@@ -67,7 +67,7 @@ export const mockExportContractAgentServiceCharge = {
 };
 
 export const mockExportContractAgentService = {
-  agentIsCharging: true,
+  agentIsCharging: false,
   serviceDescription: 'Mock export contract agent service description',
   charge: mockExportContractAgentServiceCharge,
 };

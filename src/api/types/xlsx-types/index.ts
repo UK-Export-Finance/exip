@@ -4,6 +4,7 @@ export interface XLSXTitleRowIndexes {
   EXPORTER_CONTACT_DETAILS?: number;
   POLICY: number;
   EXPORTER_BUSINESS: number;
+  EXPORT_CONTRACT: number;
   BUYER: number;
   ELIGIBILITY: number;
   DECLARATIONS: number;

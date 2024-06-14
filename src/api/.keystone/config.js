@@ -832,7 +832,8 @@ var TITLE_INDEXES = () => ({
   EXPORTER_BUSINESS: 31,
   POLICY: 47,
   BUYER: 60,
-  DECLARATIONS: 69
+  EXPORT_CONTRACT: 69,
+  DECLARATIONS: 75
 });
 var INDEXES = () => ({
   TITLES: TITLE_INDEXES(),
@@ -847,9 +848,10 @@ var incrementIndexes = (indexes) => {
   modified.BROKER_ADDRESS += 1;
   modified.BUYER_ADDRESS += 1;
   modified.LOSS_PAYEE_ADDRESS += 1;
-  modified.TITLES.POLICY += 1;
   modified.TITLES.BUYER += 1;
   modified.TITLES.DECLARATIONS += 1;
+  modified.TITLES.EXPORT_CONTRACT += 1;
+  modified.TITLES.POLICY += 1;
   return modified;
 };
 
@@ -874,6 +876,10 @@ var XLSX_ROW_INDEXES = (application2) => {
       hasDifferentTradingName
     },
     eligibility: { totalContractValue },
+    exportContract: {
+      agent: { service: { agentIsCharging } },
+      privateMarket: attemptedPrivateMarket
+    },
     nominatedLossPayee: { isAppointed: nominatedLossPayeeAppointed },
     policy: {
       jointlyInsuredParty: { requested: requestedJointlyInsuredParty }
@@ -895,6 +901,7 @@ var XLSX_ROW_INDEXES = (application2) => {
   if (isMultiplePolicyType(policyType)) {
     indexes.TITLES.BUYER += 1;
     indexes.TITLES.DECLARATIONS += 1;
+    indexes.TITLES.EXPORT_CONTRACT += 1;
     indexes.BROKER_ADDRESS += 1;
     indexes.BUYER_ADDRESS += 1;
     indexes.BUYER_CONTACT_DETAILS += 1;
@@ -903,12 +910,14 @@ var XLSX_ROW_INDEXES = (application2) => {
   if (broker[USING_BROKER]) {
     indexes.TITLES.BUYER += 3;
     indexes.TITLES.DECLARATIONS += 3;
+    indexes.TITLES.EXPORT_CONTRACT += 3;
     indexes.BUYER_ADDRESS += 3;
     indexes.LOSS_PAYEE_ADDRESS += 3;
   }
   if (policyContactIsSameAsOwner === false) {
     indexes.TITLES.BUYER += 2;
     indexes.TITLES.DECLARATIONS += 2;
+    indexes.TITLES.EXPORT_CONTRACT += 2;
     indexes.LOSS_PAYEE_ADDRESS += 2;
     indexes.BROKER_ADDRESS += 2;
     indexes.BUYER_ADDRESS += 2;
@@ -919,24 +928,36 @@ var XLSX_ROW_INDEXES = (application2) => {
     indexes.LOSS_PAYEE_ADDRESS += 3;
     indexes.TITLES.BUYER += 3;
     indexes.TITLES.DECLARATIONS += 3;
+    indexes.TITLES.EXPORT_CONTRACT += 3;
   }
   if (nominatedLossPayeeAppointed) {
     indexes.TITLES.BUYER += 5;
     indexes.TITLES.DECLARATIONS += 5;
+    indexes.TITLES.EXPORT_CONTRACT += 5;
     indexes.BUYER_ADDRESS += 5;
   }
   if (exporterHasTradedWithBuyer) {
     indexes.TITLES.DECLARATIONS += 2;
+    indexes.TITLES.EXPORT_CONTRACT += 2;
     if (buyerHasOutstandingPayments) {
       indexes.TITLES.DECLARATIONS += 2;
+      indexes.TITLES.EXPORT_CONTRACT += 2;
     }
   }
   if (exporterHasPreviousCreditInsuranceWithBuyer) {
+    indexes.TITLES.DECLARATIONS += 1;
+    indexes.TITLES.EXPORT_CONTRACT += 1;
+  }
+  if (attemptedPrivateMarket) {
+    indexes.TITLES.DECLARATIONS += 1;
+  }
+  if (agentIsCharging) {
     indexes.TITLES.DECLARATIONS += 1;
   }
   const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
   if (totalContractValueOverThreshold) {
     indexes.TITLES.DECLARATIONS += 1;
+    indexes.TITLES.EXPORT_CONTRACT += 1;
   }
   return indexes;
 };
@@ -1531,6 +1552,7 @@ var application = {
       if (file) {
         const fileBuffer = Buffer.from(file);
         const response = await callNotify(templateId, emailAddress, variables, fileBuffer);
+        await file_system_default.unlink(filePath);
         return response;
       }
       throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
@@ -7304,10 +7326,7 @@ var mapAgentChargeAmount = (charge) => {
     return mapped;
   }
   if (charge[PERCENTAGE_CHARGE2]) {
-    const mapped = [
-      xlsx_row_default(String(FIELDS26.AGENT_CHARGES[PERCENTAGE_CHARGE2]), `${charge[PERCENTAGE_CHARGE2]}%`),
-      payableCountryRow
-    ];
+    const mapped = [xlsx_row_default(String(FIELDS26.AGENT_CHARGES[PERCENTAGE_CHARGE2]), `${charge[PERCENTAGE_CHARGE2]}%`), payableCountryRow];
     return mapped;
   }
   return [];
@@ -7324,10 +7343,7 @@ var mapAgentCharge = (service) => {
   const chargingAnswer = service[IS_CHARGING2];
   let mapped = [xlsx_row_default(String(FIELDS27.AGENT_SERVICE[IS_CHARGING2]), map_yes_no_field_default({ answer: chargingAnswer }))];
   if (chargingAnswer) {
-    mapped = [
-      ...mapped,
-      ...map_agent_charge_amount_default(charge)
-    ];
+    mapped = [...mapped, ...map_agent_charge_amount_default(charge)];
   }
   return mapped;
 };
@@ -7336,7 +7352,6 @@ var map_agent_charge_default = mapAgentCharge;
 // generate-xlsx/map-application-to-XLSX/map-export-contract/map-agent/index.ts
 var { FIELDS: FIELDS28 } = XLSX;
 var {
-  // AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE, PERCENTAGE_CHARGE },
   AGENT_DETAILS: { NAME: NAME4, FULL_ADDRESS: FULL_ADDRESS4, COUNTRY_CODE: COUNTRY_CODE3 },
   AGENT_SERVICE: { SERVICE_DESCRIPTION: SERVICE_DESCRIPTION2 },
   USING_AGENT: USING_AGENT2
