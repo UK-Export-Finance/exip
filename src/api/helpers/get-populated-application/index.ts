@@ -105,11 +105,55 @@ const getPopulatedApplication = async ({
     throw new Error(generateErrorMessage('exportContract', application.id));
   }
 
+  // TODO:
+  // TODO:
+  // TODO: move into own function
+
+  const exportContractAgent = await context.db.ExportContractAgent.findOne({
+    where: { id: exportContract.agentId },
+  });
+
+  if (!exportContractAgent) {
+    throw new Error(generateErrorMessage('exportContractAgent', application.id));
+  }
+
+  const exportContractAgentService = await context.db.ExportContractAgentService.findOne({
+    where: { id: exportContractAgent.serviceId },
+  });
+
+  if (!exportContractAgentService) {
+    throw new Error(generateErrorMessage('exportContractAgentService', application.id));
+  }
+
+  const exportContractAgentServiceCharge = await context.db.ExportContractAgentServiceCharge.findOne({
+    where: { id: exportContractAgentService.chargeId },
+  });
+
+  if (!exportContractAgentServiceCharge) {
+    throw new Error(generateErrorMessage('exportContractAgentServiceCharge', application.id));
+  }
+
+  const privateMarket = await context.db.PrivateMarket.findOne({
+    where: { id: exportContract.privateMarketId },
+  });
+
+  if (!privateMarket) {
+    throw new Error(generateErrorMessage('privateMarket', application.id));
+  }
+
   const finalDestinationCountry = await getCountryByField(context, 'isoCode', exportContract.finalDestinationCountryCode);
 
   const populatedExportContract = {
     ...exportContract,
+    agent: {
+      ...exportContractAgent,
+      service: {
+        ...exportContractAgentService,
+        charge: exportContractAgentServiceCharge,
+      },
+    },
     finalDestinationCountry,
+    privateMarket,
   };
 
   const company = await context.db.Company.findOne({
