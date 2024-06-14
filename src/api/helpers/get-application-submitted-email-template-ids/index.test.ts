@@ -29,6 +29,13 @@ describe('helpers/get-application-submitted-email-template-ids', () => {
     beforeEach(() => {
       application = {
         ...mockApplication,
+        buyer: {
+          ...mockApplication.buyer,
+          buyerTradingHistory: {
+            ...mockApplication.buyer.buyerTradingHistory,
+            exporterHasTradedWithBuyer: true,
+          },
+        },
         declaration: {
           ...mockApplication.declaration,
           hasAntiBriberyCodeOfConduct: false,
@@ -52,14 +59,17 @@ describe('helpers/get-application-submitted-email-template-ids', () => {
     beforeEach(() => {
       application = {
         ...mockApplication,
+        buyer: {
+          ...mockApplication.buyer,
+          buyerTradingHistory: {
+            ...mockApplication.buyer.buyerTradingHistory,
+            exporterHasTradedWithBuyer: false,
+          },
+        },
         declaration: {
           ...mockApplication.declaration,
           ...mockApplication.declaration,
           hasAntiBriberyCodeOfConduct: false,
-        },
-        buyer: {
-          ...mockApplication.buyer,
-          exporterHasTradedWithBuyer: false,
         },
       };
     });
@@ -80,13 +90,16 @@ describe('helpers/get-application-submitted-email-template-ids', () => {
     beforeEach(async () => {
       application = {
         ...mockApplication,
+        buyer: {
+          ...mockApplication.buyer,
+          buyerTradingHistory: {
+            ...mockApplication.buyer.buyerTradingHistory,
+            exporterHasTradedWithBuyer: false,
+          },
+        },
         declaration: {
           ...mockApplication.declaration,
           hasAntiBriberyCodeOfConduct: true,
-        },
-        buyer: {
-          ...mockApplication.buyer,
-          exporterHasTradedWithBuyer: false,
         },
       };
     });

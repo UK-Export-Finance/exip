@@ -4,7 +4,7 @@ import FIELD_IDS from '../../../../constants/field-ids/insurance/your-buyer';
 import { XLSX } from '../../../../content-strings';
 import mapYesNoField from '../../helpers/map-yes-no-field';
 import xlsxRow from '../../helpers/xlsx-row';
-import { mockApplicationSinglePolicyTotalContractValueOverThreshold } from '../../../../test-mocks';
+import { mockApplication, mockApplicationSinglePolicyTotalContractValueOverThreshold } from '../../../../test-mocks';
 
 const { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = FIELD_IDS;
 
@@ -65,7 +65,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-buyer/map-previous-cover
 
   describe(`when the total contract value is NOT ${TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE}`, () => {
     it('should return an empty array', () => {
-      const result = mapPreviousCoverWithBuyer(eligibility, relationship);
+      const result = mapPreviousCoverWithBuyer(mockApplication.eligibility, relationship);
 
       expect(result).toEqual([]);
     });

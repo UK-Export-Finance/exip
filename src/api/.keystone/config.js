@@ -5398,7 +5398,9 @@ var getApplicationSubmittedEmailTemplateIds = (application2) => {
     account: ""
   };
   const { hasAntiBriberyCodeOfConduct } = declaration;
-  const { exporterHasTradedWithBuyer } = buyer;
+  const {
+    buyerTradingHistory: { exporterHasTradedWithBuyer }
+  } = buyer;
   if (!hasAntiBriberyCodeOfConduct && !exporterHasTradedWithBuyer) {
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NO_DOCUMENTS;
     return templateIds;
@@ -6678,10 +6680,7 @@ var {
 var mapNameOnPolicy = (policyContact) => {
   let mapped = [];
   if (policyContact[IS_SAME_AS_OWNER]) {
-    mapped = [
-      xlsx_row_default(String(FIELDS6.NAME_ON_POLICY[NAME2]), policyContact[NAME2]),
-      xlsx_row_default(String(FIELDS6.NAME_ON_POLICY[POSITION2]), policyContact[POSITION2])
-    ];
+    mapped = [xlsx_row_default(String(FIELDS6.NAME_ON_POLICY[NAME2]), policyContact[NAME2]), xlsx_row_default(String(FIELDS6.NAME_ON_POLICY[POSITION2]), policyContact[POSITION2])];
     return mapped;
   }
   mapped = [

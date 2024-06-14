@@ -138,6 +138,9 @@ export const createFullApplication = async (context: Context, policyType?: strin
    */
   const policyData = {
     policyType: POLICY_TYPE.SINGLE,
+    totalSalesToBuyer: 123,
+    totalValueOfContract: 456,
+    maximumBuyerWillOwe: 789,
   };
 
   if (policyType === POLICY_TYPE.MULTIPLE) {
