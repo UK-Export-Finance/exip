@@ -729,6 +729,14 @@ var CRON_DESCRIPTION_ACCOUNT_UPDATE_UNVERIFIED = "Update unverified accounts (ov
 var CRON_DESCRIPTION_APPLICATION_UPDATE_INACTIVE = "Update inactive applications (over 30 days) to Abandoned";
 var CRON_DESCRIPTION_APPLICATION_SUBMISSION_DEADLINE_EMAIL = "Email application submission deadline reminder";
 
+// constants/date-format.ts
+var DATE_FORMAT = {
+  DEFAULT: "d MMMM yyyy",
+  HOURS_AND_MINUTES: "HH:mm",
+  SHORT_MONTH: "d MMM yyyy",
+  XLSX: "dd-MMM-yy"
+};
+
 // constants/eligibility.ts
 var ELIGIBILITY = {
   MAX_COVER_AMOUNT_IN_GBP: 5e5,
@@ -1142,10 +1150,6 @@ var FEEDBACK = {
   }
 };
 var ACCEPTED_FILE_TYPES = [".xlsx"];
-var DATE_FORMAT = {
-  DEFAULT: "d MMMM yyyy",
-  HOURS_AND_MINUTES: "HH:mm"
-};
 var ORDNANCE_SURVEY_QUERY_URL = "/search/places/v1/postcode?postcode=";
 
 // cron/account/unverified-account-cron-job.ts
@@ -6556,7 +6560,7 @@ var {
 var mapIntroduction = (application2) => {
   const mapped = [
     xlsx_row_default(REFERENCE_NUMBER.SUMMARY.TITLE, application2.referenceNumber),
-    xlsx_row_default(DATE_SUBMITTED.SUMMARY.TITLE, format_date_default(application2.submissionDate, "dd-MM-yyyy")),
+    xlsx_row_default(DATE_SUBMITTED.SUMMARY.TITLE, format_date_default(application2.submissionDate, DATE_FORMAT.XLSX)),
     xlsx_row_default(TIME_SUBMITTED.SUMMARY.TITLE, format_time_of_day_default(application2.submissionDate)),
     xlsx_row_default(FIELDS2[FIRST_NAME2], application2.owner[FIRST_NAME2]),
     xlsx_row_default(FIELDS2[LAST_NAME2], application2.owner[LAST_NAME2]),
@@ -6641,7 +6645,7 @@ var mapIntro = (policy) => {
   const mapped = [
     xlsx_row_default(SECTION_TITLES.POLICY, ""),
     xlsx_row_default(String(FIELDS5[POLICY_TYPE7]), map_policy_type_default(policy[POLICY_TYPE7])),
-    xlsx_row_default(String(FIELDS5[REQUESTED_START_DATE3]), format_date_default(policy[REQUESTED_START_DATE3], "dd MM yyyy"))
+    xlsx_row_default(String(FIELDS5[REQUESTED_START_DATE3]), format_date_default(policy[REQUESTED_START_DATE3], DATE_FORMAT.XLSX))
   ];
   return mapped;
 };
@@ -6763,7 +6767,7 @@ var {
 } = insurance_default;
 var mapSingleContractPolicy = (policy) => {
   const mapped = [
-    xlsx_row_default(String(FIELDS7[CONTRACT_COMPLETION_DATE3]), format_date_default(policy[CONTRACT_COMPLETION_DATE3], "dd MM yyyy")),
+    xlsx_row_default(String(FIELDS7[CONTRACT_COMPLETION_DATE3]), format_date_default(policy[CONTRACT_COMPLETION_DATE3], DATE_FORMAT.XLSX)),
     xlsx_row_default(String(CONTENT_STRINGS2[CURRENCY_CODE3].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
     xlsx_row_default(String(FIELDS7[TOTAL_CONTRACT_VALUE2]), format_currency_default2(policy[TOTAL_CONTRACT_VALUE2], GBP_CURRENCY_CODE))
   ];
@@ -7055,7 +7059,7 @@ var mapExporterBusiness = (application2) => {
   const { business, company, companySicCodes } = application2;
   const mapped = [
     xlsx_row_default(SECTION_TITLES2.EXPORTER_BUSINESS, ""),
-    xlsx_row_default(CONTENT_STRINGS6[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], "dd-MMM-yy")),
+    xlsx_row_default(CONTENT_STRINGS6[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], DATE_FORMAT.XLSX)),
     xlsx_row_default(FIELDS18[COMPANY_ADDRESS2], map_exporter_address_default(company[COMPANY_ADDRESS2])),
     xlsx_row_default(FIELDS18[COMPANY_SIC2], map_sic_codes_default2(companySicCodes)),
     xlsx_row_default(FIELDS18[HAS_DIFFERENT_TRADING_NAME4], map_yes_no_field_default({ answer: company[HAS_DIFFERENT_TRADING_NAME4] })),

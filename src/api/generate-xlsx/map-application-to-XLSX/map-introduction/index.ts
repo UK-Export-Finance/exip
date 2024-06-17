@@ -1,3 +1,4 @@
+import { DATE_FORMAT } from '../../../constants';
 import { REFERENCE_NUMBER, DATE_SUBMITTED, TIME_SUBMITTED } from '../../../content-strings/fields/insurance';
 import { XLSX } from '../../../content-strings';
 import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
@@ -24,7 +25,7 @@ const {
 const mapIntroduction = (application: Application) => {
   const mapped = [
     xlsxRow(REFERENCE_NUMBER.SUMMARY.TITLE, application.referenceNumber),
-    xlsxRow(DATE_SUBMITTED.SUMMARY.TITLE, formatDate(application.submissionDate, 'dd-MM-yyyy')),
+    xlsxRow(DATE_SUBMITTED.SUMMARY.TITLE, formatDate(application.submissionDate, DATE_FORMAT.XLSX)),
     xlsxRow(TIME_SUBMITTED.SUMMARY.TITLE, formatTimeOfDay(application.submissionDate)),
     xlsxRow(FIELDS[FIRST_NAME], application.owner[FIRST_NAME]),
     xlsxRow(FIELDS[LAST_NAME], application.owner[LAST_NAME]),

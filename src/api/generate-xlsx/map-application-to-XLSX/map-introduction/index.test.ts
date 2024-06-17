@@ -1,4 +1,5 @@
 import mapIntroduction from '.';
+import { DATE_FORMAT } from '../../../constants';
 import { REFERENCE_NUMBER, DATE_SUBMITTED, TIME_SUBMITTED } from '../../../content-strings/fields/insurance';
 import { XLSX } from '../../../content-strings';
 import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
@@ -22,7 +23,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-introduction', () => {
 
     const expected = [
       xlsxRow(REFERENCE_NUMBER.SUMMARY.TITLE, mockApplication.referenceNumber),
-      xlsxRow(DATE_SUBMITTED.SUMMARY.TITLE, formatDate(mockApplication.submissionDate, 'dd-MM-yyyy')),
+      xlsxRow(DATE_SUBMITTED.SUMMARY.TITLE, formatDate(mockApplication.submissionDate, DATE_FORMAT.XLSX)),
       xlsxRow(TIME_SUBMITTED.SUMMARY.TITLE, formatTimeOfDay(mockApplication.submissionDate)),
       xlsxRow(FIELDS[FIRST_NAME], mockApplication.owner[FIRST_NAME]),
       xlsxRow(FIELDS[LAST_NAME], mockApplication.owner[LAST_NAME]),
