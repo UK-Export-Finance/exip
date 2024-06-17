@@ -172,7 +172,8 @@ jobs:
             COMPANIES_HOUSE_API_KEY='${{ secrets.COMPANIES_HOUSE_API_KEY }}' \
             JWT_SIGNING_KEY='${{ secrets.JWT_SIGNING_KEY }}' \
             UNDERWRITING_TEAM_EMAIL='${{ secrets.UNDERWRITING_TEAM_EMAIL }}' \
-            FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}'
+            FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}' \
+            EXCELJS_PROTECTION_PASSWORD='${{ secrets.EXCELJS_PROTECTION_PASSWORD }}'
 
       - name: Slot 🔀
         uses: azure/cli@v2.0.0
