@@ -5,7 +5,7 @@ import xlsxRow from '../helpers/xlsx-row';
 import mapYesNoField from '../helpers/map-yes-no-field';
 import mapPrivateMarket from './map-private-market';
 import mapAgent from './map-agent';
-import { mockApplication } from '../../../test-mocks';
+import { mockApplicationMinimalBrokerBuyerAndCompany as mockApplication } from '../../../test-mocks';
 
 const { FIELDS, SECTION_TITLES } = XLSX;
 

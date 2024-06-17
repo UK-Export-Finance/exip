@@ -3,7 +3,7 @@ import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-co
 import { XLSX } from '../../../../../../content-strings';
 import xlsxRow from '../../../../helpers/xlsx-row';
 import formatCurrency from '../../../../helpers/format-currency';
-import { mockApplication } from '../../../../../../test-mocks';
+import { mockApplicationMinimalBrokerBuyerAndCompany } from '../../../../../../test-mocks';
 
 const { FIELDS } = XLSX;
 
@@ -17,7 +17,7 @@ const {
       service: { charge },
     },
   },
-} = mockApplication;
+} = mockApplicationMinimalBrokerBuyerAndCompany;
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-export-contract/map-agent/map-agent-charge/map-agent-charge-amount', () => {
   describe(`when the charge method is ${FIXED_SUM_AMOUNT}`, () => {

@@ -4,12 +4,11 @@ import { XLSX } from '../../../../content-strings';
 import xlsxRow from '../../helpers/xlsx-row';
 import mapYesNoField from '../../helpers/map-yes-no-field';
 import mapAgentCharge from './map-agent-charge';
-import { mockApplication } from '../../../../test-mocks';
+import { mockApplicationMinimalBrokerBuyerAndCompany as mockApplication } from '../../../../test-mocks';
 
 const { FIELDS } = XLSX;
 
 const {
-  // AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE, PERCENTAGE_CHARGE },
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
   AGENT_SERVICE: { SERVICE_DESCRIPTION },
   USING_AGENT,

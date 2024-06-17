@@ -4,7 +4,7 @@ import { XLSX } from '../../../../../content-strings';
 import xlsxRow from '../../../helpers/xlsx-row';
 import mapYesNoField from '../../../helpers/map-yes-no-field';
 import mapAgentChargeAmount from './map-agent-charge-amount';
-import { mockApplication } from '../../../../../test-mocks';
+import { mockApplicationMinimalBrokerBuyerAndCompany as mockApplication } from '../../../../../test-mocks';
 
 const { FIELDS } = XLSX;
 
