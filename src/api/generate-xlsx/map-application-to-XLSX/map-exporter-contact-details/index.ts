@@ -1,9 +1,14 @@
-import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
+import FIELD_IDS from '../../../constants/field-ids/insurance';
 import { XLSX } from '../../../content-strings';
 import xlsxRow from '../helpers/xlsx-row';
 import { Application } from '../../../types';
 
-const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
+const {
+  ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
+  POLICY: {
+    NAME_ON_POLICY: { POSITION },
+  },
+} = FIELD_IDS;
 
 const {
   SECTION_TITLES: { EXPORTER_CONTACT_DETAILS },
@@ -24,6 +29,7 @@ const mapExporterContactDetails = (application: Application) => {
     xlsxRow(FIELDS.EXPORTER_CONTACT[FIRST_NAME], policyContact[FIRST_NAME]),
     xlsxRow(FIELDS.EXPORTER_CONTACT[LAST_NAME], policyContact[LAST_NAME]),
     xlsxRow(FIELDS.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, policyContact[EMAIL]),
+    xlsxRow(FIELDS.EXPORTER_CONTACT.EXPORTER_CONTACT_POSITION, policyContact[POSITION]),
   ];
 
   return mapped;
