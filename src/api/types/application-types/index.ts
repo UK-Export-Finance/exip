@@ -165,7 +165,6 @@ export interface ApplicationExportContractAgentServiceCharge extends Relationshi
 }
 
 export interface ApplicationExportContractAgentService extends Relationship {
-  // agentId: string;
   agentIsCharging?: boolean;
   charge: ApplicationExportContractAgentServiceCharge;
   id: string;
@@ -173,7 +172,6 @@ export interface ApplicationExportContractAgentService extends Relationship {
 }
 
 export interface ApplicationExportContractAgent extends Relationship {
-  // exportContractId: string;
   id: string;
   countryCode?: string;
   fullAddress?: string;
@@ -190,7 +188,6 @@ export interface ApplicationPrivateMarket extends Relationship {
 
 export interface ApplicationExportContract extends Relationship {
   agent: ApplicationExportContractAgent;
-  // applicationId: string;
   id: string;
   finalDestinationKnown?: boolean;
   finalDestinationCountryCode?: string;
