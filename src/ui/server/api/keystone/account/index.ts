@@ -101,11 +101,7 @@ const account = {
   },
   sendEmailConfirmEmailAddress: async (urlOrigin: string, accountId: string) => {
     try {
-      console.info('Sending email verification for account creation');
-
-      // TODO: Remove this console.log
-      // eslint-disable-next-line no-console
-      console.log('!!!!!!!!!!!!!! sendEmailConfirmEmailAddressMutation', urlOrigin, accountId);
+      console.info('Sending email verification for account creation ', urlOrigin, accountId);
 
       const variables = { urlOrigin, accountId };
 
