@@ -45,6 +45,16 @@ const mapSubmittedData = (formBody: RequestBody): object => {
     populatedData[FIXED_SUM_CURRENCY_CODE] = populatedData[CURRENCY_CODE];
 
     /**
+     * If the currency code is not the alternative currency code,
+     * nullify the alternative currency code
+     * so currency code can be changed
+     * (else if not null, the alternative currency code will be saved as the currency code when changing the answer)
+     */
+    if (populatedData[CURRENCY_CODE] !== ALTERNATIVE_CURRENCY_CODE) {
+      populatedData[ALTERNATIVE_CURRENCY_CODE] = null;
+    }
+
+    /**
      * CURRENCY_CODE should never exist.
      * This is purely a UI field and so should not be included in the data.
      */
