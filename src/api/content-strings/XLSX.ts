@@ -97,7 +97,6 @@ export const XLSX = {
     },
     [AGREE_HOW_YOUR_DATA_WILL_BE_USED]: 'How the data will be used',
     APPLICANT_EMAIL_ADDRESS: 'Applicant email address',
-    APPLICANT_ROLE: 'Applicants role',
     [BIC_SWIFT_CODE]: 'Loss payee BIC or SWIFT code',
     [BROKER_NAME]: 'Name of broker or company',
     [BROKER_ADDRESS]: 'Broker address',
@@ -122,6 +121,7 @@ export const XLSX = {
       [FIRST_NAME]: 'Exporter first name',
       [LAST_NAME]: 'Exporter last name',
       EXPORTER_CONTACT_EMAIL: 'Exporter email address',
+      EXPORTER_CONTACT_POSITION: "Exporter's role",
     },
     EXPORT_CONTRACT: {
       [DESCRIPTION]: "About the exporter's goods or services",

@@ -8,7 +8,7 @@ import { XLSXTitleRowIndexes, XLSXRowIndexes } from '../../../types';
 export const TITLE_INDEXES = () =>
   ({
     HEADER: 1,
-    EXPORTER_CONTACT_DETAILS: 10,
+    EXPORTER_CONTACT_DETAILS: 9,
     KEY_INFORMATION: 15,
     ELIGIBILITY: 21,
     EXPORTER_BUSINESS: 31,

@@ -1,8 +1,13 @@
+import dotenv from 'dotenv';
 import ExcelJS from 'exceljs';
 import mapApplicationToXLSX from './map-application-to-XLSX';
 import HEADER_COLUMNS from './header-columns';
 import styledColumns from './styled-columns';
 import { Application } from '../types';
+
+dotenv.config();
+
+const { EXCELJS_PROTECTION_PASSWORD } = process.env;
 
 /**
  * XLSX
@@ -32,6 +37,9 @@ const XLSX = (application: Application): Promise<string> => {
       console.info('Generating XLSX file - adding worksheet to workbook');
 
       let worksheet = workbook.addWorksheet(refNumber);
+
+      // protect the worksheet from modification
+      worksheet.protect(String(EXCELJS_PROTECTION_PASSWORD), {});
 
       // add header columns to the worksheet
       worksheet.columns = HEADER_COLUMNS;

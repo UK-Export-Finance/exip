@@ -9,7 +9,7 @@ const {
 } = ACCOUNT_ROUTES;
 
 const {
-  ACCOUNT: { EMAIL, PASSWORD },
+  ACCOUNT: { EMAIL },
 } = INSURANCE_FIELD_IDS;
 
 const {
@@ -56,17 +56,7 @@ context(
         cy.submitAndAssertFieldErrors({
           field: fieldSelector(EMAIL),
           value: mockAccount[EMAIL],
-          expectedErrorsCount: 2,
-          expectedErrorMessage: YOUR_DETAILS_ERROR_MESSAGES.ACCOUNT_ALREADY_EXISTS,
-        });
-      });
-
-      it(`should render an ${PASSWORD} validation error`, () => {
-        cy.submitAndAssertFieldErrors({
-          field: fieldSelector(PASSWORD),
-          value: mockAccount[PASSWORD],
-          errorIndex: 1,
-          expectedErrorsCount: 2,
+          expectedErrorsCount: 1,
           expectedErrorMessage: YOUR_DETAILS_ERROR_MESSAGES.ACCOUNT_ALREADY_EXISTS,
         });
       });

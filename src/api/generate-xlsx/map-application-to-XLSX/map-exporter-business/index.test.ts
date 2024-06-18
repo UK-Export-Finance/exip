@@ -2,7 +2,7 @@ import mapExporterBusiness from '.';
 import FIELD_IDS from '../../../constants/field-ids/insurance/business';
 import { XLSX } from '../../../content-strings';
 import { FIELDS as YOUR_BUSINESS_FIELDS } from '../../../content-strings/fields/insurance/your-business';
-import { GBP_CURRENCY_CODE } from '../../../constants';
+import { DATE_FORMAT, GBP_CURRENCY_CODE } from '../../../constants';
 import xlsxRow from '../helpers/xlsx-row';
 import mapDifferentTradingName from './map-different-trading-name';
 import mapDifferentTradingAddress from './map-different-trading-address';
@@ -41,7 +41,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-exporter-business', () =
     const expected = [
       xlsxRow(SECTION_TITLES.EXPORTER_BUSINESS, ''),
 
-      xlsxRow(CONTENT_STRINGS[COMPANY_INCORPORATED].SUMMARY?.TITLE, formatDate(company[COMPANY_INCORPORATED], 'dd-MMM-yy')),
+      xlsxRow(CONTENT_STRINGS[COMPANY_INCORPORATED].SUMMARY?.TITLE, formatDate(company[COMPANY_INCORPORATED], DATE_FORMAT.XLSX)),
       xlsxRow(FIELDS[COMPANY_ADDRESS], mapExporterAddress(company[COMPANY_ADDRESS])),
       xlsxRow(FIELDS[COMPANY_SIC], mapSicCodes(companySicCodes)),
 

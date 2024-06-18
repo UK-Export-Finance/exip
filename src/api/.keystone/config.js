@@ -729,6 +729,14 @@ var CRON_DESCRIPTION_ACCOUNT_UPDATE_UNVERIFIED = "Update unverified accounts (ov
 var CRON_DESCRIPTION_APPLICATION_UPDATE_INACTIVE = "Update inactive applications (over 30 days) to Abandoned";
 var CRON_DESCRIPTION_APPLICATION_SUBMISSION_DEADLINE_EMAIL = "Email application submission deadline reminder";
 
+// constants/date-format.ts
+var DATE_FORMAT = {
+  DEFAULT: "d MMMM yyyy",
+  HOURS_AND_MINUTES: "HH:mm",
+  SHORT_MONTH: "d MMM yyyy",
+  XLSX: "dd-MMM-yy"
+};
+
 // constants/eligibility.ts
 var ELIGIBILITY = {
   MAX_COVER_AMOUNT_IN_GBP: 5e5,
@@ -826,7 +834,7 @@ var TOTAL_CONTRACT_VALUE = {
 // constants/XLSX-CONFIG/INDEXES/index.ts
 var TITLE_INDEXES = () => ({
   HEADER: 1,
-  EXPORTER_CONTACT_DETAILS: 10,
+  EXPORTER_CONTACT_DETAILS: 9,
   KEY_INFORMATION: 15,
   ELIGIBILITY: 21,
   EXPORTER_BUSINESS: 31,
@@ -1181,10 +1189,6 @@ var FEEDBACK = {
   }
 };
 var ACCEPTED_FILE_TYPES = [".xlsx"];
-var DATE_FORMAT = {
-  DEFAULT: "d MMMM yyyy",
-  HOURS_AND_MINUTES: "HH:mm"
-};
 var ORDNANCE_SURVEY_QUERY_URL = "/search/places/v1/postcode?postcode=";
 
 // cron/account/unverified-account-cron-job.ts
@@ -5601,6 +5605,7 @@ var applicationSubmittedEmails = {
 var send_application_submitted_emails_default = applicationSubmittedEmails;
 
 // generate-xlsx/index.ts
+var import_dotenv9 = __toESM(require("dotenv"));
 var import_exceljs = __toESM(require("exceljs"));
 
 // helpers/replace-character-codes-with-characters/index.ts
@@ -6561,7 +6566,6 @@ var XLSX = {
     },
     [AGREE_HOW_YOUR_DATA_WILL_BE_USED2]: "How the data will be used",
     APPLICANT_EMAIL_ADDRESS: "Applicant email address",
-    APPLICANT_ROLE: "Applicants role",
     [BIC_SWIFT_CODE2]: "Loss payee BIC or SWIFT code",
     [BROKER_NAME]: "Name of broker or company",
     [BROKER_ADDRESS]: "Broker address",
@@ -6585,7 +6589,8 @@ var XLSX = {
     EXPORTER_CONTACT: {
       [FIRST_NAME]: "Exporter first name",
       [LAST_NAME]: "Exporter last name",
-      EXPORTER_CONTACT_EMAIL: "Exporter email address"
+      EXPORTER_CONTACT_EMAIL: "Exporter email address",
+      EXPORTER_CONTACT_POSITION: "Exporter's role"
     },
     EXPORT_CONTRACT: {
       [DESCRIPTION2]: "About the exporter's goods or services",
@@ -6650,28 +6655,27 @@ var format_time_of_day_default = formatTimeOfDay;
 
 // generate-xlsx/map-application-to-XLSX/map-introduction/index.ts
 var { FIELDS: FIELDS2 } = XLSX;
-var {
-  ACCOUNT: { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL4 },
-  POLICY: {
-    NAME_ON_POLICY: { POSITION }
-  }
-} = insurance_default;
+var { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL4 } = account_default;
 var mapIntroduction = (application2) => {
   const mapped = [
     xlsx_row_default(REFERENCE_NUMBER.SUMMARY.TITLE, application2.referenceNumber),
-    xlsx_row_default(DATE_SUBMITTED.SUMMARY.TITLE, format_date_default(application2.submissionDate, "dd-MM-yyyy")),
+    xlsx_row_default(DATE_SUBMITTED.SUMMARY.TITLE, format_date_default(application2.submissionDate, DATE_FORMAT.XLSX)),
     xlsx_row_default(TIME_SUBMITTED.SUMMARY.TITLE, format_time_of_day_default(application2.submissionDate)),
     xlsx_row_default(FIELDS2[FIRST_NAME2], application2.owner[FIRST_NAME2]),
     xlsx_row_default(FIELDS2[LAST_NAME2], application2.owner[LAST_NAME2]),
-    xlsx_row_default(FIELDS2.APPLICANT_EMAIL_ADDRESS, application2.owner[EMAIL4]),
-    xlsx_row_default(FIELDS2.APPLICANT_ROLE, application2.policyContact[POSITION])
+    xlsx_row_default(FIELDS2.APPLICANT_EMAIL_ADDRESS, application2.owner[EMAIL4])
   ];
   return mapped;
 };
 var map_introduction_default = mapIntroduction;
 
 // generate-xlsx/map-application-to-XLSX/map-exporter-contact-details/index.ts
-var { FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, EMAIL: EMAIL5 } = account_default;
+var {
+  ACCOUNT: { FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, EMAIL: EMAIL5 },
+  POLICY: {
+    NAME_ON_POLICY: { POSITION }
+  }
+} = insurance_default;
 var {
   SECTION_TITLES: { EXPORTER_CONTACT_DETAILS },
   FIELDS: FIELDS3
@@ -6682,7 +6686,8 @@ var mapExporterContactDetails = (application2) => {
     xlsx_row_default(EXPORTER_CONTACT_DETAILS),
     xlsx_row_default(FIELDS3.EXPORTER_CONTACT[FIRST_NAME3], policyContact[FIRST_NAME3]),
     xlsx_row_default(FIELDS3.EXPORTER_CONTACT[LAST_NAME3], policyContact[LAST_NAME3]),
-    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, policyContact[EMAIL5])
+    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, policyContact[EMAIL5]),
+    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_POSITION, policyContact[POSITION])
   ];
   return mapped;
 };
@@ -6793,7 +6798,7 @@ var mapIntro = (policy) => {
   const mapped = [
     xlsx_row_default(SECTION_TITLES2.POLICY, ""),
     xlsx_row_default(String(FIELDS6[POLICY_TYPE7]), map_policy_type_default(policy[POLICY_TYPE7])),
-    xlsx_row_default(String(FIELDS6[REQUESTED_START_DATE3]), format_date_default(policy[REQUESTED_START_DATE3], "dd MM yyyy"))
+    xlsx_row_default(String(FIELDS6[REQUESTED_START_DATE3]), format_date_default(policy[REQUESTED_START_DATE3], DATE_FORMAT.XLSX))
   ];
   return mapped;
 };
@@ -6915,7 +6920,7 @@ var {
 } = insurance_default;
 var mapSingleContractPolicy = (policy) => {
   const mapped = [
-    xlsx_row_default(String(FIELDS8[CONTRACT_COMPLETION_DATE3]), format_date_default(policy[CONTRACT_COMPLETION_DATE3], "dd MM yyyy")),
+    xlsx_row_default(String(FIELDS8[CONTRACT_COMPLETION_DATE3]), format_date_default(policy[CONTRACT_COMPLETION_DATE3], DATE_FORMAT.XLSX)),
     xlsx_row_default(String(CONTENT_STRINGS2[CURRENCY_CODE3].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
     xlsx_row_default(String(FIELDS8[TOTAL_CONTRACT_VALUE2]), format_currency_default2(policy[TOTAL_CONTRACT_VALUE2], GBP_CURRENCY_CODE))
   ];
@@ -7191,7 +7196,7 @@ var mapExporterBusiness = (application2) => {
   const { business, company, companySicCodes } = application2;
   const mapped = [
     xlsx_row_default(SECTION_TITLES3.EXPORTER_BUSINESS, ""),
-    xlsx_row_default(CONTENT_STRINGS6[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], "dd-MMM-yy")),
+    xlsx_row_default(CONTENT_STRINGS6[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], DATE_FORMAT.XLSX)),
     xlsx_row_default(FIELDS19[COMPANY_ADDRESS2], map_exporter_address_default(company[COMPANY_ADDRESS2])),
     xlsx_row_default(FIELDS19[COMPANY_SIC2], map_sic_codes_default2(companySicCodes)),
     xlsx_row_default(FIELDS19[HAS_DIFFERENT_TRADING_NAME4], map_yes_no_field_default({ answer: company[HAS_DIFFERENT_TRADING_NAME4] })),
@@ -7527,6 +7532,8 @@ var styledColumns = (application2, worksheet) => {
 var styled_columns_default = styledColumns;
 
 // generate-xlsx/index.ts
+import_dotenv9.default.config();
+var { EXCELJS_PROTECTION_PASSWORD } = process.env;
 var XLSX2 = (application2) => {
   try {
     console.info("Generating XLSX file for application %s", application2.id);
@@ -7539,6 +7546,7 @@ var XLSX2 = (application2) => {
       const workbook = new import_exceljs.default.Workbook();
       console.info("Generating XLSX file - adding worksheet to workbook");
       let worksheet = workbook.addWorksheet(refNumber);
+      worksheet.protect(String(EXCELJS_PROTECTION_PASSWORD), {});
       worksheet.columns = header_columns_default;
       console.info("Generating XLSX file - adding rows to worksheet");
       xlsxData.forEach((row) => {
@@ -7927,8 +7935,8 @@ var get_account_password_reset_token_default = getAccountPasswordResetToken;
 
 // integrations/APIM/index.ts
 var import_axios = __toESM(require("axios"));
-var import_dotenv9 = __toESM(require("dotenv"));
-import_dotenv9.default.config();
+var import_dotenv10 = __toESM(require("dotenv"));
+import_dotenv10.default.config();
 var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
 var { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
 var APIM = {
@@ -8224,8 +8232,8 @@ var sanitise_companies_house_number_default = sanitiseCompaniesHouseNumber;
 
 // integrations/companies-house/index.ts
 var import_axios2 = __toESM(require("axios"));
-var import_dotenv10 = __toESM(require("dotenv"));
-import_dotenv10.default.config();
+var import_dotenv11 = __toESM(require("dotenv"));
+import_dotenv11.default.config();
 var username = String(process.env.COMPANIES_HOUSE_API_KEY);
 var companiesHouseURL = String(process.env.COMPANIES_HOUSE_API_URL);
 var companiesHouse = {
@@ -8265,8 +8273,8 @@ var companies_house_default = companiesHouse;
 
 // integrations/industry-sector/index.ts
 var import_axios3 = __toESM(require("axios"));
-var import_dotenv11 = __toESM(require("dotenv"));
-import_dotenv11.default.config();
+var import_dotenv12 = __toESM(require("dotenv"));
+import_dotenv12.default.config();
 var { APIM_MDM_URL: APIM_MDM_URL2, APIM_MDM_KEY: APIM_MDM_KEY2, APIM_MDM_VALUE: APIM_MDM_VALUE2 } = process.env;
 var { APIM_MDM: APIM_MDM2 } = EXTERNAL_API_ENDPOINTS;
 var headers = {
@@ -8425,8 +8433,8 @@ var get_application_by_reference_number_default2 = getApplicationByReferenceNumb
 
 // integrations/ordnance-survey/index.ts
 var import_axios4 = __toESM(require("axios"));
-var import_dotenv12 = __toESM(require("dotenv"));
-import_dotenv12.default.config();
+var import_dotenv13 = __toESM(require("dotenv"));
+import_dotenv13.default.config();
 var { ORDNANCE_SURVEY_API_KEY, ORDNANCE_SURVEY_API_URL } = process.env;
 var ordnanceSurvey = {
   get: async (postcode) => {
