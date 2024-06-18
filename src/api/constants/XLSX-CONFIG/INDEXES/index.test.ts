@@ -6,7 +6,7 @@ describe('api/constants/XLSX-CONFIG/INDEXES', () => {
     it('should return default title indexes', () => {
       const expected = {
         HEADER: 1,
-        EXPORTER_CONTACT_DETAILS: 10,
+        EXPORTER_CONTACT_DETAILS: 9,
         KEY_INFORMATION: 15,
         ELIGIBILITY: 21,
         EXPORTER_BUSINESS: 31,

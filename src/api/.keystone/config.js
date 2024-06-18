@@ -826,7 +826,7 @@ var TOTAL_CONTRACT_VALUE = {
 // constants/XLSX-CONFIG/INDEXES/index.ts
 var TITLE_INDEXES = () => ({
   HEADER: 1,
-  EXPORTER_CONTACT_DETAILS: 10,
+  EXPORTER_CONTACT_DETAILS: 9,
   KEY_INFORMATION: 15,
   ELIGIBILITY: 21,
   EXPORTER_BUSINESS: 31,
@@ -6467,7 +6467,6 @@ var XLSX = {
     [ACCOUNT_NUMBER2]: "Loss payee account number",
     [AGREE_HOW_YOUR_DATA_WILL_BE_USED2]: "How the data will be used",
     APPLICANT_EMAIL_ADDRESS: "Applicant email address",
-    APPLICANT_ROLE: "Applicants role",
     [BIC_SWIFT_CODE2]: "Loss payee BIC or SWIFT code",
     [BROKER_NAME]: "Name of broker or company",
     [BROKER_ADDRESS]: "Broker address",
@@ -6491,7 +6490,8 @@ var XLSX = {
     EXPORTER_CONTACT: {
       [FIRST_NAME]: "Exporter first name",
       [LAST_NAME]: "Exporter last name",
-      EXPORTER_CONTACT_EMAIL: "Exporter email address"
+      EXPORTER_CONTACT_EMAIL: "Exporter email address",
+      EXPORTER_CONTACT_POSITION: "Exporter's role"
     },
     [FAILED_PAYMENTS2]: "Has the buyer ever failed to pay the exporter on time?",
     [FINANCIAL_ADDRESS2]: "Bank address of the loss payee",
@@ -6548,12 +6548,7 @@ var format_time_of_day_default = formatTimeOfDay;
 
 // generate-xlsx/map-application-to-XLSX/map-introduction/index.ts
 var { FIELDS: FIELDS2 } = XLSX;
-var {
-  ACCOUNT: { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL4 },
-  POLICY: {
-    NAME_ON_POLICY: { POSITION }
-  }
-} = insurance_default;
+var { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL4 } = account_default;
 var mapIntroduction = (application2) => {
   const mapped = [
     xlsx_row_default(REFERENCE_NUMBER.SUMMARY.TITLE, application2.referenceNumber),
@@ -6561,15 +6556,23 @@ var mapIntroduction = (application2) => {
     xlsx_row_default(TIME_SUBMITTED.SUMMARY.TITLE, format_time_of_day_default(application2.submissionDate)),
     xlsx_row_default(FIELDS2[FIRST_NAME2], application2.owner[FIRST_NAME2]),
     xlsx_row_default(FIELDS2[LAST_NAME2], application2.owner[LAST_NAME2]),
-    xlsx_row_default(FIELDS2.APPLICANT_EMAIL_ADDRESS, application2.owner[EMAIL4]),
-    xlsx_row_default(FIELDS2.APPLICANT_ROLE, application2.policyContact[POSITION])
+    xlsx_row_default(FIELDS2.APPLICANT_EMAIL_ADDRESS, application2.owner[EMAIL4])
   ];
   return mapped;
 };
 var map_introduction_default = mapIntroduction;
 
 // generate-xlsx/map-application-to-XLSX/map-exporter-contact-details/index.ts
-var { FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, EMAIL: EMAIL5 } = account_default;
+var {
+  ACCOUNT: {
+    FIRST_NAME: FIRST_NAME3,
+    LAST_NAME: LAST_NAME3,
+    EMAIL: EMAIL5
+  },
+  POLICY: {
+    NAME_ON_POLICY: { POSITION }
+  }
+} = insurance_default;
 var {
   SECTION_TITLES: { EXPORTER_CONTACT_DETAILS },
   FIELDS: FIELDS3
@@ -6580,7 +6583,8 @@ var mapExporterContactDetails = (application2) => {
     xlsx_row_default(EXPORTER_CONTACT_DETAILS),
     xlsx_row_default(FIELDS3.EXPORTER_CONTACT[FIRST_NAME3], policyContact[FIRST_NAME3]),
     xlsx_row_default(FIELDS3.EXPORTER_CONTACT[LAST_NAME3], policyContact[LAST_NAME3]),
-    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, policyContact[EMAIL5])
+    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, policyContact[EMAIL5]),
+    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_POSITION, policyContact[POSITION])
   ];
   return mapped;
 };
