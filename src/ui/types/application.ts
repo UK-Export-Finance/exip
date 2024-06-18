@@ -37,11 +37,11 @@ interface ApplicationPrivateMarket {
 
 interface ApplicationExportContractAgentServiceCharge {
   id: string;
-  percentageCharge?: string;
   fixedSumAmount?: string;
   fixedSumCurrencyCode?: string;
-  payableCountryCode?: string;
   method?: string;
+  payableCountryCode?: string;
+  percentageCharge?: string;
 }
 
 interface ApplicationExportContractAgentService {
@@ -61,12 +61,13 @@ interface ApplicationExportContractAgent {
 }
 
 interface ApplicationExportContract {
+  agent: ApplicationExportContractAgent;
   id: string;
-  goodsOrServicesDescription?: string;
   finalDestinationKnown?: boolean;
   finalDestinationCountryCode?: string;
+  goodsOrServicesDescription?: string;
+  paymentTermsDescription?: string;
   privateMarket: ApplicationPrivateMarket;
-  agent: ApplicationExportContractAgent;
 }
 
 interface ApplicationCompanyDifferentTradingAddress {

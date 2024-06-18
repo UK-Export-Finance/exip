@@ -155,36 +155,45 @@ export interface ApplicationEligibility extends Relationship {
   coverPeriod: CoverPeriod;
 }
 
-export interface ApplicationExportContract extends Relationship {
-  applicationId: string;
-  finalDestinationCountryCode?: string;
-  finalDestinationCountry?: Country;
-  finalDestinationKnown: boolean;
-  goodsOrServicesDescription?: string;
-  paymentTermsDescription?: string;
+export interface ApplicationExportContractAgentServiceCharge extends Relationship {
+  agentServiceId: string;
+  fixedSumAmount?: string;
+  fixedSumCurrencyCode?: string;
+  method?: string;
+  payableCountryCode?: string;
+  percentageCharge?: string;
+}
+
+export interface ApplicationExportContractAgentService extends Relationship {
+  agentIsCharging?: boolean;
+  charge: ApplicationExportContractAgentServiceCharge;
+  id: string;
+  serviceDescription?: string;
 }
 
 export interface ApplicationExportContractAgent extends Relationship {
-  exportContractId: string;
+  id: string;
   countryCode?: string;
   fullAddress?: string;
   isUsingAgent?: boolean;
   name?: string;
+  service: ApplicationExportContractAgentService;
 }
 
-export interface ApplicationExportContractAgentService extends Relationship {
-  agentId: string;
-  agentIsCharging?: boolean;
-  serviceDescription?: string;
+export interface ApplicationPrivateMarket extends Relationship {
+  attempted?: boolean;
+  declinedDescription?: string;
+  exportContractId: string;
 }
 
-export interface ApplicationExportContractAgentServiceCharge extends Relationship {
-  agentServiceId: string;
-  percentageCharge?: string;
-  fixedSumAmount?: string;
-  fixedSumCurrencyCode?: string;
-  payableCountryCode?: string;
-  method?: string;
+export interface ApplicationExportContract extends Relationship {
+  agent: ApplicationExportContractAgent;
+  id: string;
+  finalDestinationKnown?: boolean;
+  finalDestinationCountryCode?: string;
+  goodsOrServicesDescription?: string;
+  paymentTermsDescription?: string;
+  privateMarket: ApplicationPrivateMarket;
 }
 
 export interface ApplicationOwner extends Relationship {
@@ -220,12 +229,6 @@ export interface ApplicationPolicyContact extends Relationship {
   email: string;
   position: string;
   isSameAsOwner: boolean;
-}
-
-export interface ApplicationPrivateMarket extends Relationship {
-  exportContractId: string;
-  attempted?: boolean;
-  declinedDescription?: string;
 }
 
 export interface Application {

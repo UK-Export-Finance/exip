@@ -12,7 +12,8 @@ describe('api/constants/XLSX-CONFIG/INDEXES', () => {
         EXPORTER_BUSINESS: 31,
         POLICY: 47,
         BUYER: 60,
-        DECLARATIONS: 69,
+        EXPORT_CONTRACT: 69,
+        DECLARATIONS: 75,
       };
 
       expect(TITLE_INDEXES()).toEqual(expected);
@@ -28,6 +29,7 @@ describe('api/constants/XLSX-CONFIG/INDEXES', () => {
         BROKER_ADDRESS: 59,
         BUYER_ADDRESS: 62,
         LOSS_PAYEE_ADDRESS: 63,
+        AGENT_ADDRESS: 0,
       };
 
       expect(INDEXES()).toEqual(expected);
@@ -41,9 +43,10 @@ describe('api/constants/XLSX-CONFIG/INDEXES', () => {
         BUYER_ADDRESS: 2,
         LOSS_PAYEE_ADDRESS: 3,
         TITLES: {
-          POLICY: 4,
-          BUYER: 5,
-          DECLARATIONS: 6,
+          BUYER: 4,
+          DECLARATIONS: 5,
+          EXPORT_CONTRACT: 6,
+          POLICY: 7,
         },
       } as XLSXRowIndexes;
 
@@ -54,9 +57,10 @@ describe('api/constants/XLSX-CONFIG/INDEXES', () => {
         BUYER_ADDRESS: 3,
         LOSS_PAYEE_ADDRESS: 4,
         TITLES: {
-          POLICY: 5,
-          BUYER: 6,
-          DECLARATIONS: 7,
+          BUYER: 5,
+          DECLARATIONS: 6,
+          EXPORT_CONTRACT: 7,
+          POLICY: 8,
         },
       };
 

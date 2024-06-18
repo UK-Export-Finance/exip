@@ -66,9 +66,9 @@ const completeSignInAndSubmitAnApplication = ({
   completeSignInAndGoToApplication({ totalContractValueOverThreshold }).then(({ referenceNumber }) => {
     if (policyType === APPLICATION.POLICY_TYPE.MULTIPLE) {
       cy.completePrepareApplicationMultiplePolicyType({
-        agentIsCharging,
         agentChargeMethodFixedSum,
         agentChargeMethodPercentage,
+        agentIsCharging,
         attemptedPrivateMarketCover,
         alternativeBuyerCurrency,
         buyerOutstandingPayments,
@@ -95,6 +95,7 @@ const completeSignInAndSubmitAnApplication = ({
       cy.completePrepareApplicationSinglePolicyType({
         agentChargeMethodFixedSum,
         agentChargeMethodPercentage,
+        agentIsCharging,
         alternativeBuyerCurrency,
         attemptedPrivateMarketCover,
         buyerFailedToPayOnTime,
