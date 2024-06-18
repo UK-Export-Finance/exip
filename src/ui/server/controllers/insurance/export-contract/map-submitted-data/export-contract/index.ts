@@ -13,7 +13,7 @@ const {
  * if FINAL_DESTINATION is provided, map as the country ISO code.
  * if FINAL_DESTINATION_KNOWN is false, delete FINAL_DESTINATIN
  * @param {RequestBody} formBody
- * @param {Array} countries
+ * @param {Array<Country>} countries
  * @returns {Object} populatedData
  */
 const mapSubmittedData = (formBody: RequestBody, countries?: Array<Country>): object => {

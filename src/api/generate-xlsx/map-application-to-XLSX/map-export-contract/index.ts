@@ -17,7 +17,7 @@ const {
  * mapExportContract
  * Map an application's export contract fields into an array of objects for XLSX generation
  * @param {Application} application
- * @param {Array} countries
+ * @param {Array<Country>} countries
  * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapExportContract = (application: Application, countries: Array<Country>) => {

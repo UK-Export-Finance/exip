@@ -18,7 +18,7 @@ const {
  * mapAgent
  * Map an application's "export contract agent" fields into an array of objects for XLSX generation
  * @param {ApplicationExportContractAgent} agent: Export contract agent
- * @param {Array} countries
+ * @param {Array<Country>} countries
  * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapAgent = (agent: ApplicationExportContractAgent, countries: Array<Country>) => {

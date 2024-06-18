@@ -23,7 +23,7 @@ const {
  * mapPolicy
  * Map an application's policy fields into an array of objects for XLSX generation
  * @param {Application} application
- * @param {Array} countries
+ * @param {Array<Country>} countries
  * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapPolicy = (application: Application, countries: Array<Country>) => {

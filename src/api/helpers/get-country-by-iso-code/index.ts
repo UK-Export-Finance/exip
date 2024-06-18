@@ -3,7 +3,7 @@ import { Country } from '../../types';
 /**
  * getCountryByIsoCode
  * Get a country by ISO code
- * @param {Array} countries
+ * @param {Array<Country>} countries
  * @param {String} isoCode: Country ISO code
  * @returns {Object} Country
  */

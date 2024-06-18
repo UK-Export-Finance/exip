@@ -13,7 +13,7 @@ const { EXCELJS_PROTECTION_PASSWORD } = process.env;
  * XLSX
  * Generate an XLSX file with exceljs
  * @param {Application} application
- * @param {Array} countries
+ * @param {Array<Country>} countries
  * @returns {Promise<String>} File path
  */
 const XLSX = (application: Application, countries: Array<Country>): Promise<string> => {
