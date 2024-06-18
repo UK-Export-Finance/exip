@@ -105,10 +105,6 @@ const getPopulatedApplication = async ({
     throw new Error(generateErrorMessage('exportContract', application.id));
   }
 
-  // TODO:
-  // TODO:
-  // TODO: move into own function
-
   const exportContractAgent = await context.db.ExportContractAgent.findOne({
     where: { id: exportContract.agentId },
   });

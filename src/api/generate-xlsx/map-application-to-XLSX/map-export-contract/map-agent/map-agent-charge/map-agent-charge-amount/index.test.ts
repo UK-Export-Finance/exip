@@ -39,7 +39,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-export-contract/map-agen
     });
   });
 
-  describe(`when the charge method is ${PERCENTAGE_CHARGE} is true`, () => {
+  describe(`when the charge method is ${PERCENTAGE_CHARGE}`, () => {
     const mockCharge = {
       ...charge,
       [FIXED_SUM_AMOUNT]: null,

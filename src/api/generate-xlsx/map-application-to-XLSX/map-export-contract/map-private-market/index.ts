@@ -14,7 +14,8 @@ const {
 /**
  * mapPrivateMarket
  * Map an application's "export contract - private market" fields into an array of objects for XLSX generation
- * @param {Application} application
+ * @param {Application} application: Application
+ * @param {TotalContractValue} totalContractValue: Total contract value
  * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapPrivateMarket = (privateMarket: ApplicationPrivateMarket, totalContractValue: TotalContractValue) => {
