@@ -7,6 +7,7 @@ export * from './answers';
 export * from './application';
 export * from './cover-period';
 export * from './cron';
+export * from './date-format';
 export * from './eligibility';
 export * from './external-apis';
 export * from './field-values';
@@ -244,10 +245,5 @@ export const FEEDBACK = {
 };
 
 export const ACCEPTED_FILE_TYPES = ['.xlsx'];
-
-export const DATE_FORMAT = {
-  DEFAULT: 'd MMMM yyyy',
-  HOURS_AND_MINUTES: 'HH:mm',
-};
 
 export const ORDNANCE_SURVEY_QUERY_URL = '/search/places/v1/postcode?postcode=';
