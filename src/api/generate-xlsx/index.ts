@@ -3,7 +3,7 @@ import ExcelJS from 'exceljs';
 import mapApplicationToXLSX from './map-application-to-XLSX';
 import HEADER_COLUMNS from './header-columns';
 import styledColumns from './styled-columns';
-import { Application } from '../types';
+import { Application, Country } from '../types';
 
 dotenv.config();
 
@@ -12,10 +12,11 @@ const { EXCELJS_PROTECTION_PASSWORD } = process.env;
 /**
  * XLSX
  * Generate an XLSX file with exceljs
- * @param {Application}
+ * @param {Application} application
+ * @param {Array} countries
  * @returns {Promise<String>} File path
  */
-const XLSX = (application: Application): Promise<string> => {
+const XLSX = (application: Application, countries: Array<Country>): Promise<string> => {
   try {
     console.info('Generating XLSX file for application %s', application.id);
 
@@ -26,7 +27,7 @@ const XLSX = (application: Application): Promise<string> => {
     return new Promise((resolve) => {
       const filePath = `XLSX/${refNumber}.xlsx`;
 
-      const xlsxData = mapApplicationToXLSX(application);
+      const xlsxData = mapApplicationToXLSX(application, countries);
 
       // create a new workbook
       console.info('Generating XLSX file - creating a new workbook');

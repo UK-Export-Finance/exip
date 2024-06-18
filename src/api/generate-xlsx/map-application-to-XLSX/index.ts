@@ -8,15 +8,16 @@ import mapExporterBusiness from './map-exporter-business';
 import mapBuyer from './map-buyer';
 import mapExportContract from './map-export-contract';
 import mapDeclarations from './map-declarations';
-import { Application } from '../../types';
+import { Application, Country } from '../../types';
 
 /**
  * mapApplicationToXLSX
  * Map application fields into an array of objects for XLSX generation
- * @param {Application}
+ * @param {Application} application
+ * @param {Array} countries
  * @returns {Array<object>} Array of objects for XLSX generation
  */
-const mapApplicationToXLSX = (application: Application) => {
+const mapApplicationToXLSX = (application: Application, countries: Array<Country>) => {
   try {
     const mapped = [
       ...mapIntroduction(application),
@@ -39,7 +40,7 @@ const mapApplicationToXLSX = (application: Application) => {
 
       ROW_SEPERATOR,
 
-      ...mapPolicy(application),
+      ...mapPolicy(application, countries),
 
       ROW_SEPERATOR,
 
@@ -47,7 +48,7 @@ const mapApplicationToXLSX = (application: Application) => {
 
       ROW_SEPERATOR,
 
-      ...mapExportContract(application),
+      ...mapExportContract(application, countries),
 
       ROW_SEPERATOR,
 

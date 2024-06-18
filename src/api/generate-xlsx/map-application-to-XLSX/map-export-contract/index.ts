@@ -4,7 +4,7 @@ import xlsxRow from '../helpers/xlsx-row';
 import mapYesNoField from '../helpers/map-yes-no-field';
 import mapPrivateMarket from './map-private-market';
 import mapAgent from './map-agent';
-import { Application } from '../../../types';
+import { Application, Country } from '../../../types';
 
 const { FIELDS, SECTION_TITLES } = XLSX;
 
@@ -17,9 +17,10 @@ const {
  * mapExportContract
  * Map an application's export contract fields into an array of objects for XLSX generation
  * @param {Application} application
+ * @param {Array} countries
  * @returns {Array<object>} Array of objects for XLSX generation
  */
-const mapExportContract = (application: Application) => {
+const mapExportContract = (application: Application, countries: Array<Country>) => {
   const {
     eligibility: { totalContractValue },
     exportContract,
@@ -38,7 +39,7 @@ const mapExportContract = (application: Application) => {
 
     ...mapPrivateMarket(privateMarket, totalContractValue),
 
-    ...mapAgent(agent),
+    ...mapAgent(agent, countries),
   ];
 
   return mapped;

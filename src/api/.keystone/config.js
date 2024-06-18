@@ -5502,6 +5502,19 @@ var populatedApplication = {
 };
 var get_populated_application_default = populatedApplication;
 
+// helpers/get-countries/index.ts
+var getCountries = async (context) => {
+  console.info("Getting countries");
+  try {
+    const countries = await context.db.Country.findMany();
+    return countries;
+  } catch (err) {
+    console.error("Error getting countries %O", err);
+    throw new Error(`Getting countries ${err}`);
+  }
+};
+var get_countries_default = getCountries;
+
 // helpers/get-application-submitted-email-template-ids/index.ts
 var {
   APPLICATION: {
@@ -6960,19 +6973,27 @@ var mapMultipleContractPolicy = (policy) => [
 ];
 var map_multiple_contract_policy_default = mapMultipleContractPolicy;
 
+// helpers/get-country-by-iso-code/index.ts
+var getCountryByIsoCode = (countries, isoCode) => {
+  const country = countries.find((c) => c.isoCode === isoCode);
+  return country;
+};
+var get_country_by_iso_code_default = getCountryByIsoCode;
+
 // generate-xlsx/map-application-to-XLSX/map-policy/map-jointly-insured-party/index.ts
 var { FIELDS: FIELDS10 } = XLSX;
 var {
   REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED: REQUESTED2, COMPANY_NAME: COMPANY_NAME4, COMPANY_NUMBER: COMPANY_NUMBER3, COUNTRY_CODE: COUNTRY_CODE2 }
 } = policy_default;
-var mapJointlyInsuredParty = (party) => {
+var mapJointlyInsuredParty = (party, countries) => {
   const requestedParty = party[REQUESTED2];
   let mapped = [xlsx_row_default(String(FIELDS10.JOINTLY_INSURED_PARTY[REQUESTED2]), map_yes_no_field_default({ answer: requestedParty }))];
+  const country = get_country_by_iso_code_default(countries, party[COUNTRY_CODE2]);
   if (requestedParty) {
     mapped = [
       ...mapped,
       xlsx_row_default(String(FIELDS10.JOINTLY_INSURED_PARTY[COMPANY_NAME4]), party[COMPANY_NAME4]),
-      xlsx_row_default(String(FIELDS10.JOINTLY_INSURED_PARTY[COUNTRY_CODE2]), party[COUNTRY_CODE2]),
+      xlsx_row_default(String(FIELDS10.JOINTLY_INSURED_PARTY[COUNTRY_CODE2]), country.name),
       xlsx_row_default(String(FIELDS10.JOINTLY_INSURED_PARTY[COMPANY_NUMBER3]), party[COMPANY_NUMBER3])
     ];
   }
@@ -7089,7 +7110,7 @@ var {
   TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE8 },
   NEED_PRE_CREDIT_PERIOD: NEED_PRE_CREDIT_PERIOD3
 } = policy_default;
-var mapPolicy2 = (application2) => {
+var mapPolicy2 = (application2, countries) => {
   const { nominatedLossPayee, policy, policyContact } = application2;
   const policyType = policy[POLICY_TYPE8];
   let mapped = map_intro_default(policy);
@@ -7103,7 +7124,7 @@ var mapPolicy2 = (application2) => {
     ...mapped,
     ...map_name_on_policy_default(policyContact),
     xlsx_row_default(String(FIELDS15[NEED_PRE_CREDIT_PERIOD3]), map_yes_no_field_default({ answer: policy[NEED_PRE_CREDIT_PERIOD3] })),
-    ...map_jointly_insured_party_default(policy.jointlyInsuredParty),
+    ...map_jointly_insured_party_default(policy.jointlyInsuredParty, countries),
     ...map_broker_default(application2),
     ...map_loss_payee_default(nominatedLossPayee)
   ];
@@ -7378,16 +7399,17 @@ var {
   AGENT_SERVICE: { SERVICE_DESCRIPTION: SERVICE_DESCRIPTION2 },
   USING_AGENT: USING_AGENT2
 } = export_contract_default;
-var mapAgent = (agent) => {
+var mapAgent = (agent, countries) => {
   const usingAgentAnswer = agent[USING_AGENT2];
   let mapped = [xlsx_row_default(String(FIELDS28.EXPORT_CONTRACT[USING_AGENT2]), map_yes_no_field_default({ answer: usingAgentAnswer }))];
   if (usingAgentAnswer) {
     const { service } = agent;
+    const country = get_country_by_iso_code_default(countries, agent[COUNTRY_CODE3]);
     mapped = [
       ...mapped,
       xlsx_row_default(String(FIELDS28.AGENT[NAME4]), agent[NAME4]),
       xlsx_row_default(String(FIELDS28.AGENT[FULL_ADDRESS4]), agent[FULL_ADDRESS4]),
-      xlsx_row_default(String(FIELDS28.AGENT[COUNTRY_CODE3]), agent[COUNTRY_CODE3]),
+      xlsx_row_default(String(FIELDS28.AGENT[COUNTRY_CODE3]), country.name),
       xlsx_row_default(String(FIELDS28.AGENT_SERVICE[SERVICE_DESCRIPTION2]), service[SERVICE_DESCRIPTION2]),
       ...map_agent_charge_default(service)
     ];
@@ -7402,7 +7424,7 @@ var {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION: DESCRIPTION3, FINAL_DESTINATION_KNOWN: FINAL_DESTINATION_KNOWN3 },
   HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION: PAYMENT_TERMS_DESCRIPTION3 }
 } = export_contract_default;
-var mapExportContract = (application2) => {
+var mapExportContract = (application2, countries) => {
   const {
     eligibility: { totalContractValue },
     exportContract
@@ -7414,7 +7436,7 @@ var mapExportContract = (application2) => {
     xlsx_row_default(String(FIELDS29.EXPORT_CONTRACT[FINAL_DESTINATION_KNOWN3]), map_yes_no_field_default({ answer: exportContract[FINAL_DESTINATION_KNOWN3] })),
     xlsx_row_default(String(FIELDS29.EXPORT_CONTRACT[PAYMENT_TERMS_DESCRIPTION3]), exportContract[PAYMENT_TERMS_DESCRIPTION3]),
     ...map_private_market_default(privateMarket, totalContractValue),
-    ...map_agent_default(agent)
+    ...map_agent_default(agent, countries)
   ];
   return mapped;
 };
@@ -7457,7 +7479,7 @@ var mapDeclarations = (application2) => {
 var map_declarations_default = mapDeclarations;
 
 // generate-xlsx/map-application-to-XLSX/index.ts
-var mapApplicationToXLSX = (application2) => {
+var mapApplicationToXLSX = (application2, countries) => {
   try {
     const mapped = [
       ...map_introduction_default(application2),
@@ -7470,11 +7492,11 @@ var mapApplicationToXLSX = (application2) => {
       xlsx_row_seperator_default,
       ...map_exporter_business_default(application2),
       xlsx_row_seperator_default,
-      ...map_policy_default2(application2),
+      ...map_policy_default2(application2, countries),
       xlsx_row_seperator_default,
       ...map_buyer_default(application2),
       xlsx_row_seperator_default,
-      ...map_export_contract_default(application2),
+      ...map_export_contract_default(application2, countries),
       xlsx_row_seperator_default,
       ...map_declarations_default(application2)
     ];
@@ -7534,14 +7556,14 @@ var styled_columns_default = styledColumns;
 // generate-xlsx/index.ts
 import_dotenv9.default.config();
 var { EXCELJS_PROTECTION_PASSWORD } = process.env;
-var XLSX2 = (application2) => {
+var XLSX2 = (application2, countries) => {
   try {
     console.info("Generating XLSX file for application %s", application2.id);
     const { referenceNumber } = application2;
     const refNumber = String(referenceNumber);
     return new Promise((resolve) => {
       const filePath = `XLSX/${refNumber}.xlsx`;
-      const xlsxData = map_application_to_XLSX_default(application2);
+      const xlsxData = map_application_to_XLSX_default(application2, countries);
       console.info("Generating XLSX file - creating a new workbook");
       const workbook = new import_exceljs.default.Workbook();
       console.info("Generating XLSX file - adding worksheet to workbook");
@@ -7602,7 +7624,8 @@ var submitApplication = async (root, variables, context) => {
           decryptFinancialUk: true,
           decryptFinancialInternational: true
         });
-        const xlsxPath = await generate_xlsx_default.XLSX(populatedApplication2);
+        const countries = await get_countries_default(context);
+        const xlsxPath = await generate_xlsx_default.XLSX(populatedApplication2, countries);
         await send_application_submitted_emails_default.send(populatedApplication2, xlsxPath);
         return {
           success: true

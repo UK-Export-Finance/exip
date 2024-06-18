@@ -3,7 +3,8 @@ import { XLSX } from '../../../../content-strings';
 import xlsxRow from '../../helpers/xlsx-row';
 import mapYesNoField from '../../helpers/map-yes-no-field';
 import mapAgentCharge from './map-agent-charge';
-import { ApplicationExportContractAgent } from '../../../../types';
+import getCountryByIsoCode from '../../../../helpers/get-country-by-iso-code';
+import { ApplicationExportContractAgent, Country } from '../../../../types';
 
 const { FIELDS } = XLSX;
 
@@ -17,9 +18,10 @@ const {
  * mapAgent
  * Map an application's "export contract agent" fields into an array of objects for XLSX generation
  * @param {ApplicationExportContractAgent} agent: Export contract agent
+ * @param {Array} countries
  * @returns {Array<object>} Array of objects for XLSX generation
  */
-const mapAgent = (agent: ApplicationExportContractAgent) => {
+const mapAgent = (agent: ApplicationExportContractAgent, countries: Array<Country>) => {
   const usingAgentAnswer = agent[USING_AGENT];
 
   let mapped = [xlsxRow(String(FIELDS.EXPORT_CONTRACT[USING_AGENT]), mapYesNoField({ answer: usingAgentAnswer }))];
@@ -27,11 +29,13 @@ const mapAgent = (agent: ApplicationExportContractAgent) => {
   if (usingAgentAnswer) {
     const { service } = agent;
 
+    const country = getCountryByIsoCode(countries, agent[COUNTRY_CODE]);
+
     mapped = [
       ...mapped,
       xlsxRow(String(FIELDS.AGENT[NAME]), agent[NAME]),
       xlsxRow(String(FIELDS.AGENT[FULL_ADDRESS]), agent[FULL_ADDRESS]),
-      xlsxRow(String(FIELDS.AGENT[COUNTRY_CODE]), agent[COUNTRY_CODE]),
+      xlsxRow(String(FIELDS.AGENT[COUNTRY_CODE]), country.name),
       xlsxRow(String(FIELDS.AGENT_SERVICE[SERVICE_DESCRIPTION]), service[SERVICE_DESCRIPTION]),
 
       ...mapAgentCharge(service),
