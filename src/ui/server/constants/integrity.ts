@@ -1,7 +1,7 @@
 export const INTEGRITY = {
   JS: 'sha512-BFOXngFJ+9msC1y5Q1LD6AG+LG635vp8Lfv/+HVCUU8w/N8VWH13wdTyZeLGvu4d7zoTz83nfz329ENYfe9x5Q==',
   ACCESSIBILITY: 'sha512-+7iHxg+GAStsu3dNSm9llhRRnjOvuU10+1sbYjZlkCUd5wH9iaCWV9fY+33BtUQHafrjWU/rM42x3QlAj68Z2g==',
-  GOVUK: 'sha512-BmVM58FngHYKRRr1FTywc0AbX1IH6yszEBgwK2h9T/mtMi5NRMKgnMSmmpfYRdJo5kyLjC7skqYZlXJxLz67hg==',
+  GOVUK: 'sha512-uJMQPUeUnIWtgcgNotPpY4KqFrwRUF37sk+lFhznPIixtx6YLkppurGiruUaJx3s12jd2vZ0eaow4QQdeE0ANg==',
   FORM: 'sha512-iLw/Pa746ZmhA0V+1Vj107wkJKKnTwS5EggladAAm+onBFlgZBTRGA4xf3bVGU40qPKP6Fjn16JW6G+g3tnj7A==',
   COOKIES: 'sha512-mdioDv38Cx1nkVD8oPXoJxvie9wf/339EE8g8+jlsVaDrJeJiwUkYBwweF3fqQMZfZzO8ivTXAEyithgBzeEpw==',
   GA: 'sha512-GYc1xJpYfgNCIBH1NDfs7GhzBdepN1aPqueETCi5ZFIaompI6v++beAnZgbxpSyKr2GqO/oUpm86HZyoe3tD1Q==',
