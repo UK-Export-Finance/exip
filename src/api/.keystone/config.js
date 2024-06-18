@@ -5530,6 +5530,7 @@ var applicationSubmittedEmails = {
 var send_application_submitted_emails_default = applicationSubmittedEmails;
 
 // generate-xlsx/index.ts
+var import_dotenv9 = __toESM(require("dotenv"));
 var import_exceljs = __toESM(require("exceljs"));
 
 // helpers/replace-character-codes-with-characters/index.ts
@@ -7316,6 +7317,8 @@ var styledColumns = (application2, worksheet) => {
 var styled_columns_default = styledColumns;
 
 // generate-xlsx/index.ts
+import_dotenv9.default.config();
+var { EXCELJS_PROTECTION_PASSWORD } = process.env;
 var XLSX2 = (application2) => {
   try {
     console.info("Generating XLSX file for application %s", application2.id);
@@ -7328,6 +7331,7 @@ var XLSX2 = (application2) => {
       const workbook = new import_exceljs.default.Workbook();
       console.info("Generating XLSX file - adding worksheet to workbook");
       let worksheet = workbook.addWorksheet(refNumber);
+      worksheet.protect(String(EXCELJS_PROTECTION_PASSWORD), {});
       worksheet.columns = header_columns_default;
       console.info("Generating XLSX file - adding rows to worksheet");
       xlsxData.forEach((row) => {
@@ -7716,8 +7720,8 @@ var get_account_password_reset_token_default = getAccountPasswordResetToken;
 
 // integrations/APIM/index.ts
 var import_axios = __toESM(require("axios"));
-var import_dotenv9 = __toESM(require("dotenv"));
-import_dotenv9.default.config();
+var import_dotenv10 = __toESM(require("dotenv"));
+import_dotenv10.default.config();
 var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
 var { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
 var APIM = {
@@ -8013,8 +8017,8 @@ var sanitise_companies_house_number_default = sanitiseCompaniesHouseNumber;
 
 // integrations/companies-house/index.ts
 var import_axios2 = __toESM(require("axios"));
-var import_dotenv10 = __toESM(require("dotenv"));
-import_dotenv10.default.config();
+var import_dotenv11 = __toESM(require("dotenv"));
+import_dotenv11.default.config();
 var username = String(process.env.COMPANIES_HOUSE_API_KEY);
 var companiesHouseURL = String(process.env.COMPANIES_HOUSE_API_URL);
 var companiesHouse = {
@@ -8054,8 +8058,8 @@ var companies_house_default = companiesHouse;
 
 // integrations/industry-sector/index.ts
 var import_axios3 = __toESM(require("axios"));
-var import_dotenv11 = __toESM(require("dotenv"));
-import_dotenv11.default.config();
+var import_dotenv12 = __toESM(require("dotenv"));
+import_dotenv12.default.config();
 var { APIM_MDM_URL: APIM_MDM_URL2, APIM_MDM_KEY: APIM_MDM_KEY2, APIM_MDM_VALUE: APIM_MDM_VALUE2 } = process.env;
 var { APIM_MDM: APIM_MDM2 } = EXTERNAL_API_ENDPOINTS;
 var headers = {
@@ -8214,8 +8218,8 @@ var get_application_by_reference_number_default2 = getApplicationByReferenceNumb
 
 // integrations/ordnance-survey/index.ts
 var import_axios4 = __toESM(require("axios"));
-var import_dotenv12 = __toESM(require("dotenv"));
-import_dotenv12.default.config();
+var import_dotenv13 = __toESM(require("dotenv"));
+import_dotenv13.default.config();
 var { ORDNANCE_SURVEY_API_KEY, ORDNANCE_SURVEY_API_URL } = process.env;
 var ordnanceSurvey = {
   get: async (postcode) => {
