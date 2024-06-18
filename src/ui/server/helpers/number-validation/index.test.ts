@@ -1,9 +1,9 @@
-import wholeNumberValidation from '.';
+import numberValidation from '.';
 import generateValidationErrors from '../validation';
 import { RequestBody } from '../../../types';
 import { mockErrors } from '../../test-mocks';
 
-describe('server/helpers/whole-number-validation', () => {
+describe('server/helpers/number-validation', () => {
   const mockBody = {
     testField: '',
   } as RequestBody;
@@ -15,7 +15,7 @@ describe('server/helpers/whole-number-validation', () => {
   describe('number is a letter', () => {
     it('should return a validation error', () => {
       mockBody.testField = 'a';
-      const response = wholeNumberValidation(mockBody, mockErrors, errorMessage, FIELD);
+      const response = numberValidation({ formBody: mockBody, errors: mockErrors, errorMessage, fieldId: FIELD });
 
       const expected = generateValidationErrors(FIELD, errorMessage, mockErrors);
 
@@ -26,7 +26,7 @@ describe('server/helpers/whole-number-validation', () => {
   describe('number contains a letter', () => {
     it('should return a validation error', () => {
       mockBody.testField = '4S';
-      const response = wholeNumberValidation(mockBody, mockErrors, errorMessage, FIELD);
+      const response = numberValidation({ formBody: mockBody, errors: mockErrors, errorMessage, fieldId: FIELD });
 
       const expected = generateValidationErrors(FIELD, errorMessage, mockErrors);
 
@@ -37,7 +37,7 @@ describe('server/helpers/whole-number-validation', () => {
   describe('number is a special character', () => {
     it('should return a validation error', () => {
       mockBody.testField = '!';
-      const response = wholeNumberValidation(mockBody, mockErrors, errorMessage, FIELD);
+      const response = numberValidation({ formBody: mockBody, errors: mockErrors, errorMessage, fieldId: FIELD });
 
       const expected = generateValidationErrors(FIELD, errorMessage, mockErrors);
 
@@ -48,7 +48,7 @@ describe('server/helpers/whole-number-validation', () => {
   describe('number contains a special character', () => {
     it('should return a validation error', () => {
       mockBody.testField = '3!';
-      const response = wholeNumberValidation(mockBody, mockErrors, errorMessage, FIELD);
+      const response = numberValidation({ formBody: mockBody, errors: mockErrors, errorMessage, fieldId: FIELD });
 
       const expected = generateValidationErrors(FIELD, errorMessage, mockErrors);
 
@@ -59,7 +59,7 @@ describe('server/helpers/whole-number-validation', () => {
   describe('number is negative', () => {
     it('should return a validation error', () => {
       mockBody.testField = '-3';
-      const response = wholeNumberValidation(mockBody, mockErrors, errorMessage, FIELD);
+      const response = numberValidation({ formBody: mockBody, errors: mockErrors, errorMessage, fieldId: FIELD });
 
       const expected = generateValidationErrors(FIELD, errorMessage, mockErrors);
 
@@ -70,7 +70,7 @@ describe('server/helpers/whole-number-validation', () => {
   describe('number is negative but "allowNegativeValue" is set to "true"', () => {
     it('should not return a validation error', () => {
       mockBody.testField = '-3';
-      const response = wholeNumberValidation(mockBody, mockErrors, errorMessage, FIELD, true);
+      const response = numberValidation({ formBody: mockBody, errors: mockErrors, errorMessage, fieldId: FIELD, allowNegativeValue: true });
 
       expect(response).toEqual(mockErrors);
     });
@@ -79,7 +79,7 @@ describe('server/helpers/whole-number-validation', () => {
   describe('number is valid', () => {
     it('should not return a validation error', () => {
       mockBody.testField = '3';
-      const response = wholeNumberValidation(mockBody, mockErrors, errorMessage, FIELD);
+      const response = numberValidation({ formBody: mockBody, errors: mockErrors, errorMessage, fieldId: FIELD });
 
       expect(response).toEqual(mockErrors);
     });
@@ -88,7 +88,25 @@ describe('server/helpers/whole-number-validation', () => {
   describe('number has a comma', () => {
     it('should not return a validation error', () => {
       mockBody.testField = '3,000,000';
-      const response = wholeNumberValidation(mockBody, mockErrors, errorMessage, FIELD);
+      const response = numberValidation({ formBody: mockBody, errors: mockErrors, errorMessage, fieldId: FIELD });
+
+      expect(response).toEqual(mockErrors);
+    });
+  });
+
+  describe('number has a decimal place', () => {
+    it('should return a validation error if allowDecimalPlaces is set to false', () => {
+      mockBody.testField = '200.50';
+      const response = numberValidation({ formBody: mockBody, errors: mockErrors, errorMessage, fieldId: FIELD, allowDecimalPlaces: false });
+
+      const expected = generateValidationErrors(FIELD, errorMessage, mockErrors);
+
+      expect(response).toEqual(expected);
+    });
+
+    it('should NOT return a validation error if allowDecimalPlaces is set to true', () => {
+      mockBody.testField = '200.50';
+      const response = numberValidation({ formBody: mockBody, errors: mockErrors, errorMessage, fieldId: FIELD, allowDecimalPlaces: true });
 
       expect(response).toEqual(mockErrors);
     });

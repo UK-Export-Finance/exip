@@ -1,12 +1,12 @@
-import { RequestBody, ErrorMessageObject } from '../../../types';
+import { ValidationWholeNumberMinMaxParams } from '../../../types';
 import { objectHasProperty } from '../../helpers/object';
 import { stripCommas } from '../../helpers/string';
 import generateValidationErrors from '../../helpers/validation';
-import wholeNumberValidation from '../../helpers/whole-number-validation';
+import numberValidation from '../../helpers/number-validation';
 import { isNumberAboveMaximum, isNumberBelowMinimum } from '../../helpers/number';
 
 /**
- * wholeNumberMinimumMaximumLength
+ * numberMinimumMaximumLength
  * Check if a number is provided and its length is within the minimum and maximum length
  * @param {RequestBody} formBody
  * @param {String} fieldId
@@ -14,16 +14,18 @@ import { isNumberAboveMaximum, isNumberBelowMinimum } from '../../helpers/number
  * @param {Object} errors: Other validation errors for the same form
  * @param {Number} minimum minimum length to check against
  * @param {Number} maximum maximum length to check against
+ * @param {Boolean} allowDecimalPlaces false as default, if true then allows for decimal places.
  * @returns {ValidationErrors} or null
  */
-const wholeNumberMinimumMaximumLength = (
-  formBody: RequestBody,
-  fieldId: string,
-  errorMessage: ErrorMessageObject,
-  errors: object,
-  minimum: number,
-  maximum: number,
-) => {
+const numberMinimumMaximumLength = ({
+  formBody,
+  fieldId,
+  errorMessage,
+  errors,
+  minimum,
+  maximum,
+  allowDecimalPlaces = false,
+}: ValidationWholeNumberMinMaxParams) => {
   let updatedErrors = errors;
 
   if (!objectHasProperty(formBody, fieldId)) {
@@ -34,7 +36,7 @@ const wholeNumberMinimumMaximumLength = (
   const numberWithoutCommas = stripCommas(formBody[fieldId]);
 
   // check if the field is a whole number.
-  updatedErrors = wholeNumberValidation(formBody, updatedErrors, errorMessage.INCORRECT_FORMAT, fieldId);
+  updatedErrors = numberValidation({ formBody, errors: updatedErrors, errorMessage: errorMessage.INCORRECT_FORMAT, fieldId, allowDecimalPlaces });
 
   // check if the field is below the minimum
   if (isNumberBelowMinimum(numberWithoutCommas.length, minimum)) {
@@ -49,4 +51,4 @@ const wholeNumberMinimumMaximumLength = (
   return updatedErrors;
 };
 
-export default wholeNumberMinimumMaximumLength;
+export default numberMinimumMaximumLength;

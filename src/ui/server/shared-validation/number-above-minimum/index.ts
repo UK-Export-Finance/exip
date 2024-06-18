@@ -1,20 +1,28 @@
-import { RequestBody, ErrorMessageObject } from '../../../types';
+import { ValidationWholeNumberAboveMinimumParams } from '../../../types';
 import { objectHasProperty } from '../../helpers/object';
 import { stripCommas } from '../../helpers/string';
 import generateValidationErrors from '../../helpers/validation';
-import wholeNumberValidation from '../../helpers/whole-number-validation';
+import numberValidation from '../../helpers/number-validation';
 
 /**
- * wholeNumberAboveMinimumValidation
+ * numberAboveMinimumValidation
  * Check if a number is provided and below a minimum.
  * @param {RequestBody} formBody
  * @param {String} fieldId
  * @param {String} errorMessage
  * @param {Object} errors: Other validation errors for the same form
  * @param {Number} minimum minimum value to check against
+ * @param {Boolean} allowDecimalPlaces false as default, if true then allows for decimal places.
  * @returns {ValidationErrors} or null
  */
-const wholeNumberAboveMinimumValidation = (formBody: RequestBody, fieldId: string, errorMessage: ErrorMessageObject, errors: object, minimum: number) => {
+const numberAboveMinimumValidation = ({
+  formBody,
+  fieldId,
+  errorMessage,
+  errors,
+  minimum,
+  allowDecimalPlaces = false,
+}: ValidationWholeNumberAboveMinimumParams) => {
   let updatedErrors = errors;
 
   if (!objectHasProperty(formBody, fieldId)) {
@@ -25,7 +33,7 @@ const wholeNumberAboveMinimumValidation = (formBody: RequestBody, fieldId: strin
   const numberWithoutCommas = stripCommas(formBody[fieldId]);
 
   // check if the field is a whole number.
-  updatedErrors = wholeNumberValidation(formBody, updatedErrors, errorMessage.INCORRECT_FORMAT, fieldId);
+  updatedErrors = numberValidation({ formBody, errors: updatedErrors, errorMessage: errorMessage.INCORRECT_FORMAT, fieldId, allowDecimalPlaces });
 
   // check if the field is below the minimum
   if (Number(numberWithoutCommas) < minimum) {
@@ -35,4 +43,4 @@ const wholeNumberAboveMinimumValidation = (formBody: RequestBody, fieldId: strin
   return updatedErrors;
 };
 
-export default wholeNumberAboveMinimumValidation;
+export default numberAboveMinimumValidation;
