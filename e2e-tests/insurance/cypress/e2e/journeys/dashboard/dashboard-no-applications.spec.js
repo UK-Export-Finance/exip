@@ -23,7 +23,7 @@ context('Insurance - Dashboard - no applications', () => {
   beforeEach(() => {
     cy.saveSession();
 
-    cy.navigateToUrl(dashboardUrl);
+    cy.navigateToDashboardUrl();
   });
 
   after(() => {
@@ -40,7 +40,7 @@ context('Insurance - Dashboard - no applications', () => {
 
   describe('`start new application` button', () => {
     beforeEach(() => {
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
     });
 
     it('should render `start new application` link', () => {
@@ -65,7 +65,7 @@ context('Insurance - Dashboard - no applications', () => {
 
   describe('when starting and completing insurance eligibility via the `start new` button ', () => {
     it('should create a new application and render in the dashboard', () => {
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
       dashboardPage.startNewApplicationButton().click();
 
       cy.submitInsuranceEligibilityAnswersHappyPath();

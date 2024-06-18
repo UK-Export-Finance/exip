@@ -1,16 +1,9 @@
-import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { APPLICATION } from '../../../../../constants/application';
 import dashboardPage from '../../../../../pages/insurance/dashboard';
 
 const { IN_PROGRESS, ABANDONED } = APPLICATION.STATUS;
 
-const { DASHBOARD } = INSURANCE_ROUTES;
-
-const baseUrl = Cypress.config('baseUrl');
-
 const totalExpectedApplications = 1;
-
-const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
 const { table } = dashboardPage;
 
@@ -26,7 +19,7 @@ context(`Insurance - Dashboard - pagination - 1 ${IN_PROGRESS} application and 1
         abandonedApplication = createdApplication;
       });
 
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
     });
   });
 

@@ -1,19 +1,14 @@
 import dashboardPage from '../../../../../pages/insurance/dashboard';
 import partials from '../../../../../partials';
 import { BUTTONS, PAGES } from '../../../../../content-strings';
-import { DATE_FORMAT, ROUTES } from '../../../../../constants';
+import { DATE_FORMAT } from '../../../../../constants';
 import { formatDate } from '../../../../../helpers/date';
 
 const { table } = dashboardPage;
 
-const { DASHBOARD } = ROUTES.INSURANCE;
-
 const CONTENT_STRINGS = PAGES.INSURANCE.DASHBOARD;
 
 const { TABLE_HEADERS } = CONTENT_STRINGS;
-
-const baseUrl = Cypress.config('baseUrl');
-const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
 context('Insurance - Dashboard - submitted application', () => {
   let referenceNumber;
@@ -29,7 +24,7 @@ context('Insurance - Dashboard - submitted application', () => {
   beforeEach(() => {
     cy.saveSession();
 
-    cy.navigateToUrl(dashboardUrl);
+    cy.navigateToDashboardUrl();
   });
 
   after(() => {

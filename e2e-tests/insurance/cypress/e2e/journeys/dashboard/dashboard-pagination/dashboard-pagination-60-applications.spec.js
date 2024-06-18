@@ -9,8 +9,6 @@ const baseUrl = Cypress.config('baseUrl');
 const totalApplications = MAX_APPLICATIONS_PER_PAGE * 4;
 const totalPages = totalApplications / MAX_APPLICATIONS_PER_PAGE;
 
-const dashboardUrl = `${baseUrl}${DASHBOARD}`;
-
 context(`Insurance - Dashboard - pagination - ${totalApplications} applications`, () => {
   let applications;
 
@@ -20,7 +18,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
         applications = createdApplications;
       });
 
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
     });
   });
 
@@ -34,7 +32,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
 
   describe('page tests', () => {
     beforeEach(() => {
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
     });
 
     it('should render 3 pagination list items with links', () => {
@@ -59,7 +57,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
 
   describe('when clicking on page 4 pagination link', () => {
     it('should have the correct pagination state', () => {
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
 
       pagination.listItemLink(3).click();
 
@@ -73,7 +71,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
 
   describe('when clicking on the `previous` pagination link after clicking on page 4 pagination link', () => {
     beforeEach(() => {
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
 
       pagination.listItemLink(3).click();
       pagination.previousLink().click();

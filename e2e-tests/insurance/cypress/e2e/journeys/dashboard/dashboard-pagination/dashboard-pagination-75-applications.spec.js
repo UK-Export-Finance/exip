@@ -9,8 +9,6 @@ const baseUrl = Cypress.config('baseUrl');
 const totalApplications = MAX_APPLICATIONS_PER_PAGE * 5;
 const totalPages = totalApplications / MAX_APPLICATIONS_PER_PAGE;
 
-const dashboardUrl = `${baseUrl}${DASHBOARD}`;
-
 const assertFullyPopulatedPageLinks = () => {
   cy.assertLength(pagination.listItems(), 5);
 
@@ -30,7 +28,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
         applications = createdApplications;
       });
 
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
     });
   });
 
@@ -44,7 +42,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
 
   describe('page tests', () => {
     beforeEach(() => {
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
     });
 
     it('should render 4 pagination list items - 3 links, 1 ellipsis item', () => {
@@ -69,7 +67,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
 
   describe('when clicking on page 5 pagination link', () => {
     it('should have the correct pagination state with 1 ellipsis item', () => {
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
 
       pagination.listItemLink(2).click();
 
@@ -86,7 +84,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
 
   describe('when clicking on the `previous` pagination link after clicking on page 5 pagination link', () => {
     beforeEach(() => {
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
 
       pagination.listItemLink(2).click();
       pagination.previousLink().click();
@@ -106,7 +104,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
 
   describe('when clicking on page 2 pagination link', () => {
     beforeEach(() => {
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
 
       pagination.listItemLink(1).click();
     });
