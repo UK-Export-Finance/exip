@@ -1,5 +1,4 @@
 import { INSURANCE_FIELD_IDS } from '../../../../../constants/field-ids/insurance';
-import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { field } from '../../../../../pages/shared';
 import dashboardPage from '../../../../../pages/insurance/dashboard';
 import partials from '../../../../../partials';
@@ -10,22 +9,14 @@ const {
   ACCOUNT: { FIRST_NAME, LAST_NAME, ACCESS_CODE },
 } = INSURANCE_FIELD_IDS;
 
-const {
-  DASHBOARD,
-} = INSURANCE_ROUTES;
-
 const mockAccountSpecialCharacters = {
   ...mockAccount,
   [FIRST_NAME]: mockNameWithSpecialCharacters(mockAccount[FIRST_NAME]),
   [LAST_NAME]: mockNameWithSpecialCharacters(mockAccount[LAST_NAME]),
 };
 
-const baseUrl = Cypress.config('baseUrl');
-
 context('Insurance - Name fields - Header and page fields should render special characters without character codes after submission', () => {
   let referenceNumber;
-
-  const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
   before(() => {
     cy.deleteAccount();
@@ -58,7 +49,7 @@ context('Insurance - Name fields - Header and page fields should render special 
   beforeEach(() => {
     cy.saveSession();
 
-    cy.navigateToUrl(dashboardUrl);
+    cy.navigateToDashboardUrl();
 
     dashboardPage.startNewApplicationButton().click();
 
@@ -72,9 +63,6 @@ context('Insurance - Name fields - Header and page fields should render special 
   it("should render special characters in the header's user name/'manage account' link", () => {
     const expected = `${mockAccountSpecialCharacters[FIRST_NAME]} ${mockAccountSpecialCharacters[LAST_NAME]}`;
 
-    cy.checkText(
-      partials.header.navigation.manageAccount(),
-      expected,
-    );
+    cy.checkText(partials.header.navigation.manageAccount(), expected);
   });
 });

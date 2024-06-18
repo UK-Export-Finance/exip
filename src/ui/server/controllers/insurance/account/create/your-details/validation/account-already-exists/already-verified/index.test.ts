@@ -1,11 +1,9 @@
 import accountAlreadyExistsAlreadyVerifiedValidation from '.';
-import INSURANCE_FIELD_IDS from '../../../../../../../../constants/field-ids/insurance';
+import FIELD_IDS from '../../../../../../../../constants/field-ids/insurance/account';
 import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../../../helpers/validation';
 
-const {
-  ACCOUNT: { EMAIL, PASSWORD },
-} = INSURANCE_FIELD_IDS;
+const { EMAIL } = FIELD_IDS;
 
 const {
   ACCOUNT: {
@@ -17,9 +15,7 @@ describe('controllers/insurance/account/create/your-details/validation/account-a
   it('should return the result of generateValidationErrors', () => {
     const result = accountAlreadyExistsAlreadyVerifiedValidation();
 
-    const emailError = generateValidationErrors(EMAIL, ERROR_MESSAGES_OBJECT.ACCOUNT_ALREADY_EXISTS, {});
-
-    const expected = generateValidationErrors(PASSWORD, ERROR_MESSAGES_OBJECT.ACCOUNT_ALREADY_EXISTS, emailError);
+    const expected = generateValidationErrors(EMAIL, ERROR_MESSAGES_OBJECT.ACCOUNT_ALREADY_EXISTS, {});
 
     expect(result).toEqual(expected);
   });

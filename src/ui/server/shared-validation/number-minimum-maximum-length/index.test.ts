@@ -1,8 +1,8 @@
-import wholeNumberMinimumMaximumLength from '.';
+import numberMinimumMaximumLength from '.';
 import { mockErrorMessagesObject, mockErrors } from '../../test-mocks';
 import { RequestBody } from '../../../types';
 import generateValidationErrors from '../../helpers/validation';
-import wholeNumberValidation from '../../helpers/whole-number-validation';
+import numberValidation from '../../helpers/number-validation';
 
 describe('shared-validation/whole-number-minimum-maximum-length', () => {
   const FIELD_ID = 'FIELD_ID';
@@ -17,7 +17,14 @@ describe('shared-validation/whole-number-minimum-maximum-length', () => {
     it('should return a validation errors', () => {
       const mockEmptyBody = {};
 
-      const result = wholeNumberMinimumMaximumLength(mockEmptyBody, FIELD_ID, mockErrorMessagesObject, mockErrors, MINIMUM, MAXIMUM);
+      const result = numberMinimumMaximumLength({
+        formBody: mockEmptyBody,
+        fieldId: FIELD_ID,
+        errorMessage: mockErrorMessagesObject,
+        errors: mockErrors,
+        minimum: MINIMUM,
+        maximum: MAXIMUM,
+      });
 
       const expected = generateValidationErrors(FIELD_ID, mockErrorMessagesObject.IS_EMPTY, mockErrors);
 
@@ -29,7 +36,14 @@ describe('shared-validation/whole-number-minimum-maximum-length', () => {
     it('should return a validation errors', () => {
       mockBody[FIELD_ID] = '1';
 
-      const result = wholeNumberMinimumMaximumLength(mockBody, FIELD_ID, mockErrorMessagesObject, mockErrors, MINIMUM, MAXIMUM);
+      const result = numberMinimumMaximumLength({
+        formBody: mockBody,
+        fieldId: FIELD_ID,
+        errorMessage: mockErrorMessagesObject,
+        errors: mockErrors,
+        minimum: MINIMUM,
+        maximum: MAXIMUM,
+      });
 
       const expected = generateValidationErrors(FIELD_ID, mockErrorMessagesObject.BELOW_MINIMUM, mockErrors);
 
@@ -41,7 +55,14 @@ describe('shared-validation/whole-number-minimum-maximum-length', () => {
     it('should return a validation errors', () => {
       mockBody[FIELD_ID] = '123456789';
 
-      const result = wholeNumberMinimumMaximumLength(mockBody, FIELD_ID, mockErrorMessagesObject, mockErrors, MINIMUM, MAXIMUM);
+      const result = numberMinimumMaximumLength({
+        formBody: mockBody,
+        fieldId: FIELD_ID,
+        errorMessage: mockErrorMessagesObject,
+        errors: mockErrors,
+        minimum: MINIMUM,
+        maximum: MAXIMUM,
+      });
 
       const expected = generateValidationErrors(FIELD_ID, mockErrorMessagesObject.ABOVE_MAXIMUM, mockErrors);
 
@@ -50,12 +71,24 @@ describe('shared-validation/whole-number-minimum-maximum-length', () => {
   });
 
   describe('when the provided number is not a whole number', () => {
-    it('should return the result of "wholeNumberValidation"', () => {
+    it('should return the result of "numberValidation"', () => {
       mockBody[FIELD_ID] = '12345!';
 
-      const result = wholeNumberMinimumMaximumLength(mockBody, FIELD_ID, mockErrorMessagesObject, mockErrors, MINIMUM, MAXIMUM);
+      const result = numberMinimumMaximumLength({
+        formBody: mockBody,
+        fieldId: FIELD_ID,
+        errorMessage: mockErrorMessagesObject,
+        errors: mockErrors,
+        minimum: MINIMUM,
+        maximum: MAXIMUM,
+      });
 
-      const expected = wholeNumberValidation(mockBody, mockErrors, mockErrorMessagesObject.INCORRECT_FORMAT, FIELD_ID);
+      const expected = numberValidation({
+        formBody: mockBody,
+        errors: mockErrors,
+        errorMessage: mockErrorMessagesObject.INCORRECT_FORMAT,
+        fieldId: FIELD_ID,
+      });
 
       expect(result).toEqual(expected);
     });
@@ -65,7 +98,14 @@ describe('shared-validation/whole-number-minimum-maximum-length', () => {
     it('should return provided errors object', () => {
       mockBody[FIELD_ID] = '12345';
 
-      const result = wholeNumberMinimumMaximumLength(mockBody, FIELD_ID, mockErrorMessagesObject, mockErrors, MINIMUM, MAXIMUM);
+      const result = numberMinimumMaximumLength({
+        formBody: mockBody,
+        fieldId: FIELD_ID,
+        errorMessage: mockErrorMessagesObject,
+        errors: mockErrors,
+        minimum: MINIMUM,
+        maximum: MAXIMUM,
+      });
 
       expect(result).toEqual(mockErrors);
     });
@@ -75,7 +115,14 @@ describe('shared-validation/whole-number-minimum-maximum-length', () => {
     it('should return provided errors object', () => {
       mockBody[FIELD_ID] = '1234567';
 
-      const result = wholeNumberMinimumMaximumLength(mockBody, FIELD_ID, mockErrorMessagesObject, mockErrors, MINIMUM, MAXIMUM);
+      const result = numberMinimumMaximumLength({
+        formBody: mockBody,
+        fieldId: FIELD_ID,
+        errorMessage: mockErrorMessagesObject,
+        errors: mockErrors,
+        minimum: MINIMUM,
+        maximum: MAXIMUM,
+      });
 
       expect(result).toEqual(mockErrors);
     });

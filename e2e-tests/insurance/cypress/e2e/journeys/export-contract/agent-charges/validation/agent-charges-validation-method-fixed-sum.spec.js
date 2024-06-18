@@ -11,17 +11,13 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  AGENT_CHARGES: {
-    METHOD, FIXED_SUM, FIXED_SUM_AMOUNT: FIELD_ID,
-  },
+  AGENT_CHARGES: { METHOD, FIXED_SUM, FIXED_SUM_AMOUNT: FIELD_ID },
 } = FIELD_IDS;
 
 const {
   INSURANCE: {
     EXPORT_CONTRACT: {
-      AGENT_CHARGES: {
-        [FIELD_ID]: ERROR_MESSAGES_OBJECT,
-      },
+      AGENT_CHARGES: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
     },
   },
 } = ERROR_MESSAGES;
@@ -70,14 +66,6 @@ context(`Insurance - Export contract - Agent charges page - form validation - ${
     cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: ERROR_MESSAGES_OBJECT.IS_EMPTY });
   });
 
-  it(`should display validation errors when ${FIELD_ID} is a decimal place number`, () => {
-    cy.submitAndAssertFieldErrors({
-      ...assertions,
-      value: '1.2',
-      expectedErrorMessage: ERROR_MESSAGES_OBJECT.INCORRECT_FORMAT,
-    });
-  });
-
   it(`should display validation errors when ${FIELD_ID} has special characters`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
@@ -92,5 +80,12 @@ context(`Insurance - Export contract - Agent charges page - form validation - ${
       value: String(MINIMUM_CHARACTERS.ONE - 1),
       expectedErrorMessage: ERROR_MESSAGES_OBJECT.BELOW_MINIMUM,
     });
+  });
+
+  it(`should NOT display validation errors when ${FIELD_ID} is a decimal place number`, () => {
+    cy.keyboardInput(fieldSelector(FIELD_ID).input(), '1.50');
+
+    cy.clickSubmitButton();
+    cy.assertErrorSummaryListLength(1);
   });
 });

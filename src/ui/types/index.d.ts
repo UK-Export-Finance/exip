@@ -66,6 +66,9 @@ import {
   DateValidationFormatRules,
   ValidationErrors,
   ValidationMinAndMaxLengthParams,
+  ValidationWholeNumberParams,
+  ValidationWholeNumberAboveMinimumParams,
+  ValidationWholeNumberMinMaxParams,
 } from './validation-errors';
 import {
   CorePageVariablesInitialInput,
@@ -175,4 +178,7 @@ export {
   TaskListTask,
   ValidationErrors,
   ValidationMinAndMaxLengthParams,
+  ValidationWholeNumberParams,
+  ValidationWholeNumberAboveMinimumParams,
+  ValidationWholeNumberMinMaxParams,
 };

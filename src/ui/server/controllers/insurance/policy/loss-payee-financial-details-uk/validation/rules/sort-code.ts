@@ -11,7 +11,7 @@ const { [FIELD_ID]: ERROR_MESSAGES_OBJECT } = ERROR_MESSAGES.INSURANCE.POLICY;
 /**
  * sortCodeRules
  * Check submitted form data for errors for the sort code field
- * Returns wholeNumberAboveMinimumValidation if there are any errors.
+ * Returns numberHyphenSpacesOnlyValidation if there are any errors.
  * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
  * @returns {Object} numberHyphenSpacesOnlyValidation errors

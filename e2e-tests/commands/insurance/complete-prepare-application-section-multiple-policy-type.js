@@ -4,60 +4,60 @@ const { POLICY_TYPE } = APPLICATION;
 
 /**
  * completePrepareApplicationMultiplePolicyType
- * Runs through the full prepare your application journey for multiple policy type
- * @param {Object} Object with flags on how to complete specific parts of the application
- * @param {Boolean} alternativeBuyerCurrency: Should submit an "alternative currency" in the buyer section. Defaults to false.
- * @param {Boolean} differentTradingName: Should submit "yes" to "have a different trading name" in the "company details" form. Defaults to false.
- * @param {Boolean} differentTradingAddress: Should submit "yes" to "trade from a different address" in the "company details" form. Defaults to false.
- * @param {Boolean} hasCreditControlProcess: Flag whether to submit "yes" or "no" radio input in the "credit control" form. Defaults to false.
+ * Runs through the full "prepare your application" section/journey for multiple contract policy
+ * All params default to false, except for submitCheckYourAnswers.
+ * @param {Boolean} agentChargeMethodFixedSum: Agent charge method is "fixed sum".
+ * @param {Boolean} agentChargeMethodPercentage: Agent charge method is "percentage".
+ * @param {Boolean} agentIsCharging: Should submit "yes" to "agent is charging" in the "agent details" form.
+ * @param {Boolean} alternativeBuyerCurrency: Should submit an "alternative currency" in the buyer section.
+ * @param {Boolean} attemptedPrivateMarketCover: Should submit "yes" to "attempted to insure through the private market" form.
+ * @param {Boolean} buyerOutstandingPayments: Exporter has outstanding payments with the buyer.
+ * @param {Boolean} buyerFailedToPayOnTime: Buyer has failed to pay the exporter on the time.
+ * @param {Boolean} differentPolicyContact: Should submit an application with a different policy contact to the owner.
+ * @param {Boolean} differentTradingName: Should submit "yes" to "have a different trading name" in the "company details" form.
+ * @param {Boolean} differentTradingAddress: Should submit "yes" to "trade from a different address" in the "company details" form.
+ * @param {Boolean} hasCreditControlProcess: Flag whether to submit "yes" or "no" radio input in the "credit control" form.
  * @param {Boolean} hasConnectionToBuyer: Should submit "yes" to "have connection to buyer" radio.
  * @param {Boolean} exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" in the "working with buyer" form.
- * @param {Boolean} buyerOutstandingPayments: Exporter has outstanding payments with the buyer
- * @param {Boolean} buyerFailedToPayOnTime: Buyer has failed to pay the exporter on the time
+ * @param {Boolean} exporterHasBuyerFinancialAccounts: Should submit "yes" to the "have buyer financial accounts" form.
  * @param {Boolean} fullyPopulatedBuyerTradingHistory: Submit all possible optional "buyer trading history" form fields.
  * @param {Boolean} hasHadCreditInsuranceCoverWithBuyer: Submit "yes" to if export "has held credit insurance cover on the buyer in the past".
- * @param {Boolean} exporterHasBuyerFinancialAccounts: Should submit "yes" to the "have buyer financial accounts" form.
- * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to "no".
- * @param {Boolean} otherCompanyInvolved: If "another company to be insured" is on. Defaults to false
- * @param {Boolean} isAppointingLossPayee: Should submit "yes" or "no" to "appointing a loss payee". Defaults to "no".
- * @param {Boolean} lossPayeeIsLocatedInUK: Should submit "UK" to "loss payee details". Defaults to false.
- * @param {Boolean} policyValueOverMvpMaximum: Should submit an application with the value over the MVP maximum amount.
- * @param {Boolean} differentPolicyContact: Should submit an application with a different policy contact to the owner.
- * @param {Boolean} needPreCreditPeriod: If the user needs a pre-credit period. Defaults to false.
- * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
- * @param {Boolean} attemptedPrivateMarketCover: Should submit "yes" to "attempted to insure through the private market" form.
+ * @param {Boolean} isAppointingLossPayee: Should submit "yes" or "no" to "appointing a loss payee".
  * @param {Boolean} isUsingAgent: Should submit "yes" to "using an agent" form.
- * @param {Boolean} agentIsCharging: Should submit "yes" to "agent is charging" in the "agent details" form.
- * @param {Boolean} agentChargeMethodFixedSum: Agent charge method is "fixed sum"
- * @param {Boolean} agentChargeMethodPercentage: Agent charge method is "percentage"
+ * @param {Boolean} lossPayeeIsLocatedInUK: Should submit "UK" to "loss payee details".
+ * @param {Boolean} needPreCreditPeriod: If the user needs a pre-credit period.
+ * @param {Boolean} otherCompanyInvolved: If "another company to be insured" is on.
+ * @param {Boolean} policyValueOverMvpMaximum: Should submit an application with the value over the MVP maximum amount.
  * @param {Boolean} submitCheckYourAnswers: Should click each section's "check your answers" submit button.
+ * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
+ * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker".
  */
 const completePrepareApplicationMultiplePolicyType = ({
-  alternativeBuyerCurrency = false,
-  differentTradingName = false,
-  differentTradingAddress = false,
-  hasCreditControlProcess = false,
-  hasConnectionToBuyer = false,
-  exporterHasTradedWithBuyer = false,
-  buyerOutstandingPayments = false,
-  buyerFailedToPayOnTime = false,
-  fullyPopulatedBuyerTradingHistory = false,
-  hasHadCreditInsuranceCoverWithBuyer = false,
-  exporterHasBuyerFinancialAccounts = false,
-  usingBroker = false,
-  otherCompanyInvolved = false,
-  isAppointingLossPayee = false,
-  lossPayeeIsLocatedInUK = false,
-  policyValueOverMvpMaximum = false,
-  differentPolicyContact = false,
-  needPreCreditPeriod = false,
-  totalContractValueOverThreshold = false,
-  attemptedPrivateMarketCover = false,
-  isUsingAgent = false,
-  agentIsCharging = false,
   agentChargeMethodFixedSum = false,
   agentChargeMethodPercentage = false,
+  agentIsCharging = false,
+  alternativeBuyerCurrency = false,
+  attemptedPrivateMarketCover = false,
+  buyerOutstandingPayments = false,
+  buyerFailedToPayOnTime = false,
+  differentPolicyContact = false,
+  differentTradingName = false,
+  differentTradingAddress = false,
+  exporterHasBuyerFinancialAccounts = false,
+  exporterHasTradedWithBuyer = false,
+  fullyPopulatedBuyerTradingHistory = false,
+  hasCreditControlProcess = false,
+  hasConnectionToBuyer = false,
+  hasHadCreditInsuranceCoverWithBuyer = false,
+  isAppointingLossPayee = false,
+  isUsingAgent = false,
+  lossPayeeIsLocatedInUK = false,
+  needPreCreditPeriod = false,
+  otherCompanyInvolved = false,
+  policyValueOverMvpMaximum = false,
+  totalContractValueOverThreshold = false,
   submitCheckYourAnswers = true,
+  usingBroker = false,
 }) => {
   cy.completeBusinessSection({
     differentTradingName,

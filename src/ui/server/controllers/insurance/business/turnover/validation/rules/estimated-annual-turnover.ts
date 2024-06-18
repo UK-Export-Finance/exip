@@ -1,7 +1,7 @@
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/business';
 import { RequestBody } from '../../../../../../../types';
-import wholeNumberValidation from '../../../../../../helpers/whole-number-validation';
+import numberValidation from '../../../../../../helpers/number-validation';
 import { objectHasProperty } from '../../../../../../helpers/object';
 import generateValidationErrors from '../../../../../../helpers/validation';
 
@@ -31,7 +31,7 @@ const estimatedAnnualTurnover = (formBody: RequestBody, errors: object) => {
 
   const allowNegativeValue = true;
 
-  return wholeNumberValidation(formBody, errors, errorMessage, FIELD_ID, allowNegativeValue);
+  return numberValidation({ formBody, errors, errorMessage, fieldId: FIELD_ID, allowNegativeValue });
 };
 
 export default estimatedAnnualTurnover;
