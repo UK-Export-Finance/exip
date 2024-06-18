@@ -103,6 +103,10 @@ const account = {
     try {
       console.info('Sending email verification for account creation');
 
+      // TODO: Remove this console.log
+      // eslint-disable-next-line no-console
+      console.log('!!!!!!!!!!!!!! sendEmailConfirmEmailAddressMutation', urlOrigin, accountId);
+
       const variables = { urlOrigin, accountId };
 
       const response = (await apollo('POST', sendEmailConfirmEmailAddressMutation, variables)) as ApolloResponse;
