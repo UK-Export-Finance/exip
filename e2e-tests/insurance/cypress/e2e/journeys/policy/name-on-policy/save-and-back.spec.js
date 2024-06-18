@@ -7,16 +7,12 @@ const { POLICY_CONTACT } = application;
 
 const {
   ROOT: INSURANCE_ROOT,
-  POLICY: {
-    NAME_ON_POLICY,
-  },
+  POLICY: { NAME_ON_POLICY },
 } = INSURANCE_ROUTES;
 
 const {
   POLICY: {
-    NAME_ON_POLICY: {
-      POSITION, SAME_NAME, OTHER_NAME,
-    },
+    NAME_ON_POLICY: { POSITION, SAME_NAME, OTHER_NAME },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -93,6 +89,7 @@ context('Insurance - Policy - Name on policy - Save and go back', () => {
       cy.navigateToUrl(url);
 
       field(SAME_NAME).label().click();
+
       cy.clickSaveAndBackButton();
     });
 
@@ -118,6 +115,7 @@ context('Insurance - Policy - Name on policy - Save and go back', () => {
       cy.navigateToUrl(url);
 
       cy.completeNameOnPolicyForm({ sameName: true });
+
       cy.clickSaveAndBackButton();
     });
 
