@@ -1,6 +1,4 @@
-import {
-  cannotApplyPage, noRadio, submitButton,
-} from '../../../../../pages/shared';
+import { actions, cannotApplyPage } from '../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../commands/forms';
@@ -17,7 +15,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Cannot apply exit page', () => {
   beforeEach(() => {
     cy.login();
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
 
@@ -25,8 +23,8 @@ context('Cannot apply exit page', () => {
 
     cy.assertUrl(expectedUrl);
 
-    noRadio().label().click();
-    submitButton().click();
+    cy.clickNoRadioInput();
+    cy.clickSubmitButton();
 
     expectedUrl = `${baseUrl}${CANNOT_APPLY}`;
 
@@ -51,38 +49,25 @@ context('Cannot apply exit page', () => {
     cannotApplyPage.reason().should('exist');
   });
 
-  it('renders `actions` content', () => {
-    cy.checkText(cannotApplyPage.actions.intro(), CONTENT_STRINGS.ACTIONS.INTRO);
+  describe('actions', () => {
+    it('should render `eligibility` copy and link', () => {
+      cy.checkActionReadAboutEligibility();
+    });
 
-    const listItems = cannotApplyPage.actions.listItems();
+    it('should render `contact an approved broker` copy and link', () => {
+      cy.checkActionContactApprovedBroker();
+    });
 
-    listItems.should('have.length', 2);
-
-    const expectedEligibility = `${CONTENT_STRINGS.ACTIONS.ELIGIBILITY.TEXT} ${CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.TEXT}`;
-    cy.checkText(cannotApplyPage.actions.eligibility(), expectedEligibility);
-
-    cy.checkLink(
-      cannotApplyPage.actions.eligibilityLink(),
-      CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF,
-      CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.TEXT,
-    );
-
-    const expectedBroker = `${CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.TEXT} ${CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.TEXT}`;
-
-    cy.checkText(cannotApplyPage.actions.approvedBroker(), expectedBroker);
-
-    cy.checkLink(
-      cannotApplyPage.actions.approvedBrokerLink(),
-      CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.HREF,
-      CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.TEXT,
-    );
+    it('should render `talk to your nearest EFM` copy and link', () => {
+      cy.checkActionTalkToYourNearestEFM({});
+    });
   });
 
   describe('when clicking `eligibility` link', () => {
-    it(`redirects to ${LINKS.EXTERNAL.GUIDANCE}`, () => {
-      cannotApplyPage.actions.eligibilityLink().click();
+    it(`should redirect to ${LINKS.EXTERNAL.GUIDANCE}`, () => {
+      actions.eligibilityLink().click();
 
-      cy.url().should('eq', LINKS.EXTERNAL.GUIDANCE);
+      cy.assertUrl(LINKS.EXTERNAL.GUIDANCE);
     });
   });
 });

@@ -24,13 +24,58 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(ROUTES.INSURANCE.PROBLEM_WITH_SERVICE);
   }
 
+  const { broker, buyer, company, declaration, exportContract } = application;
+  const { nominatedLossPayee, policy, referenceNumber, totalContractValueOverThreshold } = application;
+
+  const { policyType, jointlyInsuredParty } = policy;
+
+  const {
+    isAppointed: isAppointingLossPayee,
+    isLocatedInUk: lossPayeeIsLocatedInUk,
+    isLocatedInternationally: lossPayeeIsLocatedInternationally,
+  } = nominatedLossPayee;
+
+  const {
+    finalDestinationKnown,
+    privateMarket: { attempted: attemptedPrivateMarketCover },
+    agent: {
+      isUsingAgent,
+      service: {
+        agentIsCharging,
+        charge: { method: agentChargeMethod },
+      },
+    },
+  } = exportContract;
+
+  const { isUsingBroker } = broker;
+  const { hasDifferentTradingName } = company;
+  const { hasAntiBriberyCodeOfConduct } = declaration;
+  const { buyerTradingHistory, relationship } = buyer;
+  const { exporterIsConnectedWithBuyer, exporterHasPreviousCreditInsuranceWithBuyer } = relationship;
+  const { outstandingPayments, exporterHasTradedWithBuyer } = buyerTradingHistory;
+
   const flatApplicationData = flattenApplicationData(application);
 
   const taskListStructure = generateGroupsAndTasks(
-    application.referenceNumber,
-    application.policy.policyType,
-    application.broker.isUsingBroker,
-    application.declaration.hasAntiBriberyCodeOfConduct,
+    referenceNumber,
+    policyType,
+    finalDestinationKnown,
+    jointlyInsuredParty.requested,
+    isUsingBroker,
+    isAppointingLossPayee,
+    lossPayeeIsLocatedInUk,
+    lossPayeeIsLocatedInternationally,
+    hasDifferentTradingName,
+    hasAntiBriberyCodeOfConduct,
+    exporterIsConnectedWithBuyer,
+    exporterHasTradedWithBuyer,
+    outstandingPayments,
+    exporterHasPreviousCreditInsuranceWithBuyer,
+    totalContractValueOverThreshold,
+    attemptedPrivateMarketCover,
+    isUsingAgent,
+    agentIsCharging,
+    agentChargeMethod,
   );
 
   const taskListData = generateTaskList(taskListStructure, flatApplicationData);

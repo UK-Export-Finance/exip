@@ -1,81 +1,74 @@
-import { FIELD_IDS } from '../../../../constants';
-import { LINKS } from '../../..';
-
-const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
+import { MAXIMUM_CHARACTERS } from '../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
+import { SYMBOLS } from '../../../../constants/supported-currencies';
+import { FORM_TITLES } from '../../../form-titles';
 
 const {
-  COMPANIES_HOUSE_NUMBER,
-  COMPANY_HOUSE: { COMPANY_NAME, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS },
-  YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER, WEBSITE },
-  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
-  TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
-  BROKER: { LEGEND, USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, POSTCODE, TOWN, EMAIL },
-} = EXPORTER_BUSINESS;
+  EXPORTER_BUSINESS: {
+    YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, PHONE_NUMBER, WEBSITE },
+    ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
+    NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
+    TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+    HAS_CREDIT_CONTROL,
+  },
+  CURRENCY: { CURRENCY_CODE },
+} = INSURANCE_FIELD_IDS;
+
+const {
+  YOUR_BUSINESS: { COMPANY_DETAILS, NATURE_OF_BUSINESS, TURNOVER, CREDIT_CONTROL },
+} = FORM_TITLES;
 
 export const FIELDS = {
-  COMPANIES_HOUSE_NUMBER: {
-    [COMPANIES_HOUSE_NUMBER]: {
-      HINT: `<p>For example, 8989898 or SC907816. You'll find it on your incorporation certificate or on the <a class="govuk-link" href="${LINKS.EXTERNAL.COMPANIES_HOUSE}">Companies House website</a>.</p>`,
-    },
-  },
   COMPANY_DETAILS: {
-    [COMPANY_NUMBER]: {
+    [HAS_DIFFERENT_TRADING_NAME]: {
       SUMMARY: {
-        TITLE: 'Companies House registration number',
+        TITLE: 'Different trading name',
+        FORM_TITLE: COMPANY_DETAILS,
       },
     },
-    [COMPANY_NAME]: {
+    [DIFFERENT_TRADING_NAME]: {
       SUMMARY: {
-        TITLE: 'Company name',
-      },
-    },
-    [COMPANY_ADDRESS]: {
-      SUMMARY: {
-        TITLE: 'Registered office address',
-      },
-    },
-    [COMPANY_INCORPORATED]: {
-      SUMMARY: {
-        TITLE: 'Date incorporated',
-      },
-    },
-    [COMPANY_SIC]: {
-      SUMMARY: {
-        TITLE: 'Standard industry classification (SIC) codes and nature of business',
-      },
-    },
-    [FINANCIAL_YEAR_END_DATE]: {
-      SUMMARY: {
-        TITLE: 'Financial year end date',
-      },
-    },
-    [TRADING_NAME]: {
-      SUMMARY: {
-        TITLE: 'Different trading name?',
+        FORM_TITLE: COMPANY_DETAILS,
       },
     },
     [TRADING_ADDRESS]: {
       SUMMARY: {
-        TITLE: 'Different trading address?',
+        TITLE: 'Different trading address',
+        FORM_TITLE: COMPANY_DETAILS,
       },
+      MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
     },
     [WEBSITE]: {
       SUMMARY: {
         TITLE: 'Company website (optional)',
+        FORM_TITLE: COMPANY_DETAILS,
       },
     },
     [PHONE_NUMBER]: {
       SUMMARY: {
         TITLE: 'UK telephone number (optional)',
+        FORM_TITLE: COMPANY_DETAILS,
       },
     },
   },
+  [FULL_ADDRESS]: {
+    LABEL: "What's your alternative trading address?",
+    REGISTERED_OFFICE_ADDRESS_HEADING: 'Your registered office address',
+    REGISTERED_OFFICE_ADDRESS_HINT: 'This information comes from Companies House.',
+    SUMMARY: {
+      TITLE: 'Different trading address',
+      FORM_TITLE: COMPANY_DETAILS,
+    },
+    MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
+  },
   NATURE_OF_YOUR_BUSINESS: {
     [GOODS_OR_SERVICES]: {
-      LABEL: 'What goods or services does your company supply?',
-      HINT: 'Give a general overview rather than just the exports you want to insure',
+      LABEL: 'Tell us about your business',
+      HINT: "Give us an overview of the work you do, as well as the products or services you're getting credit insurance for.",
+      MAXIMUM: MAXIMUM_CHARACTERS.BUSINESS.GOODS_OR_SERVICES_DESCRIPTION,
       SUMMARY: {
         TITLE: 'Goods or services your business supplies',
+        FORM_TITLE: NATURE_OF_BUSINESS,
       },
     },
     [YEARS_EXPORTING]: {
@@ -84,19 +77,14 @@ export const FIELDS = {
       SUFFIX: 'Years',
       SUMMARY: {
         TITLE: 'Years exporting',
+        FORM_TITLE: NATURE_OF_BUSINESS,
       },
     },
     [EMPLOYEES_UK]: {
-      LEGEND: 'How many employees do you have?',
-      LABEL: 'In the UK',
+      LEGEND: 'How many employees do you have in the UK?',
       SUMMARY: {
-        TITLE: 'UK employees',
-      },
-    },
-    [EMPLOYEES_INTERNATIONAL]: {
-      LABEL: 'Worldwide including UK',
-      SUMMARY: {
-        TITLE: 'Worldwide employees including UK employees',
+        TITLE: 'Number of UK employees',
+        FORM_TITLE: NATURE_OF_BUSINESS,
       },
     },
   },
@@ -105,13 +93,16 @@ export const FIELDS = {
       LABEL: 'Your financial year end date',
       HINT: 'This information comes from Companies House',
       DATE_FORMAT: 'd MMMM',
+      SUMMARY: {
+        FORM_TITLE: NATURE_OF_BUSINESS,
+      },
     },
     [ESTIMATED_ANNUAL_TURNOVER]: {
-      LEGEND: 'Estimated annual turnover for this current financial year',
-      LABEL: 'Estimate this to the nearest pound. Do not use decimal points.',
-      PREFIX: '£',
+      LEGEND: 'Estimated annual turnover for this current financial year in',
+      PREFIX: SYMBOLS.GBP,
       SUMMARY: {
         TITLE: 'Estimated turnover this current financial year',
+        FORM_TITLE: TURNOVER,
       },
     },
     [PERCENTAGE_TURNOVER]: {
@@ -119,47 +110,18 @@ export const FIELDS = {
       SUFFIX: '%',
       SUMMARY: {
         TITLE: 'Percentage of turnover from exports',
+        FORM_TITLE: TURNOVER,
       },
     },
   },
-  BROKER: {
-    [LEGEND]: {
-      LEGEND: 'Enter contact details for your broker',
-    },
-    [USING_BROKER]: {
-      SUMMARY: {
-        TITLE: 'Using a broker for this insurance?',
-      },
-    },
-    [NAME]: {
-      LABEL: 'Name of broker or company',
-      SUMMARY: {
-        TITLE: "Broker's name or company",
-      },
-    },
-    [ADDRESS_LINE_1]: {
-      LABEL: 'Address line 1',
-      SUMMARY: {
-        TITLE: "Broker's address",
-      },
-    },
-    [ADDRESS_LINE_2]: {
-      LABEL: 'Address line 2 (optional)',
-    },
-    [TOWN]: {
-      LABEL: 'Town or city',
-    },
-    [COUNTY]: {
-      LABEL: 'County (optional)',
-    },
-    [POSTCODE]: {
-      LABEL: 'Postcode',
-    },
-    [EMAIL]: {
-      LABEL: 'Email address',
-      SUMMARY: {
-        TITLE: "Broker's email",
-      },
+  [CURRENCY_CODE]: {
+    LEGEND: 'What currency is your turnover in?',
+  },
+  [HAS_CREDIT_CONTROL]: {
+    HINT: 'These are often called credit control processes. They may be managed by your legal or financial team.',
+    SUMMARY: {
+      TITLE: 'Process for managing late payments',
+      FORM_TITLE: CREDIT_CONTROL,
     },
   },
 };

@@ -11,7 +11,7 @@ import keystoneDocumentRendererConfig from '../../../../helpers/keystone-documen
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockDeclarations } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockDeclarations, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -50,7 +50,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(mockApplication.referenceNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELD: {
@@ -58,7 +58,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
           ...FIELDS[FIELD_ID],
         },
         SUBMIT_BUTTON_COPY: BUTTONS.SUBMIT_APPLICATION,
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -86,7 +86,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.HOW_YOUR_DATA_WILL_BE_USED,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(mockApplication.referenceNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         documentContent: mockDeclarations.howDataWillBeUsed.content.document,
         documentConfig: keystoneDocumentRendererConfig(),
@@ -108,19 +108,17 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
       });
     });
 
-    describe('api error handling', () => {
-      describe('when there is an error', () => {
-        beforeAll(() => {
-          getLatestHowDataWillBeUsedSpy = jest.fn(() => Promise.reject(new Error('mock')));
+    describe('when there is an error calling the API', () => {
+      beforeAll(() => {
+        getLatestHowDataWillBeUsedSpy = jest.fn(() => Promise.reject(new Error('mock')));
 
-          api.keystone.application.declarations.getLatestHowDataWillBeUsed = getLatestHowDataWillBeUsedSpy;
-        });
+        api.keystone.application.declarations.getLatestHowDataWillBeUsed = getLatestHowDataWillBeUsedSpy;
+      });
 
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-          await get(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-        });
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });
@@ -162,7 +160,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
       it(`should redirect to ${APPLICATION_SUBMITTED}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${APPLICATION_SUBMITTED}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
@@ -198,7 +196,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.HOW_YOUR_DATA_WILL_BE_USED,
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables(mockApplication.referenceNumber),
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           documentContent: mockDeclarations.howDataWillBeUsed.content.document,
           documentConfig: keystoneDocumentRendererConfig(),

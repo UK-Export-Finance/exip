@@ -13,6 +13,8 @@ const {
   DASHBOARD,
 } = ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Sign out - As an Exporter, I want to be able to sign out of the service from any of the digital service pages, So that I can readily maintain the security of my digital service account', () => {
   let referenceNumber;
 
@@ -36,7 +38,7 @@ context('Insurance - Account - Sign out - As an Exporter, I want to be able to s
     });
 
     it(`should redirect to ${SIGN_IN_ROOT}, display an 'important' banner with signed out copy and NOT render a back link`, () => {
-      const expectedUrl = `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`;
+      const expectedUrl = `${baseUrl}${SIGN_IN_ROOT}`;
 
       cy.assertUrl(expectedUrl);
 
@@ -52,7 +54,7 @@ context('Insurance - Account - Sign out - As an Exporter, I want to be able to s
       cy.navigateToUrl(DASHBOARD);
 
       // should be taken to the sign in page
-      const expectedUrl = `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`;
+      const expectedUrl = `${baseUrl}${SIGN_IN_ROOT}`;
 
       cy.assertUrl(expectedUrl);
     });

@@ -3,27 +3,30 @@ const applicationSubmittedPage = {
     yourReference: () => cy.get('[data-cy="your-reference"]'),
     referenceNumber: () => cy.get('[data-cy="reference-number"]'),
   },
-  intro: () => cy.get('[data-cy="intro"]'),
   whatHappensNext: {
     heading: () => cy.get('[data-cy="what-happens-next-heading"]'),
     intro: () => cy.get('[data-cy="what-happens-next-intro"]'),
-    listItem: (index) => cy.get(`[data-cy="what-happens-next-list-item-${index}"]`),
-    climateChangeFactors: () => cy.get('[data-cy="what-happens-next-climate-change-factors"]'),
+    willSendEmail: () => cy.get('[data-cy="what-happens-next-will-send-email"]'),
+    mayAlsoContact: () => cy.get('[data-cy="what-happens-next-may-also-contact"]'),
   },
   decisionFromUs: {
     heading: () => cy.get('[data-cy="decision-from-us-heading"]'),
     timeframe: () => cy.get('[data-cy="decision-from-us-timeframe"]'),
-    extraInfo: () => cy.get('[data-cy="decision-from-us-extra-info"]'),
+    questions: {
+      intro: () => cy.get('[data-cy="decision-from-us-questions-intro"]'),
+      link: () => cy.get('[data-cy="decision-from-us-questions-link"]'),
+    },
   },
-  actions: {
-    startNewApplication: () => cy.get('[data-cy="start-new-application"]'),
-    giveFeedback: () => cy.get('[data-cy="give-feedback"]'),
-  },
-  research: {
-    heading: () => cy.get('[data-cy="research-heading"]'),
-    carryOut: () => cy.get('[data-cy="research-carry-out"]'),
-    takePartLink: () => cy.get('[data-cy="research-take-part-link"]'),
-    ifYouLike: () => cy.get('[data-cy="research-if-you-like"]'),
+  helpUsImprove: {
+    heading: () => cy.get('[data-cy="help-us-improve-heading"]'),
+    carryOut: () => cy.get('[data-cy="help-us-improve-carry-out"]'),
+    takePartLink: () => cy.get('[data-cy="help-us-improve-take-part-link"]'),
+    ifYouLike: () => cy.get('[data-cy="help-us-improve-if-you-like"]'),
+    feedback: {
+      intro: () => cy.get('[data-cy="help-us-improve-feedback-intro"]'),
+      text: () => cy.get('[data-cy="help-us-improve-feedback-text"]'),
+      link: () => cy.get('[data-cy="help-us-improve-feedback-link"]'),
+    },
   },
 };
 

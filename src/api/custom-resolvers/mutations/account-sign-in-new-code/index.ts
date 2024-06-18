@@ -10,8 +10,8 @@ import { AccountSignInSendNewCodeVariables, AccountSignInResponse, Context } fro
  * - Send the user an email with security code
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the AccountSignInNewCode mutation
- * @param {Object} KeystoneJS context API
- * @returns {Object} Object with success flag
+ * @param {Context} KeystoneJS context API
+ * @returns {Promise<Object>} Object with success flag
  */
 const accountSignInSendNewCode = async (root: any, variables: AccountSignInSendNewCodeVariables, context: Context): Promise<AccountSignInResponse> => {
   try {
@@ -36,7 +36,7 @@ const accountSignInSendNewCode = async (root: any, variables: AccountSignInSendN
 
     const name = getFullNameString(account);
 
-    const emailResponse = await sendEmail.securityCodeEmail(email, name, securityCode);
+    const emailResponse = await sendEmail.accessCodeEmail(email, name, securityCode);
 
     if (emailResponse.success) {
       return {

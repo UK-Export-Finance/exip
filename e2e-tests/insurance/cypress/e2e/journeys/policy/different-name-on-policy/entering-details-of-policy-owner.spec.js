@@ -2,8 +2,6 @@ import {
   summaryList,
   field as fieldSelector,
 } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
-import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import mockApplication from '../../../../../../fixtures/application';
@@ -11,12 +9,11 @@ import account from '../../../../../../fixtures/account';
 
 const { POLICY_CONTACT } = mockApplication;
 
-const { taskList } = partials.insurancePartials;
-
 const {
   ROOT: INSURANCE_ROOT,
   POLICY: {
     DIFFERENT_NAME_ON_POLICY,
+    CHECK_YOUR_ANSWERS,
   },
 } = INSURANCE_ROUTES;
 
@@ -43,11 +40,10 @@ context(`Insurance - Policy - Different name on Policy page - Entering name of p
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      taskList.prepareApplication.tasks.policy.link().click();
-
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.startInsurancePolicySection({});
+      cy.completeAndSubmitPolicyTypeForm({});
       cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
+      cy.completeAndSubmitTotalContractValueForm({});
       cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
@@ -64,17 +60,23 @@ context(`Insurance - Policy - Different name on Policy page - Entering name of p
     cy.deleteApplication(referenceNumber);
   });
 
-  describe('when entering contact details of application owner on "different name on policy" page', () => {
+  describe(`when entering contact details of application owner on "different name on policy" page and proceeding to ${CHECK_YOUR_ANSWERS}`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitDifferentNameOnPolicyForm({ firstName: account[FIRST_NAME], lastName: account[LAST_NAME], email: account[EMAIL] });
 
+      cy.completeAndSubmitPreCreditPeriodForm({});
+      cy.completeAndSubmitAnotherCompanyForm({});
+      cy.completeAndSubmitBrokerForm({});
+      cy.completeAndSubmitLossPayeeForm({});
+
       summaryList.field(NAME).changeLink().click();
     });
 
     it(`should have ${SAME_NAME} radio selected and ${POSITION} populated when going back to the page`, () => {
-      fieldSelector(SAME_NAME).input().should('be.checked');
+      cy.assertRadioOptionIsChecked(fieldSelector(SAME_NAME).input());
+
       cy.checkValue(fieldSelector(POSITION), POLICY_CONTACT[POSITION]);
     });
   });

@@ -10,13 +10,12 @@ import { Application, RequestBody } from '../../../../../../types';
  * @param {Application} application
  * @param {RequestBody} formBody
  * @param {Object} errorList
- * @returns {Object} saveResponse from api
+ * @returns {Promise<Object>} Saved data
  */
 const business = async (application: Application, formBody: RequestBody, errorList?: object) => {
   // determines which fields to save
   const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList));
 
-  // sanitise the form data.
   const sanitisedData = sanitiseData(dataToSave);
 
   const businessId = application.business?.id;

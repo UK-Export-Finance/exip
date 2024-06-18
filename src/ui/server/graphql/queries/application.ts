@@ -21,18 +21,40 @@ const applicationQuery = gql`
             isoCode
             name
           }
+          coverPeriod {
+            id
+            value
+            valueId
+          }
           hasMinimumUkGoodsOrServices
-          validExporterLocation
+          hasEndBuyer
           hasCompaniesHouseNumber
           otherPartiesInvolved
           paidByLetterOfCredit
           totalContractValue {
             id
             value
+            valueId
           }
-          coverPeriod {
+          validExporterLocation
+        }
+        nominatedLossPayee {
+          id
+          isAppointed
+          isLocatedInUk
+          isLocatedInternationally
+          name
+          financialUk {
             id
-            value
+            accountNumber
+            sortCode
+            bankAddress
+          }
+          financialInternational {
+            id
+            iban
+            bicSwiftCode
+            bankAddress
           }
         }
         policy {
@@ -47,6 +69,13 @@ const applicationQuery = gql`
           totalMonthsOfCover
           totalSalesToBuyer
           maximumBuyerWillOwe
+          jointlyInsuredParty {
+            id
+            requested
+            companyName
+            companyNumber
+            countryCode
+          }
         }
         policyContact {
           id
@@ -59,7 +88,34 @@ const applicationQuery = gql`
         exportContract {
           id
           goodsOrServicesDescription
+          finalDestinationKnown
           finalDestinationCountryCode
+          paymentTermsDescription
+          privateMarket {
+            id
+            attempted
+            declinedDescription
+          }
+          agent {
+            id
+            isUsingAgent
+            name
+            fullAddress
+            countryCode
+            service {
+              id
+              serviceDescription
+              agentIsCharging
+              charge {
+                id
+                percentageCharge
+                fixedSumAmount
+                fixedSumCurrencyCode
+                method
+                payableCountryCode
+              }
+            }
+          }
         }
         owner {
           id
@@ -73,6 +129,7 @@ const applicationQuery = gql`
           companyNumber
           companyWebsite
           hasDifferentTradingName
+          differentTradingName
           hasDifferentTradingAddress
           dateOfCreation
           phoneNumber
@@ -93,26 +150,27 @@ const applicationQuery = gql`
             country
             premises
           }
+          differentTradingAddress {
+            id
+            fullAddress
+          }
         }
         business {
           id
           goodsOrServicesSupplied
           totalYearsExporting
           totalEmployeesUK
-          totalEmployeesInternational
           estimatedAnnualTurnover
           exportsTurnoverPercentage
+          turnoverCurrencyCode
+          hasCreditControlProcess
         }
         broker {
           id
           isUsingBroker
           name
-          addressLine1
-          addressLine2
-          town
-          county
-          postcode
           email
+          fullAddress
         }
         buyer {
           id
@@ -124,20 +182,39 @@ const applicationQuery = gql`
           }
           registrationNumber
           website
-          contactFirstName
-          contactLastName
-          contactPosition
-          contactEmail
-          canContactBuyer
-          exporterIsConnectedWithBuyer
-          exporterHasTradedWithBuyer
+          buyerTradingHistory {
+            id
+            exporterHasTradedWithBuyer
+            currencyCode
+            outstandingPayments
+            failedPayments
+            totalOverduePayments
+            totalOutstandingPayments
+          }
+          contact {
+            id
+            contactFirstName
+            contactLastName
+            contactPosition
+            contactEmail
+            canContactBuyer
+          }
+          relationship {
+            id
+            exporterIsConnectedWithBuyer
+            connectionWithBuyerDescription
+            exporterHasPreviousCreditInsuranceWithBuyer
+            exporterHasBuyerFinancialAccounts
+            previousCreditInsuranceWithBuyerDescription
+          }
         }
         sectionReview {
           id
           eligibility
-          policy
+          exportContract
           business
           buyer
+          policy
         }
         declaration {
           id

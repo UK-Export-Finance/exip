@@ -1,15 +1,9 @@
-import { field as fieldSelector, submitButton, saveAndBackButton } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
-import { TASKS } from '../../../../../../content-strings';
+import { field as fieldSelector } from '../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { FIELD_VALUES } from '../../../../../../constants';
-
-const { taskList } = partials.insurancePartials;
 
 const {
   ROOT: INSURANCE_ROOT,
-  ALL_SECTIONS,
   POLICY: {
     SINGLE_CONTRACT_POLICY,
   },
@@ -19,12 +13,9 @@ const {
   POLICY: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
-      CREDIT_PERIOD_WITH_BUYER,
     },
   },
 } = INSURANCE_FIELD_IDS;
-
-const task = taskList.prepareApplication.tasks.policy;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -40,9 +31,8 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
-
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.startInsurancePolicySection({});
+      cy.completeAndSubmitPolicyTypeForm({});
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 
@@ -62,17 +52,15 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `type of policy` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+      cy.checkTaskPolicyStatusIsInProgress();
     });
   });
 
@@ -93,22 +81,20 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
       cy.keyboardInput(field.monthInput(), month);
       cy.keyboardInput(field.yearInput(), yesterday.getFullYear());
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `type of policy` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
-    it('should not have saved the submitted values  going back to the page', () => {
-      task.link().click();
-      submitButton().click();
+    it('should NOT have saved the submitted values when going back to the page', () => {
+      cy.startInsurancePolicySection({});
+      cy.clickSubmitButton();
 
       field.dayInput().should('have.value', '');
       field.monthInput().should('have.value', '');
@@ -127,61 +113,24 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
       cy.keyboardInput(field.monthInput(), month);
       cy.keyboardInput(field.yearInput(), new Date(futureDate).getFullYear());
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `type of policy` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     it('should have the submitted values when going back to the page', () => {
-      task.link().click();
-      submitButton().click();
+      cy.startInsurancePolicySection({});
+      cy.clickSubmitButton();
 
       field.dayInput().should('have.value', '1');
       field.monthInput().should('have.value', month);
       field.yearInput().should('have.value', new Date(futureDate).getFullYear());
-    });
-  });
-
-  describe('when removing a previously submitted `buyer credit period` value', () => {
-    const field = fieldSelector(CREDIT_PERIOD_WITH_BUYER);
-
-    beforeEach(() => {
-      cy.navigateToUrl(url);
-
-      // submit a value
-      cy.keyboardInput(field.input(), 'Test');
-      saveAndBackButton().click();
-
-      // go back to the page
-      cy.clickBackLink();
-
-      field.input().clear();
-      saveAndBackButton().click();
-    });
-
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
-    });
-
-    it('should retain the `type of policy` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
-    });
-
-    it('should have no value in `buyer credit period` when going back to the page', () => {
-      task.link().click();
-      submitButton().click();
-
-      field.input().should('have.value', '');
     });
   });
 });

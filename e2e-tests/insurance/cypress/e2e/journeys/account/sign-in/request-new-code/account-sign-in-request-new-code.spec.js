@@ -1,4 +1,3 @@
-import { submitButton } from '../../../../../../../pages/shared';
 import { enterCodePage, requestNewCodePage } from '../../../../../../../pages/insurance/account/sign-in';
 import { BUTTONS, PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -12,8 +11,10 @@ const {
   },
 } = ROUTES;
 
-context('Insurance - Account - Sign in - Request new code page - I want to enter the new security code sent to my email by UK Export Finance, So that I can sign in into my UKEF digital service account', () => {
-  const url = `${Cypress.config('baseUrl')}${REQUEST_NEW_CODE}`;
+const baseUrl = Cypress.config('baseUrl');
+
+context('Insurance - Account - Sign in - Request new code page - I want to enter the new access code sent to my email by UK Export Finance, So that I can sign in into my UKEF digital service account', () => {
+  const url = `${baseUrl}${REQUEST_NEW_CODE}`;
   before(() => {
     cy.deleteAccount();
 
@@ -40,7 +41,7 @@ context('Insurance - Account - Sign in - Request new code page - I want to enter
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: REQUEST_NEW_CODE,
       backLink: ENTER_CODE,
-      submitButtonCopy: BUTTONS.SEND_NEW_SECURITY_CODE,
+      submitButtonCopy: BUTTONS.SEND_NEW_ACCESS_CODE,
       assertAuthenticatedHeader: false,
     });
   });
@@ -51,7 +52,7 @@ context('Insurance - Account - Sign in - Request new code page - I want to enter
     });
 
     it('should render intro copy', () => {
-      cy.checkText(requestNewCodePage.intro(), CONTENT_STRINGS.INTRO);
+      cy.checkIntroText(CONTENT_STRINGS.INTRO);
     });
 
     describe('expandable details - do not have access to email', () => {
@@ -94,11 +95,11 @@ context('Insurance - Account - Sign in - Request new code page - I want to enter
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     it(`should redirect to ${ENTER_CODE}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
+      const expected = `${baseUrl}${ENTER_CODE}`;
       cy.assertUrl(expected);
     });
 

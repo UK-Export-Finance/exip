@@ -20,22 +20,4 @@ describe('server/helpers/date/get-date-fields-from-timestamp', () => {
 
     expect(result).toEqual(expected);
   });
-
-  describe('when timestamp is not provided', () => {
-    it('should return an empty object', () => {
-      // @ts-ignore
-      const result = getDateFieldsFromTimestamp(undefined, mockFieldId);
-
-      expect(result).toEqual({});
-    });
-  });
-
-  describe('when fieldId is not provided', () => {
-    it('should return an empty object', () => {
-      // @ts-ignore
-      const result = getDateFieldsFromTimestamp(mockTimestamp);
-
-      expect(result).toEqual({});
-    });
-  });
 });

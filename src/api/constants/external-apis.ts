@@ -13,12 +13,19 @@ export const EXTERNAL_API_DEFINITIONS = {
       ILC: 'ILC Only',
       CILC: 'CILC Only',
       REFER: 'Refer',
+      UNLISTED: 'Unlisted',
     },
     NBI_ISSUE_AVAILABLE: {
       YES: 'Y',
       NO: 'N',
     },
     INVALID_COUNTRIES: ['EC Market n/k', 'Non EC Market n/k', 'Non UK', 'Third Country', 'Eastern and Southern African Trade and Development Bank'],
+    INVALID_CURRENCIES: ['Gold'],
+  },
+  COMPANIES_HOUSE: {
+    COMPANY_STATUS: {
+      ACTIVE: 'active',
+    },
   },
 };
 

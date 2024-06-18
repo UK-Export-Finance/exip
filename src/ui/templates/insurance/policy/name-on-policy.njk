@@ -1,11 +1,10 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-{% import '../../components/submit-button.njk' as submitButton %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from 'govuk/components/radios/macro.njk' import govukRadios %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
-{% from 'govuk/components/button/macro.njk' import govukButton %}
 {% from "govuk/components/hint/macro.njk" import govukHint %}
+{% import '../../components/text-input.njk' as textInput %}
+{% import '../../components/form-buttons.njk' as formButtons %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -48,28 +47,13 @@
 
     {% set positionHTML %}
 
-      {{ govukInput({
+      {{ textInput.render({
         id: FIELDS.POSITION.ID,
-        name: FIELDS.POSITION.ID,
+        labelText: FIELDS.POSITION.LABEL,
+        labelClasses: "govuk-!-font-weight-bold govuk-!-font-size-24",
+        inputClasses: "govuk-input--width-20",
         value: submittedValues[FIELDS.POSITION.ID],
-        label: {
-          text:FIELDS.POSITION.LABEL,
-          classes: "govuk-body govuk-!-font-weight-bold",
-          attributes: {
-            id: FIELDS.POSITION.ID + '-label',
-            "data-cy": FIELDS.POSITION.ID + "-label"
-          }
-        },
-        classes: "govuk-input--width-20",
-        attributes: {
-          "data-cy": FIELDS.POSITION.ID + "-input"
-        },
-        errorMessage: validationErrors.errorList[FIELDS.POSITION.ID] and {
-          text: validationErrors.errorList[FIELDS.POSITION.ID].text,
-          attributes: {
-            "data-cy": FIELDS.POSITION.ID + "-error-message"
-          }
-        }
+        errorMessage: validationErrors.errorList[FIELDS.POSITION.ID]
       }) }}
 
     {% endset %}
@@ -118,20 +102,10 @@
       }
     }) }}
 
-    <div class="govuk-button-group">
-      {{ submitButton.render({
-        text: CONTENT_STRINGS.BUTTONS.CONTINUE
-      }) }}
-
-      {{ govukButton({
-        text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
-        classes: "govuk-button--secondary",
-        attributes: {
-          formaction: SAVE_AND_BACK_URL,
-          'data-cy': 'save-and-back-button'
-        }
-      }) }}
-    </div>
+    {{ formButtons.render({
+      contentStrings: CONTENT_STRINGS.BUTTONS,
+      saveAndBackUrl: SAVE_AND_BACK_URL
+    }) }}
 
   </form>
 

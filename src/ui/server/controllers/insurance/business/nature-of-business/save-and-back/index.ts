@@ -1,7 +1,7 @@
 import { TEMPLATES, ROUTES } from '../../../../../constants';
 import { FIELD_IDS } from '..';
 import generateValidationErrors from '../validation';
-import mapAndSave from '../../map-and-save/nature-of-business';
+import mapAndSave from '../../map-and-save/business';
 import constructPayload from '../../../../../helpers/construct-payload';
 import { Request, Response } from '../../../../../../types';
 
@@ -12,7 +12,7 @@ export const TEMPLATE = NATURE_OF_YOUR_BUSINESS_TEMPLATE;
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 /**
- * saves and goes back to all sections from nature of your business page unless there are database errors
+ * saves and goes back to all sections from nature of your business page unless there are API errors
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} redirects to all sections page on success
@@ -35,7 +35,7 @@ const post = async (req: Request, res: Response) => {
     const validationErrors = generateValidationErrors(payload);
 
     // runs save and go back command
-    const saveResponse = await mapAndSave.natureOfBusiness(payload, application, validationErrors);
+    const saveResponse = await mapAndSave.business(payload, application, validationErrors);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

@@ -1,16 +1,12 @@
-import { singleInputField, saveAndBackButton } from '../../../../../../pages/shared';
+import { singleInputField } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
-import { TASKS } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-
-const { STATUS: { IN_PROGRESS, NOT_STARTED_YET } } = TASKS;
 
 const { taskList } = partials.insurancePartials;
 
 const {
   ROOT: INSURANCE_ROOT,
-  ALL_SECTIONS,
   DECLARATIONS: { CONFIDENTIALITY },
 } = INSURANCE_ROUTES;
 
@@ -51,17 +47,15 @@ context('Insurance - Declarations - Confidentiality page - Save and go back', ()
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the status of task `declarations` as `not started yet`', () => {
-      cy.checkTaskStatus(task, NOT_STARTED_YET);
+      cy.checkTaskDeclarationsAndSubmitStatusIsNotStartedYet();
     });
   });
 
@@ -71,22 +65,21 @@ context('Insurance - Declarations - Confidentiality page - Save and go back', ()
 
       singleInputField(FIELD_ID).label().click();
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should update the status of task `declarations` to `in progress`', () => {
-      cy.checkTaskStatus(task, IN_PROGRESS);
+      cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
 
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
       task.link().click();
-      singleInputField(FIELD_ID).input().should('be.checked');
+
+      cy.assertRadioOptionIsChecked(singleInputField(FIELD_ID).input());
     });
   });
 });

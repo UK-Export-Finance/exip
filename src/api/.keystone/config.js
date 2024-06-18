@@ -11,9 +11,9 @@ var __export = (target, all) => {
 };
 var __copyProps = (to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    for (let key2 of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key2) && key2 !== except)
+        __defProp(to, key2, { get: () => from[key2], enumerable: !(desc = __getOwnPropDesc(from, key2)) || desc.enumerable });
   }
   return to;
 };
@@ -87,12 +87,129 @@ var rateLimiter = (0, import_express_rate_limit.default)({
 });
 var rate_limiter_default = rateLimiter;
 
-// schema.ts
-var import_core2 = require("@keystone-6/core");
-var import_access = require("@keystone-6/core/access");
-var import_fields = require("@keystone-6/core/fields");
-var import_fields_document = require("@keystone-6/fields-document");
-var import_date_fns = require("date-fns");
+// cron/cron-job-scheduler.ts
+var cron = __toESM(require("node-cron"));
+
+// helpers/cron/scheduler.ts
+var asyncTaskToSyncTask = (task, context) => (now2) => {
+  (async () => {
+    await task(context, now2);
+  })();
+};
+var taskWithErrorLogging = (description, task, context) => async (_commonContext, now2) => {
+  try {
+    await task(context, now2);
+  } catch (error) {
+    console.error("An error occurred running job '%s' %o", description, error);
+    throw error;
+  }
+};
+
+// cron/cron-job-scheduler.ts
+var cronJobScheduler = (jobs, context) => {
+  jobs.forEach((job) => {
+    const { cronExpression, description, task } = job;
+    if (!cron.validate(cronExpression)) {
+      console.error("Failed to add scheduled job '%s' due to invalid cron expression: '%s'", description, cronExpression);
+      return;
+    }
+    console.info("Adding scheduled job '%s' on schedule '%s'", description, cronExpression);
+    cron.schedule(cronExpression, asyncTaskToSyncTask(taskWithErrorLogging(description, task, context), context)).on("error", (error) => console.error("An error occurred scheduling job '%s' %o", description, error));
+  });
+};
+var cron_job_scheduler_default = cronJobScheduler;
+
+// cron/account/unverified-account-cron-job.ts
+var import_dotenv2 = __toESM(require("dotenv"));
+
+// helpers/get-unverified-accounts/index.ts
+var now = /* @__PURE__ */ new Date();
+var getUnverifiedAccounts = async (context) => {
+  try {
+    console.info("Getting unverified accounts - getUnverifiedAccounts (helper)");
+    const accounts = await context.query.Account.findMany({
+      where: {
+        AND: [{ verificationExpiry: { lt: now } }, { status: { isVerified: { equals: false } } }, { status: { isInactive: { equals: false } } }]
+      },
+      query: "id firstName lastName email otpSalt otpHash otpExpiry salt hash passwordResetHash passwordResetExpiry verificationHash verificationExpiry reactivationHash reactivationExpiry updatedAt status { id isBlocked isVerified isInactive updatedAt }"
+    });
+    return accounts;
+  } catch (err) {
+    console.error("Error getting unverified accounts (getUnverifiedAccounts helper) %O", err);
+    throw new Error(`Error getting unverified accounts (getUnverifiedAccounts helper) ${err}`);
+  }
+};
+var get_unverified_accounts_default = getUnverifiedAccounts;
+
+// helpers/map-unverified-accounts/index.ts
+var mapUnverifiedAccounts = (accounts) => {
+  const mappedAccountStatusArray = accounts.map((account2) => {
+    const mapped = {
+      where: { id: account2.status.id },
+      data: {
+        isInactive: true,
+        updatedAt: /* @__PURE__ */ new Date()
+      }
+    };
+    return mapped;
+  });
+  const mappedAccountArray = accounts.map((account2) => {
+    const mapped = {
+      where: { id: account2.id },
+      data: {
+        updatedAt: /* @__PURE__ */ new Date(),
+        verificationHash: "",
+        verificationExpiry: null
+      }
+    };
+    return mapped;
+  });
+  return {
+    accountStatus: mappedAccountStatusArray,
+    account: mappedAccountArray
+  };
+};
+var map_unverified_accounts_default = mapUnverifiedAccounts;
+
+// helpers/map-and-update-unverified-accounts/index.ts
+var mapAndUpdateUnverifiedAccounts = async (accounts, context) => {
+  try {
+    console.info("Mapping and updating unverified accounts - mapAndUpdateUnverifiedAccounts");
+    const { account: account2, accountStatus: accountStatus2 } = map_unverified_accounts_default(accounts);
+    await context.db.Account.updateMany({
+      data: account2
+    });
+    await context.db.AccountStatus.updateMany({
+      data: accountStatus2
+    });
+  } catch (err) {
+    console.error("Error mapping and updating unverified accounts %O", err);
+    throw new Error(`Error mapping and updating unverified accounts ${err}`);
+  }
+};
+var map_and_update_unverified_accounts_default = mapAndUpdateUnverifiedAccounts;
+
+// helpers/update-unverified-accounts/index.ts
+var updateUnverifiedAccounts = async (context) => {
+  try {
+    console.info("Getting and updating unverified accounts");
+    const accounts = await get_unverified_accounts_default(context);
+    if (accounts.length) {
+      await map_and_update_unverified_accounts_default(accounts, context);
+      return {
+        success: true
+      };
+    }
+    console.info("No unverified accounts found - updateUnverifiedAccounts");
+    return {
+      success: true
+    };
+  } catch (err) {
+    console.error("Error getting and updating unverified accounts %O", err);
+    throw new Error(`Error getting and updating unverified accounts ${err}`);
+  }
+};
+var update_unverified_accounts_default = updateUnverifiedAccounts;
 
 // constants/index.ts
 var import_dotenv = __toESM(require("dotenv"));
@@ -100,7 +217,11 @@ var import_dotenv = __toESM(require("dotenv"));
 // constants/field-ids/shared/index.ts
 var SHARED = {
   POLICY_TYPE: "policyType",
-  NAME: "name"
+  SINGLE_POLICY_TYPE: "singlePolicyType",
+  MULTIPLE_POLICY_TYPE: "multiplePolicyType",
+  POLICY_LENGTH: "policyLength",
+  NAME: "name",
+  EMAIL: "email"
 };
 var shared_default = SHARED;
 
@@ -113,6 +234,33 @@ var SHARED_ELIGIBILITY = {
 };
 var shared_eligibility_default = SHARED_ELIGIBILITY;
 
+// constants/field-ids/insurance/shared/index.ts
+var SHARED_FIELD_IDS = {
+  COMPANY: "company",
+  COMPANIES_HOUSE: {
+    COMPANY_NAME: "companyName",
+    COMPANY_ADDRESS: "registeredOfficeAddress",
+    COMPANY_NUMBER: "companyNumber",
+    COMPANY_INCORPORATED: "dateOfCreation",
+    SIC_CODE: "sicCode",
+    COMPANY_SIC: "sicCodes",
+    INDUSTRY_SECTOR_NAME: "industrySectorName",
+    INDUSTRY_SECTOR_NAMES: "industrySectorNames",
+    FINANCIAL_YEAR_END_DATE: "financialYearEndDate",
+    REGISTED_OFFICE_ADDRESS: {
+      ADDRESS_LINE_1: "addressLine1",
+      ADDRESS_LINE_2: "addressLine2",
+      CARE_OF: "careOf",
+      LOCALITY: "locality",
+      REGION: "region",
+      POSTAL_CODE: "postalCode",
+      COUNTRY: "country",
+      PREMISES: "premises"
+    }
+  }
+};
+var shared_default2 = SHARED_FIELD_IDS;
+
 // constants/field-ids/insurance/account/index.ts
 var ACCOUNT = {
   ID: "id",
@@ -122,7 +270,7 @@ var ACCOUNT = {
   PASSWORD: "password",
   SALT: "salt",
   HASH: "hash",
-  SECURITY_CODE: "securityCode",
+  ACCESS_CODE: "securityCode",
   IS_VERIFIED: "isVerified",
   IS_BLOCKED: "isBlocked",
   PASSWORD_RESET_HASH: "passwordResetHash",
@@ -135,9 +283,13 @@ var ACCOUNT = {
 var account_default = ACCOUNT;
 
 // constants/field-ids/insurance/policy/index.ts
+var REQUESTED_START_DATE = "requestedStartDate";
+var CONTRACT_COMPLETION_DATE = "contractCompletionDate";
 var SHARED_CONTRACT_POLICY = {
-  REQUESTED_START_DATE: "requestedStartDate",
-  CREDIT_PERIOD_WITH_BUYER: "creditPeriodWithBuyer",
+  REQUESTED_START_DATE,
+  REQUESTED_START_DATE_DAY: `${REQUESTED_START_DATE}-day`,
+  REQUESTED_START_DATE_MONTH: `${REQUESTED_START_DATE}-month`,
+  REQUESTED_START_DATE_YEAR: `${REQUESTED_START_DATE}-year`,
   POLICY_CURRENCY_CODE: "policyCurrencyCode"
 };
 var POLICY = {
@@ -148,27 +300,75 @@ var POLICY = {
   CONTRACT_POLICY: {
     ...SHARED_CONTRACT_POLICY,
     SINGLE: {
-      CONTRACT_COMPLETION_DATE: "contractCompletionDate",
+      CONTRACT_COMPLETION_DATE,
+      CONTRACT_COMPLETION_DATE_DAY: `${CONTRACT_COMPLETION_DATE}-day`,
+      CONTRACT_COMPLETION_DATE_MONTH: `${CONTRACT_COMPLETION_DATE}-month`,
+      CONTRACT_COMPLETION_DATE_YEAR: `${CONTRACT_COMPLETION_DATE}-year`,
       TOTAL_CONTRACT_VALUE: "totalValueOfContract"
     },
     MULTIPLE: {
-      TOTAL_MONTHS_OF_COVER: "totalMonthsOfCover",
+      TOTAL_MONTHS_OF_COVER: "totalMonthsOfCover"
+    }
+  },
+  EXPORT_VALUE: {
+    MULTIPLE: {
       TOTAL_SALES_TO_BUYER: "totalSalesToBuyer",
       MAXIMUM_BUYER_WILL_OWE: "maximumBuyerWillOwe"
     }
   },
-  ABOUT_GOODS_OR_SERVICES: {
-    DESCRIPTION: "goodsOrServicesDescription",
-    FINAL_DESTINATION: "finalDestinationCountryCode",
-    FINAL_DESTINATION_COUNTRY: "finalDestinationCountry"
-  }
+  NAME_ON_POLICY: {
+    NAME: "nameOnPolicy",
+    IS_SAME_AS_OWNER: "isSameAsOwner",
+    SAME_NAME: "sameName",
+    OTHER_NAME: "otherName",
+    POSITION: "position",
+    POLICY_CONTACT_EMAIL: "policyContact.email"
+  },
+  DIFFERENT_NAME_ON_POLICY: {
+    POLICY_CONTACT_DETAIL: "policyContactDetail",
+    POSITION: "position"
+  },
+  NEED_PRE_CREDIT_PERIOD: "needPreCreditPeriodCover",
+  CREDIT_PERIOD_WITH_BUYER: "creditPeriodWithBuyer",
+  REQUESTED_JOINTLY_INSURED_PARTY: {
+    REQUESTED: "requested",
+    COMPANY_NAME: "companyName",
+    COMPANY_NUMBER: "companyNumber",
+    COUNTRY_CODE: "countryCode"
+  },
+  USING_BROKER: "isUsingBroker",
+  BROKER_DETAILS: {
+    NAME: "name",
+    EMAIL: shared_default.EMAIL,
+    BROKER_EMAIL: "broker.email",
+    FULL_ADDRESS: "fullAddress"
+  },
+  LOSS_PAYEE: {
+    IS_APPOINTED: "isAppointed"
+  },
+  LOSS_PAYEE_DETAILS: {
+    NAME: "name",
+    LOSS_PAYEE_NAME: "lossPayee.name",
+    LOCATION: "location",
+    IS_LOCATED_IN_UK: "isLocatedInUk",
+    IS_LOCATED_INTERNATIONALLY: "isLocatedInternationally"
+  },
+  LOSS_PAYEE_FINANCIAL_UK: {
+    SORT_CODE: "sortCode",
+    ACCOUNT_NUMBER: "accountNumber"
+  },
+  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: {
+    BIC_SWIFT_CODE: "bicSwiftCode",
+    IBAN: "iban"
+  },
+  FINANCIAL_ADDRESS: "bankAddress",
+  LOSS_PAYEE_FINANCIAL_ADDRESS: "lossPayee.bankAddress"
 };
 var policy_default = POLICY;
 
 // constants/field-ids/insurance/business/index.ts
 var EXPORTER_BUSINESS = {
-  COMPANY_HOUSE: {
-    SEARCH: "companiesHouseSearch",
+  COMPANIES_HOUSE: {
     INPUT: "companiesHouseNumber",
     COMPANY_NAME: "companyName",
     COMPANY_ADDRESS: "registeredOfficeAddress",
@@ -190,35 +390,69 @@ var EXPORTER_BUSINESS = {
   YOUR_COMPANY: {
     YOUR_BUSINESS: "yourBusiness",
     TRADING_ADDRESS: "hasDifferentTradingAddress",
-    TRADING_NAME: "hasDifferentTradingName",
+    HAS_DIFFERENT_TRADING_NAME: "hasDifferentTradingName",
+    DIFFERENT_TRADING_NAME: "differentTradingName",
     WEBSITE: "companyWebsite",
     PHONE_NUMBER: "phoneNumber"
+  },
+  ALTERNATIVE_TRADING_ADDRESS: {
+    FULL_ADDRESS: "fullAddress",
+    FULL_ADDRESS_DOT_NOTATION: "alternativeTrading.fullAddress"
   },
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES: "goodsOrServicesSupplied",
     YEARS_EXPORTING: "totalYearsExporting",
-    EMPLOYEES_UK: "totalEmployeesUK",
-    EMPLOYEES_INTERNATIONAL: "totalEmployeesInternational"
+    EMPLOYEES_UK: "totalEmployeesUK"
   },
   TURNOVER: {
     FINANCIAL_YEAR_END_DATE: "financialYearEndDate",
     ESTIMATED_ANNUAL_TURNOVER: "estimatedAnnualTurnover",
-    PERCENTAGE_TURNOVER: "exportsTurnoverPercentage"
+    PERCENTAGE_TURNOVER: "exportsTurnoverPercentage",
+    TURNOVER_CURRENCY_CODE: "turnoverCurrencyCode"
   },
-  BROKER: {
-    HEADING: "broker",
-    USING_BROKER: "isUsingBroker",
-    NAME: "name",
-    ADDRESS_LINE_1: "addressLine1",
-    ADDRESS_LINE_2: "addressLine2",
-    TOWN: "town",
-    COUNTY: "county",
-    POSTCODE: "postcode",
-    EMAIL: "email",
-    DETAILS: "whyAppointBroker"
-  }
+  HAS_CREDIT_CONTROL: "hasCreditControlProcess"
 };
 var business_default = EXPORTER_BUSINESS;
+
+// constants/field-ids/insurance/export-contract/index.ts
+var EXPORT_CONTRACT = {
+  ...shared_default,
+  ABOUT_GOODS_OR_SERVICES: {
+    DESCRIPTION: "goodsOrServicesDescription",
+    FINAL_DESTINATION_KNOWN: "finalDestinationKnown",
+    FINAL_DESTINATION: "finalDestinationCountryCode"
+  },
+  HOW_WILL_YOU_GET_PAID: {
+    PAYMENT_TERMS_DESCRIPTION: "paymentTermsDescription"
+  },
+  PRIVATE_MARKET: {
+    ATTEMPTED: "attempted",
+    DECLINED_DESCRIPTION: "declinedDescription"
+  },
+  USING_AGENT: "isUsingAgent",
+  AGENT_DETAILS: {
+    NAME: "name",
+    AGENT_NAME: "agent.name",
+    FULL_ADDRESS: "fullAddress",
+    AGENT_FULL_ADDRESS: "agent.fullAddress",
+    COUNTRY_CODE: "countryCode",
+    AGENT_COUNTRY_CODE: "agent.countryCode"
+  },
+  AGENT_SERVICE: {
+    IS_CHARGING: "agentIsCharging",
+    SERVICE_DESCRIPTION: "serviceDescription"
+  },
+  AGENT_CHARGES: {
+    METHOD: "method",
+    PAYABLE_COUNTRY_CODE: "payableCountryCode",
+    FIXED_SUM: "fixedSum",
+    FIXED_SUM_AMOUNT: "fixedSumAmount",
+    FIXED_SUM_CURRENCY_CODE: "fixedSumCurrencyCode",
+    PERCENTAGE: "percentage",
+    PERCENTAGE_CHARGE: "percentageCharge"
+  }
+};
+var export_contract_default = EXPORT_CONTRACT;
 
 // constants/field-ids/insurance/your-buyer/index.ts
 var YOUR_BUYER = {
@@ -227,17 +461,18 @@ var YOUR_BUYER = {
     ADDRESS: "address",
     COUNTRY: "country",
     REGISTRATION_NUMBER: "registrationNumber",
-    WEBSITE: "website",
-    FIRST_NAME: "contactFirstName",
-    LAST_NAME: "contactLastName",
-    POSITION: "contactPosition",
-    EMAIL: "contactEmail",
-    CAN_CONTACT_BUYER: "canContactBuyer"
+    WEBSITE: "website"
   },
-  WORKING_WITH_BUYER: {
-    CONNECTED_WITH_BUYER: "exporterIsConnectedWithBuyer",
-    TRADED_WITH_BUYER: "exporterHasTradedWithBuyer"
-  }
+  CONNECTION_WITH_BUYER: "exporterIsConnectedWithBuyer",
+  CONNECTION_WITH_BUYER_DESCRIPTION: "connectionWithBuyerDescription",
+  TRADED_WITH_BUYER: "exporterHasTradedWithBuyer",
+  OUTSTANDING_PAYMENTS: "outstandingPayments",
+  TOTAL_OUTSTANDING_PAYMENTS: "totalOutstandingPayments",
+  TOTAL_AMOUNT_OVERDUE: "totalOverduePayments",
+  FAILED_PAYMENTS: "failedPayments",
+  HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: "exporterHasPreviousCreditInsuranceWithBuyer",
+  PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: "previousCreditInsuranceWithBuyerDescription",
+  HAS_BUYER_FINANCIAL_ACCOUNTS: "exporterHasBuyerFinancialAccounts"
 };
 var your_buyer_default = YOUR_BUYER;
 
@@ -255,9 +490,10 @@ var declarations_default = DECLARATIONS;
 // constants/field-ids/insurance/check-your-answers/index.ts
 var CHECK_YOUR_ANSWERS = {
   ELIGIBILITY: "eligibility",
-  POLICY: "policy",
   EXPORTER_BUSINESS: "business",
-  BUYER: "buyer"
+  BUYER: "buyer",
+  POLICY: "policy",
+  EXPORT_CONTRACT: "exportContract"
 };
 var check_your_answers_default = CHECK_YOUR_ANSWERS;
 
@@ -265,22 +501,27 @@ var check_your_answers_default = CHECK_YOUR_ANSWERS;
 var INSURANCE_FIELD_IDS = {
   ELIGIBILITY: {
     ...shared_eligibility_default,
-    WANT_COVER_OVER_MAX_AMOUNT: "wantCoverOverMaxAmount",
+    ...shared_default2,
+    HAS_COMPANIES_HOUSE_NUMBER: "hasCompaniesHouseNumber",
+    COMPANIES_HOUSE_NUMBER: "companyNumber",
     TOTAL_CONTRACT_VALUE: "totalContractValue",
     TOTAL_CONTRACT_VALUE_ID: "totalContractValueId",
-    WANT_COVER_OVER_MAX_PERIOD: "wantCoverOverMaxPeriod",
     COVER_PERIOD: "coverPeriod",
     COVER_PERIOD_ID: "coverPeriodId",
-    OTHER_PARTIES_INVOLVED: "otherPartiesInvolved",
-    LETTER_OF_CREDIT: "paidByLetterOfCredit",
-    PRE_CREDIT_PERIOD: "needPreCreditPeriodCover",
-    COMPANIES_HOUSE_NUMBER: "hasCompaniesHouseNumber",
-    ACCOUNT_TO_APPLY_ONLINE: "alreadyHaveAnAccount"
+    HAS_END_BUYER: "hasEndBuyer",
+    HAVE_AN_ACCOUNT: "haveAnAccount",
+    HAS_REVIEWED_ELIGIBILITY: "hasReviewedEligibility"
+  },
+  ...shared_default2,
+  CURRENCY: {
+    CURRENCY_CODE: "currencyCode",
+    ALTERNATIVE_CURRENCY_CODE: "alternativeCurrencyCode"
   },
   SUBMISSION_DEADLINE: "submissionDeadline",
   ACCOUNT: account_default,
   POLICY: policy_default,
   EXPORTER_BUSINESS: business_default,
+  EXPORT_CONTRACT: export_contract_default,
   YOUR_BUYER: your_buyer_default,
   DECLARATIONS: declarations_default,
   CHECK_YOUR_ANSWERS: check_your_answers_default
@@ -303,12 +544,22 @@ var DEFAULT_RESOLVERS = [
   "updateBroker",
   "updateBusiness",
   "updateBuyer",
+  "updateBuyerRelationship",
+  "updateBuyerTradingHistory",
+  "updateCompany",
   "updateDeclaration",
+  "updateNominatedLossPayee",
+  "updateJointlyInsuredParty",
   "updatePolicy",
   "updatePolicyContact",
   "updateExportContract",
+  "updateExportContractAgent",
+  "updateExportContractAgentService",
+  "updateExportContractAgentServiceCharge",
+  "updatePrivateMarket",
   "updateSectionReview",
   "updateEligibility",
+  "updateCompanyDifferentTradingAddress",
   "referenceNumber",
   "applications",
   // account
@@ -327,6 +578,8 @@ var CUSTOM_RESOLVERS = [
   "sendEmailConfirmEmailAddress",
   "sendEmailPasswordResetLink",
   "sendEmailReactivateAccountLink",
+  "updateLossPayeeFinancialDetailsUk",
+  "updateLossPayeeFinancialDetailsInternational",
   "verifyAccountEmailAddress",
   "verifyAccountPasswordResetToken",
   "verifyAccountReactivationToken",
@@ -338,8 +591,8 @@ var CUSTOM_RESOLVERS = [
   "declarationHowDataWillBeUseds",
   "deleteApplicationByReferenceNumber",
   "getCompaniesHouseInformation",
+  "getApplicationByReferenceNumber",
   "submitApplication",
-  "updateCompanyAndCompanyAddress",
   // feedback
   "createFeedbackAndSendEmail",
   "getApimCisCountries",
@@ -350,13 +603,19 @@ if (isDevEnvironment) {
     "accounts",
     "addAndGetOTP",
     "createApplications",
+    "createAnAbandonedApplication",
     "createBuyer",
     "deleteAnAccount",
     "deleteApplications",
-    "getAccountPasswordResetToken"
+    "getAccountPasswordResetToken",
+    "updateAccountStatus"
   );
 }
 var ALLOWED_GRAPHQL_RESOLVERS = [...DEFAULT_RESOLVERS, ...CUSTOM_RESOLVERS];
+
+// constants/supported-currencies/index.ts
+var SUPPORTED_CURRENCIES = ["EUR", "GBP", "JPY", "USD"];
+var GBP = "GBP";
 
 // constants/application/versions/index.ts
 var VERSIONS = [
@@ -366,7 +625,16 @@ var VERSIONS = [
     MAXIMUM_BUYER_CAN_OWE: 5e5,
     TOTAL_VALUE_OF_CONTRACT: 5e5,
     DEFAULT_FINAL_DESTINATION_KNOWN: true,
-    DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: false
+    DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: false,
+    BROKER_ADDRESS_AS_MULTIPLE_FIELDS: true
+  },
+  {
+    VERSION_NUMBER: "2",
+    OVER_500K_SUPPORT: true,
+    DEFAULT_FINAL_DESTINATION_KNOWN: null,
+    DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: null,
+    DEFAULT_CURRENCY: GBP,
+    BROKER_ADDRESS_AS_MULTIPLE_FIELDS: false
   }
 ];
 var versions_default = VERSIONS;
@@ -383,7 +651,7 @@ var getApplicationDefinition = (versionNumber) => {
 var get_application_definition_default = getApplicationDefinition;
 
 // constants/application/versions/latest.ts
-var LATEST_VERSION_NUMBER = "1";
+var LATEST_VERSION_NUMBER = "2";
 var latest_default = LATEST_VERSION_NUMBER;
 
 // constants/application/index.ts
@@ -393,12 +661,28 @@ var APPLICATION = {
   DEAL_TYPE: "EXIP",
   SUBMISSION_COUNT_DEFAULT: 0,
   SUBMISSION_DEADLINE_IN_MONTHS: 1,
+  ALL_SECTIONS_ROUTE: "/all-sections",
+  SUBMISSION_DEADLINE_EMAIL: {
+    REMINDER_DAYS: 2,
+    START_TIME_LIMIT_HOURS: 0,
+    START_TIME_LIMIT_MINUTES: 0,
+    START_TIME_LIMIT_SECONDS: 0,
+    START_TIME_LIMIT_MS: 0,
+    END_TIME_LIMIT_HOURS: 23,
+    END_TIME_LIMIT_MINUTES: 59,
+    END_TIME_LIMIT_SECONDS: 59,
+    END_TIME_LIMIT_MS: 999
+  },
   SUBMISSION_TYPE: {
     MIA: "Manual Inclusion Application"
   },
   POLICY_TYPE: {
     SINGLE: "Single contract policy",
-    MULTIPLE: "Multiple contract policy"
+    MULTIPLE: "Multiple contract policy",
+    ABBREVIATED: {
+      SINGLE: "Single",
+      MULTIPLE: "Multiple"
+    }
   },
   POLICY: {
     TOTAL_VALUE_OF_CONTRACT: {
@@ -410,21 +694,54 @@ var APPLICATION = {
   },
   STATUS: {
     IN_PROGRESS: "In progress",
-    SUBMITTED: "Submitted to UKEF"
+    SUBMITTED: "Submitted to UKEF",
+    ABANDONED: "Abandoned"
   },
   DEFAULT_FINAL_DESTINATION_KNOWN: LATEST_VERSION.DEFAULT_FINAL_DESTINATION_KNOWN,
-  DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: LATEST_VERSION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER
+  DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: LATEST_VERSION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER,
+  DEFAULT_CURRENCY: LATEST_VERSION.DEFAULT_CURRENCY,
+  EXPORT_CONTRACT: {
+    AGENT_SERVICE_CHARGE: {
+      METHOD: {
+        FIXED_SUM: "Fixed sum",
+        PERCENTAGE: "Percentage"
+      }
+    }
+  },
+  GET_QUERY: "id eligibility { id } buyer { id companyOrOrganisationName } company { id } exportContract { id } nominatedLossPayee { id } policy { id } sectionReview { id } owner { id email firstName lastName } referenceNumber submissionDeadline status "
 };
 var application_default = APPLICATION;
 
 // constants/cover-period/index.ts
 var COVER_PERIOD = {
   LESS_THAN_2_YEARS: {
-    DB_ID: 1
+    DB_ID: 1,
+    VALUE: "1 to 24 months"
   },
   MORE_THAN_2_YEARS: {
-    DB_ID: 2
+    DB_ID: 2,
+    VALUE: "More than 2 years"
   }
+};
+
+// constants/cron/index.ts
+var CRON_DESCRIPTION_ACCOUNT_UPDATE_UNVERIFIED = "Update unverified accounts (over 24hrs) to isInactive";
+var CRON_DESCRIPTION_APPLICATION_UPDATE_INACTIVE = "Update inactive applications (over 30 days) to Abandoned";
+var CRON_DESCRIPTION_APPLICATION_SUBMISSION_DEADLINE_EMAIL = "Email application submission deadline reminder";
+
+// constants/date-format.ts
+var DATE_FORMAT = {
+  DEFAULT: "d MMMM yyyy",
+  HOURS_AND_MINUTES: "HH:mm",
+  SHORT_MONTH: "d MMM yyyy",
+  XLSX: "dd-MMM-yy"
+};
+
+// constants/eligibility.ts
+var ELIGIBILITY = {
+  MAX_COVER_AMOUNT_IN_GBP: 5e5,
+  MAX_COVER_PERIOD_MONTHS: 24,
+  MAX_COVER_PERIOD_YEARS: 2
 };
 
 // constants/external-apis.ts
@@ -440,13 +757,20 @@ var EXTERNAL_API_DEFINITIONS = {
       NO: "No",
       ILC: "ILC Only",
       CILC: "CILC Only",
-      REFER: "Refer"
+      REFER: "Refer",
+      UNLISTED: "Unlisted"
     },
     NBI_ISSUE_AVAILABLE: {
       YES: "Y",
       NO: "N"
     },
-    INVALID_COUNTRIES: ["EC Market n/k", "Non EC Market n/k", "Non UK", "Third Country", "Eastern and Southern African Trade and Development Bank"]
+    INVALID_COUNTRIES: ["EC Market n/k", "Non EC Market n/k", "Non UK", "Third Country", "Eastern and Southern African Trade and Development Bank"],
+    INVALID_CURRENCIES: ["Gold"]
+  },
+  COMPANIES_HOUSE: {
+    COMPANY_STATUS: {
+      ACTIVE: "active"
+    }
   }
 };
 var EXTERNAL_API_MAPPINGS = {
@@ -486,23 +810,58 @@ var FIELD_VALUES = {
   NO: "No"
 };
 
-// constants/supported-currencies/index.ts
-var SUPPORTED_CURRENCIES = ["EUR", "GBP", "USD"];
-
 // constants/total-contract-value/index.ts
 var TOTAL_CONTRACT_VALUE = {
   LESS_THAN_500K: {
-    DB_ID: 1
+    DB_ID: 1,
+    VALUE: "Less than 500k"
   },
   MORE_THAN_500K: {
-    DB_ID: 2
+    DB_ID: 2,
+    VALUE: "More than 500k"
   },
-  LESS_THAN_250k: {
-    DB_ID: 3
+  LESS_THAN_250K: {
+    DB_ID: 3,
+    VALUE: "Less than 250k"
   },
-  MORE_THAN_250k: {
-    DB_ID: 4
-  }
+  MORE_THAN_250K: {
+    DB_ID: 4,
+    VALUE: "More than 250k"
+  },
+  AMOUNT_250K: 25e4
+};
+
+// constants/XLSX-CONFIG/INDEXES/index.ts
+var TITLE_INDEXES = () => ({
+  HEADER: 1,
+  EXPORTER_CONTACT_DETAILS: 9,
+  KEY_INFORMATION: 15,
+  ELIGIBILITY: 21,
+  EXPORTER_BUSINESS: 31,
+  POLICY: 47,
+  BUYER: 60,
+  EXPORT_CONTRACT: 69,
+  DECLARATIONS: 75
+});
+var INDEXES = () => ({
+  TITLES: TITLE_INDEXES(),
+  COMPANY_ADDRESS: 33,
+  COMPANY_SIC_CODES: 34,
+  BROKER_ADDRESS: 59,
+  BUYER_ADDRESS: 62,
+  LOSS_PAYEE_ADDRESS: 63,
+  AGENT_ADDRESS: 0
+});
+var incrementIndexes = (indexes) => {
+  const modified = indexes;
+  modified.BROKER_ADDRESS += 1;
+  modified.BUYER_ADDRESS += 1;
+  modified.LOSS_PAYEE_ADDRESS += 1;
+  modified.TITLES.BUYER += 1;
+  modified.TITLES.DECLARATIONS += 1;
+  modified.TITLES.EXPORT_CONTRACT += 1;
+  modified.TITLES.POLICY += 1;
+  return modified;
 };
 
 // helpers/policy-type/index.ts
@@ -511,14 +870,11 @@ var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TY
 
 // constants/XLSX-CONFIG/index.ts
 var {
-  POLICY: {
-    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE2 }
-  },
-  EXPORTER_BUSINESS: {
-    BROKER: { USING_BROKER }
-  }
-} = insurance_default;
+  TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE2 },
+  USING_BROKER
+} = POLICY;
 var XLSX_ROW_INDEXES = (application2) => {
+<<<<<<< HEAD
   const { policy, broker } = application2;
   const TITLES = {
     HEADER: 1,
@@ -543,11 +899,46 @@ var XLSX_ROW_INDEXES = (application2) => {
   let isUsingBroker = false;
   if (isMultiplePolicyType(policyType)) {
     isMultiplePolicy = true;
+=======
+  const {
+    broker,
+    buyer: {
+      buyerTradingHistory: { exporterHasTradedWithBuyer, outstandingPayments: buyerHasOutstandingPayments },
+      relationship: { exporterHasPreviousCreditInsuranceWithBuyer }
+    },
+    company: {
+      differentTradingAddress: { fullAddress: hasDifferentTradingAddress },
+      hasDifferentTradingName
+    },
+    eligibility: { totalContractValue },
+    exportContract: {
+      agent: {
+        isUsingAgent,
+        service: { agentIsCharging }
+      },
+      privateMarket: { attempted: attemptedPrivateMarket }
+    },
+    nominatedLossPayee: { isAppointed: nominatedLossPayeeAppointed },
+    policy: {
+      jointlyInsuredParty: { requested: requestedJointlyInsuredParty }
+    },
+    policyContact: { isSameAsOwner: policyContactIsSameAsOwner }
+  } = application2;
+  const isMultiplePolicy = isMultiplePolicyType(application2.policy[POLICY_TYPE2]);
+  let indexes = INDEXES();
+  if (hasDifferentTradingAddress) {
+    indexes.ALTERNATIVE_TRADING_ADDRESS = 37;
+    indexes = incrementIndexes(indexes);
+>>>>>>> main-application-no-pdf
   }
-  if (broker[USING_BROKER]) {
-    isUsingBroker = true;
+  if (hasDifferentTradingName) {
+    indexes = incrementIndexes(indexes);
+  }
+  if (hasDifferentTradingName && hasDifferentTradingAddress) {
+    indexes.ALTERNATIVE_TRADING_ADDRESS = 38;
   }
   if (isMultiplePolicy) {
+<<<<<<< HEAD
     TITLES.EXPORTER_BUSINESS += 1;
     TITLES.BUYER += 1;
     TITLES.ELIGIBILITY += 1;
@@ -562,8 +953,83 @@ var XLSX_ROW_INDEXES = (application2) => {
     TITLES.BUYER += 3;
     TITLES.ELIGIBILITY += 3;
     TITLES.DECLARATIONS += 3;
+=======
+    indexes.TITLES.BUYER += 1;
+    indexes.TITLES.DECLARATIONS += 1;
+    indexes.TITLES.EXPORT_CONTRACT += 1;
+    indexes.BROKER_ADDRESS += 1;
+    indexes.BUYER_ADDRESS += 1;
+    indexes.BUYER_CONTACT_DETAILS += 1;
+    indexes.LOSS_PAYEE_ADDRESS += 1;
   }
-  return INDEXES;
+  if (broker[USING_BROKER]) {
+    indexes.TITLES.BUYER += 3;
+    indexes.TITLES.DECLARATIONS += 3;
+    indexes.TITLES.EXPORT_CONTRACT += 3;
+    indexes.BUYER_ADDRESS += 3;
+    indexes.LOSS_PAYEE_ADDRESS += 3;
+>>>>>>> main-application-no-pdf
+  }
+  if (policyContactIsSameAsOwner === false) {
+    indexes.TITLES.BUYER += 2;
+    indexes.TITLES.DECLARATIONS += 2;
+    indexes.TITLES.EXPORT_CONTRACT += 2;
+    indexes.LOSS_PAYEE_ADDRESS += 2;
+    indexes.BROKER_ADDRESS += 2;
+    indexes.BUYER_ADDRESS += 2;
+  }
+  if (requestedJointlyInsuredParty) {
+    indexes.BROKER_ADDRESS += 3;
+    indexes.BUYER_ADDRESS += 3;
+    indexes.LOSS_PAYEE_ADDRESS += 3;
+    indexes.TITLES.BUYER += 3;
+    indexes.TITLES.DECLARATIONS += 3;
+    indexes.TITLES.EXPORT_CONTRACT += 3;
+  }
+  if (nominatedLossPayeeAppointed) {
+    indexes.TITLES.BUYER += 5;
+    indexes.TITLES.DECLARATIONS += 5;
+    indexes.TITLES.EXPORT_CONTRACT += 5;
+    indexes.BUYER_ADDRESS += 5;
+  }
+  if (exporterHasTradedWithBuyer) {
+    indexes.TITLES.DECLARATIONS += 2;
+    indexes.TITLES.EXPORT_CONTRACT += 2;
+    if (buyerHasOutstandingPayments) {
+      indexes.TITLES.DECLARATIONS += 2;
+      indexes.TITLES.EXPORT_CONTRACT += 2;
+    }
+  }
+  if (exporterHasPreviousCreditInsuranceWithBuyer) {
+    indexes.TITLES.DECLARATIONS += 1;
+    indexes.TITLES.EXPORT_CONTRACT += 1;
+  }
+  if (attemptedPrivateMarket) {
+    indexes.TITLES.DECLARATIONS += 1;
+  }
+  if (isUsingAgent) {
+    indexes.TITLES.DECLARATIONS += 5;
+    indexes.AGENT_ADDRESS = 75;
+    if (isMultiplePolicy) {
+      indexes.AGENT_ADDRESS += 1;
+      indexes.TITLES.DECLARATIONS += 1;
+    }
+    if (attemptedPrivateMarket) {
+      indexes.TITLES.DECLARATIONS += 1;
+      indexes.AGENT_ADDRESS += 1;
+    }
+  }
+  if (agentIsCharging) {
+    indexes.TITLES.DECLARATIONS += 1;
+    indexes.AGENT_ADDRESS += 1;
+  }
+  const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
+  if (totalContractValueOverThreshold) {
+    indexes.TITLES.DECLARATIONS += 1;
+    indexes.TITLES.EXPORT_CONTRACT += 1;
+    indexes.AGENT_ADDRESS += 1;
+  }
+  return indexes;
 };
 var XLSX_CONFIG = {
   KEY: {
@@ -584,26 +1050,60 @@ var XLSX_CONFIG = {
   }
 };
 
+// constants/validation.ts
+var MAXIMUM_CHARACTERS = {
+  ABOUT_GOODS_OR_SERVICES_DESCRIPTION: 1e3,
+  ACCOUNT_NUMBER: 8,
+  AGENT_NAME: 800,
+  AGENT_SERVICE_DESCRIPTION: 1e3,
+  BIC_SWIFT_CODE: 11,
+  BROKER_NAME: 800,
+  BUSINESS: {
+    GOODS_OR_SERVICES_DESCRIPTION: 1e3
+  },
+  BUYER: {
+    COMPANY_OR_ORGANISATION: 200,
+    REGISTRATION_NUMBER: 200,
+    PREVIOUS_CREDIT_INSURANCE_COVER: 1e3
+  },
+  COMPANY_DIFFERENT_TRADING_NAME: 200,
+  CONNECTION_WITH_BUYER_DESCRIPTION: 1e3,
+  CREDIT_PERIOD_WITH_BUYER: 1e3,
+  DECLINED_BY_PRIVATE_MARKET_DESCRIPTION: 1e3,
+  EMAIL: 300,
+  FEEDBACK: {
+    IMPROVEMENT: 1200,
+    OTHER_COMMENTS: 1200
+  },
+  FULL_ADDRESS: 500,
+  IBAN: 34,
+  LOSS_PAYEE_NAME: 200,
+  PAYMENT_TERMS_DESCRIPTION: 1e3,
+  PERCENTAGE: 100,
+  POLICY_CONTACT_NAME: 400,
+  SORT_CODE: 6
+};
+
 // constants/index.ts
 import_dotenv.default.config();
 var GBP_CURRENCY_CODE = "GBP";
 var DATE_24_HOURS_FROM_NOW = () => {
-  const now = /* @__PURE__ */ new Date();
-  const day = now.getDate();
-  const tomorrow = new Date(now.setDate(day + 1));
+  const now2 = /* @__PURE__ */ new Date();
+  const day = now2.getDate();
+  const tomorrow = new Date(now2.setDate(day + 1));
   return tomorrow;
 };
 var DATE_24_HOURS_IN_THE_PAST = () => {
-  const now = /* @__PURE__ */ new Date();
-  const day = now.getDate();
-  const yesterday = new Date(now.setDate(day - 1));
+  const now2 = /* @__PURE__ */ new Date();
+  const day = now2.getDate();
+  const yesterday = new Date(now2.setDate(day - 1));
   return yesterday;
 };
 var DATE_30_MINUTES_FROM_NOW = () => {
-  const now = /* @__PURE__ */ new Date();
+  const now2 = /* @__PURE__ */ new Date();
   const minutes = 30;
   const milliseconds = 6e4;
-  const future = new Date(now.getTime() + minutes * milliseconds);
+  const future = new Date(now2.getTime() + minutes * milliseconds);
   return future;
 };
 var ACCOUNT2 = {
@@ -647,10 +1147,10 @@ var ACCOUNT2 = {
       ALGORITHM: "RS256"
     },
     SESSION_EXPIRY: () => {
-      const now = /* @__PURE__ */ new Date();
+      const now2 = /* @__PURE__ */ new Date();
       const hours = 12;
       const seconds = 60 * 60 * 1e3;
-      const future = new Date(now.getTime() + hours * seconds);
+      const future = new Date(now2.getTime() + hours * seconds);
       return future;
     }
   },
@@ -662,10 +1162,36 @@ var ACCOUNT2 = {
    */
   MAX_AUTH_RETRIES_TIMEFRAME: DATE_24_HOURS_IN_THE_PAST()
 };
+var DEFAULT_ENCRYPTION_SAVE_OBJECT = {
+  value: "",
+  iv: ""
+};
+var FINANCIAL_DETAILS = {
+  ENCRYPTION: {
+    CIPHER: {
+      ENCODING: "hex",
+      STRING_ENCODING: "base64",
+      ENCRYPTION_METHOD: "aes-256-cbc",
+      OUTPUT_ENCODING: "utf-8"
+    },
+    KEY: {
+      ALGORITHM: "sha512",
+      SIGNATURE: String(process.env.LOSS_PAYEE_ENCRYPTION_KEY),
+      SUBSTRING_INDEX_START: 0,
+      SUBSTRING_INDEX_END: 32
+    },
+    IV: {
+      BYTES_SIZE: 16,
+      ENCODING: "base64",
+      SLICE_INDEX_START: 0,
+      SLICE_INDEX_END: 16
+    }
+  }
+};
 var EMAIL_TEMPLATE_IDS = {
   ACCOUNT: {
     CONFIRM_EMAIL: "24022e94-171c-4044-b0ee-d22418116575",
-    SECURITY_CODE: "b92650d1-9187-4510-ace2-5eec7ca7e626",
+    ACCESS_CODE: "b92650d1-9187-4510-ace2-5eec7ca7e626",
     PASSWORD_RESET: "86d5f582-e1d3-4b55-b103-50141401fd13",
     REACTIVATE_ACCOUNT_CONFIRM_EMAIL: "2abf173a-52fc-4ec8-b28c-d7a862b8cf37"
   },
@@ -684,7 +1210,8 @@ var EMAIL_TEMPLATE_IDS = {
         NOTIFICATION_ANTI_BRIBERY: "8be12c98-b2c7-4992-8920-925aa37b6391",
         NOTIFICATION_ANTI_BRIBERY_AND_TRADING_HISTORY: "7f0541dd-1dae-4d51-9ebc-87d2a624f8d2",
         NO_DOCUMENTS: "65b517c6-ae86-470b-9448-194ae5ac44bb"
-      }
+      },
+      DEADLINE_REMINDER: "e8e5ba73-96da-46f1-b96e-2b1909be6f3d"
     }
   },
   FEEDBACK: {
@@ -706,22 +1233,559 @@ var FEEDBACK = {
   }
 };
 var ACCEPTED_FILE_TYPES = [".xlsx"];
-var DATE_FORMAT = {
-  DEFAULT: "d MMMM yyyy",
-  HOURS_AND_MINUTES: "HH:mm"
+var ORDNANCE_SURVEY_QUERY_URL = "/search/places/v1/postcode?postcode=";
+
+// cron/account/unverified-account-cron-job.ts
+import_dotenv2.default.config();
+var { CRON_SCHEDULE_UNVERIFIED_ACCOUNT } = process.env;
+var updateUnverifiedAccountsJob = {
+  cronExpression: String(CRON_SCHEDULE_UNVERIFIED_ACCOUNT),
+  description: CRON_DESCRIPTION_ACCOUNT_UPDATE_UNVERIFIED,
+  task: update_unverified_accounts_default
 };
+var unverified_account_cron_job_default = updateUnverifiedAccountsJob;
+
+// cron/account/index.ts
+var accountCronSchedulerJobs = [unverified_account_cron_job_default];
+var account_default2 = accountCronSchedulerJobs;
+
+// cron/application/inactive-application-cron-job.ts
+var import_dotenv3 = __toESM(require("dotenv"));
+
+// helpers/get-inactive-applications/index.ts
+var { IN_PROGRESS } = APPLICATION.STATUS;
+var getInactiveApplications = async (context) => {
+  try {
+    console.info("Getting inactive applications - getInactiveApplications helper");
+    const applications = await context.query.Application.findMany({
+      where: {
+        AND: [{ status: { in: [IN_PROGRESS] } }, { submissionDeadline: { lt: /* @__PURE__ */ new Date() } }]
+      },
+      query: "id status"
+    });
+    return applications;
+  } catch (err) {
+    console.error("Error getting inactive applications (getInactiveApplications helper) %O", err);
+    throw new Error(`Error getting inactive applications (getInactiveApplications helper) ${err}`);
+  }
+};
+var get_inactive_applications_default = getInactiveApplications;
+
+// helpers/map-inactive-applications/index.ts
+var mapInactiveApplications = (applications) => {
+  const mappedArray = applications.map((application2) => {
+    const mapped = {
+      where: { id: application2.id },
+      data: {
+        status: APPLICATION.STATUS.ABANDONED,
+        previousStatus: application2.status,
+        updatedAt: /* @__PURE__ */ new Date()
+      }
+    };
+    return mapped;
+  });
+  return mappedArray;
+};
+var map_inactive_applications_default = mapInactiveApplications;
+
+// helpers/map-and-update-inactive-applications/index.ts
+var mapAndUpdateInactiveApplications = async (applications, context) => {
+  try {
+    console.info("Mapping and updating inactive applications - mapAndUpdateInactiveApplications");
+    const updateData = map_inactive_applications_default(applications);
+    await context.db.Application.updateMany({
+      data: updateData
+    });
+  } catch (err) {
+    console.error("Error mapping and updating inactive applications %O", err);
+    throw new Error(`Error mapping and updating inactive applications ${err}`);
+  }
+};
+var map_and_update_inactive_applications_default = mapAndUpdateInactiveApplications;
+
+// helpers/update-inactive-applications/index.ts
+var updateInactiveApplications = async (context) => {
+  try {
+    console.info("Getting and updating inactive applications");
+    const applications = await get_inactive_applications_default(context);
+    if (applications.length) {
+      await map_and_update_inactive_applications_default(applications, context);
+    }
+    return {
+      success: true
+    };
+  } catch (err) {
+    console.error("Error getting and updating inactive applications %O", err);
+    throw new Error(`Error getting and updating inactive applications ${err}`);
+  }
+};
+var update_inactive_applications_default = updateInactiveApplications;
+
+// cron/application/inactive-application-cron-job.ts
+import_dotenv3.default.config();
+var { CRON_SCHEDULE_INACTIVE_APPLICATION } = process.env;
+var updateInactiveApplicationsJob = {
+  cronExpression: String(CRON_SCHEDULE_INACTIVE_APPLICATION),
+  description: CRON_DESCRIPTION_APPLICATION_UPDATE_INACTIVE,
+  task: update_inactive_applications_default
+};
+var inactive_application_cron_job_default = updateInactiveApplicationsJob;
+
+// cron/application/email-submission-deadline-reminder-cron-job.ts
+var import_dotenv8 = __toESM(require("dotenv"));
+
+// helpers/get-start-and-end-time-of-date/index.ts
+var {
+  START_TIME_LIMIT_HOURS,
+  START_TIME_LIMIT_MINUTES,
+  START_TIME_LIMIT_MS,
+  START_TIME_LIMIT_SECONDS,
+  END_TIME_LIMIT_HOURS,
+  END_TIME_LIMIT_MINUTES,
+  END_TIME_LIMIT_MS,
+  END_TIME_LIMIT_SECONDS
+} = APPLICATION.SUBMISSION_DEADLINE_EMAIL;
+var getStartAndEndTimeOfDate = (date) => {
+  const startSet = date.setHours(START_TIME_LIMIT_HOURS, START_TIME_LIMIT_MINUTES, START_TIME_LIMIT_SECONDS, START_TIME_LIMIT_MS);
+  const endSet = date.setHours(END_TIME_LIMIT_HOURS, END_TIME_LIMIT_MINUTES, END_TIME_LIMIT_SECONDS, END_TIME_LIMIT_MS);
+  return {
+    startTime: new Date(startSet),
+    endTime: new Date(endSet)
+  };
+};
+var get_start_and_end_time_of_date_default = getStartAndEndTimeOfDate;
+
+// helpers/date/index.ts
+var import_date_fns = require("date-fns");
+var dateIsInThePast = (targetDate) => {
+  const now2 = /* @__PURE__ */ new Date();
+  return (0, import_date_fns.isAfter)(now2, targetDate);
+};
+var dateInTheFutureByDays = (date, days) => new Date(date.setDate(date.getDate() + days));
+
+// helpers/get-expiring-applications/index.ts
+var { IN_PROGRESS: IN_PROGRESS2 } = APPLICATION.STATUS;
+var { REMINDER_DAYS } = APPLICATION.SUBMISSION_DEADLINE_EMAIL;
+var getExpiringApplications = async (context) => {
+  try {
+    console.info("Getting expiring applications - getExpiringApplications helper");
+    const today = /* @__PURE__ */ new Date();
+    const reminderDays = dateInTheFutureByDays(today, REMINDER_DAYS);
+    const { startTime, endTime } = get_start_and_end_time_of_date_default(reminderDays);
+    const applications = await context.query.Application.findMany({
+      where: {
+        AND: [{ status: { in: [IN_PROGRESS2] } }, { submissionDeadline: { gte: startTime, lte: endTime } }]
+      },
+      query: APPLICATION.GET_QUERY
+    });
+    return applications;
+  } catch (err) {
+    console.error("Error getting expiring applications (getExpiringApplications helper) %O", err);
+    throw new Error(`Error getting expiring applications (getExpiringApplications helper) ${err}`);
+  }
+};
+var get_expiring_applications_default = getExpiringApplications;
+
+// helpers/format-date/index.ts
+var import_date_fns2 = require("date-fns");
+var formatDate = (timestamp3, dateFormat = DATE_FORMAT.DEFAULT) => (0, import_date_fns2.format)(new Date(timestamp3), dateFormat);
+var format_date_default = formatDate;
+
+// helpers/generate-application-url/index.ts
+var import_dotenv4 = __toESM(require("dotenv"));
+import_dotenv4.default.config();
+var baseUrl = String(process.env.APPLICATION_URL);
+var generateApplicationUrl = (referenceNumber) => `${baseUrl}/${referenceNumber}${APPLICATION.ALL_SECTIONS_ROUTE}`;
+var generate_application_url_default = generateApplicationUrl;
+
+// helpers/map-application-submission-deadline-variables/index.ts
+var mapApplicationSubmissionDeadlineVariables = (application2) => {
+  const { submissionDeadline, owner, referenceNumber, buyer } = application2;
+  const { email, firstName, lastName } = owner;
+  const { companyOrOrganisationName } = buyer;
+  return {
+    email,
+    name: `${firstName} ${lastName}`,
+    referenceNumber: String(referenceNumber),
+    applicationUrl: generate_application_url_default(referenceNumber),
+    buyerName: application2.buyer.companyOrOrganisationName ? String(companyOrOrganisationName) : "",
+    submissionDeadline: format_date_default(new Date(submissionDeadline))
+  };
+};
+var map_application_submission_deadline_variables_default = mapApplicationSubmissionDeadlineVariables;
+
+// emails/index.ts
+var import_dotenv7 = __toESM(require("dotenv"));
+
+// integrations/notify/index.ts
+var import_dotenv5 = __toESM(require("dotenv"));
+var import_notifications_node_client = require("notifications-node-client");
+import_dotenv5.default.config();
+var notifyKey = process.env.GOV_NOTIFY_API_KEY;
+var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
+var notify = {
+  /**
+   * sendEmail
+   * Send an email via Notify API
+   * @param {String} Template ID
+   * @param {String} Email address
+   * @param {Object} Custom variables for the email template
+   * @param {Buffer} File buffer
+   * @returns {Object} Success flag and email recipient
+   */
+  sendEmail: async (templateId, sendToEmailAddress, variables, file) => {
+    try {
+      console.info("Calling Notify API. templateId: %s", templateId);
+      const personalisation = variables;
+      if (file) {
+        personalisation.linkToFile = await notifyClient.prepareUpload(file, { confirmEmailBeforeDownload: true });
+      }
+      await notifyClient.sendEmail(templateId, sendToEmailAddress, {
+        personalisation,
+        reference: null
+      });
+      return {
+        success: true,
+        emailRecipient: sendToEmailAddress
+      };
+    } catch (err) {
+      console.error("Error calling Notify API. Unable to send email %O", err);
+      throw new Error(`Calling Notify API. Unable to send email ${err}`);
+    }
+  }
+};
+var notify_default = notify;
+
+// emails/call-notify/index.ts
+var callNotify = async (templateId, emailAddress, variables, file) => {
+  try {
+    let emailResponse;
+    if (file) {
+      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables, file);
+    } else {
+      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables);
+    }
+    if (emailResponse.success) {
+      return emailResponse;
+    }
+    throw new Error(`Sending email ${emailResponse}`);
+  } catch (err) {
+    console.error("Error sending email %O", err);
+    throw new Error(`Sending email ${err}`);
+  }
+};
+
+// emails/confirm-email-address/index.ts
+var confirmEmailAddress = async (emailAddress, urlOrigin, name, verificationHash, id) => {
+  try {
+    console.info("Sending confirm email address email");
+    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
+    const variables = { urlOrigin, name, confirmToken: verificationHash, id };
+    const response = await callNotify(templateId, emailAddress, variables);
+    return response;
+  } catch (err) {
+    console.error("Error sending confirm email address email %O", err);
+    throw new Error(`Sending confirm email address email ${err}`);
+  }
+};
+
+// emails/access-code-email/index.ts
+var accessCodeEmail = async (emailAddress, name, securityCode) => {
+  try {
+    console.info("Sending access code email for account sign in");
+    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.ACCESS_CODE;
+    const variables = { name, securityCode };
+    const response = await callNotify(templateId, emailAddress, variables);
+    return response;
+  } catch (err) {
+    console.error("Error sending access code email for account sign in %O", err);
+    throw new Error(`Sending access code email for account sign in ${err}`);
+  }
+};
+
+// emails/password-reset-link/index.ts
+var passwordResetLink = async (urlOrigin, emailAddress, name, passwordResetHash) => {
+  try {
+    console.info("Sending email for account password reset");
+    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.PASSWORD_RESET;
+    const variables = { urlOrigin, name, passwordResetToken: passwordResetHash };
+    const response = await callNotify(templateId, emailAddress, variables);
+    return response;
+  } catch (err) {
+    console.error("Error sending email for account password reset %O", err);
+    throw new Error(`Sending email for account password reset ${err}`);
+  }
+};
+
+// emails/reactivate-account-link/index.ts
+var reactivateAccountLink = async (urlOrigin, emailAddress, name, reactivationHash) => {
+  try {
+    console.info("Sending email for account reactivation");
+    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.REACTIVATE_ACCOUNT_CONFIRM_EMAIL;
+    const variables = { urlOrigin, name, reactivationToken: reactivationHash };
+    const response = await callNotify(templateId, emailAddress, variables);
+    return response;
+  } catch (err) {
+    console.error("Error sending email for account reactivation %O", err);
+    throw new Error(`Sending email for account reactivation ${err}`);
+  }
+};
+
+// file-system/index.ts
+var import_fs = require("fs");
+var import_path = __toESM(require("path"));
+var fileExists = (filePath) => {
+  const fileBuffer = Buffer.from(filePath);
+  if (fileBuffer.length) {
+    return true;
+  }
+  return false;
+};
+var isAcceptedFileType = (filePath) => {
+  const fileType = import_path.default.extname(filePath);
+  if (ACCEPTED_FILE_TYPES.includes(fileType)) {
+    return true;
+  }
+  return false;
+};
+var readFile = async (filePath) => {
+  try {
+    console.info("Reading file %s", filePath);
+    const file = await import_fs.promises.readFile(filePath);
+    if (fileExists(file) && isAcceptedFileType(filePath)) {
+      return file;
+    }
+    throw new Error("Reading file - does not exist or is unaccepted file type");
+  } catch (err) {
+    console.error("Error reading file %O", err);
+    throw new Error(`Reading file ${err}`);
+  }
+};
+var unlink = async (filePath) => {
+  try {
+    console.info("Deleting file %s", filePath);
+    const file = await readFile(filePath);
+    if (file) {
+      await import_fs.promises.unlink(filePath);
+    }
+    return false;
+  } catch (err) {
+    console.error("Error deleting file %O", err);
+    throw new Error(`Deleting file ${err}`);
+  }
+};
+var fileSystem = {
+  fileExists,
+  isAcceptedFileType,
+  readFile,
+  unlink
+};
+var file_system_default = fileSystem;
+
+// emails/application/index.ts
+var application = {
+  /**
+   * application.submittedEmail
+   * Send "application submitted" email to an account
+   * @param {ApplicationSubmissionEmailVariables} ApplicationSubmissionEmailVariables
+   * @returns {Promise<Object>} callNotify response
+   */
+  submittedEmail: async (variables) => {
+    try {
+      console.info("Sending application submitted email to application owner or provided business contact");
+      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
+      const { emailAddress } = variables;
+      const response = await callNotify(templateId, emailAddress, variables);
+      return response;
+    } catch (err) {
+      console.error("Error sending application submitted email to to application owner or provided business contact %O", err);
+      throw new Error(`Sending application submitted email to to application owner or provided business contact ${err}`);
+    }
+  },
+  /**
+   * application.underwritingTeam
+   * Read CSV file, generate a file buffer
+   * Send "application submitted" email to the underwriting team with a link to CSV
+   * We send a file buffer to Notify and Notify generates a unique URL that is then rendered in the email.
+   * @param {ApplicationSubmissionEmailVariables}
+   * @returns {Promise<Object>} callNotify response
+   */
+  underwritingTeam: async (variables, filePath, templateId) => {
+    try {
+      console.info("Sending application submitted email to underwriting team");
+      const emailAddress = String(process.env.UNDERWRITING_TEAM_EMAIL);
+      const file = await file_system_default.readFile(filePath);
+      if (file) {
+        const fileBuffer = Buffer.from(file);
+        const response = await callNotify(templateId, emailAddress, variables, fileBuffer);
+        await file_system_default.unlink(filePath);
+        return response;
+      }
+      throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
+    } catch (err) {
+      console.error("Error sending application submitted email to underwriting team %O", err);
+      throw new Error(`Sending application submitted email to underwriting team ${err}`);
+    }
+  }
+};
+var application_default2 = application;
+
+// emails/documents/index.ts
+var documentsEmail = async (variables, templateId) => {
+  try {
+    console.info("Sending documents email");
+    const { emailAddress } = variables;
+    const response = await callNotify(templateId, emailAddress, variables);
+    return response;
+  } catch (err) {
+    console.error("Error sending documents email %O", err);
+    throw new Error(`Sending documents email ${err}`);
+  }
+};
+
+// emails/insurance-feedback-email/index.ts
+var import_dotenv6 = __toESM(require("dotenv"));
+
+// helpers/map-feedback-satisfaction/index.ts
+var mapFeedbackSatisfaction = (satisfaction) => FEEDBACK.EMAIL_TEXT[satisfaction];
+var map_feedback_satisfaction_default = mapFeedbackSatisfaction;
+
+// emails/insurance-feedback-email/index.ts
+import_dotenv6.default.config();
+var insuranceFeedbackEmail = async (variables) => {
+  try {
+    console.info("Sending insurance feedback email");
+    const templateId = EMAIL_TEMPLATE_IDS.FEEDBACK.INSURANCE;
+    const emailAddress = process.env.FEEDBACK_EMAIL_RECIPIENT;
+    const emailVariables = variables;
+    emailVariables.time = "";
+    emailVariables.date = "";
+    if (variables.createdAt) {
+      emailVariables.date = format_date_default(variables.createdAt);
+      emailVariables.time = format_date_default(variables.createdAt, "HH:mm:ss");
+    }
+    if (variables.satisfaction) {
+      emailVariables.satisfaction = map_feedback_satisfaction_default(variables.satisfaction);
+    }
+    const response = await callNotify(templateId, emailAddress, emailVariables);
+    return response;
+  } catch (err) {
+    console.error("Error sending insurance feedback email %O", err);
+    throw new Error(`Sending insurance feedback email ${err}`);
+  }
+};
+
+// emails/submission-deadline/index.ts
+var submissionDeadlineEmail = async (emailAddress, submissionDeadlineEmailVariables) => {
+  try {
+    console.info("Sending submission deadline reminder email for %s", submissionDeadlineEmailVariables.referenceNumber);
+    const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.DEADLINE_REMINDER;
+    const response = await callNotify(templateId, emailAddress, submissionDeadlineEmailVariables);
+    return response;
+  } catch (err) {
+    console.error("Error sending submission deadline email for applicationId %s - %O", submissionDeadlineEmailVariables.referenceNumber, err);
+    throw new Error(`Sending submission deadline email for ${submissionDeadlineEmailVariables.referenceNumber} - ${err}`);
+  }
+};
+
+// emails/index.ts
+import_dotenv7.default.config();
+var sendEmail = {
+  confirmEmailAddress,
+  accessCodeEmail,
+  passwordResetLink,
+  reactivateAccountLink,
+  application: application_default2,
+  documentsEmail,
+  insuranceFeedbackEmail,
+  submissionDeadlineEmail
+};
+var emails_default = sendEmail;
+
+// helpers/send-email-application-submission-deadline/send-email/index.ts
+var send = async (applications) => {
+  const promises = applications.map(async (application2) => {
+    const variables = map_application_submission_deadline_variables_default(application2);
+    return emails_default.submissionDeadlineEmail(variables.email, variables);
+  });
+  return Promise.all(promises).then((sent) => {
+    console.info("Application submission deadline emails sent: ", sent.length);
+  }).catch((err) => {
+    console.error("Error sending application submission deadline email (sendEmail.submissionDeadlineEmail) %O", err);
+    throw new Error(`Sending application submission deadline email (sendEmail.submissionDeadlineEmail) ${err}`);
+  });
+};
+var applicationSubmissionDeadineEmail = {
+  send
+};
+var send_email_default = applicationSubmissionDeadineEmail;
+
+// helpers/send-email-application-submission-deadline/index.ts
+var applicationSubmissionDeadlineEmail = async (context) => {
+  try {
+    console.info("Sending application submission deadline email");
+    const applications = await get_expiring_applications_default(context);
+    if (applications.length) {
+      const sentEmails = await send_email_default.send(applications);
+      if (sentEmails.length === applications.length) {
+        return {
+          success: true
+        };
+      }
+      return {
+        success: false
+      };
+    }
+    return {
+      success: true
+    };
+  } catch (err) {
+    console.error("Error sending application submission deadline email (emailApplicationSubmissionDeadlineEmail helper) %O", err);
+    throw new Error(`Sending application submission deadline email (emailApplicationSubmissionDeadlineEmail helper) ${err}`);
+  }
+};
+var send_email_application_submission_deadline_default = applicationSubmissionDeadlineEmail;
+
+// cron/application/email-submission-deadline-reminder-cron-job.ts
+import_dotenv8.default.config();
+var { CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL } = process.env;
+var sendEmailApplicationSubmissionDeadlineJob = {
+  cronExpression: String(CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL),
+  description: CRON_DESCRIPTION_APPLICATION_SUBMISSION_DEADLINE_EMAIL,
+  task: send_email_application_submission_deadline_default
+};
+var email_submission_deadline_reminder_cron_job_default = sendEmailApplicationSubmissionDeadlineJob;
+
+// cron/application/index.ts
+var applicationCronSchedulerJobs = [inactive_application_cron_job_default, email_submission_deadline_reminder_cron_job_default];
+var application_default3 = applicationCronSchedulerJobs;
+
+// cron/index.ts
+var cronJobs = (context) => {
+  console.info("Running cron jobs");
+  cron_job_scheduler_default(account_default2, context);
+  cron_job_scheduler_default(application_default3, context);
+};
+var cron_default = cronJobs;
+
+// schema.ts
+var import_core2 = require("@keystone-6/core");
+var import_access = require("@keystone-6/core/access");
+var import_fields = require("@keystone-6/core/fields");
+var import_fields_document = require("@keystone-6/fields-document");
+var import_date_fns3 = require("date-fns");
 
 // helpers/update-application/index.ts
 var timestamp = async (context, applicationId) => {
   try {
     console.info("Updating application updatedAt timestamp");
-    const now = /* @__PURE__ */ new Date();
+    const now2 = /* @__PURE__ */ new Date();
     const application2 = await context.db.Application.updateOne({
       where: {
         id: applicationId
       },
       data: {
-        updatedAt: now
+        updatedAt: now2
       }
     });
     return application2;
@@ -734,29 +1798,6 @@ var updateApplication = {
   timestamp
 };
 var update_application_default = updateApplication;
-
-// helpers/get-account-by-field/index.ts
-var getAccountByField = async (context, field, value) => {
-  try {
-    console.info("Getting account by field/value $s", `${field}, ${value}`);
-    const accountsArray = await context.db.Account.findMany({
-      where: {
-        [field]: { equals: value }
-      },
-      take: 1
-    });
-    if (!accountsArray?.length || !accountsArray[0]) {
-      console.info("Getting account by field - no account exists with the provided field/value");
-      return false;
-    }
-    const account2 = accountsArray[0];
-    return account2;
-  } catch (err) {
-    console.error("Error getting account by field/value %O", err);
-    throw new Error(`Getting account by field/value ${err}`);
-  }
-};
-var get_account_by_field_default = getAccountByField;
 
 // nullable-checkbox/index.ts
 var import_types = require("@keystone-6/core/types");
@@ -778,9 +1819,12 @@ var nullableCheckboxConfig = (defaultValue) => (
     input: {
       create: {
         arg: import_core.graphql.arg({ type: import_core.graphql.Boolean }),
-        resolve() {
+        resolve(value) {
           if (defaultValue || defaultValue === false) {
             return defaultValue;
+          }
+          if (value || value === false) {
+            return value;
           }
           return null;
         }
@@ -812,6 +1856,19 @@ var nullableCheckbox = (defaultValue) => () => nullableCheckboxConfig(defaultVal
 var nullable_checkbox_default = nullableCheckbox;
 
 // schema.ts
+var {
+  DEAL_TYPE,
+  DEFAULT_CURRENCY,
+  DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER,
+  EXPORT_CONTRACT: { AGENT_SERVICE_CHARGE },
+  LATEST_VERSION: LATEST_VERSION2,
+  POLICY: POLICY3,
+  POLICY_TYPE: POLICY_TYPE3,
+  SUBMISSION_COUNT_DEFAULT,
+  SUBMISSION_DEADLINE_IN_MONTHS,
+  SUBMISSION_TYPE,
+  STATUS
+} = APPLICATION;
 var lists = {
   ReferenceNumber: {
     db: {
@@ -831,14 +1888,14 @@ var lists = {
         isIndexed: true
       }),
       submissionCount: (0, import_fields.integer)({
-        defaultValue: APPLICATION.SUBMISSION_COUNT_DEFAULT,
+        defaultValue: SUBMISSION_COUNT_DEFAULT,
         validation: { isRequired: true }
       }),
       submissionDate: (0, import_fields.timestamp)(),
       submissionDeadline: (0, import_fields.timestamp)(),
       submissionType: (0, import_fields.select)({
-        options: [{ label: APPLICATION.SUBMISSION_TYPE.MIA, value: APPLICATION.SUBMISSION_TYPE.MIA }],
-        defaultValue: APPLICATION.SUBMISSION_TYPE.MIA
+        options: [{ label: SUBMISSION_TYPE.MIA, value: SUBMISSION_TYPE.MIA }],
+        defaultValue: SUBMISSION_TYPE.MIA
       }),
       status: (0, import_fields.text)({
         validation: { isRequired: true }
@@ -851,18 +1908,19 @@ var lists = {
         many: false
       }),
       business: (0, import_fields.relationship)({ ref: "Business" }),
-      company: (0, import_fields.relationship)({ ref: "Company" }),
       broker: (0, import_fields.relationship)({ ref: "Broker" }),
       buyer: (0, import_fields.relationship)({ ref: "Buyer" }),
-      sectionReview: (0, import_fields.relationship)({ ref: "SectionReview" }),
+      company: (0, import_fields.relationship)({ ref: "Company" }),
       declaration: (0, import_fields.relationship)({ ref: "Declaration" }),
+      nominatedLossPayee: (0, import_fields.relationship)({ ref: "NominatedLossPayee" }),
       policyContact: (0, import_fields.relationship)({ ref: "PolicyContact" }),
+      sectionReview: (0, import_fields.relationship)({ ref: "SectionReview" }),
       version: (0, import_fields.text)({
-        defaultValue: APPLICATION.LATEST_VERSION.VERSION_NUMBER,
+        defaultValue: LATEST_VERSION2.VERSION_NUMBER,
         validation: { isRequired: true }
       }),
       dealType: (0, import_fields.text)({
-        defaultValue: APPLICATION.DEAL_TYPE,
+        defaultValue: DEAL_TYPE,
         validation: { isRequired: true },
         db: { nativeType: "VarChar(4)" }
       })
@@ -877,31 +1935,6 @@ var lists = {
               data: {}
             });
             modifiedData.referenceNumber = newReferenceNumber;
-            const { id: exportContractId } = await context.db.ExportContract.createOne({
-              data: {}
-            });
-            modifiedData.exportContract = {
-              connect: {
-                id: exportContractId
-              }
-            };
-            const { id: companyId } = await context.db.Company.createOne({
-              data: {}
-            });
-            modifiedData.company = {
-              connect: {
-                id: companyId
-              }
-            };
-            await context.db.CompanyAddress.createOne({
-              data: {
-                company: {
-                  connect: {
-                    id: companyId
-                  }
-                }
-              }
-            });
             const { id: businessId } = await context.db.Business.createOne({
               data: {}
             });
@@ -926,14 +1959,6 @@ var lists = {
                 id: brokerId
               }
             };
-            const { id: sectionReviewId } = await context.db.SectionReview.createOne({
-              data: {}
-            });
-            modifiedData.sectionReview = {
-              connect: {
-                id: sectionReviewId
-              }
-            };
             const { id: declarationId } = await context.db.Declaration.createOne({
               data: {}
             });
@@ -942,12 +1967,12 @@ var lists = {
                 id: declarationId
               }
             };
-            const now = /* @__PURE__ */ new Date();
-            modifiedData.createdAt = now;
-            modifiedData.updatedAt = now;
-            modifiedData.submissionDeadline = (0, import_date_fns.addMonths)(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
-            modifiedData.submissionType = APPLICATION.SUBMISSION_TYPE.MIA;
-            modifiedData.status = APPLICATION.STATUS.IN_PROGRESS;
+            const now2 = /* @__PURE__ */ new Date();
+            modifiedData.createdAt = now2;
+            modifiedData.updatedAt = now2;
+            modifiedData.submissionDeadline = (0, import_date_fns3.addMonths)(new Date(now2), SUBMISSION_DEADLINE_IN_MONTHS);
+            modifiedData.submissionType = SUBMISSION_TYPE.MIA;
+            modifiedData.status = STATUS.IN_PROGRESS;
             return modifiedData;
           } catch (err) {
             console.error("Error adding default data to a new application. %O", err);
@@ -962,7 +1987,7 @@ var lists = {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
             const { referenceNumber } = item;
-            const { policyContactId, exportContractId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
+            const { policyContactId, businessId, brokerId, declarationId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -983,27 +2008,6 @@ var lists = {
                 }
               }
             });
-            await context.db.ExportContract.updateOne({
-              where: { id: exportContractId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                },
-                finalDestinationKnown: APPLICATION.DEFAULT_FINAL_DESTINATION_KNOWN
-              }
-            });
-            await context.db.Company.updateOne({
-              where: { id: companyId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                }
-              }
-            });
             await context.db.Business.updateOne({
               where: { id: businessId },
               data: {
@@ -1016,16 +2020,6 @@ var lists = {
             });
             await context.db.Broker.updateOne({
               where: { id: brokerId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                }
-              }
-            });
-            await context.db.SectionReview.updateOne({
-              where: { id: sectionReviewId },
               data: {
                 application: {
                   connect: {
@@ -1071,34 +2065,82 @@ var lists = {
     },
     access: import_access.allowAll
   }),
+  LossPayeeFinancialInternational: {
+    fields: {
+      lossPayee: (0, import_fields.relationship)({ ref: "NominatedLossPayee.financialInternational" }),
+      vector: (0, import_fields.relationship)({ ref: "LossPayeeFinancialInternationalVector.financialInternational" }),
+      bankAddress: (0, import_fields.text)({
+        db: { nativeType: "VarChar(500)" }
+      }),
+      bicSwiftCode: (0, import_fields.text)(),
+      iban: (0, import_fields.text)()
+    },
+    access: import_access.allowAll
+  },
+  LossPayeeFinancialInternationalVector: {
+    fields: {
+      financialInternational: (0, import_fields.relationship)({ ref: "LossPayeeFinancialInternational.vector" }),
+      bicSwiftCodeVector: (0, import_fields.text)(),
+      ibanVector: (0, import_fields.text)()
+    },
+    access: import_access.allowAll
+  },
+  LossPayeeFinancialUk: {
+    fields: {
+      lossPayee: (0, import_fields.relationship)({ ref: "NominatedLossPayee.financialUk" }),
+      vector: (0, import_fields.relationship)({ ref: "LossPayeeFinancialUkVector.financialUk" }),
+      accountNumber: (0, import_fields.text)(),
+      bankAddress: (0, import_fields.text)({
+        db: { nativeType: "VarChar(500)" }
+      }),
+      sortCode: (0, import_fields.text)()
+    },
+    access: import_access.allowAll
+  },
+  LossPayeeFinancialUkVector: {
+    fields: {
+      financialUk: (0, import_fields.relationship)({ ref: "LossPayeeFinancialUk.vector" }),
+      accountNumberVector: (0, import_fields.text)(),
+      sortCodeVector: (0, import_fields.text)()
+    },
+    access: import_access.allowAll
+  },
+  NominatedLossPayee: (0, import_core2.list)({
+    fields: {
+      application: (0, import_fields.relationship)({ ref: "Application" }),
+      financialUk: (0, import_fields.relationship)({ ref: "LossPayeeFinancialUk.lossPayee" }),
+      financialInternational: (0, import_fields.relationship)({ ref: "LossPayeeFinancialInternational.lossPayee" }),
+      isAppointed: nullable_checkbox_default(),
+      isLocatedInUk: nullable_checkbox_default(),
+      isLocatedInternationally: nullable_checkbox_default(),
+      name: (0, import_fields.text)({
+        db: { nativeType: "VarChar(200)" }
+      })
+    },
+    access: import_access.allowAll
+  }),
   Policy: {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
-      /**
-       * NOTE:
-       * - For MVP, needPreCreditPeriodCover is part of the eligibility UI flow.
-       * - Post MVP/next phase needPreCreditPeriodCover is part of the application flow.
-       * - To avoid data migration, we save the eligibility answer as part of the "policy", instead of eligibility.
-       * - In the next phase, the defaultValue can be removed, to default null.
-       */
-      needPreCreditPeriodCover: nullable_checkbox_default(APPLICATION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER),
+      jointlyInsuredParty: (0, import_fields.relationship)({ ref: "JointlyInsuredParty.policy" }),
+      needPreCreditPeriodCover: nullable_checkbox_default(DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER),
       policyType: (0, import_fields.select)({
         options: [
-          { label: APPLICATION.POLICY_TYPE.SINGLE, value: APPLICATION.POLICY_TYPE.SINGLE },
-          { label: APPLICATION.POLICY_TYPE.MULTIPLE, value: APPLICATION.POLICY_TYPE.MULTIPLE }
+          { label: POLICY_TYPE3.SINGLE, value: POLICY_TYPE3.SINGLE },
+          { label: POLICY_TYPE3.MULTIPLE, value: POLICY_TYPE3.MULTIPLE }
         ]
       }),
       requestedStartDate: (0, import_fields.timestamp)(),
       contractCompletionDate: (0, import_fields.timestamp)(),
       totalValueOfContract: (0, import_fields.integer)({
         validation: {
-          min: APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT.MINIMUM,
-          max: APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT.MAXIMUM
+          min: POLICY3.TOTAL_VALUE_OF_CONTRACT.MINIMUM,
+          max: POLICY3.TOTAL_VALUE_OF_CONTRACT.MAXIMUM
         }
       }),
       creditPeriodWithBuyer: (0, import_fields.text)(),
       policyCurrencyCode: (0, import_fields.text)({
-        db: { nativeType: "VarChar(1000)" }
+        db: { nativeType: "VarChar(3)" }
       }),
       totalMonthsOfCover: (0, import_fields.integer)(),
       totalSalesToBuyer: (0, import_fields.integer)(),
@@ -1116,22 +2158,53 @@ var lists = {
   PolicyContact: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
-      firstName: (0, import_fields.text)(),
-      lastName: (0, import_fields.text)(),
-      email: (0, import_fields.text)(),
-      position: (0, import_fields.text)(),
+      firstName: (0, import_fields.text)({
+        db: { nativeType: "VarChar(400)" }
+      }),
+      lastName: (0, import_fields.text)({
+        db: { nativeType: "VarChar(400)" }
+      }),
+      email: (0, import_fields.text)({
+        db: { nativeType: "VarChar(300)" }
+      }),
+      position: (0, import_fields.text)({
+        db: { nativeType: "VarChar(50)" }
+      }),
       isSameAsOwner: nullable_checkbox_default()
+    },
+    access: import_access.allowAll
+  }),
+  JointlyInsuredParty: (0, import_core2.list)({
+    fields: {
+      policy: (0, import_fields.relationship)({ ref: "Policy.jointlyInsuredParty" }),
+      requested: nullable_checkbox_default(),
+      companyName: (0, import_fields.text)({
+        db: { nativeType: "VarChar(200)" }
+      }),
+      companyNumber: (0, import_fields.text)({
+        db: { nativeType: "VarChar(100)" }
+      }),
+      countryCode: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
+      })
     },
     access: import_access.allowAll
   }),
   ExportContract: {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
+      agent: (0, import_fields.relationship)({ ref: "ExportContractAgent.exportContract" }),
+      privateMarket: (0, import_fields.relationship)({ ref: "PrivateMarket.exportContract" }),
+      finalDestinationKnown: nullable_checkbox_default(),
+      finalDestinationCountryCode: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
+      }),
       goodsOrServicesDescription: (0, import_fields.text)({
         db: { nativeType: "VarChar(1000)" }
       }),
-      finalDestinationKnown: nullable_checkbox_default(),
-      finalDestinationCountryCode: (0, import_fields.text)()
+      paymentTermsDescription: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
+      })
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -1142,23 +2215,91 @@ var lists = {
     },
     access: import_access.allowAll
   },
+  ExportContractAgent: (0, import_core2.list)({
+    fields: {
+      exportContract: (0, import_fields.relationship)({ ref: "ExportContract.agent" }),
+      service: (0, import_fields.relationship)({ ref: "ExportContractAgentService.agent" }),
+      countryCode: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
+      }),
+      fullAddress: (0, import_fields.text)({
+        db: { nativeType: "VarChar(500)" }
+      }),
+      isUsingAgent: nullable_checkbox_default(),
+      name: (0, import_fields.text)({
+        db: { nativeType: "VarChar(800)" }
+      })
+    },
+    access: import_access.allowAll
+  }),
+  ExportContractAgentService: {
+    fields: {
+      agent: (0, import_fields.relationship)({ ref: "ExportContractAgent.service" }),
+      charge: (0, import_fields.relationship)({ ref: "ExportContractAgentServiceCharge.service" }),
+      agentIsCharging: nullable_checkbox_default(),
+      serviceDescription: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
+      })
+    },
+    access: import_access.allowAll
+  },
+  ExportContractAgentServiceCharge: {
+    fields: {
+      service: (0, import_fields.relationship)({ ref: "ExportContractAgentService.charge" }),
+      percentageCharge: (0, import_fields.integer)(),
+      fixedSumAmount: (0, import_fields.integer)(),
+      fixedSumCurrencyCode: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" },
+        defaultValue: DEFAULT_CURRENCY
+      }),
+      method: (0, import_fields.select)({
+        options: [
+          { label: AGENT_SERVICE_CHARGE.METHOD.FIXED_SUM, value: AGENT_SERVICE_CHARGE.METHOD.FIXED_SUM },
+          { label: AGENT_SERVICE_CHARGE.METHOD.PERCENTAGE, value: AGENT_SERVICE_CHARGE.METHOD.PERCENTAGE }
+        ]
+      }),
+      payableCountryCode: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
+      })
+    },
+    access: import_access.allowAll
+  },
+  PrivateMarket: (0, import_core2.list)({
+    fields: {
+      exportContract: (0, import_fields.relationship)({ ref: "ExportContract.privateMarket" }),
+      attempted: nullable_checkbox_default(),
+      declinedDescription: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
+      })
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      }
+    },
+    access: import_access.allowAll
+  }),
   Account: (0, import_core2.list)({
     fields: {
       createdAt: (0, import_fields.timestamp)(),
       updatedAt: (0, import_fields.timestamp)(),
-      firstName: (0, import_fields.text)({ validation: { isRequired: true } }),
-      lastName: (0, import_fields.text)({ validation: { isRequired: true } }),
-      email: (0, import_fields.text)({ validation: { isRequired: true } }),
+      firstName: (0, import_fields.text)({
+        validation: { isRequired: true },
+        db: { nativeType: "VarChar(400)" }
+      }),
+      lastName: (0, import_fields.text)({
+        validation: { isRequired: true },
+        db: { nativeType: "VarChar(400)" }
+      }),
+      email: (0, import_fields.text)({
+        validation: { isRequired: true },
+        db: { nativeType: "VarChar(300)" }
+      }),
       salt: (0, import_fields.text)({ validation: { isRequired: true } }),
       hash: (0, import_fields.text)({ validation: { isRequired: true } }),
       // isVerified flag will only be true if the account has verified their email address.
-      isVerified: (0, import_fields.checkbox)({ defaultValue: false }),
-      /**
-       * isBlocked flag will only be true if the account has:
-       * - repeatedly attempted sign in
-       * - repeatedly attempted password reset request
-       */
-      isBlocked: (0, import_fields.checkbox)({ defaultValue: false }),
       verificationHash: (0, import_fields.text)(),
       verificationExpiry: (0, import_fields.timestamp)(),
       otpSalt: (0, import_fields.text)(),
@@ -1181,22 +2322,26 @@ var lists = {
       applications: (0, import_fields.relationship)({
         ref: "Application",
         many: true
-      })
-    },
-    hooks: {
-      validateInput: async ({ context, operation, resolvedData }) => {
-        if (operation === "create") {
-          const { email } = resolvedData;
-          const requestedEmail = String(email);
-          const account2 = await get_account_by_field_default(context, account_default.EMAIL, requestedEmail);
-          if (account2) {
-            throw new Error(`Unable to create a new account for ${requestedEmail} - account already exists`);
-          }
-        }
-      }
+      }),
+      status: (0, import_fields.relationship)({ ref: "AccountStatus.account" })
     },
     access: import_access.allowAll
   }),
+  AccountStatus: {
+    fields: {
+      account: (0, import_fields.relationship)({ ref: "Account.status" }),
+      isVerified: (0, import_fields.checkbox)({ defaultValue: false }),
+      /**
+       * isBlocked flag will only be true if the account has:
+       * - repeatedly attempted sign in
+       * - repeatedly attempted password reset request
+       */
+      isBlocked: (0, import_fields.checkbox)({ defaultValue: false }),
+      isInactive: (0, import_fields.checkbox)({ defaultValue: false }),
+      updatedAt: (0, import_fields.timestamp)()
+    },
+    access: import_access.allowAll
+  },
   AuthenticationRetry: (0, import_core2.list)({
     fields: {
       account: (0, import_fields.relationship)({
@@ -1227,9 +2372,13 @@ var lists = {
       }),
       totalYearsExporting: (0, import_fields.integer)(),
       totalEmployeesUK: (0, import_fields.integer)(),
-      totalEmployeesInternational: (0, import_fields.integer)(),
       estimatedAnnualTurnover: (0, import_fields.integer)(),
-      exportsTurnoverPercentage: (0, import_fields.integer)()
+      exportsTurnoverPercentage: (0, import_fields.integer)(),
+      turnoverCurrencyCode: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" },
+        defaultValue: DEFAULT_CURRENCY
+      }),
+      hasCreditControlProcess: nullable_checkbox_default()
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -1244,13 +2393,20 @@ var lists = {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       isUsingBroker: nullable_checkbox_default(),
-      name: (0, import_fields.text)(),
+      name: (0, import_fields.text)({
+        db: { nativeType: "VarChar(800)" }
+      }),
       addressLine1: (0, import_fields.text)(),
       addressLine2: (0, import_fields.text)(),
       town: (0, import_fields.text)(),
       county: (0, import_fields.text)(),
       postcode: (0, import_fields.text)(),
-      email: (0, import_fields.text)()
+      fullAddress: (0, import_fields.text)({
+        db: { nativeType: "VarChar(500)" }
+      }),
+      email: (0, import_fields.text)({
+        db: { nativeType: "VarChar(300)" }
+      })
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -1279,14 +2435,20 @@ var lists = {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       registeredOfficeAddress: (0, import_fields.relationship)({ ref: "CompanyAddress.company" }),
+      differentTradingAddress: (0, import_fields.relationship)({ ref: "CompanyDifferentTradingAddress.company" }),
       sicCodes: (0, import_fields.relationship)({
         ref: "CompanySicCode.company",
         many: true
       }),
-      companyName: (0, import_fields.text)(),
+      companyName: (0, import_fields.text)({
+        db: { nativeType: "VarChar(200)" }
+      }),
       companyNumber: (0, import_fields.text)(),
       dateOfCreation: (0, import_fields.timestamp)(),
       hasDifferentTradingAddress: nullable_checkbox_default(),
+      differentTradingName: (0, import_fields.text)({
+        db: { nativeType: "VarChar(200)" }
+      }),
       hasDifferentTradingName: nullable_checkbox_default(),
       companyWebsite: (0, import_fields.text)(),
       phoneNumber: (0, import_fields.text)(),
@@ -1301,6 +2463,15 @@ var lists = {
     },
     access: import_access.allowAll
   }),
+  CompanyDifferentTradingAddress: (0, import_core2.list)({
+    fields: {
+      company: (0, import_fields.relationship)({ ref: "Company.differentTradingAddress" }),
+      fullAddress: (0, import_fields.text)({
+        db: { nativeType: "VarChar(500)" }
+      })
+    },
+    access: import_access.allowAll
+  }),
   CompanySicCode: (0, import_core2.list)({
     fields: {
       company: (0, import_fields.relationship)({ ref: "Company.sicCodes" }),
@@ -1312,20 +2483,90 @@ var lists = {
   Buyer: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
-      companyOrOrganisationName: (0, import_fields.text)(),
+      companyOrOrganisationName: (0, import_fields.text)({
+        db: { nativeType: "VarChar(200)" }
+      }),
       address: (0, import_fields.text)({
-        db: { nativeType: "VarChar(1000)" }
+        db: { nativeType: "VarChar(500)" }
       }),
       country: (0, import_fields.relationship)({ ref: "Country" }),
-      registrationNumber: (0, import_fields.text)(),
+      registrationNumber: (0, import_fields.text)({
+        db: { nativeType: "VarChar(200)" }
+      }),
       website: (0, import_fields.text)(),
-      contactFirstName: (0, import_fields.text)(),
-      contactLastName: (0, import_fields.text)(),
+      buyerTradingHistory: (0, import_fields.relationship)({ ref: "BuyerTradingHistory.buyer" }),
+      contact: (0, import_fields.relationship)({ ref: "BuyerContact.buyer" }),
+      relationship: (0, import_fields.relationship)({ ref: "BuyerRelationship.buyer" })
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      }
+    },
+    access: import_access.allowAll
+  }),
+  BuyerContact: {
+    fields: {
+      application: (0, import_fields.relationship)({ ref: "Application" }),
+      buyer: (0, import_fields.relationship)({ ref: "Buyer.contact" }),
+      contactFirstName: (0, import_fields.text)({
+        db: { nativeType: "VarChar(200)" }
+      }),
+      contactLastName: (0, import_fields.text)({
+        db: { nativeType: "VarChar(200)" }
+      }),
       contactPosition: (0, import_fields.text)(),
-      contactEmail: (0, import_fields.text)(),
-      canContactBuyer: nullable_checkbox_default(),
+      contactEmail: (0, import_fields.text)({
+        db: { nativeType: "VarChar(300)" }
+      }),
+      canContactBuyer: nullable_checkbox_default()
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      }
+    },
+    access: import_access.allowAll
+  },
+  BuyerRelationship: {
+    fields: {
+      application: (0, import_fields.relationship)({ ref: "Application" }),
+      buyer: (0, import_fields.relationship)({ ref: "Buyer.relationship" }),
       exporterIsConnectedWithBuyer: nullable_checkbox_default(),
-      exporterHasTradedWithBuyer: nullable_checkbox_default()
+      connectionWithBuyerDescription: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
+      }),
+      exporterHasPreviousCreditInsuranceWithBuyer: nullable_checkbox_default(),
+      exporterHasBuyerFinancialAccounts: nullable_checkbox_default(),
+      previousCreditInsuranceWithBuyerDescription: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
+      })
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      }
+    },
+    access: import_access.allowAll
+  },
+  BuyerTradingHistory: (0, import_core2.list)({
+    fields: {
+      application: (0, import_fields.relationship)({ ref: "Application" }),
+      buyer: (0, import_fields.relationship)({ ref: "Buyer.buyerTradingHistory" }),
+      currencyCode: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
+      }),
+      outstandingPayments: nullable_checkbox_default(),
+      failedPayments: nullable_checkbox_default(),
+      exporterHasTradedWithBuyer: nullable_checkbox_default(),
+      totalOutstandingPayments: (0, import_fields.integer)(),
+      totalOverduePayments: (0, import_fields.integer)()
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -1351,13 +2592,14 @@ var lists = {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       buyerCountry: (0, import_fields.relationship)({ ref: "Country" }),
+      coverPeriod: (0, import_fields.relationship)({ ref: "CoverPeriod" }),
+      hasEndBuyer: (0, import_fields.checkbox)(),
       hasMinimumUkGoodsOrServices: (0, import_fields.checkbox)(),
-      validExporterLocation: (0, import_fields.checkbox)(),
       hasCompaniesHouseNumber: (0, import_fields.checkbox)(),
       otherPartiesInvolved: (0, import_fields.checkbox)(),
       paidByLetterOfCredit: (0, import_fields.checkbox)(),
       totalContractValue: (0, import_fields.relationship)({ ref: "TotalContractValue" }),
-      coverPeriod: (0, import_fields.relationship)({ ref: "CoverPeriod" })
+      validExporterLocation: (0, import_fields.checkbox)()
     },
     access: import_access.allowAll
   }),
@@ -1365,9 +2607,10 @@ var lists = {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       eligibility: nullable_checkbox_default(),
-      policy: nullable_checkbox_default(),
       business: nullable_checkbox_default(),
-      buyer: nullable_checkbox_default()
+      buyer: nullable_checkbox_default(),
+      exportContract: nullable_checkbox_default(),
+      policy: nullable_checkbox_default()
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -1593,23 +2836,12 @@ var typeDefs = `
 
   type CreateAnAccountResponse {
     success: Boolean
+    alreadyExists: Boolean
+    isVerified: Boolean
     id: String
-    firstName: String
-    lastName: String
     email: String
     verificationHash: String
-  }
-
-  # fields from registered_office_address object
-  type CompaniesHouseExporterCompanyAddress {
-    addressLine1: String
-    addressLine2: String
-    careOf: String
-    locality: String
-    region: String
-    postalCode: String
-    country: String
-    premises: String
+    isBlocked: Boolean
   }
 
   type CompaniesHouseResponse {
@@ -1622,17 +2854,38 @@ var typeDefs = `
     financialYearEndDate: DateTime
     success: Boolean
     apiError: Boolean
+    isActive: Boolean
+    notFound: Boolean
   }
 
   type CompanyAddress {
     addressLine1: String
     addressLine2: String
-    careOf: String
+    postalCode: String
+    country: String
     locality: String
     region: String
     postalCode: String
-    country: String
+    careOf: String
     premises: String
+  }
+
+  type OrdnanceSurveyAddress {
+    addressLine1: String
+    addressLine2: String
+    postalCode: String
+    country: String
+    county: String
+    town: String
+  }
+
+  input OrdnanceAddressInput  {
+    addressLine1: String
+    addressLine2: String
+    postalCode: String
+    country: String
+    county: String
+    town: String
   }
 
   input OldSicCodes {
@@ -1650,31 +2903,39 @@ var typeDefs = `
     premises: String
   }
 
-  type CompanyAndCompanyAddress {
-    id: ID
-    registeredOfficeAddress: CompanyAddress
+  input CompanyInput {
     companyName: String
     companyNumber: String
-    dateOfCreation: DateTime
-    hasDifferentTradingAddress: Boolean
-    hasDifferentTradingName: Boolean
-    companyWebsite: String
-    phoneNumber: String
-  }
-
-  input CompanyAndCompanyAddressInput {
-    address: CompanyAddressInput
+    dateOfCreation: String
     sicCodes: [String]
     industrySectorNames: [String]
-    companyName: String
-    companyNumber: String
-    dateOfCreation: DateTime
-    hasDifferentTradingAddress: Boolean
-    hasDifferentTradingName: Boolean
-    companyWebsite: String
-    phoneNumber: String
     financialYearEndDate: DateTime
-    oldSicCodes: [OldSicCodes]
+    registeredOfficeAddress: CompanyAddressInput
+    isActive: Boolean
+  }
+
+  input SectionReviewInput {
+    eligibility: Boolean!
+  }
+
+  input ApplicationWhereUniqueInput {
+    id: ID
+    referenceNumber: Int
+  }
+
+  input LossPayeeFinancialDetailsUkInput {
+    id: String
+    accountNumber: String
+    sortCode: String
+    bankAddress: String
+  }
+
+   type OrdnanceSurveyResponse {
+    success: Boolean
+    addresses: [OrdnanceSurveyAddress]
+    apiError: Boolean
+    noAddressesFound: Boolean
+    invalidPostcode: Boolean
   }
 
   type EmailResponse {
@@ -1745,17 +3006,21 @@ var typeDefs = `
 
   input ApplicationEligibility {
     buyerCountryIsoCode: String!
-    hasCompaniesHouseNumber: Boolean!
-    otherPartiesInvolved: Boolean!
-    paidByLetterOfCredit: Boolean!
-    needPreCreditPeriodCover: Boolean!
-    totalContractValueId: Int!
     coverPeriodId: Int!
-    validExporterLocation: Boolean!
+    hasCompaniesHouseNumber: Boolean!
+    hasEndBuyer: Boolean!
     hasMinimumUkGoodsOrServices: Boolean!
+    totalContractValueId: Int!
+    validExporterLocation: Boolean!
   }
 
   type CreateAnApplicationResponse {
+    success: Boolean!
+    id: String
+    referenceNumber: Int
+  }
+
+  type CreateAnAbandonedApplicationResponse {
     success: Boolean!
     id: String
     referenceNumber: Int
@@ -1768,16 +3033,86 @@ var typeDefs = `
     riskCategory: String
     nbiIssueAvailable: Boolean
     canGetAQuoteOnline: Boolean
+    canGetAQuoteOffline: Boolean
     canGetAQuoteByEmail: Boolean
     cannotGetAQuote: Boolean
-    canApplyOnline: Boolean
-    canApplyOffline: Boolean
     cannotApply: Boolean
+    canApplyForInsuranceOnline: Boolean
+    canApplyForInsuranceOffline: Boolean
+    noInsuranceSupport: Boolean
   }
 
   type MappedCurrency {
     isoCode: String!
     name: String!
+  }
+
+  type GetApimCurrencyResponse {
+    supportedCurrencies: [MappedCurrency]
+    alternativeCurrencies: [MappedCurrency]
+    allCurrencies: [MappedCurrency]
+  }
+
+  type Owner {
+    id: String
+    firstName: String
+    lastName: String
+    email: String
+  }
+
+  type ApplicationNominatedLossPayeeUk {
+    id: String
+    accountNumber: String
+    sortCode: String
+    bankAddress: String
+  }
+
+  type ApplicationNominatedLossPayeeInternational {
+    id: String
+    iban: String
+    bicSwiftCode: String
+    bankAddress: String
+  }
+
+  type ApplicationNominatedLossPayee {
+    id: String
+    isAppointed: Boolean
+    isLocatedInUk: Boolean
+    isLocatedInternationally: Boolean
+    name: String
+    financialUk: ApplicationNominatedLossPayeeUk
+    financialInternational: ApplicationNominatedLossPayeeInternational
+  }
+
+  type PopulatedApplication {
+    id: String!
+    version: Int
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    dealType: String!
+    submissionCount: Int
+    submissionDeadline: DateTime
+    submissionType: String
+    submissionDate: DateTime
+    referenceNumber: Int
+    status: String!
+    eligibility: Eligibility
+    exportContract: ExportContract
+    policy: Policy
+    nominatedLossPayee: ApplicationNominatedLossPayee
+    policyContact: PolicyContact
+    owner: Owner
+    company: Company
+    business: Business
+    broker: Broker
+    buyer: Buyer
+    sectionReview: SectionReview
+    declaration: Declaration
+  }
+
+  type ApplicationSuccessResponse {
+    success: Boolean!
+    application: PopulatedApplication
   }
 
   type Mutation {
@@ -1794,7 +3129,17 @@ var typeDefs = `
     createAnApplication(
       accountId: String!
       eligibilityAnswers: ApplicationEligibility!
+      company: CompanyInput!
+      sectionReview: SectionReviewInput!
     ): CreateAnApplicationResponse
+
+    """ create an application """
+    createAnAbandonedApplication(
+      accountId: String!
+      eligibilityAnswers: ApplicationEligibility!
+      company: CompanyInput!
+      sectionReview: SectionReviewInput!
+    ): CreateAnAbandonedApplicationResponse
 
     """ delete an account """
     deleteAnAccount(
@@ -1860,13 +3205,6 @@ var typeDefs = `
       hasBeenUsedBefore: Boolean
     ): AccountPasswordResetResponse
 
-    """ update company and company address """
-    updateCompanyAndCompanyAddress(
-      companyId: ID!
-      companyAddressId: ID!
-      data: CompanyAndCompanyAddressInput!
-    ): CompanyAndCompanyAddress
-
     """ delete an application by reference number """
     deleteApplicationByReferenceNumber(
       referenceNumber: Int!
@@ -1886,6 +3224,22 @@ var typeDefs = `
       product: String
       service: String
     ): SuccessResponse
+
+    """ update loss payee financial uk """
+    updateLossPayeeFinancialDetailsUk(
+      id: String
+      bankAddress: String
+      accountNumber: String
+      sortCode: String
+    ): SuccessResponse
+
+    """ update loss payee financial international """
+    updateLossPayeeFinancialDetailsInternational(
+      id: String
+      bankAddress: String
+      iban: String
+      bicSwiftCode: String
+    ): SuccessResponse
   }
 
   type Query {
@@ -1904,34 +3258,123 @@ var typeDefs = `
       token: String!
     ): AccountPasswordResetTokenResponse
 
+    """ get CIS countries from APIM """
+    getApimCisCountries: [MappedCisCountry]
+
     """ get companies house information """
     getCompaniesHouseInformation(
       companiesHouseNumber: String!
     ): CompaniesHouseResponse
 
+    """ gets application by reference number """
+    getApplicationByReferenceNumber(
+      referenceNumber: Int
+      decryptFinancialUk: Boolean
+      decryptFinancialInternational: Boolean
+    ): ApplicationSuccessResponse
+
+    """ get Ordnance Survey address """
+    getOrdnanceSurveyAddress(
+      postcode: String!
+      houseNameOrNumber: String!
+    ): OrdnanceSurveyResponse
+
     """ get CIS countries from APIM """
     getApimCisCountries: [MappedCisCountry]
 
     """ get currencies from APIM """
-    getApimCurrencies: [MappedCurrency]
+    getApimCurrencies: GetApimCurrencyResponse
   }
 `;
 var type_defs_default = typeDefs;
 
-// helpers/encrypt-password/index.ts
+// helpers/get-account-status-by-id/index.ts
+var getAccountStatusById = async (context, id) => {
+  try {
+    console.info("Getting account status by ID  %s", id);
+    const accountStatus2 = await context.query.AccountStatus.findOne({
+      where: { id },
+      query: "id isVerified isBlocked isInactive"
+    });
+    return accountStatus2;
+  } catch (err) {
+    console.error("Error getting account status by ID %O", err);
+    throw new Error(`Getting account status by ID ${err}`);
+  }
+};
+var get_account_status_by_id_default = getAccountStatusById;
+
+// helpers/get-account-by-field/index.ts
+var getAccountByField = async (context, field, value) => {
+  try {
+    console.info("Getting account by field/value $s", `${field}, ${value}`);
+    const accountsArray = await context.db.Account.findMany({
+      where: {
+        [field]: { equals: value }
+      },
+      take: 1
+    });
+    if (!accountsArray?.length || !accountsArray[0]) {
+      console.info("Getting account by field - no account exists with the provided field/value");
+      return false;
+    }
+    const account2 = accountsArray[0];
+    const accountStatus2 = await get_account_status_by_id_default(context, account2.statusId);
+    const populatedAccount = {
+      ...account2,
+      status: accountStatus2
+    };
+    return populatedAccount;
+  } catch (err) {
+    console.error("Error getting account by field/value %O", err);
+    throw new Error(`Getting account by field/value ${err}`);
+  }
+};
+var get_account_by_field_default = getAccountByField;
+
+// helpers/get-password-hash/index.ts
 var import_crypto = __toESM(require("crypto"));
 var { ENCRYPTION } = ACCOUNT2;
 var {
-  RANDOM_BYTES_SIZE,
   STRING_TYPE,
   PBKDF2: { ITERATIONS, DIGEST_ALGORITHM },
   PASSWORD: {
     PBKDF2: { KEY_LENGTH }
   }
 } = ENCRYPTION;
-var encryptPassword = (password2) => {
-  const salt = import_crypto.default.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
+var getPasswordHash = (password2, salt) => {
   const hash = import_crypto.default.pbkdf2Sync(password2, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
+  return hash;
+};
+var get_password_hash_default = getPasswordHash;
+
+// helpers/is-valid-account-password/index.ts
+var isValidAccountPassword = (password2, salt, hash) => {
+  console.info("Validating account password");
+  const hashVerify = get_password_hash_default(password2, salt);
+  if (hash === hashVerify) {
+    console.info("Valid account password");
+    return true;
+  }
+  console.info("Invalid account password");
+  return false;
+};
+var is_valid_account_password_default = isValidAccountPassword;
+
+// helpers/encrypt-password/index.ts
+var import_crypto2 = __toESM(require("crypto"));
+var { ENCRYPTION: ENCRYPTION2 } = ACCOUNT2;
+var {
+  RANDOM_BYTES_SIZE,
+  STRING_TYPE: STRING_TYPE2,
+  PBKDF2: { ITERATIONS: ITERATIONS2, DIGEST_ALGORITHM: DIGEST_ALGORITHM2 },
+  PASSWORD: {
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH2 }
+  }
+} = ENCRYPTION2;
+var encryptPassword = (password2) => {
+  const salt = import_crypto2.default.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE2);
+  const hash = import_crypto2.default.pbkdf2Sync(password2, salt, ITERATIONS2, KEY_LENGTH2, DIGEST_ALGORITHM2).toString(STRING_TYPE2);
   return {
     salt,
     hash
@@ -1940,17 +3383,17 @@ var encryptPassword = (password2) => {
 var encrypt_password_default = encryptPassword;
 
 // helpers/get-account-verification-hash/index.ts
-var import_crypto2 = __toESM(require("crypto"));
-var { EMAIL, ENCRYPTION: ENCRYPTION2 } = ACCOUNT2;
+var import_crypto3 = __toESM(require("crypto"));
+var { EMAIL, ENCRYPTION: ENCRYPTION3 } = ACCOUNT2;
 var {
-  STRING_TYPE: STRING_TYPE2,
-  PBKDF2: { ITERATIONS: ITERATIONS2, DIGEST_ALGORITHM: DIGEST_ALGORITHM2 },
+  STRING_TYPE: STRING_TYPE3,
+  PBKDF2: { ITERATIONS: ITERATIONS3, DIGEST_ALGORITHM: DIGEST_ALGORITHM3 },
   PASSWORD: {
-    PBKDF2: { KEY_LENGTH: KEY_LENGTH2 }
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH3 }
   }
-} = ENCRYPTION2;
+} = ENCRYPTION3;
 var generateAccountVerificationHash = (email, salt) => {
-  const verificationHash = import_crypto2.default.pbkdf2Sync(email, salt, ITERATIONS2, KEY_LENGTH2, DIGEST_ALGORITHM2).toString(STRING_TYPE2);
+  const verificationHash = import_crypto3.default.pbkdf2Sync(email, salt, ITERATIONS3, KEY_LENGTH3, DIGEST_ALGORITHM3).toString(STRING_TYPE3);
   const verificationExpiry = EMAIL.VERIFICATION_EXPIRY();
   return {
     verificationHash,
@@ -1967,326 +3410,256 @@ var getFullNameString = (account2) => {
 };
 var get_full_name_string_default = getFullNameString;
 
-// emails/index.ts
-var import_dotenv4 = __toESM(require("dotenv"));
-
-// integrations/notify/index.ts
-var import_dotenv2 = __toESM(require("dotenv"));
-var import_notifications_node_client = require("notifications-node-client");
-import_dotenv2.default.config();
-var notifyKey = process.env.GOV_NOTIFY_API_KEY;
-var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
-var notify = {
-  /**
-   * sendEmail
-   * Send an email via Notify API
-   * @param {String} Template ID
-   * @param {String} Email address
-   * @param {Object} Custom variables for the email template
-   * @param {Buffer} File buffer
-   * @returns {Object} Success flag and email recipient
-   */
-  sendEmail: async (templateId, sendToEmailAddress, variables, file) => {
-    try {
-      console.info("Calling Notify API. templateId: %s", templateId);
-      const personalisation = variables;
-      if (file) {
-        personalisation.linkToFile = await notifyClient.prepareUpload(file, { confirmEmailBeforeDownload: true });
+// helpers/get-account-by-id/index.ts
+var getAccountById = async (context, accountId) => {
+  try {
+    console.info("Getting account by ID");
+    const account2 = await context.db.Account.findOne({
+      where: {
+        id: accountId
       }
-      await notifyClient.sendEmail(templateId, sendToEmailAddress, {
-        personalisation,
-        reference: null
-      });
-      return {
-        success: true,
-        emailRecipient: sendToEmailAddress
-      };
-    } catch (err) {
-      console.error("Error calling Notify API. Unable to send email %O", err);
-      throw new Error(`Calling Notify API. Unable to send email ${err}`);
-    }
+    });
+    return account2;
+  } catch (err) {
+    console.error("Error getting account by ID %O", err);
+    throw new Error(`Getting account by ID ${err}`);
   }
 };
-var notify_default = notify;
+var get_account_by_id_default = getAccountById;
 
-// emails/call-notify/index.ts
-var callNotify = async (templateId, emailAddress, variables, file) => {
+// helpers/update-account/index.ts
+var account = async (context, accountId, updateData) => {
   try {
-    let emailResponse;
-    if (file) {
-      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables, file);
-    } else {
-      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables);
+    console.info("Updating account");
+    const updatedAccount = await context.db.Account.updateOne({
+      where: {
+        id: accountId
+      },
+      data: updateData
+    });
+    return updatedAccount;
+  } catch (err) {
+    console.error("Error updating account %O", err);
+    throw new Error(`Updating account ${err}`);
+  }
+};
+var accountStatus = async (context, accountStatusId, updateData) => {
+  try {
+    console.info("Updating account");
+    const updatedAccountStatus = await context.db.AccountStatus.updateOne({
+      where: {
+        id: accountStatusId
+      },
+      data: {
+        ...updateData,
+        updatedAt: /* @__PURE__ */ new Date()
+      }
+    });
+    return updatedAccountStatus;
+  } catch (err) {
+    console.error("Error updating account status %O", err);
+    throw new Error(`Updating account status ${err}`);
+  }
+};
+var update = {
+  account,
+  accountStatus
+};
+var update_account_default = update;
+
+// helpers/send-email-confirm-email-address/index.ts
+var send2 = async (context, urlOrigin, accountId) => {
+  try {
+    console.info("Sending email verification");
+    const account2 = await get_account_by_id_default(context, accountId);
+    if (!account2) {
+      console.info("Sending email verification - no account exists with the provided account ID");
+      return {
+        success: false
+      };
     }
+    let latestVerificationHash = "";
+    let verificationHasExpired = false;
+    if (account2.verificationExpiry) {
+      verificationHasExpired = dateIsInThePast(account2.verificationExpiry);
+    }
+    if (account2.verificationHash && !verificationHasExpired) {
+      latestVerificationHash = account2.verificationHash;
+    } else {
+      const { email: email2, salt } = account2;
+      const { verificationHash, verificationExpiry } = get_account_verification_hash_default(email2, salt);
+      const accountUpdate = { verificationHash, verificationExpiry };
+      latestVerificationHash = verificationHash;
+      await update_account_default.account(context, accountId, accountUpdate);
+    }
+    const { email, id } = account2;
+    const name = get_full_name_string_default(account2);
+    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, latestVerificationHash, id);
     if (emailResponse.success) {
       return emailResponse;
     }
-    throw new Error(`Sending email ${emailResponse}`);
+    throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${emailResponse}`);
   } catch (err) {
-    console.error("Error sending email %O", err);
-    throw new Error(`Sending email ${err}`);
+    console.error("Error sending email verification (sendEmailConfirmEmailAddress helper) %O", err);
+    throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${err}`);
   }
 };
+var confirmEmailAddressEmail = {
+  send: send2
+};
+var send_email_confirm_email_address_default = confirmEmailAddressEmail;
 
-// emails/confirm-email-address/index.ts
-var confirmEmailAddress = async (emailAddress, urlOrigin, name, verificationHash, id) => {
-  try {
-    console.info("Sending confirm email address email");
-    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
-    const variables = { urlOrigin, name, confirmToken: verificationHash, id };
-    const response = await callNotify(templateId, emailAddress, variables);
-    return response;
-  } catch (err) {
-    console.error("Error sending confirm email address email %O", err);
-    throw new Error(`Sending confirm email address email ${err}`);
-  }
-};
-
-// emails/security-code-email/index.ts
-var securityCodeEmail = async (emailAddress, name, securityCode) => {
-  try {
-    console.info("Sending security code email for account sign in");
-    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.SECURITY_CODE;
-    const variables = { name, securityCode };
-    const response = await callNotify(templateId, emailAddress, variables);
-    return response;
-  } catch (err) {
-    console.error("Error sending security code email for account sign in %O", err);
-    throw new Error(`Sending security code email for account sign in ${err}`);
-  }
-};
-
-// emails/password-reset-link/index.ts
-var passwordResetLink = async (urlOrigin, emailAddress, name, passwordResetHash) => {
-  try {
-    console.info("Sending email for account password reset");
-    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.PASSWORD_RESET;
-    const variables = { urlOrigin, name, passwordResetToken: passwordResetHash };
-    const response = await callNotify(templateId, emailAddress, variables);
-    return response;
-  } catch (err) {
-    console.error("Error sending email for account password reset %O", err);
-    throw new Error(`Sending email for account password reset ${err}`);
-  }
-};
-
-// emails/reactivate-account-link/index.ts
-var reactivateAccountLink = async (urlOrigin, emailAddress, name, reactivationHash) => {
-  try {
-    console.info("Sending email for account reactivation");
-    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.REACTIVATE_ACCOUNT_CONFIRM_EMAIL;
-    const variables = { urlOrigin, name, reactivationToken: reactivationHash };
-    const response = await callNotify(templateId, emailAddress, variables);
-    return response;
-  } catch (err) {
-    console.error("Error sending email for account reactivation %O", err);
-    throw new Error(`Sending email for account reactivation ${err}`);
-  }
-};
-
-// file-system/index.ts
-var import_fs = require("fs");
-var import_path = __toESM(require("path"));
-var fileExists = (filePath) => {
-  const fileBuffer = Buffer.from(filePath);
-  if (fileBuffer.length) {
-    return true;
-  }
-  return false;
-};
-var isAcceptedFileType = (filePath) => {
-  const fileType = import_path.default.extname(filePath);
-  if (ACCEPTED_FILE_TYPES.includes(fileType)) {
-    return true;
-  }
-  return false;
-};
-var readFile = async (filePath) => {
-  try {
-    console.info("Reading file %s", filePath);
-    const file = await import_fs.promises.readFile(filePath);
-    if (fileExists(file) && isAcceptedFileType(filePath)) {
-      return file;
-    }
-    throw new Error("Reading file - does not exist or is unaccepted file type");
-  } catch (err) {
-    console.error("Error reading file %O", err);
-    throw new Error(`Reading file ${err}`);
-  }
-};
-var unlink = async (filePath) => {
-  try {
-    console.info("Deleting file %s", filePath);
-    const file = await readFile(filePath);
-    if (file) {
-      await import_fs.promises.unlink(filePath);
-    }
-    return false;
-  } catch (err) {
-    console.error("Error deleting file %O", err);
-    throw new Error(`Deleting file ${err}`);
-  }
-};
-var fileSystem = {
-  fileExists,
-  isAcceptedFileType,
-  readFile,
-  unlink
-};
-var file_system_default = fileSystem;
-
-// emails/application/index.ts
-var application = {
-  /**
-   * application.submittedEmail
-   * Send "application submitted" email to an account
-   * @param {ApplicationSubmissionEmailVariables} ApplicationSubmissionEmailVariables
-   * @returns {Object} callNotify response
-   */
-  submittedEmail: async (variables) => {
-    try {
-      console.info("Sending application submitted email to application owner or provided business contact");
-      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
-      const { emailAddress } = variables;
-      const response = await callNotify(templateId, emailAddress, variables);
-      return response;
-    } catch (err) {
-      console.error("Error sending application submitted email to to application owner or provided business contact %O", err);
-      throw new Error(`Sending application submitted email to to application owner or provided business contact ${err}`);
-    }
-  },
-  /**
-   * application.underwritingTeam
-   * Read CSV file, generate a file buffer
-   * Send "application submitted" email to the underwriting team with a link to CSV
-   * We send a file buffer to Notify and Notify generates a unique URL that is then rendered in the email.
-   * @param {ApplicationSubmissionEmailVariables}
-   * @returns {Object} callNotify response
-   */
-  underwritingTeam: async (variables, filePath, templateId) => {
-    try {
-      console.info("Sending application submitted email to underwriting team");
-      const emailAddress = String(process.env.UNDERWRITING_TEAM_EMAIL);
-      const file = await file_system_default.readFile(filePath);
-      if (file) {
-        const fileBuffer = Buffer.from(file);
-        const response = await callNotify(templateId, emailAddress, variables, fileBuffer);
-        await file_system_default.unlink(filePath);
-        return response;
-      }
-      throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
-    } catch (err) {
-      console.error("Error sending application submitted email to underwriting team %O", err);
-      throw new Error(`Sending application submitted email to underwriting team ${err}`);
+// helpers/send-email-reactivate-account-link/index.ts
+var import_crypto4 = __toESM(require("crypto"));
+var {
+  ENCRYPTION: {
+    STRING_TYPE: STRING_TYPE4,
+    PBKDF2: { ITERATIONS: ITERATIONS4, DIGEST_ALGORITHM: DIGEST_ALGORITHM4 },
+    PASSWORD: {
+      PBKDF2: { KEY_LENGTH: KEY_LENGTH4 }
     }
   }
-};
-var application_default2 = application;
-
-// emails/documents/index.ts
-var documentsEmail = async (variables, templateId) => {
+} = ACCOUNT2;
+var send3 = async (variables, context) => {
   try {
-    console.info("Sending documents email");
-    const { emailAddress } = variables;
-    const response = await callNotify(templateId, emailAddress, variables);
-    return response;
+    console.info("Received a request to send reactivate account email/link - checking account - sendEmailReactivateAccountLinkHelper");
+    const { urlOrigin, accountId } = variables;
+    const account2 = await get_account_by_id_default(context, accountId);
+    if (!account2) {
+      console.info("Unable to check account and send reactivate account email/link - no account found");
+      return { success: false };
+    }
+    const { email } = account2;
+    console.info("Generating hash for account reactivation");
+    const reactivationHash = import_crypto4.default.pbkdf2Sync(email, account2.salt, ITERATIONS4, KEY_LENGTH4, DIGEST_ALGORITHM4).toString(STRING_TYPE4);
+    const accountUpdate = {
+      reactivationHash,
+      reactivationExpiry: ACCOUNT2.REACTIVATION_EXPIRY()
+    };
+    console.info("Updating account for reactivation");
+    await update_account_default.account(context, accountId, accountUpdate);
+    console.info("Sending reactivate account email/link");
+    const name = get_full_name_string_default(account2);
+    const emailResponse = await emails_default.reactivateAccountLink(urlOrigin, email, name, reactivationHash);
+    if (emailResponse.success) {
+      return {
+        ...emailResponse,
+        email,
+        accountId
+      };
+    }
+    return { accountId, email, success: false };
   } catch (err) {
-    console.error("Error sending documents email %O", err);
-    throw new Error(`Sending documents email ${err}`);
+    console.error("Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper) %O", err);
+    throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper) ${err}`);
   }
 };
-
-// emails/insurance-feedback-email/index.ts
-var import_dotenv3 = __toESM(require("dotenv"));
-
-// helpers/format-date/index.ts
-var import_date_fns2 = require("date-fns");
-var formatDate = (timestamp3, dateFormat = DATE_FORMAT.DEFAULT) => (0, import_date_fns2.format)(new Date(timestamp3), dateFormat);
-var format_date_default = formatDate;
-
-// helpers/map-feedback-satisfaction/index.ts
-var mapFeedbackSatisfaction = (satisfaction) => FEEDBACK.EMAIL_TEXT[satisfaction];
-var map_feedback_satisfaction_default = mapFeedbackSatisfaction;
-
-// emails/insurance-feedback-email/index.ts
-import_dotenv3.default.config();
-var insuranceFeedbackEmail = async (variables) => {
-  try {
-    console.info("Sending insurance feedback email");
-    const templateId = EMAIL_TEMPLATE_IDS.FEEDBACK.INSURANCE;
-    const emailAddress = process.env.FEEDBACK_EMAIL_RECIPIENT;
-    const emailVariables = variables;
-    emailVariables.time = "";
-    emailVariables.date = "";
-    if (variables.createdAt) {
-      emailVariables.date = format_date_default(variables.createdAt);
-      emailVariables.time = format_date_default(variables.createdAt, "HH:mm:ss");
-    }
-    if (variables.satisfaction) {
-      emailVariables.satisfaction = map_feedback_satisfaction_default(variables.satisfaction);
-    }
-    const response = await callNotify(templateId, emailAddress, emailVariables);
-    return response;
-  } catch (err) {
-    console.error("Error sending insurance feedback email %O", err);
-    throw new Error(`Sending insurance feedback email ${err}`);
-  }
+var sendEmailReactivateAccountLinkHelper = {
+  send: send3
 };
-
-// emails/index.ts
-import_dotenv4.default.config();
-var sendEmail = {
-  confirmEmailAddress,
-  securityCodeEmail,
-  passwordResetLink,
-  reactivateAccountLink,
-  application: application_default2,
-  documentsEmail,
-  insuranceFeedbackEmail
-};
-var emails_default = sendEmail;
+var send_email_reactivate_account_link_default = sendEmailReactivateAccountLinkHelper;
 
 // custom-resolvers/mutations/create-an-account/index.ts
 var createAnAccount = async (root, variables, context) => {
-  console.info("Creating new account for %s", variables.email);
+  console.info("Account creation - %s", variables.email);
   try {
     const { urlOrigin, firstName, lastName, email, password: password2 } = variables;
     const account2 = await get_account_by_field_default(context, account_default.EMAIL, email);
     if (account2) {
-      console.info("Unable to create a new account for %s - account already exists", variables.email);
+      console.info("Account creation - account already exists %s", email);
+      if (is_valid_account_password_default(password2, account2.salt, account2.hash)) {
+        console.info("Account creation - account already exists - valid credentials provided %s", email);
+        if (account2.status.isBlocked) {
+          console.info("Account creation - unable to create a new account - account already exists and is blocked %s", email);
+          const { id: accountId } = account2;
+          const reactivateAccountVariables = {
+            accountId,
+            urlOrigin
+          };
+          console.info("Account creation - resending an email for reactivation %s", email);
+          const emailResponse2 = await send_email_reactivate_account_link_default.send(reactivateAccountVariables, context);
+          if (emailResponse2.success) {
+            return {
+              id: accountId,
+              success: true,
+              alreadyExists: true,
+              isVerified: false,
+              isBlocked: true
+            };
+          }
+          return {
+            success: false,
+            alreadyExists: true
+          };
+        }
+        if (!account2.status.isVerified) {
+          console.info("Account creation - unable to create a new account - account already exists and is not verified %s", email);
+          const { id: accountId } = account2;
+          console.info("Account creation - resending an email verification for %s", email);
+          const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
+          if (emailResponse2.success) {
+            return {
+              id: accountId,
+              success: true,
+              alreadyExists: true,
+              isVerified: false
+            };
+          }
+        }
+        console.info("Account creation - unable to create a new account - account already exists and is verified %s", email);
+        return {
+          success: false,
+          alreadyExists: true,
+          isVerified: true
+        };
+      }
+      console.info("Account creation - account already exists - invalid credentials provided %s", email);
       return { success: false };
     }
+    console.info("Account creation - no existing account found. Generating an encrypted password %s", email);
     const { salt, hash } = encrypt_password_default(password2);
-    const now = /* @__PURE__ */ new Date();
+    const now2 = /* @__PURE__ */ new Date();
     const { verificationHash, verificationExpiry } = get_account_verification_hash_default(email, salt);
+    console.info("Account creation - constructing account data %s", email);
     const accountData = {
       firstName,
       lastName,
       email,
       salt,
       hash,
-      isVerified: false,
       verificationHash,
       verificationExpiry,
-      createdAt: now,
-      updatedAt: now
+      createdAt: now2,
+      updatedAt: now2
     };
+    console.info("Account creation - creating account %s", email);
     const creationResponse = await context.db.Account.createOne({
       data: accountData
     });
+    console.info("Account creation - creating account status relationship %s", email);
+    await context.db.AccountStatus.createOne({
+      data: {
+        account: {
+          connect: {
+            id: creationResponse.id
+          }
+        }
+      }
+    });
+    console.info("Account creation - sending an email verification for %s", email);
     const name = get_full_name_string_default(creationResponse);
     const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, verificationHash, creationResponse.id);
     if (emailResponse.success) {
       return {
-        ...creationResponse,
+        id: creationResponse.id,
         verificationHash,
         success: true
       };
     }
-    throw new Error(`Sending email verification for account creation ${emailResponse}`);
+    throw new Error(`Account creation - sending email verification for account creation ${emailResponse}`);
   } catch (err) {
-    console.error("Error creating a new account %O", err);
-    throw new Error(`Creating a new account ${err}`);
+    console.error("Error Account creation - creating account %O", err);
+    throw new Error(`Account creation - creating account ${err}`);
   }
 };
 var create_an_account_default = createAnAccount;
@@ -2351,30 +3724,7 @@ var deleteAnAccount = async (root, variables, context) => {
 var delete_an_account_default = deleteAnAccount;
 
 // custom-resolvers/mutations/verify-account-email-address/index.ts
-var import_date_fns3 = require("date-fns");
-
-// helpers/update-account/index.ts
-var account = async (context, accountId, updateData) => {
-  try {
-    console.info("Updating account");
-    const updatedAccount = await context.db.Account.updateOne({
-      where: {
-        id: accountId
-      },
-      data: updateData
-    });
-    return updatedAccount;
-  } catch (err) {
-    console.error("Error updating account %O", err);
-    throw new Error(`Updating account ${err}`);
-  }
-};
-var update = {
-  account
-};
-var update_account_default = update;
-
-// custom-resolvers/mutations/verify-account-email-address/index.ts
+var import_date_fns4 = require("date-fns");
 var { ID, EMAIL: EMAIL2, VERIFICATION_EXPIRY } = account_default;
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
@@ -2387,15 +3737,16 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
         invalid: true
       };
     }
-    if (account2.isVerified) {
+    if (account2.status.isVerified) {
       console.info("Account email address is already verified");
       return {
         success: true
       };
     }
     const { id } = account2;
-    const now = /* @__PURE__ */ new Date();
-    const canActivateAccount = (0, import_date_fns3.isBefore)(now, account2[VERIFICATION_EXPIRY]);
+    const { id: statusId } = account2.status;
+    const now2 = /* @__PURE__ */ new Date();
+    const canActivateAccount = (0, import_date_fns4.isBefore)(now2, account2[VERIFICATION_EXPIRY]);
     if (!canActivateAccount) {
       console.info("Unable to verify account email address - verification period has expired");
       return {
@@ -2406,11 +3757,14 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
     }
     console.info("Verified account email address - updating account to be verified");
     const accountUpdate = {
-      isVerified: true,
       verificationHash: "",
       verificationExpiry: null
     };
+    const statusUpdate = {
+      isVerified: true
+    };
     await update_account_default.account(context, id, accountUpdate);
+    await update_account_default.accountStatus(context, statusId, statusUpdate);
     return {
       success: true,
       accountId: id,
@@ -2422,61 +3776,6 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
   }
 };
 var verify_account_email_address_default = verifyAccountEmailAddress;
-
-// helpers/get-account-by-id/index.ts
-var getAccountById = async (context, accountId) => {
-  try {
-    console.info("Getting account by ID");
-    const account2 = await context.db.Account.findOne({
-      where: {
-        id: accountId
-      }
-    });
-    return account2;
-  } catch (err) {
-    console.error("Error getting account by ID %O", err);
-    throw new Error(`Getting account by ID ${err}`);
-  }
-};
-var get_account_by_id_default = getAccountById;
-
-// helpers/send-email-confirm-email-address/index.ts
-var send = async (context, urlOrigin, accountId) => {
-  try {
-    console.info("Sending email verification");
-    const account2 = await get_account_by_id_default(context, accountId);
-    if (!account2) {
-      console.info("Sending email verification - no account exists with the provided account ID");
-      return {
-        success: false
-      };
-    }
-    let latestVerificationHash = "";
-    if (account2.verificationHash) {
-      latestVerificationHash = account2.verificationHash;
-    } else {
-      const { email: email2, salt } = account2;
-      const { verificationHash, verificationExpiry } = get_account_verification_hash_default(email2, salt);
-      const accountUpdate = { verificationHash, verificationExpiry };
-      latestVerificationHash = verificationHash;
-      await update_account_default.account(context, accountId, accountUpdate);
-    }
-    const { email, id } = account2;
-    const name = get_full_name_string_default(account2);
-    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, latestVerificationHash, id);
-    if (emailResponse.success) {
-      return emailResponse;
-    }
-    throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${emailResponse}`);
-  } catch (err) {
-    console.error("Error sending email verification (sendEmailConfirmEmailAddress helper) %O", err);
-    throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${err}`);
-  }
-};
-var confirmEmailAddressEmail = {
-  send
-};
-var send_email_confirm_email_address_default = confirmEmailAddressEmail;
 
 // custom-resolvers/mutations/send-email-confirm-email-address/index.ts
 var sendEmailConfirmEmailAddressMutation = async (root, variables, context) => {
@@ -2494,40 +3793,11 @@ var sendEmailConfirmEmailAddressMutation = async (root, variables, context) => {
 };
 var send_email_confirm_email_address_default2 = sendEmailConfirmEmailAddressMutation;
 
-// helpers/get-password-hash/index.ts
-var import_crypto3 = __toESM(require("crypto"));
-var { ENCRYPTION: ENCRYPTION3 } = ACCOUNT2;
-var {
-  STRING_TYPE: STRING_TYPE3,
-  PBKDF2: { ITERATIONS: ITERATIONS3, DIGEST_ALGORITHM: DIGEST_ALGORITHM3 },
-  PASSWORD: {
-    PBKDF2: { KEY_LENGTH: KEY_LENGTH3 }
-  }
-} = ENCRYPTION3;
-var getPasswordHash = (password2, salt) => {
-  const hash = import_crypto3.default.pbkdf2Sync(password2, salt, ITERATIONS3, KEY_LENGTH3, DIGEST_ALGORITHM3).toString(STRING_TYPE3);
-  return hash;
-};
-var get_password_hash_default = getPasswordHash;
-
-// helpers/is-valid-account-password/index.ts
-var isValidAccountPassword = (password2, salt, hash) => {
-  console.info("Validating account password");
-  const hashVerify = get_password_hash_default(password2, salt);
-  if (hash === hashVerify) {
-    console.info("Valid account password");
-    return true;
-  }
-  console.info("Invalid account password");
-  return false;
-};
-var is_valid_account_password_default = isValidAccountPassword;
-
 // helpers/create-authentication-retry-entry/index.ts
 var createAuthenticationRetryEntry = async (context, accountId) => {
   try {
     console.info("Creating account authentication retry entry");
-    const now = /* @__PURE__ */ new Date();
+    const now2 = /* @__PURE__ */ new Date();
     const response = await context.db.AuthenticationRetry.createOne({
       data: {
         account: {
@@ -2535,7 +3805,7 @@ var createAuthenticationRetryEntry = async (context, accountId) => {
             id: accountId
           }
         },
-        createdAt: now
+        createdAt: now2
       }
     });
     if (response.id) {
@@ -2554,17 +3824,17 @@ var createAuthenticationRetryEntry = async (context, accountId) => {
 var create_authentication_retry_entry_default = createAuthenticationRetryEntry;
 
 // helpers/should-block-account/index.ts
-var import_date_fns4 = require("date-fns");
+var import_date_fns5 = require("date-fns");
 var { MAX_AUTH_RETRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT2;
 var shouldBlockAccount = async (context, accountId) => {
   console.info("Checking account authentication retries %s", accountId);
   try {
     const retries = await get_authentication_retries_by_account_id_default(context, accountId);
-    const now = /* @__PURE__ */ new Date();
+    const now2 = /* @__PURE__ */ new Date();
     const retriesInTimeframe = [];
     retries.forEach((retry) => {
       const retryDate = retry.createdAt;
-      const isWithinLast24Hours = (0, import_date_fns4.isAfter)(retryDate, MAX_AUTH_RETRIES_TIMEFRAME) && (0, import_date_fns4.isBefore)(retryDate, now);
+      const isWithinLast24Hours = (0, import_date_fns5.isAfter)(retryDate, MAX_AUTH_RETRIES_TIMEFRAME) && (0, import_date_fns5.isBefore)(retryDate, now2);
       if (isWithinLast24Hours) {
         retriesInTimeframe.push(retry.id);
       }
@@ -2582,11 +3852,11 @@ var shouldBlockAccount = async (context, accountId) => {
 var should_block_account_default = shouldBlockAccount;
 
 // helpers/block-account/index.ts
-var blockAccount = async (context, accountId) => {
-  console.info("Blocking account %s", accountId);
+var blockAccount = async (context, statusId) => {
+  console.info("Blocking account %s", statusId);
   try {
-    const accountUpdate = { isBlocked: true };
-    const result = await update_account_default.account(context, accountId, accountUpdate);
+    const statusUpdate = { isBlocked: true };
+    const result = await update_account_default.accountStatus(context, statusId, statusUpdate);
     if (result.id) {
       return true;
     }
@@ -2598,28 +3868,25 @@ var blockAccount = async (context, accountId) => {
 };
 var block_account_default = blockAccount;
 
-// custom-resolvers/mutations/account-sign-in/account-checks/index.ts
-var import_date_fns5 = require("date-fns");
-
 // helpers/generate-otp/index.ts
-var import_crypto4 = __toESM(require("crypto"));
+var import_crypto5 = __toESM(require("crypto"));
 var import_otplib = require("otplib");
 var { ENCRYPTION: ENCRYPTION4, OTP } = ACCOUNT2;
 var {
   RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE2,
-  STRING_TYPE: STRING_TYPE4,
-  PBKDF2: { ITERATIONS: ITERATIONS4, DIGEST_ALGORITHM: DIGEST_ALGORITHM4 },
+  STRING_TYPE: STRING_TYPE5,
+  PBKDF2: { ITERATIONS: ITERATIONS5, DIGEST_ALGORITHM: DIGEST_ALGORITHM5 },
   OTP: {
-    PBKDF2: { KEY_LENGTH: KEY_LENGTH4 }
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH5 }
   }
 } = ENCRYPTION4;
 var generateOtp = () => {
   try {
     console.info("Generating OTP");
-    const salt = import_crypto4.default.randomBytes(RANDOM_BYTES_SIZE2).toString(STRING_TYPE4);
+    const salt = import_crypto5.default.randomBytes(RANDOM_BYTES_SIZE2).toString(STRING_TYPE5);
     import_otplib.authenticator.options = { digits: OTP.DIGITS };
     const securityCode = import_otplib.authenticator.generate(salt);
-    const hash = import_crypto4.default.pbkdf2Sync(securityCode, salt, ITERATIONS4, KEY_LENGTH4, DIGEST_ALGORITHM4).toString(STRING_TYPE4);
+    const hash = import_crypto5.default.pbkdf2Sync(securityCode, salt, ITERATIONS5, KEY_LENGTH5, DIGEST_ALGORITHM5).toString(STRING_TYPE5);
     const expiry = OTP.VERIFICATION_EXPIRY();
     return {
       securityCode,
@@ -2648,7 +3915,9 @@ var generateOTPAndUpdateAccount = async (context, accountId) => {
       otpHash: hash,
       otpExpiry: expiry
     };
-    await update_account_default.account(context, accountId, accountUpdate);
+    const updatedAccount = await update_account_default.account(context, accountId, accountUpdate);
+    const accountStatusUpdate = { isInactive: false };
+    await update_account_default.accountStatus(context, updatedAccount.statusId, accountStatusUpdate);
     return {
       success: true,
       securityCode
@@ -2660,39 +3929,27 @@ var generateOTPAndUpdateAccount = async (context, accountId) => {
 };
 var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
 
-// custom-resolvers/mutations/account-sign-in/account-checks/index.ts
-var { EMAIL: EMAIL3 } = ACCOUNT2;
-var accountChecks = async (context, account2, urlOrigin) => {
+// custom-resolvers/mutations/account-sign-in/account-sign-in-checks/index.ts
+var accountSignInChecks = async (context, account2, urlOrigin) => {
   try {
     console.info("Signing in account - checking account");
     const { id: accountId, email } = account2;
-    if (!account2.isVerified) {
-      console.info("Unable to sign in account - account has not been verified yet");
-      const now = /* @__PURE__ */ new Date();
-      const verificationHasExpired = (0, import_date_fns5.isAfter)(now, account2.verificationExpiry);
-      if (account2.verificationHash && !verificationHasExpired) {
-        console.info("Account has an unexpired verification token - resetting verification expiry");
-        const accountUpdate = {
-          verificationExpiry: EMAIL3.VERIFICATION_EXPIRY()
+    if (!account2.status.isVerified) {
+      console.info("Unable to sign in account - account has not been verified yet. Sending a new email verification");
+      const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
+      if (emailResponse2?.success) {
+        return {
+          success: false,
+          resentVerificationEmail: true,
+          accountId
         };
-        await update_account_default.account(context, accountId, accountUpdate);
-        console.info("Account has an unexpired verification token - sending verification email");
-        const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
-        if (emailResponse2?.success) {
-          return {
-            success: false,
-            resentVerificationEmail: true,
-            accountId
-          };
-        }
-        return { success: false, accountId };
       }
-      console.info("Unable to sign in account - account has not been verified");
-      return { success: false };
+      return { success: false, accountId };
     }
+    console.info("Signing in account - account is verified. Generating and sending an OTP");
     const { securityCode } = await generate_otp_and_update_account_default(context, accountId);
     const name = get_full_name_string_default(account2);
-    const emailResponse = await emails_default.securityCodeEmail(email, name, securityCode);
+    const emailResponse = await emails_default.accessCodeEmail(email, name, securityCode);
     if (emailResponse?.success) {
       return {
         ...emailResponse,
@@ -2703,11 +3960,11 @@ var accountChecks = async (context, account2, urlOrigin) => {
       success: false
     };
   } catch (err) {
-    console.error("Error validating password or sending email for account sign in (accountSignIn mutation - account checks) %O", err);
-    throw new Error(`Validating password or sending email for account sign in (accountSignIn mutation - account checks) ${err}`);
+    console.error("Error validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) %O", err);
+    throw new Error(`Validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) ${err}`);
   }
 };
-var account_checks_default = accountChecks;
+var account_sign_in_checks_default = accountSignInChecks;
 
 // custom-resolvers/mutations/account-sign-in/index.ts
 var accountSignIn = async (root, variables, context) => {
@@ -2721,14 +3978,15 @@ var accountSignIn = async (root, variables, context) => {
     }
     const account2 = accountData;
     const { id: accountId } = account2;
-    const { isBlocked } = account2;
+    console.info("Signing in account - account found %s", accountId);
+    const { isBlocked } = account2.status;
     if (isBlocked) {
-      console.info("Unable to sign in account - account is already blocked");
+      console.info("Unable to sign in account - account is blocked");
       return { success: false, isBlocked: true, accountId };
     }
     if (is_valid_account_password_default(password2, account2.salt, account2.hash)) {
       console.info("Signing in account - valid credentials provided");
-      return account_checks_default(context, account2, urlOrigin);
+      return account_sign_in_checks_default(context, account2, urlOrigin);
     }
     console.info("Signing in account - invalid credentials provided");
     const newRetriesEntry = await create_authentication_retry_entry_default(context, accountId);
@@ -2737,7 +3995,7 @@ var accountSignIn = async (root, variables, context) => {
     }
     const needToBlockAccount = await should_block_account_default(context, accountId);
     if (needToBlockAccount) {
-      const blocked = await block_account_default(context, accountId);
+      const blocked = await block_account_default(context, account2.status.id);
       if (blocked) {
         return {
           success: false,
@@ -2768,7 +4026,7 @@ var accountSignInSendNewCode = async (root, variables, context) => {
     const { securityCode } = await generate_otp_and_update_account_default(context, account2.id);
     const { email } = account2;
     const name = get_full_name_string_default(account2);
-    const emailResponse = await emails_default.securityCodeEmail(email, name, securityCode);
+    const emailResponse = await emails_default.accessCodeEmail(email, name, securityCode);
     if (emailResponse.success) {
       return {
         ...emailResponse,
@@ -2785,23 +4043,20 @@ var accountSignInSendNewCode = async (root, variables, context) => {
 };
 var account_sign_in_new_code_default = accountSignInSendNewCode;
 
-// custom-resolvers/mutations/verify-account-sign-in-code/index.ts
-var import_date_fns6 = require("date-fns");
-
 // helpers/is-valid-otp/index.ts
-var import_crypto5 = __toESM(require("crypto"));
+var import_crypto6 = __toESM(require("crypto"));
 var { ENCRYPTION: ENCRYPTION5 } = ACCOUNT2;
 var {
-  STRING_TYPE: STRING_TYPE5,
-  PBKDF2: { ITERATIONS: ITERATIONS5, DIGEST_ALGORITHM: DIGEST_ALGORITHM5 },
+  STRING_TYPE: STRING_TYPE6,
+  PBKDF2: { ITERATIONS: ITERATIONS6, DIGEST_ALGORITHM: DIGEST_ALGORITHM6 },
   OTP: {
-    PBKDF2: { KEY_LENGTH: KEY_LENGTH5 }
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH6 }
   }
 } = ENCRYPTION5;
 var isValidOTP = (securityCode, otpSalt, otpHash) => {
   try {
     console.info("Validating OTP");
-    const hashVerify = import_crypto5.default.pbkdf2Sync(securityCode, otpSalt, ITERATIONS5, KEY_LENGTH5, DIGEST_ALGORITHM5).toString(STRING_TYPE5);
+    const hashVerify = import_crypto6.default.pbkdf2Sync(securityCode, otpSalt, ITERATIONS6, KEY_LENGTH6, DIGEST_ALGORITHM6).toString(STRING_TYPE6);
     if (otpHash === hashVerify) {
       return true;
     }
@@ -2833,10 +4088,10 @@ var deleteAuthenticationRetries = async (context, accountId) => {
 var delete_authentication_retries_default = deleteAuthenticationRetries;
 
 // helpers/create-jwt/index.ts
-var import_crypto6 = __toESM(require("crypto"));
+var import_crypto7 = __toESM(require("crypto"));
 var import_jsonwebtoken = __toESM(require("jsonwebtoken"));
 var {
-  ENCRYPTION: { RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE3, STRING_TYPE: STRING_TYPE6 },
+  ENCRYPTION: { RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE3, STRING_TYPE: STRING_TYPE7 },
   JWT: {
     KEY: { SIGNATURE, ENCODING, STRING_ENCODING },
     TOKEN: { EXPIRY, ALGORITHM }
@@ -2844,7 +4099,7 @@ var {
 } = ACCOUNT2;
 var PRIV_KEY = Buffer.from(SIGNATURE, ENCODING).toString(STRING_ENCODING);
 var createJWT = (accountId) => {
-  const sessionIdentifier = import_crypto6.default.randomBytes(RANDOM_BYTES_SIZE3).toString(STRING_TYPE6);
+  const sessionIdentifier = import_crypto7.default.randomBytes(RANDOM_BYTES_SIZE3).toString(STRING_TYPE7);
   const expiresIn = EXPIRY;
   const payload = {
     sub: accountId,
@@ -2884,8 +4139,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
       };
     }
     const { otpSalt, otpHash, otpExpiry } = account2;
-    const now = /* @__PURE__ */ new Date();
-    const hasExpired = (0, import_date_fns6.isAfter)(now, otpExpiry);
+    const hasExpired = dateIsInThePast(otpExpiry);
     if (hasExpired) {
       console.info("Unable to verify account sign in code - verification period has expired");
       return {
@@ -2950,13 +4204,13 @@ var addAndGetOTP = async (root, variables, context) => {
 var add_and_get_OTP_default = addAndGetOTP;
 
 // custom-resolvers/mutations/send-email-password-reset-link/index.ts
-var import_crypto7 = __toESM(require("crypto"));
+var import_crypto8 = __toESM(require("crypto"));
 var {
   ENCRYPTION: {
-    STRING_TYPE: STRING_TYPE7,
-    PBKDF2: { ITERATIONS: ITERATIONS6, DIGEST_ALGORITHM: DIGEST_ALGORITHM6 },
+    STRING_TYPE: STRING_TYPE8,
+    PBKDF2: { ITERATIONS: ITERATIONS7, DIGEST_ALGORITHM: DIGEST_ALGORITHM7 },
     PASSWORD: {
-      PBKDF2: { KEY_LENGTH: KEY_LENGTH6 }
+      PBKDF2: { KEY_LENGTH: KEY_LENGTH7 }
     }
   }
 } = ACCOUNT2;
@@ -2970,6 +4224,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
       return { success: false };
     }
     const { id: accountId } = account2;
+    const { id: statusId } = account2.status;
     const newRetriesEntry = await create_authentication_retry_entry_default(context, accountId);
     if (!newRetriesEntry.success) {
       return { success: false };
@@ -2977,7 +4232,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
     const needToBlockAccount = await should_block_account_default(context, accountId);
     if (needToBlockAccount) {
       try {
-        const blocked = await block_account_default(context, accountId);
+        const blocked = await block_account_default(context, statusId);
         if (blocked) {
           return {
             success: false,
@@ -2991,7 +4246,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
       }
     }
     console.info("Generating password reset hash");
-    const passwordResetHash = import_crypto7.default.pbkdf2Sync(email, account2.salt, ITERATIONS6, KEY_LENGTH6, DIGEST_ALGORITHM6).toString(STRING_TYPE7);
+    const passwordResetHash = import_crypto8.default.pbkdf2Sync(email, account2.salt, ITERATIONS7, KEY_LENGTH7, DIGEST_ALGORITHM7).toString(STRING_TYPE8);
     const accountUpdate = {
       passwordResetHash,
       passwordResetExpiry: ACCOUNT2.PASSWORD_RESET_EXPIRY()
@@ -3011,9 +4266,6 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
   }
 };
 var send_email_password_reset_link_default = sendEmailPasswordResetLink;
-
-// custom-resolvers/mutations/account-password-reset/index.ts
-var import_date_fns7 = require("date-fns");
 
 // helpers/account-has-used-password-before/index.ts
 var hasAccountUsedPasswordBefore = async (context, accountId, newPassword) => {
@@ -3073,7 +4325,9 @@ var accountPasswordReset = async (root, variables, context) => {
       console.info("Unable to reset account password - account does not exist");
       return { success: false };
     }
-    const { isBlocked } = account2;
+    const {
+      status: { isBlocked }
+    } = account2;
     if (isBlocked) {
       console.info("Unable to reset account password - account is blocked");
       return { success: false };
@@ -3083,8 +4337,7 @@ var accountPasswordReset = async (root, variables, context) => {
       console.info("Unable to reset account password - reset hash or expiry does not exist");
       return { success: false };
     }
-    const now = /* @__PURE__ */ new Date();
-    const hasExpired = (0, import_date_fns7.isAfter)(now, passwordResetExpiry);
+    const hasExpired = dateIsInThePast(passwordResetExpiry);
     if (hasExpired) {
       console.info("Unable to reset account password - verification period has expired");
       return {
@@ -3139,51 +4392,17 @@ var accountPasswordReset = async (root, variables, context) => {
 var account_password_reset_default = accountPasswordReset;
 
 // custom-resolvers/mutations/send-email-reactivate-account-link/index.ts
-var import_crypto8 = __toESM(require("crypto"));
-var {
-  ENCRYPTION: {
-    STRING_TYPE: STRING_TYPE8,
-    PBKDF2: { ITERATIONS: ITERATIONS7, DIGEST_ALGORITHM: DIGEST_ALGORITHM7 },
-    PASSWORD: {
-      PBKDF2: { KEY_LENGTH: KEY_LENGTH7 }
-    }
-  }
-} = ACCOUNT2;
 var sendEmailReactivateAccountLink = async (root, variables, context) => {
   try {
     console.info("Received a request to send reactivate account email/link - checking account");
-    const { urlOrigin, accountId } = variables;
-    const account2 = await get_account_by_id_default(context, accountId);
-    if (!account2) {
-      console.info("Unable to check account and send reactivate account email/link - no account found");
-      return { success: false };
-    }
-    const { email } = account2;
-    console.info("Generating hash for account reactivation");
-    const reactivationHash = import_crypto8.default.pbkdf2Sync(email, account2.salt, ITERATIONS7, KEY_LENGTH7, DIGEST_ALGORITHM7).toString(STRING_TYPE8);
-    const accountUpdate = {
-      reactivationHash,
-      reactivationExpiry: ACCOUNT2.REACTIVATION_EXPIRY()
-    };
-    console.info("Updating account for reactivation");
-    await update_account_default.account(context, accountId, accountUpdate);
-    console.info("Sending reactivate account email/link");
-    const name = get_full_name_string_default(account2);
-    const emailResponse = await emails_default.reactivateAccountLink(urlOrigin, email, name, reactivationHash);
-    if (emailResponse.success) {
-      return {
-        ...emailResponse,
-        email,
-        accountId
-      };
-    }
-    return { accountId, email, success: false };
+    const reactiveAccountResponse = await send_email_reactivate_account_link_default.send(variables, context);
+    return reactiveAccountResponse;
   } catch (err) {
     console.error("Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) %O", err);
     throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) ${err}`);
   }
 };
-var send_email_reactivate_account_link_default = sendEmailReactivateAccountLink;
+var send_email_reactivate_account_link_default2 = sendEmailReactivateAccountLink;
 
 // helpers/get-country-by-field/index.ts
 var getCountryByField = async (context, field, value) => {
@@ -3283,6 +4502,85 @@ var createAnEligibility = async (context, countryId, applicationId, coverPeriodI
 };
 var create_an_eligibility_default = createAnEligibility;
 
+// helpers/create-a-buyer-trading-history/index.ts
+var createABuyerTradingHistory = async (context, buyerId, applicationId) => {
+  console.info("Creating a buyer trading history for ", buyerId);
+  try {
+    const buyerTradingHistory = await context.db.BuyerTradingHistory.createOne({
+      data: {
+        buyer: {
+          connect: {
+            id: buyerId
+          }
+        },
+        application: {
+          connect: {
+            id: applicationId
+          }
+        },
+        currencyCode: APPLICATION.DEFAULT_CURRENCY
+      }
+    });
+    return buyerTradingHistory;
+  } catch (err) {
+    console.error("Error creating a buyer trading history %O", err);
+    throw new Error(`Creating a buyer trading history ${err}`);
+  }
+};
+var create_a_buyer_trading_history_default = createABuyerTradingHistory;
+
+// helpers/create-a-buyer-contact/index.ts
+var createABuyerContact = async (context, buyerId, applicationId) => {
+  console.info("Creating a buyer contact for ", buyerId);
+  try {
+    const buyerContact = await context.db.BuyerContact.createOne({
+      data: {
+        buyer: {
+          connect: {
+            id: buyerId
+          }
+        },
+        application: {
+          connect: {
+            id: applicationId
+          }
+        }
+      }
+    });
+    return buyerContact;
+  } catch (err) {
+    console.error("Error creating a buyer contact %O", err);
+    throw new Error(`Creating a buyer contact ${err}`);
+  }
+};
+var create_a_buyer_contact_default = createABuyerContact;
+
+// helpers/create-a-buyer-relationship/index.ts
+var createABuyerRelationship = async (context, buyerId, applicationId) => {
+  console.info("Creating a buyer relationship for ", buyerId);
+  try {
+    const buyerRelationship = await context.db.BuyerRelationship.createOne({
+      data: {
+        buyer: {
+          connect: {
+            id: buyerId
+          }
+        },
+        application: {
+          connect: {
+            id: applicationId
+          }
+        }
+      }
+    });
+    return buyerRelationship;
+  } catch (err) {
+    console.error("Error creating a buyer relationship %O", err);
+    throw new Error(`Creating a buyer relationship ${err}`);
+  }
+};
+var create_a_buyer_relationship_default = createABuyerRelationship;
+
 // helpers/create-a-buyer/index.ts
 var createABuyer = async (context, countryId, applicationId) => {
   console.info("Creating a buyer for ", applicationId);
@@ -3297,13 +4595,42 @@ var createABuyer = async (context, countryId, applicationId) => {
         }
       }
     });
-    return buyer;
+    const buyerTradingHistory = await create_a_buyer_trading_history_default(context, buyer.id, applicationId);
+    const buyerRelationship = await create_a_buyer_relationship_default(context, buyer.id, applicationId);
+    const buyerContact = await create_a_buyer_contact_default(context, buyer.id, applicationId);
+    return {
+      buyer: {
+        ...buyer,
+        buyerTradingHistory,
+        relationship: buyerRelationship
+      },
+      buyerContact
+    };
   } catch (err) {
     console.error("Error creating a buyer %O", err);
     throw new Error(`Creating a buyer ${err}`);
   }
 };
 var create_a_buyer_default = createABuyer;
+
+// helpers/create-a-jointly-insured-party/index.ts
+var createAJointlyInsuredParty = async (context, policyId) => {
+  console.info("Creating a jointly insured party for ", policyId);
+  try {
+    const jointlyInsuredParty = await context.db.JointlyInsuredParty.createOne({
+      data: {
+        policy: {
+          connect: { id: policyId }
+        }
+      }
+    });
+    return jointlyInsuredParty;
+  } catch (err) {
+    console.error("Error creating a jointly insured party %O", err);
+    throw new Error(`Creating a jointly insured party ${err}`);
+  }
+};
+var create_a_jointly_insured_party_default = createAJointlyInsuredParty;
 
 // helpers/create-a-policy/index.ts
 var createAPolicy = async (context, applicationId) => {
@@ -3317,7 +4644,11 @@ var createAPolicy = async (context, applicationId) => {
         needPreCreditPeriodCover: APPLICATION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER
       }
     });
-    return policy;
+    const jointlyInsuredParty = await create_a_jointly_insured_party_default(context, policy.id);
+    return {
+      policy,
+      jointlyInsuredParty
+    };
   } catch (err) {
     console.error("Error creating a policy %O", err);
     throw new Error(`Creating a policy ${err}`);
@@ -3325,32 +4656,363 @@ var createAPolicy = async (context, applicationId) => {
 };
 var create_a_policy_default = createAPolicy;
 
-// custom-resolvers/mutations/create-an-application/index.ts
-var createAnApplication = async (root, variables, context) => {
-  console.info("Creating application for ", variables.accountId);
+// helpers/create-a-loss-payee-financial-international/index.ts
+var createALossPayeeFinancialInternational = async (context, lossPayeeId) => {
+  console.info("Creating a loss payee financial (international) for ", lossPayeeId);
   try {
-    const { accountId, eligibilityAnswers } = variables;
+    const lossPayeeFinancialInternational = await context.db.LossPayeeFinancialInternational.createOne({
+      data: {
+        lossPayee: {
+          connect: { id: lossPayeeId }
+        }
+      }
+    });
+    const vector = await context.db.LossPayeeFinancialInternationalVector.createOne({
+      data: {
+        financialInternational: {
+          connect: { id: lossPayeeFinancialInternational.id }
+        }
+      }
+    });
+    return {
+      ...lossPayeeFinancialInternational,
+      vector
+    };
+  } catch (err) {
+    console.error("Error creating a loss payee financial (international) for %O", err);
+    throw new Error(`Creating a loss payee financial (international) for ${err}`);
+  }
+};
+var create_a_loss_payee_financial_international_default = createALossPayeeFinancialInternational;
+
+// helpers/create-a-loss-payee-financial-uk/index.ts
+var createALossPayeeFinancialUk = async (context, lossPayeeId) => {
+  console.info("Creating a loss payee financial (UK) for ", lossPayeeId);
+  try {
+    const lossPayeeFinancialUk = await context.db.LossPayeeFinancialUk.createOne({
+      data: {
+        lossPayee: {
+          connect: { id: lossPayeeId }
+        }
+      }
+    });
+    const vector = await context.db.LossPayeeFinancialUkVector.createOne({
+      data: {
+        financialUk: {
+          connect: { id: lossPayeeFinancialUk.id }
+        }
+      }
+    });
+    return {
+      ...lossPayeeFinancialUk,
+      vector
+    };
+  } catch (err) {
+    console.error("Error creating a loss payee financial (UK) for %O", err);
+    throw new Error(`Creating a loss payee financial (UK) for ${err}`);
+  }
+};
+var create_a_loss_payee_financial_uk_default = createALossPayeeFinancialUk;
+
+// helpers/create-a-nominated-loss-payee/index.ts
+var createANominatedLossPayee = async (context, applicationId) => {
+  console.info("Creating a nominated loss payee for ", applicationId);
+  try {
+    const nominatedLossPayee = await context.db.NominatedLossPayee.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId }
+        }
+      }
+    });
+    await create_a_loss_payee_financial_international_default(context, nominatedLossPayee.id);
+    await create_a_loss_payee_financial_uk_default(context, nominatedLossPayee.id);
+    return nominatedLossPayee;
+  } catch (err) {
+    console.error("Error creating a nominated loss payee for %O", err);
+    throw new Error(`Creating a nominated loss payee for ${err}`);
+  }
+};
+var create_a_nominated_loss_payee_default = createANominatedLossPayee;
+
+// helpers/create-a-company-address/index.ts
+var createACompanyAddress = async (context, addressData, companyId) => {
+  console.info("Creating a company address for ", companyId);
+  try {
+    const companyAddress = await context.db.CompanyAddress.createOne({
+      data: {
+        company: {
+          connect: {
+            id: companyId
+          }
+        },
+        ...addressData
+      }
+    });
+    return companyAddress;
+  } catch (err) {
+    console.error("Error creating a company address %O", err);
+    throw new Error(`Creating a company address ${err}`);
+  }
+};
+var create_a_company_address_default = createACompanyAddress;
+
+// helpers/map-sic-codes/index.ts
+var mapSicCodes = (sicCodes, industrySectorNames2, companyId) => {
+  const mapped = [];
+  if (!sicCodes.length) {
+    return mapped;
+  }
+  sicCodes.forEach((code, index) => {
+    let industrySectorName = "";
+    if (industrySectorNames2 && industrySectorNames2[index]) {
+      industrySectorName = industrySectorNames2[index];
+    }
+    const mappedCode = {
+      sicCode: code,
+      industrySectorName,
+      company: {
+        connect: {
+          id: companyId
+        }
+      }
+    };
+    mapped.push(mappedCode);
+  });
+  return mapped;
+};
+var map_sic_codes_default = mapSicCodes;
+
+// helpers/create-company-sic-codes/index.ts
+var createCompanySicCodes = async (context, sicCodes, industrySectorNames2, companyId) => {
+  console.info("Creating company SIC codes for ", companyId);
+  try {
+    const mappedSicCodes = map_sic_codes_default(sicCodes, industrySectorNames2, companyId);
+    let createdSicCodes = [];
+    if (sicCodes.length) {
+      createdSicCodes = await context.db.CompanySicCode.createMany({
+        data: mappedSicCodes
+      });
+    }
+    return createdSicCodes;
+  } catch (err) {
+    console.error("Error creating company SIC codes %O", err);
+    throw new Error(`Creating company SIC codes ${err}`);
+  }
+};
+var create_company_sic_codes_default = createCompanySicCodes;
+
+// helpers/create-a-company-different-trading-address/index.ts
+var createACompanyDifferentTradingAddress = async (context, companyId) => {
+  console.info("Creating a different trading address for ", companyId);
+  try {
+    const differentTradingAddress = await context.db.CompanyDifferentTradingAddress.createOne({
+      data: {
+        company: {
+          connect: {
+            id: companyId
+          }
+        }
+      }
+    });
+    return differentTradingAddress;
+  } catch (err) {
+    console.error("Error creating a company different trading address %O", err);
+    throw new Error(`Creating a company different trading address ${err}`);
+  }
+};
+var create_a_company_different_trading_address_default = createACompanyDifferentTradingAddress;
+
+// helpers/create-a-company/index.ts
+var createACompany = async (context, applicationId, companyData) => {
+  console.info("Creating a company, address and SIC codes for ", applicationId);
+  try {
+    const { registeredOfficeAddress, sicCodes, industrySectorNames: industrySectorNames2, ...companyFields } = companyData;
+    const company = await context.db.Company.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId }
+        },
+        ...companyFields
+      }
+    });
+    const companyAddress = await create_a_company_address_default(context, registeredOfficeAddress, company.id);
+    const createdSicCodes = await create_company_sic_codes_default(context, sicCodes, industrySectorNames2, company.id);
+    const createdDifferentTradingAddress = await create_a_company_different_trading_address_default(context, company.id);
+    return {
+      ...company,
+      registeredOfficeAddress: companyAddress,
+      sicCodes: createdSicCodes,
+      differentTradingAddress: createdDifferentTradingAddress
+    };
+  } catch (err) {
+    console.error("Error creating a company, address, SIC codes and company different trading address %O", err);
+    throw new Error(`Creating a company, address, SIC codes and company different trading address ${err}`);
+  }
+};
+var create_a_company_default = createACompany;
+
+// helpers/create-a-private-market/index.ts
+var createAPrivateMarket = async (context, exportContractId) => {
+  console.info("Creating a private market for ", exportContractId);
+  try {
+    const privateMarket = await context.db.PrivateMarket.createOne({
+      data: {
+        exportContract: {
+          connect: { id: exportContractId }
+        }
+      }
+    });
+    return privateMarket;
+  } catch (err) {
+    console.error("Error creating a private market %O", err);
+    throw new Error(`Creating a private market ${err}`);
+  }
+};
+var create_a_private_market_default = createAPrivateMarket;
+
+// helpers/create-an-export-contract-agent-service/index.ts
+var createAnExportContractAgentService = async (context, agentId) => {
+  console.info("Creating an export contract agent service for ", agentId);
+  try {
+    const agentService = await context.db.ExportContractAgentService.createOne({
+      data: {
+        agent: {
+          connect: { id: agentId }
+        }
+      }
+    });
+    return agentService;
+  } catch (err) {
+    console.error("Error creating an export contract agent service %O", err);
+    throw new Error(`Creating an export contract agent service ${err}`);
+  }
+};
+var create_an_export_contract_agent_service_default = createAnExportContractAgentService;
+
+// helpers/create-an-export-contract-agent-service-charge/index.ts
+var createAnExportContractAgentServiceCharge = async (context, agentServiceId) => {
+  console.info("Creating an export contract agent service charge for ", agentServiceId);
+  try {
+    const agentService = await context.db.ExportContractAgentServiceCharge.createOne({
+      data: {
+        service: {
+          connect: { id: agentServiceId }
+        }
+      }
+    });
+    return agentService;
+  } catch (err) {
+    console.error("Error creating an export contract agent service charge %O", err);
+    throw new Error(`Creating an export contract agent service charge ${err}`);
+  }
+};
+var create_an_export_contract_agent_service_charge_default = createAnExportContractAgentServiceCharge;
+
+// helpers/create-an-export-contract-agent/index.ts
+var createAnExportContractAgent = async (context, exportContractId) => {
+  console.info("Creating an export contract agent for ", exportContractId);
+  try {
+    const agent = await context.db.ExportContractAgent.createOne({
+      data: {
+        exportContract: {
+          connect: { id: exportContractId }
+        }
+      }
+    });
+    const agentService = await create_an_export_contract_agent_service_default(context, agent.id);
+    const agentServiceCharge = await create_an_export_contract_agent_service_charge_default(context, agentService.id);
+    return {
+      agent,
+      agentService,
+      agentServiceCharge
+    };
+  } catch (err) {
+    console.error("Error creating an export contract agent %O", err);
+    throw new Error(`Creating an export contract agent ${err}`);
+  }
+};
+var create_an_export_contract_agent_default = createAnExportContractAgent;
+
+// helpers/create-an-export-contract/index.ts
+var createAnExportContract = async (context, applicationId) => {
+  console.info("Creating an export contract for ", applicationId);
+  try {
+    const exportContract = await context.db.ExportContract.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId }
+        },
+        finalDestinationKnown: APPLICATION.DEFAULT_FINAL_DESTINATION_KNOWN
+      }
+    });
+    const privateMarket = await create_a_private_market_default(context, exportContract.id);
+    const { agent, agentService } = await create_an_export_contract_agent_default(context, exportContract.id);
+    return {
+      exportContract,
+      privateMarket,
+      agent,
+      agentService
+    };
+  } catch (err) {
+    console.error("Error creating an export contract %O", err);
+    throw new Error(`Creating an export contract ${err}`);
+  }
+};
+var create_an_export_contract_default = createAnExportContract;
+
+// helpers/create-a-section-review/index.ts
+var createASectionReview = async (context, applicationId, sectionReviewData) => {
+  console.info("Creating a section review for ", applicationId);
+  try {
+    const sectionReview = await context.db.SectionReview.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId }
+        },
+        ...sectionReviewData
+      }
+    });
+    return sectionReview;
+  } catch (err) {
+    console.error("Error creating a section review %O", err);
+    throw new Error(`Creating a section review ${err}`);
+  }
+};
+var create_a_section_review_default = createASectionReview;
+
+// helpers/create-an-application/index.ts
+var { SUBMISSION_TYPE: SUBMISSION_TYPE2 } = APPLICATION;
+var createAnApplication = async (root, variables, context) => {
+  console.info("Creating an application (createAnApplication helper)");
+  try {
+    const { accountId, eligibilityAnswers, company: companyData, sectionReview: sectionReviewData, status } = variables;
     const account2 = await get_account_by_id_default(context, accountId);
     if (!account2) {
-      return {
-        success: false
-      };
+      return null;
     }
     const { buyerCountryIsoCode, needPreCreditPeriodCover, totalContractValueId, coverPeriodId, ...otherEligibilityAnswers } = eligibilityAnswers;
     const country = await get_country_by_field_default(context, "isoCode", buyerCountryIsoCode);
+    const submissionType = SUBMISSION_TYPE2.MIA;
     const application2 = await context.db.Application.createOne({
       data: {
         owner: {
           connect: { id: accountId }
-        }
+        },
+        status,
+        submissionType
       }
     });
     const { id: applicationId } = application2;
-    const buyer = await create_a_buyer_default(context, country.id, applicationId);
+    const { buyer } = await create_a_buyer_default(context, country.id, applicationId);
     const totalContractValue = await get_total_contract_value_by_field_default(context, "valueId", totalContractValueId);
     const coverPeriod = await get_cover_period_value_by_field_default(context, "valueId", coverPeriodId);
     const eligibility = await create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers);
-    const policy = await create_a_policy_default(context, applicationId);
+    const { exportContract } = await create_an_export_contract_default(context, applicationId);
+    const { policy } = await create_a_policy_default(context, applicationId);
+    const nominatedLossPayee = await create_a_nominated_loss_payee_default(context, applicationId);
+    const company = await create_a_company_default(context, applicationId, companyData);
+    const sectionReview = await create_a_section_review_default(context, applicationId, sectionReviewData);
     const updatedApplication = await context.db.Application.updateOne({
       where: {
         id: applicationId
@@ -3359,37 +5021,119 @@ var createAnApplication = async (root, variables, context) => {
         buyer: {
           connect: { id: buyer.id }
         },
+        company: {
+          connect: { id: company.id }
+        },
         eligibility: {
           connect: { id: eligibility.id }
         },
+        exportContract: {
+          connect: { id: exportContract.id }
+        },
+        nominatedLossPayee: {
+          connect: { id: nominatedLossPayee.id }
+        },
         policy: {
           connect: { id: policy.id }
+        },
+        sectionReview: {
+          connect: { id: sectionReview.id }
         }
       }
     });
+    return updatedApplication;
+  } catch (err) {
+    console.error("Error creating an application (createAnApplication helper) %O", err);
+    throw new Error(`Creating an application (createAnApplication helper) ${err}`);
+  }
+};
+var create_an_application_default = createAnApplication;
+
+// custom-resolvers/mutations/create-an-application/index.ts
+var { STATUS: STATUS2 } = APPLICATION;
+var createAnApplication2 = async (root, variables, context) => {
+  console.info("Creating application for ", variables.accountId);
+  const updatedVariables = variables;
+  updatedVariables.status = STATUS2.IN_PROGRESS;
+  try {
+    const updatedApplication = await create_an_application_default(root, updatedVariables, context);
+    if (updatedApplication) {
+      return {
+        ...updatedApplication,
+        success: true
+      };
+    }
     return {
-      ...updatedApplication,
-      success: true
+      success: false
     };
   } catch (err) {
     console.error("Error creating application %O", err);
     throw new Error(`Creating application ${err}`);
   }
 };
-var create_an_application_default = createAnApplication;
+var create_an_application_default2 = createAnApplication2;
+
+// custom-resolvers/mutations/create-an-abandoned-application/index.ts
+var { STATUS: STATUS3 } = APPLICATION;
+var createAnAbandonedApplication = async (root, variables, context) => {
+  console.info("Creating an abandoned application for ", variables.accountId);
+  const abandonedApplicationVariables = variables;
+  abandonedApplicationVariables.status = STATUS3.ABANDONED;
+  try {
+    const createdApplication = await create_an_application_default(root, abandonedApplicationVariables, context);
+    if (createdApplication) {
+      const updatedApplication = await context.db.Application.updateOne({
+        where: {
+          id: createdApplication.id
+        },
+        data: {
+          status: STATUS3.ABANDONED
+        }
+      });
+      return {
+        ...updatedApplication,
+        success: true
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error("Error creating an abandoned application %O", err);
+    throw new Error(`Creating an abandoned application ${err}`);
+  }
+};
+var create_an_abandoned_application_default = createAnAbandonedApplication;
+
+// helpers/get-application-by-reference-number/index.ts
+var getApplicationByReferenceNumber = async (referenceNumber, context) => {
+  try {
+    console.info("Getting application by reference number - getApplicationByReferenceNumber helper %s", referenceNumber);
+    const applications = await context.db.Application.findMany({
+      where: {
+        referenceNumber: { equals: referenceNumber }
+      }
+    });
+    if (applications?.length) {
+      const [application2] = applications;
+      return application2;
+    }
+    return null;
+  } catch (err) {
+    console.error("Error getting application by reference number %O", err);
+    throw new Error(`Error getting application by reference number ${err}`);
+  }
+};
+var get_application_by_reference_number_default = getApplicationByReferenceNumber;
 
 // custom-resolvers/mutations/delete-application-by-reference-number/index.ts
 var deleteApplicationByReferenceNumber = async (root, variables, context) => {
   try {
     console.info("Deleting application by reference number");
     const { referenceNumber } = variables;
-    const applications = await context.db.Application.findMany({
-      where: {
-        referenceNumber: { equals: referenceNumber }
-      }
-    });
-    if (applications.length) {
-      const [{ id }] = applications;
+    const application2 = await get_application_by_reference_number_default(referenceNumber, context);
+    if (application2) {
+      const { id } = application2;
       const deleteResponse = await context.db.Application.deleteOne({
         where: {
           id
@@ -3411,79 +5155,201 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
 };
 var delete_application_by_reference_number_default = deleteApplicationByReferenceNumber;
 
-// types/index.ts
-var import_types2 = __toESM(require("@keystone-6/core/types"));
-
-// helpers/map-sic-codes/index.ts
-var mapSicCodes = (company, sicCodes, industrySectorNames2) => {
-  const mapped = [];
-  if (!sicCodes?.length) {
-    return mapped;
-  }
-  sicCodes.forEach((code, index) => {
-    let industrySectorName = "";
-    if (industrySectorNames2 && industrySectorNames2[index]) {
-      industrySectorName = industrySectorNames2[index];
-    }
-    const codeToAdd = {
-      sicCode: code,
-      industrySectorName,
-      company: {
-        connect: {
-          id: company.id
-        }
-      }
-    };
-    mapped.push(codeToAdd);
-  });
-  return mapped;
-};
-
-// custom-resolvers/mutations/update-company-and-company-address/index.ts
-var updateCompanyAndCompanyAddress = async (root, variables, context) => {
-  try {
-    console.info("Updating application company and company address for %s", variables.companyId);
-    const { address, sicCodes, industrySectorNames: industrySectorNames2, oldSicCodes, ...company } = variables.data;
-    if (company?.companyNumber && !company?.financialYearEndDate) {
-      company.financialYearEndDate = null;
-    }
-    const updatedCompany = await context.db.Company.updateOne({
-      where: { id: variables.companyId },
-      data: company
-    });
-    await context.db.CompanyAddress.updateOne({
-      where: { id: variables.companyAddressId },
-      data: address
-    });
-    const mappedSicCodes = mapSicCodes(updatedCompany, sicCodes, industrySectorNames2);
-    if (company && oldSicCodes && oldSicCodes.length) {
-      await context.db.CompanySicCode.deleteMany({
-        where: oldSicCodes
-      });
-    }
-    if (mappedSicCodes?.length) {
-      await context.db.CompanySicCode.createMany({
-        data: mappedSicCodes
-      });
-    }
-    return {
-      id: variables.companyId
-    };
-  } catch (err) {
-    console.error("Error updating application - company and company address %O", err);
-    throw new Error(`Updating application - company and company address ${err}`);
-  }
-};
-var update_company_and_company_address_default = updateCompanyAndCompanyAddress;
-
 // custom-resolvers/mutations/submit-application/index.ts
-var import_date_fns8 = require("date-fns");
+var import_date_fns6 = require("date-fns");
+
+// helpers/get-populated-application/map-policy/index.ts
+var mapPolicy = (policy) => {
+  const { requestedStartDate, contractCompletionDate } = policy;
+  const mappedPolicy = {
+    ...policy,
+    requestedStartDate: requestedStartDate ? new Date(requestedStartDate) : null,
+    contractCompletionDate: contractCompletionDate ? new Date(contractCompletionDate) : null
+  };
+  return mappedPolicy;
+};
+var map_policy_default = mapPolicy;
+
+// helpers/encrypt/generate-key/index.ts
+var import_crypto9 = __toESM(require("crypto"));
+var { ALGORITHM: ALGORITHM2, SIGNATURE: SIGNATURE2, SUBSTRING_INDEX_START, SUBSTRING_INDEX_END } = FINANCIAL_DETAILS.ENCRYPTION.KEY;
+var generateKey = () => import_crypto9.default.createHash(ALGORITHM2).update(SIGNATURE2).digest("hex").substring(SUBSTRING_INDEX_START, SUBSTRING_INDEX_END);
+var generate_key_default = generateKey;
+
+// helpers/decrypt/generate-decipher/index.ts
+var import_crypto10 = __toESM(require("crypto"));
+var { ENCRYPTION_METHOD } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
+var generateDecipher = (key2, iv) => {
+  try {
+    return import_crypto10.default.createDecipheriv(ENCRYPTION_METHOD, key2, iv);
+  } catch (err) {
+    console.error("Error generating decipher %O", err);
+    throw new Error(`Error generating decipher ${err}`);
+  }
+};
+var generate_decipher_default = generateDecipher;
+
+// helpers/decrypt/generate-buffer/index.ts
+var { STRING_ENCODING: STRING_ENCODING2, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
+var generateBufferInStringFormat = (value) => {
+  try {
+    return Buffer.from(value, STRING_ENCODING2).toString(OUTPUT_ENCODING);
+  } catch (err) {
+    console.error("Error generating buffer %O", err);
+    throw new Error(`Error generating buffer ${err}`);
+  }
+};
+var generate_buffer_default = generateBufferInStringFormat;
+
+// helpers/decrypt/index.ts
+var { ENCODING: ENCODING2, OUTPUT_ENCODING: OUTPUT_ENCODING2 } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
+var key = generate_key_default();
+var decryptData = (dataToDecrypt) => {
+  try {
+    console.info("Decrypting data");
+    const { value, iv } = dataToDecrypt;
+    const buffer = generate_buffer_default(value);
+    const decipher = generate_decipher_default(key, iv);
+    const decipherUpdate = decipher.update(buffer, ENCODING2, OUTPUT_ENCODING2);
+    const decipherFinal = decipher.final(OUTPUT_ENCODING2);
+    return decipherUpdate.concat(decipherFinal);
+  } catch (err) {
+    console.error("Error decrypting data %O", err);
+    throw new Error(`Error decrypting data ${err}`);
+  }
+};
+var decrypt = {
+  decrypt: decryptData
+};
+var decrypt_default = decrypt;
+
+// helpers/decrypt-financial-uk/index.ts
+var decryptFinancialUk = (applicationFinancialUk) => {
+  try {
+    console.info("Decrypting financial uk");
+    const mapped = applicationFinancialUk;
+    const {
+      accountNumber,
+      sortCode,
+      vector: { accountNumberVector, sortCodeVector }
+    } = applicationFinancialUk;
+    let decryptedAccountNumber = "";
+    let decryptedSortCode = "";
+    if (accountNumber && accountNumberVector) {
+      decryptedAccountNumber = decrypt_default.decrypt({ value: accountNumber, iv: accountNumberVector });
+    }
+    if (sortCode && sortCodeVector) {
+      decryptedSortCode = decrypt_default.decrypt({ value: sortCode, iv: sortCodeVector });
+    }
+    mapped.accountNumber = decryptedAccountNumber;
+    mapped.sortCode = decryptedSortCode;
+    return mapped;
+  } catch (err) {
+    console.error("Error decrypting financial uk %O", err);
+    throw new Error(`Error decrypting financial uk ${err}`);
+  }
+};
+var decrypt_financial_uk_default = decryptFinancialUk;
+
+// helpers/decrypt-financial-international/index.ts
+var decryptFinancialInternational = (applicationFinancialInternational) => {
+  try {
+    console.info("Decrypting financial international");
+    const mapped = applicationFinancialInternational;
+    const {
+      bicSwiftCode,
+      iban,
+      vector: { bicSwiftCodeVector, ibanVector }
+    } = applicationFinancialInternational;
+    let decryptedIban = "";
+    let decryptedBicSwiftCode = "";
+    if (bicSwiftCode && bicSwiftCodeVector) {
+      decryptedBicSwiftCode = decrypt_default.decrypt({ value: bicSwiftCode, iv: bicSwiftCodeVector });
+    }
+    if (iban && ibanVector) {
+      decryptedIban = decrypt_default.decrypt({ value: iban, iv: ibanVector });
+    }
+    mapped.bicSwiftCode = decryptedBicSwiftCode;
+    mapped.iban = decryptedIban;
+    return mapped;
+  } catch (err) {
+    console.error("Error decrypting international uk %O", err);
+    throw new Error(`Error decrypting international uk ${err}`);
+  }
+};
+var decrypt_financial_international_default = decryptFinancialInternational;
+
+// helpers/decrypt-nominated-loss-payee/index.ts
+var decryptNominatedLossPayee = (nominatedLossPayee, decryptFinancialUk2, decryptFinancialInternational2) => {
+  try {
+    console.info("Decrypting nominated loss payee %s", nominatedLossPayee.id);
+    const mapped = {
+      ...nominatedLossPayee,
+      financialUk: {},
+      financialInternational: {}
+    };
+    const { financialUk, financialInternational } = nominatedLossPayee;
+    if (decryptFinancialUk2) {
+      console.info("Decrypting nominated loss payee - financial - UK data %s", nominatedLossPayee.id);
+      const mappedFinancialUk = decrypt_financial_uk_default(financialUk);
+      mapped.financialUk = mappedFinancialUk;
+    }
+    if (decryptFinancialInternational2) {
+      console.info("Decrypting nominated loss payee - financial - international data %s", nominatedLossPayee.id);
+      const mappedFinancialInternational = decrypt_financial_international_default(financialInternational);
+      mapped.financialInternational = mappedFinancialInternational;
+    }
+    return mapped;
+  } catch (err) {
+    console.error("Error decrypting nominated loss payee %O", err);
+    throw new Error(`Error decrypting nominated loss payee ${err}`);
+  }
+};
+var decrypt_nominated_loss_payee_default = decryptNominatedLossPayee;
+
+// helpers/get-populated-application/nominated-loss-payee/index.ts
+var getNominatedLossPayee = async (context, lossPayeeId, decryptFinancialUk2, decryptFinancialInternational2) => {
+  try {
+    console.info(`Getting nominated loss payee ${lossPayeeId}`);
+    const nominatedLossPayee = await context.query.NominatedLossPayee.findOne({
+      where: { id: lossPayeeId },
+      query: "id isAppointed isLocatedInUk isLocatedInternationally name financialUk { id accountNumber sortCode bankAddress vector { accountNumberVector sortCodeVector } } financialInternational { id iban bicSwiftCode bankAddress vector { bicSwiftCodeVector ibanVector } }"
+    });
+    if (decryptFinancialUk2 || decryptFinancialInternational2) {
+      const decryptedNominatedLossPayee = decrypt_nominated_loss_payee_default(nominatedLossPayee, decryptFinancialUk2, decryptFinancialInternational2);
+      return decryptedNominatedLossPayee;
+    }
+    return nominatedLossPayee;
+  } catch (err) {
+    console.error("Error getting nominated loss payee (getNominatedLossPayee helper) %O", err);
+    throw new Error(`Error getting nominated loss payee (getNominatedLossPayee helper) ${err}`);
+  }
+};
+var nominated_loss_payee_default = getNominatedLossPayee;
 
 // helpers/get-populated-application/index.ts
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
-var getPopulatedApplication = async (context, application2) => {
-  console.info("Getting populated application");
-  const { eligibilityId, ownerId, policyId, policyContactId, exportContractId, companyId, businessId, brokerId, buyerId, declarationId } = application2;
+var getPopulatedApplication = async ({
+  context,
+  application: application2,
+  decryptFinancialUk: decryptFinancialUk2 = false,
+  decryptFinancialInternational: decryptFinancialInternational2 = false
+}) => {
+  console.info(`Getting populated application (helper) ${application2.id}`);
+  const {
+    eligibilityId,
+    ownerId,
+    policyId,
+    policyContactId,
+    exportContractId,
+    companyId,
+    businessId,
+    brokerId,
+    buyerId,
+    declarationId,
+    nominatedLossPayeeId,
+    sectionReviewId
+  } = application2;
   const eligibility = await context.db.Eligibility.findOne({
     where: { id: eligibilityId }
   });
@@ -3506,8 +5372,9 @@ var getPopulatedApplication = async (context, application2) => {
   if (!account2) {
     throw new Error(generateErrorMessage("account", application2.id));
   }
-  const policy = await context.db.Policy.findOne({
-    where: { id: policyId }
+  const policy = await context.query.Policy.findOne({
+    where: { id: policyId },
+    query: "id policyType requestedStartDate contractCompletionDate totalValueOfContract creditPeriodWithBuyer policyCurrencyCode totalMonthsOfCover totalSalesToBuyer maximumBuyerWillOwe needPreCreditPeriodCover jointlyInsuredParty { id companyName companyNumber countryCode requested }"
   });
   if (!policy) {
     throw new Error(generateErrorMessage("policy", application2.id));
@@ -3518,16 +5385,50 @@ var getPopulatedApplication = async (context, application2) => {
   if (!policyContact) {
     throw new Error(generateErrorMessage("policyContact", application2.id));
   }
+  const nominatedLossPayee = await nominated_loss_payee_default(context, nominatedLossPayeeId, decryptFinancialUk2, decryptFinancialInternational2);
+  const populatedPolicy = map_policy_default(policy);
   const exportContract = await context.db.ExportContract.findOne({
     where: { id: exportContractId }
   });
   if (!exportContract) {
     throw new Error(generateErrorMessage("exportContract", application2.id));
   }
+  const exportContractAgent = await context.db.ExportContractAgent.findOne({
+    where: { id: exportContract.agentId }
+  });
+  if (!exportContractAgent) {
+    throw new Error(generateErrorMessage("exportContractAgent", application2.id));
+  }
+  const exportContractAgentService = await context.db.ExportContractAgentService.findOne({
+    where: { id: exportContractAgent.serviceId }
+  });
+  if (!exportContractAgentService) {
+    throw new Error(generateErrorMessage("exportContractAgentService", application2.id));
+  }
+  const exportContractAgentServiceCharge = await context.db.ExportContractAgentServiceCharge.findOne({
+    where: { id: exportContractAgentService.chargeId }
+  });
+  if (!exportContractAgentServiceCharge) {
+    throw new Error(generateErrorMessage("exportContractAgentServiceCharge", application2.id));
+  }
+  const privateMarket = await context.db.PrivateMarket.findOne({
+    where: { id: exportContract.privateMarketId }
+  });
+  if (!privateMarket) {
+    throw new Error(generateErrorMessage("privateMarket", application2.id));
+  }
   const finalDestinationCountry = await get_country_by_field_default(context, "isoCode", exportContract.finalDestinationCountryCode);
   const populatedExportContract = {
     ...exportContract,
-    finalDestinationCountry
+    agent: {
+      ...exportContractAgent,
+      service: {
+        ...exportContractAgentService,
+        charge: exportContractAgentServiceCharge
+      }
+    },
+    finalDestinationCountry,
+    privateMarket
   };
   const company = await context.db.Company.findOne({
     where: { id: companyId }
@@ -3548,9 +5449,19 @@ var getPopulatedApplication = async (context, application2) => {
   const companyAddress = await context.db.CompanyAddress.findOne({
     where: { id: company.registeredOfficeAddressId }
   });
+  if (!companyAddress) {
+    throw new Error(generateErrorMessage("companyAddress", application2.id));
+  }
+  const differentTradingAddress = await context.db.CompanyDifferentTradingAddress.findOne({
+    where: { id: company.differentTradingAddressId }
+  });
+  if (!differentTradingAddress) {
+    throw new Error(generateErrorMessage("differentTradingAddress", application2.id));
+  }
   const populatedCompany = {
     ...company,
-    registeredOfficeAddress: companyAddress
+    registeredOfficeAddress: companyAddress,
+    differentTradingAddress
   };
   const business = await context.db.Business.findOne({
     where: { id: businessId }
@@ -3570,6 +5481,18 @@ var getPopulatedApplication = async (context, application2) => {
   if (!buyer) {
     throw new Error(generateErrorMessage("buyer", application2.id));
   }
+  const buyerRelationship = await context.db.BuyerRelationship.findOne({
+    where: { id: buyer.relationshipId }
+  });
+  if (!buyerRelationship) {
+    throw new Error(generateErrorMessage("buyerRelationship", application2.id));
+  }
+  const buyerTradingHistory = await context.db.BuyerTradingHistory.findOne({
+    where: { id: buyer.buyerTradingHistoryId }
+  });
+  if (!buyerTradingHistory) {
+    throw new Error(generateErrorMessage("buyerTradingHistory", application2.id));
+  }
   const buyerCountry = await context.db.Country.findOne({
     where: { id: buyer.countryId }
   });
@@ -3584,7 +5507,9 @@ var getPopulatedApplication = async (context, application2) => {
   };
   const populatedBuyer = {
     ...buyer,
-    country: buyerCountry
+    country: buyerCountry,
+    relationship: buyerRelationship,
+    buyerTradingHistory
   };
   const declaration = await context.db.Declaration.findOne({
     where: { id: declarationId }
@@ -3592,7 +5517,13 @@ var getPopulatedApplication = async (context, application2) => {
   if (!declaration) {
     throw new Error(generateErrorMessage("declaration", application2.id));
   }
-  const populatedApplication = {
+  const sectionReview = await context.db.SectionReview.findOne({
+    where: { id: sectionReviewId }
+  });
+  if (!sectionReview) {
+    throw new Error(generateErrorMessage("sectionReview", application2.id));
+  }
+  const populatedApplication2 = {
     ...application2,
     eligibility: populatedEligibility,
     broker,
@@ -3603,12 +5534,17 @@ var getPopulatedApplication = async (context, application2) => {
     declaration,
     exportContract: populatedExportContract,
     owner: account2,
-    policy,
-    policyContact
+    policy: populatedPolicy,
+    policyContact,
+    nominatedLossPayee,
+    sectionReview
   };
-  return populatedApplication;
+  return populatedApplication2;
 };
-var get_populated_application_default = getPopulatedApplication;
+var populatedApplication = {
+  get: getPopulatedApplication
+};
+var get_populated_application_default = populatedApplication;
 
 // helpers/get-application-submitted-email-template-ids/index.ts
 var {
@@ -3623,7 +5559,9 @@ var getApplicationSubmittedEmailTemplateIds = (application2) => {
     account: ""
   };
   const { hasAntiBriberyCodeOfConduct } = declaration;
-  const { exporterHasTradedWithBuyer } = buyer;
+  const {
+    buyerTradingHistory: { exporterHasTradedWithBuyer }
+  } = buyer;
   if (!hasAntiBriberyCodeOfConduct && !exporterHasTradedWithBuyer) {
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NO_DOCUMENTS;
     return templateIds;
@@ -3645,7 +5583,7 @@ var getApplicationSubmittedEmailTemplateIds = (application2) => {
 var get_application_submitted_email_template_ids_default = getApplicationSubmittedEmailTemplateIds;
 
 // emails/send-application-submitted-emails/index.ts
-var send2 = async (application2, xlsxPath) => {
+var send4 = async (application2, xlsxPath) => {
   try {
     const { referenceNumber, owner, company, buyer, policy, policyContact } = application2;
     const { email } = owner;
@@ -3706,11 +5644,12 @@ var send2 = async (application2, xlsxPath) => {
   }
 };
 var applicationSubmittedEmails = {
-  send: send2
+  send: send4
 };
 var send_application_submitted_emails_default = applicationSubmittedEmails;
 
 // generate-xlsx/index.ts
+var import_dotenv9 = __toESM(require("dotenv"));
 var import_exceljs = __toESM(require("exceljs"));
 
 // helpers/replace-character-codes-with-characters/index.ts
@@ -3720,6 +5659,7 @@ var replace_character_codes_with_characters_default = replaceCharacterCodesWithC
 // generate-xlsx/map-application-to-XLSX/helpers/xlsx-row/index.ts
 var { KEY, VALUE } = XLSX_CONFIG;
 var xlsxRow = (fieldName, answer) => {
+  console.info("Mapping XLSX row %s", fieldName);
   const value = answer || answer === 0 ? answer : "";
   const cleanValue = replace_character_codes_with_characters_default(String(value));
   const row = {
@@ -3778,18 +5718,54 @@ var DECLARATIONS_FIELDS = {
   }
 };
 
+<<<<<<< HEAD
+=======
+// content-strings/links.ts
+var LINKS = {
+  EXTERNAL: {
+    GUIDANCE: "https://www.gov.uk/guidance/export-insurance-policy#eligibility",
+    BEFORE_YOU_START: "https://www.gov.uk/guidance/get-a-quote-for-ukef-export-insurance",
+    PRIVACY: "https://www.gov.uk/government/publications/ukef-privacy-notice/ukef-privacy-notice--2",
+    FEEDBACK: "https://forms.office.com/r/TacytrRCgJ",
+    RESEARCH: "https://forms.office.com/pages/responsepage.aspx?id=jhOEgACUnkCm2ka1KB4LCkj8OKxLpCpDmTbrMyQ3j2JUOUFHNUc0QUhUOFdLNkJXWkRUS0wyMUZFNiQlQCN0PWcu",
+    EXPORT_FINANCE_MANAGERS: "https://www.gov.uk/government/publications/find-an-export-finance-manager",
+    APPROVED_BROKER_LIST: "https://www.gov.uk/government/publications/uk-export-finance-insurance-list-of-approved-brokers/export-insurance-approved-brokers",
+    PROPOSAL_FORM: "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1075267/10489_UKEF_Export_Insurance_Proposal_Form_20220513-fillable.pdf",
+    NBI_FORM: "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1041659/export-insurance-non-binding-indication-request-form_20170609.pdf",
+    FULL_APPLICATION: "https://www.gov.uk/guidance/apply-for-ukef-export-insurance",
+    ABILITY_NET: "https://mcmw.abilityNet.org.uk",
+    EQUALITY_ADVISORY_SERVICE: "https://www.equalityadvisoryservice.com",
+    ACCESSIBILITY_GUIDLINES: "https://www.w3.org/TR/WCAG21",
+    BRIBERY_ACT_2010_GUIDANCE: "https://www.justice.gov.uk/downloads/legislation/bribery-act-2010-guidance.pdf",
+    ICO_MAKE_A_COMPLAINT: "https://ico.org.uk/make-a-complaint",
+    CALL_CHARGES: "https://www.gov.uk/call-charges",
+    COMPANIES_HOUSE: "https://find-and-update.company-information.service.gov.uk"
+  }
+};
+
+// helpers/format-currency/index.ts
+var formatCurrency = (number, currencyCode, decimalPoints) => number.toLocaleString("en", {
+  style: "currency",
+  currency: currencyCode,
+  minimumFractionDigits: decimalPoints ?? 0,
+  maximumFractionDigits: decimalPoints ?? 0
+});
+var format_currency_default = formatCurrency;
+
+>>>>>>> main-application-no-pdf
 // content-strings/fields/insurance/eligibility/index.ts
 var {
   BUYER_COUNTRY,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   VALID_EXPORTER_LOCATION,
-  WANT_COVER_OVER_MAX_AMOUNT,
-  WANT_COVER_OVER_MAX_PERIOD,
-  OTHER_PARTIES_INVOLVED,
-  LETTER_OF_CREDIT,
-  PRE_CREDIT_PERIOD,
-  COMPANIES_HOUSE_NUMBER
+  COVER_PERIOD: COVER_PERIOD_FIELD_ID,
+  COMPANIES_HOUSE_NUMBER,
+  TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID,
+  HAS_END_BUYER,
+  HAS_COMPANIES_HOUSE_NUMBER
 } = insurance_default.ELIGIBILITY;
+var { COMPANY_NAME } = insurance_default.COMPANIES_HOUSE;
+var THRESHOLD = format_currency_default(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
 var FIELDS_ELIGIBILITY = {
   [BUYER_COUNTRY]: {
     SUMMARY: {
@@ -3807,125 +5783,505 @@ var FIELDS_ELIGIBILITY = {
     },
     ANSWER: "At least 20%"
   },
-  [WANT_COVER_OVER_MAX_AMOUNT]: {
+  [HAS_END_BUYER]: {
+    HINT: "Sometimes, exporters supply goods to a client in an overseas market who will then sell them on. The exporter will not get paid by the buyer until they have been paid by this third party. We call this third party an 'end buyer'.",
     SUMMARY: {
-      TITLE: "Insured for more than \xA3500,000"
+      TITLE: "End buyer"
     }
   },
-  [WANT_COVER_OVER_MAX_PERIOD]: {
+  [COVER_PERIOD_FIELD_ID]: {
+    OPTIONS: {
+      BELOW: {
+        ID: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
+        VALUE: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
+        TEXT: COVER_PERIOD.LESS_THAN_2_YEARS.VALUE
+      },
+      ABOVE: {
+        ID: COVER_PERIOD.MORE_THAN_2_YEARS.DB_ID,
+        VALUE: COVER_PERIOD.MORE_THAN_2_YEARS.DB_ID,
+        TEXT: COVER_PERIOD.MORE_THAN_2_YEARS.VALUE
+      }
+    },
     SUMMARY: {
-      TITLE: "Insured for more than 2 years"
-    }
-  },
-  [OTHER_PARTIES_INVOLVED]: {
-    SUMMARY: {
-      TITLE: "Other parties involved"
-    }
-  },
-  [LETTER_OF_CREDIT]: {
-    SUMMARY: {
-      TITLE: "Paid by letter of credit"
-    }
-  },
-  [PRE_CREDIT_PERIOD]: {
-    SUMMARY: {
-      TITLE: "Pre-credit period"
+      TITLE: "Length of policy"
     }
   },
   [COMPANIES_HOUSE_NUMBER]: {
+    HINT: `<p>For example, 8989898 or SC907816. You'll find it on your incorporation certificate or on the <a class="govuk-link" href="${LINKS.EXTERNAL.COMPANIES_HOUSE}">Companies House website</a>.</p>`,
+    SUMMARY: {
+      TITLE: "UK Companies House number"
+    }
+  },
+  [HAS_COMPANIES_HOUSE_NUMBER]: {
     SUMMARY: {
       TITLE: "UK Companies House registration number and actively trading"
+    }
+  },
+  [COMPANY_NAME]: {
+    SUMMARY: {
+      TITLE: "Company name"
+    }
+  },
+  [TOTAL_CONTRACT_VALUE_FIELD_ID]: {
+    OPTIONS: {
+      ABOVE: {
+        ID: TOTAL_CONTRACT_VALUE.MORE_THAN_250K.DB_ID,
+        VALUE: TOTAL_CONTRACT_VALUE.MORE_THAN_250K.DB_ID,
+        TEXT: `${THRESHOLD} and above`
+      },
+      BELOW: {
+        ID: TOTAL_CONTRACT_VALUE.LESS_THAN_250K.DB_ID,
+        VALUE: TOTAL_CONTRACT_VALUE.LESS_THAN_250K.DB_ID,
+        TEXT: `Less than ${THRESHOLD}`
+      }
+    },
+    SUMMARY: {
+      TITLE: "Total value to insure",
+      ABOVE: `Above ${THRESHOLD}`,
+      BELOW: `Below ${THRESHOLD}`
     }
   }
 };
 
+// content-strings/fields/insurance/export-contract/index.ts
+var {
+  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
+  HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
+  PRIVATE_MARKET: { DECLINED_DESCRIPTION }
+} = export_contract_default;
+var EXPORT_CONTRACT_FIELDS = {
+  ABOUT_GOODS_OR_SERVICES: {
+    [DESCRIPTION]: {
+      LABEL: "Describe the goods or services you're exporting and explain how they'll be used by the buyer",
+      HINT: {
+        INTRO: "For example:",
+        LIST: [
+          "fast moving consumer goods, like vegan protein bars",
+          "construction materials to build commercial property",
+          "educational services such as teacher training"
+        ],
+        OUTRO: "We may contact you to get more information if you're exporting goods or services that might have an impact on the environment."
+      },
+      MAXIMUM: 1e3,
+      SUMMARY: {
+        TITLE: "Goods or services you're exporting"
+      }
+    },
+    [FINAL_DESTINATION_KNOWN]: {
+      LABEL: "Do you know the final destination of the goods or services?"
+    },
+    [FINAL_DESTINATION]: {
+      LABEL: "What's the final destination of the goods or services?",
+      SUMMARY: {
+        TITLE: "Final destination of goods or services"
+      }
+    }
+  },
+  HOW_WILL_YOU_GET_PAID: {
+    [PAYMENT_TERMS_DESCRIPTION]: {
+      HINT: {
+        INTRO: "Types of payment terms include:",
+        LIST: ["payments that are due within 60 days from date of invoice", "payments collected by a letter of credit", "staged payments"],
+        OUTRO: "If you use staged payments, explain their structure and whether they're monthly, in advance or something else."
+      }
+    }
+  },
+  PRIVATE_MARKET: {
+    [DECLINED_DESCRIPTION]: {
+      HINT: "Tell us about the best quote you received and why you were unable to use it. For example, your current policy might not cover the country you're exporting to."
+    }
+  }
+};
+
+// content-strings/form-titles.ts
+var FORM_TITLES = {
+  YOUR_BUSINESS: {
+    COMPANY_DETAILS: "Company details",
+    NATURE_OF_BUSINESS: "Nature of your business",
+    TURNOVER: "Turnover",
+    CREDIT_CONTROL: "Credit control"
+  },
+  YOUR_BUYER: {
+    COMPANY_DETAILS: "Company details",
+    CONNECTION_TO_BUYER: "Connection to the buyer",
+    TRADING_HISTORY: "Trading history",
+    CREDIT_INSURANCE_HISTORY: "Credit insurance history",
+    FINANCIAL_ACCOUNTS: "Financial accounts"
+  },
+  POLICY: {
+    CONTRACT_POLICY: "Requested insurance policy",
+    NAME_ON_POLICY: "Named person on the policy",
+    BROKER: "Broker",
+    OTHER_COMPANY: "Other company to be insured",
+    LOSS_PAYEE: "Loss payee"
+  },
+  EXPORT_CONTRACT: {
+    ABOUT_THE_EXPORT: "About the export",
+    PRIVATE_MARKET: "Private insurance market",
+    AGENT: "Agent"
+  }
+};
+
 // content-strings/fields/insurance/policy/index.ts
-var { POLICY: POLICY3 } = FIELD_IDS.INSURANCE;
-var { CONTRACT_POLICY, ABOUT_GOODS_OR_SERVICES } = POLICY3;
+var {
+  ACCOUNT: { EMAIL: EMAIL3 },
+  CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
+  POLICY: {
+    POLICY_TYPE: POLICY_TYPE4,
+    SINGLE_POLICY_TYPE,
+    MULTIPLE_POLICY_TYPE,
+    CONTRACT_POLICY,
+    EXPORT_VALUE,
+    NAME_ON_POLICY,
+    DIFFERENT_NAME_ON_POLICY,
+    NEED_PRE_CREDIT_PERIOD,
+    CREDIT_PERIOD_WITH_BUYER,
+    REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME: COMPANY_NAME2, COMPANY_NUMBER, COUNTRY_CODE },
+    USING_BROKER: USING_BROKER2,
+    BROKER_DETAILS: { NAME, FULL_ADDRESS },
+    LOSS_PAYEE: { IS_APPOINTED },
+    LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY },
+    LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
+    LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
+    FINANCIAL_ADDRESS
+  }
+} = insurance_default;
+var { MAX_COVER_PERIOD_MONTHS } = ELIGIBILITY;
+var {
+  POLICY: { TOTAL_MONTHS_OF_COVER }
+} = APPLICATION;
+var { POLICY: POLICY_FORM_TITLES } = FORM_TITLES;
 var POLICY_FIELDS = {
-  [POLICY3.POLICY_TYPE]: {
-    ID: FIELD_IDS.POLICY_TYPE,
+  [POLICY_TYPE4]: {
+    ID: POLICY_TYPE4,
+    OPTIONS: {
+      SINGLE: {
+        ID: SINGLE_POLICY_TYPE,
+        VALUE: FIELD_VALUES.POLICY_TYPE.SINGLE,
+        TEXT: "Single contract policy",
+        HINT_LIST: [
+          "Covers a single contract with a buyer, for one or more shipments",
+          `Cover for up to ${MAX_COVER_PERIOD_MONTHS} months`,
+          "Best for a one off- project, when you know the exact value of your export contract now",
+          "You pay for the insurance before the policy starts"
+        ]
+      },
+      MULTIPLE: {
+        ID: MULTIPLE_POLICY_TYPE,
+        VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+        TEXT: "Multiple contract policy",
+        HINT_LIST: [
+          `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER} months`,
+          "Best if you'll have an ongoing relationship with the buyer but you're not sure yet how many contracts or sales you'll have",
+          "You only pay for your insurance each time you declare a new contract or sale - no need to pay before the policy starts"
+        ]
+      }
+    },
     SUMMARY: {
-      TITLE: "Policy type"
+      TITLE: "Policy type",
+      FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
     }
   },
   CONTRACT_POLICY: {
     [CONTRACT_POLICY.REQUESTED_START_DATE]: {
+      LABEL: "When do you want your policy to start?",
+      HINT: "For example, 06 11 2023",
       SUMMARY: {
-        TITLE: "Policy start date"
+        TITLE: "Policy start date",
+        FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
       }
     },
-    [CONTRACT_POLICY.CREDIT_PERIOD_WITH_BUYER]: {
+    [CURRENCY_CODE]: {
+      LEGEND: "Select currency you'd like your policy to be issued in",
+      HINT: "This is the currency your policy will be issued in",
       SUMMARY: {
-        TITLE: "Credit period"
-      }
-    },
-    [CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
-      SUMMARY: {
-        TITLE: "Policy currency"
+        TITLE: "Policy currency",
+        FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
+      },
+      [ALTERNATIVE_CURRENCY_CODE]: {
+        ID: ALTERNATIVE_CURRENCY_CODE,
+        VALUE: ALTERNATIVE_CURRENCY_CODE
       }
     },
     SINGLE: {
       [CONTRACT_POLICY.SINGLE.CONTRACT_COMPLETION_DATE]: {
+        LABEL: "When do you expect to complete the export contract?",
+        HINT: "For example, 06 11 2024",
         SUMMARY: {
-          TITLE: "Date you expect contract to complete"
+          TITLE: "Date you expect it to complete",
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
         }
       },
       [CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
+        HINT: "Enter a whole number. Do not enter decimals.",
         SUMMARY: {
-          TITLE: "Contract value"
+          TITLE: "Contract value",
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
         }
       }
     },
     MULTIPLE: {
       [CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
+        LABEL: "How many months do you want to be insured for?",
+        HINT: `The maximum is ${TOTAL_MONTHS_OF_COVER} months.`,
+        OPTIONS: FIELD_VALUES.TOTAL_MONTHS_OF_COVER,
         SUMMARY: {
-          TITLE: "How many months you want to be insured for"
-        }
-      },
-      [CONTRACT_POLICY.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
-        SUMMARY: {
-          TITLE: "Estimated sales during policy"
-        }
-      },
-      [CONTRACT_POLICY.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
-        SUMMARY: {
-          TITLE: "Maximum owed at any single point during policy"
+          TITLE: "How many months you want to be insured for",
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
         }
       }
     }
   },
-  ABOUT_GOODS_OR_SERVICES: {
-    [ABOUT_GOODS_OR_SERVICES.DESCRIPTION]: {
-      SUMMARY: {
-        TITLE: "Goods or services you're exporting"
-      }
-    },
-    [ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION]: {
-      SUMMARY: {
-        TITLE: "Final destination of export"
+  EXPORT_VALUE: {
+    MULTIPLE: {
+      [EXPORT_VALUE.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
+        LABEL: "Estimate total sales to your buyer during this time",
+        HINT: "Enter a whole number. Do not enter decimals.",
+        SUMMARY: {
+          TITLE: "Estimated total sales to the buyer",
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
+        }
+      },
+      [EXPORT_VALUE.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
+        LABEL: "Estimate the maximum amount your buyer will owe you at any single point during this time",
+        HINT: {
+          FOR_EXAMPLE: "For example, your total sales might be \xA3250,000 but the maximum the buyer will owe you at any single point is \xA3100,000.",
+          NO_DECIMALS: "Enter a whole number. Do not enter decimals."
+        },
+        SUMMARY: {
+          TITLE: "Estimated maximum amount owed by the buyer",
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
+        }
       }
     }
+  },
+  NAME_ON_POLICY: {
+    OPTIONS: {
+      SAME_NAME: {
+        ID: NAME_ON_POLICY.SAME_NAME,
+        VALUE: NAME_ON_POLICY.SAME_NAME
+      },
+      OTHER_NAME: {
+        ID: NAME_ON_POLICY.OTHER_NAME,
+        VALUE: NAME_ON_POLICY.OTHER_NAME,
+        TEXT: "Someone else"
+      }
+    },
+    [NAME_ON_POLICY.POSITION]: {
+      LABEL: "What's your position at the company?",
+      MAXIMUM: 50,
+      SUMMARY: {
+        TITLE: "Position at company",
+        FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY
+      }
+    },
+    [NAME_ON_POLICY.NAME]: {
+      SUMMARY: {
+        TITLE: "Contact name",
+        FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY
+      }
+    }
+  },
+  DIFFERENT_NAME_ON_POLICY: {
+    [DIFFERENT_NAME_ON_POLICY.POSITION]: {
+      LABEL: "Position at company",
+      MAXIMUM: 50
+    },
+    [EMAIL3]: {
+      SUMMARY: {
+        TITLE: "Contact email",
+        FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY
+      }
+    }
+  },
+  [NEED_PRE_CREDIT_PERIOD]: {
+    HINT: "This is known as the pre-credit period",
+    SUMMARY: {
+      TITLE: "Pre-credit period",
+      FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
+    }
+  },
+  [CREDIT_PERIOD_WITH_BUYER]: {
+    LABEL: "What period of pre-credit cover do you require?",
+    SUMMARY: {
+      TITLE: "Period of pre-credit cover",
+      FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
+    },
+    MAXIMUM: MAXIMUM_CHARACTERS.CREDIT_PERIOD_WITH_BUYER
+  },
+  REQUESTED_JOINTLY_INSURED_PARTY: {
+    [REQUESTED]: {
+      HINT: "This could be a parent company, subsidiary or a subcontractor.",
+      SUMMARY: {
+        TITLE: "Another company to be insured"
+      }
+    },
+    [COMPANY_NAME2]: {
+      LABEL: "Name of the other company",
+      MAXIMUM: 200,
+      SUMMARY: {
+        TITLE: "Name of the other company"
+      }
+    },
+    [COMPANY_NUMBER]: {
+      LABEL: "Registration number of the other company (optional)",
+      MAXIMUM: 100,
+      SUMMARY: {
+        TITLE: "Registration number of the other company"
+      }
+    },
+    [COUNTRY_CODE]: {
+      LABEL: "What country is the other company based in?",
+      SUMMARY: {
+        TITLE: "Country of the company"
+      }
+    }
+  },
+  BROKER: {
+    [USING_BROKER2]: {
+      LABEL: "Are you using a broker to get this insurance?",
+      SUMMARY: {
+        TITLE: "Using a broker",
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER
+      }
+    }
+  },
+  BROKER_DETAILS: {
+    [NAME]: {
+      LABEL: "Name of broker or company",
+      MAXIMUM: 300,
+      SUMMARY: {
+        TITLE: "Broker's name or company",
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER
+      }
+    },
+    [EMAIL3]: {
+      LABEL: "Email address",
+      SUMMARY: {
+        TITLE: "Broker's email",
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER
+      }
+    },
+    [FULL_ADDRESS]: {
+      LABEL: "Broker's address",
+      SUMMARY: {
+        TITLE: "Broker's address",
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER
+      },
+      MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS
+    }
+  },
+  LOSS_PAYEE: {
+    [IS_APPOINTED]: {
+      HINT: {
+        INTRO: "A loss payee is a financial organisation, like a bank or a lender, who will be paid in the event of a valid claim.  A loss payee could also be a parent company or subsidiary of your business.",
+        OUTRO: "Not every policy has a loss payee. If you don't, select 'No' and you will be listed as the default claimant."
+      },
+      SUMMARY: {
+        TITLE: "Appointed a loss payee",
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
+      }
+    }
+  },
+  LOSS_PAYEE_DETAILS: {
+    [LOSS_PAYEE_NAME]: {
+      LABEL: "Name of the loss payee",
+      MAXIMUM: MAXIMUM_CHARACTERS.LOSS_PAYEE_NAME,
+      SUMMARY: {
+        TITLE: "Name of the loss payee",
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
+      }
+    },
+    [LOCATION]: {
+      LABEL: "Where is the loss payee located?",
+      OPTIONS: {
+        UK: {
+          ID: IS_LOCATED_IN_UK,
+          VALUE: IS_LOCATED_IN_UK,
+          TEXT: "United Kingdom"
+        },
+        INTERNATIONALLY: {
+          ID: IS_LOCATED_INTERNATIONALLY,
+          VALUE: IS_LOCATED_INTERNATIONALLY,
+          TEXT: "International"
+        }
+      }
+    }
+  },
+  LOSS_PAYEE_FINANCIAL_UK: {
+    [SORT_CODE]: {
+      LABEL: "Sort code",
+      HINT: "Must be 6 digits long",
+      SUMMARY: {
+        TITLE: "Sort code",
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
+      }
+    },
+    [ACCOUNT_NUMBER]: {
+      LABEL: "Account number",
+      HINT: "Must be between 6 and 8 digits long",
+      SUMMARY: {
+        TITLE: "Account number",
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
+      }
+    },
+    [FINANCIAL_ADDRESS]: {
+      SUMMARY: {
+        TITLE: "Loss payee's bank based in the UK",
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
+      }
+    }
+  },
+  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: {
+    [BIC_SWIFT_CODE]: {
+      LABEL: "BIC or SWIFT code",
+      HINT: "Must be between 8 and 11 characters long",
+      SUMMARY: {
+        TITLE: "BIC or SWIFT code",
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
+      }
+    },
+    [IBAN]: {
+      LABEL: "IBAN",
+      HINT: "Must be between 16 and 34 characters long",
+      SUMMARY: {
+        TITLE: "IBAN",
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
+      }
+    },
+    [FINANCIAL_ADDRESS]: {
+      SUMMARY: {
+        TITLE: "Loss payee's bank based internationally",
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
+      }
+    }
+  },
+  FINANCIAL_ADDRESS: {
+    LABEL: "Bank address",
+    MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS
   }
 };
 
 // content-strings/fields/insurance/your-business/index.ts
-var { EXPORTER_BUSINESS: EXPORTER_BUSINESS2 } = insurance_default;
 var {
-  COMPANY_HOUSE: { COMPANY_NAME, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS },
-  YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER, WEBSITE },
-  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
-  TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
-  BROKER: { USING_BROKER: USING_BROKER2, NAME, ADDRESS_LINE_1, EMAIL: EMAIL4 }
+  COMPANIES_HOUSE: { COMPANY_NAME: COMPANY_NAME3, COMPANY_NUMBER: COMPANY_NUMBER2, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS, FINANCIAL_YEAR_END_DATE },
+  EXPORTER_BUSINESS: EXPORTER_BUSINESS2
+} = insurance_default;
+var {
+  YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, PHONE_NUMBER, WEBSITE },
+  ALTERNATIVE_TRADING_ADDRESS,
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+  HAS_CREDIT_CONTROL
 } = EXPORTER_BUSINESS2;
 var FIELDS = {
   COMPANY_DETAILS: {
-    [COMPANY_NUMBER]: {
+    [COMPANY_NUMBER2]: {
       SUMMARY: {
         TITLE: "Companies House registration number"
       }
     },
-    [COMPANY_NAME]: {
+    [COMPANY_NAME3]: {
       SUMMARY: {
         TITLE: "Company name"
       }
@@ -3950,14 +6306,14 @@ var FIELDS = {
         TITLE: "Financial year end date"
       }
     },
-    [TRADING_NAME]: {
+    [HAS_DIFFERENT_TRADING_NAME]: {
       SUMMARY: {
-        TITLE: "Different trading name?"
+        TITLE: "Different trading name"
       }
     },
     [TRADING_ADDRESS]: {
       SUMMARY: {
-        TITLE: "Different trading address?"
+        TITLE: "Different trading address"
       }
     },
     [WEBSITE]: {
@@ -3970,6 +6326,9 @@ var FIELDS = {
         TITLE: "UK telephone number (optional)"
       }
     }
+  },
+  [ALTERNATIVE_TRADING_ADDRESS]: {
+    LABEL: "What's your alternative trading address?"
   },
   NATURE_OF_YOUR_BUSINESS: {
     [GOODS_OR_SERVICES]: {
@@ -3984,12 +6343,7 @@ var FIELDS = {
     },
     [EMPLOYEES_UK]: {
       SUMMARY: {
-        TITLE: "UK employees"
-      }
-    },
-    [EMPLOYEES_INTERNATIONAL]: {
-      SUMMARY: {
-        TITLE: "Worldwide employees including UK employees"
+        TITLE: "Number of UK employees"
       }
     }
   },
@@ -4005,89 +6359,148 @@ var FIELDS = {
       }
     }
   },
-  BROKER: {
-    [USING_BROKER2]: {
-      SUMMARY: {
-        TITLE: "Using a broker for this insurance?"
-      }
-    },
-    [NAME]: {
-      SUMMARY: {
-        TITLE: "Broker's name or company"
-      }
-    },
-    [ADDRESS_LINE_1]: {
-      SUMMARY: {
-        TITLE: "Broker's address"
-      }
-    },
-    [EMAIL4]: {
-      SUMMARY: {
-        TITLE: "Broker's email"
-      }
+  [HAS_CREDIT_CONTROL]: {
+    SUMMARY: {
+      TITLE: "Process for managing late payments"
     }
   }
 };
 
 // content-strings/fields/insurance/your-buyer/index.ts
 var {
-  YOUR_BUYER: { COMPANY_OR_ORGANISATION, WORKING_WITH_BUYER }
-} = insurance_default;
+  YOUR_BUYER: {
+    COMPANY_OR_ORGANISATION,
+    CONNECTION_WITH_BUYER,
+    TRADED_WITH_BUYER,
+    CONNECTION_WITH_BUYER_DESCRIPTION,
+    OUTSTANDING_PAYMENTS,
+    FAILED_PAYMENTS,
+    HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+    PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+    TOTAL_OUTSTANDING_PAYMENTS,
+    TOTAL_AMOUNT_OVERDUE,
+    HAS_BUYER_FINANCIAL_ACCOUNTS
+  },
+  CURRENCY: { CURRENCY_CODE: CURRENCY_CODE2 }
+} = FIELD_IDS.INSURANCE;
+var {
+  YOUR_BUYER: { COMPANY_DETAILS, TRADING_HISTORY, CONNECTION_TO_BUYER, CREDIT_INSURANCE_HISTORY, FINANCIAL_ACCOUNTS }
+} = FORM_TITLES;
 var YOUR_BUYER_FIELDS = {
   COMPANY_OR_ORGANISATION: {
     [COMPANY_OR_ORGANISATION.NAME]: {
+      LABEL: "Buyer's company or organisation name",
       SUMMARY: {
-        TITLE: "Company or organisation name"
+        TITLE: "Company or organisation name",
+        FORM_TITLE: COMPANY_DETAILS
       }
     },
     [COMPANY_OR_ORGANISATION.ADDRESS]: {
+      LABEL: "Company address",
       SUMMARY: {
-        TITLE: "Buyer address"
-      }
+        TITLE: "Buyer address",
+        FORM_TITLE: COMPANY_DETAILS
+      },
+      MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS
     },
     [COMPANY_OR_ORGANISATION.COUNTRY]: {
-      LABEL: "Country"
+      LABEL: "Buyer country",
+      SUMMARY: {
+        TITLE: "Buyer country"
+      }
     },
     [COMPANY_OR_ORGANISATION.REGISTRATION_NUMBER]: {
+      LABEL: "Company registration number (optional)",
       SUMMARY: {
-        TITLE: "Registration number (optional)"
-      }
+        TITLE: "Registration number (optional)",
+        FORM_TITLE: COMPANY_DETAILS
+      },
+      MAXIMUM: MAXIMUM_CHARACTERS.BUYER.REGISTRATION_NUMBER
     },
     [COMPANY_OR_ORGANISATION.WEBSITE]: {
+      LABEL: "Enter their website (optional)",
       SUMMARY: {
-        TITLE: "Buyer website (optional)"
-      }
-    },
-    [COMPANY_OR_ORGANISATION.FIRST_NAME]: {
-      SUMMARY: {
-        TITLE: "Contact details"
-      }
-    },
-    [COMPANY_OR_ORGANISATION.LAST_NAME]: {
-      LABEL: "Last name"
-    },
-    [COMPANY_OR_ORGANISATION.POSITION]: {
-      LABEL: "Position"
-    },
-    [COMPANY_OR_ORGANISATION.EMAIL]: {
-      LABEL: "Email address"
-    },
-    [COMPANY_OR_ORGANISATION.CAN_CONTACT_BUYER]: {
-      SUMMARY: {
-        TITLE: "Can we contact the buyer?"
+        TITLE: "Buyer website (optional)",
+        FORM_TITLE: COMPANY_DETAILS
       }
     }
   },
-  WORKING_WITH_BUYER: {
-    [WORKING_WITH_BUYER.CONNECTED_WITH_BUYER]: {
-      SUMMARY: {
-        TITLE: "Connected with the buyer in any way?"
-      }
+  [CONNECTION_WITH_BUYER]: {
+    LABEL: "Are you connected with the buyer in any way?",
+    HINT: "For example, someone in your company is a shareholder or director of the buyer's company.",
+    SUMMARY: {
+      TITLE: "Connected with the buyer",
+      FORM_TITLE: CONNECTION_TO_BUYER
+    }
+  },
+  [CONNECTION_WITH_BUYER_DESCRIPTION]: {
+    LABEL: "Describe the connection with the buyer",
+    MAXIMUM: MAXIMUM_CHARACTERS.CONNECTION_WITH_BUYER_DESCRIPTION,
+    SUMMARY: {
+      TITLE: "Details of connection",
+      FORM_TITLE: CONNECTION_TO_BUYER
+    }
+  },
+  [TRADED_WITH_BUYER]: {
+    LABEL: "Have you traded with this buyer before?",
+    HINT: "If yes, we will request a copy of your trading history once the application has been submitted.",
+    SUMMARY: {
+      TITLE: "Trading history",
+      FORM_TITLE: TRADING_HISTORY
+    }
+  },
+  [OUTSTANDING_PAYMENTS]: {
+    LABEL: "Do you currently have any outstanding or overdue payments from the buyer?",
+    SUMMARY: {
+      TITLE: "Outstanding or overdue payments",
+      FORM_TITLE: TRADING_HISTORY
+    }
+  },
+  [FAILED_PAYMENTS]: {
+    LABEL: "Has the buyer ever failed to pay you on time?",
+    SUMMARY: {
+      TITLE: "Buyer failed to pay on time?",
+      FORM_TITLE: TRADING_HISTORY
+    }
+  },
+  [CURRENCY_CODE2]: {
+    LEGEND: "What currency are the outstanding or overdue payments in?"
+  },
+  [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
+    LABEL: "Have you in the past held credit insurance cover on the buyer?",
+    SUMMARY: {
+      TITLE: "Credit insurance previously held for the buyer",
+      FORM_TITLE: CREDIT_INSURANCE_HISTORY
+    }
+  },
+  [PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
+    LABEL: "Tell us about the credit insurance cover you had on the buyer",
+    HINT: "Include the name of the insurer(s) and the credit limit.",
+    SUMMARY: {
+      TITLE: "Details of credit insurance",
+      FORM_TITLE: CREDIT_INSURANCE_HISTORY
     },
-    [WORKING_WITH_BUYER.TRADED_WITH_BUYER]: {
-      SUMMARY: {
-        TITLE: "Have you traded with this buyer before?"
-      }
+    MAXIMUM: MAXIMUM_CHARACTERS.BUYER.PREVIOUS_CREDIT_INSURANCE_COVER
+  },
+  [TOTAL_OUTSTANDING_PAYMENTS]: {
+    HEADING: "Tell us about the outstanding or overdue payments",
+    LABEL: "Total outstanding, including overdue",
+    SUMMARY: {
+      TITLE: "Total outstanding including overdue",
+      FORM_TITLE: TRADING_HISTORY
+    }
+  },
+  [TOTAL_AMOUNT_OVERDUE]: {
+    LABEL: "Amount overdue",
+    SUMMARY: {
+      TITLE: "Amount overdue",
+      FORM_TITLE: TRADING_HISTORY
+    }
+  },
+  [HAS_BUYER_FINANCIAL_ACCOUNTS]: {
+    SUMMARY: {
+      TITLE: "Financial accounts relating to the buyer",
+      FORM_TITLE: FINANCIAL_ACCOUNTS
     }
   }
 };
@@ -4115,61 +6528,176 @@ var DEFAULT = {
 };
 
 // content-strings/XLSX.ts
-var { FIRST_NAME, LAST_NAME } = account_default;
+var { AMOUNT_250K, MORE_THAN_250K } = TOTAL_CONTRACT_VALUE;
 var {
-  CONTRACT_POLICY: {
-    SINGLE: { CONTRACT_COMPLETION_DATE }
+  ACCOUNT: { FIRST_NAME, LAST_NAME },
+  DECLARATIONS: { AGREE_HOW_YOUR_DATA_WILL_BE_USED: AGREE_HOW_YOUR_DATA_WILL_BE_USED2, HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2, WILL_EXPORT_WITH_CODE_OF_CONDUCT: WILL_EXPORT_WITH_CODE_OF_CONDUCT2 },
+  ELIGIBILITY: { BUYER_COUNTRY: BUYER_COUNTRY2, COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2, COVER_PERIOD: COVER_PERIOD2, HAS_END_BUYER: HAS_END_BUYER2, HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2 },
+  EXPORT_CONTRACT: {
+    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION: DESCRIPTION2, FINAL_DESTINATION_KNOWN: FINAL_DESTINATION_KNOWN2 },
+    AGENT_CHARGES: { PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE },
+    AGENT_DETAILS: { NAME: AGENT_NAME, FULL_ADDRESS: AGENT_ADDRESS, COUNTRY_CODE: AGENT_COUNTRY_CODE },
+    AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
+    HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION: PAYMENT_TERMS_DESCRIPTION2 },
+    PRIVATE_MARKET: { ATTEMPTED: ATTEMPTED_PRIVATE_MARKET, DECLINED_DESCRIPTION: DECLINED_DESCRIPTION2 },
+    USING_AGENT
+  },
+  EXPORTER_BUSINESS: {
+    ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS_DOT_NOTATION },
+    COMPANIES_HOUSE: { COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_SIC: EXPORTER_COMPANY_SIC },
+    HAS_CREDIT_CONTROL: HAS_CREDIT_CONTROL2,
+    NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2 },
+    TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2 },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME2, DIFFERENT_TRADING_NAME, PHONE_NUMBER: PHONE_NUMBER2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE2 }
+  },
+  POLICY: {
+    BROKER_DETAILS: { NAME: BROKER_NAME, EMAIL: BROKER_EMAIL, FULL_ADDRESS: BROKER_ADDRESS },
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE: REQUESTED_START_DATE2,
+      SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE2, TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_ID },
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER: TOTAL_MONTHS_OF_COVER2 }
+    },
+    EXPORT_VALUE: {
+      MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE }
+    },
+    FINANCIAL_ADDRESS: FINANCIAL_ADDRESS2,
+    LOSS_PAYEE: { IS_APPOINTED: IS_APPOINTED2 },
+    LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE: BIC_SWIFT_CODE2, IBAN: IBAN2 },
+    LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE: SORT_CODE2, ACCOUNT_NUMBER: ACCOUNT_NUMBER2 },
+    NAME_ON_POLICY: NAME_ON_POLICY2,
+    NEED_PRE_CREDIT_PERIOD: NEED_PRE_CREDIT_PERIOD2,
+    REQUESTED_JOINTLY_INSURED_PARTY,
+    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE5 },
+    USING_BROKER: USING_BROKER3
+  },
+  YOUR_BUYER: {
+    COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER, FIRST_NAME: BUYER_CONTACT_DETAILS },
+    CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER2,
+    CONNECTION_WITH_BUYER_DESCRIPTION: CONNECTION_WITH_BUYER_DESCRIPTION2,
+    FAILED_PAYMENTS: FAILED_PAYMENTS2,
+    HAS_BUYER_FINANCIAL_ACCOUNTS: HAS_BUYER_FINANCIAL_ACCOUNTS2,
+    HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER2,
+    OUTSTANDING_PAYMENTS: OUTSTANDING_PAYMENTS2,
+    PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER2,
+    TOTAL_OUTSTANDING_PAYMENTS: TOTAL_OUTSTANDING_PAYMENTS2,
+    TRADED_WITH_BUYER: TRADED_WITH_BUYER2
   }
-} = policy_default;
-var {
-  COMPANY_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
-  YOUR_COMPANY: { WEBSITE: WEBSITE2, PHONE_NUMBER: PHONE_NUMBER2 },
-  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL2 },
-  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2 },
-  BROKER: { USING_BROKER: USING_BROKER3, NAME: BROKER_NAME, ADDRESS_LINE_1: BROKER_ADDRESS, EMAIL: BROKER_EMAIL }
-} = business_default;
-var {
-  COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER, FIRST_NAME: BUYER_CONTACT_DETAILS }
-} = your_buyer_default;
+} = insurance_default;
 var XLSX = {
   AGREED: "Agreed",
   SECTION_TITLES: {
-    KEY_INFORMATION: "Key information",
-    EXPORTER_CONTACT_DETAILS: "Exporter contact details",
-    POLICY: "Type of policy and exports",
-    EXPORTER_BUSINESS: "About your business",
     BUYER: "Your buyer",
+<<<<<<< HEAD
     ELIGIBILITY: "Eligibility",
     DECLARATIONS: "Declarations"
+=======
+    DECLARATIONS: "Declarations",
+    ELIGIBILITY: "Eligibility",
+    EXPORT_CONTRACT: "Export Contract",
+    EXPORTER_BUSINESS: "The business",
+    EXPORTER_CONTACT_DETAILS: "Exporter contact details",
+    KEY_INFORMATION: "Key information",
+    POLICY: "Insurance policy"
+>>>>>>> main-application-no-pdf
   },
   FIELDS: {
-    [FIRST_NAME]: "Applicant first name",
-    [LAST_NAME]: "Applicant last name",
+    [ACCOUNT_NUMBER2]: "Loss payee account number",
+    AGENT: {
+      [AGENT_NAME]: "Name of the agent",
+      [AGENT_ADDRESS]: "Address of the agent",
+      [AGENT_COUNTRY_CODE]: "Country the agent is based in"
+    },
+    AGENT_CHARGES: {
+      [FIXED_SUM_AMOUNT]: "How much is the agent charging?",
+      [PAYABLE_COUNTRY_CODE]: "Country where the charges are payable",
+      [PERCENTAGE_CHARGE]: "How much is the agent charging?"
+    },
+    AGENT_SERVICE: {
+      [IS_CHARGING]: "Is the agent charging for their support in the export contract?",
+      [SERVICE_DESCRIPTION]: "Service the agent is providing"
+    },
+    [AGREE_HOW_YOUR_DATA_WILL_BE_USED2]: "How the data will be used",
     APPLICANT_EMAIL_ADDRESS: "Applicant email address",
+    [BIC_SWIFT_CODE2]: "Loss payee BIC or SWIFT code",
+    [BROKER_NAME]: "Name of broker or company",
+    [BROKER_ADDRESS]: "Broker address",
+    [BROKER_EMAIL]: "Broker's email address",
+    [BUYER_COMPANY_NAME]: "Buyer company name or organisation",
+    [BUYER_CONTACT_DETAILS]: "Buyer contact details",
+    [BUYER_COUNTRY2]: "Where is your buyer based?",
+    [BUYER_REGISTRATION_NUMBER]: "Buyer registration number (optional)",
+    [COMPANIES_HOUSE_NUMBER2]: "Companies house number",
+    [CONNECTION_WITH_BUYER2]: "Is the exporter connected with the buyer in any way?",
+    [CONNECTION_WITH_BUYER_DESCRIPTION2]: "Describe connection to the buyer",
+    [CONTRACT_COMPLETION_DATE2]: "Expected contract completion date",
+    [COUNTRY]: "Buyer location",
+    [COVER_PERIOD2]: "Length of cover",
+    [DIFFERENT_TRADING_NAME]: "Alternative trading name",
+    [EMPLOYEES_UK2]: "Number of UK Employees",
+    [ESTIMATED_ANNUAL_TURNOVER2]: "Exporter estimated turnover this current financial year",
+    [EXPORTER_COMPANY_ADDRESS]: "Exporter registered office address",
+    [EXPORTER_COMPANY_NAME]: "Exporter company name",
+    [EXPORTER_COMPANY_SIC]: "Exporter standard industry classification (SIC) codes and nature of business",
     EXPORTER_CONTACT: {
       [FIRST_NAME]: "Exporter first name",
       [LAST_NAME]: "Exporter last name",
-      EXPORTER_CONTACT_EMAIL: "Exporter email address"
+      EXPORTER_CONTACT_EMAIL: "Exporter email address",
+      EXPORTER_CONTACT_POSITION: "Exporter's role"
     },
-    [CONTRACT_COMPLETION_DATE]: "Date expected for contract to complete",
-    [EXPORTER_COMPANY_NAME]: "Exporter company name",
-    [EXPORTER_COMPANY_ADDRESS]: "Exporter registered office address",
-    [EXPORTER_COMPANY_SIC]: "Exporter standard industry classification (SIC) codes and nature of business",
-    [WEBSITE2]: "Exporter Company website (optional)",
-    [PHONE_NUMBER2]: "Exporter telephone number (optional)",
+    EXPORT_CONTRACT: {
+      [DESCRIPTION2]: "About the exporter's goods or services",
+      [FINAL_DESTINATION_KNOWN2]: "Does the exporter know the final destination of the goods?",
+      [PAYMENT_TERMS_DESCRIPTION2]: "How the exporter will be paid for their export",
+      [ATTEMPTED_PRIVATE_MARKET]: "Did the exporter try to insure through the private market?",
+      [DECLINED_DESCRIPTION2]: "Why could they not get insurance through the private market? ",
+      [USING_AGENT]: "Did the exporter use an agent?"
+    },
+    [FAILED_PAYMENTS2]: "Has the buyer ever failed to pay the exporter on time?",
+    [FINANCIAL_ADDRESS2]: "Bank address of the loss payee",
+    [FIRST_NAME]: "Applicant first name",
+    [FULL_ADDRESS_DOT_NOTATION]: "Alternative trading address",
     [GOODS_OR_SERVICES2]: "Goods or services the business supplies",
-    [YEARS_EXPORTING2]: "Exporter years exporting",
-    [EMPLOYEES_UK2]: "Exporter UK Employees",
-    [EMPLOYEES_INTERNATIONAL2]: "Exporter worldwide employees including UK employees",
-    [ESTIMATED_ANNUAL_TURNOVER2]: "Exporter estimated turnover this current financial year",
-    [USING_BROKER3]: "Using a broker for this insurance",
-    [BROKER_NAME]: "Name of broker or company",
-    [BROKER_ADDRESS]: "Broker address",
-    [BROKER_EMAIL]: "Broker email address",
-    [COUNTRY]: "Buyer location",
-    [BUYER_COMPANY_NAME]: "Buyer company name",
-    [BUYER_REGISTRATION_NUMBER]: "Buyer registration number (optional)",
-    [BUYER_CONTACT_DETAILS]: "Buyer contact details"
+    [HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2]: "Does the exporter have a code of conduct?",
+    [HAS_BUYER_FINANCIAL_ACCOUNTS2]: "Does the exporter hold any financial accounts in relation to the buyer?",
+    [HAS_CREDIT_CONTROL2]: "Do you have a process for dealing with late payments?",
+    [HAS_DIFFERENT_TRADING_NAME2]: "Different trading name?",
+    [HAS_END_BUYER2]: "Is there an end buyer?",
+    [HAS_MINIMUM_UK_GOODS_OR_SERVICES2]: "Is at least 20% of the contract value made up from UK goods or services?",
+    [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER2]: "Has the exporter previously held credit insurance cover on the buyer?",
+    [IBAN2]: "Loss payee IBAN number",
+    [IS_APPOINTED2]: "Using a loss payee?",
+    JOINTLY_INSURED_PARTY: {
+      [REQUESTED_JOINTLY_INSURED_PARTY.REQUESTED]: "Is there another company that needs to be insured on the policy?",
+      [REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NAME]: "Name of the company",
+      [REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NUMBER]: "Registration number of the other company (optional)",
+      [REQUESTED_JOINTLY_INSURED_PARTY.COUNTRY_CODE]: "The country the other company is based in"
+    },
+    [LAST_NAME]: "Applicant last name",
+    [MAXIMUM_BUYER_WILL_OWE]: "Maximum buyer will owe exporter",
+    [MORE_THAN_250K.VALUE]: `Contract value of ${format_currency_default(AMOUNT_250K, GBP_CURRENCY_CODE)} or more?`,
+    NAME_ON_POLICY: {
+      [NAME_ON_POLICY2.NAME]: "Name on the policy",
+      [NAME_ON_POLICY2.POSITION]: "Position at the company"
+    },
+    [NEED_PRE_CREDIT_PERIOD2]: "Is there a pre-credit period?",
+    NO_FINANCIAL_YEAR_END_DATE: "No data from Companies House",
+    [OUTSTANDING_PAYMENTS2]: "Does the exporter currently have any outstanding or overdue payments from the buyer?",
+    [PHONE_NUMBER2]: "Exporter UK telephone number (optional)",
+    [POLICY_TYPE5]: "Type of policy",
+    [PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER2]: "Details of credit insurance cover held on the buyer",
+    [REQUESTED_START_DATE2]: "Requested policy start date",
+    SOMEONE_ELSE: "Someone else",
+    [SORT_CODE2]: "Loss payee sort code",
+    [TOTAL_CONTRACT_VALUE_ID]: "Total value of the contract",
+    [TOTAL_MONTHS_OF_COVER2]: "Requested length of insurance",
+    [TOTAL_OUTSTANDING_PAYMENTS2]: "Total outstanding payments",
+    [TOTAL_SALES_TO_BUYER]: "Total sales estimate",
+    [TRADING_ADDRESS2]: "Different trading address?",
+    [TRADED_WITH_BUYER2]: "Has the exporter traded with this buyer before?",
+    [USING_BROKER3]: "Using a broker for this insurance?",
+    [WEBSITE2]: "Exporter Company website (optional)",
+    [WILL_EXPORT_WITH_CODE_OF_CONDUCT2]: "Will the exporter export using their code of conduct?",
+    [YEARS_EXPORTING2]: "How long the business has been exporting for"
   }
 };
 
@@ -4177,24 +6705,29 @@ var XLSX = {
 var formatTimeOfDay = (date) => format_date_default(date, DATE_FORMAT.HOURS_AND_MINUTES);
 var format_time_of_day_default = formatTimeOfDay;
 
-// generate-xlsx/map-application-to-XLSX/map-key-information/index.ts
+// generate-xlsx/map-application-to-XLSX/map-introduction/index.ts
 var { FIELDS: FIELDS2 } = XLSX;
-var { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL5 } = account_default;
-var mapKeyInformation = (application2) => {
+var { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL4 } = account_default;
+var mapIntroduction = (application2) => {
   const mapped = [
     xlsx_row_default(REFERENCE_NUMBER.SUMMARY.TITLE, application2.referenceNumber),
-    xlsx_row_default(DATE_SUBMITTED.SUMMARY.TITLE, format_date_default(application2.submissionDate, "dd-MM-yyyy")),
+    xlsx_row_default(DATE_SUBMITTED.SUMMARY.TITLE, format_date_default(application2.submissionDate, DATE_FORMAT.XLSX)),
     xlsx_row_default(TIME_SUBMITTED.SUMMARY.TITLE, format_time_of_day_default(application2.submissionDate)),
     xlsx_row_default(FIELDS2[FIRST_NAME2], application2.owner[FIRST_NAME2]),
     xlsx_row_default(FIELDS2[LAST_NAME2], application2.owner[LAST_NAME2]),
-    xlsx_row_default(FIELDS2.APPLICANT_EMAIL_ADDRESS, application2.owner[EMAIL5])
+    xlsx_row_default(FIELDS2.APPLICANT_EMAIL_ADDRESS, application2.owner[EMAIL4])
   ];
   return mapped;
 };
-var map_key_information_default = mapKeyInformation;
+var map_introduction_default = mapIntroduction;
 
 // generate-xlsx/map-application-to-XLSX/map-exporter-contact-details/index.ts
-var { FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, EMAIL: EMAIL6 } = account_default;
+var {
+  ACCOUNT: { FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, EMAIL: EMAIL5 },
+  POLICY: {
+    NAME_ON_POLICY: { POSITION }
+  }
+} = insurance_default;
 var {
   SECTION_TITLES: { EXPORTER_CONTACT_DETAILS },
   FIELDS: FIELDS3
@@ -4205,129 +6738,462 @@ var mapExporterContactDetails = (application2) => {
     xlsx_row_default(EXPORTER_CONTACT_DETAILS),
     xlsx_row_default(FIELDS3.EXPORTER_CONTACT[FIRST_NAME3], policyContact[FIRST_NAME3]),
     xlsx_row_default(FIELDS3.EXPORTER_CONTACT[LAST_NAME3], policyContact[LAST_NAME3]),
-    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, policyContact[EMAIL6])
+    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, policyContact[EMAIL5]),
+    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_POSITION, policyContact[POSITION])
   ];
   return mapped;
 };
 var map_exporter_contact_details_default = mapExporterContactDetails;
 
-// generate-xlsx/map-application-to-XLSX/map-secondary-key-information/index.ts
+// generate-xlsx/map-application-to-XLSX/helpers/map-yes-no-field/index.ts
+var { YES, NO } = FIELD_VALUES;
+var mapYesNoField = ({ answer, defaultValue }) => {
+  if (answer === false) {
+    return NO;
+  }
+  if (answer === true) {
+    return YES;
+  }
+  if (defaultValue) {
+    return defaultValue;
+  }
+  return DEFAULT.EMPTY;
+};
+var map_yes_no_field_default = mapYesNoField;
+
+// generate-xlsx/map-application-to-XLSX/map-eligibility/index.ts
+var { MORE_THAN_250K: MORE_THAN_250K2 } = TOTAL_CONTRACT_VALUE;
+var { FIELDS: FIELDS4, SECTION_TITLES } = XLSX;
+var {
+  ELIGIBILITY: {
+    BUYER_COUNTRY: BUYER_COUNTRY3,
+    HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES3,
+    VALID_EXPORTER_LOCATION: VALID_EXPORTER_LOCATION2,
+    COVER_PERIOD: COVER_PERIOD_ELIGIBILITY,
+    TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID2,
+    COVER_PERIOD: COVER_PERIOD3,
+    HAS_COMPANIES_HOUSE_NUMBER: HAS_COMPANIES_HOUSE_NUMBER2,
+    COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER3,
+    HAS_END_BUYER: HAS_END_BUYER3
+  }
+} = insurance_default;
+var mapEligibility = (application2) => {
+  const { company, eligibility } = application2;
+  const mapped = [
+    xlsx_row_default(SECTION_TITLES.ELIGIBILITY, ""),
+    xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default({ answer: eligibility[VALID_EXPORTER_LOCATION2] })),
+    xlsx_row_default(FIELDS_ELIGIBILITY[HAS_COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE, map_yes_no_field_default({ answer: eligibility[HAS_COMPANIES_HOUSE_NUMBER2] })),
+    xlsx_row_default(FIELDS4[COMPANIES_HOUSE_NUMBER3], company[COMPANIES_HOUSE_NUMBER3]),
+    xlsx_row_default(FIELDS4[BUYER_COUNTRY3], eligibility[BUYER_COUNTRY3].name),
+    xlsx_row_default(FIELDS4[MORE_THAN_250K2.VALUE], map_yes_no_field_default({ answer: eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID })),
+    xlsx_row_default(FIELDS4[COVER_PERIOD3], eligibility[COVER_PERIOD_ELIGIBILITY].value),
+    xlsx_row_default(FIELDS4[HAS_MINIMUM_UK_GOODS_OR_SERVICES3], map_yes_no_field_default({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES3] })),
+    xlsx_row_default(FIELDS4[HAS_END_BUYER3], map_yes_no_field_default({ answer: eligibility[HAS_END_BUYER3] }))
+  ];
+  return mapped;
+};
+var map_eligibility_default = mapEligibility;
+
+// generate-xlsx/map-application-to-XLSX/map-key-information/index.ts
 var {
   SECTION_TITLES: { KEY_INFORMATION },
-  FIELDS: FIELDS4
+  FIELDS: FIELDS5
 } = XLSX;
 var CONTENT_STRINGS = {
   ...POLICY_FIELDS
 };
 var {
   EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME2 }
+    COMPANIES_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME2 }
   },
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION: { COUNTRY: COUNTRY2, NAME: BUYER_COMPANY_NAME2 }
   },
   POLICY: {
-    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE3 }
+    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE6 }
   }
 } = insurance_default;
-var mapSecondaryKeyInformation = (application2) => {
+var mapKeyInformation = (application2) => {
   const { policy } = application2;
   const mapped = [
     xlsx_row_default(KEY_INFORMATION),
-    xlsx_row_default(FIELDS4[EXPORTER_COMPANY_NAME2], application2.company[EXPORTER_COMPANY_NAME2]),
-    xlsx_row_default(FIELDS4[COUNTRY2], application2.buyer[COUNTRY2].name),
-    xlsx_row_default(FIELDS4[BUYER_COMPANY_NAME2], application2.buyer[BUYER_COMPANY_NAME2]),
-    xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE3].SUMMARY?.TITLE), policy[POLICY_TYPE3])
+    xlsx_row_default(FIELDS5[EXPORTER_COMPANY_NAME2], application2.company[EXPORTER_COMPANY_NAME2]),
+    xlsx_row_default(FIELDS5[COUNTRY2], application2.buyer[COUNTRY2].name),
+    xlsx_row_default(FIELDS5[BUYER_COMPANY_NAME2], application2.buyer[BUYER_COMPANY_NAME2]),
+    xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE6].SUMMARY?.TITLE), policy[POLICY_TYPE6])
   ];
   return mapped;
 };
-var map_secondary_key_information_default = mapSecondaryKeyInformation;
+var map_key_information_default = mapKeyInformation;
+
+// generate-xlsx/map-application-to-XLSX/map-policy/map-intro/map-policy-type/index.ts
+var {
+  POLICY_TYPE: { ABBREVIATED }
+} = APPLICATION;
+var mapPolicyType = (policyType) => {
+  if (isSinglePolicyType(policyType)) {
+    return ABBREVIATED.SINGLE;
+  }
+  if (isMultiplePolicyType(policyType)) {
+    return ABBREVIATED.MULTIPLE;
+  }
+};
+var map_policy_type_default = mapPolicyType;
+
+// generate-xlsx/map-application-to-XLSX/map-policy/map-intro/index.ts
+var { FIELDS: FIELDS6, SECTION_TITLES: SECTION_TITLES2 } = XLSX;
+var {
+  POLICY_TYPE: POLICY_TYPE7,
+  CONTRACT_POLICY: { REQUESTED_START_DATE: REQUESTED_START_DATE3 }
+} = policy_default;
+var mapIntro = (policy) => {
+  const mapped = [
+    xlsx_row_default(SECTION_TITLES2.POLICY, ""),
+    xlsx_row_default(String(FIELDS6[POLICY_TYPE7]), map_policy_type_default(policy[POLICY_TYPE7])),
+    xlsx_row_default(String(FIELDS6[REQUESTED_START_DATE3]), format_date_default(policy[REQUESTED_START_DATE3], DATE_FORMAT.XLSX))
+  ];
+  return mapped;
+};
+var map_intro_default = mapIntro;
+
+// content-strings/fields/insurance/account/index.ts
+var { ACCOUNT: ACCOUNT3 } = FIELD_IDS.INSURANCE;
+var { FIRST_NAME: FIRST_NAME4, LAST_NAME: LAST_NAME4, EMAIL: EMAIL6, PASSWORD, ACCESS_CODE } = ACCOUNT3;
+var PASSWORD_HINT = {
+  INTRO: "Your password must contain at least 14 characters and have:",
+  RULES: ["an uppercase letter", "a lowercase letter", "a number", "a special character (for example @%!?*)"]
+};
+var ACCOUNT_FIELDS = {
+  MAXIMUM: {
+    NAME: {
+      CHARACTERS: 100
+    }
+  },
+  [FIRST_NAME4]: {
+    LABEL: "First name"
+  },
+  [LAST_NAME4]: {
+    LABEL: "Last name"
+  },
+  [EMAIL6]: {
+    LABEL: "Email address"
+  },
+  [PASSWORD]: {
+    REVEAL: {
+      SHOW: "Show",
+      HIDE: "Hide"
+    }
+  },
+  [ACCESS_CODE]: {
+    LABEL: "Access code"
+  },
+  CREATE: {
+    YOUR_DETAILS: {
+      [FIRST_NAME4]: {
+        LABEL: "First name"
+      },
+      [LAST_NAME4]: {
+        LABEL: "Last name"
+      },
+      [PASSWORD]: {
+        LABEL: "Create a password",
+        HINT: PASSWORD_HINT
+      }
+    }
+  },
+  SIGN_IN: {
+    [PASSWORD]: {
+      LABEL: "Password"
+    }
+  },
+  PASSWORD_RESET: {
+    [EMAIL6]: {
+      LABEL: "Email address",
+      HINT: "Enter the email address you used to create your account."
+    }
+  },
+  NEW_PASSWORD: {
+    [PASSWORD]: {
+      LABEL: "Enter a new password",
+      HINT: PASSWORD_HINT
+    }
+  }
+};
+
+// generate-xlsx/map-application-to-XLSX/map-policy/map-name-on-policy/index.ts
+var { FIELDS: FIELDS7 } = XLSX;
+var {
+  ACCOUNT: { FIRST_NAME: FIRST_NAME5, LAST_NAME: LAST_NAME5 },
+  POLICY: {
+    NAME_ON_POLICY: { IS_SAME_AS_OWNER, NAME: NAME2, POSITION: POSITION2 }
+  }
+} = insurance_default;
+var mapNameOnPolicy = (policyContact) => {
+  let mapped = [];
+  if (policyContact[IS_SAME_AS_OWNER]) {
+    mapped = [xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[NAME2]), policyContact[NAME2]), xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[POSITION2]), policyContact[POSITION2])];
+    return mapped;
+  }
+  mapped = [
+    xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[NAME2]), FIELDS7.SOMEONE_ELSE),
+    xlsx_row_default(String(ACCOUNT_FIELDS[FIRST_NAME5].LABEL), policyContact[FIRST_NAME5]),
+    xlsx_row_default(String(ACCOUNT_FIELDS[LAST_NAME5].LABEL), policyContact[LAST_NAME5]),
+    xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[POSITION2]), policyContact[POSITION2])
+  ];
+  return mapped;
+};
+var map_name_on_policy_default = mapNameOnPolicy;
 
 // generate-xlsx/map-application-to-XLSX/helpers/format-currency/index.ts
-var formatCurrency = (number, currencyCode, decimalPoints) => number.toLocaleString("en", {
+var formatCurrency2 = (number, currencyCode, decimalPoints) => number.toLocaleString("en", {
   style: "currency",
   currency: currencyCode,
   minimumFractionDigits: decimalPoints ?? 0,
   maximumFractionDigits: decimalPoints ?? 0
 });
-var format_currency_default = formatCurrency;
+var format_currency_default2 = formatCurrency2;
+
+// generate-xlsx/map-application-to-XLSX/map-policy/map-single-contract-policy/index.ts
+var { FIELDS: FIELDS8 } = XLSX;
+var CONTENT_STRINGS2 = {
+  ...POLICY_FIELDS,
+  ...POLICY_FIELDS.CONTRACT_POLICY,
+  ...POLICY_FIELDS.CONTRACT_POLICY.SINGLE
+};
+var {
+  CURRENCY: { CURRENCY_CODE: CURRENCY_CODE3 },
+  POLICY: {
+    CONTRACT_POLICY: {
+      SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE3 },
+      POLICY_CURRENCY_CODE,
+      SINGLE: { TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE2 }
+    }
+  }
+} = insurance_default;
+var mapSingleContractPolicy = (policy) => {
+  const mapped = [
+    xlsx_row_default(String(FIELDS8[CONTRACT_COMPLETION_DATE3]), format_date_default(policy[CONTRACT_COMPLETION_DATE3], DATE_FORMAT.XLSX)),
+    xlsx_row_default(String(CONTENT_STRINGS2[CURRENCY_CODE3].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
+    xlsx_row_default(String(FIELDS8[TOTAL_CONTRACT_VALUE2]), format_currency_default2(policy[TOTAL_CONTRACT_VALUE2], GBP_CURRENCY_CODE))
+  ];
+  return mapped;
+};
+var map_single_contract_policy_default = mapSingleContractPolicy;
 
 // generate-xlsx/map-application-to-XLSX/helpers/map-month-string/index.ts
 var mapMonthString = (answer) => answer === 1 ? `${answer} month` : `${answer} months`;
 var map_month_string_default = mapMonthString;
 
-// generate-xlsx/map-application-to-XLSX/map-policy/index.ts
-var CONTENT_STRINGS2 = {
+// generate-xlsx/map-application-to-XLSX/map-policy/map-multiple-contract-policy/index.ts
+var { FIELDS: FIELDS9 } = XLSX;
+var CONTENT_STRINGS3 = {
   ...POLICY_FIELDS,
   ...POLICY_FIELDS.CONTRACT_POLICY,
-  ...POLICY_FIELDS.ABOUT_GOODS_OR_SERVICES,
-  SINGLE: POLICY_FIELDS.CONTRACT_POLICY.SINGLE,
-  MULTIPLE: POLICY_FIELDS.CONTRACT_POLICY.MULTIPLE
+  ...POLICY_FIELDS.CONTRACT_POLICY.MULTIPLE,
+  ...POLICY_FIELDS.EXPORT_VALUE.MULTIPLE
 };
 var {
-  TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE4 },
-  CONTRACT_POLICY: {
-    REQUESTED_START_DATE,
-    SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE2, TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE2 },
-    MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
-    CREDIT_PERIOD_WITH_BUYER,
-    POLICY_CURRENCY_CODE
-  },
-  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION, FINAL_DESTINATION_COUNTRY }
-} = insurance_default.POLICY;
-var mapPolicyIntro = (application2) => {
-  const { policy } = application2;
-  const mapped = [
-    xlsx_row_default(XLSX.SECTION_TITLES.POLICY, ""),
-    xlsx_row_default(String(CONTENT_STRINGS2[POLICY_TYPE4].SUMMARY?.TITLE), policy[POLICY_TYPE4]),
-    xlsx_row_default(String(CONTENT_STRINGS2[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policy[REQUESTED_START_DATE], "dd-MMM-yy"))
-  ];
+  CURRENCY: { CURRENCY_CODE: CURRENCY_CODE4 },
+  POLICY: {
+    CONTRACT_POLICY: {
+      POLICY_CURRENCY_CODE: POLICY_CURRENCY_CODE2,
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER: TOTAL_MONTHS_OF_COVER3 }
+    },
+    EXPORT_VALUE: {
+      MULTIPLE: { TOTAL_SALES_TO_BUYER: TOTAL_SALES_TO_BUYER2, MAXIMUM_BUYER_WILL_OWE: MAXIMUM_BUYER_WILL_OWE2 }
+    }
+  }
+} = insurance_default;
+var mapMultipleContractPolicy = (policy) => [
+  xlsx_row_default(String(FIELDS9[TOTAL_MONTHS_OF_COVER3]), map_month_string_default(policy[TOTAL_MONTHS_OF_COVER3])),
+  xlsx_row_default(String(CONTENT_STRINGS3[CURRENCY_CODE4].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE2]),
+  xlsx_row_default(String(FIELDS9[TOTAL_SALES_TO_BUYER2]), format_currency_default2(policy[TOTAL_SALES_TO_BUYER2], GBP_CURRENCY_CODE)),
+  xlsx_row_default(String(FIELDS9[MAXIMUM_BUYER_WILL_OWE2]), format_currency_default2(policy[MAXIMUM_BUYER_WILL_OWE2], GBP_CURRENCY_CODE))
+];
+var map_multiple_contract_policy_default = mapMultipleContractPolicy;
+
+// generate-xlsx/map-application-to-XLSX/map-policy/map-jointly-insured-party/index.ts
+var { FIELDS: FIELDS10 } = XLSX;
+var {
+  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED: REQUESTED2, COMPANY_NAME: COMPANY_NAME4, COMPANY_NUMBER: COMPANY_NUMBER3, COUNTRY_CODE: COUNTRY_CODE2 }
+} = policy_default;
+var mapJointlyInsuredParty = (party) => {
+  const requestedParty = party[REQUESTED2];
+  let mapped = [xlsx_row_default(String(FIELDS10.JOINTLY_INSURED_PARTY[REQUESTED2]), map_yes_no_field_default({ answer: requestedParty }))];
+  if (requestedParty) {
+    mapped = [
+      ...mapped,
+      xlsx_row_default(String(FIELDS10.JOINTLY_INSURED_PARTY[COMPANY_NAME4]), party[COMPANY_NAME4]),
+      xlsx_row_default(String(FIELDS10.JOINTLY_INSURED_PARTY[COUNTRY_CODE2]), party[COUNTRY_CODE2]),
+      xlsx_row_default(String(FIELDS10.JOINTLY_INSURED_PARTY[COMPANY_NUMBER3]), party[COMPANY_NUMBER3])
+    ];
+  }
   return mapped;
 };
-var mapSinglePolicyFields = (application2) => {
-  const { policy } = application2;
-  return [
-    xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[CONTRACT_COMPLETION_DATE2].SUMMARY?.TITLE), format_date_default(policy[CONTRACT_COMPLETION_DATE2], "dd-MMM-yy")),
-    xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[TOTAL_CONTRACT_VALUE2].SUMMARY?.TITLE), format_currency_default(policy[TOTAL_CONTRACT_VALUE2], GBP_CURRENCY_CODE))
-  ];
-};
-var mapMultiplePolicyFields = (application2) => {
-  const { policy } = application2;
-  return [
-    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), map_month_string_default(policy[TOTAL_MONTHS_OF_COVER])),
-    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), format_currency_default(policy[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
-    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), format_currency_default(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE))
-  ];
-};
-var mapPolicyOutro = (application2) => {
-  const { exportContract, policy } = application2;
-  const mapped = [
-    xlsx_row_default(String(CONTENT_STRINGS2[CREDIT_PERIOD_WITH_BUYER].SUMMARY?.TITLE), policy[CREDIT_PERIOD_WITH_BUYER]),
-    xlsx_row_default(String(CONTENT_STRINGS2[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
-    xlsx_row_default(String(CONTENT_STRINGS2[DESCRIPTION].SUMMARY?.TITLE), exportContract[DESCRIPTION]),
-    xlsx_row_default(String(CONTENT_STRINGS2[FINAL_DESTINATION].SUMMARY?.TITLE), exportContract[FINAL_DESTINATION_COUNTRY].name)
-  ];
+var map_jointly_insured_party_default = mapJointlyInsuredParty;
+
+// generate-xlsx/map-application-to-XLSX/map-policy/map-broker/index.ts
+var {
+  USING_BROKER: USING_BROKER4,
+  BROKER_DETAILS: { NAME: BROKER_NAME2, EMAIL: EMAIL7, FULL_ADDRESS: FULL_ADDRESS2 }
+} = POLICY;
+var { FIELDS: FIELDS11 } = XLSX;
+var mapBroker = (application2) => {
+  const { broker } = application2;
+  let mapped = [xlsx_row_default(FIELDS11[USING_BROKER4], map_yes_no_field_default({ answer: broker[USING_BROKER4] }))];
+  if (broker[USING_BROKER4]) {
+    mapped = [
+      ...mapped,
+      xlsx_row_default(FIELDS11[BROKER_NAME2], broker[BROKER_NAME2]),
+      xlsx_row_default(FIELDS11[EMAIL7], broker[EMAIL7]),
+      xlsx_row_default(FIELDS11[FULL_ADDRESS2], broker[FULL_ADDRESS2])
+    ];
+  }
   return mapped;
 };
-var mapPolicy = (application2) => {
-  let mapped = mapPolicyIntro(application2);
-  const policyType = application2.policy[POLICY_TYPE4];
+var map_broker_default = mapBroker;
+
+// generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/map-appointed-loss-payee/map-location/index.ts
+var {
+  LOSS_PAYEE_DETAILS: { IS_LOCATED_INTERNATIONALLY: IS_LOCATED_INTERNATIONALLY2, IS_LOCATED_IN_UK: IS_LOCATED_IN_UK2, LOCATION: LOCATION2 }
+} = policy_default;
+var CONTENT_STRINGS4 = POLICY_FIELDS.LOSS_PAYEE_DETAILS[LOCATION2].OPTIONS;
+var mapLossPayeeLocation = (lossPayee) => {
+  if (lossPayee[IS_LOCATED_INTERNATIONALLY2]) {
+    return String(CONTENT_STRINGS4?.INTERNATIONALLY.TEXT);
+  }
+  if (lossPayee[IS_LOCATED_IN_UK2]) {
+    return String(CONTENT_STRINGS4?.UK.TEXT);
+  }
+};
+var map_location_default = mapLossPayeeLocation;
+
+// generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/map-appointed-loss-payee/index.ts
+var { FIELDS: FIELDS12 } = XLSX;
+var CONTENT_STRINGS5 = POLICY_FIELDS.LOSS_PAYEE_DETAILS;
+var {
+  LOSS_PAYEE: { IS_APPOINTED: IS_APPOINTED3 },
+  LOSS_PAYEE_DETAILS: { LOCATION: LOCATION3, NAME: LOSS_PAYEE_NAME2 }
+} = policy_default;
+var mapAppointedLossPayee = (lossPayee) => {
+  let mapped = [xlsx_row_default(String(FIELDS12[IS_APPOINTED3]), map_yes_no_field_default({ answer: lossPayee[IS_APPOINTED3] }))];
+  if (lossPayee[IS_APPOINTED3]) {
+    mapped = [
+      ...mapped,
+      xlsx_row_default(String(CONTENT_STRINGS5[LOSS_PAYEE_NAME2].SUMMARY?.TITLE), lossPayee[LOSS_PAYEE_NAME2]),
+      xlsx_row_default(String(CONTENT_STRINGS5[LOCATION3].LABEL), map_location_default(lossPayee))
+    ];
+  }
+  return mapped;
+};
+var map_appointed_loss_payee_default = mapAppointedLossPayee;
+
+// generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/map-financial-details-international/index.ts
+var { FIELDS: FIELDS13 } = XLSX;
+var {
+  LOSS_PAYEE_DETAILS: { IS_LOCATED_INTERNATIONALLY: IS_LOCATED_INTERNATIONALLY3 },
+  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE: BIC_SWIFT_CODE3, IBAN: IBAN3 },
+  FINANCIAL_ADDRESS: FINANCIAL_ADDRESS3
+} = policy_default;
+var mapLossPayeeFinancialDetailsInternational = (lossPayee) => {
+  if (lossPayee[IS_LOCATED_INTERNATIONALLY3]) {
+    const mapped = [
+      xlsx_row_default(String(FIELDS13[BIC_SWIFT_CODE3]), lossPayee.financialInternational[BIC_SWIFT_CODE3]),
+      xlsx_row_default(String(FIELDS13[IBAN3]), lossPayee.financialInternational[IBAN3]),
+      xlsx_row_default(String(FIELDS13[FINANCIAL_ADDRESS3]), lossPayee.financialInternational[FINANCIAL_ADDRESS3])
+    ];
+    return mapped;
+  }
+  return [];
+};
+var map_financial_details_international_default = mapLossPayeeFinancialDetailsInternational;
+
+// generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/map-financial-details-uk/index.ts
+var { FIELDS: FIELDS14 } = XLSX;
+var {
+  LOSS_PAYEE_DETAILS: { IS_LOCATED_IN_UK: IS_LOCATED_IN_UK3 },
+  LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE: SORT_CODE3, ACCOUNT_NUMBER: ACCOUNT_NUMBER3 },
+  FINANCIAL_ADDRESS: FINANCIAL_ADDRESS4
+} = policy_default;
+var mapLossPayeeFinancialDetailsUk = (lossPayee) => {
+  if (lossPayee[IS_LOCATED_IN_UK3]) {
+    const mapped = [
+      xlsx_row_default(String(FIELDS14[SORT_CODE3]), lossPayee.financialUk[SORT_CODE3]),
+      xlsx_row_default(String(FIELDS14[ACCOUNT_NUMBER3]), lossPayee.financialUk[ACCOUNT_NUMBER3]),
+      xlsx_row_default(String(FIELDS14[FINANCIAL_ADDRESS4]), lossPayee.financialUk[FINANCIAL_ADDRESS4])
+    ];
+    return mapped;
+  }
+  return [];
+};
+var map_financial_details_uk_default = mapLossPayeeFinancialDetailsUk;
+
+// generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/index.ts
+var mapLossPayee = (lossPayee) => {
+  const mapped = [...map_appointed_loss_payee_default(lossPayee), ...map_financial_details_uk_default(lossPayee), ...map_financial_details_international_default(lossPayee)];
+  return mapped;
+};
+var map_loss_payee_default = mapLossPayee;
+
+// generate-xlsx/map-application-to-XLSX/map-policy/index.ts
+var { FIELDS: FIELDS15 } = XLSX;
+var {
+  TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE8 },
+  NEED_PRE_CREDIT_PERIOD: NEED_PRE_CREDIT_PERIOD3
+} = policy_default;
+var mapPolicy2 = (application2) => {
+  const { nominatedLossPayee, policy, policyContact } = application2;
+  const policyType = policy[POLICY_TYPE8];
+  let mapped = map_intro_default(policy);
   if (isSinglePolicyType(policyType)) {
-    mapped = [...mapped, ...mapSinglePolicyFields(application2)];
+    mapped = [...mapped, ...map_single_contract_policy_default(policy)];
   }
   if (isMultiplePolicyType(policyType)) {
-    mapped = [...mapped, ...mapMultiplePolicyFields(application2)];
+    mapped = [...mapped, ...map_multiple_contract_policy_default(policy)];
   }
-  mapped = [...mapped, ...mapPolicyOutro(application2)];
+  mapped = [
+    ...mapped,
+    ...map_name_on_policy_default(policyContact),
+    xlsx_row_default(String(FIELDS15[NEED_PRE_CREDIT_PERIOD3]), map_yes_no_field_default({ answer: policy[NEED_PRE_CREDIT_PERIOD3] })),
+    ...map_jointly_insured_party_default(policy.jointlyInsuredParty),
+    ...map_broker_default(application2),
+    ...map_loss_payee_default(nominatedLossPayee)
+  ];
   return mapped;
 };
-var map_policy_default = mapPolicy;
+var map_policy_default2 = mapPolicy2;
+
+// generate-xlsx/map-application-to-XLSX/map-exporter-business/map-different-trading-name/index.ts
+var {
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME3, DIFFERENT_TRADING_NAME: DIFFERENT_TRADING_NAME2 }
+} = business_default;
+var { FIELDS: FIELDS16 } = XLSX;
+var mapDifferentTradingName = (company) => {
+  if (company[HAS_DIFFERENT_TRADING_NAME3]) {
+    return xlsx_row_default(FIELDS16[DIFFERENT_TRADING_NAME2], company[DIFFERENT_TRADING_NAME2]);
+  }
+};
+var map_different_trading_name_default = mapDifferentTradingName;
+
+// generate-xlsx/map-application-to-XLSX/map-exporter-business/map-different-trading-address/index.ts
+var {
+  ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS: FULL_ADDRESS3, FULL_ADDRESS_DOT_NOTATION: FULL_ADDRESS_DOT_NOTATION2 }
+} = business_default;
+var { FIELDS: FIELDS17 } = XLSX;
+var mapDifferentTradingAddress = (company) => {
+  const { differentTradingAddress } = company;
+  const differentTradingAddressValue = differentTradingAddress[FULL_ADDRESS3];
+  if (differentTradingAddressValue) {
+    return xlsx_row_default(FIELDS17[FULL_ADDRESS_DOT_NOTATION2], differentTradingAddressValue);
+  }
+};
+var map_different_trading_address_default = mapDifferentTradingAddress;
 
 // generate-xlsx/map-application-to-XLSX/helpers/xlsx-new-line/index.ts
 var NEW_LINE = "\r\n";
 var xlsx_new_line_default = NEW_LINE;
 
-// generate-xlsx/map-application-to-XLSX/map-exporter/map-address/index.ts
+// generate-xlsx/map-application-to-XLSX/map-exporter-business/map-exporter-address/index.ts
 var mapExporterAddress = (address) => {
   let addressString = "";
   Object.keys(address).forEach((field) => {
@@ -4337,34 +7203,22 @@ var mapExporterAddress = (address) => {
   });
   return addressString;
 };
-var map_address_default = mapExporterAddress;
+var map_exporter_address_default = mapExporterAddress;
 
-// generate-xlsx/map-application-to-XLSX/helpers/map-yes-no-field/index.ts
-var mapYesNoField = (answer) => {
-  if (answer === false) {
-    return "No";
-  }
-  if (answer === true) {
-    return "Yes";
-  }
-  return DEFAULT.EMPTY;
-};
-var map_yes_no_field_default = mapYesNoField;
-
-// generate-xlsx/map-application-to-XLSX/map-exporter/index.ts
-var CONTENT_STRINGS3 = {
-  ...FIELDS.COMPANY_DETAILS,
-  ...FIELDS.NATURE_OF_YOUR_BUSINESS,
-  ...FIELDS.TURNOVER,
-  ...FIELDS.BROKER
-};
+// generate-xlsx/map-application-to-XLSX/map-exporter-business/map-financial-year-end-date/index.ts
 var {
-  COMPANY_HOUSE: { COMPANY_NUMBER: COMPANY_NUMBER2, COMPANY_NAME: COMPANY_NAME2, COMPANY_ADDRESS: COMPANY_ADDRESS2, COMPANY_INCORPORATED: COMPANY_INCORPORATED2, COMPANY_SIC: COMPANY_SIC2, FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 },
-  YOUR_COMPANY: { TRADING_NAME: TRADING_NAME2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE3, PHONE_NUMBER: PHONE_NUMBER3 },
-  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL3 },
-  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
-  BROKER: { USING_BROKER: USING_BROKER4, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL7 }
+  COMPANIES_HOUSE: { FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 }
 } = business_default;
+var { FIELDS: FIELDS18 } = XLSX;
+var mapFinancialYearEndDate = (company) => {
+  if (company[FINANCIAL_YEAR_END_DATE2]) {
+    return format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM");
+  }
+  return FIELDS18.NO_FINANCIAL_YEAR_END_DATE;
+};
+var map_financial_year_end_date_default = mapFinancialYearEndDate;
+
+// generate-xlsx/map-application-to-XLSX/map-exporter-business/map-sic-codes/index.ts
 var mapSicCodes2 = (sicCodes) => {
   let mapped = "";
   sicCodes.forEach((sicCodeObj) => {
@@ -4373,123 +7227,286 @@ var mapSicCodes2 = (sicCodes) => {
   });
   return mapped;
 };
-var mapBroker = (application2) => {
-  const { broker } = application2;
-  let mapped = [xlsx_row_default(XLSX.FIELDS[USING_BROKER4], map_yes_no_field_default(broker[USING_BROKER4]))];
-  if (broker[USING_BROKER4]) {
-    const addressAnswer = {
-      lineOneAndTwo: `${broker[ADDRESS_LINE_12]} ${xlsx_new_line_default}${broker[ADDRESS_LINE_2]}`,
-      other: `${xlsx_new_line_default}${broker[TOWN]} ${xlsx_new_line_default}${broker[COUNTY]} ${xlsx_new_line_default}${broker[POSTCODE]}`
-    };
-    mapped = [
-      ...mapped,
-      xlsx_row_default(XLSX.FIELDS[BROKER_NAME2], broker[BROKER_NAME2]),
-      xlsx_row_default(XLSX.FIELDS[ADDRESS_LINE_12], `${addressAnswer.lineOneAndTwo}${addressAnswer.other}`),
-      xlsx_row_default(XLSX.FIELDS[EMAIL7], broker[EMAIL7])
-    ];
-  }
-  return mapped;
+var map_sic_codes_default2 = mapSicCodes2;
+
+// generate-xlsx/map-application-to-XLSX/map-exporter-business/index.ts
+var { FIELDS: FIELDS19, SECTION_TITLES: SECTION_TITLES3 } = XLSX;
+var CONTENT_STRINGS6 = {
+  ...FIELDS.COMPANY_DETAILS,
+  ...FIELDS.NATURE_OF_YOUR_BUSINESS,
+  ...FIELDS.TURNOVER,
+  ...FIELDS.BROKER
 };
-var mapExporter = (application2) => {
-  const { company, companySicCodes, business } = application2;
-  let financialYearEndDate = "No data from Companies House";
-  if (company[FINANCIAL_YEAR_END_DATE2]) {
-    financialYearEndDate = format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM");
-  }
+var {
+  COMPANIES_HOUSE: { COMPANY_ADDRESS: COMPANY_ADDRESS2, COMPANY_INCORPORATED: COMPANY_INCORPORATED2, COMPANY_SIC: COMPANY_SIC2, FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE3 },
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME4, TRADING_ADDRESS: TRADING_ADDRESS3, PHONE_NUMBER: PHONE_NUMBER3, WEBSITE: WEBSITE3 },
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3 },
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
+  HAS_CREDIT_CONTROL: HAS_CREDIT_CONTROL3
+} = business_default;
+var mapExporterBusiness = (application2) => {
+  const { business, company, companySicCodes } = application2;
   const mapped = [
-    xlsx_row_default(XLSX.SECTION_TITLES.EXPORTER_BUSINESS, ""),
-    // company fields
-    xlsx_row_default(CONTENT_STRINGS3[COMPANY_NUMBER2].SUMMARY?.TITLE, company[COMPANY_NUMBER2]),
-    xlsx_row_default(XLSX.FIELDS[COMPANY_NAME2], company[COMPANY_NAME2]),
-    xlsx_row_default(CONTENT_STRINGS3[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], "dd-MMM-yy")),
-    xlsx_row_default(XLSX.FIELDS[COMPANY_ADDRESS2], map_address_default(company[COMPANY_ADDRESS2])),
-    xlsx_row_default(CONTENT_STRINGS3[TRADING_NAME2].SUMMARY?.TITLE, map_yes_no_field_default(company[TRADING_NAME2])),
-    xlsx_row_default(CONTENT_STRINGS3[TRADING_ADDRESS2].SUMMARY?.TITLE, map_yes_no_field_default(company[TRADING_ADDRESS2])),
-    xlsx_row_default(XLSX.FIELDS[COMPANY_SIC2], mapSicCodes2(companySicCodes)),
-    xlsx_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, financialYearEndDate),
-    xlsx_row_default(XLSX.FIELDS[WEBSITE3], company[WEBSITE3]),
-    xlsx_row_default(XLSX.FIELDS[PHONE_NUMBER3], company[PHONE_NUMBER3]),
-    // business fields
-    xlsx_row_default(XLSX.FIELDS[GOODS_OR_SERVICES3], business[GOODS_OR_SERVICES3]),
-    xlsx_row_default(XLSX.FIELDS[YEARS_EXPORTING3], business[YEARS_EXPORTING3]),
-    xlsx_row_default(XLSX.FIELDS[EMPLOYEES_UK3], business[EMPLOYEES_UK3]),
-    xlsx_row_default(XLSX.FIELDS[EMPLOYEES_INTERNATIONAL3], business[EMPLOYEES_INTERNATIONAL3]),
-    xlsx_row_default(XLSX.FIELDS[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
-    xlsx_row_default(CONTENT_STRINGS3[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER2]}%`),
-    // broker fields
-    ...mapBroker(application2)
+    xlsx_row_default(SECTION_TITLES3.EXPORTER_BUSINESS, ""),
+    xlsx_row_default(CONTENT_STRINGS6[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], DATE_FORMAT.XLSX)),
+    xlsx_row_default(FIELDS19[COMPANY_ADDRESS2], map_exporter_address_default(company[COMPANY_ADDRESS2])),
+    xlsx_row_default(FIELDS19[COMPANY_SIC2], map_sic_codes_default2(companySicCodes)),
+    xlsx_row_default(FIELDS19[HAS_DIFFERENT_TRADING_NAME4], map_yes_no_field_default({ answer: company[HAS_DIFFERENT_TRADING_NAME4] })),
+    map_different_trading_name_default(company),
+    xlsx_row_default(FIELDS19[TRADING_ADDRESS3], map_yes_no_field_default({ answer: company[TRADING_ADDRESS3] })),
+    map_different_trading_address_default(company),
+    xlsx_row_default(FIELDS19[WEBSITE3], company[WEBSITE3]),
+    xlsx_row_default(FIELDS19[PHONE_NUMBER3], company[PHONE_NUMBER3]),
+    xlsx_row_default(FIELDS19[GOODS_OR_SERVICES3], business[GOODS_OR_SERVICES3]),
+    xlsx_row_default(FIELDS19[YEARS_EXPORTING3], business[YEARS_EXPORTING3]),
+    xlsx_row_default(FIELDS19[EMPLOYEES_UK3], business[EMPLOYEES_UK3]),
+    xlsx_row_default(CONTENT_STRINGS6[FINANCIAL_YEAR_END_DATE3].SUMMARY?.TITLE, map_financial_year_end_date_default(company)),
+    xlsx_row_default(FIELDS19[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default2(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
+    xlsx_row_default(CONTENT_STRINGS6[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER2]}%`),
+    xlsx_row_default(FIELDS19[HAS_CREDIT_CONTROL3], map_yes_no_field_default({ answer: business[HAS_CREDIT_CONTROL3] }))
   ];
   return mapped;
 };
-var map_exporter_default = mapExporter;
+var map_exporter_business_default = mapExporterBusiness;
+
+// generate-xlsx/map-application-to-XLSX/map-buyer/map-connection-with-buyer/index.ts
+var { CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER3, CONNECTION_WITH_BUYER_DESCRIPTION: CONNECTION_WITH_BUYER_DESCRIPTION3 } = your_buyer_default;
+var { FIELDS: FIELDS20 } = XLSX;
+var mapConnectionWithBuyer = (relationship2) => {
+  if (relationship2[CONNECTION_WITH_BUYER3]) {
+    return xlsx_row_default(String(FIELDS20[CONNECTION_WITH_BUYER_DESCRIPTION3]), relationship2[CONNECTION_WITH_BUYER_DESCRIPTION3]);
+  }
+};
+var map_connection_with_buyer_default = mapConnectionWithBuyer;
+
+// generate-xlsx/map-application-to-XLSX/map-buyer/map-outstanding-payments/index.ts
+var {
+  CURRENCY: { CURRENCY_CODE: CURRENCY_CODE5 },
+  YOUR_BUYER: { OUTSTANDING_PAYMENTS: OUTSTANDING_PAYMENTS3, TOTAL_OUTSTANDING_PAYMENTS: TOTAL_OUTSTANDING_PAYMENTS3, TOTAL_AMOUNT_OVERDUE: TOTAL_AMOUNT_OVERDUE2 }
+} = insurance_default;
+var { FIELDS: FIELDS21 } = XLSX;
+var mapOutstandingPayments = (tradingHistory) => {
+  if (tradingHistory[OUTSTANDING_PAYMENTS3]) {
+    const values = {
+      totalOutstanding: format_currency_default(tradingHistory[TOTAL_OUTSTANDING_PAYMENTS3], tradingHistory[CURRENCY_CODE5]),
+      totalAmountOverdue: format_currency_default(tradingHistory[TOTAL_AMOUNT_OVERDUE2], tradingHistory[CURRENCY_CODE5])
+    };
+    const mapped = [
+      xlsx_row_default(String(FIELDS21[TOTAL_OUTSTANDING_PAYMENTS3]), values.totalOutstanding),
+      xlsx_row_default(String(YOUR_BUYER_FIELDS[TOTAL_AMOUNT_OVERDUE2].SUMMARY?.TITLE), values.totalAmountOverdue)
+    ];
+    return mapped;
+  }
+  return [];
+};
+var map_outstanding_payments_default = mapOutstandingPayments;
+
+// generate-xlsx/map-application-to-XLSX/map-buyer/map-buyer-trading-history/index.ts
+var { FAILED_PAYMENTS: FAILED_PAYMENTS3, OUTSTANDING_PAYMENTS: OUTSTANDING_PAYMENTS4, TRADED_WITH_BUYER: TRADED_WITH_BUYER3 } = your_buyer_default;
+var { FIELDS: FIELDS22 } = XLSX;
+var mapBuyerTradingHistory = (tradingHistory) => {
+  if (tradingHistory[TRADED_WITH_BUYER3]) {
+    const mapped = [
+      xlsx_row_default(String(FIELDS22[OUTSTANDING_PAYMENTS4]), map_yes_no_field_default({ answer: tradingHistory[OUTSTANDING_PAYMENTS4] })),
+      ...map_outstanding_payments_default(tradingHistory),
+      xlsx_row_default(String(FIELDS22[FAILED_PAYMENTS3]), map_yes_no_field_default({ answer: tradingHistory[FAILED_PAYMENTS3] }))
+    ];
+    return mapped;
+  }
+  return [];
+};
+var map_buyer_trading_history_default = mapBuyerTradingHistory;
+
+// generate-xlsx/map-application-to-XLSX/map-buyer/map-previous-cover-with-buyer/index.ts
+var { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3 } = your_buyer_default;
+var { FIELDS: FIELDS23 } = XLSX;
+var mapPreviousCoverWithBuyer = (eligibility, relationship2) => {
+  const totalContractValueOverThreshold = eligibility.totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
+  if (totalContractValueOverThreshold) {
+    const answer = relationship2[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3];
+    const mapped = [xlsx_row_default(String(FIELDS23[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), map_yes_no_field_default({ answer }))];
+    if (answer === true) {
+      mapped.push(xlsx_row_default(String(FIELDS23[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), relationship2[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]));
+    }
+    return mapped;
+  }
+  return [];
+};
+var map_previous_cover_with_buyer_default = mapPreviousCoverWithBuyer;
 
 // generate-xlsx/map-application-to-XLSX/map-buyer/index.ts
-var CONTENT_STRINGS4 = {
+var CONTENT_STRINGS7 = {
   ...YOUR_BUYER_FIELDS.COMPANY_OR_ORGANISATION,
-  ...YOUR_BUYER_FIELDS.WORKING_WITH_BUYER
+  ...YOUR_BUYER_FIELDS
 };
 var {
-  COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, COUNTRY: COUNTRY3, REGISTRATION_NUMBER, WEBSITE: WEBSITE4, FIRST_NAME: FIRST_NAME4, LAST_NAME: LAST_NAME4, POSITION, EMAIL: EMAIL8, CAN_CONTACT_BUYER },
-  WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER, TRADED_WITH_BUYER }
+  COMPANY_OR_ORGANISATION: { NAME: NAME3, ADDRESS, COUNTRY: COUNTRY3, REGISTRATION_NUMBER, WEBSITE: WEBSITE4 },
+  CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER4,
+  HAS_BUYER_FINANCIAL_ACCOUNTS: HAS_BUYER_FINANCIAL_ACCOUNTS3,
+  TRADED_WITH_BUYER: TRADED_WITH_BUYER4
 } = your_buyer_default;
+var { SECTION_TITLES: SECTION_TITLES4, FIELDS: FIELDS24 } = XLSX;
 var mapBuyer = (application2) => {
-  const { buyer } = application2;
+  const { buyer, eligibility } = application2;
+  const { buyerTradingHistory, relationship: relationship2 } = buyer;
   const mapped = [
-    xlsx_row_default(XLSX.SECTION_TITLES.BUYER, ""),
-    xlsx_row_default(XLSX.FIELDS[NAME2], buyer[NAME2]),
-    xlsx_row_default(String(CONTENT_STRINGS4[ADDRESS].SUMMARY?.TITLE), `${buyer[ADDRESS]} ${xlsx_new_line_default}${buyer[COUNTRY3].name}`),
-    xlsx_row_default(XLSX.FIELDS[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
-    xlsx_row_default(String(CONTENT_STRINGS4[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
-    xlsx_row_default(XLSX.FIELDS[FIRST_NAME4], `${buyer[FIRST_NAME4]} ${buyer[LAST_NAME4]} ${xlsx_new_line_default}${buyer[POSITION]} ${xlsx_new_line_default}${buyer[EMAIL8]}`),
-    xlsx_row_default(String(CONTENT_STRINGS4[CAN_CONTACT_BUYER].SUMMARY?.TITLE), map_yes_no_field_default(buyer[CAN_CONTACT_BUYER])),
-    xlsx_row_default(String(CONTENT_STRINGS4[CONNECTED_WITH_BUYER].SUMMARY?.TITLE), map_yes_no_field_default(buyer[CONNECTED_WITH_BUYER])),
-    xlsx_row_default(String(CONTENT_STRINGS4[TRADED_WITH_BUYER].SUMMARY?.TITLE), map_yes_no_field_default(buyer[TRADED_WITH_BUYER]))
+    xlsx_row_default(SECTION_TITLES4.BUYER, ""),
+    xlsx_row_default(FIELDS24[NAME3], buyer[NAME3]),
+    xlsx_row_default(String(CONTENT_STRINGS7[ADDRESS].SUMMARY?.TITLE), `${buyer[ADDRESS]} ${xlsx_new_line_default}${buyer[COUNTRY3].name}`),
+    xlsx_row_default(FIELDS24[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
+    xlsx_row_default(String(CONTENT_STRINGS7[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
+    xlsx_row_default(String(FIELDS24[CONNECTION_WITH_BUYER4]), map_yes_no_field_default({ answer: relationship2[CONNECTION_WITH_BUYER4] })),
+    map_connection_with_buyer_default(relationship2),
+    xlsx_row_default(String(FIELDS24[TRADED_WITH_BUYER4]), map_yes_no_field_default({ answer: buyerTradingHistory[TRADED_WITH_BUYER4] })),
+    ...map_buyer_trading_history_default(buyerTradingHistory),
+    ...map_previous_cover_with_buyer_default(eligibility, relationship2),
+    xlsx_row_default(String(FIELDS24[HAS_BUYER_FINANCIAL_ACCOUNTS3]), map_yes_no_field_default({ answer: relationship2[HAS_BUYER_FINANCIAL_ACCOUNTS3] }))
   ];
   return mapped;
 };
 var map_buyer_default = mapBuyer;
 
-// generate-xlsx/map-application-to-XLSX/map-eligibility/index.ts
+// generate-xlsx/map-application-to-XLSX/map-export-contract/map-private-market/index.ts
+var { FIELDS: FIELDS25 } = XLSX;
 var {
-  ELIGIBILITY: {
-    BUYER_COUNTRY: BUYER_COUNTRY2,
-    HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2,
-    VALID_EXPORTER_LOCATION: VALID_EXPORTER_LOCATION2,
-    WANT_COVER_OVER_MAX_AMOUNT: WANT_COVER_OVER_MAX_AMOUNT2,
-    COVER_PERIOD: COVER_PERIOD_ELIGIBILITY,
-    TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_ELIGIBILITY,
-    WANT_COVER_OVER_MAX_PERIOD: WANT_COVER_OVER_MAX_PERIOD2,
-    OTHER_PARTIES_INVOLVED: OTHER_PARTIES_INVOLVED2,
-    LETTER_OF_CREDIT: LETTER_OF_CREDIT2,
-    PRE_CREDIT_PERIOD: PRE_CREDIT_PERIOD2,
-    COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2
+  PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION: DECLINED_DESCRIPTION3 }
+} = export_contract_default;
+var mapPrivateMarket = (privateMarket, totalContractValue) => {
+  const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
+  if (totalContractValueOverThreshold) {
+    const attempedPrivateMarketAnswer = privateMarket[ATTEMPTED];
+    const mapped = [xlsx_row_default(String(FIELDS25.EXPORT_CONTRACT[ATTEMPTED]), map_yes_no_field_default({ answer: attempedPrivateMarketAnswer }))];
+    if (attempedPrivateMarketAnswer) {
+      mapped.push(xlsx_row_default(String(FIELDS25.EXPORT_CONTRACT[DECLINED_DESCRIPTION3]), privateMarket[DECLINED_DESCRIPTION3]));
+    }
+    return mapped;
   }
-} = FIELD_IDS.INSURANCE;
-var { MORE_THAN_2_YEARS } = COVER_PERIOD;
-var { MORE_THAN_500K } = TOTAL_CONTRACT_VALUE;
-var mapEligibility = (application2) => {
-  const { eligibility, policy } = application2;
+  return [];
+};
+var map_private_market_default = mapPrivateMarket;
+
+// generate-xlsx/map-application-to-XLSX/map-export-contract/map-agent/map-agent-charge/map-agent-charge-amount/index.ts
+var { FIELDS: FIELDS26 } = XLSX;
+var {
+  AGENT_CHARGES: { FIXED_SUM_AMOUNT: FIXED_SUM_AMOUNT2, FIXED_SUM_CURRENCY_CODE, PAYABLE_COUNTRY_CODE: PAYABLE_COUNTRY_CODE2, PERCENTAGE_CHARGE: PERCENTAGE_CHARGE2 }
+} = export_contract_default;
+var mapAgentChargeAmount = (charge) => {
+  const payableCountryRow = xlsx_row_default(String(FIELDS26.AGENT_CHARGES[PAYABLE_COUNTRY_CODE2]), charge[PAYABLE_COUNTRY_CODE2]);
+  if (charge[FIXED_SUM_AMOUNT2]) {
+    const mapped = [
+      xlsx_row_default(String(FIELDS26.AGENT_CHARGES[FIXED_SUM_AMOUNT2]), format_currency_default2(charge[FIXED_SUM_AMOUNT2], charge[FIXED_SUM_CURRENCY_CODE])),
+      payableCountryRow
+    ];
+    return mapped;
+  }
+  if (charge[PERCENTAGE_CHARGE2]) {
+    const mapped = [xlsx_row_default(String(FIELDS26.AGENT_CHARGES[PERCENTAGE_CHARGE2]), `${charge[PERCENTAGE_CHARGE2]}%`), payableCountryRow];
+    return mapped;
+  }
+  return [];
+};
+var map_agent_charge_amount_default = mapAgentChargeAmount;
+
+// generate-xlsx/map-application-to-XLSX/map-export-contract/map-agent/map-agent-charge/index.ts
+var { FIELDS: FIELDS27 } = XLSX;
+var {
+  AGENT_SERVICE: { IS_CHARGING: IS_CHARGING2 }
+} = export_contract_default;
+var mapAgentCharge = (service) => {
+  const { charge } = service;
+  const chargingAnswer = service[IS_CHARGING2];
+  let mapped = [xlsx_row_default(String(FIELDS27.AGENT_SERVICE[IS_CHARGING2]), map_yes_no_field_default({ answer: chargingAnswer }))];
+  if (chargingAnswer) {
+    mapped = [...mapped, ...map_agent_charge_amount_default(charge)];
+  }
+  return mapped;
+};
+var map_agent_charge_default = mapAgentCharge;
+
+// generate-xlsx/map-application-to-XLSX/map-export-contract/map-agent/index.ts
+var { FIELDS: FIELDS28 } = XLSX;
+var {
+  AGENT_DETAILS: { NAME: NAME4, FULL_ADDRESS: FULL_ADDRESS4, COUNTRY_CODE: COUNTRY_CODE3 },
+  AGENT_SERVICE: { SERVICE_DESCRIPTION: SERVICE_DESCRIPTION2 },
+  USING_AGENT: USING_AGENT2
+} = export_contract_default;
+var mapAgent = (agent) => {
+  const usingAgentAnswer = agent[USING_AGENT2];
+  let mapped = [xlsx_row_default(String(FIELDS28.EXPORT_CONTRACT[USING_AGENT2]), map_yes_no_field_default({ answer: usingAgentAnswer }))];
+  if (usingAgentAnswer) {
+    const { service } = agent;
+    mapped = [
+      ...mapped,
+      xlsx_row_default(String(FIELDS28.AGENT[NAME4]), agent[NAME4]),
+      xlsx_row_default(String(FIELDS28.AGENT[FULL_ADDRESS4]), agent[FULL_ADDRESS4]),
+      xlsx_row_default(String(FIELDS28.AGENT[COUNTRY_CODE3]), agent[COUNTRY_CODE3]),
+      xlsx_row_default(String(FIELDS28.AGENT_SERVICE[SERVICE_DESCRIPTION2]), service[SERVICE_DESCRIPTION2]),
+      ...map_agent_charge_default(service)
+    ];
+  }
+  return mapped;
+};
+var map_agent_default = mapAgent;
+
+// generate-xlsx/map-application-to-XLSX/map-export-contract/index.ts
+var { FIELDS: FIELDS29, SECTION_TITLES: SECTION_TITLES5 } = XLSX;
+var {
+  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION: DESCRIPTION3, FINAL_DESTINATION_KNOWN: FINAL_DESTINATION_KNOWN3 },
+  HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION: PAYMENT_TERMS_DESCRIPTION3 }
+} = export_contract_default;
+var mapExportContract = (application2) => {
+  const {
+    eligibility: { totalContractValue },
+    exportContract
+  } = application2;
+  const { agent, privateMarket } = exportContract;
   const mapped = [
-    xlsx_row_default(XLSX.SECTION_TITLES.ELIGIBILITY, ""),
-    xlsx_row_default(FIELDS_ELIGIBILITY[BUYER_COUNTRY2].SUMMARY?.TITLE, eligibility[BUYER_COUNTRY2].name),
-    xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[VALID_EXPORTER_LOCATION2])),
-    xlsx_row_default(FIELDS_ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES2])),
-    xlsx_row_default(
-      FIELDS_ELIGIBILITY[WANT_COVER_OVER_MAX_AMOUNT2].SUMMARY?.TITLE,
-      map_yes_no_field_default(eligibility[TOTAL_CONTRACT_VALUE_ELIGIBILITY].valueId === MORE_THAN_500K.DB_ID)
-    ),
-    xlsx_row_default(
-      FIELDS_ELIGIBILITY[WANT_COVER_OVER_MAX_PERIOD2].SUMMARY?.TITLE,
-      map_yes_no_field_default(eligibility[COVER_PERIOD_ELIGIBILITY].valueId === MORE_THAN_2_YEARS.DB_ID)
-    ),
-    xlsx_row_default(FIELDS_ELIGIBILITY[OTHER_PARTIES_INVOLVED2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[OTHER_PARTIES_INVOLVED2])),
-    xlsx_row_default(FIELDS_ELIGIBILITY[LETTER_OF_CREDIT2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[LETTER_OF_CREDIT2])),
-    xlsx_row_default(FIELDS_ELIGIBILITY[PRE_CREDIT_PERIOD2].SUMMARY?.TITLE, map_yes_no_field_default(policy[PRE_CREDIT_PERIOD2])),
-    xlsx_row_default(FIELDS_ELIGIBILITY[COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[COMPANIES_HOUSE_NUMBER2]))
+    xlsx_row_default(SECTION_TITLES5.EXPORT_CONTRACT, ""),
+    xlsx_row_default(String(FIELDS29.EXPORT_CONTRACT[DESCRIPTION3]), exportContract[DESCRIPTION3]),
+    xlsx_row_default(String(FIELDS29.EXPORT_CONTRACT[FINAL_DESTINATION_KNOWN3]), map_yes_no_field_default({ answer: exportContract[FINAL_DESTINATION_KNOWN3] })),
+    xlsx_row_default(String(FIELDS29.EXPORT_CONTRACT[PAYMENT_TERMS_DESCRIPTION3]), exportContract[PAYMENT_TERMS_DESCRIPTION3]),
+    ...map_private_market_default(privateMarket, totalContractValue),
+    ...map_agent_default(agent)
   ];
   return mapped;
 };
-var map_eligibility_default = mapEligibility;
+var map_export_contract_default = mapExportContract;
+
+// generate-xlsx/map-application-to-XLSX/helpers/map-agreed-field/index.ts
+var mapAgreedField = (answer) => {
+  if (answer === true) {
+    return XLSX.AGREED;
+  }
+  return DEFAULT.EMPTY;
+};
+var map_agreed_field_default = mapAgreedField;
+
+// generate-xlsx/map-application-to-XLSX/map-declarations/index.ts
+var { FIELDS: FIELDS30, SECTION_TITLES: SECTION_TITLES6 } = XLSX;
+var {
+  DECLARATIONS: {
+    AGREE_CONFIDENTIALITY: AGREE_CONFIDENTIALITY2,
+    AGREE_ANTI_BRIBERY: AGREE_ANTI_BRIBERY2,
+    HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3,
+    WILL_EXPORT_WITH_CODE_OF_CONDUCT: WILL_EXPORT_WITH_CODE_OF_CONDUCT3,
+    AGREE_HOW_YOUR_DATA_WILL_BE_USED: AGREE_HOW_YOUR_DATA_WILL_BE_USED3,
+    AGREE_CONFIRMATION_ACKNOWLEDGEMENTS: AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2
+  }
+} = insurance_default;
+var mapDeclarations = (application2) => {
+  const { declaration } = application2;
+  const mapped = [
+    xlsx_row_default(SECTION_TITLES6.DECLARATIONS, ""),
+    xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIDENTIALITY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIDENTIALITY2])),
+    xlsx_row_default(DECLARATIONS_FIELDS[AGREE_ANTI_BRIBERY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_ANTI_BRIBERY2])),
+    xlsx_row_default(String(FIELDS30[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3] })),
+    xlsx_row_default(String(FIELDS30[WILL_EXPORT_WITH_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT3] })),
+    xlsx_row_default(String(FIELDS30[AGREE_HOW_YOUR_DATA_WILL_BE_USED3]), map_agreed_field_default(declaration[AGREE_HOW_YOUR_DATA_WILL_BE_USED3])),
+    xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2]))
+  ];
+  return mapped;
+};
+var map_declarations_default = mapDeclarations;
 
 // generate-xlsx/map-application-to-XLSX/helpers/map-agreed-field/index.ts
 var mapAgreedField = (answer) => {
@@ -4530,19 +7547,25 @@ var map_declarations_default = mapDeclarations;
 var mapApplicationToXLSX = (application2) => {
   try {
     const mapped = [
-      ...map_key_information_default(application2),
+      ...map_introduction_default(application2),
       xlsx_row_seperator_default,
       ...map_exporter_contact_details_default(application2),
       xlsx_row_seperator_default,
-      ...map_secondary_key_information_default(application2),
+      ...map_key_information_default(application2),
       xlsx_row_seperator_default,
-      ...map_policy_default(application2),
+      ...map_eligibility_default(application2),
       xlsx_row_seperator_default,
-      ...map_exporter_default(application2),
+      ...map_exporter_business_default(application2),
+      xlsx_row_seperator_default,
+      ...map_policy_default2(application2),
       xlsx_row_seperator_default,
       ...map_buyer_default(application2),
       xlsx_row_seperator_default,
+<<<<<<< HEAD
       ...map_eligibility_default(application2),
+=======
+      ...map_export_contract_default(application2),
+>>>>>>> main-application-no-pdf
       xlsx_row_seperator_default,
       ...map_declarations_default(application2)
     ];
@@ -4576,9 +7599,9 @@ var worksheetRowHeights = (titleRowIndexes, rowIndexes, worksheet) => {
 };
 var styledColumns = (application2, worksheet) => {
   let modifiedWorksheet = worksheet;
-  const INDEXES = XLSX_ROW_INDEXES(application2);
-  const { TITLES, ...ROWS } = INDEXES;
-  const TITLE_INDEXES = Object.values(TITLES);
+  const INDEXES2 = XLSX_ROW_INDEXES(application2);
+  const { TITLES, ...ROWS } = INDEXES2;
+  const TITLE_INDEXES2 = Object.values(TITLES);
   const ROW_INDEXES = Object.values(ROWS);
   modifiedWorksheet.eachRow((row, rowNumber) => {
     row.eachCell((cell, colNumber) => {
@@ -4587,19 +7610,21 @@ var styledColumns = (application2, worksheet) => {
         vertical: "top",
         wrapText: true
       };
-      const isTitleRow = TITLE_INDEXES.includes(rowNumber);
+      const isTitleRow = TITLE_INDEXES2.includes(rowNumber);
       modifiedRow.getCell(colNumber).font = {
         bold: Boolean(isTitleRow),
         size: isTitleRow ? FONT_SIZE.TITLE : FONT_SIZE.DEFAULT
       };
     });
   });
-  modifiedWorksheet = worksheetRowHeights(TITLE_INDEXES, ROW_INDEXES, modifiedWorksheet);
+  modifiedWorksheet = worksheetRowHeights(TITLE_INDEXES2, ROW_INDEXES, modifiedWorksheet);
   return modifiedWorksheet;
 };
 var styled_columns_default = styledColumns;
 
 // generate-xlsx/index.ts
+import_dotenv9.default.config();
+var { EXCELJS_PROTECTION_PASSWORD } = process.env;
 var XLSX2 = (application2) => {
   try {
     console.info("Generating XLSX file for application %s", application2.id);
@@ -4612,10 +7637,13 @@ var XLSX2 = (application2) => {
       const workbook = new import_exceljs.default.Workbook();
       console.info("Generating XLSX file - adding worksheet to workbook");
       let worksheet = workbook.addWorksheet(refNumber);
+      worksheet.protect(String(EXCELJS_PROTECTION_PASSWORD), {});
       worksheet.columns = header_columns_default;
       console.info("Generating XLSX file - adding rows to worksheet");
       xlsxData.forEach((row) => {
-        worksheet.addRow(row);
+        if (row) {
+          worksheet.addRow(row);
+        }
       });
       console.info("Generating XLSX file - adding custom styles to worksheet");
       worksheet = styled_columns_default(application2, worksheet);
@@ -4642,24 +7670,31 @@ var submitApplication = async (root, variables, context) => {
     if (application2) {
       const { status, submissionDeadline, submissionCount } = application2;
       const isInProgress = status === APPLICATION.STATUS.IN_PROGRESS;
-      const now = /* @__PURE__ */ new Date();
-      const validSubmissionDate = (0, import_date_fns8.isAfter)(new Date(submissionDeadline), now);
+      const now2 = /* @__PURE__ */ new Date();
+      const validSubmissionDate = (0, import_date_fns6.isAfter)(new Date(submissionDeadline), now2);
       const isFirstSubmission = submissionCount === 0;
       const canSubmit = isInProgress && validSubmissionDate && isFirstSubmission;
       if (canSubmit) {
+        console.info("Submitting application - updating status, submission date and count %s", variables.applicationId);
         const update2 = {
           status: APPLICATION.STATUS.SUBMITTED,
           previousStatus: APPLICATION.STATUS.IN_PROGRESS,
-          submissionDate: now,
+          submissionDate: now2,
           submissionCount: submissionCount + 1
         };
         const updatedApplication = await context.db.Application.updateOne({
           where: { id: application2.id },
           data: update2
         });
-        const populatedApplication = await get_populated_application_default(context, updatedApplication);
-        const xlsxPath = await generate_xlsx_default.XLSX(populatedApplication);
-        await send_application_submitted_emails_default.send(populatedApplication, xlsxPath);
+        console.info("Submitting application - getting populated application %s", variables.applicationId);
+        const populatedApplication2 = await get_populated_application_default.get({
+          context,
+          application: updatedApplication,
+          decryptFinancialUk: true,
+          decryptFinancialInternational: true
+        });
+        const xlsxPath = await generate_xlsx_default.XLSX(populatedApplication2);
+        await send_application_submitted_emails_default.send(populatedApplication2, xlsxPath);
         return {
           success: true
         };
@@ -4704,7 +7739,7 @@ var createFeedback = async (root, variables, context) => {
 var create_feedback_default = createFeedback;
 
 // custom-resolvers/mutations/verify-account-reactivation-token/index.ts
-var import_date_fns9 = require("date-fns");
+var import_date_fns7 = require("date-fns");
 var {
   INSURANCE: {
     ACCOUNT: { REACTIVATION_HASH, REACTIVATION_EXPIRY }
@@ -4716,8 +7751,8 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
     const account2 = await get_account_by_field_default(context, REACTIVATION_HASH, variables.token);
     if (account2) {
       console.info("Received a request to reactivate account - found account %s", account2.id);
-      const now = /* @__PURE__ */ new Date();
-      const canReactivateAccount = (0, import_date_fns9.isBefore)(now, account2[REACTIVATION_EXPIRY]);
+      const now2 = /* @__PURE__ */ new Date();
+      const canReactivateAccount = (0, import_date_fns7.isBefore)(now2, account2[REACTIVATION_EXPIRY]);
       if (!canReactivateAccount) {
         console.info("Unable to reactivate account - reactivation period has expired");
         return {
@@ -4728,12 +7763,15 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
       }
       console.info("Reactivating account %s", account2.id);
       const accountUpdate = {
-        isBlocked: false,
-        isVerified: true,
         reactivationHash: "",
         reactivationExpiry: null
       };
+      const statusUpdate = {
+        isBlocked: false,
+        isVerified: true
+      };
       await update_account_default.account(context, account2.id, accountUpdate);
+      await update_account_default.accountStatus(context, account2.status.id, statusUpdate);
       await delete_authentication_retries_default(context, account2.id);
       return {
         success: true
@@ -4750,6 +7788,216 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
   }
 };
 var verify_account_reactivation_token_default = verifyAccountReactivationToken;
+
+// helpers/encrypt/index.ts
+var import_crypto12 = __toESM(require("crypto"));
+
+// helpers/encrypt/generate-initialisation-vector/index.ts
+var import_crypto11 = __toESM(require("crypto"));
+var { BYTES_SIZE, ENCODING: ENCODING3, SLICE_INDEX_START, SLICE_INDEX_END } = FINANCIAL_DETAILS.ENCRYPTION.IV;
+var generateInitialisationVector = () => import_crypto11.default.randomBytes(BYTES_SIZE).toString(ENCODING3).slice(SLICE_INDEX_START, SLICE_INDEX_END);
+var generate_initialisation_vector_default = generateInitialisationVector;
+
+// helpers/encrypt/index.ts
+var { ENCRYPTION_METHOD: ENCRYPTION_METHOD2, ENCODING: ENCODING4, STRING_ENCODING: STRING_ENCODING3, OUTPUT_ENCODING: OUTPUT_ENCODING3 } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
+var encrypt = (dataToEncrypt) => {
+  try {
+    console.info("Encrypting data");
+    const key2 = generate_key_default();
+    const iv = generate_initialisation_vector_default();
+    const cipher = import_crypto12.default.createCipheriv(ENCRYPTION_METHOD2, key2, iv);
+    const value = Buffer.from(cipher.update(dataToEncrypt, OUTPUT_ENCODING3, ENCODING4).concat(cipher.final(ENCODING4))).toString(STRING_ENCODING3);
+    return {
+      value,
+      iv
+    };
+  } catch (err) {
+    console.error("Error encrypting data %O", err);
+    throw new Error(`Error encrypting data ${err}`);
+  }
+};
+var encrypt_default = encrypt;
+
+// helpers/map-loss-payee-financial-details-uk/index.ts
+var mapLossPayeeFinancialDetailsUk2 = (variables) => {
+  try {
+    console.info("Mapping loss payee financial UK");
+    const { accountNumber, sortCode, bankAddress } = variables;
+    let accountNumberData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
+    let sortCodeData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
+    if (accountNumber) {
+      accountNumberData = encrypt_default(accountNumber);
+    }
+    if (sortCode) {
+      sortCodeData = encrypt_default(sortCode);
+    }
+    const updateData = {
+      uk: {
+        accountNumber: accountNumberData.value,
+        sortCode: sortCodeData.value,
+        bankAddress
+      },
+      vectors: {
+        accountNumberVector: accountNumberData.iv,
+        sortCodeVector: sortCodeData.iv
+      }
+    };
+    return updateData;
+  } catch (err) {
+    console.error("Error mapping loss payee financial UK %O", err);
+    throw new Error(`Error mapping loss payee financial UK ${err}`);
+  }
+};
+var map_loss_payee_financial_details_uk_default = mapLossPayeeFinancialDetailsUk2;
+
+// helpers/update-loss-payee-financial-uk/index.ts
+var updateLossPayeeFinancialInternationalUk = async (context, id, data) => {
+  try {
+    console.info("Updating loss payee financial uk (helper) %s", id);
+    const updated = await context.db.LossPayeeFinancialUk.updateOne({
+      where: {
+        id
+      },
+      data
+    });
+    return updated;
+  } catch (err) {
+    console.error("Error updating loss payee financial uk (helper) %O", err);
+    throw new Error(`Updating loss payee financial uk (helper) ${err}`);
+  }
+};
+var update_loss_payee_financial_uk_default = updateLossPayeeFinancialInternationalUk;
+
+// helpers/update-loss-payee-financial-uk-vector/index.ts
+var updateLossPayeeFinancialUkVector = async (context, id, data) => {
+  try {
+    console.info("Updating loss payee financial uk vector (helper) %s", id);
+    const updated = await context.db.LossPayeeFinancialUkVector.updateOne({
+      where: {
+        id
+      },
+      data
+    });
+    return updated;
+  } catch (err) {
+    console.error("Error updating loss payee financial uk vector (helper) %O", err);
+    throw new Error(`Updating loss payee financial uk vector (helper) ${err}`);
+  }
+};
+var update_loss_payee_financial_uk_vector_default = updateLossPayeeFinancialUkVector;
+
+// custom-resolvers/mutations/update-loss-payee-financial-details-uk/index.ts
+var updateLossPayeeFinancialDetailsUk = async (root, variables, context) => {
+  try {
+    console.info("Updating loss payee financial UK %s", variables.id);
+    const { id } = variables;
+    const mappedData = map_loss_payee_financial_details_uk_default(variables);
+    const uk = await update_loss_payee_financial_uk_default(context, id, mappedData.uk);
+    const vector = await update_loss_payee_financial_uk_vector_default(context, String(uk.vectorId), mappedData.vectors);
+    if (uk && vector) {
+      return {
+        success: true
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error("Error updating loss payee financial UK %O", err);
+    throw new Error(`Updating loss payee financial UK ${err}`);
+  }
+};
+var update_loss_payee_financial_details_uk_default = updateLossPayeeFinancialDetailsUk;
+
+// helpers/map-loss-payee-financial-details-international/index.ts
+var mapLossPayeeFinancialDetailsInternational2 = (variables) => {
+  try {
+    const { iban, bicSwiftCode, bankAddress } = variables;
+    let ibanData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
+    let bicSwiftCodeData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
+    if (iban) {
+      ibanData = encrypt_default(iban);
+    }
+    if (bicSwiftCode) {
+      bicSwiftCodeData = encrypt_default(bicSwiftCode);
+    }
+    const updateData = {
+      international: {
+        iban: ibanData.value,
+        bicSwiftCode: bicSwiftCodeData.value,
+        bankAddress
+      },
+      vectors: {
+        ibanVector: ibanData.iv,
+        bicSwiftCodeVector: bicSwiftCodeData.iv
+      }
+    };
+    return updateData;
+  } catch (err) {
+    console.error("Error mapping loss payee financial international %O", err);
+    throw new Error(`Error mapping loss payee financial international ${err}`);
+  }
+};
+var map_loss_payee_financial_details_international_default = mapLossPayeeFinancialDetailsInternational2;
+
+// helpers/update-loss-payee-financial-international/index.ts
+var updateLossPayeeFinancialInternational = async (context, id, data) => {
+  try {
+    console.info("Updating loss payee financial international (helper) %s", id);
+    const updated = await context.db.LossPayeeFinancialInternational.updateOne({
+      where: {
+        id
+      },
+      data
+    });
+    return updated;
+  } catch (err) {
+    console.error("Error updating loss payee financial international (helper) %O", err);
+    throw new Error(`Updating loss payee financial international (helper) ${err}`);
+  }
+};
+var update_loss_payee_financial_international_default = updateLossPayeeFinancialInternational;
+
+// helpers/update-loss-payee-financial-international-vector/index.ts
+var updateLossPayeeFinancialInternationalVector = async (context, id, data) => {
+  try {
+    console.info("Updating loss payee financial international vector (helper) %s", id);
+    const updated = await context.db.LossPayeeFinancialInternationalVector.updateOne({
+      where: {
+        id
+      },
+      data
+    });
+    return updated;
+  } catch (err) {
+    console.error("Error updating loss payee financial international vector (helper) %O", err);
+    throw new Error(`Updating loss payee financial international vector (helper) ${err}`);
+  }
+};
+var update_loss_payee_financial_international_vector_default = updateLossPayeeFinancialInternationalVector;
+
+// custom-resolvers/mutations/update-loss-payee-financial-details-international/index.ts
+var updateLossPayeeFinancialDetailsInternational = async (root, variables, context) => {
+  try {
+    console.info("Updating loss payee financial international %s", variables.id);
+    const { id } = variables;
+    const mappedData = map_loss_payee_financial_details_international_default(variables);
+    const international = await update_loss_payee_financial_international_default(context, id, mappedData.international);
+    const vector = await update_loss_payee_financial_international_vector_default(context, String(international.vectorId), mappedData.vectors);
+    if (international && vector) {
+      return {
+        success: true
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error("Error updating loss payee financial international %O", err);
+    throw new Error(`Updating loss payee financial international ${err}`);
+  }
+};
+var update_loss_payee_financial_details_international_default = updateLossPayeeFinancialDetailsInternational;
 
 // custom-resolvers/queries/get-account-password-reset-token/index.ts
 var getAccountPasswordResetToken = async (root, variables, context) => {
@@ -4778,8 +8026,8 @@ var get_account_password_reset_token_default = getAccountPasswordResetToken;
 
 // integrations/APIM/index.ts
 var import_axios = __toESM(require("axios"));
-var import_dotenv5 = __toESM(require("dotenv"));
-import_dotenv5.default.config();
+var import_dotenv10 = __toESM(require("dotenv"));
+import_dotenv10.default.config();
 var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
 var { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
 var APIM = {
@@ -4843,6 +8091,13 @@ var APIM = {
   }
 };
 var APIM_default = APIM;
+
+// helpers/filter-cis-entries/index.ts
+var filterCisEntries = (arr, invalidEntries, entityPropertyName) => {
+  const filtered = arr.filter((obj) => !invalidEntries.includes(obj[entityPropertyName]));
+  return filtered;
+};
+var filter_cis_entries_default = filterCisEntries;
 
 // helpers/map-CIS-countries/map-CIS-country/map-risk-category/index.ts
 var { CIS } = EXTERNAL_API_DEFINITIONS;
@@ -4917,15 +8172,34 @@ var cannotGetAQuote = (country) => {
 };
 var cannot_get_a_quote_default = cannotGetAQuote;
 
-// helpers/map-CIS-countries/map-CIS-country/can-apply-online/index.ts
-var { CIS: CIS3 } = EXTERNAL_API_DEFINITIONS;
-var canApplyOnline = (originalShortTermCover) => {
-  if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.YES) {
-    return true;
+// helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/index.ts
+var {
+  CIS: {
+    SHORT_TERM_COVER_AVAILABLE: { YES: YES2, ILC, CILC, REFER, UNLISTED }
   }
-  return false;
+} = EXTERNAL_API_DEFINITIONS;
+var canApplyForInsuranceOnline = (originalShortTermCover, riskCategory) => {
+  switch (originalShortTermCover) {
+    case (riskCategory && YES2):
+      return true;
+    case (riskCategory && ILC):
+      return true;
+    case (riskCategory && CILC):
+      return true;
+    case (riskCategory && REFER):
+      return true;
+    case (riskCategory && UNLISTED):
+      return true;
+    default:
+      return false;
+  }
 };
-var can_apply_online_default = canApplyOnline;
+var can_apply_for_insurance_online_default = canApplyForInsuranceOnline;
+
+// helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-offline/index.ts
+var { CIS: CIS3 } = EXTERNAL_API_DEFINITIONS;
+var canApplyForInsuranceOffline = (originalShortTermCover) => originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.NO;
+var can_apply_for_insurance_offline_default = canApplyForInsuranceOffline;
 
 // helpers/map-CIS-countries/map-CIS-country/can-apply-offline/index.ts
 var { CIS: CIS4 } = EXTERNAL_API_DEFINITIONS;
@@ -4953,11 +8227,12 @@ var mapCisCountry = (country) => {
     nbiIssueAvailable: map_NBI_issue_available_default(country.NBIIssue)
   };
   mapped.canGetAQuoteOnline = can_get_a_quote_online_default(mapped);
+  mapped.canGetAQuoteOffline = can_apply_offline_default(country.shortTermCoverAvailabilityDesc);
   mapped.canGetAQuoteByEmail = can_get_a_quote_by_email_default(mapped);
   mapped.cannotGetAQuote = cannot_get_a_quote_default(mapped);
-  mapped.canApplyOnline = can_apply_online_default(country.shortTermCoverAvailabilityDesc);
-  mapped.canApplyOffline = can_apply_offline_default(country.shortTermCoverAvailabilityDesc);
-  mapped.cannotApply = !mapped.canApplyOnline && !mapped.canApplyOffline;
+  mapped.canApplyForInsuranceOnline = can_apply_for_insurance_online_default(country.shortTermCoverAvailabilityDesc, mapped.riskCategory);
+  mapped.canApplyForInsuranceOffline = can_apply_for_insurance_offline_default(country.shortTermCoverAvailabilityDesc);
+  mapped.noInsuranceSupport = !mapped.canApplyForInsuranceOnline && !mapped.canApplyForInsuranceOffline;
   return mapped;
 };
 var map_CIS_country_default = mapCisCountry;
@@ -4968,9 +8243,8 @@ var sort_array_alphabetically_default = sortArrayAlphabetically;
 
 // helpers/map-CIS-countries/index.ts
 var { CIS: CIS5 } = EXTERNAL_API_DEFINITIONS;
-var filterCisCountries = (countries) => countries.filter((country) => !CIS5.INVALID_COUNTRIES.includes(country.marketName));
 var mapCisCountries = (countries) => {
-  const filteredCountries = filterCisCountries(countries);
+  const filteredCountries = filter_cis_entries_default(countries, CIS5.INVALID_COUNTRIES, "marketName");
   const mapped = filteredCountries.map((country) => map_CIS_country_default(country));
   const sorted = sort_array_alphabetically_default(mapped, "name");
   return sorted;
@@ -4995,13 +8269,23 @@ var getApimCisCountries = async () => {
 var get_APIM_CIS_countries_default = getApimCisCountries;
 
 // helpers/map-currencies/index.ts
+var { CIS: CIS6 } = EXTERNAL_API_DEFINITIONS;
 var getSupportedCurrencies = (currencies) => {
   const supported = currencies.filter((currency) => SUPPORTED_CURRENCIES.find((currencyCode) => currency.isoCode === currencyCode));
   return supported;
 };
-var mapCurrencies = (currencies) => {
-  const supportedCurrencies = getSupportedCurrencies(currencies);
-  const sorted = sort_array_alphabetically_default(supportedCurrencies, FIELD_IDS.NAME);
+var getAlternativeCurrencies = (currencies) => {
+  const alternate = currencies.filter((currency) => !SUPPORTED_CURRENCIES.includes(currency.isoCode));
+  return alternate;
+};
+var mapCurrencies = (currencies, alternativeCurrencies) => {
+  let currenciesArray = filter_cis_entries_default(currencies, CIS6.INVALID_CURRENCIES, "name");
+  if (!alternativeCurrencies) {
+    currenciesArray = getSupportedCurrencies(currenciesArray);
+  } else {
+    currenciesArray = getAlternativeCurrencies(currenciesArray);
+  }
+  const sorted = sort_array_alphabetically_default(currenciesArray, FIELD_IDS.NAME);
   return sorted;
 };
 var map_currencies_default = mapCurrencies;
@@ -5012,8 +8296,14 @@ var getApimCurrencies = async () => {
     console.info("Getting and mapping currencies from APIM");
     const response = await APIM_default.getCurrencies();
     if (response.data) {
-      const mapped = map_currencies_default(response.data);
-      return mapped;
+      const supportedCurrencies = map_currencies_default(response.data, false);
+      const alternativeCurrencies = map_currencies_default(response.data, true);
+      const allCurrencies = [...supportedCurrencies, ...alternativeCurrencies];
+      return {
+        supportedCurrencies,
+        alternativeCurrencies,
+        allCurrencies
+      };
     }
     return { success: false };
   } catch (err) {
@@ -5023,59 +8313,59 @@ var getApimCurrencies = async () => {
 };
 var get_APIM_currencies_default = getApimCurrencies;
 
-// helpers/create-full-timestamp-from-day-month/index.ts
-var createFullTimestampFromDayAndMonth = (day, month) => {
-  if (day && month) {
-    return /* @__PURE__ */ new Date(`${(/* @__PURE__ */ new Date()).getFullYear()}-${month}-${day}`);
-  }
-  return null;
-};
-var create_full_timestamp_from_day_month_default = createFullTimestampFromDayAndMonth;
+// helpers/remove-white-space/index.ts
+var removeWhiteSpace = (string) => string.replace(" ", "");
+var remove_white_space_default = removeWhiteSpace;
 
-// helpers/map-sic-code-descriptions/index.ts
-var mapSicCodeDescriptions = (sicCodes, sectors) => {
-  const industrySectorNames2 = [];
-  if (!sicCodes?.length || !sectors?.length) {
-    return industrySectorNames2;
-  }
-  sicCodes.forEach((sicCode) => {
-    const sicCodeSector = sectors.find((sector) => sector.ukefIndustryId === sicCode);
-    industrySectorNames2.push(sicCodeSector?.ukefIndustryName);
-  });
-  return industrySectorNames2;
-};
-var map_sic_code_descriptions_default = mapSicCodeDescriptions;
+// helpers/sanitise-companies-house-number/index.ts
+var sanitiseCompaniesHouseNumber = (companyNumber) => remove_white_space_default(companyNumber).toUpperCase().padStart(8, "0");
+var sanitise_companies_house_number_default = sanitiseCompaniesHouseNumber;
 
-// helpers/map-companies-house-fields/index.ts
-var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => {
-  return {
-    companyName: companiesHouseResponse.company_name,
-    registeredOfficeAddress: {
-      careOf: companiesHouseResponse.registered_office_address.care_of,
-      premises: companiesHouseResponse.registered_office_address.premises,
-      addressLine1: companiesHouseResponse.registered_office_address.address_line_1,
-      addressLine2: companiesHouseResponse.registered_office_address.address_line_2,
-      locality: companiesHouseResponse.registered_office_address.locality,
-      region: companiesHouseResponse.registered_office_address.region,
-      postalCode: companiesHouseResponse.registered_office_address.postal_code,
-      country: companiesHouseResponse.registered_office_address.country
-    },
-    companyNumber: companiesHouseResponse.company_number,
-    dateOfCreation: companiesHouseResponse.date_of_creation,
-    sicCodes: companiesHouseResponse.sic_codes,
-    industrySectorNames: map_sic_code_descriptions_default(companiesHouseResponse.sic_codes, sectors),
-    // creates timestamp for financialYearEndDate from day and month if exist
-    financialYearEndDate: create_full_timestamp_from_day_month_default(
-      companiesHouseResponse.accounts?.accounting_reference_date?.day,
-      companiesHouseResponse.accounts?.accounting_reference_date?.month
-    )
-  };
+// integrations/companies-house/index.ts
+var import_axios2 = __toESM(require("axios"));
+var import_dotenv11 = __toESM(require("dotenv"));
+import_dotenv11.default.config();
+var username = String(process.env.COMPANIES_HOUSE_API_KEY);
+var companiesHouseURL = String(process.env.COMPANIES_HOUSE_API_URL);
+var companiesHouse = {
+  get: async (companyNumber) => {
+    try {
+      const response = await (0, import_axios2.default)({
+        method: "get",
+        url: `${companiesHouseURL}/company/${companyNumber}`,
+        auth: { username, password: "" },
+        validateStatus(status) {
+          const acceptableStatus = [200, 404];
+          return acceptableStatus.includes(status);
+        }
+      });
+      if (response.status === 404) {
+        return {
+          success: false,
+          notFound: true
+        };
+      }
+      if (!response.data || response.status !== 200) {
+        return {
+          success: false
+        };
+      }
+      return {
+        success: true,
+        data: response.data
+      };
+    } catch (err) {
+      console.error("Error calling Companies House API %O", err);
+      throw new Error(`Calling Companies House API. Unable to search for company ${err}`);
+    }
+  }
 };
+var companies_house_default = companiesHouse;
 
 // integrations/industry-sector/index.ts
-var import_axios2 = __toESM(require("axios"));
-var import_dotenv6 = __toESM(require("dotenv"));
-import_dotenv6.default.config();
+var import_axios3 = __toESM(require("axios"));
+var import_dotenv12 = __toESM(require("dotenv"));
+import_dotenv12.default.config();
 var { APIM_MDM_URL: APIM_MDM_URL2, APIM_MDM_KEY: APIM_MDM_KEY2, APIM_MDM_VALUE: APIM_MDM_VALUE2 } = process.env;
 var { APIM_MDM: APIM_MDM2 } = EXTERNAL_API_ENDPOINTS;
 var headers = {
@@ -5086,7 +8376,7 @@ var industrySectorNames = {
   get: async () => {
     try {
       console.info("Calling industry sector API");
-      const response = await (0, import_axios2.default)({
+      const response = await (0, import_axios3.default)({
         method: "get",
         url: `${APIM_MDM_URL2}${APIM_MDM2.INDUSTRY_SECTORS}`,
         headers,
@@ -5115,51 +8405,71 @@ var industrySectorNames = {
 };
 var industry_sector_default = industrySectorNames;
 
-// integrations/companies-house/index.ts
-var import_axios3 = __toESM(require("axios"));
-var import_dotenv7 = __toESM(require("dotenv"));
-import_dotenv7.default.config();
-var username = String(process.env.COMPANIES_HOUSE_API_KEY);
-var companiesHouseURL = String(process.env.COMPANIES_HOUSE_API_URL);
-var companiesHouse = {
-  get: async (companyNumber) => {
-    try {
-      const response = await (0, import_axios3.default)({
-        method: "get",
-        url: `${companiesHouseURL}/company/${companyNumber}`,
-        auth: { username, password: "" },
-        validateStatus(status) {
-          const acceptableStatus = [200, 404];
-          return acceptableStatus.includes(status);
-        }
-      });
-      if (!response.data || response.status !== 200) {
-        return {
-          success: false
-        };
-      }
-      return {
-        success: true,
-        data: response.data
-      };
-    } catch (err) {
-      console.error("Error calling Companies House API %O", err);
-      throw new Error(`Calling Companies House API. Unable to search for company ${err}`);
-    }
+// helpers/create-full-timestamp-from-day-month/index.ts
+var createFullTimestampFromDayAndMonth = (day, month) => {
+  if (day && month) {
+    return /* @__PURE__ */ new Date(`${(/* @__PURE__ */ new Date()).getFullYear()}-${month}-${day}`);
   }
+  return null;
 };
-var companies_house_default = companiesHouse;
+var create_full_timestamp_from_day_month_default = createFullTimestampFromDayAndMonth;
+
+// helpers/map-sic-code-descriptions/index.ts
+var mapSicCodeDescriptions = (sicCodes, sectors) => {
+  const industrySectorNames2 = [];
+  if (!sicCodes?.length || !sectors?.length) {
+    return industrySectorNames2;
+  }
+  sicCodes.forEach((sicCode) => {
+    const sicCodeSector = sectors.find((sector) => sector.ukefIndustryId === sicCode);
+    industrySectorNames2.push(sicCodeSector?.ukefIndustryName);
+  });
+  return industrySectorNames2;
+};
+var map_sic_code_descriptions_default = mapSicCodeDescriptions;
+
+// helpers/map-companies-house-fields/index.ts
+var {
+  COMPANIES_HOUSE: { COMPANY_STATUS }
+} = EXTERNAL_API_DEFINITIONS;
+var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => ({
+  companyName: companiesHouseResponse.company_name,
+  registeredOfficeAddress: {
+    careOf: companiesHouseResponse.registered_office_address.care_of,
+    premises: companiesHouseResponse.registered_office_address.premises,
+    addressLine1: companiesHouseResponse.registered_office_address.address_line_1,
+    addressLine2: companiesHouseResponse.registered_office_address.address_line_2,
+    locality: companiesHouseResponse.registered_office_address.locality,
+    region: companiesHouseResponse.registered_office_address.region,
+    postalCode: companiesHouseResponse.registered_office_address.postal_code,
+    country: companiesHouseResponse.registered_office_address.country
+  },
+  companyNumber: companiesHouseResponse.company_number,
+  dateOfCreation: companiesHouseResponse.date_of_creation,
+  sicCodes: companiesHouseResponse.sic_codes,
+  industrySectorNames: map_sic_code_descriptions_default(companiesHouseResponse.sic_codes, sectors),
+  /**
+   * Create a timestamp for financialYearEndDate
+   * If day and month exist
+   */
+  financialYearEndDate: create_full_timestamp_from_day_month_default(
+    companiesHouseResponse.accounts?.accounting_reference_date?.day,
+    companiesHouseResponse.accounts?.accounting_reference_date?.month
+  ),
+  isActive: companiesHouseResponse.company_status === COMPANY_STATUS.ACTIVE
+});
 
 // custom-resolvers/queries/get-companies-house-information/index.ts
 var getCompaniesHouseInformation = async (root, variables) => {
   try {
     const { companiesHouseNumber } = variables;
     console.info("Getting Companies House information for %s", companiesHouseNumber);
-    const sanitisedRegNo = companiesHouseNumber.toString().padStart(8, "0");
-    const response = await companies_house_default.get(sanitisedRegNo);
+    const sanitisedNumber = sanitise_companies_house_number_default(companiesHouseNumber);
+    const response = await companies_house_default.get(sanitisedNumber);
     if (!response.success || !response.data) {
       return {
-        success: false
+        success: false,
+        notFound: response.notFound
       };
     }
     const industrySectors = await industry_sector_default.get();
@@ -5184,8 +8494,137 @@ var getCompaniesHouseInformation = async (root, variables) => {
 };
 var get_companies_house_information_default = getCompaniesHouseInformation;
 
+// custom-resolvers/queries/get-application-by-reference-number/index.ts
+var getApplicationByReferenceNumberQuery = async (root, variables, context) => {
+  try {
+    console.info("Getting application by reference number %s", variables.referenceNumber);
+    const { referenceNumber, decryptFinancialUk: decryptFinancialUk2, decryptFinancialInternational: decryptFinancialInternational2 } = variables;
+    const application2 = await get_application_by_reference_number_default(referenceNumber, context);
+    if (application2) {
+      const populatedApplication2 = await get_populated_application_default.get({
+        context,
+        application: application2,
+        decryptFinancialUk: decryptFinancialUk2,
+        decryptFinancialInternational: decryptFinancialInternational2
+      });
+      return {
+        success: true,
+        application: populatedApplication2
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error("Error getting application by reference number (GetApplicationByReferenceNumber mutation) %O", err);
+    throw new Error(`Get application by reference number (GetApplicationByReferenceNumber mutation) ${err}`);
+  }
+};
+var get_application_by_reference_number_default2 = getApplicationByReferenceNumberQuery;
+
+// integrations/ordnance-survey/index.ts
+var import_axios4 = __toESM(require("axios"));
+var import_dotenv13 = __toESM(require("dotenv"));
+import_dotenv13.default.config();
+var { ORDNANCE_SURVEY_API_KEY, ORDNANCE_SURVEY_API_URL } = process.env;
+var ordnanceSurvey = {
+  get: async (postcode) => {
+    try {
+      const response = await (0, import_axios4.default)({
+        method: "get",
+        url: `${ORDNANCE_SURVEY_API_URL}${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ORDNANCE_SURVEY_API_KEY}`,
+        validateStatus(status) {
+          const acceptableStatus = [200, 404];
+          return acceptableStatus.includes(status);
+        }
+      });
+      if (!response?.data?.results || response.status !== 200) {
+        return {
+          success: false
+        };
+      }
+      return {
+        success: true,
+        data: response.data.results
+      };
+    } catch (err) {
+      console.error("Error calling Ordnance Survey API %O", err);
+      throw new Error(`Calling Ordnance Survey API. Unable to search for address ${err}`);
+    }
+  }
+};
+var ordnance_survey_default = ordnanceSurvey;
+
+// helpers/is-valid-postcode/index.ts
+var import_postcode_validator = require("postcode-validator");
+var isValidPostcode = (postcode) => (0, import_postcode_validator.postcodeValidator)(postcode, "GB");
+
+// helpers/map-address/index.ts
+var mapAddress = (address) => ({
+  addressLine1: `${address.DPA.ORGANISATION_NAME ?? ""} ${address.DPA.BUILDING_NAME ?? ""} ${address.DPA.BUILDING_NUMBER ?? ""} ${address.DPA.THOROUGHFARE_NAME ?? ""}`.trim(),
+  addressLine2: address.DPA.DEPENDENT_LOCALITY,
+  town: address.DPA.POST_TOWN,
+  postalCode: address.DPA.POSTCODE
+});
+var map_address_default = mapAddress;
+
+// helpers/map-and-filter-address/index.ts
+var mapAndFilterAddress = (houseNameOrNumber, ordnanceSurveyResponse) => {
+  const filtered = ordnanceSurveyResponse.filter(
+    (eachAddress) => eachAddress.DPA.BUILDING_NUMBER === houseNameOrNumber || eachAddress.DPA.BUILDING_NAME === houseNameOrNumber
+  );
+  if (!filtered.length) {
+    return [];
+  }
+  const mappedFilteredAddresses = [];
+  filtered.forEach((address) => {
+    mappedFilteredAddresses.push(map_address_default(address));
+  });
+  return mappedFilteredAddresses;
+};
+var map_and_filter_address_default = mapAndFilterAddress;
+
+// custom-resolvers/queries/get-ordnance-survey-address/index.ts
+var getOrdnanceSurveyAddress = async (root, variables) => {
+  try {
+    const { postcode, houseNameOrNumber } = variables;
+    console.info("Getting Ordnance Survey address for postcode: %s, houseNameOrNumber: %s", postcode, houseNameOrNumber);
+    const noWhitespacePostcode = remove_white_space_default(postcode);
+    if (!isValidPostcode(noWhitespacePostcode)) {
+      console.error("Invalid postcode: %s", postcode);
+      return {
+        success: false,
+        invalidPostcode: true
+      };
+    }
+    const response = await ordnance_survey_default.get(postcode);
+    if (!response.success || !response.data) {
+      return {
+        success: false
+      };
+    }
+    const mappedAddresses = map_and_filter_address_default(houseNameOrNumber, response.data);
+    if (!mappedAddresses.length) {
+      return {
+        success: false,
+        noAddressesFound: true
+      };
+    }
+    return {
+      addresses: mappedAddresses,
+      success: true
+    };
+  } catch (err) {
+    console.error("Error getting Ordnance Survey address results %O", err);
+    return {
+      apiError: true,
+      success: false
+    };
+  }
+};
+var get_ordnance_survey_address_default = getOrdnanceSurveyAddress;
+
 // custom-resolvers/queries/verify-account-password-reset-token/index.ts
-var import_date_fns10 = require("date-fns");
 var { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY } = account_default;
 var verifyAccountPasswordResetToken = async (root, variables, context) => {
   console.info("Verifying account password reset token");
@@ -5193,8 +8632,7 @@ var verifyAccountPasswordResetToken = async (root, variables, context) => {
     const { token } = variables;
     const account2 = await get_account_by_field_default(context, PASSWORD_RESET_HASH, token);
     if (account2) {
-      const now = /* @__PURE__ */ new Date();
-      const hasExpired = (0, import_date_fns10.isAfter)(now, account2[PASSWORD_RESET_EXPIRY]);
+      const hasExpired = dateIsInThePast(account2[PASSWORD_RESET_EXPIRY]);
       if (hasExpired) {
         console.info("Unable to verify account password reset token - token has expired");
         return {
@@ -5233,19 +8671,23 @@ var customResolvers = {
     addAndGetOTP: add_and_get_OTP_default,
     accountPasswordReset: account_password_reset_default,
     sendEmailPasswordResetLink: send_email_password_reset_link_default,
-    sendEmailReactivateAccountLink: send_email_reactivate_account_link_default,
-    createAnApplication: create_an_application_default,
+    sendEmailReactivateAccountLink: send_email_reactivate_account_link_default2,
+    createAnApplication: create_an_application_default2,
+    createAnAbandonedApplication: create_an_abandoned_application_default,
     deleteApplicationByReferenceNumber: delete_application_by_reference_number_default,
-    updateCompanyAndCompanyAddress: update_company_and_company_address_default,
     submitApplication: submit_application_default,
     createFeedbackAndSendEmail: create_feedback_default,
-    verifyAccountReactivationToken: verify_account_reactivation_token_default
+    verifyAccountReactivationToken: verify_account_reactivation_token_default,
+    updateLossPayeeFinancialDetailsUk: update_loss_payee_financial_details_uk_default,
+    updateLossPayeeFinancialDetailsInternational: update_loss_payee_financial_details_international_default
   },
   Query: {
     getAccountPasswordResetToken: get_account_password_reset_token_default,
     getApimCisCountries: get_APIM_CIS_countries_default,
     getApimCurrencies: get_APIM_currencies_default,
     getCompaniesHouseInformation: get_companies_house_information_default,
+    getApplicationByReferenceNumber: get_application_by_reference_number_default2,
+    getOrdnanceSurveyAddress: get_ordnance_survey_address_default,
     verifyAccountPasswordResetToken: verify_account_password_reset_token_default
   }
 };
@@ -5273,6 +8715,9 @@ var keystone_default = withAuth(
         if (isProdEnvironment) {
           app.use(rate_limiter_default);
         }
+      },
+      extendHttpServer: (httpServer, context) => {
+        cron_default(context);
       }
     },
     db: {

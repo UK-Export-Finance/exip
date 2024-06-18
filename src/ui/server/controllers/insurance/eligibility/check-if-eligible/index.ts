@@ -15,6 +15,4 @@ export const get = (req: Request, res: Response) =>
     userName: getUserNameFromSession(req.session.user),
   });
 
-export const post = (req: Request, res: Response) => {
-  return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
-};
+export const post = (req: Request, res: Response) => res.redirect(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);

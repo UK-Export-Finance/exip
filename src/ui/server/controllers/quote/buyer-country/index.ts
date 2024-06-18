@@ -9,7 +9,7 @@ import getUserNameFromSession from '../../../helpers/get-user-name-from-session'
 import constructPayload from '../../../helpers/construct-payload';
 import { validation as generateValidationErrors } from '../../../shared-validation/buyer-country';
 import isChangeRoute from '../../../helpers/is-change-route';
-import getCountryByName from '../../../helpers/get-country-by-name';
+import getCountryByIsoCode from '../../../helpers/get-country-by-iso-code';
 import mapSubmittedEligibilityCountry from '../../../helpers/mappings/map-submitted-eligibility-country';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { Request, Response } from '../../../../types';
@@ -71,20 +71,9 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    let countryValue;
     const { quoteEligibility } = req.session.submittedData;
 
-    if (objectHasProperty(quoteEligibility, FIELD_ID)) {
-      countryValue = quoteEligibility[FIELD_ID];
-    }
-
-    let mappedCountries;
-
-    if (countryValue) {
-      mappedCountries = mapCountries(countries, countryValue.isoCode);
-    } else {
-      mappedCountries = mapCountries(countries);
-    }
+    const mappedCountries = mapCountries(countries, quoteEligibility[FIELD_ID]?.isoCode);
 
     return res.render(TEMPLATE, {
       ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer), ORIGINAL_URL: req.originalUrl }),
@@ -126,14 +115,14 @@ export const post = async (req: Request, res: Response) => {
 
     const submittedCountryName = payload[FIELD_ID];
 
-    const country = getCountryByName(countries, submittedCountryName);
+    const country = getCountryByIsoCode(countries, submittedCountryName);
 
     if (!country) {
       return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
     }
 
     if (country.canGetAQuoteOnline) {
-      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
+      const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
 
@@ -145,7 +134,7 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (country.canGetAQuoteByEmail) {
-      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
+      const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
 
@@ -161,7 +150,7 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (country.cannotGetAQuote) {
-      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
+      const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
 

@@ -4,32 +4,54 @@ import {
   COMPANIES_HOUSE_NUMBER_MULTIPLE_SIC_CODES,
   COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE,
 } from '../constants/examples';
-import { EXPORTER_BUSINESS as EXPORTER_BUSINESS_FIELD_IDS } from '../constants/field-ids/insurance/business';
-import mockApplication from './application';
+import { INSURANCE_FIELD_IDS } from '../constants/field-ids/insurance';
 import mockSicCodes from './sic-codes';
 
 const {
-  COMPANY_HOUSE: { INDUSTRY_SECTOR_NAME, FINANCIAL_YEAR_END_DATE },
-} = EXPORTER_BUSINESS_FIELD_IDS;
+  COMPANIES_HOUSE: {
+    COMPANY_NUMBER,
+    COMPANY_NAME,
+    COMPANY_INCORPORATED,
+    COMPANY_ADDRESS,
+    COMPANY_SIC,
+    INDUSTRY_SECTOR_NAME,
+    INDUSTRY_SECTOR_NAMES,
+    FINANCIAL_YEAR_END_DATE,
+  },
+} = INSURANCE_FIELD_IDS;
 
-const baseCompany = mockApplication.EXPORTER_COMPANY;
-
-const { financialYearEndDate, ...baseCompanyFields } = baseCompany;
+const baseCompany = {
+  [COMPANY_NUMBER]: COMPANIES_HOUSE_NUMBER,
+  [COMPANY_NAME]: 'DHG PROPERTY FINANCE LIMITED',
+  [COMPANY_INCORPORATED]: '2014-04-10T00:00:00.000Z',
+  [COMPANY_ADDRESS]: {
+    addressLine1: '13 Clos Hector',
+    careOf: '',
+    locality: 'Cardiff',
+    region: 'South Glamorgan',
+    postalCode: 'CF24 2HL',
+    country: '',
+    premises: '',
+  },
+  [COMPANY_SIC]: [mockSicCodes[0].code],
+  [INDUSTRY_SECTOR_NAMES]: [mockSicCodes[0][INDUSTRY_SECTOR_NAME]],
+  [FINANCIAL_YEAR_END_DATE]: '2023-07-31T00:00:00.000Z',
+};
 
 const mockCompanies = {
   [COMPANIES_HOUSE_NUMBER]: {
-    ...baseCompanyFields,
+    ...baseCompany,
     companyNumber: COMPANIES_HOUSE_NUMBER,
     [FINANCIAL_YEAR_END_DATE]: baseCompany[FINANCIAL_YEAR_END_DATE],
   },
   [COMPANIES_HOUSE_NUMBER_NO_SIC_CODE]: {
-    ...baseCompanyFields,
+    ...baseCompany,
     companyNumber: COMPANIES_HOUSE_NUMBER_NO_SIC_CODE,
     [FINANCIAL_YEAR_END_DATE]: baseCompany[FINANCIAL_YEAR_END_DATE],
     sicCodes: [],
   },
   [COMPANIES_HOUSE_NUMBER_MULTIPLE_SIC_CODES]: {
-    ...baseCompanyFields,
+    ...baseCompany,
     companyNumber: COMPANIES_HOUSE_NUMBER_MULTIPLE_SIC_CODES,
     [FINANCIAL_YEAR_END_DATE]: baseCompany[FINANCIAL_YEAR_END_DATE],
     sicCodes: [
@@ -46,8 +68,9 @@ const mockCompanies = {
     ],
   },
   [COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE]: {
-    ...baseCompanyFields,
+    ...baseCompany,
     companyNumber: COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE,
+    [COMPANY_NAME]: 'EP CAPITAL PARTNERS LLP NO 16',
   },
 };
 

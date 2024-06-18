@@ -1,4 +1,4 @@
-export const sanitise = (string?: string): string | undefined => {
+export const sanitise = (string?: string): string | undefined =>
   /**
    * Sanitises the input string by replacing occurrences of the sequence '\\n' with a newline character ('\n').
    *
@@ -13,5 +13,4 @@ export const sanitise = (string?: string): string | undefined => {
    * // ABC
    * // CBA
    */
-  return string ? string.replace(/\\n|\\\n|\\\\n/g, '\n') : string;
-};
+  string ? string.replace(/\\n|\\\n|\\\\n/g, '\n') : string;

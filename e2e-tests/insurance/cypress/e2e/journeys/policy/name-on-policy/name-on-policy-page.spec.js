@@ -1,31 +1,20 @@
-import {
-  headingCaption,
-  saveAndBackButton,
-  field,
-} from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
-import {
-  BUTTONS,
-  PAGES,
-} from '../../../../../../content-strings';
+import { headingCaption, field } from '../../../../../../pages/shared';
+import { PAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
-import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import account from '../../../../../../fixtures/account';
 import application from '../../../../../../fixtures/application';
-
-const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.NAME_ON_POLICY;
 
 const {
   ROOT: INSURANCE_ROOT,
   POLICY: {
-    ABOUT_GOODS_OR_SERVICES,
-    CHECK_YOUR_ANSWERS,
-    NAME_ON_POLICY,
+    PRE_CREDIT_PERIOD,
     DIFFERENT_NAME_ON_POLICY,
+    NAME_ON_POLICY,
+    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
   },
 } = INSURANCE_ROUTES;
 
@@ -53,11 +42,10 @@ context('Insurance - Policy - Name on Policy page - I want to enter the details 
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      taskList.prepareApplication.tasks.policy.link().click();
-
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.startInsurancePolicySection({});
+      cy.completeAndSubmitPolicyTypeForm({});
       cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
+      cy.completeAndSubmitTotalContractValueForm({});
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
 
@@ -77,7 +65,7 @@ context('Insurance - Policy - Name on Policy page - I want to enter the details 
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`,
     });
   });
 
@@ -119,18 +107,18 @@ context('Insurance - Policy - Name on Policy page - I want to enter the details 
     });
 
     it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
   });
 
   describe('form submission', () => {
     describe(SAME_NAME, () => {
-      it(`should redirect to ${CHECK_YOUR_ANSWERS} when ${SAME_NAME} is selected`, () => {
+      it(`should redirect to ${PRE_CREDIT_PERIOD} when ${SAME_NAME} is selected`, () => {
         cy.navigateToUrl(url);
 
         cy.completeAndSubmitNameOnPolicyForm({});
 
-        const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`;
         cy.assertUrl(expectedUrl);
       });
 
@@ -140,7 +128,8 @@ context('Insurance - Policy - Name on Policy page - I want to enter the details 
 
           cy.navigateToUrl(url);
 
-          field(SAME_NAME).input().should('be.checked');
+          cy.assertRadioOptionIsChecked(field(SAME_NAME).input());
+
           cy.checkValue(field(POSITION), POLICY_CONTACT[POSITION]);
         });
       });
@@ -160,7 +149,7 @@ context('Insurance - Policy - Name on Policy page - I want to enter the details 
         it('should have the submitted values', () => {
           cy.navigateToUrl(url);
 
-          field(OTHER_NAME).input().should('be.checked');
+          cy.assertRadioOptionIsChecked(field(OTHER_NAME).input());
         });
       });
     });

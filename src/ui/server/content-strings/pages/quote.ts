@@ -58,7 +58,7 @@ const GET_A_QUOTE_BY_EMAIL = {
 };
 
 const YOUR_QUOTE = {
-  PAGE_TITLE: 'You can apply for UKEF export insurance',
+  PAGE_TITLE: 'You can apply for UKEF credit insurance',
   QUOTE: {
     SUB_HEADING: 'Your quote',
   },

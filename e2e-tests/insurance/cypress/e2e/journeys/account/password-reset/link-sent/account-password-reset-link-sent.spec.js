@@ -24,7 +24,9 @@ const {
   ACCOUNT: { EMAIL },
 } = INSURANCE_FIELD_IDS;
 
-const passwordResetUrl = `${Cypress.config('baseUrl')}${PASSWORD_RESET_ROOT}`;
+const baseUrl = Cypress.config('baseUrl');
+
+const passwordResetUrl = `${baseUrl}${PASSWORD_RESET_ROOT}`;
 
 const goToPasswordResetLinkSentPage = () => {
   cy.navigateToUrl(passwordResetUrl);

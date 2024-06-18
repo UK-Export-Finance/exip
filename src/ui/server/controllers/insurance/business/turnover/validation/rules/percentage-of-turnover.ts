@@ -1,6 +1,6 @@
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/business';
-import { NumberErrorMessage, RequestBody } from '../../../../../../../types';
+import { ErrorMessageObject, RequestBody } from '../../../../../../../types';
 import percentageNumberValidation from '../../../../../../helpers/percentage-number-validation';
 
 const {
@@ -16,16 +16,16 @@ const errorMessages = {
   INCORRECT_FORMAT: ERROR_MESSAGE.INCORRECT_FORMAT,
   BELOW_MINIMUM: ERROR_MESSAGE.BELOW_MINIMUM,
   ABOVE_MAXIMUM: ERROR_MESSAGE.ABOVE_MAXIMUM,
-} as NumberErrorMessage;
+} as ErrorMessageObject;
 
 /**
  * validates percentage turnover
  * only numbers without decimals, special characters or commas
  * only allows numbers between 0 and 100
- * @param {RequestBody} responseBody
- * @param {object} errors
- * @returns {object} errors
+ * @param {RequestBody} formBody
+ * @param {Object} errors: Other validation errors for the same form
+ * @returns {Object} errors
  */
-const percentageTurnover = (responseBody: RequestBody, errors: object) => percentageNumberValidation(responseBody, FIELD_ID, errors, errorMessages);
+const percentageTurnover = (formBody: RequestBody, errors: object) => percentageNumberValidation(formBody, FIELD_ID, errors, errorMessages);
 
 export default percentageTurnover;

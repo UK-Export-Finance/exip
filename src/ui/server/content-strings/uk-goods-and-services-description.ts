@@ -24,7 +24,7 @@ export const UK_GOODS_AND_SERVICES_DESCRIPTION = {
   },
   DOES_NOT_COUNT: {
     HEADING: 'What does not count as UK goods and services',
-    TEXT: "Goods or services from outside the UK that you'll send directly to the buyer unprocessed or unaltered in the UK do not count. Instead, they're classed as foreign goods and services.",
+    TEXT: 'Goods or services from outside the UK that are sent directly to the buyer without processing or modifying them. Instead, these are classed as foreign goods and services.',
   },
   STAFFING_COSTS: {
     HEADING: 'Staffing costs for this export contract',
@@ -37,13 +37,13 @@ export const UK_GOODS_AND_SERVICES_DESCRIPTION = {
         TEXT: 'contractors supplied to work for you by a UK sub-contractor',
       },
       {
-        TEXT: "staff seconded from abroad to work for you in the UK, on the export contract, and for whom you're financially responsible",
+        TEXT: "staff seconded from abroad to work for you in the UK on the export contract that you're financially responsible for",
       },
     ],
   },
   NON_PHYSICAL_ASSETS: {
     HEADING: 'Non-physical assets',
-    TEXT: "Some assets cannot have a certificate of origin as they're not physical goods, for example, a licence to manufacture goods in another country. But they still count as UK goods or services if they originate from the UK.",
+    TEXT: "Some assets cannot have a certificate of origin as they're not physical goods. For example, a licence to manufacture goods in another country. But they still count as UK goods or services if they originate from the UK.",
   },
   NOT_SURE: {
     HEADING: "If you're not sure",

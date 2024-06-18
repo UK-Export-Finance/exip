@@ -10,12 +10,14 @@ import {
   LINKS,
   PRODUCT as PRODUCT_CONTENT_STRING,
 } from '../../../content-strings';
-import { ROUTES } from '../../../constants';
+import { ATTRIBUTES, ROUTES, TEMPLATES } from '../../../constants';
 
 const { THERE_IS_A_PROBLEM } = ERROR_MESSAGES;
 
 const { START: quoteStart } = ROUTES.QUOTE;
 const { START: insuranceStart } = ROUTES.INSURANCE;
+
+const { CONDITIONAL_YES_HTML } = TEMPLATES.PARTIALS.INSURANCE.BUYER.CONNECTION_WITH_BUYER;
 
 describe('server/helpers/page-variables/core', () => {
   const mock = {
@@ -24,6 +26,11 @@ describe('server/helpers/page-variables/core', () => {
       HEADING: 'Testing',
     },
     BACK_LINK: '/mock',
+  };
+
+  const HTML_FLAGS = {
+    CONDITIONAL_YES_HTML,
+    HORIZONTAL_RADIOS: true,
   };
 
   describe('when ORIGINAL_URL is undefined', () => {
@@ -50,9 +57,11 @@ describe('server/helpers/page-variables/core', () => {
         BACK_LINK: mock.BACK_LINK,
         COOKIES_ROUTE: ROUTES.INSURANCE.COOKIES,
         FEEDBACK_ROUTE: ROUTES.INSURANCE.FEEDBACK,
+        ATTRIBUTES,
         DATA_CY: {
           HEADING: 'heading',
           BACK_LINK: 'back-link',
+          INTRO: 'intro',
         },
         START_ROUTE: insuranceStart,
       };
@@ -84,11 +93,13 @@ describe('server/helpers/page-variables/core', () => {
         },
         BACK_LINK: mock.BACK_LINK,
         COOKIES_ROUTE: ROUTES.INSURANCE.COOKIES,
+        FEEDBACK_ROUTE: ROUTES.INSURANCE.FEEDBACK,
+        ATTRIBUTES,
         DATA_CY: {
           HEADING: 'heading',
           BACK_LINK: 'back-link',
+          INTRO: 'intro',
         },
-        FEEDBACK_ROUTE: ROUTES.INSURANCE.FEEDBACK,
         START_ROUTE: insuranceStart,
       };
 
@@ -119,11 +130,13 @@ describe('server/helpers/page-variables/core', () => {
         },
         BACK_LINK: mock.BACK_LINK,
         COOKIES_ROUTE: ROUTES.COOKIES,
+        FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
+        ATTRIBUTES,
         DATA_CY: {
           HEADING: 'heading',
           BACK_LINK: 'back-link',
+          INTRO: 'intro',
         },
-        FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
         START_ROUTE: quoteStart,
       };
 
@@ -155,12 +168,52 @@ describe('server/helpers/page-variables/core', () => {
         },
         BACK_LINK: mock.BACK_LINK,
         COOKIES_ROUTE: ROUTES.COOKIES,
+        FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
+        ATTRIBUTES,
         DATA_CY: {
           HEADING: 'heading',
           BACK_LINK: 'back-link',
+          INTRO: 'intro',
         },
-        FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
         START_ROUTE: quoteStart,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when HTML_FLAGS are provided', () => {
+    it('should return an object with provided data and HTML_FLAGS', () => {
+      const quoteMock = {
+        ...mock,
+        HTML_FLAGS,
+      };
+
+      const result = corePageVariables(quoteMock);
+
+      const expected = {
+        CONTENT_STRINGS: {
+          ...mock.PAGE_CONTENT_STRINGS,
+          BUTTONS,
+          COOKIES_CONSENT,
+          ERROR_MESSAGES: { THERE_IS_A_PROBLEM },
+          HEADER,
+          FOOTER: INSURANCE_FOOTER,
+          LINKS,
+          PHASE_BANNER,
+          PRODUCT: { DESCRIPTION: PRODUCT_CONTENT_STRING.DESCRIPTION.APPLICATION },
+        },
+        BACK_LINK: mock.BACK_LINK,
+        START_ROUTE: insuranceStart,
+        COOKIES_ROUTE: ROUTES.INSURANCE.COOKIES,
+        FEEDBACK_ROUTE: ROUTES.INSURANCE.FEEDBACK,
+        ATTRIBUTES,
+        DATA_CY: {
+          HEADING: 'heading',
+          BACK_LINK: 'back-link',
+          INTRO: 'intro',
+        },
+        ...HTML_FLAGS,
       };
 
       expect(result).toEqual(expected);

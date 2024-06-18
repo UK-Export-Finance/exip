@@ -9,8 +9,6 @@ const baseUrl = Cypress.config('baseUrl');
 const totalApplications = MAX_APPLICATIONS_PER_PAGE + 1;
 const totalPages = 2;
 
-const dashboardUrl = `${baseUrl}${DASHBOARD}`;
-
 context(`Insurance - Dashboard - pagination - ${totalApplications} applications`, () => {
   let applications;
 
@@ -20,7 +18,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
         applications = createdApplications;
       });
 
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
     });
   });
 
@@ -34,11 +32,11 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
 
   describe('page tests', () => {
     beforeEach(() => {
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
     });
 
     it('should render 2 pagination list items with links', () => {
-      pagination.listItems().should('have.length', totalPages);
+      cy.assertLength(pagination.listItems(), totalPages);
 
       cy.assertPaginationItemLink({ index: 0 });
       cy.assertPaginationItemLink({ index: 1 });
@@ -57,7 +55,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
 
   describe('when clicking on the `next` pagination link', () => {
     beforeEach(() => {
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
 
       pagination.nextLink().click();
     });
@@ -74,7 +72,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
 
   describe('when clicking on page 2 pagination link', () => {
     it('should have the correct pagination state', () => {
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
 
       pagination.listItemLink(1).click();
 

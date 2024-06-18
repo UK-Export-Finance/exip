@@ -6,11 +6,12 @@ interface Country {
   selected?: boolean;
   value: string;
   canGetAQuoteOnline: boolean;
+  canGetAQuoteOffline: boolean;
   canGetAQuoteByEmail: boolean;
   cannotGetAQuote: boolean;
-  canApplyOnline: boolean;
-  canApplyOffline: boolean;
-  cannotApply: boolean;
+  canApplyForInsuranceOnline: boolean;
+  canApplyForInsuranceOffline: boolean;
+  noInsuranceSupport: boolean;
 }
 
 export { Country };

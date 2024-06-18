@@ -28,7 +28,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 const field = singleInputField(FIELD_ID);
 
-context("Insurance - Declarations - Confirmation and acknowledgements page - As an Exporter, I want the system to provide the details of my application's confirmation and acknowledgement, So that, I can readily confirm my export insurance application", () => {
+context("Insurance - Declarations - Confirmation and acknowledgements page - As an Exporter, I want the system to provide the details of my application's confirmation and acknowledgement, So that, I can readily confirm my credit insurance application", () => {
   let referenceNumber;
   let url;
 
@@ -129,13 +129,11 @@ context("Insurance - Declarations - Confirmation and acknowledgements page - As 
       it('should render a validation error', () => {
         const expectedErrorsCount = 1;
 
-        cy.submitAndAssertRadioErrors(
+        cy.submitAndAssertRadioErrors({
           field,
-          0,
           expectedErrorsCount,
-          ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
-          false,
-        );
+          expectedErrorMessage: ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
+        });
       });
     });
 
@@ -154,7 +152,7 @@ context("Insurance - Declarations - Confirmation and acknowledgements page - As 
         it('should have the submitted value', () => {
           cy.navigateToUrl(url);
 
-          field.input().should('be.checked');
+          cy.assertRadioOptionIsChecked(field.input());
         });
       });
     });

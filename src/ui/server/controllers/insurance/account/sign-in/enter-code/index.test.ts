@@ -8,13 +8,13 @@ import constructPayload from '../../../../../helpers/construct-payload';
 import { sanitiseData, sanitiseValue } from '../../../../../helpers/sanitise-data';
 import mapEligibilityAnswers from '../../../../../helpers/map-eligibility-answers';
 import generateValidationErrors from './validation';
-import securityCodeValidationErrors from './validation/rules/security-code';
+import accessCodeValidationErrors from './validation/rules/access-code';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockAccount, mockApplication, mockSession, mockApplications } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockAccount, referenceNumber, mockSession, mockApplications } from '../../../../../test-mocks';
 
 const {
-  ACCOUNT: { SECURITY_CODE },
+  ACCOUNT: { ACCESS_CODE },
 } = FIELD_IDS.INSURANCE;
 
 const {
@@ -33,8 +33,6 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
   let req: Request;
   let res: Response;
 
-  const { referenceNumber } = mockApplication;
-
   beforeEach(() => {
     req = mockReq();
     req.flash = () => 'mock';
@@ -46,7 +44,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
 
   describe('FIELD_ID', () => {
     it('should have the correct ID', () => {
-      const expected = SECURITY_CODE;
+      const expected = ACCESS_CODE;
 
       expect(FIELD_ID).toEqual(expected);
     });
@@ -57,7 +55,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
       const expected = {
         FIELD: {
           ID: FIELD_ID,
-          ...FIELDS[SECURITY_CODE],
+          ...FIELDS[ACCESS_CODE],
         },
       };
 
@@ -162,7 +160,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
     let getApplicationsSpy = jest.fn(() => Promise.resolve({ applications: mockApplications, totalApplications: 3 }));
 
     const validBody = {
-      [SECURITY_CODE]: '123456',
+      [ACCESS_CODE]: '123456',
     };
 
     beforeEach(() => {
@@ -350,7 +348,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
             ...PAGE_VARIABLES,
             userName: getUserNameFromSession(req.session.user),
             submittedValues: payload,
-            validationErrors: securityCodeValidationErrors({}, {}),
+            validationErrors: accessCodeValidationErrors({}, {}),
           });
         });
       });

@@ -1,10 +1,5 @@
 import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm, completeAndSubmitUkContentForm } from '../../../../../../commands/quote/forms';
-import {
-  countryInput,
-  field,
-  submitButton,
-  summaryList,
-} from '../../../../../../pages/shared';
+import { autoCompleteField, field, summaryList } from '../../../../../../pages/shared';
 import { policyTypePage } from '../../../../../../pages/quote';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { USD_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
@@ -27,14 +22,14 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporter, I want to get an Export insurance quote', () => {
+context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporter, I want to get an Credit insurance quote', () => {
   before(() => {
     cy.login();
 
-    cy.keyboardInput(countryInput.field(BUYER_COUNTRY).input(), 'Kenya');
-    const results = countryInput.field(BUYER_COUNTRY).results();
+    cy.keyboardInput(autoCompleteField(BUYER_COUNTRY).input(), 'Kenya');
+    const results = autoCompleteField(BUYER_COUNTRY).results();
     results.first().click();
-    submitButton().click();
+    cy.clickSubmitButton();
 
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
@@ -42,7 +37,7 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
 
     policyTypePage[POLICY_TYPE].single.label().click();
 
-    submitButton().click();
+    cy.clickSubmitButton();
   });
 
   beforeEach(() => {
@@ -56,7 +51,7 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
     field(CURRENCY).input().select(USD_CURRENCY_CODE);
     field(PERCENTAGE_OF_COVER).input().select('80');
 
-    submitButton().click();
+    cy.clickSubmitButton();
 
     const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
@@ -68,7 +63,7 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
     const expectedAmount = '$100,000';
     cy.checkText(answersAmount, expectedAmount);
 
-    submitButton().click();
+    cy.clickSubmitButton();
 
     // Check contract value formatting in the quote
     const expectedValue = '$80,000.00';

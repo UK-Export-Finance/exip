@@ -28,8 +28,8 @@ const {
  * Or return success=false if the account is not found.
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the SendEmailPasswordResetLink mutation
- * @param {Object} KeystoneJS context API
- * @returns {Object} Object with success flag
+ * @param {Context} KeystoneJS context API
+ * @returns {Promise<Object>} Object with success flag
  */
 const sendEmailPasswordResetLink = async (
   root: any,
@@ -54,6 +54,7 @@ const sendEmailPasswordResetLink = async (
     }
 
     const { id: accountId } = account;
+    const { id: statusId } = account.status;
 
     /**
      * Create a new retry entry for the account
@@ -73,7 +74,7 @@ const sendEmailPasswordResetLink = async (
 
     if (needToBlockAccount) {
       try {
-        const blocked = await blockAccount(context, accountId);
+        const blocked = await blockAccount(context, statusId);
 
         if (blocked) {
           return {

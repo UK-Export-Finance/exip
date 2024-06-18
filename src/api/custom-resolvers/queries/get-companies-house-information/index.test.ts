@@ -1,8 +1,9 @@
 import getCompaniesHouseInformation from '.';
+import sanitiseCompaniesHouseNumber from '../../../helpers/sanitise-companies-house-number';
 import companiesHouse from '../../../integrations/companies-house';
 import { mapCompaniesHouseFields } from '../../../helpers/map-companies-house-fields';
 import industrySectorNames from '../../../integrations/industry-sector';
-import mockCompanyAPIResponse from '../../../test-mocks/mock-company-api-response';
+import mockCompanyAPIResponse from '../../../test-mocks/mock-companies-house-api-response';
 import mockIndustrySectors from '../../../test-mocks/mock-industry-sectors';
 
 describe('custom-resolvers/get-companies-house-information', () => {
@@ -13,15 +14,32 @@ describe('custom-resolvers/get-companies-house-information', () => {
     jest.resetAllMocks();
   });
 
+  it('should call companiesHouse.get with a sanitised companies house number', async () => {
+    companiesHouse.get = jest.fn();
+
+    const mockNumber = ' 12345 ';
+
+    await getCompaniesHouseInformation({}, { companiesHouseNumber: mockNumber });
+
+    expect(companiesHouse.get).toHaveBeenCalledTimes(1);
+
+    const expected = sanitiseCompaniesHouseNumber(mockNumber);
+
+    expect(companiesHouse.get).toHaveBeenCalledWith(expected);
+  });
+
   describe('when companies house API returns success as false', () => {
     beforeEach(() => {
-      companiesHouse.get = jest.fn(() => Promise.resolve({ success: false }));
+      companiesHouse.get = jest.fn(() => Promise.resolve({ success: false, notFound: true }));
     });
 
     it('should return object containing success as false', async () => {
       const response = await getCompaniesHouseInformation({}, { companiesHouseNumber: '12345' });
 
-      const expected = { success: false };
+      const expected = {
+        success: false,
+        notFound: true,
+      };
 
       expect(response).toEqual(expected);
     });

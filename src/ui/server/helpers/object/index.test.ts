@@ -1,4 +1,4 @@
-import { objectHasKeysAndValues, objectHasProperty } from '.';
+import { objectHasKeysAndValues, isAnObjectWithKeysAndValues, objectHasProperty } from '.';
 
 describe('server/helpers/object', () => {
   describe('objectHasKeysAndValues', () => {
@@ -23,6 +23,35 @@ describe('server/helpers/object', () => {
         const result = objectHasKeysAndValues({});
 
         expect(result).toEqual(false);
+      });
+    });
+  });
+
+  describe('isAnObjectWithKeysAndValues', () => {
+    describe('when a field is not an object', () => {
+      it('should return undefined', () => {
+        const mockField = 'notAnObject';
+
+        const result = isAnObjectWithKeysAndValues(mockField);
+        expect(result).toBeUndefined();
+      });
+    });
+
+    describe('when a field is an object, but has no values', () => {
+      it('should return undefined', () => {
+        const mockField = {};
+
+        const result = isAnObjectWithKeysAndValues(mockField);
+        expect(result).toBeUndefined();
+      });
+    });
+
+    describe('when a field is an object, with values', () => {
+      it('should return the object', () => {
+        const mockField = { a: true };
+
+        const result = isAnObjectWithKeysAndValues(mockField);
+        expect(result).toEqual(mockField);
       });
     });
   });

@@ -8,13 +8,6 @@ describe('server/helpers/get-country-by-iso-code', () => {
     const result = getCountryByIsoCode(mockCountries, mockIsoCode);
     const { 2: expectedCountry } = mockCountries;
 
-    const { isoCode, name } = expectedCountry;
-
-    const expected = {
-      isoCode,
-      name,
-    };
-
-    expect(result).toEqual(expected);
+    expect(result).toEqual(expectedCountry);
   });
 });

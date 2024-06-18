@@ -12,8 +12,8 @@ const ERROR_MESSAGE = ERROR_MESSAGES.INSURANCE.POLICY.TYPE_OF_POLICY[FIELD_ID].I
 /**
  * validation
  * Check if the policy type is a valid type and not empty
- * @param {Express.Response.body} Express response body
- * @returns {Object} Validation errors
+ * @param {RequestBody} formBody: Form body
+ * @returns {ValidationErrors}
  */
 const validation = (formBody: RequestBody) => {
   let errors;

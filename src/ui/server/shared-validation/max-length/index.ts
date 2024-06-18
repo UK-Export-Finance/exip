@@ -1,20 +1,19 @@
 import generateValidationErrors from '../../helpers/validation';
-import isAboveMaxLength from '../../helpers/is-above-max-length';
+import { isAboveMaxLength } from '../../helpers/string';
 
 /**
- * validates field character count input is not above max length
- * @param {string} fieldBody
- * @param {string} fieldId
- * @param {string} errorMessage
- * @param {object} errors
- * @param {number} maximum
- * @returns {object} errors
+ * Validates a field value is not above a maximum length
+ * @param {String} fieldValue: Field value to validate
+ * @param {String} fieldId: Field ID
+ * @param {String} errorMessage: Error message
+ * @param {Object} errors: Errors object from previous validation errors
+ * @param {Integer} maximum: Maximum allowed length
+ * @returns {Object} errors
  */
-const validateInputMaxLength = (fieldBody: string, fieldId: string, errorMessage: string, errors: object, maximum: number) => {
+const maxLengthValidation = (fieldValue: string, fieldId: string, errorMessage: string, errors: object, maximum: number) => {
   let updatedErrors = errors;
 
-  // is over maximum number of characters then will be false
-  if (isAboveMaxLength(fieldBody, maximum)) {
+  if (isAboveMaxLength(fieldValue, maximum)) {
     updatedErrors = generateValidationErrors(fieldId, errorMessage, updatedErrors);
 
     return updatedErrors;
@@ -23,4 +22,4 @@ const validateInputMaxLength = (fieldBody: string, fieldId: string, errorMessage
   return updatedErrors;
 };
 
-export default validateInputMaxLength;
+export default maxLengthValidation;

@@ -6,7 +6,7 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
 /**
  * mapAndSave policyContact
  * Map and save any valid policyContact fields
- * @param {Express.Request.body} Express request body
+ * @param {RequestBody} formBody: Form body
  * @param {Application}
  * @param {Object} Validation errors
  * @returns {Boolean}
@@ -33,7 +33,7 @@ const policyContact = async (formBody: RequestBody, application: Application, va
 
     return true;
   } catch (err) {
-    console.error('Error mapping and saving application %O', err);
+    console.error('Error mapping and saving application - policy - contact %O', err);
 
     return false;
   }

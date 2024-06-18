@@ -21,9 +21,9 @@ const {
  * websiteRule.
  * Check submitted form data for errors with the website field
  * Returns generateValidationErrors if there are any errors.
- * @param {Express.Response.body} Express response body
+ * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const websiteRule = (formBody: RequestBody, errors: object) => {
   // only validate website if field is not empty

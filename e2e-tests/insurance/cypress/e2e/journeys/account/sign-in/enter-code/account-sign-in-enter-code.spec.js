@@ -15,13 +15,15 @@ const {
 } = ROUTES;
 
 const {
-  ACCOUNT: { SECURITY_CODE },
+  ACCOUNT: { ACCESS_CODE },
 } = INSURANCE_FIELD_IDS;
 
-const FIELD_STRINGS = ACCOUNT_FIELDS[SECURITY_CODE];
+const FIELD_STRINGS = ACCOUNT_FIELDS[ACCESS_CODE];
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Account - Sign in - I want to sign in into my UKEF digital service account after completing eligibility, So that I can complete my application for a UKEF Export Insurance Policy', () => {
-  const url = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
+  const url = `${baseUrl}${ENTER_CODE}`;
 
   before(() => {
     cy.deleteAccount();
@@ -59,15 +61,18 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
         cy.navigateToUrl(url);
       });
 
-      it('renders `security code` label and input', () => {
-        const fieldId = SECURITY_CODE;
+      it('renders `access code` label and input', () => {
+        const fieldId = ACCESS_CODE;
         const field = fieldSelector(fieldId);
 
         cy.checkText(field.label(), FIELD_STRINGS.LABEL);
 
         field.input().should('exist');
 
-        field.input().should('have.class', 'govuk-input--extra-letter-spacing');
+        cy.checkClassName(
+          field.input(),
+          'govuk-input govuk-input--width-4 govuk-input--extra-letter-spacing',
+        );
       });
 
       it('renders a `request new code` link', () => {
@@ -85,7 +90,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
         it(`should re-direct to ${REQUEST_NEW_CODE}`, () => {
           enterCodePage.requestNewCodeLink().click();
 
-          const expectedUrl = `${Cypress.config('baseUrl')}${REQUEST_NEW_CODE}`;
+          const expectedUrl = `${baseUrl}${REQUEST_NEW_CODE}`;
 
           cy.assertUrl(expectedUrl);
         });

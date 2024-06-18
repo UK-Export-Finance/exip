@@ -1,8 +1,8 @@
-import { ELIGIBILITY } from '../../eligibility';
 import { ACCOUNT } from './account';
 import { POLICY } from './policy';
 import { EXPORTER_BUSINESS } from './business';
 import { YOUR_BUYER } from './your-buyer';
+import { EXPORT_CONTRACT } from './export-contract';
 import { DECLARATIONS } from './declarations';
 import { CHECK_YOUR_ANSWERS } from './check-your-answers';
 
@@ -14,22 +14,36 @@ export const INSURANCE_ROUTES = {
   START: `${INSURANCE_ROOT}/start`,
   ELIGIBILITY: {
     CHECK_IF_ELIGIBLE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/check-if-eligible`,
-    BUYER_COUNTRY: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/buyer-location`,
     CANNOT_APPLY: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/cannot-apply`,
     EXPORTER_LOCATION: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/exporter-location`,
-    UK_GOODS_OR_SERVICES: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/uk-goods-services`,
-    INSURED_AMOUNT: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/insured-amount`,
-    INSURED_PERIOD: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/insured-over-${ELIGIBILITY.MAX_COVER_PERIOD_YEARS}-years`,
-    OTHER_PARTIES_INVOLVED: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/other-parties`,
-    LETTER_OF_CREDIT: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/letter-of-credit`,
-    PRE_CREDIT_PERIOD: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/pre-credit-period`,
+    EXPORTER_LOCATION_CHANGE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/exporter-location/change`,
     COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/companies-house-number`,
+    COMPANIES_HOUSE_NUMBER_CHANGE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/companies-house-number/change`,
+    NO_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/no-companies-house-number`,
+    ENTER_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/enter-companies-house-number`,
+    ENTER_COMPANIES_HOUSE_NUMBER_CHANGE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/enter-companies-house-number/change`,
+    COMPANIES_HOUSE_UNAVAILABLE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/companies-house-unavailable`,
+    COMPANY_NOT_ACTIVE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/company-not-active`,
+    COMPANY_DETAILS: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/company-details`,
+    COMPANY_DETAILS_CHANGE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/company-details/change`,
+    BUYER_COUNTRY: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/buyer-location`,
+    BUYER_COUNTRY_CHANGE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/buyer-location/change`,
+    TOTAL_VALUE_INSURED: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/total-value-insured`,
+    TOTAL_VALUE_INSURED_CHANGE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/total-value-insured/change`,
+    COVER_PERIOD: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/cover-period`,
+    COVER_PERIOD_CHANGE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/cover-period/change`,
+    LONG_TERM_COVER: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/long-term-cover`,
+    UK_GOODS_OR_SERVICES: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/uk-goods-services`,
+    UK_GOODS_OR_SERVICES_CHANGE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/uk-goods-services/change`,
+    END_BUYER: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/end-buyer`,
+    END_BUYER_CHANGE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/end-buyer/change`,
+    CANNOT_APPLY_MULTIPLE_RISKS: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/multiple-risks`,
+    CHECK_YOUR_ANSWERS: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/check-your-answers`,
     ELIGIBLE_TO_APPLY_ONLINE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/eligible-to-apply-online`,
-    ACCOUNT_TO_APPLY_ONLINE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/account-to-apply-online`,
+    HAVE_AN_ACCOUNT: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/do-you-have-an-account`,
     NEED_TO_START_AGAIN: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/need-to-start-again`,
   },
   APPLY_OFFLINE: `${INSURANCE_ROOT}/apply-using-our-form`,
-  SPEAK_TO_UKEF_EFM: `${INSURANCE_ROOT}/speak-to-UKEF-EFM`,
   PAGE_NOT_FOUND: `${INSURANCE_ROOT}/page-not-found`,
   NO_ACCESS_TO_APPLICATION: `${INSURANCE_ROOT}/no-access-to-application`,
   NO_ACCESS_APPLICATION_SUBMITTED: `${INSURANCE_ROOT}/no-access-application-submitted`,
@@ -40,6 +54,7 @@ export const INSURANCE_ROUTES = {
   POLICY,
   EXPORTER_BUSINESS,
   YOUR_BUYER,
+  EXPORT_CONTRACT,
   DECLARATIONS,
   CHECK_YOUR_ANSWERS,
   APPLICATION_SUBMITTED: '/application-submitted',

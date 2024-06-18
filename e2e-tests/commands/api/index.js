@@ -12,9 +12,9 @@ const queryStrings = {
     mutation createAnAccount($urlOrigin: String!, $firstName: String!, $lastName: String!, $email: String!, $password: String!) {
       createAnAccount(urlOrigin: $urlOrigin, firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
         success
+        alreadyExists
+        isVerified
         id
-        firstName
-        lastName
         email
         verificationHash
       }
@@ -28,8 +28,25 @@ const queryStrings = {
     }
   `,
   createAnApplication: () => gql`
-    mutation createAnApplication($accountId: String!, $eligibilityAnswers: ApplicationEligibility!) {
-      createAnApplication(accountId: $accountId, eligibilityAnswers: $eligibilityAnswers) {
+    mutation createAnApplication(
+      $accountId: String!
+      $eligibilityAnswers: ApplicationEligibility!
+      $company: CompanyInput!
+      $sectionReview: SectionReviewInput!
+    ) {
+      createAnApplication(accountId: $accountId, eligibilityAnswers: $eligibilityAnswers, company: $company, sectionReview: $sectionReview) {
+        referenceNumber
+      }
+    }
+  `,
+  createAnAbandonedApplication: () => gql`
+    mutation createAnAbandonedApplication(
+      $accountId: String!
+      $eligibilityAnswers: ApplicationEligibility!
+      $company: CompanyInput!
+      $sectionReview: SectionReviewInput!
+    ) {
+      createAnAbandonedApplication(accountId: $accountId, eligibilityAnswers: $eligibilityAnswers, company: $company, sectionReview: $sectionReview) {
         referenceNumber
       }
     }
@@ -38,11 +55,12 @@ const queryStrings = {
     mutation createApplications($data: [ApplicationCreateInput!]!) {
       createApplications(data: $data) {
         id
+        referenceNumber
       }
     }
   `,
   deleteAnAccount: () => gql`
-    mutation deleteAnAccount($email: String!)  {
+    mutation deleteAnAccount($email: String!) {
       deleteAnAccount(email: $email) {
         success
       }
@@ -58,19 +76,24 @@ const queryStrings = {
     }
   `,
   updateAccount: () => gql`
-    mutation updateAccount($where: AccountWhereUniqueInput!, $data: AccountUpdateInput!)  {
+    mutation updateAccount($where: AccountWhereUniqueInput!, $data: AccountUpdateInput!) {
       updateAccount(where: $where, data: $data) {
         id
+        verificationExpiry
         verificationHash
         reactivationHash
         passwordResetHash
+        status {
+          id
+        }
       }
     }
   `,
-  updateCompanyAndCompanyAddress: () => gql`
-    mutation updateCompanyAndCompanyAddress($companyId: ID!, $companyAddressId: ID!, $data: CompanyAndCompanyAddressInput!) {
-      updateCompanyAndCompanyAddress(companyId: $companyId, companyAddressId: $companyAddressId, data: $data) {
+  updateAccountStatus: () => gql`
+    mutation updateAccountStatus($where: AccountStatusWhereUniqueInput!, $data: AccountStatusUpdateInput!) {
+      updateAccountStatus(where: $where, data: $data) {
         id
+        isInactive
       }
     }
   `,
@@ -110,7 +133,7 @@ const queryStrings = {
     }
   }`,
   deleteApplicationByReferenceNumber: () => gql`
-    mutation deleteApplicationByReferenceNumber($referenceNumber: Int!)  {
+    mutation deleteApplicationByReferenceNumber($referenceNumber: Int!) {
       deleteApplicationByReferenceNumber(referenceNumber: $referenceNumber) {
         success
       }
@@ -189,17 +212,19 @@ const queryStrings = {
  * @returns {Object} Account
  */
 const createAnAccount = (urlOrigin, firstName, lastName, email, password) =>
-  apollo.query({
-    query: queryStrings.createAnAccount(),
-    variables: {
-      urlOrigin,
-      firstName,
-      lastName,
-      email,
-      password,
-    },
-    context: APOLLO_CONTEXT,
-  }).then((response) => response.data.createAnAccount);
+  apollo
+    .query({
+      query: queryStrings.createAnAccount(),
+      variables: {
+        urlOrigin,
+        firstName,
+        lastName,
+        email,
+        password,
+      },
+      context: APOLLO_CONTEXT,
+    })
+    .then((response) => response.data.createAnAccount);
 
 /**
  * createBuyer
@@ -208,51 +233,84 @@ const createAnAccount = (urlOrigin, firstName, lastName, email, password) =>
  * @returns {Object} Buyer
  */
 const createBuyer = (countryId) =>
-  apollo.query({
-    query: queryStrings.createBuyer(),
-    variables: {
-      data: {
-        country: {
-          connect: {
-            id: countryId,
+  apollo
+    .query({
+      query: queryStrings.createBuyer(),
+      variables: {
+        data: {
+          country: {
+            connect: {
+              id: countryId,
+            },
           },
         },
       },
-    },
-    context: APOLLO_CONTEXT,
-  }).then((response) => response.data.createBuyer);
+      context: APOLLO_CONTEXT,
+    })
+    .then((response) => response.data.createBuyer);
 
 /**
-  * createAnApplication
-  * Create an application
-  * @param {String} Account/application owner ID
-  * @param {Object} Eligibility answers
-  * @returns {Object} Created application
-  */
-const createAnApplication = (accountId, eligibilityAnswers) =>
-  apollo.query({
-    query: queryStrings.createAnApplication(),
-    variables: {
-      accountId,
-      eligibilityAnswers,
-    },
-    context: APOLLO_CONTEXT,
-  }).then((response) => response.data.createAnApplication);
+ * createAnApplication
+ * Create an application
+ * @param {String} Account/application owner ID
+ * @param {Object} Eligibility answers
+ * @param {Object} Company object (obtained from eligibility companies house call)
+ * @param {Object} sectionReview object (with eligibility set to true)
+ * @returns {Object} Created application
+ */
+const createAnApplication = (accountId, eligibilityAnswers, company, sectionReview) =>
+  apollo
+    .query({
+      query: queryStrings.createAnApplication(),
+      variables: {
+        accountId,
+        eligibilityAnswers,
+        company,
+        sectionReview,
+      },
+      context: APOLLO_CONTEXT,
+    })
+    .then((response) => response.data.createAnApplication);
 
 /**
-  * createApplications
-  * Create multiple applications
-  * @param {Array} Array of applications
-  * @returns {Array} Created applications
-  */
+ * createAnApplication
+ * Create an application
+ * @param {String} Account/application owner ID
+ * @param {Object} Eligibility answers
+ * @param {Object} Company object (obtained from eligibility companies house call)
+ * @param {Object} sectionReview object (with eligibility set to true)
+ * @returns {Object} Created application
+ */
+const createAnAbandonedApplication = (accountId, eligibilityAnswers, company, sectionReview) =>
+  apollo
+    .query({
+      query: queryStrings.createAnAbandonedApplication(),
+      variables: {
+        accountId,
+        eligibilityAnswers,
+        company,
+        sectionReview,
+      },
+      context: APOLLO_CONTEXT,
+    })
+    .then((response) => response.data.createAnAbandonedApplication);
+
+/**
+ * createApplications
+ * Create multiple applications
+ * @param {Array} Array of applications
+ * @returns {Array} Created applications
+ */
 const createApplications = (applications) =>
-  apollo.query({
-    query: queryStrings.createApplications(),
-    variables: {
-      data: applications,
-    },
-    context: APOLLO_CONTEXT,
-  }).then((response) => response.data.createApplications);
+  apollo
+    .query({
+      query: queryStrings.createApplications(),
+      variables: {
+        data: applications,
+      },
+      context: APOLLO_CONTEXT,
+    })
+    .then((response) => response.data.createApplications);
 
 /**
  * getAccountByEmail
@@ -262,17 +320,19 @@ const createApplications = (applications) =>
  */
 const getAccountByEmail = async (email) => {
   try {
-    const responseBody = await apollo.query({
-      query: queryStrings.getAccountByEmail(email),
-      variables: {
-        where: {
-          orderBy: { updatedAt: 'desc' },
-          email: { equals: email },
-          take: 1,
+    const responseBody = await apollo
+      .query({
+        query: queryStrings.getAccountByEmail(email),
+        variables: {
+          where: {
+            orderBy: { updatedAt: 'desc' },
+            email: { equals: email },
+            take: 1,
+          },
         },
-      },
-      context: APOLLO_CONTEXT,
-    }).then((response) => response.data.accounts);
+        context: APOLLO_CONTEXT,
+      })
+      .then((response) => response.data.accounts);
 
     return responseBody;
   } catch (err) {
@@ -290,14 +350,16 @@ const getAccountByEmail = async (email) => {
  */
 const updateAccount = async (id, updateObj) => {
   try {
-    const responseBody = await apollo.query({
-      query: queryStrings.updateAccount(),
-      variables: {
-        where: { id },
-        data: updateObj,
-      },
-      context: APOLLO_CONTEXT,
-    }).then((response) => response.data.updateAccount);
+    const responseBody = await apollo
+      .query({
+        query: queryStrings.updateAccount(),
+        variables: {
+          where: { id },
+          data: updateObj,
+        },
+        context: APOLLO_CONTEXT,
+      })
+      .then((response) => response.data.updateAccount);
 
     return responseBody;
   } catch (err) {
@@ -308,30 +370,29 @@ const updateAccount = async (id, updateObj) => {
 };
 
 /**
- * updateCompanyAndCompanyAddress
- * Update an company and the companies address
- * @param {String} Company ID
- * @param {String} Company address ID
- * @param {String} Company address ID
- * @returns {Object} Updated company and company address
+ * updateAccountStatus
+ * Update an account status
+ * @param {String} AccountStatus ID
+ * @returns {AccountStatus} AccountStatus
  */
-const updateCompanyAndCompanyAddress = async (companyId, companyAddressId, updateObj) => {
+const updateAccountStatus = async (id, updateObj) => {
   try {
-    const responseBody = await apollo.query({
-      query: queryStrings.updateCompanyAndCompanyAddress(),
-      variables: {
-        companyId,
-        companyAddressId,
-        data: updateObj,
-      },
-      context: APOLLO_CONTEXT,
-    }).then((response) => response.data.updateCompanyAndCompanyAddress);
+    const responseBody = await apollo
+      .query({
+        query: queryStrings.updateAccountStatus(),
+        variables: {
+          where: { id },
+          data: updateObj,
+        },
+        context: APOLLO_CONTEXT,
+      })
+      .then((response) => response.data.updateAccountStatus);
 
     return responseBody;
   } catch (err) {
     console.error(err);
 
-    throw new Error('Updating account', { err });
+    throw new Error('Updating account status', { err });
   }
 };
 
@@ -343,11 +404,13 @@ const updateCompanyAndCompanyAddress = async (companyId, companyAddressId, updat
  */
 const deleteAnAccount = async (email) => {
   try {
-    const responseBody = await apollo.query({
-      query: queryStrings.deleteAnAccount(),
-      variables: { email },
-      context: APOLLO_CONTEXT,
-    }).then((response) => response.data.deleteAnAccount);
+    const responseBody = await apollo
+      .query({
+        query: queryStrings.deleteAnAccount(),
+        variables: { email },
+        context: APOLLO_CONTEXT,
+      })
+      .then((response) => response.data.deleteAnAccount);
 
     return responseBody.success;
   } catch (err) {
@@ -360,14 +423,14 @@ const deleteAnAccount = async (email) => {
 /**
  * addAndGetOTP
  * Create and get an OTP for an account directly from the API,
- * so that we can assert enter a valid security code and continue the journey.
+ * so that we can assert enter a valid access code and continue the journey.
  * This is to ensure that we are testing a real world scenario.
  *
- * The alternative approach is to either intercept the UI requests and fake the security code validation,
+ * The alternative approach is to either intercept the UI requests and fake the access code validation,
  * or have email inbox testing capabilities which can be risky/flaky.
- * This approach practically mimics "get my security code from my email inbox".
+ * This approach practically mimics "get my access code from my email inbox".
  * @param {String} Account email address
- * @returns {Object} security code
+ * @returns {Object} access code
  */
 const addAndGetOTP = async (emailAddress) => {
   let email = emailAddress;
@@ -377,11 +440,13 @@ const addAndGetOTP = async (emailAddress) => {
   }
 
   try {
-    const responseBody = await apollo.query({
-      query: queryStrings.addAndGetOTP(),
-      variables: { email },
-      context: APOLLO_CONTEXT,
-    }).then((response) => response.data.addAndGetOTP);
+    const responseBody = await apollo
+      .query({
+        query: queryStrings.addAndGetOTP(),
+        variables: { email },
+        context: APOLLO_CONTEXT,
+      })
+      .then((response) => response.data.addAndGetOTP);
 
     return responseBody.securityCode;
   } catch (err) {
@@ -406,11 +471,13 @@ const getAccountPasswordResetToken = async () => {
   const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
   try {
-    const responseBody = await apollo.query({
-      query: queryStrings.getAccountPasswordResetToken(),
-      variables: { email: accountEmail },
-      context: APOLLO_CONTEXT,
-    }).then((response) => response.data.getAccountPasswordResetToken);
+    const responseBody = await apollo
+      .query({
+        query: queryStrings.getAccountPasswordResetToken(),
+        variables: { email: accountEmail },
+        context: APOLLO_CONTEXT,
+      })
+      .then((response) => response.data.getAccountPasswordResetToken);
 
     return responseBody.token;
   } catch (err) {
@@ -428,10 +495,12 @@ const getAccountPasswordResetToken = async () => {
  */
 const getApplicationByReferenceNumber = async (referenceNumber) => {
   try {
-    const responseBody = await apollo.query({
-      query: queryStrings.getApplicationByReferenceNumber(referenceNumber),
-      context: APOLLO_CONTEXT,
-    }).then((response) => response.data.applications[0]);
+    const responseBody = await apollo
+      .query({
+        query: queryStrings.getApplicationByReferenceNumber(referenceNumber),
+        context: APOLLO_CONTEXT,
+      })
+      .then((response) => response.data.applications[0]);
 
     return responseBody;
   } catch (err) {
@@ -449,11 +518,13 @@ const getApplicationByReferenceNumber = async (referenceNumber) => {
  */
 const deleteApplicationByReferenceNumber = async (referenceNumber) => {
   try {
-    const responseBody = await apollo.query({
-      query: queryStrings.deleteApplicationByReferenceNumber(),
-      variables: { referenceNumber },
-      context: APOLLO_CONTEXT,
-    }).then((response) => response.data);
+    const responseBody = await apollo
+      .query({
+        query: queryStrings.deleteApplicationByReferenceNumber(),
+        variables: { referenceNumber },
+        context: APOLLO_CONTEXT,
+      })
+      .then((response) => response.data);
 
     return responseBody;
   } catch (err) {
@@ -471,13 +542,15 @@ const deleteApplicationByReferenceNumber = async (referenceNumber) => {
  */
 const deleteApplications = async (applications) => {
   try {
-    const responseBody = await apollo.query({
-      query: queryStrings.deleteApplications(),
-      variables: {
-        where: applications,
-      },
-      context: APOLLO_CONTEXT,
-    }).then((response) => response.data);
+    const responseBody = await apollo
+      .query({
+        query: queryStrings.deleteApplications(),
+        variables: {
+          where: applications,
+        },
+        context: APOLLO_CONTEXT,
+      })
+      .then((response) => response.data);
 
     return responseBody;
   } catch (err) {
@@ -494,10 +567,12 @@ const deleteApplications = async (applications) => {
  */
 const getACountry = async () => {
   try {
-    const responseBody = await apollo.query({
-      query: queryStrings.getCountries(),
-      context: APOLLO_CONTEXT,
-    }).then((response) => response.data.countries[0]);
+    const responseBody = await apollo
+      .query({
+        query: queryStrings.getCountries(),
+        context: APOLLO_CONTEXT,
+      })
+      .then((response) => response.data.countries[0]);
 
     return responseBody;
   } catch (err) {
@@ -515,10 +590,12 @@ const declarations = {
    */
   getLatestConfidentiality: async () => {
     try {
-      const responseBody = await apollo.query({
-        query: queryStrings.declarations.getLatestConfidentiality(),
-        context: APOLLO_CONTEXT,
-      }).then((response) => response.data.declarationConfidentialities[0]);
+      const responseBody = await apollo
+        .query({
+          query: queryStrings.declarations.getLatestConfidentiality(),
+          context: APOLLO_CONTEXT,
+        })
+        .then((response) => response.data.declarationConfidentialities[0]);
 
       return responseBody;
     } catch (err) {
@@ -534,10 +611,12 @@ const declarations = {
    */
   getLatestAntiBribery: async () => {
     try {
-      const responseBody = await apollo.query({
-        query: queryStrings.declarations.getLatestAntiBribery(),
-        context: APOLLO_CONTEXT,
-      }).then((response) => response.data.declarationAntiBriberies[0]);
+      const responseBody = await apollo
+        .query({
+          query: queryStrings.declarations.getLatestAntiBribery(),
+          context: APOLLO_CONTEXT,
+        })
+        .then((response) => response.data.declarationAntiBriberies[0]);
 
       return responseBody;
     } catch (err) {
@@ -553,10 +632,12 @@ const declarations = {
    */
   getLatestConfirmationAndAcknowledgements: async () => {
     try {
-      const responseBody = await apollo.query({
-        query: queryStrings.declarations.getLatestConfirmationAndAcknowledgements(),
-        context: APOLLO_CONTEXT,
-      }).then((response) => response.data.declarationConfirmationAndAcknowledgements[0]);
+      const responseBody = await apollo
+        .query({
+          query: queryStrings.declarations.getLatestConfirmationAndAcknowledgements(),
+          context: APOLLO_CONTEXT,
+        })
+        .then((response) => response.data.declarationConfirmationAndAcknowledgements[0]);
 
       return responseBody;
     } catch (err) {
@@ -572,10 +653,12 @@ const declarations = {
    */
   getLatestHowDataWillBeUsed: async () => {
     try {
-      const responseBody = await apollo.query({
-        query: queryStrings.declarations.getLatestHowDataWillBeUsed(),
-        context: APOLLO_CONTEXT,
-      }).then((response) => response.data.declarationHowDataWillBeUseds[0]);
+      const responseBody = await apollo
+        .query({
+          query: queryStrings.declarations.getLatestHowDataWillBeUsed(),
+          context: APOLLO_CONTEXT,
+        })
+        .then((response) => response.data.declarationHowDataWillBeUseds[0]);
 
       return responseBody;
     } catch (err) {
@@ -590,10 +673,11 @@ const api = {
   createAnAccount,
   createBuyer,
   createAnApplication,
+  createAnAbandonedApplication,
   createApplications,
   getAccountByEmail,
   updateAccount,
-  updateCompanyAndCompanyAddress,
+  updateAccountStatus,
   deleteAnAccount,
   addAndGetOTP,
   getAccountPasswordResetToken,

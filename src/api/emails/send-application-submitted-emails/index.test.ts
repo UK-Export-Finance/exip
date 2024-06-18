@@ -150,8 +150,8 @@ describe('emails/send-email-application-submitted', () => {
           hasAntiBriberyCodeOfConduct: false,
         };
 
-        application.buyer = {
-          ...application.buyer,
+        application.buyer.buyerTradingHistory = {
+          ...application.buyer.buyerTradingHistory,
           exporterHasTradedWithBuyer: true,
         };
       });
@@ -174,8 +174,8 @@ describe('emails/send-email-application-submitted', () => {
           hasAntiBriberyCodeOfConduct: false,
         };
 
-        application.buyer = {
-          ...application.buyer,
+        application.buyer.buyerTradingHistory = {
+          ...application.buyer.buyerTradingHistory,
           exporterHasTradedWithBuyer: false,
         };
       });
@@ -194,8 +194,8 @@ describe('emails/send-email-application-submitted', () => {
           hasAntiBriberyCodeOfConduct: true,
         };
 
-        application.buyer = {
-          ...application.buyer,
+        application.buyer.buyerTradingHistory = {
+          ...application.buyer.buyerTradingHistory,
           exporterHasTradedWithBuyer: false,
         };
       });

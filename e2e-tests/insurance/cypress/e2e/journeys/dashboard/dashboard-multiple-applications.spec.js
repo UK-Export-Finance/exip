@@ -1,10 +1,10 @@
 import dashboardPage from '../../../../../pages/insurance/dashboard';
 import header from '../../../../../partials/header';
-import { ROUTES } from '../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
 const { table } = dashboardPage;
 
-const { ROOT, ALL_SECTIONS, DASHBOARD } = ROUTES.INSURANCE;
+const { DASHBOARD } = INSURANCE_ROUTES;
 
 context('Insurance - Dashboard - new application', () => {
   const baseUrl = Cypress.config('baseUrl');
@@ -21,7 +21,7 @@ context('Insurance - Dashboard - new application', () => {
 
       cy.assertUrl(url);
 
-      table.body.rows().should('have.length', 1);
+      cy.assertLength(table.body.rows(), 1);
     });
   });
 
@@ -39,15 +39,13 @@ context('Insurance - Dashboard - new application', () => {
     before(() => {
       dashboardPage.startNewApplicationButton().click();
 
-      cy.submitInsuranceEligibilityAnswersFromBuyerCountryHappyPath();
+      cy.submitInsuranceEligibilityAnswersFromExporterLocationHappyPath();
 
       // get the reference number and check we're on the "all sections" and not the "do you have an account" page
       cy.getReferenceNumber().then((refNumber) => {
         referenceNumber = refNumber;
 
-        const allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-        cy.assertUrl(allSectionsUrl);
+        cy.assertAllSectionsUrl(referenceNumber);
       });
     });
 
@@ -62,7 +60,7 @@ context('Insurance - Dashboard - new application', () => {
     });
 
     it('should render the newly created application and the previously created application', () => {
-      table.body.rows().should('have.length', 2);
+      cy.assertLength(table.body.rows(), 2);
     });
 
     it('should order the applications in descending order', () => {

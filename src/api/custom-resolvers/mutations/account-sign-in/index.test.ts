@@ -3,8 +3,9 @@ import accountSignIn from '.';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
 import generate from '../../../helpers/generate-otp';
 import sendEmail from '../../../emails';
-import accountChecks from './account-checks';
+import accountChecks from './account-sign-in-checks';
 import accounts from '../../../test-helpers/accounts';
+import accountStatusHelper from '../../../test-helpers/account-status';
 import authRetries from '../../../test-helpers/auth-retries';
 import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin } from '../../../test-mocks';
 import { Account, AccountSignInResponse, Context } from '../../../types';
@@ -14,13 +15,15 @@ const { PASSWORD } = FIELD_IDS.INSURANCE.ACCOUNT;
 
 const { MAX_AUTH_RETRIES } = ACCOUNT;
 
+const { status, ...mockAccountUpdate } = mockAccount;
+
 describe('custom-resolvers/account-sign-in', () => {
   let context: Context;
   let account: Account;
 
   generate.otp = () => mockOTP;
 
-  const securityCodeEmailSpy = jest.fn();
+  const accessCodeEmailSpy = jest.fn();
 
   const mockPassword = String(process.env.MOCK_ACCOUNT_PASSWORD);
 
@@ -76,7 +79,30 @@ describe('custom-resolvers/account-sign-in', () => {
       // get the latest account
       account = await accounts.get(context, account.id);
 
-      expect(account.isBlocked).toEqual(false);
+      expect(account.status.isBlocked).toEqual(false);
+    });
+  });
+
+  describe('when the account is blocked', () => {
+    beforeAll(async () => {
+      await accounts.deleteAll(context);
+
+      account = await accounts.create({ context });
+      account = await accounts.get(context, account.id);
+
+      await accountStatusHelper.update(context, account.status.id, { isBlocked: true });
+    });
+
+    test('it should return success=false, isBlocked=true and accountId', async () => {
+      result = await accountSignIn({}, variables, context);
+
+      const expected = {
+        success: false,
+        isBlocked: true,
+        accountId: account.id,
+      };
+
+      expect(result).toEqual(expected);
     });
   });
 
@@ -119,11 +145,12 @@ describe('custom-resolvers/account-sign-in', () => {
 
         // create a new account and ensure it is not blocked so that we have a clean slate.
         const unblockedAccount = {
-          ...mockAccount,
-          isBlocked: false,
+          ...mockAccountUpdate,
         };
 
         account = await accounts.create({ context, data: unblockedAccount });
+        account = await accounts.get(context, account.id);
+        await accountStatusHelper.update(context, account.status.id, { isBlocked: false });
 
         // wipe the AuthenticationRetry table so we have a clean slate.
         await authRetries.deleteAll(context);
@@ -150,34 +177,7 @@ describe('custom-resolvers/account-sign-in', () => {
         // get the latest account
         account = await accounts.get(context, account.id);
 
-        expect(account.isBlocked).toEqual(true);
-      });
-    });
-
-    describe('when the account is blocked', () => {
-      beforeEach(async () => {
-        await accounts.deleteAll(context);
-
-        account = await accounts.create({ context });
-
-        account = (await context.query.Account.updateOne({
-          where: { id: account.id },
-          data: {
-            isBlocked: true,
-          },
-        })) as Account;
-
-        result = await accountSignIn({}, variables, context);
-      });
-
-      test('it should return success=false, isBlocked=true and accountId', async () => {
-        const expected = {
-          success: false,
-          isBlocked: true,
-          accountId: account.id,
-        };
-
-        expect(result).toEqual(expected);
+        expect(account.status.isBlocked).toEqual(true);
       });
     });
   });
@@ -197,14 +197,14 @@ describe('custom-resolvers/account-sign-in', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      sendEmail.securityCodeEmail = jest.fn(() => Promise.reject(mockSendEmailResponse));
+      sendEmail.accessCodeEmail = jest.fn(() => Promise.reject(mockSendEmailResponse));
     });
 
     test('should throw an error', async () => {
       try {
         await accountSignIn({}, variables, context);
       } catch (err) {
-        expect(securityCodeEmailSpy).toHaveBeenCalledTimes(1);
+        expect(accessCodeEmailSpy).toHaveBeenCalledTimes(1);
 
         const expected = new Error(`Validating password or sending email for account sign in (accountSignIn mutation) ${mockSendEmailResponse}`);
         expect(err).toEqual(expected);

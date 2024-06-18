@@ -1,15 +1,10 @@
-import {
-  backLink, countryInput, yesRadioInput, submitButton, summaryList,
-} from '../../../../../../pages/shared';
+import { backLink, autoCompleteField, summaryList } from '../../../../../../pages/shared';
 import { LINKS } from '../../../../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
+import { BRA } from '../../../../../../fixtures/countries';
 
 const {
-  ELIGIBILITY: {
-    BUYER_COUNTRY,
-    VALID_EXPORTER_LOCATION,
-    HAS_MINIMUM_UK_GOODS_OR_SERVICES,
-  },
+  ELIGIBILITY: { BUYER_COUNTRY, VALID_EXPORTER_LOCATION, HAS_MINIMUM_UK_GOODS_OR_SERVICES },
 } = FIELD_IDS;
 
 const submissionData = {
@@ -62,17 +57,13 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     });
 
     it('renders a back link with correct url', () => {
-      cy.checkLink(
-        backLink(),
-        checkYourAnswersUrl,
-        LINKS.BACK,
-      );
+      cy.checkLink(backLink(), checkYourAnswersUrl, LINKS.BACK);
     });
 
     it('has originally submitted answer selected', () => {
       const expectedValue = submissionData[BUYER_COUNTRY];
 
-      cy.checkText(countryInput.field(BUYER_COUNTRY).results(), expectedValue);
+      cy.checkText(autoCompleteField(BUYER_COUNTRY).results(), expectedValue);
     });
 
     describe('when submitting a new answer', () => {
@@ -80,11 +71,11 @@ context('Change your answers (export fields) - as an exporter, I want to change 
         cy.navigateToUrl(url);
         row.changeLink().click();
 
-        cy.keyboardInput(countryInput.field(BUYER_COUNTRY).input(), 'Brazil');
-        const results = countryInput.field(BUYER_COUNTRY).results();
+        cy.keyboardInput(autoCompleteField(BUYER_COUNTRY).input(), BRA.NAME);
+        const results = autoCompleteField(BUYER_COUNTRY).results();
         results.first().click();
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`redirects to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -96,7 +87,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
       it('renders the new answer in `Check your answers` page', () => {
         row = summaryList.field(BUYER_COUNTRY);
 
-        const expected = 'Brazil';
+        const expected = BRA.NAME;
         cy.checkText(row.value(), expected);
       });
     });
@@ -120,19 +111,15 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     it('renders a back link with correct url', () => {
       const expectedHref = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
-      cy.checkLink(
-        backLink(),
-        expectedHref,
-        LINKS.BACK,
-      );
+      cy.checkLink(backLink(), expectedHref, LINKS.BACK);
     });
 
     it('has originally submitted answer selected', () => {
-      yesRadioInput().should('be.checked');
+      cy.assertYesRadioOptionIsChecked();
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when resubmitting`, () => {
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${checkYourAnswersUrl}#heading`;
 
@@ -157,19 +144,15 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     it('renders a back link with correct url', () => {
       const expectedHref = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
-      cy.checkLink(
-        backLink(),
-        expectedHref,
-        LINKS.BACK,
-      );
+      cy.checkLink(backLink(), expectedHref, LINKS.BACK);
     });
 
     it('has originally submitted answer', () => {
-      yesRadioInput().should('be.checked');
+      cy.assertYesRadioOptionIsChecked();
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when resubmitting`, () => {
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${checkYourAnswersUrl}#heading`;
 

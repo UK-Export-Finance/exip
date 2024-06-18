@@ -1,8 +1,9 @@
 import yearsExporting from './estimated-annual-turnover';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/business';
-import { RequestBody } from '../../../../../../../types';
 import generateValidationErrors from '../../../../../../helpers/validation';
+import { mockErrors } from '../../../../../../test-mocks';
+import { RequestBody } from '../../../../../../../types';
 
 const {
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER },
@@ -11,17 +12,12 @@ const {
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 
 describe('controllers/insurance/business/turnover/validation/rules/estimated-annual-turnover', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [ESTIMATED_ANNUAL_TURNOVER]: '',
   } as RequestBody;
 
   describe(`when the ${ESTIMATED_ANNUAL_TURNOVER} input is empty`, () => {
-    it('should return a validation error', () => {
+    it('should return the result of numberValidation', () => {
       const response = yearsExporting(mockBody, mockErrors);
 
       const errorMessage = EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER].IS_EMPTY;
@@ -32,7 +28,7 @@ describe('controllers/insurance/business/turnover/validation/rules/estimated-ann
   });
 
   describe(`when the ${ESTIMATED_ANNUAL_TURNOVER} input contains a letter`, () => {
-    it('should return a validation error', () => {
+    it('should return the result of numberValidation', () => {
       mockBody[ESTIMATED_ANNUAL_TURNOVER] = 'I5';
       const response = yearsExporting(mockBody, mockErrors);
 
@@ -44,7 +40,7 @@ describe('controllers/insurance/business/turnover/validation/rules/estimated-ann
   });
 
   describe(`when the ${ESTIMATED_ANNUAL_TURNOVER} input contains a decimal place`, () => {
-    it('should return a validation error', () => {
+    it('should return the result of numberValidation', () => {
       mockBody[ESTIMATED_ANNUAL_TURNOVER] = '3.1';
       const response = yearsExporting(mockBody, mockErrors);
 
@@ -56,7 +52,7 @@ describe('controllers/insurance/business/turnover/validation/rules/estimated-ann
   });
 
   describe(`when the ${ESTIMATED_ANNUAL_TURNOVER} input contains a special character`, () => {
-    it('should return a validation error', () => {
+    it('should return the result of numberValidation', () => {
       mockBody[ESTIMATED_ANNUAL_TURNOVER] = '1*';
       const response = yearsExporting(mockBody, mockErrors);
 
@@ -68,7 +64,7 @@ describe('controllers/insurance/business/turnover/validation/rules/estimated-ann
   });
 
   describe(`when the ${ESTIMATED_ANNUAL_TURNOVER} input is below 0 but has a decimal place`, () => {
-    it('should return a validation error', () => {
+    it('should return the result of numberValidation', () => {
       mockBody[ESTIMATED_ANNUAL_TURNOVER] = '-3.123';
       const response = yearsExporting(mockBody, mockErrors);
 
@@ -80,7 +76,7 @@ describe('controllers/insurance/business/turnover/validation/rules/estimated-ann
   });
 
   describe(`when the ${ESTIMATED_ANNUAL_TURNOVER} input is below 0 but has a decimal place and letters`, () => {
-    it('should return a validation error', () => {
+    it('should return the result of numberValidation', () => {
       mockBody[ESTIMATED_ANNUAL_TURNOVER] = '-3.AB123';
       const response = yearsExporting(mockBody, mockErrors);
 

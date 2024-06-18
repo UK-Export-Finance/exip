@@ -78,12 +78,13 @@ type Application {
   exportContract: ExportContract
   owner: Account
   business: Business
-  company: Company
   broker: Broker
   buyer: Buyer
-  sectionReview: SectionReview
+  company: Company
   declaration: Declaration
+  nominatedLossPayee: NominatedLossPayee
   policyContact: PolicyContact
+  sectionReview: SectionReview
   version: String
   dealType: String
 }
@@ -92,6 +93,7 @@ scalar DateTime @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339
 
 input ApplicationWhereUniqueInput {
   id: ID
+  referenceNumber: Int
 }
 
 input ApplicationWhereInput {
@@ -113,12 +115,13 @@ input ApplicationWhereInput {
   exportContract: ExportContractWhereInput
   owner: AccountWhereInput
   business: BusinessWhereInput
-  company: CompanyWhereInput
   broker: BrokerWhereInput
   buyer: BuyerWhereInput
-  sectionReview: SectionReviewWhereInput
+  company: CompanyWhereInput
   declaration: DeclarationWhereInput
+  nominatedLossPayee: NominatedLossPayeeWhereInput
   policyContact: PolicyContactWhereInput
+  sectionReview: SectionReviewWhereInput
   version: StringFilter
   dealType: StringFilter
 }
@@ -228,12 +231,13 @@ input ApplicationUpdateInput {
   exportContract: ExportContractRelateToOneForUpdateInput
   owner: AccountRelateToOneForUpdateInput
   business: BusinessRelateToOneForUpdateInput
-  company: CompanyRelateToOneForUpdateInput
   broker: BrokerRelateToOneForUpdateInput
   buyer: BuyerRelateToOneForUpdateInput
-  sectionReview: SectionReviewRelateToOneForUpdateInput
+  company: CompanyRelateToOneForUpdateInput
   declaration: DeclarationRelateToOneForUpdateInput
+  nominatedLossPayee: NominatedLossPayeeRelateToOneForUpdateInput
   policyContact: PolicyContactRelateToOneForUpdateInput
+  sectionReview: SectionReviewRelateToOneForUpdateInput
   version: String
   dealType: String
 }
@@ -268,12 +272,6 @@ input BusinessRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input CompanyRelateToOneForUpdateInput {
-  create: CompanyCreateInput
-  connect: CompanyWhereUniqueInput
-  disconnect: Boolean
-}
-
 input BrokerRelateToOneForUpdateInput {
   create: BrokerCreateInput
   connect: BrokerWhereUniqueInput
@@ -286,9 +284,9 @@ input BuyerRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input SectionReviewRelateToOneForUpdateInput {
-  create: SectionReviewCreateInput
-  connect: SectionReviewWhereUniqueInput
+input CompanyRelateToOneForUpdateInput {
+  create: CompanyCreateInput
+  connect: CompanyWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -298,9 +296,21 @@ input DeclarationRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
+input NominatedLossPayeeRelateToOneForUpdateInput {
+  create: NominatedLossPayeeCreateInput
+  connect: NominatedLossPayeeWhereUniqueInput
+  disconnect: Boolean
+}
+
 input PolicyContactRelateToOneForUpdateInput {
   create: PolicyContactCreateInput
   connect: PolicyContactWhereUniqueInput
+  disconnect: Boolean
+}
+
+input SectionReviewRelateToOneForUpdateInput {
+  create: SectionReviewCreateInput
+  connect: SectionReviewWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -324,12 +334,13 @@ input ApplicationCreateInput {
   exportContract: ExportContractRelateToOneForCreateInput
   owner: AccountRelateToOneForCreateInput
   business: BusinessRelateToOneForCreateInput
-  company: CompanyRelateToOneForCreateInput
   broker: BrokerRelateToOneForCreateInput
   buyer: BuyerRelateToOneForCreateInput
-  sectionReview: SectionReviewRelateToOneForCreateInput
+  company: CompanyRelateToOneForCreateInput
   declaration: DeclarationRelateToOneForCreateInput
+  nominatedLossPayee: NominatedLossPayeeRelateToOneForCreateInput
   policyContact: PolicyContactRelateToOneForCreateInput
+  sectionReview: SectionReviewRelateToOneForCreateInput
   version: String
   dealType: String
 }
@@ -359,11 +370,6 @@ input BusinessRelateToOneForCreateInput {
   connect: BusinessWhereUniqueInput
 }
 
-input CompanyRelateToOneForCreateInput {
-  create: CompanyCreateInput
-  connect: CompanyWhereUniqueInput
-}
-
 input BrokerRelateToOneForCreateInput {
   create: BrokerCreateInput
   connect: BrokerWhereUniqueInput
@@ -374,9 +380,9 @@ input BuyerRelateToOneForCreateInput {
   connect: BuyerWhereUniqueInput
 }
 
-input SectionReviewRelateToOneForCreateInput {
-  create: SectionReviewCreateInput
-  connect: SectionReviewWhereUniqueInput
+input CompanyRelateToOneForCreateInput {
+  create: CompanyCreateInput
+  connect: CompanyWhereUniqueInput
 }
 
 input DeclarationRelateToOneForCreateInput {
@@ -384,9 +390,19 @@ input DeclarationRelateToOneForCreateInput {
   connect: DeclarationWhereUniqueInput
 }
 
+input NominatedLossPayeeRelateToOneForCreateInput {
+  create: NominatedLossPayeeCreateInput
+  connect: NominatedLossPayeeWhereUniqueInput
+}
+
 input PolicyContactRelateToOneForCreateInput {
   create: PolicyContactCreateInput
   connect: PolicyContactWhereUniqueInput
+}
+
+input SectionReviewRelateToOneForCreateInput {
+  create: SectionReviewCreateInput
+  connect: SectionReviewWhereUniqueInput
 }
 
 type TotalContractValue {
@@ -469,9 +485,304 @@ input CoverPeriodCreateInput {
   value: String
 }
 
+type LossPayeeFinancialInternational {
+  id: ID!
+  lossPayee: NominatedLossPayee
+  vector: LossPayeeFinancialInternationalVector
+  bankAddress: String
+  bicSwiftCode: String
+  iban: String
+}
+
+input LossPayeeFinancialInternationalWhereUniqueInput {
+  id: ID
+}
+
+input LossPayeeFinancialInternationalWhereInput {
+  AND: [LossPayeeFinancialInternationalWhereInput!]
+  OR: [LossPayeeFinancialInternationalWhereInput!]
+  NOT: [LossPayeeFinancialInternationalWhereInput!]
+  id: IDFilter
+  lossPayee: NominatedLossPayeeWhereInput
+  vector: LossPayeeFinancialInternationalVectorWhereInput
+  bankAddress: StringFilter
+  bicSwiftCode: StringFilter
+  iban: StringFilter
+}
+
+input LossPayeeFinancialInternationalOrderByInput {
+  id: OrderDirection
+  bankAddress: OrderDirection
+  bicSwiftCode: OrderDirection
+  iban: OrderDirection
+}
+
+input LossPayeeFinancialInternationalUpdateInput {
+  lossPayee: NominatedLossPayeeRelateToOneForUpdateInput
+  vector: LossPayeeFinancialInternationalVectorRelateToOneForUpdateInput
+  bankAddress: String
+  bicSwiftCode: String
+  iban: String
+}
+
+input LossPayeeFinancialInternationalVectorRelateToOneForUpdateInput {
+  create: LossPayeeFinancialInternationalVectorCreateInput
+  connect: LossPayeeFinancialInternationalVectorWhereUniqueInput
+  disconnect: Boolean
+}
+
+input LossPayeeFinancialInternationalUpdateArgs {
+  where: LossPayeeFinancialInternationalWhereUniqueInput!
+  data: LossPayeeFinancialInternationalUpdateInput!
+}
+
+input LossPayeeFinancialInternationalCreateInput {
+  lossPayee: NominatedLossPayeeRelateToOneForCreateInput
+  vector: LossPayeeFinancialInternationalVectorRelateToOneForCreateInput
+  bankAddress: String
+  bicSwiftCode: String
+  iban: String
+}
+
+input LossPayeeFinancialInternationalVectorRelateToOneForCreateInput {
+  create: LossPayeeFinancialInternationalVectorCreateInput
+  connect: LossPayeeFinancialInternationalVectorWhereUniqueInput
+}
+
+type LossPayeeFinancialInternationalVector {
+  id: ID!
+  financialInternational: LossPayeeFinancialInternational
+  bicSwiftCodeVector: String
+  ibanVector: String
+}
+
+input LossPayeeFinancialInternationalVectorWhereUniqueInput {
+  id: ID
+}
+
+input LossPayeeFinancialInternationalVectorWhereInput {
+  AND: [LossPayeeFinancialInternationalVectorWhereInput!]
+  OR: [LossPayeeFinancialInternationalVectorWhereInput!]
+  NOT: [LossPayeeFinancialInternationalVectorWhereInput!]
+  id: IDFilter
+  financialInternational: LossPayeeFinancialInternationalWhereInput
+  bicSwiftCodeVector: StringFilter
+  ibanVector: StringFilter
+}
+
+input LossPayeeFinancialInternationalVectorOrderByInput {
+  id: OrderDirection
+  bicSwiftCodeVector: OrderDirection
+  ibanVector: OrderDirection
+}
+
+input LossPayeeFinancialInternationalVectorUpdateInput {
+  financialInternational: LossPayeeFinancialInternationalRelateToOneForUpdateInput
+  bicSwiftCodeVector: String
+  ibanVector: String
+}
+
+input LossPayeeFinancialInternationalRelateToOneForUpdateInput {
+  create: LossPayeeFinancialInternationalCreateInput
+  connect: LossPayeeFinancialInternationalWhereUniqueInput
+  disconnect: Boolean
+}
+
+input LossPayeeFinancialInternationalVectorUpdateArgs {
+  where: LossPayeeFinancialInternationalVectorWhereUniqueInput!
+  data: LossPayeeFinancialInternationalVectorUpdateInput!
+}
+
+input LossPayeeFinancialInternationalVectorCreateInput {
+  financialInternational: LossPayeeFinancialInternationalRelateToOneForCreateInput
+  bicSwiftCodeVector: String
+  ibanVector: String
+}
+
+input LossPayeeFinancialInternationalRelateToOneForCreateInput {
+  create: LossPayeeFinancialInternationalCreateInput
+  connect: LossPayeeFinancialInternationalWhereUniqueInput
+}
+
+type LossPayeeFinancialUk {
+  id: ID!
+  lossPayee: NominatedLossPayee
+  vector: LossPayeeFinancialUkVector
+  accountNumber: String
+  bankAddress: String
+  sortCode: String
+}
+
+input LossPayeeFinancialUkWhereUniqueInput {
+  id: ID
+}
+
+input LossPayeeFinancialUkWhereInput {
+  AND: [LossPayeeFinancialUkWhereInput!]
+  OR: [LossPayeeFinancialUkWhereInput!]
+  NOT: [LossPayeeFinancialUkWhereInput!]
+  id: IDFilter
+  lossPayee: NominatedLossPayeeWhereInput
+  vector: LossPayeeFinancialUkVectorWhereInput
+  accountNumber: StringFilter
+  bankAddress: StringFilter
+  sortCode: StringFilter
+}
+
+input LossPayeeFinancialUkOrderByInput {
+  id: OrderDirection
+  accountNumber: OrderDirection
+  bankAddress: OrderDirection
+  sortCode: OrderDirection
+}
+
+input LossPayeeFinancialUkUpdateInput {
+  lossPayee: NominatedLossPayeeRelateToOneForUpdateInput
+  vector: LossPayeeFinancialUkVectorRelateToOneForUpdateInput
+  accountNumber: String
+  bankAddress: String
+  sortCode: String
+}
+
+input LossPayeeFinancialUkVectorRelateToOneForUpdateInput {
+  create: LossPayeeFinancialUkVectorCreateInput
+  connect: LossPayeeFinancialUkVectorWhereUniqueInput
+  disconnect: Boolean
+}
+
+input LossPayeeFinancialUkUpdateArgs {
+  where: LossPayeeFinancialUkWhereUniqueInput!
+  data: LossPayeeFinancialUkUpdateInput!
+}
+
+input LossPayeeFinancialUkCreateInput {
+  lossPayee: NominatedLossPayeeRelateToOneForCreateInput
+  vector: LossPayeeFinancialUkVectorRelateToOneForCreateInput
+  accountNumber: String
+  bankAddress: String
+  sortCode: String
+}
+
+input LossPayeeFinancialUkVectorRelateToOneForCreateInput {
+  create: LossPayeeFinancialUkVectorCreateInput
+  connect: LossPayeeFinancialUkVectorWhereUniqueInput
+}
+
+type LossPayeeFinancialUkVector {
+  id: ID!
+  financialUk: LossPayeeFinancialUk
+  accountNumberVector: String
+  sortCodeVector: String
+}
+
+input LossPayeeFinancialUkVectorWhereUniqueInput {
+  id: ID
+}
+
+input LossPayeeFinancialUkVectorWhereInput {
+  AND: [LossPayeeFinancialUkVectorWhereInput!]
+  OR: [LossPayeeFinancialUkVectorWhereInput!]
+  NOT: [LossPayeeFinancialUkVectorWhereInput!]
+  id: IDFilter
+  financialUk: LossPayeeFinancialUkWhereInput
+  accountNumberVector: StringFilter
+  sortCodeVector: StringFilter
+}
+
+input LossPayeeFinancialUkVectorOrderByInput {
+  id: OrderDirection
+  accountNumberVector: OrderDirection
+  sortCodeVector: OrderDirection
+}
+
+input LossPayeeFinancialUkVectorUpdateInput {
+  financialUk: LossPayeeFinancialUkRelateToOneForUpdateInput
+  accountNumberVector: String
+  sortCodeVector: String
+}
+
+input LossPayeeFinancialUkRelateToOneForUpdateInput {
+  create: LossPayeeFinancialUkCreateInput
+  connect: LossPayeeFinancialUkWhereUniqueInput
+  disconnect: Boolean
+}
+
+input LossPayeeFinancialUkVectorUpdateArgs {
+  where: LossPayeeFinancialUkVectorWhereUniqueInput!
+  data: LossPayeeFinancialUkVectorUpdateInput!
+}
+
+input LossPayeeFinancialUkVectorCreateInput {
+  financialUk: LossPayeeFinancialUkRelateToOneForCreateInput
+  accountNumberVector: String
+  sortCodeVector: String
+}
+
+input LossPayeeFinancialUkRelateToOneForCreateInput {
+  create: LossPayeeFinancialUkCreateInput
+  connect: LossPayeeFinancialUkWhereUniqueInput
+}
+
+type NominatedLossPayee {
+  id: ID!
+  application: Application
+  financialUk: LossPayeeFinancialUk
+  financialInternational: LossPayeeFinancialInternational
+  isAppointed: Boolean
+  isLocatedInUk: Boolean
+  isLocatedInternationally: Boolean
+  name: String
+}
+
+input NominatedLossPayeeWhereUniqueInput {
+  id: ID
+}
+
+input NominatedLossPayeeWhereInput {
+  AND: [NominatedLossPayeeWhereInput!]
+  OR: [NominatedLossPayeeWhereInput!]
+  NOT: [NominatedLossPayeeWhereInput!]
+  id: IDFilter
+  application: ApplicationWhereInput
+  financialUk: LossPayeeFinancialUkWhereInput
+  financialInternational: LossPayeeFinancialInternationalWhereInput
+  name: StringFilter
+}
+
+input NominatedLossPayeeOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+}
+
+input NominatedLossPayeeUpdateInput {
+  application: ApplicationRelateToOneForUpdateInput
+  financialUk: LossPayeeFinancialUkRelateToOneForUpdateInput
+  financialInternational: LossPayeeFinancialInternationalRelateToOneForUpdateInput
+  isAppointed: Boolean
+  isLocatedInUk: Boolean
+  isLocatedInternationally: Boolean
+  name: String
+}
+
+input NominatedLossPayeeUpdateArgs {
+  where: NominatedLossPayeeWhereUniqueInput!
+  data: NominatedLossPayeeUpdateInput!
+}
+
+input NominatedLossPayeeCreateInput {
+  application: ApplicationRelateToOneForCreateInput
+  financialUk: LossPayeeFinancialUkRelateToOneForCreateInput
+  financialInternational: LossPayeeFinancialInternationalRelateToOneForCreateInput
+  isAppointed: Boolean
+  isLocatedInUk: Boolean
+  isLocatedInternationally: Boolean
+  name: String
+}
+
 type Policy {
   id: ID!
   application: Application
+  jointlyInsuredParty: JointlyInsuredParty
   needPreCreditPeriodCover: Boolean
   policyType: String
   requestedStartDate: DateTime
@@ -494,6 +805,7 @@ input PolicyWhereInput {
   NOT: [PolicyWhereInput!]
   id: IDFilter
   application: ApplicationWhereInput
+  jointlyInsuredParty: JointlyInsuredPartyWhereInput
   policyType: StringNullableFilter
   requestedStartDate: DateTimeNullableFilter
   contractCompletionDate: DateTimeNullableFilter
@@ -520,6 +832,7 @@ input PolicyOrderByInput {
 
 input PolicyUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
+  jointlyInsuredParty: JointlyInsuredPartyRelateToOneForUpdateInput
   needPreCreditPeriodCover: Boolean
   policyType: String
   requestedStartDate: DateTime
@@ -530,6 +843,12 @@ input PolicyUpdateInput {
   totalMonthsOfCover: Int
   totalSalesToBuyer: Int
   maximumBuyerWillOwe: Int
+}
+
+input JointlyInsuredPartyRelateToOneForUpdateInput {
+  create: JointlyInsuredPartyCreateInput
+  connect: JointlyInsuredPartyWhereUniqueInput
+  disconnect: Boolean
 }
 
 input PolicyUpdateArgs {
@@ -539,6 +858,7 @@ input PolicyUpdateArgs {
 
 input PolicyCreateInput {
   application: ApplicationRelateToOneForCreateInput
+  jointlyInsuredParty: JointlyInsuredPartyRelateToOneForCreateInput
   needPreCreditPeriodCover: Boolean
   policyType: String
   requestedStartDate: DateTime
@@ -549,6 +869,11 @@ input PolicyCreateInput {
   totalMonthsOfCover: Int
   totalSalesToBuyer: Int
   maximumBuyerWillOwe: Int
+}
+
+input JointlyInsuredPartyRelateToOneForCreateInput {
+  create: JointlyInsuredPartyCreateInput
+  connect: JointlyInsuredPartyWhereUniqueInput
 }
 
 type PolicyContact {
@@ -608,12 +933,67 @@ input PolicyContactCreateInput {
   isSameAsOwner: Boolean
 }
 
+type JointlyInsuredParty {
+  id: ID!
+  policy: Policy
+  requested: Boolean
+  companyName: String
+  companyNumber: String
+  countryCode: String
+}
+
+input JointlyInsuredPartyWhereUniqueInput {
+  id: ID
+}
+
+input JointlyInsuredPartyWhereInput {
+  AND: [JointlyInsuredPartyWhereInput!]
+  OR: [JointlyInsuredPartyWhereInput!]
+  NOT: [JointlyInsuredPartyWhereInput!]
+  id: IDFilter
+  policy: PolicyWhereInput
+  companyName: StringFilter
+  companyNumber: StringFilter
+  countryCode: StringFilter
+}
+
+input JointlyInsuredPartyOrderByInput {
+  id: OrderDirection
+  companyName: OrderDirection
+  companyNumber: OrderDirection
+  countryCode: OrderDirection
+}
+
+input JointlyInsuredPartyUpdateInput {
+  policy: PolicyRelateToOneForUpdateInput
+  requested: Boolean
+  companyName: String
+  companyNumber: String
+  countryCode: String
+}
+
+input JointlyInsuredPartyUpdateArgs {
+  where: JointlyInsuredPartyWhereUniqueInput!
+  data: JointlyInsuredPartyUpdateInput!
+}
+
+input JointlyInsuredPartyCreateInput {
+  policy: PolicyRelateToOneForCreateInput
+  requested: Boolean
+  companyName: String
+  companyNumber: String
+  countryCode: String
+}
+
 type ExportContract {
   id: ID!
   application: Application
-  goodsOrServicesDescription: String
+  agent: ExportContractAgent
+  privateMarket: PrivateMarket
   finalDestinationKnown: Boolean
   finalDestinationCountryCode: String
+  goodsOrServicesDescription: String
+  paymentTermsDescription: String
 }
 
 input ExportContractWhereUniqueInput {
@@ -626,21 +1006,40 @@ input ExportContractWhereInput {
   NOT: [ExportContractWhereInput!]
   id: IDFilter
   application: ApplicationWhereInput
-  goodsOrServicesDescription: StringFilter
+  agent: ExportContractAgentWhereInput
+  privateMarket: PrivateMarketWhereInput
   finalDestinationCountryCode: StringFilter
+  goodsOrServicesDescription: StringFilter
+  paymentTermsDescription: StringFilter
 }
 
 input ExportContractOrderByInput {
   id: OrderDirection
-  goodsOrServicesDescription: OrderDirection
   finalDestinationCountryCode: OrderDirection
+  goodsOrServicesDescription: OrderDirection
+  paymentTermsDescription: OrderDirection
 }
 
 input ExportContractUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
-  goodsOrServicesDescription: String
+  agent: ExportContractAgentRelateToOneForUpdateInput
+  privateMarket: PrivateMarketRelateToOneForUpdateInput
   finalDestinationKnown: Boolean
   finalDestinationCountryCode: String
+  goodsOrServicesDescription: String
+  paymentTermsDescription: String
+}
+
+input ExportContractAgentRelateToOneForUpdateInput {
+  create: ExportContractAgentCreateInput
+  connect: ExportContractAgentWhereUniqueInput
+  disconnect: Boolean
+}
+
+input PrivateMarketRelateToOneForUpdateInput {
+  create: PrivateMarketCreateInput
+  connect: PrivateMarketWhereUniqueInput
+  disconnect: Boolean
 }
 
 input ExportContractUpdateArgs {
@@ -650,9 +1049,247 @@ input ExportContractUpdateArgs {
 
 input ExportContractCreateInput {
   application: ApplicationRelateToOneForCreateInput
-  goodsOrServicesDescription: String
+  agent: ExportContractAgentRelateToOneForCreateInput
+  privateMarket: PrivateMarketRelateToOneForCreateInput
   finalDestinationKnown: Boolean
   finalDestinationCountryCode: String
+  goodsOrServicesDescription: String
+  paymentTermsDescription: String
+}
+
+input ExportContractAgentRelateToOneForCreateInput {
+  create: ExportContractAgentCreateInput
+  connect: ExportContractAgentWhereUniqueInput
+}
+
+input PrivateMarketRelateToOneForCreateInput {
+  create: PrivateMarketCreateInput
+  connect: PrivateMarketWhereUniqueInput
+}
+
+type ExportContractAgent {
+  id: ID!
+  exportContract: ExportContract
+  service: ExportContractAgentService
+  countryCode: String
+  fullAddress: String
+  isUsingAgent: Boolean
+  name: String
+}
+
+input ExportContractAgentWhereUniqueInput {
+  id: ID
+}
+
+input ExportContractAgentWhereInput {
+  AND: [ExportContractAgentWhereInput!]
+  OR: [ExportContractAgentWhereInput!]
+  NOT: [ExportContractAgentWhereInput!]
+  id: IDFilter
+  exportContract: ExportContractWhereInput
+  service: ExportContractAgentServiceWhereInput
+  countryCode: StringFilter
+  fullAddress: StringFilter
+  name: StringFilter
+}
+
+input ExportContractAgentOrderByInput {
+  id: OrderDirection
+  countryCode: OrderDirection
+  fullAddress: OrderDirection
+  name: OrderDirection
+}
+
+input ExportContractAgentUpdateInput {
+  exportContract: ExportContractRelateToOneForUpdateInput
+  service: ExportContractAgentServiceRelateToOneForUpdateInput
+  countryCode: String
+  fullAddress: String
+  isUsingAgent: Boolean
+  name: String
+}
+
+input ExportContractAgentServiceRelateToOneForUpdateInput {
+  create: ExportContractAgentServiceCreateInput
+  connect: ExportContractAgentServiceWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ExportContractAgentUpdateArgs {
+  where: ExportContractAgentWhereUniqueInput!
+  data: ExportContractAgentUpdateInput!
+}
+
+input ExportContractAgentCreateInput {
+  exportContract: ExportContractRelateToOneForCreateInput
+  service: ExportContractAgentServiceRelateToOneForCreateInput
+  countryCode: String
+  fullAddress: String
+  isUsingAgent: Boolean
+  name: String
+}
+
+input ExportContractAgentServiceRelateToOneForCreateInput {
+  create: ExportContractAgentServiceCreateInput
+  connect: ExportContractAgentServiceWhereUniqueInput
+}
+
+type ExportContractAgentService {
+  id: ID!
+  agent: ExportContractAgent
+  charge: ExportContractAgentServiceCharge
+  agentIsCharging: Boolean
+  serviceDescription: String
+}
+
+input ExportContractAgentServiceWhereUniqueInput {
+  id: ID
+}
+
+input ExportContractAgentServiceWhereInput {
+  AND: [ExportContractAgentServiceWhereInput!]
+  OR: [ExportContractAgentServiceWhereInput!]
+  NOT: [ExportContractAgentServiceWhereInput!]
+  id: IDFilter
+  agent: ExportContractAgentWhereInput
+  charge: ExportContractAgentServiceChargeWhereInput
+  serviceDescription: StringFilter
+}
+
+input ExportContractAgentServiceOrderByInput {
+  id: OrderDirection
+  serviceDescription: OrderDirection
+}
+
+input ExportContractAgentServiceUpdateInput {
+  agent: ExportContractAgentRelateToOneForUpdateInput
+  charge: ExportContractAgentServiceChargeRelateToOneForUpdateInput
+  agentIsCharging: Boolean
+  serviceDescription: String
+}
+
+input ExportContractAgentServiceChargeRelateToOneForUpdateInput {
+  create: ExportContractAgentServiceChargeCreateInput
+  connect: ExportContractAgentServiceChargeWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ExportContractAgentServiceUpdateArgs {
+  where: ExportContractAgentServiceWhereUniqueInput!
+  data: ExportContractAgentServiceUpdateInput!
+}
+
+input ExportContractAgentServiceCreateInput {
+  agent: ExportContractAgentRelateToOneForCreateInput
+  charge: ExportContractAgentServiceChargeRelateToOneForCreateInput
+  agentIsCharging: Boolean
+  serviceDescription: String
+}
+
+input ExportContractAgentServiceChargeRelateToOneForCreateInput {
+  create: ExportContractAgentServiceChargeCreateInput
+  connect: ExportContractAgentServiceChargeWhereUniqueInput
+}
+
+type ExportContractAgentServiceCharge {
+  id: ID!
+  service: ExportContractAgentService
+  percentageCharge: Int
+  fixedSumAmount: Int
+  fixedSumCurrencyCode: String
+  method: String
+  payableCountryCode: String
+}
+
+input ExportContractAgentServiceChargeWhereUniqueInput {
+  id: ID
+}
+
+input ExportContractAgentServiceChargeWhereInput {
+  AND: [ExportContractAgentServiceChargeWhereInput!]
+  OR: [ExportContractAgentServiceChargeWhereInput!]
+  NOT: [ExportContractAgentServiceChargeWhereInput!]
+  id: IDFilter
+  service: ExportContractAgentServiceWhereInput
+  percentageCharge: IntNullableFilter
+  fixedSumAmount: IntNullableFilter
+  fixedSumCurrencyCode: StringFilter
+  method: StringNullableFilter
+  payableCountryCode: StringFilter
+}
+
+input ExportContractAgentServiceChargeOrderByInput {
+  id: OrderDirection
+  percentageCharge: OrderDirection
+  fixedSumAmount: OrderDirection
+  fixedSumCurrencyCode: OrderDirection
+  method: OrderDirection
+  payableCountryCode: OrderDirection
+}
+
+input ExportContractAgentServiceChargeUpdateInput {
+  service: ExportContractAgentServiceRelateToOneForUpdateInput
+  percentageCharge: Int
+  fixedSumAmount: Int
+  fixedSumCurrencyCode: String
+  method: String
+  payableCountryCode: String
+}
+
+input ExportContractAgentServiceChargeUpdateArgs {
+  where: ExportContractAgentServiceChargeWhereUniqueInput!
+  data: ExportContractAgentServiceChargeUpdateInput!
+}
+
+input ExportContractAgentServiceChargeCreateInput {
+  service: ExportContractAgentServiceRelateToOneForCreateInput
+  percentageCharge: Int
+  fixedSumAmount: Int
+  fixedSumCurrencyCode: String
+  method: String
+  payableCountryCode: String
+}
+
+type PrivateMarket {
+  id: ID!
+  exportContract: ExportContract
+  attempted: Boolean
+  declinedDescription: String
+}
+
+input PrivateMarketWhereUniqueInput {
+  id: ID
+}
+
+input PrivateMarketWhereInput {
+  AND: [PrivateMarketWhereInput!]
+  OR: [PrivateMarketWhereInput!]
+  NOT: [PrivateMarketWhereInput!]
+  id: IDFilter
+  exportContract: ExportContractWhereInput
+  declinedDescription: StringFilter
+}
+
+input PrivateMarketOrderByInput {
+  id: OrderDirection
+  declinedDescription: OrderDirection
+}
+
+input PrivateMarketUpdateInput {
+  exportContract: ExportContractRelateToOneForUpdateInput
+  attempted: Boolean
+  declinedDescription: String
+}
+
+input PrivateMarketUpdateArgs {
+  where: PrivateMarketWhereUniqueInput!
+  data: PrivateMarketUpdateInput!
+}
+
+input PrivateMarketCreateInput {
+  exportContract: ExportContractRelateToOneForCreateInput
+  attempted: Boolean
+  declinedDescription: String
 }
 
 type Account {
@@ -664,8 +1301,6 @@ type Account {
   email: String
   salt: String
   hash: String
-  isVerified: Boolean
-  isBlocked: Boolean
   verificationHash: String
   verificationExpiry: DateTime
   otpSalt: String
@@ -681,6 +1316,7 @@ type Account {
   reactivationExpiry: DateTime
   applications(where: ApplicationWhereInput! = {}, orderBy: [ApplicationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ApplicationWhereUniqueInput): [Application!]
   applicationsCount(where: ApplicationWhereInput! = {}): Int
+  status: AccountStatus
 }
 
 input AccountWhereUniqueInput {
@@ -699,8 +1335,6 @@ input AccountWhereInput {
   email: StringFilter
   salt: StringFilter
   hash: StringFilter
-  isVerified: BooleanFilter
-  isBlocked: BooleanFilter
   verificationHash: StringFilter
   verificationExpiry: DateTimeNullableFilter
   otpSalt: StringFilter
@@ -715,11 +1349,7 @@ input AccountWhereInput {
   reactivationHash: StringFilter
   reactivationExpiry: DateTimeNullableFilter
   applications: ApplicationManyRelationFilter
-}
-
-input BooleanFilter {
-  equals: Boolean
-  not: BooleanFilter
+  status: AccountStatusWhereInput
 }
 
 input ApplicationManyRelationFilter {
@@ -737,8 +1367,6 @@ input AccountOrderByInput {
   email: OrderDirection
   salt: OrderDirection
   hash: OrderDirection
-  isVerified: OrderDirection
-  isBlocked: OrderDirection
   verificationHash: OrderDirection
   verificationExpiry: OrderDirection
   otpSalt: OrderDirection
@@ -760,8 +1388,6 @@ input AccountUpdateInput {
   email: String
   salt: String
   hash: String
-  isVerified: Boolean
-  isBlocked: Boolean
   verificationHash: String
   verificationExpiry: DateTime
   otpSalt: String
@@ -776,6 +1402,7 @@ input AccountUpdateInput {
   reactivationHash: String
   reactivationExpiry: DateTime
   applications: ApplicationRelateToManyForUpdateInput
+  status: AccountStatusRelateToOneForUpdateInput
 }
 
 input AuthenticationRelateToOneForUpdateInput {
@@ -797,6 +1424,12 @@ input ApplicationRelateToManyForUpdateInput {
   connect: [ApplicationWhereUniqueInput!]
 }
 
+input AccountStatusRelateToOneForUpdateInput {
+  create: AccountStatusCreateInput
+  connect: AccountStatusWhereUniqueInput
+  disconnect: Boolean
+}
+
 input AccountUpdateArgs {
   where: AccountWhereUniqueInput!
   data: AccountUpdateInput!
@@ -810,8 +1443,6 @@ input AccountCreateInput {
   email: String
   salt: String
   hash: String
-  isVerified: Boolean
-  isBlocked: Boolean
   verificationHash: String
   verificationExpiry: DateTime
   otpSalt: String
@@ -826,6 +1457,7 @@ input AccountCreateInput {
   reactivationHash: String
   reactivationExpiry: DateTime
   applications: ApplicationRelateToManyForCreateInput
+  status: AccountStatusRelateToOneForCreateInput
 }
 
 input AuthenticationRelateToOneForCreateInput {
@@ -841,6 +1473,70 @@ input AuthenticationRetryRelateToOneForCreateInput {
 input ApplicationRelateToManyForCreateInput {
   create: [ApplicationCreateInput!]
   connect: [ApplicationWhereUniqueInput!]
+}
+
+input AccountStatusRelateToOneForCreateInput {
+  create: AccountStatusCreateInput
+  connect: AccountStatusWhereUniqueInput
+}
+
+type AccountStatus {
+  id: ID!
+  account: Account
+  isVerified: Boolean
+  isBlocked: Boolean
+  isInactive: Boolean
+  updatedAt: DateTime
+}
+
+input AccountStatusWhereUniqueInput {
+  id: ID
+}
+
+input AccountStatusWhereInput {
+  AND: [AccountStatusWhereInput!]
+  OR: [AccountStatusWhereInput!]
+  NOT: [AccountStatusWhereInput!]
+  id: IDFilter
+  account: AccountWhereInput
+  isVerified: BooleanFilter
+  isBlocked: BooleanFilter
+  isInactive: BooleanFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
+input AccountStatusOrderByInput {
+  id: OrderDirection
+  isVerified: OrderDirection
+  isBlocked: OrderDirection
+  isInactive: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input AccountStatusUpdateInput {
+  account: AccountRelateToOneForUpdateInput
+  isVerified: Boolean
+  isBlocked: Boolean
+  isInactive: Boolean
+  updatedAt: DateTime
+}
+
+input AccountStatusUpdateArgs {
+  where: AccountStatusWhereUniqueInput!
+  data: AccountStatusUpdateInput!
+}
+
+input AccountStatusCreateInput {
+  account: AccountRelateToOneForCreateInput
+  isVerified: Boolean
+  isBlocked: Boolean
+  isInactive: Boolean
+  updatedAt: DateTime
 }
 
 type AuthenticationRetry {
@@ -968,9 +1664,10 @@ type Business {
   goodsOrServicesSupplied: String
   totalYearsExporting: Int
   totalEmployeesUK: Int
-  totalEmployeesInternational: Int
   estimatedAnnualTurnover: Int
   exportsTurnoverPercentage: Int
+  turnoverCurrencyCode: String
+  hasCreditControlProcess: Boolean
 }
 
 input BusinessWhereUniqueInput {
@@ -986,9 +1683,9 @@ input BusinessWhereInput {
   goodsOrServicesSupplied: StringFilter
   totalYearsExporting: IntNullableFilter
   totalEmployeesUK: IntNullableFilter
-  totalEmployeesInternational: IntNullableFilter
   estimatedAnnualTurnover: IntNullableFilter
   exportsTurnoverPercentage: IntNullableFilter
+  turnoverCurrencyCode: StringFilter
 }
 
 input BusinessOrderByInput {
@@ -996,9 +1693,9 @@ input BusinessOrderByInput {
   goodsOrServicesSupplied: OrderDirection
   totalYearsExporting: OrderDirection
   totalEmployeesUK: OrderDirection
-  totalEmployeesInternational: OrderDirection
   estimatedAnnualTurnover: OrderDirection
   exportsTurnoverPercentage: OrderDirection
+  turnoverCurrencyCode: OrderDirection
 }
 
 input BusinessUpdateInput {
@@ -1006,9 +1703,10 @@ input BusinessUpdateInput {
   goodsOrServicesSupplied: String
   totalYearsExporting: Int
   totalEmployeesUK: Int
-  totalEmployeesInternational: Int
   estimatedAnnualTurnover: Int
   exportsTurnoverPercentage: Int
+  turnoverCurrencyCode: String
+  hasCreditControlProcess: Boolean
 }
 
 input BusinessUpdateArgs {
@@ -1021,9 +1719,10 @@ input BusinessCreateInput {
   goodsOrServicesSupplied: String
   totalYearsExporting: Int
   totalEmployeesUK: Int
-  totalEmployeesInternational: Int
   estimatedAnnualTurnover: Int
   exportsTurnoverPercentage: Int
+  turnoverCurrencyCode: String
+  hasCreditControlProcess: Boolean
 }
 
 type Broker {
@@ -1036,6 +1735,7 @@ type Broker {
   town: String
   county: String
   postcode: String
+  fullAddress: String
   email: String
 }
 
@@ -1055,6 +1755,7 @@ input BrokerWhereInput {
   town: StringFilter
   county: StringFilter
   postcode: StringFilter
+  fullAddress: StringFilter
   email: StringFilter
 }
 
@@ -1066,6 +1767,7 @@ input BrokerOrderByInput {
   town: OrderDirection
   county: OrderDirection
   postcode: OrderDirection
+  fullAddress: OrderDirection
   email: OrderDirection
 }
 
@@ -1078,6 +1780,7 @@ input BrokerUpdateInput {
   town: String
   county: String
   postcode: String
+  fullAddress: String
   email: String
 }
 
@@ -1095,6 +1798,7 @@ input BrokerCreateInput {
   town: String
   county: String
   postcode: String
+  fullAddress: String
   email: String
 }
 
@@ -1176,12 +1880,14 @@ type Company {
   id: ID!
   application: Application
   registeredOfficeAddress: CompanyAddress
+  differentTradingAddress: CompanyDifferentTradingAddress
   sicCodes(where: CompanySicCodeWhereInput! = {}, orderBy: [CompanySicCodeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CompanySicCodeWhereUniqueInput): [CompanySicCode!]
   sicCodesCount(where: CompanySicCodeWhereInput! = {}): Int
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
   hasDifferentTradingAddress: Boolean
+  differentTradingName: String
   hasDifferentTradingName: Boolean
   companyWebsite: String
   phoneNumber: String
@@ -1199,10 +1905,12 @@ input CompanyWhereInput {
   id: IDFilter
   application: ApplicationWhereInput
   registeredOfficeAddress: CompanyAddressWhereInput
+  differentTradingAddress: CompanyDifferentTradingAddressWhereInput
   sicCodes: CompanySicCodeManyRelationFilter
   companyName: StringFilter
   companyNumber: StringFilter
   dateOfCreation: DateTimeNullableFilter
+  differentTradingName: StringFilter
   companyWebsite: StringFilter
   phoneNumber: StringFilter
   financialYearEndDate: DateTimeNullableFilter
@@ -1219,6 +1927,7 @@ input CompanyOrderByInput {
   companyName: OrderDirection
   companyNumber: OrderDirection
   dateOfCreation: OrderDirection
+  differentTradingName: OrderDirection
   companyWebsite: OrderDirection
   phoneNumber: OrderDirection
   financialYearEndDate: OrderDirection
@@ -1227,11 +1936,13 @@ input CompanyOrderByInput {
 input CompanyUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   registeredOfficeAddress: CompanyAddressRelateToOneForUpdateInput
+  differentTradingAddress: CompanyDifferentTradingAddressRelateToOneForUpdateInput
   sicCodes: CompanySicCodeRelateToManyForUpdateInput
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
   hasDifferentTradingAddress: Boolean
+  differentTradingName: String
   hasDifferentTradingName: Boolean
   companyWebsite: String
   phoneNumber: String
@@ -1241,6 +1952,12 @@ input CompanyUpdateInput {
 input CompanyAddressRelateToOneForUpdateInput {
   create: CompanyAddressCreateInput
   connect: CompanyAddressWhereUniqueInput
+  disconnect: Boolean
+}
+
+input CompanyDifferentTradingAddressRelateToOneForUpdateInput {
+  create: CompanyDifferentTradingAddressCreateInput
+  connect: CompanyDifferentTradingAddressWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -1259,11 +1976,13 @@ input CompanyUpdateArgs {
 input CompanyCreateInput {
   application: ApplicationRelateToOneForCreateInput
   registeredOfficeAddress: CompanyAddressRelateToOneForCreateInput
+  differentTradingAddress: CompanyDifferentTradingAddressRelateToOneForCreateInput
   sicCodes: CompanySicCodeRelateToManyForCreateInput
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
   hasDifferentTradingAddress: Boolean
+  differentTradingName: String
   hasDifferentTradingName: Boolean
   companyWebsite: String
   phoneNumber: String
@@ -1275,9 +1994,53 @@ input CompanyAddressRelateToOneForCreateInput {
   connect: CompanyAddressWhereUniqueInput
 }
 
+input CompanyDifferentTradingAddressRelateToOneForCreateInput {
+  create: CompanyDifferentTradingAddressCreateInput
+  connect: CompanyDifferentTradingAddressWhereUniqueInput
+}
+
 input CompanySicCodeRelateToManyForCreateInput {
   create: [CompanySicCodeCreateInput!]
   connect: [CompanySicCodeWhereUniqueInput!]
+}
+
+type CompanyDifferentTradingAddress {
+  id: ID!
+  company: Company
+  fullAddress: String
+}
+
+input CompanyDifferentTradingAddressWhereUniqueInput {
+  id: ID
+}
+
+input CompanyDifferentTradingAddressWhereInput {
+  AND: [CompanyDifferentTradingAddressWhereInput!]
+  OR: [CompanyDifferentTradingAddressWhereInput!]
+  NOT: [CompanyDifferentTradingAddressWhereInput!]
+  id: IDFilter
+  company: CompanyWhereInput
+  fullAddress: StringFilter
+}
+
+input CompanyDifferentTradingAddressOrderByInput {
+  id: OrderDirection
+  fullAddress: OrderDirection
+}
+
+input CompanyDifferentTradingAddressUpdateInput {
+  company: CompanyRelateToOneForUpdateInput
+  fullAddress: String
+}
+
+input CompanyDifferentTradingAddressUpdateArgs {
+  where: CompanyDifferentTradingAddressWhereUniqueInput!
+  data: CompanyDifferentTradingAddressUpdateInput!
+}
+
+input CompanyDifferentTradingAddressCreateInput {
+  company: CompanyRelateToOneForCreateInput
+  fullAddress: String
 }
 
 type CompanySicCode {
@@ -1332,13 +2095,9 @@ type Buyer {
   country: Country
   registrationNumber: String
   website: String
-  contactFirstName: String
-  contactLastName: String
-  contactPosition: String
-  contactEmail: String
-  canContactBuyer: Boolean
-  exporterIsConnectedWithBuyer: Boolean
-  exporterHasTradedWithBuyer: Boolean
+  buyerTradingHistory: BuyerTradingHistory
+  contact: BuyerContact
+  relationship: BuyerRelationship
 }
 
 input BuyerWhereUniqueInput {
@@ -1356,10 +2115,9 @@ input BuyerWhereInput {
   country: CountryWhereInput
   registrationNumber: StringFilter
   website: StringFilter
-  contactFirstName: StringFilter
-  contactLastName: StringFilter
-  contactPosition: StringFilter
-  contactEmail: StringFilter
+  buyerTradingHistory: BuyerTradingHistoryWhereInput
+  contact: BuyerContactWhereInput
+  relationship: BuyerRelationshipWhereInput
 }
 
 input BuyerOrderByInput {
@@ -1368,10 +2126,6 @@ input BuyerOrderByInput {
   address: OrderDirection
   registrationNumber: OrderDirection
   website: OrderDirection
-  contactFirstName: OrderDirection
-  contactLastName: OrderDirection
-  contactPosition: OrderDirection
-  contactEmail: OrderDirection
 }
 
 input BuyerUpdateInput {
@@ -1381,18 +2135,32 @@ input BuyerUpdateInput {
   country: CountryRelateToOneForUpdateInput
   registrationNumber: String
   website: String
-  contactFirstName: String
-  contactLastName: String
-  contactPosition: String
-  contactEmail: String
-  canContactBuyer: Boolean
-  exporterIsConnectedWithBuyer: Boolean
-  exporterHasTradedWithBuyer: Boolean
+  buyerTradingHistory: BuyerTradingHistoryRelateToOneForUpdateInput
+  contact: BuyerContactRelateToOneForUpdateInput
+  relationship: BuyerRelationshipRelateToOneForUpdateInput
 }
 
 input CountryRelateToOneForUpdateInput {
   create: CountryCreateInput
   connect: CountryWhereUniqueInput
+  disconnect: Boolean
+}
+
+input BuyerTradingHistoryRelateToOneForUpdateInput {
+  create: BuyerTradingHistoryCreateInput
+  connect: BuyerTradingHistoryWhereUniqueInput
+  disconnect: Boolean
+}
+
+input BuyerContactRelateToOneForUpdateInput {
+  create: BuyerContactCreateInput
+  connect: BuyerContactWhereUniqueInput
+  disconnect: Boolean
+}
+
+input BuyerRelationshipRelateToOneForUpdateInput {
+  create: BuyerRelationshipCreateInput
+  connect: BuyerRelationshipWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -1408,18 +2176,209 @@ input BuyerCreateInput {
   country: CountryRelateToOneForCreateInput
   registrationNumber: String
   website: String
-  contactFirstName: String
-  contactLastName: String
-  contactPosition: String
-  contactEmail: String
-  canContactBuyer: Boolean
-  exporterIsConnectedWithBuyer: Boolean
-  exporterHasTradedWithBuyer: Boolean
+  buyerTradingHistory: BuyerTradingHistoryRelateToOneForCreateInput
+  contact: BuyerContactRelateToOneForCreateInput
+  relationship: BuyerRelationshipRelateToOneForCreateInput
 }
 
 input CountryRelateToOneForCreateInput {
   create: CountryCreateInput
   connect: CountryWhereUniqueInput
+}
+
+input BuyerTradingHistoryRelateToOneForCreateInput {
+  create: BuyerTradingHistoryCreateInput
+  connect: BuyerTradingHistoryWhereUniqueInput
+}
+
+input BuyerContactRelateToOneForCreateInput {
+  create: BuyerContactCreateInput
+  connect: BuyerContactWhereUniqueInput
+}
+
+input BuyerRelationshipRelateToOneForCreateInput {
+  create: BuyerRelationshipCreateInput
+  connect: BuyerRelationshipWhereUniqueInput
+}
+
+type BuyerContact {
+  id: ID!
+  application: Application
+  buyer: Buyer
+  contactFirstName: String
+  contactLastName: String
+  contactPosition: String
+  contactEmail: String
+  canContactBuyer: Boolean
+}
+
+input BuyerContactWhereUniqueInput {
+  id: ID
+}
+
+input BuyerContactWhereInput {
+  AND: [BuyerContactWhereInput!]
+  OR: [BuyerContactWhereInput!]
+  NOT: [BuyerContactWhereInput!]
+  id: IDFilter
+  application: ApplicationWhereInput
+  buyer: BuyerWhereInput
+  contactFirstName: StringFilter
+  contactLastName: StringFilter
+  contactPosition: StringFilter
+  contactEmail: StringFilter
+}
+
+input BuyerContactOrderByInput {
+  id: OrderDirection
+  contactFirstName: OrderDirection
+  contactLastName: OrderDirection
+  contactPosition: OrderDirection
+  contactEmail: OrderDirection
+}
+
+input BuyerContactUpdateInput {
+  application: ApplicationRelateToOneForUpdateInput
+  buyer: BuyerRelateToOneForUpdateInput
+  contactFirstName: String
+  contactLastName: String
+  contactPosition: String
+  contactEmail: String
+  canContactBuyer: Boolean
+}
+
+input BuyerContactUpdateArgs {
+  where: BuyerContactWhereUniqueInput!
+  data: BuyerContactUpdateInput!
+}
+
+input BuyerContactCreateInput {
+  application: ApplicationRelateToOneForCreateInput
+  buyer: BuyerRelateToOneForCreateInput
+  contactFirstName: String
+  contactLastName: String
+  contactPosition: String
+  contactEmail: String
+  canContactBuyer: Boolean
+}
+
+type BuyerRelationship {
+  id: ID!
+  application: Application
+  buyer: Buyer
+  exporterIsConnectedWithBuyer: Boolean
+  connectionWithBuyerDescription: String
+  exporterHasPreviousCreditInsuranceWithBuyer: Boolean
+  exporterHasBuyerFinancialAccounts: Boolean
+  previousCreditInsuranceWithBuyerDescription: String
+}
+
+input BuyerRelationshipWhereUniqueInput {
+  id: ID
+}
+
+input BuyerRelationshipWhereInput {
+  AND: [BuyerRelationshipWhereInput!]
+  OR: [BuyerRelationshipWhereInput!]
+  NOT: [BuyerRelationshipWhereInput!]
+  id: IDFilter
+  application: ApplicationWhereInput
+  buyer: BuyerWhereInput
+  connectionWithBuyerDescription: StringFilter
+  previousCreditInsuranceWithBuyerDescription: StringFilter
+}
+
+input BuyerRelationshipOrderByInput {
+  id: OrderDirection
+  connectionWithBuyerDescription: OrderDirection
+  previousCreditInsuranceWithBuyerDescription: OrderDirection
+}
+
+input BuyerRelationshipUpdateInput {
+  application: ApplicationRelateToOneForUpdateInput
+  buyer: BuyerRelateToOneForUpdateInput
+  exporterIsConnectedWithBuyer: Boolean
+  connectionWithBuyerDescription: String
+  exporterHasPreviousCreditInsuranceWithBuyer: Boolean
+  exporterHasBuyerFinancialAccounts: Boolean
+  previousCreditInsuranceWithBuyerDescription: String
+}
+
+input BuyerRelationshipUpdateArgs {
+  where: BuyerRelationshipWhereUniqueInput!
+  data: BuyerRelationshipUpdateInput!
+}
+
+input BuyerRelationshipCreateInput {
+  application: ApplicationRelateToOneForCreateInput
+  buyer: BuyerRelateToOneForCreateInput
+  exporterIsConnectedWithBuyer: Boolean
+  connectionWithBuyerDescription: String
+  exporterHasPreviousCreditInsuranceWithBuyer: Boolean
+  exporterHasBuyerFinancialAccounts: Boolean
+  previousCreditInsuranceWithBuyerDescription: String
+}
+
+type BuyerTradingHistory {
+  id: ID!
+  application: Application
+  buyer: Buyer
+  currencyCode: String
+  outstandingPayments: Boolean
+  failedPayments: Boolean
+  exporterHasTradedWithBuyer: Boolean
+  totalOutstandingPayments: Int
+  totalOverduePayments: Int
+}
+
+input BuyerTradingHistoryWhereUniqueInput {
+  id: ID
+}
+
+input BuyerTradingHistoryWhereInput {
+  AND: [BuyerTradingHistoryWhereInput!]
+  OR: [BuyerTradingHistoryWhereInput!]
+  NOT: [BuyerTradingHistoryWhereInput!]
+  id: IDFilter
+  application: ApplicationWhereInput
+  buyer: BuyerWhereInput
+  currencyCode: StringFilter
+  totalOutstandingPayments: IntNullableFilter
+  totalOverduePayments: IntNullableFilter
+}
+
+input BuyerTradingHistoryOrderByInput {
+  id: OrderDirection
+  currencyCode: OrderDirection
+  totalOutstandingPayments: OrderDirection
+  totalOverduePayments: OrderDirection
+}
+
+input BuyerTradingHistoryUpdateInput {
+  application: ApplicationRelateToOneForUpdateInput
+  buyer: BuyerRelateToOneForUpdateInput
+  currencyCode: String
+  outstandingPayments: Boolean
+  failedPayments: Boolean
+  exporterHasTradedWithBuyer: Boolean
+  totalOutstandingPayments: Int
+  totalOverduePayments: Int
+}
+
+input BuyerTradingHistoryUpdateArgs {
+  where: BuyerTradingHistoryWhereUniqueInput!
+  data: BuyerTradingHistoryUpdateInput!
+}
+
+input BuyerTradingHistoryCreateInput {
+  application: ApplicationRelateToOneForCreateInput
+  buyer: BuyerRelateToOneForCreateInput
+  currencyCode: String
+  outstandingPayments: Boolean
+  failedPayments: Boolean
+  exporterHasTradedWithBuyer: Boolean
+  totalOutstandingPayments: Int
+  totalOverduePayments: Int
 }
 
 type Country {
@@ -1466,13 +2425,14 @@ type Eligibility {
   id: ID!
   application: Application
   buyerCountry: Country
+  coverPeriod: CoverPeriod
+  hasEndBuyer: Boolean
   hasMinimumUkGoodsOrServices: Boolean
-  validExporterLocation: Boolean
   hasCompaniesHouseNumber: Boolean
   otherPartiesInvolved: Boolean
   paidByLetterOfCredit: Boolean
   totalContractValue: TotalContractValue
-  coverPeriod: CoverPeriod
+  validExporterLocation: Boolean
 }
 
 input EligibilityWhereUniqueInput {
@@ -1486,45 +2446,48 @@ input EligibilityWhereInput {
   id: IDFilter
   application: ApplicationWhereInput
   buyerCountry: CountryWhereInput
+  coverPeriod: CoverPeriodWhereInput
+  hasEndBuyer: BooleanFilter
   hasMinimumUkGoodsOrServices: BooleanFilter
-  validExporterLocation: BooleanFilter
   hasCompaniesHouseNumber: BooleanFilter
   otherPartiesInvolved: BooleanFilter
   paidByLetterOfCredit: BooleanFilter
   totalContractValue: TotalContractValueWhereInput
-  coverPeriod: CoverPeriodWhereInput
+  validExporterLocation: BooleanFilter
 }
 
 input EligibilityOrderByInput {
   id: OrderDirection
+  hasEndBuyer: OrderDirection
   hasMinimumUkGoodsOrServices: OrderDirection
-  validExporterLocation: OrderDirection
   hasCompaniesHouseNumber: OrderDirection
   otherPartiesInvolved: OrderDirection
   paidByLetterOfCredit: OrderDirection
+  validExporterLocation: OrderDirection
 }
 
 input EligibilityUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   buyerCountry: CountryRelateToOneForUpdateInput
+  coverPeriod: CoverPeriodRelateToOneForUpdateInput
+  hasEndBuyer: Boolean
   hasMinimumUkGoodsOrServices: Boolean
-  validExporterLocation: Boolean
   hasCompaniesHouseNumber: Boolean
   otherPartiesInvolved: Boolean
   paidByLetterOfCredit: Boolean
   totalContractValue: TotalContractValueRelateToOneForUpdateInput
-  coverPeriod: CoverPeriodRelateToOneForUpdateInput
-}
-
-input TotalContractValueRelateToOneForUpdateInput {
-  create: TotalContractValueCreateInput
-  connect: TotalContractValueWhereUniqueInput
-  disconnect: Boolean
+  validExporterLocation: Boolean
 }
 
 input CoverPeriodRelateToOneForUpdateInput {
   create: CoverPeriodCreateInput
   connect: CoverPeriodWhereUniqueInput
+  disconnect: Boolean
+}
+
+input TotalContractValueRelateToOneForUpdateInput {
+  create: TotalContractValueCreateInput
+  connect: TotalContractValueWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -1536,18 +2499,14 @@ input EligibilityUpdateArgs {
 input EligibilityCreateInput {
   application: ApplicationRelateToOneForCreateInput
   buyerCountry: CountryRelateToOneForCreateInput
+  coverPeriod: CoverPeriodRelateToOneForCreateInput
+  hasEndBuyer: Boolean
   hasMinimumUkGoodsOrServices: Boolean
-  validExporterLocation: Boolean
   hasCompaniesHouseNumber: Boolean
   otherPartiesInvolved: Boolean
   paidByLetterOfCredit: Boolean
   totalContractValue: TotalContractValueRelateToOneForCreateInput
-  coverPeriod: CoverPeriodRelateToOneForCreateInput
-}
-
-input TotalContractValueRelateToOneForCreateInput {
-  create: TotalContractValueCreateInput
-  connect: TotalContractValueWhereUniqueInput
+  validExporterLocation: Boolean
 }
 
 input CoverPeriodRelateToOneForCreateInput {
@@ -1555,13 +2514,19 @@ input CoverPeriodRelateToOneForCreateInput {
   connect: CoverPeriodWhereUniqueInput
 }
 
+input TotalContractValueRelateToOneForCreateInput {
+  create: TotalContractValueCreateInput
+  connect: TotalContractValueWhereUniqueInput
+}
+
 type SectionReview {
   id: ID!
   application: Application
   eligibility: Boolean
-  policy: Boolean
   business: Boolean
   buyer: Boolean
+  exportContract: Boolean
+  policy: Boolean
 }
 
 input SectionReviewWhereUniqueInput {
@@ -1583,9 +2548,10 @@ input SectionReviewOrderByInput {
 input SectionReviewUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   eligibility: Boolean
-  policy: Boolean
   business: Boolean
   buyer: Boolean
+  exportContract: Boolean
+  policy: Boolean
 }
 
 input SectionReviewUpdateArgs {
@@ -1596,9 +2562,10 @@ input SectionReviewUpdateArgs {
 input SectionReviewCreateInput {
   application: ApplicationRelateToOneForCreateInput
   eligibility: Boolean
-  policy: Boolean
   business: Boolean
   buyer: Boolean
+  exportContract: Boolean
+  policy: Boolean
 }
 
 type Declaration {
@@ -2014,6 +2981,36 @@ type Mutation {
   updateCoverPeriods(data: [CoverPeriodUpdateArgs!]!): [CoverPeriod]
   deleteCoverPeriod(where: CoverPeriodWhereUniqueInput!): CoverPeriod
   deleteCoverPeriods(where: [CoverPeriodWhereUniqueInput!]!): [CoverPeriod]
+  createLossPayeeFinancialInternational(data: LossPayeeFinancialInternationalCreateInput!): LossPayeeFinancialInternational
+  createLossPayeeFinancialInternationals(data: [LossPayeeFinancialInternationalCreateInput!]!): [LossPayeeFinancialInternational]
+  updateLossPayeeFinancialInternational(where: LossPayeeFinancialInternationalWhereUniqueInput!, data: LossPayeeFinancialInternationalUpdateInput!): LossPayeeFinancialInternational
+  updateLossPayeeFinancialInternationals(data: [LossPayeeFinancialInternationalUpdateArgs!]!): [LossPayeeFinancialInternational]
+  deleteLossPayeeFinancialInternational(where: LossPayeeFinancialInternationalWhereUniqueInput!): LossPayeeFinancialInternational
+  deleteLossPayeeFinancialInternationals(where: [LossPayeeFinancialInternationalWhereUniqueInput!]!): [LossPayeeFinancialInternational]
+  createLossPayeeFinancialInternationalVector(data: LossPayeeFinancialInternationalVectorCreateInput!): LossPayeeFinancialInternationalVector
+  createLossPayeeFinancialInternationalVectors(data: [LossPayeeFinancialInternationalVectorCreateInput!]!): [LossPayeeFinancialInternationalVector]
+  updateLossPayeeFinancialInternationalVector(where: LossPayeeFinancialInternationalVectorWhereUniqueInput!, data: LossPayeeFinancialInternationalVectorUpdateInput!): LossPayeeFinancialInternationalVector
+  updateLossPayeeFinancialInternationalVectors(data: [LossPayeeFinancialInternationalVectorUpdateArgs!]!): [LossPayeeFinancialInternationalVector]
+  deleteLossPayeeFinancialInternationalVector(where: LossPayeeFinancialInternationalVectorWhereUniqueInput!): LossPayeeFinancialInternationalVector
+  deleteLossPayeeFinancialInternationalVectors(where: [LossPayeeFinancialInternationalVectorWhereUniqueInput!]!): [LossPayeeFinancialInternationalVector]
+  createLossPayeeFinancialUk(data: LossPayeeFinancialUkCreateInput!): LossPayeeFinancialUk
+  createLossPayeeFinancialUks(data: [LossPayeeFinancialUkCreateInput!]!): [LossPayeeFinancialUk]
+  updateLossPayeeFinancialUk(where: LossPayeeFinancialUkWhereUniqueInput!, data: LossPayeeFinancialUkUpdateInput!): LossPayeeFinancialUk
+  updateLossPayeeFinancialUks(data: [LossPayeeFinancialUkUpdateArgs!]!): [LossPayeeFinancialUk]
+  deleteLossPayeeFinancialUk(where: LossPayeeFinancialUkWhereUniqueInput!): LossPayeeFinancialUk
+  deleteLossPayeeFinancialUks(where: [LossPayeeFinancialUkWhereUniqueInput!]!): [LossPayeeFinancialUk]
+  createLossPayeeFinancialUkVector(data: LossPayeeFinancialUkVectorCreateInput!): LossPayeeFinancialUkVector
+  createLossPayeeFinancialUkVectors(data: [LossPayeeFinancialUkVectorCreateInput!]!): [LossPayeeFinancialUkVector]
+  updateLossPayeeFinancialUkVector(where: LossPayeeFinancialUkVectorWhereUniqueInput!, data: LossPayeeFinancialUkVectorUpdateInput!): LossPayeeFinancialUkVector
+  updateLossPayeeFinancialUkVectors(data: [LossPayeeFinancialUkVectorUpdateArgs!]!): [LossPayeeFinancialUkVector]
+  deleteLossPayeeFinancialUkVector(where: LossPayeeFinancialUkVectorWhereUniqueInput!): LossPayeeFinancialUkVector
+  deleteLossPayeeFinancialUkVectors(where: [LossPayeeFinancialUkVectorWhereUniqueInput!]!): [LossPayeeFinancialUkVector]
+  createNominatedLossPayee(data: NominatedLossPayeeCreateInput!): NominatedLossPayee
+  createNominatedLossPayees(data: [NominatedLossPayeeCreateInput!]!): [NominatedLossPayee]
+  updateNominatedLossPayee(where: NominatedLossPayeeWhereUniqueInput!, data: NominatedLossPayeeUpdateInput!): NominatedLossPayee
+  updateNominatedLossPayees(data: [NominatedLossPayeeUpdateArgs!]!): [NominatedLossPayee]
+  deleteNominatedLossPayee(where: NominatedLossPayeeWhereUniqueInput!): NominatedLossPayee
+  deleteNominatedLossPayees(where: [NominatedLossPayeeWhereUniqueInput!]!): [NominatedLossPayee]
   createPolicy(data: PolicyCreateInput!): Policy
   createPolicies(data: [PolicyCreateInput!]!): [Policy]
   updatePolicy(where: PolicyWhereUniqueInput!, data: PolicyUpdateInput!): Policy
@@ -2026,18 +3023,54 @@ type Mutation {
   updatePolicyContacts(data: [PolicyContactUpdateArgs!]!): [PolicyContact]
   deletePolicyContact(where: PolicyContactWhereUniqueInput!): PolicyContact
   deletePolicyContacts(where: [PolicyContactWhereUniqueInput!]!): [PolicyContact]
+  createJointlyInsuredParty(data: JointlyInsuredPartyCreateInput!): JointlyInsuredParty
+  createJointlyInsuredParties(data: [JointlyInsuredPartyCreateInput!]!): [JointlyInsuredParty]
+  updateJointlyInsuredParty(where: JointlyInsuredPartyWhereUniqueInput!, data: JointlyInsuredPartyUpdateInput!): JointlyInsuredParty
+  updateJointlyInsuredParties(data: [JointlyInsuredPartyUpdateArgs!]!): [JointlyInsuredParty]
+  deleteJointlyInsuredParty(where: JointlyInsuredPartyWhereUniqueInput!): JointlyInsuredParty
+  deleteJointlyInsuredParties(where: [JointlyInsuredPartyWhereUniqueInput!]!): [JointlyInsuredParty]
   createExportContract(data: ExportContractCreateInput!): ExportContract
   createExportContracts(data: [ExportContractCreateInput!]!): [ExportContract]
   updateExportContract(where: ExportContractWhereUniqueInput!, data: ExportContractUpdateInput!): ExportContract
   updateExportContracts(data: [ExportContractUpdateArgs!]!): [ExportContract]
   deleteExportContract(where: ExportContractWhereUniqueInput!): ExportContract
   deleteExportContracts(where: [ExportContractWhereUniqueInput!]!): [ExportContract]
+  createExportContractAgent(data: ExportContractAgentCreateInput!): ExportContractAgent
+  createExportContractAgents(data: [ExportContractAgentCreateInput!]!): [ExportContractAgent]
+  updateExportContractAgent(where: ExportContractAgentWhereUniqueInput!, data: ExportContractAgentUpdateInput!): ExportContractAgent
+  updateExportContractAgents(data: [ExportContractAgentUpdateArgs!]!): [ExportContractAgent]
+  deleteExportContractAgent(where: ExportContractAgentWhereUniqueInput!): ExportContractAgent
+  deleteExportContractAgents(where: [ExportContractAgentWhereUniqueInput!]!): [ExportContractAgent]
+  createExportContractAgentService(data: ExportContractAgentServiceCreateInput!): ExportContractAgentService
+  createExportContractAgentServices(data: [ExportContractAgentServiceCreateInput!]!): [ExportContractAgentService]
+  updateExportContractAgentService(where: ExportContractAgentServiceWhereUniqueInput!, data: ExportContractAgentServiceUpdateInput!): ExportContractAgentService
+  updateExportContractAgentServices(data: [ExportContractAgentServiceUpdateArgs!]!): [ExportContractAgentService]
+  deleteExportContractAgentService(where: ExportContractAgentServiceWhereUniqueInput!): ExportContractAgentService
+  deleteExportContractAgentServices(where: [ExportContractAgentServiceWhereUniqueInput!]!): [ExportContractAgentService]
+  createExportContractAgentServiceCharge(data: ExportContractAgentServiceChargeCreateInput!): ExportContractAgentServiceCharge
+  createExportContractAgentServiceCharges(data: [ExportContractAgentServiceChargeCreateInput!]!): [ExportContractAgentServiceCharge]
+  updateExportContractAgentServiceCharge(where: ExportContractAgentServiceChargeWhereUniqueInput!, data: ExportContractAgentServiceChargeUpdateInput!): ExportContractAgentServiceCharge
+  updateExportContractAgentServiceCharges(data: [ExportContractAgentServiceChargeUpdateArgs!]!): [ExportContractAgentServiceCharge]
+  deleteExportContractAgentServiceCharge(where: ExportContractAgentServiceChargeWhereUniqueInput!): ExportContractAgentServiceCharge
+  deleteExportContractAgentServiceCharges(where: [ExportContractAgentServiceChargeWhereUniqueInput!]!): [ExportContractAgentServiceCharge]
+  createPrivateMarket(data: PrivateMarketCreateInput!): PrivateMarket
+  createPrivateMarkets(data: [PrivateMarketCreateInput!]!): [PrivateMarket]
+  updatePrivateMarket(where: PrivateMarketWhereUniqueInput!, data: PrivateMarketUpdateInput!): PrivateMarket
+  updatePrivateMarkets(data: [PrivateMarketUpdateArgs!]!): [PrivateMarket]
+  deletePrivateMarket(where: PrivateMarketWhereUniqueInput!): PrivateMarket
+  deletePrivateMarkets(where: [PrivateMarketWhereUniqueInput!]!): [PrivateMarket]
   createAccount(data: AccountCreateInput!): Account
   createAccounts(data: [AccountCreateInput!]!): [Account]
   updateAccount(where: AccountWhereUniqueInput!, data: AccountUpdateInput!): Account
   updateAccounts(data: [AccountUpdateArgs!]!): [Account]
   deleteAccount(where: AccountWhereUniqueInput!): Account
   deleteAccounts(where: [AccountWhereUniqueInput!]!): [Account]
+  createAccountStatus(data: AccountStatusCreateInput!): AccountStatus
+  createAccountStatuses(data: [AccountStatusCreateInput!]!): [AccountStatus]
+  updateAccountStatus(where: AccountStatusWhereUniqueInput!, data: AccountStatusUpdateInput!): AccountStatus
+  updateAccountStatuses(data: [AccountStatusUpdateArgs!]!): [AccountStatus]
+  deleteAccountStatus(where: AccountStatusWhereUniqueInput!): AccountStatus
+  deleteAccountStatuses(where: [AccountStatusWhereUniqueInput!]!): [AccountStatus]
   createAuthenticationRetry(data: AuthenticationRetryCreateInput!): AuthenticationRetry
   createAuthenticationRetries(data: [AuthenticationRetryCreateInput!]!): [AuthenticationRetry]
   updateAuthenticationRetry(where: AuthenticationRetryWhereUniqueInput!, data: AuthenticationRetryUpdateInput!): AuthenticationRetry
@@ -2074,6 +3107,12 @@ type Mutation {
   updateCompanies(data: [CompanyUpdateArgs!]!): [Company]
   deleteCompany(where: CompanyWhereUniqueInput!): Company
   deleteCompanies(where: [CompanyWhereUniqueInput!]!): [Company]
+  createCompanyDifferentTradingAddress(data: CompanyDifferentTradingAddressCreateInput!): CompanyDifferentTradingAddress
+  createCompanyDifferentTradingAddresses(data: [CompanyDifferentTradingAddressCreateInput!]!): [CompanyDifferentTradingAddress]
+  updateCompanyDifferentTradingAddress(where: CompanyDifferentTradingAddressWhereUniqueInput!, data: CompanyDifferentTradingAddressUpdateInput!): CompanyDifferentTradingAddress
+  updateCompanyDifferentTradingAddresses(data: [CompanyDifferentTradingAddressUpdateArgs!]!): [CompanyDifferentTradingAddress]
+  deleteCompanyDifferentTradingAddress(where: CompanyDifferentTradingAddressWhereUniqueInput!): CompanyDifferentTradingAddress
+  deleteCompanyDifferentTradingAddresses(where: [CompanyDifferentTradingAddressWhereUniqueInput!]!): [CompanyDifferentTradingAddress]
   createCompanySicCode(data: CompanySicCodeCreateInput!): CompanySicCode
   createCompanySicCodes(data: [CompanySicCodeCreateInput!]!): [CompanySicCode]
   updateCompanySicCode(where: CompanySicCodeWhereUniqueInput!, data: CompanySicCodeUpdateInput!): CompanySicCode
@@ -2086,6 +3125,24 @@ type Mutation {
   updateBuyers(data: [BuyerUpdateArgs!]!): [Buyer]
   deleteBuyer(where: BuyerWhereUniqueInput!): Buyer
   deleteBuyers(where: [BuyerWhereUniqueInput!]!): [Buyer]
+  createBuyerContact(data: BuyerContactCreateInput!): BuyerContact
+  createBuyerContacts(data: [BuyerContactCreateInput!]!): [BuyerContact]
+  updateBuyerContact(where: BuyerContactWhereUniqueInput!, data: BuyerContactUpdateInput!): BuyerContact
+  updateBuyerContacts(data: [BuyerContactUpdateArgs!]!): [BuyerContact]
+  deleteBuyerContact(where: BuyerContactWhereUniqueInput!): BuyerContact
+  deleteBuyerContacts(where: [BuyerContactWhereUniqueInput!]!): [BuyerContact]
+  createBuyerRelationship(data: BuyerRelationshipCreateInput!): BuyerRelationship
+  createBuyerRelationships(data: [BuyerRelationshipCreateInput!]!): [BuyerRelationship]
+  updateBuyerRelationship(where: BuyerRelationshipWhereUniqueInput!, data: BuyerRelationshipUpdateInput!): BuyerRelationship
+  updateBuyerRelationships(data: [BuyerRelationshipUpdateArgs!]!): [BuyerRelationship]
+  deleteBuyerRelationship(where: BuyerRelationshipWhereUniqueInput!): BuyerRelationship
+  deleteBuyerRelationships(where: [BuyerRelationshipWhereUniqueInput!]!): [BuyerRelationship]
+  createBuyerTradingHistory(data: BuyerTradingHistoryCreateInput!): BuyerTradingHistory
+  createBuyerTradingHistories(data: [BuyerTradingHistoryCreateInput!]!): [BuyerTradingHistory]
+  updateBuyerTradingHistory(where: BuyerTradingHistoryWhereUniqueInput!, data: BuyerTradingHistoryUpdateInput!): BuyerTradingHistory
+  updateBuyerTradingHistories(data: [BuyerTradingHistoryUpdateArgs!]!): [BuyerTradingHistory]
+  deleteBuyerTradingHistory(where: BuyerTradingHistoryWhereUniqueInput!): BuyerTradingHistory
+  deleteBuyerTradingHistories(where: [BuyerTradingHistoryWhereUniqueInput!]!): [BuyerTradingHistory]
   createCountry(data: CountryCreateInput!): Country
   createCountries(data: [CountryCreateInput!]!): [Country]
   updateCountry(where: CountryWhereUniqueInput!, data: CountryUpdateInput!): Country
@@ -2154,7 +3211,10 @@ type Mutation {
   createAnAccount(urlOrigin: String!, firstName: String!, lastName: String!, email: String!, password: String!): CreateAnAccountResponse
 
   """ create an application """
-  createAnApplication(accountId: String!, eligibilityAnswers: ApplicationEligibility!): CreateAnApplicationResponse
+  createAnApplication(accountId: String!, eligibilityAnswers: ApplicationEligibility!, company: CompanyInput!, sectionReview: SectionReviewInput!): CreateAnApplicationResponse
+
+  """ create an application """
+  createAnAbandonedApplication(accountId: String!, eligibilityAnswers: ApplicationEligibility!, company: CompanyInput!, sectionReview: SectionReviewInput!): CreateAnAbandonedApplicationResponse
 
   """ delete an account """
   deleteAnAccount(email: String!): SuccessResponse
@@ -2189,9 +3249,6 @@ type Mutation {
   """ reset account password """
   accountPasswordReset(token: String!, password: String!, hasBeenUsedBefore: Boolean): AccountPasswordResetResponse
 
-  """ update company and company address """
-  updateCompanyAndCompanyAddress(companyId: ID!, companyAddressId: ID!, data: CompanyAndCompanyAddressInput!): CompanyAndCompanyAddress
-
   """ delete an application by reference number """
   deleteApplicationByReferenceNumber(referenceNumber: Int!): SuccessResponse
 
@@ -2200,6 +3257,12 @@ type Mutation {
 
   """ create and send email for insurance feedback """
   createFeedbackAndSendEmail(satisfaction: String, improvement: String, otherComments: String, referralUrl: String, product: String, service: String): SuccessResponse
+
+  """ update loss payee financial uk """
+  updateLossPayeeFinancialDetailsUk(id: String, bankAddress: String, accountNumber: String, sortCode: String): SuccessResponse
+
+  """ update loss payee financial international """
+  updateLossPayeeFinancialDetailsInternational(id: String, bankAddress: String, iban: String, bicSwiftCode: String): SuccessResponse
 }
 
 union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure
@@ -2232,18 +3295,51 @@ type Query {
   coverPeriods(where: CoverPeriodWhereInput! = {}, orderBy: [CoverPeriodOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CoverPeriodWhereUniqueInput): [CoverPeriod!]
   coverPeriod(where: CoverPeriodWhereUniqueInput!): CoverPeriod
   coverPeriodsCount(where: CoverPeriodWhereInput! = {}): Int
+  lossPayeeFinancialInternationals(where: LossPayeeFinancialInternationalWhereInput! = {}, orderBy: [LossPayeeFinancialInternationalOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LossPayeeFinancialInternationalWhereUniqueInput): [LossPayeeFinancialInternational!]
+  lossPayeeFinancialInternational(where: LossPayeeFinancialInternationalWhereUniqueInput!): LossPayeeFinancialInternational
+  lossPayeeFinancialInternationalsCount(where: LossPayeeFinancialInternationalWhereInput! = {}): Int
+  lossPayeeFinancialInternationalVectors(where: LossPayeeFinancialInternationalVectorWhereInput! = {}, orderBy: [LossPayeeFinancialInternationalVectorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LossPayeeFinancialInternationalVectorWhereUniqueInput): [LossPayeeFinancialInternationalVector!]
+  lossPayeeFinancialInternationalVector(where: LossPayeeFinancialInternationalVectorWhereUniqueInput!): LossPayeeFinancialInternationalVector
+  lossPayeeFinancialInternationalVectorsCount(where: LossPayeeFinancialInternationalVectorWhereInput! = {}): Int
+  lossPayeeFinancialUks(where: LossPayeeFinancialUkWhereInput! = {}, orderBy: [LossPayeeFinancialUkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LossPayeeFinancialUkWhereUniqueInput): [LossPayeeFinancialUk!]
+  lossPayeeFinancialUk(where: LossPayeeFinancialUkWhereUniqueInput!): LossPayeeFinancialUk
+  lossPayeeFinancialUksCount(where: LossPayeeFinancialUkWhereInput! = {}): Int
+  lossPayeeFinancialUkVectors(where: LossPayeeFinancialUkVectorWhereInput! = {}, orderBy: [LossPayeeFinancialUkVectorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LossPayeeFinancialUkVectorWhereUniqueInput): [LossPayeeFinancialUkVector!]
+  lossPayeeFinancialUkVector(where: LossPayeeFinancialUkVectorWhereUniqueInput!): LossPayeeFinancialUkVector
+  lossPayeeFinancialUkVectorsCount(where: LossPayeeFinancialUkVectorWhereInput! = {}): Int
+  nominatedLossPayees(where: NominatedLossPayeeWhereInput! = {}, orderBy: [NominatedLossPayeeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: NominatedLossPayeeWhereUniqueInput): [NominatedLossPayee!]
+  nominatedLossPayee(where: NominatedLossPayeeWhereUniqueInput!): NominatedLossPayee
+  nominatedLossPayeesCount(where: NominatedLossPayeeWhereInput! = {}): Int
   policies(where: PolicyWhereInput! = {}, orderBy: [PolicyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyWhereUniqueInput): [Policy!]
   policy(where: PolicyWhereUniqueInput!): Policy
   policiesCount(where: PolicyWhereInput! = {}): Int
   policyContacts(where: PolicyContactWhereInput! = {}, orderBy: [PolicyContactOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyContactWhereUniqueInput): [PolicyContact!]
   policyContact(where: PolicyContactWhereUniqueInput!): PolicyContact
   policyContactsCount(where: PolicyContactWhereInput! = {}): Int
+  jointlyInsuredParties(where: JointlyInsuredPartyWhereInput! = {}, orderBy: [JointlyInsuredPartyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: JointlyInsuredPartyWhereUniqueInput): [JointlyInsuredParty!]
+  jointlyInsuredParty(where: JointlyInsuredPartyWhereUniqueInput!): JointlyInsuredParty
+  jointlyInsuredPartiesCount(where: JointlyInsuredPartyWhereInput! = {}): Int
   exportContracts(where: ExportContractWhereInput! = {}, orderBy: [ExportContractOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractWhereUniqueInput): [ExportContract!]
   exportContract(where: ExportContractWhereUniqueInput!): ExportContract
   exportContractsCount(where: ExportContractWhereInput! = {}): Int
+  exportContractAgents(where: ExportContractAgentWhereInput! = {}, orderBy: [ExportContractAgentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractAgentWhereUniqueInput): [ExportContractAgent!]
+  exportContractAgent(where: ExportContractAgentWhereUniqueInput!): ExportContractAgent
+  exportContractAgentsCount(where: ExportContractAgentWhereInput! = {}): Int
+  exportContractAgentServices(where: ExportContractAgentServiceWhereInput! = {}, orderBy: [ExportContractAgentServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractAgentServiceWhereUniqueInput): [ExportContractAgentService!]
+  exportContractAgentService(where: ExportContractAgentServiceWhereUniqueInput!): ExportContractAgentService
+  exportContractAgentServicesCount(where: ExportContractAgentServiceWhereInput! = {}): Int
+  exportContractAgentServiceCharges(where: ExportContractAgentServiceChargeWhereInput! = {}, orderBy: [ExportContractAgentServiceChargeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractAgentServiceChargeWhereUniqueInput): [ExportContractAgentServiceCharge!]
+  exportContractAgentServiceCharge(where: ExportContractAgentServiceChargeWhereUniqueInput!): ExportContractAgentServiceCharge
+  exportContractAgentServiceChargesCount(where: ExportContractAgentServiceChargeWhereInput! = {}): Int
+  privateMarkets(where: PrivateMarketWhereInput! = {}, orderBy: [PrivateMarketOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PrivateMarketWhereUniqueInput): [PrivateMarket!]
+  privateMarket(where: PrivateMarketWhereUniqueInput!): PrivateMarket
+  privateMarketsCount(where: PrivateMarketWhereInput! = {}): Int
   accounts(where: AccountWhereInput! = {}, orderBy: [AccountOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AccountWhereUniqueInput): [Account!]
   account(where: AccountWhereUniqueInput!): Account
   accountsCount(where: AccountWhereInput! = {}): Int
+  accountStatuses(where: AccountStatusWhereInput! = {}, orderBy: [AccountStatusOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AccountStatusWhereUniqueInput): [AccountStatus!]
+  accountStatus(where: AccountStatusWhereUniqueInput!): AccountStatus
+  accountStatusesCount(where: AccountStatusWhereInput! = {}): Int
   authenticationRetries(where: AuthenticationRetryWhereInput! = {}, orderBy: [AuthenticationRetryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthenticationRetryWhereUniqueInput): [AuthenticationRetry!]
   authenticationRetry(where: AuthenticationRetryWhereUniqueInput!): AuthenticationRetry
   authenticationRetriesCount(where: AuthenticationRetryWhereInput! = {}): Int
@@ -2262,12 +3358,24 @@ type Query {
   companies(where: CompanyWhereInput! = {}, orderBy: [CompanyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CompanyWhereUniqueInput): [Company!]
   company(where: CompanyWhereUniqueInput!): Company
   companiesCount(where: CompanyWhereInput! = {}): Int
+  companyDifferentTradingAddresses(where: CompanyDifferentTradingAddressWhereInput! = {}, orderBy: [CompanyDifferentTradingAddressOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CompanyDifferentTradingAddressWhereUniqueInput): [CompanyDifferentTradingAddress!]
+  companyDifferentTradingAddress(where: CompanyDifferentTradingAddressWhereUniqueInput!): CompanyDifferentTradingAddress
+  companyDifferentTradingAddressesCount(where: CompanyDifferentTradingAddressWhereInput! = {}): Int
   companySicCodes(where: CompanySicCodeWhereInput! = {}, orderBy: [CompanySicCodeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CompanySicCodeWhereUniqueInput): [CompanySicCode!]
   companySicCode(where: CompanySicCodeWhereUniqueInput!): CompanySicCode
   companySicCodesCount(where: CompanySicCodeWhereInput! = {}): Int
   buyers(where: BuyerWhereInput! = {}, orderBy: [BuyerOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BuyerWhereUniqueInput): [Buyer!]
   buyer(where: BuyerWhereUniqueInput!): Buyer
   buyersCount(where: BuyerWhereInput! = {}): Int
+  buyerContacts(where: BuyerContactWhereInput! = {}, orderBy: [BuyerContactOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BuyerContactWhereUniqueInput): [BuyerContact!]
+  buyerContact(where: BuyerContactWhereUniqueInput!): BuyerContact
+  buyerContactsCount(where: BuyerContactWhereInput! = {}): Int
+  buyerRelationships(where: BuyerRelationshipWhereInput! = {}, orderBy: [BuyerRelationshipOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BuyerRelationshipWhereUniqueInput): [BuyerRelationship!]
+  buyerRelationship(where: BuyerRelationshipWhereUniqueInput!): BuyerRelationship
+  buyerRelationshipsCount(where: BuyerRelationshipWhereInput! = {}): Int
+  buyerTradingHistories(where: BuyerTradingHistoryWhereInput! = {}, orderBy: [BuyerTradingHistoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BuyerTradingHistoryWhereUniqueInput): [BuyerTradingHistory!]
+  buyerTradingHistory(where: BuyerTradingHistoryWhereUniqueInput!): BuyerTradingHistory
+  buyerTradingHistoriesCount(where: BuyerTradingHistoryWhereInput! = {}): Int
   countries(where: CountryWhereInput! = {}, orderBy: [CountryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CountryWhereUniqueInput): [Country!]
   country(where: CountryWhereUniqueInput!): Country
   countriesCount(where: CountryWhereInput! = {}): Int
@@ -2310,14 +3418,20 @@ type Query {
   """ verify an account's password reset token """
   verifyAccountPasswordResetToken(token: String!): AccountPasswordResetTokenResponse
 
-  """ get companies house information """
-  getCompaniesHouseInformation(companiesHouseNumber: String!): CompaniesHouseResponse
-
   """ get CIS countries from APIM """
   getApimCisCountries: [MappedCisCountry]
 
+  """ get companies house information """
+  getCompaniesHouseInformation(companiesHouseNumber: String!): CompaniesHouseResponse
+
+  """ gets application by reference number """
+  getApplicationByReferenceNumber(referenceNumber: Int, decryptFinancialUk: Boolean, decryptFinancialInternational: Boolean): ApplicationSuccessResponse
+
+  """ get Ordnance Survey address """
+  getOrdnanceSurveyAddress(postcode: String!, houseNameOrNumber: String!): OrdnanceSurveyResponse
+
   """ get currencies from APIM """
-  getApimCurrencies: [MappedCurrency]
+  getApimCurrencies: GetApimCurrencyResponse
 }
 
 union AuthenticatedItem = User
@@ -2446,22 +3560,12 @@ input AccountInput {
 
 type CreateAnAccountResponse {
   success: Boolean
+  alreadyExists: Boolean
+  isVerified: Boolean
   id: String
-  firstName: String
-  lastName: String
   email: String
   verificationHash: String
-}
-
-type CompaniesHouseExporterCompanyAddress {
-  addressLine1: String
-  addressLine2: String
-  careOf: String
-  locality: String
-  region: String
-  postalCode: String
-  country: String
-  premises: String
+  isBlocked: Boolean
 }
 
 type CompaniesHouseResponse {
@@ -2474,6 +3578,26 @@ type CompaniesHouseResponse {
   financialYearEndDate: DateTime
   success: Boolean
   apiError: Boolean
+  isActive: Boolean
+  notFound: Boolean
+}
+
+type OrdnanceSurveyAddress {
+  addressLine1: String
+  addressLine2: String
+  postalCode: String
+  country: String
+  county: String
+  town: String
+}
+
+input OrdnanceAddressInput {
+  addressLine1: String
+  addressLine2: String
+  postalCode: String
+  country: String
+  county: String
+  town: String
 }
 
 input OldSicCodes {
@@ -2491,31 +3615,34 @@ input CompanyAddressInput {
   premises: String
 }
 
-type CompanyAndCompanyAddress {
-  id: ID
-  registeredOfficeAddress: CompanyAddress
+input CompanyInput {
   companyName: String
   companyNumber: String
-  dateOfCreation: DateTime
-  hasDifferentTradingAddress: Boolean
-  hasDifferentTradingName: Boolean
-  companyWebsite: String
-  phoneNumber: String
-}
-
-input CompanyAndCompanyAddressInput {
-  address: CompanyAddressInput
+  dateOfCreation: String
   sicCodes: [String]
   industrySectorNames: [String]
-  companyName: String
-  companyNumber: String
-  dateOfCreation: DateTime
-  hasDifferentTradingAddress: Boolean
-  hasDifferentTradingName: Boolean
-  companyWebsite: String
-  phoneNumber: String
   financialYearEndDate: DateTime
-  oldSicCodes: [OldSicCodes]
+  registeredOfficeAddress: CompanyAddressInput
+  isActive: Boolean
+}
+
+input SectionReviewInput {
+  eligibility: Boolean!
+}
+
+input LossPayeeFinancialDetailsUkInput {
+  id: String
+  accountNumber: String
+  sortCode: String
+  bankAddress: String
+}
+
+type OrdnanceSurveyResponse {
+  success: Boolean
+  addresses: [OrdnanceSurveyAddress]
+  apiError: Boolean
+  noAddressesFound: Boolean
+  invalidPostcode: Boolean
 }
 
 type EmailResponse {
@@ -2586,17 +3713,21 @@ type AccountSendEmailReactivateAccountLinkResponse {
 
 input ApplicationEligibility {
   buyerCountryIsoCode: String!
-  hasCompaniesHouseNumber: Boolean!
-  otherPartiesInvolved: Boolean!
-  paidByLetterOfCredit: Boolean!
-  needPreCreditPeriodCover: Boolean!
-  totalContractValueId: Int!
   coverPeriodId: Int!
-  validExporterLocation: Boolean!
+  hasCompaniesHouseNumber: Boolean!
+  hasEndBuyer: Boolean!
   hasMinimumUkGoodsOrServices: Boolean!
+  totalContractValueId: Int!
+  validExporterLocation: Boolean!
 }
 
 type CreateAnApplicationResponse {
+  success: Boolean!
+  id: String
+  referenceNumber: Int
+}
+
+type CreateAnAbandonedApplicationResponse {
   success: Boolean!
   id: String
   referenceNumber: Int
@@ -2609,14 +3740,84 @@ type MappedCisCountry {
   riskCategory: String
   nbiIssueAvailable: Boolean
   canGetAQuoteOnline: Boolean
+  canGetAQuoteOffline: Boolean
   canGetAQuoteByEmail: Boolean
   cannotGetAQuote: Boolean
-  canApplyOnline: Boolean
-  canApplyOffline: Boolean
   cannotApply: Boolean
+  canApplyForInsuranceOnline: Boolean
+  canApplyForInsuranceOffline: Boolean
+  noInsuranceSupport: Boolean
 }
 
 type MappedCurrency {
   isoCode: String!
   name: String!
+}
+
+type GetApimCurrencyResponse {
+  supportedCurrencies: [MappedCurrency]
+  alternativeCurrencies: [MappedCurrency]
+  allCurrencies: [MappedCurrency]
+}
+
+type Owner {
+  id: String
+  firstName: String
+  lastName: String
+  email: String
+}
+
+type ApplicationNominatedLossPayeeUk {
+  id: String
+  accountNumber: String
+  sortCode: String
+  bankAddress: String
+}
+
+type ApplicationNominatedLossPayeeInternational {
+  id: String
+  iban: String
+  bicSwiftCode: String
+  bankAddress: String
+}
+
+type ApplicationNominatedLossPayee {
+  id: String
+  isAppointed: Boolean
+  isLocatedInUk: Boolean
+  isLocatedInternationally: Boolean
+  name: String
+  financialUk: ApplicationNominatedLossPayeeUk
+  financialInternational: ApplicationNominatedLossPayeeInternational
+}
+
+type PopulatedApplication {
+  id: String!
+  version: Int
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  dealType: String!
+  submissionCount: Int
+  submissionDeadline: DateTime
+  submissionType: String
+  submissionDate: DateTime
+  referenceNumber: Int
+  status: String!
+  eligibility: Eligibility
+  exportContract: ExportContract
+  policy: Policy
+  nominatedLossPayee: ApplicationNominatedLossPayee
+  policyContact: PolicyContact
+  owner: Owner
+  company: Company
+  business: Business
+  broker: Broker
+  buyer: Buyer
+  sectionReview: SectionReview
+  declaration: Declaration
+}
+
+type ApplicationSuccessResponse {
+  success: Boolean!
+  application: PopulatedApplication
 }

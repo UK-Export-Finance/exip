@@ -1,4 +1,4 @@
-import { countryInput } from '../../../pages/shared';
+import { autoCompleteField } from '../../../pages/shared';
 import partials from '../../../partials';
 import { ERROR_MESSAGES, FIELDS } from '../../../content-strings';
 import { FIELD_IDS } from '../../../constants';
@@ -8,19 +8,16 @@ const {
 } = FIELD_IDS;
 
 export const checkBuyerCountryInputHint = () => {
-  cy.checkText(countryInput.field(FIELD_ID).hint(), FIELDS[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY].HINT);
+  cy.checkText(autoCompleteField(FIELD_ID).hint(), FIELDS[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY].HINT);
 };
 
 export const checkBuyerCountryValidationErrors = () => {
-  const expectedErrorsCount = 1;
-
-  cy.submitAndAssertFieldErrors(
-    countryInput.field(FIELD_ID),
-    null,
-    0,
-    expectedErrorsCount,
-    ERROR_MESSAGES.ELIGIBILITY[FIELD_ID],
-  );
+  cy.submitAndAssertFieldErrors({
+    field: autoCompleteField(FIELD_ID),
+    value: null,
+    expectedErrorsCount: 1,
+    expectedErrorMessage: ERROR_MESSAGES.ELIGIBILITY[FIELD_ID],
+  });
 };
 
 export const checkBuyerCountryFocusAfterSummaryErrorClick = () => {
@@ -31,5 +28,10 @@ export const checkBuyerCountryFocusAfterSummaryErrorClick = () => {
 
   partials.errorSummaryListItemLinks().eq(0).click();
 
-  countryInput.field(FIELD_ID).input().should('have.class', 'autocomplete__input--focused');
+  const expectedClass = 'autocomplete__input autocomplete__input--default autocomplete__input--focused';
+
+  cy.checkClassName(
+    autoCompleteField(FIELD_ID).input(),
+    expectedClass,
+  );
 };

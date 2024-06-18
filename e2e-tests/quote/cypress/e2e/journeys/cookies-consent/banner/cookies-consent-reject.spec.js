@@ -94,7 +94,7 @@ context('Cookies consent - reject', () => {
 
       partials.cookieBanner.question.rejectButton().click();
       partials.cookieBanner.hideButton().click();
-      completeAndSubmitBuyerCountryForm();
+      completeAndSubmitBuyerCountryForm({});
     });
 
     it('should not render any banner elements', () => {

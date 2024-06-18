@@ -1,7 +1,7 @@
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { cookiesPage, cookiesSavedPage } from '../../../../../pages';
 import partials from '../../../../../partials';
-import { submitButton } from '../../../../../pages/shared';
+import { body } from '../../../../../pages/shared';
 import { PAGES, BUTTONS } from '../../../../../content-strings';
 
 const CONTENT_STRINGS = PAGES.COOKIES_SAVED_PAGE;
@@ -28,7 +28,7 @@ context('Cookies saved page - Quote', () => {
 
     cookiesPage[FIELD_ID].accept.label().click();
 
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.assertUrl(url);
   });
@@ -46,7 +46,7 @@ context('Cookies saved page - Quote', () => {
   });
 
   it('renders body copy', () => {
-    cy.checkText(cookiesSavedPage.body(), CONTENT_STRINGS.BODY);
+    cy.checkText(body(), CONTENT_STRINGS.BODY);
   });
 
   it('renders a `return to service` button link', () => {

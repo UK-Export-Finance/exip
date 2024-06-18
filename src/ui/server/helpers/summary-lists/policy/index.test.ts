@@ -1,65 +1,58 @@
-import { generateFields, policySummaryList } from '.';
+import { generateFields, policySummaryLists } from '.';
 import generatePolicyAndDateFields from './policy-and-date-fields';
-import generateCreditPeriodAndCurrencyFields from './credit-period-and-currency-fields';
-import generateAboutGoodsOrServicesFields from './about-goods-or-services-fields';
-import generateSingleContractPolicyFields from './single-contract-policy-fields';
-import generateMultipleContractPolicyFields from './multiple-contract-policy-fields';
 import generatePolicyContactFields from './policy-contact-fields';
-import generateSummaryListRows from '../generate-summary-list-rows';
-import { mockCountries, mockCurrencies, mockContact } from '../../../test-mocks';
-import mockApplication, { mockSinglePolicy, mockMultiplePolicy } from '../../../test-mocks/mock-application';
+import { generateOtherCompanyFields } from './other-company-fields';
+import { generateBrokerFields } from './broker-fields';
+import { generateLossPayeeFields } from './loss-payee-fields';
+import generateGroupsOfSummaryLists from '../generate-groups-of-summary-lists';
+import { mockCurrencies, mockContact, mockCountries } from '../../../test-mocks';
+import mockApplication, { mockBroker, mockNominatedLossPayee, referenceNumber } from '../../../test-mocks/mock-application';
 
 describe('server/helpers/summary-lists/policy', () => {
-  const { referenceNumber } = mockApplication;
+  const mockAnswers = mockApplication.policy;
   const checkAndChange = false;
 
   describe('generateFields', () => {
-    describe('when the policy type is single policy type', () => {
-      const mockAnswers = mockSinglePolicy;
+    it('should return fields and values from the submitted data/answers', () => {
+      const result = generateFields(
+        mockAnswers,
+        mockContact,
+        mockBroker,
+        mockNominatedLossPayee,
+        referenceNumber,
+        mockCurrencies,
+        mockCountries,
+        checkAndChange,
+      );
 
-      it('should return fields and values from the submitted data/answers', () => {
-        const result = generateFields(mockAnswers, mockContact, referenceNumber, mockCountries, mockCurrencies, checkAndChange);
+      const expected = [
+        generatePolicyAndDateFields(mockAnswers, referenceNumber, mockCurrencies, checkAndChange),
+        generatePolicyContactFields(mockContact, referenceNumber, checkAndChange),
+        generateOtherCompanyFields(mockAnswers.jointlyInsuredParty, referenceNumber, mockCountries, checkAndChange),
+        generateBrokerFields(mockBroker, referenceNumber, checkAndChange),
+        generateLossPayeeFields(mockNominatedLossPayee, referenceNumber, checkAndChange),
+      ];
 
-        const expected = [
-          ...generatePolicyAndDateFields(mockAnswers, referenceNumber, checkAndChange),
-          ...generateSingleContractPolicyFields(mockAnswers, referenceNumber, checkAndChange),
-          ...generateCreditPeriodAndCurrencyFields(mockAnswers, referenceNumber, mockCurrencies, checkAndChange),
-          ...generateAboutGoodsOrServicesFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
-          ...generatePolicyContactFields(mockContact, referenceNumber, checkAndChange),
-        ];
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when the policy type is multiple policy type', () => {
-      const mockAnswers = mockMultiplePolicy;
-
-      it('should return fields and values from the submitted data/answers', () => {
-        const result = generateFields(mockAnswers, mockContact, referenceNumber, mockCountries, mockCurrencies, checkAndChange);
-
-        const expected = [
-          ...generatePolicyAndDateFields(mockAnswers, referenceNumber, checkAndChange),
-          ...generateMultipleContractPolicyFields(mockAnswers, referenceNumber, checkAndChange),
-          ...generateCreditPeriodAndCurrencyFields(mockAnswers, referenceNumber, mockCurrencies, checkAndChange),
-          ...generateAboutGoodsOrServicesFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
-          ...generatePolicyContactFields(mockContact, referenceNumber, checkAndChange),
-        ];
-
-        expect(result).toEqual(expected);
-      });
+      expect(result).toEqual(expected);
     });
   });
 
-  describe('policySummaryList', () => {
-    const mockAnswers = mockSinglePolicy;
-
+  describe('policySummaryLists', () => {
     it('should return an array of summary list rows', () => {
-      const result = policySummaryList(mockAnswers, mockContact, referenceNumber, mockCountries, mockCurrencies);
+      const result = policySummaryLists(mockAnswers, mockContact, mockBroker, mockNominatedLossPayee, referenceNumber, mockCurrencies, mockCountries);
 
-      const fields = generateFields(mockAnswers, mockContact, referenceNumber, mockCountries, mockCurrencies, checkAndChange);
+      const fields = generateFields(
+        mockAnswers,
+        mockContact,
+        mockBroker,
+        mockNominatedLossPayee,
+        referenceNumber,
+        mockCurrencies,
+        mockCountries,
+        checkAndChange,
+      );
 
-      const expected = generateSummaryListRows(fields);
+      const expected = generateGroupsOfSummaryLists(fields);
 
       expect(result).toEqual(expected);
     });

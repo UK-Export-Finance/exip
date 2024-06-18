@@ -1,18 +1,16 @@
 import { LINKS } from '../../links';
 import { BUTTONS } from '../../buttons';
-import { ELIGIBILITY, ROUTES, CONTACT_DETAILS } from '../../../constants';
+import { ROUTES, CONTACT_DETAILS } from '../../../constants';
 import POLICY from './policy';
 import * as ELIGIBILITY_PAGES from './eligibility';
 import * as ACCOUNT_PAGES from './account';
 import * as EXPORTER_BUSINESS from './business';
 import * as YOUR_BUYER from './your-buyer';
+import * as EXPORT_CONTRACT from './export-contract';
 import * as DECLARATIONS from './declarations';
 import * as CHECK_YOUR_ANSWERS from './check-your-answers';
 import COMPLETE_OTHER_SECTIONS from './complete-other-sections';
 import * as APPLICATION_SUBMITTED from './application-submitted';
-import formatCurrency from '../../../helpers/format-currency';
-
-export const MAX_COVER_AMOUNT = formatCurrency(ELIGIBILITY.MAX_COVER_AMOUNT_IN_GBP);
 
 const DASHBOARD = {
   PAGE_TITLE: 'Your applications',
@@ -27,7 +25,7 @@ const DASHBOARD = {
   NO_APPLICATIONS: 'You have no applications currently.',
   START_NEW_APPLICATION: {
     TEXT: BUTTONS.START_A_NEW_APPLICATION,
-    HREF: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
+    HREF: ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION,
   },
   GET_A_QUOTE: {
     TEXT: BUTTONS.GET_A_QUOTE_FOR_INSURANCE,
@@ -36,7 +34,7 @@ const DASHBOARD = {
 };
 
 const ALL_SECTIONS = {
-  PAGE_TITLE: 'Apply for UKEF export insurance',
+  PAGE_TITLE: 'Apply for UKEF credit insurance',
   DEADLINE_TO_SUBMIT: 'Deadline to submit',
   REFERENCE_NUMBER: 'Your reference',
 };
@@ -45,10 +43,8 @@ const APPLY_OFFLINE = {
   PAGE_TITLE: 'You need to apply using our form',
   REASON: {
     INTRO: 'This is because',
-    WANT_COVER_OVER_MAX_AMOUNT: `you want to be insured for more than ${MAX_COVER_AMOUNT} and we need to make extra checks.`,
     OTHER_PARTIES_INVOLVED: 'there are other parties involved in your exports and we need to make extra checks.',
     WILL_BE_PAID_BY_LETTER_OF_CREDIT: "you'll be paid by a letter of credit.",
-    NEED_PRE_CREDIT_PERIOD_COVER: 'you need pre-credit cover and we need to make extra checks.',
     NO_COMPANIES_HOUSE_NUMBER: "you do not have a UK Companies House registration number for a company that's actively trading, so we need to make extra checks.",
   },
   ACTIONS: {
@@ -70,33 +66,9 @@ const APPLY_OFFLINE = {
   },
 };
 
-const SPEAK_TO_UKEF_EFM = {
-  PAGE_TITLE: 'You need to speak with a UKEF export finance manager',
-  REASON: {
-    INTRO: 'This is because',
-    WANT_COVER_OVER_MAX_PERIOD: `you want to be insured for longer than ${ELIGIBILITY.MAX_COVER_PERIOD_YEARS} years.`,
-  },
-  ACTIONS: {
-    FIND_EFM: [
-      [
-        {
-          text: 'Find ',
-        },
-        {
-          text: 'your nearest export finance manager',
-          href: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
-        },
-        {
-          text: ' to discuss this.',
-        },
-      ],
-    ],
-  },
-};
-
 const START = {
-  PAGE_TITLE: 'Apply for UKEF export insurance',
-  INTRO: 'Use this service to make a full application for export insurance from UK Export Finance (UKEF).',
+  PAGE_TITLE: 'Apply for UKEF credit insurance',
+  INTRO: 'Use this service to make a full application for credit insurance from UK Export Finance (UKEF).',
   LIST: {
     INTRO: "You'll need your:",
     ITEMS: [
@@ -121,7 +93,7 @@ const START = {
   FIND_OUT_MORE: {
     YOU_CAN: 'You can',
     LINK: {
-      TEXT: 'find out more about UKEF export insurance',
+      TEXT: 'find out more about UKEF credit insurance',
       HREF: LINKS.EXTERNAL.GUIDANCE,
     },
     TO_FIND_OUT_MORE: "if you want to know who's eligible and what's covered.",
@@ -167,8 +139,8 @@ const INSURANCE = {
   ELIGIBILITY: ELIGIBILITY_PAGES,
   NO_ACCESS_TO_APPLICATION_PAGE,
   POLICY,
-  SPEAK_TO_UKEF_EFM,
   YOUR_BUYER,
+  EXPORT_CONTRACT,
   DECLARATIONS,
   CHECK_YOUR_ANSWERS,
   COMPLETE_OTHER_SECTIONS,

@@ -3,16 +3,31 @@
 {% macro render(params) %}
 
   {% set groups = params.groups %}
+  {% set tagClasses = params.tagClasses %}
 
   {% for group in groups %}
-    <h2 class="govuk-heading-m" data-cy="task-list-group-heading-{{ group.title }}">{{ loop.index }}. {{ group.title }}</h2>
 
-    <dl class="govuk-summary-list ukef-task-list">
+    {% set headingClass = "govuk-heading-m" %}
+    {% set hintClass = "govuk-hint" %}
+
+    {% if group.hint %}
+      {% set headingClass = headingClass + " govuk-!-margin-bottom-0" %}
+      {% set hintClass = hintClass + " govuk-!-margin-top-0" %}
+    {% endif %}
+    
+    <h2 class="{{ headingClass }}" data-cy="task-list-group-heading-{{ group.title }}">{{ loop.index }}. {{ group.title }}</h2>
+
+    {% if group.hint %}
+      <p class="{{ hintClass }}" data-cy="task-list-group-hint-{{ group.hint }}">{{ group.hint }}</p>
+    {% endif %}
+
+    <dl class="govuk-summary-list govuk-!-margin-bottom-9 ukef-task-list">
       {% for task in group.tasks %}
 
         {{ taskListRow.render({
           task: task,
-          groupTitle: group.title
+          groupTitle: group.title,
+          tagClasses: tagClasses
         }) }}
 
       {% endfor %}

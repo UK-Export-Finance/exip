@@ -1,4 +1,4 @@
-import { APPLICATION, ELIGIBILITY, FIELD_IDS, FIELD_VALUES } from '../../constants';
+import { APPLICATION, ELIGIBILITY, FIELD_IDS, FIELD_VALUES, MAXIMUM_CHARACTERS } from '../../constants';
 import { LINKS } from '../links';
 
 const { MAX_COVER_PERIOD_MONTHS } = ELIGIBILITY;
@@ -22,12 +22,13 @@ export const FIELDS = {
     },
   },
   [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]: {
-    HINT: 'Cover is based on the country your buyer is located in, not the destination of your goods or services.',
+    HINT: "Credit insurance protects in the event your buyer doesn't pay you. That means that cover is based on the country your buyer is based in, not the destination of the goods or services.",
     SUMMARY: {
       TITLE: 'Buyer is based in',
     },
   },
   [FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION]: {
+    HINT: 'UKEF provides credit insurance for payments from overseas territories.',
     SUMMARY: {
       TITLE: 'Your company',
     },
@@ -48,7 +49,7 @@ export const FIELDS = {
   },
   [FIELD_IDS.ELIGIBILITY.CURRENCY]: {
     LABEL:
-      'Select a currency (pounds sterling, euros or US dollars). You can send out your invoices in most currencies but UKEF only issues policies in these 3 currencies.',
+      'Select a currency (UK sterling, Euros, US dollars, or Japanese yen). You can send out your invoices in most currencies but UKEF only issues policies in these 4 currencies.',
   },
   [FIELD_IDS.ELIGIBILITY.CONTRACT_VALUE]: {
     LABEL: 'Contract value',
@@ -163,36 +164,36 @@ export const FIELDS = {
       TITLE: 'Policy length',
     },
   },
-  [FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD]: {
-    HINT: 'This is known as the pre-credit period.',
+  [FIELD_IDS.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT]: {
+    HINT: "If you've applied for credit insurance using this service in the past, you should have an account with us.",
   },
-  [FIELD_IDS.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE]: {
-    HINT: "If you've applied online before, you'll already have an account.",
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NUMBER]: {
+  [FIELD_IDS.INSURANCE.COMPANIES_HOUSE.COMPANY_NUMBER]: {
     SUMMARY: {
       TITLE: 'Companies House registration number',
     },
   },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NAME]: {
+  [FIELD_IDS.INSURANCE.COMPANIES_HOUSE.COMPANY_NAME]: {
     SUMMARY: {
       TITLE: 'Company name',
     },
   },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_ADDRESS]: {
+  [FIELD_IDS.INSURANCE.COMPANIES_HOUSE.COMPANY_ADDRESS]: {
     SUMMARY: {
       TITLE: 'Registered office address',
     },
   },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_INCORPORATED]: {
+  [FIELD_IDS.INSURANCE.COMPANIES_HOUSE.COMPANY_INCORPORATED]: {
     SUMMARY: {
       TITLE: 'Incorporated on',
     },
   },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_SIC]: {
+  [FIELD_IDS.INSURANCE.COMPANIES_HOUSE.COMPANY_SIC]: {
     SUMMARY: {
       TITLE: 'Standard industrial classification (SIC) codes and nature of business',
     },
+  },
+  [FIELD_IDS.INSURANCE.CURRENCY.ALTERNATIVE_CURRENCY_CODE]: {
+    TEXT: 'Another currency',
   },
   [FIELD_IDS.FEEDBACK.SATISFACTION]: {
     TITLE: 'Satisfaction survey',
@@ -206,9 +207,11 @@ export const FIELDS = {
   [FIELD_IDS.FEEDBACK.IMPROVEMENT]: {
     LABEL: 'How could we improve this service?',
     HINT: 'Do not include any personal or financial information, for example your National Insurance or credit card numbers',
+    MAXIMUM: MAXIMUM_CHARACTERS.FEEDBACK.IMPROVEMENT,
   },
   [FIELD_IDS.FEEDBACK.OTHER_COMMENTS]: {
     LABEL: 'Is there anything else you would like to tell us about your experience?',
     HINT: 'Do not include any personal or financial information, for example your National Insurance or credit card numbers',
+    MAXIMUM: MAXIMUM_CHARACTERS.FEEDBACK.OTHER_COMMENTS,
   },
 };

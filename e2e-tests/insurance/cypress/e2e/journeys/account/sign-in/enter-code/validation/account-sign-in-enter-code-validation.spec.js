@@ -12,21 +12,20 @@ const {
 } = ROUTES;
 
 const {
-  ACCOUNT: { SECURITY_CODE },
+  ACCOUNT: { ACCESS_CODE },
 } = INSURANCE_FIELD_IDS;
 
 const {
-  INSURANCE: { ACCOUNT: { [SECURITY_CODE]: SECURITY_CODE_ERROR_MESSAGE } },
+  INSURANCE: { ACCOUNT: { [ACCESS_CODE]: ACCESS_CODE_ERROR_MESSAGE } },
 } = ERROR_MESSAGES;
 
-const field = fieldSelector(SECURITY_CODE);
-let value = null;
-const fieldIndex = 0;
-const TOTAL_REQUIRED_FIELDS = 1;
-const expectedMessage = String(SECURITY_CODE_ERROR_MESSAGE.INCORRECT);
+const field = fieldSelector(ACCESS_CODE);
+const expectedErrorMessage = String(ACCESS_CODE_ERROR_MESSAGE.INCORRECT);
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Account - Sign in - Enter code - validation', () => {
-  const url = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
+  const url = `${baseUrl}${ENTER_CODE}`;
 
   before(() => {
     cy.deleteAccount();
@@ -58,35 +57,38 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
   });
 
   it('should render a validation error when submitting an empty form', () => {
-    cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
+    cy.submitAndAssertFieldErrors({ field, expectedErrorMessage });
   });
 
-  it('should render a validation error and retain the submitted value when submitting an invalid security code', () => {
-    const invalidSecurityCode = '123456';
-    value = invalidSecurityCode;
+  it('should render a validation error and retain the submitted value when submitting an invalid access code', () => {
+    const invalidAccessCode = '123456';
 
-    cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
+    cy.submitAndAssertFieldErrors({
+      field,
+      value: invalidAccessCode,
+      expectedErrorMessage,
+    });
 
-    field.input().should('have.value', invalidSecurityCode);
+    field.input().should('have.value', invalidAccessCode);
   });
 
-  describe('when submitting a valid security code', () => {
-    let validSecurityCode;
+  describe('when submitting a valid access code', () => {
+    let validAccessCode;
 
     before(() => {
       // create and get an OTP for the exporter's account
-      cy.accountAddAndGetOTP().then((securityCode) => {
-        validSecurityCode = securityCode;
+      cy.accountAddAndGetOTP().then((accessCode) => {
+        validAccessCode = accessCode;
       });
     });
 
     it(`should redirect to ${DASHBOARD}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitEnterCodeAccountForm(validSecurityCode);
+      cy.completeAndSubmitEnterCodeAccountForm(validAccessCode);
 
       cy.getReferenceNumber().then((referenceNumber) => {
-        const expectedUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+        const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
         cy.assertUrl(expectedUrl);
       });
     });

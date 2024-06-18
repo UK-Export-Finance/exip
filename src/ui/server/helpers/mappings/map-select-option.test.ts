@@ -1,4 +1,5 @@
 import mapSelectOption from './map-select-option';
+import nameAndIsoCodeText from '../name-and-iso-code-text';
 import { mockCurrencies } from '../../test-mocks';
 
 describe('server/helpers/mappings/map-select-option', () => {
@@ -21,7 +22,7 @@ describe('server/helpers/mappings/map-select-option', () => {
       const result = mapSelectOption(mockOption.name, mockOption.isoCode, true);
 
       const expected = {
-        text: `${mockOption.isoCode} - ${mockOption.name}`,
+        text: nameAndIsoCodeText(mockOption.name, mockOption.isoCode),
         value: mockOption.isoCode,
         selected: false,
       };

@@ -1,7 +1,6 @@
 import dotenv from 'dotenv';
-import { APPLICATION, COVER_PERIOD, TOTAL_CONTRACT_VALUE } from '../constants';
+import { APPLICATION, COVER_PERIOD, TOTAL_CONTRACT_VALUE, EUR, GBP } from '../constants';
 import mockCountries from './mock-countries';
-import mockCurrencies from './mock-currencies';
 import { Application, ApplicationPolicyContact } from '../types';
 import broker from './mock-broker';
 import buyer from './mock-buyer';
@@ -14,26 +13,29 @@ const month = date.getMonth();
 
 export const mockApplicationEligibility = {
   buyerCountry: mockCountries[0],
-  hasMinimumUkGoodsOrServices: true,
-  validExporterLocation: true,
-  hasCompaniesHouseNumber: true,
-  otherPartiesInvolved: false,
-  paidByLetterOfCredit: false,
-  coverPeriodId: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
   coverPeriod: {
     valueId: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
   },
-  totalContractValueId: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
+  coverPeriodId: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
+  hasCompaniesHouseNumber: true,
+  hasEndBuyer: false,
+  hasMinimumUkGoodsOrServices: true,
+  otherPartiesInvolved: false,
+  paidByLetterOfCredit: false,
   totalContractValue: {
     valueId: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
   },
+  totalContractValueId: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
+  validExporterLocation: true,
 };
 
 const mockGenericPolicy = {
   requestedStartDate: new Date(date.setMonth(month + 1)),
-  creditPeriodWithBuyer: ' Mock free text',
-  policyCurrencyCode: mockCurrencies[0].isoCode,
-  needPreCreditPeriodCover: false,
+  policyCurrencyCode: GBP,
+  jointlyInsuredParty: {
+    id: 'clfv9uv6v00csoqz2pm7nftfx',
+    requested: false,
+  },
 };
 
 export const mockSinglePolicy = {
@@ -51,9 +53,44 @@ export const mockMultiplePolicy = {
   maximumBuyerWillOwe: 1000,
 };
 
+export const mockPrivateMarket = {
+  attempted: false,
+  declinedDescription: 'Mock declined description',
+};
+
+export const mockExportContractAgentServiceCharge = {
+  percentageCharge: '10',
+  fixedSumAmount: '1500',
+  fixedSumCurrencyCode: mockCountries[0].isoCode,
+  payableCountryCode: mockCountries[0].isoCode,
+  method: APPLICATION.EXPORT_CONTRACT.AGENT_SERVICE_CHARGE.METHOD.FIXED_SUM,
+};
+
+export const mockExportContractAgentService = {
+  agentIsCharging: false,
+  serviceDescription: 'Mock export contract agent service description',
+  charge: mockExportContractAgentServiceCharge,
+};
+
+export const mockExportContractAgent = {
+  service: mockExportContractAgentService,
+};
+
+export const mockExportContractAgentFullyPopulated = {
+  countryCode: mockCountries[0].isoCode,
+  fullAddress: 'Mock export contract agent address',
+  isUsingAgent: false,
+  name: 'Mock export contract agent name',
+  privateMarket: mockPrivateMarket,
+  service: mockExportContractAgentService,
+  agent: mockExportContractAgent,
+};
+
 export const mockExportContract = {
   goodsOrServicesDescription: 'Mock description',
+  finalDestinationKnown: false,
   finalDestinationCountryCode: mockCountries[0].isoCode,
+  paymentTermsDescription: 'Mock payment terms description',
 };
 
 export const mockAccount = {
@@ -61,10 +98,11 @@ export const mockAccount = {
 };
 
 export const mockCompany = {
-  id: 'clcyyopn40148m8noyar9wxrn',
+  id: 'claydon40148m8boyar9waen',
   companyName: 'Test Name',
   companyNumber: '0123456',
   companyWebsite: '',
+  differentTradingAddress: {},
   hasDifferentTradingName: false,
   hasDifferentTradingAddress: false,
   dateOfCreation: '2014-04-10T00:00:00.000Z',
@@ -75,7 +113,7 @@ export const mockCompany = {
     },
   ],
   registeredOfficeAddress: {
-    id: 'clcyyopna0158m8noaglyy94t',
+    id: 'claydona0158m8noaglyy94t',
     addressLine1: 'Line 1',
     addressLine2: 'Line 2',
     careOf: '',
@@ -101,19 +139,20 @@ export const mockPolicyContact = {
 export const mockBusiness = {
   goodsOrServicesSupplied: 'ABC',
   totalYearsExporting: 20,
-  totalEmployeesInternational: 1000,
   totalEmployeesUK: 400,
   estimatedAnnualTurnover: 155220,
   exportsTurnoverPercentage: 20,
+  turnoverCurrencyCode: EUR,
+  hasCreditControlProcess: true,
 };
 
 export const mockBroker = {
-  id: 'clcyyopna0158m8noaglyy9gg',
+  id: 'claydona0158m8noaglyy9gg',
   ...broker,
 };
 
 export const mockApplicationBuyer = {
-  id: 'clcyyopna0158m8noaglyy9aa',
+  id: 'claydona0158m8noaglyy9aa',
   ...buyer,
 };
 
@@ -133,6 +172,41 @@ export const mockApplicationDeclaration = {
   willExportWithAntiBriberyCodeOfConduct: true,
   agreeToConfirmationAndAcknowledgements: true,
   agreeHowDataWillBeUsed: true,
+};
+
+export const mockLossPayeeFinancialDetailsUkVector = {
+  accountNumberVector: 'AAaaAAA1aA+1aaa1',
+  sortCodeVector: 'BBbbBBB2bB+2bbb2',
+};
+
+export const mockLossPayeeFinancialDetailsUk = {
+  accountNumber: 'AAaaa1A1AAaaAAa1AaAaAaaaAaAaaaAaAAAaAaAaAaA=',
+  sortCode: 'BBbbb2B1BBbbBBb2BbBbBbbbBbBbbbBbBBBbBbBbBbB',
+  bankAddress: 'Mock UK financial address',
+};
+
+export const mockLossPayeeFinancialDetailsInternationalVector = {
+  ibanVector: 'CCccCCC3cC+3ccc3',
+  bicSwiftCodeVector: 'DDddDDD4dD+4ddd4',
+};
+
+export const mockLossPayeeFinancialDetailsInternational = {
+  iban: 'Ccccc3C3CCccCCc3CcCcCcccCcCcccCcCCCcCcCcCcC=',
+  bicSwiftCode: 'DDddd4D4DDddDDd4DdDdDdddDdDdddDdDDdDdDdDdD',
+  bankAddress: 'Mock international financial address',
+};
+
+export const mockNominatedLossPayee = {
+  id: '123',
+  isAppointed: false,
+  financialUk: {
+    id: '2345',
+    ...mockLossPayeeFinancialDetailsUk,
+  },
+  financialInternational: {
+    id: '2345',
+    ...mockLossPayeeFinancialDetailsInternational,
+  },
 };
 
 const mockApplication = {
@@ -161,7 +235,7 @@ const mockApplication = {
   companySicCodes: [mockCompanySicCode, mockCompanySicCode],
   companyAddress: mockCompany.registeredOfficeAddress,
   business: {
-    id: 'clcyyopna0158m8noaglyy9gg',
+    id: 'claydona0158m8noaglyy9gg',
     ...mockBusiness,
   },
   broker: mockBroker,
@@ -169,6 +243,7 @@ const mockApplication = {
   sectionReview: mockSectionReview,
   declaration: mockApplicationDeclaration,
   policyContact: mockPolicyContact,
+  nominatedLossPayee: mockNominatedLossPayee,
 } as Application;
 
 export const mockApplicationMultiplePolicy = {

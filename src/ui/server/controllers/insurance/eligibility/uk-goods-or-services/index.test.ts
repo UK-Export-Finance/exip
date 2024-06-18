@@ -1,6 +1,7 @@
-import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
+import { FIELD_ID, PAGE_VARIABLES, HTML_FLAGS, TEMPLATE, get, post } from '.';
 import { PAGES, UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION, UK_GOODS_AND_SERVICES_DESCRIPTION, ERROR_MESSAGES } from '../../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { FIELD_IDS, TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
@@ -8,6 +9,17 @@ import generateValidationErrors from '../../../../shared-validation/yes-no-radio
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
+
+const {
+  ELIGIBILITY: { UK_GOODS_OR_SERVICES_CHANGE, CANNOT_APPLY, END_BUYER, CHECK_YOUR_ANSWERS },
+} = INSURANCE_ROUTES;
+
+const {
+  SHARED_PAGES,
+  PARTIALS: {
+    INSURANCE: { UK_GOODS_OR_SERVICES },
+  },
+} = TEMPLATES;
 
 describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
   let req: Request;
@@ -41,9 +53,19 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
     });
   });
 
+  describe('HTML_FLAGS', () => {
+    it('should have correct properties', () => {
+      const expected = {
+        CUSTOM_CONTENT_HTML: UK_GOODS_OR_SERVICES.CUSTOM_CONTENT_HTML,
+      };
+
+      expect(HTML_FLAGS).toEqual(expected);
+    });
+  });
+
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES);
+      expect(TEMPLATE).toEqual(SHARED_PAGES.SINGLE_RADIO);
     });
   });
 
@@ -51,8 +73,8 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
     it('should render template', () => {
       get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, {
-        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, HTML_FLAGS }),
         userName: getUserNameFromSession(req.session.user),
         submittedValues: req.session.submittedData.insuranceEligibility,
       });
@@ -66,8 +88,8 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
 
         const payload = constructPayload(req.body, [FIELD_ID]);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, {
-          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, HTML_FLAGS }),
           userName: getUserNameFromSession(req.session.user),
           validationErrors: generateValidationErrors(payload, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID].IS_EMPTY),
         });
@@ -81,10 +103,10 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
         };
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY}`, async () => {
+      it(`should redirect to ${CANNOT_APPLY}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
+        expect(res.redirect).toHaveBeenCalledWith(CANNOT_APPLY);
       });
 
       it('should add exitReason to req.flash', async () => {
@@ -119,10 +141,21 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT}`, () => {
+      it(`should redirect to ${END_BUYER}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT);
+        expect(res.redirect).toHaveBeenCalledWith(END_BUYER);
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.originalUrl = UK_GOODS_OR_SERVICES_CHANGE;
+
+          await post(req, res);
+
+          const expected = CHECK_YOUR_ANSWERS;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
   });

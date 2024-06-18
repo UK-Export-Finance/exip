@@ -1,9 +1,12 @@
 import singleInputPageVariables from '.';
 import corePageVariables from '../core';
 import { FIELDS } from '../../../content-strings';
-import { FIELD_IDS, ROUTES } from '../../../constants';
+import { FIELDS_ELIGIBILITY as FIELDS_INSURANCE_ELIGIBILITY } from '../../../content-strings/fields/insurance/eligibility';
+import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 
 const { FEEDBACK: feedbackRoute } = ROUTES.INSURANCE;
+
+const { CONDITIONAL_YES_HTML } = TEMPLATES.PARTIALS.INSURANCE.BUYER.CONNECTION_WITH_BUYER;
 
 describe('server/helpers/page-variables/single-input', () => {
   const mock = {
@@ -13,6 +16,7 @@ describe('server/helpers/page-variables/single-input', () => {
     },
     BACK_LINK: '/mock',
     FEEDBACK_ROUTE: feedbackRoute,
+    CONDITIONAL_YES_HTML,
   };
 
   it('should return corePageVariables with BACK_LINK, quote product description and FIELD_ID', () => {
@@ -26,14 +30,27 @@ describe('server/helpers/page-variables/single-input', () => {
     expect(result).toEqual(expected);
   });
 
-  describe('when a FIELD_ID exists in content string fields', () => {
-    it('should also return FIELD_HINT', () => {
+  describe('when a FIELD_ID exists in `fields` content string fields', () => {
+    it('should also return FIELD_LABEL and FIELD_HINT', () => {
       mock.FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
       const result = singleInputPageVariables(mock);
 
-      const expected = FIELDS[mock.FIELD_ID].HINT;
+      const expectedLabel = FIELDS[mock.FIELD_ID].LABEL;
+      const expectedHint = FIELDS[mock.FIELD_ID].HINT;
 
-      expect(result.FIELD_HINT).toEqual(expected);
+      expect(result.FIELD_LABEL).toEqual(expectedLabel);
+      expect(result.FIELD_HINT).toEqual(expectedHint);
+    });
+  });
+
+  describe('when a FIELD_ID exists in `fields - insurance eligibility` content string fields', () => {
+    it('should also return a FIELD_HINT', () => {
+      mock.FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_END_BUYER;
+      const result = singleInputPageVariables(mock);
+
+      const expectedHint = FIELDS_INSURANCE_ELIGIBILITY[mock.FIELD_ID].HINT;
+
+      expect(result.FIELD_HINT).toEqual(expectedHint);
     });
   });
 });

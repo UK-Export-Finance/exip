@@ -1,24 +1,28 @@
-import {
-  backLink, cannotApplyPage, noRadio, noRadioInput, submitButton,
-} from '../../../../../../pages/shared';
+import { backLink, cannotApplyPage } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
-import { completeStartForm, completeCheckIfEligibleForm, completeExporterLocationForm } from '../../../../../../commands/insurance/eligibility/forms';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
 
-context('Insurance - UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover - submit `no - UK goods/services is below the minimum`', () => {
+const baseUrl = Cypress.config('baseUrl');
+
+context('Insurance - UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF credit insurance cover - submit `no - UK goods/services is below the minimum`', () => {
   beforeEach(() => {
     cy.navigateToUrl(ROUTES.INSURANCE.START);
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
-    completeAndSubmitBuyerCountryForm();
-    completeExporterLocationForm();
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
+    cy.completeExporterLocationForm();
+    cy.completeCompaniesHouseNumberForm();
+    cy.completeAndSubmitCompaniesHouseSearchForm({});
+    cy.completeEligibilityCompanyDetailsForm();
+    completeAndSubmitBuyerCountryForm({});
+    cy.completeAndSubmitTotalValueInsuredForm({});
+    cy.completeCoverPeriodForm({});
 
-    noRadio().label().click();
-    submitButton().click();
+    cy.clickNoRadioInput();
+    cy.clickSubmitButton();
   });
 
   beforeEach(() => {
@@ -26,13 +30,13 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
   });
 
   it('redirects to exit page', () => {
-    const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY}`;
+    const expectedUrl = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY}`;
 
     cy.assertUrl(expectedUrl);
   });
 
   it('renders a back link with correct url', () => {
-    const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES}`;
+    const expectedHref = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES}`;
 
     cy.checkLink(
       backLink(),
@@ -50,7 +54,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     it('should NOT have the originally submitted answer selected', () => {
       cy.clickBackLink();
 
-      noRadioInput().should('not.be.checked');
+      cy.assertNoRadioOptionIsNotChecked();
     });
   });
 });

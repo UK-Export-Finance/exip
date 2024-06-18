@@ -1,6 +1,4 @@
-import {
-  yesRadio, noRadio, submitButton,
-} from '../../../../../../pages/shared';
+import { yesRadio, noRadio } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
@@ -27,12 +25,12 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover', () => {
+context('UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF credit insurance cover', () => {
   const url = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
 
   before(() => {
     cy.login();
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
 
@@ -97,15 +95,10 @@ context('UK goods or services page - as an exporter, I want to check if my expor
       });
 
       it('should render validation errors', () => {
-        const expectedErrorsCount = 1;
-        const expectedErrorMessage = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID].IS_EMPTY;
-
-        cy.submitAndAssertRadioErrors(
-          yesRadio(FIELD_ID),
-          0,
-          expectedErrorsCount,
-          expectedErrorMessage,
-        );
+        cy.submitAndAssertRadioErrors({
+          field: yesRadio(FIELD_ID),
+          expectedErrorMessage: ERROR_MESSAGES.ELIGIBILITY[FIELD_ID].IS_EMPTY,
+        });
       });
     });
 
@@ -113,8 +106,8 @@ context('UK goods or services page - as an exporter, I want to check if my expor
       it(`should redirect to ${POLICY_TYPE}`, () => {
         cy.navigateToUrl(url);
 
-        yesRadio().label().click();
-        submitButton().click();
+        cy.clickYesRadioInput();
+        cy.clickSubmitButton();
 
         const expectedUrl = `${baseUrl}${POLICY_TYPE}`;
 

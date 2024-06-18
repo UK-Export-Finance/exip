@@ -5,11 +5,10 @@ import { FIELD_IDS, FIELD_VALUES, ROUTES, TEMPLATES } from '../../../../../const
 import singleInputPageVariables from '../../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../../helpers/construct-payload';
-import mapApplicationToFormFields from '../../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
 import save from '../../save-data';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromise, referenceNumber } from '../../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -25,7 +24,7 @@ const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_EXPORTING
 describe('controllers/insurance/declarations/anti-bribery/exporting-with-a-code-of-conduct', () => {
   jest.mock('../../save-data');
 
-  let mockSaveDeclaration = jest.fn(() => Promise.resolve({}));
+  let mockSaveDeclaration = mockSpyPromise();
 
   save.declaration = mockSaveDeclaration;
 
@@ -47,14 +46,14 @@ describe('controllers/insurance/declarations/anti-bribery/exporting-with-a-code-
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(mockApplication.referenceNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELD: {
           ID: FIELD_ID,
           ...DECLARATIONS_FIELDS[FIELD_ID],
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -63,7 +62,7 @@ describe('controllers/insurance/declarations/anti-bribery/exporting-with-a-code-
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.DECLARATIONS.ANTI_BRIBERY.EXPORTING_WITH_CODE_OF_CONDUCT);
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SINGLE_RADIO);
     });
   });
 
@@ -73,9 +72,9 @@ describe('controllers/insurance/declarations/anti-bribery/exporting-with-a-code-
 
       const expectedVariables = {
         ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
-        ...pageVariables(mockApplication.referenceNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
-        application: mapApplicationToFormFields(res.locals.application),
+        applicationAnswer: mockApplication.declaration[FIELD_ID],
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -116,7 +115,7 @@ describe('controllers/insurance/declarations/anti-bribery/exporting-with-a-code-
       it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
@@ -130,7 +129,7 @@ describe('controllers/insurance/declarations/anti-bribery/exporting-with-a-code-
 
         const expectedVariables = {
           ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
-          ...pageVariables(mockApplication.referenceNumber),
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           validationErrors: generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),
         };

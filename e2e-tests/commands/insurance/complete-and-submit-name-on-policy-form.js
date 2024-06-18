@@ -1,5 +1,3 @@
-import { submitButton } from '../../pages/shared';
-
 /**
  * completeAndSubmitNameOnPolicyForm
  * completes and submits name on policy form
@@ -7,7 +5,7 @@ import { submitButton } from '../../pages/shared';
  */
 const completeAndSubmitNameOnPolicyForm = ({ sameName = true }) => {
   cy.completeNameOnPolicyForm({ sameName });
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export default completeAndSubmitNameOnPolicyForm;

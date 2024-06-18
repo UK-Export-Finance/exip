@@ -1,28 +1,33 @@
-import { backLink, countryInput, submitButton } from '../../../../../../pages/shared';
+import { autoCompleteField } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { FIELD_IDS } from '../../../../../../constants';
-import { PAGES, LINKS } from '../../../../../../content-strings';
-import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../../commands/insurance/eligibility/forms';
-import { COUNTRY_SUPPORTED_ONLINE } from '../../../../../../fixtures/countries';
-import checkAutocompleteInput from '../../../../../../commands/shared-commands/assertions/check-autocomplete-input';
+import { PAGES } from '../../../../../../content-strings';
+import { COUNTRY_APPLICATION_SUPPORT } from '../../../../../../fixtures/countries';
+import { assertCountryAutocompleteInput } from '../../../../../../shared-test-assertions';
 
 const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
 
 const {
   START,
-  ELIGIBILITY: { BUYER_COUNTRY, CHECK_IF_ELIGIBLE, EXPORTER_LOCATION },
+  ELIGIBILITY: { BUYER_COUNTRY, COMPANY_DETAILS, TOTAL_VALUE_INSURED },
 } = INSURANCE_ROUTES;
 
 const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
+const COUNTRY_NAME = COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME;
+
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Buyer country page - as an exporter, I want to check if UKEF offer export insurance policy for where my buyer is based', () => {
+context('Insurance - Buyer country page - as an exporter, I want to check if UKEF offer credit insurance policy for where my buyer is based', () => {
   beforeEach(() => {
     cy.navigateToUrl(START);
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
+    cy.completeExporterLocationForm();
+    cy.completeCompaniesHouseNumberForm();
+    cy.completeAndSubmitCompaniesHouseSearchForm({});
+    cy.completeEligibilityCompanyDetailsForm();
 
     const expectedUrl = `${baseUrl}${BUYER_COUNTRY}`;
 
@@ -33,7 +38,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: BUYER_COUNTRY,
-      backLink: CHECK_IF_ELIGIBLE,
+      backLink: COMPANY_DETAILS,
       assertAuthenticatedHeader: false,
       lightHouseThresholds: {
         performance: 70,
@@ -46,49 +51,17 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
   });
 
   describe('searchable autocomplete input', () => {
-    it('has working client side JS', () => {
-      checkAutocompleteInput.hasWorkingClientSideJS(countryInput.field(FIELD_ID));
-    });
-
-    it('renders an input', () => {
-      checkAutocompleteInput.rendersInput(countryInput.field(FIELD_ID));
-    });
-
-    it('renders `no results` message when no results are found', () => {
-      checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(FIELD_ID), 'test');
-    });
-
-    it('renders a single country result after searching', () => {
-      checkAutocompleteInput.rendersSingleResult(countryInput.field(FIELD_ID), 'Alg');
-    });
-
-    it('renders multiple country results after searching', () => {
-      checkAutocompleteInput.rendersMultipleResults(countryInput.field(FIELD_ID), 'Be');
-    });
-
-    it('allows user to remove a selected country and search again', () => {
-      checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(countryInput.field(FIELD_ID), 'Algeria', 'Brazil');
-    });
+    assertCountryAutocompleteInput({ fieldId: FIELD_ID });
   });
 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
       beforeEach(() => {
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it('should render validation errors', () => {
         cy.checkBuyerCountryValidationErrors();
-      });
-
-      it('renders a back link with correct url', () => {
-        const expectedHref = `${Cypress.config('baseUrl')}${BUYER_COUNTRY}`;
-
-        cy.checkLink(
-          backLink(),
-          expectedHref,
-          LINKS.BACK,
-        );
       });
 
       it('should focus on input when clicking summary error message', () => {
@@ -98,16 +71,16 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
 
     describe('when submitting with a supported country', () => {
       beforeEach(() => {
-        cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_SUPPORTED_ONLINE.name);
+        cy.keyboardInput(autoCompleteField(FIELD_ID).input(), COUNTRY_NAME);
 
-        const results = countryInput.field(FIELD_ID).results();
+        const results = autoCompleteField(FIELD_ID).results();
         results.first().click();
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
-      it(`should redirect to ${EXPORTER_LOCATION}`, () => {
-        const expectedUrl = `${baseUrl}${EXPORTER_LOCATION}`;
+      it(`should redirect to ${TOTAL_VALUE_INSURED}`, () => {
+        const expectedUrl = `${baseUrl}${TOTAL_VALUE_INSURED}`;
 
         cy.assertUrl(expectedUrl);
       });
@@ -115,11 +88,11 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
       it('should prepopulate the field when going back to the page via back link', () => {
         cy.clickBackLink();
 
-        const expectedValue = COUNTRY_SUPPORTED_ONLINE.name;
+        const expectedValue = COUNTRY_NAME;
 
-        cy.checkValue(countryInput.field(FIELD_ID), expectedValue);
+        cy.checkValue(autoCompleteField(FIELD_ID), expectedValue);
 
-        cy.checkText(countryInput.field(FIELD_ID).results(), expectedValue);
+        cy.checkText(autoCompleteField(FIELD_ID).results(), expectedValue);
       });
     });
   });

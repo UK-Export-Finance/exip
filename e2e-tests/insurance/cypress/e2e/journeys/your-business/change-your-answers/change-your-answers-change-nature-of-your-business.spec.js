@@ -1,5 +1,4 @@
-import partials from '../../../../../../partials';
-import { field, submitButton, summaryList } from '../../../../../../pages/shared';
+import { field, summaryList } from '../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -7,7 +6,6 @@ const {
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES,
     YEARS_EXPORTING,
-    EMPLOYEES_INTERNATIONAL,
     EMPLOYEES_UK,
   },
 } = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
@@ -20,9 +18,7 @@ const {
   },
 } = INSURANCE_ROUTES;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Your business - Change your answers - Nature of your business- As an exporter, I want to change my answers to the nature of your business section', () => {
   let referenceNumber;
@@ -34,15 +30,14 @@ context('Insurance - Your business - Change your answers - Nature of your busine
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection({});
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
-      cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
-      cy.completeAndSubmitBrokerForm({});
+      cy.completeAndSubmitCreditControlForm({});
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
   });
 
@@ -63,7 +58,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, NATURE_OF_BUSINESS_CHANGE, GOODS_OR_SERVICES);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: NATURE_OF_BUSINESS_CHANGE, fieldId: GOODS_OR_SERVICES });
       });
     });
 
@@ -77,11 +72,11 @@ context('Insurance - Your business - Change your answers - Nature of your busine
 
         cy.keyboardInput(field(fieldId).textarea(), newAnswer);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {
@@ -99,7 +94,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, NATURE_OF_BUSINESS_CHANGE, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: NATURE_OF_BUSINESS_CHANGE, fieldId });
       });
     });
 
@@ -113,11 +108,11 @@ context('Insurance - Your business - Change your answers - Nature of your busine
 
         cy.keyboardInput(field(fieldId).input(), newAnswer);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {
@@ -135,7 +130,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, NATURE_OF_BUSINESS_CHANGE, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: NATURE_OF_BUSINESS_CHANGE, fieldId });
       });
     });
 
@@ -149,47 +144,11 @@ context('Insurance - Your business - Change your answers - Nature of your busine
 
         cy.keyboardInput(field(fieldId).input(), newAnswer);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
-      });
-
-      it('should render the new answer', () => {
-        cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
-      });
-    });
-  });
-
-  describe(EMPLOYEES_INTERNATIONAL, () => {
-    const fieldId = EMPLOYEES_INTERNATIONAL;
-
-    describe('when clicking the `change` link', () => {
-      it(`should redirect to ${NATURE_OF_BUSINESS_CHANGE}`, () => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.assertChangeAnswersPageUrl(referenceNumber, NATURE_OF_BUSINESS_CHANGE, fieldId);
-      });
-    });
-
-    describe('form submission with a new answer', () => {
-      const newAnswer = '35';
-
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.keyboardInput(field(fieldId).input(), newAnswer);
-
-        submitButton().click();
-      });
-
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {

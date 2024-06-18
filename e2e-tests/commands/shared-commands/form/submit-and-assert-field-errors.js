@@ -1,36 +1,53 @@
-import { submitButton } from '../../../pages/shared';
-import partials from '../../../partials';
-
 /**
- * @param {String} field
- * @param {String} fieldValue - the value to input - can be null
- * @param {Number} errorIndex - index of error in errorSummary
- * @param {Number} errorSummaryLength - the number of expected errors in errorSummary
- * @param {String} errorMessage
+ * submitAndAssertFieldErrors
+ * Submit and assert errors for a field
+ * @param {Object} field: Cypress selector.
+ * @param {String} value: The value to input - can be null.
+ * @param {Number} errorIndex: Index of error. Defaults to 0.
+ * @param {Number} expectedErrorsCount: Expected total amount of errors in the errors summary. Defaults to 1.
+ * @param {Number} expectedErrorMessage: Expected error message.
+ * @param {Number} expectedValue: Expected value after submission.
+ * @param {Boolean} assertExpectedValue: Assert an expected value. Defaults to true.
+ * @param {Boolean} clearInput: Clear the input before text entry. Defaults to true.
+ * @param {Boolean} keyboardInputViaValueAttribute: Flag for whether to input the text via the input's value attribute, instead of .type().
  */
-const submitAndAssertFieldErrors = (field, fieldValue, errorIndex, errorSummaryLength, errorMessage, clearInput = true) => {
-  // only type if a field value is provided
-  if (fieldValue) {
-    cy.keyboardInput(field.input(), fieldValue);
+const submitAndAssertFieldErrors = ({
+  field,
+  value,
+  errorIndex = 0,
+  expectedErrorsCount = 1,
+  expectedErrorMessage,
+  expectedValue,
+  assertExpectedValue = true,
+  clearInput = true,
+  keyboardInputViaValueAttribute = false,
+}) => {
+  /**
+   * If a value is provided,
+   * Enter the value into the field's input.
+   */
+  if (value) {
+    cy.keyboardInput(field.input(), value, keyboardInputViaValueAttribute);
   } else if (clearInput) {
     field.input().clear();
   }
 
-  submitButton().click();
+  cy.clickSubmitButton();
 
-  cy.checkErrorSummaryListHeading();
+  cy.assertFieldErrors({
+    field,
+    errorIndex,
+    errorSummaryLength: expectedErrorsCount,
+    errorMessage: expectedErrorMessage,
+  });
 
-  partials.errorSummaryListItems().should('have.length', errorSummaryLength);
-
-  cy.checkText(
-    partials.errorSummaryListItems().eq(errorIndex),
-    errorMessage,
-  );
-
-  partials.errorSummaryListItemLinks().eq(errorIndex).click();
-  field.input().should('have.focus');
-
-  cy.checkText(field.errorMessage(), `Error: ${errorMessage}`);
+  if (assertExpectedValue) {
+    if (expectedValue) {
+      cy.checkValue(field, expectedValue);
+    } else if (value) {
+      cy.checkValue(field, value);
+    }
+  }
 };
 
 export default submitAndAssertFieldErrors;

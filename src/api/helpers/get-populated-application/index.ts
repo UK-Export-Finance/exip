@@ -1,22 +1,49 @@
 import { Context, Application as KeystoneApplication } from '.keystone/types'; // eslint-disable-line
 import getAccountById from '../get-account-by-id';
 import getCountryByField from '../get-country-by-field';
-import { Application } from '../../types';
+import mapPolicy from './map-policy';
+import getNominatedLossPayee from './nominated-loss-payee';
+import { Application, ApplicationPolicy } from '../../types';
 
 export const generateErrorMessage = (section: string, applicationId: number) =>
   `Getting populated application - no ${section} found for application ${applicationId}`;
 
+interface GetPopulatedApplicationParams {
+  context: Context;
+  application: KeystoneApplication;
+  decryptFinancialUk?: boolean;
+  decryptFinancialInternational?: boolean;
+}
+
 /**
  * getPopulatedApplication
  * Get data associated with an application
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {Application}
- * @returns {Object} Populated application
+ * @returns {Promise<Object>} Populated application
  */
-const getPopulatedApplication = async (context: Context, application: KeystoneApplication): Promise<Application> => {
-  console.info('Getting populated application');
+const getPopulatedApplication = async ({
+  context,
+  application,
+  decryptFinancialUk = false,
+  decryptFinancialInternational = false,
+}: GetPopulatedApplicationParams): Promise<Application> => {
+  console.info(`Getting populated application (helper) ${application.id}`);
 
-  const { eligibilityId, ownerId, policyId, policyContactId, exportContractId, companyId, businessId, brokerId, buyerId, declarationId } = application;
+  const {
+    eligibilityId,
+    ownerId,
+    policyId,
+    policyContactId,
+    exportContractId,
+    companyId,
+    businessId,
+    brokerId,
+    buyerId,
+    declarationId,
+    nominatedLossPayeeId,
+    sectionReviewId,
+  } = application;
 
   const eligibility = await context.db.Eligibility.findOne({
     where: { id: eligibilityId },
@@ -48,9 +75,11 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('account', application.id));
   }
 
-  const policy = await context.db.Policy.findOne({
+  const policy = (await context.query.Policy.findOne({
     where: { id: policyId },
-  });
+    query:
+      'id policyType requestedStartDate contractCompletionDate totalValueOfContract creditPeriodWithBuyer policyCurrencyCode totalMonthsOfCover totalSalesToBuyer maximumBuyerWillOwe needPreCreditPeriodCover jointlyInsuredParty { id companyName companyNumber countryCode requested }',
+  })) as ApplicationPolicy;
 
   if (!policy) {
     throw new Error(generateErrorMessage('policy', application.id));
@@ -64,6 +93,10 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('policyContact', application.id));
   }
 
+  const nominatedLossPayee = await getNominatedLossPayee(context, nominatedLossPayeeId, decryptFinancialUk, decryptFinancialInternational);
+
+  const populatedPolicy = mapPolicy(policy);
+
   const exportContract = await context.db.ExportContract.findOne({
     where: { id: exportContractId },
   });
@@ -72,11 +105,51 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('exportContract', application.id));
   }
 
+  const exportContractAgent = await context.db.ExportContractAgent.findOne({
+    where: { id: exportContract.agentId },
+  });
+
+  if (!exportContractAgent) {
+    throw new Error(generateErrorMessage('exportContractAgent', application.id));
+  }
+
+  const exportContractAgentService = await context.db.ExportContractAgentService.findOne({
+    where: { id: exportContractAgent.serviceId },
+  });
+
+  if (!exportContractAgentService) {
+    throw new Error(generateErrorMessage('exportContractAgentService', application.id));
+  }
+
+  const exportContractAgentServiceCharge = await context.db.ExportContractAgentServiceCharge.findOne({
+    where: { id: exportContractAgentService.chargeId },
+  });
+
+  if (!exportContractAgentServiceCharge) {
+    throw new Error(generateErrorMessage('exportContractAgentServiceCharge', application.id));
+  }
+
+  const privateMarket = await context.db.PrivateMarket.findOne({
+    where: { id: exportContract.privateMarketId },
+  });
+
+  if (!privateMarket) {
+    throw new Error(generateErrorMessage('privateMarket', application.id));
+  }
+
   const finalDestinationCountry = await getCountryByField(context, 'isoCode', exportContract.finalDestinationCountryCode);
 
   const populatedExportContract = {
     ...exportContract,
+    agent: {
+      ...exportContractAgent,
+      service: {
+        ...exportContractAgentService,
+        charge: exportContractAgentServiceCharge,
+      },
+    },
     finalDestinationCountry,
+    privateMarket,
   };
 
   const company = await context.db.Company.findOne({
@@ -103,9 +176,22 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     where: { id: company.registeredOfficeAddressId },
   });
 
+  if (!companyAddress) {
+    throw new Error(generateErrorMessage('companyAddress', application.id));
+  }
+
+  const differentTradingAddress = await context.db.CompanyDifferentTradingAddress.findOne({
+    where: { id: company.differentTradingAddressId },
+  });
+
+  if (!differentTradingAddress) {
+    throw new Error(generateErrorMessage('differentTradingAddress', application.id));
+  }
+
   const populatedCompany = {
     ...company,
     registeredOfficeAddress: companyAddress,
+    differentTradingAddress,
   };
 
   const business = await context.db.Business.findOne({
@@ -132,6 +218,22 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('buyer', application.id));
   }
 
+  const buyerRelationship = await context.db.BuyerRelationship.findOne({
+    where: { id: buyer.relationshipId },
+  });
+
+  if (!buyerRelationship) {
+    throw new Error(generateErrorMessage('buyerRelationship', application.id));
+  }
+
+  const buyerTradingHistory = await context.db.BuyerTradingHistory.findOne({
+    where: { id: buyer.buyerTradingHistoryId },
+  });
+
+  if (!buyerTradingHistory) {
+    throw new Error(generateErrorMessage('buyerTradingHistory', application.id));
+  }
+
   const buyerCountry = await context.db.Country.findOne({
     where: { id: buyer.countryId },
   });
@@ -150,6 +252,8 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
   const populatedBuyer = {
     ...buyer,
     country: buyerCountry,
+    relationship: buyerRelationship,
+    buyerTradingHistory,
   };
 
   const declaration = await context.db.Declaration.findOne({
@@ -158,6 +262,14 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
 
   if (!declaration) {
     throw new Error(generateErrorMessage('declaration', application.id));
+  }
+
+  const sectionReview = await context.db.SectionReview.findOne({
+    where: { id: sectionReviewId },
+  });
+
+  if (!sectionReview) {
+    throw new Error(generateErrorMessage('sectionReview', application.id));
   }
 
   const populatedApplication = {
@@ -171,11 +283,17 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     declaration,
     exportContract: populatedExportContract,
     owner: account,
-    policy,
+    policy: populatedPolicy,
     policyContact,
+    nominatedLossPayee,
+    sectionReview,
   };
 
   return populatedApplication;
 };
 
-export default getPopulatedApplication;
+const populatedApplication = {
+  get: getPopulatedApplication,
+};
+
+export default populatedApplication;

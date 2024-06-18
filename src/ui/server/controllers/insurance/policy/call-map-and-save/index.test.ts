@@ -32,12 +32,10 @@ describe('controllers/insurance/policy/call-map-and-save', () => {
     req = mockReq();
     res = mockRes();
 
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
-
     req.body = mockFormBody;
   });
 
-  describe('when form data has validation errors ', () => {
+  describe('when form data has validation errors', () => {
     it('should call mapAndSave.policy with application, form data and validationErrors', async () => {
       await callMapAndSave(req.body, mockApplication, mockValidationErrors);
 

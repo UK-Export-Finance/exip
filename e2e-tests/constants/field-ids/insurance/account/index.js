@@ -3,7 +3,7 @@ export const ACCOUNT = {
   LAST_NAME: 'lastName',
   EMAIL: 'email',
   PASSWORD: 'password',
-  SECURITY_CODE: 'securityCode',
+  ACCESS_CODE: 'securityCode',
   VERIFICATION_EXPIRY: 'verificationExpiry',
   VERIFICATION_HASH: 'verificationHash',
   IS_VERIFIED: 'isVerified',
@@ -13,3 +13,5 @@ export const ACCOUNT = {
   REACTIVATION_HASH: 'reactivationHash',
   REACTIVATION_EXPIRY: 'reactivationExpiry',
 };
+
+export default ACCOUNT;

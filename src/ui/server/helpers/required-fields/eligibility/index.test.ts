@@ -1,20 +1,27 @@
 import requiredFields, { irrelevantFields } from '.';
 import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 
-const { ACCOUNT_TO_APPLY_ONLINE, BUYER_COUNTRY_ISO_CODE } = INSURANCE_FIELD_IDS.ELIGIBILITY;
-const { TOTAL_CONTRACT_VALUE_ID, WANT_COVER_OVER_MAX_AMOUNT, WANT_COVER_OVER_MAX_PERIOD, COVER_PERIOD_ID } = INSURANCE_FIELD_IDS.ELIGIBILITY;
+const {
+  ELIGIBILITY: {
+    BUYER_COUNTRY_ISO_CODE,
+    COMPANY,
+    COMPANIES_HOUSE,
+    COMPANIES_HOUSE_NUMBER,
+    COVER_PERIOD,
+    COVER_PERIOD_ID,
+    HAVE_AN_ACCOUNT,
+    HAS_END_BUYER,
+    TOTAL_CONTRACT_VALUE_ID,
+    TOTAL_CONTRACT_VALUE,
+    HAS_REVIEWED_ELIGIBILITY,
+    ...FIELD_IDS
+  },
+} = INSURANCE_FIELD_IDS;
 
 describe('server/helpers/required-fields/eligibility', () => {
   describe('irrelevantFields', () => {
     it('should return array of irrelevant fields', () => {
-      const expected = [
-        ACCOUNT_TO_APPLY_ONLINE,
-        BUYER_COUNTRY_ISO_CODE,
-        WANT_COVER_OVER_MAX_AMOUNT,
-        TOTAL_CONTRACT_VALUE_ID,
-        WANT_COVER_OVER_MAX_PERIOD,
-        COVER_PERIOD_ID,
-      ];
+      const expected = [BUYER_COUNTRY_ISO_CODE, COVER_PERIOD_ID, HAVE_AN_ACCOUNT, TOTAL_CONTRACT_VALUE_ID];
 
       expect(irrelevantFields).toEqual(expected);
     });
@@ -24,7 +31,7 @@ describe('server/helpers/required-fields/eligibility', () => {
     it('should return array of required fields', () => {
       const result = requiredFields();
 
-      const fieldIds = Object.values(INSURANCE_FIELD_IDS.ELIGIBILITY);
+      const fieldIds = Object.values(FIELD_IDS);
 
       const expected = fieldIds.filter((id) => !irrelevantFields.includes(id));
 

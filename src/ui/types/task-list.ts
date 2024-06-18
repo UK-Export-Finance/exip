@@ -16,6 +16,7 @@ type TaskListTask = {
 
 type TaskListDataGroup = {
   title: string;
+  hint?: string;
   id: string;
   tasks: Array<TaskListDataTask>;
 };
@@ -29,4 +30,26 @@ type TaskListData = Array<TaskListDataGroup>;
 
 type TaskList = Array<TaskListGroup>;
 
-export { TaskListData, TaskListDataTask, TaskListDataGroup, TaskListGroup, TaskListTask, TaskList };
+interface CreatePrepareApplicationTasksParams {
+  referenceNumber: number;
+  otherGroups: TaskListData;
+  policyType?: string;
+  finalDestinationKnown?: boolean;
+  jointlyInsuredParty?: boolean;
+  isUsingBroker?: boolean;
+  isAppointingLossPayee?: boolean;
+  lossPayeeIsLocatedInUk?: boolean;
+  lossPayeeIsLocatedInternationally?: boolean;
+  hasDifferentTradingName?: boolean;
+  connectionWithBuyer?: boolean;
+  tradedWithBuyer?: boolean;
+  outstandingPayments?: boolean;
+  hasPreviousCreditInsuranceWithBuyer?: boolean;
+  totalContractValueOverThreshold?: boolean;
+  attemptedPrivateMarketCover?: boolean;
+  isUsingAgent?: boolean;
+  agentIsCharging?: boolean;
+  agentChargeMethod?: string;
+}
+
+export { CreatePrepareApplicationTasksParams, TaskListData, TaskListDataTask, TaskListDataGroup, TaskListGroup, TaskListTask, TaskList };

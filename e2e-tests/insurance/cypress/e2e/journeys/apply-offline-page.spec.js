@@ -1,9 +1,9 @@
-import { countryInput, submitButton } from '../../../../pages/shared';
+import { autoCompleteField } from '../../../../pages/shared';
 import { insurance } from '../../../../pages';
 import { PAGES } from '../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { FIELD_IDS } from '../../../../constants';
-import { completeStartForm, completeCheckIfEligibleForm } from '../../../../commands/insurance/eligibility/forms';
+import { COUNTRY_APPLICATION_SUPPORT } from '../../../../fixtures/countries';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.APPLY_OFFLINE;
 const { ACTIONS } = CONTENT_STRINGS;
@@ -16,23 +16,25 @@ const {
   ELIGIBILITY: { BUYER_COUNTRY },
 } = INSURANCE_ROUTES;
 
-const COUNTRY_NAME_APPLY_OFFLINE_ONLY = 'Angola';
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - apply offline exit page', () => {
   beforeEach(() => {
     cy.navigateToUrl(START);
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
+    cy.completeExporterLocationForm();
+    cy.completeCompaniesHouseNumberForm();
+    cy.completeAndSubmitCompaniesHouseSearchForm({});
+    cy.completeEligibilityCompanyDetailsForm();
 
-    cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_NAME_APPLY_OFFLINE_ONLY);
+    cy.keyboardInput(autoCompleteField(FIELD_ID).input(), COUNTRY_APPLICATION_SUPPORT.OFFLINE.NAME);
 
-    const results = countryInput.field(FIELD_ID).results();
+    const results = autoCompleteField(FIELD_ID).results();
     results.first().click();
 
-    submitButton().click();
+    cy.clickSubmitButton();
 
     const expectedUrl = `${baseUrl}${APPLY_OFFLINE}`;
 

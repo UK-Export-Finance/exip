@@ -4,7 +4,7 @@ import isValidAccountPassword from '../../../helpers/is-valid-account-password';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
 import shouldBlockAccount from '../../../helpers/should-block-account';
 import blockAccount from '../../../helpers/block-account';
-import accountChecks from './account-checks';
+import accountChecks from './account-sign-in-checks';
 import { Account, AccountSignInVariables, AccountSignInResponse, Context } from '../../../types';
 
 /**
@@ -14,15 +14,15 @@ import { Account, AccountSignInVariables, AccountSignInResponse, Context } from 
  * 3) Get and validate email and password.
  * 4) If the provided credentials are valid:
  *   4.1) Generate an OTP, save in the database.
- *   4.2) Send the user an email with security code.
+ *   4.2) Send the user an email with access code.
  *
  * 5) If the provided credentials are invalid:
  *   5.1) Create a new retry entry for the account.
  *   5.2) Check if the account should be blocked. If so, block the account.
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the AccountSignIn mutation
- * @param {Object} KeystoneJS context API
- * @returns {Object} Object with success flag
+ * @param {Context} KeystoneJS context API
+ * @returns {Promise<Object>} Object with success flag
  */
 const accountSignIn = async (root: any, variables: AccountSignInVariables, context: Context): Promise<AccountSignInResponse> => {
   try {
@@ -43,14 +43,16 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
 
     const { id: accountId } = account;
 
+    console.info('Signing in account - account found %s', accountId);
+
     /**
      * Check if the account is blocked
      * If so, return isBlocked=false
      */
-    const { isBlocked } = account;
+    const { isBlocked } = account.status;
 
     if (isBlocked) {
-      console.info('Unable to sign in account - account is already blocked');
+      console.info('Unable to sign in account - account is blocked');
 
       return { success: false, isBlocked: true, accountId };
     }
@@ -60,7 +62,7 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
      * 1) Check if the password matches what is encrypted in the database.
      * 2) If the password is valid:
      *   - If the account is unverified, but has a valid has/token, send verification email.
-     *   - If the account is verified, generate an OTP/security code and send via email.
+     *   - If the account is verified, generate an OTP/access code and send via email.
      * 3) Otherwise, we return a rejection because either:
      *   - The password is invalid.
      *   - The email was not sent.
@@ -92,7 +94,7 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
     const needToBlockAccount = await shouldBlockAccount(context, accountId);
 
     if (needToBlockAccount) {
-      const blocked = await blockAccount(context, accountId);
+      const blocked = await blockAccount(context, account.status.id);
 
       if (blocked) {
         return {

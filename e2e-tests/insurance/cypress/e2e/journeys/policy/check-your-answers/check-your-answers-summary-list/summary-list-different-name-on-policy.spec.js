@@ -1,4 +1,3 @@
-import partials from '../../../../../../../partials';
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -10,34 +9,24 @@ const {
 
 const {
   POLICY: {
-    TYPE_OF_POLICY: { POLICY_TYPE },
-    CONTRACT_POLICY: {
-      REQUESTED_START_DATE,
-      CREDIT_PERIOD_WITH_BUYER,
-      POLICY_CURRENCY_CODE,
-      SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
-    },
-    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
-    NAME_ON_POLICY: { NAME, POSITION },
+    NEED_PRE_CREDIT_PERIOD,
+    CREDIT_PERIOD_WITH_BUYER,
+    NAME_ON_POLICY: { NAME },
+    USING_BROKER,
+    LOSS_PAYEE: { IS_APPOINTED: LOSS_PAYEE_IS_APPOINTED },
   },
   ACCOUNT: { EMAIL },
 } = INSURANCE_FIELD_IDS;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.policy;
-
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Check your answers - Summary list - single contract policy', () => {
+context('Insurance - Policy - Check your answers - Summary list - Single contract policy - Different name on policy', () => {
   let referenceNumber;
   let url;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-
-      task.link().click();
 
       cy.completePolicySection({ sameName: false });
 
@@ -55,36 +44,16 @@ context('Insurance - Policy - Check your answers - Summary list - single contrac
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should render a ${POLICY_TYPE} summary list row`, () => {
-    checkSummaryList.singleContractPolicy[POLICY_TYPE]();
+  it('should render generic policy summary list rows', () => {
+    cy.assertGenericSinglePolicySummaryListRows();
   });
 
-  it(`should render a ${REQUESTED_START_DATE} summary list row`, () => {
-    checkSummaryList[REQUESTED_START_DATE]();
+  it(`should render a ${NEED_PRE_CREDIT_PERIOD} summary list row`, () => {
+    checkSummaryList[NEED_PRE_CREDIT_PERIOD]({});
   });
 
-  it(`should render a ${CONTRACT_COMPLETION_DATE} summary list row`, () => {
-    checkSummaryList.singleContractPolicy[CONTRACT_COMPLETION_DATE]();
-  });
-
-  it(`should render a ${TOTAL_CONTRACT_VALUE} summary list row`, () => {
-    checkSummaryList.singleContractPolicy[TOTAL_CONTRACT_VALUE]();
-  });
-
-  it(`should render a ${CREDIT_PERIOD_WITH_BUYER} summary list row`, () => {
-    checkSummaryList[CREDIT_PERIOD_WITH_BUYER]();
-  });
-
-  it(`should render a ${POLICY_CURRENCY_CODE} summary list row`, () => {
-    checkSummaryList[POLICY_CURRENCY_CODE]();
-  });
-
-  it(`should render a ${DESCRIPTION} summary list row`, () => {
-    checkSummaryList[DESCRIPTION]();
-  });
-
-  it(`should render a ${FINAL_DESTINATION} summary list row`, () => {
-    checkSummaryList[FINAL_DESTINATION]();
+  it(`should NOT render a ${CREDIT_PERIOD_WITH_BUYER} summary list row`, () => {
+    checkSummaryList[CREDIT_PERIOD_WITH_BUYER]({});
   });
 
   it(`should render a ${NAME} summary list row`, () => {
@@ -92,10 +61,14 @@ context('Insurance - Policy - Check your answers - Summary list - single contrac
   });
 
   it(`should render a ${EMAIL} summary list row`, () => {
-    checkSummaryList[EMAIL]();
+    checkSummaryList[EMAIL]({});
   });
 
-  it(`should render a ${POSITION} summary list row`, () => {
-    checkSummaryList[POSITION]();
+  it(`should render a ${USING_BROKER} summary list row`, () => {
+    checkSummaryList[USING_BROKER]({ usingBroker: false });
+  });
+
+  it(`should render a ${LOSS_PAYEE_IS_APPOINTED} summary list row`, () => {
+    checkSummaryList[LOSS_PAYEE_IS_APPOINTED]({ isAppointingLossPayee: false });
   });
 });

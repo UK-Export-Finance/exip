@@ -4,15 +4,16 @@ const {
   ROOT: INSURANCE_ROOT,
   COMPLETE_OTHER_SECTIONS,
   CHECK_YOUR_ANSWERS: {
-    ELIGIBILITY,
     TYPE_OF_POLICY,
     YOUR_BUSINESS,
     YOUR_BUYER,
   },
 } = INSURANCE_ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Check your answers - cannot skip to any Check your answers page without completing other required fields/sections', () => {
-  const insuranceRoute = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}`;
+  const insuranceRoute = `${baseUrl}${INSURANCE_ROOT}`;
 
   let referenceNumber;
   let completeOtherSectionsUrl;
@@ -31,14 +32,6 @@ context('Insurance - Check your answers - cannot skip to any Check your answers 
 
   after(() => {
     cy.deleteApplication();
-  });
-
-  it(`should redirect to ${COMPLETE_OTHER_SECTIONS} when navigating to the Check your answers - Eligibility page directly`, () => {
-    const url = `${insuranceRoute}/${referenceNumber}${ELIGIBILITY}`;
-
-    cy.navigateToUrl(url);
-
-    cy.assertUrl(completeOtherSectionsUrl);
   });
 
   it(`should redirect to ${COMPLETE_OTHER_SECTIONS} when navigating to the Check your answers - Policy page directly`, () => {

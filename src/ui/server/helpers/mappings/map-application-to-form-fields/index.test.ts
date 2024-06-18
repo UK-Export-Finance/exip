@@ -1,116 +1,126 @@
 import mapApplicationToFormFields from '.';
-import { FIELD_IDS } from '../../../constants';
+import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 import mapNameFields from '../map-name-fields';
+import mapTextareaFields from '../map-textarea-fields';
 import formatDate from '../../date/format-date';
 import getDateFieldsFromTimestamp from '../../date/get-date-fields-from-timestamp';
 import { mockApplication } from '../../../test-mocks';
 import mapFinancialYearEndDate from '../map-financial-year-end-date';
 import transformNumberToString from '../../transform-number-to-string';
+import mapNominatedLossPayeeLocation from '../map-nominated-loss-payee-location';
+import { Application } from '../../../../types';
 
 const {
+  CURRENCY: { CURRENCY_CODE },
   SUBMISSION_DEADLINE,
   POLICY: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
       SINGLE: { CONTRACT_COMPLETION_DATE },
+      POLICY_CURRENCY_CODE,
     },
+    LOSS_PAYEE_DETAILS: { LOCATION },
   },
   EXPORTER_BUSINESS: {
-    NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING, EMPLOYEES_INTERNATIONAL, EMPLOYEES_UK },
+    NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING, EMPLOYEES_UK },
     TURNOVER: { FINANCIAL_YEAR_END_DATE, PERCENTAGE_TURNOVER, ESTIMATED_ANNUAL_TURNOVER },
   },
-} = FIELD_IDS.INSURANCE;
+} = INSURANCE_FIELD_IDS;
+
+const { business, company, policy } = mockApplication;
 
 describe('server/helpers/mappings/map-application-to-form-fields', () => {
-  it(`should return the application without mapped ${SUBMISSION_DEADLINE}`, () => {
-    const simpleApplication = {
+  it(`should return the application with a mapped ${SUBMISSION_DEADLINE}`, () => {
+    const result = mapApplicationToFormFields(mockApplication) as Application;
+
+    const expected = formatDate(mockApplication[SUBMISSION_DEADLINE]);
+
+    expect(result[SUBMISSION_DEADLINE]).toEqual(expected);
+  });
+
+  it('should return mapped business data', () => {
+    const result = mapApplicationToFormFields(mockApplication) as Application;
+
+    const expected = {
+      ...mockApplication.business,
+      [YEARS_EXPORTING]: transformNumberToString(mockApplication.business[YEARS_EXPORTING]),
+      [EMPLOYEES_UK]: transformNumberToString(mockApplication.business[EMPLOYEES_UK]),
+      [PERCENTAGE_TURNOVER]: transformNumberToString(mockApplication.business[PERCENTAGE_TURNOVER]),
+      [ESTIMATED_ANNUAL_TURNOVER]: transformNumberToString(mockApplication.business[ESTIMATED_ANNUAL_TURNOVER]),
+    };
+
+    expect(result.business).toEqual(expected);
+  });
+
+  describe(`when an application has company.${FINANCIAL_YEAR_END_DATE} field`, () => {
+    it('should return mapped company', () => {
+      const result = mapApplicationToFormFields(mockApplication) as Application;
+
+      const expected = mapFinancialYearEndDate(mockApplication.company[FINANCIAL_YEAR_END_DATE]);
+
+      expect(result.company[FINANCIAL_YEAR_END_DATE]).toEqual(expected);
+    });
+  });
+
+  it('should return mapped name and textarea fields', () => {
+    const minimalApplication = {
       ...mockApplication,
-      [SUBMISSION_DEADLINE]: formatDate(mockApplication[SUBMISSION_DEADLINE]),
+      business: {
+        ...business,
+        [YEARS_EXPORTING]: null,
+        [EMPLOYEES_UK]: null,
+        [PERCENTAGE_TURNOVER]: null,
+        [ESTIMATED_ANNUAL_TURNOVER]: null,
+      },
+      company: {
+        ...company,
+        [FINANCIAL_YEAR_END_DATE]: null,
+      },
       policy: {
-        id: mockApplication.policy.id,
+        id: policy.id,
+        jointlyInsuredParty: {
+          id: policy.jointlyInsuredParty.id,
+        },
       },
     };
 
-    const result = mapApplicationToFormFields(simpleApplication);
+    const result = mapApplicationToFormFields(minimalApplication);
 
-    const expected = mapNameFields(simpleApplication);
+    const expected = {
+      ...minimalApplication,
+      ...mapNameFields(minimalApplication),
+      ...mapTextareaFields(minimalApplication),
+      [SUBMISSION_DEADLINE]: formatDate(minimalApplication[SUBMISSION_DEADLINE]),
+    };
 
     expect(result).toEqual(expected);
   });
 
-  describe(`when an application has policy.${REQUESTED_START_DATE} field`, () => {
-    it('should return additional date fields from the timestamp', () => {
-      const timestamp = mockApplication.policy[REQUESTED_START_DATE];
+  it('should return mapped policy data with date fields from timestamps', () => {
+    const result = mapApplicationToFormFields(mockApplication) as Application;
 
-      const result = mapApplicationToFormFields(mockApplication);
+    const timestampStart = mockApplication.policy[REQUESTED_START_DATE];
+    const timestampEnd = mockApplication.policy[CONTRACT_COMPLETION_DATE];
 
-      const expected = mapNameFields({
-        ...mockApplication,
-        [SUBMISSION_DEADLINE]: formatDate(mockApplication[SUBMISSION_DEADLINE]),
-        policy: {
-          ...mockApplication.policy,
-          ...getDateFieldsFromTimestamp(timestamp, REQUESTED_START_DATE),
-        },
-      });
+    const expected = {
+      ...mockApplication.policy,
+      ...getDateFieldsFromTimestamp(timestampStart, REQUESTED_START_DATE),
+      ...getDateFieldsFromTimestamp(timestampEnd, CONTRACT_COMPLETION_DATE),
+      [CURRENCY_CODE]: mockApplication.policy[POLICY_CURRENCY_CODE],
+    };
 
-      expect(result).toEqual(expected);
-    });
+    expect(result.policy).toEqual(expected);
   });
 
-  describe('when an application has business fields', () => {
-    it('should return the relevant business fields', () => {
-      const result = mapApplicationToFormFields(mockApplication);
+  it(`should return mapped nominatedLossPayee data with ${LOCATION} populated from mapNominatedLossPayeeLocation`, () => {
+    const result = mapApplicationToFormFields(mockApplication) as Application;
 
-      const expected = mapNameFields({
-        ...mockApplication,
-        [SUBMISSION_DEADLINE]: formatDate(mockApplication[SUBMISSION_DEADLINE]),
-        business: {
-          ...mockApplication.business,
-          [YEARS_EXPORTING]: transformNumberToString(mockApplication.business[YEARS_EXPORTING]),
-          [EMPLOYEES_UK]: transformNumberToString(mockApplication.business[EMPLOYEES_UK]),
-          [EMPLOYEES_INTERNATIONAL]: transformNumberToString(mockApplication.business[EMPLOYEES_INTERNATIONAL]),
-          [PERCENTAGE_TURNOVER]: transformNumberToString(mockApplication.business[PERCENTAGE_TURNOVER]),
-          [ESTIMATED_ANNUAL_TURNOVER]: transformNumberToString(mockApplication.business[ESTIMATED_ANNUAL_TURNOVER]),
-        },
-      });
+    const expected = {
+      ...mockApplication.nominatedLossPayee,
+      [LOCATION]: mapNominatedLossPayeeLocation(mockApplication.nominatedLossPayee),
+    };
 
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe(`when an application has policy.${CONTRACT_COMPLETION_DATE} field`, () => {
-    it('should return additional date fields from the timestamp', () => {
-      const timestamp = mockApplication.policy[CONTRACT_COMPLETION_DATE];
-
-      const result = mapApplicationToFormFields(mockApplication);
-
-      const expected = mapNameFields({
-        ...mockApplication,
-        [SUBMISSION_DEADLINE]: formatDate(mockApplication[SUBMISSION_DEADLINE]),
-        policy: {
-          ...mockApplication.policy,
-          ...getDateFieldsFromTimestamp(timestamp, CONTRACT_COMPLETION_DATE),
-        },
-      });
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe(`when an application has company.${FINANCIAL_YEAR_END_DATE} field`, () => {
-    it('should return mapped date field', () => {
-      const result = mapApplicationToFormFields(mockApplication);
-
-      const expected = mapNameFields({
-        ...mockApplication,
-        company: {
-          ...mockApplication.company,
-          [FINANCIAL_YEAR_END_DATE]: mapFinancialYearEndDate(mockApplication.company[FINANCIAL_YEAR_END_DATE]),
-        },
-      });
-
-      expect(result).toEqual(expected);
-    });
+    expect(result.nominatedLossPayee).toEqual(expected);
   });
 
   describe('when an empty application is passed', () => {

@@ -11,11 +11,11 @@ import { SubmitApplicationVariables, SuccessResponse } from '../../../types';
  * Submit an application
  * 1) Change application status, add submission date
  * 2) Generate a XLSX for the UKEF underwriting team
- * 3) Sends emails to the UKEF underwriting team and the account that created the application
+ * 3) Sends emails to the UKEF underwriting team and the owner of the application
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the SubmitApplication mutation
- * @param {Object} KeystoneJS context API
- * @returns {Object} Object with success flag
+ * @param {Context} KeystoneJS context API
+ * @returns {Promise<Object>} Object with success flag
  */
 const submitApplication = async (root: any, variables: SubmitApplicationVariables, context: Context): Promise<SuccessResponse> => {
   try {
@@ -41,6 +41,8 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
       const canSubmit = isInProgress && validSubmissionDate && isFirstSubmission;
 
       if (canSubmit) {
+        console.info('Submitting application - updating status, submission date and count %s', variables.applicationId);
+
         // change the status and add submission date
         const update = {
           status: APPLICATION.STATUS.SUBMITTED,
@@ -54,8 +56,15 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
           data: update,
         });
 
+        console.info('Submitting application - getting populated application %s', variables.applicationId);
+
         // get a fully populated application for XLSX generation
-        const populatedApplication = await getPopulatedApplication(context, updatedApplication);
+        const populatedApplication = await getPopulatedApplication.get({
+          context,
+          application: updatedApplication,
+          decryptFinancialUk: true,
+          decryptFinancialInternational: true,
+        });
 
         // generate a XLSX for UKEF underwriting team email
         const xlsxPath = await generate.XLSX(populatedApplication);

@@ -1,178 +1,138 @@
-import { FIELD_IDS } from '../../../../constants';
+import { MAXIMUM_CHARACTERS } from '../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../constants/field-ids/insurance';
+import { SYMBOLS } from '../../../../fixtures/currencies';
+import { FORM_TITLES } from '../../../form-titles';
+
+const {
+  EXPORTER_BUSINESS: {
+    YOUR_COMPANY: {
+      TRADING_ADDRESS,
+      HAS_DIFFERENT_TRADING_NAME,
+      DIFFERENT_TRADING_NAME,
+      PHONE_NUMBER,
+      WEBSITE,
+    },
+    ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
+    NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
+    TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+    HAS_CREDIT_CONTROL,
+  },
+  CURRENCY: { CURRENCY_CODE },
+} = INSURANCE_FIELD_IDS;
+
+const {
+  YOUR_BUSINESS: {
+    COMPANY_DETAILS,
+    NATURE_OF_BUSINESS,
+    TURNOVER,
+    CREDIT_CONTROL,
+  },
+} = FORM_TITLES;
 
 export const EXPORTER_BUSINESS_FIELDS = {
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.SUMMARY_LIST]: {
-    LABEL: 'Your company',
-    COMPANY_NUMBER: {
-      text: 'Companies House registration number',
-    },
-    COMPANY_NAME: {
-      text: 'Company name',
-    },
-    COMPANY_ADDRESS: {
-      text: 'Registered office address',
-    },
-    COMPANY_INCORPORATED: {
-      text: 'Incorporated on',
-    },
-    COMPANY_SIC: {
-      text: 'Standard industrial classification (SIC) codes and nature of business',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NUMBER]: {
-    SUMMARY: {
-      TITLE: 'Companies House registration number',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NAME]: {
-    SUMMARY: {
-      TITLE: 'Company name',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_ADDRESS]: {
-    SUMMARY: {
-      TITLE: 'Registered office address',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_INCORPORATED]: {
-    SUMMARY: {
-      TITLE: 'Date incorporated',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_SIC]: {
-    SUMMARY: {
-      TITLE: 'Standard industry classification (SIC) codes and nature of business',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.FINANCIAL_YEAR_END_DATE]: {
-    SUMMARY: {
-      TITLE: 'Financial year end date',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.TRADING_NAME]: {
-    LABEL: 'Do you use a different trading name for this company?',
-    SUMMARY: {
-      TITLE: 'Different trading name?',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.TRADING_ADDRESS]: {
-    LABEL: 'Do you trade from a different address to your registered office address for this company?',
-    SUMMARY: {
-      TITLE: 'Different trading address?',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.WEBSITE]: {
-    LABEL: 'Enter your company website, if you have one (optional)',
-    SUMMARY: {
-      TITLE: 'Company website (optional)',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.PHONE_NUMBER]: {
-    LABEL: 'Your UK telephone number (optional)',
-    HINT: 'We may need to contact you about your application',
-    SUMMARY: {
-      TITLE: 'UK telephone number (optional)',
-    },
-  },
-  NATURE_OF_YOUR_BUSINESS: {
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.GOODS_OR_SERVICES]: {
-      LABEL: 'What goods or services does your company supply?',
-      HINT: 'Give a general overview rather than just the exports you want to insure',
-      MAXIMUM: 1000,
+  COMPANY_DETAILS: {
+    [HAS_DIFFERENT_TRADING_NAME]: {
       SUMMARY: {
-        TITLE: 'Goods or services your business supplies',
+        TITLE: 'Different trading name',
+        FORM_TITLE: COMPANY_DETAILS,
       },
     },
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.YEARS_EXPORTING]: {
+    [DIFFERENT_TRADING_NAME]: {
+      SUMMARY: {
+        FORM_TITLE: COMPANY_DETAILS,
+      },
+    },
+    [TRADING_ADDRESS]: {
+      SUMMARY: {
+        TITLE: 'Different trading address',
+        FORM_TITLE: COMPANY_DETAILS,
+      },
+      MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
+    },
+    [WEBSITE]: {
+      SUMMARY: {
+        TITLE: 'Company website (optional)',
+        FORM_TITLE: COMPANY_DETAILS,
+      },
+    },
+    [PHONE_NUMBER]: {
+      SUMMARY: {
+        TITLE: 'UK telephone number (optional)',
+        FORM_TITLE: COMPANY_DETAILS,
+      },
+    },
+  },
+  [FULL_ADDRESS]: {
+    LABEL: "What's your alternative trading address?",
+    REGISTERED_OFFICE_ADDRESS_HEADING: 'Your registered office address',
+    REGISTERED_OFFICE_ADDRESS_HINT: 'This information comes from Companies House.',
+    SUMMARY: {
+      TITLE: 'Different trading address',
+      FORM_TITLE: COMPANY_DETAILS,
+    },
+    MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
+  },
+  NATURE_OF_YOUR_BUSINESS: {
+    [GOODS_OR_SERVICES]: {
+      LABEL: 'Tell us about your business',
+      HINT: "Give us an overview of the work you do, as well as the products or services you're getting credit insurance for.",
+      MAXIMUM: MAXIMUM_CHARACTERS.BUSINESS.GOODS_OR_SERVICES_DESCRIPTION,
+      SUMMARY: {
+        TITLE: 'Goods or services your business supplies',
+        FORM_TITLE: NATURE_OF_BUSINESS,
+      },
+    },
+    [YEARS_EXPORTING]: {
       LABEL: 'How many years have you been exporting for?',
       HINT: 'Round to the nearest year',
       SUFFIX: 'Years',
       SUMMARY: {
         TITLE: 'Years exporting',
+        FORM_TITLE: NATURE_OF_BUSINESS,
       },
     },
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.EMPLOYEES_UK]: {
-      LEGEND: 'How many employees do you have?',
-      LABEL: 'In the UK',
+    [EMPLOYEES_UK]: {
+      LEGEND: 'How many employees do you have in the UK?',
       SUMMARY: {
-        TITLE: 'UK employees',
-      },
-    },
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.EMPLOYEES_INTERNATIONAL]: {
-      LABEL: 'Worldwide including UK',
-      SUMMARY: {
-        TITLE: 'Worldwide employees including UK employees',
+        TITLE: 'Number of UK employees',
+        FORM_TITLE: NATURE_OF_BUSINESS,
       },
     },
   },
   TURNOVER: {
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER.FINANCIAL_YEAR_END_DATE]: {
+    [FINANCIAL_YEAR_END_DATE]: {
       LABEL: 'Your financial year end date',
       HINT: 'This information comes from Companies House',
       DATE_FORMAT: 'd MMMM',
-    },
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER.ESTIMATED_ANNUAL_TURNOVER]: {
-      LEGEND: 'Estimated annual turnover for this current financial year',
-      LABEL: 'Estimate this to the nearest pound. Do not use decimal points.',
-      PREFIX: '£',
       SUMMARY: {
-        TITLE: 'Estimated turnover this current financial year',
+        FORM_TITLE: NATURE_OF_BUSINESS,
       },
     },
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER.PERCENTAGE_TURNOVER]: {
+    [ESTIMATED_ANNUAL_TURNOVER]: {
+      LEGEND: 'Estimated annual turnover for this current financial year in',
+      PREFIX: SYMBOLS.GBP,
+      SUMMARY: {
+        TITLE: 'Estimated turnover this current financial year',
+        FORM_TITLE: TURNOVER,
+      },
+    },
+    [PERCENTAGE_TURNOVER]: {
       LABEL: 'Percentage of turnover from exports',
       SUFFIX: '%',
       SUMMARY: {
         TITLE: 'Percentage of turnover from exports',
+        FORM_TITLE: TURNOVER,
       },
     },
   },
-  BROKER: {
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.LEGEND]: {
-      LEGEND: 'Enter contact details for your broker',
-    },
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.USING_BROKER]: {
-      SUMMARY: {
-        TITLE: 'Using a broker for this insurance?',
-      },
-    },
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.NAME]: {
-      LABEL: 'Name of broker or company',
-      SUMMARY: {
-        TITLE: "Broker's name or company",
-      },
-    },
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.ADDRESS_LINE_1]: {
-      LABEL: 'Address line 1',
-      SUMMARY: {
-        TITLE: "Broker's address",
-      },
-    },
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.ADDRESS_LINE_2]: {
-      LABEL: 'Address line 2 (optional)',
-    },
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.TOWN]: {
-      LABEL: 'Town or city',
-    },
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.COUNTY]: {
-      LABEL: 'County (optional)',
-    },
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.POSTCODE]: {
-      LABEL: 'Postcode',
-    },
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.EMAIL]: {
-      LABEL: 'Email address',
-      SUMMARY: {
-        TITLE: "Broker's email",
-      },
-    },
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.DETAILS]: {
-      SUMMARY: 'Why appoint a broker?',
-      LINE_1: 'A broker can advise you during the application process and lifetime of any UKEF insurance policy.',
-      LINE_2: "You can find your nearest one on UKEF's list of approved brokers.",
-      LINK_TEXT: "UKEF's list of approved brokers.",
-      LINE_3: 'Alternatively, you can use any broker you prefer. They do not have to be approved by UKEF.',
-      LINE_4: 'Appointing a broker does not change the cost to you of any UKEF export insurance policy.',
+  [CURRENCY_CODE]: {
+    LEGEND: 'What currency is your turnover in?',
+  },
+  [HAS_CREDIT_CONTROL]: {
+    HINT: 'These are often called credit control processes. They may be managed by your legal or financial team.',
+    SUMMARY: {
+      TITLE: 'Process for managing late payments',
+      FORM_TITLE: CREDIT_CONTROL,
     },
   },
 };

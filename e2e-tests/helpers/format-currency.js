@@ -1,8 +1,15 @@
 import { GBP_CURRENCY_CODE } from '../fixtures/currencies';
 
-const formatCurrency = (str) => Number(str).toLocaleString('en', {
+/**
+ * formatCurrency
+ * Transform a number into a currency string
+ * @param {String} str: Amount
+ * @param {String} Currency code - defaults to GBP
+ * @returns {String} formatted currency
+ */
+const formatCurrency = (str, currency = GBP_CURRENCY_CODE) => Number(str).toLocaleString('en', {
   style: 'currency',
-  currency: GBP_CURRENCY_CODE,
+  currency,
   minimumFractionDigits: 0,
 });
 

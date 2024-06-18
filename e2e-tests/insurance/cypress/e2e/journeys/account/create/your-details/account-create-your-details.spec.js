@@ -9,7 +9,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.YOUR_DETAILS;
 
 const {
   START,
-  ELIGIBILITY: { ACCOUNT_TO_APPLY_ONLINE },
+  ELIGIBILITY: { HAVE_AN_ACCOUNT },
   ACCOUNT: { CREATE: { YOUR_DETAILS, CONFIRM_EMAIL }, SIGN_IN },
 } = ROUTES;
 
@@ -24,6 +24,8 @@ const {
 
 const FIELD_STRINGS = ACCOUNT_FIELDS.CREATE.YOUR_DETAILS;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Create - Your details page - As an exporter, I want to provide my details when creating my UKEF digital service account, So that the details of the UKEF digital service account created can be unique to me', () => {
   let url;
 
@@ -34,7 +36,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
 
     cy.submitEligibilityAndStartAccountCreation();
 
-    url = `${Cypress.config('baseUrl')}${YOUR_DETAILS}`;
+    url = `${baseUrl}${YOUR_DETAILS}`;
 
     cy.assertUrl(url);
   });
@@ -47,7 +49,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: YOUR_DETAILS,
-      backLink: ACCOUNT_TO_APPLY_ONLINE,
+      backLink: HAVE_AN_ACCOUNT,
       assertAuthenticatedHeader: false,
       lightHouseThresholds: {
         performance: 70,
@@ -61,7 +63,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
     });
 
     it('renders intro text', () => {
-      cy.checkText(yourDetailsPage.intro(), CONTENT_STRINGS.INTRO);
+      cy.checkIntroText(CONTENT_STRINGS.INTRO);
     });
 
     it('renders `first name` label and input', () => {
@@ -84,11 +86,11 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
 
     it('renders `email` label and input', () => {
       const fieldId = EMAIL;
-      const field = fieldSelector(fieldId);
 
-      cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
-
-      field.input().should('exist');
+      cy.checkEmailFieldRendering({
+        fieldId,
+        contentStrings: ACCOUNT_FIELDS[fieldId],
+      });
     });
 
     describe('password', () => {
@@ -137,7 +139,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
       it(`should redirect to ${SIGN_IN.ROOT}`, () => {
         yourDetailsPage.signInButtonLink().click();
 
-        const expectedUrl = `${Cypress.config('baseUrl')}${SIGN_IN.ROOT}`;
+        const expectedUrl = `${baseUrl}${SIGN_IN.ROOT}`;
 
         cy.assertUrl(expectedUrl);
       });
@@ -152,7 +154,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
       it(`should redirect to ${CONFIRM_EMAIL}`, () => {
         cy.completeAndSubmitCreateAccountForm();
 
-        const expected = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
+        const expected = `${baseUrl}${CONFIRM_EMAIL}`;
         cy.assertUrl(expected);
       });
     });

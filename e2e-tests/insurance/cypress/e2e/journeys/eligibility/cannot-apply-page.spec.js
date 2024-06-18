@@ -1,12 +1,12 @@
 import {
-  countryInput,
+  actions,
+  autoCompleteField,
   cannotApplyPage,
-  submitButton,
 } from '../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { FIELD_IDS } from '../../../../../constants';
-import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../commands/insurance/eligibility/forms';
+import { COUNTRY_APPLICATION_SUPPORT } from '../../../../../fixtures/countries';
 
 const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
 
@@ -17,7 +17,7 @@ const {
 
 const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
-const COUNTRY_NAME_UNSUPPORTED = 'France';
+const COUNTRY_NAME_UNSUPPORTED = COUNTRY_APPLICATION_SUPPORT.UNSUPPORTED.NAME;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -25,14 +25,18 @@ context('Insurance Eligibility - Cannot apply exit page', () => {
   beforeEach(() => {
     cy.navigateToUrl(START);
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
+    cy.completeExporterLocationForm();
+    cy.completeCompaniesHouseNumberForm();
+    cy.completeAndSubmitCompaniesHouseSearchForm({});
+    cy.completeEligibilityCompanyDetailsForm();
 
-    cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_NAME_UNSUPPORTED);
-    const results = countryInput.field(FIELD_ID).results();
+    cy.keyboardInput(autoCompleteField(FIELD_ID).input(), COUNTRY_NAME_UNSUPPORTED);
+    const results = autoCompleteField(FIELD_ID).results();
     results.first().click();
 
-    submitButton().click();
+    cy.clickSubmitButton();
 
     const expectedUrl = `${baseUrl}${CANNOT_APPLY}`;
 
@@ -53,38 +57,25 @@ context('Insurance Eligibility - Cannot apply exit page', () => {
     cannotApplyPage.reason().should('exist');
   });
 
-  it('renders `actions` content', () => {
-    cy.checkText(cannotApplyPage.actions.intro(), CONTENT_STRINGS.ACTIONS.INTRO);
+  describe('actions', () => {
+    it('should render `eligibility` copy and link', () => {
+      cy.checkActionReadAboutEligibility();
+    });
 
-    const listItems = cannotApplyPage.actions.listItems();
+    it('should render `contact an approved broker` copy and link', () => {
+      cy.checkActionContactApprovedBroker();
+    });
 
-    listItems.should('have.length', 2);
-
-    const expectedEligibility = `${CONTENT_STRINGS.ACTIONS.ELIGIBILITY.TEXT} ${CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.TEXT}`;
-
-    cy.checkText(cannotApplyPage.actions.eligibility(), expectedEligibility);
-
-    cy.checkLink(
-      cannotApplyPage.actions.eligibilityLink(),
-      CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF,
-      CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.TEXT,
-    );
-
-    const expectedBroker = `${CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.TEXT} ${CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.TEXT}`;
-    cy.checkText(cannotApplyPage.actions.approvedBroker(), expectedBroker);
-
-    cy.checkLink(
-      cannotApplyPage.actions.approvedBrokerLink(),
-      CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.HREF,
-      CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.TEXT,
-    );
+    it('should render `talk to your nearest EFM` copy and link', () => {
+      cy.checkActionTalkToYourNearestEFM({});
+    });
   });
 
   describe('when clicking `eligibility` link', () => {
-    it(`redirects to ${LINKS.EXTERNAL.GUIDANCE}`, () => {
-      cannotApplyPage.actions.eligibilityLink().click();
+    it(`should redirect to ${LINKS.EXTERNAL.GUIDANCE}`, () => {
+      actions.eligibilityLink().click();
 
-      cy.url().should('eq', LINKS.EXTERNAL.GUIDANCE);
+      cy.assertUrl(LINKS.EXTERNAL.GUIDANCE);
     });
   });
 });

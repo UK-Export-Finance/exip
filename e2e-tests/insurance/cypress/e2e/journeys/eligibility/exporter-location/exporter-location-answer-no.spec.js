@@ -1,10 +1,6 @@
-import {
-  backLink, cannotApplyPage, noRadio, noRadioInput, submitButton,
-} from '../../../../../../pages/shared';
+import { backLink, cannotApplyPage } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../../commands/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
 
@@ -15,15 +11,14 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Exporter location page - as an exporter, I want to check if my company can get UKEF issue export insurance cover - submit `not based inside the UK`', () => {
+context('Insurance - Exporter location page - as an exporter, I want to check if my company can get UKEF issue credit insurance cover - submit `not based inside the UK`', () => {
   const url = `${baseUrl}${EXPORTER_LOCATION}`;
 
   before(() => {
     cy.navigateToUrl(START);
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
-    completeAndSubmitBuyerCountryForm();
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
 
     cy.assertUrl(url);
   });
@@ -33,8 +28,8 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
 
     cy.navigateToUrl(url);
 
-    noRadio().label().click();
-    submitButton().click();
+    cy.clickNoRadioInput();
+    cy.clickSubmitButton();
   });
 
   it('redirects to exit page', () => {
@@ -62,7 +57,7 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
     it('should NOT have the originally submitted answer selected', () => {
       cy.clickBackLink();
 
-      noRadioInput().should('not.be.checked');
+      cy.assertNoRadioOptionIsNotChecked();
     });
   });
 });

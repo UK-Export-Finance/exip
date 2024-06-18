@@ -1,11 +1,37 @@
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import getApplication from '../../../helpers/get-application';
+import mapTotalContractValueOverThreshold from '../map-total-contract-value-over-threshold';
 import { Next, Request, Response } from '../../../../types';
 
 const { PAGE_NOT_FOUND } = INSURANCE_ROUTES;
 
-const { ALL_SECTIONS, POLICY, EXPORTER_BUSINESS, YOUR_BUYER } = INSURANCE_ROUTES;
-const { COMPLETE_OTHER_SECTIONS, CHECK_YOUR_ANSWERS, DECLARATIONS, APPLICATION_SUBMITTED } = INSURANCE_ROUTES;
+const { ALL_SECTIONS, POLICY, EXPORTER_BUSINESS, YOUR_BUYER, EXPORT_CONTRACT } = INSURANCE_ROUTES;
+const {
+  COMPLETE_OTHER_SECTIONS,
+  CHECK_YOUR_ANSWERS: {
+    TYPE_OF_POLICY: CHECK_YOUR_ANSWERS_APPLICATION_TYPE_OF_POLICY,
+    YOUR_BUSINESS: CHECK_YOUR_ANSWERS_APPLICATION_YOUR_BUSINESS,
+    YOUR_BUYER: CHECK_YOUR_ANSWERS_APPLICATION_YOUR_BUYER,
+  },
+  DECLARATIONS,
+  APPLICATION_SUBMITTED,
+} = INSURANCE_ROUTES;
+
+// routes in policy that require a get-application-by-reference-number middleware
+const {
+  ROOT,
+  LOSS_PAYEE_ROOT,
+  LOSS_PAYEE_CHANGE,
+  LOSS_PAYEE_CHECK_AND_CHANGE,
+  LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
+  LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
+  LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE,
+  LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
+  LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE,
+  LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE,
+  CHECK_YOUR_ANSWERS,
+  ...POLICY_ROUTES
+} = POLICY;
 
 /**
  * RELEVANT_ROUTES
@@ -14,11 +40,15 @@ const { COMPLETE_OTHER_SECTIONS, CHECK_YOUR_ANSWERS, DECLARATIONS, APPLICATION_S
  */
 export const RELEVANT_ROUTES = [
   ALL_SECTIONS,
-  POLICY.ROOT,
+  // remaining policy routes which do not require get-application-by-reference-number middleware
+  ...Object.values(POLICY_ROUTES),
   EXPORTER_BUSINESS.ROOT,
   YOUR_BUYER.ROOT,
+  EXPORT_CONTRACT.ROOT,
   DECLARATIONS.ROOT,
-  CHECK_YOUR_ANSWERS.ROOT,
+  CHECK_YOUR_ANSWERS_APPLICATION_TYPE_OF_POLICY,
+  CHECK_YOUR_ANSWERS_APPLICATION_YOUR_BUSINESS,
+  CHECK_YOUR_ANSWERS_APPLICATION_YOUR_BUYER,
   COMPLETE_OTHER_SECTIONS,
   APPLICATION_SUBMITTED,
 ];
@@ -50,7 +80,9 @@ const getApplicationMiddleware = async (req: Request, res: Response, next: Next)
       const application = await getApplication(Number(referenceNumber));
 
       if (application) {
-        res.locals.application = application;
+        // TODO: EMS-3467: move to getPopulatedApplication.
+        res.locals.application = mapTotalContractValueOverThreshold(application);
+
         return next();
       }
 

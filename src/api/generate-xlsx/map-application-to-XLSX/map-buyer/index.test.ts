@@ -5,34 +5,49 @@ import { YOUR_BUYER_FIELDS } from '../../../content-strings/fields/insurance/you
 import NEW_LINE from '../helpers/xlsx-new-line';
 import xlsxRow from '../helpers/xlsx-row';
 import mapYesNoField from '../helpers/map-yes-no-field';
+import mapConnectionWithBuyer from './map-connection-with-buyer';
+import mapBuyerTradingHistory from './map-buyer-trading-history';
+import mapPreviousCoverWithBuyer from './map-previous-cover-with-buyer';
 import { mockApplication } from '../../../test-mocks';
 
 const CONTENT_STRINGS = {
   ...YOUR_BUYER_FIELDS.COMPANY_OR_ORGANISATION,
-  ...YOUR_BUYER_FIELDS.WORKING_WITH_BUYER,
+  ...YOUR_BUYER_FIELDS,
 };
 
 const {
-  COMPANY_OR_ORGANISATION: { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME, POSITION, EMAIL, CAN_CONTACT_BUYER },
-  WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER, TRADED_WITH_BUYER },
+  COMPANY_OR_ORGANISATION: { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE },
+  CONNECTION_WITH_BUYER,
+  HAS_BUYER_FINANCIAL_ACCOUNTS,
+  TRADED_WITH_BUYER,
 } = FIELD_IDS;
+
+const { SECTION_TITLES, FIELDS } = XLSX;
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-buyer', () => {
   it('should return an array of mapped buyer fields', () => {
     const result = mapBuyer(mockApplication);
 
-    const { buyer } = mockApplication;
+    const { eligibility, buyer } = mockApplication;
+    const { buyerTradingHistory, relationship } = buyer;
 
     const expected = [
-      xlsxRow(XLSX.SECTION_TITLES.BUYER, ''),
-      xlsxRow(XLSX.FIELDS[NAME], buyer[NAME]),
+      xlsxRow(SECTION_TITLES.BUYER, ''),
+      xlsxRow(FIELDS[NAME], buyer[NAME]),
       xlsxRow(String(CONTENT_STRINGS[ADDRESS].SUMMARY?.TITLE), `${buyer[ADDRESS]} ${NEW_LINE}${buyer[COUNTRY].name}`),
-      xlsxRow(XLSX.FIELDS[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
+      xlsxRow(FIELDS[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
       xlsxRow(String(CONTENT_STRINGS[WEBSITE].SUMMARY?.TITLE), buyer[WEBSITE]),
-      xlsxRow(XLSX.FIELDS[FIRST_NAME], `${buyer[FIRST_NAME]} ${buyer[LAST_NAME]} ${NEW_LINE}${buyer[POSITION]} ${NEW_LINE}${buyer[EMAIL]}`),
-      xlsxRow(String(CONTENT_STRINGS[CAN_CONTACT_BUYER].SUMMARY?.TITLE), mapYesNoField(buyer[CAN_CONTACT_BUYER])),
-      xlsxRow(String(CONTENT_STRINGS[CONNECTED_WITH_BUYER].SUMMARY?.TITLE), mapYesNoField(buyer[CONNECTED_WITH_BUYER])),
-      xlsxRow(String(CONTENT_STRINGS[TRADED_WITH_BUYER].SUMMARY?.TITLE), mapYesNoField(buyer[TRADED_WITH_BUYER])),
+      xlsxRow(String(FIELDS[CONNECTION_WITH_BUYER]), mapYesNoField({ answer: relationship[CONNECTION_WITH_BUYER] })),
+
+      mapConnectionWithBuyer(relationship),
+
+      xlsxRow(String(FIELDS[TRADED_WITH_BUYER]), mapYesNoField({ answer: buyerTradingHistory[TRADED_WITH_BUYER] })),
+
+      ...mapBuyerTradingHistory(buyerTradingHistory),
+
+      ...mapPreviousCoverWithBuyer(eligibility, relationship),
+
+      xlsxRow(String(FIELDS[HAS_BUYER_FINANCIAL_ACCOUNTS]), mapYesNoField({ answer: relationship[HAS_BUYER_FINANCIAL_ACCOUNTS] })),
     ];
 
     expect(result).toEqual(expected);

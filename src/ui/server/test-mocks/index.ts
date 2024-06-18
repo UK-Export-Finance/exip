@@ -1,29 +1,57 @@
-import { Request, Response } from '../../types';
+import cookieParser from 'cookie-parser';
+import { PRODUCT } from '../content-strings';
+import { INTEGRITY } from '../constants';
 import mockAccount from './mock-account';
 import mockAnswers from './mock-answers';
 import mockSession from './mock-session';
 import mockQuote from './mock-quote';
 import mockCountries from './mock-countries';
-import mockCurrencies from './mock-currencies';
+import mockCurrencies, { EUR, HKD, JPY, GBP, USD, mockCurrenciesResponse, mockCurrenciesEmptyResponse } from './mock-currencies';
+import mockCompaniesHouseResponse from './mock-companies-house-response';
 import mockCompany from './mock-company';
-import mockApplication, { mockBusiness } from './mock-application';
+import mockApplication, {
+  mockExportContractAgent,
+  mockExportContractAgentIsNotUsing,
+  mockExportContractAgentIsUsing,
+  mockApplicationAgentServiceChargeEmpty,
+  mockApplicationAgentServiceEmpty,
+  mockApplicationMultiplePolicy,
+  mockApplicationNominatedLossPayeeAppointedEmptyData,
+  mockApplicationNominatedLossPayeeNotAppointedFullFinancialInternationalData,
+  mockApplicationNominatedLossPayeeNotAppointedFullFinancialUkData,
+  mockApplicationTotalContractValueThresholdTrue,
+  mockApplicationTotalContractValueThresholdFalse,
+  mockBusiness,
+  mockCompanyDifferentTradingAddress,
+  mockExportContractAgentService,
+  mockExportContractAgentServiceCharge,
+  mockNominatedLossPayee,
+  referenceNumber,
+} from './mock-application';
 import mockApplications from './mock-applications';
 import mockEligibility from './mock-eligibility';
+import mockErrorMessagesObject from './mock-error-messages-object';
+import mockErrors from './mock-errors';
 import mockUrlOrigin from './mock-url-origin';
 import mockPhoneNumbers from './mock-phone-numbers';
 import mockSicCodes from './mock-sic-codes';
 import mockBusinessNatureOfBusiness from './mock-business-nature-of-business';
 import mockBusinessTurnover from './mock-business-turnover';
 import mockBroker from './mock-broker';
-import mockBuyer from './mock-buyer';
+import mockBuyer, { mockBuyerTradingHistory, mockBuyerRelationship, mockBuyerContact } from './mock-buyer';
 import mockDeclarations from './mock-declarations';
 import { mockInsuranceFeedback } from './mock-feedback';
+import mockJointlyInsuredParty from './mock-jointly-insured-party';
+import mockLossPayeeDetails from './mock-loss-payee-details';
+import mockLossPayeeFinancialDetailsInternational from './mock-loss-payee-financial-details-international';
+import mockLossPayeeFinancialDetailsUk from './mock-loss-payee-financial-details-uk';
 import mockContact from './mock-contact';
-import { PRODUCT } from '../content-strings';
-import { INTEGRITY } from '../constants';
-import cookieParser from 'cookie-parser';
+import mockValidEmail from './mock-valid-email';
+import { Request, Response } from '../../types';
 
-const { JS, GOVUK, FORM, COOKIES, GA, GA_TAG_MANAGER, MOJ, ACCESSIBILITY } = INTEGRITY;
+const { JS, GOVUK, FORM, COOKIES, GA, GA_TAG_MANAGER, ACCESSIBILITY } = INTEGRITY;
+
+const mockNext = jest.fn();
 
 const mockReq = () => {
   const req = {
@@ -42,7 +70,7 @@ const mockReq = () => {
     originalUrl: 'mock?mockQueryParam',
     baseUrl: 'mock',
     params: {
-      referenceNumber: mockApplication.referenceNumber.toString(),
+      referenceNumber: String(referenceNumber),
     },
     query: {},
     redirect: jest.fn(),
@@ -77,7 +105,6 @@ const mockRes = () => {
     SRI: {
       JS,
       ACCESSIBILITY,
-      MOJ,
       GOVUK,
       FORM,
       COOKIES,
@@ -89,26 +116,58 @@ const mockRes = () => {
   return res;
 };
 
-const mockNext = jest.fn();
+const mockSpyPromise = () => jest.fn().mockResolvedValue({});
 
 export {
+  EUR,
+  HKD,
+  JPY,
+  GBP,
+  USD,
   mockAccount,
   mockAnswers,
   mockApplication,
+  mockExportContractAgent,
+  mockExportContractAgentIsNotUsing,
+  mockExportContractAgentIsUsing,
+  mockApplicationAgentServiceChargeEmpty,
+  mockApplicationAgentServiceEmpty,
+  mockApplicationMultiplePolicy,
+  mockApplicationNominatedLossPayeeAppointedEmptyData,
+  mockApplicationNominatedLossPayeeNotAppointedFullFinancialInternationalData,
+  mockApplicationNominatedLossPayeeNotAppointedFullFinancialUkData,
   mockApplications,
+  mockApplicationTotalContractValueThresholdTrue,
+  mockApplicationTotalContractValueThresholdFalse,
   mockBroker,
   mockBusiness,
   mockContact,
   mockBusinessNatureOfBusiness,
   mockBusinessTurnover,
   mockBuyer,
+  mockBuyerContact,
+  mockBuyerRelationship,
+  mockBuyerTradingHistory,
   mockCountries,
+  mockCompaniesHouseResponse,
   mockCompany,
   mockCurrencies,
+  mockCurrenciesResponse,
+  mockCurrenciesEmptyResponse,
   mockDeclarations,
+  mockCompanyDifferentTradingAddress,
   mockEligibility,
+  mockErrorMessagesObject,
+  mockErrors,
+  mockExportContractAgentService,
+  mockExportContractAgentServiceCharge,
   mockInsuranceFeedback,
+  mockJointlyInsuredParty,
   mockNext,
+  mockLossPayeeDetails,
+  mockLossPayeeFinancialDetailsInternational,
+  mockLossPayeeFinancialDetailsUk,
+  mockNominatedLossPayee,
   mockUrlOrigin,
   mockSession,
   mockSicCodes,
@@ -116,4 +175,7 @@ export {
   mockPhoneNumbers,
   mockReq,
   mockRes,
+  mockSpyPromise,
+  mockValidEmail,
+  referenceNumber,
 };

@@ -5,7 +5,7 @@ import { Country } from '../../../types';
 /**
  * mapCountries
  * Map all countries into the required structure for GOV select component.
- * @param {Array} Array of currency objects
+ * @param {Array} Array of country objects
  * @returns {String} Selected credit period value
  * @returns {Array} Array of mapped countries, ordered alphabetically
  */

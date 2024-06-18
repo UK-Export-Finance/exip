@@ -22,7 +22,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters-from-desktop">
 
-      <p data-cy="intro">{{ CONTENT_STRINGS.INTRO }}</p>
+      <p data-cy="{{ DATA_CY.INTRO }}">{{ CONTENT_STRINGS.INTRO }}</p>
 
       <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
 
@@ -30,7 +30,7 @@
 
         <div class="govuk-button-group">
           {{ submitButton.render({
-            text: CONTENT_STRINGS.BUTTONS.SEND_NEW_SECURITY_CODE
+            text: CONTENT_STRINGS.BUTTONS.SEND_NEW_ACCESS_CODE
           }) }}
         </div>
 

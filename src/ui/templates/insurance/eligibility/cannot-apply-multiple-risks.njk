@@ -1,0 +1,41 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+
+      <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+      <p class="govuk-body" data-cy="{{ DATA_CY.INTRO }}">{{ CONTENT_STRINGS.INTRO }}</p>
+
+      <ol class="govuk-list govuk-list--number">
+        {% for ITEM in CONTENT_STRINGS.LIST %}
+          <li data-cy="list-item-{{ loop.index }}">{{ ITEM }}</li>
+        {% endfor %}
+      </ol>
+
+      <p class="govuk-body">
+        <span data-cy="action-intro">{{ CONTENT_STRINGS.ACTIONS.INTRO }}</span>
+        <span data-cy="action-contact-efm">
+          <a class="govuk-link" data-cy="action-contact-efm-link" href="{{ CONTENT_STRINGS.ACTIONS.CONTACT_EFM.LINK.HREF }}">{{ CONTENT_STRINGS.ACTIONS.CONTACT_EFM.LINK.TEXT }}</a> {{ CONTENT_STRINGS.ACTIONS.CONTACT_EFM.TEXT }}
+        </span>
+      </p>
+
+    </div>
+  </div>
+
+{% endblock %}

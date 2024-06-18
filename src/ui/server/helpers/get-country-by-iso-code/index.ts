@@ -7,13 +7,10 @@ import { Country } from '../../../types';
  * @param {String} Country ISO code
  * @returns {Object} Country
  */
-const getCountryByIsoCode = (countries: Array<Country>, isoCode: string) => {
-  const countryByIsoCode = countries.find((country) => country.isoCode === isoCode);
+const getCountryByIsoCode = (countries: Array<Country>, isoCode: string): Country => {
+  const countryByIsoCode = countries.find((country) => country.isoCode === isoCode) as Country;
 
-  return {
-    isoCode: countryByIsoCode?.isoCode,
-    name: countryByIsoCode?.name,
-  };
+  return countryByIsoCode;
 };
 
 export default getCountryByIsoCode;

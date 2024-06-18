@@ -5,10 +5,22 @@ import { document } from '@keystone-6/fields-document';
 import { addMonths } from 'date-fns';
 import { Lists } from '.keystone/types'; // eslint-disable-line
 import { APPLICATION, FEEDBACK } from './constants';
-import ACCOUNT_FIELD_IDS from './constants/field-ids/insurance/account';
 import updateApplication from './helpers/update-application';
-import getAccountByField from './helpers/get-account-by-field';
 import nullableCheckbox from './nullable-checkbox';
+
+const {
+  DEAL_TYPE,
+  DEFAULT_CURRENCY,
+  DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER,
+  EXPORT_CONTRACT: { AGENT_SERVICE_CHARGE },
+  LATEST_VERSION,
+  POLICY,
+  POLICY_TYPE,
+  SUBMISSION_COUNT_DEFAULT,
+  SUBMISSION_DEADLINE_IN_MONTHS,
+  SUBMISSION_TYPE,
+  STATUS,
+} = APPLICATION;
 
 export const lists = {
   ReferenceNumber: {
@@ -29,14 +41,14 @@ export const lists = {
         isIndexed: true,
       }),
       submissionCount: integer({
-        defaultValue: APPLICATION.SUBMISSION_COUNT_DEFAULT,
+        defaultValue: SUBMISSION_COUNT_DEFAULT,
         validation: { isRequired: true },
       }),
       submissionDate: timestamp(),
       submissionDeadline: timestamp(),
       submissionType: select({
-        options: [{ label: APPLICATION.SUBMISSION_TYPE.MIA, value: APPLICATION.SUBMISSION_TYPE.MIA }],
-        defaultValue: APPLICATION.SUBMISSION_TYPE.MIA,
+        options: [{ label: SUBMISSION_TYPE.MIA, value: SUBMISSION_TYPE.MIA }],
+        defaultValue: SUBMISSION_TYPE.MIA,
       }),
       status: text({
         validation: { isRequired: true },
@@ -49,18 +61,19 @@ export const lists = {
         many: false,
       }),
       business: relationship({ ref: 'Business' }),
-      company: relationship({ ref: 'Company' }),
       broker: relationship({ ref: 'Broker' }),
       buyer: relationship({ ref: 'Buyer' }),
-      sectionReview: relationship({ ref: 'SectionReview' }),
+      company: relationship({ ref: 'Company' }),
       declaration: relationship({ ref: 'Declaration' }),
+      nominatedLossPayee: relationship({ ref: 'NominatedLossPayee' }),
       policyContact: relationship({ ref: 'PolicyContact' }),
+      sectionReview: relationship({ ref: 'SectionReview' }),
       version: text({
-        defaultValue: APPLICATION.LATEST_VERSION.VERSION_NUMBER,
+        defaultValue: LATEST_VERSION.VERSION_NUMBER,
         validation: { isRequired: true },
       }),
       dealType: text({
-        defaultValue: APPLICATION.DEAL_TYPE,
+        defaultValue: DEAL_TYPE,
         validation: { isRequired: true },
         db: { nativeType: 'VarChar(4)' },
       }),
@@ -79,39 +92,6 @@ export const lists = {
             });
 
             modifiedData.referenceNumber = newReferenceNumber;
-
-            // generate and attach a new 'export contract' relationship
-            const { id: exportContractId } = await context.db.ExportContract.createOne({
-              data: {},
-            });
-
-            modifiedData.exportContract = {
-              connect: {
-                id: exportContractId,
-              },
-            };
-
-            // generate and attach a new `company` relationship
-            const { id: companyId } = await context.db.Company.createOne({
-              data: {},
-            });
-
-            modifiedData.company = {
-              connect: {
-                id: companyId,
-              },
-            };
-
-            // generate a new `company address` relationship with the company
-            await context.db.CompanyAddress.createOne({
-              data: {
-                company: {
-                  connect: {
-                    id: companyId,
-                  },
-                },
-              },
-            });
 
             // generate and attach a new 'business' relationship
             const { id: businessId } = await context.db.Business.createOne({
@@ -146,17 +126,6 @@ export const lists = {
               },
             };
 
-            // generate and attach a new 'sectionReview' relationship
-            const { id: sectionReviewId } = await context.db.SectionReview.createOne({
-              data: {},
-            });
-
-            modifiedData.sectionReview = {
-              connect: {
-                id: sectionReviewId,
-              },
-            };
-
             // generate and attach a new 'declaration' relationship
             const { id: declarationId } = await context.db.Declaration.createOne({
               data: {},
@@ -172,13 +141,13 @@ export const lists = {
             const now = new Date();
             modifiedData.createdAt = now;
             modifiedData.updatedAt = now;
-            modifiedData.submissionDeadline = addMonths(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
+            modifiedData.submissionDeadline = addMonths(new Date(now), SUBMISSION_DEADLINE_IN_MONTHS);
 
             // add default submission type
-            modifiedData.submissionType = APPLICATION.SUBMISSION_TYPE.MIA;
+            modifiedData.submissionType = SUBMISSION_TYPE.MIA;
 
             // add default status
-            modifiedData.status = APPLICATION.STATUS.IN_PROGRESS;
+            modifiedData.status = STATUS.IN_PROGRESS;
 
             return modifiedData;
           } catch (err) {
@@ -199,7 +168,7 @@ export const lists = {
 
             const { referenceNumber } = item;
 
-            const { policyContactId, exportContractId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
+            const { policyContactId, businessId, brokerId, declarationId } = item;
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
@@ -225,31 +194,6 @@ export const lists = {
               },
             });
 
-            // add the application ID to the export contract entry.
-            await context.db.ExportContract.updateOne({
-              where: { id: exportContractId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId,
-                  },
-                },
-                finalDestinationKnown: APPLICATION.DEFAULT_FINAL_DESTINATION_KNOWN,
-              },
-            });
-
-            // add the application ID to the company entry.
-            await context.db.Company.updateOne({
-              where: { id: companyId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId,
-                  },
-                },
-              },
-            });
-
             // add the application ID to the business entry.
             await context.db.Business.updateOne({
               where: { id: businessId },
@@ -265,18 +209,6 @@ export const lists = {
             // add the application ID to the broker entry.
             await context.db.Broker.updateOne({
               where: { id: brokerId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId,
-                  },
-                },
-              },
-            });
-
-            // add the application ID to the section review entry.
-            await context.db.SectionReview.updateOne({
-              where: { id: sectionReviewId },
               data: {
                 application: {
                   connect: {
@@ -325,34 +257,82 @@ export const lists = {
     },
     access: allowAll,
   }),
+  LossPayeeFinancialInternational: {
+    fields: {
+      lossPayee: relationship({ ref: 'NominatedLossPayee.financialInternational' }),
+      vector: relationship({ ref: 'LossPayeeFinancialInternationalVector.financialInternational' }),
+      bankAddress: text({
+        db: { nativeType: 'VarChar(500)' },
+      }),
+      bicSwiftCode: text(),
+      iban: text(),
+    },
+    access: allowAll,
+  },
+  LossPayeeFinancialInternationalVector: {
+    fields: {
+      financialInternational: relationship({ ref: 'LossPayeeFinancialInternational.vector' }),
+      bicSwiftCodeVector: text(),
+      ibanVector: text(),
+    },
+    access: allowAll,
+  },
+  LossPayeeFinancialUk: {
+    fields: {
+      lossPayee: relationship({ ref: 'NominatedLossPayee.financialUk' }),
+      vector: relationship({ ref: 'LossPayeeFinancialUkVector.financialUk' }),
+      accountNumber: text(),
+      bankAddress: text({
+        db: { nativeType: 'VarChar(500)' },
+      }),
+      sortCode: text(),
+    },
+    access: allowAll,
+  },
+  LossPayeeFinancialUkVector: {
+    fields: {
+      financialUk: relationship({ ref: 'LossPayeeFinancialUk.vector' }),
+      accountNumberVector: text(),
+      sortCodeVector: text(),
+    },
+    access: allowAll,
+  },
+  NominatedLossPayee: list({
+    fields: {
+      application: relationship({ ref: 'Application' }),
+      financialUk: relationship({ ref: 'LossPayeeFinancialUk.lossPayee' }),
+      financialInternational: relationship({ ref: 'LossPayeeFinancialInternational.lossPayee' }),
+      isAppointed: nullableCheckbox(),
+      isLocatedInUk: nullableCheckbox(),
+      isLocatedInternationally: nullableCheckbox(),
+      name: text({
+        db: { nativeType: 'VarChar(200)' },
+      }),
+    },
+    access: allowAll,
+  }),
   Policy: {
     fields: {
       application: relationship({ ref: 'Application' }),
-      /**
-       * NOTE:
-       * - For MVP, needPreCreditPeriodCover is part of the eligibility UI flow.
-       * - Post MVP/next phase needPreCreditPeriodCover is part of the application flow.
-       * - To avoid data migration, we save the eligibility answer as part of the "policy", instead of eligibility.
-       * - In the next phase, the defaultValue can be removed, to default null.
-       */
-      needPreCreditPeriodCover: nullableCheckbox(APPLICATION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER),
+      jointlyInsuredParty: relationship({ ref: 'JointlyInsuredParty.policy' }),
+      needPreCreditPeriodCover: nullableCheckbox(DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER),
       policyType: select({
         options: [
-          { label: APPLICATION.POLICY_TYPE.SINGLE, value: APPLICATION.POLICY_TYPE.SINGLE },
-          { label: APPLICATION.POLICY_TYPE.MULTIPLE, value: APPLICATION.POLICY_TYPE.MULTIPLE },
+          { label: POLICY_TYPE.SINGLE, value: POLICY_TYPE.SINGLE },
+          { label: POLICY_TYPE.MULTIPLE, value: POLICY_TYPE.MULTIPLE },
         ],
       }),
       requestedStartDate: timestamp(),
       contractCompletionDate: timestamp(),
       totalValueOfContract: integer({
         validation: {
-          min: APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT.MINIMUM,
-          max: APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT.MAXIMUM,
+          min: POLICY.TOTAL_VALUE_OF_CONTRACT.MINIMUM,
+          max: POLICY.TOTAL_VALUE_OF_CONTRACT.MAXIMUM,
         },
       }),
       creditPeriodWithBuyer: text(),
       policyCurrencyCode: text({
-        db: { nativeType: 'VarChar(1000)' },
+        db: { nativeType: 'VarChar(3)' },
       }),
       totalMonthsOfCover: integer(),
       totalSalesToBuyer: integer(),
@@ -370,22 +350,53 @@ export const lists = {
   PolicyContact: list({
     fields: {
       application: relationship({ ref: 'Application' }),
-      firstName: text(),
-      lastName: text(),
-      email: text(),
-      position: text(),
+      firstName: text({
+        db: { nativeType: 'VarChar(400)' },
+      }),
+      lastName: text({
+        db: { nativeType: 'VarChar(400)' },
+      }),
+      email: text({
+        db: { nativeType: 'VarChar(300)' },
+      }),
+      position: text({
+        db: { nativeType: 'VarChar(50)' },
+      }),
       isSameAsOwner: nullableCheckbox(),
+    },
+    access: allowAll,
+  }),
+  JointlyInsuredParty: list({
+    fields: {
+      policy: relationship({ ref: 'Policy.jointlyInsuredParty' }),
+      requested: nullableCheckbox(),
+      companyName: text({
+        db: { nativeType: 'VarChar(200)' },
+      }),
+      companyNumber: text({
+        db: { nativeType: 'VarChar(100)' },
+      }),
+      countryCode: text({
+        db: { nativeType: 'VarChar(3)' },
+      }),
     },
     access: allowAll,
   }),
   ExportContract: {
     fields: {
       application: relationship({ ref: 'Application' }),
+      agent: relationship({ ref: 'ExportContractAgent.exportContract' }),
+      privateMarket: relationship({ ref: 'PrivateMarket.exportContract' }),
+      finalDestinationKnown: nullableCheckbox(),
+      finalDestinationCountryCode: text({
+        db: { nativeType: 'VarChar(3)' },
+      }),
       goodsOrServicesDescription: text({
         db: { nativeType: 'VarChar(1000)' },
       }),
-      finalDestinationKnown: nullableCheckbox(),
-      finalDestinationCountryCode: text(),
+      paymentTermsDescription: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -396,23 +407,91 @@ export const lists = {
     },
     access: allowAll,
   },
+  ExportContractAgent: list({
+    fields: {
+      exportContract: relationship({ ref: 'ExportContract.agent' }),
+      service: relationship({ ref: 'ExportContractAgentService.agent' }),
+      countryCode: text({
+        db: { nativeType: 'VarChar(3)' },
+      }),
+      fullAddress: text({
+        db: { nativeType: 'VarChar(500)' },
+      }),
+      isUsingAgent: nullableCheckbox(),
+      name: text({
+        db: { nativeType: 'VarChar(800)' },
+      }),
+    },
+    access: allowAll,
+  }),
+  ExportContractAgentService: {
+    fields: {
+      agent: relationship({ ref: 'ExportContractAgent.service' }),
+      charge: relationship({ ref: 'ExportContractAgentServiceCharge.service' }),
+      agentIsCharging: nullableCheckbox(),
+      serviceDescription: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+    },
+    access: allowAll,
+  },
+  ExportContractAgentServiceCharge: {
+    fields: {
+      service: relationship({ ref: 'ExportContractAgentService.charge' }),
+      percentageCharge: integer(),
+      fixedSumAmount: integer(),
+      fixedSumCurrencyCode: text({
+        db: { nativeType: 'VarChar(3)' },
+        defaultValue: DEFAULT_CURRENCY,
+      }),
+      method: select({
+        options: [
+          { label: AGENT_SERVICE_CHARGE.METHOD.FIXED_SUM, value: AGENT_SERVICE_CHARGE.METHOD.FIXED_SUM },
+          { label: AGENT_SERVICE_CHARGE.METHOD.PERCENTAGE, value: AGENT_SERVICE_CHARGE.METHOD.PERCENTAGE },
+        ],
+      }),
+      payableCountryCode: text({
+        db: { nativeType: 'VarChar(3)' },
+      }),
+    },
+    access: allowAll,
+  },
+  PrivateMarket: list({
+    fields: {
+      exportContract: relationship({ ref: 'ExportContract.privateMarket' }),
+      attempted: nullableCheckbox(),
+      declinedDescription: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await updateApplication.timestamp(context, item.applicationId);
+        }
+      },
+    },
+    access: allowAll,
+  }),
   Account: list({
     fields: {
       createdAt: timestamp(),
       updatedAt: timestamp(),
-      firstName: text({ validation: { isRequired: true } }),
-      lastName: text({ validation: { isRequired: true } }),
-      email: text({ validation: { isRequired: true } }),
+      firstName: text({
+        validation: { isRequired: true },
+        db: { nativeType: 'VarChar(400)' },
+      }),
+      lastName: text({
+        validation: { isRequired: true },
+        db: { nativeType: 'VarChar(400)' },
+      }),
+      email: text({
+        validation: { isRequired: true },
+        db: { nativeType: 'VarChar(300)' },
+      }),
       salt: text({ validation: { isRequired: true } }),
       hash: text({ validation: { isRequired: true } }),
       // isVerified flag will only be true if the account has verified their email address.
-      isVerified: checkbox({ defaultValue: false }),
-      /**
-       * isBlocked flag will only be true if the account has:
-       * - repeatedly attempted sign in
-       * - repeatedly attempted password reset request
-       */
-      isBlocked: checkbox({ defaultValue: false }),
       verificationHash: text(),
       verificationExpiry: timestamp(),
       otpSalt: text(),
@@ -436,28 +515,25 @@ export const lists = {
         ref: 'Application',
         many: true,
       }),
-    },
-    hooks: {
-      validateInput: async ({ context, operation, resolvedData }) => {
-        if (operation === 'create') {
-          const { email } = resolvedData;
-
-          const requestedEmail = String(email);
-
-          /**
-           * Check if an account with the email already exists.
-           * If so, reject.
-           */
-          const account = await getAccountByField(context, ACCOUNT_FIELD_IDS.EMAIL, requestedEmail);
-
-          if (account) {
-            throw new Error(`Unable to create a new account for ${requestedEmail} - account already exists`);
-          }
-        }
-      },
+      status: relationship({ ref: 'AccountStatus.account' }),
     },
     access: allowAll,
   }),
+  AccountStatus: {
+    fields: {
+      account: relationship({ ref: 'Account.status' }),
+      isVerified: checkbox({ defaultValue: false }),
+      /**
+       * isBlocked flag will only be true if the account has:
+       * - repeatedly attempted sign in
+       * - repeatedly attempted password reset request
+       */
+      isBlocked: checkbox({ defaultValue: false }),
+      isInactive: checkbox({ defaultValue: false }),
+      updatedAt: timestamp(),
+    },
+    access: allowAll,
+  },
   AuthenticationRetry: list({
     fields: {
       account: relationship({
@@ -488,9 +564,13 @@ export const lists = {
       }),
       totalYearsExporting: integer(),
       totalEmployeesUK: integer(),
-      totalEmployeesInternational: integer(),
       estimatedAnnualTurnover: integer(),
       exportsTurnoverPercentage: integer(),
+      turnoverCurrencyCode: text({
+        db: { nativeType: 'VarChar(3)' },
+        defaultValue: DEFAULT_CURRENCY,
+      }),
+      hasCreditControlProcess: nullableCheckbox(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -505,13 +585,20 @@ export const lists = {
     fields: {
       application: relationship({ ref: 'Application' }),
       isUsingBroker: nullableCheckbox(),
-      name: text(),
+      name: text({
+        db: { nativeType: 'VarChar(800)' },
+      }),
       addressLine1: text(),
       addressLine2: text(),
       town: text(),
       county: text(),
       postcode: text(),
-      email: text(),
+      fullAddress: text({
+        db: { nativeType: 'VarChar(500)' },
+      }),
+      email: text({
+        db: { nativeType: 'VarChar(300)' },
+      }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -540,14 +627,20 @@ export const lists = {
     fields: {
       application: relationship({ ref: 'Application' }),
       registeredOfficeAddress: relationship({ ref: 'CompanyAddress.company' }),
+      differentTradingAddress: relationship({ ref: 'CompanyDifferentTradingAddress.company' }),
       sicCodes: relationship({
         ref: 'CompanySicCode.company',
         many: true,
       }),
-      companyName: text(),
+      companyName: text({
+        db: { nativeType: 'VarChar(200)' },
+      }),
       companyNumber: text(),
       dateOfCreation: timestamp(),
       hasDifferentTradingAddress: nullableCheckbox(),
+      differentTradingName: text({
+        db: { nativeType: 'VarChar(200)' },
+      }),
       hasDifferentTradingName: nullableCheckbox(),
       companyWebsite: text(),
       phoneNumber: text(),
@@ -562,6 +655,15 @@ export const lists = {
     },
     access: allowAll,
   }),
+  CompanyDifferentTradingAddress: list({
+    fields: {
+      company: relationship({ ref: 'Company.differentTradingAddress' }),
+      fullAddress: text({
+        db: { nativeType: 'VarChar(500)' },
+      }),
+    },
+    access: allowAll,
+  }),
   CompanySicCode: list({
     fields: {
       company: relationship({ ref: 'Company.sicCodes' }),
@@ -573,20 +675,90 @@ export const lists = {
   Buyer: list({
     fields: {
       application: relationship({ ref: 'Application' }),
-      companyOrOrganisationName: text(),
+      companyOrOrganisationName: text({
+        db: { nativeType: 'VarChar(200)' },
+      }),
       address: text({
-        db: { nativeType: 'VarChar(1000)' },
+        db: { nativeType: 'VarChar(500)' },
       }),
       country: relationship({ ref: 'Country' }),
-      registrationNumber: text(),
+      registrationNumber: text({
+        db: { nativeType: 'VarChar(200)' },
+      }),
       website: text(),
-      contactFirstName: text(),
-      contactLastName: text(),
+      buyerTradingHistory: relationship({ ref: 'BuyerTradingHistory.buyer' }),
+      contact: relationship({ ref: 'BuyerContact.buyer' }),
+      relationship: relationship({ ref: 'BuyerRelationship.buyer' }),
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await updateApplication.timestamp(context, item.applicationId);
+        }
+      },
+    },
+    access: allowAll,
+  }),
+  BuyerContact: {
+    fields: {
+      application: relationship({ ref: 'Application' }),
+      buyer: relationship({ ref: 'Buyer.contact' }),
+      contactFirstName: text({
+        db: { nativeType: 'VarChar(200)' },
+      }),
+      contactLastName: text({
+        db: { nativeType: 'VarChar(200)' },
+      }),
       contactPosition: text(),
-      contactEmail: text(),
+      contactEmail: text({
+        db: { nativeType: 'VarChar(300)' },
+      }),
       canContactBuyer: nullableCheckbox(),
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await updateApplication.timestamp(context, item.applicationId);
+        }
+      },
+    },
+    access: allowAll,
+  },
+  BuyerRelationship: {
+    fields: {
+      application: relationship({ ref: 'Application' }),
+      buyer: relationship({ ref: 'Buyer.relationship' }),
       exporterIsConnectedWithBuyer: nullableCheckbox(),
+      connectionWithBuyerDescription: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+      exporterHasPreviousCreditInsuranceWithBuyer: nullableCheckbox(),
+      exporterHasBuyerFinancialAccounts: nullableCheckbox(),
+      previousCreditInsuranceWithBuyerDescription: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await updateApplication.timestamp(context, item.applicationId);
+        }
+      },
+    },
+    access: allowAll,
+  },
+  BuyerTradingHistory: list({
+    fields: {
+      application: relationship({ ref: 'Application' }),
+      buyer: relationship({ ref: 'Buyer.buyerTradingHistory' }),
+      currencyCode: text({
+        db: { nativeType: 'VarChar(3)' },
+      }),
+      outstandingPayments: nullableCheckbox(),
+      failedPayments: nullableCheckbox(),
       exporterHasTradedWithBuyer: nullableCheckbox(),
+      totalOutstandingPayments: integer(),
+      totalOverduePayments: integer(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -612,13 +784,14 @@ export const lists = {
     fields: {
       application: relationship({ ref: 'Application' }),
       buyerCountry: relationship({ ref: 'Country' }),
+      coverPeriod: relationship({ ref: 'CoverPeriod' }),
+      hasEndBuyer: checkbox(),
       hasMinimumUkGoodsOrServices: checkbox(),
-      validExporterLocation: checkbox(),
       hasCompaniesHouseNumber: checkbox(),
       otherPartiesInvolved: checkbox(),
       paidByLetterOfCredit: checkbox(),
       totalContractValue: relationship({ ref: 'TotalContractValue' }),
-      coverPeriod: relationship({ ref: 'CoverPeriod' }),
+      validExporterLocation: checkbox(),
     },
     access: allowAll,
   }),
@@ -626,9 +799,10 @@ export const lists = {
     fields: {
       application: relationship({ ref: 'Application' }),
       eligibility: nullableCheckbox(),
-      policy: nullableCheckbox(),
       business: nullableCheckbox(),
       buyer: nullableCheckbox(),
+      exportContract: nullableCheckbox(),
+      policy: nullableCheckbox(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {

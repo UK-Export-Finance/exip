@@ -1,21 +1,44 @@
-import { APPLICATION, ELIGIBILITY, FIELD_IDS, FIELD_VALUES } from '../../../../constants';
-import { LINKS } from '../../../links';
+import { APPLICATION, ELIGIBILITY, FIELD_VALUES, MAXIMUM_CHARACTERS } from '../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
+import { FORM_TITLES } from '../../../form-titles';
 
-const { POLICY, ACCOUNT } = FIELD_IDS.INSURANCE;
-const { CONTRACT_POLICY, ABOUT_GOODS_OR_SERVICES, NAME_ON_POLICY, DIFFERENT_NAME_ON_POLICY } = POLICY;
-const { EMAIL } = ACCOUNT;
+const {
+  ACCOUNT: { EMAIL },
+  CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
+  POLICY: {
+    POLICY_TYPE,
+    SINGLE_POLICY_TYPE,
+    MULTIPLE_POLICY_TYPE,
+    CONTRACT_POLICY,
+    EXPORT_VALUE,
+    NAME_ON_POLICY,
+    DIFFERENT_NAME_ON_POLICY,
+    NEED_PRE_CREDIT_PERIOD,
+    CREDIT_PERIOD_WITH_BUYER,
+    REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
+    USING_BROKER,
+    BROKER_DETAILS: { NAME, FULL_ADDRESS },
+    LOSS_PAYEE: { IS_APPOINTED },
+    LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY },
+    LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
+    LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
+    FINANCIAL_ADDRESS,
+  },
+} = INSURANCE_FIELD_IDS;
 
 const { MAX_COVER_PERIOD_MONTHS } = ELIGIBILITY;
 const {
   POLICY: { TOTAL_MONTHS_OF_COVER },
 } = APPLICATION;
 
+const { POLICY: POLICY_FORM_TITLES } = FORM_TITLES;
+
 export const POLICY_FIELDS = {
-  [POLICY.POLICY_TYPE]: {
-    ID: FIELD_IDS.POLICY_TYPE,
+  [POLICY_TYPE]: {
+    ID: POLICY_TYPE,
     OPTIONS: {
       SINGLE: {
-        ID: POLICY.SINGLE_POLICY_TYPE,
+        ID: SINGLE_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.SINGLE,
         TEXT: 'Single contract policy',
         HINT_LIST: [
@@ -26,7 +49,7 @@ export const POLICY_FIELDS = {
         ],
       },
       MULTIPLE: {
-        ID: POLICY.MULTIPLE_POLICY_TYPE,
+        ID: MULTIPLE_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
         TEXT: 'Multiple contract policy',
         HINT_LIST: [
@@ -38,66 +61,44 @@ export const POLICY_FIELDS = {
     },
     SUMMARY: {
       TITLE: 'Policy type',
+      FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
     },
   },
   CONTRACT_POLICY: {
     [CONTRACT_POLICY.REQUESTED_START_DATE]: {
       LABEL: 'When do you want your policy to start?',
-      HINT: 'For example, 6 11 2023',
+      HINT: 'For example, 06 11 2023',
       SUMMARY: {
         TITLE: 'Policy start date',
+        FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
       },
     },
-    [CONTRACT_POLICY.CREDIT_PERIOD_WITH_BUYER]: {
-      LABEL: 'What credit period do you have with your buyer?',
-      HINT: {
-        INTRO: 'For example:',
-        LIST: [
-          '90 days after invoicing your buyer',
-          '60 days after dispatching goods from your premises',
-          '15 days after goods arrive at the destination port',
-          'some other terms of payment.',
-        ],
-      },
-      MAXIMUM: 1000,
-      SUMMARY: {
-        TITLE: 'Credit period',
-      },
-    },
-    [CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
-      LABEL: 'Select currency you want your policy to be issued in',
-      HINT: {
-        USUALLY_ISSUES: 'UKEF usually issues policies in pounds sterling, US dollars or euros.',
-        NEED_DIFFERENT_CURRENCY: "If you need a different currency, you'll need to",
-        APPLY_USING_FORM: {
-          TEXT: 'apply using our form.',
-          HREF: LINKS.EXTERNAL.PROPOSAL_FORM,
-        },
-      },
+    [CURRENCY_CODE]: {
+      LEGEND: "Select currency you'd like your policy to be issued in",
+      HINT: 'This is the currency your policy will be issued in',
       SUMMARY: {
         TITLE: 'Policy currency',
+        FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
+      },
+      [ALTERNATIVE_CURRENCY_CODE]: {
+        ID: ALTERNATIVE_CURRENCY_CODE,
+        VALUE: ALTERNATIVE_CURRENCY_CODE,
       },
     },
     SINGLE: {
       [CONTRACT_POLICY.SINGLE.CONTRACT_COMPLETION_DATE]: {
         LABEL: 'When do you expect to complete the export contract?',
-        HINT: 'For example, 6 11 2024',
+        HINT: 'For example, 06 11 2024',
         SUMMARY: {
-          TITLE: 'Date you expect contract to complete',
+          TITLE: 'Date you expect it to complete',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
         },
       },
       [CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
-        LABEL: "What's the total value of the contract you want to insure?",
-        HINT: {
-          NEED_MORE_COVER: 'If you need cover for more than £500,000,',
-          FILL_IN_FORM: {
-            TEXT: 'fill in this form instead',
-            HREF: LINKS.EXTERNAL.PROPOSAL_FORM,
-          },
-          NO_DECIMALS: 'Enter a whole number - do not enter decimals.',
-        },
+        HINT: 'Enter a whole number. Do not enter decimals.',
         SUMMARY: {
           TITLE: 'Contract value',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
         },
       },
     },
@@ -108,52 +109,31 @@ export const POLICY_FIELDS = {
         OPTIONS: FIELD_VALUES.TOTAL_MONTHS_OF_COVER,
         SUMMARY: {
           TITLE: 'How many months you want to be insured for',
-        },
-      },
-      [CONTRACT_POLICY.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
-        LABEL: 'Estimate total sales to your buyer during this time',
-        HINT: 'Enter a whole number - do not enter decimals.',
-        SUMMARY: {
-          TITLE: 'Estimated sales during policy',
-        },
-      },
-      [CONTRACT_POLICY.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
-        LABEL: 'Estimate the maximum amount your buyer will owe you at any single point during this time',
-        HINT: {
-          FOR_EXAMPLE: 'For example, your total sales might be £250,000 but the maximum the buyer will owe you at any single point is £100,000.',
-          NEED_MORE_COVER: 'If you need cover for more than £500,000, ',
-          FILL_IN_FORM: {
-            TEXT: 'fill in this form instead.',
-            HREF: LINKS.EXTERNAL.PROPOSAL_FORM,
-          },
-          NO_DECIMALS: 'Enter a whole number - do not enter decimals.',
-        },
-        SUMMARY: {
-          TITLE: 'Maximum owed at any single point during policy',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
         },
       },
     },
   },
-  ABOUT_GOODS_OR_SERVICES: {
-    [ABOUT_GOODS_OR_SERVICES.DESCRIPTION]: {
-      LABEL: "Describe the goods or services you want to insure and explain how they'll be used by the buyer",
-      HINT: {
-        INTRO: 'For example:',
-        LIST: [
-          'fast moving consumer goods, like vegan protein bars',
-          'construction materials to build commercial property',
-          'educational services such as teacher training',
-        ],
+  EXPORT_VALUE: {
+    MULTIPLE: {
+      [EXPORT_VALUE.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
+        LABEL: 'Estimate total sales to your buyer during this time',
+        HINT: 'Enter a whole number. Do not enter decimals.',
+        SUMMARY: {
+          TITLE: 'Estimated total sales to the buyer',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
+        },
       },
-      MAXIMUM: 1000,
-      SUMMARY: {
-        TITLE: "Goods or services you're exporting",
-      },
-    },
-    [ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION]: {
-      LABEL: "What's the final destination of the goods or services?",
-      SUMMARY: {
-        TITLE: 'Final destination of export',
+      [EXPORT_VALUE.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
+        LABEL: 'Estimate the maximum amount your buyer will owe you at any single point during this time',
+        HINT: {
+          FOR_EXAMPLE: 'For example, your total sales might be £250,000 but the maximum the buyer will owe you at any single point is £100,000.',
+          NO_DECIMALS: 'Enter a whole number. Do not enter decimals.',
+        },
+        SUMMARY: {
+          TITLE: 'Estimated maximum amount owed by the buyer',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
+        },
       },
     },
   },
@@ -171,24 +151,196 @@ export const POLICY_FIELDS = {
     },
     [NAME_ON_POLICY.POSITION]: {
       LABEL: "What's your position at the company?",
+      MAXIMUM: 50,
       SUMMARY: {
         TITLE: 'Position at company',
+        FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY,
       },
     },
     [NAME_ON_POLICY.NAME]: {
       SUMMARY: {
-        TITLE: 'Name on the policy',
+        TITLE: 'Contact name',
+        FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY,
       },
     },
   },
   DIFFERENT_NAME_ON_POLICY: {
     [DIFFERENT_NAME_ON_POLICY.POSITION]: {
       LABEL: 'Position at company',
+      MAXIMUM: 50,
     },
     [EMAIL]: {
       SUMMARY: {
         TITLE: 'Contact email',
+        FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY,
       },
     },
+  },
+  [NEED_PRE_CREDIT_PERIOD]: {
+    HINT: 'This is known as the pre-credit period',
+    SUMMARY: {
+      TITLE: 'Pre-credit period',
+      FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
+    },
+  },
+  [CREDIT_PERIOD_WITH_BUYER]: {
+    LABEL: 'What period of pre-credit cover do you require?',
+    SUMMARY: {
+      TITLE: 'Period of pre-credit cover',
+      FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
+    },
+    MAXIMUM: MAXIMUM_CHARACTERS.CREDIT_PERIOD_WITH_BUYER,
+  },
+  REQUESTED_JOINTLY_INSURED_PARTY: {
+    [REQUESTED]: {
+      HINT: 'This could be a parent company, subsidiary or a subcontractor.',
+      SUMMARY: {
+        TITLE: 'Another company to be insured',
+      },
+    },
+    [COMPANY_NAME]: {
+      LABEL: 'Name of the other company',
+      MAXIMUM: 200,
+      SUMMARY: {
+        TITLE: 'Name of the other company',
+      },
+    },
+    [COMPANY_NUMBER]: {
+      LABEL: 'Registration number of the other company (optional)',
+      MAXIMUM: 100,
+      SUMMARY: {
+        TITLE: 'Registration number of the other company',
+      },
+    },
+    [COUNTRY_CODE]: {
+      LABEL: 'What country is the other company based in?',
+      SUMMARY: {
+        TITLE: 'Country of the company',
+      },
+    },
+  },
+  BROKER: {
+    [USING_BROKER]: {
+      LABEL: 'Are you using a broker to get this insurance?',
+      SUMMARY: {
+        TITLE: 'Using a broker',
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
+      },
+    },
+  },
+  BROKER_DETAILS: {
+    [NAME]: {
+      LABEL: 'Name of broker or company',
+      MAXIMUM: 300,
+      SUMMARY: {
+        TITLE: "Broker's name or company",
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
+      },
+    },
+    [EMAIL]: {
+      LABEL: 'Email address',
+      SUMMARY: {
+        TITLE: "Broker's email",
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
+      },
+    },
+    [FULL_ADDRESS]: {
+      LABEL: "Broker's address",
+      SUMMARY: {
+        TITLE: "Broker's address",
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
+      },
+      MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
+    },
+  },
+  LOSS_PAYEE: {
+    [IS_APPOINTED]: {
+      HINT: {
+        INTRO:
+          'A loss payee is a financial organisation, like a bank or a lender, who will be paid in the event of a valid claim.  A loss payee could also be a parent company or subsidiary of your business.',
+        OUTRO: "Not every policy has a loss payee. If you don't, select 'No' and you will be listed as the default claimant.",
+      },
+      SUMMARY: {
+        TITLE: 'Appointed a loss payee',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
+    },
+  },
+  LOSS_PAYEE_DETAILS: {
+    [LOSS_PAYEE_NAME]: {
+      LABEL: 'Name of the loss payee',
+      MAXIMUM: MAXIMUM_CHARACTERS.LOSS_PAYEE_NAME,
+      SUMMARY: {
+        TITLE: 'Name of the loss payee',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
+    },
+    [LOCATION]: {
+      LABEL: 'Where is the loss payee located?',
+      OPTIONS: {
+        UK: {
+          ID: IS_LOCATED_IN_UK,
+          VALUE: IS_LOCATED_IN_UK,
+          TEXT: 'United Kingdom',
+        },
+        INTERNATIONALLY: {
+          ID: IS_LOCATED_INTERNATIONALLY,
+          VALUE: IS_LOCATED_INTERNATIONALLY,
+          TEXT: 'International',
+        },
+      },
+    },
+  },
+  LOSS_PAYEE_FINANCIAL_UK: {
+    [SORT_CODE]: {
+      LABEL: 'Sort code',
+      HINT: 'Must be 6 digits long',
+      SUMMARY: {
+        TITLE: 'Sort code',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
+    },
+    [ACCOUNT_NUMBER]: {
+      LABEL: 'Account number',
+      HINT: 'Must be between 6 and 8 digits long',
+      SUMMARY: {
+        TITLE: 'Account number',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
+    },
+    [FINANCIAL_ADDRESS]: {
+      SUMMARY: {
+        TITLE: "Loss payee's bank based in the UK",
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
+    },
+  },
+  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: {
+    [BIC_SWIFT_CODE]: {
+      LABEL: 'BIC or SWIFT code',
+      HINT: 'Must be between 8 and 11 characters long',
+      SUMMARY: {
+        TITLE: 'BIC or SWIFT code',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
+    },
+    [IBAN]: {
+      LABEL: 'IBAN',
+      HINT: 'Must be between 16 and 34 characters long',
+      SUMMARY: {
+        TITLE: 'IBAN',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
+    },
+    [FINANCIAL_ADDRESS]: {
+      SUMMARY: {
+        TITLE: "Loss payee's bank based internationally",
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
+    },
+  },
+  FINANCIAL_ADDRESS: {
+    LABEL: 'Bank address',
+    MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
   },
 };

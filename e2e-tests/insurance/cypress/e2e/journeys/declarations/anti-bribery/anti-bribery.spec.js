@@ -28,7 +28,7 @@ const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_ANTI_BRIBERY;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Declarations - Anti-bribery page - As an Exporter, I want the system to provide the details of the anti-bribery and corruption declaration for my export insurance application, So that, while processing my export insurance application. I have clarity on my anti-bribery and corruption declarations', () => {
+context('Insurance - Declarations - Anti-bribery page - As an Exporter, I want the system to provide the details of the anti-bribery and corruption declaration for my credit insurance application, So that, while processing my credit insurance application. I have clarity on my anti-bribery and corruption declarations', () => {
   let referenceNumber;
   let url;
 
@@ -169,14 +169,12 @@ context('Insurance - Declarations - Anti-bribery page - As an Exporter, I want t
       it('should render a validation error', () => {
         const expectedErrorsCount = 1;
 
-        cy.submitAndAssertFieldErrors(
+        cy.submitAndAssertFieldErrors({
           field,
-          null,
-          0,
           expectedErrorsCount,
-          ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
-          false,
-        );
+          expectedErrorMessage: ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
+          clearInput: false,
+        });
       });
     });
 
@@ -199,7 +197,7 @@ context('Insurance - Declarations - Anti-bribery page - As an Exporter, I want t
 
           cy.navigateToUrl(url);
 
-          singleInputField(FIELD_ID).input().should('be.checked');
+          cy.assertRadioOptionIsChecked(singleInputField(FIELD_ID).input());
         });
       });
     });

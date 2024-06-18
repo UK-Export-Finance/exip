@@ -6,11 +6,15 @@ export * from './allowed-graphql-resolvers';
 export * from './answers';
 export * from './application';
 export * from './cover-period';
+export * from './cron';
+export * from './date-format';
+export * from './eligibility';
 export * from './external-apis';
 export * from './field-values';
 export * from './supported-currencies';
 export * from './total-contract-value';
 export * from './XLSX-CONFIG';
+export * from './validation';
 
 dotenv.config();
 
@@ -82,6 +86,22 @@ export const DATE_ONE_MINUTE_IN_THE_PAST = () => {
   return oneMinuteInThePast;
 };
 
+/**
+ * DATE_2_MONTHS_IN_THE_PAST
+ * Generate a date that is 2  months in the past
+ * @returns {Date}
+ */
+export const DATE_2_MONTHS_IN_THE_PAST = () => {
+  const now = new Date();
+
+  const day = now.getDate();
+
+  // subtract 60 days (2 months) from the current day.
+  const twoMonths = new Date(now.setDate(day - 60));
+
+  return twoMonths;
+};
+
 export const ACCOUNT = {
   EMAIL: {
     VERIFICATION_EXPIRY: DATE_24_HOURS_FROM_NOW,
@@ -143,10 +163,45 @@ export const ACCOUNT = {
   MAX_AUTH_RETRIES_TIMEFRAME: DATE_24_HOURS_IN_THE_PAST(),
 };
 
+/**
+ * default object for data encryption
+ * if no data or initialisation vector provided
+ * then empty string for value and iv must be saved to database
+ * eg. if wiping field, then empty string will wipe data
+ * replaced by values if data and initalisation vector provided
+ */
+export const DEFAULT_ENCRYPTION_SAVE_OBJECT = {
+  value: '',
+  iv: '',
+};
+
+export const FINANCIAL_DETAILS = {
+  ENCRYPTION: {
+    CIPHER: {
+      ENCODING: 'hex' as BufferEncoding,
+      STRING_ENCODING: 'base64' as BufferEncoding,
+      ENCRYPTION_METHOD: 'aes-256-cbc',
+      OUTPUT_ENCODING: 'utf-8' as BufferEncoding,
+    },
+    KEY: {
+      ALGORITHM: 'sha512' as Algorithm,
+      SIGNATURE: String(process.env.LOSS_PAYEE_ENCRYPTION_KEY),
+      SUBSTRING_INDEX_START: 0,
+      SUBSTRING_INDEX_END: 32,
+    },
+    IV: {
+      BYTES_SIZE: 16,
+      ENCODING: 'base64' as BufferEncoding,
+      SLICE_INDEX_START: 0,
+      SLICE_INDEX_END: 16,
+    },
+  },
+};
+
 export const EMAIL_TEMPLATE_IDS = {
   ACCOUNT: {
     CONFIRM_EMAIL: '24022e94-171c-4044-b0ee-d22418116575',
-    SECURITY_CODE: 'b92650d1-9187-4510-ace2-5eec7ca7e626',
+    ACCESS_CODE: 'b92650d1-9187-4510-ace2-5eec7ca7e626',
     PASSWORD_RESET: '86d5f582-e1d3-4b55-b103-50141401fd13',
     REACTIVATE_ACCOUNT_CONFIRM_EMAIL: '2abf173a-52fc-4ec8-b28c-d7a862b8cf37',
   },
@@ -166,6 +221,7 @@ export const EMAIL_TEMPLATE_IDS = {
         NOTIFICATION_ANTI_BRIBERY_AND_TRADING_HISTORY: '7f0541dd-1dae-4d51-9ebc-87d2a624f8d2',
         NO_DOCUMENTS: '65b517c6-ae86-470b-9448-194ae5ac44bb',
       },
+      DEADLINE_REMINDER: 'e8e5ba73-96da-46f1-b96e-2b1909be6f3d',
     },
   },
   FEEDBACK: {
@@ -190,7 +246,4 @@ export const FEEDBACK = {
 
 export const ACCEPTED_FILE_TYPES = ['.xlsx'];
 
-export const DATE_FORMAT = {
-  DEFAULT: 'd MMMM yyyy',
-  HOURS_AND_MINUTES: 'HH:mm',
-};
+export const ORDNANCE_SURVEY_QUERY_URL = '/search/places/v1/postcode?postcode=';

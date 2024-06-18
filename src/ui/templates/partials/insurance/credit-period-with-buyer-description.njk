@@ -1,0 +1,21 @@
+{% set contentStrings = CONTENT_STRINGS.CREDIT_PERIOD_WITH_BUYER %}
+
+{% set descriptionHtml %}
+  <p class="govuk-body" data-cy="{{ fieldId }}-description-protects-you">{{ contentStrings.PROTECTS_YOU }}</p>
+  <p class="govuk-body" data-cy="{{ fieldId }}-description-insures-you">{{ contentStrings.INSURES_YOU }}</p>
+  <p class="govuk-body" data-cy="{{ fieldId }}-description-happens-before">{{ contentStrings.HAPPENS_BEFORE }}</p>
+{% endset %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters-from-desktop">
+
+    {{ govukDetails({
+      summaryText: contentStrings.INTRO,
+      html: descriptionHtml,
+      attributes: {
+        "data-cy": fieldId + "-description"
+      }
+    }) }}
+
+  </div>
+</div>

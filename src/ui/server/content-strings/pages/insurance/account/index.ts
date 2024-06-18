@@ -47,9 +47,10 @@ const ACCOUNT = {
     },
     VERIFY_EMAIL_EXPIRED_LINK: {
       PAGE_TITLE: 'Your link has expired',
-      BODY: "You'll need to enter your details and create an account again.",
-      CREATE_ACCOUNT: {
-        TEXT: 'Create account',
+      NOT_VERIFIED: 'Your account has not been verified.',
+      CAN_SEND_NEW_LINK: 'If you would still like to verify your account we can send you a new link.',
+      REQUEST_NEW_LINK: {
+        TEXT: 'Request a new link',
         HREF: INSURANCE_ROUTES.ACCOUNT.CREATE.YOUR_DETAILS,
       },
     },
@@ -78,17 +79,17 @@ const ACCOUNT = {
     },
     ENTER_CODE: {
       PAGE_TITLE: 'Check your email',
-      INTRO: "We've sent you an email with a security code. This code will expire after 5 minutes.",
+      INTRO: "We've sent you an email with an access code. This code will expire after 5 minutes.",
       REQUEST_NEW_CODE: {
-        TEXT: 'Request a new security code',
+        TEXT: 'Request a new access code',
         HREF: INSURANCE_ROUTES.ACCOUNT.SIGN_IN.REQUEST_NEW_CODE,
       },
       SUCCESS_BANNER: {
-        NEW_CODE_SENT: "We've sent a new security code to your email address.",
+        NEW_CODE_SENT: "We've sent a new access code to your email address.",
       },
     },
     REQUEST_NEW_CODE: {
-      PAGE_TITLE: 'Request a new security code',
+      PAGE_TITLE: 'Request a new access code',
       INTRO: 'Emails sometimes take a few minutes to arrive. If you do not receive the email, after this you can request a new one.',
       DO_NOT_HAVE_EMAIL_ACCESS: {
         INTRO: 'I do not have access to this email inbox',

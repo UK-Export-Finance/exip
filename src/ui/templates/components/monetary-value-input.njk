@@ -1,0 +1,35 @@
+{% import './text-input.njk' as textInput %}
+
+{% macro render(params) %}
+
+  {% set fieldId = params.fieldId %}
+  {% set label = params.label %}
+  {% set hintText = params.hintText %}
+  {% set hintHtml = params.hintHtml %}
+  {% set currencyPrefixSymbol = params.currencyPrefixSymbol %}
+  {% set submittedValue = params.submittedValue %}
+  {% set validationError = params.validationError %}
+  {% set legendClass = params.legendClass %}
+
+  {% if legendClass %}
+    {% set labelClass = legendClass %}
+  {% else %}
+    {% set labelClass = "govuk-!-font-weight-bold govuk-!-font-size-24" %}
+  {% endif %}
+
+  {{ textInput.render({
+    id: fieldId,
+    labelText: label,
+    labelClasses: labelClass,
+    inputClasses: "govuk-input--width-10 govuk-!-margin-bottom-4",
+    hintText: hintText,
+    hintHtml: hintHtml,
+    prefixText: currencyPrefixSymbol,
+    inputmode: "numeric",
+    pattern: "[0-9]*",
+    spellcheck: false,
+    value: submittedValue,
+    errorMessage: validationError
+  }) }}
+
+{% endmacro %}

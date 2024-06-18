@@ -3,11 +3,11 @@ import { FIELD_IDS } from '../../../../../constants';
 import mapSubmittedData from '../../map-submitted-data/policy';
 import save from '../../save-data/policy';
 import generateValidationErrors from '../../single-contract-policy/validation';
-import { mockApplication } from '../../../../../test-mocks';
+import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
   POLICY: {
-    CONTRACT_POLICY: { CREDIT_PERIOD_WITH_BUYER },
+    CONTRACT_POLICY: { POLICY_CURRENCY_CODE },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -16,12 +16,12 @@ describe('controllers/insurance/policy/map-and-save/policy', () => {
 
   let mockFormBody = {
     _csrf: '1234',
-    [CREDIT_PERIOD_WITH_BUYER]: 'Example',
+    [POLICY_CURRENCY_CODE]: 'Example',
   };
 
   const mockValidationErrors = generateValidationErrors(mockFormBody);
 
-  const mockSavePolicyData = jest.fn(() => Promise.resolve({}));
+  const mockSavePolicyData = mockSpyPromise();
 
   save.policy = mockSavePolicyData;
 
@@ -31,7 +31,7 @@ describe('controllers/insurance/policy/map-and-save/policy', () => {
         await mapAndSave.policy(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(save.policy).toHaveBeenCalledTimes(1);
-        expect(save.policy).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody), mockValidationErrors?.errorList);
+        expect(save.policy).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody, mockApplication), mockValidationErrors?.errorList);
       });
 
       it('should return true', async () => {
@@ -41,12 +41,12 @@ describe('controllers/insurance/policy/map-and-save/policy', () => {
       });
     });
 
-    describe('when the form does NOT have validation errors ', () => {
+    describe('when the form does NOT have validation errors', () => {
       it('should call save.policy with application and populated submitted data', async () => {
         await mapAndSave.policy(mockFormBody, mockApplication);
 
         expect(save.policy).toHaveBeenCalledTimes(1);
-        expect(save.policy).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody));
+        expect(save.policy).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody, mockApplication));
       });
 
       it('should return true', async () => {

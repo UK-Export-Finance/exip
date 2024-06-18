@@ -1,4 +1,4 @@
-import { countryInput, submitButton, summaryList } from '../../../../../../pages/shared';
+import { autoCompleteField, summaryList } from '../../../../../../pages/shared';
 import { yourQuotePage } from '../../../../../../pages/quote';
 import { LINKS, PAGES, QUOTE_TITLES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
@@ -49,14 +49,14 @@ const submissionData = {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Get a quote/your quote page (single policy) - as an exporter, I want to get an Export insurance quote', () => {
+context('Get a quote/your quote page (single policy) - as an exporter, I want to get an Credit insurance quote', () => {
   const url = `${baseUrl}${YOUR_QUOTE}`;
 
   before(() => {
     cy.login();
 
     cy.submitQuoteAnswersHappyPathSinglePolicy({});
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.assertUrl(url);
   });
@@ -272,7 +272,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
       it('clears the session', () => {
         // buyer country auto complete stores the selected value in the first list item of the 'results' list.
         // Therefore, if it's not defined, nothing has been selected/submitted.
-        countryInput.field(BUYER_COUNTRY).results().should('not.exist');
+        autoCompleteField(BUYER_COUNTRY).results().should('not.exist');
       });
     });
   });

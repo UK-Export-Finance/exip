@@ -6,6 +6,8 @@ import {
   submitButton,
 } from '../pages/shared';
 
+const baseUrl = Cypress.config('baseUrl');
+
 // const lighthouseAudit = (lightHouseThresholds = {}) => {
 //   cy.lighthouse({
 //     accessibility: 100,
@@ -29,7 +31,7 @@ const checkBackLink = (currentHref, expectedHref) => {
 
   cy.clickBackLink();
 
-  let expectedUrl = `${Cypress.config('baseUrl')}${expectedHref}`;
+  let expectedUrl = `${baseUrl}${expectedHref}`;
 
   /**
    * Some back links (start of the eligibility flow) can have external links.
@@ -42,7 +44,7 @@ const checkBackLink = (currentHref, expectedHref) => {
   cy.url().should('eq', expectedUrl);
 
   // go back to current page
-  cy.visit(`${Cypress.config('baseUrl')}${currentHref}`);
+  cy.visit(`${baseUrl}${currentHref}`);
 };
 
 /**
@@ -65,6 +67,7 @@ const checkPageTitleAndHeading = (pageTitle) => {
  * @param {String} backLink - Expected "back" HREF
  * @param {Boolean} hasAForm - Flag for if a page has a form, to check check form attributes and submit button (some paged do not have a form)
  * @param {String} submitButtonCopy - Expected submit button copy
+ * @param {Boolean} assertSaveAndBackButtonDoesNotExist - Flag for if we should check that a "save and back" button does not exist.
  * @param {Boolean} assertBackLink - Should check "back" link (some pages do not have a back link)
  * @param {Boolean} isInsurancePage - If page is an insurance page or otherwise
  * @param {Boolean} assertServiceHeading - Should check service heading is for insurance or quote
@@ -76,6 +79,7 @@ const corePageChecks = ({
   backLink,
   hasAForm = true,
   submitButtonCopy = BUTTONS.CONTINUE,
+  assertSaveAndBackButtonDoesNotExist = false,
   assertBackLink = true,
   assertAuthenticatedHeader = true,
   assertCookies = true,
@@ -125,6 +129,10 @@ const corePageChecks = ({
     form().should('have.attr', 'novalidate');
 
     cy.checkText(submitButton(), submitButtonCopy);
+  }
+
+  if (assertSaveAndBackButtonDoesNotExist) {
+    cy.assertSaveAndBackButtonDoesNotExist();
   }
 };
 

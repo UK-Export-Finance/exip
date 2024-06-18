@@ -1,4 +1,5 @@
-import { FIELD_IDS, GBP_CURRENCY_CODE } from '../../../constants';
+import { GBP_CURRENCY_CODE } from '../../../constants';
+import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 import { DEFAULT } from '../../../content-strings';
 import { isSinglePolicyType, isMultiplePolicyType } from '../../policy-type';
 import formatCurrency from '../../format-currency';
@@ -10,10 +11,12 @@ const {
     POLICY_TYPE,
     CONTRACT_POLICY: {
       SINGLE: { TOTAL_CONTRACT_VALUE },
+    },
+    EXPORT_VALUE: {
       MULTIPLE: { MAXIMUM_BUYER_WILL_OWE },
     },
   },
-} = FIELD_IDS.INSURANCE;
+} = INSURANCE_FIELD_IDS;
 
 /**
  * mapValue

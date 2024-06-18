@@ -5,7 +5,9 @@ import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/route
 
 const {
   START,
-  ACCOUNT: { CREATE: { YOUR_DETAILS } },
+  ACCOUNT: {
+    CREATE: { YOUR_DETAILS },
+  },
 } = ROUTES;
 
 const {
@@ -49,40 +51,39 @@ context('Insurance - Account - Create - Your details page - empty form validatio
   const TOTAL_REQUIRED_FIELDS = 4;
 
   it('should render first name validation error', () => {
-    const field = fieldSelector(FIRST_NAME);
-    const value = null;
-    const fieldIndex = 0;
-    const expectedMessage = String(YOUR_DETAILS_ERROR_MESSAGES[FIRST_NAME].IS_EMPTY);
-
     cy.navigateToUrl(url);
 
-    cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
+    cy.submitAndAssertFieldErrors({
+      field: fieldSelector(FIRST_NAME),
+      expectedErrorsCount: TOTAL_REQUIRED_FIELDS,
+      expectedErrorMessage: YOUR_DETAILS_ERROR_MESSAGES[FIRST_NAME].IS_EMPTY,
+    });
   });
 
   it('should render last name a validation error', () => {
-    const field = fieldSelector(LAST_NAME);
-    const value = null;
-    const fieldIndex = 1;
-    const expectedMessage = String(YOUR_DETAILS_ERROR_MESSAGES[LAST_NAME].IS_EMPTY);
-
-    cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
+    cy.submitAndAssertFieldErrors({
+      field: fieldSelector(LAST_NAME),
+      errorIndex: 1,
+      expectedErrorsCount: TOTAL_REQUIRED_FIELDS,
+      expectedErrorMessage: YOUR_DETAILS_ERROR_MESSAGES[LAST_NAME].IS_EMPTY,
+    });
   });
 
   it('should render email validation error', () => {
-    const field = fieldSelector(EMAIL);
-    const value = null;
-    const fieldIndex = 2;
-    const expectedMessage = String(YOUR_DETAILS_ERROR_MESSAGES[EMAIL].INCORRECT_FORMAT);
-
-    cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
+    cy.submitAndAssertFieldErrors({
+      field: fieldSelector(EMAIL),
+      errorIndex: 2,
+      expectedErrorsCount: TOTAL_REQUIRED_FIELDS,
+      expectedErrorMessage: YOUR_DETAILS_ERROR_MESSAGES[EMAIL].INCORRECT_FORMAT,
+    });
   });
 
   it('should render password validation error', () => {
-    const field = fieldSelector(PASSWORD);
-    const value = null;
-    const fieldIndex = 3;
-    const expectedMessage = String(YOUR_DETAILS_ERROR_MESSAGES[PASSWORD].INCORRECT_FORMAT);
-
-    cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
+    cy.submitAndAssertFieldErrors({
+      field: fieldSelector(PASSWORD),
+      errorIndex: 3,
+      expectedErrorsCount: TOTAL_REQUIRED_FIELDS,
+      expectedErrorMessage: YOUR_DETAILS_ERROR_MESSAGES[PASSWORD].INCORRECT_FORMAT,
+    });
   });
 });

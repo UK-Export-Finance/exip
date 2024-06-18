@@ -1,8 +1,8 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
+import { MAXIMUM_CHARACTERS } from '../../../../../../../constants/validation';
 
 const {
   COMPANY_OR_ORGANISATION: {
@@ -23,13 +23,9 @@ const {
   YOUR_BUYER: { COMPANY_OR_ORGANISATION },
 } = INSURANCE_ROUTES;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.buyer;
-
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your Buyer - Company or organisation page - form validation - address', () => {
+context('Insurance - Your buyer - Company or organisation page - form validation - address', () => {
   let referenceNumber;
   let url;
 
@@ -37,16 +33,13 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startInsuranceYourBuyerSection({});
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`;
 
       cy.assertUrl(url);
     });
   });
-
-  const field = fieldSelector(ADDRESS);
-  const submittedValue = 'a'.repeat(301);
 
   beforeEach(() => {
     cy.saveSession();
@@ -58,15 +51,18 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     cy.deleteApplication(referenceNumber);
   });
 
-  it('should render a validation error and retain the submitted value when address is above the maximum', () => {
-    const expectedErrorsCount = 7;
+  it(`should render a validation error and retain the submitted value when ${ADDRESS} is over ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`, () => {
+    const textareaField = {
+      ...fieldSelector(ADDRESS),
+      input: fieldSelector(ADDRESS).textarea,
+    };
 
-    cy.submitAndAssertFieldErrors(
-      field,
-      submittedValue,
-      1,
-      expectedErrorsCount,
-      COMPANY_OR_ORG_ERROR_MESSAGES[ADDRESS].ABOVE_MAXIMUM,
-    );
+    cy.submitAndAssertFieldErrors({
+      field: textareaField,
+      value: 'a'.repeat(MAXIMUM_CHARACTERS.FULL_ADDRESS + 1),
+      errorIndex: 1,
+      expectedErrorsCount: 2,
+      expectedErrorMessage: COMPANY_OR_ORG_ERROR_MESSAGES[ADDRESS].ABOVE_MAXIMUM,
+    });
   });
 });

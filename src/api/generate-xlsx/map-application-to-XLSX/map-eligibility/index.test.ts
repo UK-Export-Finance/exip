@@ -1,53 +1,51 @@
 import mapEligibility from '.';
-import { COVER_PERIOD, FIELD_IDS, TOTAL_CONTRACT_VALUE } from '../../../constants';
+import { TOTAL_CONTRACT_VALUE } from '../../../constants/total-contract-value';
 import { XLSX } from '../../../content-strings';
+import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 import { FIELDS_ELIGIBILITY as CONTENT_STRINGS } from '../../../content-strings/fields/insurance/eligibility';
 import xlsxRow from '../helpers/xlsx-row';
 import mapYesNoField from '../helpers/map-yes-no-field';
 import { mockApplication } from '../../../test-mocks';
+
+const { MORE_THAN_250K } = TOTAL_CONTRACT_VALUE;
+
+const { FIELDS, SECTION_TITLES } = XLSX;
 
 const {
   ELIGIBILITY: {
     BUYER_COUNTRY,
     HAS_MINIMUM_UK_GOODS_OR_SERVICES,
     VALID_EXPORTER_LOCATION,
-    WANT_COVER_OVER_MAX_AMOUNT,
     COVER_PERIOD: COVER_PERIOD_ELIGIBILITY,
-    TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_ELIGIBILITY,
-    WANT_COVER_OVER_MAX_PERIOD,
-    OTHER_PARTIES_INVOLVED,
-    LETTER_OF_CREDIT,
-    PRE_CREDIT_PERIOD,
+    TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID,
+    COVER_PERIOD,
+    HAS_COMPANIES_HOUSE_NUMBER,
     COMPANIES_HOUSE_NUMBER,
+    HAS_END_BUYER,
   },
-} = FIELD_IDS.INSURANCE;
-
-const { MORE_THAN_2_YEARS } = COVER_PERIOD;
-const { MORE_THAN_500K } = TOTAL_CONTRACT_VALUE;
+} = INSURANCE_FIELD_IDS;
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-eligibility', () => {
   it('should return an array of mapped eligibility fields', () => {
     const result = mapEligibility(mockApplication);
 
-    const { eligibility, policy } = mockApplication;
+    const { company, eligibility } = mockApplication;
 
     const expected = [
-      xlsxRow(XLSX.SECTION_TITLES.ELIGIBILITY, ''),
-      xlsxRow(CONTENT_STRINGS[BUYER_COUNTRY].SUMMARY?.TITLE, eligibility[BUYER_COUNTRY].name),
-      xlsxRow(CONTENT_STRINGS[VALID_EXPORTER_LOCATION].SUMMARY?.TITLE, mapYesNoField(eligibility[VALID_EXPORTER_LOCATION])),
-      xlsxRow(CONTENT_STRINGS[HAS_MINIMUM_UK_GOODS_OR_SERVICES].SUMMARY?.TITLE, mapYesNoField(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES])),
-      xlsxRow(
-        CONTENT_STRINGS[WANT_COVER_OVER_MAX_AMOUNT].SUMMARY?.TITLE,
-        mapYesNoField(eligibility[TOTAL_CONTRACT_VALUE_ELIGIBILITY].valueId === MORE_THAN_500K.DB_ID),
-      ),
-      xlsxRow(
-        CONTENT_STRINGS[WANT_COVER_OVER_MAX_PERIOD].SUMMARY?.TITLE,
-        mapYesNoField(eligibility[COVER_PERIOD_ELIGIBILITY].valueId === MORE_THAN_2_YEARS.DB_ID),
-      ),
-      xlsxRow(CONTENT_STRINGS[OTHER_PARTIES_INVOLVED].SUMMARY?.TITLE, mapYesNoField(eligibility[OTHER_PARTIES_INVOLVED])),
-      xlsxRow(CONTENT_STRINGS[LETTER_OF_CREDIT].SUMMARY?.TITLE, mapYesNoField(eligibility[LETTER_OF_CREDIT])),
-      xlsxRow(CONTENT_STRINGS[PRE_CREDIT_PERIOD].SUMMARY?.TITLE, mapYesNoField(policy[PRE_CREDIT_PERIOD])),
-      xlsxRow(CONTENT_STRINGS[COMPANIES_HOUSE_NUMBER].SUMMARY?.TITLE, mapYesNoField(eligibility[COMPANIES_HOUSE_NUMBER])),
+      xlsxRow(SECTION_TITLES.ELIGIBILITY, ''),
+      xlsxRow(CONTENT_STRINGS[VALID_EXPORTER_LOCATION].SUMMARY?.TITLE, mapYesNoField({ answer: eligibility[VALID_EXPORTER_LOCATION] })),
+
+      xlsxRow(CONTENT_STRINGS[HAS_COMPANIES_HOUSE_NUMBER].SUMMARY?.TITLE, mapYesNoField({ answer: eligibility[HAS_COMPANIES_HOUSE_NUMBER] })),
+      xlsxRow(FIELDS[COMPANIES_HOUSE_NUMBER], company[COMPANIES_HOUSE_NUMBER]),
+
+      xlsxRow(FIELDS[BUYER_COUNTRY], eligibility[BUYER_COUNTRY].name),
+
+      xlsxRow(FIELDS[MORE_THAN_250K.VALUE], mapYesNoField({ answer: eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID].valueId === MORE_THAN_250K.DB_ID })),
+
+      xlsxRow(FIELDS[COVER_PERIOD], eligibility[COVER_PERIOD_ELIGIBILITY].value),
+
+      xlsxRow(FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES], mapYesNoField({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES] })),
+      xlsxRow(FIELDS[HAS_END_BUYER], mapYesNoField({ answer: eligibility[HAS_END_BUYER] })),
     ];
 
     expect(result).toEqual(expected);

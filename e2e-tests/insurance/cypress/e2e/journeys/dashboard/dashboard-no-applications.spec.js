@@ -1,19 +1,15 @@
 import dashboardPage from '../../../../../pages/insurance/dashboard';
 import header from '../../../../../partials/header';
 import { PAGES } from '../../../../../content-strings';
-import { ROUTES } from '../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
-const {
-  ROOT,
-  DASHBOARD,
-  ALL_SECTIONS,
-  ELIGIBILITY,
-} = ROUTES.INSURANCE;
+const { DASHBOARD, ELIGIBILITY } = INSURANCE_ROUTES;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.DASHBOARD;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Dashboard - no applications', () => {
-  const baseUrl = Cypress.config('baseUrl');
   const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
   let referenceNumber;
@@ -27,7 +23,7 @@ context('Insurance - Dashboard - no applications', () => {
   beforeEach(() => {
     cy.saveSession();
 
-    cy.navigateToUrl(dashboardUrl);
+    cy.navigateToDashboardUrl();
   });
 
   after(() => {
@@ -44,24 +40,24 @@ context('Insurance - Dashboard - no applications', () => {
 
   describe('`start new application` button', () => {
     beforeEach(() => {
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
     });
 
     it('should render `start new application` link', () => {
       const selector = dashboardPage.startNewApplicationButton();
 
       const expected = {
-        href: ELIGIBILITY.BUYER_COUNTRY,
+        href: ELIGIBILITY.EXPORTER_LOCATION,
         copy: CONTENT_STRINGS.START_NEW_APPLICATION.TEXT,
       };
 
       cy.checkLink(selector, expected.href, expected.copy);
     });
 
-    it(`should redirect to ${ELIGIBILITY.BUYER_COUNTRY}`, () => {
+    it(`should redirect to ${ELIGIBILITY.EXPORTER_LOCATION}`, () => {
       dashboardPage.startNewApplicationButton().click();
 
-      const expectedUrl = `${baseUrl}${ELIGIBILITY.BUYER_COUNTRY}`;
+      const expectedUrl = `${baseUrl}${ELIGIBILITY.EXPORTER_LOCATION}`;
 
       cy.assertUrl(expectedUrl);
     });
@@ -69,7 +65,7 @@ context('Insurance - Dashboard - no applications', () => {
 
   describe('when starting and completing insurance eligibility via the `start new` button ', () => {
     it('should create a new application and render in the dashboard', () => {
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
       dashboardPage.startNewApplicationButton().click();
 
       cy.submitInsuranceEligibilityAnswersHappyPath();
@@ -78,16 +74,14 @@ context('Insurance - Dashboard - no applications', () => {
       cy.getReferenceNumber().then((refNumber) => {
         referenceNumber = refNumber;
 
-        const allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-        cy.assertUrl(allSectionsUrl);
+        cy.assertAllSectionsUrl(referenceNumber);
       });
 
       // go to the dashboard
       header.navigation.applications().click();
 
       // check that the dashboard is now populated
-      dashboardPage.table.body.rows().should('have.length', 1);
+      cy.assertLength(dashboardPage.table.body.rows(), 1);
     });
   });
 });

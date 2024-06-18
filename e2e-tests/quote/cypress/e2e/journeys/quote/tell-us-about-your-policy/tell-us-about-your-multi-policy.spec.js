@@ -5,15 +5,20 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeMultiForm,
 } from '../../../../../../commands/quote/forms';
-import { field as fieldSelector, submitButton } from '../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../pages/shared';
 import { tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
 import {
   LINKS,
   FIELDS,
   PAGES,
 } from '../../../../../../content-strings';
-import { ROUTES, FIELD_IDS, SUPPORTED_CURRENCIES } from '../../../../../../constants';
-import { GBP_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
+import { ROUTES, FIELD_IDS } from '../../../../../../constants';
+import {
+  EUR,
+  GBP,
+  JPY,
+  USD,
+} from '../../../../../../fixtures/currencies';
 
 const CONTENT_STRINGS = PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 
@@ -37,13 +42,13 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Tell us about your multiple policy page - as an exporter, I want to provide my Export insurance policy details', () => {
+context('Tell us about your multiple policy page - as an exporter, I want to provide my Credit insurance policy details', () => {
   const url = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
 
   before(() => {
     cy.login();
 
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
     completeAndSubmitUkContentForm();
@@ -56,7 +61,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
     cy.saveSession();
   });
 
-  it('renders core page elements', () => {
+  it('should render core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.MULTIPLE_POLICY_PAGE_TITLE,
       currentHref: TELL_US_ABOUT_YOUR_POLICY,
@@ -77,7 +82,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
       cy.navigateToUrl(url);
     });
 
-    it('renders `currency and amount` legend', () => {
+    it('should render `currency and amount` legend', () => {
       const fieldId = AMOUNT_CURRENCY;
 
       const field = fieldSelector(fieldId);
@@ -86,7 +91,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
       cy.checkText(field.legend(), FIELDS[fieldId].MULTIPLE_POLICY.LEGEND);
     });
 
-    it('renders `currency` legend, label and input', () => {
+    it('should render `currency` legend, label and input', () => {
       const fieldId = CURRENCY;
 
       const field = fieldSelector(fieldId);
@@ -96,17 +101,18 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
       field.input().should('exist');
     });
 
-    it('renders only supported currencies in alphabetical order', () => {
+    it('should render only supported currencies in a specific order', () => {
       const fieldId = CURRENCY;
 
       const field = fieldSelector(fieldId);
 
-      field.input().select(1).should('have.value', SUPPORTED_CURRENCIES[0]);
-      field.input().select(2).should('have.value', SUPPORTED_CURRENCIES[1]);
-      field.input().select(3).should('have.value', SUPPORTED_CURRENCIES[2]);
+      field.input().select(1).should('have.value', GBP.isoCode);
+      field.input().select(2).should('have.value', EUR.isoCode);
+      field.input().select(3).should('have.value', USD.isoCode);
+      field.input().select(4).should('have.value', JPY.isoCode);
     });
 
-    it('renders `max amount owed` label and input', () => {
+    it('should render `max amount owed` label and input', () => {
       const fieldId = MAX_AMOUNT_OWED;
 
       const field = fieldSelector(fieldId);
@@ -116,7 +122,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
       field.input().should('exist');
     });
 
-    it('renders `percentage of cover` label, hint and input', () => {
+    it('should render `percentage of cover` label, hint and input', () => {
       const fieldId = PERCENTAGE_OF_COVER;
 
       const field = fieldSelector(fieldId);
@@ -128,7 +134,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
       field.input().should('exist');
     });
 
-    it('renders `percentage of cover` label, hint and input with correct options', () => {
+    it('should render `percentage of cover` label, hint and input with correct options', () => {
       const fieldId = PERCENTAGE_OF_COVER;
 
       const field = fieldSelector(fieldId);
@@ -147,7 +153,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
       });
     });
 
-    it('renders `credit period` label, hint and input with correct options', () => {
+    it('should render `credit period` label, hint and input with correct options', () => {
       const fieldId = CREDIT_PERIOD;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
@@ -184,11 +190,11 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
       cy.navigateToUrl(url);
 
       cy.keyboardInput(fieldSelector(MAX_AMOUNT_OWED).input(), '100');
-      fieldSelector(CURRENCY).input().select(GBP_CURRENCY_CODE);
+      fieldSelector(CURRENCY).input().select(GBP.isoCode);
       fieldSelector(PERCENTAGE_OF_COVER).input().select('90');
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 

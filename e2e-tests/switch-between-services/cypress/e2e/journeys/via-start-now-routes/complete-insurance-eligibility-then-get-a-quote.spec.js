@@ -1,6 +1,3 @@
-import { submitButton } from '../../../../../pages/shared';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../commands/forms';
-import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../commands/insurance/eligibility/forms';
 import { ROUTES } from '../../../../../constants';
 
 const {
@@ -30,7 +27,7 @@ context('Complete insurance eligibility, get a quote and then re-visit the insur
     cy.assertUrl(expectedUrl);
 
     cy.submitQuoteAnswersHappyPathSinglePolicy({});
-    submitButton().click();
+    cy.clickSubmitButton();
 
     expectedUrl = `${baseUrl}${YOUR_QUOTE}`;
 
@@ -40,11 +37,11 @@ context('Complete insurance eligibility, get a quote and then re-visit the insur
   it('allows an exporter to start another insurance eligibility when visiting the beginning of the flow', () => {
     cy.navigateToUrl(START);
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
-    completeAndSubmitBuyerCountryForm();
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
+    cy.completeExporterLocationForm();
 
-    const expectedUrl = `${baseUrl}${ELIGIBILITY.EXPORTER_LOCATION}`;
+    const expectedUrl = `${baseUrl}${ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
 
     cy.assertUrl(expectedUrl);
   });

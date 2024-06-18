@@ -1,18 +1,6 @@
-import partials from '../../../../../partials';
-import { saveAndBackButton } from '../../../../../pages/shared';
-import { TASKS } from '../../../../../content-strings';
-import { FIELD_VALUES, ROUTES } from '../../../../../constants';
+import { FIELD_VALUES } from '../../../../../constants';
 
-const { taskList } = partials.insurancePartials;
-
-const {
-  INSURANCE: {
-    ROOT: INSURANCE_ROOT,
-    ALL_SECTIONS,
-  },
-} = ROUTES;
-
-const task = taskList.prepareApplication.tasks.policy;
+const policyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
 context('Insurance - Policy - Complete the entire section as a multiple contract policy', () => {
   let referenceNumber;
@@ -21,15 +9,22 @@ context('Insurance - Policy - Complete the entire section as a multiple contract
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      taskList.prepareApplication.tasks.policy.link().click();
+      cy.startInsurancePolicySection({});
 
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
+      cy.completeAndSubmitPolicyTypeForm({ policyType });
       cy.completeAndSubmitMultipleContractPolicyForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
+      cy.completeAndSubmitExportValueForm({ policyType });
       cy.completeAndSubmitNameOnPolicyForm({});
+      cy.completeAndSubmitPreCreditPeriodForm({});
+      cy.completeAndSubmitAnotherCompanyForm({});
+      cy.completeAndSubmitBrokerForm({});
+      cy.completeAndSubmitLossPayeeForm({});
 
-      // go back to the all sections page
-      saveAndBackButton().click();
+      /**
+       * Submit the "Policy - check your answers" form,
+       * This proceeds to the next part of the flow - "All sections"
+       */
+      cy.clickSubmitButton();
     });
   });
 
@@ -41,14 +36,9 @@ context('Insurance - Policy - Complete the entire section as a multiple contract
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should change the 'type of policy' task status to 'completed' in the ${ALL_SECTIONS} page`, () => {
-    const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+  it('should change the `type of policy`` task status to `completed` in the `all sections` page', () => {
+    cy.assertAllSectionsUrl(referenceNumber);
 
-    cy.assertUrl(expectedUrl);
-
-    cy.checkText(
-      task.status(),
-      TASKS.STATUS.COMPLETED,
-    );
+    cy.checkTaskPolicyStatusIsComplete();
   });
 });

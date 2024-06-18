@@ -1,7 +1,5 @@
 import mapEligibilityAnswers from '.';
 import { FIELD_IDS } from '../../constants';
-import mapCoverPeriodId from '../map-cover-period-id';
-import mapTotalContractValue from '../map-total-contract-value';
 import { mockEligibility } from '../../test-mocks';
 
 const {
@@ -17,16 +15,16 @@ describe('server/helpers/map-eligibility-answers', () => {
 
       const result = mapEligibilityAnswers(mockAnswers);
 
-      const { buyerCountry, wantCoverOverMaxPeriod, wantCoverOverMaxAmount, ...otherAnswers } = mockAnswers;
-
-      const wantCoverOverMaxPeriodBoolean = Boolean(wantCoverOverMaxPeriod);
-      const wantCoverOverMaxAmountBoolean = Boolean(wantCoverOverMaxAmount);
+      const { buyerCountry, totalContractValue, coverPeriod, hasReviewedEligibility, ...otherAnswers } = mockAnswers;
 
       const expected = {
         ...otherAnswers,
         [BUYER_COUNTRY_ISO_CODE]: buyerCountry?.isoCode,
-        [COVER_PERIOD_ID]: mapCoverPeriodId(wantCoverOverMaxPeriodBoolean),
-        [TOTAL_CONTRACT_VALUE_ID]: mapTotalContractValue(wantCoverOverMaxAmountBoolean),
+        [COVER_PERIOD_ID]: coverPeriod,
+        [TOTAL_CONTRACT_VALUE_ID]: totalContractValue,
+        sectionReview: {
+          eligibility: hasReviewedEligibility,
+        },
       };
 
       expect(result).toEqual(expected);

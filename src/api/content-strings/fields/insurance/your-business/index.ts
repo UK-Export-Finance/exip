@@ -1,12 +1,15 @@
-import FIELD_IDS from '../../../../constants/field-ids/insurance';
+import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 
-const { EXPORTER_BUSINESS } = FIELD_IDS;
 const {
-  COMPANY_HOUSE: { COMPANY_NAME, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS },
-  YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER, WEBSITE },
-  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
-  TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
-  BROKER: { USING_BROKER, NAME, ADDRESS_LINE_1, EMAIL },
+  COMPANIES_HOUSE: { COMPANY_NAME, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS, FINANCIAL_YEAR_END_DATE },
+  EXPORTER_BUSINESS,
+} = INSURANCE_FIELD_IDS;
+const {
+  YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, PHONE_NUMBER, WEBSITE },
+  ALTERNATIVE_TRADING_ADDRESS,
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+  HAS_CREDIT_CONTROL,
 } = EXPORTER_BUSINESS;
 
 export const FIELDS = {
@@ -41,14 +44,14 @@ export const FIELDS = {
         TITLE: 'Financial year end date',
       },
     },
-    [TRADING_NAME]: {
+    [HAS_DIFFERENT_TRADING_NAME]: {
       SUMMARY: {
-        TITLE: 'Different trading name?',
+        TITLE: 'Different trading name',
       },
     },
     [TRADING_ADDRESS]: {
       SUMMARY: {
-        TITLE: 'Different trading address?',
+        TITLE: 'Different trading address',
       },
     },
     [WEBSITE]: {
@@ -61,6 +64,9 @@ export const FIELDS = {
         TITLE: 'UK telephone number (optional)',
       },
     },
+  },
+  [ALTERNATIVE_TRADING_ADDRESS]: {
+    LABEL: "What's your alternative trading address?",
   },
   NATURE_OF_YOUR_BUSINESS: {
     [GOODS_OR_SERVICES]: {
@@ -75,12 +81,7 @@ export const FIELDS = {
     },
     [EMPLOYEES_UK]: {
       SUMMARY: {
-        TITLE: 'UK employees',
-      },
-    },
-    [EMPLOYEES_INTERNATIONAL]: {
-      SUMMARY: {
-        TITLE: 'Worldwide employees including UK employees',
+        TITLE: 'Number of UK employees',
       },
     },
   },
@@ -96,26 +97,9 @@ export const FIELDS = {
       },
     },
   },
-  BROKER: {
-    [USING_BROKER]: {
-      SUMMARY: {
-        TITLE: 'Using a broker for this insurance?',
-      },
-    },
-    [NAME]: {
-      SUMMARY: {
-        TITLE: "Broker's name or company",
-      },
-    },
-    [ADDRESS_LINE_1]: {
-      SUMMARY: {
-        TITLE: "Broker's address",
-      },
-    },
-    [EMAIL]: {
-      SUMMARY: {
-        TITLE: "Broker's email",
-      },
+  [HAS_CREDIT_CONTROL]: {
+    SUMMARY: {
+      TITLE: 'Process for managing late payments',
     },
   },
 };

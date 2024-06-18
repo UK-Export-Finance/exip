@@ -1,3 +1,4 @@
+import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import ACCOUNT_FIELD_IDS from '../../../../constants/field-ids/insurance/account';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -8,10 +9,15 @@ import getFieldById from '../../../get-field-by-id';
 import generateChangeLink from '../../../generate-change-link';
 
 const {
+  POLICY: { NAME_ON_POLICY: FORM_TITLE },
+} = FORM_TITLES;
+
+const {
   POLICY: {
     NAME_ON_POLICY: { NAME, POSITION, IS_SAME_AS_OWNER },
   },
 } = INSURANCE_FIELD_IDS;
+
 const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 
 const {
@@ -21,9 +27,9 @@ const {
 /**
  * nameOnPolicyField
  * returns fieldGroupItem for summary list for nameOnPolicy
- * @param {ApplicationPolicyContact} answers submitted policyContact data
- * @param {Number} referenceNumber
- * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
+ * @param {ApplicationPolicyContact} answers: submitted policyContact data
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
  * @returns {Object} fieldGroupItem for name on policy
  */
 const nameOnPolicyField = (answers: ApplicationPolicyContact, referenceNumber: number, checkAndChange: boolean) =>
@@ -40,10 +46,10 @@ const nameOnPolicyField = (answers: ApplicationPolicyContact, referenceNumber: n
  * positionField
  * returns fieldGroupItem for summary list for position
  * generates changeLink to name on policy page or different name on policy page based on if sameName is true or not
- * @param {ApplicationPolicyContact} answers submitted policyContact data
- * @param {Number} referenceNumber
- * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
- * @param {Boolean} sameName if IS_SAME_AS_OWNER is true
+ * @param {ApplicationPolicyContact} answers: submitted policyContact data
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
+ * @param {Boolean} sameName: if IS_SAME_AS_OWNER is true
  * @returns {Object} fieldGroupItem for position
  */
 const positionField = (answers: ApplicationPolicyContact, referenceNumber: number, checkAndChange: boolean, sameName: boolean) => {
@@ -72,16 +78,17 @@ const positionField = (answers: ApplicationPolicyContact, referenceNumber: numbe
 /**
  * emailField
  * returns fieldGroupItem for summary list for email
- * @param {ApplicationPolicyContact} answers submitted policyContact data
- * @param {Number} referenceNumber
- * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
+ * @param {ApplicationPolicyContact} answers: submitted policyContact data
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
+ * @param {Boolean} shouldRenderChangeLink: if renders change link - provided by answer to IS_SAME_AS_OWNER - if IS_SAME_AS_OWNER - no change link
  * @returns {Object} fieldGroupItem for name on email
  */
-const emailField = (answers: ApplicationPolicyContact, referenceNumber: number, checkAndChange: boolean) =>
+const emailField = (answers: ApplicationPolicyContact, referenceNumber: number, checkAndChange: boolean, shouldRenderChangeLink: boolean) =>
   fieldGroupItem(
     {
       field: getFieldById(FIELDS.DIFFERENT_NAME_ON_POLICY, EMAIL),
-      renderChangeLink: true,
+      renderChangeLink: shouldRenderChangeLink,
       href: generateChangeLink(DIFFERENT_NAME_ON_POLICY_CHANGE, DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE, `#${EMAIL}-label`, referenceNumber, checkAndChange),
     },
     answers[EMAIL],
@@ -97,14 +104,17 @@ const emailField = (answers: ApplicationPolicyContact, referenceNumber: number, 
 const generatePolicyContactFields = (answers: ApplicationPolicyContact, referenceNumber: number, checkAndChange: boolean) => {
   const fields = [nameOnPolicyField(answers, referenceNumber, checkAndChange)] as Array<SummaryListItemData>;
 
-  // if IS_SAME_AS_OWNER is false, then add email field
-  if (!answers[IS_SAME_AS_OWNER]) {
-    fields.push(emailField(answers, referenceNumber, checkAndChange));
-  }
+  /**
+   * if answers[IS_SAME_AS_OWNER], then change link should not be rendered so inverse passed
+   */
+  fields.push(emailField(answers, referenceNumber, checkAndChange, !answers[IS_SAME_AS_OWNER]));
 
   fields.push(positionField(answers, referenceNumber, checkAndChange, answers[IS_SAME_AS_OWNER]));
 
-  return fields;
+  return {
+    title: FORM_TITLE,
+    fields,
+  };
 };
 
 export default generatePolicyContactFields;

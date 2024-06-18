@@ -1,4 +1,3 @@
-import { submitButton } from '../../../../../../pages/shared';
 import {
   policyTypePage,
   tellUsAboutYourPolicyPage,
@@ -32,7 +31,7 @@ context('Change your answers (policy type) - multiple times via back button - as
   const completePreviousForms = () => {
     cy.login();
 
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
     completeAndSubmitUkContentForm();
@@ -55,14 +54,14 @@ context('Change your answers (policy type) - multiple times via back button - as
 
   it(`redirects to ${TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
     policyTypePage[POLICY_TYPE].multiple.label().click();
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.assertUrl(tellUsAboutPolicyUrl);
   });
 
   it('renders credit period field in the `tell us about your policy` page', () => {
     policyTypePage[POLICY_TYPE].multiple.label().click();
-    submitButton().click();
+    cy.clickSubmitButton();
 
     const field = tellUsAboutYourPolicyPage[CREDIT_PERIOD];
 
@@ -74,7 +73,7 @@ context('Change your answers (policy type) - multiple times via back button - as
       completePreviousForms();
 
       policyTypePage[POLICY_TYPE].multiple.label().click();
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.clickBackLink();
 
@@ -82,7 +81,7 @@ context('Change your answers (policy type) - multiple times via back button - as
 
       policyTypePage[POLICY_TYPE].single.label().click();
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.assertUrl(tellUsAboutPolicyUrl);
     });
@@ -102,7 +101,7 @@ context('Change your answers (policy type) - multiple times via back button - as
 
       // 1st time - change from single to multiple
       policyTypePage[POLICY_TYPE].multiple.label().click();
-      submitButton().click();
+      cy.clickSubmitButton();
 
       // 2nd time - change from multiple to single
       cy.clickBackLink();
@@ -111,7 +110,7 @@ context('Change your answers (policy type) - multiple times via back button - as
 
       policyTypePage[POLICY_TYPE].single.label().click();
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.assertUrl(tellUsAboutPolicyUrl);
 
@@ -120,7 +119,7 @@ context('Change your answers (policy type) - multiple times via back button - as
       cy.assertUrl(policyTypeUrl);
 
       policyTypePage[POLICY_TYPE].multiple.label().click();
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.assertUrl(tellUsAboutPolicyUrl);
     });

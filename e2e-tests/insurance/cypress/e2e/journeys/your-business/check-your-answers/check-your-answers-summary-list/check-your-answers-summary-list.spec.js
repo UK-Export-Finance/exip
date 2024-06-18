@@ -1,4 +1,3 @@
-import partials from '../../../../../../../partials';
 import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
 import checkSummaryList from '../../../../../../../commands/insurance/check-your-business-summary-list';
 
@@ -12,151 +11,159 @@ const {
 const {
   INSURANCE: {
     EXPORTER_BUSINESS: {
-      COMPANY_HOUSE: {
-        COMPANY_NAME,
-        COMPANY_NUMBER,
-        COMPANY_ADDRESS,
-        COMPANY_INCORPORATED,
-        COMPANY_SIC,
-        FINANCIAL_YEAR_END_DATE,
-      },
       YOUR_COMPANY: {
         TRADING_ADDRESS,
-        TRADING_NAME,
+        HAS_DIFFERENT_TRADING_NAME,
         WEBSITE,
         PHONE_NUMBER,
       },
       NATURE_OF_YOUR_BUSINESS: {
         GOODS_OR_SERVICES,
         YEARS_EXPORTING,
-        EMPLOYEES_INTERNATIONAL,
         EMPLOYEES_UK,
       },
       TURNOVER: {
         ESTIMATED_ANNUAL_TURNOVER,
         PERCENTAGE_TURNOVER,
       },
-      BROKER: {
-        USING_BROKER,
-        NAME,
-        ADDRESS_LINE_1,
-        EMAIL,
-      },
+      HAS_CREDIT_CONTROL,
     },
   },
 } = FIELD_IDS;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Your business - Check your answers - Summary list - your business', () => {
   let referenceNumber;
   let url;
 
-  before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
+  describe(`${TRADING_ADDRESS} as no`, () => {
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-      task.link().click();
+        cy.startYourBusinessSection({});
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
-      cy.completeAndSubmitCompanyDetails();
-      cy.completeAndSubmitNatureOfYourBusiness();
-      cy.completeAndSubmitTurnoverForm();
-      cy.completeAndSubmitBrokerForm({ usingBroker: true });
+        cy.completeAndSubmitCompanyDetails({});
+        cy.completeAndSubmitNatureOfYourBusiness();
+        cy.completeAndSubmitTurnoverForm();
+        cy.completeAndSubmitCreditControlForm({ hasCreditControlProcess: true });
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      });
+    });
+
+    beforeEach(() => {
+      cy.saveSession();
+
+      cy.navigateToUrl(url);
+    });
+
+    after(() => {
+      cy.deleteApplication(referenceNumber);
+    });
+
+    it(`should render a ${HAS_DIFFERENT_TRADING_NAME} summary list row`, () => {
+      checkSummaryList[HAS_DIFFERENT_TRADING_NAME]({});
+    });
+
+    it(`should render a ${TRADING_ADDRESS} summary list row`, () => {
+      checkSummaryList[TRADING_ADDRESS]({});
+    });
+
+    it(`should render a ${WEBSITE} summary list row`, () => {
+      checkSummaryList[WEBSITE]();
+    });
+
+    it(`should render a ${PHONE_NUMBER} summary list row`, () => {
+      checkSummaryList[PHONE_NUMBER]();
+    });
+
+    it(`should render a ${GOODS_OR_SERVICES} summary list row`, () => {
+      checkSummaryList[GOODS_OR_SERVICES]();
+    });
+
+    it(`should render a ${YEARS_EXPORTING} summary list row`, () => {
+      checkSummaryList[YEARS_EXPORTING]();
+    });
+
+    it(`should render a ${EMPLOYEES_UK} summary list row`, () => {
+      checkSummaryList[EMPLOYEES_UK]();
+    });
+
+    it(`should render a ${ESTIMATED_ANNUAL_TURNOVER} summary list row`, () => {
+      checkSummaryList[ESTIMATED_ANNUAL_TURNOVER]();
+    });
+
+    it(`should render a ${PERCENTAGE_TURNOVER} summary list row`, () => {
+      checkSummaryList[PERCENTAGE_TURNOVER]();
+    });
+
+    it(`should render a ${HAS_CREDIT_CONTROL} summary list row`, () => {
+      checkSummaryList[HAS_CREDIT_CONTROL]({ isYes: true });
     });
   });
 
-  beforeEach(() => {
-    cy.saveSession();
+  describe(`${TRADING_ADDRESS} as yes`, () => {
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-    cy.navigateToUrl(url);
+        cy.startYourBusinessSection({});
+
+        cy.completeAndSubmitCompanyDetails({ differentTradingAddress: true });
+        cy.completeAndSubmitAlternativeTradingAddressForm({});
+        cy.completeAndSubmitNatureOfYourBusiness();
+        cy.completeAndSubmitTurnoverForm();
+        cy.completeAndSubmitCreditControlForm({});
+
+        url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      });
+    });
+
+    beforeEach(() => {
+      cy.saveSession();
+
+      cy.navigateToUrl(url);
+    });
+
+    after(() => {
+      cy.deleteApplication(referenceNumber);
+    });
+
+    it(`should render a ${TRADING_ADDRESS} summary list row with the full address`, () => {
+      checkSummaryList[TRADING_ADDRESS]({ differentTradingAddress: true });
+    });
   });
 
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
+  describe(`${HAS_DIFFERENT_TRADING_NAME} as yes`, () => {
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-  it(`should render a ${COMPANY_NUMBER} summary list row`, () => {
-    checkSummaryList[COMPANY_NUMBER]();
-  });
+        cy.startYourBusinessSection({});
 
-  it(`should render a ${COMPANY_NAME} summary list row`, () => {
-    checkSummaryList[COMPANY_NAME]();
-  });
+        cy.completeAndSubmitCompanyDetails({ differentTradingName: true });
+        cy.completeAndSubmitNatureOfYourBusiness();
+        cy.completeAndSubmitTurnoverForm();
+        cy.completeAndSubmitCreditControlForm({});
 
-  it(`should render a ${COMPANY_ADDRESS} summary list row`, () => {
-    checkSummaryList[COMPANY_ADDRESS]();
-  });
+        url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      });
+    });
 
-  it(`should render a ${COMPANY_INCORPORATED} summary list row`, () => {
-    checkSummaryList[COMPANY_INCORPORATED]();
-  });
+    beforeEach(() => {
+      cy.saveSession();
 
-  it(`should render a ${COMPANY_SIC} summary list row`, () => {
-    checkSummaryList[COMPANY_SIC]();
-  });
+      cy.navigateToUrl(url);
+    });
 
-  it(`should render a ${FINANCIAL_YEAR_END_DATE} summary list row`, () => {
-    checkSummaryList[FINANCIAL_YEAR_END_DATE]();
-  });
+    after(() => {
+      cy.deleteApplication(referenceNumber);
+    });
 
-  it(`should render a ${TRADING_NAME} summary list row`, () => {
-    checkSummaryList[TRADING_NAME]();
-  });
-
-  it(`should render a ${TRADING_ADDRESS} summary list row`, () => {
-    checkSummaryList[TRADING_ADDRESS]();
-  });
-
-  it(`should render a ${WEBSITE} summary list row`, () => {
-    checkSummaryList[WEBSITE]();
-  });
-
-  it(`should render a ${PHONE_NUMBER} summary list row`, () => {
-    checkSummaryList[PHONE_NUMBER]();
-  });
-
-  it(`should render a ${GOODS_OR_SERVICES} summary list row`, () => {
-    checkSummaryList[GOODS_OR_SERVICES]();
-  });
-
-  it(`should render a ${YEARS_EXPORTING} summary list row`, () => {
-    checkSummaryList[YEARS_EXPORTING]();
-  });
-
-  it(`should render a ${EMPLOYEES_UK} summary list row`, () => {
-    checkSummaryList[EMPLOYEES_UK]();
-  });
-
-  it(`should render a ${EMPLOYEES_INTERNATIONAL} summary list row`, () => {
-    checkSummaryList[EMPLOYEES_INTERNATIONAL]();
-  });
-
-  it(`should render a ${ESTIMATED_ANNUAL_TURNOVER} summary list row`, () => {
-    checkSummaryList[ESTIMATED_ANNUAL_TURNOVER]();
-  });
-
-  it(`should render a ${PERCENTAGE_TURNOVER} summary list row`, () => {
-    checkSummaryList[PERCENTAGE_TURNOVER]();
-  });
-
-  it(`should render a ${USING_BROKER} summary list row`, () => {
-    checkSummaryList[USING_BROKER]();
-  });
-
-  it(`should render a ${NAME} summary list row`, () => {
-    checkSummaryList[NAME]({});
-  });
-
-  it(`should render a ${ADDRESS_LINE_1} summary list row`, () => {
-    checkSummaryList[ADDRESS_LINE_1]();
-  });
-
-  it(`should render a ${EMAIL} summary list row`, () => {
-    checkSummaryList[EMAIL]();
+    it(`should render a ${HAS_DIFFERENT_TRADING_NAME} summary list row with the different name`, () => {
+      checkSummaryList[HAS_DIFFERENT_TRADING_NAME]({ differentTradingName: true });
+    });
   });
 });

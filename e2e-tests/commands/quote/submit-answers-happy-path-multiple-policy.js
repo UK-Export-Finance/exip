@@ -12,7 +12,7 @@ import {
  * Submit all quote answers - happy path - multiple policy
  */
 const submitQuoteAnswersHappyPathMultiplePolicy = () => {
-  completeAndSubmitBuyerCountryForm();
+  completeAndSubmitBuyerCountryForm({});
   completeAndSubmitBuyerBodyForm();
   completeAndSubmitExporterLocationForm();
   completeAndSubmitUkContentForm();

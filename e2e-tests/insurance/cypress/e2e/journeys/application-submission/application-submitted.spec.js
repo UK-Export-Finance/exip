@@ -1,4 +1,5 @@
 import applicationSubmittedPage from '../../../../../pages/insurance/applicationSubmitted';
+import { CONTACT_DETAILS } from '../../../../../constants';
 import { PAGES, LINKS } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
@@ -6,11 +7,17 @@ const CONTENT_STRINGS = PAGES.INSURANCE.APPLICATION_SUBMITTED;
 
 const {
   ROOT: INSURANCE_ROOT,
-  ELIGIBILITY: { BUYER_COUNTRY },
   DECLARATIONS: { HOW_YOUR_DATA_WILL_BE_USED },
   APPLICATION_SUBMITTED,
   FEEDBACK,
 } = INSURANCE_ROUTES;
+
+const {
+  panel,
+  whatHappensNext,
+  decisionFromUs,
+  helpUsImprove,
+} = applicationSubmittedPage;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -47,14 +54,6 @@ context('Insurance - application submitted page', () => {
   });
 
   describe('page tests', () => {
-    const {
-      panel,
-      whatHappensNext,
-      decisionFromUs,
-      actions,
-      research,
-    } = applicationSubmittedPage;
-
     beforeEach(() => {
       cy.navigateToUrl(url);
     });
@@ -67,26 +66,21 @@ context('Insurance - application submitted page', () => {
       cy.checkText(panel.referenceNumber(), referenceNumber);
     });
 
-    it('renders intro copy', () => {
-      cy.checkText(applicationSubmittedPage.intro(), CONTENT_STRINGS.INTRO);
-    });
-
     describe('what happens next', () => {
       it('renders a heading', () => {
         cy.checkText(whatHappensNext.heading(), CONTENT_STRINGS.WHAT_HAPPENS_NEXT.HEADING);
       });
 
-      it('renders `we will contact you` intro copy', () => {
-        cy.checkText(whatHappensNext.intro(), CONTENT_STRINGS.WHAT_HAPPENS_NEXT.WILL_CONTACT_YOU.INTRO);
+      it('renders an intro', () => {
+        cy.checkText(whatHappensNext.intro(), CONTENT_STRINGS.WHAT_HAPPENS_NEXT.INTRO);
       });
 
-      it('renders a list', () => {
-        cy.checkText(whatHappensNext.listItem(1), CONTENT_STRINGS.WHAT_HAPPENS_NEXT.WILL_CONTACT_YOU.LIST[0]);
-        cy.checkText(whatHappensNext.listItem(2), CONTENT_STRINGS.WHAT_HAPPENS_NEXT.WILL_CONTACT_YOU.LIST[1]);
+      it('renders `we will send email` copy', () => {
+        cy.checkText(whatHappensNext.willSendEmail(), CONTENT_STRINGS.WHAT_HAPPENS_NEXT.WILL_SEND_EMAIL);
       });
 
-      it('renders `climate change factors` copy', () => {
-        cy.checkText(whatHappensNext.climateChangeFactors(), CONTENT_STRINGS.WHAT_HAPPENS_NEXT.CLIMATE_CHANGE_FACTORS);
+      it('renders `may also contact` copy', () => {
+        cy.checkText(whatHappensNext.mayAlsoContact(), CONTENT_STRINGS.WHAT_HAPPENS_NEXT.MAY_ALSO_CONTACT);
       });
     });
 
@@ -99,73 +93,55 @@ context('Insurance - application submitted page', () => {
         cy.checkText(decisionFromUs.timeframe(), CONTENT_STRINGS.DECISION_FROM_US.TIMEFRAME);
       });
 
-      it('renders `extra information` copy', () => {
-        cy.checkText(decisionFromUs.extraInfo(), CONTENT_STRINGS.DECISION_FROM_US.EXTRA_INFO);
+      it('renders `questions` intro', () => {
+        cy.checkText(decisionFromUs.questions.intro(), CONTENT_STRINGS.DECISION_FROM_US.HAVE_ANY_QUESTIONS.INTRO);
+      });
+
+      it('renders `questions` link', () => {
+        cy.checkLink(
+          decisionFromUs.questions.link(),
+          `mailto:${CONTACT_DETAILS.EMAIL.UNDERWRITING}`,
+          CONTACT_DETAILS.EMAIL.UNDERWRITING,
+        );
       });
     });
 
-    describe('actions', () => {
-      let selector;
-
-      describe('start a new application', () => {
-        beforeEach(() => {
-          cy.navigateToUrl(url);
-
-          selector = actions.startNewApplication;
-        });
-
-        it('renders a link', () => {
-          cy.checkLink(
-            selector(),
-            BUYER_COUNTRY,
-            CONTENT_STRINGS.ACTIONS.START_NEW_APPLICATION.TEXT,
-          );
-        });
-
-        it(`should redirect to ${BUYER_COUNTRY}`, () => {
-          selector().click();
-
-          const expectedUrl = `${baseUrl}${BUYER_COUNTRY}`;
-          cy.assertUrl(expectedUrl);
-        });
-      });
-
-      describe('feedback', () => {
-        beforeEach(() => {
-          cy.navigateToUrl(url);
-
-          selector = actions.giveFeedback;
-        });
-
-        it('renders a link', () => {
-          cy.checkLink(
-            selector(),
-            FEEDBACK,
-            CONTENT_STRINGS.ACTIONS.GIVE_FEEDBACK.TEXT,
-          );
-        });
-      });
-    });
-
-    describe('research', () => {
+    describe('help us improve', () => {
       it('renders a heading', () => {
-        cy.checkText(research.heading(), CONTENT_STRINGS.RESEARCH.HEADING);
+        cy.checkText(helpUsImprove.heading(), CONTENT_STRINGS.HELP_US_IMPROVE.HEADING);
       });
 
       it('renders `carry out` copy', () => {
-        cy.checkText(research.carryOut(), CONTENT_STRINGS.RESEARCH.CARRY_OUT);
+        cy.checkText(helpUsImprove.carryOut(), CONTENT_STRINGS.HELP_US_IMPROVE.CARRY_OUT);
       });
 
-      it('renders a link to take part', () => {
+      it('renders a `take part` link', () => {
         cy.checkLink(
-          research.takePartLink(),
+          helpUsImprove.takePartLink(),
           LINKS.EXTERNAL.RESEARCH,
-          CONTENT_STRINGS.RESEARCH.TAKE_PART.TEXT,
+          CONTENT_STRINGS.HELP_US_IMPROVE.TAKE_PART.TEXT,
         );
       });
 
       it('renders a `if you like` copy', () => {
-        cy.checkText(research.ifYouLike(), CONTENT_STRINGS.RESEARCH.IF_YOU_LIKE);
+        cy.checkText(helpUsImprove.ifYouLike(), CONTENT_STRINGS.HELP_US_IMPROVE.IF_YOU_LIKE);
+      });
+
+      it('renders a `feedback` intro', () => {
+        cy.checkText(helpUsImprove.feedback.intro(), CONTENT_STRINGS.HELP_US_IMPROVE.FEEDBACK.INTRO);
+      });
+
+      it('renders a `feedback` link', () => {
+        cy.checkText(
+          helpUsImprove.feedback.text(),
+          `${CONTENT_STRINGS.HELP_US_IMPROVE.FEEDBACK.LINK.TEXT}.`,
+        );
+
+        cy.checkLink(
+          helpUsImprove.feedback.link(),
+          FEEDBACK,
+          CONTENT_STRINGS.HELP_US_IMPROVE.FEEDBACK.LINK.TEXT,
+        );
       });
     });
   });

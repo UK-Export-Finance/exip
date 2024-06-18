@@ -1,0 +1,122 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% import '../../components/single-radio.njk' as singleRadio %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <div class="govuk-grid-column-three-quarters-from-desktop govuk-!-padding-right-0 govuk-!-padding-left-0">
+        <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+        <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+      </div>
+    </div>
+  </div>
+
+  <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        {% set descriptionHintHtml %}
+          <p class="govuk-hint" data-cy="{{ FIELDS.DESCRIPTION.ID }}-hint-intro">{{ FIELDS.DESCRIPTION.HINT.INTRO }}</p>
+
+          <ul class="govuk-list govuk-list--bullet">
+            {% for item in FIELDS.DESCRIPTION.HINT.LIST %}
+              <li class="govuk-hint" data-cy="{{ FIELDS.DESCRIPTION.ID }}-hint-list-item-{{ loop.index }}">{{ item }}</li>
+            {% endfor %}
+          </ul>
+
+          <p class="govuk-hint" data-cy="{{ FIELDS.DESCRIPTION.ID }}-hint-outro">{{ FIELDS.DESCRIPTION.HINT.OUTRO }}</p>
+        {% endset %}
+
+        {{ govukCharacterCount({
+          name: FIELDS.DESCRIPTION.ID,
+          id: FIELDS.DESCRIPTION.ID,
+          label: {
+            text: FIELDS.DESCRIPTION.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            attributes: {
+              'data-cy': FIELDS.DESCRIPTION.ID + '-label',
+              id: FIELDS.DESCRIPTION.ID + '-label'
+            }
+          },
+          hint: {
+            html: descriptionHintHtml
+          },
+          attributes: {
+            'data-cy': FIELDS.DESCRIPTION.ID
+          },
+          maxlength: FIELDS.DESCRIPTION.MAXIMUM,
+          value: submittedValues[FIELDS.DESCRIPTION.ID] or application.exportContract[FIELDS.DESCRIPTION.ID],
+          errorMessage: validationErrors.errorList[FIELDS.DESCRIPTION.ID] and {
+            text: validationErrors.errorList[FIELDS.DESCRIPTION.ID].text,
+            attributes: {
+              "data-cy": FIELDS.DESCRIPTION.ID + "-error-message"
+            }
+          }
+        }) }}
+
+      </div>
+    </div>
+
+    {% set FINAL_DESTINATION_KNOWN_ID = FIELDS.FINAL_DESTINATION_KNOWN.ID %}
+
+    {#
+      If no application answer is available,
+      Set the submittedAnswer to a value in submittedValues.
+     #}
+    {% set hasNoApplicationAnswer = application.exportContract[FINAL_DESTINATION_KNOWN_ID] === null or application.exportContract[FINAL_DESTINATION_KNOWN_ID] === undefined %}
+
+    {% if hasNoApplicationAnswer %}
+      {% set submittedAnswer = submittedValues[FINAL_DESTINATION_KNOWN_ID] %}
+    {% else %}
+      {% set submittedAnswer = application.exportContract[FINAL_DESTINATION_KNOWN_ID] %}
+    {% endif %}
+
+    {{ singleRadio.render({
+      application: application,
+      conditionalYes: CONDITIONAL_YES_HTML,
+      CONTENT_STRINGS: CONTENT_STRINGS,
+      continueButtonText: CONTENT_STRINGS.BUTTONS.CONTINUE,
+      conditionalHtmlData: countries,
+      dataCyLegend: FINAL_DESTINATION_KNOWN_ID + '-label',
+      errorMessage: validationErrors.errorList[FINAL_DESTINATION_KNOWN_ID],
+      fieldId: FINAL_DESTINATION_KNOWN_ID,
+      FIELDS: FIELDS,
+      horizontalRadios: HORIZONTAL_RADIOS,
+      legendClass: 'govuk-fieldset__legend--m',
+      legendSpan: true,
+      legendText: FIELDS.FINAL_DESTINATION_KNOWN.LABEL,
+      noRadioAsFirstOption: NO_RADIO_AS_FIRST_OPTION,
+      saveAndBackUrl: SAVE_AND_BACK_URL,
+      submittedAnswer: submittedAnswer,
+      submittedValues: submittedValues,
+      validationErrors: validationErrors
+    }) }}
+
+  </form>
+
+{% endblock %}

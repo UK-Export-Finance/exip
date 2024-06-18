@@ -1,0 +1,101 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% from "govuk/components/hint/macro.njk" import govukHint %}
+{% import '../../components/form-buttons.njk' as formButtons %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary,
+      attributes: {
+        'data-cy': 'error-summary'
+      }
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <span class="govuk-caption-xl" data-cy="heading-caption">
+        {{ CONTENT_STRINGS.HEADING_CAPTION }}
+      </span>
+    </div>
+
+    <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
+      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-three-quarters-from-desktop">
+
+          <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+        </div>
+
+        <div class="govuk-grid-column-three-quarters-from-desktop">
+            <h2 class="govuk-heading-m govuk-!-margin-bottom-2" data-cy="{{FIELDS.REGISTERED_OFFICE_ADDRESS.ID}}-heading">{{ FIELDS.REGISTERED_OFFICE_ADDRESS.HEADING }}</h2>
+
+            {{ govukHint({
+              text: FIELDS.REGISTERED_OFFICE_ADDRESS.HINT,
+              attributes: {
+              "data-cy": FIELDS.REGISTERED_OFFICE_ADDRESS.ID + "-hint"
+              }
+            }) }}
+
+            <p class="govuk-body" data-cy="{{FIELDS.REGISTERED_OFFICE_ADDRESS.ID}}-html">{{ addressHtml | safe }}</p>
+        </div>
+
+        <div class="govuk-grid-column-three-quarters-from-desktop">
+          {{ govukCharacterCount({
+            name: FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID,
+            id: FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID,
+            label: {
+              text: FIELDS.ALTERNATIVE_TRADING_ADDRESS.LABEL,
+              classes: "govuk-!-font-weight-bold govuk-!-font-size-24 govuk-!-margin-top-5",
+              attributes: {
+                'data-cy': FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID + '-label',
+                id: FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID + '-label'
+              }
+            },
+            hint: {
+              html: descriptionHintHtml
+            },
+            attributes: {
+              'data-cy': FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID
+            },
+            maxlength: FIELDS.ALTERNATIVE_TRADING_ADDRESS.MAXIMUM,
+            value: submittedValues[FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID] or application.company.differentTradingAddress[FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID],
+            errorMessage: validationErrors.errorList[FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID] and {
+              text: validationErrors.errorList[FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID].text,
+              attributes: {
+                "data-cy": FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID + "-error-message"
+              }
+            }
+          }) }}
+        <div>
+
+        {{ formButtons.render({
+          contentStrings: CONTENT_STRINGS.BUTTONS,
+          saveAndBackUrl: SAVE_AND_BACK_URL
+        }) }}
+
+      </div>
+
+    </form>
+  </div>
+
+
+{% endblock %}

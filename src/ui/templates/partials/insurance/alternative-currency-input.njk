@@ -1,0 +1,28 @@
+{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
+{% import '../../components/accessible-autocomplete-select.njk' as accessibleAutoCompleteSelect %}
+
+{% set class = "govuk-form-group" %}
+
+{% if errors[alternativeCurrencyFieldId] %}
+  {% set class = "govuk-form-group govuk-form-group--error" %}
+{% endif %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters-from-desktop">
+
+    <div class="{{ class }}">
+      {{ govukErrorMessage({
+        text: errors[alternativeCurrencyFieldId].text,
+        attributes: {
+          "data-cy": alternativeCurrencyFieldId + "-error-message"
+        }
+      }) }}
+
+      {{ accessibleAutoCompleteSelect.render({
+        fieldId: alternativeCurrencyFieldId,
+        options: alternativeCurrencies,
+        integrity: SRI.ACCESSIBILITY
+      }) }}
+      </div>
+  </div>
+</div>

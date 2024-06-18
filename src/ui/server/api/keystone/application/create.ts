@@ -2,13 +2,27 @@ import apollo from '../../../graphql/apollo';
 import createAnApplicationMutation from '../../../graphql/mutations/create-an-application';
 import { ApolloResponse, SubmittedDataInsuranceEligibility } from '../../../../types';
 
+/**
+ * createApplication
+ * 1) Extract company object from eligibility answers
+ * 2) Construct variables object with separate eligibilityAnswers, company object and sectionReview object.
+ * 3) Call the GraphQL API with constructed variables.
+ * 4) Return the created application or error.
+ * @param {Object} eligibilityAnswers: Answers submitted from the eligibility forms.
+ * @param {String} accountId: Account ID for the application owner
+ * @returns {Object} Created application
+ */
 const createApplication = async (eligibilityAnswers: SubmittedDataInsuranceEligibility, accountId: string) => {
   try {
     console.info('Creating application');
 
+    const { company, sectionReview, ...otherAnswers } = eligibilityAnswers;
+
     const variables = {
       accountId,
-      eligibilityAnswers,
+      eligibilityAnswers: otherAnswers,
+      company,
+      sectionReview,
     };
 
     const response = (await apollo('POST', createAnApplicationMutation, variables)) as ApolloResponse;

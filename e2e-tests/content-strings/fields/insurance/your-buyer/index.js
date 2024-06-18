@@ -1,8 +1,28 @@
-import { FIELD_IDS } from '../../../../constants';
+import { FIELD_IDS, MAXIMUM_CHARACTERS } from '../../../../constants';
+import { FORM_TITLES } from '../../../form-titles';
 
 const {
-  YOUR_BUYER: { COMPANY_OR_ORGANISATION, WORKING_WITH_BUYER },
+  YOUR_BUYER: {
+    COMPANY_OR_ORGANISATION,
+    CONNECTION_WITH_BUYER,
+    TRADED_WITH_BUYER,
+    CONNECTION_WITH_BUYER_DESCRIPTION,
+    OUTSTANDING_PAYMENTS,
+    FAILED_PAYMENTS,
+    HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+    PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+    TOTAL_OUTSTANDING_PAYMENTS,
+    TOTAL_AMOUNT_OVERDUE,
+    HAS_BUYER_FINANCIAL_ACCOUNTS,
+  },
+  CURRENCY: { CURRENCY_CODE },
 } = FIELD_IDS.INSURANCE;
+
+const {
+  YOUR_BUYER: {
+    COMPANY_DETAILS, TRADING_HISTORY, CONNECTION_TO_BUYER, CREDIT_INSURANCE_HISTORY, FINANCIAL_ACCOUNTS,
+  },
+} = FORM_TITLES;
 
 export const YOUR_BUYER_FIELDS = {
   COMPANY_OR_ORGANISATION: {
@@ -10,69 +30,115 @@ export const YOUR_BUYER_FIELDS = {
       LABEL: "Buyer's company or organisation name",
       SUMMARY: {
         TITLE: 'Company or organisation name',
+        FORM_TITLE: COMPANY_DETAILS,
       },
     },
     [COMPANY_OR_ORGANISATION.ADDRESS]: {
-      LABEL: 'Address',
-      MAXIMUM: 330,
+      LABEL: 'Company address',
       SUMMARY: {
         TITLE: 'Buyer address',
+        FORM_TITLE: COMPANY_DETAILS,
       },
+      MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
     },
     [COMPANY_OR_ORGANISATION.COUNTRY]: {
       LABEL: 'Buyer country',
+      SUMMARY: {
+        TITLE: 'Buyer country',
+      },
     },
     [COMPANY_OR_ORGANISATION.REGISTRATION_NUMBER]: {
-      LABEL: 'Registration number (optional)',
+      LABEL: 'Company registration number (optional)',
       SUMMARY: {
         TITLE: 'Registration number (optional)',
+        FORM_TITLE: COMPANY_DETAILS,
       },
+      MAXIMUM: MAXIMUM_CHARACTERS.BUYER.REGISTRATION_NUMBER,
     },
     [COMPANY_OR_ORGANISATION.WEBSITE]: {
-      LABEL: 'Enter their  website (optional)',
+      LABEL: 'Enter their website (optional)',
       SUMMARY: {
         TITLE: 'Buyer website (optional)',
-      },
-    },
-    [COMPANY_OR_ORGANISATION.FIRST_NAME]: {
-      LEGEND: "Enter details for your contact at the buyer's company or organisation",
-      HINT: 'We will not contact them without your permission',
-      LABEL: 'First name',
-      SUMMARY: {
-        TITLE: 'Contact details',
-      },
-    },
-    [COMPANY_OR_ORGANISATION.LAST_NAME]: {
-      LABEL: 'Last name',
-    },
-    [COMPANY_OR_ORGANISATION.POSITION]: {
-      LABEL: 'Position',
-    },
-    [COMPANY_OR_ORGANISATION.EMAIL]: {
-      LABEL: 'Email address',
-    },
-    [COMPANY_OR_ORGANISATION.CAN_CONTACT_BUYER]: {
-      LABEL: 'Can we contact the buyer about this application, if we need to?',
-      HINT: 'For example, if we need to contact them for their accounts.',
-      SUMMARY: {
-        TITLE: 'Can we contact the buyer?',
+        FORM_TITLE: COMPANY_DETAILS,
       },
     },
   },
-  WORKING_WITH_BUYER: {
-    [WORKING_WITH_BUYER.CONNECTED_WITH_BUYER]: {
-      LABEL: 'Are you connected with the buyer in any way?',
-      HINT: "For example, someone in your company is a shareholder or director of the buyer's company.",
-      SUMMARY: {
-        TITLE: 'Connected with the buyer in any way?',
-      },
+  [CONNECTION_WITH_BUYER]: {
+    LABEL: 'Are you connected with the buyer in any way?',
+    HINT: "For example, someone in your company is a shareholder or director of the buyer's company.",
+    SUMMARY: {
+      TITLE: 'Connected with the buyer',
+      FORM_TITLE: CONNECTION_TO_BUYER,
     },
-    [WORKING_WITH_BUYER.TRADED_WITH_BUYER]: {
-      LABEL: 'Have you traded with this buyer before?',
-      HINT: 'If yes, we will request a copy of your trading history once the application has been submitted.',
-      SUMMARY: {
-        TITLE: 'Have you traded with this buyer before?',
-      },
+  },
+  [CONNECTION_WITH_BUYER_DESCRIPTION]: {
+    LABEL: 'Describe the connection with the buyer',
+    MAXIMUM: MAXIMUM_CHARACTERS.CONNECTION_WITH_BUYER_DESCRIPTION,
+    SUMMARY: {
+      TITLE: 'Details of connection',
+      FORM_TITLE: CONNECTION_TO_BUYER,
+    },
+  },
+  [TRADED_WITH_BUYER]: {
+    LABEL: 'Have you traded with this buyer before?',
+    HINT: 'If yes, we will request a copy of your trading history once the application has been submitted.',
+    SUMMARY: {
+      TITLE: 'Trading history',
+      FORM_TITLE: TRADING_HISTORY,
+    },
+  },
+  [OUTSTANDING_PAYMENTS]: {
+    LABEL: 'Do you currently have any outstanding or overdue payments from the buyer?',
+    SUMMARY: {
+      TITLE: 'Outstanding or overdue payments',
+      FORM_TITLE: TRADING_HISTORY,
+    },
+  },
+  [FAILED_PAYMENTS]: {
+    LABEL: 'Has the buyer ever failed to pay you on time?',
+    SUMMARY: {
+      TITLE: 'Buyer failed to pay on time?',
+      FORM_TITLE: TRADING_HISTORY,
+    },
+  },
+  [CURRENCY_CODE]: {
+    LEGEND: 'What currency are the outstanding or overdue payments in?',
+  },
+  [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
+    LABEL: 'Have you in the past held credit insurance cover on the buyer?',
+    SUMMARY: {
+      TITLE: 'Credit insurance previously held for the buyer',
+      FORM_TITLE: CREDIT_INSURANCE_HISTORY,
+    },
+  },
+  [PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
+    LABEL: 'Tell us about the credit insurance cover you had on the buyer',
+    HINT: 'Include the name of the insurer(s) and the credit limit.',
+    SUMMARY: {
+      TITLE: 'Details of credit insurance',
+      FORM_TITLE: CREDIT_INSURANCE_HISTORY,
+    },
+    MAXIMUM: MAXIMUM_CHARACTERS.BUYER.PREVIOUS_CREDIT_INSURANCE_COVER,
+  },
+  [TOTAL_OUTSTANDING_PAYMENTS]: {
+    HEADING: 'Tell us about the outstanding or overdue payments',
+    LABEL: 'Total outstanding, including overdue',
+    SUMMARY: {
+      TITLE: 'Total outstanding including overdue',
+      FORM_TITLE: TRADING_HISTORY,
+    },
+  },
+  [TOTAL_AMOUNT_OVERDUE]: {
+    LABEL: 'Amount overdue',
+    SUMMARY: {
+      TITLE: 'Amount overdue',
+      FORM_TITLE: TRADING_HISTORY,
+    },
+  },
+  [HAS_BUYER_FINANCIAL_ACCOUNTS]: {
+    SUMMARY: {
+      TITLE: 'Financial accounts relating to the buyer',
+      FORM_TITLE: FINANCIAL_ACCOUNTS,
     },
   },
 };

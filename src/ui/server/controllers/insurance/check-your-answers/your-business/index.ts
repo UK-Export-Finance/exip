@@ -4,7 +4,7 @@ import FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import { yourBusinessSummaryList } from '../../../../helpers/summary-lists/your-business';
+import { yourBusinessSummaryLists } from '../../../../helpers/summary-lists/your-business';
 import requiredFields from '../../../../helpers/required-fields/business';
 import sectionStatus from '../../../../helpers/section-status';
 import constructPayload from '../../../../helpers/construct-payload';
@@ -39,10 +39,10 @@ export const pageVariables = (referenceNumber: number) => ({
 
 /**
  * get
- * Render the check your answers your buyer page
+ * Render the Check your answers - Your buyer page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} check your answers your buyer
+ * @returns {Express.Response.render} Check your answers - Your buyer page
  */
 export const get = async (req: Request, res: Response) => {
   try {
@@ -52,15 +52,15 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber, broker, company, business } = application;
+    const { referenceNumber, company, business } = application;
 
     const checkAndChange = true;
 
-    const summaryList = yourBusinessSummaryList(company, business, broker, referenceNumber, checkAndChange);
+    const summaryList = yourBusinessSummaryLists(company, business, referenceNumber, checkAndChange);
 
-    const exporterFields = requiredFields(broker.isUsingBroker);
+    const businessFields = requiredFields(company.hasDifferentTradingName);
 
-    const status = sectionStatus(exporterFields, application);
+    const status = sectionStatus(businessFields, application);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -69,11 +69,11 @@ export const get = async (req: Request, res: Response) => {
       }),
       userName: getUserNameFromSession(req.session.user),
       status,
-      SUMMARY_LIST: summaryList,
+      SUMMARY_LISTS: summaryList,
       ...pageVariables(referenceNumber),
     });
   } catch (err) {
-    console.error('Error getting check your answers - policy %O', err);
+    console.error('Error getting Check your answers - Your business %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -106,7 +106,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER}`);
   } catch (err) {
-    console.error('Error updating check your answers - your business %O', err);
+    console.error('Error updating Check your answers - Your business %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

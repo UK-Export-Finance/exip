@@ -6,14 +6,14 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapEligibilityAnswers from '../../../../helpers/map-eligibility-answers';
 import api from '../../../../api';
-import { mockAccount, mockApplication, mockSession, mockReq, mockRes } from '../../../../test-mocks';
+import { mockAccount, referenceNumber, mockSession, mockReq, mockRes } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE: {
     INSURANCE_ROOT,
     ALL_SECTIONS,
-    ELIGIBILITY: { ACCOUNT_TO_APPLY_ONLINE },
+    ELIGIBILITY: { HAVE_AN_ACCOUNT },
     DASHBOARD,
     PROBLEM_WITH_SERVICE,
   },
@@ -22,8 +22,6 @@ const {
 describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
   let req: Request;
   let res: Response;
-
-  const { referenceNumber } = mockApplication;
 
   const mockCreateApplicationResponse = { referenceNumber };
 
@@ -55,10 +53,10 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
   });
 
   describe('post', () => {
-    it(`should redirect to ${ACCOUNT_TO_APPLY_ONLINE}`, async () => {
+    it(`should redirect to ${HAVE_AN_ACCOUNT}`, async () => {
       await post(req, res);
 
-      const expected = `${ACCOUNT_TO_APPLY_ONLINE}`;
+      const expected = `${HAVE_AN_ACCOUNT}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });

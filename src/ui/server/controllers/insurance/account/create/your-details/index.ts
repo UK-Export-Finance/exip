@@ -6,7 +6,8 @@ import insuranceCorePageVariables from '../../../../../helpers/page-variables/co
 import constructPayload from '../../../../../helpers/construct-payload';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
-import generateAccountAlreadyExistsValidationErrors from './validation/account-already-exists';
+import generateAccountAlreadyExistsValidation from './validation/account-already-exists/invalid-password';
+import accountAlreadyExistsAlreadyVerifiedValidation from './validation/account-already-exists/already-verified';
 import saveData from './save-data';
 import canCreateAnApplication from '../../../../../helpers/can-create-an-application';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
@@ -21,6 +22,7 @@ const {
     ACCOUNT: {
       CREATE: { CONFIRM_EMAIL },
       SIGN_IN,
+      SUSPENDED: { EMAIL_SENT },
     },
     DASHBOARD,
     PROBLEM_WITH_SERVICE,
@@ -62,10 +64,10 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.YOUR_DETAILS;
 
 /**
  * get
- * Render the Do you already have an account page
+ * Render the Do you have an account page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} Do you already have an account page
+ * @returns {Express.Response.render} Do you have an account page
  */
 export const get = (req: Request, res: Response) => {
   if (req.session.user?.id) {
@@ -88,7 +90,7 @@ export const get = (req: Request, res: Response) => {
 
 /**
  * post
- * Check  Do you already have an account page validation errors and if successful, redirect to the next part of the flow.
+ * Check  Do you have an account page validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
@@ -121,8 +123,14 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    if (!saveResponse.success) {
-      validationErrors = generateAccountAlreadyExistsValidationErrors();
+    const { success, isVerified, isBlocked } = saveResponse;
+
+    if (!success) {
+      if (isVerified) {
+        validationErrors = accountAlreadyExistsAlreadyVerifiedValidation();
+      } else {
+        validationErrors = generateAccountAlreadyExistsValidation();
+      }
 
       if (validationErrors) {
         return res.render(TEMPLATE, {
@@ -166,6 +174,10 @@ export const post = async (req: Request, res: Response) => {
         console.error('Error creating application');
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
+    }
+
+    if (isBlocked) {
+      return res.redirect(EMAIL_SENT);
     }
 
     return res.redirect(CONFIRM_EMAIL);

@@ -1,23 +1,50 @@
-import { FIELD_IDS } from '../../constants';
-import { field, yesRadio } from '../../pages/shared';
+import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
+import { field } from '../../pages/shared';
+import application from '../../fixtures/application';
+
+const { YOUR_COMPANY } = application;
 
 const {
-  YOUR_COMPANY: {
-    WEBSITE,
-    PHONE_NUMBER,
+  EXPORTER_BUSINESS: {
+    YOUR_COMPANY: {
+      WEBSITE,
+      PHONE_NUMBER,
+      DIFFERENT_TRADING_NAME,
+    },
   },
-} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+} = INSURANCE_FIELD_IDS;
 
 /**
  * completeCompaniesDetailsForm
  * fills in the company details form
- * fills in optional fields if they are provided
- * does not submit the form
- * @param {Object} variables - phoneNumber and website
+ * @param {Boolean} differentTradingName
+ * @param {Boolean} differentTradingAddress
+ * @param {String} phoneNumber
+ * @param {String} companyWebsite
+ * @param {Boolean} completeDifferentTradingName
  */
-const completeCompaniesDetailsForm = ({ phoneNumber, companyWebsite }) => {
-  yesRadio().label().first().click();
-  yesRadio().label().eq(1).click();
+const completeCompaniesDetailsForm = ({
+  differentTradingName = false,
+  differentTradingAddress = false,
+  phoneNumber,
+  companyWebsite,
+  completeDifferentTradingName = true,
+}) => {
+  if (differentTradingName) {
+    cy.clickYesRadioInput();
+  } else {
+    cy.clickNoRadioInput();
+  }
+
+  if (differentTradingName && completeDifferentTradingName) {
+    cy.keyboardInput(field(DIFFERENT_TRADING_NAME).input(), YOUR_COMPANY[DIFFERENT_TRADING_NAME]);
+  }
+
+  if (differentTradingAddress) {
+    cy.clickYesRadioInput(1);
+  } else {
+    cy.clickNoRadioInput(1);
+  }
 
   if (phoneNumber) {
     cy.keyboardInput(field(PHONE_NUMBER).input(), phoneNumber);

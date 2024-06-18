@@ -1,27 +1,43 @@
-import mapPolicy from '.';
-import { REFERENCE_NUMBER, DATE_SUBMITTED, TIME_SUBMITTED } from '../../../content-strings/fields/insurance';
+import mapKeyInformation from '.';
 import { XLSX } from '../../../content-strings';
-import ACCOUNT from '../../../constants/field-ids/insurance/account';
+import { POLICY_FIELDS } from '../../../content-strings/fields/insurance';
+import FIELD_IDS from '../../../constants/field-ids/insurance';
 import xlsxRow from '../helpers/xlsx-row';
-import formatDate from '../../../helpers/format-date';
-import formatTimeOfDay from '../helpers/format-time-of-day';
 import { mockApplication } from '../../../test-mocks';
 
-const { FIELDS } = XLSX;
+const {
+  SECTION_TITLES: { KEY_INFORMATION },
+  FIELDS,
+} = XLSX;
 
-const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT;
+const CONTENT_STRINGS = {
+  ...POLICY_FIELDS,
+};
+
+const {
+  EXPORTER_BUSINESS: {
+    COMPANIES_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME },
+  },
+  YOUR_BUYER: {
+    COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME },
+  },
+  POLICY: {
+    TYPE_OF_POLICY: { POLICY_TYPE },
+  },
+} = FIELD_IDS;
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-key-information', () => {
-  it('should return an array of mapped key information', () => {
-    const result = mapPolicy(mockApplication);
+  it('should return an array of mapped fields', () => {
+    const result = mapKeyInformation(mockApplication);
+
+    const { policy } = mockApplication;
 
     const expected = [
-      xlsxRow(REFERENCE_NUMBER.SUMMARY.TITLE, mockApplication.referenceNumber),
-      xlsxRow(DATE_SUBMITTED.SUMMARY.TITLE, formatDate(mockApplication.submissionDate, 'dd-MM-yyyy')),
-      xlsxRow(TIME_SUBMITTED.SUMMARY.TITLE, formatTimeOfDay(mockApplication.submissionDate)),
-      xlsxRow(FIELDS[FIRST_NAME], mockApplication.owner[FIRST_NAME]),
-      xlsxRow(FIELDS[LAST_NAME], mockApplication.owner[LAST_NAME]),
-      xlsxRow(FIELDS.APPLICANT_EMAIL_ADDRESS, mockApplication.owner[EMAIL]),
+      xlsxRow(KEY_INFORMATION),
+      xlsxRow(FIELDS[EXPORTER_COMPANY_NAME], mockApplication.company[EXPORTER_COMPANY_NAME]),
+      xlsxRow(FIELDS[COUNTRY], mockApplication.buyer[COUNTRY].name),
+      xlsxRow(FIELDS[BUYER_COMPANY_NAME], mockApplication.buyer[BUYER_COMPANY_NAME]),
+      xlsxRow(String(CONTENT_STRINGS[POLICY_TYPE].SUMMARY?.TITLE), policy[POLICY_TYPE]),
     ];
 
     expect(result).toEqual(expected);

@@ -1,4 +1,5 @@
 import invalidLinkPage from '../../../../../../../pages/insurance/account/invalid-link';
+import { body } from '../../../../../../../pages/shared';
 import { BUTTONS, PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
@@ -46,7 +47,7 @@ context('Insurance - Account - Create - Confirm email page - invalid link - As a
       });
 
       cy.checkText(
-        invalidLinkPage.body(),
+        body(),
         CONTENT_STRINGS.BODY,
       );
 

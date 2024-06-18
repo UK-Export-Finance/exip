@@ -1,36 +1,27 @@
-import partials from '../../../../../../../partials';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
+import { FIELD_VALUES } from '../../../../../../../constants';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
 
 const {
   ROOT: INSURANCE_ROOT,
   POLICY,
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    POLICY: {
-      TYPE_OF_POLICY: { POLICY_TYPE },
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
-        POLICY_CURRENCY_CODE,
-        MULTIPLE: {
-          TOTAL_MONTHS_OF_COVER,
-          TOTAL_SALES_TO_BUYER,
-          MAXIMUM_BUYER_WILL_OWE,
-        },
-      },
-      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
-    },
-  },
-} = FIELD_IDS;
+  NEED_PRE_CREDIT_PERIOD,
+  CREDIT_PERIOD_WITH_BUYER,
+  NAME_ON_POLICY: { NAME },
+  USING_BROKER,
+  LOSS_PAYEE: { IS_APPOINTED: LOSS_PAYEE_IS_APPOINTED },
+  LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME },
+  LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
+  FINANCIAL_ADDRESS,
+} = POLICY_FIELD_IDS;
 
-const { taskList } = partials.insurancePartials;
+const baseUrl = Cypress.config('baseUrl');
 
-const task = taskList.prepareApplication.tasks.policy;
-
-context('Insurance - Policy - Check your answers - Summary list - multiple contract policy', () => {
+context('Insurance - Policy - Check your answers - Summary list - Multiple contract policy', () => {
   let referenceNumber;
   let url;
 
@@ -38,11 +29,9 @@ context('Insurance - Policy - Check your answers - Summary list - multiple contr
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
-
       cy.completePolicySection({ policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE });
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`;
     });
   });
 
@@ -56,39 +45,43 @@ context('Insurance - Policy - Check your answers - Summary list - multiple contr
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should render a ${POLICY_TYPE} summary list row`, () => {
-    checkSummaryList.multipleContractPolicy[POLICY_TYPE]();
+  it('should render generic policy summary list rows', () => {
+    cy.assertGenericMultiplePolicySummaryListRows();
   });
 
-  it(`should render a ${REQUESTED_START_DATE} summary list row`, () => {
-    checkSummaryList[REQUESTED_START_DATE]();
+  it(`should render a ${NEED_PRE_CREDIT_PERIOD} summary list row`, () => {
+    checkSummaryList[NEED_PRE_CREDIT_PERIOD]({});
   });
 
-  it(`should render a ${TOTAL_MONTHS_OF_COVER} summary list row`, () => {
-    checkSummaryList.multipleContractPolicy[TOTAL_MONTHS_OF_COVER]();
+  it(`should NOT render a ${CREDIT_PERIOD_WITH_BUYER} summary list row`, () => {
+    checkSummaryList[CREDIT_PERIOD_WITH_BUYER]({});
   });
 
-  it(`should render a ${TOTAL_SALES_TO_BUYER} summary list row`, () => {
-    checkSummaryList.multipleContractPolicy[TOTAL_SALES_TO_BUYER]();
+  it(`should render a ${NAME} summary list row`, () => {
+    checkSummaryList[NAME]({});
   });
 
-  it(`should render a ${MAXIMUM_BUYER_WILL_OWE} summary list row`, () => {
-    checkSummaryList.multipleContractPolicy[MAXIMUM_BUYER_WILL_OWE]();
+  it(`should render a ${USING_BROKER} summary list row`, () => {
+    checkSummaryList[USING_BROKER]({ usingBroker: false });
   });
 
-  it(`should render a ${CREDIT_PERIOD_WITH_BUYER} summary list row`, () => {
-    checkSummaryList[CREDIT_PERIOD_WITH_BUYER]();
+  it(`should render a ${LOSS_PAYEE_IS_APPOINTED} summary list row`, () => {
+    checkSummaryList[LOSS_PAYEE_IS_APPOINTED]({ isAppointingLossPayee: false });
   });
 
-  it(`should render a ${POLICY_CURRENCY_CODE} summary list row`, () => {
-    checkSummaryList[POLICY_CURRENCY_CODE]();
+  it(`should NOT render a ${LOSS_PAYEE_NAME} summary list row`, () => {
+    checkSummaryList.LOSS_PAYEE[LOSS_PAYEE_NAME]({ shouldRender: false });
   });
 
-  it(`should render a ${DESCRIPTION} summary list row`, () => {
-    checkSummaryList[DESCRIPTION]();
+  it(`should NOT render a ${FINANCIAL_ADDRESS} summary list row`, () => {
+    checkSummaryList.LOSS_PAYEE[FINANCIAL_ADDRESS]({ shouldRender: false });
   });
 
-  it(`should render a ${FINAL_DESTINATION} summary list row`, () => {
-    checkSummaryList[FINAL_DESTINATION]();
+  it(`should NOT render a ${SORT_CODE} summary list row`, () => {
+    checkSummaryList.LOSS_PAYEE[SORT_CODE]({ shouldRender: false });
+  });
+
+  it(`should NOT render a ${ACCOUNT_NUMBER} summary list row`, () => {
+    checkSummaryList.LOSS_PAYEE[ACCOUNT_NUMBER]({ shouldRender: false });
   });
 });

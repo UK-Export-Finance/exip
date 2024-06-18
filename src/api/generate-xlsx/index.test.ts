@@ -12,7 +12,10 @@ describe('api/generate-xlsx/index', () => {
 
     expect(result).toEqual(expected);
 
-    // delete the file so we don't create a file during unit tests.
+    /**
+     * delete the file,
+     * so that we don't create a file during unit tests.
+     */
 
     await fileSystem.unlink(expected);
   });

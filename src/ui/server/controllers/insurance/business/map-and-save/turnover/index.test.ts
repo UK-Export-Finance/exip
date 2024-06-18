@@ -1,9 +1,9 @@
 import mapAndSave from '.';
 import save from '../../save-data/business';
-import mapTurnoverSubmittedData from '../../turnover/map-submitted-data';
-import { mockApplication } from '../../../../../test-mocks';
+import mapSubmittedData from '../../turnover/map-submitted-data';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { FIELD_IDS } from '../../../../../constants';
+import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
   EXPORTER_BUSINESS: {
@@ -20,7 +20,7 @@ describe('controllers/insurance/business/map-and-save/turnover', () => {
     [ESTIMATED_ANNUAL_TURNOVER]: '35000',
   };
 
-  const mockSaveBusiness = jest.fn(() => Promise.resolve({}));
+  const mockSaveBusiness = mockSpyPromise();
   save.business = mockSaveBusiness;
 
   const mockValidationErrors = generateValidationErrors(PERCENTAGE_TURNOVER, 'error', {});
@@ -31,7 +31,7 @@ describe('controllers/insurance/business/map-and-save/turnover', () => {
         await mapAndSave.turnover(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(save.business).toHaveBeenCalledTimes(1);
-        expect(save.business).toHaveBeenCalledWith(mockApplication, mapTurnoverSubmittedData(mockFormBody), mockValidationErrors?.errorList);
+        expect(save.business).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody), mockValidationErrors?.errorList);
       });
 
       it('should return true', async () => {
@@ -41,7 +41,7 @@ describe('controllers/insurance/business/map-and-save/turnover', () => {
       });
     });
 
-    describe('when the form does NOT have validation errors ', () => {
+    describe('when the form does NOT have validation errors', () => {
       mockFormBody = {
         _csrf: '1234',
         [PERCENTAGE_TURNOVER]: '25',
@@ -52,7 +52,7 @@ describe('controllers/insurance/business/map-and-save/turnover', () => {
         await mapAndSave.turnover(mockFormBody, mockApplication);
 
         expect(save.business).toHaveBeenCalledTimes(1);
-        expect(save.business).toHaveBeenCalledWith(mockApplication, mapTurnoverSubmittedData(mockFormBody));
+        expect(save.business).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody));
       });
 
       it('should return true', async () => {

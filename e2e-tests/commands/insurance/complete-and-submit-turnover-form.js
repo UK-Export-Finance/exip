@@ -1,5 +1,5 @@
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
-import { field, submitButton } from '../../pages/shared';
+import { field } from '../../pages/shared';
 import application from '../../fixtures/application';
 
 const {
@@ -11,9 +11,15 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-export default () => {
+/**
+ * completeAndSubmitTurnoverForm
+ * complete and submit the "turnover" form.
+ */
+const completeAndSubmitTurnoverForm = () => {
   cy.keyboardInput(field(ESTIMATED_ANNUAL_TURNOVER).input(), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
   cy.keyboardInput(field(PERCENTAGE_TURNOVER).input(), application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
 
-  submitButton().click();
+  cy.clickSubmitButton();
 };
+
+export default completeAndSubmitTurnoverForm;

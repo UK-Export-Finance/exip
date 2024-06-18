@@ -5,6 +5,7 @@
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% import '../../components/status-tag.njk' as statusTag %}
+{% import '../../components/group-of-summary-lists.njk' as groupOfSummaryLists %}
 {% import '../../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
@@ -42,14 +43,21 @@
     <div class="govuk-grid-column-full-from-desktop govuk-!-margin-bottom-5">
       {{ statusTag.render({
         status: status,
-        dataCy: "status"
+        dataCy: "status",
+        tagClasses: ATTRIBUTES.CLASSES.TAGS
       }) }}
     </div>
   </div>
 
-  {{ govukSummaryList({
-    rows: SUMMARY_LIST
-  }) }}
+  {% if SUMMARY_LISTS %}
+    {{ groupOfSummaryLists.render({
+      summaryLists: SUMMARY_LISTS
+    }) }}
+  {% else %}
+    {{ govukSummaryList({
+      rows: SUMMARY_LIST
+    }) }}
+  {% endif %}
 
   <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
 
@@ -59,14 +67,14 @@
 
     <div class="govuk-button-group">
       {{ submitButton.render({
-        text: CONTENT_STRINGS.BUTTONS.CONFIRM_AND_CONTINUE
+        text: SUBMIT_BUTTON_COPY or CONTENT_STRINGS.BUTTONS.CONFIRM_AND_CONTINUE
       }) }}
 
       {% if eligibility %}
 
       <a class="govuk-button govuk-button--secondary" href="{{ START_NEW_APPLICATION }}" data-cy="save-and-back-button">{{ CONTENT_STRINGS.CHANGE_ANSWERS }}</a>
 
-      {% else %}
+      {% elif SAVE_AND_BACK_URL %}
 
       {{ govukButton({
         text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,

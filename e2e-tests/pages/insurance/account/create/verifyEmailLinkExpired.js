@@ -1,6 +1,6 @@
 const verifyEmailLinkExpiredPage = {
-  body: () => cy.get('[data-cy="body"]'),
-  createAccount: () => cy.get('[data-cy="create-account"]'),
+  notVerified: () => cy.get('[data-cy="not-verified"]'),
+  canSendNewLink: () => cy.get('[data-cy="can-send-new-link"]'),
 };
 
 export default verifyEmailLinkExpiredPage;

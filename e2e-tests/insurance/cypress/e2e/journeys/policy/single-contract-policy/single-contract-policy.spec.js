@@ -1,60 +1,51 @@
 import {
+  radios,
   field as fieldSelector,
   headingCaption,
-  submitButton,
-  saveAndBackButton,
 } from '../../../../../../pages/shared';
-import { singleContractPolicyPage } from '../../../../../../pages/insurance/policy';
-import partials from '../../../../../../partials';
-import {
-  BUTTONS,
-  LINKS,
-  PAGES,
-  TASKS,
-} from '../../../../../../content-strings';
+import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
-import {
-  FIELD_IDS,
-  FIELD_VALUES,
-  ROUTES,
-} from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import application from '../../../../../../fixtures/application';
-import checkPolicyCurrencyCodeInput from '../../../../../../commands/insurance/check-policy-currency-code-input';
-import checkCreditPeriodWithBuyerInput from '../../../../../../commands/insurance/check-credit-period-with-buyer-input';
-
-const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
+import { assertCurrencyFormFields } from '../../../../../../shared-test-assertions';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY;
 
 const {
-  INSURANCE: {
-    ROOT: INSURANCE_ROOT,
-    ALL_SECTIONS,
-    POLICY: {
-      TYPE_OF_POLICY,
-      SINGLE_CONTRACT_POLICY,
-      ABOUT_GOODS_OR_SERVICES,
+  ROOT: INSURANCE_ROOT,
+  ALL_SECTIONS,
+  POLICY: {
+    TYPE_OF_POLICY,
+    SINGLE_CONTRACT_POLICY,
+    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
+  },
+} = INSURANCE_ROUTES;
+
+const { CONTRACT_POLICY } = FIELDS;
+
+const {
+  CURRENCY: { CURRENCY_CODE },
+  POLICY: {
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      POLICY_CURRENCY_CODE,
+      SINGLE: {
+        CONTRACT_COMPLETION_DATE,
+      },
     },
   },
-} = ROUTES;
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
     POLICY: {
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
-        POLICY_CURRENCY_CODE,
-        SINGLE: {
-          CONTRACT_COMPLETION_DATE,
-          TOTAL_CONTRACT_VALUE,
-        },
-      },
+      CONTRACT_POLICY: CONTRACT_ERROR_MESSAGES,
     },
   },
-} = FIELD_IDS;
+} = ERROR_MESSAGES;
 
-const task = taskList.prepareApplication.tasks.policy;
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Single contract policy page - As an exporter, I want to enter the type of policy I need for my export contract', () => {
   let referenceNumber;
@@ -64,11 +55,10 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startInsurancePolicySection({});
+      cy.completeAndSubmitPolicyTypeForm({});
 
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 
       cy.assertUrl(url);
     });
@@ -103,9 +93,9 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
       const fieldId = REQUESTED_START_DATE;
       const field = fieldSelector(fieldId);
 
-      cy.checkText(field.label(), FIELDS.CONTRACT_POLICY[fieldId].LABEL);
+      cy.checkText(field.label(), CONTRACT_POLICY[fieldId].LABEL);
 
-      cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY[fieldId].HINT);
+      cy.checkText(field.hint(), CONTRACT_POLICY[fieldId].HINT);
 
       field.dayInput().should('exist');
       field.monthInput().should('exist');
@@ -116,57 +106,41 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
       const fieldId = CONTRACT_COMPLETION_DATE;
       const field = fieldSelector(fieldId);
 
-      cy.checkText(field.label(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].LABEL);
+      cy.checkText(field.label(), CONTRACT_POLICY.SINGLE[fieldId].LABEL);
 
-      cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT);
+      cy.checkText(field.hint(), CONTRACT_POLICY.SINGLE[fieldId].HINT);
 
       field.dayInput().should('exist');
       field.monthInput().should('exist');
       field.yearInput().should('exist');
     });
 
-    it('renders `total contract value` label, hint, prefix and input', () => {
-      const fieldId = TOTAL_CONTRACT_VALUE;
-      const field = singleContractPolicyPage[fieldId];
-
-      cy.checkText(field.label(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].LABEL);
-
-      const hintContent = FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT;
-
-      cy.checkText(
-        field.hint.needMoreCover(),
-        hintContent.NEED_MORE_COVER,
-      );
-
-      cy.checkLink(
-        field.hint.link(),
-        LINKS.EXTERNAL.PROPOSAL_FORM,
-        hintContent.FILL_IN_FORM.TEXT,
-      );
-
-      cy.checkText(
-        field.hint.noDecimals(),
-        hintContent.NO_DECIMALS,
-      );
-
-      cy.checkText(field.prefix(), '£');
-
-      field.input().should('exist');
-    });
-
-    it('renders `credit period with buyer` label, hint and input', () => {
-      checkCreditPeriodWithBuyerInput();
-    });
-
-    describe('currency', () => {
-      it('renders `currency` label, hint and input with supported currencies ordered alphabetically', () => {
-        checkPolicyCurrencyCodeInput();
-      });
-    });
-
     it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
+  });
+
+  describe('currency form fields', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
+    const { rendering, formSubmission } = assertCurrencyFormFields({
+      legend: CONTRACT_POLICY[CURRENCY_CODE].LEGEND,
+      hint: CONTRACT_POLICY[CURRENCY_CODE].HINT,
+      errors: CONTRACT_ERROR_MESSAGES,
+    });
+
+    rendering();
+
+    formSubmission().selectAltRadioButNoAltCurrency({ errorIndex: 2 });
+
+    formSubmission().submitASupportedCurrency({
+      url: SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
+      completeNonCurrencyFields: () => cy.completeSingleContractPolicyForm({ chooseCurrency: false }),
+    });
+
+    formSubmission().submitAlternativeCurrency({ url: SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE });
   });
 
   describe('form submission', () => {
@@ -176,16 +150,15 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
       cy.completeAndSubmitSingleContractPolicyForm({});
     });
 
-    it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, () => {
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+    it(`should redirect to ${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`, () => {
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`;
       cy.assertUrl(expectedUrl);
     });
 
     it('should retain the `type of policy` task status as `in progress` after submitting the form', () => {
       cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {
@@ -204,27 +177,11 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
         fieldSelector(CONTRACT_COMPLETION_DATE).monthInput().should('have.value', application.POLICY[CONTRACT_COMPLETION_DATE].month);
         fieldSelector(CONTRACT_COMPLETION_DATE).yearInput().should('have.value', application.POLICY[CONTRACT_COMPLETION_DATE].year);
 
-        singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().should('have.value', application.POLICY[TOTAL_CONTRACT_VALUE]);
-        fieldSelector(CREDIT_PERIOD_WITH_BUYER).input().should('have.value', application.POLICY[CREDIT_PERIOD_WITH_BUYER]);
-        policyCurrencyCodeFormField.inputOptionSelected().contains(application.POLICY[POLICY_CURRENCY_CODE]);
-      });
-    });
+        const isoCode = application.POLICY[POLICY_CURRENCY_CODE];
 
-    describe('when the credit period with buyer field is a pure number and there are no other validation errors', () => {
-      const creditPeriodField = fieldSelector(CREDIT_PERIOD_WITH_BUYER);
-      const submittedValue = '1234';
+        const field = radios(CURRENCY_CODE, isoCode).option;
 
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-
-        cy.keyboardInput(creditPeriodField.input(), submittedValue);
-        submitButton().click();
-      });
-
-      it('should retain the submitted value when going back to the page', () => {
-        cy.clickBackLink();
-
-        creditPeriodField.input().should('have.value', submittedValue);
+        cy.assertRadioOptionIsChecked(field.input());
       });
     });
   });

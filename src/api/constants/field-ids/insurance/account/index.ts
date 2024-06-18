@@ -6,7 +6,7 @@ const ACCOUNT = {
   PASSWORD: 'password',
   SALT: 'salt',
   HASH: 'hash',
-  SECURITY_CODE: 'securityCode',
+  ACCESS_CODE: 'securityCode',
   IS_VERIFIED: 'isVerified',
   IS_BLOCKED: 'isBlocked',
   PASSWORD_RESET_HASH: 'passwordResetHash',

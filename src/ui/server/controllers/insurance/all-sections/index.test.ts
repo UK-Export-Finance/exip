@@ -31,14 +31,60 @@ describe('controllers/insurance/all-sections', () => {
     it('should render template', () => {
       get(req, res);
 
-      const { referenceNumber, policy, broker, declaration } = mockApplication;
+      const { broker, buyer, company, declaration, exportContract } = mockApplication;
+      const { nominatedLossPayee, policy, referenceNumber, totalContractValueOverThreshold } = mockApplication;
 
-      const { policyType } = policy;
+      const { policyType, jointlyInsuredParty } = policy;
+
+      const {
+        isAppointed: isAppointingLossPayee,
+        isLocatedInUk: lossPayeeIsLocatedInUk,
+        isLocatedInternationally: lossPayeeIsLocatedInternationally,
+      } = nominatedLossPayee;
+
+      const {
+        finalDestinationKnown,
+        privateMarket: { attempted: attemptedPrivateMarketCover },
+        agent: {
+          isUsingAgent,
+          service: {
+            agentIsCharging,
+            charge: { method: agentChargeMethod },
+          },
+        },
+      } = exportContract;
+
       const { isUsingBroker } = broker;
+      const { hasDifferentTradingName } = company;
       const { hasAntiBriberyCodeOfConduct } = declaration;
+      const { buyerTradingHistory, relationship } = buyer;
+      const { exporterIsConnectedWithBuyer, exporterHasPreviousCreditInsuranceWithBuyer } = relationship;
+      const { outstandingPayments, exporterHasTradedWithBuyer } = buyerTradingHistory;
 
       const flatApplicationData = flattenApplicationData(mockApplication);
-      const taskListStructure = generateGroupsAndTasks(referenceNumber, policyType, isUsingBroker, hasAntiBriberyCodeOfConduct);
+
+      const taskListStructure = generateGroupsAndTasks(
+        referenceNumber,
+        policyType,
+        finalDestinationKnown,
+        jointlyInsuredParty.requested,
+        isUsingBroker,
+        isAppointingLossPayee,
+        lossPayeeIsLocatedInUk,
+        lossPayeeIsLocatedInternationally,
+        hasDifferentTradingName,
+        hasAntiBriberyCodeOfConduct,
+        exporterIsConnectedWithBuyer,
+        exporterHasTradedWithBuyer,
+        outstandingPayments,
+        exporterHasPreviousCreditInsuranceWithBuyer,
+        totalContractValueOverThreshold,
+        attemptedPrivateMarketCover,
+        isUsingAgent,
+        agentIsCharging,
+        agentChargeMethod,
+      );
+
       const expectedTaskListData = generateTaskList(taskListStructure, flatApplicationData);
 
       const expectedVariables = {

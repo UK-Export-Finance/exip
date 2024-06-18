@@ -3,9 +3,9 @@ import { Context } from '../../types';
 /**
  * timestamp
  * Update an application's "updated" timestamp
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {String} Application ID
- * @returns {Object} Application
+ * @returns {Promise<Object>} Application
  */
 const timestamp = async (context: Context, applicationId: string) => {
   try {

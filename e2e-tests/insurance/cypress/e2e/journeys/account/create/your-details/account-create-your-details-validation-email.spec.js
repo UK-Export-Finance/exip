@@ -1,9 +1,7 @@
-import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
-import { INVALID_EMAILS } from '../../../../../../../constants';
+import { assertEmailFieldValidation } from '../../../../../../../shared-test-assertions';
 
 const {
   START,
@@ -11,35 +9,22 @@ const {
 } = ROUTES;
 
 const {
-  ACCOUNT: { EMAIL },
+  ACCOUNT: { EMAIL: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
     ACCOUNT: {
-      CREATE: { YOUR_DETAILS: YOUR_DETAILS_ERROR_MESSAGES },
+      CREATE: {
+        YOUR_DETAILS: {
+          [FIELD_ID]: ERROR_MESSAGES_OBJECT,
+        },
+      },
     },
   },
 } = ERROR_MESSAGES;
 
-const expectedMessage = String(YOUR_DETAILS_ERROR_MESSAGES[EMAIL].INCORRECT_FORMAT);
-
 const baseUrl = Cypress.config('baseUrl');
-
-const submitAndAssertFieldErrors = (fieldValue) => {
-  const field = fieldSelector(EMAIL);
-
-  cy.keyboardInput(field.input(), fieldValue);
-
-  submitButton().click();
-
-  cy.checkText(
-    partials.errorSummaryListItems().eq(2),
-    expectedMessage,
-  );
-
-  cy.checkText(field.errorMessage(), `Error: ${expectedMessage}`);
-};
 
 context('Insurance - Account - Create - Your details page - form validation - email', () => {
   let url;
@@ -60,27 +45,11 @@ context('Insurance - Account - Create - Your details page - form validation - em
     cy.navigateToUrl(url);
   });
 
-  it('should render a validation error when email does not contain an @ symbol', () => {
-    const invalidEmail = INVALID_EMAILS.NO_AT_SYMBOL;
-
-    submitAndAssertFieldErrors(invalidEmail);
-  });
-
-  it('should render a validation error when email does not contain at least one dot', () => {
-    const invalidEmail = INVALID_EMAILS.NO_DOTS;
-
-    submitAndAssertFieldErrors(invalidEmail);
-  });
-
-  it('should render a validation error when email contains a space', () => {
-    const invalidEmail = INVALID_EMAILS.WITH_SPACE;
-
-    submitAndAssertFieldErrors(invalidEmail);
-  });
-
-  it('should render a validation error when email does not contain a domain', () => {
-    const invalidEmail = INVALID_EMAILS.NO_DOMAIN;
-
-    submitAndAssertFieldErrors(invalidEmail);
+  assertEmailFieldValidation({
+    fieldId: FIELD_ID,
+    errorIndex: 2,
+    errorMessages: ERROR_MESSAGES_OBJECT,
+    totalExpectedErrors: 4,
+    totalExpectedOtherErrorsWithValidEmail: 3,
   });
 });

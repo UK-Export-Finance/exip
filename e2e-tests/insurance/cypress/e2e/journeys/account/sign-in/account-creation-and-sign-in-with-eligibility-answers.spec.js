@@ -46,17 +46,17 @@ context('Insurance - Account - When answering eligibility answers, creating an a
     cy.deleteApplication(referenceNumber);
   });
 
-  describe('after signing in with a valid security code', () => {
-    let validSecurityCode;
+  describe('after signing in with a valid access code', () => {
+    let validAccessCode;
 
     before(() => {
       cy.navigateToUrl(enterCodeUrl);
 
       // create and get an OTP for the exporter's account
-      cy.accountAddAndGetOTP().then((securityCode) => {
-        validSecurityCode = securityCode;
+      cy.accountAddAndGetOTP().then((accessCode) => {
+        validAccessCode = accessCode;
 
-        cy.completeAndSubmitEnterCodeAccountForm(validSecurityCode);
+        cy.completeAndSubmitEnterCodeAccountForm(validAccessCode);
       });
     });
 
@@ -71,7 +71,7 @@ context('Insurance - Account - When answering eligibility answers, creating an a
 
       cy.assertUrl(dashboardUrl);
 
-      table.body.rows().should('have.length', 1);
+      cy.assertLength(table.body.rows(), 1);
 
       table.body.firstRow.submittedLink().invoke('text').then((refNumber) => {
         referenceNumber = refNumber;

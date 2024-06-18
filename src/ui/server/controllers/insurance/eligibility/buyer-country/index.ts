@@ -1,17 +1,18 @@
 import { PAGES } from '../../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { FIELD_IDS, TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import api from '../../../../api';
-import { objectHasProperty } from '../../../../helpers/object';
 import { isPopulatedArray } from '../../../../helpers/array';
 import mapCountries from '../../../../helpers/mappings/map-countries';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import { validation as generateValidationErrors } from '../../../../shared-validation/buyer-country';
-import getCountryByName from '../../../../helpers/get-country-by-name';
+import getCountryByIsoCode from '../../../../helpers/get-country-by-iso-code';
 import mapSubmittedEligibilityCountry from '../../../../helpers/mappings/map-submitted-eligibility-country';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
+import isChangeRoute from '../../../../helpers/is-change-route';
 
 export const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
@@ -22,39 +23,23 @@ export const PAGE_VARIABLES = {
 
 export const TEMPLATE = TEMPLATES.SHARED_PAGES.BUYER_COUNTRY;
 
-const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
+const {
+  PROBLEM_WITH_SERVICE,
+  APPLY_OFFLINE,
+  ELIGIBILITY: { CANNOT_APPLY: CANNOT_APPLY_ROUTE, TOTAL_VALUE_INSURED, CHECK_YOUR_ANSWERS },
+} = INSURANCE_ROUTES;
 
 export const get = async (req: Request, res: Response) => {
   try {
-    const { submittedData } = req.session;
-
-    if (!submittedData || !objectHasProperty(submittedData, 'insuranceEligibility')) {
-      req.session.submittedData = {
-        ...req.session.submittedData,
-        insuranceEligibility: {},
-      };
-    }
-
     const countries = await api.keystone.APIM.getCisCountries();
 
     if (!isPopulatedArray(countries)) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    let countryValue;
     const { insuranceEligibility } = req.session.submittedData;
 
-    if (objectHasProperty(insuranceEligibility, FIELD_ID)) {
-      countryValue = insuranceEligibility[FIELD_ID];
-    }
-
-    let mappedCountries;
-
-    if (countryValue) {
-      mappedCountries = mapCountries(countries, countryValue.isoCode);
-    } else {
-      mappedCountries = mapCountries(countries);
-    }
+    const mappedCountries = mapCountries(countries, insuranceEligibility[FIELD_ID]?.isoCode);
 
     return res.render(TEMPLATE, {
       ...singleInputPageVariables({
@@ -84,9 +69,9 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const mappedCountries = mapCountries(countries);
-
     if (validationErrors) {
+      const mappedCountries = mapCountries(countries);
+
       return res.render(TEMPLATE, {
         ...singleInputPageVariables({
           ...PAGE_VARIABLES,
@@ -98,38 +83,42 @@ export const post = async (req: Request, res: Response) => {
       });
     }
 
-    const submittedCountryName = payload[FIELD_ID];
+    const submittedCountryIsoCode = payload[FIELD_ID];
 
-    const country = getCountryByName(countries, submittedCountryName);
+    const country = getCountryByIsoCode(countries, submittedCountryIsoCode);
 
     if (!country) {
-      return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
+      return res.redirect(CANNOT_APPLY_ROUTE);
     }
 
-    if (country.canApplyOnline) {
-      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
+    if (country.canApplyForInsuranceOnline) {
+      const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData = {
         ...req.session.submittedData,
         insuranceEligibility: updateSubmittedData(populatedData, req.session.submittedData.insuranceEligibility),
       };
 
-      return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
+      if (isChangeRoute(req.originalUrl)) {
+        return res.redirect(CHECK_YOUR_ANSWERS);
+      }
+
+      return res.redirect(TOTAL_VALUE_INSURED);
     }
 
-    if (country.canApplyOffline) {
-      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
+    if (country.canApplyForInsuranceOffline) {
+      const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData = {
         ...req.session.submittedData,
         insuranceEligibility: updateSubmittedData(populatedData, req.session.submittedData.insuranceEligibility),
       };
 
-      return res.redirect(ROUTES.INSURANCE.APPLY_OFFLINE);
+      return res.redirect(APPLY_OFFLINE);
     }
 
-    if (country.cannotApply) {
-      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
+    if (country.noInsuranceSupport) {
+      const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData = {
         ...req.session.submittedData,
@@ -143,7 +132,7 @@ export const post = async (req: Request, res: Response) => {
 
       req.flash('exitReason', reason);
 
-      return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
+      return res.redirect(CANNOT_APPLY_ROUTE);
     }
   } catch (err) {
     console.error('Error posting insurance - eligibility - buyer-country %O', err);

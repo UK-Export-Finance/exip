@@ -9,6 +9,8 @@ const { KEY, VALUE } = XLSX_CONFIG;
  * @returns {Object}
  */
 const xlsxRow = (fieldName: string, answer?: string | number) => {
+  console.info('Mapping XLSX row %s', fieldName);
+
   const value = answer || answer === 0 ? answer : '';
 
   const cleanValue = replaceCharacterCodesWithCharacters(String(value));

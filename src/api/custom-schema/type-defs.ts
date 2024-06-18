@@ -22,23 +22,12 @@ const typeDefs = `
 
   type CreateAnAccountResponse {
     success: Boolean
+    alreadyExists: Boolean
+    isVerified: Boolean
     id: String
-    firstName: String
-    lastName: String
     email: String
     verificationHash: String
-  }
-
-  # fields from registered_office_address object
-  type CompaniesHouseExporterCompanyAddress {
-    addressLine1: String
-    addressLine2: String
-    careOf: String
-    locality: String
-    region: String
-    postalCode: String
-    country: String
-    premises: String
+    isBlocked: Boolean
   }
 
   type CompaniesHouseResponse {
@@ -51,17 +40,38 @@ const typeDefs = `
     financialYearEndDate: DateTime
     success: Boolean
     apiError: Boolean
+    isActive: Boolean
+    notFound: Boolean
   }
 
   type CompanyAddress {
     addressLine1: String
     addressLine2: String
-    careOf: String
+    postalCode: String
+    country: String
     locality: String
     region: String
     postalCode: String
-    country: String
+    careOf: String
     premises: String
+  }
+
+  type OrdnanceSurveyAddress {
+    addressLine1: String
+    addressLine2: String
+    postalCode: String
+    country: String
+    county: String
+    town: String
+  }
+
+  input OrdnanceAddressInput  {
+    addressLine1: String
+    addressLine2: String
+    postalCode: String
+    country: String
+    county: String
+    town: String
   }
 
   input OldSicCodes {
@@ -79,31 +89,39 @@ const typeDefs = `
     premises: String
   }
 
-  type CompanyAndCompanyAddress {
-    id: ID
-    registeredOfficeAddress: CompanyAddress
+  input CompanyInput {
     companyName: String
     companyNumber: String
-    dateOfCreation: DateTime
-    hasDifferentTradingAddress: Boolean
-    hasDifferentTradingName: Boolean
-    companyWebsite: String
-    phoneNumber: String
-  }
-
-  input CompanyAndCompanyAddressInput {
-    address: CompanyAddressInput
+    dateOfCreation: String
     sicCodes: [String]
     industrySectorNames: [String]
-    companyName: String
-    companyNumber: String
-    dateOfCreation: DateTime
-    hasDifferentTradingAddress: Boolean
-    hasDifferentTradingName: Boolean
-    companyWebsite: String
-    phoneNumber: String
     financialYearEndDate: DateTime
-    oldSicCodes: [OldSicCodes]
+    registeredOfficeAddress: CompanyAddressInput
+    isActive: Boolean
+  }
+
+  input SectionReviewInput {
+    eligibility: Boolean!
+  }
+
+  input ApplicationWhereUniqueInput {
+    id: ID
+    referenceNumber: Int
+  }
+
+  input LossPayeeFinancialDetailsUkInput {
+    id: String
+    accountNumber: String
+    sortCode: String
+    bankAddress: String
+  }
+
+   type OrdnanceSurveyResponse {
+    success: Boolean
+    addresses: [OrdnanceSurveyAddress]
+    apiError: Boolean
+    noAddressesFound: Boolean
+    invalidPostcode: Boolean
   }
 
   type EmailResponse {
@@ -174,17 +192,21 @@ const typeDefs = `
 
   input ApplicationEligibility {
     buyerCountryIsoCode: String!
-    hasCompaniesHouseNumber: Boolean!
-    otherPartiesInvolved: Boolean!
-    paidByLetterOfCredit: Boolean!
-    needPreCreditPeriodCover: Boolean!
-    totalContractValueId: Int!
     coverPeriodId: Int!
-    validExporterLocation: Boolean!
+    hasCompaniesHouseNumber: Boolean!
+    hasEndBuyer: Boolean!
     hasMinimumUkGoodsOrServices: Boolean!
+    totalContractValueId: Int!
+    validExporterLocation: Boolean!
   }
 
   type CreateAnApplicationResponse {
+    success: Boolean!
+    id: String
+    referenceNumber: Int
+  }
+
+  type CreateAnAbandonedApplicationResponse {
     success: Boolean!
     id: String
     referenceNumber: Int
@@ -197,16 +219,86 @@ const typeDefs = `
     riskCategory: String
     nbiIssueAvailable: Boolean
     canGetAQuoteOnline: Boolean
+    canGetAQuoteOffline: Boolean
     canGetAQuoteByEmail: Boolean
     cannotGetAQuote: Boolean
-    canApplyOnline: Boolean
-    canApplyOffline: Boolean
     cannotApply: Boolean
+    canApplyForInsuranceOnline: Boolean
+    canApplyForInsuranceOffline: Boolean
+    noInsuranceSupport: Boolean
   }
 
   type MappedCurrency {
     isoCode: String!
     name: String!
+  }
+
+  type GetApimCurrencyResponse {
+    supportedCurrencies: [MappedCurrency]
+    alternativeCurrencies: [MappedCurrency]
+    allCurrencies: [MappedCurrency]
+  }
+
+  type Owner {
+    id: String
+    firstName: String
+    lastName: String
+    email: String
+  }
+
+  type ApplicationNominatedLossPayeeUk {
+    id: String
+    accountNumber: String
+    sortCode: String
+    bankAddress: String
+  }
+
+  type ApplicationNominatedLossPayeeInternational {
+    id: String
+    iban: String
+    bicSwiftCode: String
+    bankAddress: String
+  }
+
+  type ApplicationNominatedLossPayee {
+    id: String
+    isAppointed: Boolean
+    isLocatedInUk: Boolean
+    isLocatedInternationally: Boolean
+    name: String
+    financialUk: ApplicationNominatedLossPayeeUk
+    financialInternational: ApplicationNominatedLossPayeeInternational
+  }
+
+  type PopulatedApplication {
+    id: String!
+    version: Int
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    dealType: String!
+    submissionCount: Int
+    submissionDeadline: DateTime
+    submissionType: String
+    submissionDate: DateTime
+    referenceNumber: Int
+    status: String!
+    eligibility: Eligibility
+    exportContract: ExportContract
+    policy: Policy
+    nominatedLossPayee: ApplicationNominatedLossPayee
+    policyContact: PolicyContact
+    owner: Owner
+    company: Company
+    business: Business
+    broker: Broker
+    buyer: Buyer
+    sectionReview: SectionReview
+    declaration: Declaration
+  }
+
+  type ApplicationSuccessResponse {
+    success: Boolean!
+    application: PopulatedApplication
   }
 
   type Mutation {
@@ -223,7 +315,17 @@ const typeDefs = `
     createAnApplication(
       accountId: String!
       eligibilityAnswers: ApplicationEligibility!
+      company: CompanyInput!
+      sectionReview: SectionReviewInput!
     ): CreateAnApplicationResponse
+
+    """ create an application """
+    createAnAbandonedApplication(
+      accountId: String!
+      eligibilityAnswers: ApplicationEligibility!
+      company: CompanyInput!
+      sectionReview: SectionReviewInput!
+    ): CreateAnAbandonedApplicationResponse
 
     """ delete an account """
     deleteAnAccount(
@@ -289,13 +391,6 @@ const typeDefs = `
       hasBeenUsedBefore: Boolean
     ): AccountPasswordResetResponse
 
-    """ update company and company address """
-    updateCompanyAndCompanyAddress(
-      companyId: ID!
-      companyAddressId: ID!
-      data: CompanyAndCompanyAddressInput!
-    ): CompanyAndCompanyAddress
-
     """ delete an application by reference number """
     deleteApplicationByReferenceNumber(
       referenceNumber: Int!
@@ -315,6 +410,22 @@ const typeDefs = `
       product: String
       service: String
     ): SuccessResponse
+
+    """ update loss payee financial uk """
+    updateLossPayeeFinancialDetailsUk(
+      id: String
+      bankAddress: String
+      accountNumber: String
+      sortCode: String
+    ): SuccessResponse
+
+    """ update loss payee financial international """
+    updateLossPayeeFinancialDetailsInternational(
+      id: String
+      bankAddress: String
+      iban: String
+      bicSwiftCode: String
+    ): SuccessResponse
   }
 
   type Query {
@@ -333,16 +444,32 @@ const typeDefs = `
       token: String!
     ): AccountPasswordResetTokenResponse
 
+    """ get CIS countries from APIM """
+    getApimCisCountries: [MappedCisCountry]
+
     """ get companies house information """
     getCompaniesHouseInformation(
       companiesHouseNumber: String!
     ): CompaniesHouseResponse
 
+    """ gets application by reference number """
+    getApplicationByReferenceNumber(
+      referenceNumber: Int
+      decryptFinancialUk: Boolean
+      decryptFinancialInternational: Boolean
+    ): ApplicationSuccessResponse
+
+    """ get Ordnance Survey address """
+    getOrdnanceSurveyAddress(
+      postcode: String!
+      houseNameOrNumber: String!
+    ): OrdnanceSurveyResponse
+
     """ get CIS countries from APIM """
     getApimCisCountries: [MappedCisCountry]
 
     """ get currencies from APIM """
-    getApimCurrencies: [MappedCurrency]
+    getApimCurrencies: GetApimCurrencyResponse
   }
 `;
 

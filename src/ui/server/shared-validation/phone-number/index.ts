@@ -2,7 +2,7 @@ import Joi from 'joi';
 import { PhoneNumberUtil } from 'google-libphonenumber';
 import generateValidationErrors from '../../helpers/validation';
 import { DEFAULT_COUNTRY_UK } from '../../constants';
-import isAboveMaxLength from '../../helpers/is-above-max-length';
+import { isAboveMaxLength } from '../../helpers/string';
 
 const phoneUtil = PhoneNumberUtil.getInstance();
 
@@ -35,8 +35,8 @@ const phoneNumberPatternValidation = (phoneNumber: string) => {
  * @param {string} phoneNumber
  * @param {string} fieldId
  * @param {string} errorMessage
- * @param {object} errors
- * @returns {object} updatedErrors
+ * @param {Object} errors: Other validation errors for the same form
+ * @returns {Object} updatedErrors
  */
 const validatePhoneNumber = (phoneNumber: string, fieldId: string, errorMessage: string, errors: object) => {
   let updatedErrors = errors;

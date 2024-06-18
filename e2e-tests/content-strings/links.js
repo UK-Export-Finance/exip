@@ -10,6 +10,7 @@ export const LINKS = {
   },
   FEEDBACK: 'feedback',
   GIVE_FEEDBACK: 'Give feedback',
+  GIVE_FEEDBACK_LOWERCASE: 'give feedback',
   SKIP_TO_MAIN_CONTENT: 'Skip to main content',
   EXTERNAL: {
     GUIDANCE: 'https://www.gov.uk/guidance/export-insurance-policy#eligibility',
@@ -30,5 +31,6 @@ export const LINKS = {
     BRIBERY_ACT_2010_GUIDANCE: 'https://www.justice.gov.uk/downloads/legislation/bribery-act-2010-guidance.pdf',
     ICO_MAKE_A_COMPLAINT: 'https://ico.org.uk/make-a-complaint',
     CALL_CHARGES: 'https://www.gov.uk/call-charges',
+    COMPANIES_HOUSE: 'https://find-and-update.company-information.service.gov.uk',
   },
 };

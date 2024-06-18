@@ -2,7 +2,8 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
+{% import '../../../components/text-input.njk' as textInput %}
+{% import '../../../components/password-input.njk' as passwordInput %}
 {% import '../../../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
@@ -71,7 +72,7 @@
 
   <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
-  <p data-cy="intro">{{ CONTENT_STRINGS.INTRO }}</p>
+  <p data-cy="{{ DATA_CY.INTRO }}">{{ CONTENT_STRINGS.INTRO }}</p>
 
   <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
 
@@ -80,55 +81,23 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-half-from-desktop">
 
-        {{ govukInput({
-          label: {
-            text: FIELDS.EMAIL.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
-            attributes: {
-              id: FIELDS.EMAIL.ID + '-label',
-              'data-cy': FIELDS.EMAIL.ID + '-label'
-            }
-          },
-          attributes: {
-            'data-cy': FIELDS.EMAIL.ID + '-input'
-          },
+        {{ textInput.render({
           id: FIELDS.EMAIL.ID,
-          name: FIELDS.EMAIL.ID,
+          labelText: FIELDS.EMAIL.LABEL,
+          labelClasses: "govuk-!-font-weight-bold govuk-!-font-size-24",
+          type: "email",
+          autocomplete: true,
+          spellcheck: false,
           value: submittedValues[FIELDS.EMAIL.ID],
-          errorMessage: validationErrors.errorList[FIELDS.EMAIL.ID] and {
-            text: validationErrors.errorList[FIELDS.EMAIL.ID].text,
-            attributes: {
-              "data-cy": FIELDS.EMAIL.ID + "-error-message"
-            }
-          }
+          errorMessage: validationErrors.errorList[FIELDS.EMAIL.ID]
         }) }}
 
-        {{ govukInput({
-          label: {
-            text: FIELDS.PASSWORD.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
-            attributes: {
-              id: FIELDS.PASSWORD.ID + '-label',
-              'data-cy': FIELDS.PASSWORD.ID + '-label'
-            }
-          },
-          attributes: {
-            'data-cy': FIELDS.PASSWORD.ID + '-input',
-            'data-module': 'moj-password-reveal'
-          },
+        {{ passwordInput.render({
           id: FIELDS.PASSWORD.ID,
-          name: FIELDS.PASSWORD.ID,
-          type: 'password',
-          hint: {
-            html: passwordHintHtml
-          },
+          labelText: FIELDS.PASSWORD.LABEL,
+          hintHtml: passwordHintHtml,
           value: submittedValues[FIELDS.PASSWORD.ID],
-          errorMessage: validationErrors.errorList[FIELDS.PASSWORD.ID] and {
-            text: validationErrors.errorList[FIELDS.PASSWORD.ID].text,
-            attributes: {
-              "data-cy": FIELDS.PASSWORD.ID + "-error-message"
-            }
-          }
+          errorMessage: validationErrors.errorList[FIELDS.PASSWORD.ID]
         }) }}
 
         <div class="govuk-button-group">
@@ -149,7 +118,5 @@
     <a class="govuk-button govuk-button--secondary" href="{{ CONTENT_STRINGS.NEED_TO_CREATE_ACCOUNT.LINK.HREF }}" data-cy="create-account">{{ CONTENT_STRINGS.NEED_TO_CREATE_ACCOUNT.LINK.TEXT }}</a>
 
   </form>
-
-  <script src="/assets/js/mojFrontend.js" type="module" integrity="{{ SRI.MOJ }}" crossorigin="anonymous"></script>
 
 {% endblock %}

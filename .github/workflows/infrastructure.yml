@@ -153,12 +153,6 @@ jobs:
         uses: azure/cli@v1.0.9
         with:
           inlineScript: |
-            # Database
-            az network vnet subnet create \
-            --name snet-database-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-            --address-prefixes ${{ vars.VNET_SUBNET_DATABASE_PREFIX }} \
-            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
-
             # WebApp
             az network vnet subnet create \
             --name snet-webapp-${{ env.PRODUCT }}-${{ vars.VERSION }} \
@@ -500,7 +494,7 @@ jobs:
             --domains $(az afd endpoint list --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query [].id -o tsv) \
             --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
-            # Custom rule - RL 
+            # Custom rule - RL
             az network front-door waf-policy rule create \
             --action Block \
             --name HTTPRateLimitRule \
@@ -524,7 +518,7 @@ jobs:
         uses: azure/cli@v1.0.9
         with:
           inlineScript: |
-            # Custom rule - IP 
+            # Custom rule - IP
             az network front-door waf-policy rule create \
             --action Redirect \
             --name IPAllowListRule \
@@ -607,7 +601,6 @@ jobs:
       - name: Variables ✨
         run: |
           echo "API_URL=$(az webapp show --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} --query defaultHostName -o tsv)" >> $GITHUB_ENV
-          echo "MYSQL_URL=$(az mysql flexible-server list --query [].fullyQualifiedDomainName -o tsv)" >> $GITHUB_ENV
 
       - name: Setting 🧱
         uses: azure/cli@v1.0.9
@@ -642,7 +635,9 @@ jobs:
             WEBSITES_PORT='${{ vars.API_PORT }}' \
             TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
             TLS_KEY='${{ secrets.TLS_KEY }}' \
-            DATABASE_URL='mysql://${{ secrets.MYSQL_USER }}:${{ secrets.MYSQL_PASSWORD }}@${{ env.MYSQL_URL }}:${{ vars.DATABASE_PORT }}/${{ env.PRODUCT }}' \
+            DATABASE_URL='${{ secrets.DATABASE_URL }}' \
+            MYSQL_DATABASE='${{ secrets.MYSQL_DATABASE }}' \
+            MYSQL_ROOT_PASSWORD='${{ secrets.MYSQL_ROOT_PASSWORD }}' \
             API_KEY='${{ secrets.API_KEY }}' \
             APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
             APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
@@ -654,6 +649,10 @@ jobs:
             JWT_SIGNING_KEY='${{ secrets.JWT_SIGNING_KEY }}' \
             UNDERWRITING_TEAM_EMAIL='${{ secrets.UNDERWRITING_TEAM_EMAIL }}' \
             FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}'
+            CRON_SCHEDULE_UNVERIFIED_ACCOUNT='${{ secrets.CRON_SCHEDULE_UNVERIFIED_ACCOUNT }}'
+            CRON_SCHEDULE_INACTIVE_APPLICATION='${{ secrets.CRON_SCHEDULE_INACTIVE_APPLICATION }}'
+            CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL='${{ secrets.CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL }}'
+            APPLICATION_URL='${{ secrets.APPLICATION_URL }}'
 
       - name: Extension ➕
         uses: azure/cli@v1.0.9
@@ -718,12 +717,15 @@ jobs:
         uses: azure/cli@v1.0.9
         with:
           inlineScript: |
-            az monitor diagnostic-settings create \
-            --name sqldb-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --resource $(az mysql flexible-server list --query [].id -o tsv) \
-            --workspace $(az monitor log-analytics workspace list --query [].id -o tsv) \
-            --logs "[{categoryGroup:allLogs,enabled:true}]" \
-            --metrics "[{category:allMetrics,enabled:true}]"
+            # UI
+            az webapp log config \
+            --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --detailed-error-messages true \
+            --failed-request-tracing true \
+            --level ${{ vars.WEBAPP_LOG_LEVEL }} \
+            --application-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
+            --docker-container-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
+            --web-server-logging ${{ vars.WEBAPP_LOG_DESTINATION }}
 
       - name: WebApp 🌐
         uses: azure/cli@v1.0.9
@@ -778,7 +780,7 @@ jobs:
             --workspace $(az monitor log-analytics workspace list --query [].id -o tsv) \
             --metrics "[{category:allMetrics,enabled:true}]"
 
-  # 6. Health check alerts
+  # 5. Health check alerts
   alert:
     name: Alert 📢
     needs: [base, security, webapp]

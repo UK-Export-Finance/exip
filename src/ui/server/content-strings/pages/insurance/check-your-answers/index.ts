@@ -15,14 +15,9 @@ const START_NEW_APPLICATION = {
   INSET: 'You can continue to make changes to your existing application until',
 };
 
-const POLICY = {
-  ...SHARED,
-  PAGE_TITLE: 'Type of policy and exports',
-};
-
 const YOUR_BUSINESS = {
   ...SHARED,
-  PAGE_TITLE: 'About your business',
+  PAGE_TITLE: 'Your business',
 };
 
 const YOUR_BUYER = {
@@ -30,10 +25,21 @@ const YOUR_BUYER = {
   PAGE_TITLE: 'Your buyer',
 };
 
+const POLICY = {
+  ...SHARED,
+  PAGE_TITLE: 'Your insurance coverage',
+};
+
+const YOUR_EXPORT_CONTRACT = {
+  ...SHARED,
+  PAGE_TITLE: 'Your export contract',
+};
+
 export default {
   ELIGIBILITY,
   START_NEW_APPLICATION,
-  POLICY,
   YOUR_BUSINESS,
   YOUR_BUYER,
+  POLICY,
+  YOUR_EXPORT_CONTRACT,
 };

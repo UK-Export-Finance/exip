@@ -30,7 +30,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 const field = singleInputField(FIELD_ID);
 
-context('Insurance - Declarations - How your data will be used page - As an Exporter, I want to have details of how my export insurance application data will be used, So that I can determine if I am okay with the use of my application in that format', () => {
+context('Insurance - Declarations - How your data will be used page - As an Exporter, I want to have details of how my credit insurance application data will be used, So that I can determine if I am okay with the use of my application in that format', () => {
   let referenceNumber;
   let url;
 
@@ -129,13 +129,12 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
       it('should render a validation error', () => {
         const expectedErrorsCount = 1;
 
-        cy.submitAndAssertRadioErrors(
-          singleInputField(FIELD_ID),
-          0,
+        cy.submitAndAssertRadioErrors({
+          field: singleInputField(FIELD_ID),
+          errorIndex: 0,
           expectedErrorsCount,
-          ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
-          false,
-        );
+          expectedErrorMessage: ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
+        });
       });
     });
 

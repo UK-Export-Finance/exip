@@ -10,11 +10,13 @@ import sendEmailPasswordResetLink from './send-email-password-reset-link';
 import accountPasswordReset from './account-password-reset';
 import sendEmailReactivateAccountLink from './send-email-reactivate-account-link';
 import createAnApplication from './create-an-application';
+import createAnAbandonedApplication from './create-an-abandoned-application';
 import deleteApplicationByReferenceNumber from './delete-application-by-reference-number';
-import updateCompanyAndCompanyAddress from './update-company-and-company-address';
 import submitApplication from './submit-application';
 import createFeedbackAndSendEmail from './create-feedback';
 import verifyAccountReactivationToken from './verify-account-reactivation-token';
+import updateLossPayeeFinancialDetailsUk from './update-loss-payee-financial-details-uk';
+import updateLossPayeeFinancialDetailsInternational from './update-loss-payee-financial-details-international';
 
 export {
   createAnAccount,
@@ -29,9 +31,11 @@ export {
   accountPasswordReset,
   sendEmailReactivateAccountLink,
   createAnApplication,
+  createAnAbandonedApplication,
   deleteApplicationByReferenceNumber,
-  updateCompanyAndCompanyAddress,
   submitApplication,
   createFeedbackAndSendEmail,
   verifyAccountReactivationToken,
+  updateLossPayeeFinancialDetailsUk,
+  updateLossPayeeFinancialDetailsInternational,
 };

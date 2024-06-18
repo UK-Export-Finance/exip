@@ -1,3 +1,4 @@
+import getAccountStatusById from '../get-account-status-by-id';
 import { Account, Context } from '../../types';
 
 const getAccountByField = async (context: Context, field: string, value: string): Promise<Account | boolean> => {
@@ -27,7 +28,18 @@ const getAccountByField = async (context: Context, field: string, value: string)
 
     const account = accountsArray[0] as Account;
 
-    return account;
+    const accountStatus = await getAccountStatusById(context, account.statusId);
+
+    /**
+     * Construct a populated account,
+     * with accountStatus data.
+     */
+    const populatedAccount = {
+      ...account,
+      status: accountStatus,
+    } as Account;
+
+    return populatedAccount;
   } catch (err) {
     console.error('Error getting account by field/value %O', err);
     throw new Error(`Getting account by field/value ${err}`);

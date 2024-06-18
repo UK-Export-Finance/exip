@@ -1,6 +1,6 @@
 import { INSURANCE_ROUTES as ROUTES } from '../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
-import { submitButton } from '../../../pages/shared';
+
 import mockAccount from '../../../fixtures/account';
 
 const {
@@ -13,7 +13,9 @@ const {
 
 const { ACCOUNT: { PASSWORD } } = INSURANCE_FIELD_IDS;
 
-const accountSuspendedEmailSentUrl = `${Cypress.config('baseUrl')}${EMAIL_SENT}`;
+const baseUrl = Cypress.config('baseUrl');
+
+const accountSuspendedEmailSentUrl = `${baseUrl}${EMAIL_SENT}`;
 
 const invalidPassword = `${mockAccount[PASSWORD]}-invalid`;
 
@@ -39,7 +41,7 @@ const createAnAccountAndBecomeBlocked = ({ startReactivationJourney = false }) =
   });
 
   if (startReactivationJourney) {
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.assertUrl(accountSuspendedEmailSentUrl);
   }

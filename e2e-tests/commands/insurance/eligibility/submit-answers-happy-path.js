@@ -1,9 +1,8 @@
-import submitInsuranceEligibilityAnswersFromBuyerCountryHappyPath from './submit-answers-from-buyer-country-happy-path';
-
+import submitInsuranceEligibilityAnswersFromExporterLocationHappyPath from './submit-answers-from-exporter-location-happy-path';
 import { completeStartForm, completeCheckIfEligibleForm } from './forms';
 
 export default () => {
   completeStartForm();
   completeCheckIfEligibleForm();
-  submitInsuranceEligibilityAnswersFromBuyerCountryHappyPath();
+  submitInsuranceEligibilityAnswersFromExporterLocationHappyPath();
 };

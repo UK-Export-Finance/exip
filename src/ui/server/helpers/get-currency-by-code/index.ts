@@ -1,3 +1,4 @@
+import { SYMBOLS } from '../../constants/supported-currencies';
 import { Currency } from '../../../types';
 
 /**
@@ -10,9 +11,12 @@ import { Currency } from '../../../types';
 const getCurrencyByCode = (currencies: Array<Currency>, isoCode: string) => {
   const currency = currencies.find((c) => c.isoCode === isoCode);
 
+  const symbol = SYMBOLS[isoCode];
+
   return {
     isoCode: currency?.isoCode,
     name: currency?.name,
+    symbol,
   };
 };
 

@@ -1,0 +1,18 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters-from-desktop">
+
+    {% set detailsHtml %}
+      <p data-cy="details-body-1">{{ CONTENT_STRINGS.DETAILS.BODY_1 }}</p>
+      <p data-cy="details-body-2">{{ CONTENT_STRINGS.DETAILS.BODY_2 }}</p>
+    {% endset %}
+
+    {{ govukDetails({
+      summaryText: CONTENT_STRINGS.DETAILS.INTRO,
+      html: detailsHtml,
+      attributes: {
+        "data-cy": "buyer-body"
+      }
+    }) }}
+
+  </div>
+</div>

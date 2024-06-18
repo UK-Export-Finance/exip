@@ -14,7 +14,7 @@ describe('server/helpers/page-variables/single-input/insurance', () => {
     FIELD_ID: 'mock',
   };
 
-  it('should return singleInputPageVariables with BACK_LINK, insurance/application product description and FIELD_ID', () => {
+  it('should return singleInputPageVariables with BACK_LINK, insurance/application product description, FIELD_ID', () => {
     const result = insuranceSingleInputPageVariables(mock);
 
     const expected = singleInputPageVariables({

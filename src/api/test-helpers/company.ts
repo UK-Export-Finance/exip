@@ -3,7 +3,7 @@ import { ApplicationCompany, ApplicationCompanyAddress, Context, TestHelperCreat
 /**
  * create company test helper
  * Creates a blank company.
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Object} Created company id
  */
 const createCompany = async ({ context }: TestHelperCreate) => {
@@ -24,7 +24,7 @@ const createCompany = async ({ context }: TestHelperCreate) => {
 /**
  * delete company test helper
  * deletes a company by companyId.
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Object} Delete response
  */
 const deleteCompany = async (context: Context, companyId: string) => {
@@ -47,7 +47,7 @@ const deleteCompany = async (context: Context, companyId: string) => {
 /**
  * delete company address test helper
  * deletes a company address by companyAddressId.
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Object} Delete response
  */
 const deleteCompanyAddress = async (context: Context, companyAddressId: string) => {
@@ -70,7 +70,7 @@ const deleteCompanyAddress = async (context: Context, companyAddressId: string) 
 /**
  * delete company sic code test helper
  * deletes a company sic code by companyId.
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Array} Delete response
  */
 const deleteCompanySicCode = async (context: Context, companySicId: string) => {
@@ -91,7 +91,7 @@ const deleteCompanySicCode = async (context: Context, companySicId: string) => {
 /**
  * create company address test helper
  * Creates a blank company address.
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Object} Created company address id
  */
 const createCompanyAddress = async ({ context }: TestHelperCreate) => {
@@ -115,7 +115,7 @@ const createCompanyAddress = async ({ context }: TestHelperCreate) => {
 /**
  * get company test helper
  * Get a company by ID
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {String} companyId
  * @returns {Object} company
  */
@@ -138,7 +138,7 @@ const getCompany = async (context: Context, companyId: string) => {
 /**
  * get company address test helper
  * Get a company address by ID
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {String} companyAddressId
  * @returns {Object} company address
  */
@@ -161,7 +161,7 @@ const getCompanyAddress = async (context: Context, companyAddressId: string) => 
 /**
  * get company sic code test helper
  * Get a company sic code address by companyId
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {String} companyId
  * @returns {Array} company sic codes
  */

@@ -1,6 +1,6 @@
-import { isAfter } from 'date-fns';
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import getAccountByField from '../../../helpers/get-account-by-field';
+import { dateIsInThePast } from '../../../helpers/date';
 import { Context, AccountPasswordResetTokenResponse, VerifyAccountPasswordResetTokenVariables } from '../../../types';
 
 const { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY } = ACCOUNT_FIELD_IDS;
@@ -10,8 +10,8 @@ const { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY } = ACCOUNT_FIELD_IDS;
  * - Get an account's reset password token and return in the response.
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the VerifyAccountPasswordResetToken mutation
- * @param {Object} KeystoneJS context API
- * @returns {Object} Object with success flag
+ * @param {Context} KeystoneJS context API
+ * @returns {Promise<Object>} Object with success flag
  */
 const verifyAccountPasswordResetToken = async (
   root: any,
@@ -28,9 +28,7 @@ const verifyAccountPasswordResetToken = async (
 
     if (account) {
       // check that the reset token period has not expired.
-      const now = new Date();
-
-      const hasExpired = isAfter(now, account[PASSWORD_RESET_EXPIRY]);
+      const hasExpired = dateIsInThePast(account[PASSWORD_RESET_EXPIRY]);
 
       if (hasExpired) {
         console.info('Unable to verify account password reset token - token has expired');

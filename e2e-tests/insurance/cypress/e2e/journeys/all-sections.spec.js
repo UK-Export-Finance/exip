@@ -1,12 +1,23 @@
-import { format } from 'date-fns';
+import { addMonths, format } from 'date-fns';
 import insurance from '../../../../pages/insurance';
 import partials from '../../../../partials';
 import { PAGES, TASKS } from '../../../../content-strings';
-import { APPLICATION, DATE_FORMAT, ROUTES } from '../../../../constants';
+import { APPLICATION, DATE_FORMAT } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 
 const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ALL_SECTIONS;
+
+const {
+  ROOT,
+  ALL_SECTIONS,
+  ELIGIBILITY,
+  EXPORTER_BUSINESS,
+  YOUR_BUYER,
+  POLICY,
+  EXPORT_CONTRACT,
+} = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -18,7 +29,7 @@ context('Insurance - All sections - new application', () => {
     cy.completeSignInAndGoToApplication({ createApplicationViaApi: false }).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -35,8 +46,8 @@ context('Insurance - All sections - new application', () => {
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`,
-      backLink: ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE,
+      currentHref: `${ROOT}/${referenceNumber}${ALL_SECTIONS}`,
+      backLink: ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE,
       hasAForm: false,
       assertBackLink: false,
     });
@@ -65,7 +76,7 @@ context('Insurance - All sections - new application', () => {
             expectedText,
           );
 
-          cy.checkText(task.status(), TASKS.STATUS.COMPLETED);
+          cy.checkTaskEligibilityStatusIsComplete();
 
           task.link().should('not.exist');
         });
@@ -73,12 +84,16 @@ context('Insurance - All sections - new application', () => {
     });
 
     describe('`prepare application` group', () => {
-      it('should render a group heading', () => {
+      it('should render a group heading and hint', () => {
         cy.navigateToUrl(url);
 
-        const expected = `2. ${TASKS.LIST.PREPARE_APPLICATION.HEADING}`;
+        const expectedHeading = `2. ${TASKS.LIST.PREPARE_APPLICATION.HEADING}`;
 
-        cy.checkText(taskList.prepareApplication.groupHeading(), expected);
+        cy.checkText(taskList.prepareApplication.groupHeading(), expectedHeading);
+
+        const expectedHint = TASKS.LIST.PREPARE_APPLICATION.HINT;
+
+        cy.checkText(taskList.prepareApplication.groupHint(), expectedHint);
       });
 
       describe('tasks', () => {
@@ -86,25 +101,10 @@ context('Insurance - All sections - new application', () => {
           cy.navigateToUrl(url);
         });
 
-        it('should render a `type of policy` task with link and `not started` status', () => {
-          const task = taskList.prepareApplication.tasks.policy;
-
-          const expectedHref = `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY.TYPE_OF_POLICY}`;
-          const expectedText = TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY;
-
-          cy.checkLink(
-            task.link(),
-            expectedHref,
-            expectedText,
-          );
-
-          cy.checkText(task.status(), TASKS.STATUS.NOT_STARTED_YET);
-        });
-
         it('should render a `your business` task with link and `not started` status', () => {
           const task = taskList.prepareApplication.tasks.business;
 
-          const expectedHref = `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANIES_HOUSE_NUMBER}`;
+          const expectedHref = `${ROOT}/${referenceNumber}${EXPORTER_BUSINESS.ROOT}`;
           const expectedText = TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS;
 
           cy.checkLink(
@@ -113,14 +113,14 @@ context('Insurance - All sections - new application', () => {
             expectedText,
           );
 
-          cy.checkText(task.status(), TASKS.STATUS.NOT_STARTED_YET);
+          cy.checkTaskBusinessStatusIsNotStartedYet();
         });
 
         it('should render a `your buyer` task with link and `not started` status', () => {
           const task = taskList.prepareApplication.tasks.buyer;
 
           const expectedText = TASKS.LIST.PREPARE_APPLICATION.TASKS.BUYER;
-          const expectedHref = `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
+          const expectedHref = `${ROOT}/${referenceNumber}${YOUR_BUYER.ROOT}`;
 
           cy.checkLink(
             task.link(),
@@ -128,7 +128,37 @@ context('Insurance - All sections - new application', () => {
             expectedText,
           );
 
-          cy.checkText(task.status(), TASKS.STATUS.NOT_STARTED_YET);
+          cy.checkTaskBuyerStatusIsNotStartedYet();
+        });
+
+        it('should render a `type of policy` task with link and `not started` status', () => {
+          const task = taskList.prepareApplication.tasks.policy;
+
+          const expectedHref = `${ROOT}/${referenceNumber}${POLICY.ROOT}`;
+          const expectedText = TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY;
+
+          cy.checkLink(
+            task.link(),
+            expectedHref,
+            expectedText,
+          );
+
+          cy.checkTaskPolicyStatusIsNotStartedYet();
+        });
+
+        it('should render an `export contract` task with link and `not started` status', () => {
+          const task = taskList.prepareApplication.tasks.exportContract;
+
+          const expectedHref = `${ROOT}/${referenceNumber}${EXPORT_CONTRACT.ROOT}`;
+          const expectedText = TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORT_CONTRACT;
+
+          cy.checkLink(
+            task.link(),
+            expectedHref,
+            expectedText,
+          );
+
+          cy.checkTaskExportContractStatusIsNotStartedYet();
         });
       });
     });
@@ -154,7 +184,7 @@ context('Insurance - All sections - new application', () => {
 
           task.link().should('not.exist');
 
-          cy.checkText(task.status(), TASKS.STATUS.CANNOT_START);
+          cy.checkTaskCheckAnswersStatusIsCannotStart();
         });
 
         it('should render a `declarations and submit` task with no link and `cannot start yet` status', () => {
@@ -165,7 +195,7 @@ context('Insurance - All sections - new application', () => {
 
           task.link().should('not.exist');
 
-          cy.checkText(task.status(), TASKS.STATUS.CANNOT_START);
+          cy.checkTaskDeclarationsAndSubmitStatusIsCannotStart();
         });
       });
     });
@@ -184,9 +214,9 @@ context('Insurance - All sections - new application', () => {
     it('should render correct submission deadline', () => {
       insurance.allSectionsPage.submissionDeadline().should('exist');
 
-      const date = new Date();
-      const month = date.getMonth();
-      const timestamp = new Date(date.setMonth((month + APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS)));
+      const now = new Date();
+
+      const timestamp = addMonths(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
 
       const expected = format(new Date(timestamp), DATE_FORMAT.DEFAULT);
       cy.checkText(insurance.allSectionsPage.submissionDeadline(), expected);

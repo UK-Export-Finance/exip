@@ -1,4 +1,5 @@
-import { ROUTES, TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import { TEMPLATES } from '../../../../constants';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
@@ -6,19 +7,18 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
-import { Request, Response } from '../../../../../types';
 import getNameEmailPositionFromOwnerAndPolicy from '../../../../helpers/get-name-email-position-from-owner-and-policy';
 import mapAndSave from '../map-and-save/policy-contact';
+import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
+import { Request, Response } from '../../../../../types';
 
 const {
-  INSURANCE: {
-    INSURANCE_ROOT,
-    POLICY: { NAME_ON_POLICY_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, DIFFERENT_NAME_ON_POLICY },
-    CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
-    PROBLEM_WITH_SERVICE,
-  },
-} = ROUTES;
+  INSURANCE_ROOT,
+  POLICY: { DIFFERENT_NAME_ON_POLICY, DIFFERENT_NAME_ON_POLICY_CHANGE, NAME_ON_POLICY_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, PRE_CREDIT_PERIOD },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 const {
   NAME_ON_POLICY: { NAME, POSITION, OTHER_NAME, SAME_NAME },
@@ -62,9 +62,6 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
-
   const submittedValues = getNameEmailPositionFromOwnerAndPolicy(application.owner, application.policyContact);
 
   return res.render(TEMPLATE, {
@@ -72,7 +69,7 @@ export const get = (req: Request, res: Response) => {
       PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.NAME_ON_POLICY,
       BACK_LINK: req.headers.referer,
     }),
-    ...pageVariables(refNumber),
+    ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
     application,
     submittedValues,
@@ -93,8 +90,7 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
+  const { referenceNumber } = application;
 
   const payload = constructPayload(req.body, FIELD_IDS);
 
@@ -119,7 +115,7 @@ export const post = async (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.NAME_ON_POLICY,
         BACK_LINK: req.headers.referer,
       }),
-      ...pageVariables(refNumber),
+      ...pageVariables(application.referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       application,
       submittedValues,
@@ -128,24 +124,41 @@ export const post = async (req: Request, res: Response) => {
   }
 
   try {
-    let redirectRoute = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+    let redirectRoute = `${INSURANCE_ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`;
+
     const differentNameOnPolicyRoute = `${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
 
     if (payload[NAME] === OTHER_NAME) {
       redirectRoute = differentNameOnPolicyRoute;
     }
-    // // save the application
+
+    // save the application
     const saveResponse = await mapAndSave.policyContact(payload, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
+    if (isChangeRoute(req.originalUrl)) {
+      /**
+       * If change route and "not the same as owner" answer is submitted,
+       * redirect to different name on policy page with /change in URL.
+       * This ensures that the next page can consume /change in the URL
+       * and therefore correctly redirect on submission.
+       */
+      if (!isSameAsOwner) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY_CHANGE}`);
+      }
+
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    }
+
     if (isCheckAndChangeRoute(req.originalUrl)) {
       /**
-       * if check-and-change route
-       * if someone else is selected then redirects to different name on policy page with /check-and-change in url
-       * ensures that redirects to next page and once submitted, then redirects back to check and change page
+       * If check-and-change route and "not the same as owner" answer is submitted,
+       * redirect to different name on policy page with /check-and-change in url.
+       * This ensures that the next page can consume /check-and-change in the URL
+       * and therefore correctly redirect on submission.
        */
       if (!isSameAsOwner) {
         return res.redirect(`${differentNameOnPolicyRoute}/check-and-change`);

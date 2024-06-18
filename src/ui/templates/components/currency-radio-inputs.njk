@@ -1,0 +1,120 @@
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% import '../components/fieldset-legend.njk' as fieldsetLegend %}
+
+{% macro render(params) %}
+
+  {% set id = params.id %}
+  {% set isPageHeading = params.isPageHeading %}
+  {% set legend = params.legend %}
+  {% set hint = params.hint %}
+  {% set supportedCurrencies = params.supportedCurrencies %}
+  {% set alternativeCurrencies = params.alternativeCurrencies %}
+  {% set errors = params.errors %}
+  {% set submittedValue = params.submittedValue %}
+  {% set alternativeCurrencies = params.alternativeCurrencies %}
+  {% set alternativeCurrencyFieldId = params.alternativeCurrencyFieldId %}
+
+  {% set allCurrenciesHtml %}
+    {% include "partials/insurance/alternative-currency-input.njk" %}
+  {% endset %}
+
+  {{ govukRadios({
+    name: id,
+    fieldset: {
+      legend: {
+        html: fieldsetLegend.render({ id: id, legendText: legend, isPageHeading: isPageHeading })
+      }
+    },
+    hint: {
+      text: hint,
+      attributes: {
+        "data-cy": id + '-hint'
+      }
+    },
+    items: [
+      {
+        label: {
+          attributes: {
+            id: id + '-' + supportedCurrencies.GBP.value + '-label',
+            'data-cy': id + '-' + supportedCurrencies.GBP.value + '-label'
+          }
+        },
+        value: supportedCurrencies.GBP.value,
+        text: supportedCurrencies.GBP.text,
+        checked: submittedValue === supportedCurrencies.GBP.value,
+        attributes: {
+          "data-cy": id + '-' + supportedCurrencies.GBP.value + '-input'
+        }
+      },
+      {
+        label: {
+          attributes: {
+            id: id + '-' + supportedCurrencies.EUR.value + '-label',
+            'data-cy': id + '-' + supportedCurrencies.EUR.value + '-label'
+          }
+        },
+        value: supportedCurrencies.EUR.value,
+        text: supportedCurrencies.EUR.text,
+        checked: submittedValue === supportedCurrencies.EUR.value,
+        attributes: {
+          "data-cy": id + '-' + supportedCurrencies.EUR.value + '-input'
+        }
+      },
+      {
+        label: {
+          attributes: {
+            id: id + '-' + supportedCurrencies.USD.value + '-label',
+            'data-cy': id + '-' + supportedCurrencies.USD.value + '-label'
+          }
+        },
+        value: supportedCurrencies.USD.value,
+        text: supportedCurrencies.USD.text,
+        checked: submittedValue === supportedCurrencies.USD.value,
+        attributes: {
+          "data-cy": id + '-' + supportedCurrencies.USD.value + '-input'
+        }
+      },
+      {
+        label: {
+          attributes: {
+            id: id + '-' + supportedCurrencies.JPY.value + '-label',
+            'data-cy': id + '-' + supportedCurrencies.JPY.value + '-label'
+          }
+        },
+        value: supportedCurrencies.JPY.value,
+        text: supportedCurrencies.JPY.text,
+        checked: submittedValue === supportedCurrencies.JPY.value,
+        attributes: {
+          "data-cy": id + '-' + supportedCurrencies.JPY.value + '-input'
+        }
+      },
+      {
+        divider: 'or'
+      },
+      {
+        label: {
+          attributes: {
+            id: alternativeCurrencyFieldId + '-label',
+            'data-cy': alternativeCurrencyFieldId + '-label'
+          }
+        },
+        value: supportedCurrencies.ALTERNATIVE.value,
+        text: supportedCurrencies.ALTERNATIVE.text,
+        checked: submittedValue === supportedCurrencies.ALTERNATIVE.value,
+        attributes: {
+          "data-cy": alternativeCurrencyFieldId + '-input'
+        },
+        conditional: {
+          html: allCurrenciesHtml
+        }
+      }
+    ],
+    errorMessage: errors[id].text and {
+      text: errors[id].text,
+      attributes: {
+        "data-cy": id + "-error-message"
+      }
+    }
+  }) }}
+
+{% endmacro %}

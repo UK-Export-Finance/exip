@@ -1,14 +1,12 @@
-import { ROUTES } from '../../../../../constants';
-import { Request, Response } from '../../../../../../types';
+import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import hasFormData from '../../../../../helpers/has-form-data';
 import { FIELD_IDS } from '..';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
 import callMapAndSave from '../../call-map-and-save';
+import { Request, Response } from '../../../../../../types';
 
-const {
-  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE },
-} = ROUTES;
+const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 /**
  * post

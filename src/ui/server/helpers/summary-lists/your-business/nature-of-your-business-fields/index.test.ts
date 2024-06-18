@@ -1,30 +1,32 @@
+import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { ROUTES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import generateNatureOfYourBusinessFields from '.';
-import mockApplication, { mockBusiness } from '../../../../test-mocks/mock-application';
+import { mockBusiness, referenceNumber } from '../../../../test-mocks/mock-application';
 import generateChangeLink from '../../../generate-change-link';
+
+const {
+  YOUR_BUSINESS: { NATURE_OF_BUSINESS: FORM_TITLE },
+} = FORM_TITLES;
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
 const {
-  INSURANCE: {
-    EXPORTER_BUSINESS: { NATURE_OF_BUSINESS_CHANGE, NATURE_OF_BUSINESS_CHECK_AND_CHANGE },
-  },
-} = ROUTES;
+  EXPORTER_BUSINESS: { NATURE_OF_BUSINESS_CHANGE, NATURE_OF_BUSINESS_CHECK_AND_CHANGE },
+} = INSURANCE_ROUTES;
 
 const {
-  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
 } = FIELD_IDS;
 
 describe('server/helpers/summary-lists/your-business/nature-of-your-business-fields', () => {
   const mockAnswers = mockBusiness;
-  const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 
-  const expectedBase = [
+  const expectedFields = [
     fieldGroupItem({
       field: getFieldById(FIELDS.NATURE_OF_YOUR_BUSINESS, GOODS_OR_SERVICES),
       data: mockAnswers,
@@ -43,23 +45,16 @@ describe('server/helpers/summary-lists/your-business/nature-of-your-business-fie
       href: generateChangeLink(NATURE_OF_BUSINESS_CHANGE, NATURE_OF_BUSINESS_CHECK_AND_CHANGE, `#${EMPLOYEES_UK}-label`, referenceNumber, checkAndChange),
       renderChangeLink: true,
     }),
-    fieldGroupItem({
-      field: getFieldById(FIELDS.NATURE_OF_YOUR_BUSINESS, EMPLOYEES_INTERNATIONAL),
-      data: mockAnswers,
-      href: generateChangeLink(
-        NATURE_OF_BUSINESS_CHANGE,
-        NATURE_OF_BUSINESS_CHECK_AND_CHANGE,
-        `#${EMPLOYEES_INTERNATIONAL}-label`,
-        referenceNumber,
-        checkAndChange,
-      ),
-      renderChangeLink: true,
-    }),
   ];
 
-  it('should return fields and values from the submitted data/answers', () => {
+  it('should return a title and fields from the submitted data/answers', () => {
     const result = generateNatureOfYourBusinessFields(mockAnswers, referenceNumber, checkAndChange);
 
-    expect(result).toEqual(expectedBase);
+    const expected = {
+      title: FORM_TITLE,
+      fields: expectedFields,
+    };
+
+    expect(result).toEqual(expected);
   });
 });

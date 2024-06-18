@@ -1,34 +1,28 @@
 import header from '../../../../partials/header';
 import { HEADER } from '../../../../content-strings';
-import { ROUTES, FIELD_IDS } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../constants/field-ids/insurance';
 import mockAccount from '../../../../fixtures/account';
 
 const {
-  INSURANCE: {
-    ROOT,
-    DASHBOARD,
-    ALL_SECTIONS,
-    ACCOUNT: { MANAGE, SIGN_OUT },
-  },
-} = ROUTES;
+  DASHBOARD,
+  ACCOUNT: { MANAGE, SIGN_OUT },
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    ACCOUNT: { FIRST_NAME, LAST_NAME },
-  },
-} = FIELD_IDS;
+  ACCOUNT: { FIRST_NAME, LAST_NAME },
+} = INSURANCE_FIELD_IDS;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - header - authenticated - As an Exporter, I want the system to have a login service header across every page of the digital service once I am signed in, So that I can easily access the header content anywhere on the application', () => {
   let referenceNumber;
-  let allSectionsUrl;
 
-  const dashboardUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
+  const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-
-      allSectionsUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
     });
   });
 
@@ -42,7 +36,7 @@ context('Insurance - header - authenticated - As an Exporter, I want the system 
 
   describe('`manage account` link', () => {
     beforeEach(() => {
-      cy.navigateToUrl(allSectionsUrl);
+      cy.navigateToAllSectionsUrl(referenceNumber);
     });
 
     const selector = header.navigation.manageAccount;
@@ -56,7 +50,7 @@ context('Insurance - header - authenticated - As an Exporter, I want the system 
     it(`should redirect to ${MANAGE} when clicking the link`, () => {
       selector().click();
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${MANAGE}`;
+      const expectedUrl = `${baseUrl}${MANAGE}`;
 
       cy.assertUrl(expectedUrl);
     });
@@ -64,7 +58,7 @@ context('Insurance - header - authenticated - As an Exporter, I want the system 
 
   describe('`my applications` link', () => {
     beforeEach(() => {
-      cy.navigateToUrl(allSectionsUrl);
+      cy.navigateToAllSectionsUrl(referenceNumber);
     });
 
     const selector = header.navigation.applications;
@@ -82,7 +76,7 @@ context('Insurance - header - authenticated - As an Exporter, I want the system 
 
   describe('`sign out` link', () => {
     beforeEach(() => {
-      cy.navigateToUrl(allSectionsUrl);
+      cy.navigateToAllSectionsUrl(referenceNumber);
     });
 
     const selector = header.navigation.signOut;

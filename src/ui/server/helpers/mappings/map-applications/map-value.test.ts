@@ -1,17 +1,22 @@
 import mapInsuredFor from './map-value';
-import { FIELD_IDS, GBP_CURRENCY_CODE } from '../../../constants';
+import { GBP_CURRENCY_CODE } from '../../../constants';
+import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 import { DEFAULT } from '../../../content-strings';
 import formatCurrency from '../../format-currency';
 import mockApplication, { mockSinglePolicy, mockMultiplePolicy } from '../../../test-mocks/mock-application';
+
+const { policy: initPolicy } = mockApplication;
 
 const {
   POLICY: {
     CONTRACT_POLICY: {
       SINGLE: { TOTAL_CONTRACT_VALUE },
+    },
+    EXPORT_VALUE: {
       MULTIPLE: { MAXIMUM_BUYER_WILL_OWE },
     },
   },
-} = FIELD_IDS.INSURANCE;
+} = INSURANCE_FIELD_IDS;
 
 describe('server/helpers/mappings/map-applications/map-value', () => {
   describe('when the policy type is single policy type', () => {
@@ -53,7 +58,10 @@ describe('server/helpers/mappings/map-applications/map-value', () => {
       const result = mapInsuredFor({
         ...mockApplication,
         policy: {
-          id: mockApplication.policy.id,
+          id: initPolicy.id,
+          jointlyInsuredParty: {
+            id: initPolicy.jointlyInsuredParty.id,
+          },
         },
       });
 

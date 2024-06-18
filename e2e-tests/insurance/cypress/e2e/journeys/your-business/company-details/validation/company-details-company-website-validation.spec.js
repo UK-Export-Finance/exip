@@ -1,8 +1,7 @@
-import { field, submitButton } from '../../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import partials from '../../../../../../../partials';
 import {
-  ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER, WEBSITE_EXAMPLES,
+  ROUTES, FIELD_IDS, WEBSITE_EXAMPLES,
 } from '../../../../../../../constants';
 
 const {
@@ -15,32 +14,27 @@ const {
 
 const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
-const { taskList } = partials.insurancePartials;
+const expectedErrorMessage = COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT;
 
-const task = taskList.prepareApplication.tasks.business;
-
-const expectedErrors = 1;
-const errorIndex = 0;
-const errorMessage = COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT;
-
-let natureOfBusinessUrl;
-let url;
+const field = fieldSelector(WEBSITE);
 
 const baseUrl = Cypress.config('baseUrl');
 
 describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section - company website validation", () => {
   let referenceNumber;
+  let url;
+  let natureOfBusinessUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
-      natureOfBusinessUrl = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
+      natureOfBusinessUrl = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS_ROOT}`;
 
-      task.link().click();
+      cy.startYourBusinessSection({});
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber, companiesHouseNumber: COMPANIES_HOUSE_NUMBER });
+      cy.completeCompanyDetailsForm({});
 
       cy.assertUrl(url);
     });
@@ -63,13 +57,11 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
-        cy.submitAndAssertFieldErrors(
-          field(WEBSITE),
-          WEBSITE_EXAMPLES.INVALID,
-          errorIndex,
-          expectedErrors,
-          errorMessage,
-        );
+        cy.submitAndAssertFieldErrors({
+          field,
+          value: WEBSITE_EXAMPLES.INVALID,
+          expectedErrorMessage,
+        });
       });
     });
 
@@ -81,13 +73,11 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
-        cy.submitAndAssertFieldErrors(
-          field(WEBSITE),
-          WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH,
-          errorIndex,
-          expectedErrors,
-          errorMessage,
-        );
+        cy.submitAndAssertFieldErrors({
+          field,
+          value: WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH,
+          expectedErrorMessage,
+        });
       });
     });
   });
@@ -98,12 +88,12 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       cy.completeCompanyDetailsForm({});
 
-      field(WEBSITE).input().clear();
-      submitButton().click();
+      field.input().clear();
+      cy.clickSubmitButton();
     });
 
     it('should not display validation errors', () => {
-      partials.errorSummaryListItems().should('have.length', 0);
+      cy.assertErrorSummaryListDoesNotExist();
     });
 
     it(`should redirect to ${natureOfBusinessUrl}`, () => {
@@ -117,12 +107,12 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       cy.completeCompanyDetailsForm({});
 
-      field(WEBSITE).input().clear().type(WEBSITE_EXAMPLES.VALID);
-      submitButton().click();
+      field.input().clear().type(WEBSITE_EXAMPLES.VALID);
+      cy.clickSubmitButton();
     });
 
     it('should not display validation errors', () => {
-      partials.errorSummaryListItems().should('have.length', 0);
+      cy.assertErrorSummaryListDoesNotExist();
     });
 
     it(`should redirect to ${natureOfBusinessUrl}`, () => {

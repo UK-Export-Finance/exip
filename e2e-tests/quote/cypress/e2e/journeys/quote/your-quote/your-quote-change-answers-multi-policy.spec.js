@@ -1,8 +1,9 @@
 import {
-  backLink, countryInput, field, submitButton, summaryList,
+  backLink, autoCompleteField, field, summaryList,
 } from '../../../../../../pages/shared';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import { LINKS } from '../../../../../../content-strings';
+import { BRA } from '../../../../../../fixtures/countries';
 
 const {
   ELIGIBILITY: {
@@ -24,14 +25,16 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Your quote page - change answers (policy type and length from multiple to single) - as an exporter, I want to get an Export insurance quote', () => {
+const { NAME: BRAZIL } = BRA;
+
+context('Your quote page - change answers (policy type and length from multiple to single) - as an exporter, I want to get an Credit insurance quote', () => {
   const url = `${baseUrl}${YOUR_QUOTE}`;
 
   before(() => {
     cy.login();
 
     cy.submitQuoteAnswersHappyPathMultiplePolicy();
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.assertUrl(url);
   });
@@ -66,7 +69,7 @@ context('Your quote page - change answers (policy type and length from multiple 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
       cy.keyboardInput(field(MAX_AMOUNT_OWED).input(), '200');
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}#${MAX_AMOUNT_OWED}-label`;
 
@@ -74,11 +77,8 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it('renders the new answer in the quote', () => {
-      // form submit
-      submitButton().click();
-
-      // submit check your answers
-      submitButton().click();
+      // go through 2 get a quote forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 2 });
 
       const expected = '£200';
       cy.checkText(row.value(), expected);
@@ -110,7 +110,7 @@ context('Your quote page - change answers (policy type and length from multiple 
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
       field(PERCENTAGE_OF_COVER).input().select('95');
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}#${PERCENTAGE_OF_COVER}-label`;
 
@@ -118,11 +118,8 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it('renders the new answer in the quote', () => {
-      // form submit
-      submitButton().click();
-
-      // submit check your answers
-      submitButton().click();
+      // go through 2 get a quote forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 2 });
 
       const expected = '95%';
       cy.checkText(row.value(), expected);
@@ -153,11 +150,11 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      cy.keyboardInput(countryInput.field(BUYER_COUNTRY).input(), 'Brazil');
-      const results = countryInput.field(BUYER_COUNTRY).results();
+      cy.keyboardInput(autoCompleteField(BUYER_COUNTRY).input(), BRAZIL);
+      const results = autoCompleteField(BUYER_COUNTRY).results();
       results.first().click();
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}#heading`;
 
@@ -165,15 +162,12 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it('renders the new answers in the quote', () => {
-      cy.keyboardInput(countryInput.field(BUYER_COUNTRY).input(), 'Brazil');
-      const results = countryInput.field(BUYER_COUNTRY).results();
+      cy.keyboardInput(autoCompleteField(BUYER_COUNTRY).input(), BRAZIL);
+      const results = autoCompleteField(BUYER_COUNTRY).results();
       results.first().click();
 
-      // form submit
-      submitButton().click();
-
-      // submit check your answers
-      submitButton().click();
+      // go through 2 get a quote forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 2 });
 
       const expectedUrl = `${url}#heading`;
 
@@ -181,7 +175,7 @@ context('Your quote page - change answers (policy type and length from multiple 
 
       const buyerLocation = summaryList.field(QUOTE.BUYER_LOCATION);
 
-      cy.checkText(buyerLocation.value(), 'Brazil');
+      cy.checkText(buyerLocation.value(), BRAZIL);
     });
   });
 });

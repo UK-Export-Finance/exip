@@ -1,6 +1,4 @@
-import {
-  yesRadio, noRadio, submitButton,
-} from '../../../../../../pages/shared';
+import { yesRadio, noRadio } from '../../../../../../pages/shared';
 import buyerBodyPage from '../../../../../../pages/quote/buyerBody';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
@@ -27,7 +25,7 @@ const url = `${baseUrl}${BUYER_BODY}`;
 context('Buyer body page - as an exporter, I want to check if I can get an EXIP online quote for my buyers country', () => {
   beforeEach(() => {
     cy.login();
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
 
     cy.assertUrl(url);
   });
@@ -82,22 +80,17 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
       it('should render validation errors', () => {
-        const expectedErrorsCount = 1;
-        const expectedErrorMessage = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID];
-
-        cy.submitAndAssertRadioErrors(
-          yesRadio(FIELD_ID),
-          0,
-          expectedErrorsCount,
-          expectedErrorMessage,
-        );
+        cy.submitAndAssertRadioErrors({
+          field: yesRadio(FIELD_ID),
+          expectedErrorMessage: ERROR_MESSAGES.ELIGIBILITY[FIELD_ID],
+        });
       });
     });
 
     describe('when submitting the answer as `no`', () => {
       it(`should redirect to ${EXPORTER_LOCATION}`, () => {
-        noRadio().label().click();
-        submitButton().click();
+        cy.clickNoRadioInput();
+        cy.clickSubmitButton();
 
         const expectedUrl = `${baseUrl}${EXPORTER_LOCATION}`;
 

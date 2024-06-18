@@ -1,11 +1,13 @@
+import brokerPage from './broker';
+import brokerConfirmAddressPage from './brokerConfirmAddress';
+import lossPayeePage from './lossPayee';
+import multipleContractPolicyExportValuePage from './multipleContractPolicyExportValue';
 import typeOfPolicyPage from './typeOfPolicy';
-import singleContractPolicyPage from './singleContractPolicy';
-import multipleContractPolicyPage from './multipleContractPolicy';
-import aboutGoodsOrServicesPage from './aboutGoodsOrServices';
 
 export {
+  brokerPage,
+  brokerConfirmAddressPage,
+  lossPayeePage,
+  multipleContractPolicyExportValuePage,
   typeOfPolicyPage,
-  singleContractPolicyPage,
-  multipleContractPolicyPage,
-  aboutGoodsOrServicesPage,
 };

@@ -23,9 +23,12 @@ The repository is based on the [template-typescript-package](https://github.com/
 
 **CD** 🚀
 
-![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=dev)
-![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=staging)
-![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=production)
+| Status | Environment |
+| -------- | ------- |
+| ![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=dev) | `dev` |
+| ![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=feature) | `feature` |
+| ![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=staging) | `staging` |
+| ![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=production) | `production` |
 
 ## Prerequisites :gear:
 
@@ -59,7 +62,7 @@ This project utilizes various technologies and tools, including:
 
 To run the project locally, follow these steps:
 
-1. Execute `docker-compose up` from the root directory. Use `--build` for the first-time usage.
+1. Execute `docker compose up` from the root directory. Use `--build` for the first-time usage.
 2. Visit [https://localhost:5000](https://localhost:5000) in your web browser.
 3. If presented with the certificate not trusted error, then please accept and proceed with certificate is self-signed for domain `localhost`.
 
@@ -389,7 +392,7 @@ These are the key aspects of the UK Export Finance EXIP service codebase and dev
 ---
 
 ## Sub-resource integrity [(SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
-JavaScript files are protected by SRI security feature which allows the browser to verify the authenticity of the JavaScript files in use.
+Client side JavaScript files are protected by SRI security feature which allows the browser to verify the authenticity of the JavaScript files in use.
 We use `SHA512` hashing algrothim for all our JavaScript files.
 
 To calculate file hash use the following Bash command with reference to the file in question (Webpack compiled JS file).
@@ -398,3 +401,4 @@ To calculate file hash use the following Bash command with reference to the file
 cat FILENAME.js | openssl dgst -sha512 -binary | openssl base64 -A
 ```
 
+:warning: If a client side JavaScript file is changed and recompiled, a new file hash will need to be generated. Otherwise, the script will not be executed.

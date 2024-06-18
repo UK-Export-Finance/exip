@@ -1,11 +1,13 @@
 import hasFormData from '../../../../../helpers/has-form-data';
+import mapSubmittedData from '../../map-submitted-data/company-details';
+import saveCompany from '../../save-data/company-details';
+import shouldNullifyCompanyDifferentAddress from '../../../../../helpers/should-nullify-company-different-address';
+import nullify from '../nullify-company-different-address';
 import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
-import mapCompanyDetailsSubmittedData from '../../company-details/map-submitted-data';
-import save from '../../save-data/company-details';
 
 /**
- * maps company details request and calls save function
- * returns true or false based on response from save function
+ * map company details data and calls save functions.
+ * If DIFFERENT_TRADING_ADDRESS data should be nullified, nullify and save the data.
  * @param {RequestBody} formBody
  * @param {Object} application
  * @param {Object} validationErrors
@@ -14,18 +16,45 @@ import save from '../../save-data/company-details';
 const companyDetails = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
-      // maps through formBody and puts fields in correct format
-      const dataToSave = mapCompanyDetailsSubmittedData(formBody, application);
+      console.info('Mapping and saving application - business - company details');
+
+      const populatedData = mapSubmittedData(formBody);
+
       let saveResponse;
 
+      /**
+       * If validation errors, save the data with only valid data.
+       * Otherwise, simply save all data.
+       */
+
       if (validationErrors) {
-        saveResponse = await save.companyDetails(application, dataToSave, validationErrors.errorList);
+        saveResponse = await saveCompany.companyDetails(application, populatedData, validationErrors.errorList);
       } else {
-        saveResponse = await save.companyDetails(application, dataToSave);
+        saveResponse = await saveCompany.companyDetails(application, populatedData);
       }
 
       if (!saveResponse) {
         return false;
+      }
+
+      /**
+       * If DIFFERENT_TRADING_ADDRESS data should be nullified,
+       * Nullify and save the data.
+       */
+      const { hasDifferentTradingAddress } = formBody;
+
+      const {
+        company: {
+          differentTradingAddress: { fullAddress },
+        },
+      } = application;
+
+      if (shouldNullifyCompanyDifferentAddress(hasDifferentTradingAddress, fullAddress)) {
+        saveResponse = await nullify.companyDifferentTradingAddress(application);
+
+        if (!saveResponse) {
+          return false;
+        }
       }
 
       return true;
