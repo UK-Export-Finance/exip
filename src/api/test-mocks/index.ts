@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { ACCOUNT, APPLICATION, FIELD_IDS, TOTAL_CONTRACT_VALUE } from '../constants';
 import encryptPassword from '../helpers/encrypt-password';
-import application from './mock-application';
+import application, { mockExportContractAgentFullyPopulated } from './mock-application';
 import buyer from './mock-buyer';
 import cisCountries from './mock-CIS-countries';
 import currencies from './mock-currencies';
@@ -67,6 +67,7 @@ export const mockApplicationMinimalBrokerBuyerAndCompany = {
     },
   },
   company: companyScenarios.noDifferentTradingNameOrAddress,
+  exportContract: mockExportContractAgentFullyPopulated,
 };
 
 export const mockApplicationSinglePolicyTotalContractValueOverThreshold = {

@@ -4,7 +4,7 @@ import HEADER_COLUMNS from '../header-columns';
 import mapApplicationToXLSX from '../map-application-to-XLSX';
 import { XLSX_CONFIG, XLSX_ROW_INDEXES } from '../../constants';
 import { generateSubmittedApplication } from '../../test-helpers';
-import { mockApplication } from '../../test-mocks';
+import { mockApplicationMinimalBrokerBuyerAndCompany as mockApplication } from '../../test-mocks';
 
 const { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, FONT_SIZE } = XLSX_CONFIG;
 

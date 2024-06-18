@@ -37,6 +37,7 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
         ...indexes.TITLES,
         BUYER: indexes.TITLES.BUYER + 4,
         DECLARATIONS: indexes.TITLES.DECLARATIONS + 4,
+        EXPORT_CONTRACT: indexes.TITLES.EXPORT_CONTRACT + 4,
       },
     };
 

@@ -11,9 +11,11 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
 
     const expected = {
       ...indexes,
+      AGENT_ADDRESS: indexes.AGENT_ADDRESS + 1,
       TITLES: {
         ...indexes.TITLES,
         DECLARATIONS: indexes.TITLES.DECLARATIONS + 1,
+        EXPORT_CONTRACT: indexes.TITLES.EXPORT_CONTRACT + 1,
       },
     };
 

@@ -53,9 +53,44 @@ export const mockMultiplePolicy = {
   maximumBuyerWillOwe: 1000,
 };
 
+export const mockPrivateMarket = {
+  attempted: false,
+  declinedDescription: 'Mock declined description',
+};
+
+export const mockExportContractAgentServiceCharge = {
+  percentageCharge: '10',
+  fixedSumAmount: '1500',
+  fixedSumCurrencyCode: mockCountries[0].isoCode,
+  payableCountryCode: mockCountries[0].isoCode,
+  method: APPLICATION.EXPORT_CONTRACT.AGENT_SERVICE_CHARGE.METHOD.FIXED_SUM,
+};
+
+export const mockExportContractAgentService = {
+  agentIsCharging: false,
+  serviceDescription: 'Mock export contract agent service description',
+  charge: mockExportContractAgentServiceCharge,
+};
+
+export const mockExportContractAgent = {
+  service: mockExportContractAgentService,
+};
+
+export const mockExportContractAgentFullyPopulated = {
+  countryCode: mockCountries[0].isoCode,
+  fullAddress: 'Mock export contract agent address',
+  isUsingAgent: false,
+  name: 'Mock export contract agent name',
+  privateMarket: mockPrivateMarket,
+  service: mockExportContractAgentService,
+  agent: mockExportContractAgent,
+};
+
 export const mockExportContract = {
   goodsOrServicesDescription: 'Mock description',
+  finalDestinationKnown: false,
   finalDestinationCountryCode: mockCountries[0].isoCode,
+  paymentTermsDescription: 'Mock payment terms description',
 };
 
 export const mockAccount = {
