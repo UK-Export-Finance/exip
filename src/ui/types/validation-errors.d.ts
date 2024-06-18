@@ -50,6 +50,7 @@ interface WholeNumberParams {
   allowDecimalPlaces?: boolean;
   allowNegativeValue?: boolean;
 }
+
 interface ValidationWholeNumberParams extends WholeNumberParams {
   errorMessage: string;
 }
