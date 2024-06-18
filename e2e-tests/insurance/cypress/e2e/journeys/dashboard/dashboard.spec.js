@@ -8,7 +8,12 @@ import application from '../../../../../fixtures/application';
 const { table } = dashboardPage;
 
 const {
-  INSURANCE: { ROOT, DASHBOARD, ALL_SECTIONS, ELIGIBILITY },
+  INSURANCE: {
+    ROOT,
+    DASHBOARD,
+    ALL_SECTIONS,
+    ELIGIBILITY,
+  },
   QUOTE,
 } = ROUTES;
 
