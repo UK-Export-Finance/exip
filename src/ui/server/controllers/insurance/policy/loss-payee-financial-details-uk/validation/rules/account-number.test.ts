@@ -1,7 +1,7 @@
 import accountNumberRules, { MINIMUM, MAXIMUM } from './account-number';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import wholeNumberMinimumMaximumLength from '../../../../../../shared-validation/whole-number-minimum-maximum-length';
+import numberMinimumMaximumLength from '../../../../../../shared-validation/number-minimum-maximum-length';
 import { RequestBody } from '../../../../../../../types';
 import { mockErrors } from '../../../../../../test-mocks';
 
@@ -16,10 +16,17 @@ describe('controllers/insurance/policy/loss-payee-financial-details-uk/validatio
     [FIELD_ID]: '',
   } as RequestBody;
 
-  it('should return the result of wholeNumberMinimumMaximumLength', () => {
+  it('should return the result of numberMinimumMaximumLength', () => {
     const result = accountNumberRules(mockBody, mockErrors);
 
-    const expected = wholeNumberMinimumMaximumLength(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors, MINIMUM, MAXIMUM);
+    const expected = numberMinimumMaximumLength({
+      formBody: mockBody,
+      fieldId: FIELD_ID,
+      errorMessage: ERROR_MESSAGES_OBJECT,
+      errors: mockErrors,
+      minimum: MINIMUM,
+      maximum: MAXIMUM,
+    });
 
     expect(result).toEqual(expected);
   });
