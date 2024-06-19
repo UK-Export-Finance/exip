@@ -10,7 +10,7 @@ import createACompany from '../helpers/create-a-company';
 import createAnExportContract from '../helpers/create-an-export-contract';
 import createANominatedLossPayee from '../helpers/create-a-nominated-loss-payee';
 import sectionReviewCreate from './sectionReview';
-import { FIELD_VALUES } from '../constants';
+import { FIELD_VALUES, GBP_CURRENCY_CODE } from '../constants';
 import { mockApplicationEligibility, mockExportContract, mockBusiness, mockPolicyContact } from '../test-mocks/mock-application';
 import { mockApplicationDeclaration } from '../test-mocks';
 import mockCompany from '../test-mocks/mock-company';
@@ -141,6 +141,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
     totalSalesToBuyer: 123,
     totalValueOfContract: 456,
     maximumBuyerWillOwe: 789,
+    policyCurrencyCode: GBP_CURRENCY_CODE,
   };
 
   if (policyType === POLICY_TYPE.MULTIPLE) {
