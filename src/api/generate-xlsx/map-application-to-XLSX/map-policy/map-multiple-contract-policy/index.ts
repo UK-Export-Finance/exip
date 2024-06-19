@@ -1,4 +1,3 @@
-import { GBP_CURRENCY_CODE } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { XLSX } from '../../../../content-strings';
 import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance';
@@ -38,8 +37,8 @@ const {
 const mapMultipleContractPolicy = (policy: ApplicationPolicy) => [
   xlsxRow(String(FIELDS[TOTAL_MONTHS_OF_COVER]), mapMonthString(policy[TOTAL_MONTHS_OF_COVER])),
   xlsxRow(String(CONTENT_STRINGS[CURRENCY_CODE].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
-  xlsxRow(String(FIELDS[TOTAL_SALES_TO_BUYER]), formatCurrency(policy[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
-  xlsxRow(String(FIELDS[MAXIMUM_BUYER_WILL_OWE]), formatCurrency(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE)),
+  xlsxRow(String(FIELDS[TOTAL_SALES_TO_BUYER]), formatCurrency(policy[TOTAL_SALES_TO_BUYER], policy[POLICY_CURRENCY_CODE])),
+  xlsxRow(String(FIELDS[MAXIMUM_BUYER_WILL_OWE]), formatCurrency(policy[MAXIMUM_BUYER_WILL_OWE], policy[POLICY_CURRENCY_CODE])),
 ];
 
 export default mapMultipleContractPolicy;
