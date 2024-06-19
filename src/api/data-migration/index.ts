@@ -26,6 +26,7 @@ const dataMigration = async () => {
     // TEMPORARILY commented out for easier local dev.
     // await updateApplications.nominatedLossPayeeField(connection);
     // await updateApplications.nominatedLossPayeeConstraint(connection);
+    // await updateApplications.exportContractFields(connection);
 
     console.info('✅ Applications successfully updated.');
 

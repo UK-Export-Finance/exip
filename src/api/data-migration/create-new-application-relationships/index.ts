@@ -1,6 +1,7 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import createLossPayee from './loss-payee';
 import createJointlyInsuredParty from './jointly-insured-party';
+import createExportContractAgent from './export-contract-agent';
 
 interface CreateNewApplicationRelationshipsParams {
   context: Context
@@ -17,6 +18,7 @@ const createNewApplicationRelationships = async ({ context, applicationIdsConnec
     const newRelationships = await Promise.all([
       createLossPayee(context, applicationIdsConnectArray),
       createJointlyInsuredParty(context, applications),
+      createExportContractAgent(context, applications),
     ]);
 
     return newRelationships;

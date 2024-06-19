@@ -122,6 +122,7 @@ const createLossPayee = async (context: Context, applicationIdsConnectArray: Arr
 
     await lossPayeeFinancialUkVector(context, ukIds);
 
+    return lossPayees;
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 

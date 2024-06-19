@@ -21,9 +21,37 @@ const addNominatedLossPayeeConstraint = (connection: Connection) => {
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
+const addExportContractFields = (connection: Connection) => {
+  const queries =  Promise.all([
+    executeSqlQuery({
+      connection,
+      query: `ALTER TABLE ExportContract ADD goodsOrServicesDescription varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''`,
+      loggingMessage: 'Adding FIELD goodsOrServicesDescription to exportContract table',
+    }),
+    executeSqlQuery({
+      connection,
+      query: `ALTER TABLE ExportContract ADD paymentTermsDescription varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''`,
+      loggingMessage: 'Adding FIELD paymentTermsDescription to exportContract table',
+    }),
+    executeSqlQuery({
+      connection,
+      query: `ALTER TABLE ExportContract ADD privateMarket varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL`,
+      loggingMessage: 'Adding FIELD privateMarket to exportContract table',
+    }),
+    executeSqlQuery({
+      connection,
+      query: `ALTER TABLE ExportContract ADD agent varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL`,
+      loggingMessage: 'Adding FIELD agent to exportContract table',
+    }),
+  ]);
+
+  return queries;
+};
+
 const updateApplications = {
   nominatedLossPayeeField: (connection: Connection) => addNominatedLossPayeeField(connection),
   nominatedLossPayeeConstraint: (connection: Connection) => addNominatedLossPayeeConstraint(connection),
+  exportContractFields: (connection: Connection) => addExportContractFields(connection),
 };
 
 export default updateApplications;
