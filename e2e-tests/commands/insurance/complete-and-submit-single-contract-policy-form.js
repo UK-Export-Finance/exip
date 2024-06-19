@@ -2,15 +2,12 @@
  * completeAndSubmitSingleContractPolicyForm
  * Complete and submit the "single contract policy" form.
  * @param {String} isoCode: Policy currency ISO code
- * @param {Boolean} alternativeCurrency: Select the "alternative currency" option
+ * @param {Boolean} alternativeCurrencyPolicy: Select the "alternative currency" option
  */
-const completeAndSubmitSingleContractPolicyForm = ({
-  isoCode,
-  alternativeCurrency,
-}) => {
+const completeAndSubmitSingleContractPolicyForm = ({ isoCode, alternativeCurrencyPolicy }) => {
   cy.completeSingleContractPolicyForm({
     isoCode,
-    alternativeCurrency,
+    alternativeCurrencyPolicy,
   });
 
   cy.clickSubmitButton();
