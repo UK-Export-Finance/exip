@@ -1,4 +1,5 @@
-import { Context, ApplicationJointlyInsuredParty } from '../../types';
+import { Context } from '.keystone/types';
+import { ApplicationJointlyInsuredParty } from '../../types';
 
 /**
  * createAJointlyInsuredParty
@@ -19,6 +20,7 @@ const createAJointlyInsuredParty = async (context: Context, policyId: string): P
       },
     });
 
+    // @ts-ignore
     return jointlyInsuredParty;
   } catch (err) {
     console.error('Error creating a jointly insured party %O', err);

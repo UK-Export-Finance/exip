@@ -1,7 +1,8 @@
+import { Context } from '.keystone/types';
 import { APPLICATION } from '../../constants';
 import createAPrivateMarket from '../create-a-private-market';
 import createAnExportContractAgent from '../create-an-export-contract-agent';
-import { Context, CreateExportContractResponse } from '../../types';
+import { CreateExportContractResponse } from '../../types';
 
 /**
  * createAnExportContract
@@ -27,6 +28,7 @@ const createAnExportContract = async (context: Context, applicationId: string): 
     const { agent, agentService } = await createAnExportContractAgent(context, exportContract.id);
 
     return {
+      // @ts-ignore
       exportContract,
       privateMarket,
       agent,

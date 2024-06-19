@@ -26,6 +26,7 @@ export const asyncTaskToSyncTask =
  */
 export const taskWithErrorLogging =
   (description: string, task: CronSchedulerJobTask, context: Context): CronSchedulerJobTask =>
+    // @ts-ignore
     async (_commonContext, now) => {
       try {
         await task(context, now);

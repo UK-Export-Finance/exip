@@ -1,5 +1,6 @@
+import { Context } from '.keystone/types';
 import sendEmail from '../../../emails';
-import { Context, InsuranceFeedbackVariables } from '../../../types';
+import { InsuranceFeedbackVariables } from '../../../types';
 
 /**
  * creates feedback in database and sends email

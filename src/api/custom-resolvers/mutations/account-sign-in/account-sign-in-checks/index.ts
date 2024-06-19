@@ -1,8 +1,9 @@
+import { Context } from '.keystone/types';
 import confirmEmailAddressEmail from '../../../../helpers/send-email-confirm-email-address';
 import generateOTPAndUpdateAccount from '../../../../helpers/generate-otp-and-update-account';
 import getFullNameString from '../../../../helpers/get-full-name-string';
 import sendEmail from '../../../../emails';
-import { Account, Context } from '../../../../types';
+import { Account } from '../../../../types';
 
 /**
  * accountSignInChecks
@@ -57,7 +58,7 @@ const accountSignInChecks = async (context: Context, account: Account, urlOrigin
      */
     const name = getFullNameString(account);
 
-    const emailResponse = await sendEmail.accessCodeEmail(email, name, securityCode);
+    const emailResponse = await sendEmail.accessCodeEmail(email, name, String(securityCode));
 
     if (emailResponse?.success) {
       return {

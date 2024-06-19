@@ -1,8 +1,8 @@
+import { Context } from '.keystone/types';
 import createACompanyAddress from '.';
 import { mockCompany } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import companyHelpers from '../../test-helpers/company';
-import { Context } from '../../types';
 
 const { registeredOfficeAddress: mockAddress } = mockCompany;
 

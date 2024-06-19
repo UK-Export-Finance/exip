@@ -1,4 +1,5 @@
-import { Context, Application as KeystoneApplication } from '.keystone/types'; // eslint-disable-line
+// @ts-ignore
+import { Context, Application as KeystoneApplication } from '.keystone/types';
 import getAccountById from '../get-account-by-id';
 import getCountryByField from '../get-country-by-field';
 import mapPolicy from './map-policy';

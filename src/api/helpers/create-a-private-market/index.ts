@@ -1,4 +1,5 @@
-import { Context, ApplicationPrivateMarket } from '../../types';
+import { Context } from '.keystone/types';
+import { ApplicationPrivateMarket } from '../../types';
 
 /**
  * createAPrivateMarket
@@ -19,6 +20,7 @@ const createAPrivateMarket = async (context: Context, exportContractId: string):
       },
     });
 
+    // @ts-ignore
     return privateMarket;
   } catch (err) {
     console.error('Error creating a private market %O', err);

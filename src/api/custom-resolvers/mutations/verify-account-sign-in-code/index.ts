@@ -1,3 +1,4 @@
+import { Context } from '.keystone/types';
 import { ACCOUNT } from '../../../constants';
 import getAccountById from '../../../helpers/get-account-by-id';
 import isValidOTP from '../../../helpers/is-valid-otp';
@@ -5,7 +6,7 @@ import deleteAuthenticationRetries from '../../../helpers/delete-authentication-
 import create from '../../../helpers/create-jwt';
 import update from '../../../helpers/update-account';
 import { dateIsInThePast } from '../../../helpers/date';
-import { Context, VerifyAccountSignInCodeVariables, VerifyAccountSignInCodeResponse } from '../../../types';
+import { VerifyAccountSignInCodeVariables, VerifyAccountSignInCodeResponse } from '../../../types';
 
 const {
   JWT: { SESSION_EXPIRY },
@@ -90,7 +91,7 @@ const verifyAccountSignInCode = async (root: any, variables: VerifyAccountSignIn
         firstName: account.firstName,
         email: account.email,
         ...jwt,
-        expires: accountUpdate.sessionExpiry,
+        expires: String(accountUpdate.sessionExpiry),
       };
     }
 

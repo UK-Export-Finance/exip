@@ -1,7 +1,7 @@
+import { Context } from '.keystone/types';
 import createCompanySicCodes from '.';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import companyHelpers from '../../test-helpers/company';
-import { Context } from '../../types';
 
 const mockSicCodes = ['1', '2'];
 const mocIndustrySectorNames = ['Mock sector name'];

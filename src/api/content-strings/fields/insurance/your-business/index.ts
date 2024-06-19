@@ -65,7 +65,7 @@ export const FIELDS = {
       },
     },
   },
-  [ALTERNATIVE_TRADING_ADDRESS]: {
+  [ALTERNATIVE_TRADING_ADDRESS.FULL_ADDRESS]: {
     LABEL: "What's your alternative trading address?",
   },
   NATURE_OF_YOUR_BUSINESS: {

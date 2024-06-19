@@ -1,7 +1,8 @@
+import { Context } from '.keystone/types';
 import createACompanyAddress from '../create-a-company-address';
 import createCompanySicCodes from '../create-company-sic-codes';
 import createACompanyDifferentTradingAddress from '../create-a-company-different-trading-address';
-import { Context, ApplicationCompanyCore } from '../../types';
+import { ApplicationCompanyCore } from '../../types';
 
 /**
  * createACompany
@@ -21,6 +22,7 @@ const createACompany = async (context: Context, applicationId: string, companyDa
      * Create a company with provided data and application relationship
      */
     const company = await context.db.Company.createOne({
+      // @ts-ignore
       data: {
         application: {
           connect: { id: applicationId },

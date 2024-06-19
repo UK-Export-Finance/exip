@@ -1,6 +1,7 @@
+import { Context } from '.keystone/types';
 import createALossPayeeFinancialInternational from '../create-a-loss-payee-financial-international';
 import createALossPayeeFinancialUk from '../create-a-loss-payee-financial-uk';
-import { ApplicationNominatedLossPayee, Context } from '../../types';
+import { ApplicationNominatedLossPayee } from '../../types';
 
 /**
  * createANominatedLossPayee
@@ -26,6 +27,7 @@ const createANominatedLossPayee = async (context: Context, applicationId: string
     await createALossPayeeFinancialInternational(context, nominatedLossPayee.id);
     await createALossPayeeFinancialUk(context, nominatedLossPayee.id);
 
+    // @ts-ignore
     return nominatedLossPayee;
   } catch (err) {
     console.error('Error creating a nominated loss payee for %O', err);

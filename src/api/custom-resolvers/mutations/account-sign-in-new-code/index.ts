@@ -1,8 +1,9 @@
+import { Context } from '.keystone/types';
 import getAccountById from '../../../helpers/get-account-by-id';
 import generateOTPAndUpdateAccount from '../../../helpers/generate-otp-and-update-account';
 import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
-import { AccountSignInSendNewCodeVariables, AccountSignInResponse, Context } from '../../../types';
+import { AccountSignInSendNewCodeVariables, AccountSignInResponse } from '../../../types';
 
 /**
  * accountSignInSendNewCode
@@ -36,7 +37,7 @@ const accountSignInSendNewCode = async (root: any, variables: AccountSignInSendN
 
     const name = getFullNameString(account);
 
-    const emailResponse = await sendEmail.accessCodeEmail(email, name, securityCode);
+    const emailResponse = await sendEmail.accessCodeEmail(email, name, String(securityCode));
 
     if (emailResponse.success) {
       return {

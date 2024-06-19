@@ -1,6 +1,7 @@
+import { Context } from '.keystone/types';
 import { APPLICATION } from '../../constants';
 import createAJointlyInsuredParty from '../create-a-jointly-insured-party';
-import { Context, CreatePolicyResponse } from '../../types';
+// import { CreatePolicyResponse } from '../../types';
 
 /**
  * createAPolicy
@@ -9,7 +10,8 @@ import { Context, CreatePolicyResponse } from '../../types';
  * @param {String} Application ID
  * @returns {Promise<Object>} Created policy
  */
-const createAPolicy = async (context: Context, applicationId: string): Promise<CreatePolicyResponse> => {
+// const createAPolicy = async (context: Context, applicationId: string): Promise<CreatePolicyResponse> => {
+const createAPolicy = async (context: Context, applicationId: string): Promise<object> => {
   console.info('Creating a policy for ', applicationId);
 
   try {

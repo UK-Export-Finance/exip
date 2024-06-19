@@ -1,7 +1,7 @@
+import { Context } from '.keystone/types';
 import createACompanyDifferentTradingAddress from '.';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import companyHelpers from '../../test-helpers/company';
-import { Context } from '../../types';
 
 const invalidId = 'invalid-id';
 

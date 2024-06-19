@@ -1,6 +1,7 @@
+import { Context } from '.keystone/types'; // eslint-disable-line
 import getExpiringApplications from '../get-expiring-applications';
 import applicationSubmissionDeadineEmail from './send-email';
-import { Context, SuccessResponse } from '../../types';
+import { SuccessResponse } from '../../types';
 
 /**
  * applicationSubmissionDeadlineEmail
@@ -25,6 +26,8 @@ const applicationSubmissionDeadlineEmail = async (context: Context): Promise<Suc
       const sentEmails = await applicationSubmissionDeadineEmail.send(applications);
 
       // totalExpiringApplications
+
+      // @ts-ignore
       if (sentEmails.length === applications.length) {
         return {
           success: true,

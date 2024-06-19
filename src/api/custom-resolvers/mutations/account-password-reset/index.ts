@@ -1,3 +1,4 @@
+import { Context } from '.keystone/types';
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import encryptPassword from '../../../helpers/encrypt-password';
@@ -7,7 +8,7 @@ import deleteAuthenticationRetries from '../../../helpers/delete-authentication-
 import createAuthenticationEntry from '../../../helpers/create-authentication-entry';
 import update from '../../../helpers/update-account';
 import { dateIsInThePast } from '../../../helpers/date';
-import { Account, AccountPasswordResetVariables, Context } from '../../../types';
+import { Account, AccountPasswordResetVariables } from '../../../types';
 
 const accountPasswordReset = async (root: any, variables: AccountPasswordResetVariables, context: Context) => {
   console.info('Resetting account password');

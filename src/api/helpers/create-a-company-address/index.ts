@@ -1,4 +1,5 @@
-import { Context, ApplicationCompanyAddressCore } from '../../types';
+import { Context } from '.keystone/types';
+import { ApplicationCompanyAddressCore } from '../../types';
 
 /**
  * createACompanyAddress

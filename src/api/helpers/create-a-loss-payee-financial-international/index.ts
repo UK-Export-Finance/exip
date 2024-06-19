@@ -1,4 +1,5 @@
-import { ApplicationLossPayeeFinancialInternational, Context } from '../../types';
+import { Context } from '.keystone/types';
+import { ApplicationLossPayeeFinancialInternational } from '../../types';
 
 /**
  * createALossPayeeFinancialInternational
@@ -27,6 +28,7 @@ const createALossPayeeFinancialInternational = async (context: Context, lossPaye
       },
     });
 
+    // @ts-ignore
     return {
       ...lossPayeeFinancialInternational,
       vector,

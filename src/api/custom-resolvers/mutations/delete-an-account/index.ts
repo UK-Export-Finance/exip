@@ -1,6 +1,7 @@
+import { Context } from '.keystone/types';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import getAuthenticationRetriesByAccountId from '../../../helpers/get-authentication-retries-by-account-id';
-import { Account, AccountDeletionVariables, Context } from '../../../types';
+import { Account, AccountDeletionVariables, AuthenticationRetry } from '../../../types';
 
 /**
  * deleteAnAccount
@@ -39,7 +40,7 @@ const deleteAnAccount = async (root: any, variables: AccountDeletionVariables, c
     if (retries.length) {
       console.info('Deleting authentication retry entries');
 
-      const retriesArray = retries.map((retry) => ({
+      const retriesArray = retries.map((retry: AuthenticationRetry) => ({
         id: retry.id,
       }));
 

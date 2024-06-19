@@ -1,5 +1,6 @@
-import { Application, Context } from '.keystone/types'; // eslint-disable-line
+import { Context } from '.keystone/types'; // eslint-disable-line
 import mapInactiveApplications from '../map-inactive-applications';
+import { Application } from '../../types';
 
 /**
  * mapAndUpdateInactiveApplications

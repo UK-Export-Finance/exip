@@ -1,4 +1,4 @@
-import { Context } from '../../types';
+import { Context } from '.keystone/types';
 
 const getCoverPeriodValueByField = async (context: Context, field: string, value: number): Promise<object | boolean> => {
   try {

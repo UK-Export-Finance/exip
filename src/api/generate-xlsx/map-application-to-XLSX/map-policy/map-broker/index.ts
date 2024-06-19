@@ -20,14 +20,14 @@ const { FIELDS } = XLSX;
 const mapBroker = (application: Application) => {
   const { broker } = application;
 
-  let mapped = [xlsxRow(FIELDS[USING_BROKER], mapYesNoField({ answer: broker[USING_BROKER] }))];
+  let mapped = [xlsxRow(String(FIELDS[USING_BROKER]), mapYesNoField({ answer: broker[USING_BROKER] }))];
 
   if (broker[USING_BROKER]) {
     mapped = [
       ...mapped,
-      xlsxRow(FIELDS[BROKER_NAME], broker[BROKER_NAME]),
-      xlsxRow(FIELDS[EMAIL], broker[EMAIL]),
-      xlsxRow(FIELDS[FULL_ADDRESS], broker[FULL_ADDRESS]),
+      xlsxRow(String(FIELDS[BROKER_NAME]), broker[BROKER_NAME]),
+      xlsxRow(String(FIELDS[EMAIL]), broker[EMAIL]),
+      xlsxRow(String(FIELDS[FULL_ADDRESS]), broker[FULL_ADDRESS]),
     ];
   }
 

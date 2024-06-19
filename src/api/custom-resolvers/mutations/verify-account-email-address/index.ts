@@ -1,8 +1,9 @@
+import { Context } from '.keystone/types';
 import { isBefore } from 'date-fns';
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import update from '../../../helpers/update-account';
-import { Account, Context, VerifyEmailAddressVariables, VerifyEmailAddressResponse } from '../../../types';
+import { Account, VerifyEmailAddressVariables, VerifyEmailAddressResponse } from '../../../types';
 
 const { ID, EMAIL, VERIFICATION_EXPIRY } = ACCOUNT_FIELD_IDS;
 

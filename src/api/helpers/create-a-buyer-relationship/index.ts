@@ -1,4 +1,4 @@
-import { Context } from '../../types';
+import { Context } from '.keystone/types';
 
 /**
  * createABuyerRelationship

@@ -1,9 +1,10 @@
+import { Context } from '.keystone/types';
 import { isBefore } from 'date-fns';
 import { FIELD_IDS } from '../../../constants';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import update from '../../../helpers/update-account';
 import deleteAuthenticationRetries from '../../../helpers/delete-authentication-retries';
-import { Account, Context, VerifyAccountReactivationTokenVariables, VerifyAccountReactivationTokenResponse } from '../../../types';
+import { Account, VerifyAccountReactivationTokenVariables, VerifyAccountReactivationTokenResponse } from '../../../types';
 
 const {
   INSURANCE: {

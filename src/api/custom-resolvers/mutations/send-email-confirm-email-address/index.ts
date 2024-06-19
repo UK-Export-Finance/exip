@@ -1,5 +1,6 @@
+import { Context } from '.keystone/types';
 import confirmEmailAddressEmail from '../../../helpers/send-email-confirm-email-address';
-import { Context, SendConfirmEmailAddressVariables } from '../../../types';
+import { SendConfirmEmailAddressVariables } from '../../../types';
 
 /**
  * sendEmailConfirmEmailAddress

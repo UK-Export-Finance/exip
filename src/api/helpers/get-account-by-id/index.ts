@@ -1,4 +1,5 @@
-import { Account, Context } from '../../types';
+import { Context } from '.keystone/types';
+import { Account } from '../../types';
 
 /**
  * getAccountById
@@ -7,17 +8,18 @@ import { Account, Context } from '../../types';
  * @param {String} accountId: Account ID
  * @returns {Promise<Account>} Account
  */
-const getAccountById = async (context: Context, accountId: string) => {
+const getAccountById = async (context: Context, accountId: string): Promise<Account> => {
   try {
     console.info('Getting account by ID');
+    // let account: unknown;
 
     const account = (await context.db.Account.findOne({
       where: {
         id: accountId,
       },
-    })) as Account;
+    })) as unknown;
 
-    return account;
+    return account as Account;
   } catch (err) {
     console.error('Error getting account by ID %O', err);
 

@@ -1,5 +1,6 @@
+import { Context } from '.keystone/types';
 import sendEmailReactivateAccountLinkHelper from '../../../helpers/send-email-reactivate-account-link';
-import { AccountSendEmailReactivateLinkVariables, AccountSendEmailReactivateLinkResponse, Context } from '../../../types';
+import { AccountSendEmailReactivateLinkVariables, AccountSendEmailReactivateLinkResponse } from '../../../types';
 
 /**
  * sendEmailReactivateAccountLink

@@ -1,4 +1,5 @@
-import { Context, SectionReview } from '../../types';
+import { Context } from '.keystone/types';
+import { SectionReview } from '../../types';
 
 /**
  * createASectionReview

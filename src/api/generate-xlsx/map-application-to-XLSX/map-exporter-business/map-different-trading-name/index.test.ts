@@ -20,7 +20,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-exporter-business/map-di
 
       const result = mapDifferentTradingName(mockCompany);
 
-      const expected = xlsxRow(FIELDS[DIFFERENT_TRADING_NAME], mockCompany[DIFFERENT_TRADING_NAME]);
+      const expected = xlsxRow(String(FIELDS[DIFFERENT_TRADING_NAME]), mockCompany[DIFFERENT_TRADING_NAME]);
 
       expect(result).toEqual(expected);
     });
