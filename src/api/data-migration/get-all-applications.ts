@@ -9,7 +9,7 @@ const getAllApplications = async (context: Context) => {
 
   try {
     const applications = await context.db.Application.findMany() as Array<object>;
-
+  
     console.info('✅ Generating an array of application ID connections');
 
     const idsConnectArray = mapArrayOfConnectionObjects({
