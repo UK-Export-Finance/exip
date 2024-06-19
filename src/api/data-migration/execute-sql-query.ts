@@ -14,7 +14,7 @@ const executeSqlQuery = async ({ connection, query, loggingMessage }: ExecuteSql
 
     return response;
   } catch (err) {
-    console.info(`🚨 error ${loggingMessage} %O`, err);
+    console.error(`🚨 error ${loggingMessage} %O`, err);
 
     throw new Error(`🚨 error ${loggingMessage} ${err}`);
   }

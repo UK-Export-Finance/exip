@@ -13,7 +13,7 @@ const createInitialLossPayees = async (context: Context, applicationIdsConnectAr
 
     return created;
   } catch (err) {
-    console.info(`🚨 error ${loggingMessage} %O`, err);
+    console.error(`🚨 error ${loggingMessage} %O`, err);
 
     throw new Error(`🚨 error ${loggingMessage} ${err}`);
   }
@@ -31,7 +31,7 @@ const lossPayeeFinancialInternational = async (context: Context, lossPayeeIdsCon
 
     return created;
   } catch (err) {
-    console.info(`🚨 error ${loggingMessage} %O`, err);
+    console.error(`🚨 error ${loggingMessage} %O`, err);
 
     throw new Error(`🚨 error ${loggingMessage} ${err}`);
   }
@@ -49,7 +49,7 @@ const lossPayeeFinancialInternationalVector = async (context: Context, lossPayee
 
     return created;
   } catch (err) {
-    console.info(`🚨 error ${loggingMessage} %O`, err);
+    console.error(`🚨 error ${loggingMessage} %O`, err);
 
     throw new Error(`🚨 error ${loggingMessage} ${err}`);
   }
@@ -67,7 +67,7 @@ const lossPayeeFinancialUk = async (context: Context, lossPayeeIdsConnectArray: 
 
     return created;
   } catch (err) {
-    console.info(`🚨 error ${loggingMessage} %O`, err);
+    console.error(`🚨 error ${loggingMessage} %O`, err);
 
     throw new Error(`🚨 error ${loggingMessage} ${err}`);
   }
@@ -85,7 +85,7 @@ const lossPayeeFinancialUkVector = async (context: Context, lossPayeeIdsConnectA
 
     return created;
   } catch (err) {
-    console.info(`🚨 error ${loggingMessage} %O`, err);
+    console.error(`🚨 error ${loggingMessage} %O`, err);
 
     throw new Error(`🚨 error ${loggingMessage} ${err}`);
   }
@@ -123,7 +123,7 @@ const createLossPayee = async (context: Context, applicationIdsConnectArray: Arr
     await lossPayeeFinancialUkVector(context, ukIds);
 
   } catch (err) {
-    console.info(`🚨 error ${loggingMessage} %O`, err);
+    console.error(`🚨 error ${loggingMessage} %O`, err);
 
     throw new Error(`🚨 error ${loggingMessage} ${err}`);
   }

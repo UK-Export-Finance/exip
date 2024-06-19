@@ -22,7 +22,7 @@ const getAllApplications = async (context: Context) => {
       idsConnectArray,
     };
   } catch (err) {
-    console.info(`🚨 error ${loggingMessage} %O`, err);
+    console.error(`🚨 error ${loggingMessage} %O`, err);
 
     throw new Error(`🚨 error ${loggingMessage} ${err}`);
   }

@@ -8,43 +8,47 @@ import getKeystoneContext from './get-keystone-context';
 // TODO: seems that we shoud only touch applications that do NOT have a submitted status
 
 const dataMigration = async () => {
-  console.info('✅ Beginning data migration');
+  try {
+    console.info('🚀 Beginning data migration');
 
-  const connection = await connectToDatabase();
+    const connection = await connectToDatabase();
 
-  if (connection) {
-    console.info('✅ Connected to database. Creating new tables');
+    if (connection) {
+      console.info('✅ Connected to database. Creating new tables');
+
+      // TEMPORARILY commented out for easier local dev.
+      // await createTables.accountStatus(connection);
+      // await createTables.jointlyInsuredParty(connection);
+    }
+
+    console.info('✅ New tables successfully created. Updating applications');
 
     // TEMPORARILY commented out for easier local dev.
-    // await createTables.accountStatus(connection);
-    // await createTables.jointlyInsuredParty(connection);
+    // await updateApplications.nominatedLossPayeeField(connection);
+    // await updateApplications.nominatedLossPayeeConstraint(connection);
+
+    console.info('✅ Applications successfully updated.');
+
+    const context = await getKeystoneContext();
+
+    console.info('✅ Obtained keystone context. Executing keystone/prisma queries');
+
+    // TODO: rename idsConnectArray to include applications?
+    const { applications, idsConnectArray } = await getAllApplications(context);
+
+    console.info('✅ Creating new relationships for all applications');
+
+    await createNewApplicationRelationships.lossPayee(context, idsConnectArray);
+    await createNewApplicationRelationships.jointlyInsuredParty(context, applications);
+
+    console.info('🎉 Migration complete. Exiting script');
+
+    process.exit();
+  } catch (err) {
+    console.error(`🚨 error with data migration %O`, err);
+
+    throw new Error(`🚨 error with data migration ${err}`);
   }
-
-  console.info('✅ New tables successfully created. Updating applications');
-
-  // TEMPORARILY commented out for easier local dev.
-  // await updateApplications.nominatedLossPayeeField(connection);
-  // await updateApplications.nominatedLossPayeeConstraint(connection);
-
-  console.info('✅ Applications successfully updated.');
-
-  const context = await getKeystoneContext();
-
-  console.info('✅ Obtained keystone context. Executing keystone/prisma queries');
-
-  // TODO: rename idsConnectArray to include applications?
-  const { applications, idsConnectArray } = await getAllApplications(context);
-
-  console.info('✅ Creating new relationships for all applications');
-
-  await createNewApplicationRelationships.lossPayee(context, idsConnectArray);
-  await createNewApplicationRelationships.jointlyInsuredParty(context, applications);
-
-
-
-  console.info('🎉 Migration complete. Exiting script');
-
-  process.exit();
 };
 
 dataMigration();

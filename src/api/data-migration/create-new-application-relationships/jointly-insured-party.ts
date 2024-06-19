@@ -21,7 +21,7 @@ const createJointlyInsuredParty = async (context: Context, applications: Array<o
 
     return created;
   } catch (err) {
-    console.info(`🚨 error ${loggingMessage} %O`, err);
+    console.error(`🚨 error ${loggingMessage} %O`, err);
 
     throw new Error(`🚨 error ${loggingMessage} ${err}`);
   }
