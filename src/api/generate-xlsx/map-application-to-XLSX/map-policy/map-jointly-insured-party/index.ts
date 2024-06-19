@@ -15,6 +15,7 @@ const {
  * mapJointlyInsuredParty
  * Map an application's "jointly insured party" fields into an array of objects for XLSX generation
  * @param {ApplicationJointlyInsuredParty} party: Application's jointly insured party
+ * @param {Array<Country>} countries: Countries
  * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapJointlyInsuredParty = (party: ApplicationJointlyInsuredParty, countries: Array<Country>) => {
