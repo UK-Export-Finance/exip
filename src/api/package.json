@@ -14,12 +14,13 @@
   "author": "UK Export Finance",
   "scripts": {
     "build": "NODE_ENV=dev keystone build --no-ui",
-    "dev": "keystone dev  --no-ui",
+    "dev": "keystone dev  --no-ui  --no-db-push",
     "documentation": "npx spectaql -t ./documentation/output ./documentation/config.yml",
     "lint": "eslint ./",
     "lint:fix": "eslint ./ --fix",
     "start": "keystone start --no-ui",
-    "test": "jest --runInBand --verbose --silent --coverage --config=jest.config.js"
+    "test": "jest --runInBand --verbose --silent --coverage --config=jest.config.js",
+    "data-migration": "npx ts-node ./data-migration/index.ts"
   },
   "dependencies": {
     "@babel/core": "^7.24.7",
@@ -40,6 +41,7 @@
     "exceljs": "^4.4.0",
     "express-rate-limit": "^7.3.1",
     "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.10.1",
     "node-cron": "^3.0.3",
     "notifications-node-client": "^8.1.0",
     "otplib": "^12.0.1",
@@ -52,6 +54,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
     "@types/jest": "^29.5.12",
     "@types/jsonwebtoken": "^9.0.6",
+    "@types/mysql": "^2.15.26",
     "@types/node-cron": "^3.0.11",
     "@typescript-eslint/eslint-plugin": "^7.13.0",
     "@typescript-eslint/parser": "^7.13.0",
