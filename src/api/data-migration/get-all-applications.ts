@@ -12,14 +12,14 @@ const getAllApplications = async (context: Context) => {
   
     console.info('✅ Generating an array of application ID connections');
 
-    const idsConnectArray = mapArrayOfConnectionObjects({
+    const applicationIdsConnectArray = mapArrayOfConnectionObjects({
       idsArray: applications,
       relationshipName: 'application',
     });
 
     return {
       applications,
-      idsConnectArray,
+      applicationIdsConnectArray,
     };
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);

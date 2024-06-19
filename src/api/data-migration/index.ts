@@ -21,25 +21,36 @@ const dataMigration = async () => {
       // await createTables.jointlyInsuredParty(connection);
     }
 
-    console.info('✅ New tables successfully created. Updating applications');
+    console.info('✅ New tables successfully created.');
+
+    // NOTE: these tables require creation before creating new application relationships 
+
+    console.info('✅ Updating existing tables.');
 
     // TEMPORARILY commented out for easier local dev.
+    // await updateApplications.exportContractFields(connection);
     // await updateApplications.nominatedLossPayeeField(connection);
     // await updateApplications.nominatedLossPayeeConstraint(connection);
-    // await updateApplications.exportContractFields(connection);
 
     console.info('✅ Applications successfully updated.');
+
+    console.info('✅ Creating export contract tables.');
+
+    await createTables.exportContractAgentServiceCharge(connection);
+    await createTables.exportContractAgentService(connection);
+    await createTables.exportContractAgent(connection);
+
+    console.info('✅ Export contract tables successfully created.');
 
     const context = await getKeystoneContext();
 
     console.info('✅ Obtained keystone context. Executing keystone/prisma queries');
 
-    // TODO: rename idsConnectArray to include applications?
-    const { applications, idsConnectArray } = await getAllApplications(context);
+    const { applications, applicationIdsConnectArray } = await getAllApplications(context);
 
     await createNewApplicationRelationships({
       context,
-      applicationIdsConnectArray: idsConnectArray,
+      applicationIdsConnectArray,
       applications,
     });
 
