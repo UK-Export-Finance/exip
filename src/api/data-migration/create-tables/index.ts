@@ -100,12 +100,28 @@ const createExportContractAgentServiceCharge = (connection: Connection) => {
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
+const createPrivateMarket = (connection: Connection) => {
+  const loggingMessage = 'Creating TABLE - private market';
+
+  const query = `
+    CREATE TABLE PrivateMarket (
+      id varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+      attempted tinyint(1) DEFAULT NULL,
+      declinedDescription varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      PRIMARY KEY (id)
+    ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+  `;
+
+  return executeSqlQuery({ connection, query, loggingMessage });
+};
+
 const createTables = {
   accountStatus: (connection: Connection) => createAccountStatus(connection),
   jointlyInsuredParty: (connection: Connection) => createJointlyInsuredParty(connection),
   exportContractAgent: (connection: Connection) => createExportContractAgent(connection),
   exportContractAgentService: (connection: Connection) => createExportContractAgentService(connection),
   exportContractAgentServiceCharge: (connection: Connection) => createExportContractAgentServiceCharge(connection),
+  privateMarket: (connection: Connection) => createPrivateMarket(connection),
 };
 
 export default createTables;

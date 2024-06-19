@@ -34,13 +34,16 @@ const dataMigration = async () => {
 
     console.info('✅ Applications successfully updated.');
 
-    console.info('✅ Creating export contract tables.');
+    // console.info('✅ Creating export contract tables.');
 
-    await createTables.exportContractAgentServiceCharge(connection);
-    await createTables.exportContractAgentService(connection);
-    await createTables.exportContractAgent(connection);
+    // TEMPORARILY commented out for easier local dev.
+    // await createTables.exportContractAgentServiceCharge(connection);
+    // await createTables.exportContractAgentService(connection);
+    // await createTables.exportContractAgent(connection);
 
-    console.info('✅ Export contract tables successfully created.');
+    await createTables.privateMarket(connection);
+
+    // console.info('✅ Export contract tables successfully created.');
 
     const context = await getKeystoneContext();
 
