@@ -132,6 +132,76 @@ const createCompanyDifferentTradingAddress = (connection: Connection) => {
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
+const createBuyerContact = (connection: Connection) => {
+  const loggingMessage = 'Creating TABLE - buyer contact';
+
+  const query = `
+    CREATE TABLE BuyerContact (
+      id varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+      contactFirstName varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      contactLastName varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      contactPosition varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      contactEmail varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      canContactBuyer tinyint(1) DEFAULT NULL,
+      application varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+      PRIMARY KEY (id),
+      KEY BuyerContact_application_idx (application),
+      CONSTRAINT BuyerContact_application_fkey FOREIGN KEY (application) REFERENCES Application (id) ON DELETE
+      SET
+        NULL ON UPDATE CASCADE
+    ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+  `;
+
+  return executeSqlQuery({ connection, query, loggingMessage });
+};
+
+const createBuyerRelationship = (connection: Connection) => {
+  const loggingMessage = 'Creating TABLE - buyer relationship';
+
+  const query = `
+    CREATE TABLE BuyerRelationship (
+      id varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+      exporterIsConnectedWithBuyer tinyint(1) DEFAULT NULL,
+      connectionWithBuyerDescription varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      exporterHasPreviousCreditInsuranceWithBuyer tinyint(1) DEFAULT NULL,
+      exporterHasBuyerFinancialAccounts tinyint(1) DEFAULT NULL,
+      previousCreditInsuranceWithBuyerDescription varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      application varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+      PRIMARY KEY (id),
+      KEY BuyerRelationship_application_idx (application),
+      CONSTRAINT BuyerRelationship_application_fkey FOREIGN KEY (application) REFERENCES Application (id) ON DELETE
+      SET
+        NULL ON UPDATE CASCADE
+    ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+  `;
+
+  return executeSqlQuery({ connection, query, loggingMessage });
+};
+
+const createBuyerTradingHistory = (connection: Connection) => {
+  const loggingMessage = 'Creating TABLE - buyer trading history';
+
+  const query = `
+    CREATE TABLE BuyerTradingHistory (
+      id varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+      currencyCode varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      outstandingPayments tinyint(1) DEFAULT NULL,
+      failedPayments tinyint(1) DEFAULT NULL,
+      exporterHasTradedWithBuyer tinyint(1) DEFAULT NULL,
+      totalOverduePayments int DEFAULT NULL,
+      totalOutstandingPayments int DEFAULT NULL,
+      application varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+      PRIMARY KEY (id),
+      KEY BuyerTradingHistory_application_idx (application),
+      CONSTRAINT BuyerTradingHistory_application_fkey FOREIGN KEY (application) REFERENCES Application (id) ON DELETE
+      SET
+        NULL ON UPDATE CASCADE
+    ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+  `;
+
+  return executeSqlQuery({ connection, query, loggingMessage });
+};
+
 const createTables = {
   accountStatus: (connection: Connection) => createAccountStatus(connection),
   jointlyInsuredParty: (connection: Connection) => createJointlyInsuredParty(connection),
@@ -140,6 +210,9 @@ const createTables = {
   exportContractAgentServiceCharge: (connection: Connection) => createExportContractAgentServiceCharge(connection),
   privateMarket: (connection: Connection) => createPrivateMarket(connection),
   companyDifferentTradingAddress: (connection: Connection) => createCompanyDifferentTradingAddress(connection),
+  buyerContact: (connection: Connection) => createBuyerContact(connection),
+  buyerRelationship: (connection: Connection) => createBuyerRelationship(connection),
+  buyerTradingHistory: (connection: Connection) => createBuyerTradingHistory(connection),
 };
 
 export default createTables;

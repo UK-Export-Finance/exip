@@ -20,6 +20,10 @@ const dataMigration = async () => {
       // await createTables.accountStatus(connection);
       // await createTables.jointlyInsuredParty(connection);
       // await createTables.companyDifferentTradingAddress(connection);
+
+      await createTables.buyerContact(connection);
+      await createTables.buyerRelationship(connection);
+      await createTables.buyerTradingHistory(connection);
     }
 
     console.info('✅ New tables successfully created.');

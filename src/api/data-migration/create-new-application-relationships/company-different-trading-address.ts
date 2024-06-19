@@ -5,8 +5,6 @@ const createCompanyDifferentTradingAddress = async (context: Context, applicatio
 
   console.info(`✅ ${loggingMessage}`);
 
-  console.log('>>>>>>>> applications ', applications);
-
   try {
     const companyIdsConnectArray = applications.map((application) => ({
       company: {
