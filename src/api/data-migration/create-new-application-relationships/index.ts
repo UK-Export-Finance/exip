@@ -3,6 +3,7 @@ import createLossPayee from './loss-payee';
 import createJointlyInsuredParty from './jointly-insured-party';
 import createExportContractAgent from './export-contract-agent';
 import createPrivateMarket from './private-market';
+import createCompanyDifferentTradingAddress from './company-different-trading-address';
 
 interface CreateNewApplicationRelationshipsParams {
   context: Context
@@ -21,6 +22,7 @@ const createNewApplicationRelationships = async ({ context, applicationIdsConnec
       createJointlyInsuredParty(context, applications),
       createExportContractAgent(context, applications),
       createPrivateMarket(context, applications),
+      createCompanyDifferentTradingAddress(context, applications),
     ]);
 
     return newRelationships;
