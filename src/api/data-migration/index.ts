@@ -31,6 +31,8 @@ const dataMigration = async () => {
     // await updateApplications.exportContractFields(connection);
     // await updateApplications.nominatedLossPayeeField(connection);
     // await updateApplications.nominatedLossPayeeConstraint(connection);
+    // await updateApplications.companyFields(connection);
+    // await updateApplications.companyConstraint(connection);
 
     console.info('✅ Applications successfully updated.');
 
@@ -40,8 +42,7 @@ const dataMigration = async () => {
     // await createTables.exportContractAgentServiceCharge(connection);
     // await createTables.exportContractAgentService(connection);
     // await createTables.exportContractAgent(connection);
-
-    await createTables.privateMarket(connection);
+    // await createTables.privateMarket(connection);
 
     // console.info('✅ Export contract tables successfully created.');
 
