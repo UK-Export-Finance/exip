@@ -36,10 +36,11 @@ const dataMigration = async () => {
     // TODO: rename idsConnectArray to include applications?
     const { applications, idsConnectArray } = await getAllApplications(context);
 
-    console.info('✅ Creating new relationships for all applications');
-
-    await createNewApplicationRelationships.lossPayee(context, idsConnectArray);
-    await createNewApplicationRelationships.jointlyInsuredParty(context, applications);
+    await createNewApplicationRelationships({
+      context,
+      applicationIdsConnectArray: idsConnectArray,
+      applications,
+    });
 
     console.info('🎉 Migration complete. Exiting script');
 
