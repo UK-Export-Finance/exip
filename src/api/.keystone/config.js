@@ -3426,7 +3426,7 @@ var update_account_default = update;
 // helpers/send-email-confirm-email-address/index.ts
 var send2 = async (context, urlOrigin, accountId) => {
   try {
-    console.info("Sending email verification");
+    console.info("Sending email verification %s %s", urlOrigin, accountId);
     const account2 = await get_account_by_id_default(context, accountId);
     if (!account2) {
       console.info("Sending email verification - no account exists with the provided account ID");

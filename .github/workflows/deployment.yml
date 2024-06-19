@@ -11,6 +11,12 @@
 # 3. Azure WebApp - https://learn.microsoft.com/en-us/azure/app-service/overview
 #
 #
+# Following Azure services are consumed:
+# 1. Azure resource group - https://learn.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az-group-create
+# 2. Azure container registry - https://learn.microsoft.com/en-us/cli/azure/acr?view=azure-cli-latest#az-acr-create
+# 3. Azure WebApp - https://learn.microsoft.com/en-us/azure/app-service/overview
+#
+#
 # Execution
 # *********
 # GHA is only invoked when following conditions are satisfied:
@@ -24,6 +30,7 @@ on:
   push:
     branches:
       - dev
+      - feature
       - feature
       - staging
       - production
@@ -166,6 +173,7 @@ jobs:
             APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
             APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
             API_KEY='${{ secrets.API_KEY }}' \
+            API_KEY='${{ secrets.API_KEY }}' \
             SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
             GOV_NOTIFY_API_KEY='${{ secrets.GOV_NOTIFY_API_KEY }}' \
             COMPANIES_HOUSE_API_URL='${{ secrets.COMPANIES_HOUSE_API_URL }}' \
@@ -272,6 +280,8 @@ jobs:
             GOOGLE_TAG_MANAGER_ID='${{ secrets.GOOGLE_TAG_MANAGER_ID }}' \
             APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
             APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
+            APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
+            API_KEY='${{ secrets.API_KEY }}'
             APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
             API_KEY='${{ secrets.API_KEY }}'
 
