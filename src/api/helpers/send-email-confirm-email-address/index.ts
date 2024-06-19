@@ -14,7 +14,7 @@ import { Context, SuccessResponse } from '../../types';
  */
 const send = async (context: Context, urlOrigin: string, accountId: string): Promise<SuccessResponse> => {
   try {
-    console.info('Sending email verification');
+    console.info('Sending email verification %s %s', urlOrigin, accountId);
 
     // get the account
     const account = await getAccountById(context, accountId);
