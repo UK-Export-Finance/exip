@@ -53,6 +53,10 @@ const dataMigration = async () => {
 
     // await updateApplications.brokerFullAddressField(connection);
 
+    // await updateApplications.eligibilityHasEndBuyerField(connection);
+
+    await updateApplications.declarationsExportContractField(connection);
+
     console.info('✅ Applications successfully updated.');
 
 

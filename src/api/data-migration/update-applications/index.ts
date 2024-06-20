@@ -102,6 +102,26 @@ const addBrokerFullAddressField = (connection: Connection) => {
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
+const addEligibilityHasEndBuyerField = (connection: Connection) => {
+  const loggingMessage = 'Adding FIELD hasEndBuyer to eligibility table';
+
+  const query = `
+    ALTER TABLE Eligibility ADD hasEndBuyer tinyint(1) NOT NULL DEFAULT '0'
+  `;
+
+  return executeSqlQuery({ connection, query, loggingMessage });
+};
+
+const addDeclarationsExportContractField = (connection: Connection) => {
+  const loggingMessage = 'Adding FIELD exportContract to declaration table';
+
+  const query = `
+    ALTER TABLE Declaration ADD exportContract tinyint(1) DEFAULT NULL
+  `;
+
+  return executeSqlQuery({ connection, query, loggingMessage });
+};
+
 const updateApplications = {
   nominatedLossPayeeField: (connection: Connection) => addNominatedLossPayeeField(connection),
   nominatedLossPayeeConstraint: (connection: Connection) => addNominatedLossPayeeConstraint(connection),
@@ -110,6 +130,8 @@ const updateApplications = {
   companyConstraint: (connection: Connection) => addCompanyConstraint(connection),
   businessFields: (connection: Connection) => addBusinessFields(connection),
   brokerFullAddressField: (connection: Connection) => addBrokerFullAddressField(connection),
+  eligibilityHasEndBuyerField: (connection: Connection) => addEligibilityHasEndBuyerField(connection),
+  declarationsExportContractField: (connection: Connection) => addDeclarationsExportContractField(connection),
 };
 
 export default updateApplications;
