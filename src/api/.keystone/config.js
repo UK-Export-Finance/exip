@@ -2331,6 +2331,7 @@ var lists = {
       }),
       totalYearsExporting: (0, import_fields.integer)(),
       totalEmployeesUK: (0, import_fields.integer)(),
+      totalEmployeesInternational: (0, import_fields.integer)(),
       estimatedAnnualTurnover: (0, import_fields.integer)(),
       exportsTurnoverPercentage: (0, import_fields.integer)(),
       turnoverCurrencyCode: (0, import_fields.text)({

@@ -202,6 +202,110 @@ const createBuyerTradingHistory = (connection: Connection) => {
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
+const createNominatedLossPayee = (connection: Connection) => {
+  const loggingMessage = 'Creating TABLE - nominated loss payee';
+
+  const query = `
+    CREATE TABLE NominatedLossPayee (
+      id varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+      application varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+      isAppointed tinyint(1) DEFAULT NULL,
+      name varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      isLocatedInUk tinyint(1) DEFAULT NULL,
+      isLocatedInternationally tinyint(1) DEFAULT NULL,
+      PRIMARY KEY (id),
+      KEY NominatedLossPayee_application_idx (application),
+      CONSTRAINT NominatedLossPayee_application_fkey FOREIGN KEY (application) REFERENCES Application (id) ON DELETE
+      SET
+        NULL ON UPDATE CASCADE
+    ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+  `;
+
+  return executeSqlQuery({ connection, query, loggingMessage });
+};
+
+const createLossPayeeFinancialInternational = (connection: Connection) => {
+  const loggingMessage = 'Creating TABLE - loss payee financial international';
+
+  const query = `
+    CREATE TABLE LossPayeeFinancialInternational (
+      id varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+      lossPayee varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+      bankAddress varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      bicSwiftCode varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      iban varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      vector varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+      PRIMARY KEY (id),
+      UNIQUE KEY LossPayeeFinancialInternational_lossPayee_key (lossPayee),
+      UNIQUE KEY LossPayeeFinancialInternational_vector_key (vector),
+      CONSTRAINT LossPayeeFinancialInternational_lossPayee_fkey FOREIGN KEY (lossPayee) REFERENCES NominatedLossPayee (id) ON DELETE
+      SET
+        NULL ON UPDATE CASCADE,
+        CONSTRAINT LossPayeeFinancialInternational_vector_fkey FOREIGN KEY (vector) REFERENCES LossPayeeFinancialInternationalVector (id) ON DELETE
+      SET
+        NULL ON UPDATE CASCADE
+    ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+  `;
+
+  return executeSqlQuery({ connection, query, loggingMessage });
+};
+
+const createLossPayeeFinancialInternationalVector = (connection: Connection) => {
+  const loggingMessage = 'Creating TABLE - loss payee financial international vector';
+
+  const query = `
+    CREATE TABLE LossPayeeFinancialInternationalVector (
+      id varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+      bicSwiftCodeVector varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      ibanVector varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      PRIMARY KEY (id)
+    ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+  `;
+
+  return executeSqlQuery({ connection, query, loggingMessage });
+};
+
+const createLossPayeeFinancialUk = (connection: Connection) => {
+  const loggingMessage = 'Creating TABLE - loss payee financial UK';
+
+  const query = `
+    CREATE TABLE LossPayeeFinancialUk (
+      id varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+      lossPayee varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+      accountNumber varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      bankAddress varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      sortCode varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      vector varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+      PRIMARY KEY (id),
+      UNIQUE KEY LossPayeeFinancialUk_lossPayee_key (lossPayee),
+      UNIQUE KEY LossPayeeFinancialUk_vector_key (vector),
+      CONSTRAINT LossPayeeFinancialUk_lossPayee_fkey FOREIGN KEY (lossPayee) REFERENCES NominatedLossPayee (id) ON DELETE
+      SET
+        NULL ON UPDATE CASCADE,
+        CONSTRAINT LossPayeeFinancialUk_vector_fkey FOREIGN KEY (vector) REFERENCES LossPayeeFinancialUkVector (id) ON DELETE
+      SET
+        NULL ON UPDATE CASCADE
+    ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+  `;
+
+  return executeSqlQuery({ connection, query, loggingMessage });
+};
+
+const createLossPayeeFinancialUkVector = (connection: Connection) => {
+  const loggingMessage = 'Creating TABLE - loss payee financial UK vector';
+
+  const query = `
+    CREATE TABLE LossPayeeFinancialUkVector (
+      id varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+      accountNumberVector varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      sortCodeVector varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      PRIMARY KEY (id)
+    ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+  `;
+
+  return executeSqlQuery({ connection, query, loggingMessage });
+};
+
 const createTables = {
   accountStatus: (connection: Connection) => createAccountStatus(connection),
   jointlyInsuredParty: (connection: Connection) => createJointlyInsuredParty(connection),
@@ -213,6 +317,11 @@ const createTables = {
   buyerContact: (connection: Connection) => createBuyerContact(connection),
   buyerRelationship: (connection: Connection) => createBuyerRelationship(connection),
   buyerTradingHistory: (connection: Connection) => createBuyerTradingHistory(connection),
+  nominatedLossPayee: (connection: Connection) => createNominatedLossPayee(connection),
+  lossPayeeFinancialInternational: (connection: Connection) => createLossPayeeFinancialInternational(connection),
+  lossPayeeFinancialInternationalVector: (connection: Connection) => createLossPayeeFinancialInternationalVector(connection),
+  lossPayeeFinancialUk: (connection: Connection) => createLossPayeeFinancialUk(connection),
+  lossPayeeFinancialUkVector: (connection: Connection) => createLossPayeeFinancialUkVector(connection),
 };
 
 export default createTables;

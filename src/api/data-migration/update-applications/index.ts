@@ -27,11 +27,6 @@ const addExportContractFields = (connection: Connection) => {
   const queries =  Promise.all([
     executeSqlQuery({
       connection,
-      query: `ALTER TABLE ExportContract ADD goodsOrServicesDescription varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''`,
-      loggingMessage: 'Adding FIELD goodsOrServicesDescription to exportContract table',
-    }),
-    executeSqlQuery({
-      connection,
       query: `ALTER TABLE ExportContract ADD paymentTermsDescription varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''`,
       loggingMessage: 'Adding FIELD paymentTermsDescription to exportContract table',
     }),
