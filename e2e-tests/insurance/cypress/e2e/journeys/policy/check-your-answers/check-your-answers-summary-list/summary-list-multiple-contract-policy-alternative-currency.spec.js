@@ -28,7 +28,7 @@ context('Insurance - Policy - Check your answers - Summary list - Multiple contr
       cy.completePolicySection({
         policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
         isoCode: NON_STANDARD_CURRENCY_CODE,
-        alternativeCurrencyPolicy: true,
+        alternativeCurrency: true,
       });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`;

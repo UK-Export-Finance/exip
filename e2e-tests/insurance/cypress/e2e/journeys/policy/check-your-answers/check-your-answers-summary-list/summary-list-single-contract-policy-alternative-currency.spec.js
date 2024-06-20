@@ -26,7 +26,7 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
 
       cy.completePolicySection({
         isoCode: NON_STANDARD_CURRENCY_CODE,
-        alternativeCurrencyPolicy: true,
+        alternativeCurrency: true,
       });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`;

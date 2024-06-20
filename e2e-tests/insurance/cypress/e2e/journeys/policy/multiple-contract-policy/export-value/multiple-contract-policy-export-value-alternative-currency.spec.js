@@ -41,7 +41,7 @@ context('Insurance - Policy - Multiple contract policy - Export value page - Alt
 
       cy.completeAndSubmitMultipleContractPolicyForm({
         isoCode: NON_STANDARD_CURRENCY_CODE,
-        alternativeCurrencyPolicy: true,
+        alternativeCurrency: true,
       });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`;

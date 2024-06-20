@@ -11,10 +11,10 @@ const {
 /**
  * completeAndSubmitTurnoverForm
  * complete and submit the "turnover" form.
- * @param {Boolean} alternativeCurrencyTurnover: Select the "alternative currency" option
+ * @param {Boolean} alternativeCurrency: Select the "alternative currency" option
  */
-const completeAndSubmitTurnoverForm = ({ alternativeCurrencyTurnover = false }) => {
-  if (alternativeCurrencyTurnover) {
+const completeAndSubmitTurnoverForm = ({ alternativeCurrency = false }) => {
+  if (alternativeCurrency) {
     cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true });
   }
 

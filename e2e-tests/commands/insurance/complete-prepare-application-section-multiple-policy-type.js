@@ -94,7 +94,7 @@ const completePrepareApplicationMultiplePolicyType = ({
     needPreCreditPeriod,
     isAppointingLossPayee,
     lossPayeeIsLocatedInUK,
-    alternativeCurrencyPolicy,
+    alternativeCurrency: alternativeCurrencyPolicy,
   });
 
   cy.completeExportContractSection({

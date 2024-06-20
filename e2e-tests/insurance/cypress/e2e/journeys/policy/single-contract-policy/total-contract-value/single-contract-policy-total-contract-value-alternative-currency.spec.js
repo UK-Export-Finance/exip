@@ -37,7 +37,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
       cy.completeAndSubmitPolicyTypeForm({});
       cy.completeAndSubmitSingleContractPolicyForm({
         isoCode: NON_STANDARD_CURRENCY_CODE,
-        alternativeCurrencyPolicy: true,
+        alternativeCurrency: true,
       });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`;

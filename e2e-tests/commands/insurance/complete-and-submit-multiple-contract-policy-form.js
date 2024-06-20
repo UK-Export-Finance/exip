@@ -2,12 +2,12 @@
  * completeAndSubmitMultipleContractPolicyForm
  * Complete and submit the "multiple contract policy" form
  * @param {String} isoCode: Policy currency ISO code
- * @param {Boolean} alternativeCurrencyPolicy: Select the "alternative currency" option
+ * @param {Boolean} alternativeCurrency: Select the "alternative currency" option
  */
-const completeAndSubmitMultipleContractPolicyForm = ({ isoCode, alternativeCurrencyPolicy }) => {
+const completeAndSubmitMultipleContractPolicyForm = ({ isoCode, alternativeCurrency }) => {
   cy.completeMultipleContractPolicyForm({
     isoCode,
-    alternativeCurrencyPolicy,
+    alternativeCurrency,
   });
 
   cy.clickSubmitButton();
