@@ -135,14 +135,17 @@ export const mockLossPayeeFinancialDetailsInternationalVector = {
 
 export const mockCountries = [
   {
+    id: '1',
     name: 'Abu Dhabi',
     isoCode: 'XAD',
   },
   {
+    id: '2',
     name: 'Algeria',
     isoCode: 'DZA',
   },
   {
+    id: '3',
     name: 'Greenland',
     isoCode: 'GRL',
   },

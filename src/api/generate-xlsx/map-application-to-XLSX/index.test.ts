@@ -10,6 +10,7 @@ import mapBuyer from './map-buyer';
 import mapExportContract from './map-export-contract';
 import mapDeclarations from './map-declarations';
 import { generateSubmittedApplication } from '../../test-helpers';
+import { mockCountries } from '../../test-mocks';
 import { Application } from '../../types';
 
 describe('api/generate-xlsx/map-application-to-xlsx/index', () => {
@@ -20,7 +21,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/index', () => {
   });
 
   it('should return an array of mappings and section breaks', () => {
-    const result = mapApplicationToXLSX(submittedApplication);
+    const result = mapApplicationToXLSX(submittedApplication, mockCountries);
 
     const expected = [
       ...mapKeyInformation(submittedApplication),
@@ -43,7 +44,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/index', () => {
 
       ROW_SEPERATOR,
 
-      ...mapPolicy(submittedApplication),
+      ...mapPolicy(submittedApplication, mockCountries),
 
       ROW_SEPERATOR,
 
@@ -51,7 +52,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/index', () => {
 
       ROW_SEPERATOR,
 
-      ...mapExportContract(submittedApplication),
+      ...mapExportContract(submittedApplication, mockCountries),
 
       ROW_SEPERATOR,
 

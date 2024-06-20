@@ -4,7 +4,8 @@ import { XLSX } from '../../../../content-strings';
 import xlsxRow from '../../helpers/xlsx-row';
 import mapYesNoField from '../../helpers/map-yes-no-field';
 import mapAgentCharge from './map-agent-charge';
-import { mockApplicationMinimalBrokerBuyerAndCompany as mockApplication } from '../../../../test-mocks';
+import getCountryByIsoCode from '../../../../helpers/get-country-by-iso-code';
+import { mockApplicationMinimalBrokerBuyerAndCompany as mockApplication, mockCountries } from '../../../../test-mocks';
 
 const { FIELDS } = XLSX;
 
@@ -22,18 +23,21 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-export-contract/map-agen
   describe(`when ${USING_AGENT} is true`, () => {
     const mockAgent = {
       ...agent,
+      [COUNTRY_CODE]: mockCountries[0].isoCode,
       [USING_AGENT]: true,
     };
 
     it('should return an array of mapped fields', () => {
-      const result = mapAgent(mockAgent);
+      const result = mapAgent(mockAgent, mockCountries);
+
+      const country = getCountryByIsoCode(mockCountries, mockAgent[COUNTRY_CODE]);
 
       const expected = [
         xlsxRow(String(FIELDS.EXPORT_CONTRACT[USING_AGENT]), mapYesNoField({ answer: mockAgent[USING_AGENT] })),
 
         xlsxRow(String(FIELDS.AGENT[NAME]), mockAgent[NAME]),
         xlsxRow(String(FIELDS.AGENT[FULL_ADDRESS]), mockAgent[FULL_ADDRESS]),
-        xlsxRow(String(FIELDS.AGENT[COUNTRY_CODE]), mockAgent[COUNTRY_CODE]),
+        xlsxRow(String(FIELDS.AGENT[COUNTRY_CODE]), country.name),
         xlsxRow(String(FIELDS.AGENT_SERVICE[SERVICE_DESCRIPTION]), mockAgent.service[SERVICE_DESCRIPTION]),
 
         ...mapAgentCharge(mockAgent.service),

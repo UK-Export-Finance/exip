@@ -4,7 +4,7 @@ import HEADER_COLUMNS from '../header-columns';
 import mapApplicationToXLSX from '../map-application-to-XLSX';
 import { XLSX_CONFIG, XLSX_ROW_INDEXES } from '../../constants';
 import { generateSubmittedApplication } from '../../test-helpers';
-import { mockApplicationMinimalBrokerBuyerAndCompany as mockApplication } from '../../test-mocks';
+import { mockApplicationMinimalBrokerBuyerAndCompany as mockApplication, mockCountries } from '../../test-mocks';
 
 const { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, FONT_SIZE } = XLSX_CONFIG;
 
@@ -80,7 +80,7 @@ describe('api/generate-xlsx/styled-columns/index', () => {
     it('should add column heights to particular columns', async () => {
       const submittedApplication = await generateSubmittedApplication();
 
-      const xlsxData = mapApplicationToXLSX(submittedApplication);
+      const xlsxData = mapApplicationToXLSX(submittedApplication, mockCountries);
 
       xlsxData.forEach((row) => {
         worksheet.addRow(row);

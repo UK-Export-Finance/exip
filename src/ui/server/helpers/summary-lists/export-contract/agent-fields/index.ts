@@ -30,7 +30,7 @@ const { AGENT_SERVICE_CHANGE, AGENT_SERVICE_CHECK_AND_CHANGE } = EXPORT_CONTRACT
  * Create all fields and values for the Insurance - "Export contract - agent details" govukSummaryList
  * @param {ApplicationExportContractAgent} answers: All submitted agent data
  * @param {Number} referenceNumber: Application reference number
- * @param {Array} countries: Countries
+ * @param {Array<Country>} countries: Countries
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>} Agent details fields
  */
@@ -94,7 +94,7 @@ export const agentServiceFields = (answers: ApplicationExportContractAgentServic
  * Create all fields and values for the Insurance - "Export contract - agent" govukSummaryList
  * @param {ApplicationExportContractAgent} answers: All submitted agent data
  * @param {Number} referenceNumber: Application reference number
- * @param {Array} countries: Countries
+ * @param {Array<Country>} countries: Countries
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} Fields and values in an object structure for GOVUK summary list structure
  */

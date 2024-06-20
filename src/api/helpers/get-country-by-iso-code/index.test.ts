@@ -1,7 +1,7 @@
 import getCountryByIsoCode from '.';
 import { mockCountries } from '../../test-mocks';
 
-describe('server/helpers/get-country-by-iso-code', () => {
+describe('helpers/get-country-by-iso-code', () => {
   it('should return a country', () => {
     const mockIsoCode = mockCountries[2].isoCode;
 
