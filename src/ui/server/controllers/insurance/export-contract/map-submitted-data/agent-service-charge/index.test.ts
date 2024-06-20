@@ -1,7 +1,7 @@
 import mapSubmittedData from '.';
 import { APPLICATION } from '../../../../../constants';
 import FIELD_IDS from '../../../../../constants/field-ids/insurance';
-import { EUR } from '../../../../../test-mocks';
+import { EUR, HKD } from '../../../../../test-mocks';
 
 const {
   EXPORT_CONTRACT: {
@@ -35,6 +35,27 @@ describe('controllers/insurance/export-contract/map-submitted-data/agent-service
         [FIXED_SUM_AMOUNT]: Number(mockFormBody[FIXED_SUM_AMOUNT]),
         [PERCENTAGE_CHARGE]: null,
         [FIXED_SUM_CURRENCY_CODE]: EUR.isoCode,
+      };
+
+      expect(result).toEqual(expected);
+    });
+
+    it(`should set ${ALTERNATIVE_CURRENCY_CODE} to null when ${CURRENCY_CODE} is NOT ${ALTERNATIVE_CURRENCY_CODE}`, () => {
+      const mockFormBody = {
+        [METHOD]: FIXED_SUM,
+        [FIXED_SUM_AMOUNT]: '1',
+        [ALTERNATIVE_CURRENCY_CODE]: HKD.isoCode,
+        [CURRENCY_CODE]: EUR.isoCode,
+      };
+
+      const result = mapSubmittedData(mockFormBody);
+
+      const expected = {
+        ...mockFormBody,
+        [FIXED_SUM_AMOUNT]: Number(mockFormBody[FIXED_SUM_AMOUNT]),
+        [PERCENTAGE_CHARGE]: null,
+        [FIXED_SUM_CURRENCY_CODE]: EUR.isoCode,
+        [ALTERNATIVE_CURRENCY_CODE]: null,
       };
 
       expect(result).toEqual(expected);
