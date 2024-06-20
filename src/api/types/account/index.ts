@@ -124,6 +124,13 @@ export interface Account extends AccountCreationCore {
   status: AccountStatus;
 }
 
+export interface AccountMvp extends AccountCreationCore {
+  id: string;
+  isVerified?: boolean;
+  isBlocked?: boolean;
+  statusId?: string;
+}
+
 export interface AuthenticationRetry {
   id: string;
 }

@@ -1,7 +1,10 @@
 import connectToDatabase from './connect-to-database';
 import createTables from './create-tables';
+import updateAccounts from './update-accounts';
 import updateApplications from'./update-applications';
+import getAllAccounts from './get-all-accounts';
 import getAllApplications from './get-all-applications';
+import createNewAccountStatusRelationships from './create-new-account-status-relationships';
 import createNewApplicationRelationships from './create-new-application-relationships';
 import getKeystoneContext from './get-keystone-context';
 
@@ -21,9 +24,9 @@ const dataMigration = async () => {
       // await createTables.jointlyInsuredParty(connection);
       // await createTables.companyDifferentTradingAddress(connection);
 
-      await createTables.buyerContact(connection);
-      await createTables.buyerRelationship(connection);
-      await createTables.buyerTradingHistory(connection);
+      // await createTables.buyerContact(connection);
+      // await createTables.buyerRelationship(connection);
+      // await createTables.buyerTradingHistory(connection);
     }
 
     console.info('✅ New tables successfully created.');
@@ -33,6 +36,13 @@ const dataMigration = async () => {
     console.info('✅ Updating existing tables.');
 
     // TEMPORARILY commented out for easier local dev.
+
+    // await updateAccounts.statusField(connection);
+    // await updateAccounts.statusConstraint(connection);
+
+    // await updateAccounts.isVerifiedField(connection);
+    // await updateAccounts.isBlockedField(connection);
+
     // await updateApplications.exportContractFields(connection);
     // await updateApplications.nominatedLossPayeeField(connection);
     // await updateApplications.nominatedLossPayeeConstraint(connection);
@@ -40,6 +50,7 @@ const dataMigration = async () => {
     // await updateApplications.companyConstraint(connection);
 
     console.info('✅ Applications successfully updated.');
+
 
     // console.info('✅ Creating export contract tables.');
 
@@ -54,6 +65,13 @@ const dataMigration = async () => {
     const context = await getKeystoneContext();
 
     console.info('✅ Obtained keystone context. Executing keystone/prisma queries');
+
+    const accounts = await getAllAccounts(connection);
+
+    await createNewAccountStatusRelationships({
+      context,
+      accounts,
+    });
 
     const { applications, applicationIdsConnectArray } = await getAllApplications(context);
 
