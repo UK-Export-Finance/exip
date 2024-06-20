@@ -92,6 +92,16 @@ const addBusinessFields = (connection: Connection) => {
   return queries;
 };
 
+const addBrokerFullAddressField = (connection: Connection) => {
+  const loggingMessage = 'Adding FIELD fullAddress to broker table';
+
+  const query = `
+    ALTER TABLE Broker ADD fullAddress varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''
+  `;
+
+  return executeSqlQuery({ connection, query, loggingMessage });
+};
+
 const updateApplications = {
   nominatedLossPayeeField: (connection: Connection) => addNominatedLossPayeeField(connection),
   nominatedLossPayeeConstraint: (connection: Connection) => addNominatedLossPayeeConstraint(connection),
@@ -99,6 +109,7 @@ const updateApplications = {
   companyFields: (connection: Connection) => addCompanyFields(connection),
   companyConstraint: (connection: Connection) => addCompanyConstraint(connection),
   businessFields: (connection: Connection) => addBusinessFields(connection),
+  brokerFullAddressField: (connection: Connection) => addBrokerFullAddressField(connection),
 };
 
 export default updateApplications;

@@ -51,6 +51,8 @@ const dataMigration = async () => {
 
     // await updateApplications.businessFields(connection);
 
+    // await updateApplications.brokerFullAddressField(connection);
+
     console.info('✅ Applications successfully updated.');
 
 
