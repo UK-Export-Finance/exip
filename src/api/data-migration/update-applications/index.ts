@@ -1,7 +1,6 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import { Connection } from 'mysql2/promise';
 import executeSqlQuery from '../execute-sql-query';
-import getAllBuyers from '../get-all-buyers';
 import { ApplicationBuyerMvp } from '../../types';
 
 const addNominatedLossPayeeField = (connection: Connection) => {
