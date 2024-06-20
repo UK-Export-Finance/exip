@@ -75,13 +75,30 @@ const addCompanyConstraint = (connection: Connection) => {
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
+const addBusinessFields = (connection: Connection) => {
+  const queries = Promise.all([
+    executeSqlQuery({
+      connection,
+      query: `ALTER TABLE Business ADD turnoverCurrencyCode varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''`,
+      loggingMessage: 'Adding FIELD turnoverCurrencyCode to business table',
+    }),
+    executeSqlQuery({
+      connection,
+      query: `ALTER TABLE Business ADD hasCreditControlProcess tinyint(1) DEFAULT NULL`,
+      loggingMessage: 'Adding FIELD hasCreditControlProcess to business table',
+    }),
+  ]);
+
+  return queries;
+};
+
 const updateApplications = {
   nominatedLossPayeeField: (connection: Connection) => addNominatedLossPayeeField(connection),
   nominatedLossPayeeConstraint: (connection: Connection) => addNominatedLossPayeeConstraint(connection),
   exportContractFields: (connection: Connection) => addExportContractFields(connection),
   companyFields: (connection: Connection) => addCompanyFields(connection),
   companyConstraint: (connection: Connection) => addCompanyConstraint(connection),
-
+  businessFields: (connection: Connection) => addBusinessFields(connection),
 };
 
 export default updateApplications;

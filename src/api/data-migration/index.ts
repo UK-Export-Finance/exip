@@ -49,6 +49,8 @@ const dataMigration = async () => {
     // await updateApplications.companyFields(connection);
     // await updateApplications.companyConstraint(connection);
 
+    // await updateApplications.businessFields(connection);
+
     console.info('✅ Applications successfully updated.');
 
 
