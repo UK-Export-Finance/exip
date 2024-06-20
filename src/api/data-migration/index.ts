@@ -3,6 +3,7 @@ import createTables from './create-tables';
 import updateAccounts from './update-accounts';
 import updateApplications from'./update-applications';
 import getAllAccounts from './get-all-accounts';
+import getAllBuyers from './get-all-buyers';
 import getAllApplications from './get-all-applications';
 import createNewAccountStatusRelationships from './create-new-account-status-relationships';
 import createNewApplicationRelationships from './create-new-application-relationships';
@@ -55,7 +56,8 @@ const dataMigration = async () => {
 
     // await updateApplications.eligibilityHasEndBuyerField(connection);
 
-    await updateApplications.declarationsExportContractField(connection);
+    // await updateApplications.declarationsExportContractField(connection);
+
 
     console.info('✅ Applications successfully updated.');
 
@@ -72,7 +74,7 @@ const dataMigration = async () => {
 
     const context = await getKeystoneContext();
 
-    console.info('✅ Obtained keystone context. Executing keystone/prisma queries');
+    console.info('✅ Obtained keystone context. Executing additional queries');
 
     const accounts = await getAllAccounts(connection);
 
@@ -80,6 +82,14 @@ const dataMigration = async () => {
       context,
       accounts,
     });
+
+    const buyers = await getAllBuyers(connection);
+
+    // TEMPORARILY commented out for easier local dev.
+    // await updateApplications.buyerContactFields(buyers, context);
+    // await updateApplications.buyerRelationshipFields(buyers, context);
+    // await updateApplications.buyerTradingHistoryFields(buyers, context);
+    // await updateApplications.buyerFields(connection);
 
     const { applications, applicationIdsConnectArray } = await getAllApplications(context);
 

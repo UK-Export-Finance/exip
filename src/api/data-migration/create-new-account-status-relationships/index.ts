@@ -21,10 +21,10 @@ const createNewAccountStatusRelationships = async ({ context, accounts }: Create
         },
         /**
          * NOTE: The accounts data we receive is raw database data.
-         * These 2x fields are TINYINT/integer values.
-         * The KeystoneJS context/GraphQL API expects these fields to booleans.
+         * In the database, boolean fields are TINYINT/integer values.
+         * The KeystoneJS context/GraphQL API expects these fields to be booleans.
          * Therefore, since the TINYINT values will be 0 or 1,
-         * we can safely transform these to a boolean.
+         * we can safely transform these fields to have a boolean value.
          * KeystoneJS will then automatically handle saving in the database as a TINYINT
          */
         isVerified: Boolean(account.isVerified),
