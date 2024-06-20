@@ -20,6 +20,7 @@ import { get as eligibleToApplyOnlineGet, post as eligibleToApplyOnlinePost } fr
 import { get as haveAnAccountGet, post as haveAnAccountPost } from '../../../controllers/insurance/eligibility/do-you-have-an-account';
 import { get as cannotApplyGet } from '../../../controllers/insurance/eligibility/cannot-apply';
 import { get as needToStartAgainGet, post as needToStartAgainPost } from '../../../controllers/insurance/eligibility/need-to-start-again';
+import { get as talkToEfmTooShortGet } from '../../../controllers/insurance/eligibility/contract-too-short';
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
@@ -97,5 +98,7 @@ insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY, cannot
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN, needToStartAgainGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN, needToStartAgainPost);
+
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.CONTRACT_TOO_SHORT, talkToEfmTooShortGet);
 
 export default insuranceEligibilityRouter;

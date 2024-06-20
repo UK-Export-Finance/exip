@@ -136,3 +136,18 @@ export const ELIGIBLE_TO_APPLY_ONLINE = {
 export const HAVE_AN_ACCOUNT = {
   PAGE_TITLE: 'Do you have an account with us?',
 };
+
+export const CONTRACT_TOO_SHORT = {
+  PAGE_TITLE: 'Talk to an export finance manager',
+  INTRO: "We don't offer short term cover for the country you've selected.",
+  CAN_STILL_APPLY:
+    "You can still apply for credit insurance through UKEF, but you'll need to speak to an export finance manager instead of using this digital application service.",
+  CONTACT_EFM: {
+    INTRO: 'Contact',
+    LINK: {
+      TEXT: 'your nearest export finance manager',
+      HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
+    },
+    TEXT: `to learn more about your options. If you have any questions, get in touch with our team at ${CONTACT_DETAILS.EMAIL.UNDERWRITING}.`,
+  },
+};

@@ -36,6 +36,7 @@ const {
   COMPANY_DETAILS_CHANGE,
   CANNOT_APPLY_MULTIPLE_RISKS,
   ELIGIBLE_TO_APPLY_ONLINE,
+  CONTRACT_TOO_SHORT,
 } = ELIGIBILITY;
 
 const {
@@ -137,6 +138,15 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
     describe(`when req.originalUrl is ${CANNOT_APPLY}`, () => {
       it('should call req.next', () => {
         req.originalUrl = CANNOT_APPLY;
+        requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
+
+        expect(nextSpy).toHaveBeenCalled();
+      });
+    });
+
+    describe(`when req.originalUrl is ${CONTRACT_TOO_SHORT}`, () => {
+      it('should call req.next', () => {
+        req.originalUrl = CONTRACT_TOO_SHORT;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();

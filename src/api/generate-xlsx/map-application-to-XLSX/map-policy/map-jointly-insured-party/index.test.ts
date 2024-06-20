@@ -3,7 +3,8 @@ import FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import { XLSX } from '../../../../content-strings';
 import xlsxRow from '../../helpers/xlsx-row';
 import mapYesNoField from '../../helpers/map-yes-no-field';
-import { mockApplication } from '../../../../test-mocks';
+import getCountryByIsoCode from '../../../../helpers/get-country-by-iso-code';
+import { mockApplication, mockCountries } from '../../../../test-mocks';
 
 const { FIELDS } = XLSX;
 
@@ -16,15 +17,18 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-jointly-insured-party', 
     it('should return an array of mapped fields', () => {
       const mockParty = {
         ...mockApplication.policy.jointlyInsuredParty,
+        [COUNTRY_CODE]: mockCountries[0].isoCode,
         [REQUESTED]: true,
       };
 
-      const result = mapJointlyInsuredParty(mockParty);
+      const result = mapJointlyInsuredParty(mockParty, mockCountries);
+
+      const country = getCountryByIsoCode(mockCountries, mockParty[COUNTRY_CODE]);
 
       const expected = [
         xlsxRow(String(FIELDS.JOINTLY_INSURED_PARTY[REQUESTED]), mapYesNoField({ answer: mockParty[REQUESTED] })),
         xlsxRow(String(FIELDS.JOINTLY_INSURED_PARTY[COMPANY_NAME]), mockParty[COMPANY_NAME]),
-        xlsxRow(String(FIELDS.JOINTLY_INSURED_PARTY[COUNTRY_CODE]), mockParty[COUNTRY_CODE]),
+        xlsxRow(String(FIELDS.JOINTLY_INSURED_PARTY[COUNTRY_CODE]), country.name),
         xlsxRow(String(FIELDS.JOINTLY_INSURED_PARTY[COMPANY_NUMBER]), mockParty[COMPANY_NUMBER]),
       ];
 
@@ -39,7 +43,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-jointly-insured-party', 
         [REQUESTED]: false,
       };
 
-      const result = mapJointlyInsuredParty(mockParty);
+      const result = mapJointlyInsuredParty(mockParty, mockCountries);
 
       const expected = [xlsxRow(String(FIELDS.JOINTLY_INSURED_PARTY[REQUESTED]), mapYesNoField({ answer: mockParty[REQUESTED] }))];
 

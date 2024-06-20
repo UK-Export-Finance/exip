@@ -23,7 +23,7 @@ const { AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE } = EXPORT_CONTRACT
  * Create all fields and values for the Insurance - "Export contract - agent charges" govukSummaryList
  * @param {ApplicationExportContractAgentService} answers: All submitted agent data
  * @param {Number} referenceNumber: Application reference number
- * @param {Array} countries: Countries
+ * @param {Array<Country>} countries: Countries
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>} Agent charges fields
  */

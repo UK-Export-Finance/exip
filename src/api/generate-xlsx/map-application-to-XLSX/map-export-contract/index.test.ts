@@ -5,7 +5,7 @@ import xlsxRow from '../helpers/xlsx-row';
 import mapYesNoField from '../helpers/map-yes-no-field';
 import mapPrivateMarket from './map-private-market';
 import mapAgent from './map-agent';
-import { mockApplicationMinimalBrokerBuyerAndCompany as mockApplication } from '../../../test-mocks';
+import { mockApplicationMinimalBrokerBuyerAndCompany as mockApplication, mockCountries } from '../../../test-mocks';
 
 const { FIELDS, SECTION_TITLES } = XLSX;
 
@@ -16,7 +16,7 @@ const {
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-export-contract', () => {
   it('should return an array of mapped export contract fields', () => {
-    const result = mapExportContract(mockApplication);
+    const result = mapExportContract(mockApplication, mockCountries);
 
     const {
       eligibility: { totalContractValue },
@@ -36,7 +36,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-export-contract', () => 
 
       ...mapPrivateMarket(privateMarket, totalContractValue),
 
-      ...mapAgent(agent),
+      ...mapAgent(agent, mockCountries),
     ];
 
     expect(result).toEqual(expected);

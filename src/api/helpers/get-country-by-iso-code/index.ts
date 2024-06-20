@@ -1,10 +1,10 @@
-import { Country } from '../../../types';
+import { Country } from '../../types';
 
 /**
  * getCountryByIsoCode
  * Get a country by ISO code
- * @param {Array} Countries
- * @param {String} Country ISO code
+ * @param {Array<Country>} countries
+ * @param {String} isoCode: Country ISO code
  * @returns {Object} Country
  */
 const getCountryByIsoCode = (countries: Array<Country>, isoCode: string): Country => {

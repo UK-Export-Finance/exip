@@ -20,6 +20,7 @@ import { get as eligibleToApplyOnlineGet, post as eligibleToApplyOnlinePost } fr
 import { get as haveAnAccountGet, post as haveAnAccountPost } from '../../../controllers/insurance/eligibility/do-you-have-an-account';
 import { get as cannotApplyGet } from '../../../controllers/insurance/eligibility/cannot-apply';
 import { get as needToStartAgainGet, post as needToStartAgainPost } from '../../../controllers/insurance/eligibility/need-to-start-again';
+import { get as contractTooShortGet } from '../../../controllers/insurance/eligibility/contract-too-short';
 
 describe('routes/insurance/eligibility', () => {
   beforeEach(() => {
@@ -31,7 +32,7 @@ describe('routes/insurance/eligibility', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(29);
+    expect(get).toHaveBeenCalledTimes(30);
     expect(post).toHaveBeenCalledTimes(23);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE, checkIfEligibleGet);
@@ -86,5 +87,7 @@ describe('routes/insurance/eligibility', () => {
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN, needToStartAgainGet);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN, needToStartAgainPost);
+
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CONTRACT_TOO_SHORT, contractTooShortGet);
   });
 });

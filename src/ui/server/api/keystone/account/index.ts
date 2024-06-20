@@ -101,7 +101,7 @@ const account = {
   },
   sendEmailConfirmEmailAddress: async (urlOrigin: string, accountId: string) => {
     try {
-      console.info('Sending email verification for account creation');
+      console.info('Sending email verification for account creation %s %s', urlOrigin, accountId);
 
       const variables = { urlOrigin, accountId };
 
