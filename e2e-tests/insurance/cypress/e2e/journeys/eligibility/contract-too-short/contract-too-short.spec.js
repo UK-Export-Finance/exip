@@ -1,4 +1,5 @@
 import { actions } from '../../../../../../pages/shared';
+import { contractTooShort } from '../../../../../../pages/insurance/eligibility';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -42,21 +43,23 @@ context('Insurance - Eligibility - Contract too short page', () => {
       cy.navigateToUrl(url);
     });
 
-    it('renders intro copy', () => {
+    it('should render an intro copy', () => {
       cy.checkIntroText(CONTENT_STRINGS.INTRO);
     });
 
-    describe('CONTACT EFM', () => {
-      it('should render `CONTACT EFM` intro', () => {
-        cy.checkText(actions.intro(), CONTACT_EFM.INTRO);
-      });
+    it('should render the "can still apply" copy', () => {
+      cy.checkText(contractTooShort.canStillApply(), CONTENT_STRINGS.CAN_STILL_APPLY);
+    });
 
-      it('should render `CONTACT EFM` link and text', () => {
-        cy.checkActionTalkToYourNearestEFM({
-          expectedText: `${CONTACT_EFM.LINK.TEXT} ${CONTACT_EFM.TEXT}`,
-          expectedLinkHref: CONTACT_EFM.LINK.HREF,
-          expectedLinkText: CONTACT_EFM.LINK.TEXT,
-        });
+    it('should render the `CONTACT EFM` intro', () => {
+      cy.checkText(actions.intro(), CONTACT_EFM.INTRO);
+    });
+
+    it('should render the `CONTACT EFM` link and text', () => {
+      cy.checkActionTalkToYourNearestEFM({
+        expectedText: `${CONTACT_EFM.LINK.TEXT} ${CONTACT_EFM.TEXT}`,
+        expectedLinkHref: CONTACT_EFM.LINK.HREF,
+        expectedLinkText: CONTACT_EFM.LINK.TEXT,
       });
     });
   });
