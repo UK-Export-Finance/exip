@@ -18,7 +18,7 @@ context('Insurance - Your business - Credit control - Save and go back', () => {
       cy.startYourBusinessSection({});
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
-      cy.completeAndSubmitTurnoverForm();
+      cy.completeAndSubmitTurnoverForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
 

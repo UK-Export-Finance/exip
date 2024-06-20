@@ -1,9 +1,5 @@
 import partials from '../../../../../../partials';
-import {
-  yesNoRadioHint,
-  yesRadio,
-  noRadio,
-} from '../../../../../../pages/shared';
+import { yesNoRadioHint, yesRadio, noRadio } from '../../../../../../pages/shared';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { FIELD_VALUES } from '../../../../../../constants';
@@ -16,116 +12,115 @@ const { HAS_CREDIT_CONTROL: FIELD_ID } = FIELD_IDS;
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: {
-    CHECK_YOUR_ANSWERS,
-    CREDIT_CONTROL,
-    TURNOVER_ROOT,
-  },
+  EXPORTER_BUSINESS: { CHECK_YOUR_ANSWERS, CREDIT_CONTROL, TURNOVER_ROOT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your business - Credit control page - answer `yes` - As an Exporter, I want to provide our late payment process  So that UKEF can have clarity on our credit control', () => {
-  let referenceNumber;
-  let url;
-  let checkYourAnswersUrl;
+context(
+  'Insurance - Your business - Credit control page - answer `yes` - As an Exporter, I want to provide our late payment process  So that UKEF can have clarity on our credit control',
+  () => {
+    let referenceNumber;
+    let url;
+    let checkYourAnswersUrl;
 
-  before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-      cy.startYourBusinessSection({});
-      cy.completeAndSubmitCompanyDetails({});
-      cy.completeAndSubmitNatureOfYourBusiness();
-      cy.completeAndSubmitTurnoverForm();
+        cy.startYourBusinessSection({});
+        cy.completeAndSubmitCompanyDetails({});
+        cy.completeAndSubmitNatureOfYourBusiness();
+        cy.completeAndSubmitTurnoverForm({});
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
-      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
+        checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
-      cy.assertUrl(url);
+        cy.assertUrl(url);
+      });
     });
-  });
 
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
-
-  it('renders core page elements', () => {
-    cy.corePageChecks({
-      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${ROOT}/${referenceNumber}${CREDIT_CONTROL}`,
-      backLink: `${ROOT}/${referenceNumber}${TURNOVER_ROOT}`,
-    });
-  });
-
-  describe('page tests', () => {
     beforeEach(() => {
-      cy.navigateToUrl(url);
+      cy.saveSession();
     });
 
-    it('renders a heading caption', () => {
-      cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    after(() => {
+      cy.deleteApplication(referenceNumber);
     });
 
-    it('renders a `yes` radio button with a hint', () => {
-      yesRadio().input().should('exist');
-
-      cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
-      cy.checkText(yesNoRadioHint(), FIELDS[FIELD_ID].HINT);
-
-      cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
+    it('renders core page elements', () => {
+      cy.corePageChecks({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currentHref: `${ROOT}/${referenceNumber}${CREDIT_CONTROL}`,
+        backLink: `${ROOT}/${referenceNumber}${TURNOVER_ROOT}`,
+      });
     });
 
-    it('renders a `no` radio button', () => {
-      cy.checkText(noRadio().label(), FIELD_VALUES.NO);
-
-      cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
-    });
-
-    it('renders a `save and back` button', () => {
-      cy.assertSaveAndBackButton();
-    });
-  });
-
-  describe('form submission', () => {
-    describe('when submitting an empty form', () => {
+    describe('page tests', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
-
-        cy.clickSubmitButton();
       });
 
-      it('should render validation errors', () => {
-        const expectedErrorsCount = 1;
+      it('renders a heading caption', () => {
+        cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+      });
 
-        cy.submitAndAssertRadioErrors({
-          field: yesRadio(FIELD_ID),
-          expectedErrorsCount,
-          expectedErrorMessage: ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS[FIELD_ID].IS_EMPTY,
+      it('renders a `yes` radio button with a hint', () => {
+        yesRadio().input().should('exist');
+
+        cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
+        cy.checkText(yesNoRadioHint(), FIELDS[FIELD_ID].HINT);
+
+        cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
+      });
+
+      it('renders a `no` radio button', () => {
+        cy.checkText(noRadio().label(), FIELD_VALUES.NO);
+
+        cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
+      });
+
+      it('renders a `save and back` button', () => {
+        cy.assertSaveAndBackButton();
+      });
+    });
+
+    describe('form submission', () => {
+      describe('when submitting an empty form', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+
+          cy.clickSubmitButton();
+        });
+
+        it('should render validation errors', () => {
+          const expectedErrorsCount = 1;
+
+          cy.submitAndAssertRadioErrors({
+            field: yesRadio(FIELD_ID),
+            expectedErrorsCount,
+            expectedErrorMessage: ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS[FIELD_ID].IS_EMPTY,
+          });
+        });
+      });
+
+      describe('when submitting the answer as `yes`', () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+          cy.navigateToUrl(url);
+
+          cy.completeAndSubmitCreditControlForm({});
+
+          cy.assertUrl(checkYourAnswersUrl);
         });
       });
     });
 
-    describe('when submitting the answer as `yes`', () => {
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+    describe('when going back to the page', () => {
+      it('should have the submitted values', () => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitCreditControlForm({});
-
-        cy.assertUrl(checkYourAnswersUrl);
+        cy.assertYesRadioOptionIsChecked();
       });
     });
-  });
-
-  describe('when going back to the page', () => {
-    it('should have the submitted values', () => {
-      cy.navigateToUrl(url);
-
-      cy.assertYesRadioOptionIsChecked();
-    });
-  });
-});
+  },
+);
