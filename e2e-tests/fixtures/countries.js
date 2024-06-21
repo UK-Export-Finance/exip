@@ -53,6 +53,10 @@ const mockCountries = [
     NAME: 'United Kingdom',
     ISO_CODE: 'GBR',
   },
+  {
+    NAME: 'Afghanistan',
+    ISO_CODE: 'AFG',
+  },
 ];
 
 /**
@@ -76,6 +80,7 @@ const {
   2: APPLICATION_BY_EMAIL,
   3: APPLICATION_OFFLINE,
   5: APPLICATION_UNSUPPORTED,
+  6: APPLICATION_NO_SHORT_TERM_COVER,
 } = mockCountries;
 
 export const COUNTRY_APPLICATION_SUPPORT = {
@@ -83,6 +88,7 @@ export const COUNTRY_APPLICATION_SUPPORT = {
   BY_EMAIL: APPLICATION_BY_EMAIL,
   OFFLINE: APPLICATION_OFFLINE,
   UNSUPPORTED: APPLICATION_UNSUPPORTED,
+  NO_SHORT_TERM_COVER: APPLICATION_NO_SHORT_TERM_COVER,
 };
 
 export default mockCountries;

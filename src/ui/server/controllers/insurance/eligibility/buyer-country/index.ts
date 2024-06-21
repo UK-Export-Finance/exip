@@ -26,7 +26,7 @@ export const TEMPLATE = TEMPLATES.SHARED_PAGES.BUYER_COUNTRY;
 const {
   PROBLEM_WITH_SERVICE,
   APPLY_OFFLINE,
-  ELIGIBILITY: { CANNOT_APPLY: CANNOT_APPLY_ROUTE, TOTAL_VALUE_INSURED, CHECK_YOUR_ANSWERS },
+  ELIGIBILITY: { CANNOT_APPLY: CANNOT_APPLY_ROUTE, TOTAL_VALUE_INSURED, CHECK_YOUR_ANSWERS, CONTRACT_TOO_SHORT },
 } = INSURANCE_ROUTES;
 
 export const get = async (req: Request, res: Response) => {
@@ -89,6 +89,23 @@ export const post = async (req: Request, res: Response) => {
 
     if (!country) {
       return res.redirect(CANNOT_APPLY_ROUTE);
+    }
+
+    /**
+     * If a country has no insurance support and no short term cover,
+     * redirect to contract too short page.
+     */
+    const noShortTermCover = !country.noInsuranceSupport && !country.shortTermCover;
+
+    if (noShortTermCover) {
+      const populatedData = mapSubmittedEligibilityCountry(country);
+
+      req.session.submittedData = {
+        ...req.session.submittedData,
+        insuranceEligibility: updateSubmittedData(populatedData, req.session.submittedData.insuranceEligibility),
+      };
+
+      return res.redirect(CONTRACT_TOO_SHORT);
     }
 
     if (country.canApplyForInsuranceOnline) {

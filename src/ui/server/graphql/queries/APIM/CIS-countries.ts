@@ -14,6 +14,7 @@ const getApimCisCountries = gql`
       canApplyForInsuranceOnline
       canApplyForInsuranceOffline
       noInsuranceSupport
+      shortTermCover
     }
   }
 `;

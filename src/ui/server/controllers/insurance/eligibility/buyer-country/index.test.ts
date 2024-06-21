@@ -17,7 +17,7 @@ import { mockReq, mockRes, mockCountries } from '../../../../test-mocks';
 const {
   PROBLEM_WITH_SERVICE,
   APPLY_OFFLINE,
-  ELIGIBILITY: { CANNOT_APPLY: CANNOT_APPLY_ROUTE, TOTAL_VALUE_INSURED, BUYER_COUNTRY_CHANGE, CHECK_YOUR_ANSWERS },
+  ELIGIBILITY: { CANNOT_APPLY: CANNOT_APPLY_ROUTE, TOTAL_VALUE_INSURED, BUYER_COUNTRY_CHANGE, CHECK_YOUR_ANSWERS, CONTRACT_TOO_SHORT },
 } = INSURANCE_ROUTES;
 
 describe('controllers/insurance/eligibility/buyer-country', () => {
@@ -26,7 +26,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
   let mockCountriesResponse = mockCountries;
 
-  const { 1: countryApplyOnline, 3: countryApplyOffline, 4: countryCannotApply } = mockCountriesResponse;
+  const { 1: countryApplyOnline, 3: countryApplyOffline, 4: countryCannotApply, 5: countryNoShortTermCover } = mockCountriesResponse;
   const mockFlash = jest.fn();
 
   beforeEach(() => {
@@ -199,6 +199,41 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
           const expected = CHECK_YOUR_ANSWERS;
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
+      });
+    });
+
+    describe('when the submitted country does not have short term cover', () => {
+      const selectedCountryName = countryNoShortTermCover.isoCode;
+
+      beforeEach(() => {
+        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = selectedCountryName;
+
+        mockCountriesResponse = [countryNoShortTermCover];
+
+        getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+
+        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
+      });
+
+      it('should update the session with populated country object', async () => {
+        await post(req, res);
+
+        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, countryNoShortTermCover.isoCode) as Country;
+
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
+
+        const expected = {
+          ...req.session.submittedData,
+          insuranceEligibility: updateSubmittedData(expectedPopulatedData, req.session.submittedData.insuranceEligibility),
+        };
+
+        expect(req.session.submittedData).toEqual(expected);
+      });
+
+      it(`should redirect to ${CONTRACT_TOO_SHORT}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(CONTRACT_TOO_SHORT);
       });
     });
 
