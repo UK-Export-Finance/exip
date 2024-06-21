@@ -1,4 +1,4 @@
-context('Insurance - submit an application - Single policy type, Loss payee - Alternative currency', () => {
+context('Insurance - submit an application - Single policy type - Alternative currency', () => {
   let referenceNumber;
 
   before(() => {

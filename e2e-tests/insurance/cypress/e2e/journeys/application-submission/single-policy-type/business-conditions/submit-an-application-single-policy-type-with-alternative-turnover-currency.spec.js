@@ -1,5 +1,5 @@
 context(
-  'Insurance - submit an application - Single policy type, alternative turnover currency - As an Exporter, I want to submit my completed credit insurance application, So that UKEF can process and make a decision on my application',
+  'Insurance - submit an application - Single policy type - alternative turnover currency - As an Exporter, I want to submit my completed credit insurance application, So that UKEF can process and make a decision on my application',
   () => {
     let referenceNumber;
 
