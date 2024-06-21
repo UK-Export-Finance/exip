@@ -14,44 +14,47 @@ const fieldId = HAS_CREDIT_CONTROL;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your business - Change your answers - Credit control - No to yes - As an exporter, I want to change my answers to the credit control section', () => {
-  let referenceNumber;
-  let url;
+context(
+  'Insurance - Your business - Change your answers - Credit control - No to yes - As an exporter, I want to change my answers to the credit control section',
+  () => {
+    let referenceNumber;
+    let url;
 
-  before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-      cy.startYourBusinessSection({});
+        cy.startYourBusinessSection({});
 
-      cy.completeAndSubmitCompanyDetails({});
-      cy.completeAndSubmitNatureOfYourBusiness();
-      cy.completeAndSubmitTurnoverForm();
-      cy.completeAndSubmitCreditControlForm({ hasCreditControlProcess: false });
+        cy.completeAndSubmitCompanyDetails({});
+        cy.completeAndSubmitNatureOfYourBusiness();
+        cy.completeAndSubmitTurnoverForm({});
+        cy.completeAndSubmitCreditControlForm({ hasCreditControlProcess: false });
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      });
     });
-  });
 
-  beforeEach(() => {
-    cy.saveSession();
+    beforeEach(() => {
+      cy.saveSession();
 
-    cy.navigateToUrl(url);
+      cy.navigateToUrl(url);
 
-    summaryList.field(fieldId).changeLink().click();
+      summaryList.field(fieldId).changeLink().click();
 
-    cy.completeAndSubmitCreditControlForm({ hasCreditControlProcess: true });
-  });
+      cy.completeAndSubmitCreditControlForm({ hasCreditControlProcess: true });
+    });
 
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
+    after(() => {
+      cy.deleteApplication(referenceNumber);
+    });
 
-  it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-    cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
-  });
+    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+      cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+    });
 
-  it('should render the new answer', () => {
-    cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.YES);
-  });
-});
+    it('should render the new answer', () => {
+      cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.YES);
+    });
+  },
+);

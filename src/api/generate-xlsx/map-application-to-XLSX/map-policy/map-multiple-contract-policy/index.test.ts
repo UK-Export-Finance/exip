@@ -1,5 +1,5 @@
 import mapMultipleContractPolicy from '.';
-import { FIELD_VALUES, GBP_CURRENCY_CODE } from '../../../../constants';
+import { FIELD_VALUES } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { XLSX } from '../../../../content-strings';
 import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance';
@@ -52,8 +52,8 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-multiple-cont
     const expected = [
       xlsxRow(String(FIELDS[TOTAL_MONTHS_OF_COVER]), mapMonthString(policy[TOTAL_MONTHS_OF_COVER])),
       xlsxRow(String(CONTENT_STRINGS[CURRENCY_CODE].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
-      xlsxRow(String(FIELDS[TOTAL_SALES_TO_BUYER]), formatCurrency(policy[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
-      xlsxRow(String(FIELDS[MAXIMUM_BUYER_WILL_OWE]), formatCurrency(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE)),
+      xlsxRow(String(FIELDS[TOTAL_SALES_TO_BUYER]), formatCurrency(policy[TOTAL_SALES_TO_BUYER], policy[POLICY_CURRENCY_CODE])),
+      xlsxRow(String(FIELDS[MAXIMUM_BUYER_WILL_OWE]), formatCurrency(policy[MAXIMUM_BUYER_WILL_OWE], policy[POLICY_CURRENCY_CODE])),
     ];
 
     expect(result).toEqual(expected);

@@ -29,7 +29,7 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
 
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
-      cy.completeAndSubmitTurnoverForm();
+      cy.completeAndSubmitTurnoverForm({});
       cy.completeAndSubmitCreditControlForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;

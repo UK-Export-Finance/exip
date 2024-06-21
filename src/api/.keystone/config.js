@@ -6935,7 +6935,7 @@ var mapSingleContractPolicy = (policy) => {
   const mapped = [
     xlsx_row_default(String(FIELDS8[CONTRACT_COMPLETION_DATE3]), format_date_default(policy[CONTRACT_COMPLETION_DATE3], DATE_FORMAT.XLSX)),
     xlsx_row_default(String(CONTENT_STRINGS2[CURRENCY_CODE3].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
-    xlsx_row_default(String(FIELDS8[TOTAL_CONTRACT_VALUE2]), format_currency_default2(policy[TOTAL_CONTRACT_VALUE2], GBP_CURRENCY_CODE))
+    xlsx_row_default(String(FIELDS8[TOTAL_CONTRACT_VALUE2]), format_currency_default2(policy[TOTAL_CONTRACT_VALUE2], policy[POLICY_CURRENCY_CODE]))
   ];
   return mapped;
 };
@@ -6968,8 +6968,8 @@ var {
 var mapMultipleContractPolicy = (policy) => [
   xlsx_row_default(String(FIELDS9[TOTAL_MONTHS_OF_COVER3]), map_month_string_default(policy[TOTAL_MONTHS_OF_COVER3])),
   xlsx_row_default(String(CONTENT_STRINGS3[CURRENCY_CODE4].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE2]),
-  xlsx_row_default(String(FIELDS9[TOTAL_SALES_TO_BUYER2]), format_currency_default2(policy[TOTAL_SALES_TO_BUYER2], GBP_CURRENCY_CODE)),
-  xlsx_row_default(String(FIELDS9[MAXIMUM_BUYER_WILL_OWE2]), format_currency_default2(policy[MAXIMUM_BUYER_WILL_OWE2], GBP_CURRENCY_CODE))
+  xlsx_row_default(String(FIELDS9[TOTAL_SALES_TO_BUYER2]), format_currency_default2(policy[TOTAL_SALES_TO_BUYER2], policy[POLICY_CURRENCY_CODE2])),
+  xlsx_row_default(String(FIELDS9[MAXIMUM_BUYER_WILL_OWE2]), format_currency_default2(policy[MAXIMUM_BUYER_WILL_OWE2], policy[POLICY_CURRENCY_CODE2]))
 ];
 var map_multiple_contract_policy_default = mapMultipleContractPolicy;
 
@@ -7210,7 +7210,7 @@ var {
   COMPANIES_HOUSE: { COMPANY_ADDRESS: COMPANY_ADDRESS2, COMPANY_INCORPORATED: COMPANY_INCORPORATED2, COMPANY_SIC: COMPANY_SIC2, FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE3 },
   YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME4, TRADING_ADDRESS: TRADING_ADDRESS3, PHONE_NUMBER: PHONE_NUMBER3, WEBSITE: WEBSITE3 },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3 },
-  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2, TURNOVER_CURRENCY_CODE },
   HAS_CREDIT_CONTROL: HAS_CREDIT_CONTROL3
 } = business_default;
 var mapExporterBusiness = (application2) => {
@@ -7230,7 +7230,7 @@ var mapExporterBusiness = (application2) => {
     xlsx_row_default(FIELDS19[YEARS_EXPORTING3], business[YEARS_EXPORTING3]),
     xlsx_row_default(FIELDS19[EMPLOYEES_UK3], business[EMPLOYEES_UK3]),
     xlsx_row_default(CONTENT_STRINGS6[FINANCIAL_YEAR_END_DATE3].SUMMARY?.TITLE, map_financial_year_end_date_default(company)),
-    xlsx_row_default(FIELDS19[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default2(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
+    xlsx_row_default(FIELDS19[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default2(business[ESTIMATED_ANNUAL_TURNOVER3], business[TURNOVER_CURRENCY_CODE])),
     xlsx_row_default(CONTENT_STRINGS6[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER2]}%`),
     xlsx_row_default(FIELDS19[HAS_CREDIT_CONTROL3], map_yes_no_field_default({ answer: business[HAS_CREDIT_CONTROL3] }))
   ];

@@ -4,10 +4,7 @@
  * @param {String} isoCode: Policy currency ISO code
  * @param {Boolean} alternativeCurrency: Select the "alternative currency" option
  */
-const completeAndSubmitSingleContractPolicyForm = ({
-  isoCode,
-  alternativeCurrency,
-}) => {
+const completeAndSubmitSingleContractPolicyForm = ({ isoCode, alternativeCurrency }) => {
   cy.completeSingleContractPolicyForm({
     isoCode,
     alternativeCurrency,
