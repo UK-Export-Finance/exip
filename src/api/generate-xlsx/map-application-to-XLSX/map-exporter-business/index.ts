@@ -1,7 +1,7 @@
 import FIELD_IDS from '../../../constants/field-ids/insurance/business';
 import { XLSX } from '../../../content-strings';
 import { FIELDS as YOUR_BUSINESS_FIELDS } from '../../../content-strings/fields/insurance/your-business';
-import { DATE_FORMAT, GBP_CURRENCY_CODE } from '../../../constants';
+import { DATE_FORMAT } from '../../../constants';
 import xlsxRow from '../helpers/xlsx-row';
 import mapDifferentTradingName from './map-different-trading-name';
 import mapDifferentTradingAddress from './map-different-trading-address';
@@ -26,7 +26,7 @@ const {
   COMPANIES_HOUSE: { COMPANY_ADDRESS, COMPANY_INCORPORATED, COMPANY_SIC, FINANCIAL_YEAR_END_DATE },
   YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER, WEBSITE },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
-  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER, TURNOVER_CURRENCY_CODE },
   HAS_CREDIT_CONTROL,
 } = FIELD_IDS;
 
@@ -58,7 +58,7 @@ const mapExporterBusiness = (application: Application) => {
     xlsxRow(String(FIELDS[YEARS_EXPORTING]), business[YEARS_EXPORTING]),
     xlsxRow(String(FIELDS[EMPLOYEES_UK]), business[EMPLOYEES_UK]),
     xlsxRow(CONTENT_STRINGS[FINANCIAL_YEAR_END_DATE].SUMMARY?.TITLE, mapFinancialYearEndDate(company)),
-    xlsxRow(String(FIELDS[ESTIMATED_ANNUAL_TURNOVER]), formatCurrency(business[ESTIMATED_ANNUAL_TURNOVER], GBP_CURRENCY_CODE)),
+    xlsxRow(String(FIELDS[ESTIMATED_ANNUAL_TURNOVER]), formatCurrency(business[ESTIMATED_ANNUAL_TURNOVER], business[TURNOVER_CURRENCY_CODE])),
     xlsxRow(CONTENT_STRINGS[PERCENTAGE_TURNOVER].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER]}%`),
 
     xlsxRow(String(FIELDS[HAS_CREDIT_CONTROL]), mapYesNoField({ answer: business[HAS_CREDIT_CONTROL] })),

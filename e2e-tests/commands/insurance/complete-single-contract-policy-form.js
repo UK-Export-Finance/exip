@@ -1,6 +1,7 @@
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { radios, field } from '../../pages/shared';
 import application from '../../fixtures/application';
+import { NON_STANDARD_CURRENCY_CODE } from '../../fixtures/currencies';
 
 const {
   CURRENCY: { CURRENCY_CODE },
@@ -33,7 +34,7 @@ const completeSingleContractPolicyForm = ({ isoCode = application.POLICY[POLICY_
     if (alternativeCurrency) {
       cy.clickAlternativeCurrencyRadioOption();
 
-      cy.completeAlternativeCurrencyField({ currency: isoCode });
+      cy.completeAlternativeCurrencyField({ currency: NON_STANDARD_CURRENCY_CODE });
     } else {
       radios(CURRENCY_CODE, isoCode).option.label().click();
     }

@@ -33,6 +33,8 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * @param {Boolean} submitCheckYourAnswers: Should click each section's "check your answers" submit button.
  * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker".
+ * @param {Boolean} alternativeCurrencyTurnover: Select the "alternative currency" option
+ * @param {Boolean} alternativeCurrencyPolicy: Select the "alternative currency" option
  * @return {String} Application reference number
  */
 const completeSignInAndSubmitAnApplication = ({
@@ -62,6 +64,8 @@ const completeSignInAndSubmitAnApplication = ({
   policyValueOverMvpMaximum = false,
   totalContractValueOverThreshold = false,
   usingBroker = false,
+  alternativeCurrencyTurnover = false,
+  alternativeCurrencyPolicy = false,
 }) => {
   completeSignInAndGoToApplication({ totalContractValueOverThreshold }).then(({ referenceNumber }) => {
     if (policyType === APPLICATION.POLICY_TYPE.MULTIPLE) {
@@ -90,6 +94,8 @@ const completeSignInAndSubmitAnApplication = ({
         referenceNumber,
         totalContractValueOverThreshold,
         usingBroker,
+        alternativeCurrencyTurnover,
+        alternativeCurrencyPolicy,
       });
     } else {
       cy.completePrepareApplicationSinglePolicyType({
@@ -117,6 +123,8 @@ const completeSignInAndSubmitAnApplication = ({
         referenceNumber,
         totalContractValueOverThreshold,
         usingBroker,
+        alternativeCurrencyTurnover,
+        alternativeCurrencyPolicy,
       });
     }
     cy.completeAndSubmitCheckYourAnswers();
