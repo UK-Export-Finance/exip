@@ -2,7 +2,7 @@ type ObjectType = {
   [key: string]: any;
 };
 
-interface mapArrayOfConnectionObjectsParams {
+interface MapArrayOfConnectionObjectsParams {
   idsArray: Array<object>;
   relationshipName: string;
 }
@@ -14,7 +14,7 @@ interface mapArrayOfConnectionObjectsParams {
  * @param {String} relationshipName: Name of the relationship to map.
  * @returns {Array<object>} Array of "connect" relationships.
  */
-const mapArrayOfConnectionObjects = ({ idsArray, relationshipName }: mapArrayOfConnectionObjectsParams) => {
+const mapArrayOfConnectionObjects = ({ idsArray, relationshipName }: MapArrayOfConnectionObjectsParams) => {
   const mapped = idsArray.map((obj: ObjectType) => ({
     [relationshipName]: {
       connect: {
