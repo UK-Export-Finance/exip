@@ -6238,7 +6238,7 @@ var {
 } = insurance_default;
 var {
   YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, PHONE_NUMBER, WEBSITE },
-  ALTERNATIVE_TRADING_ADDRESS,
+  ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS: FULL_ADDRESS2 },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
   HAS_CREDIT_CONTROL
@@ -6296,7 +6296,7 @@ var FIELDS = {
       }
     }
   },
-  [ALTERNATIVE_TRADING_ADDRESS.FULL_ADDRESS]: {
+  [FULL_ADDRESS2]: {
     LABEL: "What's your alternative trading address?"
   },
   NATURE_OF_YOUR_BUSINESS: {
@@ -6540,7 +6540,6 @@ var {
     USING_BROKER: USING_BROKER3
   },
   YOUR_BUYER: {
-    // COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER, FIRST_NAME: BUYER_CONTACT_DETAILS },
     COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER },
     CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER2,
     CONNECTION_WITH_BUYER_DESCRIPTION: CONNECTION_WITH_BUYER_DESCRIPTION2,
@@ -6588,8 +6587,7 @@ var XLSX = {
     [BROKER_ADDRESS]: "Broker address",
     [BROKER_EMAIL]: "Broker's email address",
     [BUYER_COMPANY_NAME]: "Buyer company name or organisation",
-    // TODO: fix
-    // [BUYER_CONTACT_DETAILS]: 'Buyer contact details',
+    BUYER_CONTACT_DETAILS: "Buyer contact details",
     [BUYER_COUNTRY2]: "Where is your buyer based?",
     [BUYER_REGISTRATION_NUMBER]: "Buyer registration number (optional)",
     [COMPANIES_HOUSE_NUMBER2]: "Companies house number",
@@ -7009,7 +7007,7 @@ var map_jointly_insured_party_default = mapJointlyInsuredParty;
 // generate-xlsx/map-application-to-XLSX/map-policy/map-broker/index.ts
 var {
   USING_BROKER: USING_BROKER4,
-  BROKER_DETAILS: { NAME: BROKER_NAME2, EMAIL: EMAIL7, FULL_ADDRESS: FULL_ADDRESS2 }
+  BROKER_DETAILS: { NAME: BROKER_NAME2, EMAIL: EMAIL7, FULL_ADDRESS: FULL_ADDRESS3 }
 } = POLICY;
 var { FIELDS: FIELDS11 } = XLSX;
 var mapBroker = (application2) => {
@@ -7020,7 +7018,7 @@ var mapBroker = (application2) => {
       ...mapped,
       xlsx_row_default(String(FIELDS11[BROKER_NAME2]), broker[BROKER_NAME2]),
       xlsx_row_default(String(FIELDS11[EMAIL7]), broker[EMAIL7]),
-      xlsx_row_default(String(FIELDS11[FULL_ADDRESS2]), broker[FULL_ADDRESS2])
+      xlsx_row_default(String(FIELDS11[FULL_ADDRESS3]), broker[FULL_ADDRESS3])
     ];
   }
   return mapped;
@@ -7151,12 +7149,12 @@ var map_different_trading_name_default = mapDifferentTradingName;
 
 // generate-xlsx/map-application-to-XLSX/map-exporter-business/map-different-trading-address/index.ts
 var {
-  ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS: FULL_ADDRESS3, FULL_ADDRESS_DOT_NOTATION: FULL_ADDRESS_DOT_NOTATION2 }
+  ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS: FULL_ADDRESS4, FULL_ADDRESS_DOT_NOTATION: FULL_ADDRESS_DOT_NOTATION2 }
 } = business_default;
 var { FIELDS: FIELDS17 } = XLSX;
 var mapDifferentTradingAddress = (company) => {
   const { differentTradingAddress } = company;
-  const differentTradingAddressValue = differentTradingAddress[FULL_ADDRESS3];
+  const differentTradingAddressValue = differentTradingAddress[FULL_ADDRESS4];
   if (differentTradingAddressValue) {
     return xlsx_row_default(String(FIELDS17[FULL_ADDRESS_DOT_NOTATION2]), differentTradingAddressValue);
   }
@@ -7400,7 +7398,7 @@ var map_agent_charge_default = mapAgentCharge;
 // generate-xlsx/map-application-to-XLSX/map-export-contract/map-agent/index.ts
 var { FIELDS: FIELDS28 } = XLSX;
 var {
-  AGENT_DETAILS: { NAME: NAME4, FULL_ADDRESS: FULL_ADDRESS4, COUNTRY_CODE: COUNTRY_CODE3 },
+  AGENT_DETAILS: { NAME: NAME4, FULL_ADDRESS: FULL_ADDRESS5, COUNTRY_CODE: COUNTRY_CODE3 },
   AGENT_SERVICE: { SERVICE_DESCRIPTION: SERVICE_DESCRIPTION2 },
   USING_AGENT: USING_AGENT2
 } = export_contract_default;
@@ -7413,7 +7411,7 @@ var mapAgent = (agent, countries) => {
     mapped = [
       ...mapped,
       xlsx_row_default(String(FIELDS28.AGENT[NAME4]), agent[NAME4]),
-      xlsx_row_default(String(FIELDS28.AGENT[FULL_ADDRESS4]), agent[FULL_ADDRESS4]),
+      xlsx_row_default(String(FIELDS28.AGENT[FULL_ADDRESS5]), agent[FULL_ADDRESS5]),
       xlsx_row_default(String(FIELDS28.AGENT[COUNTRY_CODE3]), country.name),
       xlsx_row_default(String(FIELDS28.AGENT_SERVICE[SERVICE_DESCRIPTION2]), service[SERVICE_DESCRIPTION2]),
       ...map_agent_charge_default(service)
