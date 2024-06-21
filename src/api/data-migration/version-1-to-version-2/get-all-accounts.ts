@@ -1,6 +1,6 @@
 import { Connection } from 'mysql2/promise';
 import executeSqlQuery from './execute-sql-query';
-import { AccountMvp } from '../types';
+import { AccountMvp } from '../../types';
 
 /**
  * getAllAccounts

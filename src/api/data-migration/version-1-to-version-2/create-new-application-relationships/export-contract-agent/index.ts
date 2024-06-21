@@ -2,7 +2,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
 import createInitialAgents from './create-initial-agents';
 import createAgentServices from './create-agent-services';
 import createAgentServiceCharges from './create-agent-service-charges';
-import { Application } from '../../../types';
+import { Application } from '../../../../types';
 
 /**
  * createExportContractAgent

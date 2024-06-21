@@ -14,13 +14,13 @@
   "author": "UK Export Finance",
   "scripts": {
     "build": "NODE_ENV=dev keystone build --no-ui",
+    "data-migration": "npx ts-node --transpile-only  ./data-migration/version-1-to-version-2/index.ts",
     "dev": "keystone dev --no-ui",
     "documentation": "npx spectaql -t ./documentation/output ./documentation/config.yml",
     "lint": "eslint ./",
     "lint:fix": "eslint ./ --fix",
     "start": "keystone start --no-ui",
-    "test": "jest --runInBand --verbose --silent --coverage --config=jest.config.js",
-    "data-migration": "npx ts-node --transpile-only  ./data-migration/index.ts"
+    "test": "jest --runInBand --verbose --silent --coverage --config=jest.config.js"
   },
   "dependencies": {
     "@babel/core": "^7.24.7",

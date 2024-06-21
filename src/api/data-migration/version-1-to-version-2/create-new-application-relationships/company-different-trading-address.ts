@@ -1,5 +1,5 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
-import { ApplicationCompanyDifferentTradingAddress } from '../../types';
+import { ApplicationCompanyDifferentTradingAddress } from '../../../types';
 
 /**
  * createCompanyDifferentTradingAddress

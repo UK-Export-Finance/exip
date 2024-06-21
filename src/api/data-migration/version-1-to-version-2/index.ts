@@ -5,7 +5,7 @@ import updateApplications from './update-applications';
 import createNewAccountStatusRelationships from './create-new-account-status-relationships';
 import createNewApplicationRelationships from './create-new-application-relationships';
 import updateBuyers from './update-buyers';
-import getKeystoneContext from '../test-helpers/get-keystone-context';
+import getKeystoneContext from '../../test-helpers/get-keystone-context';
 
 // TODO: seems that we should only touch applications that do NOT have a submitted status
 

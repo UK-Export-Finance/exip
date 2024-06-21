@@ -1,5 +1,5 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
-import { ApplicationBuyerMvp } from '../../types';
+import { ApplicationBuyerMvp } from '../../../types';
 
 /**
  * NOTE: The buyer data we receive is raw database data.

@@ -1,7 +1,7 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import { Connection } from 'mysql2/promise';
 import getAllAccounts from '../get-all-accounts';
-import { AccountMvp, AccountStatus } from '../../types';
+import { AccountMvp, AccountStatus } from '../../../types';
 
 /**
  * createNewAccountStatusRelationships
