@@ -1,4 +1,3 @@
-import { Context } from '.keystone/types';
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import isValidAccountPassword from '../../../helpers/is-valid-account-password';
@@ -6,7 +5,7 @@ import createAuthenticationRetryEntry from '../../../helpers/create-authenticati
 import shouldBlockAccount from '../../../helpers/should-block-account';
 import blockAccount from '../../../helpers/block-account';
 import accountChecks from './account-sign-in-checks';
-import { Account, AccountSignInVariables, AccountSignInResponse } from '../../../types';
+import { Account, AccountSignInVariables, AccountSignInResponse, Context } from '../../../types';
 
 /**
  * accountSignIn

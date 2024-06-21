@@ -1,8 +1,7 @@
-import { Context } from '.keystone/types';
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import { dateIsInThePast } from '../../../helpers/date';
-import { Account, AccountPasswordResetTokenResponse, VerifyAccountPasswordResetTokenVariables } from '../../../types';
+import { Account, AccountPasswordResetTokenResponse, Context, VerifyAccountPasswordResetTokenVariables } from '../../../types';
 
 const { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY } = ACCOUNT_FIELD_IDS;
 

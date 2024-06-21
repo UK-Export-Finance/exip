@@ -1,5 +1,4 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
-import mapArrayOfConnectionObjects from '../map-array-of-connection-objects';
 
 const createInitialAgents = async (context: Context, exportContractIdsConnectArray: Array<object>) => {
   const loggingMessage = 'Creating initial exportContractAgents with export contract relationships';

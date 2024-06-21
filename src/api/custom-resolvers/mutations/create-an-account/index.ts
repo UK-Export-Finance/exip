@@ -1,4 +1,3 @@
-import { Context } from '.keystone/types';
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import isValidAccountPassword from '../../../helpers/is-valid-account-password';
@@ -8,7 +7,7 @@ import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
 import confirmEmailAddressEmail from '../../../helpers/send-email-confirm-email-address';
 import sendEmailReactivateAccountLinkHelper from '../../../helpers/send-email-reactivate-account-link';
-import { Account, AccountCreationVariables, AccountCreationCore } from '../../../types';
+import { Account, AccountCreationVariables, AccountCreationCore, Context } from '../../../types';
 
 /**
  * createAnAccount

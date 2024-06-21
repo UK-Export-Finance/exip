@@ -1,7 +1,6 @@
-import { Context } from '.keystone/types';
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import getAccountByField from '../../../helpers/get-account-by-field';
-import { Account, AccountPasswordResetTokenResponse, GetAccountPasswordResetTokenVariables } from '../../../types';
+import { Account, AccountPasswordResetTokenResponse, Context, GetAccountPasswordResetTokenVariables } from '../../../types';
 
 /**
  * getAccountPasswordResetToken

@@ -1,11 +1,10 @@
-import { Context } from '.keystone/types';
 import crypto from 'crypto';
 import { ACCOUNT } from '../../constants';
 import getAccountById from '../get-account-by-id';
 import update from '../update-account';
 import getFullNameString from '../get-full-name-string';
 import sendEmail from '../../emails';
-import { AccountSendEmailReactivateLinkVariables, AccountSendEmailReactivateLinkResponse } from '../../types';
+import { AccountSendEmailReactivateLinkVariables, AccountSendEmailReactivateLinkResponse, Context } from '../../types';
 
 const {
   ENCRYPTION: {

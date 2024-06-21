@@ -1,4 +1,4 @@
-import { Context } from '.keystone/types';
+import { Context } from '../../types';
 import getAuthenticationRetriesByAccountId from '../get-authentication-retries-by-account-id';
 
 /**

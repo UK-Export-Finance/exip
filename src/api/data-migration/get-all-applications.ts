@@ -1,6 +1,5 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import mapArrayOfConnectionObjects from './map-array-of-connection-objects';
-import { Application } from '../types';
 
 const getAllApplications = async (context: Context) => {
   const loggingMessage = 'Getting all applications';

@@ -1,10 +1,10 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
+import { Context, Application } from '.keystone/types'; // eslint-disable-line
 import { isAfter } from 'date-fns';
 import { APPLICATION } from '../../../constants';
 import getPopulatedApplication from '../../../helpers/get-populated-application';
 import applicationSubmittedEmails from '../../../emails/send-application-submitted-emails';
 import generate from '../../../generate-xlsx';
-import { Application, SubmitApplicationVariables, SuccessResponse } from '../../../types';
+import { SubmitApplicationVariables, SuccessResponse } from '../../../types';
 
 /**
  * submitApplication
@@ -23,7 +23,6 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
 
     // get the application
 
-    // @ts-ignore
     const application = (await context.db.Application.findOne({
       where: { id: variables.applicationId },
     })) as Application;

@@ -1,6 +1,5 @@
-import { Context } from '.keystone/types';
 import mapSicCodes from '../map-sic-codes';
-import { SicCode } from '../../types';
+import { Context, SicCode } from '../../types';
 
 /**
  * createCompanySicCodes
@@ -11,7 +10,12 @@ import { SicCode } from '../../types';
  * @param {String} Company ID
  * @returns {Promise<Object>} Created company SIC codes
  */
-const createCompanySicCodes = async (context: Context, sicCodes: Array<string>, industrySectorNames: Array<string>, companyId: string): Promise<Array<SicCode>> => {
+const createCompanySicCodes = async (
+  context: Context,
+  sicCodes: Array<string>,
+  industrySectorNames: Array<string>,
+  companyId: string,
+): Promise<Array<SicCode>> => {
   console.info('Creating company SIC codes for ', companyId);
 
   try {

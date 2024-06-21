@@ -1,11 +1,10 @@
-import { Context } from '.keystone/types';
 import getAccountById from '../get-account-by-id';
 import generateAccountVerificationHash from '../get-account-verification-hash';
 import update from '../update-account';
 import getFullNameString from '../get-full-name-string';
 import sendEmail from '../../emails';
 import { dateIsInThePast } from '../date';
-import { SuccessResponse } from '../../types';
+import { Context, SuccessResponse } from '../../types';
 
 /**
  * confirmEmailAddressEmail.send

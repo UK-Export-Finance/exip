@@ -1,7 +1,6 @@
-import { Context } from '.keystone/types';
 import generate from '../generate-otp';
 import update from '../update-account';
-import { AddAndGetOtpResponse } from '../../types';
+import { AddAndGetOtpResponse, Context } from '../../types';
 
 /**
  * generateOTPAndUpdateAccount

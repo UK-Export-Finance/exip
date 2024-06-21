@@ -1,5 +1,4 @@
-import { Context } from '.keystone/types';
-import { ApplicationPrivateMarket } from '../../types';
+import { Context, ApplicationPrivateMarket } from '../../types';
 
 /**
  * createAPrivateMarket

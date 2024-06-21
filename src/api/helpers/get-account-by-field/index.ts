@@ -1,6 +1,5 @@
-import { Context } from '.keystone/types';
 import getAccountStatusById from '../get-account-status-by-id';
-import { Account } from '../../types';
+import { Account, Context } from '../../types';
 
 const getAccountByField = async (context: Context, field: string, value: string): Promise<Account | boolean> => {
   try {
@@ -18,7 +17,7 @@ const getAccountByField = async (context: Context, field: string, value: string)
         [field]: { equals: value },
       },
       take: 1,
-    }) as Array<unknown>;
+    });
 
     // ensure that we have found an account with the requested field/value
     if (!accountsArray?.length || !accountsArray[0]) {

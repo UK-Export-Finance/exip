@@ -1,9 +1,8 @@
-import { Context } from '.keystone/types';
 import confirmEmailAddressEmail from '../../../../helpers/send-email-confirm-email-address';
 import generateOTPAndUpdateAccount from '../../../../helpers/generate-otp-and-update-account';
 import getFullNameString from '../../../../helpers/get-full-name-string';
 import sendEmail from '../../../../emails';
-import { Account } from '../../../../types';
+import { Account, Context } from '../../../../types';
 
 /**
  * accountSignInChecks

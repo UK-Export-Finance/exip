@@ -1,8 +1,7 @@
-import { Context } from '.keystone/types';
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import generateOTPAndUpdateAccount from '../../../helpers/generate-otp-and-update-account';
-import { Account, AddOtpToAccountVariables, AddAndGetOtpResponse } from '../../../types';
+import { Account, AddOtpToAccountVariables, AddAndGetOtpResponse, Context } from '../../../types';
 
 /**
  * addAndGetOTP

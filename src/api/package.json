@@ -20,7 +20,7 @@
     "lint:fix": "eslint ./ --fix",
     "start": "keystone start --no-ui",
     "test": "jest --runInBand --verbose --silent --coverage --config=jest.config.js",
-    "data-migration": "npx ts-node ./data-migration/index.ts"
+    "data-migration": "npx ts-node --transpile-only  ./data-migration/index.ts"
   },
   "dependencies": {
     "@babel/core": "^7.24.7",

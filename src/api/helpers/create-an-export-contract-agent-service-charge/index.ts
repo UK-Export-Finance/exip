@@ -1,5 +1,4 @@
-import { Context } from '.keystone/types';
-import { ApplicationExportContractAgentServiceCharge } from '../../types';
+import { Context, ApplicationExportContractAgentServiceCharge } from '../../types';
 
 /**
  * createAnExportContractAgentServiceCharge
@@ -20,7 +19,6 @@ const createAnExportContractAgentServiceCharge = async (context: Context, agentS
       },
     });
 
-    // @ts-ignore
     return agentService;
   } catch (err) {
     console.error('Error creating an export contract agent service charge %O', err);

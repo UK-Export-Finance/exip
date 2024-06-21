@@ -1,7 +1,6 @@
-import { Context } from '.keystone/types';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import getAuthenticationRetriesByAccountId from '../../../helpers/get-authentication-retries-by-account-id';
-import { Account, AccountDeletionVariables, AuthenticationRetry } from '../../../types';
+import { Account, AccountDeletionVariables, AuthenticationRetry, Context } from '../../../types';
 
 /**
  * deleteAnAccount

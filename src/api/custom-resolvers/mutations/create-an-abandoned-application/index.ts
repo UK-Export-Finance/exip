@@ -1,7 +1,6 @@
-import { Context } from '.keystone/types';
 import { APPLICATION } from '../../../constants';
 import createAnApplicationHelper from '../../../helpers/create-an-application';
-import { CreateAnApplicationVariables } from '../../../types';
+import { CreateAnApplicationVariables, Context } from '../../../types';
 
 const { STATUS } = APPLICATION;
 

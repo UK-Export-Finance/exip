@@ -1,7 +1,5 @@
 import 'dotenv/config';
-
-// @ts-ignore
-import { GraphQLFormattedError } from '.keystone.types';
+import { GraphQLFormattedError } from '.keystone.types'; // eslint-disable-line
 import { ValidationError } from 'apollo-server-express';
 
 /**

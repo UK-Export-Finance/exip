@@ -1,5 +1,4 @@
-import { Context } from '.keystone/types';
-import { ApplicationJointlyInsuredParty } from '../../types';
+import { Context, ApplicationJointlyInsuredParty } from '../../types';
 
 /**
  * createAJointlyInsuredParty

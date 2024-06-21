@@ -1,7 +1,7 @@
-import { Context } from '.keystone/types';
 import createABuyerTradingHistory from '../create-a-buyer-trading-history';
 import createABuyerContact from '../create-a-buyer-contact';
 import createABuyerRelationship from '../create-a-buyer-relationship';
+import { Context } from '../../types';
 
 /**
  * createABuyer

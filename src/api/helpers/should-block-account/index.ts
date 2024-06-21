@@ -1,7 +1,7 @@
-import { Context } from '.keystone/types';
 import { isAfter, isBefore } from 'date-fns';
 import { ACCOUNT } from '../../constants';
 import getAuthenticationRetriesByAccountId from '../get-authentication-retries-by-account-id';
+import { Context } from '../../types';
 
 const { MAX_AUTH_RETRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT;
 

@@ -1,9 +1,8 @@
-import { Context } from '.keystone/types';
 import getAccountById from '../../../helpers/get-account-by-id';
 import generateOTPAndUpdateAccount from '../../../helpers/generate-otp-and-update-account';
 import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
-import { AccountSignInSendNewCodeVariables, AccountSignInResponse } from '../../../types';
+import { AccountSignInSendNewCodeVariables, AccountSignInResponse, Context } from '../../../types';
 
 /**
  * accountSignInSendNewCode

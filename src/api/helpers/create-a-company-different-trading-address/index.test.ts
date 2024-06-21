@@ -1,4 +1,4 @@
-import { Context } from '.keystone/types';
+import { Context } from '../../types';
 import createACompanyDifferentTradingAddress from '.';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import companyHelpers from '../../test-helpers/company';

@@ -1,5 +1,4 @@
-import { Context } from '.keystone/types';
-import { AccountStatusCore } from '../../types';
+import { AccountStatusCore, Context } from '../../types';
 
 /**
  * account

@@ -1,7 +1,6 @@
-import { Context } from '.keystone/types';
 import createAnExportContractAgentService from '../create-an-export-contract-agent-service';
 import createAnExportContractAgentServiceCharge from '../create-an-export-contract-agent-service-charge';
-import { CreateExportContractAgentResponse } from '../../types';
+import { Context, CreateExportContractAgentResponse } from '../../types';
 
 /**
  * createAnExportContractAgent
@@ -26,7 +25,6 @@ const createAnExportContractAgent = async (context: Context, exportContractId: s
     const agentServiceCharge = await createAnExportContractAgentServiceCharge(context, agentService.id);
 
     return {
-      // @ts-ignore
       agent,
       agentService,
       agentServiceCharge,

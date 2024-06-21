@@ -1,8 +1,7 @@
-import { Context } from '.keystone/types';
 import createACompanyAddress from '../create-a-company-address';
 import createCompanySicCodes from '../create-company-sic-codes';
 import createACompanyDifferentTradingAddress from '../create-a-company-different-trading-address';
-import { ApplicationCompanyCore } from '../../types';
+import { Context, ApplicationCompanyCore } from '../../types';
 
 /**
  * createACompany

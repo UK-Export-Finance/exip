@@ -1,5 +1,5 @@
-import { Context } from '.keystone/types';
 import getPasswordHash from '../get-password-hash';
+import { Context } from '../../types';
 
 /**
  * hasAccountUsedPasswordBefore

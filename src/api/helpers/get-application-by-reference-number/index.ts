@@ -1,5 +1,4 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
-import { Application } from '../../types';
+import { Application, Context } from '.keystone/types'; // eslint-disable-line
 
 /**
  * getApplicationByReferenceNumber
@@ -13,7 +12,6 @@ const getApplicationByReferenceNumber = async (referenceNumber: number, context:
   try {
     console.info('Getting application by reference number - getApplicationByReferenceNumber helper %s', referenceNumber);
 
-    // @ts-ignore
     const applications = (await context.db.Application.findMany({
       where: {
         referenceNumber: { equals: referenceNumber },

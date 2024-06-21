@@ -1,5 +1,4 @@
-import { Context } from '.keystone/types';
-import { ApplicationLossPayeeFinancialInternational } from '../../types';
+import { ApplicationLossPayeeFinancialInternational, Context } from '../../types';
 
 /**
  * createALossPayeeFinancialInternational

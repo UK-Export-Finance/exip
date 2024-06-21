@@ -1,4 +1,3 @@
-import { Context } from '.keystone/types';
 import crypto from 'crypto';
 import { ACCOUNT } from '../../../constants';
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
@@ -9,7 +8,7 @@ import blockAccount from '../../../helpers/block-account';
 import update from '../../../helpers/update-account';
 import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
-import { AccountSendEmailPasswordResetLinkVariables, Account, AccountSendEmailPasswordResetLinkResponse } from '../../../types';
+import { AccountSendEmailPasswordResetLinkVariables, Account, AccountSendEmailPasswordResetLinkResponse, Context } from '../../../types';
 
 const {
   ENCRYPTION: {

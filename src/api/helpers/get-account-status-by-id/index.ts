@@ -1,5 +1,4 @@
-import { Context } from '.keystone/types';
-import { AccountStatus } from '../../types';
+import { AccountStatus, Context } from '../../types';
 
 /**
  * getAccountStatusById

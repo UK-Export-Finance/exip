@@ -1,5 +1,4 @@
-import { Context } from '.keystone/types';
-import { Country } from '../../types';
+import { Context, Country } from '../../types';
 
 const getCountryByField = async (context: Context, field: string, value: string): Promise<Country | boolean> => {
   try {

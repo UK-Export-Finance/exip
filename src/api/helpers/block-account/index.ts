@@ -1,5 +1,5 @@
-import { Context } from '.keystone/types';
 import update from '../update-account';
+import { Context } from '../../types';
 
 /**
  * blockAccount
