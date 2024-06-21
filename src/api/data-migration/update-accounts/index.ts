@@ -41,11 +41,25 @@ const removeIsBlockedField = (connection: Connection) => {
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
-const updateAccounts = {
-  statusField: (connection: Connection) => addStatusField(connection),
-  statusConstraint: (connection: Connection) => addStatusConstraint(connection),
-  isVerifiedField: (connection: Connection) => removeIsVerifiedField(connection),
-  isBlockedField: (connection: Connection) => removeIsBlockedField(connection),
+const updateAccounts = async (connection: Connection) => {
+  const loggingMessage = 'Updating accounts';
+
+  console.info(`✅ ${loggingMessage}`);
+
+  try {
+    const tables = await Promise.all([
+      addStatusField(connection),
+      addStatusConstraint(connection),
+      removeIsVerifiedField(connection),
+      removeIsBlockedField(connection),
+    ]);
+
+    return tables;
+  } catch (err) {
+    console.error(`🚨 error ${loggingMessage} %O`, err);
+
+    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+  }
 };
 
 export default updateAccounts;

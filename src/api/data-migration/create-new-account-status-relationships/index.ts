@@ -1,17 +1,16 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
+import { Connection } from 'mysql2/promise';
+import getAllAccounts from '../get-all-accounts';
 import { AccountMvp } from '../../types';
 
-interface CreateNewAccountRelationshipsParams {
-  context: Context
-  accounts: Array<AccountMvp>
-}
-
-const createNewAccountStatusRelationships = async ({ context, accounts }: CreateNewAccountRelationshipsParams) => {
+const createNewAccountStatusRelationships = async (connection: Connection, context: Context) => {
   const loggingMessage = 'Creating new status relationships for all accounts';
 
   console.info(`✅ ${loggingMessage}`);
 
   try {
+    const accounts = await getAllAccounts(connection);
+
     const mappedAccountStatusData = accounts.map((account: AccountMvp) => {
       const mapped = {
         account: {
@@ -39,7 +38,6 @@ const createNewAccountStatusRelationships = async ({ context, accounts }: Create
     });
 
     return created;
-
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 

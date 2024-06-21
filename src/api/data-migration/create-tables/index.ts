@@ -4,7 +4,7 @@ import executeSqlQuery from '../execute-sql-query';
 const createAccountStatus = (connection: Connection) => {
   const loggingMessage = 'Creating TABLE - account status';
 
-  const query =  `
+  const query = `
     CREATE TABLE AccountStatus (
       id varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
       isBlocked tinyint(1) NOT NULL DEFAULT '0',
@@ -306,22 +306,40 @@ const createLossPayeeFinancialUkVector = (connection: Connection) => {
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
-const createTables = {
-  accountStatus: (connection: Connection) => createAccountStatus(connection),
-  jointlyInsuredParty: (connection: Connection) => createJointlyInsuredParty(connection),
-  exportContractAgent: (connection: Connection) => createExportContractAgent(connection),
-  exportContractAgentService: (connection: Connection) => createExportContractAgentService(connection),
-  exportContractAgentServiceCharge: (connection: Connection) => createExportContractAgentServiceCharge(connection),
-  privateMarket: (connection: Connection) => createPrivateMarket(connection),
-  companyDifferentTradingAddress: (connection: Connection) => createCompanyDifferentTradingAddress(connection),
-  buyerContact: (connection: Connection) => createBuyerContact(connection),
-  buyerRelationship: (connection: Connection) => createBuyerRelationship(connection),
-  buyerTradingHistory: (connection: Connection) => createBuyerTradingHistory(connection),
-  nominatedLossPayee: (connection: Connection) => createNominatedLossPayee(connection),
-  lossPayeeFinancialInternational: (connection: Connection) => createLossPayeeFinancialInternational(connection),
-  lossPayeeFinancialInternationalVector: (connection: Connection) => createLossPayeeFinancialInternationalVector(connection),
-  lossPayeeFinancialUk: (connection: Connection) => createLossPayeeFinancialUk(connection),
-  lossPayeeFinancialUkVector: (connection: Connection) => createLossPayeeFinancialUkVector(connection),
+const createTables = async (connection: Connection) => {
+  const loggingMessage = 'Creating new tables';
+
+  try {
+    console.info(`✅ ${loggingMessage}`);
+
+    const tables = await Promise.all([
+      createAccountStatus(connection),
+      createJointlyInsuredParty(connection),
+
+      createExportContractAgentServiceCharge(connection),
+      createExportContractAgentService(connection),
+      createExportContractAgent(connection),
+
+      createPrivateMarket(connection),
+      createCompanyDifferentTradingAddress(connection),
+
+      createBuyerContact(connection),
+      createBuyerRelationship(connection),
+      createBuyerTradingHistory(connection),
+
+      createNominatedLossPayee(connection),
+      createLossPayeeFinancialInternationalVector(connection),
+      createLossPayeeFinancialInternational(connection),
+      createLossPayeeFinancialUkVector(connection),
+      createLossPayeeFinancialUk(connection),
+    ]);
+
+    return tables;
+  } catch (err) {
+    console.error(`🚨 error ${loggingMessage} %O`, err);
+
+    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+  }
 };
 
 export default createTables;

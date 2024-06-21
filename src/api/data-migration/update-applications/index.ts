@@ -24,7 +24,7 @@ const addNominatedLossPayeeConstraint = (connection: Connection) => {
 };
 
 const addExportContractFields = (connection: Connection) => {
-  const queries =  Promise.all([
+  const queries = Promise.all([
     executeSqlQuery({
       connection,
       query: `ALTER TABLE ExportContract ADD paymentTermsDescription varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''`,
@@ -128,7 +128,7 @@ const addDeclarationsExportContractField = (connection: Connection) => {
  * KeystoneJS will then automatically handle saving in the database as a TINYINT
  */
 
-const moveBuyerContactFields = async (buyers: Array<ApplicationBuyerMvp>, context: Context) => {
+export const moveBuyerContactFields = async (buyers: Array<ApplicationBuyerMvp>, context: Context) => {
   const mappedBuyerContactData = buyers.map((buyer: ApplicationBuyerMvp) => {
     const mapped = {
       application: {
@@ -153,7 +153,7 @@ const moveBuyerContactFields = async (buyers: Array<ApplicationBuyerMvp>, contex
   return created;
 };
 
-const moveBuyerRelationshipFields = async (buyers: Array<ApplicationBuyerMvp>, context: Context) => {
+export const moveBuyerRelationshipFields = async (buyers: Array<ApplicationBuyerMvp>, context: Context) => {
   const mappedBuyerRelationshipData = buyers.map((buyer: ApplicationBuyerMvp) => {
     const mapped = {
       application: {
@@ -174,7 +174,7 @@ const moveBuyerRelationshipFields = async (buyers: Array<ApplicationBuyerMvp>, c
   return created;
 };
 
-const moveBuyerTradingHistoryFields = async (buyers: Array<ApplicationBuyerMvp>, context: Context) => {
+export const moveBuyerTradingHistoryFields = async (buyers: Array<ApplicationBuyerMvp>, context: Context) => {
   const mappedBuyerTradingHistoryData = buyers.map((buyer: ApplicationBuyerMvp) => {
     const mapped = {
       application: {
@@ -195,7 +195,7 @@ const moveBuyerTradingHistoryFields = async (buyers: Array<ApplicationBuyerMvp>,
   return created;
 };
 
-const removeBuyerFields = (connection: Connection) => {
+export const removeBuyerFields = (connection: Connection) => {
   const queries = Promise.all([
     executeSqlQuery({
       connection,
@@ -237,20 +237,30 @@ const removeBuyerFields = (connection: Connection) => {
   return queries;
 };
 
-const updateApplications = {
-  nominatedLossPayeeField: (connection: Connection) => addNominatedLossPayeeField(connection),
-  nominatedLossPayeeConstraint: (connection: Connection) => addNominatedLossPayeeConstraint(connection),
-  exportContractFields: (connection: Connection) => addExportContractFields(connection),
-  companyFields: (connection: Connection) => addCompanyFields(connection),
-  companyConstraint: (connection: Connection) => addCompanyConstraint(connection),
-  businessFields: (connection: Connection) => addBusinessFields(connection),
-  brokerFullAddressField: (connection: Connection) => addBrokerFullAddressField(connection),
-  eligibilityHasEndBuyerField: (connection: Connection) => addEligibilityHasEndBuyerField(connection),
-  declarationsExportContractField: (connection: Connection) => addDeclarationsExportContractField(connection),
-  buyerContactFields: (buyers: Array<ApplicationBuyerMvp>, context: Context) => moveBuyerContactFields(buyers, context),
-  buyerRelationshipFields: (buyers: Array<ApplicationBuyerMvp>, context: Context) => moveBuyerRelationshipFields(buyers, context),
-  buyerTradingHistoryFields: (buyers: Array<ApplicationBuyerMvp>, context: Context) => moveBuyerTradingHistoryFields(buyers, context),
-  buyerFields: (connection: Connection) => removeBuyerFields(connection),
+const updateApplications = async (connection: Connection) => {
+  const loggingMessage = 'Updating applications';
+
+  console.info(`✅ ${loggingMessage}`);
+
+  try {
+    const tables = Promise.all([
+      addNominatedLossPayeeField(connection),
+      addNominatedLossPayeeConstraint(connection),
+      addExportContractFields(connection),
+      addCompanyFields(connection),
+      addCompanyConstraint(connection),
+      addBusinessFields(connection),
+      addBrokerFullAddressField(connection),
+      addEligibilityHasEndBuyerField(connection),
+      addDeclarationsExportContractField(connection),
+    ]);
+
+    return tables;
+  } catch (err) {
+    console.error(`🚨 error ${loggingMessage} %O`, err);
+
+    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+  }
 };
 
 export default updateApplications;
