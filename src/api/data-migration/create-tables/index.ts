@@ -1,7 +1,7 @@
 import { Connection } from 'mysql2/promise';
 import executeSqlQuery from '../execute-sql-query';
 
-const createAccountStatus = (connection: Connection) => {
+const createAccountStatusTable = (connection: Connection) => {
   const loggingMessage = 'Creating TABLE - account status';
 
   const query = `
@@ -18,7 +18,7 @@ const createAccountStatus = (connection: Connection) => {
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
-const createJointlyInsuredParty = (connection: Connection) => {
+const createJointlyInsuredPartyTable = (connection: Connection) => {
   const loggingMessage = 'Creating TABLE - jointly insured party';
 
   const query = `
@@ -40,7 +40,7 @@ const createJointlyInsuredParty = (connection: Connection) => {
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
-const createExportContractAgent = (connection: Connection) => {
+const createExportContractAgentTable = (connection: Connection) => {
   const loggingMessage = 'Creating TABLE - export contract agent';
 
   const query = `
@@ -62,7 +62,7 @@ const createExportContractAgent = (connection: Connection) => {
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
-const createExportContractAgentService = (connection: Connection) => {
+const createExportContractAgentServiceTable = (connection: Connection) => {
   const loggingMessage = 'Creating TABLE - export contract agent service';
 
   const query = `
@@ -82,7 +82,7 @@ const createExportContractAgentService = (connection: Connection) => {
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
-const createExportContractAgentServiceCharge = (connection: Connection) => {
+const createExportContractAgentServiceChargeTable = (connection: Connection) => {
   const loggingMessage = 'Creating TABLE - export contract agent service charge';
 
   const query = `
@@ -100,7 +100,7 @@ const createExportContractAgentServiceCharge = (connection: Connection) => {
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
-const createPrivateMarket = (connection: Connection) => {
+const createPrivateMarketTable = (connection: Connection) => {
   const loggingMessage = 'Creating TABLE - private market';
 
   const query = `
@@ -115,7 +115,7 @@ const createPrivateMarket = (connection: Connection) => {
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
-const createCompanyDifferentTradingAddress = (connection: Connection) => {
+const createCompanyDifferentTradingAddressTable = (connection: Connection) => {
   const loggingMessage = 'Creating TABLE - company different trading address';
 
   const query = `
@@ -132,7 +132,7 @@ const createCompanyDifferentTradingAddress = (connection: Connection) => {
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
-const createBuyerContact = (connection: Connection) => {
+const createBuyerContactTable = (connection: Connection) => {
   const loggingMessage = 'Creating TABLE - buyer contact';
 
   const query = `
@@ -155,7 +155,7 @@ const createBuyerContact = (connection: Connection) => {
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
-const createBuyerRelationship = (connection: Connection) => {
+const createBuyerRelationshipTable = (connection: Connection) => {
   const loggingMessage = 'Creating TABLE - buyer relationship';
 
   const query = `
@@ -178,7 +178,7 @@ const createBuyerRelationship = (connection: Connection) => {
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
-const createBuyerTradingHistory = (connection: Connection) => {
+const createBuyerTradingHistoryTable = (connection: Connection) => {
   const loggingMessage = 'Creating TABLE - buyer trading history';
 
   const query = `
@@ -202,7 +202,7 @@ const createBuyerTradingHistory = (connection: Connection) => {
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
-const createNominatedLossPayee = (connection: Connection) => {
+const createNominatedLossPayeeTable = (connection: Connection) => {
   const loggingMessage = 'Creating TABLE - nominated loss payee';
 
   const query = `
@@ -224,7 +224,7 @@ const createNominatedLossPayee = (connection: Connection) => {
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
-const createLossPayeeFinancialInternational = (connection: Connection) => {
+const createLossPayeeFinancialInternationalTable = (connection: Connection) => {
   const loggingMessage = 'Creating TABLE - loss payee financial international';
 
   const query = `
@@ -250,7 +250,7 @@ const createLossPayeeFinancialInternational = (connection: Connection) => {
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
-const createLossPayeeFinancialInternationalVector = (connection: Connection) => {
+const createLossPayeeFinancialInternationalVectorTable = (connection: Connection) => {
   const loggingMessage = 'Creating TABLE - loss payee financial international vector';
 
   const query = `
@@ -265,7 +265,7 @@ const createLossPayeeFinancialInternationalVector = (connection: Connection) => 
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
-const createLossPayeeFinancialUk = (connection: Connection) => {
+const createLossPayeeFinancialUkTable = (connection: Connection) => {
   const loggingMessage = 'Creating TABLE - loss payee financial UK';
 
   const query = `
@@ -291,7 +291,7 @@ const createLossPayeeFinancialUk = (connection: Connection) => {
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
-const createLossPayeeFinancialUkVector = (connection: Connection) => {
+const createLossPayeeFinancialUkVectorTable = (connection: Connection) => {
   const loggingMessage = 'Creating TABLE - loss payee financial UK vector';
 
   const query = `
@@ -313,25 +313,25 @@ const createTables = async (connection: Connection) => {
     console.info(`✅ ${loggingMessage}`);
 
     const tables = await Promise.all([
-      createAccountStatus(connection),
-      createJointlyInsuredParty(connection),
+      createAccountStatusTable(connection),
+      createJointlyInsuredPartyTable(connection),
 
-      createExportContractAgentServiceCharge(connection),
-      createExportContractAgentService(connection),
-      createExportContractAgent(connection),
+      createExportContractAgentServiceChargeTable(connection),
+      createExportContractAgentServiceTable(connection),
+      createExportContractAgentTable(connection),
 
-      createPrivateMarket(connection),
-      createCompanyDifferentTradingAddress(connection),
+      createPrivateMarketTable(connection),
+      createCompanyDifferentTradingAddressTable(connection),
 
-      createBuyerContact(connection),
-      createBuyerRelationship(connection),
-      createBuyerTradingHistory(connection),
+      createBuyerContactTable(connection),
+      createBuyerRelationshipTable(connection),
+      createBuyerTradingHistoryTable(connection),
 
-      createNominatedLossPayee(connection),
-      createLossPayeeFinancialInternationalVector(connection),
-      createLossPayeeFinancialInternational(connection),
-      createLossPayeeFinancialUkVector(connection),
-      createLossPayeeFinancialUk(connection),
+      createNominatedLossPayeeTable(connection),
+      createLossPayeeFinancialInternationalVectorTable(connection),
+      createLossPayeeFinancialInternationalTable(connection),
+      createLossPayeeFinancialUkVectorTable(connection),
+      createLossPayeeFinancialUkTable(connection),
     ]);
 
     return tables;

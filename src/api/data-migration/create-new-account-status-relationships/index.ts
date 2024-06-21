@@ -1,9 +1,19 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import { Connection } from 'mysql2/promise';
 import getAllAccounts from '../get-all-accounts';
-import { AccountMvp } from '../../types';
+import { AccountMvp, AccountStatus } from '../../types';
 
-const createNewAccountStatusRelationships = async (connection: Connection, context: Context) => {
+/**
+ * createNewAccountStatusRelationships
+ * Create new "account status" relationships for all existing accounts.
+ * 1) Get all accounts
+ * 2) Create an array of "account status" data - using isVerified and isBlocked from the original accounts data.
+ * 3) Create new "account status" entries.
+ * @param {Connection} connection: SQL database connection
+ * @param {Context} context: KeystoneJS context API
+ * @returns {Promise<Array<AccountStatus>>} Account status entires
+ */
+const createNewAccountStatusRelationships = async (connection: Connection, context: Context): Promise<Array<AccountStatus>> => {
   const loggingMessage = 'Creating new status relationships for all accounts';
 
   console.info(`✅ ${loggingMessage}`);
@@ -33,9 +43,9 @@ const createNewAccountStatusRelationships = async (connection: Connection, conte
       return mapped;
     });
 
-    const created = await context.db.AccountStatus.createMany({
+    const created = (await context.db.AccountStatus.createMany({
       data: mappedAccountStatusData,
-    });
+    })) as Array<AccountStatus>;
 
     return created;
   } catch (err) {

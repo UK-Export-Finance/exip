@@ -1,6 +1,19 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
+import { ApplicationCompanyDifferentTradingAddress } from '../../types';
 
-const createCompanyDifferentTradingAddress = async (context: Context, applications: Array<object>) => {
+/**
+ * createCompanyDifferentTradingAddress
+ * Create new "company different trading address" entries with company relationships.
+ * 1) Create an array of "company different trading address" data - using the application's companyId.
+ * 2) Create new "company different trading address" entires.
+ * @param {Context} context: KeystoneJS context API
+ * @param {<ArrayApplication>} applications: Applications
+ * @returns {Promise<Array<ApplicationCompanyDifferentTradingAddress>>} Company different trading address entries
+ */
+const createCompanyDifferentTradingAddress = async (
+  context: Context,
+  applications: Array<object>,
+): Promise<Array<ApplicationCompanyDifferentTradingAddress>> => {
   const loggingMessage = 'Creating companyDifferentTradingAddresses with company relationships';
 
   console.info(`✅ ${loggingMessage}`);
@@ -9,7 +22,6 @@ const createCompanyDifferentTradingAddress = async (context: Context, applicatio
     const companyIdsConnectArray = applications.map((application) => ({
       company: {
         connect: {
-          // @ts-ignore
           id: application.companyId,
         },
       },

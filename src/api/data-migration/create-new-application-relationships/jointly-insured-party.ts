@@ -1,5 +1,14 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 
+/**
+ * createJointlyInsuredParty
+ * Create new "jointly insured party" entries with "policy" relationships.
+ * 1) Create an array of policy ID "connect" relationships.
+ * 2) Create "jointly insured party" entries.
+ * @param {Context} context: KeystoneJS context API
+ * @param {Array<Application>} applications: Applications
+ * @returns {Promise<Array<ApplicationJointlyInsuredParty>>} Jointly insured party entries
+ */
 const createJointlyInsuredParty = async (context: Context, applications: Array<object>) => {
   const loggingMessage = 'Creating jointlyInsuredParty with policy relationships';
 
@@ -9,7 +18,6 @@ const createJointlyInsuredParty = async (context: Context, applications: Array<o
     const policyIdsConnectArray = applications.map((application) => ({
       policy: {
         connect: {
-          // @ts-ignore
           id: application.policyId,
         },
       },

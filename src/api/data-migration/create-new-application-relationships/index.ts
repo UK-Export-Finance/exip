@@ -6,6 +6,14 @@ import createExportContractAgent from './export-contract-agent';
 import createPrivateMarket from './private-market';
 import createCompanyDifferentTradingAddress from './company-different-trading-address';
 
+/**
+ * createNewApplicationRelationships
+ * Create new application relationships
+ * 1) Get all applications.
+ * 2) Create new relationships.
+ * @param {Context} context: KeystoneJS context API
+ * @returns {Promise<Array<object>>} New application relationships
+ */
 const createNewApplicationRelationships = async (context: Context) => {
   const loggingMessage = 'Creating new relationships for all applications';
 
