@@ -1,0 +1,46 @@
+import { Connection } from 'mysql2/promise';
+import executeSqlQuery from '../execute-sql-query';
+
+const removeBuyerFields = (connection: Connection) => {
+  const queries = Promise.all([
+    executeSqlQuery({
+      connection,
+      query: 'ALTER TABLE Buyer DROP COLUMN canContactBuyer',
+      loggingMessage: 'Removing FIELD canContactBuyer from buyer table',
+    }),
+    executeSqlQuery({
+      connection,
+      query: 'ALTER TABLE Buyer DROP COLUMN contactEmail',
+      loggingMessage: 'Removing FIELD contactEmail from buyer table',
+    }),
+    executeSqlQuery({
+      connection,
+      query: 'ALTER TABLE Buyer DROP COLUMN contactFirstName',
+      loggingMessage: 'Removing FIELD contactFirstName from buyer table',
+    }),
+    executeSqlQuery({
+      connection,
+      query: 'ALTER TABLE Buyer DROP COLUMN contactLastName',
+      loggingMessage: 'Removing FIELD contactLastName from buyer table',
+    }),
+    executeSqlQuery({
+      connection,
+      query: 'ALTER TABLE Buyer DROP COLUMN contactPosition',
+      loggingMessage: 'Removing FIELD contactPosition from buyer table',
+    }),
+    executeSqlQuery({
+      connection,
+      query: 'ALTER TABLE Buyer DROP COLUMN exporterIsConnectedWithBuyer',
+      loggingMessage: 'Removing FIELD exporterIsConnectedWithBuyer from buyer table',
+    }),
+    executeSqlQuery({
+      connection,
+      query: 'ALTER TABLE Buyer DROP COLUMN exporterHasTradedWithBuyer',
+      loggingMessage: 'Removing FIELD exporterHasTradedWithBuyer from buyer table',
+    }),
+  ]);
+
+  return queries;
+};
+
+export default removeBuyerFields;

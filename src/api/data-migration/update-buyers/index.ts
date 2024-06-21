@@ -1,8 +1,16 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import { Connection } from 'mysql2/promise';
 import getAllBuyers from '../get-all-buyers';
-import { moveBuyerContactFields, moveBuyerRelationshipFields, moveBuyerTradingHistoryFields, removeBuyerFields } from '../update-applications';
+import { moveBuyerContactFields, moveBuyerRelationshipFields, moveBuyerTradingHistoryFields } from '../update-applications/move-buyer-contact-fields';
+import removeBuyerFields from '../update-applications/remove-buyer-fields';
 
+/**
+ * updateBuyers
+ * Move MVP "buyers" fields into the new No PDF model/structure.
+ * @param {Connection} connection: SQL database connection
+ * @param {Context} context: KeystoneJS context API
+ * @returns {Promise<Array<object>>} Updated buyers
+ */
 const updateBuyers = async (connection: Connection, context: Context) => {
   const loggingMessage = 'Updating buyers';
 
