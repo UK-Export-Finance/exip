@@ -35,6 +35,7 @@ const {
   COMPANY_DETAILS_CHANGE,
   CANNOT_APPLY_MULTIPLE_RISKS,
   ELIGIBLE_TO_APPLY_ONLINE,
+  CONTRACT_TOO_SHORT,
 } = ELIGIBILITY;
 
 const {
@@ -123,6 +124,7 @@ export const requiredInsuranceEligibilityDataProvided = (req: Request, res: Resp
     HAVE_AN_ACCOUNT,
     ACCOUNT.CREATE.YOUR_DETAILS,
     ACCOUNT.SIGN_IN.ROOT,
+    CONTRACT_TOO_SHORT,
   ];
 
   const isIrrelevantRoute = (route: string) => irrelevantRoutes.includes(route);

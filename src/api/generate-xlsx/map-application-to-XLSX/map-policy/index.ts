@@ -10,7 +10,7 @@ import mapJointlyInsuredParty from './map-jointly-insured-party';
 import mapBroker from './map-broker';
 import mapLossPayee from './map-loss-payee';
 import mapYesNoField from '../helpers/map-yes-no-field';
-import { Application } from '../../../types';
+import { Application, Country } from '../../../types';
 
 const { FIELDS } = XLSX;
 
@@ -23,9 +23,10 @@ const {
  * mapPolicy
  * Map an application's policy fields into an array of objects for XLSX generation
  * @param {Application} application
+ * @param {Array<Country>} countries
  * @returns {Array<object>} Array of objects for XLSX generation
  */
-const mapPolicy = (application: Application) => {
+const mapPolicy = (application: Application, countries: Array<Country>) => {
   const { nominatedLossPayee, policy, policyContact } = application;
 
   const policyType = policy[POLICY_TYPE];
@@ -47,7 +48,7 @@ const mapPolicy = (application: Application) => {
 
     xlsxRow(String(FIELDS[NEED_PRE_CREDIT_PERIOD]), mapYesNoField({ answer: policy[NEED_PRE_CREDIT_PERIOD] })),
 
-    ...mapJointlyInsuredParty(policy.jointlyInsuredParty),
+    ...mapJointlyInsuredParty(policy.jointlyInsuredParty, countries),
 
     ...mapBroker(application),
     ...mapLossPayee(nominatedLossPayee),

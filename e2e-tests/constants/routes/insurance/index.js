@@ -42,6 +42,7 @@ export const INSURANCE_ROUTES = {
     ELIGIBLE_TO_APPLY_ONLINE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/eligible-to-apply-online`,
     HAVE_AN_ACCOUNT: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/do-you-have-an-account`,
     NEED_TO_START_AGAIN: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/need-to-start-again`,
+    CONTRACT_TOO_SHORT: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/contract-too-short`,
   },
   APPLY_OFFLINE: `${INSURANCE_ROOT}/apply-using-our-form`,
   PAGE_NOT_FOUND: `${INSURANCE_ROOT}/page-not-found`,

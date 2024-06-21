@@ -248,6 +248,7 @@ jobs:
             "eligibility/buyer-country/**/*.spec.js",
             "eligibility/cannot-apply-multiple-risks/**/*.spec.js",
             "eligibility/cannot-skip-flow/**/*.spec.js",
+            "eligibility/contract-too-short/**/*.spec.js",
             "eligibility/change-your-answers/**/*.spec.js",
             "eligibility/check-your-answers/**/*.spec.js",
             "eligibility/companies-house/**/*.spec.js",

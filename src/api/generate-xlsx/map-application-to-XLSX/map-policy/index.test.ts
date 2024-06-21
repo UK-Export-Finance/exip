@@ -12,6 +12,7 @@ import mapBroker from './map-broker';
 import mapLossPayee from './map-loss-payee';
 import mapYesNoField from '../helpers/map-yes-no-field';
 import getPopulatedApplication from '../../../helpers/get-populated-application';
+import { mockCountries } from '../../../test-mocks';
 import { createFullApplication, getKeystoneContext, mapApplicationIds } from '../../../test-helpers';
 import { Application, Context } from '../../../types';
 
@@ -36,7 +37,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy', () => {
 
   describe(`when the policy type is ${FIELD_VALUES.POLICY_TYPE.SINGLE}`, () => {
     it('should return an array of mapped fields via mapSingleContractPolicy', () => {
-      const result = mapPolicy(fullApplication);
+      const result = mapPolicy(fullApplication, mockCountries);
 
       const { nominatedLossPayee, policy, policyContact } = fullApplication;
 
@@ -48,7 +49,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy', () => {
 
         xlsxRow(String(FIELDS[NEED_PRE_CREDIT_PERIOD]), mapYesNoField({ answer: policy[NEED_PRE_CREDIT_PERIOD] })),
 
-        ...mapJointlyInsuredParty(policy.jointlyInsuredParty),
+        ...mapJointlyInsuredParty(policy.jointlyInsuredParty, mockCountries),
 
         ...mapBroker(fullApplication),
         ...mapLossPayee(nominatedLossPayee),
@@ -60,7 +61,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy', () => {
 
   describe(`when the policy type is ${FIELD_VALUES.POLICY_TYPE.MULTIPLE}`, () => {
     it('should return an array of mapped fields via mapMultipleContractPolicy', () => {
-      const result = mapPolicy(populatedApplicationMultiplePolicy);
+      const result = mapPolicy(populatedApplicationMultiplePolicy, mockCountries);
 
       const { nominatedLossPayee, policy, policyContact } = populatedApplicationMultiplePolicy;
 
@@ -72,7 +73,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy', () => {
 
         xlsxRow(String(FIELDS[NEED_PRE_CREDIT_PERIOD]), mapYesNoField({ answer: policy[NEED_PRE_CREDIT_PERIOD] })),
 
-        ...mapJointlyInsuredParty(policy.jointlyInsuredParty),
+        ...mapJointlyInsuredParty(policy.jointlyInsuredParty, mockCountries),
 
         ...mapBroker(fullApplication),
         ...mapLossPayee(nominatedLossPayee),

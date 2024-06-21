@@ -10,7 +10,7 @@ const {
  * Map Private market fields
  * if ATTEMPTED is false, delete DECLINED_DESCRIPTION
  * @param {RequestBody} formBody
- * @param {Array} countries
+ * @param {Array<Country>} countries
  * @returns {Object} populatedData
  */
 const mapSubmittedData = (formBody: RequestBody): object => {

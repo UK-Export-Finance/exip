@@ -2,6 +2,7 @@ import { Context, Application } from '.keystone/types'; // eslint-disable-line
 import { isAfter } from 'date-fns';
 import { APPLICATION } from '../../../constants';
 import getPopulatedApplication from '../../../helpers/get-populated-application';
+import getCountries from '../../../helpers/get-countries';
 import applicationSubmittedEmails from '../../../emails/send-application-submitted-emails';
 import generate from '../../../generate-xlsx';
 import { SubmitApplicationVariables, SuccessResponse } from '../../../types';
@@ -67,8 +68,10 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
           decryptFinancialInternational: true,
         });
 
+        const countries = await getCountries(context);
+
         // generate a XLSX for UKEF underwriting team email
-        const xlsxPath = await generate.XLSX(populatedApplication);
+        const xlsxPath = await generate.XLSX(populatedApplication, countries);
 
         // send all "application submitted" emails
         await applicationSubmittedEmails.send(populatedApplication, xlsxPath);
