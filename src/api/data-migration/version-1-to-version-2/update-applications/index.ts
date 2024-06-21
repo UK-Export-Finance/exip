@@ -19,7 +19,7 @@ const updateApplications = async (connection: Connection) => {
   console.info(`✅ ${loggingMessage}`);
 
   try {
-    const tables = Promise.all([
+    const tables = await Promise.all([
       addNominatedLossPayeeField(connection),
       addNominatedLossPayeeConstraint(connection),
       addExportContractFields(connection),
