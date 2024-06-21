@@ -96,17 +96,14 @@ var asyncTaskToSyncTask = (task, context) => (now2) => {
     await task(context, now2);
   })();
 };
-var taskWithErrorLogging = (description, task, context) => (
-  // @ts-ignore
-  async (_commonContext, now2) => {
-    try {
-      await task(context, now2);
-    } catch (error) {
-      console.error("An error occurred running job '%s' %o", description, error);
-      throw error;
-    }
+var taskWithErrorLogging = (description, task, context) => async (_commonContext, now2) => {
+  try {
+    await task(context, now2);
+  } catch (error) {
+    console.error("An error occurred running job '%s' %o", description, error);
+    throw error;
   }
-);
+};
 
 // cron/cron-job-scheduler.ts
 var cronJobScheduler = (jobs, context) => {
@@ -4789,7 +4786,6 @@ var createACompany = async (context, applicationId, companyData) => {
   try {
     const { registeredOfficeAddress, sicCodes, industrySectorNames: industrySectorNames2, ...companyFields } = companyData;
     const company = await context.db.Company.createOne({
-      // @ts-ignore
       data: {
         application: {
           connect: { id: applicationId }
@@ -4884,7 +4880,6 @@ var createAnExportContractAgent = async (context, exportContractId) => {
     const agentService = await create_an_export_contract_agent_service_default(context, agent.id);
     const agentServiceCharge = await create_an_export_contract_agent_service_charge_default(context, agentService.id);
     return {
-      // @ts-ignore
       agent,
       agentService,
       agentServiceCharge
@@ -4911,7 +4906,6 @@ var createAnExportContract = async (context, applicationId) => {
     const privateMarket = await create_a_private_market_default(context, exportContract.id);
     const { agent, agentService } = await create_an_export_contract_agent_default(context, exportContract.id);
     return {
-      // @ts-ignore
       exportContract,
       privateMarket,
       agent,
