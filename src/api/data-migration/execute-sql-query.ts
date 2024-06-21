@@ -3,10 +3,17 @@ import { Connection } from 'mysql2/promise';
 interface ExecuteSqlQueryParams {
   connection: Connection;
   query: string;
-  loggingMessage: string
+  loggingMessage: string;
 }
 
-const executeSqlQuery = async ({ connection, query, loggingMessage }: ExecuteSqlQueryParams ) => {
+/**
+ * Execute a SQL query.
+ * @param {Connection} connection: SQL database connection
+ * @param {String} query: SQL query
+ * @param {String} loggingMessage: Logging message
+ * @returns {Array} The result of connection.query()
+ */
+const executeSqlQuery = async ({ connection, query, loggingMessage }: ExecuteSqlQueryParams) => {
   try {
     console.info(`✅ ${loggingMessage}`);
 

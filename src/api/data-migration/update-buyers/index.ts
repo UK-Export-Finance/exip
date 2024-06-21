@@ -6,7 +6,7 @@ import removeBuyerFields from '../update-applications/remove-buyer-fields';
 
 /**
  * updateBuyers
- * Move MVP "buyers" fields into the new No PDF model/structure.
+ * Move MVP "buyers" fields into the new "No PDF" data model/structure.
  * @param {Connection} connection: SQL database connection
  * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Array<object>>} Updated buyers

@@ -9,7 +9,7 @@ import addDeclarationsExportContractField from './add-declarations-export-contra
 
 /**
  * updateApplications
- * Update application fields from the MVP data model/structure, to the new "No PDF" data model/structure.
+ * Update applications from the MVP data model/structure, to the new "No PDF" data model/structure.
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<object>>} executeSqlQuery responses
  */

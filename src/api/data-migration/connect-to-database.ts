@@ -1,15 +1,23 @@
+import dotenv from 'dotenv';
 import mysql, { Connection } from 'mysql2/promise';
 
+dotenv.config();
+
+/**
+ * connectToDatabase
+ * Connect to the SQL database
+ * @returns {Connection} SQL database connection
+ */
 const connectToDatabase = async () => {
   console.info('✅ Connecting to database');
 
   try {
-    const connection = await mysql.createConnection({
+    const connection = (await mysql.createConnection({
       host: '127.0.0.1',
       user: 'root',
       database: 'exip-migration',
-      port: 3306,
-    }) as Connection;
+      port: Number(process.env.DATABASE_PORT),
+    })) as Connection;
 
     return connection;
   } catch (err) {

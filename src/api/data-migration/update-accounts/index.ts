@@ -1,46 +1,15 @@
 import { Connection } from 'mysql2/promise';
-import executeSqlQuery from '../execute-sql-query';
+import addStatusField from './add-status-field';
+import addStatusConstraint from './add-status-constraint';
+import removeIsVerifiedField from './remove-is-verified-field';
+import removeIsBlockedField from './remove-is-blocked-field';
 
-const addStatusField = (connection: Connection) => {
-  const loggingMessage = 'Adding FIELD status to account table';
-
-  const query = `
-    ALTER TABLE Account ADD status varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-  `;
-
-  return executeSqlQuery({ connection, query, loggingMessage });
-};
-
-const addStatusConstraint = (connection: Connection) => {
-  const loggingMessage = 'Adding CONSTRAINT status to account table';
-
-  const query = `
-    ALTER TABLE Account ADD CONSTRAINT Account_status_fkey FOREIGN KEY (status) REFERENCES AccountStatus (id) ON DELETE SET NULL ON UPDATE CASCADE
-  `;
-
-  return executeSqlQuery({ connection, query, loggingMessage });
-};
-
-const removeIsVerifiedField = (connection: Connection) => {
-  const loggingMessage = 'Removing FIELD isVerified from account table';
-
-  const query = `
-    ALTER TABLE Account DROP COLUMN isVerified
-  `;
-
-  return executeSqlQuery({ connection, query, loggingMessage });
-};
-
-const removeIsBlockedField = (connection: Connection) => {
-  const loggingMessage = 'Removing FIELD isBlocked from account table';
-
-  const query = `
-    ALTER TABLE Account DROP COLUMN isBlocked
-  `;
-
-  return executeSqlQuery({ connection, query, loggingMessage });
-};
-
+/**
+ * updateAccounts
+ * Update accounts from the MVP data model/structure, to the new "No PDF" data model/structure.
+ * @param {Connection} connection: SQL database connection
+ * @returns {Promise<Array<object>>} executeSqlQuery responses
+ */
 const updateAccounts = async (connection: Connection) => {
   const loggingMessage = 'Updating accounts';
 
