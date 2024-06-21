@@ -27,7 +27,6 @@ const createALossPayeeFinancialUk = async (context: Context, lossPayeeId: string
       },
     });
 
-    // @ts-ignore
     return {
       ...lossPayeeFinancialUk,
       vector,

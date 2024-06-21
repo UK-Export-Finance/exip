@@ -15,9 +15,9 @@ const getAccountById = async (context: Context, accountId: string): Promise<Acco
       where: {
         id: accountId,
       },
-    })) as unknown;
+    })) as Account;
 
-    return account as Account;
+    return account;
   } catch (err) {
     console.error('Error getting account by ID %O', err);
 

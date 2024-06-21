@@ -24,6 +24,10 @@ const applicationSubmissionDeadlineEmail = async (context: Context): Promise<Suc
     if (applications.length) {
       const sentEmails = await applicationSubmissionDeadineEmail.send(applications);
 
+      /**
+       * check if the total amount of sent emails,
+       * equals the total amount of expiring applications.
+       */
       if (sentEmails.length === applications.length) {
         return {
           success: true,

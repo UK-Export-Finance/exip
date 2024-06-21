@@ -466,11 +466,7 @@ export const lists = {
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
-
-        // @ts-ignore
         if (item?.applicationId) {
-
-          // @ts-ignore
           await updateApplication.timestamp(context, item.applicationId);
         }
       },
