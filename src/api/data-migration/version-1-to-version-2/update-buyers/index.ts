@@ -5,6 +5,7 @@ import moveBuyerContactFields from '../update-applications/move-buyer-contact-fi
 import moveBuyerRelationshipFields from '../update-applications/move-buyer-relationship-fields';
 import moveBuyerTradingHistoryFields from '../update-applications/move-buyer-trading-history-fields';
 import removeBuyerFields from '../update-applications/remove-buyer-fields';
+import updateBuyerRelationshipIds from './update-buyer-relationship-ids';
 
 /**
  * updateBuyers
@@ -21,14 +22,21 @@ const updateBuyers = async (connection: Connection, context: Context) => {
   try {
     const buyers = await getAllBuyers(connection);
 
-    const updatedBuyers = await Promise.all([
-      moveBuyerContactFields(buyers, context),
-      moveBuyerRelationshipFields(buyers, context),
-      moveBuyerTradingHistoryFields(buyers, context),
-      removeBuyerFields(connection),
-    ]);
+    const buyerContacts = await moveBuyerContactFields(buyers, context);
+    const buyerRelationships = await moveBuyerRelationshipFields(buyers, context);
+    const buyerTradingHistories = await moveBuyerTradingHistoryFields(buyers, context);
 
-    return updatedBuyers;
+    const updated = await updateBuyerRelationshipIds({
+      context,
+      buyers,
+      buyerContacts,
+      buyerRelationships,
+      buyerTradingHistories,
+    });
+
+    await removeBuyerFields(connection);
+
+    return updated;
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 

@@ -7,8 +7,8 @@ import executeSqlQuery from '../execute-sql-query';
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<object>>} executeSqlQuery response
  */
-const addExportContractFields = (connection: Connection) => {
-  const queries = Promise.all([
+const addExportContractFields = async (connection: Connection) => {
+  const queries = await Promise.all([
     executeSqlQuery({
       connection,
       query: `ALTER TABLE ExportContract ADD paymentTermsDescription varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''`,

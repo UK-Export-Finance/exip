@@ -1,6 +1,7 @@
 import { Connection } from 'mysql2/promise';
 import { addNominatedLossPayeeField, addNominatedLossPayeeConstraint } from './nominated-loss-payee';
 import addExportContractFields from './add-export-contract-fields';
+import addBuyerFields from './add-buyer-fields';
 import addCompanyFields from './add-company-fields';
 import addBusinessFields from './add-business-fields';
 import addBrokerFullAddressField from './add-broker-full-address-field';
@@ -24,6 +25,7 @@ const updateApplications = async (connection: Connection) => {
       addNominatedLossPayeeField(connection),
       addNominatedLossPayeeConstraint(connection),
       addExportContractFields(connection),
+      addBuyerFields(connection),
       addCompanyFields(connection),
       addBusinessFields(connection),
       addBrokerFullAddressField(connection),

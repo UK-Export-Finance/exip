@@ -7,8 +7,8 @@ import executeSqlQuery from '../execute-sql-query';
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<object>>} executeSqlQuery response
  */
-const removeBuyerFields = (connection: Connection) => {
-  const queries = Promise.all([
+const removeBuyerFields = async (connection: Connection) => {
+  const queries = await Promise.all([
     executeSqlQuery({
       connection,
       query: 'ALTER TABLE Buyer DROP COLUMN canContactBuyer',
