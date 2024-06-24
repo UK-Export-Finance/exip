@@ -9,6 +9,12 @@ import getKeystoneContext from '../../test-helpers/get-keystone-context';
 
 // TODO: seems that we should only touch applications that do NOT have a submitted status
 
+/**
+ * dataMigration
+ * Update all accounts and applications from the MVP data model/structure,
+ * to the new "No PDF" data model/structure.
+ * @returns {Function} process.exit()
+ */
 const dataMigration = async () => {
   try {
     console.info('🚀 Beginning data migration');

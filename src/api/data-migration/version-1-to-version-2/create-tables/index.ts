@@ -15,6 +15,12 @@ import createLossPayeeFinancialInternationalTable from './create-nominated-loss-
 import createLossPayeeFinancialUkVectorTable from './create-nominated-loss-payee-financial-uk-vector-table';
 import createLossPayeeFinancialUkTable from './create-nominated-loss-payee-financial-uk-table';
 
+/**
+ * createTables
+ * Create new tables for the new "No PDF" data model/structure.
+ * @param {Connection} connection: SQL database connection
+ * @returns {Promise<Array<object>>} executeSqlQuery responses
+ */
 const createTables = async (connection: Connection) => {
   const loggingMessage = 'Creating new tables';
 
