@@ -1,8 +1,9 @@
-import { FIELD_IDS, FIELD_VALUES } from '../../constants';
+import { FIELD_IDS, FIELD_VALUES, COMPANIES_HOUSE_NUMBER_COMPANY_WITH_SPECIAL_CHARACTER_NAME } from '../../constants';
 import { summaryList } from '../../pages/shared';
 import { FIELDS_ELIGIBILITY as FIELDS } from '../../content-strings/fields/insurance/eligibility';
 import application, { country } from '../../fixtures/application';
 import getSummaryListField from './get-summary-list-field';
+import mockCompanies from '../../fixtures/companies';
 
 const { COMPANY } = application;
 
@@ -19,7 +20,7 @@ const {
 
 const { COMPANY_NAME } = FIELD_IDS.INSURANCE.COMPANIES_HOUSE;
 
-const checkYourAnswersEligibilitySummaryList = ({
+const checkYourAnswersEligibilitySummaryList = {
   [BUYER_COUNTRY]: () => {
     const fieldId = BUYER_COUNTRY;
 
@@ -68,19 +69,28 @@ const checkYourAnswersEligibilitySummaryList = ({
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
-  [COMPANY_NAME]: () => {
+  [COMPANY_NAME]: ({ differentCompany = false }) => {
     const fieldId = COMPANY_NAME;
 
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = COMPANY[COMPANY_NAME];
+
+    let expectedValue = COMPANY[COMPANY_NAME];
+
+    if (differentCompany) {
+      expectedValue = mockCompanies[COMPANIES_HOUSE_NUMBER_COMPANY_WITH_SPECIAL_CHARACTER_NAME][COMPANY_NAME];
+    }
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
-  [COMPANIES_HOUSE_NUMBER]: () => {
+  [COMPANIES_HOUSE_NUMBER]: ({ differentCompany = false }) => {
     const fieldId = COMPANIES_HOUSE_NUMBER;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = COMPANY[COMPANIES_HOUSE_NUMBER];
+    let expectedValue = COMPANY[COMPANIES_HOUSE_NUMBER];
+
+    if (differentCompany) {
+      expectedValue = mockCompanies[COMPANIES_HOUSE_NUMBER_COMPANY_WITH_SPECIAL_CHARACTER_NAME][COMPANIES_HOUSE_NUMBER];
+    }
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
@@ -92,6 +102,6 @@ const checkYourAnswersEligibilitySummaryList = ({
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
-});
+};
 
 export default checkYourAnswersEligibilitySummaryList;
