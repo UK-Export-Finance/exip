@@ -66,11 +66,11 @@ context(
     });
 
     it(`should render a ${COMPANIES_HOUSE_NUMBER} summary list row`, () => {
-      checkSummaryList[COMPANIES_HOUSE_NUMBER]();
+      checkSummaryList[COMPANIES_HOUSE_NUMBER]({});
     });
 
     it(`should render a ${COMPANY_NAME} summary list row`, () => {
-      checkSummaryList[COMPANY_NAME]();
+      checkSummaryList[COMPANY_NAME]({});
     });
 
     it(`should render a ${BUYER_COUNTRY} summary list row`, () => {
