@@ -5,6 +5,7 @@ import lossPayeeFinancialInternational from './create-loss-payee-financial-inter
 import lossPayeeFinancialInternationalVector from './create-loss-payee-financial-international-vector';
 import lossPayeeFinancialUk from './create-loss-payee-financial-uk';
 import lossPayeeFinancialUkVector from './create-loss-payee-financial-uk-vector';
+import createApplicationLossPayeeRelationship from './create-application-loss-payee-relationship';
 
 /**
  * createLossPayee
@@ -17,6 +18,7 @@ import lossPayeeFinancialUkVector from './create-loss-payee-financial-uk-vector'
  * 6) Create "loss payee - financial UK" entries.
  * 7) Create an array of loss payee - financial UK ID "connect" relationships.
  * 8) Create "loss payee - financial UK vector" entries.
+ * 9) Update applications to hav a loss payee relationship/ID.
  * @param {Context} context: KeystoneJS context API
  * @param {Array<object>} applicationIdsConnectArray: Array of application IDs "connect" objects
  * @returns {Promise<Array<ApplicationNominatedLossPayee>>} Loss payee entries
@@ -51,6 +53,8 @@ const createLossPayee = async (context: Context, applicationIdsConnectArray: Arr
     });
 
     await lossPayeeFinancialUkVector(context, ukIds);
+
+    await createApplicationLossPayeeRelationship(context, lossPayees);
 
     return lossPayees;
   } catch (err) {
