@@ -5,7 +5,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  * Update all applications to have a loss payee relationship/ID.
  * @param {Context} context: KeystoneJS context API
  * @param {Array<object>} lossPayees: Array of loss payees
- * @returns {Promise<Array<ApplicationLossPayeeFinancialUkVector>>} Loss payee - financial UK vector entries
+ * @returns {Promise<Array<Application>>} Updated applications
  */
 const createApplicationLossPayeeRelationship = async (context: Context, lossPayees: Array<object>) => {
   const loggingMessage = 'Updating applications to have loss payee relationships';
