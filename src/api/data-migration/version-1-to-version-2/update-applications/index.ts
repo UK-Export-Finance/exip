@@ -6,6 +6,7 @@ import addBusinessFields from './add-business-fields';
 import addBrokerFullAddressField from './add-broker-full-address-field';
 import addEligibilityHasEndBuyerField from './add-eligibility-has-end-buyer-field';
 import addDeclarationsExportContractField from './add-declarations-export-contract-field';
+import updateApplicationVersion from './update-application-version';
 
 /**
  * updateApplications
@@ -28,6 +29,7 @@ const updateApplications = async (connection: Connection) => {
       addBrokerFullAddressField(connection),
       addEligibilityHasEndBuyerField(connection),
       addDeclarationsExportContractField(connection),
+      updateApplicationVersion(connection),
     ]);
 
     return tables;
