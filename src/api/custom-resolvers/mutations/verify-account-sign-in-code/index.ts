@@ -90,7 +90,7 @@ const verifyAccountSignInCode = async (root: any, variables: VerifyAccountSignIn
         firstName: account.firstName,
         email: account.email,
         ...jwt,
-        expires: String(accountUpdate.sessionExpiry),
+        expires: accountUpdate.sessionExpiry,
       };
     }
 

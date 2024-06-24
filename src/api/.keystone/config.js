@@ -4125,7 +4125,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
         firstName: account2.firstName,
         email: account2.email,
         ...jwt,
-        expires: String(accountUpdate.sessionExpiry)
+        expires: accountUpdate.sessionExpiry
       };
     }
     return {
