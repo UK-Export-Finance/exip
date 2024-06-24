@@ -7,7 +7,7 @@ import { ApplicationCompanyDifferentTradingAddress } from '../../../types';
  * 1) Create an array of "company different trading address" data - using the application's companyId.
  * 2) Create new "company different trading address" entires.
  * @param {Context} context: KeystoneJS context API
- * @param {<ArrayApplication>} applications: Applications
+ * @param {<Array<Application>>} applications: Applications
  * @returns {Promise<Array<ApplicationCompanyDifferentTradingAddress>>} Company different trading address entries
  */
 const createCompanyDifferentTradingAddress = async (

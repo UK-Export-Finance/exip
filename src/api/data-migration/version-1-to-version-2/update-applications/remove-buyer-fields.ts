@@ -14,31 +14,37 @@ const removeBuyerFields = async (connection: Connection) => {
       query: 'ALTER TABLE Buyer DROP COLUMN canContactBuyer',
       loggingMessage: 'Removing FIELD canContactBuyer from buyer table',
     }),
+
     executeSqlQuery({
       connection,
       query: 'ALTER TABLE Buyer DROP COLUMN contactEmail',
       loggingMessage: 'Removing FIELD contactEmail from buyer table',
     }),
+
     executeSqlQuery({
       connection,
       query: 'ALTER TABLE Buyer DROP COLUMN contactFirstName',
       loggingMessage: 'Removing FIELD contactFirstName from buyer table',
     }),
+
     executeSqlQuery({
       connection,
       query: 'ALTER TABLE Buyer DROP COLUMN contactLastName',
       loggingMessage: 'Removing FIELD contactLastName from buyer table',
     }),
+
     executeSqlQuery({
       connection,
       query: 'ALTER TABLE Buyer DROP COLUMN contactPosition',
       loggingMessage: 'Removing FIELD contactPosition from buyer table',
     }),
+
     executeSqlQuery({
       connection,
       query: 'ALTER TABLE Buyer DROP COLUMN exporterIsConnectedWithBuyer',
       loggingMessage: 'Removing FIELD exporterIsConnectedWithBuyer from buyer table',
     }),
+
     executeSqlQuery({
       connection,
       query: 'ALTER TABLE Buyer DROP COLUMN exporterHasTradedWithBuyer',

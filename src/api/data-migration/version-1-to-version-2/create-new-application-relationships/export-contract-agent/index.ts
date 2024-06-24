@@ -13,7 +13,7 @@ import { Application } from '../../../../types';
  * 4) Create agent service entries.
  * 5) Create an array of service ID "connect" relationships.
  * 6) Create agent service charge entries.
- * @param {Connection} connection: SQL database connection
+ * @param {Context} context: KeystoneJS context API
  * @param {Array<Application>} applications: Applications
  * @returns {Promise<Array<ApplicationExportContractAgent>>} Export contract agent entries
  */
