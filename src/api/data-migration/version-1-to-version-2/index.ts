@@ -3,11 +3,10 @@ import createTables from './create-tables';
 import updateAccounts from './update-accounts';
 import updateApplications from './update-applications';
 import createNewAccountStatusRelationships from './create-new-account-status-relationships';
+import removeAccountStatusFields from './update-accounts/remove-account-status-fields';
 import createNewApplicationRelationships from './create-new-application-relationships';
 import updateBuyers from './update-buyers';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
-
-// TODO: seems that we should only touch applications that do NOT have a submitted status
 
 /**
  * dataMigration
@@ -38,6 +37,8 @@ const dataMigration = async () => {
     console.info('✅ Obtained keystone context. Executing additional queries');
 
     await createNewAccountStatusRelationships(connection, context);
+
+    await removeAccountStatusFields(connection);
 
     await updateBuyers(connection, context);
 

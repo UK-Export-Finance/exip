@@ -1,8 +1,8 @@
 import { Connection } from 'mysql2/promise';
 import addStatusField from './add-status-field';
 import addStatusConstraint from './add-status-constraint';
-import removeIsVerifiedField from './remove-is-verified-field';
-import removeIsBlockedField from './remove-is-blocked-field';
+import addStatusUniqueKey from './add-status-unique-key';
+import addStatusKey from './add-status-key';
 
 /**
  * updateAccounts
@@ -18,9 +18,9 @@ const updateAccounts = async (connection: Connection) => {
   try {
     const tables = await Promise.all([
       addStatusField(connection),
+      addStatusUniqueKey(connection),
+      addStatusKey(connection),
       addStatusConstraint(connection),
-      removeIsVerifiedField(connection),
-      removeIsBlockedField(connection),
     ]);
 
     return tables;

@@ -38,6 +38,7 @@ const createNewAccountStatusRelationships = async (connection: Connection, conte
          */
         isVerified: Boolean(account.isVerified),
         isBlocked: Boolean(account.isBlocked),
+        updatedAt: account.updatedAt,
       };
 
       return mapped;
