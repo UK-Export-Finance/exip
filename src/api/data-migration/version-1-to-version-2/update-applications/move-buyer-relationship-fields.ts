@@ -2,8 +2,8 @@ import { Context } from '.keystone/types'; // eslint-disable-line
 import { ApplicationBuyerMvp } from '../../../types';
 
 /**
- * moveBuyerContactFields
- * Move MVP "buyers" fields into the new "No PDF" data model/structure.
+ * moveBuyerRelationshipFields
+ * Move MVP "buyer relationships" fields into the new "No PDF" data model/structure.
  * NOTE: The buyer data we receive is raw database data.
  * In the database, boolean fields are TINYINT/integer values.
  * The KeystoneJS context/GraphQL API expects these fields to be booleans.
@@ -14,29 +14,25 @@ import { ApplicationBuyerMvp } from '../../../types';
  * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Array<ApplicationBuyer>>} Updated buyers
  */
-const moveBuyerContactFields = async (buyers: Array<ApplicationBuyerMvp>, context: Context) => {
-  const mappedBuyerContactData = buyers.map((buyer: ApplicationBuyerMvp) => {
+const moveBuyerRelationshipFields = async (buyers: Array<ApplicationBuyerMvp>, context: Context) => {
+  const mappedBuyerRelationshipData = buyers.map((buyer: ApplicationBuyerMvp) => {
     const mapped = {
       application: {
         connect: {
           id: buyer.application,
         },
       },
-      canContactBuyer: Boolean(buyer.canContactBuyer),
-      contactEmail: buyer.contactEmail,
-      contactFirstName: buyer.contactFirstName,
-      contactLastName: buyer.contactLastName,
-      contactPosition: buyer.contactPosition,
+      exporterIsConnectedWithBuyer: Boolean(buyer.exporterIsConnectedWithBuyer),
     };
 
     return mapped;
   });
 
-  const created = await context.db.BuyerContact.createMany({
-    data: mappedBuyerContactData,
+  const created = await context.db.BuyerRelationship.createMany({
+    data: mappedBuyerRelationshipData,
   });
 
   return created;
 };
 
-export default moveBuyerContactFields;
+export default moveBuyerRelationshipFields;

@@ -1,6 +1,12 @@
 import { Connection } from 'mysql2/promise';
 import executeSqlQuery from '../execute-sql-query';
 
+/**
+ * addCompanyFields
+ * Add new company fields to the company table.
+ * @param {Connection} connection: SQL database connection
+ * @returns {Promise<Array<object>>} executeSqlQuery response
+ */
 const addCompanyFields = (connection: Connection) => {
   const queries = Promise.all([
     executeSqlQuery({

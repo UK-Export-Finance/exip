@@ -1,6 +1,12 @@
 import { Connection } from 'mysql2/promise';
 import executeSqlQuery from '../execute-sql-query';
 
+/**
+ * removeBuyerFields
+ * Remove old buyer fields from the buyer table.
+ * @param {Connection} connection: SQL database connection
+ * @returns {Promise<Array<object>>} executeSqlQuery response
+ */
 const removeBuyerFields = (connection: Connection) => {
   const queries = Promise.all([
     executeSqlQuery({

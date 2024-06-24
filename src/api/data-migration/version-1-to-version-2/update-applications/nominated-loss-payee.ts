@@ -1,6 +1,12 @@
 import { Connection } from 'mysql2/promise';
 import executeSqlQuery from '../execute-sql-query';
 
+/**
+ * addNominatedLossPayeeField
+ * Add a nominatedLossPayee field to the application table.
+ * @param {Connection} connection: SQL database connection
+ * @returns {Promise<Array<object>>} executeSqlQuery response
+ */
 export const addNominatedLossPayeeField = (connection: Connection) => {
   const loggingMessage = 'Adding FIELD nominatedLossPayee to application table';
 
@@ -11,6 +17,12 @@ export const addNominatedLossPayeeField = (connection: Connection) => {
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
+/**
+ * addNominatedLossPayeeConstraint
+ * Add a nominatedLossPayee constraint to the application table.
+ * @param {Connection} connection: SQL database connection
+ * @returns {Promise<Array<object>>} executeSqlQuery response
+ */
 export const addNominatedLossPayeeConstraint = (connection: Connection) => {
   const loggingMessage = 'Adding CONSTRAINT nominatedLossPayee to application table';
 

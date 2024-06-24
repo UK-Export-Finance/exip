@@ -1,7 +1,9 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import { Connection } from 'mysql2/promise';
 import getAllBuyers from '../get-all-buyers';
-import { moveBuyerContactFields, moveBuyerRelationshipFields, moveBuyerTradingHistoryFields } from '../update-applications/move-buyer-contact-fields';
+import moveBuyerContactFields from '../update-applications/move-buyer-contact-fields';
+import moveBuyerRelationshipFields from '../update-applications/move-buyer-relationship-fields';
+import moveBuyerTradingHistoryFields from '../update-applications/move-buyer-trading-history-fields';
 import removeBuyerFields from '../update-applications/remove-buyer-fields';
 
 /**
