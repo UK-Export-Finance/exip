@@ -37,7 +37,7 @@ context(
       cy.clickSubmitButton();
     });
 
-    it('redirects to `cannot apply` exit page', () => {
+    it(`should redirect to ${CONTRACT_TOO_SHORT}`, () => {
       const expectedUrl = `${baseUrl}${CONTRACT_TOO_SHORT}`;
 
       cy.assertUrl(expectedUrl);
