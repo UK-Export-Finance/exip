@@ -1,4 +1,4 @@
-import { FIELD_IDS, FIELD_VALUES, COMPANIES_HOUSE_NUMBER_COMPANY_WITH_SPECIAL_CHARACTER_NAME } from '../../constants';
+import { FIELD_IDS, FIELD_VALUES, COMPANIES_HOUSE_NUMBER_SPECIAL_CHARACTERS_NAME } from '../../constants';
 import { summaryList } from '../../pages/shared';
 import { FIELDS_ELIGIBILITY as FIELDS } from '../../content-strings/fields/insurance/eligibility';
 import application, { country } from '../../fixtures/application';
@@ -69,27 +69,27 @@ const checkYourAnswersEligibilitySummaryList = {
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
-  [COMPANY_NAME]: ({ differentCompany = false }) => {
+  [COMPANY_NAME]: ({ differentCompanyWithSpecialCharacters = false }) => {
     const fieldId = COMPANY_NAME;
 
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
 
     let expectedValue = COMPANY[COMPANY_NAME];
 
-    if (differentCompany) {
-      expectedValue = mockCompanies[COMPANIES_HOUSE_NUMBER_COMPANY_WITH_SPECIAL_CHARACTER_NAME][COMPANY_NAME];
+    if (differentCompanyWithSpecialCharacters) {
+      expectedValue = mockCompanies[COMPANIES_HOUSE_NUMBER_SPECIAL_CHARACTERS_NAME][COMPANY_NAME];
     }
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
-  [COMPANIES_HOUSE_NUMBER]: ({ differentCompany = false }) => {
+  [COMPANIES_HOUSE_NUMBER]: ({ differentCompanyWithSpecialCharacters = false }) => {
     const fieldId = COMPANIES_HOUSE_NUMBER;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
     let expectedValue = COMPANY[COMPANIES_HOUSE_NUMBER];
 
-    if (differentCompany) {
-      expectedValue = mockCompanies[COMPANIES_HOUSE_NUMBER_COMPANY_WITH_SPECIAL_CHARACTER_NAME][COMPANIES_HOUSE_NUMBER];
+    if (differentCompanyWithSpecialCharacters) {
+      expectedValue = mockCompanies[COMPANIES_HOUSE_NUMBER_SPECIAL_CHARACTERS_NAME][COMPANIES_HOUSE_NUMBER];
     }
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);

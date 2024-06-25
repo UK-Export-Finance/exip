@@ -1,6 +1,6 @@
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { COMPANIES_HOUSE_NUMBER_COMPANY_WITH_SPECIAL_CHARACTER_NAME } from '../../../../../../constants/examples';
+import { COMPANIES_HOUSE_NUMBER_SPECIAL_CHARACTERS_NAME } from '../../../../../../constants/examples';
 import checkSummaryList from '../../../../../../commands/insurance/check-your-answers-eligibility-summary-list';
 
 const {
@@ -20,16 +20,16 @@ context('Insurance - Eligibility - Check your answers - company name with specia
   beforeEach(() => {
     cy.navigateToUrl(START);
 
-    cy.completeAndSubmitAllInsuranceEligibilityAnswers({ companyNumber: COMPANIES_HOUSE_NUMBER_COMPANY_WITH_SPECIAL_CHARACTER_NAME });
+    cy.completeAndSubmitAllInsuranceEligibilityAnswers({ companyNumber: COMPANIES_HOUSE_NUMBER_SPECIAL_CHARACTERS_NAME });
 
     cy.assertUrl(url);
   });
 
   it(`should render a ${COMPANIES_HOUSE_NUMBER} summary list row`, () => {
-    checkSummaryList[COMPANIES_HOUSE_NUMBER]({ differentCompany: true });
+    checkSummaryList[COMPANIES_HOUSE_NUMBER]({ differentCompanyWithSpecialCharacters: true });
   });
 
   it(`should render a ${COMPANY_NAME} summary list row with special characters`, () => {
-    checkSummaryList[COMPANY_NAME]({ differentCompany: true });
+    checkSummaryList[COMPANY_NAME]({ differentCompanyWithSpecialCharacters: true });
   });
 });
