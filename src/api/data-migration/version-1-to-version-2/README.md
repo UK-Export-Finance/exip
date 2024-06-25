@@ -20,6 +20,7 @@ This directory contains source code for migrating version 1 of EXIP data into th
 - `ExportContract` table - 1x new field - `paymentTermsDescription`.
 - `Policy` table - 1x new relationship - `jointlyInsuredParty`.
 - `SectionReview` table - 1x new field - `exportContract`.
+- Various tables/columns - changes to VARCHAR values.
 
 ## Additionally, version 2 has verious new tables
 
