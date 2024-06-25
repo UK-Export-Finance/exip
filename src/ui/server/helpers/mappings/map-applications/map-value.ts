@@ -10,6 +10,7 @@ const {
   POLICY: {
     POLICY_TYPE,
     CONTRACT_POLICY: {
+      POLICY_CURRENCY_CODE,
       SINGLE: { TOTAL_CONTRACT_VALUE },
     },
     EXPORT_VALUE: {
@@ -30,12 +31,14 @@ const mapValue = (application: Application) => {
 
     const policyType = policy[POLICY_TYPE];
 
+    const currencyCode = application.policy[POLICY_CURRENCY_CODE] || GBP_CURRENCY_CODE;
+
     if (isSinglePolicyType(policyType) && objectHasProperty(policy, TOTAL_CONTRACT_VALUE)) {
-      return formatCurrency(policy[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE);
+      return formatCurrency(policy[TOTAL_CONTRACT_VALUE], currencyCode);
     }
 
     if (isMultiplePolicyType(policyType) && objectHasProperty(policy, MAXIMUM_BUYER_WILL_OWE)) {
-      return formatCurrency(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE);
+      return formatCurrency(policy[MAXIMUM_BUYER_WILL_OWE], currencyCode);
     }
   }
 

@@ -16,10 +16,7 @@ const { TABLE_HEADERS } = CONTENT_STRINGS;
 
 const {
   YOUR_BUYER: {
-    COMPANY_OR_ORGANISATION: {
-      COUNTRY,
-      NAME,
-    },
+    COMPANY_OR_ORGANISATION: { COUNTRY, NAME },
   },
   POLICY: {
     CONTRACT_POLICY: {
@@ -31,7 +28,7 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-context('Insurance - Dashboard - populated application', () => {
+context('Insurance - Dashboard - populated application - GBP currency', () => {
   const baseUrl = Cypress.config('baseUrl');
   let referenceNumber;
   let url;
