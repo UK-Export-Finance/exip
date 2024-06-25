@@ -43,6 +43,7 @@ export const mockSinglePolicy = {
   policyType: APPLICATION.POLICY_TYPE.SINGLE,
   contractCompletionDate: new Date(date.setMonth(month + 3)),
   totalValueOfContract: 1500,
+  needPreCreditPeriodCover: false,
 };
 
 export const mockMultiplePolicy = {
