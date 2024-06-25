@@ -2,7 +2,7 @@ import dashboardPage from '../../../../../pages/insurance/dashboard';
 import partials from '../../../../../partials';
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES, FIELD_VALUES } from '../../../../../constants';
-import { INSURANCE_FIELD_IDS } from '../../../../../constants/field-ids/insurance';
+import { POLICY as FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
 import application from '../../../../../fixtures/application';
 import { NON_STANDARD_CURRENCY_CODE } from '../../../../../fixtures/currencies';
 import formatCurrency from '../../../../../helpers/format-currency';
@@ -16,18 +16,13 @@ const CONTENT_STRINGS = PAGES.INSURANCE.DASHBOARD;
 const { TABLE_HEADERS } = CONTENT_STRINGS;
 
 const {
-  YOUR_BUYER: {
-    COMPANY_OR_ORGANISATION: { COUNTRY, NAME },
+  CONTRACT_POLICY: {
+    SINGLE: { TOTAL_CONTRACT_VALUE },
   },
-  POLICY: {
-    CONTRACT_POLICY: {
-      SINGLE: { TOTAL_CONTRACT_VALUE },
-    },
-    EXPORT_VALUE: {
-      MULTIPLE: { MAXIMUM_BUYER_WILL_OWE },
-    },
+  EXPORT_VALUE: {
+    MULTIPLE: { MAXIMUM_BUYER_WILL_OWE },
   },
-} = INSURANCE_FIELD_IDS;
+} = FIELD_IDS;
 
 context('Insurance - Dashboard - populated application - non GBP currency', () => {
   const baseUrl = Cypress.config('baseUrl');
@@ -52,41 +47,6 @@ context('Insurance - Dashboard - populated application - non GBP currency', () =
 
   after(() => {
     cy.deleteApplication(referenceNumber);
-  });
-
-  describe('when completing the `your buyer - company or organisation` form', () => {
-    before(() => {
-      cy.navigateToUrl(url);
-
-      // go to application
-      table.body.row(referenceNumber).submittedLink().click();
-
-      // go to the 'your buyer' section via task list
-      cy.startInsuranceYourBuyerSection({});
-
-      // complete and submit the form
-      cy.completeAndSubmitCompanyOrOrganisationForm({});
-    });
-
-    beforeEach(() => {
-      cy.navigateToUrl(url);
-
-      partials.header.navigation.applications().click();
-    });
-
-    it(`should render a value in the ${TABLE_HEADERS.BUYER_LOCATION} cell`, () => {
-      const cell = table.body.row(referenceNumber).buyerLocation();
-
-      const expected = application.BUYER[COUNTRY];
-      cy.checkText(cell, expected);
-    });
-
-    it(`should render a value in the ${TABLE_HEADERS.BUYER_NAME} cell`, () => {
-      const cell = table.body.row(referenceNumber).buyerName();
-
-      const expected = application.BUYER[NAME];
-      cy.checkText(cell, expected);
-    });
   });
 
   describe('when completing the `policy - tell us about your policy` form - single policy type', () => {
@@ -148,18 +108,6 @@ context('Insurance - Dashboard - populated application - non GBP currency', () =
       const expected = formatCurrency(application.POLICY[MAXIMUM_BUYER_WILL_OWE], NON_STANDARD_CURRENCY_CODE);
 
       cy.checkText(cell, expected);
-    });
-  });
-
-  describe('when going back to the dashboard', () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
-    });
-
-    it('should render `status` cell with an `in progress` status tag', () => {
-      const selector = table.body.row(referenceNumber).status;
-
-      cy.checkTaskStatusInProgress(selector);
     });
   });
 });
