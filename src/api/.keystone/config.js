@@ -6988,9 +6988,9 @@ var map_multiple_contract_policy_default = mapMultipleContractPolicy;
 var { FIELDS: FIELDS10 } = XLSX;
 var { NEED_PRE_CREDIT_PERIOD: NEED_PRE_CREDIT_PERIOD3, CREDIT_PERIOD_WITH_BUYER: CREDIT_PERIOD_WITH_BUYER3 } = policy_default;
 var mapCreditPeriod = (policy) => {
-  const needCreditPrePeriod = policy[NEED_PRE_CREDIT_PERIOD3];
-  let mapped = [xlsx_row_default(String(FIELDS10[NEED_PRE_CREDIT_PERIOD3]), map_yes_no_field_default({ answer: needCreditPrePeriod }))];
-  if (needCreditPrePeriod) {
+  const needPreCreditPeriod = policy[NEED_PRE_CREDIT_PERIOD3];
+  let mapped = [xlsx_row_default(String(FIELDS10[NEED_PRE_CREDIT_PERIOD3]), map_yes_no_field_default({ answer: needPreCreditPeriod }))];
+  if (needPreCreditPeriod) {
     mapped = [...mapped, xlsx_row_default(String(FIELDS10[CREDIT_PERIOD_WITH_BUYER3]), policy[CREDIT_PERIOD_WITH_BUYER3])];
   }
   return mapped;
