@@ -14,7 +14,7 @@
   "author": "UK Export Finance",
   "scripts": {
     "build": "NODE_ENV=dev keystone build --no-ui",
-    "data-migration": "npx ts-node --transpile-only  ./data-migration/version-1-to-version-2/index.ts",
+    "data-migration": "npx ts-node --transpile-only ./data-migration/version-1-to-version-2/index.ts",
     "dev": "keystone dev --no-ui",
     "documentation": "npx spectaql -t ./documentation/output ./documentation/config.yml",
     "lint": "eslint ./",
