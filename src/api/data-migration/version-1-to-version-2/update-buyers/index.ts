@@ -4,6 +4,7 @@ import getAllBuyers from '../get-all-buyers';
 import moveBuyerContactFields from '../update-applications/move-buyer-contact-fields';
 import moveBuyerRelationshipFields from '../update-applications/move-buyer-relationship-fields';
 import moveBuyerTradingHistoryFields from '../update-applications/move-buyer-trading-history-fields';
+import updateBuyerAddressVarChar from '../update-applications/update-buyer-address-var-char';
 import removeBuyerFields from '../update-applications/remove-buyer-fields';
 import updateBuyerRelationshipIds from './update-buyer-relationship-ids';
 
@@ -33,6 +34,8 @@ const updateBuyers = async (connection: Connection, context: Context) => {
       buyerRelationships,
       buyerTradingHistories,
     });
+
+    await updateBuyerAddressVarChar(connection);
 
     await removeBuyerFields(connection);
 

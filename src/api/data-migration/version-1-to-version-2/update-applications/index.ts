@@ -7,6 +7,9 @@ import addBusinessFields from './add-business-fields';
 import addBrokerFullAddressField from './add-broker-full-address-field';
 import addEligibilityHasEndBuyerField from './add-eligibility-has-end-buyer-field';
 import addDeclarationsExportContractField from './add-declarations-export-contract-field';
+import updateExportContractFinalDestinationCountryCodeVarChar from './update-export-contract-final-destination-country-code-var-char';
+import updatePolicyCurrencyCodeVarChar from './update-policy-currency-code-var-char';
+import updatePolicyContactPositionCodeVarChar from './update-policy-contact-position-var-char';
 import updateApplicationVersion from './update-application-version';
 
 /**
@@ -31,6 +34,9 @@ const updateApplications = async (connection: Connection) => {
       addBrokerFullAddressField(connection),
       addEligibilityHasEndBuyerField(connection),
       addDeclarationsExportContractField(connection),
+      updateExportContractFinalDestinationCountryCodeVarChar(connection),
+      updatePolicyCurrencyCodeVarChar(connection),
+      updatePolicyContactPositionCodeVarChar(connection),
       updateApplicationVersion(connection),
     ]);
 
