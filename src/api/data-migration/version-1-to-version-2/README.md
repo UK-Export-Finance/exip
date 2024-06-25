@@ -22,7 +22,7 @@ This directory contains source code for migrating version 1 of EXIP data into th
 - `SectionReview` table - 1x new field - `exportContract`.
 - Various tables/columns - changes to VARCHAR values.
 
-## Additionally, version 2 has verious new tables
+## Additionally, version 2 has various new tables
 
 - AccountStatus
 - BuyerContact
@@ -90,7 +90,7 @@ Due to the nature of GraphQL and KeystoneJS - the version 1 and version 2 data m
 
 If we try to run the version 2 API, with version 1 data, things will not work.
 
-Similarily, if we migrate the database and the API is running on version 2 - any applications created with the version 1 data model need to be migrated to the new version 2 model - hence why we need migration logic.
+Similarly, if we migrate the database and the API is running on version 2 - any applications created with the version 1 data model need to be migrated to the new version 2 model - hence why we need migration logic.
 
 This means that if a user has completed e.g 3 out of 5 sections of an application and then we migrate to version 2, the user's application will be migrated from version 1 (MVP) to version 2 ("No PDF"). Depending on the previously submitted answers, some sections may now be marked as incomplete - because version 2 has different or additional requirements, compared to version 1 (MVP).
 
