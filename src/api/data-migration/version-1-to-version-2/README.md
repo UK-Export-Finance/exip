@@ -69,4 +69,30 @@ The migration should successfully do the following:
 9. Create new application relationships.
 10. Exit the process.
 
+## SQL and KeystoneJS queries
+
+The data migration uses a combination of raw SQL queries and KeystoneJS context queries.
+
+In many instances, we need to obtain certain pieces of data that are currently stored in the database, and move these to another place.
+
+If the database and the KeystoneJS schema are out of sync (as it would be prior to running the migration script), KeystoneJS will not return all the data. For example, if field X is in the database, but it's been moved in the KeystoneJS/GraphQL schema, the GraphQL query will simply not return field X, because it is no longer in the schema.
+
+Therefore, it is not possible to use KeystoneJS context queries to obtain version 1 data in the database, whilst executing data migration.
+
+When KeystoneJS context queries cannot be used, we use the `mysql2` NPM package to execute raw database queries and create new tables, fields etc.
+
+KeystoneJS context queries can however be used to obtain data that has _not_ changed, but most importantly, the KeystoneJS context queries can be used to very easily create new relationships. This is used extensively in various migration functions.
+
+## What happens to applications that are in progress :microscope:
+
+Due to the nature of GraphQL and KeystoneJS - the version 1 and version 2 data models are essentially "out of sync".
+
+If we try to run the version 2 API, with version 1 data, things will not work.
+
+Similarily, if we migrate the database and the API is running on version 2 - any applications created with the version 1 data model need to be migrated to the new version 2 model - hence why we need migration logic.
+
+This means that if a user has completed e.g 3 out of 5 sections of an application and then we migrate to version 2, the user's application will be migrated from version 1 (MVP) to version 2 ("No PDF"). Depending on the previously submitted answers, some sections may now be marked as incomplete - because version 2 has different or additional requirements, compared to version 1 (MVP).
+
+This is an intentional behaviour, so that a user can continue to complete and submit an application. The alternative to this is to ask a user to start again, which is not recommended.
+
 If you have any specific questions or need further guidance related to this data migration or the API, please feel free to ask.
