@@ -96,7 +96,7 @@ describe('controllers/insurance/account/create/verify-email-expired-link', () =>
 
       expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledTimes(1);
 
-      const expectedUrlOrigin = `https://${req.headers.origin}`;
+      const expectedUrlOrigin = req.headers.origin;
 
       expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(expectedUrlOrigin, sanitisedId);
     });

@@ -69,7 +69,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const urlOrigin = `https://${req.headers.origin}`;
+    const urlOrigin = req.headers.origin;
 
     const sanitisedId = String(sanitiseValue({ value: id }));
 
