@@ -19,10 +19,7 @@ const {
  * @param {Boolean} agentChargeMethodFixedSum: Agent charge method is "fixed sum"
  * @param {Boolean} agentChargeMethodPercentage: Agent charge method is "percentage"
  */
-const assertFullyPopulatedExportContractSummaryListRows = ({
-  agentChargeMethodFixedSum,
-  agentChargeMethodPercentage,
-}) => {
+const assertFullyPopulatedExportContractSummaryListRows = ({ agentChargeMethodFixedSum, agentChargeMethodPercentage }) => {
   assertGenericExportContractSummaryListRows();
 
   it(`should render a ${DESCRIPTION} summary list row`, () => {
@@ -30,7 +27,7 @@ const assertFullyPopulatedExportContractSummaryListRows = ({
   });
 
   it(`should render a ${FINAL_DESTINATION} summary list row`, () => {
-    checkSummaryList[FINAL_DESTINATION]();
+    checkSummaryList[FINAL_DESTINATION]({ shouldRender: true });
   });
 
   it(`should render a ${PAYMENT_TERMS_DESCRIPTION} summary list row`, () => {

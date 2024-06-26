@@ -13,43 +13,47 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Change your answers - Export contract - Summary list - As an exporter, I want to be able to review my input for the export contract again, So that I can do a final review of the information I previously input before submitting my application - application over total contract value threshold, private insurance attempt, using an agent, agent is chraging - percentage method', () => {
-  let referenceNumber;
-  let url;
+context(
+  'Insurance - Change your answers - Export contract - Summary list - As an exporter, I want to be able to review my input for the export contract again, So that I can do a final review of the information I previously input before submitting my application - application over total contract value threshold, private insurance attempt, using an agent, agent is chraging - percentage method',
+  () => {
+    let referenceNumber;
+    let url;
 
-  before(() => {
-    cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
+    before(() => {
+      cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({
-        referenceNumber,
-        totalContractValueOverThreshold: true,
-        attemptedPrivateMarketCover: true,
-        isUsingAgent: true,
-        agentIsCharging: true,
-        agentChargeMethodPercentage: true,
+        cy.completePrepareApplicationSinglePolicyType({
+          referenceNumber,
+          totalContractValueOverThreshold: true,
+          attemptedPrivateMarketCover: true,
+          isUsingAgent: true,
+          agentIsCharging: true,
+          agentChargeMethodPercentage: true,
+          finalDestinationKnown: true,
+        });
+
+        task.link().click();
+
+        // To get past previous "Check your answers" pages
+        cy.completeAndSubmitMultipleCheckYourAnswers({ count: 3 });
+
+        url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT}`;
       });
-
-      task.link().click();
-
-      // To get past previous "Check your answers" pages
-      cy.completeAndSubmitMultipleCheckYourAnswers({ count: 3 });
-
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT}`;
     });
-  });
 
-  beforeEach(() => {
-    cy.saveSession();
+    beforeEach(() => {
+      cy.saveSession();
 
-    cy.navigateToUrl(url);
-  });
+      cy.navigateToUrl(url);
+    });
 
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
+    after(() => {
+      cy.deleteApplication(referenceNumber);
+    });
 
-  assertFullyPopulatedExportContractSummaryListRows({
-    agentChargeMethodPercentage: true,
-  });
-});
+    assertFullyPopulatedExportContractSummaryListRows({
+      agentChargeMethodPercentage: true,
+    });
+  },
+);
