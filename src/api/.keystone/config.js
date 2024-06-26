@@ -1591,6 +1591,7 @@ var application = {
       if (file) {
         const fileBuffer = Buffer.from(file);
         const response = await callNotify(templateId, emailAddress, variables, fileBuffer);
+        await file_system_default.unlink(filePath);
         return response;
       }
       throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
