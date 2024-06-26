@@ -1,5 +1,6 @@
 import {
   COMPANIES_HOUSE_NUMBER,
+  COMPANIES_HOUSE_NUMBER_SPECIAL_CHARACTERS_NAME,
   COMPANIES_HOUSE_NUMBER_NO_SIC_CODE,
   COMPANIES_HOUSE_NUMBER_MULTIPLE_SIC_CODES,
   COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE,
@@ -38,12 +39,18 @@ const baseCompany = {
   [FINANCIAL_YEAR_END_DATE]: '2023-07-31T00:00:00.000Z',
 };
 
+const companyNameSpecialCharacter = {
+  [COMPANY_NUMBER]: COMPANIES_HOUSE_NUMBER_SPECIAL_CHARACTERS_NAME,
+  [COMPANY_NAME]: 'STEVENS, FOX & CO. LIMITED',
+};
+
 const mockCompanies = {
   [COMPANIES_HOUSE_NUMBER]: {
     ...baseCompany,
     companyNumber: COMPANIES_HOUSE_NUMBER,
     [FINANCIAL_YEAR_END_DATE]: baseCompany[FINANCIAL_YEAR_END_DATE],
   },
+  [COMPANIES_HOUSE_NUMBER_SPECIAL_CHARACTERS_NAME]: companyNameSpecialCharacter,
   [COMPANIES_HOUSE_NUMBER_NO_SIC_CODE]: {
     ...baseCompany,
     companyNumber: COMPANIES_HOUSE_NUMBER_NO_SIC_CODE,
@@ -54,12 +61,7 @@ const mockCompanies = {
     ...baseCompany,
     companyNumber: COMPANIES_HOUSE_NUMBER_MULTIPLE_SIC_CODES,
     [FINANCIAL_YEAR_END_DATE]: baseCompany[FINANCIAL_YEAR_END_DATE],
-    sicCodes: [
-      mockSicCodes[1].code,
-      mockSicCodes[2].code,
-      mockSicCodes[3].code,
-      mockSicCodes[4].code,
-    ],
+    sicCodes: [mockSicCodes[1].code, mockSicCodes[2].code, mockSicCodes[3].code, mockSicCodes[4].code],
     industrySectorNames: [
       mockSicCodes[1][INDUSTRY_SECTOR_NAME],
       mockSicCodes[2][INDUSTRY_SECTOR_NAME],
