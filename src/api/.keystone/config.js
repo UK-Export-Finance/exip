@@ -7211,7 +7211,7 @@ var {
 var { FIELDS: FIELDS18 } = XLSX;
 var mapFinancialYearEndDate = (company) => {
   if (company[FINANCIAL_YEAR_END_DATE2]) {
-    return format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM");
+    return format_date_default(company[FINANCIAL_YEAR_END_DATE2], DATE_FORMAT.XLSX);
   }
   return FIELDS18.NO_FINANCIAL_YEAR_END_DATE;
 };
