@@ -24,7 +24,7 @@ const {
   },
 } = FIELD_IDS;
 
-context('Insurance - Dashboard - populated application - non GBP currency', () => {
+context('Insurance - Dashboard - populated application - alternative (non GBP) currency', () => {
   const baseUrl = Cypress.config('baseUrl');
   let referenceNumber;
   let url;
