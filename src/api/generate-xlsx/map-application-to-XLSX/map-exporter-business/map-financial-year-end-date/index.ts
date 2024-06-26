@@ -1,3 +1,4 @@
+import { DATE_FORMAT } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import { XLSX } from '../../../../content-strings';
 import formatDate from '../../../../helpers/format-date';
@@ -18,7 +19,7 @@ const { FIELDS } = XLSX;
  */
 const mapFinancialYearEndDate = (company: ApplicationCompany) => {
   if (company[FINANCIAL_YEAR_END_DATE]) {
-    return formatDate(company[FINANCIAL_YEAR_END_DATE], 'd MMMM');
+    return formatDate(company[FINANCIAL_YEAR_END_DATE], DATE_FORMAT.XLSX);
   }
 
   return FIELDS.NO_FINANCIAL_YEAR_END_DATE;
