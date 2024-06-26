@@ -1,7 +1,10 @@
 import { companyDetails } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
 import {
-  body, field, yesRadioInput, noRadioInput,
+  body,
+  field,
+  yesRadioInput,
+  noRadioInput,
 } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -18,7 +21,11 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS;
 const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: {
-      TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_NAME,
+      TRADING_ADDRESS,
+      HAS_DIFFERENT_TRADING_NAME,
+      WEBSITE,
+      PHONE_NUMBER,
+      DIFFERENT_TRADING_NAME,
     },
   },
 } = INSURANCE_FIELD_IDS;
