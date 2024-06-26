@@ -15,7 +15,10 @@ const {
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
   AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
   AGENT_CHARGES: {
-    FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE,
+    FIXED_SUM_AMOUNT,
+    FIXED_SUM_CURRENCY_CODE,
+    PERCENTAGE_CHARGE,
+    PAYABLE_COUNTRY_CODE,
   },
 } = FIELD_IDS;
 
@@ -23,7 +26,7 @@ const {
  * checkExportContractSummaryList
  * "export contract" summary list assertions.
  */
-const checkExportContractSummaryList = ({
+const checkExportContractSummaryList = {
   [DESCRIPTION]: () => {
     const fieldId = DESCRIPTION;
 
@@ -33,16 +36,26 @@ const checkExportContractSummaryList = ({
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
-  [FINAL_DESTINATION]: () => {
+  [FINAL_DESTINATION]: ({ isKnown = false }) => {
     const fieldId = FINAL_DESTINATION;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.ABOUT_GOODS_OR_SERVICES);
 
-    const country = COUNTRIES.find((c) => c.ISO_CODE === application.EXPORT_CONTRACT[fieldId]);
+    let expectedValue;
 
-    const expectedValue = country.NAME;
+    if (isKnown) {
+      const country = COUNTRIES.find((c) => c.ISO_CODE === application.EXPORT_CONTRACT[fieldId]);
 
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+      expectedValue = country.NAME;
+
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    } else {
+      const fieldStrings = FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].SUMMARY;
+
+      const expectedLinkText = `${fieldStrings.TITLE} (${fieldStrings.FORM_TITLE})`;
+
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedLinkText);
+    }
   },
   [PAYMENT_TERMS_DESCRIPTION]: () => {
     const fieldId = PAYMENT_TERMS_DESCRIPTION;
@@ -51,19 +64,13 @@ const checkExportContractSummaryList = ({
 
     const row = summaryList.field(fieldId);
 
-    cy.checkText(
-      row.key(),
-      expectedKey,
-    );
+    cy.checkText(row.key(), expectedKey);
 
     row.value().contains(EXPECTED_SINGLE_LINE_STRING);
 
     const expectedLineBreaks = 3;
 
-    cy.assertLength(
-      row.valueHtmlLineBreak(),
-      expectedLineBreaks,
-    );
+    cy.assertLength(row.valueHtmlLineBreak(), expectedLineBreaks);
   },
   [ATTEMPTED]: ({ isYes = false, shouldRender = false }) => {
     const fieldId = ATTEMPTED;
@@ -92,19 +99,13 @@ const checkExportContractSummaryList = ({
 
       const row = summaryList.field(fieldId);
 
-      cy.checkText(
-        row.key(),
-        expectedKey,
-      );
+      cy.checkText(row.key(), expectedKey);
 
       row.value().contains(EXPECTED_SINGLE_LINE_STRING);
 
       const expectedLineBreaks = 3;
 
-      cy.assertLength(
-        row.valueHtmlLineBreak(),
-        expectedLineBreaks,
-      );
+      cy.assertLength(row.valueHtmlLineBreak(), expectedLineBreaks);
     } else {
       cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
     }
@@ -145,19 +146,13 @@ const checkExportContractSummaryList = ({
 
       const row = summaryList.field(fieldId);
 
-      cy.checkText(
-        row.key(),
-        expectedKey,
-      );
+      cy.checkText(row.key(), expectedKey);
 
       row.value().contains(EXPECTED_SINGLE_LINE_STRING);
 
       const expectedLineBreaks = 3;
 
-      cy.assertLength(
-        row.valueHtmlLineBreak(),
-        expectedLineBreaks,
-      );
+      cy.assertLength(row.valueHtmlLineBreak(), expectedLineBreaks);
     } else {
       cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
     }
@@ -183,10 +178,7 @@ const checkExportContractSummaryList = ({
 
       const row = summaryList.field(fieldId);
 
-      cy.checkText(
-        row.key(),
-        expectedKey,
-      );
+      cy.checkText(row.key(), expectedKey);
 
       row.value().contains(EXPECTED_SINGLE_LINE_STRING);
 
@@ -196,10 +188,7 @@ const checkExportContractSummaryList = ({
 
       const expectedLineBreaks = 3;
 
-      cy.assertLength(
-        row.valueHtmlLineBreak(),
-        expectedLineBreaks,
-      );
+      cy.assertLength(row.valueHtmlLineBreak(), expectedLineBreaks);
     } else {
       cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
     }
@@ -264,6 +253,6 @@ const checkExportContractSummaryList = ({
       cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
     }
   },
-});
+};
 
 export default checkExportContractSummaryList;
