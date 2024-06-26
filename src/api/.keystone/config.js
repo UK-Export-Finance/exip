@@ -944,10 +944,10 @@ var XLSX_ROW_INDEXES = (application2) => {
     indexes.TITLES.EXPORT_CONTRACT += 3;
   }
   if (needPreCreditPeriodCover) {
-    indexes.BROKER_ADDRESS += 1;
+    indexes.BROKER_ADDRESS += 2;
     indexes.BUYER_ADDRESS += 1;
     indexes.LOSS_PAYEE_ADDRESS += 1;
-    indexes.TITLES.BUYER += 3;
+    indexes.TITLES.BUYER += 1;
     indexes.TITLES.DECLARATIONS += 1;
     indexes.TITLES.EXPORT_CONTRACT += 1;
   }
@@ -975,6 +975,9 @@ var XLSX_ROW_INDEXES = (application2) => {
   if (isUsingAgent) {
     indexes.TITLES.DECLARATIONS += 5;
     indexes.AGENT_ADDRESS = 75;
+    if (needPreCreditPeriodCover) {
+      indexes.AGENT_ADDRESS += 1;
+    }
     if (isMultiplePolicy) {
       indexes.AGENT_ADDRESS += 1;
       indexes.TITLES.DECLARATIONS += 1;

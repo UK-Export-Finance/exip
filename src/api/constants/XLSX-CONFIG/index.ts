@@ -126,11 +126,11 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   }
 
   if (needPreCreditPeriodCover) {
-    indexes.BROKER_ADDRESS += 1;
+    indexes.BROKER_ADDRESS += 2;
     indexes.BUYER_ADDRESS += 1;
     indexes.LOSS_PAYEE_ADDRESS += 1;
 
-    indexes.TITLES.BUYER += 3;
+    indexes.TITLES.BUYER += 1;
     indexes.TITLES.DECLARATIONS += 1;
     indexes.TITLES.EXPORT_CONTRACT += 1;
   }
@@ -173,6 +173,10 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   if (isUsingAgent) {
     indexes.TITLES.DECLARATIONS += 5;
     indexes.AGENT_ADDRESS = 75;
+
+    if (needPreCreditPeriodCover) {
+      indexes.AGENT_ADDRESS += 1;
+    }
 
     if (isMultiplePolicy) {
       indexes.AGENT_ADDRESS += 1;
