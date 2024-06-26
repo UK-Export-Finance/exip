@@ -18,82 +18,85 @@ const newCompanyNumber = COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE;
 const newCompanyName = mockCompanies[COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE][COMPANY_NAME];
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Eligibility - Change your answers - Companies house search - As an exporter, I want to change my answers to the eligibility Companies house search section', () => {
-  const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
+context(
+  'Insurance - Eligibility - Change your answers - Companies house search - As an exporter, I want to change my answers to the eligibility Companies house search section',
+  () => {
+    const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
-  before(() => {
-    cy.navigateToUrl(START);
+    before(() => {
+      cy.navigateToUrl(START);
 
-    cy.completeAndSubmitAllInsuranceEligibilityAnswers();
+      cy.completeAndSubmitAllInsuranceEligibilityAnswers({});
 
-    cy.assertUrl(url);
-  });
-
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  const fieldId = COMPANIES_HOUSE_NUMBER_FIELD_ID;
-
-  describe('when clicking the `change` link', () => {
-    it(`should redirect to ${ENTER_COMPANIES_HOUSE_NUMBER_CHANGE}`, () => {
-      cy.navigateToUrl(url);
-
-      summaryList.field(fieldId).changeLink().click();
-
-      cy.assertChangeAnswersPageUrl({ route: ENTER_COMPANIES_HOUSE_NUMBER_CHANGE, fieldId, isInsuranceEligibility: true });
+      cy.assertUrl(url);
     });
-  });
 
-  describe('form submission without changing the answer', () => {
     beforeEach(() => {
-      cy.navigateToUrl(url);
-
-      summaryList.field(fieldId).changeLink().click();
-
-      cy.clickSubmitButton();
+      cy.saveSession();
     });
 
-    it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
-      cy.assertChangeAnswersPageUrl({ route: COMPANY_DETAILS_CHANGE, fieldId, isInsuranceEligibility: true });
+    const fieldId = COMPANIES_HOUSE_NUMBER_FIELD_ID;
+
+    describe('when clicking the `change` link', () => {
+      it(`should redirect to ${ENTER_COMPANIES_HOUSE_NUMBER_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+
+        summaryList.field(fieldId).changeLink().click();
+
+        cy.assertChangeAnswersPageUrl({ route: ENTER_COMPANIES_HOUSE_NUMBER_CHANGE, fieldId, isInsuranceEligibility: true });
+      });
     });
 
-    it(`should redirect to ${CHECK_YOUR_ANSWERS} when company details continue button pressed`, () => {
-      cy.submitAndAssertChangeAnswersPageUrl({ route: CHECK_YOUR_ANSWERS, fieldId, isInsuranceEligibility: true });
+    describe('form submission without changing the answer', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList.field(fieldId).changeLink().click();
+
+        cy.clickSubmitButton();
+      });
+
+      it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
+        cy.assertChangeAnswersPageUrl({ route: COMPANY_DETAILS_CHANGE, fieldId, isInsuranceEligibility: true });
+      });
+
+      it(`should redirect to ${CHECK_YOUR_ANSWERS} when company details continue button pressed`, () => {
+        cy.submitAndAssertChangeAnswersPageUrl({ route: CHECK_YOUR_ANSWERS, fieldId, isInsuranceEligibility: true });
+      });
+
+      it(`should render the original answer for ${COMPANIES_HOUSE_NUMBER_FIELD_ID}`, () => {
+        cy.submitAndAssertSummaryListRowValue(summaryList, fieldId, oldCompanyNumber);
+      });
+
+      it(`should render the original answer for ${COMPANY_NAME}`, () => {
+        cy.submitAndAssertSummaryListRowValue(summaryList, COMPANY_NAME, oldCompanyName);
+      });
     });
 
-    it(`should render the original answer for ${COMPANIES_HOUSE_NUMBER_FIELD_ID}`, () => {
-      cy.submitAndAssertSummaryListRowValue(summaryList, fieldId, oldCompanyNumber);
+    describe('form submission with a new answer', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList.field(fieldId).changeLink().click();
+
+        cy.completeAndSubmitCompaniesHouseSearchForm({ companyNumber: newCompanyNumber });
+      });
+
+      it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
+        cy.assertChangeAnswersPageUrl({ route: COMPANY_DETAILS_CHANGE, fieldId, isInsuranceEligibility: true });
+      });
+
+      it(`should redirect to ${CHECK_YOUR_ANSWERS} when company details continue button pressed`, () => {
+        cy.submitAndAssertChangeAnswersPageUrl({ route: CHECK_YOUR_ANSWERS, fieldId, isInsuranceEligibility: true });
+      });
+
+      it(`should render the new answer for ${COMPANIES_HOUSE_NUMBER_FIELD_ID}`, () => {
+        cy.submitAndAssertSummaryListRowValue(summaryList, fieldId, newCompanyNumber);
+      });
+
+      it(`should render the new answer for ${COMPANY_NAME}`, () => {
+        cy.submitAndAssertSummaryListRowValue(summaryList, COMPANY_NAME, newCompanyName);
+      });
     });
-
-    it(`should render the original answer for ${COMPANY_NAME}`, () => {
-      cy.submitAndAssertSummaryListRowValue(summaryList, COMPANY_NAME, oldCompanyName);
-    });
-  });
-
-  describe('form submission with a new answer', () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
-
-      summaryList.field(fieldId).changeLink().click();
-
-      cy.completeAndSubmitCompaniesHouseSearchForm({ companyNumber: newCompanyNumber });
-    });
-
-    it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
-      cy.assertChangeAnswersPageUrl({ route: COMPANY_DETAILS_CHANGE, fieldId, isInsuranceEligibility: true });
-    });
-
-    it(`should redirect to ${CHECK_YOUR_ANSWERS} when company details continue button pressed`, () => {
-      cy.submitAndAssertChangeAnswersPageUrl({ route: CHECK_YOUR_ANSWERS, fieldId, isInsuranceEligibility: true });
-    });
-
-    it(`should render the new answer for ${COMPANIES_HOUSE_NUMBER_FIELD_ID}`, () => {
-      cy.submitAndAssertSummaryListRowValue(summaryList, fieldId, newCompanyNumber);
-    });
-
-    it(`should render the new answer for ${COMPANY_NAME}`, () => {
-      cy.submitAndAssertSummaryListRowValue(summaryList, COMPANY_NAME, newCompanyName);
-    });
-  });
-});
+  },
+);
