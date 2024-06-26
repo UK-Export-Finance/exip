@@ -17,6 +17,7 @@ const applicationsQuery = gql`
         companyOrOrganisationName
       }
       policy {
+        policyCurrencyCode
         policyType
         totalValueOfContract
         maximumBuyerWillOwe

@@ -17,7 +17,7 @@ context('Insurance - Eligibility - Change your answers - End buyer - As an expor
   before(() => {
     cy.navigateToUrl(START);
 
-    cy.completeAndSubmitAllInsuranceEligibilityAnswers();
+    cy.completeAndSubmitAllInsuranceEligibilityAnswers({});
 
     cy.assertUrl(url);
   });

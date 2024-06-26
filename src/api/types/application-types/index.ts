@@ -232,6 +232,7 @@ export interface ApplicationPolicy extends Relationship {
   requestedStartDate: Date;
   contractCompletionDate: Date;
   totalValueOfContract?: number;
+  needPreCreditPeriodCover?: boolean;
   creditPeriodWithBuyer?: string;
   policyCurrencyCode?: string;
   totalMonthsOfCover?: number;

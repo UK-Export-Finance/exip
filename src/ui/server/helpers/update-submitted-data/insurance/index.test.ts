@@ -16,10 +16,35 @@ describe('server/helpers/update-submitted-data/insurance', () => {
 
         const result = updateSubmittedData(mockFormData, mockExistingData);
 
-        const expected = sanitiseData({
+        const sanitisedFormData = sanitiseData(mockFormData);
+
+        const expected = {
           ...mockExistingData,
-          ...mockFormData,
-        });
+          ...sanitisedFormData,
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when there is existing data which has a special character', () => {
+      it('should return an object with existing and new, sanitised form data and should not sanitise the existing data', () => {
+        const mockFormData = {
+          a: true,
+        } as RequestBody;
+
+        const mockExistingData = {
+          mock: '&amp;',
+        } as SubmittedDataInsuranceEligibility;
+
+        const result = updateSubmittedData(mockFormData, mockExistingData);
+
+        const sanitisedFormData = sanitiseData(mockFormData);
+
+        const expected = {
+          ...mockExistingData,
+          ...sanitisedFormData,
+        };
 
         expect(result).toEqual(expected);
       });

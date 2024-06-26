@@ -7,19 +7,12 @@ import { XAD } from '../../../../../../../../fixtures/countries';
 
 const {
   ROOT,
-  CHECK_YOUR_ANSWERS: {
-    EXPORT_CONTRACT,
-  },
-  EXPORT_CONTRACT: {
-    ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE,
-  },
+  CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT },
+  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {
-  ABOUT_GOODS_OR_SERVICES: {
-    DESCRIPTION,
-    FINAL_DESTINATION,
-  },
+  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
 } = FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
@@ -48,7 +41,10 @@ context('Insurance - Change your answers - Export contract - Summary list - Abou
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+      cy.completePrepareApplicationSinglePolicyType({
+        referenceNumber,
+        finalDestinationKnown: true,
+      });
 
       task.link().click();
 

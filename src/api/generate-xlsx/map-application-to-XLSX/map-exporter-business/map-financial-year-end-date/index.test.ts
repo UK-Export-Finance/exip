@@ -1,4 +1,5 @@
 import mapFinancialYearEndDate from '.';
+import { DATE_FORMAT } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import { XLSX } from '../../../../content-strings';
 import formatDate from '../../../../helpers/format-date';
@@ -22,7 +23,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-exporter-business/map-fi
 
       const result = mapFinancialYearEndDate(mockCompany);
 
-      const expected = formatDate(mockCompany[FINANCIAL_YEAR_END_DATE], 'd MMMM');
+      const expected = formatDate(mockCompany[FINANCIAL_YEAR_END_DATE], DATE_FORMAT.XLSX);
 
       expect(result).toEqual(expected);
     });

@@ -1,17 +1,15 @@
 import { APPLICATION } from '../../../../../../../constants';
 
-context('Insurance - submit an application - Multiple policy type, fully populated export contract', () => {
+context('Insurance - submit an application - Multiple policy - fully populated business section', () => {
   let referenceNumber;
 
   before(() => {
     cy.completeSignInAndSubmitAnApplication({
-      agentIsCharging: true,
-      agentChargeMethodFixedSum: true,
-      attemptedPrivateMarketCover: true,
-      isUsingAgent: true,
-      finalDestinationKnown: true,
+      alternativeCurrencyTurnover: true,
+      differentTradingName: true,
+      differentTradingAddress: true,
       policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
-      totalContractValueOverThreshold: true,
+      usingBroker: true,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });

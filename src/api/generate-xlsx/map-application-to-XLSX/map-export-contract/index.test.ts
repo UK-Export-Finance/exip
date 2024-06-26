@@ -2,7 +2,7 @@ import mapExportContract from '.';
 import FIELD_IDS from '../../../constants/field-ids/insurance/export-contract';
 import { XLSX } from '../../../content-strings';
 import xlsxRow from '../helpers/xlsx-row';
-import mapYesNoField from '../helpers/map-yes-no-field';
+import mapFinalDestination from './map-final-destination';
 import mapPrivateMarket from './map-private-market';
 import mapAgent from './map-agent';
 import { mockApplicationMinimalBrokerBuyerAndCompany as mockApplication, mockCountries } from '../../../test-mocks';
@@ -10,7 +10,7 @@ import { mockApplicationMinimalBrokerBuyerAndCompany as mockApplication, mockCou
 const { FIELDS, SECTION_TITLES } = XLSX;
 
 const {
-  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN },
+  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
   HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
 } = FIELD_IDS;
 
@@ -30,7 +30,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-export-contract', () => 
 
       xlsxRow(String(FIELDS.EXPORT_CONTRACT[DESCRIPTION]), exportContract[DESCRIPTION]),
 
-      xlsxRow(String(FIELDS.EXPORT_CONTRACT[FINAL_DESTINATION_KNOWN]), mapYesNoField({ answer: exportContract[FINAL_DESTINATION_KNOWN] })),
+      ...mapFinalDestination(exportContract, mockCountries),
 
       xlsxRow(String(FIELDS.EXPORT_CONTRACT[PAYMENT_TERMS_DESCRIPTION]), exportContract[PAYMENT_TERMS_DESCRIPTION]),
 

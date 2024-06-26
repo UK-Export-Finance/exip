@@ -16,66 +16,69 @@ const oldCountry = country.NAME;
 const newCountry = XAD.NAME;
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Eligibility - Change your answers - Buyer country - As an exporter, I want to change my answers to the eligibility buyer country section', () => {
-  const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
+context(
+  'Insurance - Eligibility - Change your answers - Buyer country - As an exporter, I want to change my answers to the eligibility buyer country section',
+  () => {
+    const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
-  before(() => {
-    cy.navigateToUrl(START);
+    before(() => {
+      cy.navigateToUrl(START);
 
-    cy.completeAndSubmitAllInsuranceEligibilityAnswers();
+      cy.completeAndSubmitAllInsuranceEligibilityAnswers({});
 
-    cy.assertUrl(url);
-  });
-
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  const fieldId = BUYER_COUNTRY;
-
-  describe('when clicking the `change` link', () => {
-    it(`should redirect to ${BUYER_COUNTRY_CHANGE}`, () => {
-      cy.navigateToUrl(url);
-
-      summaryList.field(fieldId).changeLink().click();
-
-      cy.assertChangeAnswersPageUrl({ route: BUYER_COUNTRY_CHANGE, fieldId, isInsuranceEligibility: true });
+      cy.assertUrl(url);
     });
-  });
 
-  describe('form submission without changing the answer', () => {
     beforeEach(() => {
-      cy.navigateToUrl(url);
-
-      summaryList.field(fieldId).changeLink().click();
-
-      cy.clickSubmitButton();
+      cy.saveSession();
     });
 
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-      cy.assertChangeAnswersPageUrl({ route: CHECK_YOUR_ANSWERS, fieldId, isInsuranceEligibility: true });
+    const fieldId = BUYER_COUNTRY;
+
+    describe('when clicking the `change` link', () => {
+      it(`should redirect to ${BUYER_COUNTRY_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+
+        summaryList.field(fieldId).changeLink().click();
+
+        cy.assertChangeAnswersPageUrl({ route: BUYER_COUNTRY_CHANGE, fieldId, isInsuranceEligibility: true });
+      });
     });
 
-    it('should render the same answer', () => {
-      cy.assertSummaryListRowValue(summaryList, fieldId, oldCountry);
+    describe('form submission without changing the answer', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList.field(fieldId).changeLink().click();
+
+        cy.clickSubmitButton();
+      });
+
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        cy.assertChangeAnswersPageUrl({ route: CHECK_YOUR_ANSWERS, fieldId, isInsuranceEligibility: true });
+      });
+
+      it('should render the same answer', () => {
+        cy.assertSummaryListRowValue(summaryList, fieldId, oldCountry);
+      });
     });
-  });
 
-  describe('form submission with a new answer', () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
+    describe('form submission with a new answer', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
-      summaryList.field(fieldId).changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
-      completeAndSubmitBuyerCountryForm({ countryName: newCountry });
+        completeAndSubmitBuyerCountryForm({ countryName: newCountry });
+      });
+
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        cy.assertChangeAnswersPageUrl({ route: CHECK_YOUR_ANSWERS, fieldId, isInsuranceEligibility: true });
+      });
+
+      it('should render the new answer', () => {
+        cy.assertSummaryListRowValue(summaryList, fieldId, newCountry);
+      });
     });
-
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-      cy.assertChangeAnswersPageUrl({ route: CHECK_YOUR_ANSWERS, fieldId, isInsuranceEligibility: true });
-    });
-
-    it('should render the new answer', () => {
-      cy.assertSummaryListRowValue(summaryList, fieldId, newCountry);
-    });
-  });
-});
+  },
+);

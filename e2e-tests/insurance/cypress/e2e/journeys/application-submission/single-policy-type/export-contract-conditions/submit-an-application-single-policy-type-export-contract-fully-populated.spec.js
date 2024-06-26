@@ -3,11 +3,12 @@ context('Insurance - submit an application - Single policy type, fully populated
 
   before(() => {
     cy.completeSignInAndSubmitAnApplication({
-      totalContractValueOverThreshold: true,
-      attemptedPrivateMarketCover: true,
-      isUsingAgent: true,
       agentIsCharging: true,
       agentChargeMethodFixedSum: true,
+      attemptedPrivateMarketCover: true,
+      isUsingAgent: true,
+      finalDestinationKnown: true,
+      totalContractValueOverThreshold: true,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });

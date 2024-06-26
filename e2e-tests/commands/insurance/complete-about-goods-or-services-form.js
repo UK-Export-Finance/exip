@@ -5,22 +5,19 @@ import application from '../../fixtures/application';
 import { COUNTRY_APPLICATION_SUPPORT } from '../../fixtures/countries';
 
 const {
-  ABOUT_GOODS_OR_SERVICES: {
-    DESCRIPTION,
-    FINAL_DESTINATION,
-  },
+  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
 } = FIELD_IDS;
 
 /**
  * completeAboutGoodsOrServicesForm
  * Complete the "About goods or services" form
  * @param {Boolean} description: description value
- * @param {String} finalDestinationKnown: flag for if the final destination is known
- * @param {Boolean} includeFinalDestination: flag for if the final destination should be included.
+ * @param {String} finalDestinationKnown: flag for if the final destination is known. Defaults to false.
+ * @param {Boolean} includeFinalDestination: flag for if the final destination should be included. Defaults to true.
  */
 const completeAboutGoodsOrServicesForm = ({
   description = application.EXPORT_CONTRACT[DESCRIPTION],
-  finalDestinationKnown = true,
+  finalDestinationKnown = false,
   includeFinalDestination = true,
 }) => {
   cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].textarea(), description);
