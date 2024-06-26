@@ -42,7 +42,7 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
 
     const expected = {
       ...indexes,
-      AGENT_ADDRESS: 79,
+      AGENT_ADDRESS: 80,
       BROKER_ADDRESS: indexes.BROKER_ADDRESS + 1,
       BUYER_ADDRESS: indexes.BUYER_ADDRESS + 1,
       BUYER_CONTACT_DETAILS: indexes.BUYER_CONTACT_DETAILS + 1,

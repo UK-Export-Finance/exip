@@ -961,9 +961,6 @@ var XLSX_ROW_INDEXES = (application2) => {
     indexes.TITLES.DECLARATIONS += 1;
     indexes.TITLES.EXPORT_CONTRACT += 1;
   }
-  if (finalDestinationKnown) {
-    indexes.TITLES.DECLARATIONS += 1;
-  }
   if (attemptedPrivateMarket) {
     indexes.TITLES.DECLARATIONS += 1;
   }
@@ -980,6 +977,10 @@ var XLSX_ROW_INDEXES = (application2) => {
     }
   }
   if (agentIsCharging) {
+    indexes.TITLES.DECLARATIONS += 1;
+    indexes.AGENT_ADDRESS += 1;
+  }
+  if (finalDestinationKnown) {
     indexes.TITLES.DECLARATIONS += 1;
     indexes.AGENT_ADDRESS += 1;
   }
@@ -1578,7 +1579,6 @@ var application = {
       if (file) {
         const fileBuffer = Buffer.from(file);
         const response = await callNotify(templateId, emailAddress, variables, fileBuffer);
-        await file_system_default.unlink(filePath);
         return response;
       }
       throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
@@ -7347,14 +7347,10 @@ var {
 } = export_contract_default;
 var mapFinalDestination = (exportContract, countries) => {
   const finalDestinationKnownAnswer = exportContract[FINAL_DESTINATION_KNOWN3];
-  const mapped = [
-    xlsx_row_default(String(FIELDS25.EXPORT_CONTRACT[FINAL_DESTINATION_KNOWN3]), map_yes_no_field_default({ answer: finalDestinationKnownAnswer }))
-  ];
+  const mapped = [xlsx_row_default(String(FIELDS25.EXPORT_CONTRACT[FINAL_DESTINATION_KNOWN3]), map_yes_no_field_default({ answer: finalDestinationKnownAnswer }))];
   if (finalDestinationKnownAnswer) {
     const country = get_country_by_iso_code_default(countries, exportContract[FINAL_DESTINATION2]);
-    mapped.push(
-      xlsx_row_default(String(CONTENT_STRINGS8[FINAL_DESTINATION2]), String(country))
-    );
+    mapped.push(xlsx_row_default(String(CONTENT_STRINGS8[FINAL_DESTINATION2]), String(country)));
   }
   return mapped;
 };

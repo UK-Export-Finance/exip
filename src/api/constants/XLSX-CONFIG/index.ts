@@ -157,10 +157,6 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
    * Increment some specific indexes,
    * depending on answers in the "Export contract" section of an application.
    */
-  if (finalDestinationKnown) {
-    indexes.TITLES.DECLARATIONS += 1;
-  }
-
   if (attemptedPrivateMarket) {
     indexes.TITLES.DECLARATIONS += 1;
   }
@@ -185,6 +181,11 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   if (agentIsCharging) {
     indexes.TITLES.DECLARATIONS += 1;
 
+    indexes.AGENT_ADDRESS += 1;
+  }
+
+  if (finalDestinationKnown) {
+    indexes.TITLES.DECLARATIONS += 1;
     indexes.AGENT_ADDRESS += 1;
   }
 
