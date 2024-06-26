@@ -25,7 +25,7 @@ const assertMinimalExportContractSummaryListRows = () => {
   });
 
   it(`should NOT render a ${FINAL_DESTINATION} summary list row`, () => {
-    checkSummaryList[FINAL_DESTINATION]({ shouldRender: false });
+    checkSummaryList[FINAL_DESTINATION]({ isKnown: false });
   });
 
   it(`should render a ${PAYMENT_TERMS_DESCRIPTION} summary list row`, () => {

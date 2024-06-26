@@ -27,7 +27,7 @@ const assertFullyPopulatedExportContractSummaryListRows = ({ agentChargeMethodFi
   });
 
   it(`should render a ${FINAL_DESTINATION} summary list row`, () => {
-    checkSummaryList[FINAL_DESTINATION]({ shouldRender: true });
+    checkSummaryList[FINAL_DESTINATION]({ isKnown: true });
   });
 
   it(`should render a ${PAYMENT_TERMS_DESCRIPTION} summary list row`, () => {

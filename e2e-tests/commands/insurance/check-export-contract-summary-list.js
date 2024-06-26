@@ -31,19 +31,25 @@ const checkExportContractSummaryList = {
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
-  [FINAL_DESTINATION]: ({ shouldRender = false }) => {
+  [FINAL_DESTINATION]: ({ isKnown = false }) => {
     const fieldId = FINAL_DESTINATION;
 
-    if (shouldRender) {
-      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.ABOUT_GOODS_OR_SERVICES);
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.ABOUT_GOODS_OR_SERVICES);
 
+    let expectedValue;
+
+    if (isKnown) {
       const country = COUNTRIES.find((c) => c.ISO_CODE === application.EXPORT_CONTRACT[fieldId]);
 
-      const expectedValue = country.NAME;
+      expectedValue = country.NAME;
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     } else {
-      cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+      const fieldStrings = FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].SUMMARY;
+
+      const expectedLinkText = `${fieldStrings.TITLE} (${fieldStrings.FORM_TITLE})`;
+
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedLinkText);
     }
   },
   [PAYMENT_TERMS_DESCRIPTION]: () => {
