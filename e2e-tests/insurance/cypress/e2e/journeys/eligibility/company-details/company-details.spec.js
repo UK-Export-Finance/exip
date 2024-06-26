@@ -8,11 +8,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COMPANY_DETAILS;
 
 const {
   START,
-  ELIGIBILITY: {
-    BUYER_COUNTRY,
-    COMPANY_DETAILS,
-    ENTER_COMPANIES_HOUSE_NUMBER,
-  },
+  ELIGIBILITY: { BUYER_COUNTRY, COMPANY_DETAILS, ENTER_COMPANIES_HOUSE_NUMBER },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -60,7 +56,7 @@ context('Insurance - Eligibility - Companies details page - I want to check if I
       });
 
       it('should render `company name` key and value', () => {
-        assertCompaniesHouseSummaryList.name();
+        assertCompaniesHouseSummaryList.name({});
       });
 
       it('should render `company address` key and value', () => {
@@ -77,11 +73,7 @@ context('Insurance - Eligibility - Companies details page - I want to check if I
     });
 
     it('should render `enter different companies house number` link', () => {
-      cy.checkLink(
-        companyDetailsPage.differentCompaniesHouseNumberLink(),
-        ENTER_COMPANIES_HOUSE_NUMBER,
-        CONTENT_STRINGS.DIFFERENT_COMPANIES_HOUSE_NUMBER,
-      );
+      cy.checkLink(companyDetailsPage.differentCompaniesHouseNumberLink(), ENTER_COMPANIES_HOUSE_NUMBER, CONTENT_STRINGS.DIFFERENT_COMPANIES_HOUSE_NUMBER);
     });
   });
 

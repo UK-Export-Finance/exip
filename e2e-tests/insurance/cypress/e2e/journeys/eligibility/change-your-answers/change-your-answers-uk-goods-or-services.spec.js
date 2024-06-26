@@ -11,59 +11,62 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Eligibility - Change your answers - UK goods or services - As an exporter, I want to change my answers to the eligibility UK goods or services section', () => {
-  const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
+context(
+  'Insurance - Eligibility - Change your answers - UK goods or services - As an exporter, I want to change my answers to the eligibility UK goods or services section',
+  () => {
+    const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
-  before(() => {
-    cy.navigateToUrl(START);
+    before(() => {
+      cy.navigateToUrl(START);
 
-    cy.completeAndSubmitAllInsuranceEligibilityAnswers();
+      cy.completeAndSubmitAllInsuranceEligibilityAnswers({});
 
-    cy.assertUrl(url);
-  });
-
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  const fieldId = HAS_MINIMUM_UK_GOODS_OR_SERVICES;
-
-  describe('when clicking the `change` link', () => {
-    it(`should redirect to ${UK_GOODS_OR_SERVICES_CHANGE}`, () => {
-      cy.navigateToUrl(url);
-
-      summaryList.field(fieldId).changeLink().click();
-
-      cy.assertChangeAnswersPageUrl({ route: UK_GOODS_OR_SERVICES_CHANGE, fieldId, isInsuranceEligibility: true });
+      cy.assertUrl(url);
     });
-  });
 
-  describe('form submission without changing the answer', () => {
     beforeEach(() => {
-      cy.navigateToUrl(url);
-
-      summaryList.field(fieldId).changeLink().click();
-
-      cy.clickSubmitButton();
+      cy.saveSession();
     });
 
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-      cy.assertChangeAnswersPageUrl({ route: CHECK_YOUR_ANSWERS, fieldId, isInsuranceEligibility: true });
-    });
-  });
+    const fieldId = HAS_MINIMUM_UK_GOODS_OR_SERVICES;
 
-  describe('form submission with a new answer', () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
+    describe('when clicking the `change` link', () => {
+      it(`should redirect to ${UK_GOODS_OR_SERVICES_CHANGE}`, () => {
+        cy.navigateToUrl(url);
 
-      summaryList.field(fieldId).changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
-      cy.clickNoRadioInput();
-      cy.clickSubmitButton();
+        cy.assertChangeAnswersPageUrl({ route: UK_GOODS_OR_SERVICES_CHANGE, fieldId, isInsuranceEligibility: true });
+      });
     });
 
-    it(`should redirect to ${CANNOT_APPLY}`, () => {
-      cy.assertChangeAnswersPageUrl({ route: CANNOT_APPLY, fieldId, isInsuranceEligibility: true });
+    describe('form submission without changing the answer', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList.field(fieldId).changeLink().click();
+
+        cy.clickSubmitButton();
+      });
+
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        cy.assertChangeAnswersPageUrl({ route: CHECK_YOUR_ANSWERS, fieldId, isInsuranceEligibility: true });
+      });
     });
-  });
-});
+
+    describe('form submission with a new answer', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList.field(fieldId).changeLink().click();
+
+        cy.clickNoRadioInput();
+        cy.clickSubmitButton();
+      });
+
+      it(`should redirect to ${CANNOT_APPLY}`, () => {
+        cy.assertChangeAnswersPageUrl({ route: CANNOT_APPLY, fieldId, isInsuranceEligibility: true });
+      });
+    });
+  },
+);
