@@ -25,6 +25,7 @@ const {
  * - If "buyer section - traded with buyer before" is true, the XLSX has 2 additional rows.
  * - If "buyer section - traded with buyer before" is true and "buyer has outstanding payments" is true, the XLSX has 2 additional rows.
  * - If "buyer section - has previous credit insurance cover with buyer" is true, the XLSX has 1 additional row.
+ * - If "export contract section - final destination is known" is true, the XLSX has 1 additional row.
  * - If "export contract section - has attempted private market cover" is true, the XLSX has 1 additional row.
  * - If "export contract section - using an agent" is true, the XLSX has 5 additional rows.
  * - If "export contract section - using an agent - agent is charging" is true, the XLSX has 1 additional row.
@@ -49,6 +50,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
         isUsingAgent,
         service: { agentIsCharging },
       },
+      finalDestinationKnown,
       privateMarket: { attempted: attemptedPrivateMarket },
     },
     nominatedLossPayee: { isAppointed: nominatedLossPayeeAppointed },
@@ -155,6 +157,10 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
    * Increment some specific indexes,
    * depending on answers in the "Export contract" section of an application.
    */
+  if (finalDestinationKnown) {
+    indexes.TITLES.DECLARATIONS += 1;
+  }
+
   if (attemptedPrivateMarket) {
     indexes.TITLES.DECLARATIONS += 1;
   }

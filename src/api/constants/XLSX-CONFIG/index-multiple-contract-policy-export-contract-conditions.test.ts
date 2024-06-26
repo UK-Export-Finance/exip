@@ -22,6 +22,7 @@ const mockApplication = {
         agentIsCharging: true,
       },
     },
+    finalDestinationKnown: true,
     privateMarket: {
       ...exportContract.privateMarket,
       attempted: true,
@@ -49,7 +50,7 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
       TITLES: {
         ...indexes.TITLES,
         BUYER: indexes.TITLES.BUYER + 1,
-        DECLARATIONS: indexes.TITLES.DECLARATIONS + 11,
+        DECLARATIONS: indexes.TITLES.DECLARATIONS + 12,
         EXPORT_CONTRACT: indexes.TITLES.EXPORT_CONTRACT + 2,
       },
     };
