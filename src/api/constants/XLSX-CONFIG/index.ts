@@ -54,6 +54,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     nominatedLossPayee: { isAppointed: nominatedLossPayeeAppointed },
     policy: {
       jointlyInsuredParty: { requested: requestedJointlyInsuredParty },
+      needPreCreditPeriodCover,
     },
     policyContact: { isSameAsOwner: policyContactIsSameAsOwner },
   } = application;
@@ -124,6 +125,16 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     indexes.TITLES.EXPORT_CONTRACT += 3;
   }
 
+  if (needPreCreditPeriodCover) {
+    indexes.BROKER_ADDRESS += 2;
+    indexes.BUYER_ADDRESS += 1;
+    indexes.LOSS_PAYEE_ADDRESS += 1;
+
+    indexes.TITLES.BUYER += 1;
+    indexes.TITLES.DECLARATIONS += 1;
+    indexes.TITLES.EXPORT_CONTRACT += 1;
+  }
+
   if (nominatedLossPayeeAppointed) {
     indexes.TITLES.BUYER += 5;
     indexes.TITLES.DECLARATIONS += 5;
@@ -162,6 +173,10 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   if (isUsingAgent) {
     indexes.TITLES.DECLARATIONS += 5;
     indexes.AGENT_ADDRESS = 75;
+
+    if (needPreCreditPeriodCover) {
+      indexes.AGENT_ADDRESS += 1;
+    }
 
     if (isMultiplePolicy) {
       indexes.AGENT_ADDRESS += 1;
