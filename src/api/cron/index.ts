@@ -1,7 +1,7 @@
+import { Context } from '.keystone/types'; // eslint-disable-line
 import cronJobScheduler from './cron-job-scheduler';
 import accountCronSchedulerJobs from './account';
 import applicationCronSchedulerJobs from './application';
-import { Context } from '.keystone/types'; // eslint-disable-line
 
 /**
  * cronJobs

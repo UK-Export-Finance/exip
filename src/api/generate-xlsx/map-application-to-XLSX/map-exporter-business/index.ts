@@ -42,26 +42,26 @@ const mapExporterBusiness = (application: Application) => {
   const mapped = [
     xlsxRow(SECTION_TITLES.EXPORTER_BUSINESS, ''),
     xlsxRow(CONTENT_STRINGS[COMPANY_INCORPORATED].SUMMARY?.TITLE, formatDate(company[COMPANY_INCORPORATED], DATE_FORMAT.XLSX)),
-    xlsxRow(FIELDS[COMPANY_ADDRESS], mapExporterAddress(company[COMPANY_ADDRESS])),
-    xlsxRow(FIELDS[COMPANY_SIC], mapSicCodes(companySicCodes)),
+    xlsxRow(String(FIELDS[COMPANY_ADDRESS]), mapExporterAddress(company[COMPANY_ADDRESS])),
+    xlsxRow(String(FIELDS[COMPANY_SIC]), mapSicCodes(companySicCodes)),
 
-    xlsxRow(FIELDS[HAS_DIFFERENT_TRADING_NAME], mapYesNoField({ answer: company[HAS_DIFFERENT_TRADING_NAME] })),
+    xlsxRow(String(FIELDS[HAS_DIFFERENT_TRADING_NAME]), mapYesNoField({ answer: company[HAS_DIFFERENT_TRADING_NAME] })),
     mapDifferentTradingName(company),
 
-    xlsxRow(FIELDS[TRADING_ADDRESS], mapYesNoField({ answer: company[TRADING_ADDRESS] })),
+    xlsxRow(String(FIELDS[TRADING_ADDRESS]), mapYesNoField({ answer: company[TRADING_ADDRESS] })),
     mapDifferentTradingAddress(company),
 
-    xlsxRow(FIELDS[WEBSITE], company[WEBSITE]),
-    xlsxRow(FIELDS[PHONE_NUMBER], company[PHONE_NUMBER]),
+    xlsxRow(String(FIELDS[WEBSITE]), company[WEBSITE]),
+    xlsxRow(String(FIELDS[PHONE_NUMBER]), company[PHONE_NUMBER]),
 
-    xlsxRow(FIELDS[GOODS_OR_SERVICES], business[GOODS_OR_SERVICES]),
-    xlsxRow(FIELDS[YEARS_EXPORTING], business[YEARS_EXPORTING]),
-    xlsxRow(FIELDS[EMPLOYEES_UK], business[EMPLOYEES_UK]),
+    xlsxRow(String(FIELDS[GOODS_OR_SERVICES]), business[GOODS_OR_SERVICES]),
+    xlsxRow(String(FIELDS[YEARS_EXPORTING]), business[YEARS_EXPORTING]),
+    xlsxRow(String(FIELDS[EMPLOYEES_UK]), business[EMPLOYEES_UK]),
     xlsxRow(CONTENT_STRINGS[FINANCIAL_YEAR_END_DATE].SUMMARY?.TITLE, mapFinancialYearEndDate(company)),
-    xlsxRow(FIELDS[ESTIMATED_ANNUAL_TURNOVER], formatCurrency(business[ESTIMATED_ANNUAL_TURNOVER], business[TURNOVER_CURRENCY_CODE])),
+    xlsxRow(String(FIELDS[ESTIMATED_ANNUAL_TURNOVER]), formatCurrency(business[ESTIMATED_ANNUAL_TURNOVER], business[TURNOVER_CURRENCY_CODE])),
     xlsxRow(CONTENT_STRINGS[PERCENTAGE_TURNOVER].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER]}%`),
 
-    xlsxRow(FIELDS[HAS_CREDIT_CONTROL], mapYesNoField({ answer: business[HAS_CREDIT_CONTROL] })),
+    xlsxRow(String(FIELDS[HAS_CREDIT_CONTROL]), mapYesNoField({ answer: business[HAS_CREDIT_CONTROL] })),
   ];
 
   return mapped;

@@ -23,6 +23,7 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
     console.info('Submitting application %s', variables.applicationId);
 
     // get the application
+
     const application = (await context.db.Application.findOne({
       where: { id: variables.applicationId },
     })) as Application;

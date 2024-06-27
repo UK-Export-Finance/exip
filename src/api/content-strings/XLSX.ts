@@ -48,7 +48,7 @@ const {
     USING_BROKER,
   },
   YOUR_BUYER: {
-    COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER, FIRST_NAME: BUYER_CONTACT_DETAILS },
+    COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER },
     CONNECTION_WITH_BUYER,
     CONNECTION_WITH_BUYER_DESCRIPTION,
     FAILED_PAYMENTS,
@@ -103,7 +103,7 @@ export const XLSX = {
     [BROKER_ADDRESS]: 'Broker address',
     [BROKER_EMAIL]: "Broker's email address",
     [BUYER_COMPANY_NAME]: 'Buyer company name or organisation',
-    [BUYER_CONTACT_DETAILS]: 'Buyer contact details',
+    BUYER_CONTACT_DETAILS: 'Buyer contact details',
     [BUYER_COUNTRY]: 'Where is your buyer based?',
     [BUYER_REGISTRATION_NUMBER]: 'Buyer registration number (optional)',
     [COMPANIES_HOUSE_NUMBER]: 'Companies house number',

@@ -1,5 +1,5 @@
 import update from '../update-account';
-import { Account, Context } from '../../types';
+import { Context } from '../../types';
 
 /**
  * blockAccount
@@ -8,13 +8,13 @@ import { Account, Context } from '../../types';
  * @param {String} AccountStatus ID
  * @returns {Promise<Boolean>}
  */
-const blockAccount = async (context: Context, statusId: string) => {
+const blockAccount = async (context: Context, statusId: string): Promise<boolean> => {
   console.info('Blocking account %s', statusId);
 
   try {
     const statusUpdate = { isBlocked: true };
 
-    const result = (await update.accountStatus(context, statusId, statusUpdate)) as Account;
+    const result = await update.accountStatus(context, statusId, statusUpdate);
 
     if (result.id) {
       return true;

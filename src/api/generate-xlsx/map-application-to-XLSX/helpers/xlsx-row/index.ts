@@ -9,18 +9,20 @@ const { KEY, VALUE } = XLSX_CONFIG;
  * @returns {Object}
  */
 const xlsxRow = (fieldName: string, answer?: string | number) => {
-  console.info('Mapping XLSX row %s', fieldName);
+  if (fieldName) {
+    console.info('Mapping XLSX row %s', fieldName);
 
-  const value = answer || answer === 0 ? answer : '';
+    const value = answer || answer === 0 ? answer : '';
 
-  const cleanValue = replaceCharacterCodesWithCharacters(String(value));
+    const cleanValue = replaceCharacterCodesWithCharacters(String(value));
 
-  const row = {
-    [KEY.ID]: fieldName,
-    [VALUE.ID]: cleanValue,
-  };
+    const row = {
+      [KEY.ID]: fieldName,
+      [VALUE.ID]: cleanValue,
+    };
 
-  return row;
+    return row;
+  }
 };
 
 export default xlsxRow;

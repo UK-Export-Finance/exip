@@ -10,7 +10,6 @@ import createACompany from '../create-a-company';
 import createAnExportContract from '../create-an-export-contract';
 import createASectionReview from '../create-a-section-review';
 import { APPLICATION } from '../../constants';
-
 import { CreateAnApplicationVariables, Context } from '../../types';
 
 const { SUBMISSION_TYPE } = APPLICATION;
@@ -52,7 +51,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
      * 1) Eligibility buyer country relationship
      * 2) Buyer country relationship
      */
-    const { buyerCountryIsoCode, needPreCreditPeriodCover, totalContractValueId, coverPeriodId, ...otherEligibilityAnswers } = eligibilityAnswers;
+    const { buyerCountryIsoCode, totalContractValueId, coverPeriodId, ...otherEligibilityAnswers } = eligibilityAnswers;
 
     const country = await getCountryByField(context, 'isoCode', buyerCountryIsoCode);
 

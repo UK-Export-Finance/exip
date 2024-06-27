@@ -63,6 +63,6 @@ export interface MappedCompaniesHouseResponse {
 export interface SicCode {
   sicCode: string;
   industrySectorName: string;
-  company: ConnectObj;
-  application: ConnectObj;
+  company?: ConnectObj;
+  application?: ConnectObj;
 }

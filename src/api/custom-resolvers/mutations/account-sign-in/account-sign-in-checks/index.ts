@@ -57,7 +57,7 @@ const accountSignInChecks = async (context: Context, account: Account, urlOrigin
      */
     const name = getFullNameString(account);
 
-    const emailResponse = await sendEmail.accessCodeEmail(email, name, securityCode);
+    const emailResponse = await sendEmail.accessCodeEmail(email, name, String(securityCode));
 
     if (emailResponse?.success) {
       return {

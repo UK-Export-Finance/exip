@@ -36,9 +36,9 @@ const mapKeyInformation = (application: Application) => {
 
   const mapped = [
     xlsxRow(KEY_INFORMATION),
-    xlsxRow(FIELDS[EXPORTER_COMPANY_NAME], application.company[EXPORTER_COMPANY_NAME]),
-    xlsxRow(FIELDS[COUNTRY], application.buyer[COUNTRY].name),
-    xlsxRow(FIELDS[BUYER_COMPANY_NAME], application.buyer[BUYER_COMPANY_NAME]),
+    xlsxRow(String(FIELDS[EXPORTER_COMPANY_NAME]), application.company[EXPORTER_COMPANY_NAME]),
+    xlsxRow(String(FIELDS[COUNTRY]), application.buyer[COUNTRY].name),
+    xlsxRow(String(FIELDS[BUYER_COMPANY_NAME]), application.buyer[BUYER_COMPANY_NAME]),
     xlsxRow(String(CONTENT_STRINGS[POLICY_TYPE].SUMMARY?.TITLE), policy[POLICY_TYPE]),
   ];
 

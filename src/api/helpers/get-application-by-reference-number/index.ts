@@ -8,7 +8,7 @@ import { Application, Context } from '.keystone/types'; // eslint-disable-line
  * @param {Context} context
  * @returns {Application} application section ids or null
  */
-const getApplicationByReferenceNumber = async (referenceNumber: number, context: Context): Application => {
+const getApplicationByReferenceNumber = async (referenceNumber: number, context: Context): Promise<Application | null> => {
   try {
     console.info('Getting application by reference number - getApplicationByReferenceNumber helper %s', referenceNumber);
 
@@ -16,7 +16,7 @@ const getApplicationByReferenceNumber = async (referenceNumber: number, context:
       where: {
         referenceNumber: { equals: referenceNumber },
       },
-    })) as Application;
+    })) as Array<Application>;
 
     if (applications?.length) {
       const [application] = applications;

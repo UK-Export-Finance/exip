@@ -25,7 +25,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-exporter-business/map-di
 
       const result = mapDifferentTradingAddress(mockCompany);
 
-      const expected = xlsxRow(FIELDS[FULL_ADDRESS_DOT_NOTATION], differentTradingAddressValue);
+      const expected = xlsxRow(String(FIELDS[FULL_ADDRESS_DOT_NOTATION]), differentTradingAddressValue);
 
       expect(result).toEqual(expected);
     });
