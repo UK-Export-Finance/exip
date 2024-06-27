@@ -6921,10 +6921,7 @@ var mapNameOnPolicy = (policyContact) => {
   let mapped = [];
   if (policyContact[IS_SAME_AS_OWNER]) {
     const nameOnPolicy = `${policyContact[FIRST_NAME5]} ${policyContact[LAST_NAME5]} (${policyContact[EMAIL7]})`;
-    mapped = [
-      xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[NAME2]), nameOnPolicy),
-      xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[POSITION2]), policyContact[POSITION2])
-    ];
+    mapped = [xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[NAME2]), nameOnPolicy), xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[POSITION2]), policyContact[POSITION2])];
     return mapped;
   }
   mapped = [

@@ -23,6 +23,7 @@ const mapNameOnPolicy = (policyContact: ApplicationPolicyContact) => {
   let mapped = [];
 
   if (policyContact[IS_SAME_AS_OWNER]) {
+    // name on policy which is constructed from firstName, lastName and (email)
     const nameOnPolicy = `${policyContact[FIRST_NAME]} ${policyContact[LAST_NAME]} (${policyContact[EMAIL]})`;
 
     mapped = [xlsxRow(String(FIELDS.NAME_ON_POLICY[NAME]), nameOnPolicy), xlsxRow(String(FIELDS.NAME_ON_POLICY[POSITION]), policyContact[POSITION])];
