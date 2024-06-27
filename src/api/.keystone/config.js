@@ -929,12 +929,12 @@ var XLSX_ROW_INDEXES = (application2) => {
     indexes.LOSS_PAYEE_ADDRESS += 3;
   }
   if (policyContactIsSameAsOwner === false) {
-    indexes.TITLES.BUYER += 2;
-    indexes.TITLES.DECLARATIONS += 2;
-    indexes.TITLES.EXPORT_CONTRACT += 2;
-    indexes.LOSS_PAYEE_ADDRESS += 2;
-    indexes.BROKER_ADDRESS += 2;
-    indexes.BUYER_ADDRESS += 2;
+    indexes.TITLES.BUYER += 3;
+    indexes.TITLES.DECLARATIONS += 3;
+    indexes.TITLES.EXPORT_CONTRACT += 3;
+    indexes.LOSS_PAYEE_ADDRESS += 3;
+    indexes.BROKER_ADDRESS += 3;
+    indexes.BUYER_ADDRESS += 3;
   }
   if (requestedJointlyInsuredParty) {
     indexes.BROKER_ADDRESS += 3;
@@ -6912,7 +6912,7 @@ var ACCOUNT_FIELDS = {
 // generate-xlsx/map-application-to-XLSX/map-policy/map-name-on-policy/index.ts
 var { FIELDS: FIELDS7 } = XLSX;
 var {
-  ACCOUNT: { FIRST_NAME: FIRST_NAME5, LAST_NAME: LAST_NAME5 },
+  ACCOUNT: { FIRST_NAME: FIRST_NAME5, LAST_NAME: LAST_NAME5, EMAIL: EMAIL7 },
   POLICY: {
     NAME_ON_POLICY: { IS_SAME_AS_OWNER, NAME: NAME2, POSITION: POSITION2 }
   }
@@ -6920,13 +6920,18 @@ var {
 var mapNameOnPolicy = (policyContact) => {
   let mapped = [];
   if (policyContact[IS_SAME_AS_OWNER]) {
-    mapped = [xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[NAME2]), policyContact[NAME2]), xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[POSITION2]), policyContact[POSITION2])];
+    const nameOnPolicy = `${policyContact[FIRST_NAME5]} ${policyContact[LAST_NAME5]} (${policyContact[EMAIL7]})`;
+    mapped = [
+      xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[NAME2]), nameOnPolicy),
+      xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[POSITION2]), policyContact[POSITION2])
+    ];
     return mapped;
   }
   mapped = [
     xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[NAME2]), FIELDS7.SOMEONE_ELSE),
     xlsx_row_default(String(ACCOUNT_FIELDS[FIRST_NAME5].LABEL), policyContact[FIRST_NAME5]),
     xlsx_row_default(String(ACCOUNT_FIELDS[LAST_NAME5].LABEL), policyContact[LAST_NAME5]),
+    xlsx_row_default(String(ACCOUNT_FIELDS[EMAIL7].LABEL), policyContact[EMAIL7]),
     xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[POSITION2]), policyContact[POSITION2])
   ];
   return mapped;
@@ -7045,7 +7050,7 @@ var map_jointly_insured_party_default = mapJointlyInsuredParty;
 // generate-xlsx/map-application-to-XLSX/map-policy/map-broker/index.ts
 var {
   USING_BROKER: USING_BROKER4,
-  BROKER_DETAILS: { NAME: BROKER_NAME2, EMAIL: EMAIL7, FULL_ADDRESS: FULL_ADDRESS2 }
+  BROKER_DETAILS: { NAME: BROKER_NAME2, EMAIL: EMAIL8, FULL_ADDRESS: FULL_ADDRESS2 }
 } = POLICY;
 var { FIELDS: FIELDS12 } = XLSX;
 var mapBroker = (application2) => {
@@ -7055,7 +7060,7 @@ var mapBroker = (application2) => {
     mapped = [
       ...mapped,
       xlsx_row_default(FIELDS12[BROKER_NAME2], broker[BROKER_NAME2]),
-      xlsx_row_default(FIELDS12[EMAIL7], broker[EMAIL7]),
+      xlsx_row_default(FIELDS12[EMAIL8], broker[EMAIL8]),
       xlsx_row_default(FIELDS12[FULL_ADDRESS2], broker[FULL_ADDRESS2])
     ];
   }

@@ -110,13 +110,13 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   }
 
   if (policyContactIsSameAsOwner === false) {
-    indexes.TITLES.BUYER += 2;
-    indexes.TITLES.DECLARATIONS += 2;
-    indexes.TITLES.EXPORT_CONTRACT += 2;
+    indexes.TITLES.BUYER += 3;
+    indexes.TITLES.DECLARATIONS += 3;
+    indexes.TITLES.EXPORT_CONTRACT += 3;
 
-    indexes.LOSS_PAYEE_ADDRESS += 2;
-    indexes.BROKER_ADDRESS += 2;
-    indexes.BUYER_ADDRESS += 2;
+    indexes.LOSS_PAYEE_ADDRESS += 3;
+    indexes.BROKER_ADDRESS += 3;
+    indexes.BUYER_ADDRESS += 3;
   }
 
   if (requestedJointlyInsuredParty) {

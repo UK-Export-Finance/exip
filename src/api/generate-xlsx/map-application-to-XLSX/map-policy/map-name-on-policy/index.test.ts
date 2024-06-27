@@ -8,7 +8,7 @@ import { mockApplication } from '../../../../test-mocks';
 const { FIELDS } = XLSX;
 
 const {
-  ACCOUNT: { FIRST_NAME, LAST_NAME },
+  ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
   POLICY: {
     NAME_ON_POLICY: { IS_SAME_AS_OWNER, NAME, POSITION },
   },
@@ -26,8 +26,10 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-name-on-polic
 
       const result = mapNameOnPolicy(mockPolicyContact);
 
+      const nameOnPolicy = `${mockPolicyContact[FIRST_NAME]} ${mockPolicyContact[LAST_NAME]} (${mockPolicyContact[EMAIL]})`;
+
       const expected = [
-        xlsxRow(String(FIELDS.NAME_ON_POLICY[NAME]), mockPolicyContact[NAME]),
+        xlsxRow(String(FIELDS.NAME_ON_POLICY[NAME]), nameOnPolicy),
         xlsxRow(String(FIELDS.NAME_ON_POLICY[POSITION]), mockPolicyContact[POSITION]),
       ];
 
@@ -48,6 +50,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-name-on-polic
         xlsxRow(String(FIELDS.NAME_ON_POLICY[NAME]), FIELDS.SOMEONE_ELSE),
         xlsxRow(String(CONTENT_STRINGS[FIRST_NAME].LABEL), mockPolicyContact[FIRST_NAME]),
         xlsxRow(String(CONTENT_STRINGS[LAST_NAME].LABEL), mockPolicyContact[LAST_NAME]),
+        xlsxRow(String(CONTENT_STRINGS[EMAIL].LABEL), mockPolicyContact[EMAIL]),
         xlsxRow(String(FIELDS.NAME_ON_POLICY[POSITION]), mockPolicyContact[POSITION]),
       ];
 

@@ -7,7 +7,7 @@ import { ApplicationPolicyContact } from '../../../../types';
 const { FIELDS } = XLSX;
 
 const {
-  ACCOUNT: { FIRST_NAME, LAST_NAME },
+  ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
   POLICY: {
     NAME_ON_POLICY: { IS_SAME_AS_OWNER, NAME, POSITION },
   },
@@ -23,7 +23,9 @@ const mapNameOnPolicy = (policyContact: ApplicationPolicyContact) => {
   let mapped = [];
 
   if (policyContact[IS_SAME_AS_OWNER]) {
-    mapped = [xlsxRow(String(FIELDS.NAME_ON_POLICY[NAME]), policyContact[NAME]), xlsxRow(String(FIELDS.NAME_ON_POLICY[POSITION]), policyContact[POSITION])];
+    const nameOnPolicy = `${policyContact[FIRST_NAME]} ${policyContact[LAST_NAME]} (${policyContact[EMAIL]})`;
+
+    mapped = [xlsxRow(String(FIELDS.NAME_ON_POLICY[NAME]), nameOnPolicy), xlsxRow(String(FIELDS.NAME_ON_POLICY[POSITION]), policyContact[POSITION])];
 
     return mapped;
   }
@@ -32,6 +34,7 @@ const mapNameOnPolicy = (policyContact: ApplicationPolicyContact) => {
     xlsxRow(String(FIELDS.NAME_ON_POLICY[NAME]), FIELDS.SOMEONE_ELSE),
     xlsxRow(String(CONTENT_STRINGS[FIRST_NAME].LABEL), policyContact[FIRST_NAME]),
     xlsxRow(String(CONTENT_STRINGS[LAST_NAME].LABEL), policyContact[LAST_NAME]),
+    xlsxRow(String(CONTENT_STRINGS[EMAIL].LABEL), policyContact[EMAIL]),
     xlsxRow(String(FIELDS.NAME_ON_POLICY[POSITION]), policyContact[POSITION]),
   ];
 
