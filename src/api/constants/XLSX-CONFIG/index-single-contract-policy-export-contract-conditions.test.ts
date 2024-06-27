@@ -36,7 +36,7 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
       AGENT_ADDRESS: 79,
       TITLES: {
         ...indexes.TITLES,
-        DECLARATIONS: indexes.TITLES.DECLARATIONS + 10,
+        DECLARATIONS: indexes.TITLES.DECLARATIONS + 11,
         EXPORT_CONTRACT: indexes.TITLES.EXPORT_CONTRACT + 1,
       },
     };

@@ -64,6 +64,7 @@ export const mockApplicationMinimalBrokerBuyerAndCompany = {
     relationship: {
       ...mockApplication.buyer.relationship,
       exporterHasPreviousCreditInsuranceWithBuyer: false,
+      exporterIsConnectedWithBuyer: false,
     },
   },
   company: companyScenarios.noDifferentTradingNameOrAddress,
