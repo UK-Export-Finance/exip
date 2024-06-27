@@ -33,7 +33,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-export-contract/map-fina
 
       const expected = [
         xlsxRow(String(FIELDS.EXPORT_CONTRACT[FINAL_DESTINATION_KNOWN]), mapYesNoField({ answer: finalDestinationKnownAnswer })),
-        xlsxRow(String(CONTENT_STRINGS[FINAL_DESTINATION]), String(country)),
+        xlsxRow(String(CONTENT_STRINGS[FINAL_DESTINATION].SUMMARY?.TITLE), String(country.name)),
       ];
 
       expect(result).toEqual(expected);

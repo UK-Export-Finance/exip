@@ -7390,7 +7390,7 @@ var mapFinalDestination = (exportContract, countries) => {
   const mapped = [xlsx_row_default(String(FIELDS25.EXPORT_CONTRACT[FINAL_DESTINATION_KNOWN3]), map_yes_no_field_default({ answer: finalDestinationKnownAnswer }))];
   if (finalDestinationKnownAnswer) {
     const country = get_country_by_iso_code_default(countries, exportContract[FINAL_DESTINATION2]);
-    mapped.push(xlsx_row_default(String(CONTENT_STRINGS8[FINAL_DESTINATION2]), String(country)));
+    mapped.push(xlsx_row_default(String(CONTENT_STRINGS8[FINAL_DESTINATION2].SUMMARY?.TITLE), country.name));
   }
   return mapped;
 };

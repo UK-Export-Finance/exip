@@ -29,7 +29,7 @@ const mapFinalDestination = (exportContract: ApplicationExportContract, countrie
   if (finalDestinationKnownAnswer) {
     const country = getCountryByIsoCode(countries, exportContract[FINAL_DESTINATION]);
 
-    mapped.push(xlsxRow(String(CONTENT_STRINGS[FINAL_DESTINATION]), String(country)));
+    mapped.push(xlsxRow(String(CONTENT_STRINGS[FINAL_DESTINATION].SUMMARY?.TITLE), country.name));
   }
 
   return mapped;

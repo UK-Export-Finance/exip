@@ -31,6 +31,7 @@ context(
         hasConnectionToBuyer: true,
         buyerOutstandingPayments: true,
         buyerFailedToPayOnTime: true,
+        finalDestinationKnown: true,
         fullyPopulatedBuyerTradingHistory: true,
         hasHadCreditInsuranceCoverWithBuyer: true,
         exporterHasBuyerFinancialAccounts: true,
