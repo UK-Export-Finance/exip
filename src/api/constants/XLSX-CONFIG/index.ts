@@ -24,6 +24,8 @@ const {
  * - If "policy - using a nominated loss payee" is true, the XLSX has 5 additional rows.
  * - If "buyer section - traded with buyer before" is true, the XLSX has 2 additional rows.
  * - If "buyer section - traded with buyer before" is true and "buyer has outstanding payments" is true, the XLSX has 2 additional rows.
+ * - If "total contract value over threshold", the buyer section has 2 additional rows.
+ * - If "total contract value over threshold" and has previous credit insurance with buyer, the buyer section has 2 additional rows.
  * - If "buyer section - has previous credit insurance cover with buyer" is true, the XLSX has 1 additional row.
  * - If "export contract section - final destination is known" is true, the XLSX has 1 additional row.
  * - If "export contract section - has attempted private market cover" is true, the XLSX has 1 additional row.
@@ -38,7 +40,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     broker,
     buyer: {
       buyerTradingHistory: { exporterHasTradedWithBuyer, outstandingPayments: buyerHasOutstandingPayments },
-      relationship: { exporterHasPreviousCreditInsuranceWithBuyer },
+      relationship: { exporterHasPreviousCreditInsuranceWithBuyer, exporterIsConnectedWithBuyer },
     },
     company: {
       differentTradingAddress: { fullAddress: hasDifferentTradingAddress },
@@ -149,6 +151,11 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
    * Increment some specific indexes,
    * depending on answers in the "Buyer" section of an application.
    */
+  if (exporterIsConnectedWithBuyer) {
+    indexes.TITLES.DECLARATIONS += 1;
+    indexes.TITLES.EXPORT_CONTRACT += 1;
+  }
+
   if (exporterHasTradedWithBuyer) {
     indexes.TITLES.DECLARATIONS += 2;
     indexes.TITLES.EXPORT_CONTRACT += 2;
@@ -159,9 +166,17 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     }
   }
 
-  if (exporterHasPreviousCreditInsuranceWithBuyer) {
+  // TODO: EMS-3467: move to getPopulatedApplication.
+  const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
+
+  if (totalContractValueOverThreshold) {
     indexes.TITLES.DECLARATIONS += 1;
     indexes.TITLES.EXPORT_CONTRACT += 1;
+
+    if (exporterHasPreviousCreditInsuranceWithBuyer) {
+      indexes.TITLES.DECLARATIONS += 1;
+      indexes.TITLES.EXPORT_CONTRACT += 1;
+    }
   }
 
   /**
@@ -199,6 +214,10 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     indexes.AGENT_ADDRESS += 1;
   }
 
+  if (totalContractValueOverThreshold) {
+    indexes.AGENT_ADDRESS += 1;
+  }
+
   if (finalDestinationKnown) {
     indexes.TITLES.DECLARATIONS += 1;
     indexes.AGENT_ADDRESS += 1;
@@ -206,16 +225,11 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
 
   /**
    * Increment some specific indexes,
-   * depending on generic answers in the application.
+   * depending on generic answers in the application,
+   * that affect the final "declarations" section of an application.
    */
-  // TODO: EMS-3467: move to getPopulatedApplication.
-  const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
-
   if (totalContractValueOverThreshold) {
     indexes.TITLES.DECLARATIONS += 1;
-    indexes.TITLES.EXPORT_CONTRACT += 1;
-
-    indexes.AGENT_ADDRESS += 1;
   }
 
   return indexes;
