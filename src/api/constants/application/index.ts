@@ -1,4 +1,5 @@
 import getApplicationDefinition from './get-application-definition';
+import VERSIONS from './versions';
 import LATEST_VERSION_NUMBER from './versions/latest';
 
 const LATEST_VERSION = getApplicationDefinition(LATEST_VERSION_NUMBER);
@@ -17,6 +18,7 @@ const LATEST_VERSION = getApplicationDefinition(LATEST_VERSION_NUMBER);
  */
 export const APPLICATION = {
   LATEST_VERSION,
+  LATEST_VERSION_NUMBER,
   DEAL_TYPE: 'EXIP',
   SUBMISSION_COUNT_DEFAULT: 0,
   SUBMISSION_DEADLINE_IN_MONTHS: 1,
@@ -69,6 +71,7 @@ export const APPLICATION = {
   },
   GET_QUERY:
     'id eligibility { id } buyer { id companyOrOrganisationName } company { id } exportContract { id } nominatedLossPayee { id } policy { id } sectionReview { id } owner { id email firstName lastName } referenceNumber submissionDeadline status ',
+  VERSIONS,
 };
 
 export default APPLICATION;

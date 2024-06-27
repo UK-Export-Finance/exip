@@ -3,9 +3,7 @@ import checkSummaryList from '../../../../../../../commands/insurance/check-your
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: {
-    CHECK_YOUR_ANSWERS,
-  },
+  EXPORTER_BUSINESS: { CHECK_YOUR_ANSWERS },
 } = ROUTES.INSURANCE;
 
 const {
@@ -17,15 +15,8 @@ const {
         WEBSITE,
         PHONE_NUMBER,
       },
-      NATURE_OF_YOUR_BUSINESS: {
-        GOODS_OR_SERVICES,
-        YEARS_EXPORTING,
-        EMPLOYEES_UK,
-      },
-      TURNOVER: {
-        ESTIMATED_ANNUAL_TURNOVER,
-        PERCENTAGE_TURNOVER,
-      },
+      NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
+      TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
       HAS_CREDIT_CONTROL,
     },
   },
@@ -46,7 +37,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
 
         cy.completeAndSubmitCompanyDetails({});
         cy.completeAndSubmitNatureOfYourBusiness();
-        cy.completeAndSubmitTurnoverForm();
+        cy.completeAndSubmitTurnoverForm({});
         cy.completeAndSubmitCreditControlForm({ hasCreditControlProcess: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
@@ -114,7 +105,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
         cy.completeAndSubmitCompanyDetails({ differentTradingAddress: true });
         cy.completeAndSubmitAlternativeTradingAddressForm({});
         cy.completeAndSubmitNatureOfYourBusiness();
-        cy.completeAndSubmitTurnoverForm();
+        cy.completeAndSubmitTurnoverForm({});
         cy.completeAndSubmitCreditControlForm({});
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
@@ -145,7 +136,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
 
         cy.completeAndSubmitCompanyDetails({ differentTradingName: true });
         cy.completeAndSubmitNatureOfYourBusiness();
-        cy.completeAndSubmitTurnoverForm();
+        cy.completeAndSubmitTurnoverForm({});
         cy.completeAndSubmitCreditControlForm({});
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;

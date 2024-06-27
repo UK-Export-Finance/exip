@@ -1,7 +1,7 @@
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import generateOTPAndUpdateAccount from '../../../helpers/generate-otp-and-update-account';
-import { AddOtpToAccountVariables, AddAndGetOtpResponse, Context } from '../../../types';
+import { Account, AddOtpToAccountVariables, AddAndGetOtpResponse, Context } from '../../../types';
 
 /**
  * addAndGetOTP
@@ -20,7 +20,7 @@ const addAndGetOTP = async (root: any, variables: AddOtpToAccountVariables, cont
     const { email } = variables;
 
     // Get the account the email is associated with.
-    const account = await getAccountByField(context, ACCOUNT_FIELD_IDS.EMAIL, email);
+    const account = await getAccountByField(context, ACCOUNT_FIELD_IDS.EMAIL, email) as Account;
 
     if (!account) {
       console.info('Unable to generate and add OTP to an account - no account found');

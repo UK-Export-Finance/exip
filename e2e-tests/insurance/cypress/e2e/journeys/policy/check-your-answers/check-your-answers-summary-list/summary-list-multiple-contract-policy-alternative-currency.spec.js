@@ -4,10 +4,7 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/in
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
 import { NON_STANDARD_CURRENCY_CODE, NON_STANDARD_CURRENCY_NAME } from '../../../../../../../fixtures/currencies';
 
-const {
-  ROOT: INSURANCE_ROOT,
-  POLICY,
-} = INSURANCE_ROUTES;
+const { ROOT: INSURANCE_ROOT, POLICY } = INSURANCE_ROUTES;
 
 const {
   CURRENCY: { CURRENCY_CODE },

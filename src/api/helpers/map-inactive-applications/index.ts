@@ -1,6 +1,5 @@
-import { Application } from '.keystone/types'; // eslint-disable-line
 import { APPLICATION } from '../../constants';
-import { CronApplicationInactiveUpdate } from '../../types';
+import { Application, CronApplicationInactiveUpdate } from '../../types';
 
 /**
  * mapInactiveApplications

@@ -35,9 +35,9 @@ const mapBuyer = (application: Application) => {
 
   const mapped = [
     xlsxRow(SECTION_TITLES.BUYER, ''),
-    xlsxRow(FIELDS[NAME], buyer[NAME]),
+    xlsxRow(String(FIELDS[NAME]), buyer[NAME]),
     xlsxRow(String(CONTENT_STRINGS[ADDRESS].SUMMARY?.TITLE), `${buyer[ADDRESS]} ${NEW_LINE}${buyer[COUNTRY].name}`),
-    xlsxRow(FIELDS[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
+    xlsxRow(String(FIELDS[REGISTRATION_NUMBER]), buyer[REGISTRATION_NUMBER]),
     xlsxRow(String(CONTENT_STRINGS[WEBSITE].SUMMARY?.TITLE), buyer[WEBSITE]),
     xlsxRow(String(FIELDS[CONNECTION_WITH_BUYER]), mapYesNoField({ answer: relationship[CONNECTION_WITH_BUYER] })),
 

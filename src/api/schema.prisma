@@ -312,17 +312,18 @@ model Authentication {
 }
 
 model Business {
-  id                        String        @id @default(cuid())
-  application               Application?  @relation("Business_application", fields: [applicationId], references: [id])
-  applicationId             String?       @map("application")
-  goodsOrServicesSupplied   String        @default("") @mysql.VarChar(1000)
-  totalYearsExporting       Int?
-  totalEmployeesUK          Int?
-  estimatedAnnualTurnover   Int?
-  exportsTurnoverPercentage Int?
-  turnoverCurrencyCode      String        @default("GBP") @mysql.VarChar(3)
-  hasCreditControlProcess   Boolean?
-  from_Application_business Application[] @relation("Application_business")
+  id                          String        @id @default(cuid())
+  application                 Application?  @relation("Business_application", fields: [applicationId], references: [id])
+  applicationId               String?       @map("application")
+  goodsOrServicesSupplied     String        @default("") @mysql.VarChar(1000)
+  totalYearsExporting         Int?
+  totalEmployeesUK            Int?
+  totalEmployeesInternational Int?
+  estimatedAnnualTurnover     Int?
+  exportsTurnoverPercentage   Int?
+  turnoverCurrencyCode        String        @default("GBP") @mysql.VarChar(3)
+  hasCreditControlProcess     Boolean?
+  from_Application_business   Application[] @relation("Application_business")
 
   @@index([applicationId])
 }

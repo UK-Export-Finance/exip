@@ -869,6 +869,7 @@ CREATE TABLE `Business` (
   `goodsOrServicesSupplied` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `totalYearsExporting` int DEFAULT NULL,
   `totalEmployeesUK` int DEFAULT NULL,
+  `totalEmployeesInternational` int DEFAULT NULL,
   `estimatedAnnualTurnover` int DEFAULT NULL,
   `exportsTurnoverPercentage` int DEFAULT NULL,
   `hasCreditControlProcess` tinyint(1) DEFAULT NULL,

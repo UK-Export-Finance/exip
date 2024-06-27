@@ -5,12 +5,13 @@ context('Insurance - submit an application - Multiple policy type, fully populat
 
   before(() => {
     cy.completeSignInAndSubmitAnApplication({
-      policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
-      totalContractValueOverThreshold: true,
-      attemptedPrivateMarketCover: true,
-      isUsingAgent: true,
       agentIsCharging: true,
       agentChargeMethodFixedSum: true,
+      attemptedPrivateMarketCover: true,
+      isUsingAgent: true,
+      finalDestinationKnown: true,
+      policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
+      totalContractValueOverThreshold: true,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });

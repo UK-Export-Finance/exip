@@ -21,7 +21,7 @@ const mapDifferentTradingAddress = (company: ApplicationCompany) => {
   const differentTradingAddressValue = differentTradingAddress[FULL_ADDRESS];
 
   if (differentTradingAddressValue) {
-    return xlsxRow(FIELDS[FULL_ADDRESS_DOT_NOTATION], differentTradingAddressValue);
+    return xlsxRow(String(FIELDS[FULL_ADDRESS_DOT_NOTATION]), differentTradingAddressValue);
   }
 };
 

@@ -17,7 +17,7 @@ const { FIELDS } = XLSX;
  */
 const mapDifferentTradingName = (company: ApplicationCompany) => {
   if (company[HAS_DIFFERENT_TRADING_NAME]) {
-    return xlsxRow(FIELDS[DIFFERENT_TRADING_NAME], company[DIFFERENT_TRADING_NAME]);
+    return xlsxRow(String(FIELDS[DIFFERENT_TRADING_NAME]), company[DIFFERENT_TRADING_NAME]);
   }
 };
 

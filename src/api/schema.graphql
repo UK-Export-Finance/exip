@@ -1664,6 +1664,7 @@ type Business {
   goodsOrServicesSupplied: String
   totalYearsExporting: Int
   totalEmployeesUK: Int
+  totalEmployeesInternational: Int
   estimatedAnnualTurnover: Int
   exportsTurnoverPercentage: Int
   turnoverCurrencyCode: String
@@ -1683,6 +1684,7 @@ input BusinessWhereInput {
   goodsOrServicesSupplied: StringFilter
   totalYearsExporting: IntNullableFilter
   totalEmployeesUK: IntNullableFilter
+  totalEmployeesInternational: IntNullableFilter
   estimatedAnnualTurnover: IntNullableFilter
   exportsTurnoverPercentage: IntNullableFilter
   turnoverCurrencyCode: StringFilter
@@ -1693,6 +1695,7 @@ input BusinessOrderByInput {
   goodsOrServicesSupplied: OrderDirection
   totalYearsExporting: OrderDirection
   totalEmployeesUK: OrderDirection
+  totalEmployeesInternational: OrderDirection
   estimatedAnnualTurnover: OrderDirection
   exportsTurnoverPercentage: OrderDirection
   turnoverCurrencyCode: OrderDirection
@@ -1703,6 +1706,7 @@ input BusinessUpdateInput {
   goodsOrServicesSupplied: String
   totalYearsExporting: Int
   totalEmployeesUK: Int
+  totalEmployeesInternational: Int
   estimatedAnnualTurnover: Int
   exportsTurnoverPercentage: Int
   turnoverCurrencyCode: String
@@ -1719,6 +1723,7 @@ input BusinessCreateInput {
   goodsOrServicesSupplied: String
   totalYearsExporting: Int
   totalEmployeesUK: Int
+  totalEmployeesInternational: Int
   estimatedAnnualTurnover: Int
   exportsTurnoverPercentage: Int
   turnoverCurrencyCode: String

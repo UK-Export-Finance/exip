@@ -18,9 +18,7 @@ const {
 
 const {
   INSURANCE: {
-    EXPORT_CONTRACT: {
-      ABOUT_GOODS_OR_SERVICES: ABOUT_ERROR_MESSAGES,
-    },
+    EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES: ABOUT_ERROR_MESSAGES },
   },
 } = ERROR_MESSAGES;
 
@@ -102,6 +100,7 @@ context('Insurance - Export contract - About goods or services page - form valid
       cy.navigateToUrl(url);
 
       cy.completeAboutGoodsOrServicesForm({
+        finalDestinationKnown: true,
         includeFinalDestination: false,
       });
 
@@ -120,6 +119,7 @@ context('Insurance - Export contract - About goods or services page - form valid
 
       cy.completeAndSubmitAboutGoodsOrServicesForm({
         description: descriptionOverMaximum,
+        finalDestinationKnown: true,
         includeFinalDestination: true,
       });
 

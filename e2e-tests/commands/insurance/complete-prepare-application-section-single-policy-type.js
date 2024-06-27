@@ -20,6 +20,7 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * @param {Boolean} hasConnectionToBuyer: Should submit "yes" to "have connection to buyer" radio.
  * @param {Boolean} exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" in the "working with buyer" form.
  * @param {Boolean} exporterHasBuyerFinancialAccounts: Should submit "yes" to the "have buyer financial accounts" form.
+ * @param {Boolean} finalDestinationKnown: Should submit "yes" to "Final destination known"
  * @param {Boolean} fullyPopulatedBuyerTradingHistory: Submit all possible optional "buyer trading history" form fields.
  * @param {Boolean} hasHadCreditInsuranceCoverWithBuyer: Submit "yes" to if export "has held credit insurance cover on the buyer in the past".
  * @param {Boolean} isAppointingLossPayee: Should submit "yes" or "no" to "appointing a loss payee".
@@ -31,6 +32,8 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * @param {Boolean} submitCheckYourAnswers: Should click each section's "check your answers" submit button.
  * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker".
+ * @param {Boolean} alternativeCurrencyTurnover: Select the "alternative currency" option
+ * @param {Boolean} alternativeCurrencyPolicy: Select the "alternative currency" option
  */
 const completePrepareApplicationSinglePolicyType = ({
   alternativeBuyerCurrency = false,
@@ -44,6 +47,7 @@ const completePrepareApplicationSinglePolicyType = ({
   fullyPopulatedBuyerTradingHistory = false,
   hasHadCreditInsuranceCoverWithBuyer = false,
   exporterHasBuyerFinancialAccounts = false,
+  finalDestinationKnown = false,
   usingBroker = false,
   otherCompanyInvolved = false,
   isAppointingLossPayee = false,
@@ -58,12 +62,15 @@ const completePrepareApplicationSinglePolicyType = ({
   agentChargeMethodFixedSum = false,
   agentChargeMethodPercentage = false,
   submitCheckYourAnswers = true,
+  alternativeCurrencyTurnover = false,
+  alternativeCurrencyPolicy = false,
 }) => {
   cy.completeBusinessSection({
     differentTradingName,
     differentTradingAddress,
     hasCreditControlProcess,
     submitCheckYourAnswers,
+    alternativeCurrencyTurnover,
   });
 
   cy.completeBuyerSection({
@@ -89,16 +96,18 @@ const completePrepareApplicationSinglePolicyType = ({
     needPreCreditPeriod,
     isAppointingLossPayee,
     lossPayeeIsLocatedInUK,
+    alternativeCurrency: alternativeCurrencyPolicy,
   });
 
   cy.completeExportContractSection({
-    totalContractValueOverThreshold,
-    attemptedPrivateMarketCover,
-    isUsingAgent,
     agentIsCharging,
     agentChargeMethodFixedSum,
     agentChargeMethodPercentage,
+    attemptedPrivateMarketCover,
+    finalDestinationKnown,
+    isUsingAgent,
     submitCheckYourAnswers,
+    totalContractValueOverThreshold,
   });
 };
 

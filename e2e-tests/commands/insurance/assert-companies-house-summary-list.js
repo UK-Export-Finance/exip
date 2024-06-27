@@ -1,13 +1,18 @@
 import { format } from 'date-fns';
 import { summaryList } from '../../pages/shared';
-import { COMPANIES_HOUSE_NUMBER, DATE_FORMAT } from '../../constants';
+import { COMPANIES_HOUSE_NUMBER, COMPANIES_HOUSE_NUMBER_SPECIAL_CHARACTERS_NAME, DATE_FORMAT } from '../../constants';
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { FIELDS } from '../../content-strings';
 import mockCompanies from '../../fixtures/companies';
 
 const {
   COMPANIES_HOUSE: {
-    COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_NAME, COMPANY_INCORPORATED, COMPANY_SIC, INDUSTRY_SECTOR_NAMES,
+    COMPANY_ADDRESS,
+    COMPANY_NUMBER,
+    COMPANY_NAME,
+    COMPANY_INCORPORATED,
+    COMPANY_SIC,
+    INDUSTRY_SECTOR_NAMES,
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -23,10 +28,14 @@ const assertCompaniesHouseSummaryList = {
 
     cy.checkText(summaryList.field(COMPANY_NUMBER).value(), mockCompany[COMPANY_NUMBER]);
   },
-  name: () => {
+  name: ({ differentCompanyWithSpecialCharacters = false }) => {
     cy.checkText(summaryList.field(COMPANY_NAME).key(), FIELDS[COMPANY_NAME].SUMMARY.TITLE);
 
-    cy.checkText(summaryList.field(COMPANY_NAME).value(), mockCompany[COMPANY_NAME]);
+    if (differentCompanyWithSpecialCharacters) {
+      cy.checkText(summaryList.field(COMPANY_NAME).value(), mockCompanies[COMPANIES_HOUSE_NUMBER_SPECIAL_CHARACTERS_NAME][COMPANY_NAME]);
+    } else {
+      cy.checkText(summaryList.field(COMPANY_NAME).value(), mockCompany[COMPANY_NAME]);
+    }
   },
   address: () => {
     cy.checkText(summaryList.field(COMPANY_ADDRESS).key(), FIELDS[COMPANY_ADDRESS].SUMMARY.TITLE);

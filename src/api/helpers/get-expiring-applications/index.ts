@@ -1,7 +1,8 @@
-import { Application, Context } from '.keystone/types'; // eslint-disable-line
+import { Context } from '.keystone/types'; // eslint-disable-line
 import { APPLICATION } from '../../constants';
 import getStartAndEndTimeOfDate from '../get-start-and-end-time-of-date';
 import { dateInTheFutureByDays } from '../date';
+import { Application } from '../../types';
 
 const { IN_PROGRESS } = APPLICATION.STATUS;
 

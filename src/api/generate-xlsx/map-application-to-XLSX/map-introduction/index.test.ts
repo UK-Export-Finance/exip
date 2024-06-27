@@ -20,8 +20,8 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-introduction', () => {
       xlsxRow(REFERENCE_NUMBER.SUMMARY.TITLE, mockApplication.referenceNumber),
       xlsxRow(DATE_SUBMITTED.SUMMARY.TITLE, formatDate(mockApplication.submissionDate, DATE_FORMAT.XLSX)),
       xlsxRow(TIME_SUBMITTED.SUMMARY.TITLE, formatTimeOfDay(mockApplication.submissionDate)),
-      xlsxRow(FIELDS[FIRST_NAME], mockApplication.owner[FIRST_NAME]),
-      xlsxRow(FIELDS[LAST_NAME], mockApplication.owner[LAST_NAME]),
+      xlsxRow(String(FIELDS[FIRST_NAME]), mockApplication.owner[FIRST_NAME]),
+      xlsxRow(String(FIELDS[LAST_NAME]), mockApplication.owner[LAST_NAME]),
       xlsxRow(FIELDS.APPLICANT_EMAIL_ADDRESS, mockApplication.owner[EMAIL]),
     ];
 

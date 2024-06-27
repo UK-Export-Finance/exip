@@ -30,6 +30,7 @@ export interface ApplicationBuyerRelationship extends Relationship {
 }
 
 export interface ApplicationBuyer extends Relationship {
+  application?: string;
   companyOrOrganisationName?: string;
   address?: string;
   country?: Country;
@@ -42,6 +43,22 @@ export interface ApplicationBuyer extends Relationship {
   canContactBuyer?: boolean;
   buyerTradingHistory: BuyerTradingHistory;
   relationship: ApplicationBuyerRelationship;
+}
+
+export interface ApplicationBuyerMvp extends Relationship {
+  application?: string;
+  companyOrOrganisationName?: string;
+  address?: string;
+  country?: Country;
+  registrationNumber?: string;
+  website?: string;
+  contactFirstName?: string;
+  contactLastName?: string;
+  contactPosition?: string;
+  contactEmail?: string;
+  canContactBuyer?: boolean;
+  exporterIsConnectedWithBuyer?: boolean;
+  exporterHasTradedWithBuyer?: boolean;
 }
 
 export interface ApplicationCompanyAddressCore {
@@ -215,6 +232,7 @@ export interface ApplicationPolicy extends Relationship {
   requestedStartDate: Date;
   contractCompletionDate: Date;
   totalValueOfContract?: number;
+  needPreCreditPeriodCover?: boolean;
   creditPeriodWithBuyer?: string;
   policyCurrencyCode?: string;
   totalMonthsOfCover?: number;

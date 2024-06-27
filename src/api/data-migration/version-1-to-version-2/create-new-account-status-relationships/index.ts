@@ -1,0 +1,59 @@
+import { Context } from '.keystone/types'; // eslint-disable-line
+import { Connection } from 'mysql2/promise';
+import getAllAccounts from '../get-all-accounts';
+import { AccountMvp, AccountStatus } from '../../../types';
+
+/**
+ * createNewAccountStatusRelationships
+ * Create new "account status" relationships for all existing accounts.
+ * 1) Get all accounts
+ * 2) Create an array of "account status" data - using isVerified and isBlocked from the original accounts data.
+ * 3) Create new "account status" entries.
+ * @param {Connection} connection: SQL database connection
+ * @param {Context} context: KeystoneJS context API
+ * @returns {Promise<Array<AccountStatus>>} Account status entires
+ */
+const createNewAccountStatusRelationships = async (connection: Connection, context: Context): Promise<Array<AccountStatus>> => {
+  const loggingMessage = 'Creating new status relationships for all accounts';
+
+  console.info(`✅ ${loggingMessage}`);
+
+  try {
+    const accounts = await getAllAccounts(connection);
+
+    const mappedAccountStatusData = accounts.map((account: AccountMvp) => {
+      const mapped = {
+        account: {
+          connect: {
+            id: account.id,
+          },
+        },
+        /**
+         * NOTE: The accounts data we receive is raw database data.
+         * In the database, boolean fields are TINYINT/integer values.
+         * The KeystoneJS context/GraphQL API expects these fields to be booleans.
+         * Therefore, since the TINYINT values will be 0 or 1,
+         * we can safely transform these fields to have a boolean value.
+         * KeystoneJS will then automatically handle saving in the database as a TINYINT
+         */
+        isVerified: Boolean(account.isVerified),
+        isBlocked: Boolean(account.isBlocked),
+        updatedAt: account.updatedAt,
+      };
+
+      return mapped;
+    });
+
+    const created = (await context.db.AccountStatus.createMany({
+      data: mappedAccountStatusData,
+    })) as Array<AccountStatus>;
+
+    return created;
+  } catch (err) {
+    console.error(`🚨 error ${loggingMessage} %O`, err);
+
+    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+  }
+};
+
+export default createNewAccountStatusRelationships;

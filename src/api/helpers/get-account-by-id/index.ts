@@ -7,7 +7,7 @@ import { Account, Context } from '../../types';
  * @param {String} accountId: Account ID
  * @returns {Promise<Account>} Account
  */
-const getAccountById = async (context: Context, accountId: string) => {
+const getAccountById = async (context: Context, accountId: string): Promise<Account> => {
   try {
     console.info('Getting account by ID');
 

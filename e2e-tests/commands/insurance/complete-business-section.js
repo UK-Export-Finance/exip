@@ -6,6 +6,7 @@
  * @param {Boolean} differentTradingAddress: Should submit "yes" to "trade from a different address" in the "company details" form.
  * @param {Boolean} hasCreditControlProcess: Flag whether to submit "yes" or "no" radio input in the "credit control" form.
  * @param {Boolean} submitCheckYourAnswers: Click policy "check your answers" submit button
+ * @param {Boolean} alternativeCurrencyTurnover: Select the "alternative currency" option
  */
 const completeBusinessSection = ({
   viaTaskList,
@@ -13,6 +14,7 @@ const completeBusinessSection = ({
   differentTradingAddress = false,
   hasCreditControlProcess = false,
   submitCheckYourAnswers = false,
+  alternativeCurrencyTurnover = false,
 }) => {
   cy.startYourBusinessSection({ viaTaskList });
 
@@ -23,7 +25,7 @@ const completeBusinessSection = ({
   }
 
   cy.completeAndSubmitNatureOfYourBusiness();
-  cy.completeAndSubmitTurnoverForm();
+  cy.completeAndSubmitTurnoverForm({ alternativeCurrency: alternativeCurrencyTurnover });
   cy.completeAndSubmitCreditControlForm({ hasCreditControlProcess });
 
   if (submitCheckYourAnswers) {

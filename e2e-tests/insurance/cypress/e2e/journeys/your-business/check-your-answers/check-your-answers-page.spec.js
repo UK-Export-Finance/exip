@@ -4,10 +4,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: {
-    CREDIT_CONTROL,
-    CHECK_YOUR_ANSWERS,
-  },
+  EXPORTER_BUSINESS: { CREDIT_CONTROL, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.CHECK_YOUR_ANSWERS;
@@ -26,7 +23,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
 
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
-      cy.completeAndSubmitTurnoverForm();
+      cy.completeAndSubmitTurnoverForm({});
       cy.completeAndSubmitCreditControlForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
