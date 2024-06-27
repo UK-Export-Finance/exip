@@ -170,7 +170,6 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
 
   if (totalContractValueOverThreshold) {
-    // increment for HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER field/row.
     indexes.TITLES.DECLARATIONS += 1;
     indexes.TITLES.EXPORT_CONTRACT += 1;
 
