@@ -764,6 +764,7 @@ var EXTERNAL_API_DEFINITIONS = {
       YES: "Y",
       NO: "N"
     },
+    NO_COVER: "Off cover",
     INVALID_COUNTRIES: ["EC Market n/k", "Non EC Market n/k", "Non UK", "Third Country", "Eastern and Southern African Trade and Development Bank"],
     INVALID_CURRENCIES: ["Gold"]
   },
@@ -2994,7 +2995,6 @@ var typeDefs = `
     cannotGetAQuote: Boolean
     cannotApply: Boolean
     canApplyForInsuranceOnline: Boolean
-    canApplyForInsuranceOffline: Boolean
     noInsuranceSupport: Boolean
   }
 
@@ -8113,26 +8113,26 @@ var canApplyForInsuranceOnline = (shortTermCover, riskCategory) => {
 };
 var can_apply_for_insurance_online_default = canApplyForInsuranceOnline;
 
-// helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-offline/index.ts
-var { CIS: CIS3 } = EXTERNAL_API_DEFINITIONS;
-var canApplyForInsuranceOffline = (originalShortTermCover) => originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.NO;
-var can_apply_for_insurance_offline_default = canApplyForInsuranceOffline;
-
 // helpers/map-CIS-countries/map-CIS-country/can-apply-offline/index.ts
-var { CIS: CIS4 } = EXTERNAL_API_DEFINITIONS;
+var { CIS: CIS3 } = EXTERNAL_API_DEFINITIONS;
 var canApplyOffline = (originalShortTermCover) => {
-  if (originalShortTermCover === CIS4.SHORT_TERM_COVER_AVAILABLE.ILC) {
+  if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.ILC) {
     return true;
   }
-  if (originalShortTermCover === CIS4.SHORT_TERM_COVER_AVAILABLE.CILC) {
+  if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.CILC) {
     return true;
   }
-  if (originalShortTermCover === CIS4.SHORT_TERM_COVER_AVAILABLE.REFER) {
+  if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.REFER) {
     return true;
   }
   return false;
 };
 var can_apply_offline_default = canApplyOffline;
+
+// helpers/map-CIS-countries/map-CIS-country/no-insurance-support/index.ts
+var { NO_COVER } = EXTERNAL_API_DEFINITIONS.CIS;
+var noInsuranceSupportAvailable = (marketRiskAppetitePublicDesc) => marketRiskAppetitePublicDesc === NO_COVER;
+var no_insurance_support_default = noInsuranceSupportAvailable;
 
 // helpers/map-CIS-countries/map-CIS-country/index.ts
 var mapCisCountry = (country) => {
@@ -8148,8 +8148,7 @@ var mapCisCountry = (country) => {
   mapped.canGetAQuoteByEmail = can_get_a_quote_by_email_default(mapped);
   mapped.cannotGetAQuote = cannot_get_a_quote_default(mapped);
   mapped.canApplyForInsuranceOnline = can_apply_for_insurance_online_default(mapped.shortTermCover, mapped.riskCategory);
-  mapped.canApplyForInsuranceOffline = can_apply_for_insurance_offline_default(country.shortTermCoverAvailabilityDesc);
-  mapped.noInsuranceSupport = !mapped.canApplyForInsuranceOnline && !mapped.canApplyForInsuranceOffline;
+  mapped.noInsuranceSupport = no_insurance_support_default(country.marketRiskAppetitePublicDesc);
   return mapped;
 };
 var map_CIS_country_default = mapCisCountry;
@@ -8159,9 +8158,9 @@ var sortArrayAlphabetically = (arr, field) => arr.sort((a, b) => a[field].locale
 var sort_array_alphabetically_default = sortArrayAlphabetically;
 
 // helpers/map-CIS-countries/index.ts
-var { CIS: CIS5 } = EXTERNAL_API_DEFINITIONS;
+var { CIS: CIS4 } = EXTERNAL_API_DEFINITIONS;
 var mapCisCountries = (countries) => {
-  const filteredCountries = filter_cis_entries_default(countries, CIS5.INVALID_COUNTRIES, "marketName");
+  const filteredCountries = filter_cis_entries_default(countries, CIS4.INVALID_COUNTRIES, "marketName");
   const mapped = filteredCountries.map((country) => map_CIS_country_default(country));
   const sorted = sort_array_alphabetically_default(mapped, "name");
   return sorted;
@@ -8186,7 +8185,7 @@ var getApimCisCountries = async () => {
 var get_APIM_CIS_countries_default = getApimCisCountries;
 
 // helpers/map-currencies/index.ts
-var { CIS: CIS6 } = EXTERNAL_API_DEFINITIONS;
+var { CIS: CIS5 } = EXTERNAL_API_DEFINITIONS;
 var getSupportedCurrencies = (currencies) => {
   const supported = currencies.filter((currency) => SUPPORTED_CURRENCIES.find((currencyCode) => currency.isoCode === currencyCode));
   return supported;
@@ -8196,7 +8195,7 @@ var getAlternativeCurrencies = (currencies) => {
   return alternate;
 };
 var mapCurrencies = (currencies, alternativeCurrencies) => {
-  let currenciesArray = filter_cis_entries_default(currencies, CIS6.INVALID_CURRENCIES, "name");
+  let currenciesArray = filter_cis_entries_default(currencies, CIS5.INVALID_CURRENCIES, "name");
   if (!alternativeCurrencies) {
     currenciesArray = getSupportedCurrencies(currenciesArray);
   } else {

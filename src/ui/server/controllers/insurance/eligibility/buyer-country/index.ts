@@ -25,7 +25,6 @@ export const TEMPLATE = TEMPLATES.SHARED_PAGES.BUYER_COUNTRY;
 
 const {
   PROBLEM_WITH_SERVICE,
-  APPLY_OFFLINE,
   ELIGIBILITY: { CANNOT_APPLY: CANNOT_APPLY_ROUTE, TOTAL_VALUE_INSURED, CHECK_YOUR_ANSWERS, CONTRACT_TOO_SHORT },
 } = INSURANCE_ROUTES;
 
@@ -121,17 +120,6 @@ export const post = async (req: Request, res: Response) => {
       }
 
       return res.redirect(TOTAL_VALUE_INSURED);
-    }
-
-    if (country.canApplyForInsuranceOffline) {
-      const populatedData = mapSubmittedEligibilityCountry(country);
-
-      req.session.submittedData = {
-        ...req.session.submittedData,
-        insuranceEligibility: updateSubmittedData(populatedData, req.session.submittedData.insuranceEligibility),
-      };
-
-      return res.redirect(APPLY_OFFLINE);
     }
 
     if (country.noInsuranceSupport) {

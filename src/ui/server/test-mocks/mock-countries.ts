@@ -12,7 +12,6 @@ const baseCountry = {
   canGetAQuoteByEmail: false,
   cannotGetAQuote: false,
   canApplyForInsuranceOnline: true,
-  canApplyForInsuranceOffline: false,
   noInsuranceSupport: false,
   shortTermCover: true,
 };
@@ -63,7 +62,6 @@ const mockCountries = [
     ...baseCountry,
     canGetAQuoteOnline: false,
     canApplyForInsuranceOnline: false,
-    canApplyForInsuranceOffline: true,
   },
   /**
    * mock country that:
@@ -78,7 +76,6 @@ const mockCountries = [
     canGetAQuoteOnline: false,
     canGetAQuoteOffline: false,
     canApplyForInsuranceOnline: false,
-    canApplyForInsuranceOffline: false,
     noInsuranceSupport: true,
   },
   /**

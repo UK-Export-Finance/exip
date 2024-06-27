@@ -10,7 +10,6 @@ import { Country, Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockCountries } from '../../../../test-mocks';
 
 const {
-  APPLY_OFFLINE,
   ELIGIBILITY: { CANNOT_APPLY: CANNOT_APPLY_ROUTE, TOTAL_VALUE_INSURED, BUYER_COUNTRY_CHANGE, CHECK_YOUR_ANSWERS, CONTRACT_TOO_SHORT },
 } = INSURANCE_ROUTES;
 
@@ -20,7 +19,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
   let mockCountriesResponse = mockCountries;
 
-  const { 1: countryApplyOnline, 3: countryApplyOffline, 4: countryCannotApply, 5: countryNoShortTermCover } = mockCountriesResponse;
+  const { 1: countryApplyOnline, 4: countryCannotApply, 5: countryNoShortTermCover } = mockCountriesResponse;
   const mockFlash = jest.fn();
 
   beforeEach(() => {
@@ -135,41 +134,6 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(CONTRACT_TOO_SHORT);
-      });
-    });
-
-    describe('when the submitted country can only apply for an application offline', () => {
-      const selectedCountryName = countryApplyOffline.isoCode;
-
-      beforeEach(() => {
-        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = selectedCountryName;
-
-        mockCountriesResponse = [countryApplyOffline];
-
-        getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
-
-        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
-      });
-
-      it('should update the session with populated country object', async () => {
-        await post(req, res);
-
-        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, countryApplyOffline.isoCode) as Country;
-
-        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
-
-        const expected = {
-          ...req.session.submittedData,
-          insuranceEligibility: updateSubmittedData(expectedPopulatedData, req.session.submittedData.insuranceEligibility),
-        };
-
-        expect(req.session.submittedData).toEqual(expected);
-      });
-
-      it(`should redirect to ${APPLY_OFFLINE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(APPLY_OFFLINE);
       });
     });
 
