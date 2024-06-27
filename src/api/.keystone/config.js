@@ -878,7 +878,7 @@ var XLSX_ROW_INDEXES = (application2) => {
     broker,
     buyer: {
       buyerTradingHistory: { exporterHasTradedWithBuyer, outstandingPayments: buyerHasOutstandingPayments },
-      relationship: { exporterHasPreviousCreditInsuranceWithBuyer }
+      relationship: { exporterHasPreviousCreditInsuranceWithBuyer, exporterIsConnectedWithBuyer }
     },
     company: {
       differentTradingAddress: { fullAddress: hasDifferentTradingAddress },
@@ -958,6 +958,10 @@ var XLSX_ROW_INDEXES = (application2) => {
     indexes.TITLES.EXPORT_CONTRACT += 5;
     indexes.BUYER_ADDRESS += 5;
   }
+  if (exporterIsConnectedWithBuyer) {
+    indexes.TITLES.DECLARATIONS += 1;
+    indexes.TITLES.EXPORT_CONTRACT += 1;
+  }
   if (exporterHasTradedWithBuyer) {
     indexes.TITLES.DECLARATIONS += 2;
     indexes.TITLES.EXPORT_CONTRACT += 2;
@@ -966,9 +970,14 @@ var XLSX_ROW_INDEXES = (application2) => {
       indexes.TITLES.EXPORT_CONTRACT += 2;
     }
   }
-  if (exporterHasPreviousCreditInsuranceWithBuyer) {
+  const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
+  if (totalContractValueOverThreshold) {
     indexes.TITLES.DECLARATIONS += 1;
     indexes.TITLES.EXPORT_CONTRACT += 1;
+    if (exporterHasPreviousCreditInsuranceWithBuyer) {
+      indexes.TITLES.DECLARATIONS += 1;
+      indexes.TITLES.EXPORT_CONTRACT += 1;
+    }
   }
   if (attemptedPrivateMarket) {
     indexes.TITLES.DECLARATIONS += 1;
@@ -992,15 +1001,15 @@ var XLSX_ROW_INDEXES = (application2) => {
     indexes.TITLES.DECLARATIONS += 1;
     indexes.AGENT_ADDRESS += 1;
   }
+  if (totalContractValueOverThreshold) {
+    indexes.AGENT_ADDRESS += 1;
+  }
   if (finalDestinationKnown) {
     indexes.TITLES.DECLARATIONS += 1;
     indexes.AGENT_ADDRESS += 1;
   }
-  const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
   if (totalContractValueOverThreshold) {
     indexes.TITLES.DECLARATIONS += 1;
-    indexes.TITLES.EXPORT_CONTRACT += 1;
-    indexes.AGENT_ADDRESS += 1;
   }
   return indexes;
 };
