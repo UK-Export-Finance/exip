@@ -1,42 +1,33 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
+import crypto from 'crypto';
+import { Connection } from 'mysql2/promise';
+import executeSqlQuery from '../execute-sql-query';
 import { ApplicationBuyerMvp } from '../../../types';
 
 /**
  * moveBuyerContactFields
  * Move MVP "buyers" fields into the new "No PDF" data model/structure.
- * NOTE: The buyer data we receive is raw database data.
- * In the database, boolean fields are TINYINT/integer values.
- * The KeystoneJS context/GraphQL API expects these fields to be booleans.
- * Therefore, since the TINYINT values will be 0 or 1,
- * we can safely transform any TINYINT fields to have a boolean value.
- * KeystoneJS will then automatically handle saving in the database as a TINYINT
- * @param {Array<ApplicationBuyerMvp>} context: KeystoneJS context API
- * @param {Context} context: KeystoneJS context API
- * @returns {Promise<Array<ApplicationBuyer>>} Updated buyers
+ * @param {Array<ApplicationBuyerMvp>} buyers: Buyers
+ * @param {Connection} connection: SQL database connection
+ * @returns {Promise<Boolean>}
  */
-const moveBuyerContactFields = async (buyers: Array<ApplicationBuyerMvp>, context: Context) => {
-  const mappedBuyerContactData = buyers.map((buyer: ApplicationBuyerMvp) => {
-    const mapped = {
-      application: {
-        connect: {
-          id: buyer.application,
-        },
-      },
-      canContactBuyer: Boolean(buyer.canContactBuyer),
-      contactEmail: buyer.contactEmail,
-      contactFirstName: buyer.contactFirstName,
-      contactLastName: buyer.contactLastName,
-      contactPosition: buyer.contactPosition,
-    };
+const moveBuyerContactFields = async (buyers: Array<ApplicationBuyerMvp>, connection: Connection): Promise<Array<object>> => {
+  console.info('✅ Moving buyer contact relationships for all buyers');
 
-    return mapped;
+  const buyerContactValues = buyers.map((buyer: ApplicationBuyerMvp) => {
+    const { application, canContactBuyer, contactEmail, contactFirstName, contactLastName, contactPosition } = buyer;
+
+    return `('${crypto.randomUUID()}', '${application}', ${canContactBuyer}, '${contactEmail}', '${contactFirstName}', '${contactLastName}', '${contactPosition}')`;
   });
 
-  const created = await context.db.BuyerContact.createMany({
-    data: mappedBuyerContactData,
-  });
+  const loggingMessage = 'Creating new buyer contact relationships for all buyers';
 
-  return created;
+  const query = `
+    INSERT INTO BuyerContact (id, application, canContactBuyer, contactEmail, contactFirstName, contactLastName, contactPosition) VALUES ${buyerContactValues};
+  `;
+
+  const updated = executeSqlQuery({ connection, query, loggingMessage });
+
+  return updated;
 };
 
 export default moveBuyerContactFields;
