@@ -11,7 +11,7 @@ import { AccountMvp } from '../../../types';
  * 2) Create an array of "account status" data - using isVerified and isBlocked from the original accounts data.
  * 3) Create new "account status" entries.
  * @param {Connection} connection: SQL database connection
- * @returns {Promise<Array<AccountStatus>>} Account status entires
+ * @returns {Promise<Boolean>}
  */
 const createNewAccountStatusRelationships = async (connection: Connection): Promise<boolean> => {
   const loggingMessage = 'Creating new status relationships for all accounts';

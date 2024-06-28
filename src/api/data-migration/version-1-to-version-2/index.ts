@@ -5,6 +5,7 @@ import updateApplications from './update-applications';
 import createNewAccountStatusRelationships from './create-new-account-status-relationships';
 import removeAccountStatusFields from './update-accounts/remove-account-status-fields';
 import createNewApplicationRelationships from './create-new-application-relationships';
+import getAllBuyers from './get-all-buyers';
 import updateBuyers from './update-buyers';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 
@@ -38,7 +39,9 @@ const dataMigration = async () => {
 
     await createNewAccountStatusRelationships(connection);
 
-    await updateBuyers(connection, context);
+    const buyers = await getAllBuyers(connection);
+
+    await updateBuyers(connection, buyers);
 
     await createNewApplicationRelationships(context);
 
