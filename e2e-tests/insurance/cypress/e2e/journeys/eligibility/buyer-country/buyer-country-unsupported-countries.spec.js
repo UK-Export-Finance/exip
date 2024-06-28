@@ -11,8 +11,7 @@ const COUNTRY_NAME_2 = COUNTRY_APPLICATION_SUPPORT.UNSUPPORTED_2.NAME;
 const COUNTRY_NAME_3 = COUNTRY_APPLICATION_SUPPORT.UNSUPPORTED_3.NAME;
 const COUNTRY_NAME_4 = COUNTRY_APPLICATION_SUPPORT.UNSUPPORTED_4.NAME;
 
-const contextString =
-  'As an exporter I want to enter the country where my buyer is based So that I can ascertain if I can obtain UKEF Credit Insurance for the country where my buyer is based';
+const contextString = 'As an exporter I want to enter the country where my buyer is based So that I can ascertain if I can obtain UKEF Credit Insurance for the country where my buyer is based';
 
 context(`Insurance - Buyer country page - ${contextString} - Unsupported countries`, () => {
   beforeEach(() => {
