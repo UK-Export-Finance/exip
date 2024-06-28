@@ -15,7 +15,8 @@ const connectToDatabase = async () => {
     const connection = (await mysql.createConnection({
       host: '127.0.0.1',
       user: process.env.DATABASE_USER,
-      database: 'exip-migration',
+      password: process.env.DATABASE_PASSWORD,
+      database: 'exip',
       port: Number(process.env.DATABASE_PORT),
     })) as Connection;
 

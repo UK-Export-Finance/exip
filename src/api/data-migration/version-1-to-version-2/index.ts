@@ -36,13 +36,13 @@ const dataMigration = async () => {
 
     console.info('✅ Obtained keystone context. Executing additional queries');
 
-    await createNewAccountStatusRelationships(connection, context);
-
-    await removeAccountStatusFields(connection);
+    await createNewAccountStatusRelationships(connection);
 
     await updateBuyers(connection, context);
 
     await createNewApplicationRelationships(context);
+
+    await removeAccountStatusFields(connection);
 
     console.info('🎉 Migration complete. Exiting script');
 
