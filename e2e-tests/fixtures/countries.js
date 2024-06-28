@@ -23,63 +23,43 @@ export const BRA = {
   ISO_CODE: 'BRA',
 };
 
+export const AFG = {
+  NAME: 'Afghanistan',
+  ISO_CODE: 'AFG',
+};
+
+export const AUS = {
+  NAME: 'Australia',
+  ISO_CODE: 'AUS',
+};
+
+export const BLR = {
+  NAME: 'Belarus',
+  ISO_CODE: 'BLR',
+};
+
+export const RUS = {
+  NAME: 'Russia',
+  ISO_CODE: 'RUS',
+};
+
+export const MMR = {
+  NAME: 'Burma',
+  ISO_CODE: 'MMR',
+};
+
 export const GBR = {
   NAME: 'United Kingdom',
   ISO_CODE: 'GBR',
 };
 
-const mockCountries = [
-  {
-    NAME: 'Abu Dhabi',
-    ISO_CODE: 'XAD',
-  },
-  {
-    NAME: 'Algeria',
-    ISO_CODE: 'DZA',
-  },
-  {
-    NAME: 'Angola',
-    ISO_CODE: 'AGO',
-  },
-  {
-    NAME: 'France',
-    ISO_CODE: 'FRA',
-  },
-  {
-    NAME: 'Brazil',
-    ISO_CODE: 'BRA',
-  },
-  {
-    NAME: 'United Kingdom',
-    ISO_CODE: 'GBR',
-  },
-  {
-    NAME: 'Afghanistan',
-    ISO_CODE: 'AFG',
-  },
-  {
-    NAME: 'Australia',
-    ISO_CODE: 'AUS',
-  },
-  {
-    NAME: 'Belarus',
-    ISO_CODE: 'BLR',
-  },
-  {
-    NAME: 'Russia',
-    ISO_CODE: 'RUS',
-  },
-  {
-    NAME: 'Burma',
-    ISO_CODE: 'MMR',
-  },
-];
+const mockCountries = [XAD, AFG, DZA, AGO, AUS, BLR, BRA, MMR, FRA, RUS, GBR];
 
 /**
  * COUNTRY_QUOTE_SUPPORT
  * Different types of country support for a quote.
  */
-const { 1: QUOTE_ONLINE, 2: QUOTE_BY_EMAIL, 3: QUOTE_UNSUPPORTED } = mockCountries;
+const { 2: QUOTE_ONLINE, 3: QUOTE_BY_EMAIL, 8: QUOTE_UNSUPPORTED } = mockCountries;
 
 export const COUNTRY_QUOTE_SUPPORT = {
   ONLINE: QUOTE_ONLINE,
@@ -92,14 +72,14 @@ export const COUNTRY_QUOTE_SUPPORT = {
  * Different types of country support for an application
  */
 const {
-  1: APPLICATION_ONLINE,
-  2: APPLICATION_BY_EMAIL,
-  3: APPLICATION_NO_SHORT_TERM_COVER_1,
-  6: APPLICATION_UNSUPPORTED_1,
-  7: APPLICATION_NO_SHORT_TERM_COVER_2,
-  8: APPLICATION_UNSUPPORTED_2,
+  2: APPLICATION_ONLINE,
+  3: APPLICATION_BY_EMAIL,
+  8: APPLICATION_NO_SHORT_TERM_COVER_1,
+  4: APPLICATION_NO_SHORT_TERM_COVER_2,
+  2: APPLICATION_UNSUPPORTED_1,
+  5: APPLICATION_UNSUPPORTED_2,
   9: APPLICATION_UNSUPPORTED_3,
-  10: APPLICATION_UNSUPPORTED_4,
+  7: APPLICATION_UNSUPPORTED_4,
 } = mockCountries;
 
 export const COUNTRY_APPLICATION_SUPPORT = {

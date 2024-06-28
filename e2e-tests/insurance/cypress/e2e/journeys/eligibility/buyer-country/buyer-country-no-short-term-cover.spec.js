@@ -27,13 +27,13 @@ context(
 
     describe(COUNTRY_NAME_1, () => {
       it(`redirects to ${CONTRACT_TOO_SHORT} exit page`, () => {
-        cy.assertExitPageUrlBuyerCountry(COUNTRY_NAME_1, CONTRACT_TOO_SHORT);
+        cy.enterCountryAndAssertExitPageUrlBuyerCountry(COUNTRY_NAME_1, CONTRACT_TOO_SHORT);
       });
     });
 
     describe(COUNTRY_NAME_2, () => {
       it(`redirects to ${CONTRACT_TOO_SHORT} exit page`, () => {
-        cy.assertExitPageUrlBuyerCountry(COUNTRY_NAME_2, CONTRACT_TOO_SHORT);
+        cy.enterCountryAndAssertExitPageUrlBuyerCountry(COUNTRY_NAME_2, CONTRACT_TOO_SHORT);
       });
     });
   },

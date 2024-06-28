@@ -14,7 +14,7 @@ describe('helpers/map-CIS-countries/map-CIS-country/no-insurance-support', () =>
     });
   });
 
-  describe(`when originalShortTermCover is NOT '${noInsuranceSupportAvailable}'`, () => {
+  describe(`when originalShortTermCover is NOT '${NO_COVER}'`, () => {
     it('should return false', () => {
       const result = noInsuranceSupportAvailable('');
 

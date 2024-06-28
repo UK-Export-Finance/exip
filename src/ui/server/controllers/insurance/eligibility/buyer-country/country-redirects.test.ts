@@ -13,7 +13,7 @@ const {
   ELIGIBILITY: { CANNOT_APPLY: CANNOT_APPLY_ROUTE, TOTAL_VALUE_INSURED, BUYER_COUNTRY_CHANGE, CHECK_YOUR_ANSWERS, CONTRACT_TOO_SHORT },
 } = INSURANCE_ROUTES;
 
-describe('controllers/insurance/eligibility/buyer-country', () => {
+describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
   let req: Request;
   let res: Response;
 
@@ -72,7 +72,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
       it('should update the session with populated with country object', async () => {
         await post(req, res);
 
-        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, selectedCountryIsoCode) as Country;
+        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, selectedCountryIsoCode);
 
         const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
 
@@ -154,7 +154,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
       it('should update the session with populated with country object', async () => {
         await post(req, res);
 
-        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, selectedCountryIsoCode) as Country;
+        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, selectedCountryIsoCode);
 
         const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
 

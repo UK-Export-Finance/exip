@@ -19,7 +19,7 @@ const COUNTRY_NAME = COUNTRY_APPLICATION_SUPPORT.UNSUPPORTED_1.NAME;
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  'Insurance - Buyer country page - as an exporter, I want to check if UKEF offer credit insurance policy for where my buyer is based - submit unsupported country',
+  'Insurance - Cannot apply page - as an exporter, I want to check if UKEF offer credit insurance policy for where my buyer is based - Unsupported country',
   () => {
     beforeEach(() => {
       cy.saveSession();

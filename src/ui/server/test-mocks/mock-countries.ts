@@ -85,7 +85,7 @@ const mockCountries = [
    * - cannot get short term cover
    */
   {
-    name: 'FRANCE',
+    name: 'France',
     isoCode: 'FRA',
     ...baseCountry,
     riskCategory: RISK.STANDARD,
