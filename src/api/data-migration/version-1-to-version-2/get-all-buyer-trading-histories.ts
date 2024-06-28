@@ -12,10 +12,9 @@ const getAllBuyerTradingHistories = async (connection: Connection) => {
 
   const query = 'SELECT * FROM BuyerTradingHistory';
 
-  // TODO: allbuyers / trading history etc
-  const [allBuyers] = await executeSqlQuery({ connection, query, loggingMessage });
+  const [tradingHistories] = await executeSqlQuery({ connection, query, loggingMessage });
 
-  return allBuyers;
+  return tradingHistories;
 };
 
 export default getAllBuyerTradingHistories;

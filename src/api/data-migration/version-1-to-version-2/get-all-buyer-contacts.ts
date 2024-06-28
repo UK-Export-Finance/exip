@@ -1,6 +1,5 @@
 import { Connection } from 'mysql2/promise';
 import executeSqlQuery from './execute-sql-query';
-import { ApplicationBuyerMvp } from '../../types';
 
 /**
  * getAllBuyerContacts
@@ -13,11 +12,9 @@ const getAllBuyerContacts = async (connection: Connection) => {
 
   const query = 'SELECT * FROM BuyerContact';
 
-  const [allBuyers] = await executeSqlQuery({ connection, query, loggingMessage });
+  const [contacts] = await executeSqlQuery({ connection, query, loggingMessage });
 
-  const buyers = allBuyers as Array<ApplicationBuyerMvp>;
-
-  return buyers;
+  return contacts;
 };
 
 export default getAllBuyerContacts;
