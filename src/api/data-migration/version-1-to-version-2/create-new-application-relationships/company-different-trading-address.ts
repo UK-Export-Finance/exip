@@ -22,7 +22,7 @@ const createCompanyDifferentTradingAddress = async (
     const companyIdsConnectArray = applications.map((application) => ({
       company: {
         connect: {
-          id: application.companyId,
+          id: application.company,
         },
       },
     }));

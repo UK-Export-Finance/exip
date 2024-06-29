@@ -3,15 +3,15 @@ import executeSqlQuery from './execute-sql-query';
 import { AccountMvp } from '../../types';
 
 /**
- * getAllAccounts
- * Get all entries in the "Account" table.
+ * getAllAccountStatuses
+ * Get all entires in the "AccountStatus" table.
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<object>>} executeSqlQuery response
  */
-const getAllAccounts = async (connection: Connection) => {
-  const loggingMessage = 'Getting all accounts';
+const getAllAccountStatuses = async (connection: Connection) => {
+  const loggingMessage = 'Getting all account statuses';
 
-  const query = 'SELECT * FROM Account';
+  const query = 'SELECT * FROM AccountStatus';
 
   const [allAccounts] = await executeSqlQuery({ connection, query, loggingMessage });
 
@@ -20,4 +20,4 @@ const getAllAccounts = async (connection: Connection) => {
   return accounts;
 };
 
-export default getAllAccounts;
+export default getAllAccountStatuses;

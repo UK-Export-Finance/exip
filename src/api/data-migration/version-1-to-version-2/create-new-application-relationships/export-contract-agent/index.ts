@@ -26,7 +26,7 @@ const createExportContractAgent = async (context: Context, applications: Array<A
     const exportContractIdsConnectArray = applications.map((application) => ({
       exportContract: {
         connect: {
-          id: application.exportContractId,
+          id: application.exportContract,
         },
       },
     }));
