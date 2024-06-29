@@ -15,13 +15,13 @@ import { AccountStatus } from '../../../types';
 const updateAccountStatusColumns = async (connection: Connection, statusRows: Array<AccountStatus>, accountStatuses: Array<AccountStatus>) => {
   console.info('✅ Updating account status columns for all accounts (account table)');
 
-  const accountPromises = statusRows.map(async (account: AccountStatus, index: number) => {
+  const accountPromises = statusRows.map(async (accountStatus: AccountStatus, index: number) => {
     const status = accountStatuses[index];
 
-    const loggingMessage = 'Updating status columns for all accounts';
+    const loggingMessage = `Updating status column in account table for account status ${accountStatus.id}`;
 
     const query = `
-      UPDATE Account SET status='${status.id}' WHERE id='${account.id}'
+      UPDATE Account SET status='${status.id}' WHERE id='${accountStatus.id}'
     `;
 
     const updated = await executeSqlQuery({ connection, query, loggingMessage });

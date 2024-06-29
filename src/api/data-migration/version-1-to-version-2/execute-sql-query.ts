@@ -17,6 +17,17 @@ const executeSqlQuery = async ({ connection, query, loggingMessage }: ExecuteSql
   try {
     console.info(`✅ ${loggingMessage}`);
 
+    /**
+     * Check that the connection is a valid database connection.
+     * If not, this is very useful for debugging.
+     * Otherwise, a generic "cannot query" style error is logged.
+     */
+    if (!connection.query || typeof connection.query !== 'function') {
+      console.error(`🚨 Invalid connection passed to executeSqlQuery (${loggingMessage})`);
+
+      throw new Error(`🚨 Invalid connection passed to executeSqlQuery (${loggingMessage})`);
+    }
+
     const response = await connection.query(query);
 
     return response;

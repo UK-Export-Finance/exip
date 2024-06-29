@@ -1,6 +1,6 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import { Connection } from 'mysql2/promise';
-import mapArrayOfConnectionObjects from './map-array-of-connection-objects';
+// import mapArrayOfConnectionObjects from './map-array-of-connection-objects';
 import executeSqlQuery from './execute-sql-query';
 
 /**
@@ -23,7 +23,6 @@ const getAllApplications = async (context: Context, connection: Connection) => {
 
     const [applications] = await executeSqlQuery({ connection, query, loggingMessage });
 
-    console.log('>>>>>> applications ', applications);
     console.info('✅ Generating an array of application ID connections');
 
     // const applicationIdsConnectArray = mapArrayOfConnectionObjects({

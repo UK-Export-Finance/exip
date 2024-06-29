@@ -1,9 +1,11 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
+import { Connection } from 'mysql2/promise';
 import getAllApplications from '../get-all-applications';
 import createLossPayee from './loss-payee';
 import createJointlyInsuredParty from './jointly-insured-party';
 import createExportContractAgent from './export-contract-agent';
 import createPrivateMarket from './private-market';
+import updateExportContractPrivateMarket from './export-contract-private-market';
 import createCompanyDifferentTradingAddress from './company-different-trading-address';
 
 /**
@@ -14,20 +16,27 @@ import createCompanyDifferentTradingAddress from './company-different-trading-ad
  * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Array<object>>} New application relationships
  */
-const createNewApplicationRelationships = async (context: Context) => {
+const createNewApplicationRelationships = async (context: Context, connection: Connection) => {
   const loggingMessage = 'Creating new relationships for all applications';
 
   console.info(`✅ ${loggingMessage}`);
 
   try {
-    const { applications, applicationIdsConnectArray } = await getAllApplications(context);
+    // const { applications, applicationIdsConnectArray } = await getAllApplications(context, connection);
+    const { applications } = await getAllApplications(context, connection);
 
     const newRelationships = await Promise.all([
-      createLossPayee(context, applicationIdsConnectArray),
-      createJointlyInsuredParty(context, applications),
-      createExportContractAgent(context, applications),
-      createPrivateMarket(context, applications),
-      createCompanyDifferentTradingAddress(context, applications),
+      // createLossPayee(context, applicationIdsConnectArray), // NOT WORKING NEED TO UPDATE
+
+      createJointlyInsuredParty(connection, applications), // WORKING
+
+      // createExportContractAgent(context, applications),
+      createPrivateMarket(connection, applications), // DONE, need to test
+
+      updateExportContractPrivateMarket(connection), // DONE, need to test
+
+
+      createCompanyDifferentTradingAddress(connection, applications),  // DONE, need to test
     ]);
 
     return newRelationships;
