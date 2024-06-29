@@ -2,7 +2,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
 
 /**
  * createAgentServices
- * Create new "export contract agent service" entires
+ * Create new "export contract agent service" entries
  * @param {Context} context: KeystoneJS context API
  * @param {Array<object>} agentIdsConnectArray: Array of agent IDs "connect" objects
  * @returns {Promise<Array<ApplicationExportContractAgentService>>} Export contract agent service entries

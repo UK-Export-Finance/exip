@@ -7,7 +7,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  * 2) Create "private market" entries.
  * @param {Context} context: KeystoneJS context API
  * @param {Array<Application>} applications: Applications
- * @returns {Promise<Array<ApplicationPrivateMarket>>} Private market entires
+ * @returns {Promise<Array<ApplicationPrivateMarket>>} Private market entries
  */
 const createPrivateMarket = async (context: Context, applications: Array<object>) => {
   const loggingMessage = 'Creating privateMarkets with exportContract relationships';
@@ -18,7 +18,7 @@ const createPrivateMarket = async (context: Context, applications: Array<object>
     const exportContractIdsConnectArray = applications.map((application) => ({
       exportContract: {
         connect: {
-          id: application.exportContractId,
+          id: application.exportContract,
         },
       },
     }));

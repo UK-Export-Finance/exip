@@ -4,7 +4,7 @@ import { AccountMvp } from '../../types';
 
 /**
  * getAllAccountStatuses
- * Get all entires in the "AccountStatus" table.
+ * Get all entries in the "AccountStatus" table.
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<object>>} executeSqlQuery response
  */

@@ -9,7 +9,7 @@ import createApplicationLossPayeeRelationship from './create-application-loss-pa
 
 /**
  * createLossPayee
- * Create new "loss payee" entires
+ * Create new "loss payee" entries
  * 1) Create initial "loss payee" entries.
  * 2) Create an array of loss payee ID "connect" relationships.
  * 3) Create "loss payee - financial international" entries.

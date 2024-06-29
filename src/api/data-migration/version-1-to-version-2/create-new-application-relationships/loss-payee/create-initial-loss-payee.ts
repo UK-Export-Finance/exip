@@ -2,7 +2,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
 
 /**
  * createInitialLossPayee
- * Create new "loss payee" entires
+ * Create new "loss payee" entries
  * @param {Context} context: KeystoneJS context API
  * @param {Array<object>} applicationIdsConnectArray: Array of loss payee IDs "connect" objects
  * @returns {Promise<Array<ApplicationNominatedLossPayee>>} Loss payee - financial UK entries
