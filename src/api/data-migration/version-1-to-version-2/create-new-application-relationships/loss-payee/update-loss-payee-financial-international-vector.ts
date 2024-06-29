@@ -4,12 +4,12 @@ import getAllLossPayeeFinancialInternationalVectors from '../../get-all-loss-pay
 import executeSqlQuery from '../../execute-sql-query';
 
 /**
- * updateLossPayeeFinancialUkVector
+ * updateLossPayeeFinancialInternationalVector
  * Update "vector" columns in "loss payee - financial International" entries
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<object>>} Loss payee - nominated loss payee - financial International entries
  */
-const updateLossPayeeFinancialUkVector = async (connection: Connection) => {
+const updateLossPayeeFinancialInternationalVector = async (connection: Connection) => {
   const loggingMessage = 'Updating vector columns in LossPayeeFinancialInternational entries';
 
   console.info(`✅ ${loggingMessage}`);
@@ -42,4 +42,4 @@ const updateLossPayeeFinancialUkVector = async (connection: Connection) => {
   }
 };
 
-export default updateLossPayeeFinancialUkVector;
+export default updateLossPayeeFinancialInternationalVector;

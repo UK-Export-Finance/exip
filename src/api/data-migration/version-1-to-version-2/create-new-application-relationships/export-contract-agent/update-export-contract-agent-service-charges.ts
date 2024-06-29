@@ -4,7 +4,7 @@ import getAllExportContractAgentServiceCharges from '../../get-all-export-contra
 import executeSqlQuery from '../../execute-sql-query';
 
 /**
- * updateExportContractAgentServices
+ * updateExportContractAgentServiceCharges
  * Update "charge" columns in "export contract agent service" entries
  * 1) Map over each "export contract agent service".
  * 2) Generate "service" values (charge ID relationship)
@@ -12,7 +12,7 @@ import executeSqlQuery from '../../execute-sql-query';
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<object>>} executeSqlQuery responses
  */
-const updateExportContractAgentServices = async (connection: Connection) => {
+const updateExportContractAgentServiceCharges = async (connection: Connection) => {
   const loggingMessage = 'Updating agent columns in exportContract entries';
 
   console.info(`✅ ${loggingMessage}`);
@@ -45,4 +45,4 @@ const updateExportContractAgentServices = async (connection: Connection) => {
   }
 };
 
-export default updateExportContractAgentServices;
+export default updateExportContractAgentServiceCharges;
