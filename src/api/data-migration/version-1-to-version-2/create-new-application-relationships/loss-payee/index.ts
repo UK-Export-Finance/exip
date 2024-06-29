@@ -1,6 +1,5 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import createInitialLossPayees from './create-initial-loss-payee';
-import mapArrayOfConnectionObjects from '../../map-array-of-connection-objects';
 import lossPayeeFinancialInternational from './create-loss-payee-financial-international';
 import lossPayeeFinancialInternationalVector from './create-loss-payee-financial-international-vector';
 import lossPayeeFinancialUk from './create-loss-payee-financial-uk';
@@ -31,26 +30,26 @@ const createLossPayee = async (context: Context, applicationIdsConnectArray: Arr
   try {
     const lossPayees = await createInitialLossPayees(context, applicationIdsConnectArray);
 
-    const lossPayeeIds = mapArrayOfConnectionObjects({
-      idsArray: lossPayees,
-      relationshipName: 'lossPayee',
-    });
+    // const lossPayeeIds = mapArrayOfConnectionObjects({
+    //   idsArray: lossPayees,
+    //   relationshipName: 'lossPayee',
+    // });
 
     const financialInternationals = await lossPayeeFinancialInternational(context, lossPayeeIds);
 
-    const internationalIds = mapArrayOfConnectionObjects({
-      idsArray: financialInternationals,
-      relationshipName: 'financialInternational',
-    });
+    // const internationalIds = mapArrayOfConnectionObjects({
+    //   idsArray: financialInternationals,
+    //   relationshipName: 'financialInternational',
+    // });
 
     await lossPayeeFinancialInternationalVector(context, internationalIds);
 
     const financialUks = await lossPayeeFinancialUk(context, lossPayeeIds);
 
-    const ukIds = mapArrayOfConnectionObjects({
-      idsArray: financialUks,
-      relationshipName: 'financialUk',
-    });
+    // const ukIds = mapArrayOfConnectionObjects({
+    //   idsArray: financialUks,
+    //   relationshipName: 'financialUk',
+    // });
 
     await lossPayeeFinancialUkVector(context, ukIds);
 

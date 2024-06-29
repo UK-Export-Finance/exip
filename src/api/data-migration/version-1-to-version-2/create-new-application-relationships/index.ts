@@ -23,7 +23,6 @@ const createNewApplicationRelationships = async (context: Context, connection: C
   console.info(`✅ ${loggingMessage}`);
 
   try {
-    // const { applications, applicationIdsConnectArray } = await getAllApplications(context, connection);
     const { applications } = await getAllApplications(context, connection);
 
     const newRelationships = await Promise.all([
