@@ -1,5 +1,5 @@
-import crypto from 'crypto';
 import { Connection } from 'mysql2/promise';
+import createCuid from '../create-cuid';
 import executeSqlQuery from '../execute-sql-query';
 import { Application } from '../../../types';
 
@@ -14,25 +14,24 @@ import { Application } from '../../../types';
  * @param {Array<Application>} applications: Applications
  * @returns {Promise<Array<ApplicationCompanyDifferentTradingAddress>>} Company different trading address entries
  */
-const createCompanyDifferentTradingAddress = async (
-  connection: Connection,
-  applications: Array<Application>,
-) => {
+const createCompanyDifferentTradingAddress = async (connection: Connection, applications: Array<Application>) => {
   const loggingMessage = 'Creating companyDifferentTradingAddresses entries with company relationships';
 
   console.info(`✅ ${loggingMessage}`);
 
   try {
     const jointlyInsuredPartyPromises = applications.map(async (application: Application) => {
-      const loggingMessage = `Creating CompanyDifferentTradingAddress entry for application ${application.id}`;
-
-      const theValues = `('${crypto.randomUUID()}', '${application.company}')`;
+      const theValues = `('${createCuid()}', '${application.company}')`;
 
       const query = `
         INSERT INTO CompanyDifferentTradingAddress (id, company) VALUES ${theValues};
       `;
 
-      const updated = await executeSqlQuery({ connection, query, loggingMessage });
+      const updated = await executeSqlQuery({
+        connection,
+        query,
+        loggingMessage: `Creating CompanyDifferentTradingAddress entry for application ${application.id}`,
+      });
 
       return updated;
     });

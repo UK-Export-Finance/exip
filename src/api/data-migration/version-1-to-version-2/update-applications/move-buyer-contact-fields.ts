@@ -1,5 +1,5 @@
-import crypto from 'crypto';
 import { Connection } from 'mysql2/promise';
+import createCuid from '../create-cuid';
 import executeSqlQuery from '../execute-sql-query';
 import { ApplicationBuyerMvp } from '../../../types';
 
@@ -16,7 +16,7 @@ const moveBuyerContactFields = async (buyers: Array<ApplicationBuyerMvp>, connec
   const buyerContactValues = buyers.map((buyer: ApplicationBuyerMvp) => {
     const { application, canContactBuyer, contactEmail, contactFirstName, contactLastName, contactPosition } = buyer;
 
-    return `('${crypto.randomUUID()}', '${application}', ${canContactBuyer}, '${contactEmail}', '${contactFirstName}', '${contactLastName}', '${contactPosition}')`;
+    return `('${createCuid()}', '${application}', ${canContactBuyer}, '${contactEmail}', '${contactFirstName}', '${contactLastName}', '${contactPosition}')`;
   });
 
   const loggingMessage = 'Creating new buyer contact relationships for all buyers';

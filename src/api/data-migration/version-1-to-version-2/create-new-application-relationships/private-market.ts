@@ -1,5 +1,5 @@
-import crypto from 'crypto';
 import { Connection } from 'mysql2/promise';
+import createCuid from '../create-cuid';
 import executeSqlQuery from '../execute-sql-query';
 import { Application } from '../../../types';
 
@@ -21,15 +21,17 @@ const createPrivateMarket = async (connection: Connection, applications: Array<A
 
   try {
     const privateMarketPromises = applications.map(async (application: Application) => {
-      const loggingMessage = `Creating PrivateMarket entry for application ${application.id}`;
-
-      const theValues = `('${crypto.randomUUID()}')`;
+      const theValues = `('${createCuid()}')`;
 
       const query = `
         INSERT INTO PrivateMarket (id) VALUES ${theValues};
       `;
 
-      const updated = await executeSqlQuery({ connection, query, loggingMessage });
+      const updated = await executeSqlQuery({
+        connection,
+        query,
+        loggingMessage: `Creating PrivateMarket entry for application ${application.id}`,
+      });
 
       return updated;
     });

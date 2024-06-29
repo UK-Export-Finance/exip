@@ -1,5 +1,5 @@
-import crypto from 'crypto';
 import { Connection } from 'mysql2/promise';
+import createCuid from '../create-cuid';
 import executeSqlQuery from '../execute-sql-query';
 import { ApplicationBuyerMvp } from '../../../types';
 
@@ -22,7 +22,7 @@ const moveBuyerTradingHistoryFields = async (buyers: Array<ApplicationBuyerMvp>,
   const buyerTradingHistoryValues = buyers.map((buyer: ApplicationBuyerMvp) => {
     const { application, exporterHasTradedWithBuyer } = buyer;
 
-    return `('${crypto.randomUUID()}', '${application}', ${exporterHasTradedWithBuyer})`;
+    return `('${createCuid()}', '${application}', ${exporterHasTradedWithBuyer})`;
   });
 
   const loggingMessage = 'Creating new buyer trading history relationships for all buyers';

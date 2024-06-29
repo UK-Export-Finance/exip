@@ -1,5 +1,5 @@
-import crypto from 'crypto';
 import { Connection } from 'mysql2/promise';
+import createCuid from '../create-cuid';
 import executeSqlQuery from '../execute-sql-query';
 import { Application } from '../../../types';
 
@@ -20,22 +20,22 @@ const createJointlyInsuredParty = async (connection: Connection, applications: A
 
   try {
     const jointlyInsuredPartyPromises = applications.map(async (application: Application) => {
-      const loggingMessage = `Creating JointlyInsuredParty entry for application ${application.id}`;
-
-      const theValues = `('${crypto.randomUUID()}', '${application.policy}')`;
+      const theValues = `('${createCuid()}', '${application.policy}')`;
 
       const query = `
         INSERT INTO JointlyInsuredParty (id, policy) VALUES ${theValues};
       `;
 
-      const updated = await executeSqlQuery({ connection, query, loggingMessage });
+      const updated = await executeSqlQuery({
+        connection,
+        query,
+        loggingMessage: `Creating JointlyInsuredParty entry for application ${application.id}`,
+      });
 
       return updated;
     });
 
     return Promise.all(jointlyInsuredPartyPromises);
-
-
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 
