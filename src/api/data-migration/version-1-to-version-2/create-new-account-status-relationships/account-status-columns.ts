@@ -5,12 +5,12 @@ import { AccountStatus } from '../../../types';
 /**
  * updateAccountStatusColumns
  * Update "account status" columns for all existing accounts.
- * TODO update documentation
- * 1) Create an array of "account status" data - using isVerified and isBlocked from the original accounts data.
- * 2) Create new "account status" entries.
+ * 1) Map over each account status entry.
+ * 2) Update the Account table to have a status ID/relationship.
  * @param {Connection} connection: SQL database connection
+ * @param {Array<AccountStatus>} statusRows: Account status entries
  * @param {Array<AccountMvp>} accounts: MVP accounts
- * @returns {Promise<Array<AccountStatus>>} Account statuses
+ * @returns {Promise<Array<object>>} executeSqlQuery response
  */
 const updateAccountStatusColumns = async (connection: Connection, statusRows: Array<AccountStatus>, accountStatuses: Array<AccountStatus>) => {
   console.info('✅ Updating account status columns for all accounts (account table)');

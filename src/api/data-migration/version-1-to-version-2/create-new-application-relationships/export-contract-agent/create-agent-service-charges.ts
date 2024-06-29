@@ -6,11 +6,12 @@ import { Application } from '../../../../types';
 /**
  * createAgentServiceCharges
  * Create new "export contract agent service charges" entries
- * TODO: update documentation
- * TODO: update documentation
+ * 1) Map over each application.
+ * 2) Generate "agent service charge" values (CUID)
+ * 3) Insert the values into the ExportContractAgentServiceCharge table.
  * @param {Connection} connection: SQL database connection
  * @param {Array<Application>} applications: Applications
- * @returns {Promise<Array<ApplicationExportContractAgent>>} Export contract agent entries
+ * @returns {Promise<Array<object>>} executeSqlQuery responses
  */
 const createAgentServiceCharges = async (connection: Connection, applications: Array<Application>) => {
   const loggingMessage = 'Creating exportContract agent service charges';

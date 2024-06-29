@@ -6,12 +6,11 @@ import { AccountMvp } from '../../../types';
 /**
  * createAccountStatusRows
  * Create new "account status" rows for all existing accounts.
- * TODO update documentation
- * 1) Create an array of "account status" data - using isVerified and isBlocked from the original accounts data.
- * 2) Create new "account status" entries.
+ * 1) Map over each account entry.
+ * 2) Insert status data into the AccountStatus table - using isVerified, isBlocked and updatedAt from the original accounts data.
  * @param {Connection} connection: SQL database connection
  * @param {Array<AccountMvp>} accounts: MVP accounts
- * @returns {Promise<Array<AccountStatus>>} Account statuses
+ * @returns {Promise<Array<object>>} executeSqlQuery responses
  */
 const createAccountStatusRows = async (connection: Connection, accounts: Array<AccountMvp>) => {
   console.info('✅ Creating account status rows for all accounts (account status table)');

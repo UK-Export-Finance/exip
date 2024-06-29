@@ -18,7 +18,7 @@ import { Application } from '../../../../types';
  * 6) Create agent service charge entries.
  * @param {Connection} connection: SQL database connection
  * @param {Array<Application>} applications: Applications
- * @returns {Promise<Array>}
+ * @returns {Promise<Array<object>>} executeSqlQuery responses
  */
 const createExportContractAgent = async (connection: Connection, applications: Array<Application>) => {
   const loggingMessage = 'Creating exportContractAgent with service and charge relationships';

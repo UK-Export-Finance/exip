@@ -6,13 +6,12 @@ import { Application } from '../../../types';
 /**
  * createCompanyDifferentTradingAddress
  * Create new "company different trading address" entries with company relationships.
- * TODO update documentation
- * TODO update documentation
- * 1) Create an array of "company different trading address" data - using the application's companyId.
- * 2) Create new "company different trading address" entries.
+ * 1) Map over each application.
+ * 2) Generate "different trading address" values.
+ * 3) Insert the values into the CompanyDifferentTradingAddress table.
  * @param {Connection} connection: SQL database connection
  * @param {Array<Application>} applications: Applications
- * @returns {Promise<Array<ApplicationCompanyDifferentTradingAddress>>} Company different trading address entries
+ * @returns {Promise<Array<object>>} executeSqlQuery responses
  */
 const createCompanyDifferentTradingAddress = async (connection: Connection, applications: Array<Application>) => {
   const loggingMessage = 'Creating companyDifferentTradingAddresses entries with company relationships';

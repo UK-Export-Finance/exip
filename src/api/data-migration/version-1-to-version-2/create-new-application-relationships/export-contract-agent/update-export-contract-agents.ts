@@ -6,10 +6,11 @@ import executeSqlQuery from '../../execute-sql-query';
 /**
  * updateExportContractAgents
  * Update "agent" columns in "export contract" entries
- * TODO: update documentation
- * TODO: update documentation
+ * 1) Map over each "export contract".
+ * 2) Generate "export contract" values (agent ID relationship)
+ * 3) Update the values in the ExportContract table.
  * @param {Connection} connection: SQL database connection
- * @returns {Promise<Array<ApplicationExportContractAgent>>} Export contract agent entries
+ * @returns {Promise<Array<object>>} executeSqlQuery responses
  */
 const updateExportContractAgents = async (connection: Connection) => {
   const loggingMessage = 'Updating agent columns in exportContract entries';
