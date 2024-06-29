@@ -1,10 +1,13 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
-import createInitialLossPayees from './create-initial-loss-payee';
+import { Connection } from 'mysql2/promise';
+import createInitialLossPayees from './create-initial-loss-payees';
 import lossPayeeFinancialInternational from './create-loss-payee-financial-international';
 import lossPayeeFinancialInternationalVector from './create-loss-payee-financial-international-vector';
 import lossPayeeFinancialUk from './create-loss-payee-financial-uk';
 import lossPayeeFinancialUkVector from './create-loss-payee-financial-uk-vector';
+import updateLossPayeeFinancialUkVector from './update-loss-payee-financial-uk-vector';
+import updateLossPayeeFinancialInternationalVector from './update-loss-payee-financial-international-vector';
 import createApplicationLossPayeeRelationship from './create-application-loss-payee-relationship';
+import { Application } from '../../../../types';
 
 /**
  * createLossPayee
@@ -18,44 +21,28 @@ import createApplicationLossPayeeRelationship from './create-application-loss-pa
  * 7) Create an array of loss payee - financial UK ID "connect" relationships.
  * 8) Create "loss payee - financial UK vector" entries.
  * 9) Update applications to hav a loss payee relationship/ID.
- * @param {Context} context: KeystoneJS context API
+ * @param {Connection} connection: SQL database connection
  * @param {Array<object>} applicationIdsConnectArray: Array of application IDs "connect" objects
  * @returns {Promise<Array<ApplicationNominatedLossPayee>>} Loss payee entries
  */
-const createLossPayee = async (context: Context, applicationIdsConnectArray: Array<object>) => {
+const createLossPayee = async (connection: Connection, applications: Array<Application>) => {
   const loggingMessage = 'Creating nominatedLossPayees with application relationships';
 
   console.info(`✅ ${loggingMessage}`);
 
   try {
-    const lossPayees = await createInitialLossPayees(context, applicationIdsConnectArray);
+    const promises = await Promise.all([
+      createInitialLossPayees(connection, applications),
+      lossPayeeFinancialInternational(connection),
+      lossPayeeFinancialInternationalVector(connection, applications),
+      lossPayeeFinancialUk(connection),
+      lossPayeeFinancialUkVector(connection, applications),
+      updateLossPayeeFinancialUkVector(connection),
+      updateLossPayeeFinancialInternationalVector(connection),
+      createApplicationLossPayeeRelationship(connection),
+    ]);
 
-    // const lossPayeeIds = mapArrayOfConnectionObjects({
-    //   idsArray: lossPayees,
-    //   relationshipName: 'lossPayee',
-    // });
-
-    const financialInternationals = await lossPayeeFinancialInternational(context, lossPayeeIds);
-
-    // const internationalIds = mapArrayOfConnectionObjects({
-    //   idsArray: financialInternationals,
-    //   relationshipName: 'financialInternational',
-    // });
-
-    await lossPayeeFinancialInternationalVector(context, internationalIds);
-
-    const financialUks = await lossPayeeFinancialUk(context, lossPayeeIds);
-
-    // const ukIds = mapArrayOfConnectionObjects({
-    //   idsArray: financialUks,
-    //   relationshipName: 'financialUk',
-    // });
-
-    await lossPayeeFinancialUkVector(context, ukIds);
-
-    await createApplicationLossPayeeRelationship(context, lossPayees);
-
-    return lossPayees;
+    return promises;
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 

@@ -1,23 +1,37 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
+import { Connection } from 'mysql2/promise';
+import createCuid from '../../create-cuid';
+import executeSqlQuery from '../../execute-sql-query';
+import { Application } from '../../../../types';
 
 /**
  * lossPayeeFinancialUkVector
- * Create new "loss payee - financial UK vector" entries
- * @param {Context} context: KeystoneJS context API
- * @param {Array<object>} lossPayeeIdsConnectArray: Array of loss payee IDs "connect" objects
- * @returns {Promise<Array<ApplicationLossPayeeFinancialUkVector>>} Loss payee - financial UK vector entries
+ * Create new "nominated loss payee - financial UK vector" entries
+ * @param {Connection} connection: SQL database connection
+ * @returns {Promise<Array<object>>} Loss payee - nominated loss payee - financial UK vector entries
  */
-const lossPayeeFinancialUkVector = async (context: Context, lossPayeeIdsConnectArray: Array<object>) => {
+const lossPayeeFinancialUkVector = async (connection: Connection, applications: Array<Application>) => {
   const loggingMessage = 'Creating nominatedLossPayees - financial UK vector';
 
   console.info(`✅ ${loggingMessage}`);
 
   try {
-    const created = await context.db.LossPayeeFinancialUkVector.createMany({
-      data: lossPayeeIdsConnectArray,
+    const vectorPromises = applications.map(async (application: Application) => {
+      const theValues = `('${createCuid()}')`;
+
+      const query = `
+        INSERT INTO LossPayeeFinancialUkVector (id) VALUES ${theValues};
+      `;
+
+      const created = await executeSqlQuery({
+        connection,
+        query,
+        loggingMessage: `Creating LossPayeeFinancialUkVector entry for application ${application.id}`,
+      });
+
+      return created;
     });
 
-    return created;
+    return Promise.all(vectorPromises);
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 

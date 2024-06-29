@@ -26,8 +26,7 @@ const createNewApplicationRelationships = async (context: Context, connection: C
     const { applications } = await getAllApplications(context, connection);
 
     const newRelationships = await Promise.all([
-      // createLossPayee(context, applicationIdsConnectArray), // NOT WORKING NEED TO UPDATE
-
+      createLossPayee(connection, applications),
       createJointlyInsuredParty(connection, applications),
       createExportContractAgent(connection, applications),
       createPrivateMarket(connection, applications),

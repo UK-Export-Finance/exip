@@ -4,31 +4,29 @@ import executeSqlQuery from '../../execute-sql-query';
 import { Application } from '../../../../types';
 
 /**
- * createInitialAgents
- * Create new "export contract agent" entries
- * TODO: update documentation
- * TODO: update documentation
+ * createInitialLossPayees
+ * Create new "nominated loss payee" entries
  * @param {Connection} connection: SQL database connection
  * @param {Array<Application>} applications: Applications
- * @returns {Promise<Array<ApplicationExportContractAgent>>} Export contract agent entries
+ * @returns {Promise<Array<ApplicationExportContractAgent>>} Loss payee entries
  */
-const createInitialAgents = async (connection: Connection, applications: Array<Application>) => {
-  const loggingMessage = 'Creating initial exportContractAgents';
+const createInitialLossPayees = async (connection: Connection, applications: Array<Application>) => {
+  const loggingMessage = 'Creating initial lossPayees';
 
   console.info(`✅ ${loggingMessage}`);
 
   try {
     const initialAgentsPromises = applications.map(async (application: Application) => {
-      const theValues = `('${createCuid()}')`;
+      const theValues = `('${createCuid()}', '${application.id}')`;
 
       const query = `
-        INSERT INTO ExportContractAgent (id) VALUES ${theValues};
+        INSERT INTO NominatedLossPayee (id, application) VALUES ${theValues};
       `;
 
       const created = await executeSqlQuery({
         connection,
         query,
-        loggingMessage: `Creating ExportContractAgent entry for application ${application.id}`,
+        loggingMessage: `Creating LossPayee entry for application ${application.id}`,
       });
 
       return created;
@@ -42,4 +40,4 @@ const createInitialAgents = async (connection: Connection, applications: Array<A
   }
 };
 
-export default createInitialAgents;
+export default createInitialLossPayees;

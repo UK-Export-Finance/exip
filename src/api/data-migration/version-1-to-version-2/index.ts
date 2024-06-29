@@ -39,13 +39,13 @@ const dataMigration = async () => {
 
     await createNewAccountStatusRelationships(connection);
 
+    await removeAccountStatusFields(connection);
+
     const buyers = await getAllBuyers(connection);
 
     await updateBuyers(connection, buyers);
 
     await createNewApplicationRelationships(context, connection);
-
-    await removeAccountStatusFields(connection);
 
     console.info('🎉 Migration complete. Exiting script');
 
