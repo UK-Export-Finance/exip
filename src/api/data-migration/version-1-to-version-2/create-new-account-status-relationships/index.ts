@@ -1,4 +1,3 @@
-import { format } from 'date-fns';
 import { Connection } from 'mysql2/promise';
 import createAccountStatusRows from './account-status-rows';
 import getAllAccountStatuses from '../get-all-account-statuses';

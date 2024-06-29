@@ -1,27 +1,45 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
+import { Connection } from 'mysql2/promise';
+import createCuid from '../../create-cuid';
+import executeSqlQuery from '../../execute-sql-query';
+import { Application } from '../../../../types';
 
 /**
  * createAgentServiceCharges
- * Create new "export contract agent service charge" entries
- * @param {Context} context: KeystoneJS context API
- * @param {Array<object>} agentServiceIdsConnectArray: Array of agent service IDs "connect" objects
- * @returns {Promise<Array<ApplicationExportContractAgentServiceCharge>>} Export contract agent service charge entries
+ * Create new "export contract agent service charges" entries
+ * TODO: update documentation
+ * TODO: update documentation
+ * @param {Connection} connection: SQL database connection
+ * @param {Array<Application>} applications: Applications
+ * @returns {Promise<Array<ApplicationExportContractAgent>>} Export contract agent entries
  */
-const createAgentServiceCharges = async (context: Context, agentServiceIdsConnectArray: Array<object>) => {
-  const loggingMessage = 'Creating exportContractAgentServiceCharges with agent service relationships';
+const createAgentServiceCharges = async (connection: Connection, applications: Array<Application>) => {
+  const loggingMessage = 'Creating exportContract agent service charges';
 
   console.info(`✅ ${loggingMessage}`);
 
   try {
-    const created = await context.db.ExportContractAgentServiceCharge.createMany({
-      data: agentServiceIdsConnectArray,
+    const servicesPromises = applications.map(async (application: Application) => {
+      const theValues = `('${createCuid()}')`;
+
+      const query = `
+        INSERT INTO ExportContractAgentServiceCharge (id) VALUES ${theValues};
+      `;
+
+      const updated = await executeSqlQuery({
+        connection,
+        query,
+        loggingMessage: `Creating ExportContractAgentServiceCharge entry for application ${application.id}`,
+      });
+
+      return updated;
     });
 
-    return created;
+    return Promise.all(servicesPromises);
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 
     throw new Error(`🚨 error ${loggingMessage} ${err}`);
   }
 };
+
 export default createAgentServiceCharges;

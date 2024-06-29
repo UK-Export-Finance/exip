@@ -1,23 +1,40 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
+import { Connection } from 'mysql2/promise';
+import createCuid from '../../create-cuid';
+import executeSqlQuery from '../../execute-sql-query';
+import { Application } from '../../../../types';
 
 /**
  * createInitialAgents
  * Create new "export contract agent" entries
- * @param {Context} context: KeystoneJS context API
- * @param {Array<object>} exportContractIdsConnectArray: Array of export contract IDs "connect" objects
+ * TODO: update documentation
+ * TODO: update documentation
+ * @param {Connection} connection: SQL database connection
+ * @param {Array<Application>} applications: Applications
  * @returns {Promise<Array<ApplicationExportContractAgent>>} Export contract agent entries
  */
-const createInitialAgents = async (context: Context, exportContractIdsConnectArray: Array<object>) => {
-  const loggingMessage = 'Creating initial exportContractAgents with export contract relationships';
+const createInitialAgents = async (connection: Connection, applications: Array<Application>) => {
+  const loggingMessage = 'Creating initial exportContractAgents';
 
   console.info(`✅ ${loggingMessage}`);
 
   try {
-    const created = await context.db.ExportContractAgent.createMany({
-      data: exportContractIdsConnectArray,
+    const initialAgentsPromises = applications.map(async (application: Application) => {
+      const theValues = `('${createCuid()}')`;
+
+      const query = `
+        INSERT INTO ExportContractAgent (id) VALUES ${theValues};
+      `;
+
+      const updated = await executeSqlQuery({
+        connection,
+        query,
+        loggingMessage: `Creating ExportContractAgent entry for application ${application.id}`,
+      });
+
+      return updated;
     });
 
-    return created;
+    return Promise.all(initialAgentsPromises);
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 

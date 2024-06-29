@@ -1,23 +1,40 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
+import { Connection } from 'mysql2/promise';
+import createCuid from '../../create-cuid';
+import executeSqlQuery from '../../execute-sql-query';
+import { Application } from '../../../../types';
 
 /**
  * createAgentServices
- * Create new "export contract agent service" entries
- * @param {Context} context: KeystoneJS context API
- * @param {Array<object>} agentIdsConnectArray: Array of agent IDs "connect" objects
- * @returns {Promise<Array<ApplicationExportContractAgentService>>} Export contract agent service entries
+ * Create new "export contract agent services" entries
+ * TODO: update documentation
+ * TODO: update documentation
+ * @param {Connection} connection: SQL database connection
+ * @param {Array<Application>} applications: Applications
+ * @returns {Promise<Array<ApplicationExportContractAgent>>} Export contract agent entries
  */
-const createAgentServices = async (context: Context, agentIdsConnectArray: Array<object>) => {
-  const loggingMessage = 'Creating exportContractAgentServices with agent relationships';
+const createAgentServices = async (connection: Connection, applications: Array<Application>) => {
+  const loggingMessage = 'Creating exportContract agent services';
 
   console.info(`✅ ${loggingMessage}`);
 
   try {
-    const created = await context.db.ExportContractAgentService.createMany({
-      data: agentIdsConnectArray,
+    const servicesPromises = applications.map(async (application: Application) => {
+      const theValues = `('${createCuid()}')`;
+
+      const query = `
+        INSERT INTO ExportContractAgentService (id) VALUES ${theValues};
+      `;
+
+      const updated = await executeSqlQuery({
+        connection,
+        query,
+        loggingMessage: `Creating ExportContractAgentService entry for application ${application.id}`,
+      });
+
+      return updated;
     });
 
-    return created;
+    return Promise.all(servicesPromises);
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 

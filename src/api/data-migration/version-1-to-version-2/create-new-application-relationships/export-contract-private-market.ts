@@ -22,13 +22,15 @@ const updateExportContractPrivateMarket = async (connection: Connection) => {
     const accountPromises = exportContracts.map(async (exportContract: object, index: number) => {
       const privateMarket = privateMarkets[index];
 
-      const loggingMessage = `Updating privateMarket column in export contract table for exportContract ${exportContract.id}`;
-
       const query = `
         UPDATE ExportContract SET privateMarket='${privateMarket.id}' WHERE id='${exportContract.id}'
       `;
 
-      const updated = await executeSqlQuery({ connection, query, loggingMessage });
+      const updated = await executeSqlQuery({
+        connection,
+        query,
+        loggingMessage: `Updating privateMarket column in export contract table for exportContract ${exportContract.id}`,
+      });
 
       return updated;
     });

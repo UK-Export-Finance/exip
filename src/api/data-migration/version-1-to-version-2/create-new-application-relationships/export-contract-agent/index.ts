@@ -1,7 +1,10 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
+import { Connection } from 'mysql2/promise';
 import createInitialAgents from './create-initial-agents';
+import updateExportContractAgents from './update-export-contract-agents';
 import createAgentServices from './create-agent-services';
+import updateExportContractAgentServices from './update-export-contract-agent-services';
 import createAgentServiceCharges from './create-agent-service-charges';
+import updateExportContractServiceCharges from './update-export-contract-agent-service-charges';
 import { Application } from '../../../../types';
 
 /**
@@ -13,47 +16,26 @@ import { Application } from '../../../../types';
  * 4) Create agent service entries.
  * 5) Create an array of service ID "connect" relationships.
  * 6) Create agent service charge entries.
- * @param {Context} context: KeystoneJS context API
+ * @param {Connection} connection: SQL database connection
  * @param {Array<Application>} applications: Applications
- * @returns {Promise<Array<ApplicationExportContractAgent>>} Export contract agent entries
+ * @returns {Promise<Array>}
  */
-const createExportContractAgent = async (context: Context, applications: Array<Application>) => {
+const createExportContractAgent = async (connection: Connection, applications: Array<Application>) => {
   const loggingMessage = 'Creating exportContractAgent with service and charge relationships';
 
   console.info(`✅ ${loggingMessage}`);
 
   try {
-    const exportContractIdsConnectArray = applications.map((application) => ({
-      exportContract: {
-        connect: {
-          id: application.exportContract,
-        },
-      },
-    }));
+    const promises = await Promise.all([
+      createInitialAgents(connection, applications),
+      updateExportContractAgents(connection),
+      createAgentServices(connection, applications),
+      updateExportContractAgentServices(connection),
+      createAgentServiceCharges(connection, applications),
+      updateExportContractServiceCharges(connection),
+    ]);
 
-    const agents = await createInitialAgents(context, exportContractIdsConnectArray);
-
-    const agentIdsConnectArray = agents.map((agent) => ({
-      agent: {
-        connect: {
-          id: agent.id,
-        },
-      },
-    }));
-
-    const services = await createAgentServices(context, agentIdsConnectArray);
-
-    const agentServiceIdsConnectArray = services.map((service) => ({
-      service: {
-        connect: {
-          id: service.id,
-        },
-      },
-    }));
-
-    await createAgentServiceCharges(context, agentServiceIdsConnectArray);
-
-    return agents;
+    return promises;
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 

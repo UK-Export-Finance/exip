@@ -14,6 +14,7 @@ import createCompanyDifferentTradingAddress from './company-different-trading-ad
  * 1) Get all applications.
  * 2) Create new relationships.
  * @param {Context} context: KeystoneJS context API
+ * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<object>>} New application relationships
  */
 const createNewApplicationRelationships = async (context: Context, connection: Connection) => {
@@ -28,15 +29,11 @@ const createNewApplicationRelationships = async (context: Context, connection: C
     const newRelationships = await Promise.all([
       // createLossPayee(context, applicationIdsConnectArray), // NOT WORKING NEED TO UPDATE
 
-      createJointlyInsuredParty(connection, applications), // WORKING
-
-      // createExportContractAgent(context, applications),
-      createPrivateMarket(connection, applications), // DONE, need to test
-
-      updateExportContractPrivateMarket(connection), // DONE, need to test
-
-
-      createCompanyDifferentTradingAddress(connection, applications),  // DONE, need to test
+      createJointlyInsuredParty(connection, applications),
+      createExportContractAgent(connection, applications),
+      createPrivateMarket(connection, applications),
+      updateExportContractPrivateMarket(connection),
+      createCompanyDifferentTradingAddress(connection, applications),
     ]);
 
     return newRelationships;
