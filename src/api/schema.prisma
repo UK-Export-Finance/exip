@@ -163,7 +163,7 @@ model Policy {
   requestedStartDate       DateTime?
   contractCompletionDate   DateTime?
   totalValueOfContract     Int?
-  creditPeriodWithBuyer    String               @default("")
+  creditPeriodWithBuyer    String               @default("") @mysql.VarChar(1000)
   policyCurrencyCode       String               @default("") @mysql.VarChar(3)
   totalMonthsOfCover       Int?
   totalSalesToBuyer        Int?
