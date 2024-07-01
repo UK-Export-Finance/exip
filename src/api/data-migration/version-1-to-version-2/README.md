@@ -40,6 +40,11 @@ This directory contains source code for migrating version 1 of EXIP data into th
 - NominatedLossPayee
 - PrivateMarket
 
+Note - there are 2 new fields that are created with a default currency code (GBP). Otherwise, any applications that are half complete will error when a user tries to continue the application:
+
+1. BuyerTradingHistory table - `currencyCode` column.
+2. Business table - `turnoverCurrencyCode` column.
+
 ## Prerequisites :gear:
 
 To set up and run the API locally, you'll need the following prerequisites:
