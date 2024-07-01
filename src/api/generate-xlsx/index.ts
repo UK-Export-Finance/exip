@@ -1,15 +1,14 @@
-// import dotenv from 'dotenv';
+import dotenv from 'dotenv';
 import ExcelJS from 'exceljs';
-// import SECTION_KEYS from '../constants/XLSX-CONFIG/SECTION_KEYS';
 import SECTION_NAMES from '../constants/XLSX-CONFIG/SECTION_NAMES';
 import mapApplicationToXLSX from './map-application-to-XLSX';
 import HEADER_COLUMNS from './header-columns';
 import styledColumns from './styled-columns';
 import { Application, Country } from '../types';
 
-// dotenv.config();
+dotenv.config();
 
-// const { EXCELJS_PROTECTION_PASSWORD } = process.env;
+const { EXCELJS_PROTECTION_PASSWORD } = process.env;
 
 /**
  * XLSX
@@ -43,6 +42,10 @@ const XLSX = (application: Application, countries: Array<Country>): Promise<stri
         console.info(`Generating XLSX file - adding ${sheetName} worksheet`);
 
         let worksheet = workbook.addWorksheet(sheetName);
+
+        console.info(`Generating XLSX file - protecting ${sheetName} worksheet from modification`);
+
+        worksheet.protect(String(EXCELJS_PROTECTION_PASSWORD), {});
 
         console.info(`Generating XLSX file - adding ${sheetName} worksheet header columns`);
 

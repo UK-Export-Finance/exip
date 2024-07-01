@@ -1415,6 +1415,7 @@ var application = {
       if (file) {
         const fileBuffer = Buffer.from(file);
         const response = await callNotify(templateId, emailAddress, variables, fileBuffer);
+        await file_system_default.unlink(filePath);
         return response;
       }
       throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
@@ -5459,6 +5460,7 @@ var applicationSubmittedEmails = {
 var send_application_submitted_emails_default = applicationSubmittedEmails;
 
 // generate-xlsx/index.ts
+var import_dotenv9 = __toESM(require("dotenv"));
 var import_exceljs = __toESM(require("exceljs"));
 
 // constants/XLSX-CONFIG/SECTION_NAMES/index.ts
@@ -7389,113 +7391,124 @@ var XLSX_HEADER_COLUMNS = (sheetName) => [
 ];
 var header_columns_default = XLSX_HEADER_COLUMNS;
 
-// constants/XLSX-CONFIG/INDEXES/index.ts
-var {
-  EXPORTER_BUSINESS: EXPORTER_BUSINESS4,
-  POLICY: POLICY5,
-  BUYER: BUYER2,
-  EXPORT_CONTRACT: EXPORT_CONTRACT3
-} = SECTION_NAMES_default;
+// constants/XLSX-CONFIG/INDEXES/EXPORTER_BUSINESS/index.ts
+var DEFAULT_INDEXES = {
+  REGISTERED_OFFICE_ADDRESS: 3,
+  COMPANY_SIC_CODES: 4,
+  ALTERNATIVE_TRADING_ADDRESS: 0
+};
+var EXPORTER_BUSINESS_INDEXES = (application2) => {
+  const {
+    company: {
+      differentTradingAddress: { fullAddress: hasDifferentTradingAddress },
+      hasDifferentTradingName
+    }
+  } = application2;
+  const INDEXES = DEFAULT_INDEXES;
+  if (hasDifferentTradingAddress) {
+    INDEXES.ALTERNATIVE_TRADING_ADDRESS = 7;
+  }
+  if (hasDifferentTradingName && hasDifferentTradingAddress) {
+    INDEXES.ALTERNATIVE_TRADING_ADDRESS += 1;
+  }
+  return INDEXES;
+};
+var EXPORTER_BUSINESS_default = EXPORTER_BUSINESS_INDEXES;
+
+// constants/XLSX-CONFIG/INDEXES/POLICY/index.ts
 var {
   // TYPE_OF_POLICY: { POLICY_TYPE },
   USING_BROKER: USING_BROKER4
 } = POLICY;
-var NEW_XLSX_ROW_INDEXES = {
-  [EXPORTER_BUSINESS4]: (application2) => {
-    const {
-      company: {
-        differentTradingAddress: { fullAddress: hasDifferentTradingAddress },
-        hasDifferentTradingName
-      }
-    } = application2;
-    const INDEXES = {
-      REGISTERED_OFFICE_ADDRESS: 3,
-      COMPANY_SIC_CODES: 4,
-      ALTERNATIVE_TRADING_ADDRESS: 0
-    };
-    if (hasDifferentTradingAddress) {
-      INDEXES.ALTERNATIVE_TRADING_ADDRESS = 7;
-    }
-    if (hasDifferentTradingName && hasDifferentTradingAddress) {
-      INDEXES.ALTERNATIVE_TRADING_ADDRESS += 1;
-    }
-    return INDEXES;
-  },
-  [POLICY5]: (application2) => {
-    const {
-      broker,
-      nominatedLossPayee: { isAppointed: nominatedLossPayeeAppointed },
-      policy: {
-        jointlyInsuredParty: { requested: requestedJointlyInsuredParty },
-        needPreCreditPeriodCover
-      },
-      policyContact: { isSameAsOwner: policyContactIsSameAsOwner }
-    } = application2;
-    const INDEXES = {
-      BROKER_ADDRESS: 0,
-      LOSS_PAYEE_ADDRESS: 0
-    };
-    if (nominatedLossPayeeAppointed) {
-      INDEXES.LOSS_PAYEE_ADDRESS = 17;
-    }
-    ;
-    if (broker[USING_BROKER4]) {
-      INDEXES.BROKER_ADDRESS = 14;
-      if (policyContactIsSameAsOwner === false) {
-        INDEXES.BROKER_ADDRESS += 2;
-      }
-      if (needPreCreditPeriodCover) {
-        INDEXES.BROKER_ADDRESS += 1;
-      }
-      if (requestedJointlyInsuredParty) {
-        INDEXES.BROKER_ADDRESS += 3;
-      }
-    }
-    if (nominatedLossPayeeAppointed) {
-      if (policyContactIsSameAsOwner === false) {
-        INDEXES.LOSS_PAYEE_ADDRESS += 2;
-      }
-      if (needPreCreditPeriodCover) {
-        INDEXES.LOSS_PAYEE_ADDRESS += 1;
-      }
-      if (requestedJointlyInsuredParty) {
-        INDEXES.LOSS_PAYEE_ADDRESS += 3;
-      }
-      if (broker[USING_BROKER4]) {
-        INDEXES.LOSS_PAYEE_ADDRESS += 3;
-      }
-    }
-    return INDEXES;
-  },
-  [BUYER2]: () => {
-    const INDEXES = {
-      BUYER_ADDRESS: 3
-    };
-    return INDEXES;
-  },
-  [EXPORT_CONTRACT3]: (application2) => {
-    const {
-      exportContract: {
-        agent: { isUsingAgent },
-        finalDestinationKnown,
-        privateMarket: { attempted: attemptedPrivateMarket }
-      }
-    } = application2;
-    const INDEXES = {
-      AGENT_ADDRESS: 0
-    };
-    if (isUsingAgent) {
-      INDEXES.AGENT_ADDRESS = 9;
-      if (finalDestinationKnown) {
-        INDEXES.AGENT_ADDRESS += 1;
-      }
-      if (attemptedPrivateMarket) {
-        INDEXES.AGENT_ADDRESS += 1;
-      }
-    }
-    return INDEXES;
-  }
+var DEFAULT_INDEXES2 = {
+  BROKER_ADDRESS: 0,
+  LOSS_PAYEE_ADDRESS: 0
 };
+var POLICY_INDEXES = (application2) => {
+  const {
+    broker,
+    nominatedLossPayee: { isAppointed: nominatedLossPayeeAppointed },
+    policy: {
+      jointlyInsuredParty: { requested: requestedJointlyInsuredParty },
+      needPreCreditPeriodCover
+    },
+    policyContact: { isSameAsOwner: policyContactIsSameAsOwner }
+  } = application2;
+  const INDEXES = DEFAULT_INDEXES2;
+  if (nominatedLossPayeeAppointed) {
+    INDEXES.LOSS_PAYEE_ADDRESS = 17;
+  }
+  if (broker[USING_BROKER4]) {
+    INDEXES.BROKER_ADDRESS = 14;
+    if (policyContactIsSameAsOwner === false) {
+      INDEXES.BROKER_ADDRESS += 2;
+    }
+    if (needPreCreditPeriodCover) {
+      INDEXES.BROKER_ADDRESS += 1;
+    }
+    if (requestedJointlyInsuredParty) {
+      INDEXES.BROKER_ADDRESS += 3;
+    }
+  }
+  if (nominatedLossPayeeAppointed) {
+    if (policyContactIsSameAsOwner === false) {
+      INDEXES.LOSS_PAYEE_ADDRESS += 2;
+    }
+    if (needPreCreditPeriodCover) {
+      INDEXES.LOSS_PAYEE_ADDRESS += 1;
+    }
+    if (requestedJointlyInsuredParty) {
+      INDEXES.LOSS_PAYEE_ADDRESS += 3;
+    }
+    if (broker[USING_BROKER4]) {
+      INDEXES.LOSS_PAYEE_ADDRESS += 3;
+    }
+  }
+  return INDEXES;
+};
+var POLICY_default = POLICY_INDEXES;
+
+// constants/XLSX-CONFIG/INDEXES/BUYER/index.ts
+var BUYER_INDEXES = () => ({
+  BUYER_ADDRESS: 3
+});
+var BUYER_default = BUYER_INDEXES;
+
+// constants/XLSX-CONFIG/INDEXES/EXPORT_CONTRACT/index.ts
+var DEFAULT_INDEXES3 = {
+  AGENT_ADDRESS: 0
+};
+var EXPORT_CONTRACT_INDEXES = (application2) => {
+  const {
+    exportContract: {
+      agent: { isUsingAgent },
+      finalDestinationKnown,
+      privateMarket: { attempted: attemptedPrivateMarket }
+    }
+  } = application2;
+  const INDEXES = DEFAULT_INDEXES3;
+  if (isUsingAgent) {
+    INDEXES.AGENT_ADDRESS = 9;
+    if (finalDestinationKnown) {
+      INDEXES.AGENT_ADDRESS += 1;
+    }
+    if (attemptedPrivateMarket) {
+      INDEXES.AGENT_ADDRESS += 1;
+    }
+  }
+  return INDEXES;
+};
+var EXPORT_CONTRACT_default = EXPORT_CONTRACT_INDEXES;
+
+// constants/XLSX-CONFIG/INDEXES/index.ts
+var { EXPORTER_BUSINESS: EXPORTER_BUSINESS4, POLICY: POLICY5, BUYER: BUYER2, EXPORT_CONTRACT: EXPORT_CONTRACT3 } = SECTION_NAMES_default;
+var XLSX_ROW_INDEXES = {
+  [EXPORTER_BUSINESS4]: (application2) => EXPORTER_BUSINESS_default(application2),
+  [POLICY5]: (application2) => POLICY_default(application2),
+  [BUYER2]: () => BUYER_default(),
+  [EXPORT_CONTRACT3]: (application2) => EXPORT_CONTRACT_default(application2)
+};
+var INDEXES_default = XLSX_ROW_INDEXES;
 
 // generate-xlsx/styled-columns/index.ts
 var { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, FONT_SIZE } = XLSX_CONFIG;
@@ -7524,8 +7537,8 @@ var styledColumns = (application2, worksheet, sheetName) => {
     });
   });
   let INDEXES = [];
-  if (NEW_XLSX_ROW_INDEXES[sheetName]) {
-    const sheetIndexes = NEW_XLSX_ROW_INDEXES[sheetName](application2);
+  if (INDEXES_default[sheetName]) {
+    const sheetIndexes = INDEXES_default[sheetName](application2);
     INDEXES = Object.values(sheetIndexes);
   }
   modifiedWorksheet = worksheetRowHeights(INDEXES, modifiedWorksheet);
@@ -7534,6 +7547,8 @@ var styledColumns = (application2, worksheet, sheetName) => {
 var styled_columns_default = styledColumns;
 
 // generate-xlsx/index.ts
+import_dotenv9.default.config();
+var { EXCELJS_PROTECTION_PASSWORD } = process.env;
 var XLSX2 = (application2, countries) => {
   try {
     console.info("Generating XLSX file for application %s", application2.id);
@@ -7549,6 +7564,8 @@ var XLSX2 = (application2, countries) => {
       sheetNames.forEach((sheetName) => {
         console.info(`Generating XLSX file - adding ${sheetName} worksheet`);
         let worksheet = workbook.addWorksheet(sheetName);
+        console.info(`Generating XLSX file - protecting ${sheetName} worksheet from modification`);
+        worksheet.protect(String(EXCELJS_PROTECTION_PASSWORD), {});
         console.info(`Generating XLSX file - adding ${sheetName} worksheet header columns`);
         worksheet.columns = header_columns_default(sheetName);
         xlsxData[sheetName].forEach((row) => {
@@ -7940,8 +7957,8 @@ var get_account_password_reset_token_default = getAccountPasswordResetToken;
 
 // integrations/APIM/index.ts
 var import_axios = __toESM(require("axios"));
-var import_dotenv9 = __toESM(require("dotenv"));
-import_dotenv9.default.config();
+var import_dotenv10 = __toESM(require("dotenv"));
+import_dotenv10.default.config();
 var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
 var { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
 var APIM = {
@@ -8237,8 +8254,8 @@ var sanitise_companies_house_number_default = sanitiseCompaniesHouseNumber;
 
 // integrations/companies-house/index.ts
 var import_axios2 = __toESM(require("axios"));
-var import_dotenv10 = __toESM(require("dotenv"));
-import_dotenv10.default.config();
+var import_dotenv11 = __toESM(require("dotenv"));
+import_dotenv11.default.config();
 var username = String(process.env.COMPANIES_HOUSE_API_KEY);
 var companiesHouseURL = String(process.env.COMPANIES_HOUSE_API_URL);
 var companiesHouse = {
@@ -8278,8 +8295,8 @@ var companies_house_default = companiesHouse;
 
 // integrations/industry-sector/index.ts
 var import_axios3 = __toESM(require("axios"));
-var import_dotenv11 = __toESM(require("dotenv"));
-import_dotenv11.default.config();
+var import_dotenv12 = __toESM(require("dotenv"));
+import_dotenv12.default.config();
 var { APIM_MDM_URL: APIM_MDM_URL2, APIM_MDM_KEY: APIM_MDM_KEY2, APIM_MDM_VALUE: APIM_MDM_VALUE2 } = process.env;
 var { APIM_MDM: APIM_MDM2 } = EXTERNAL_API_ENDPOINTS;
 var headers = {
@@ -8438,8 +8455,8 @@ var get_application_by_reference_number_default2 = getApplicationByReferenceNumb
 
 // integrations/ordnance-survey/index.ts
 var import_axios4 = __toESM(require("axios"));
-var import_dotenv12 = __toESM(require("dotenv"));
-import_dotenv12.default.config();
+var import_dotenv13 = __toESM(require("dotenv"));
+import_dotenv13.default.config();
 var { ORDNANCE_SURVEY_API_KEY, ORDNANCE_SURVEY_API_URL } = process.env;
 var ordnanceSurvey = {
   get: async (postcode) => {
