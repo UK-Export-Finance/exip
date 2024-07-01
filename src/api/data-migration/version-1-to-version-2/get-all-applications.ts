@@ -3,10 +3,7 @@ import executeSqlQuery from './execute-sql-query';
 
 /**
  * getAllApplications
- * TODO: update documentation
  * Get all entries in the "Application" table.
- * 1) Get all applications via KeystoneJS context.
- * 2) Create an array of application ID "connect" relationships.
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Object>} applications and application ID "connect" relationships
  */
@@ -18,10 +15,7 @@ const getAllApplications = async (connection: Connection) => {
 
     const [applications] = await executeSqlQuery({ connection, query, loggingMessage });
 
-    // TODO: simplify
-    return {
-      applications,
-    };
+    return applications;
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 

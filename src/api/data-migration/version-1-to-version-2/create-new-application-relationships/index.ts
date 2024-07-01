@@ -21,7 +21,7 @@ const createNewApplicationRelationships = async (connection: Connection) => {
   console.info(`✅ ${loggingMessage}`);
 
   try {
-    const { applications } = await getAllApplications(connection);
+    const applications = await getAllApplications(connection);
 
     const newRelationships = await Promise.all([
       createLossPayee(connection, applications),

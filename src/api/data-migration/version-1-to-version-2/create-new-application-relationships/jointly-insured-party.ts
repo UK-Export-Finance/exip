@@ -7,7 +7,7 @@ import { Application } from '../../../types';
  * createJointlyInsuredParty
  * Create new "jointly insured party" entries with "policy" relationships.
  * 1) Map over each application
- * 2) Create new database values with a UUID and policy ID
+ * 2) Create new database values with a CUID and policy ID
  * 3) Add entries to the JointlyInsuredParty table
  * @param {Connection} connection: SQL database connection
  * @param {Array<Application>} applications: Applications

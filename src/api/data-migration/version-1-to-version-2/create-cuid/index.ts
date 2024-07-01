@@ -1,4 +1,7 @@
+import dotenv from 'dotenv';
 import { init } from '@paralleldrive/cuid2';
+
+dotenv.config();
 
 /**
  * createCuid
@@ -8,8 +11,7 @@ import { init } from '@paralleldrive/cuid2';
 const createCuid = init({
   random: Math.random,
   length: 25,
-  // TODO: environment variable
-  fingerprint: 'a-custom-host-fingerprint',
+  fingerprint: process.env.CUID_FINGERPRINT,
 });
 
 export default createCuid;

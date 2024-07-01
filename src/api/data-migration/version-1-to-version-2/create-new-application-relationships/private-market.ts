@@ -6,10 +6,9 @@ import { Application } from '../../../types';
 /**
  * createPrivateMarket
  * Create new "private market" entries with "export contract" relationships.
- * TODO update documentation
- * TODO update documentation
- * 1) Create an array of export contract ID "connect" relationships.
- * 2) Create "private market" entries.
+ * 1) Map over each application
+ * 2) Create new database values with a CUID
+ * 3) Add entries to the PrivateMarket table
  * @param {Connection} connection: SQL database connection
  * @param {Array<Application>} applications: Applications
  * @returns {Promise<Array<ApplicationPrivateMarket>>} Private market entries
