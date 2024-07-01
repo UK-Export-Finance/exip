@@ -1,6 +1,6 @@
 import { Row, Worksheet } from 'exceljs';
 import { XLSX_CONFIG } from '../../constants';
-import { NEW_XLSX_ROW_INDEXES } from '../../constants/XLSX-CONFIG/INDEXES';
+import XLSX_ROW_INDEXES from '../../constants/XLSX-CONFIG/INDEXES';
 import { Application } from '../../types';
 
 const { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, FONT_SIZE } = XLSX_CONFIG;
@@ -16,7 +16,6 @@ export const worksheetRowHeights = (rowIndexes: Array<number>, worksheet: Worksh
   const modifiedWorksheet = worksheet;
 
   modifiedWorksheet.getRow(1).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
-
 
   rowIndexes.forEach((rowIndex) => {
     modifiedWorksheet.getRow(rowIndex).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
@@ -55,10 +54,10 @@ const styledColumns = (application: Application, worksheet: Worksheet, sheetName
 
   let INDEXES = [] as Array<number>;
 
-  if (NEW_XLSX_ROW_INDEXES[sheetName]) {
-    const sheetIndexes = NEW_XLSX_ROW_INDEXES[sheetName](application);
+  if (XLSX_ROW_INDEXES[sheetName]) {
+    const sheetIndexes = XLSX_ROW_INDEXES[sheetName](application);
 
-    INDEXES = Object.values(sheetIndexes); 
+    INDEXES = Object.values(sheetIndexes);
   }
 
   modifiedWorksheet = worksheetRowHeights(INDEXES, modifiedWorksheet);

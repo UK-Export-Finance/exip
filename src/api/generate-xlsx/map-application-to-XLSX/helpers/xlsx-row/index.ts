@@ -17,8 +17,8 @@ const xlsxRow = (fieldName: string, answer?: string | number) => {
     const cleanValue = replaceCharacterCodesWithCharacters(String(value));
 
     const row = {
-      [KEY.ID]: fieldName,
-      [VALUE.ID]: cleanValue,
+      [KEY]: fieldName,
+      [VALUE]: cleanValue,
     };
 
     return row;

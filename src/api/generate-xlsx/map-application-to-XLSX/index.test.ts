@@ -13,15 +13,7 @@ import { generateSubmittedApplication } from '../../test-helpers';
 import { mockCountries } from '../../test-mocks';
 import { Application } from '../../types';
 
-const {
-  APPLICATION_INFORMATION,
-  ELIGIBILITY,
-  EXPORTER_BUSINESS,
-  POLICY,
-  BUYER,
-  EXPORT_CONTRACT,
-  DECLARATIONS,
-} = SECTION_NAMES;
+const { APPLICATION_INFORMATION, ELIGIBILITY, EXPORTER_BUSINESS, POLICY, BUYER, EXPORT_CONTRACT, DECLARATIONS } = SECTION_NAMES;
 
 describe('api/generate-xlsx/map-application-to-xlsx/index', () => {
   let submittedApplication: Application;

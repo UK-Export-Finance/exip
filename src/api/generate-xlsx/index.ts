@@ -39,7 +39,7 @@ const XLSX = (application: Application, countries: Array<Country>): Promise<stri
 
       const sheetNames = Object.values(SECTION_NAMES);
 
-      sheetNames.forEach(sheetName => {
+      sheetNames.forEach((sheetName) => {
         console.info(`Generating XLSX file - adding ${sheetName} worksheet`);
 
         let worksheet = workbook.addWorksheet(sheetName);
@@ -48,7 +48,7 @@ const XLSX = (application: Application, countries: Array<Country>): Promise<stri
 
         worksheet.columns = HEADER_COLUMNS(sheetName);
 
-        xlsxData[sheetName].forEach((row) => {          
+        xlsxData[sheetName].forEach((row) => {
           console.info(`Generating XLSX file - adding rows to ${sheetName} worksheeet`);
 
           /**
@@ -60,7 +60,7 @@ const XLSX = (application: Application, countries: Array<Country>): Promise<stri
           }
         });
 
-        console.info('Generating XLSX file - adding custom styles to worksheet');
+        console.info(`Generating XLSX file - adding custom styles to ${sheetName} worksheet`);
 
         /**
          * Add custom styles to each column in the worksheet.
