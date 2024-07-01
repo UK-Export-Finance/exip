@@ -72,9 +72,22 @@ The migration should successfully do the following:
 9. Create new application relationships.
 10. Exit the process.
 
-## SQL and KeystoneJS queries
+## How to ensure that data migration was successful
 
-<!-- The data migration uses raw SQL queries -->
+1. All user accounts should have an AccountStatus table.
+2. All applications should be aligned with the version 2 data model (listed above).
+3. In the UI, all existing accounts work as expected (sign in, suspension etc)
+4. In the UI, all existing applications with a status of "in progress" can be progressed and successfully submitted.
+
+:warning: After running the migration script, `npm run dev` in the API will fail. `npm run start` should be used instead.
+
+This is because, during `npm run dev`, KeystoneJS/prisma checks the schema against the database. It will then attempt to automatically build the database, with the latest schema. After running the migration script, this will fail because KeystoneJS/prisma attempts to create foreign key constraints that already exist.
+
+We manage our own data migration, so we do not need these checks to run.
+
+To run `npm run dev` after running the migration script, it can be achieved by adding a `--no-db-push` to the command. However, this should not be necessary since this is for development environments only. In a data migration scenario, `npm run start` should be used.
+
+## SQL and KeystoneJS queries
 
 In many instances, we need to obtain certain pieces of data that are currently stored in the database, and move these to another place.
 
