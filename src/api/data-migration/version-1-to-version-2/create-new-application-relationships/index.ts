@@ -5,7 +5,8 @@ import createJointlyInsuredParty from './jointly-insured-party';
 import createExportContractAgent from './export-contract-agent';
 import createPrivateMarket from './private-market';
 import updateExportContractPrivateMarket from './export-contract-private-market';
-import createCompanyDifferentTradingAddress from './company-different-trading-address';
+import createCompanyDifferentTradingAddress from './create-company-different-trading-address';
+import updateCompanyDifferentTradingAddress from './update-company-different-trading-address';
 
 /**
  * createNewApplicationRelationships
@@ -30,6 +31,7 @@ const createNewApplicationRelationships = async (connection: Connection) => {
       createPrivateMarket(connection, applications),
       updateExportContractPrivateMarket(connection),
       createCompanyDifferentTradingAddress(connection, applications),
+      updateCompanyDifferentTradingAddress(connection),
     ]);
 
     return newRelationships;
