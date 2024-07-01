@@ -1,38 +1,33 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
+import crypto from 'crypto';
+import { Connection } from 'mysql2/promise';
+import executeSqlQuery from '../execute-sql-query';
 import { ApplicationBuyerMvp } from '../../../types';
 
 /**
  * moveBuyerRelationshipFields
  * Move MVP "buyer relationships" fields into the new "No PDF" data model/structure.
- * NOTE: The buyer data we receive is raw database data.
- * In the database, boolean fields are TINYINT/integer values.
- * The KeystoneJS context/GraphQL API expects these fields to be booleans.
- * Therefore, since the TINYINT values will be 0 or 1,
- * we can safely transform any TINYINT fields to have a boolean value.
- * KeystoneJS will then automatically handle saving in the database as a TINYINT
- * @param {Array<ApplicationBuyerMvp>} context: KeystoneJS context API
- * @param {Context} context: KeystoneJS context API
+ * @param {Array<ApplicationBuyerMvp>} buyers: Buyers
+ * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<ApplicationBuyer>>} Updated buyers
  */
-const moveBuyerRelationshipFields = async (buyers: Array<ApplicationBuyerMvp>, context: Context) => {
-  const mappedBuyerRelationshipData = buyers.map((buyer: ApplicationBuyerMvp) => {
-    const mapped = {
-      application: {
-        connect: {
-          id: buyer.application,
-        },
-      },
-      exporterIsConnectedWithBuyer: Boolean(buyer.exporterIsConnectedWithBuyer),
-    };
+const moveBuyerRelationshipFields = async (buyers: Array<ApplicationBuyerMvp>, connection: Connection): Promise<Array<object>> => {
+  console.info('✅ Moving buyer relationship for all buyers');
 
-    return mapped;
+  const buyerRelationshipValues = buyers.map((buyer: ApplicationBuyerMvp) => {
+    const { application, exporterIsConnectedWithBuyer } = buyer;
+
+    return `('${crypto.randomUUID()}', '${application}', ${exporterIsConnectedWithBuyer})`;
   });
 
-  const created = await context.db.BuyerRelationship.createMany({
-    data: mappedBuyerRelationshipData,
-  });
+  const loggingMessage = 'Creating new buyer relationship for all buyers';
 
-  return created;
+  const query = `
+    INSERT INTO BuyerRelationship (id, application, exporterIsConnectedWithBuyer) VALUES ${buyerRelationshipValues};
+  `;
+
+  const updated = await executeSqlQuery({ connection, query, loggingMessage });
+
+  return updated;
 };
 
 export default moveBuyerRelationshipFields;

@@ -50,7 +50,9 @@ To set up and run the API locally, you'll need the following prerequisites:
 - The `DATABASE_URL` environment variable should be configured to point to your local MySQL database, for example: `mysql://root:@localhost:1234/db-name`.
 - The local `NODE_ENV` environment variable set to `migration`.
 - The local `DATABASE_USER` environment variable set to the database's user.
+- The local `DATABASE_PASSWORD` environment variable set to the database's password.
 - `mysql2` NPM package installed as an API dependency.
+- `ts-node` NPM package installed locally.
 
 ## Running Locally :computer:
 
