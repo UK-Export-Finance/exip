@@ -4,10 +4,7 @@ import FIELD_IDS from '../../../constants/field-ids/insurance';
 import xlsxRow from '../helpers/xlsx-row';
 import { Application } from '../../../types';
 
-const {
-  SECTION_TITLES: { KEY_INFORMATION },
-  FIELDS,
-} = XLSX;
+const { FIELDS } = XLSX;
 
 const CONTENT_STRINGS = {
   ...POLICY_FIELDS,
@@ -35,7 +32,6 @@ const mapKeyInformation = (application: Application) => {
   const { policy } = application;
 
   const mapped = [
-    xlsxRow(KEY_INFORMATION),
     xlsxRow(String(FIELDS[EXPORTER_COMPANY_NAME]), application.company[EXPORTER_COMPANY_NAME]),
     xlsxRow(String(FIELDS[COUNTRY]), application.buyer[COUNTRY].name),
     xlsxRow(String(FIELDS[BUYER_COMPANY_NAME]), application.buyer[BUYER_COMPANY_NAME]),

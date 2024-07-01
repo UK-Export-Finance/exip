@@ -1,13 +1,15 @@
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
 import ExcelJS from 'exceljs';
+// import SECTION_KEYS from '../constants/XLSX-CONFIG/SECTION_KEYS';
+import SECTION_NAMES from '../constants/XLSX-CONFIG/SECTION_NAMES';
 import mapApplicationToXLSX from './map-application-to-XLSX';
 import HEADER_COLUMNS from './header-columns';
 import styledColumns from './styled-columns';
 import { Application, Country } from '../types';
 
-dotenv.config();
+// dotenv.config();
 
-const { EXCELJS_PROTECTION_PASSWORD } = process.env;
+// const { EXCELJS_PROTECTION_PASSWORD } = process.env;
 
 /**
  * XLSX
@@ -29,44 +31,45 @@ const XLSX = (application: Application, countries: Array<Country>): Promise<stri
 
       const xlsxData = mapApplicationToXLSX(application, countries);
 
-      // create a new workbook
       console.info('Generating XLSX file - creating a new workbook');
 
       const workbook = new ExcelJS.Workbook();
 
-      // add a worksheet to the workbook
-      console.info('Generating XLSX file - adding worksheet to workbook');
+      console.info('Generating XLSX file - adding worksheets to workbook');
 
-      let worksheet = workbook.addWorksheet(refNumber);
+      const sheetNames = Object.values(SECTION_NAMES);
 
-      // protect the worksheet from modification
-      worksheet.protect(String(EXCELJS_PROTECTION_PASSWORD), {});
+      sheetNames.forEach(sheetName => {
+        console.info(`Generating XLSX file - adding ${sheetName} worksheet`);
 
-      // add header columns to the worksheet
-      worksheet.columns = HEADER_COLUMNS;
+        let worksheet = workbook.addWorksheet(sheetName);
 
-      // add each row to the worksheet
-      console.info('Generating XLSX file - adding rows to worksheet');
+        console.info(`Generating XLSX file - adding ${sheetName} worksheet header columns`);
 
-      xlsxData.forEach((row) => {
+        worksheet.columns = HEADER_COLUMNS(sheetName);
+
+        xlsxData[sheetName].forEach((row) => {          
+          console.info(`Generating XLSX file - adding rows to ${sheetName} worksheeet`);
+
+          /**
+           * NOTE: some rows are undefined.
+           * Therefore, only add rows that have data.
+           */
+          if (row) {
+            worksheet.addRow(row);
+          }
+        });
+
+        console.info('Generating XLSX file - adding custom styles to worksheet');
+
         /**
-         * NOTE: some rows are undefined.
-         * Therefore, only add rows that have data.
+         * Add custom styles to each column in the worksheet.
+         * This introduces e.g:
+         * - bold heading rows.
+         * - larger rows for address and SIC codes.
          */
-        if (row) {
-          worksheet.addRow(row);
-        }
+        worksheet = styledColumns(application, worksheet, sheetName);
       });
-
-      /**
-       * Add custom styles to each column in the worksheet.
-       * This introduces e.g:
-       * - larger rows for address and SIC codes.
-       * - bold heading rows.
-       */
-      console.info('Generating XLSX file - adding custom styles to worksheet');
-
-      worksheet = styledColumns(application, worksheet);
 
       /**
        * Write the file,

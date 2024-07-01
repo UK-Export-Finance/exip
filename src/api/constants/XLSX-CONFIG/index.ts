@@ -1,5 +1,5 @@
 import { TOTAL_CONTRACT_VALUE } from '../total-contract-value';
-import { INDEXES, incrementIndexes } from './INDEXES';
+// import { INDEXES } from './INDEXES';
 import { POLICY as POLICY_FIELD_IDS } from '../field-ids/insurance/policy';
 import { isMultiplePolicyType } from '../../helpers/policy-type';
 import { Application, XLSXRowIndexes } from '../../types';
@@ -65,7 +65,8 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
 
   const isMultiplePolicy = isMultiplePolicyType(application.policy[POLICY_TYPE]);
 
-  let indexes = INDEXES();
+  // let indexes = INDEXES();
+  let indexes = {};
 
   /**
    * Increment some specific indexes,
@@ -74,11 +75,11 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   if (hasDifferentTradingAddress) {
     indexes.ALTERNATIVE_TRADING_ADDRESS = 37;
 
-    indexes = incrementIndexes(indexes);
+    // indexes = incrementIndexes(indexes);
   }
 
   if (hasDifferentTradingName) {
-    indexes = incrementIndexes(indexes);
+    // indexes = incrementIndexes(indexes);
   }
 
   if (hasDifferentTradingName && hasDifferentTradingAddress) {
@@ -241,14 +242,8 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
  * @returns {Object}
  */
 export const XLSX_CONFIG = {
-  KEY: {
-    ID: 'field',
-    COPY: 'Field',
-  },
-  VALUE: {
-    ID: 'answer',
-    COPY: 'Answer',
-  },
+  KEY: 'field',
+  VALUE: 'answer',
   COLUMN_WIDTH: 85,
   ADDITIONAL_TITLE_COLUMN_HEIGHT: 25,
   ADDITIONAL_COLUMN_HEIGHT: 50,

@@ -22,7 +22,7 @@ const {
   TRADED_WITH_BUYER,
 } = FIELD_IDS;
 
-const { SECTION_TITLES, FIELDS } = XLSX;
+const { FIELDS } = XLSX;
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-buyer', () => {
   it('should return an array of mapped buyer fields', () => {
@@ -32,7 +32,6 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-buyer', () => {
     const { buyerTradingHistory, relationship } = buyer;
 
     const expected = [
-      xlsxRow(SECTION_TITLES.BUYER, ''),
       xlsxRow(String(FIELDS[NAME]), buyer[NAME]),
       xlsxRow(String(CONTENT_STRINGS[ADDRESS].SUMMARY?.TITLE), `${buyer[ADDRESS]} ${NEW_LINE}${buyer[COUNTRY].name}`),
       xlsxRow(String(FIELDS[REGISTRATION_NUMBER]), buyer[REGISTRATION_NUMBER]),

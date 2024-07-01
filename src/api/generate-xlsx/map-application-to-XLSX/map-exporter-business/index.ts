@@ -13,7 +13,7 @@ import formatCurrency from '../helpers/format-currency';
 import mapYesNoField from '../helpers/map-yes-no-field';
 import { Application } from '../../../types';
 
-const { FIELDS, SECTION_TITLES } = XLSX;
+const { FIELDS } = XLSX;
 
 const CONTENT_STRINGS = {
   ...YOUR_BUSINESS_FIELDS.COMPANY_DETAILS,
@@ -40,7 +40,6 @@ const mapExporterBusiness = (application: Application) => {
   const { business, company, companySicCodes } = application;
 
   const mapped = [
-    xlsxRow(SECTION_TITLES.EXPORTER_BUSINESS, ''),
     xlsxRow(CONTENT_STRINGS[COMPANY_INCORPORATED].SUMMARY?.TITLE, formatDate(company[COMPANY_INCORPORATED], DATE_FORMAT.XLSX)),
     xlsxRow(String(FIELDS[COMPANY_ADDRESS]), mapExporterAddress(company[COMPANY_ADDRESS])),
     xlsxRow(String(FIELDS[COMPANY_SIC]), mapSicCodes(companySicCodes)),

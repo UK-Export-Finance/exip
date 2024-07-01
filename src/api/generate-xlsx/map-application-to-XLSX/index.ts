@@ -1,4 +1,4 @@
-import ROW_SEPERATOR from './helpers/xlsx-row-seperator';
+import SECTION_NAMES from '../../constants/XLSX-CONFIG/SECTION_NAMES';
 import mapIntroduction from './map-introduction';
 import mapExporterContactDetails from './map-exporter-contact-details';
 import mapEligibility from './map-eligibility';
@@ -10,6 +10,16 @@ import mapExportContract from './map-export-contract';
 import mapDeclarations from './map-declarations';
 import { Application, Country } from '../../types';
 
+const {
+  APPLICATION_INFORMATION,
+  ELIGIBILITY,
+  EXPORTER_BUSINESS,
+  POLICY,
+  BUYER,
+  EXPORT_CONTRACT,
+  DECLARATIONS,
+} = SECTION_NAMES;
+
 /**
  * mapApplicationToXLSX
  * Map application fields into an array of objects for XLSX generation
@@ -19,41 +29,19 @@ import { Application, Country } from '../../types';
  */
 const mapApplicationToXLSX = (application: Application, countries: Array<Country>) => {
   try {
-    const mapped = [
-      ...mapIntroduction(application),
-
-      ROW_SEPERATOR,
-
-      ...mapExporterContactDetails(application),
-
-      ROW_SEPERATOR,
-
-      ...mapKeyInformation(application),
-
-      ROW_SEPERATOR,
-
-      ...mapEligibility(application),
-
-      ROW_SEPERATOR,
-
-      ...mapExporterBusiness(application),
-
-      ROW_SEPERATOR,
-
-      ...mapPolicy(application, countries),
-
-      ROW_SEPERATOR,
-
-      ...mapBuyer(application),
-
-      ROW_SEPERATOR,
-
-      ...mapExportContract(application, countries),
-
-      ROW_SEPERATOR,
-
-      ...mapDeclarations(application),
-    ];
+    const mapped = {
+      [APPLICATION_INFORMATION]: [
+        ...mapIntroduction(application),
+        ...mapExporterContactDetails(application),
+        ...mapKeyInformation(application),
+      ],
+      [ELIGIBILITY]: mapEligibility(application),
+      [EXPORTER_BUSINESS]: mapExporterBusiness(application),
+      [POLICY]: mapPolicy(application, countries),
+      [BUYER]: mapBuyer(application),
+      [EXPORT_CONTRACT]: mapExportContract(application, countries),
+      [DECLARATIONS]: mapDeclarations(application),
+    };
 
     return mapped;
   } catch (err) {

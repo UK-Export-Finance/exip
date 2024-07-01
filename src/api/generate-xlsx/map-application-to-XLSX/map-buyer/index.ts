@@ -21,7 +21,7 @@ const {
   TRADED_WITH_BUYER,
 } = FIELD_IDS;
 
-const { SECTION_TITLES, FIELDS } = XLSX;
+const { FIELDS } = XLSX;
 
 /**
  * mapBuyer
@@ -34,7 +34,6 @@ const mapBuyer = (application: Application) => {
   const { buyerTradingHistory, relationship } = buyer;
 
   const mapped = [
-    xlsxRow(SECTION_TITLES.BUYER, ''),
     xlsxRow(String(FIELDS[NAME]), buyer[NAME]),
     xlsxRow(String(CONTENT_STRINGS[ADDRESS].SUMMARY?.TITLE), `${buyer[ADDRESS]} ${NEW_LINE}${buyer[COUNTRY].name}`),
     xlsxRow(String(FIELDS[REGISTRATION_NUMBER]), buyer[REGISTRATION_NUMBER]),

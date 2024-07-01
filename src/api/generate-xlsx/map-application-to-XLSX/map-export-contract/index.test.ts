@@ -7,7 +7,7 @@ import mapPrivateMarket from './map-private-market';
 import mapAgent from './map-agent';
 import { mockApplicationMinimalBrokerBuyerAndCompany as mockApplication, mockCountries } from '../../../test-mocks';
 
-const { FIELDS, SECTION_TITLES } = XLSX;
+const { FIELDS } = XLSX;
 
 const {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
@@ -26,8 +26,6 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-export-contract', () => 
     const { agent, privateMarket } = exportContract;
 
     const expected = [
-      xlsxRow(SECTION_TITLES.EXPORT_CONTRACT, ''),
-
       xlsxRow(String(FIELDS.EXPORT_CONTRACT[DESCRIPTION]), exportContract[DESCRIPTION]),
 
       ...mapFinalDestination(exportContract, mockCountries),

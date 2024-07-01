@@ -6,7 +6,7 @@ import mapPrivateMarket from './map-private-market';
 import mapAgent from './map-agent';
 import { Application, Country } from '../../../types';
 
-const { FIELDS, SECTION_TITLES } = XLSX;
+const { FIELDS } = XLSX;
 
 const {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
@@ -29,8 +29,6 @@ const mapExportContract = (application: Application, countries: Array<Country>) 
   const { agent, privateMarket } = exportContract;
 
   const mapped = [
-    xlsxRow(SECTION_TITLES.EXPORT_CONTRACT, ''),
-
     xlsxRow(String(FIELDS.EXPORT_CONTRACT[DESCRIPTION]), exportContract[DESCRIPTION]),
 
     ...mapFinalDestination(exportContract, countries),
