@@ -14,6 +14,7 @@ export const DEFAULT_INDEXES = () => ({
  * - If "using an agent" is true, the worksheet has 5 additional rows.
  * - If "final destination is known" is true, the worksheet has 1 additional row.
  * - If "has attempted private market cover" is true, the worksheet has 1 additional row.
+ * @param {Application} application
  * @returns {Object}
  */
 const EXPORT_CONTRACT_INDEXES = (application: Application) => {

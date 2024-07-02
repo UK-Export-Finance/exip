@@ -10,6 +10,8 @@ const { USING_BROKER } = POLICY_FIELD_IDS;
  * - If "different name on policy / policy contact is NOT the same as the owner", is true, the worksheet has 2 additional rows.
  * - If "need pre-credit period cover" is true, the worksheet has 1 additional row.
  * - If "requested a jointly insured party" is true, the worksheet has 3 additional rows.
+ * @param {Application} application
+ * @param {Object} INDEXES
  * @returns {Object}
  */
 const BROKER_CONDITIONS = (application: Application, INDEXES: object) => {

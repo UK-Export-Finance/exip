@@ -22,6 +22,7 @@ export const DEFAULT_INDEXES = {
 /**
  * POLICY_INDEXES
  * Generate row indexes for the XLSX's "Policy" worksheet.
+ * @param {Application} application
  * @returns {Object}
  */
 const POLICY_INDEXES = (application: Application) => {
@@ -52,7 +53,6 @@ const POLICY_INDEXES = (application: Application) => {
     }
   }
 
-  // if (policyContact[IS_SAME_AS_OWNER]) {
   if (!policyContact[IS_SAME_AS_OWNER]) {
     INDEXES.BROKER_ADDRESS += 1;
     INDEXES.LOSS_PAYEE_ADDRESS += 1;

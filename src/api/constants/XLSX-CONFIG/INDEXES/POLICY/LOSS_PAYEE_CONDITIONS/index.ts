@@ -11,6 +11,8 @@ const { USING_BROKER } = POLICY_FIELD_IDS;
  * - If "need pre-credit period cover" is true, the worksheet has 1 additional row.
  * - If "requested a jointly insured party" is true, the worksheet has 3 additional rows.
  * - If "using a broker" is true, the worksheet has 3 additional rows.
+ * @param {Application} application
+ * @param {Object} INDEXES
  * @returns {Object}
  */
 const LOSS_PAYEE_CONDITIONS = (application: Application, INDEXES: object) => {
