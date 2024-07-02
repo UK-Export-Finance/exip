@@ -34,8 +34,8 @@
       <div class="govuk-grid-column-three-quarters-from-desktop">
 
         {% set html %}
-        <h3 class="govuk-notification-banner__heading" data-cy="success-banner-heading">{{ CONTENT_STRINGS.SUCCESS_BANNER.HEADING }}</h3>
-        <p class="govuk-heading-m" data-cy="success-banner-continue">{{ CONTENT_STRINGS.SUCCESS_BANNER.SIGN_IN_TO_CONTINUE }}</p>
+          <h3 class="govuk-notification-banner__heading" data-cy="success-banner-heading">{{ CONTENT_STRINGS.SUCCESS_BANNER.HEADING }}</h3>
+          <p class="govuk-heading-m" data-cy="success-banner-continue">{{ CONTENT_STRINGS.SUCCESS_BANNER.SIGN_IN_TO_CONTINUE }}</p>
         {% endset %}
 
         {{ govukNotificationBanner({
@@ -55,7 +55,7 @@
       <div class="govuk-grid-column-three-quarters-from-desktop">
 
         {% set html %}
-        <p class="govuk-notification-banner__heading" data-cy="important-banner-heading">{{ CONTENT_STRINGS.IMPORTANT_BANNER.SUCCESSFULLY_SIGNED_OUT }}</p>
+          <p class="govuk-notification-banner__heading" data-cy="important-banner-heading">{{ CONTENT_STRINGS.IMPORTANT_BANNER.SUCCESSFULLY_SIGNED_OUT }}</p>
         {% endset %}
 
         {{ govukNotificationBanner({
@@ -92,21 +92,21 @@
           errorMessage: validationErrors.errorList[FIELDS.EMAIL.ID]
         }) }}
 
-        {{ passwordInput.render({
-          id: FIELDS.PASSWORD.ID,
-          labelText: FIELDS.PASSWORD.LABEL,
-          hintHtml: passwordHintHtml,
-          value: submittedValues[FIELDS.PASSWORD.ID],
-          errorMessage: validationErrors.errorList[FIELDS.PASSWORD.ID]
-        }) }}
-
-        <div class="govuk-button-group">
-          {{ submitButton.render({
-            text: CONTENT_STRINGS.BUTTONS.CONTINUE
-          }) }}
-        </div>
-
       </div>
+    </div>
+
+    {{ passwordInput.render({
+      id: FIELDS.PASSWORD.ID,
+      labelText: FIELDS.PASSWORD.LABEL,
+      hintHtml: passwordHintHtml,
+      value: submittedValues[FIELDS.PASSWORD.ID],
+      errorMessage: validationErrors.errorList[FIELDS.PASSWORD.ID]
+    }) }}
+
+    <div class="govuk-button-group">
+      {{ submitButton.render({
+        text: CONTENT_STRINGS.BUTTONS.CONTINUE
+      }) }}
     </div>
 
     <a class="govuk-link" href="{{ CONTENT_STRINGS.PASSWORD_RESET.HREF }}" data-cy="reset-password">{{ CONTENT_STRINGS.PASSWORD_RESET.TEXT }}</a>
