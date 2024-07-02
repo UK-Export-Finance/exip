@@ -1,4 +1,12 @@
-import { isNumber, numberHasDecimal, getPercentageOfNumber, isNumberBelowMinimum, isNumberAboveMaximum } from '.';
+import {
+  isNumber,
+  numberHasDecimal,
+  getPercentageOfNumber,
+  isNumberBelowMinimum,
+  isNumberAboveMaximum,
+  transformEmptyDecimalsToWholeNumber,
+  numberHasDecimalPlaces,
+} from '.';
 
 describe('server/helpers/number', () => {
   describe('isNumber', () => {
@@ -113,6 +121,46 @@ describe('server/helpers/number', () => {
       const result = isNumberAboveMaximum(mockValue, mockMaximum);
 
       expect(result).toEqual(false);
+    });
+  });
+
+  describe('transformEmptyDecimalsToWholeNumber', () => {
+    it('should return a whole number when number contains ".00"', () => {
+      const mockValue = '100.00';
+
+      const result = transformEmptyDecimalsToWholeNumber(mockValue);
+
+      const expected = '100';
+
+      expect(result).toEqual(expected);
+    });
+
+    it('should retain the decimal places when number does not contain ".00"', () => {
+      const mockValue = '100.50';
+
+      const result = transformEmptyDecimalsToWholeNumber(mockValue);
+
+      const expected = '100.50';
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('numberHasDecimalPlaces', () => {
+    it('should return false if whole number provided', () => {
+      const mockValue = '100';
+
+      const result = numberHasDecimalPlaces(mockValue);
+
+      expect(result).toEqual(false);
+    });
+
+    it('should return true if number with decimals provided', () => {
+      const mockValue = '100.50';
+
+      const result = numberHasDecimalPlaces(mockValue);
+
+      expect(result).toEqual(true);
     });
   });
 });

@@ -1,3 +1,5 @@
+import { REGEX } from '../../constants';
+
 /**
  * isNumber
  * Check if the provided string or number, is a number
@@ -14,7 +16,7 @@ const isNumber = (value: string | number) => {
 
 /**
  * numberHasDecimal
- * Check if a number has decimal points
+ * Check if a number has decimal places
  * @param {Number}
  * @returns {Boolean}
  */
@@ -47,4 +49,28 @@ const isNumberBelowMinimum = (value: number, minimum: number) => value < minimum
  */
 const isNumberAboveMaximum = (value: number, maximum: number) => value > maximum;
 
-export { isNumber, numberHasDecimal, getPercentageOfNumber, isNumberBelowMinimum, isNumberAboveMaximum };
+/**
+ * transformEmptyDecimalsToWholeNumber
+ * if number has .00 at the end
+ * removes the .00 and transforms to whole number
+ * @param {String} value
+ * @returns {String} value without .00 unless it has other decimal places
+ */
+const transformEmptyDecimalsToWholeNumber = (value: string) => value.replace(REGEX.INCLUDES_DOUBLE_ZERO_DECIMALS, '');
+
+/**
+ * checks if number has decimal places via modulus check
+ * @param {Number || String} value
+ * @returns {Boolean}
+ */
+const numberHasDecimalPlaces = (value: number | string) => Number(value) % 1 !== 0;
+
+export {
+  isNumber,
+  numberHasDecimal,
+  getPercentageOfNumber,
+  isNumberBelowMinimum,
+  isNumberAboveMaximum,
+  transformEmptyDecimalsToWholeNumber,
+  numberHasDecimalPlaces,
+};

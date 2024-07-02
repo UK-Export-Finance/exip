@@ -7,6 +7,7 @@ const { POLICY_TYPE } = APPLICATION;
  * Runs through the full "prepare your application" section/journey for multiple contract policy
  * All params default to false, except for submitCheckYourAnswers.
  * @param {Boolean} agentChargeMethodFixedSum: Agent charge method is "fixed sum".
+ * @param {String} agentChargeFixedSumAmount: Agent charge fixed sum amount
  * @param {Boolean} agentChargeMethodPercentage: Agent charge method is "percentage".
  * @param {Boolean} agentIsCharging: Should submit "yes" to "agent is charging" in the "agent details" form.
  * @param {Boolean} alternativeBuyerCurrency: Should submit an "alternative currency" in the buyer section.
@@ -37,6 +38,7 @@ const { POLICY_TYPE } = APPLICATION;
  */
 const completePrepareApplicationMultiplePolicyType = ({
   agentChargeMethodFixedSum = false,
+  agentChargeFixedSumAmount,
   agentChargeMethodPercentage = false,
   agentIsCharging = false,
   alternativeBuyerCurrency = false,
@@ -102,6 +104,7 @@ const completePrepareApplicationMultiplePolicyType = ({
   cy.completeExportContractSection({
     agentIsCharging,
     agentChargeMethodFixedSum,
+    agentChargeFixedSumAmount,
     agentChargeMethodPercentage,
     attemptedPrivateMarketCover,
     finalDestinationKnown,

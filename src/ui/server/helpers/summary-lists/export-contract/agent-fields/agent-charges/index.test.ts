@@ -9,6 +9,7 @@ import mapPercentage from '../../../../map-percentage';
 import getCountryByIsoCode from '../../../../get-country-by-iso-code';
 import generateChangeLink from '../../../../generate-change-link';
 import formatCurrency from '../../../../format-currency';
+import { transformEmptyDecimalsToWholeNumber } from '../../../../number';
 import { mockExportContractAgentService, mockCountries, referenceNumber } from '../../../../../test-mocks';
 
 const {
@@ -58,7 +59,56 @@ describe('server/helpers/summary-lists/export-contract/agent-fields/agent-charge
       charge: {
         ...mockAnswersChargingTrue.charge,
         [PERCENTAGE_CHARGE]: null,
-        [FIXED_SUM_AMOUNT]: 10,
+        [FIXED_SUM_AMOUNT]: '10.00',
+      },
+    };
+
+    it('should return all agent service charge fields and values', () => {
+      const result = agentChargesFields(mockAnswers, referenceNumber, mockCountries, checkAndChange);
+
+      const fixedSumAnswer = transformEmptyDecimalsToWholeNumber(mockAnswers.charge[FIXED_SUM_AMOUNT]);
+
+      const expected = [
+        fieldGroupItem(
+          {
+            field: getFieldById(FIELDS.AGENT_SERVICE, IS_CHARGING),
+            data: mockAnswers,
+            href: generateChangeLink(AGENT_SERVICE_CHANGE, AGENT_SERVICE_CHECK_AND_CHANGE, `#${IS_CHARGING}-label`, referenceNumber, checkAndChange),
+            renderChangeLink: true,
+          },
+          mapYesNoField(mockAnswers[IS_CHARGING]),
+        ),
+        fieldGroupItem(
+          {
+            field: getFieldById(FIELDS.AGENT_CHARGES, FIXED_SUM_AMOUNT),
+            data: mockAnswers.charge,
+            href: generateChangeLink(AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE, `#${FIXED_SUM_AMOUNT}-label`, referenceNumber, checkAndChange),
+            renderChangeLink: true,
+          },
+          formatCurrency(Number(fixedSumAnswer), mockAnswers.charge[FIXED_SUM_CURRENCY_CODE]),
+        ),
+        fieldGroupItem(
+          {
+            field: getFieldById(FIELDS.AGENT_CHARGES, PAYABLE_COUNTRY_CODE),
+            data: mockAnswers.charge,
+            href: generateChangeLink(AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE, `#${PAYABLE_COUNTRY_CODE}-label`, referenceNumber, checkAndChange),
+            renderChangeLink: true,
+          },
+          getCountryByIsoCode(mockCountries, mockAnswers.charge[PAYABLE_COUNTRY_CODE]).name,
+        ),
+      ];
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when ${IS_CHARGING} is true and ${FIXED_SUM_AMOUNT} is provided with decimal places`, () => {
+    const mockAnswers = {
+      ...mockAnswersChargingTrue,
+      charge: {
+        ...mockAnswersChargingTrue.charge,
+        [PERCENTAGE_CHARGE]: null,
+        [FIXED_SUM_AMOUNT]: '10.50',
       },
     };
 
@@ -82,7 +132,7 @@ describe('server/helpers/summary-lists/export-contract/agent-fields/agent-charge
             href: generateChangeLink(AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE, `#${FIXED_SUM_AMOUNT}-label`, referenceNumber, checkAndChange),
             renderChangeLink: true,
           },
-          formatCurrency(mockAnswers.charge[FIXED_SUM_AMOUNT], mockAnswers.charge[FIXED_SUM_CURRENCY_CODE]),
+          formatCurrency(Number(mockAnswers.charge[FIXED_SUM_AMOUNT]), mockAnswers.charge[FIXED_SUM_CURRENCY_CODE], 2),
         ),
         fieldGroupItem(
           {

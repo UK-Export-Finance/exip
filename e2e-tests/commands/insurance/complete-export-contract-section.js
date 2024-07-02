@@ -3,6 +3,7 @@
  * Complete the "Export contract" section
  * @param {Boolean} agentIsCharging: Agent is charging
  * @param {Boolean} agentChargeMethodFixedSum: Agent charge method is "fixed sum"
+ * @param {String} agentChargeFixedSumAmount: Agent charge fixed sum amount
  * @param {Boolean} agentChargeMethodPercentage: Agent charge method is "percentage"
  * @param {Boolean} attemptedPrivateMarketCover: Has attempted to insure through the private market
  * @param {Boolean} finalDestinationKnown: "Final destination known"
@@ -14,6 +15,7 @@
 const completeExportContractSection = ({
   agentIsCharging = false,
   agentChargeMethodFixedSum = false,
+  agentChargeFixedSumAmount,
   agentChargeMethodPercentage = false,
   attemptedPrivateMarketCover = false,
   finalDestinationKnown,
@@ -45,6 +47,7 @@ const completeExportContractSection = ({
     if (agentIsCharging) {
       cy.completeAndSubmitAgentChargesForm({
         fixedSumMethod: agentChargeMethodFixedSum,
+        fixedSumAmount: agentChargeFixedSumAmount,
         percentageMethod: agentChargeMethodPercentage,
       });
     }

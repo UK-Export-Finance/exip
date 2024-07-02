@@ -1195,11 +1195,13 @@ type ExportContractAgentServiceCharge {
   id: ID!
   service: ExportContractAgentService
   percentageCharge: Int
-  fixedSumAmount: Int
+  fixedSumAmount: Decimal
   fixedSumCurrencyCode: String
   method: String
   payableCountryCode: String
 }
+
+scalar Decimal
 
 input ExportContractAgentServiceChargeWhereUniqueInput {
   id: ID
@@ -1212,10 +1214,21 @@ input ExportContractAgentServiceChargeWhereInput {
   id: IDFilter
   service: ExportContractAgentServiceWhereInput
   percentageCharge: IntNullableFilter
-  fixedSumAmount: IntNullableFilter
+  fixedSumAmount: DecimalNullableFilter
   fixedSumCurrencyCode: StringFilter
   method: StringNullableFilter
   payableCountryCode: StringFilter
+}
+
+input DecimalNullableFilter {
+  equals: Decimal
+  in: [Decimal!]
+  notIn: [Decimal!]
+  lt: Decimal
+  lte: Decimal
+  gt: Decimal
+  gte: Decimal
+  not: DecimalNullableFilter
 }
 
 input ExportContractAgentServiceChargeOrderByInput {
@@ -1230,7 +1243,7 @@ input ExportContractAgentServiceChargeOrderByInput {
 input ExportContractAgentServiceChargeUpdateInput {
   service: ExportContractAgentServiceRelateToOneForUpdateInput
   percentageCharge: Int
-  fixedSumAmount: Int
+  fixedSumAmount: Decimal
   fixedSumCurrencyCode: String
   method: String
   payableCountryCode: String
@@ -1244,7 +1257,7 @@ input ExportContractAgentServiceChargeUpdateArgs {
 input ExportContractAgentServiceChargeCreateInput {
   service: ExportContractAgentServiceRelateToOneForCreateInput
   percentageCharge: Int
-  fixedSumAmount: Int
+  fixedSumAmount: Decimal
   fixedSumCurrencyCode: String
   method: String
   payableCountryCode: String
