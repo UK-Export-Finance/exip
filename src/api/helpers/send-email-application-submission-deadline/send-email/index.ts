@@ -11,6 +11,8 @@ import { Application, EmailResponse } from '../../../types';
  */
 const send = async (applications: Array<Application>) => {
   try {
+    console.info('Sending application submission deadline emails - send helper');
+
     const mapped = applications.map(async (application) => {
       const variables = mapApplicationSubmissionDeadlineVariables(application);
 

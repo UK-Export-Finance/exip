@@ -1503,6 +1503,7 @@ var emails_default = sendEmail;
 // helpers/send-email-application-submission-deadline/send-email/index.ts
 var send = async (applications) => {
   try {
+    console.info("Sending application submission deadline emails - send helper");
     const mapped = applications.map(async (application2) => {
       const variables = map_application_submission_deadline_variables_default(application2);
       return emails_default.submissionDeadlineEmail(variables.email, variables);
