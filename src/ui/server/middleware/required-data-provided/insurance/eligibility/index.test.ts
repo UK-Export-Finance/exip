@@ -4,7 +4,7 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { mockReq, mockRes, mockSession } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
 
-const { APPLY_OFFLINE, ELIGIBILITY, ACCOUNT } = INSURANCE_ROUTES;
+const { ELIGIBILITY, ACCOUNT } = INSURANCE_ROUTES;
 
 const {
   HAVE_AN_ACCOUNT,
@@ -147,15 +147,6 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
     describe(`when req.originalUrl is ${CONTRACT_TOO_SHORT}`, () => {
       it('should call req.next', () => {
         req.originalUrl = CONTRACT_TOO_SHORT;
-        requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
-
-        expect(nextSpy).toHaveBeenCalled();
-      });
-    });
-
-    describe(`when req.originalUrl is ${APPLY_OFFLINE}`, () => {
-      it('should call req.next', () => {
-        req.originalUrl = APPLY_OFFLINE;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();

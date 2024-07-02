@@ -74,7 +74,7 @@ describe('server/helpers/page-variables/core', () => {
     it('should return an object with provided data and additional content strings, footer, startRoute and product for insurance', () => {
       const insuranceMock = {
         ...mock,
-        ORIGINAL_URL: ROUTES.INSURANCE.APPLY_OFFLINE,
+        ORIGINAL_URL: ROUTES.INSURANCE.DASHBOARD,
       };
 
       const result = corePageVariables(insuranceMock);

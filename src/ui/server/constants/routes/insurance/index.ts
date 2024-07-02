@@ -45,7 +45,6 @@ export const INSURANCE_ROUTES = {
     NEED_TO_START_AGAIN: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/need-to-start-again`,
     CONTRACT_TOO_SHORT: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/contract-too-short`,
   },
-  APPLY_OFFLINE: `${INSURANCE_ROOT}/apply-using-our-form`,
   PAGE_NOT_FOUND: `${INSURANCE_ROOT}/page-not-found`,
   NO_ACCESS_TO_APPLICATION: `${INSURANCE_ROOT}/no-access-to-application`,
   NO_ACCESS_APPLICATION_SUBMITTED: `${INSURANCE_ROOT}/no-access-application-submitted`,

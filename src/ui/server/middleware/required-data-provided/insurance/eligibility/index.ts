@@ -3,7 +3,7 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { Request, RequiredDataStateInsuranceEligibility, Response } from '../../../../../types';
 import { getRoutesAsArray, routeIsKnown, hasRequiredData } from '../../helpers';
 
-const { APPLY_OFFLINE, ELIGIBILITY, ACCOUNT } = INSURANCE_ROUTES;
+const { ELIGIBILITY, ACCOUNT } = INSURANCE_ROUTES;
 
 const {
   HAVE_AN_ACCOUNT,
@@ -113,7 +113,6 @@ export const requiredInsuranceEligibilityDataProvided = (req: Request, res: Resp
   // array of routes that do not require any data checks.
   const irrelevantRoutes = [
     CANNOT_APPLY,
-    APPLY_OFFLINE,
     CHECK_IF_ELIGIBLE,
     NO_COMPANIES_HOUSE_NUMBER,
     COMPANIES_HOUSE_UNAVAILABLE,
