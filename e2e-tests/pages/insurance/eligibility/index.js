@@ -7,11 +7,5 @@ import otherPartiesPage from './otherParties';
 import contractTooShort from './contractTooShort';
 
 export {
-  checkIfEligiblePage,
-  companiesHouseUnavailablePage,
-  companyDetailsPage,
-  eligibleToApplyOnlinePage,
-  endBuyerPage,
-  otherPartiesPage,
-  contractTooShort,
+  checkIfEligiblePage, companiesHouseUnavailablePage, companyDetailsPage, eligibleToApplyOnlinePage, endBuyerPage, otherPartiesPage, contractTooShort,
 };

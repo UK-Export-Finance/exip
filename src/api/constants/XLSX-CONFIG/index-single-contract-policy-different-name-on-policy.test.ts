@@ -20,14 +20,14 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
 
     const expected = {
       ...indexes,
-      BROKER_ADDRESS: indexes.BROKER_ADDRESS + 2,
-      BUYER_ADDRESS: indexes.BUYER_ADDRESS + 2,
-      LOSS_PAYEE_ADDRESS: indexes.LOSS_PAYEE_ADDRESS + 2,
+      BROKER_ADDRESS: indexes.BROKER_ADDRESS + 3,
+      BUYER_ADDRESS: indexes.BUYER_ADDRESS + 3,
+      LOSS_PAYEE_ADDRESS: indexes.LOSS_PAYEE_ADDRESS + 3,
       TITLES: {
         ...indexes.TITLES,
-        BUYER: indexes.TITLES.BUYER + 2,
-        DECLARATIONS: indexes.TITLES.DECLARATIONS + 2,
-        EXPORT_CONTRACT: indexes.TITLES.EXPORT_CONTRACT + 2,
+        BUYER: indexes.TITLES.BUYER + 3,
+        DECLARATIONS: indexes.TITLES.DECLARATIONS + 3,
+        EXPORT_CONTRACT: indexes.TITLES.EXPORT_CONTRACT + 3,
       },
     };
 

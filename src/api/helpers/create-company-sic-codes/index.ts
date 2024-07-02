@@ -24,9 +24,9 @@ const createCompanySicCodes = async (
     let createdSicCodes = [] as Array<SicCode>;
 
     if (sicCodes.length) {
-      createdSicCodes = await context.db.CompanySicCode.createMany({
+      createdSicCodes = (await context.db.CompanySicCode.createMany({
         data: mappedSicCodes,
-      }) as Array<SicCode>;
+      })) as Array<SicCode>;
     }
 
     return createdSicCodes;

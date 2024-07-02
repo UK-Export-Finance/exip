@@ -24,7 +24,7 @@ const verifyAccountPasswordResetToken = async (
     const { token } = variables;
 
     // get the account the token is associated with.
-    const account = await getAccountByField(context, PASSWORD_RESET_HASH, token) as Account;
+    const account = (await getAccountByField(context, PASSWORD_RESET_HASH, token)) as Account;
 
     if (account) {
       // check that the reset token period has not expired.
