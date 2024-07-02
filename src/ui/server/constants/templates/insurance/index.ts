@@ -9,7 +9,6 @@ import { DECLARATIONS_TEMPLATES } from './declarations';
 export const INSURANCE_TEMPLATES = {
   START: 'insurance/start.njk',
   ELIGIBILITY: ELIGIBILITY_TEMPLATES,
-  APPLY_OFFLINE: 'insurance/apply-offline.njk',
   ACCOUNT: ACCOUNT_TEMPLATES,
   DASHBOARD: 'insurance/dashboard.njk',
   ALL_SECTIONS: 'insurance/all-sections.njk',
