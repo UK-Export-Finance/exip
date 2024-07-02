@@ -11,7 +11,7 @@ describe('api/generate-xlsx/header-columns', () => {
 
     const expected = [
       { key: KEY, header: mockSheetName, width: COLUMN_WIDTH },
-      { key: VALUE, header: '', width: COLUMN_WIDTH },
+      { key: VALUE, width: COLUMN_WIDTH },
     ];
 
     expect(result).toEqual(expected);

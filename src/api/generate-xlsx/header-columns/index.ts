@@ -9,7 +9,7 @@ const { KEY, VALUE, COLUMN_WIDTH } = XLSX_CONFIG;
  */
 const XLSX_HEADER_COLUMNS = (sheetName: string) => [
   { key: KEY, header: sheetName, width: COLUMN_WIDTH },
-  { key: VALUE, header: '', width: COLUMN_WIDTH },
+  { key: VALUE, width: COLUMN_WIDTH },
 ];
 
 export default XLSX_HEADER_COLUMNS;

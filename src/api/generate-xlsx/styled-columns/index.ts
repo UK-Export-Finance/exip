@@ -11,7 +11,7 @@ const { APPLICATION_INFORMATION } = SECTION_NAMES;
 /**
  * worksheetRowHeights
  * Add custom heights to certain worksheet cells
- * @param {Array} rowIndexes: Row indexes
+ * @param {Array<number>} rowIndexes: Row indexes
  * @param {ExcelJS.Worksheet} worksheet: ExcelJS worksheet
  * @param {String} ExcelJS sheetName: worksheet name
  * @returns {ExcelJS.Worksheet} ExcelJS worksheet

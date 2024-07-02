@@ -7385,7 +7385,7 @@ var map_application_to_XLSX_default = mapApplicationToXLSX;
 var { KEY: KEY2, VALUE: VALUE2, COLUMN_WIDTH } = XLSX_CONFIG;
 var XLSX_HEADER_COLUMNS = (sheetName) => [
   { key: KEY2, header: sheetName, width: COLUMN_WIDTH },
-  { key: VALUE2, header: "", width: COLUMN_WIDTH }
+  { key: VALUE2, width: COLUMN_WIDTH }
 ];
 var header_columns_default = XLSX_HEADER_COLUMNS;
 
