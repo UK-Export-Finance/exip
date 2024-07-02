@@ -6,14 +6,8 @@ describe('api/constants/XLSX-CONFIG', () => {
       const result = XLSX_CONFIG;
 
       const expected = {
-        KEY: {
-          ID: 'field',
-          COPY: 'Field',
-        },
-        VALUE: {
-          ID: 'answer',
-          COPY: 'Answer',
-        },
+        KEY: 'field',
+        VALUE: 'answer',
         COLUMN_WIDTH: 85,
         ADDITIONAL_TITLE_COLUMN_HEIGHT: 25,
         ADDITIONAL_COLUMN_HEIGHT: 50,

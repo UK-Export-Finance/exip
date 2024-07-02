@@ -3,7 +3,7 @@
  * Names for each section/worksheet in the XLSX.
  */
 const SECTION_NAMES = {
-  APPLICATION_INFORMATION: 'Application information',
+  APPLICATION_INFORMATION: 'Application Information',
   ELIGIBILITY: 'Eligibility',
   EXPORTER_BUSINESS: 'The Business',
   BUYER: 'The Buyer',

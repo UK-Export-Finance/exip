@@ -1,21 +1,32 @@
 import { Row, Worksheet } from 'exceljs';
 import { XLSX_CONFIG } from '../../constants';
 import XLSX_ROW_INDEXES from '../../constants/XLSX-CONFIG/INDEXES';
+import SECTION_NAMES from '../../constants/XLSX-CONFIG/SECTION_NAMES';
 import { Application } from '../../types';
 
 const { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, FONT_SIZE } = XLSX_CONFIG;
+
+const { APPLICATION_INFORMATION } = SECTION_NAMES;
 
 /**
  * worksheetRowHeights
  * Add custom heights to certain worksheet cells
  * @param {Array} rowIndexes: Row indexes
- * @param {ExcelJS.Worksheet} ExcelJS worksheet
+ * @param {ExcelJS.Worksheet} worksheet: ExcelJS worksheet
+ * @param {String} ExcelJS sheetName: worksheet name
  * @returns {ExcelJS.Worksheet} ExcelJS worksheet
  */
-export const worksheetRowHeights = (rowIndexes: Array<number>, worksheet: Worksheet) => {
+export const worksheetRowHeights = (rowIndexes: Array<number>, worksheet: Worksheet, sheetName: string) => {
   const modifiedWorksheet = worksheet;
 
   modifiedWorksheet.getRow(1).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+
+  const isInformationSheet = sheetName === APPLICATION_INFORMATION;
+
+  if (isInformationSheet) {
+    modifiedWorksheet.getRow(8).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+    modifiedWorksheet.getRow(13).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+  }
 
   rowIndexes.forEach((rowIndex) => {
     modifiedWorksheet.getRow(rowIndex).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
@@ -27,8 +38,9 @@ export const worksheetRowHeights = (rowIndexes: Array<number>, worksheet: Worksh
 /**
  * styledColumns
  * Add custom styles to each worksheet cell
- * @param {Application}
- * @param {ExcelJS.Worksheet} ExcelJS worksheet
+ * @param {Application} application
+ * @param {ExcelJS.Worksheet} worksheet: ExcelJS worksheet
+ * @param {String} sheetName: ExcelJS worksheet name
  * @returns {ExcelJS.Worksheet} ExcelJS worksheet
  */
 const styledColumns = (application: Application, worksheet: Worksheet, sheetName: string) => {
@@ -43,11 +55,17 @@ const styledColumns = (application: Application, worksheet: Worksheet, sheetName
         wrapText: true,
       };
 
-      const isHeaderRow = rowNumber === 1;
+      const isInformationSheet = sheetName === APPLICATION_INFORMATION;
+      const isInformationTitleOne = isInformationSheet && rowNumber === 8;
+      const isInformationTitleTwo = isInformationSheet && rowNumber === 13;
+
+      const isInformationTitle = isInformationTitleOne || isInformationTitleTwo;
+
+      const isTitleRow = rowNumber === 1 || isInformationTitle;
 
       modifiedRow.getCell(colNumber).font = {
-        bold: Boolean(isHeaderRow),
-        size: isHeaderRow ? FONT_SIZE.TITLE : FONT_SIZE.DEFAULT,
+        bold: Boolean(isTitleRow),
+        size: isTitleRow ? FONT_SIZE.TITLE : FONT_SIZE.DEFAULT,
       };
     });
   });
@@ -60,7 +78,7 @@ const styledColumns = (application: Application, worksheet: Worksheet, sheetName
     INDEXES = Object.values(sheetIndexes);
   }
 
-  modifiedWorksheet = worksheetRowHeights(INDEXES, modifiedWorksheet);
+  modifiedWorksheet = worksheetRowHeights(INDEXES, modifiedWorksheet, sheetName);
 
   return modifiedWorksheet;
 };

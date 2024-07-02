@@ -74,7 +74,7 @@ export const mockExportContractAgentService = {
 };
 
 export const mockExportContractAgent = {
-  isUsingAgent: false,
+  // isUsingAgent: false,
   service: mockExportContractAgentService,
 };
 

@@ -30,6 +30,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-key-information', () => 
     const { policy } = mockApplication;
 
     const expected = [
+      xlsxRow(FIELDS.KEY_INFORMATION_TITLE),
       xlsxRow(String(FIELDS[EXPORTER_COMPANY_NAME]), mockApplication.company[EXPORTER_COMPANY_NAME]),
       xlsxRow(String(FIELDS[COUNTRY]), mockApplication.buyer[COUNTRY].name),
       xlsxRow(String(FIELDS[BUYER_COMPANY_NAME]), mockApplication.buyer[BUYER_COMPANY_NAME]),

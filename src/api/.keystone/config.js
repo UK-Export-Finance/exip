@@ -1415,7 +1415,6 @@ var application = {
       if (file) {
         const fileBuffer = Buffer.from(file);
         const response = await callNotify(templateId, emailAddress, variables, fileBuffer);
-        await file_system_default.unlink(filePath);
         return response;
       }
       throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
@@ -5465,7 +5464,7 @@ var import_exceljs = __toESM(require("exceljs"));
 
 // constants/XLSX-CONFIG/SECTION_NAMES/index.ts
 var SECTION_NAMES = {
-  APPLICATION_INFORMATION: "Application information",
+  APPLICATION_INFORMATION: "Application Information",
   ELIGIBILITY: "Eligibility",
   EXPORTER_BUSINESS: "The Business",
   BUYER: "The Buyer",
@@ -6384,16 +6383,6 @@ var {
 } = insurance_default;
 var XLSX = {
   AGREED: "Agreed",
-  SECTION_TITLES: {
-    BUYER: "Your buyer",
-    DECLARATIONS: "Declarations",
-    ELIGIBILITY: "Eligibility",
-    EXPORT_CONTRACT: "Export Contract",
-    EXPORTER_BUSINESS: "The business",
-    EXPORTER_CONTACT_DETAILS: "Exporter contact details",
-    KEY_INFORMATION: "Key information",
-    POLICY: "Insurance policy"
-  },
   FIELDS: {
     [ACCOUNT_NUMBER2]: "Loss payee account number",
     AGENT: {
@@ -6433,6 +6422,7 @@ var XLSX = {
     [EXPORTER_COMPANY_NAME]: "Exporter company name",
     [EXPORTER_COMPANY_SIC]: "Exporter standard industry classification (SIC) code(s)",
     EXPORTER_CONTACT: {
+      TITLE: "Exporter contact details",
       [FIRST_NAME]: "Exporter first name",
       [LAST_NAME]: "Exporter last name",
       EXPORTER_CONTACT_EMAIL: "Exporter email address",
@@ -6466,6 +6456,7 @@ var XLSX = {
       [REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NUMBER]: "Registration number of the other company (optional)",
       [REQUESTED_JOINTLY_INSURED_PARTY.COUNTRY_CODE]: "The country the other company is based in"
     },
+    KEY_INFORMATION_TITLE: "Key information",
     [LAST_NAME]: "Applicant last name",
     [MAXIMUM_BUYER_WILL_OWE]: "Maximum buyer will owe exporter",
     [MORE_THAN_250K.VALUE]: `Contract value of ${format_currency_default(AMOUNT_250K, GBP_CURRENCY_CODE)} or more?`,
@@ -6547,6 +6538,7 @@ var { FIELDS: FIELDS3 } = XLSX;
 var mapExporterContactDetails = (application2) => {
   const { policyContact } = application2;
   const mapped = [
+    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.TITLE),
     xlsx_row_default(FIELDS3.EXPORTER_CONTACT[FIRST_NAME3], policyContact[FIRST_NAME3]),
     xlsx_row_default(FIELDS3.EXPORTER_CONTACT[LAST_NAME3], policyContact[LAST_NAME3]),
     xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, policyContact[EMAIL5]),
@@ -6623,6 +6615,7 @@ var {
 var mapKeyInformation = (application2) => {
   const { policy } = application2;
   const mapped = [
+    xlsx_row_default(FIELDS5.KEY_INFORMATION_TITLE),
     xlsx_row_default(String(FIELDS5[EXPORTER_COMPANY_NAME2]), application2.company[EXPORTER_COMPANY_NAME2]),
     xlsx_row_default(String(FIELDS5[COUNTRY2]), application2.buyer[COUNTRY2].name),
     xlsx_row_default(String(FIELDS5[BUYER_COMPANY_NAME2]), application2.buyer[BUYER_COMPANY_NAME2]),
@@ -7555,9 +7548,15 @@ var INDEXES_default = XLSX_ROW_INDEXES;
 
 // generate-xlsx/styled-columns/index.ts
 var { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, FONT_SIZE } = XLSX_CONFIG;
-var worksheetRowHeights = (rowIndexes, worksheet) => {
+var { APPLICATION_INFORMATION: APPLICATION_INFORMATION2 } = SECTION_NAMES_default;
+var worksheetRowHeights = (rowIndexes, worksheet, sheetName) => {
   const modifiedWorksheet = worksheet;
   modifiedWorksheet.getRow(1).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+  const isInformationSheet = sheetName === APPLICATION_INFORMATION2;
+  if (isInformationSheet) {
+    modifiedWorksheet.getRow(8).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+    modifiedWorksheet.getRow(13).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+  }
   rowIndexes.forEach((rowIndex) => {
     modifiedWorksheet.getRow(rowIndex).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
   });
@@ -7572,10 +7571,14 @@ var styledColumns = (application2, worksheet, sheetName) => {
         vertical: "top",
         wrapText: true
       };
-      const isHeaderRow = rowNumber === 1;
+      const isInformationSheet = sheetName === APPLICATION_INFORMATION2;
+      const isInformationTitleOne = isInformationSheet && rowNumber === 8;
+      const isInformationTitleTwo = isInformationSheet && rowNumber === 13;
+      const isInformationTitle = isInformationTitleOne || isInformationTitleTwo;
+      const isTitleRow = rowNumber === 1 || isInformationTitle;
       modifiedRow.getCell(colNumber).font = {
-        bold: Boolean(isHeaderRow),
-        size: isHeaderRow ? FONT_SIZE.TITLE : FONT_SIZE.DEFAULT
+        bold: Boolean(isTitleRow),
+        size: isTitleRow ? FONT_SIZE.TITLE : FONT_SIZE.DEFAULT
       };
     });
   });
@@ -7584,7 +7587,7 @@ var styledColumns = (application2, worksheet, sheetName) => {
     const sheetIndexes = INDEXES_default[sheetName](application2);
     INDEXES = Object.values(sheetIndexes);
   }
-  modifiedWorksheet = worksheetRowHeights(INDEXES, modifiedWorksheet);
+  modifiedWorksheet = worksheetRowHeights(INDEXES, modifiedWorksheet, sheetName);
   return modifiedWorksheet;
 };
 var styled_columns_default = styledColumns;

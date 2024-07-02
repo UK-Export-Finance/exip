@@ -20,6 +20,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-exporter-contact-details
     const { policyContact } = mockApplication;
 
     const expected = [
+      xlsxRow(FIELDS.EXPORTER_CONTACT.TITLE),
       xlsxRow(FIELDS.EXPORTER_CONTACT[FIRST_NAME], policyContact[FIRST_NAME]),
       xlsxRow(FIELDS.EXPORTER_CONTACT[LAST_NAME], policyContact[LAST_NAME]),
       xlsxRow(FIELDS.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, policyContact[EMAIL]),

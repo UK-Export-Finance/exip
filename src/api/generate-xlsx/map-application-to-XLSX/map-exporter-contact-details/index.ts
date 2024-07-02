@@ -22,6 +22,7 @@ const mapExporterContactDetails = (application: Application) => {
   const { policyContact } = application;
 
   const mapped = [
+    xlsxRow(FIELDS.EXPORTER_CONTACT.TITLE),
     xlsxRow(FIELDS.EXPORTER_CONTACT[FIRST_NAME], policyContact[FIRST_NAME]),
     xlsxRow(FIELDS.EXPORTER_CONTACT[LAST_NAME], policyContact[LAST_NAME]),
     xlsxRow(FIELDS.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, policyContact[EMAIL]),
