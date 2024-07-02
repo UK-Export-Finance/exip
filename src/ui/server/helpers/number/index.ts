@@ -47,4 +47,13 @@ const isNumberBelowMinimum = (value: number, minimum: number) => value < minimum
  */
 const isNumberAboveMaximum = (value: number, maximum: number) => value > maximum;
 
-export { isNumber, numberHasDecimal, getPercentageOfNumber, isNumberBelowMinimum, isNumberAboveMaximum };
+/**
+ * transformEmptyDecimalsToWholeNumber
+ * if number has .00 at the end
+ * removes the .00 and transforms to whole number
+ * @param {String} value
+ * @returns {String} transformed number as a string
+ */
+const transformEmptyDecimalsToWholeNumber = (value: string) => value.replace(/\.00$/, '');
+
+export { isNumber, numberHasDecimal, getPercentageOfNumber, isNumberBelowMinimum, isNumberAboveMaximum, transformEmptyDecimalsToWholeNumber };

@@ -2231,7 +2231,7 @@ var lists = {
     fields: {
       service: (0, import_fields.relationship)({ ref: "ExportContractAgentService.charge" }),
       percentageCharge: (0, import_fields.integer)(),
-      fixedSumAmount: (0, import_fields.integer)(),
+      fixedSumAmount: (0, import_fields.decimal)({ scale: 2 }),
       fixedSumCurrencyCode: (0, import_fields.text)({
         db: { nativeType: "VarChar(3)" },
         defaultValue: DEFAULT_CURRENCY
