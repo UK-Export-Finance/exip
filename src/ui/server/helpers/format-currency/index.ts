@@ -3,7 +3,7 @@
  * Transform a number into a currency string
  * @param {Number} Amount
  * @param {String} Currency code
- * @param {Number} Decimal palces
+ * @param {Number} Decimal places
  * @returns {String}
  */
 const formatCurrency = (number: number, currencyCode: string, decimalPlaces?: number): string =>
