@@ -6,7 +6,7 @@ import mapPolicyType from './map-policy-type';
 import formatDate from '../../../../helpers/format-date';
 import { ApplicationPolicy } from '../../../../types';
 
-const { FIELDS, SECTION_TITLES } = XLSX;
+const { FIELDS } = XLSX;
 
 const {
   POLICY_TYPE,
@@ -21,7 +21,6 @@ const {
  */
 const mapIntro = (policy: ApplicationPolicy) => {
   const mapped = [
-    xlsxRow(SECTION_TITLES.POLICY, ''),
     xlsxRow(String(FIELDS[POLICY_TYPE]), mapPolicyType(policy[POLICY_TYPE])),
     xlsxRow(String(FIELDS[REQUESTED_START_DATE]), formatDate(policy[REQUESTED_START_DATE], DATE_FORMAT.XLSX)),
   ];

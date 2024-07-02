@@ -7,7 +7,7 @@ import mapYesNoField from '../helpers/map-yes-no-field';
 import mapAgreedField from '../helpers/map-agreed-field';
 import { mockApplication } from '../../../test-mocks';
 
-const { FIELDS, SECTION_TITLES } = XLSX;
+const { FIELDS } = XLSX;
 
 const {
   DECLARATIONS: {
@@ -27,7 +27,6 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-declarations', () => {
     const { declaration } = mockApplication;
 
     const expected = [
-      xlsxRow(SECTION_TITLES.DECLARATIONS, ''),
       xlsxRow(CONTENT_STRINGS[AGREE_CONFIDENTIALITY].SUMMARY.TITLE, mapAgreedField(declaration[AGREE_CONFIDENTIALITY])),
       xlsxRow(CONTENT_STRINGS[AGREE_ANTI_BRIBERY].SUMMARY.TITLE, mapAgreedField(declaration[AGREE_ANTI_BRIBERY])),
       xlsxRow(String(FIELDS[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT]), mapYesNoField({ answer: declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT] })),

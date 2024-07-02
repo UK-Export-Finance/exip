@@ -80,7 +80,6 @@ export const mockExportContractAgent = {
 export const mockExportContractAgentFullyPopulated = {
   finalDestinationCountryCode: mockCountries[0].isoCode,
   fullAddress: 'Mock export contract agent address',
-  isUsingAgent: false,
   name: 'Mock export contract agent name',
   privateMarket: mockPrivateMarket,
   service: mockExportContractAgentService,

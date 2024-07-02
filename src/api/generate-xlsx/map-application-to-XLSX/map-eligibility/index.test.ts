@@ -9,7 +9,7 @@ import { mockApplication } from '../../../test-mocks';
 
 const { MORE_THAN_250K } = TOTAL_CONTRACT_VALUE;
 
-const { FIELDS, SECTION_TITLES } = XLSX;
+const { FIELDS } = XLSX;
 
 const {
   ELIGIBILITY: {
@@ -32,7 +32,6 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-eligibility', () => {
     const { company, eligibility } = mockApplication;
 
     const expected = [
-      xlsxRow(SECTION_TITLES.ELIGIBILITY, ''),
       xlsxRow(CONTENT_STRINGS[VALID_EXPORTER_LOCATION].SUMMARY?.TITLE, mapYesNoField({ answer: eligibility[VALID_EXPORTER_LOCATION] })),
 
       xlsxRow(CONTENT_STRINGS[HAS_COMPANIES_HOUSE_NUMBER].SUMMARY?.TITLE, mapYesNoField({ answer: eligibility[HAS_COMPANIES_HOUSE_NUMBER] })),

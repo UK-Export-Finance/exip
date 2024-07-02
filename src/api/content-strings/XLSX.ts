@@ -70,16 +70,6 @@ const {
  */
 export const XLSX = {
   AGREED: 'Agreed',
-  SECTION_TITLES: {
-    BUYER: 'Your buyer',
-    DECLARATIONS: 'Declarations',
-    ELIGIBILITY: 'Eligibility',
-    EXPORT_CONTRACT: 'Export Contract',
-    EXPORTER_BUSINESS: 'The business',
-    EXPORTER_CONTACT_DETAILS: 'Exporter contact details',
-    KEY_INFORMATION: 'Key information',
-    POLICY: 'Insurance policy',
-  },
   FIELDS: {
     [ACCOUNT_NUMBER]: 'Loss payee account number',
     AGENT: {
@@ -117,8 +107,9 @@ export const XLSX = {
     [ESTIMATED_ANNUAL_TURNOVER]: 'Exporter estimated turnover this current financial year',
     [EXPORTER_COMPANY_ADDRESS]: 'Exporter registered office address',
     [EXPORTER_COMPANY_NAME]: 'Exporter company name',
-    [EXPORTER_COMPANY_SIC]: 'Exporter standard industry classification (SIC) codes and nature of business',
+    [EXPORTER_COMPANY_SIC]: 'Exporter standard industry classification (SIC) code(s)',
     EXPORTER_CONTACT: {
+      TITLE: 'Exporter contact details',
       [FIRST_NAME]: 'Exporter first name',
       [LAST_NAME]: 'Exporter last name',
       EXPORTER_CONTACT_EMAIL: 'Exporter email address',
@@ -152,6 +143,7 @@ export const XLSX = {
       [REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NUMBER]: 'Registration number of the other company (optional)',
       [REQUESTED_JOINTLY_INSURED_PARTY.COUNTRY_CODE]: 'The country the other company is based in',
     },
+    KEY_INFORMATION_TITLE: 'Key information',
     [LAST_NAME]: 'Applicant last name',
     [MAXIMUM_BUYER_WILL_OWE]: 'Maximum buyer will owe exporter',
     [MORE_THAN_250K.VALUE]: `Contract value of ${formatCurrency(AMOUNT_250K, GBP_CURRENCY_CODE)} or more?`,

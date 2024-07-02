@@ -1,9 +1,9 @@
 import mapApplicationToXLSX from '.';
-import ROW_SEPERATOR from './helpers/xlsx-row-seperator';
-import mapKeyInformation from './map-introduction';
+import SECTION_NAMES from '../../constants/XLSX-CONFIG/SECTION_NAMES';
+import mapIntroduction from './map-introduction';
 import mapExporterContactDetails from './map-exporter-contact-details';
 import mapEligibility from './map-eligibility';
-import mapSecondaryKeyInformation from './map-key-information';
+import mapKeyInformation from './map-key-information';
 import mapPolicy from './map-policy';
 import mapExporterBusiness from './map-exporter-business';
 import mapBuyer from './map-buyer';
@@ -12,6 +12,8 @@ import mapDeclarations from './map-declarations';
 import { generateSubmittedApplication } from '../../test-helpers';
 import { mockCountries } from '../../test-mocks';
 import { Application } from '../../types';
+
+const { APPLICATION_INFORMATION, ELIGIBILITY, EXPORTER_BUSINESS, POLICY, BUYER, EXPORT_CONTRACT, DECLARATIONS } = SECTION_NAMES;
 
 describe('api/generate-xlsx/map-application-to-xlsx/index', () => {
   let submittedApplication: Application;
@@ -23,41 +25,19 @@ describe('api/generate-xlsx/map-application-to-xlsx/index', () => {
   it('should return an array of mappings and section breaks', () => {
     const result = mapApplicationToXLSX(submittedApplication, mockCountries);
 
-    const expected = [
-      ...mapKeyInformation(submittedApplication),
-
-      ROW_SEPERATOR,
-
-      ...mapExporterContactDetails(submittedApplication),
-
-      ROW_SEPERATOR,
-
-      ...mapSecondaryKeyInformation(submittedApplication),
-
-      ROW_SEPERATOR,
-
-      ...mapEligibility(submittedApplication),
-
-      ROW_SEPERATOR,
-
-      ...mapExporterBusiness(submittedApplication),
-
-      ROW_SEPERATOR,
-
-      ...mapPolicy(submittedApplication, mockCountries),
-
-      ROW_SEPERATOR,
-
-      ...mapBuyer(submittedApplication),
-
-      ROW_SEPERATOR,
-
-      ...mapExportContract(submittedApplication, mockCountries),
-
-      ROW_SEPERATOR,
-
-      ...mapDeclarations(submittedApplication),
-    ];
+    const expected = {
+      [APPLICATION_INFORMATION]: [
+        ...mapIntroduction(submittedApplication),
+        ...mapExporterContactDetails(submittedApplication),
+        ...mapKeyInformation(submittedApplication),
+      ],
+      [ELIGIBILITY]: mapEligibility(submittedApplication),
+      [EXPORTER_BUSINESS]: mapExporterBusiness(submittedApplication),
+      [POLICY]: mapPolicy(submittedApplication, mockCountries),
+      [BUYER]: mapBuyer(submittedApplication),
+      [EXPORT_CONTRACT]: mapExportContract(submittedApplication, mockCountries),
+      [DECLARATIONS]: mapDeclarations(submittedApplication),
+    };
 
     expect(result).toEqual(expected);
   });

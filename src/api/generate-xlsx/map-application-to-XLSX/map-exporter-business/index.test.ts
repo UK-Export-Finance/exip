@@ -30,7 +30,7 @@ const {
   HAS_CREDIT_CONTROL,
 } = FIELD_IDS;
 
-const { FIELDS, SECTION_TITLES } = XLSX;
+const { FIELDS } = XLSX;
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-exporter-business', () => {
   it('should return an array of mapped exporter fields', () => {
@@ -39,8 +39,6 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-exporter-business', () =
     const { company, companySicCodes, business } = mockApplication;
 
     const expected = [
-      xlsxRow(SECTION_TITLES.EXPORTER_BUSINESS, ''),
-
       xlsxRow(CONTENT_STRINGS[COMPANY_INCORPORATED].SUMMARY?.TITLE, formatDate(company[COMPANY_INCORPORATED], DATE_FORMAT.XLSX)),
       xlsxRow(String(FIELDS[COMPANY_ADDRESS]), mapExporterAddress(company[COMPANY_ADDRESS])),
       xlsxRow(String(FIELDS[COMPANY_SIC]), mapSicCodes(companySicCodes)),

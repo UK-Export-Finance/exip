@@ -5,10 +5,7 @@ import FIELD_IDS from '../../../constants/field-ids/insurance';
 import xlsxRow from '../helpers/xlsx-row';
 import { mockApplication } from '../../../test-mocks';
 
-const {
-  SECTION_TITLES: { KEY_INFORMATION },
-  FIELDS,
-} = XLSX;
+const { FIELDS } = XLSX;
 
 const CONTENT_STRINGS = {
   ...POLICY_FIELDS,
@@ -33,7 +30,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-key-information', () => 
     const { policy } = mockApplication;
 
     const expected = [
-      xlsxRow(KEY_INFORMATION),
+      xlsxRow(FIELDS.KEY_INFORMATION_TITLE),
       xlsxRow(String(FIELDS[EXPORTER_COMPANY_NAME]), mockApplication.company[EXPORTER_COMPANY_NAME]),
       xlsxRow(String(FIELDS[COUNTRY]), mockApplication.buyer[COUNTRY].name),
       xlsxRow(String(FIELDS[BUYER_COMPANY_NAME]), mockApplication.buyer[BUYER_COMPANY_NAME]),
