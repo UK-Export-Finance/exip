@@ -6,4 +6,12 @@ import endBuyerPage from './endBuyer';
 import otherPartiesPage from './otherParties';
 import contractTooShort from './contractTooShort';
 
-export { checkIfEligiblePage, companiesHouseUnavailablePage, companyDetailsPage, eligibleToApplyOnlinePage, endBuyerPage, otherPartiesPage, contractTooShort };
+export {
+  checkIfEligiblePage,
+  companiesHouseUnavailablePage,
+  companyDetailsPage,
+  eligibleToApplyOnlinePage,
+  endBuyerPage,
+  otherPartiesPage,
+  contractTooShort,
+};
