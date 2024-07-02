@@ -128,7 +128,7 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
   });
 
   describe(`when an application has a ${FIXED_SUM_AMOUNT} field`, () => {
-    it(`should return the result of transformEmptyDecimalsToWholeNumberfor ${FIXED_SUM_AMOUNT}`, () => {
+    it(`should return the result of transformEmptyDecimalsToWholeNumber for ${FIXED_SUM_AMOUNT}`, () => {
       mockApplication.exportContract.agent.service.charge[FIXED_SUM_AMOUNT] = '1000.00';
       const result = mapApplicationToFormFields(mockApplication) as Application;
 

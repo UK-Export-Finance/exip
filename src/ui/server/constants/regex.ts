@@ -37,4 +37,9 @@ export const REGEX = {
    * - hyphen.
    */
   SPACE_AND_HYPHEN: /[- ]/g,
+  /**
+   * INCLUDES_DOUBLE_ZERO_DECIMALS:
+   * Regex that checks a string includes ".00".
+   */
+  INCLUDES_DOUBLE_ZERO_DECIMALS: /\.00$/,
 };

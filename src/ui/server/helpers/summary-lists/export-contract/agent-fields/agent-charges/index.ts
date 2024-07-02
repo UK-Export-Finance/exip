@@ -8,7 +8,7 @@ import mapPercentage from '../../../../map-percentage';
 import getCountryByIsoCode from '../../../../get-country-by-iso-code';
 import generateChangeLink from '../../../../generate-change-link';
 import formatCurrency from '../../../../format-currency';
-import { transformEmptyDecimalsToWholeNumber, doesNumberHaveDecimalPlaces } from '../../../../number';
+import { transformEmptyDecimalsToWholeNumber, numberHasDecimalPlaces } from '../../../../number';
 import { ApplicationExportContractAgentService, Country } from '../../../../../../types';
 
 const {
@@ -52,7 +52,7 @@ const agentChargesFields = (answers: ApplicationExportContractAgentService, refe
        * If the number has decimal places, show 2 decimal places
        * or 0 if it's a whole number
        */
-      const decimalPlaces = doesNumberHaveDecimalPlaces(answer) ? 2 : 0;
+      const decimalPlaces = numberHasDecimalPlaces(answer) ? 2 : 0;
 
       fields.push(
         fieldGroupItem(

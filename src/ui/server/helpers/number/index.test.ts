@@ -5,7 +5,7 @@ import {
   isNumberBelowMinimum,
   isNumberAboveMaximum,
   transformEmptyDecimalsToWholeNumber,
-  doesNumberHaveDecimalPlaces,
+  numberHasDecimalPlaces,
 } from '.';
 
 describe('server/helpers/number', () => {
@@ -146,11 +146,11 @@ describe('server/helpers/number', () => {
     });
   });
 
-  describe('doesNumberHaveDecimalPlaces', () => {
+  describe('numberHasDecimalPlaces', () => {
     it('should return false if whole number provided', () => {
       const mockValue = '100';
 
-      const result = doesNumberHaveDecimalPlaces(mockValue);
+      const result = numberHasDecimalPlaces(mockValue);
 
       expect(result).toEqual(false);
     });
@@ -158,7 +158,7 @@ describe('server/helpers/number', () => {
     it('should return true if number with decimals provided', () => {
       const mockValue = '100.50';
 
-      const result = doesNumberHaveDecimalPlaces(mockValue);
+      const result = numberHasDecimalPlaces(mockValue);
 
       expect(result).toEqual(true);
     });
