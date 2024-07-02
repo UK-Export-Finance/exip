@@ -39,33 +39,6 @@ const ALL_SECTIONS = {
   REFERENCE_NUMBER: 'Your reference',
 };
 
-const APPLY_OFFLINE = {
-  PAGE_TITLE: 'You need to apply using our form',
-  REASON: {
-    INTRO: 'This is because',
-    OTHER_PARTIES_INVOLVED: 'there are other parties involved in your exports and we need to make extra checks.',
-    WILL_BE_PAID_BY_LETTER_OF_CREDIT: "you'll be paid by a letter of credit.",
-    NO_COMPANIES_HOUSE_NUMBER: "you do not have a UK Companies House registration number for a company that's actively trading, so we need to make extra checks.",
-  },
-  ACTIONS: {
-    DOWNLOAD_FORM: {
-      LINK: {
-        TEXT: 'Download this form',
-        HREF_NBI: LINKS.EXTERNAL.NBI_FORM,
-        HREF_PROPOSAL: LINKS.EXTERNAL.PROPOSAL_FORM,
-      },
-      TEXT: "and email it to UKEF once you've filled it in.",
-    },
-    CONTACT: {
-      TEXT: "If you'd like to discuss your exports or need help applying, you can",
-      LINK: {
-        TEXT: 'talk to your nearest export finance manager.',
-        HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
-      },
-    },
-  },
-};
-
 const START = {
   PAGE_TITLE: 'Apply for UKEF credit insurance',
   INTRO: 'Use this service to make a full application for credit insurance from UK Export Finance (UKEF).',
@@ -134,7 +107,6 @@ const INSURANCE = {
   ACCOUNT: ACCOUNT_PAGES,
   DASHBOARD,
   ALL_SECTIONS,
-  APPLY_OFFLINE,
   EXPORTER_BUSINESS,
   ELIGIBILITY: ELIGIBILITY_PAGES,
   NO_ACCESS_TO_APPLICATION_PAGE,
