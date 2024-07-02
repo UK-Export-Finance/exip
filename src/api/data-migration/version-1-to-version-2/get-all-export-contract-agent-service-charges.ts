@@ -15,9 +15,9 @@ const getAllExportContractAgentServiceCharges = async (connection: Connection) =
   try {
     const query = 'SELECT * FROM ExportContractAgentServiceCharge';
 
-    const [exportContracts] = await executeSqlQuery({ connection, query, loggingMessage });
+    const [charges] = await executeSqlQuery({ connection, query, loggingMessage });
 
-    return exportContracts;
+    return charges;
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 

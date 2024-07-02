@@ -19,7 +19,7 @@ const createCompanyDifferentTradingAddress = async (connection: Connection, appl
   console.info(`✅ ${loggingMessage}`);
 
   try {
-    const jointlyInsuredPartyPromises = applications.map(async (application: Application) => {
+    const promises = applications.map(async (application: Application) => {
       const theValues = `('${createCuid()}', '${application.company}')`;
 
       const query = `
@@ -35,7 +35,7 @@ const createCompanyDifferentTradingAddress = async (connection: Connection, appl
       return updated;
     });
 
-    return Promise.all(jointlyInsuredPartyPromises);
+    return Promise.all(promises);
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 

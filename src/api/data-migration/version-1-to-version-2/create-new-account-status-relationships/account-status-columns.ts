@@ -9,7 +9,7 @@ import { AccountStatus } from '../../../types';
  * 2) Update the Account table to have a status ID/relationship.
  * @param {Connection} connection: SQL database connection
  * @param {Array<AccountStatus>} statusRows: Account status entries
- * @param {Array<AccountMvp>} accounts: MVP accounts
+ * @param {Array<AccountStatus>} accountStatuses: Account statuses
  * @returns {Promise<Array<object>>} executeSqlQuery response
  */
 const updateAccountStatusColumns = async (connection: Connection, statusRows: Array<AccountStatus>, accountStatuses: Array<AccountStatus>) => {
