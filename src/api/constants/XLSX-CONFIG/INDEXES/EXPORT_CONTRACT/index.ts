@@ -4,9 +4,9 @@ import { Application } from '../../../../types';
  * DEFAULT_INDEXES
  * Default XLSX indexes for the "Export contract" XLSX worksheet.
  */
-export const DEFAULT_INDEXES = {
+export const DEFAULT_INDEXES = () => ({
   AGENT_ADDRESS: 0,
-};
+});
 
 /**
  * EXPORT_CONTRACT_INDEXES
@@ -25,7 +25,7 @@ const EXPORT_CONTRACT_INDEXES = (application: Application) => {
     },
   } = application;
 
-  const INDEXES = DEFAULT_INDEXES;
+  const INDEXES = DEFAULT_INDEXES();
 
   if (isUsingAgent) {
     INDEXES.AGENT_ADDRESS = 9;

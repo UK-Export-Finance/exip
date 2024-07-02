@@ -8,7 +8,7 @@ const { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, FONT_SIZ
 /**
  * worksheetRowHeights
  * Add custom heights to certain worksheet cells
- * @param {Array} Title row indexes
+ * @param {Array} rowIndexes: Row indexes
  * @param {ExcelJS.Worksheet} ExcelJS worksheet
  * @returns {ExcelJS.Worksheet} ExcelJS worksheet
  */

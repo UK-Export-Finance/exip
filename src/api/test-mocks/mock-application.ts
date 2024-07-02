@@ -74,13 +74,13 @@ export const mockExportContractAgentService = {
 };
 
 export const mockExportContractAgent = {
+  isUsingAgent: false,
   service: mockExportContractAgentService,
 };
 
 export const mockExportContractAgentFullyPopulated = {
   countryCode: mockCountries[0].isoCode,
   fullAddress: 'Mock export contract agent address',
-  isUsingAgent: false,
   name: 'Mock export contract agent name',
   privateMarket: mockPrivateMarket,
   service: mockExportContractAgentService,
@@ -92,6 +92,8 @@ export const mockExportContract = {
   finalDestinationKnown: false,
   finalDestinationCountryCode: mockCountries[0].isoCode,
   paymentTermsDescription: 'Mock payment terms description',
+  agent: mockExportContractAgent,
+  privateMarket: mockPrivateMarket,
 };
 
 export const mockAccount = {

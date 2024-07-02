@@ -4,11 +4,11 @@ import { Application } from '../../../../types';
  * DEFAULT_INDEXES
  * Default indexes for the "Exporter business" XLSX worksheet.
  */
-export const DEFAULT_INDEXES = {
+export const DEFAULT_INDEXES = () => ({
   REGISTERED_OFFICE_ADDRESS: 3,
   COMPANY_SIC_CODES: 4,
   ALTERNATIVE_TRADING_ADDRESS: 0,
-};
+});
 
 /**
  * EXPORTER_BUSINESS_INDEXES
@@ -26,14 +26,14 @@ const EXPORTER_BUSINESS_INDEXES = (application: Application) => {
     },
   } = application;
 
-  const INDEXES = DEFAULT_INDEXES;
+  const INDEXES = DEFAULT_INDEXES();
 
   if (hasDifferentTradingAddress) {
     INDEXES.ALTERNATIVE_TRADING_ADDRESS = 7;
-  }
 
-  if (hasDifferentTradingName && hasDifferentTradingAddress) {
-    INDEXES.ALTERNATIVE_TRADING_ADDRESS += 1;
+    if (hasDifferentTradingName) {
+      INDEXES.ALTERNATIVE_TRADING_ADDRESS += 1;
+    }
   }
 
   return INDEXES;

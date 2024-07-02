@@ -1,3 +1,7 @@
+/**
+ * SECTION_NAMES
+ * Names for each section/worksheet in the XLSX.
+ */
 const SECTION_NAMES = {
   APPLICATION_INFORMATION: 'Application information',
   ELIGIBILITY: 'Eligibility',

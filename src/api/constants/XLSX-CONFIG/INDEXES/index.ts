@@ -12,7 +12,7 @@ const { EXPORTER_BUSINESS, POLICY, BUYER, EXPORT_CONTRACT } = SECTION_NAMES;
  * Generate row indexes for each worksheet in the XLSX.
  * @returns {Object}
  */
-export const XLSX_ROW_INDEXES = {
+const XLSX_ROW_INDEXES = {
   [EXPORTER_BUSINESS]: (application: Application) => EXPORTER_BUSINESS_INDEXES(application),
   [POLICY]: (application: Application) => POLICY_INDEXES(application),
   [BUYER]: () => BUYER_INDEXES(),
