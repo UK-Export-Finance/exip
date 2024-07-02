@@ -54,7 +54,7 @@ const application = {
          * NOTE: no need to handle an error from fs.unlink here.
          * If this errors, it will go into the catch handler below.
          */
-        // await fileSystem.unlink(filePath);
+        await fileSystem.unlink(filePath);
 
         return response;
       }
