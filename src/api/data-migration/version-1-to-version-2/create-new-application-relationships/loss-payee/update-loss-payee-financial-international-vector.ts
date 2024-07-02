@@ -22,7 +22,7 @@ const updateLossPayeeFinancialInternationalVector = async (connection: Connectio
       const vector = vectors[index];
 
       const query = `
-        UPDATE LossPayeeFinancialInternational SET vector='${vector.id}' WHERE id='${vector.id}'
+        UPDATE LossPayeeFinancialInternational SET vector='${vector.id}' WHERE id='${financialInternational.id}'
       `;
 
       const updated = await executeSqlQuery({

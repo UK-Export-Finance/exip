@@ -4,8 +4,6 @@ import lossPayeeFinancialInternational from './create-loss-payee-financial-inter
 import lossPayeeFinancialInternationalVector from './create-loss-payee-financial-international-vector';
 import lossPayeeFinancialUk from './create-loss-payee-financial-uk';
 import lossPayeeFinancialUkVector from './create-loss-payee-financial-uk-vector';
-import updateLossPayeeFinancialUkVector from './update-loss-payee-financial-uk-vector';
-import updateLossPayeeFinancialInternationalVector from './update-loss-payee-financial-international-vector';
 import createApplicationLossPayeeRelationship from './create-application-loss-payee-relationship';
 import { Application } from '../../../../types';
 
@@ -13,16 +11,13 @@ import { Application } from '../../../../types';
  * createLossPayee
  * Create new "loss payee" entries
  * 1) Create initial "loss payee" entries.
- * 2) Create an array of loss payee ID "connect" relationships.
- * 3) Create "loss payee - financial international" entries.
- * 4) Create an array of loss payee - financial international ID "connect" relationships.
- * 5) Create "loss payee - financial international vector" entries.
- * 6) Create "loss payee - financial UK" entries.
- * 7) Create an array of loss payee - financial UK ID "connect" relationships.
- * 8) Create "loss payee - financial UK vector" entries.
- * 9) Update applications to hav a loss payee relationship/ID.
+ * 2) Create "loss payee - financial international" entries.
+ * 3) Create "loss payee - financial international vector" entries.
+ * 4) Create "loss payee - financial UK" entries.
+ * 5) Create "loss payee - financial UK vector" entries.
+ * 6) Update applications to have a loss payee relationship/ID.
  * @param {Connection} connection: SQL database connection
- * @param {Array<object>} applicationIdsConnectArray: Array of application IDs "connect" objects
+ * @param {Array<Application>} Applications: Applications
  * @returns {Promise<Array<ApplicationNominatedLossPayee>>} Loss payee entries
  */
 const createLossPayee = async (connection: Connection, applications: Array<Application>) => {
@@ -37,8 +32,6 @@ const createLossPayee = async (connection: Connection, applications: Array<Appli
       lossPayeeFinancialInternationalVector(connection, applications),
       lossPayeeFinancialUk(connection),
       lossPayeeFinancialUkVector(connection, applications),
-      updateLossPayeeFinancialUkVector(connection),
-      updateLossPayeeFinancialInternationalVector(connection),
       createApplicationLossPayeeRelationship(connection),
     ]);
 

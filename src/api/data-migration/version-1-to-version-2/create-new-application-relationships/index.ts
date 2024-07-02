@@ -2,6 +2,8 @@ import { Connection } from 'mysql2/promise';
 import getAllApplications from '../get-all-applications';
 import createLossPayee from './loss-payee';
 import createJointlyInsuredParty from './jointly-insured-party';
+import updateLossPayeeFinancialUkVector from './loss-payee/update-loss-payee-financial-uk-vector';
+import updateLossPayeeFinancialInternationalVector from './loss-payee/update-loss-payee-financial-international-vector';
 import createExportContractAgent from './export-contract-agent';
 import createPrivateMarket from './private-market';
 import updateExportContractPrivateMarket from './export-contract-private-market';
@@ -33,6 +35,9 @@ const createNewApplicationRelationships = async (connection: Connection) => {
       createCompanyDifferentTradingAddress(connection, applications),
       updateCompanyDifferentTradingAddress(connection),
     ]);
+
+    await updateLossPayeeFinancialUkVector(connection);
+    await updateLossPayeeFinancialInternationalVector(connection);
 
     return newRelationships;
   } catch (err) {
