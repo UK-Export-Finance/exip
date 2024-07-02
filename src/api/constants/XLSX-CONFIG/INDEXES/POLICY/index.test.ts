@@ -21,7 +21,7 @@ describe('api/constants/XLSX-CONFIG/INDEXES/POLICY', () => {
   });
 
   describe('POLICY_INDEXES', () => {
-    describe(`when ${SINGLE} contract policy, isUsingBroker=true, nominatedLossPayeeAppointed=true`, () => {
+    describe(`when ${SINGLE} contract policy, isUsingBroker=true, nominatedLossPayeeAppointed=true, policyContact.isSameAsOwner=false`, () => {
       it('should return an object with indexes', () => {
         const application = {
           ...mockApplication,
@@ -33,41 +33,8 @@ describe('api/constants/XLSX-CONFIG/INDEXES/POLICY', () => {
             ...mockApplication.nominatedLossPayee,
             isAppointed: true,
           },
-        };
-
-        const result = POLICY_INDEXES(application);
-
-        const expectedIndexes = {
-          ...DEFAULT_INDEXES,
-          BROKER_ADDRESS: 14,
-          LOSS_PAYEE_ADDRESS: 17,
-        };
-
-        const expected = {
-          ...DEFAULT_INDEXES,
-          ...BROKER_CONDITIONS(application, expectedIndexes),
-          ...LOSS_PAYEE_CONDITIONS(application, expectedIndexes),
-        };
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe(`when ${MULTIPLE} contract policy, isUsingBroker=true, nominatedLossPayeeAppointed=true`, () => {
-      it('should return an object with indexes', () => {
-        const application = {
-          ...mockApplication,
-          broker: {
-            ...mockApplication.broker,
-            isUsingBroker: true,
-          },
-          nominatedLossPayee: {
-            ...mockApplication.nominatedLossPayee,
-            isAppointed: true,
-          },
-          policy: {
-            ...mockApplication.policy,
-            policyType: MULTIPLE,
+          policyContact: {
+            isSameAsOwner: false,
           },
         };
 
@@ -89,7 +56,46 @@ describe('api/constants/XLSX-CONFIG/INDEXES/POLICY', () => {
       });
     });
 
-    describe(`when ${SINGLE} contract policy, isUsingBroker=false, nominatedLossPayeeAppointed=false`, () => {
+    describe(`when ${MULTIPLE} contract policy, isUsingBroker=true, nominatedLossPayeeAppointed=true, policyContact.isSameAsOwner=false`, () => {
+      it('should return an object with indexes', () => {
+        const application = {
+          ...mockApplication,
+          broker: {
+            ...mockApplication.broker,
+            isUsingBroker: true,
+          },
+          nominatedLossPayee: {
+            ...mockApplication.nominatedLossPayee,
+            isAppointed: true,
+          },
+          policy: {
+            ...mockApplication.policy,
+            policyType: MULTIPLE,
+          },
+          policyContact: {
+            isSameAsOwner: false,
+          },
+        };
+
+        const result = POLICY_INDEXES(application);
+
+        const expectedIndexes = {
+          ...DEFAULT_INDEXES,
+          BROKER_ADDRESS: 16,
+          LOSS_PAYEE_ADDRESS: 19,
+        };
+
+        const expected = {
+          ...DEFAULT_INDEXES,
+          ...BROKER_CONDITIONS(application, expectedIndexes),
+          ...LOSS_PAYEE_CONDITIONS(application, expectedIndexes),
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`when ${SINGLE} contract policy, isUsingBroker=false, nominatedLossPayeeAppointed=false, policyContact.isSameAsOwner=true`, () => {
       it('should return an object with indexes', () => {
         const application = {
           ...mockApplication,
@@ -100,6 +106,9 @@ describe('api/constants/XLSX-CONFIG/INDEXES/POLICY', () => {
           nominatedLossPayee: {
             ...mockApplication.nominatedLossPayee,
             isAppointed: false,
+          },
+          policyContact: {
+            isSameAsOwner: false,
           },
         };
 
@@ -115,7 +124,7 @@ describe('api/constants/XLSX-CONFIG/INDEXES/POLICY', () => {
       });
     });
 
-    describe(`when ${MULTIPLE} contract policy, isUsingBroker=false, nominatedLossPayeeAppointed=false`, () => {
+    describe(`when ${MULTIPLE} contract policy, isUsingBroker=false, nominatedLossPayeeAppointed=false, policyContact.isSameAsOwner=true`, () => {
       it('should return an object with indexes', () => {
         const application = {
           ...mockApplication,
@@ -130,6 +139,9 @@ describe('api/constants/XLSX-CONFIG/INDEXES/POLICY', () => {
           policy: {
             ...mockApplication.policy,
             policyType: MULTIPLE,
+          },
+          policyContact: {
+            isSameAsOwner: false,
           },
         };
 

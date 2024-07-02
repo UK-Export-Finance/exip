@@ -1935,7 +1935,9 @@ var lists = {
           max: POLICY3.TOTAL_VALUE_OF_CONTRACT.MAXIMUM
         }
       }),
-      creditPeriodWithBuyer: (0, import_fields.text)(),
+      creditPeriodWithBuyer: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
+      }),
       policyCurrencyCode: (0, import_fields.text)({
         db: { nativeType: "VarChar(3)" }
       }),
@@ -6726,7 +6728,7 @@ var ACCOUNT_FIELDS = {
 // generate-xlsx/map-application-to-XLSX/map-policy/map-name-on-policy/index.ts
 var { FIELDS: FIELDS7 } = XLSX;
 var {
-  ACCOUNT: { FIRST_NAME: FIRST_NAME5, LAST_NAME: LAST_NAME5 },
+  ACCOUNT: { FIRST_NAME: FIRST_NAME5, LAST_NAME: LAST_NAME5, EMAIL: EMAIL7 },
   POLICY: {
     NAME_ON_POLICY: { IS_SAME_AS_OWNER, NAME: NAME2, POSITION: POSITION2 }
   }
@@ -6734,13 +6736,15 @@ var {
 var mapNameOnPolicy = (policyContact) => {
   let mapped = [];
   if (policyContact[IS_SAME_AS_OWNER]) {
-    mapped = [xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[NAME2]), policyContact[NAME2]), xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[POSITION2]), policyContact[POSITION2])];
+    const nameOnPolicy = `${policyContact[FIRST_NAME5]} ${policyContact[LAST_NAME5]} (${policyContact[EMAIL7]})`;
+    mapped = [xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[NAME2]), nameOnPolicy), xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[POSITION2]), policyContact[POSITION2])];
     return mapped;
   }
   mapped = [
     xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[NAME2]), FIELDS7.SOMEONE_ELSE),
     xlsx_row_default(String(ACCOUNT_FIELDS[FIRST_NAME5].LABEL), policyContact[FIRST_NAME5]),
     xlsx_row_default(String(ACCOUNT_FIELDS[LAST_NAME5].LABEL), policyContact[LAST_NAME5]),
+    xlsx_row_default(String(ACCOUNT_FIELDS[EMAIL7].LABEL), policyContact[EMAIL7]),
     xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[POSITION2]), policyContact[POSITION2])
   ];
   return mapped;
@@ -6859,7 +6863,7 @@ var map_jointly_insured_party_default = mapJointlyInsuredParty;
 // generate-xlsx/map-application-to-XLSX/map-policy/map-broker/index.ts
 var {
   USING_BROKER: USING_BROKER3,
-  BROKER_DETAILS: { NAME: BROKER_NAME2, EMAIL: EMAIL7, FULL_ADDRESS: FULL_ADDRESS3 }
+  BROKER_DETAILS: { NAME: BROKER_NAME2, EMAIL: EMAIL8, FULL_ADDRESS: FULL_ADDRESS3 }
 } = POLICY;
 var { FIELDS: FIELDS12 } = XLSX;
 var mapBroker = (application2) => {
@@ -6869,7 +6873,7 @@ var mapBroker = (application2) => {
     mapped = [
       ...mapped,
       xlsx_row_default(String(FIELDS12[BROKER_NAME2]), broker[BROKER_NAME2]),
-      xlsx_row_default(String(FIELDS12[EMAIL7]), broker[EMAIL7]),
+      xlsx_row_default(String(FIELDS12[EMAIL8]), broker[EMAIL8]),
       xlsx_row_default(String(FIELDS12[FULL_ADDRESS3]), broker[FULL_ADDRESS3])
     ];
   }
@@ -7470,7 +7474,8 @@ var LOSS_PAYEE_CONDITIONS_default = LOSS_PAYEE_CONDITIONS;
 // constants/XLSX-CONFIG/INDEXES/POLICY/index.ts
 var {
   TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE8 },
-  USING_BROKER: USING_BROKER6
+  USING_BROKER: USING_BROKER6,
+  NAME_ON_POLICY: { IS_SAME_AS_OWNER: IS_SAME_AS_OWNER2 }
 } = policy_default;
 var DEFAULT_INDEXES2 = {
   BROKER_ADDRESS: 0,
@@ -7480,7 +7485,8 @@ var POLICY_INDEXES = (application2) => {
   const {
     broker,
     nominatedLossPayee: { isAppointed: nominatedLossPayeeAppointed },
-    policy
+    policy,
+    policyContact
   } = application2;
   const isMultiplePolicy = isMultiplePolicyType(policy[POLICY_TYPE8]);
   let INDEXES = DEFAULT_INDEXES2;
@@ -7495,6 +7501,10 @@ var POLICY_INDEXES = (application2) => {
     if (isMultiplePolicy) {
       INDEXES.LOSS_PAYEE_ADDRESS += 1;
     }
+  }
+  if (!policyContact[IS_SAME_AS_OWNER2]) {
+    INDEXES.BROKER_ADDRESS += 1;
+    INDEXES.LOSS_PAYEE_ADDRESS += 1;
   }
   INDEXES = {
     ...INDEXES,
@@ -7517,10 +7527,7 @@ var DEFAULT_INDEXES3 = () => ({
 });
 var EXPORT_CONTRACT_INDEXES = (application2) => {
   const { exportContract } = application2;
-  const {
-    finalDestinationKnown,
-    privateMarket
-  } = exportContract;
+  const { finalDestinationKnown, privateMarket } = exportContract;
   const INDEXES = DEFAULT_INDEXES3();
   if (exportContract.agent?.isUsingAgent) {
     INDEXES.AGENT_ADDRESS = 9;

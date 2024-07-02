@@ -20,7 +20,7 @@ const addAndGetOTP = async (root: any, variables: AddOtpToAccountVariables, cont
     const { email } = variables;
 
     // Get the account the email is associated with.
-    const account = await getAccountByField(context, ACCOUNT_FIELD_IDS.EMAIL, email) as Account;
+    const account = (await getAccountByField(context, ACCOUNT_FIELD_IDS.EMAIL, email)) as Account;
 
     if (!account) {
       console.info('Unable to generate and add OTP to an account - no account found');

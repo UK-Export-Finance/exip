@@ -1,23 +1,39 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
+import { Connection } from 'mysql2/promise';
+import getAllLossPayees from '../../get-all-loss-payees';
+import createCuid from '../../create-cuid';
+import executeSqlQuery from '../../execute-sql-query';
 
 /**
  * lossPayeeFinancialInternational
- * Create new "loss payee - financial international" entires
- * @param {Context} context: KeystoneJS context API
- * @param {Array<object>} lossPayeeIdsConnectArray: Array of loss payee IDs "connect" objects
- * @returns {Promise<Array<ApplicationLossPayeeFinancialInternational>>} Loss payee - financial international entries
+ * Create new "nominated loss payee - financial international" entries
+ * @param {Connection} connection: SQL database connection
+ * @returns {Promise<Array<object>>} Loss payee - nominated loss payee - financial international entries
  */
-const lossPayeeFinancialInternational = async (context: Context, lossPayeeIdsConnectArray: Array<object>) => {
+const lossPayeeFinancialInternational = async (connection: Connection) => {
   const loggingMessage = 'Creating nominatedLossPayees - financial international';
 
   console.info(`✅ ${loggingMessage}`);
 
   try {
-    const created = await context.db.LossPayeeFinancialInternational.createMany({
-      data: lossPayeeIdsConnectArray,
+    const lossPayees = await getAllLossPayees(connection);
+
+    const financialInternationalPromises = lossPayees.map(async (lossPayee: object) => {
+      const theValues = `('${createCuid()}', '${lossPayee.id}')`;
+
+      const query = `
+        INSERT INTO LossPayeeFinancialInternational (id, lossPayee) VALUES ${theValues};
+      `;
+
+      const created = await executeSqlQuery({
+        connection,
+        query,
+        loggingMessage: `Creating LossPayeeFinancialInternational entry for loss payee ${lossPayee.id}`,
+      });
+
+      return created;
     });
 
-    return created;
+    return Promise.all(financialInternationalPromises);
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 

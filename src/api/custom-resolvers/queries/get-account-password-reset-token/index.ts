@@ -26,7 +26,7 @@ const getAccountPasswordResetToken = async (
      * Get the account the email is associated with.
      * If an account does not exist, return success=false
      */
-    const account = await getAccountByField(context, ACCOUNT_FIELD_IDS.EMAIL, email) as Account;
+    const account = (await getAccountByField(context, ACCOUNT_FIELD_IDS.EMAIL, email)) as Account;
 
     if (!account) {
       console.info('Unable to get account password reset token - account does not exist');

@@ -13,7 +13,7 @@ const createBuyerTradingHistoryTable = (connection: Connection) => {
   const query = `
     CREATE TABLE BuyerTradingHistory (
       id varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-      currencyCode varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      currencyCode varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'GBP',
       outstandingPayments tinyint(1) DEFAULT NULL,
       failedPayments tinyint(1) DEFAULT NULL,
       exporterHasTradedWithBuyer tinyint(1) DEFAULT NULL,

@@ -32,37 +32,45 @@ const {
  * @returns {Object} Application with mapped textarea field characters
  */
 const mapTextareaFields = (application: Application): Application => {
-  const { broker, business, buyer, company, exportContract, policy, nominatedLossPayee } = application;
+  try {
+    console.info('Mapping textarea fields');
 
-  broker[BROKER_ADDRESS] = replaceCharacterCodesWithCharacters(broker[BROKER_ADDRESS]);
+    const { broker, business, buyer, company, exportContract, policy, nominatedLossPayee } = application;
 
-  business[GOODS_OR_SERVICES] = replaceCharacterCodesWithCharacters(business[GOODS_OR_SERVICES]);
+    broker[BROKER_ADDRESS] = replaceCharacterCodesWithCharacters(broker[BROKER_ADDRESS]);
 
-  buyer[ADDRESS] = replaceCharacterCodesWithCharacters(buyer[ADDRESS]);
+    business[GOODS_OR_SERVICES] = replaceCharacterCodesWithCharacters(business[GOODS_OR_SERVICES]);
 
-  buyer.relationship[CONNECTION_WITH_BUYER_DESCRIPTION] = replaceCharacterCodesWithCharacters(buyer.relationship[CONNECTION_WITH_BUYER_DESCRIPTION]);
+    buyer[ADDRESS] = replaceCharacterCodesWithCharacters(buyer[ADDRESS]);
 
-  buyer[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER] = replaceCharacterCodesWithCharacters(buyer[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]);
+    buyer.relationship[CONNECTION_WITH_BUYER_DESCRIPTION] = replaceCharacterCodesWithCharacters(buyer.relationship[CONNECTION_WITH_BUYER_DESCRIPTION]);
 
-  company.differentTradingAddress[ALT_TRADING_FULL_ADDRESS] = replaceCharacterCodesWithCharacters(company.differentTradingAddress[ALT_TRADING_FULL_ADDRESS]);
+    buyer[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER] = replaceCharacterCodesWithCharacters(buyer[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]);
 
-  exportContract[DESCRIPTION] = replaceCharacterCodesWithCharacters(exportContract[DESCRIPTION]);
+    company.differentTradingAddress[ALT_TRADING_FULL_ADDRESS] = replaceCharacterCodesWithCharacters(company.differentTradingAddress[ALT_TRADING_FULL_ADDRESS]);
 
-  exportContract.privateMarket[DECLINED_DESCRIPTION] = replaceCharacterCodesWithCharacters(exportContract.privateMarket[DECLINED_DESCRIPTION]);
+    exportContract[DESCRIPTION] = replaceCharacterCodesWithCharacters(exportContract[DESCRIPTION]);
 
-  exportContract.agent[AGENT_FULL_ADDRESS] = replaceCharacterCodesWithCharacters(exportContract.agent[AGENT_FULL_ADDRESS]);
+    exportContract.privateMarket[DECLINED_DESCRIPTION] = replaceCharacterCodesWithCharacters(exportContract.privateMarket[DECLINED_DESCRIPTION]);
 
-  exportContract.agent.service[SERVICE_DESCRIPTION] = replaceCharacterCodesWithCharacters(exportContract.agent.service[SERVICE_DESCRIPTION]);
+    exportContract.agent[AGENT_FULL_ADDRESS] = replaceCharacterCodesWithCharacters(exportContract.agent[AGENT_FULL_ADDRESS]);
 
-  policy[CREDIT_PERIOD_WITH_BUYER] = replaceCharacterCodesWithCharacters(policy[CREDIT_PERIOD_WITH_BUYER]);
+    exportContract.agent.service[SERVICE_DESCRIPTION] = replaceCharacterCodesWithCharacters(exportContract.agent.service[SERVICE_DESCRIPTION]);
 
-  nominatedLossPayee.financialUk[FINANCIAL_ADDRESS] = replaceCharacterCodesWithCharacters(nominatedLossPayee.financialUk[FINANCIAL_ADDRESS]);
+    policy[CREDIT_PERIOD_WITH_BUYER] = replaceCharacterCodesWithCharacters(policy[CREDIT_PERIOD_WITH_BUYER]);
 
-  nominatedLossPayee.financialInternational[FINANCIAL_ADDRESS] = replaceCharacterCodesWithCharacters(
-    nominatedLossPayee.financialInternational[FINANCIAL_ADDRESS],
-  );
+    nominatedLossPayee.financialUk[FINANCIAL_ADDRESS] = replaceCharacterCodesWithCharacters(nominatedLossPayee.financialUk[FINANCIAL_ADDRESS]);
 
-  return application;
+    nominatedLossPayee.financialInternational[FINANCIAL_ADDRESS] = replaceCharacterCodesWithCharacters(
+      nominatedLossPayee.financialInternational[FINANCIAL_ADDRESS],
+    );
+
+    return application;
+  } catch (err) {
+    console.error('Error mapping textarea fields %O', err);
+
+    throw new Error(`Error mapping textarea fields ${err}`);
+  }
 };
 
 export default mapTextareaFields;

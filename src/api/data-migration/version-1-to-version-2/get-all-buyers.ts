@@ -4,7 +4,7 @@ import { ApplicationBuyerMvp } from '../../types';
 
 /**
  * getAllBuyers
- * Get all buyers in the "Buyer" table.
+ * Get all entries in the "Buyer" table.
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<object>>} executeSqlQuery response
  */

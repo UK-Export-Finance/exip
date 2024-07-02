@@ -4,7 +4,7 @@ import { AccountMvp } from '../../types';
 
 /**
  * getAllAccounts
- * Get all accounts in the "Account" table.
+ * Get all entries in the "Account" table.
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<object>>} executeSqlQuery response
  */

@@ -7,6 +7,7 @@ import { Application } from '../../../../types';
 const {
   TYPE_OF_POLICY: { POLICY_TYPE },
   USING_BROKER,
+  NAME_ON_POLICY: { IS_SAME_AS_OWNER },
 } = FIELD_IDS;
 
 /**
@@ -28,6 +29,7 @@ const POLICY_INDEXES = (application: Application) => {
     broker,
     nominatedLossPayee: { isAppointed: nominatedLossPayeeAppointed },
     policy,
+    policyContact,
   } = application;
 
   const isMultiplePolicy = isMultiplePolicyType(policy[POLICY_TYPE]);
@@ -48,6 +50,12 @@ const POLICY_INDEXES = (application: Application) => {
     if (isMultiplePolicy) {
       INDEXES.LOSS_PAYEE_ADDRESS += 1;
     }
+  }
+
+  // if (policyContact[IS_SAME_AS_OWNER]) {
+  if (!policyContact[IS_SAME_AS_OWNER]) {
+    INDEXES.BROKER_ADDRESS += 1;
+    INDEXES.LOSS_PAYEE_ADDRESS += 1;
   }
 
   INDEXES = {

@@ -1,23 +1,39 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
+import { Connection } from 'mysql2/promise';
+import getAllLossPayees from '../../get-all-loss-payees';
+import createCuid from '../../create-cuid';
+import executeSqlQuery from '../../execute-sql-query';
 
 /**
- * lossPayeeFinancialUk
- * Create new "loss payee - financial UK" entires
- * @param {Context} context: KeystoneJS context API
- * @param {Array<object>} lossPayeeIdsConnectArray: Array of loss payee IDs "connect" objects
- * @returns {Promise<Array<ApplicationLossPayeeFinancialUk>>} Loss payee - financial UK entries
+ * lossPayeeFinancialInternational
+ * Create new "nominated loss payee - financial UK" entries
+ * @param {Connection} connection: SQL database connection
+ * @returns {Promise<Array<object>>} Loss payee - nominated loss payee - financial UK entries
  */
-const lossPayeeFinancialUk = async (context: Context, lossPayeeIdsConnectArray: Array<object>) => {
+const lossPayeeFinancialInternational = async (connection: Connection) => {
   const loggingMessage = 'Creating nominatedLossPayees - financial UK';
 
   console.info(`✅ ${loggingMessage}`);
 
   try {
-    const created = await context.db.LossPayeeFinancialUk.createMany({
-      data: lossPayeeIdsConnectArray,
+    const lossPayees = await getAllLossPayees(connection);
+
+    const financialUkPromises = lossPayees.map(async (lossPayee: object) => {
+      const theValues = `('${createCuid()}', '${lossPayee.id}')`;
+
+      const query = `
+        INSERT INTO LossPayeeFinancialUk (id, lossPayee) VALUES ${theValues};
+      `;
+
+      const created = await executeSqlQuery({
+        connection,
+        query,
+        loggingMessage: `Creating LossPayeeFinancialUk entry for loss payee ${lossPayee.id}`,
+      });
+
+      return created;
     });
 
-    return created;
+    return Promise.all(financialUkPromises);
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 
@@ -25,4 +41,4 @@ const lossPayeeFinancialUk = async (context: Context, lossPayeeIdsConnectArray: 
   }
 };
 
-export default lossPayeeFinancialUk;
+export default lossPayeeFinancialInternational;

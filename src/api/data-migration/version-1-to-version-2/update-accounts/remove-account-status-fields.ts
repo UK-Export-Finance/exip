@@ -10,15 +10,12 @@ import removeIsBlockedField from './remove-is-blocked-field';
  * @returns {Promise<Array<object>>} executeSqlQuery responses
  */
 const removeAccountStatusFields = async (connection: Connection) => {
-  const loggingMessage = 'Removing account status fields';
+  const loggingMessage = 'Removing FIELDS account statuses';
 
   console.info(`✅ ${loggingMessage}`);
 
   try {
-    const tables = await Promise.all([
-      removeIsVerifiedField(connection),
-      removeIsBlockedField(connection),
-    ]);
+    const tables = await Promise.all([removeIsVerifiedField(connection), removeIsBlockedField(connection)]);
 
     return tables;
   } catch (err) {

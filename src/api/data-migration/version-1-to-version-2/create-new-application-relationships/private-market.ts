@@ -1,33 +1,41 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
+import { Connection } from 'mysql2/promise';
+import createCuid from '../create-cuid';
+import executeSqlQuery from '../execute-sql-query';
+import { Application } from '../../../types';
 
 /**
  * createPrivateMarket
  * Create new "private market" entries with "export contract" relationships.
- * 1) Create an array of export contract ID "connect" relationships.
- * 2) Create "private market" entries.
- * @param {Context} context: KeystoneJS context API
+ * 1) Map over each application
+ * 2) Create new database values with a CUID
+ * 3) Add entries to the PrivateMarket table
+ * @param {Connection} connection: SQL database connection
  * @param {Array<Application>} applications: Applications
- * @returns {Promise<Array<ApplicationPrivateMarket>>} Private market entires
+ * @returns {Promise<Array<ApplicationPrivateMarket>>} Private market entries
  */
-const createPrivateMarket = async (context: Context, applications: Array<object>) => {
-  const loggingMessage = 'Creating privateMarkets with exportContract relationships';
+const createPrivateMarket = async (connection: Connection, applications: Array<Application>) => {
+  const loggingMessage = 'Creating privateMarket entries with exportContract relationships';
 
   console.info(`✅ ${loggingMessage}`);
 
   try {
-    const exportContractIdsConnectArray = applications.map((application) => ({
-      exportContract: {
-        connect: {
-          id: application.exportContractId,
-        },
-      },
-    }));
+    const privateMarketPromises = applications.map(async (application: Application) => {
+      const theValues = `('${createCuid()}')`;
 
-    const created = await context.db.PrivateMarket.createMany({
-      data: exportContractIdsConnectArray,
+      const query = `
+        INSERT INTO PrivateMarket (id) VALUES ${theValues};
+      `;
+
+      const updated = await executeSqlQuery({
+        connection,
+        query,
+        loggingMessage: `Creating PrivateMarket entry for application ${application.id}`,
+      });
+
+      return updated;
     });
 
-    return created;
+    return Promise.all(privateMarketPromises);
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 

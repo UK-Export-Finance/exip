@@ -16,12 +16,7 @@ const updateAccounts = async (connection: Connection) => {
   console.info(`✅ ${loggingMessage}`);
 
   try {
-    const tables = await Promise.all([
-      addStatusField(connection),
-      addStatusUniqueKey(connection),
-      addStatusKey(connection),
-      addStatusConstraint(connection),
-    ]);
+    const tables = await Promise.all([addStatusField(connection), addStatusUniqueKey(connection), addStatusKey(connection), addStatusConstraint(connection)]);
 
     return tables;
   } catch (err) {

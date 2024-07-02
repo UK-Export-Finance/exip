@@ -3,7 +3,7 @@ import executeSqlQuery from './execute-sql-query';
 
 /**
  * getAllBuyerTradingHistories
- * Get all buyer trading history in the "BuyerTradingHistory" table.
+ * Get all entries in the "BuyerTradingHistory" table.
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<object>>} executeSqlQuery response
  */
