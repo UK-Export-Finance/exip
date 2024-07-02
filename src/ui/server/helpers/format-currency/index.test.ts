@@ -18,7 +18,7 @@ describe('server/helpers/format-currency', () => {
     expect(result).toEqual(expected);
   });
 
-  describe('when decimalPoints parameter is not provided', () => {
+  describe('when decimalPlaces parameter is not provided', () => {
     it('should default to 0', () => {
       const result = formatCurrency(mock, currencyCode);
 

@@ -8,6 +8,7 @@ import { mockApplication } from '../../../test-mocks';
 import mapFinancialYearEndDate from '../map-financial-year-end-date';
 import transformNumberToString from '../../transform-number-to-string';
 import mapNominatedLossPayeeLocation from '../map-nominated-loss-payee-location';
+import { transformEmptyDecimalsToWholeNumber } from '../../number';
 import { Application } from '../../../../types';
 
 const {
@@ -24,6 +25,9 @@ const {
   EXPORTER_BUSINESS: {
     NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING, EMPLOYEES_UK },
     TURNOVER: { FINANCIAL_YEAR_END_DATE, PERCENTAGE_TURNOVER, ESTIMATED_ANNUAL_TURNOVER },
+  },
+  EXPORT_CONTRACT: {
+    AGENT_CHARGES: { FIXED_SUM_AMOUNT },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -121,6 +125,19 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
     };
 
     expect(result.nominatedLossPayee).toEqual(expected);
+  });
+
+  describe(`when an application has a ${FIXED_SUM_AMOUNT} field`, () => {
+    it(`should return the result of transformEmptyDecimalsToWholeNumber for ${FIXED_SUM_AMOUNT}`, () => {
+      mockApplication.exportContract.agent.service.charge[FIXED_SUM_AMOUNT] = '1000.00';
+      const result = mapApplicationToFormFields(mockApplication) as Application;
+
+      const expectedResult = result.exportContract.agent.service.charge[FIXED_SUM_AMOUNT];
+
+      const expected = transformEmptyDecimalsToWholeNumber(mockApplication.exportContract.agent.service.charge[FIXED_SUM_AMOUNT]);
+
+      expect(expectedResult).toEqual(expected);
+    });
   });
 
   describe('when an empty application is passed', () => {

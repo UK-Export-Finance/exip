@@ -8,6 +8,7 @@ import mapPercentage from '../../../../map-percentage';
 import getCountryByIsoCode from '../../../../get-country-by-iso-code';
 import generateChangeLink from '../../../../generate-change-link';
 import formatCurrency from '../../../../format-currency';
+import { transformEmptyDecimalsToWholeNumber, numberHasDecimalPlaces } from '../../../../number';
 import { ApplicationExportContractAgentService, Country } from '../../../../../../types';
 
 const {
@@ -42,6 +43,17 @@ const agentChargesFields = (answers: ApplicationExportContractAgentService, refe
 
   if (answers[IS_CHARGING]) {
     if (answers.charge[FIXED_SUM_AMOUNT]) {
+      /**
+       * transforms the number to a whole number if it has .00 at the end
+       */
+      const answer = transformEmptyDecimalsToWholeNumber(answers.charge[FIXED_SUM_AMOUNT]);
+
+      /**
+       * If the number has decimal places, show 2 decimal places
+       * or 0 if it's a whole number
+       */
+      const decimalPlaces = numberHasDecimalPlaces(answer) ? 2 : 0;
+
       fields.push(
         fieldGroupItem(
           {
@@ -50,7 +62,7 @@ const agentChargesFields = (answers: ApplicationExportContractAgentService, refe
             href: generateChangeLink(AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE, `#${FIXED_SUM_AMOUNT}-label`, referenceNumber, checkAndChange),
             renderChangeLink: true,
           },
-          formatCurrency(answers.charge[FIXED_SUM_AMOUNT], answers.charge[FIXED_SUM_CURRENCY_CODE]),
+          formatCurrency(Number(answer), answers.charge[FIXED_SUM_CURRENCY_CODE], decimalPlaces),
         ),
       );
     }

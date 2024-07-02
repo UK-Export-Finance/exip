@@ -32,7 +32,7 @@ describe('controllers/insurance/export-contract/map-submitted-data/agent-service
 
       const expected = {
         ...mockFormBody,
-        [FIXED_SUM_AMOUNT]: Number(mockFormBody[FIXED_SUM_AMOUNT]),
+        [FIXED_SUM_AMOUNT]: String(mockFormBody[FIXED_SUM_AMOUNT]),
         [PERCENTAGE_CHARGE]: null,
         [FIXED_SUM_CURRENCY_CODE]: EUR.isoCode,
       };
@@ -52,7 +52,7 @@ describe('controllers/insurance/export-contract/map-submitted-data/agent-service
 
       const expected = {
         ...mockFormBody,
-        [FIXED_SUM_AMOUNT]: Number(mockFormBody[FIXED_SUM_AMOUNT]),
+        [FIXED_SUM_AMOUNT]: String(mockFormBody[FIXED_SUM_AMOUNT]),
         [PERCENTAGE_CHARGE]: null,
         [FIXED_SUM_CURRENCY_CODE]: EUR.isoCode,
         [ALTERNATIVE_CURRENCY_CODE]: null,

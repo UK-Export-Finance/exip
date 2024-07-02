@@ -2047,7 +2047,7 @@ var lists = {
     fields: {
       service: (0, import_fields.relationship)({ ref: "ExportContractAgentService.charge" }),
       percentageCharge: (0, import_fields.integer)(),
-      fixedSumAmount: (0, import_fields.integer)(),
+      fixedSumAmount: (0, import_fields.decimal)({ scale: 2 }),
       fixedSumCurrencyCode: (0, import_fields.text)({
         db: { nativeType: "VarChar(3)" },
         defaultValue: DEFAULT_CURRENCY
@@ -5545,11 +5545,11 @@ var LINKS = {
 };
 
 // helpers/format-currency/index.ts
-var formatCurrency = (number, currencyCode, decimalPoints) => number.toLocaleString("en", {
+var formatCurrency = (number, currencyCode, decimalPlaces) => number.toLocaleString("en", {
   style: "currency",
   currency: currencyCode,
-  minimumFractionDigits: decimalPoints ?? 0,
-  maximumFractionDigits: decimalPoints ?? 0
+  minimumFractionDigits: decimalPlaces ?? 0,
+  maximumFractionDigits: decimalPlaces ?? 0
 });
 var format_currency_default = formatCurrency;
 
@@ -6752,11 +6752,11 @@ var mapNameOnPolicy = (policyContact) => {
 var map_name_on_policy_default = mapNameOnPolicy;
 
 // generate-xlsx/map-application-to-XLSX/helpers/format-currency/index.ts
-var formatCurrency2 = (number, currencyCode, decimalPoints) => number.toLocaleString("en", {
+var formatCurrency2 = (number, currencyCode, decimalPlaces) => number.toLocaleString("en", {
   style: "currency",
   currency: currencyCode,
-  minimumFractionDigits: decimalPoints ?? 0,
-  maximumFractionDigits: decimalPoints ?? 0
+  minimumFractionDigits: decimalPlaces ?? 0,
+  maximumFractionDigits: decimalPlaces ?? 0
 });
 var format_currency_default2 = formatCurrency2;
 

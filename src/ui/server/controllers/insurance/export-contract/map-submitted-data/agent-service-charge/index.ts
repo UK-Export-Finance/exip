@@ -31,7 +31,7 @@ const mapSubmittedData = (formBody: RequestBody): object => {
   const populatedData = formBody;
 
   if (formBody[METHOD] === FIXED_SUM) {
-    populatedData[FIXED_SUM_AMOUNT] = Number(populatedData[FIXED_SUM_AMOUNT]);
+    populatedData[FIXED_SUM_AMOUNT] = String(populatedData[FIXED_SUM_AMOUNT]);
     populatedData[PERCENTAGE_CHARGE] = null;
   }
 

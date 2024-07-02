@@ -7,6 +7,7 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * Runs through the full "prepare your application" section/journey for a single contract policy
  * All params default to false, except for submitCheckYourAnswers.
  * @param {Boolean} agentChargeMethodFixedSum: Agent charge method is "fixed sum".
+ * @param {String} agentChargeFixedSumAmount: Agent charge fixed sum amount
  * @param {Boolean} agentChargeMethodPercentage: Agent charge method is "percentage".
  * @param {Boolean} agentIsCharging: Should submit "yes" to "agent is charging" in the "agent details" form.
  * @param {Boolean} alternativeBuyerCurrency: Should submit an "alternative currency" in the buyer section.
@@ -60,6 +61,7 @@ const completePrepareApplicationSinglePolicyType = ({
   isUsingAgent = false,
   agentIsCharging = false,
   agentChargeMethodFixedSum = false,
+  agentChargeFixedSumAmount,
   agentChargeMethodPercentage = false,
   submitCheckYourAnswers = true,
   alternativeCurrencyTurnover = false,
@@ -102,6 +104,7 @@ const completePrepareApplicationSinglePolicyType = ({
   cy.completeExportContractSection({
     agentIsCharging,
     agentChargeMethodFixedSum,
+    agentChargeFixedSumAmount,
     agentChargeMethodPercentage,
     attemptedPrivateMarketCover,
     finalDestinationKnown,

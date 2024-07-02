@@ -238,7 +238,7 @@ model ExportContractAgentServiceCharge {
   id                   String                      @id @default(cuid())
   service              ExportContractAgentService? @relation("ExportContractAgentService_charge")
   percentageCharge     Int?
-  fixedSumAmount       Int?
+  fixedSumAmount       Decimal?                    @mysql.Decimal(18, 2)
   fixedSumCurrencyCode String                      @default("GBP") @mysql.VarChar(3)
   method               String?
   payableCountryCode   String                      @default("") @mysql.VarChar(3)

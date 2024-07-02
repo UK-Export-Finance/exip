@@ -7,6 +7,7 @@ import getDateFieldsFromTimestamp from '../../date/get-date-fields-from-timestam
 import mapFinancialYearEndDate from '../map-financial-year-end-date';
 import transformNumberToString from '../../transform-number-to-string';
 import mapNominatedLossPayeeLocation from '../map-nominated-loss-payee-location';
+import { transformEmptyDecimalsToWholeNumber } from '../../number';
 import { Application } from '../../../../types';
 
 const {
@@ -23,6 +24,9 @@ const {
   EXPORTER_BUSINESS: {
     NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING, EMPLOYEES_UK },
     TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+  },
+  EXPORT_CONTRACT: {
+    AGENT_CHARGES: { FIXED_SUM_AMOUNT },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -90,6 +94,13 @@ const mapApplicationToFormFields = (application?: Application): Application | ob
       mapped.nominatedLossPayee = {
         ...mapped.nominatedLossPayee,
         [LOCATION]: mapNominatedLossPayeeLocation(application.nominatedLossPayee),
+      };
+    }
+
+    if (application?.exportContract?.agent?.service?.charge?.[FIXED_SUM_AMOUNT]) {
+      mapped.exportContract.agent.service.charge = {
+        ...mapped.exportContract.agent.service.charge,
+        [FIXED_SUM_AMOUNT]: transformEmptyDecimalsToWholeNumber(application.exportContract.agent.service.charge[FIXED_SUM_AMOUNT]),
       };
     }
 
