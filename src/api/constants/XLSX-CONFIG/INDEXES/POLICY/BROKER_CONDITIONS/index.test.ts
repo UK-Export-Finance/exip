@@ -18,7 +18,7 @@ describe('api/constants/XLSX-CONFIG/INDEXES/POLICY/BROKER_CONDITIONS', () => {
       const result = BROKER_CONDITIONS(application, mockIndexes);
 
       const expected = {
-        BROKER_ADDRESS: (mockIndexes.BROKER_ADDRESS += 20),
+        BROKER_ADDRESS: (mockIndexes.BROKER_ADDRESS += 6),
       };
 
       expect(result).toEqual(expected);
@@ -37,7 +37,7 @@ describe('api/constants/XLSX-CONFIG/INDEXES/POLICY/BROKER_CONDITIONS', () => {
       const result = BROKER_CONDITIONS(application, mockIndexes);
 
       const expected = {
-        BROKER_ADDRESS: (mockIndexes.BROKER_ADDRESS += 18),
+        BROKER_ADDRESS: (mockIndexes.BROKER_ADDRESS += 4),
       };
 
       expect(result).toEqual(expected);
@@ -56,7 +56,7 @@ describe('api/constants/XLSX-CONFIG/INDEXES/POLICY/BROKER_CONDITIONS', () => {
       const result = BROKER_CONDITIONS(application, mockIndexes);
 
       const expected = {
-        BROKER_ADDRESS: (mockIndexes.BROKER_ADDRESS += 16),
+        BROKER_ADDRESS: (mockIndexes.BROKER_ADDRESS += 2),
       };
 
       expect(result).toEqual(expected);
@@ -75,7 +75,7 @@ describe('api/constants/XLSX-CONFIG/INDEXES/POLICY/BROKER_CONDITIONS', () => {
       const result = BROKER_CONDITIONS(application, mockIndexes);
 
       const expected = {
-        BROKER_ADDRESS: (mockIndexes.BROKER_ADDRESS += 17),
+        BROKER_ADDRESS: (mockIndexes.BROKER_ADDRESS += 3),
       };
 
       expect(result).toEqual(expected);
@@ -94,7 +94,7 @@ describe('api/constants/XLSX-CONFIG/INDEXES/POLICY/BROKER_CONDITIONS', () => {
       const result = BROKER_CONDITIONS(application, mockIndexes);
 
       const expected = {
-        BROKER_ADDRESS: (mockIndexes.BROKER_ADDRESS += 14),
+        BROKER_ADDRESS: mockIndexes.BROKER_ADDRESS,
       };
 
       expect(result).toEqual(expected);

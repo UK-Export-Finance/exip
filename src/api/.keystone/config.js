@@ -1415,6 +1415,7 @@ var application = {
       if (file) {
         const fileBuffer = Buffer.from(file);
         const response = await callNotify(templateId, emailAddress, variables, fileBuffer);
+        await file_system_default.unlink(filePath);
         return response;
       }
       throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
@@ -7427,7 +7428,6 @@ var BROKER_CONDITIONS = (application2, INDEXES) => {
   } = application2;
   const MODIFIED_INDEXES = INDEXES;
   if (broker[USING_BROKER4]) {
-    MODIFIED_INDEXES.BROKER_ADDRESS = 14;
     if (policyContactIsSameAsOwner === false) {
       MODIFIED_INDEXES.BROKER_ADDRESS += 2;
     }
@@ -7474,17 +7474,33 @@ var LOSS_PAYEE_CONDITIONS = (application2, INDEXES) => {
 var LOSS_PAYEE_CONDITIONS_default = LOSS_PAYEE_CONDITIONS;
 
 // constants/XLSX-CONFIG/INDEXES/POLICY/index.ts
+var {
+  TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE8 },
+  USING_BROKER: USING_BROKER6
+} = policy_default;
 var DEFAULT_INDEXES2 = {
   BROKER_ADDRESS: 0,
   LOSS_PAYEE_ADDRESS: 0
 };
 var POLICY_INDEXES = (application2) => {
   const {
-    nominatedLossPayee: { isAppointed: nominatedLossPayeeAppointed }
+    broker,
+    nominatedLossPayee: { isAppointed: nominatedLossPayeeAppointed },
+    policy
   } = application2;
+  const isMultiplePolicy = isMultiplePolicyType(policy[POLICY_TYPE8]);
   let INDEXES = DEFAULT_INDEXES2;
+  if (broker[USING_BROKER6]) {
+    INDEXES.BROKER_ADDRESS = 14;
+    if (isMultiplePolicy) {
+      INDEXES.BROKER_ADDRESS += 1;
+    }
+  }
   if (nominatedLossPayeeAppointed) {
     INDEXES.LOSS_PAYEE_ADDRESS = 17;
+    if (isMultiplePolicy) {
+      INDEXES.LOSS_PAYEE_ADDRESS += 1;
+    }
   }
   INDEXES = {
     ...INDEXES,

@@ -1,6 +1,13 @@
+import FIELD_IDS from '../../../field-ids/insurance/policy';
+import { isMultiplePolicyType } from '../../../../helpers/policy-type';
 import BROKER_CONDITIONS from './BROKER_CONDITIONS';
 import LOSS_PAYEE_CONDITIONS from './LOSS_PAYEE_CONDITIONS';
 import { Application } from '../../../../types';
+
+const {
+  TYPE_OF_POLICY: { POLICY_TYPE },
+  USING_BROKER,
+} = FIELD_IDS;
 
 /**
  * DEFAULT_INDEXES
@@ -11,8 +18,6 @@ export const DEFAULT_INDEXES = {
   LOSS_PAYEE_ADDRESS: 0,
 };
 
-// * - If the policy type is multiple, the XLSX has 1 additional row.
-
 /**
  * POLICY_INDEXES
  * Generate row indexes for the XLSX's "Policy" worksheet.
@@ -20,15 +25,29 @@ export const DEFAULT_INDEXES = {
  */
 const POLICY_INDEXES = (application: Application) => {
   const {
+    broker,
     nominatedLossPayee: { isAppointed: nominatedLossPayeeAppointed },
+    policy,
   } = application;
 
-  // const isMultiplePolicy = isMultiplePolicyType(application.policy[POLICY_TYPE]);
+  const isMultiplePolicy = isMultiplePolicyType(policy[POLICY_TYPE]);
 
   let INDEXES = DEFAULT_INDEXES;
 
+  if (broker[USING_BROKER]) {
+    INDEXES.BROKER_ADDRESS = 14;
+
+    if (isMultiplePolicy) {
+      INDEXES.BROKER_ADDRESS += 1;
+    }
+  }
+
   if (nominatedLossPayeeAppointed) {
     INDEXES.LOSS_PAYEE_ADDRESS = 17;
+
+    if (isMultiplePolicy) {
+      INDEXES.LOSS_PAYEE_ADDRESS += 1;
+    }
   }
 
   INDEXES = {

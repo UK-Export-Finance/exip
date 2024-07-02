@@ -25,8 +25,6 @@ const BROKER_CONDITIONS = (application: Application, INDEXES: object) => {
   const MODIFIED_INDEXES = INDEXES;
 
   if (broker[USING_BROKER]) {
-    MODIFIED_INDEXES.BROKER_ADDRESS = 14;
-
     if (policyContactIsSameAsOwner === false) {
       MODIFIED_INDEXES.BROKER_ADDRESS += 2;
     }
