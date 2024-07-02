@@ -1,7 +1,8 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
+import { format } from 'date-fns';
 import { Connection } from 'mysql2/promise';
 import getAllAccounts from '../get-all-accounts';
-import { AccountMvp, AccountStatus } from '../../../types';
+import executeSqlQuery from '../execute-sql-query';
+import { AccountMvp } from '../../../types';
 
 /**
  * createNewAccountStatusRelationships
@@ -10,10 +11,9 @@ import { AccountMvp, AccountStatus } from '../../../types';
  * 2) Create an array of "account status" data - using isVerified and isBlocked from the original accounts data.
  * 3) Create new "account status" entries.
  * @param {Connection} connection: SQL database connection
- * @param {Context} context: KeystoneJS context API
- * @returns {Promise<Array<AccountStatus>>} Account status entires
+ * @returns {Promise<Boolean>}
  */
-const createNewAccountStatusRelationships = async (connection: Connection, context: Context): Promise<Array<AccountStatus>> => {
+const createNewAccountStatusRelationships = async (connection: Connection): Promise<boolean> => {
   const loggingMessage = 'Creating new status relationships for all accounts';
 
   console.info(`✅ ${loggingMessage}`);
@@ -21,34 +21,17 @@ const createNewAccountStatusRelationships = async (connection: Connection, conte
   try {
     const accounts = await getAllAccounts(connection);
 
-    const mappedAccountStatusData = accounts.map((account: AccountMvp) => {
-      const mapped = {
-        account: {
-          connect: {
-            id: account.id,
-          },
-        },
-        /**
-         * NOTE: The accounts data we receive is raw database data.
-         * In the database, boolean fields are TINYINT/integer values.
-         * The KeystoneJS context/GraphQL API expects these fields to be booleans.
-         * Therefore, since the TINYINT values will be 0 or 1,
-         * we can safely transform these fields to have a boolean value.
-         * KeystoneJS will then automatically handle saving in the database as a TINYINT
-         */
-        isVerified: Boolean(account.isVerified),
-        isBlocked: Boolean(account.isBlocked),
-        updatedAt: account.updatedAt,
-      };
+    const accountStatusData = accounts.map(
+      (account: AccountMvp) => `('${account.id}', ${account.isBlocked}, ${account.isVerified}, '${format(account.updatedAt, 'yyyy-MM-dd HH:mm')}')`,
+    );
 
-      return mapped;
-    });
+    const query = `
+      INSERT INTO AccountStatus (id, isBlocked, isVerified, updatedAt) VALUES ${accountStatusData};
+    `;
 
-    const created = (await context.db.AccountStatus.createMany({
-      data: mappedAccountStatusData,
-    })) as Array<AccountStatus>;
+    await executeSqlQuery({ connection, query, loggingMessage });
 
-    return created;
+    return true;
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 
