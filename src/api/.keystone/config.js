@@ -6431,7 +6431,7 @@ var XLSX = {
     [ESTIMATED_ANNUAL_TURNOVER2]: "Exporter estimated turnover this current financial year",
     [EXPORTER_COMPANY_ADDRESS]: "Exporter registered office address",
     [EXPORTER_COMPANY_NAME]: "Exporter company name",
-    [EXPORTER_COMPANY_SIC]: "Exporter standard industry classification (SIC) codes and nature of business",
+    [EXPORTER_COMPANY_SIC]: "Exporter standard industry classification (SIC) code(s)",
     EXPORTER_CONTACT: {
       [FIRST_NAME]: "Exporter first name",
       [LAST_NAME]: "Exporter last name",
