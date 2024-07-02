@@ -7,6 +7,7 @@ export interface CisCountry {
   shortTermCoverAvailabilityDesc: string;
   ESRAClassificationDesc: string;
   NBIIssue: string;
+  marketRiskAppetitePublicDesc: string;
   riskCategory?: string;
 }
 
@@ -21,7 +22,6 @@ export interface Country extends Relationship {
   canGetAQuoteByEmail?: boolean;
   cannotGetAQuote?: boolean;
   canApplyForInsuranceOnline?: boolean;
-  canApplyForInsuranceOffline?: boolean;
   noInsuranceSupport?: boolean;
 }
 
@@ -46,6 +46,5 @@ export interface MappedCisCountry {
   canGetAQuoteByEmail: boolean;
   cannotGetAQuote: boolean;
   canApplyForInsuranceOnline: boolean;
-  canApplyForInsuranceOffline: boolean;
   noInsuranceSupport: boolean;
 }

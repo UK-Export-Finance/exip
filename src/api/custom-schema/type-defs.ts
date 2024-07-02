@@ -224,7 +224,6 @@ const typeDefs = `
     cannotGetAQuote: Boolean
     cannotApply: Boolean
     canApplyForInsuranceOnline: Boolean
-    canApplyForInsuranceOffline: Boolean
     noInsuranceSupport: Boolean
   }
 

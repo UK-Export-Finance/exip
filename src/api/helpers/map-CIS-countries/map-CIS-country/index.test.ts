@@ -6,8 +6,8 @@ import canGetAQuoteOnline from './can-get-a-quote-online';
 import canGetAQuoteByEmail from './can-get-a-quote-by-email';
 import cannotGetAQuote from './cannot-get-a-quote';
 import applyForInsuranceOnline from './can-apply-for-insurance-online';
-import applyForInsuranceOffline from './can-apply-for-insurance-offline';
 import canApplyOffline from './can-apply-offline';
+import noInsuranceSupportAvailable from './no-insurance-support';
 import { EXTERNAL_API_DEFINITIONS, EXTERNAL_API_MAPPINGS } from '../../../constants';
 import { MappedCisCountry } from '../../../types';
 import { mockCisCountries } from '../../../test-mocks';
@@ -23,6 +23,7 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
     riskCategory: EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD,
     isoCode: initialMockCountry.isoCode,
     shortTermCoverAvailabilityDesc: CIS.SHORT_TERM_COVER_AVAILABLE.ILC,
+    marketRiskAppetitePublicDesc: CIS.NO_COVER,
   };
 
   it('should return an object', () => {
@@ -39,7 +40,6 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
       canGetAQuoteByEmail: false,
       cannotGetAQuote: false,
       canApplyForInsuranceOnline: false,
-      canApplyForInsuranceOffline: false,
       noInsuranceSupport: false,
     } as MappedCisCountry;
 
@@ -48,10 +48,9 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
     mapped.canGetAQuoteByEmail = canGetAQuoteByEmail(mapped);
     mapped.cannotGetAQuote = cannotGetAQuote(mapped);
 
-    mapped.canApplyForInsuranceOnline = applyForInsuranceOnline(mockCountryBase.shortTermCoverAvailabilityDesc);
-    mapped.canApplyForInsuranceOffline = applyForInsuranceOffline(mockCountryBase.shortTermCoverAvailabilityDesc);
+    mapped.canApplyForInsuranceOnline = applyForInsuranceOnline(mapped.shortTermCover);
 
-    mapped.noInsuranceSupport = !mapped.canApplyForInsuranceOnline && !mapped.canApplyForInsuranceOffline;
+    mapped.noInsuranceSupport = noInsuranceSupportAvailable(mockCountryBase.marketRiskAppetitePublicDesc);
 
     expect(result).toEqual(mapped);
   });

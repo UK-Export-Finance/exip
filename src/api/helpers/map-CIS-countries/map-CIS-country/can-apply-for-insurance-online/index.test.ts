@@ -3,7 +3,6 @@ import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
 
 const {
   CIS: {
-    SHORT_TERM_COVER_AVAILABLE: { YES, ILC, CILC, REFER, UNLISTED },
     RISK: { VERY_HIGH },
   },
 } = EXTERNAL_API_DEFINITIONS;
@@ -11,57 +10,41 @@ const {
 const mockRiskCategory = VERY_HIGH;
 
 describe('helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online', () => {
-  describe(`when a country has a riskCategory and originalShortTermCover is '${YES}'`, () => {
+  describe('when a country has a riskCategory and shortTermCover of true', () => {
     it('should return true', () => {
-      const result = canApplyForInsuranceOnline(YES, mockRiskCategory);
+      const shortTermCover = true;
+
+      const result = canApplyForInsuranceOnline(shortTermCover, mockRiskCategory);
 
       expect(result).toEqual(true);
     });
   });
 
-  describe(`when a country has a riskCategory and originalShortTermCover is '${ILC}'`, () => {
-    it('should return true', () => {
-      const result = canApplyForInsuranceOnline(ILC, mockRiskCategory);
-
-      expect(result).toEqual(true);
-    });
-  });
-
-  describe(`when a country has a riskCategory and originalShortTermCover is '${CILC}'`, () => {
-    it('should return true', () => {
-      const result = canApplyForInsuranceOnline(CILC, mockRiskCategory);
-
-      expect(result).toEqual(true);
-    });
-  });
-
-  describe(`when a country has a riskCategory and originalShortTermCover is '${REFER}'`, () => {
-    it('should return true', () => {
-      const result = canApplyForInsuranceOnline(REFER, mockRiskCategory);
-
-      expect(result).toEqual(true);
-    });
-  });
-
-  describe(`when a country has a riskCategory and originalShortTermCover is ${UNLISTED}`, () => {
-    it('should return true', () => {
-      const result = canApplyForInsuranceOnline(UNLISTED, mockRiskCategory);
-
-      expect(result).toEqual(true);
-    });
-  });
-
-  describe('when a country has a riskCategory and originalShortTermCover is anything else', () => {
+  describe('when a country has a riskCategory and shortTermCover is false', () => {
     it('should return false', () => {
-      const result = canApplyForInsuranceOnline('Something else', mockRiskCategory);
+      const shortTermCover = false;
+
+      const result = canApplyForInsuranceOnline(shortTermCover, mockRiskCategory);
 
       expect(result).toEqual(false);
     });
   });
 
-  describe('when a country does NOT have a riskCategory, but has a valid originalShortTermCover', () => {
+  describe('when a country does not have a riskCategory and shortTermCover of true', () => {
     it('should return false', () => {
-      const result = canApplyForInsuranceOnline(YES);
+      const shortTermCover = true;
+
+      const result = canApplyForInsuranceOnline(shortTermCover);
+
+      expect(result).toEqual(false);
+    });
+  });
+
+  describe('when a country does not have a riskCategory and shortTermCover is false', () => {
+    it('should return false', () => {
+      const shortTermCover = false;
+
+      const result = canApplyForInsuranceOnline(shortTermCover);
 
       expect(result).toEqual(false);
     });

@@ -246,6 +246,7 @@ jobs:
             "declarations/how-your-data-will-be-used/**/*.spec.js",
             "eligibility/*.spec.js",
             "eligibility/buyer-country/**/*.spec.js",
+            "eligibility/cannot-apply/**/*.spec.js",
             "eligibility/cannot-apply-multiple-risks/**/*.spec.js",
             "eligibility/cannot-skip-flow/**/*.spec.js",
             "eligibility/contract-too-short/**/*.spec.js",

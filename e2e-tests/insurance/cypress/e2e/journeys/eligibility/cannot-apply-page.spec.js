@@ -1,8 +1,4 @@
-import {
-  actions,
-  autoCompleteField,
-  cannotApplyPage,
-} from '../../../../../pages/shared';
+import { actions, autoCompleteField, cannotApplyPage } from '../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { FIELD_IDS } from '../../../../../constants';
@@ -17,7 +13,7 @@ const {
 
 const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
-const COUNTRY_NAME_UNSUPPORTED = COUNTRY_APPLICATION_SUPPORT.UNSUPPORTED.NAME;
+const COUNTRY_NAME_UNSUPPORTED = COUNTRY_APPLICATION_SUPPORT.UNSUPPORTED_1.NAME;
 
 const baseUrl = Cypress.config('baseUrl');
 

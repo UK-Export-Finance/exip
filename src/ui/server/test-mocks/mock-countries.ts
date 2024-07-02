@@ -12,8 +12,8 @@ const baseCountry = {
   canGetAQuoteByEmail: false,
   cannotGetAQuote: false,
   canApplyForInsuranceOnline: true,
-  canApplyForInsuranceOffline: false,
   noInsuranceSupport: false,
+  shortTermCover: true,
 };
 
 const mockCountries = [
@@ -24,10 +24,10 @@ const mockCountries = [
    */
   {
     name: 'Abu Dhabi',
+    ...baseCountry,
     isoCode: 'XAD',
     riskCategory: RISK.STANDARD,
     shortTermCover: false,
-    ...baseCountry,
     canGetAQuoteOnline: false,
     canApplyForInsuranceOnline: false,
     cannotGetAQuote: true,
@@ -62,7 +62,6 @@ const mockCountries = [
     ...baseCountry,
     canGetAQuoteOnline: false,
     canApplyForInsuranceOnline: false,
-    canApplyForInsuranceOffline: true,
   },
   /**
    * mock country that:
@@ -77,8 +76,25 @@ const mockCountries = [
     canGetAQuoteOnline: false,
     canGetAQuoteOffline: false,
     canApplyForInsuranceOnline: false,
-    canApplyForInsuranceOffline: false,
     noInsuranceSupport: true,
+  },
+  /**
+   * mock country that:
+   * - can get a quote, online or offline
+   * - can apply for insurance, online
+   * - cannot get short term cover
+   */
+  {
+    name: 'France',
+    isoCode: 'FRA',
+    ...baseCountry,
+    riskCategory: RISK.STANDARD,
+    canGetAQuoteOnline: true,
+    canGetAQuoteOffline: true,
+    canApplyForInsuranceOnline: true,
+    canApplyForInsuranceOffline: false,
+    noInsuranceSupport: false,
+    shortTermCover: false,
   },
 ] as Array<Country>;
 

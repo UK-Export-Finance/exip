@@ -7,7 +7,6 @@ const baseCountry = {
   canGetAQuoteByEmail: true,
   cannotGetAQuote: false,
   canApplyForInsuranceOnline: true,
-  canApplyForInsuranceOffline: true,
   noInsuranceSupport: false,
 };
 

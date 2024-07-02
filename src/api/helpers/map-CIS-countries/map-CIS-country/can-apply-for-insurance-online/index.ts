@@ -1,11 +1,3 @@
-import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
-
-const {
-  CIS: {
-    SHORT_TERM_COVER_AVAILABLE: { YES, ILC, CILC, REFER, UNLISTED },
-  },
-} = EXTERNAL_API_DEFINITIONS;
-
 /**
  * canApplyForInsuranceOnline
  * Check if a country can apply for insurance online.
@@ -17,30 +9,16 @@ const {
  * - CILC
  * - Refer
  * - Unlisted
- * @param {String} originalShortTermCover: Country original short term cover definition from CIS API.
+ * @param {Boolean} shortTermCover: Boolean value of shortTermCover.
  * @param {String} riskCategory: Country risk category.
  * @returns {Boolean}
  */
-export const canApplyForInsuranceOnline = (originalShortTermCover: string, riskCategory?: string) => {
-  switch (originalShortTermCover) {
-    case riskCategory && YES:
-      return true;
-
-    case riskCategory && ILC:
-      return true;
-
-    case riskCategory && CILC:
-      return true;
-
-    case riskCategory && REFER:
-      return true;
-
-    case riskCategory && UNLISTED:
-      return true;
-
-    default:
-      return false;
+export const canApplyForInsuranceOnline = (shortTermCover: boolean, riskCategory?: string) => {
+  if (riskCategory && shortTermCover) {
+    return true;
   }
+
+  return false;
 };
 
 export default canApplyForInsuranceOnline;

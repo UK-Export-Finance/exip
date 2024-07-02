@@ -12,7 +12,7 @@ import api from '../../../api';
 import mapCountries from '../../../helpers/mappings/map-countries';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { mockReq, mockRes, mockCountries } from '../../../test-mocks';
-import { Country, Request, Response } from '../../../../types';
+import { Request, Response } from '../../../../types';
 
 describe('controllers/quote/buyer-country', () => {
   let req: Request;
@@ -233,7 +233,7 @@ describe('controllers/quote/buyer-country', () => {
       it('should update the session with submitted data, populated with country object', async () => {
         await post(req, res);
 
-        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, selectedCountryisoCode) as Country;
+        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, selectedCountryisoCode);
 
         const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
 
@@ -292,7 +292,7 @@ describe('controllers/quote/buyer-country', () => {
       it('should update the session with submitted data, populated with country object', async () => {
         await post(req, res);
 
-        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, selectedCountryIsoCode) as Country;
+        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, selectedCountryIsoCode);
 
         const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
 
@@ -343,7 +343,7 @@ describe('controllers/quote/buyer-country', () => {
       it('should update the session with submitted data, populated with country object', async () => {
         await post(req, res);
 
-        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, selectedCountryIsoCode) as Country;
+        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, selectedCountryIsoCode);
 
         const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
 
