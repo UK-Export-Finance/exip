@@ -5,10 +5,10 @@
 const SECTION_NAMES = {
   APPLICATION_INFORMATION: 'Application information',
   ELIGIBILITY: 'Eligibility',
-  EXPORTER_BUSINESS: 'Exporter business',
-  POLICY: 'Policy',
-  BUYER: 'Buyer',
-  EXPORT_CONTRACT: 'Export contract',
+  EXPORTER_BUSINESS: 'The Business',
+  BUYER: 'The Buyer',
+  POLICY: 'Insurance Policy',
+  EXPORT_CONTRACT: 'Export Contract',
   DECLARATIONS: 'Declarations',
 };
 

@@ -1415,7 +1415,6 @@ var application = {
       if (file) {
         const fileBuffer = Buffer.from(file);
         const response = await callNotify(templateId, emailAddress, variables, fileBuffer);
-        await file_system_default.unlink(filePath);
         return response;
       }
       throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
@@ -5467,10 +5466,10 @@ var import_exceljs = __toESM(require("exceljs"));
 var SECTION_NAMES = {
   APPLICATION_INFORMATION: "Application information",
   ELIGIBILITY: "Eligibility",
-  EXPORTER_BUSINESS: "Exporter business",
-  POLICY: "Policy",
-  BUYER: "Buyer",
-  EXPORT_CONTRACT: "Export contract",
+  EXPORTER_BUSINESS: "The Business",
+  BUYER: "The Buyer",
+  POLICY: "Insurance Policy",
+  EXPORT_CONTRACT: "Export Contract",
   DECLARATIONS: "Declarations"
 };
 var SECTION_NAMES_default = SECTION_NAMES;
@@ -7392,11 +7391,11 @@ var XLSX_HEADER_COLUMNS = (sheetName) => [
 var header_columns_default = XLSX_HEADER_COLUMNS;
 
 // constants/XLSX-CONFIG/INDEXES/EXPORTER_BUSINESS/index.ts
-var DEFAULT_INDEXES = {
+var DEFAULT_INDEXES = () => ({
   REGISTERED_OFFICE_ADDRESS: 3,
   COMPANY_SIC_CODES: 4,
   ALTERNATIVE_TRADING_ADDRESS: 0
-};
+});
 var EXPORTER_BUSINESS_INDEXES = (application2) => {
   const {
     company: {
@@ -7404,27 +7403,48 @@ var EXPORTER_BUSINESS_INDEXES = (application2) => {
       hasDifferentTradingName
     }
   } = application2;
-  const INDEXES = DEFAULT_INDEXES;
+  const INDEXES = DEFAULT_INDEXES();
   if (hasDifferentTradingAddress) {
     INDEXES.ALTERNATIVE_TRADING_ADDRESS = 7;
-  }
-  if (hasDifferentTradingName && hasDifferentTradingAddress) {
-    INDEXES.ALTERNATIVE_TRADING_ADDRESS += 1;
+    if (hasDifferentTradingName) {
+      INDEXES.ALTERNATIVE_TRADING_ADDRESS += 1;
+    }
   }
   return INDEXES;
 };
 var EXPORTER_BUSINESS_default = EXPORTER_BUSINESS_INDEXES;
 
-// constants/XLSX-CONFIG/INDEXES/POLICY/index.ts
-var {
-  // TYPE_OF_POLICY: { POLICY_TYPE },
-  USING_BROKER: USING_BROKER4
-} = POLICY;
-var DEFAULT_INDEXES2 = {
-  BROKER_ADDRESS: 0,
-  LOSS_PAYEE_ADDRESS: 0
+// constants/XLSX-CONFIG/INDEXES/POLICY/BROKER_CONDITIONS/index.ts
+var { USING_BROKER: USING_BROKER4 } = POLICY;
+var BROKER_CONDITIONS = (application2, INDEXES) => {
+  const {
+    broker,
+    policy: {
+      jointlyInsuredParty: { requested: requestedJointlyInsuredParty },
+      needPreCreditPeriodCover
+    },
+    policyContact: { isSameAsOwner: policyContactIsSameAsOwner }
+  } = application2;
+  const MODIFIED_INDEXES = INDEXES;
+  if (broker[USING_BROKER4]) {
+    MODIFIED_INDEXES.BROKER_ADDRESS = 14;
+    if (policyContactIsSameAsOwner === false) {
+      MODIFIED_INDEXES.BROKER_ADDRESS += 2;
+    }
+    if (needPreCreditPeriodCover) {
+      MODIFIED_INDEXES.BROKER_ADDRESS += 1;
+    }
+    if (requestedJointlyInsuredParty) {
+      MODIFIED_INDEXES.BROKER_ADDRESS += 3;
+    }
+  }
+  return MODIFIED_INDEXES;
 };
-var POLICY_INDEXES = (application2) => {
+var BROKER_CONDITIONS_default = BROKER_CONDITIONS;
+
+// constants/XLSX-CONFIG/INDEXES/POLICY/LOSS_PAYEE_CONDITIONS/index.ts
+var { USING_BROKER: USING_BROKER5 } = POLICY;
+var LOSS_PAYEE_CONDITIONS = (application2, INDEXES) => {
   const {
     broker,
     nominatedLossPayee: { isAppointed: nominatedLossPayeeAppointed },
@@ -7434,36 +7454,43 @@ var POLICY_INDEXES = (application2) => {
     },
     policyContact: { isSameAsOwner: policyContactIsSameAsOwner }
   } = application2;
-  const INDEXES = DEFAULT_INDEXES2;
+  const MODIFIED_INDEXES = INDEXES;
+  if (nominatedLossPayeeAppointed) {
+    if (policyContactIsSameAsOwner === false) {
+      MODIFIED_INDEXES.LOSS_PAYEE_ADDRESS += 2;
+    }
+    if (needPreCreditPeriodCover) {
+      MODIFIED_INDEXES.LOSS_PAYEE_ADDRESS += 1;
+    }
+    if (requestedJointlyInsuredParty) {
+      MODIFIED_INDEXES.LOSS_PAYEE_ADDRESS += 3;
+    }
+    if (broker[USING_BROKER5]) {
+      MODIFIED_INDEXES.LOSS_PAYEE_ADDRESS += 3;
+    }
+  }
+  return INDEXES;
+};
+var LOSS_PAYEE_CONDITIONS_default = LOSS_PAYEE_CONDITIONS;
+
+// constants/XLSX-CONFIG/INDEXES/POLICY/index.ts
+var DEFAULT_INDEXES2 = {
+  BROKER_ADDRESS: 0,
+  LOSS_PAYEE_ADDRESS: 0
+};
+var POLICY_INDEXES = (application2) => {
+  const {
+    nominatedLossPayee: { isAppointed: nominatedLossPayeeAppointed }
+  } = application2;
+  let INDEXES = DEFAULT_INDEXES2;
   if (nominatedLossPayeeAppointed) {
     INDEXES.LOSS_PAYEE_ADDRESS = 17;
   }
-  if (broker[USING_BROKER4]) {
-    INDEXES.BROKER_ADDRESS = 14;
-    if (policyContactIsSameAsOwner === false) {
-      INDEXES.BROKER_ADDRESS += 2;
-    }
-    if (needPreCreditPeriodCover) {
-      INDEXES.BROKER_ADDRESS += 1;
-    }
-    if (requestedJointlyInsuredParty) {
-      INDEXES.BROKER_ADDRESS += 3;
-    }
-  }
-  if (nominatedLossPayeeAppointed) {
-    if (policyContactIsSameAsOwner === false) {
-      INDEXES.LOSS_PAYEE_ADDRESS += 2;
-    }
-    if (needPreCreditPeriodCover) {
-      INDEXES.LOSS_PAYEE_ADDRESS += 1;
-    }
-    if (requestedJointlyInsuredParty) {
-      INDEXES.LOSS_PAYEE_ADDRESS += 3;
-    }
-    if (broker[USING_BROKER4]) {
-      INDEXES.LOSS_PAYEE_ADDRESS += 3;
-    }
-  }
+  INDEXES = {
+    ...INDEXES,
+    ...BROKER_CONDITIONS_default(application2, INDEXES),
+    ...LOSS_PAYEE_CONDITIONS_default(application2, INDEXES)
+  };
   return INDEXES;
 };
 var POLICY_default = POLICY_INDEXES;
@@ -7475,9 +7502,9 @@ var BUYER_INDEXES = () => ({
 var BUYER_default = BUYER_INDEXES;
 
 // constants/XLSX-CONFIG/INDEXES/EXPORT_CONTRACT/index.ts
-var DEFAULT_INDEXES3 = {
+var DEFAULT_INDEXES3 = () => ({
   AGENT_ADDRESS: 0
-};
+});
 var EXPORT_CONTRACT_INDEXES = (application2) => {
   const {
     exportContract: {
@@ -7486,7 +7513,7 @@ var EXPORT_CONTRACT_INDEXES = (application2) => {
       privateMarket: { attempted: attemptedPrivateMarket }
     }
   } = application2;
-  const INDEXES = DEFAULT_INDEXES3;
+  const INDEXES = DEFAULT_INDEXES3();
   if (isUsingAgent) {
     INDEXES.AGENT_ADDRESS = 9;
     if (finalDestinationKnown) {
