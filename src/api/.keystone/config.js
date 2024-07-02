@@ -7516,20 +7516,18 @@ var DEFAULT_INDEXES3 = () => ({
   AGENT_ADDRESS: 0
 });
 var EXPORT_CONTRACT_INDEXES = (application2) => {
+  const { exportContract } = application2;
   const {
-    exportContract: {
-      agent: { isUsingAgent },
-      finalDestinationKnown,
-      privateMarket: { attempted: attemptedPrivateMarket }
-    }
-  } = application2;
+    finalDestinationKnown,
+    privateMarket
+  } = exportContract;
   const INDEXES = DEFAULT_INDEXES3();
-  if (isUsingAgent) {
+  if (exportContract.agent?.isUsingAgent) {
     INDEXES.AGENT_ADDRESS = 9;
     if (finalDestinationKnown) {
       INDEXES.AGENT_ADDRESS += 1;
     }
-    if (attemptedPrivateMarket) {
+    if (privateMarket.attempted) {
       INDEXES.AGENT_ADDRESS += 1;
     }
   }

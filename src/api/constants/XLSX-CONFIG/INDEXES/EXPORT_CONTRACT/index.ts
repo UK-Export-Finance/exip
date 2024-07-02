@@ -17,24 +17,20 @@ export const DEFAULT_INDEXES = () => ({
  * @returns {Object}
  */
 const EXPORT_CONTRACT_INDEXES = (application: Application) => {
-  const {
-    exportContract: {
-      agent: { isUsingAgent },
-      finalDestinationKnown,
-      privateMarket: { attempted: attemptedPrivateMarket },
-    },
-  } = application;
+  const { exportContract } = application;
+
+  const { finalDestinationKnown, privateMarket } = exportContract;
 
   const INDEXES = DEFAULT_INDEXES();
 
-  if (isUsingAgent) {
+  if (exportContract.agent?.isUsingAgent) {
     INDEXES.AGENT_ADDRESS = 9;
 
     if (finalDestinationKnown) {
       INDEXES.AGENT_ADDRESS += 1;
     }
 
-    if (attemptedPrivateMarket) {
+    if (privateMarket.attempted) {
       INDEXES.AGENT_ADDRESS += 1;
     }
   }

@@ -1,9 +1,9 @@
 import BROKER_CONDITIONS from '.';
 import { mockApplication } from '../../../../../test-mocks';
 
-const mockIndexes = {
+const mockIndexes = () => ({
   BROKER_ADDRESS: 0,
-};
+});
 
 describe('api/constants/XLSX-CONFIG/INDEXES/POLICY/BROKER_CONDITIONS', () => {
   describe('when isUsingBroker=true, policyContactIsSameAsOwner=false, needPreCreditPeriodCover=true, requestedJointlyInsuredParty=true', () => {
@@ -15,10 +15,10 @@ describe('api/constants/XLSX-CONFIG/INDEXES/POLICY/BROKER_CONDITIONS', () => {
       application.policy.jointlyInsuredParty.requested = true;
       application.policy.needPreCreditPeriodCover = true;
 
-      const result = BROKER_CONDITIONS(application, mockIndexes);
+      const result = BROKER_CONDITIONS(application, mockIndexes());
 
       const expected = {
-        BROKER_ADDRESS: mockIndexes.BROKER_ADDRESS + 6,
+        BROKER_ADDRESS: 6,
       };
 
       expect(result).toEqual(expected);
@@ -34,10 +34,10 @@ describe('api/constants/XLSX-CONFIG/INDEXES/POLICY/BROKER_CONDITIONS', () => {
       application.policy.needPreCreditPeriodCover = true;
       application.policy.jointlyInsuredParty.requested = true;
 
-      const result = BROKER_CONDITIONS(application, mockIndexes);
+      const result = BROKER_CONDITIONS(application, mockIndexes());
 
       const expected = {
-        BROKER_ADDRESS: mockIndexes.BROKER_ADDRESS + 4,
+        BROKER_ADDRESS: 4,
       };
 
       expect(result).toEqual(expected);
@@ -53,10 +53,10 @@ describe('api/constants/XLSX-CONFIG/INDEXES/POLICY/BROKER_CONDITIONS', () => {
       application.policy.needPreCreditPeriodCover = false;
       application.policy.jointlyInsuredParty.requested = false;
 
-      const result = BROKER_CONDITIONS(application, mockIndexes);
+      const result = BROKER_CONDITIONS(application, mockIndexes());
 
       const expected = {
-        BROKER_ADDRESS: mockIndexes.BROKER_ADDRESS + 2,
+        BROKER_ADDRESS: 0,
       };
 
       expect(result).toEqual(expected);
@@ -72,10 +72,10 @@ describe('api/constants/XLSX-CONFIG/INDEXES/POLICY/BROKER_CONDITIONS', () => {
       application.policy.needPreCreditPeriodCover = true;
       application.policy.jointlyInsuredParty.requested = false;
 
-      const result = BROKER_CONDITIONS(application, mockIndexes);
+      const result = BROKER_CONDITIONS(application, mockIndexes());
 
       const expected = {
-        BROKER_ADDRESS: mockIndexes.BROKER_ADDRESS + 3,
+        BROKER_ADDRESS: 1,
       };
 
       expect(result).toEqual(expected);
@@ -91,10 +91,10 @@ describe('api/constants/XLSX-CONFIG/INDEXES/POLICY/BROKER_CONDITIONS', () => {
       application.policy.needPreCreditPeriodCover = false;
       application.policy.jointlyInsuredParty.requested = true;
 
-      const result = BROKER_CONDITIONS(application, mockIndexes);
+      const result = BROKER_CONDITIONS(application, mockIndexes());
 
       const expected = {
-        BROKER_ADDRESS: mockIndexes.BROKER_ADDRESS,
+        BROKER_ADDRESS: 3,
       };
 
       expect(result).toEqual(expected);
@@ -107,10 +107,10 @@ describe('api/constants/XLSX-CONFIG/INDEXES/POLICY/BROKER_CONDITIONS', () => {
 
       application.broker.isUsingBroker = false;
 
-      const result = BROKER_CONDITIONS(application, mockIndexes);
+      const result = BROKER_CONDITIONS(application, mockIndexes());
 
       const expected = {
-        BROKER_ADDRESS: mockIndexes.BROKER_ADDRESS,
+        BROKER_ADDRESS: 0,
       };
 
       expect(result).toEqual(expected);

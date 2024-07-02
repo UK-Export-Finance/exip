@@ -1,9 +1,9 @@
 import LOSS_PAYEE_CONDITIONS from '.';
 import { mockApplication } from '../../../../../test-mocks';
 
-const mockIndexes = {
+const mockIndexes = () => ({
   LOSS_PAYEE_ADDRESS: 0,
-};
+});
 
 const populatedApplicationFlags = {
   ...mockApplication,
@@ -34,10 +34,10 @@ describe('api/constants/XLSX-CONFIG/INDEXES/POLICY/LOSS_PAYEE_CONDITIONS', () =>
     it('should return an object with indexes', () => {
       const application = populatedApplicationFlags;
 
-      const result = LOSS_PAYEE_CONDITIONS(application, mockIndexes);
+      const result = LOSS_PAYEE_CONDITIONS(application, mockIndexes());
 
       const expected = {
-        LOSS_PAYEE_ADDRESS: mockIndexes.LOSS_PAYEE_ADDRESS + 9,
+        LOSS_PAYEE_ADDRESS: 9,
       };
 
       expect(result).toEqual(expected);
@@ -54,10 +54,10 @@ describe('api/constants/XLSX-CONFIG/INDEXES/POLICY/LOSS_PAYEE_CONDITIONS', () =>
         },
       };
 
-      const result = LOSS_PAYEE_CONDITIONS(application, mockIndexes);
+      const result = LOSS_PAYEE_CONDITIONS(application, mockIndexes());
 
       const expected = {
-        LOSS_PAYEE_ADDRESS: mockIndexes.LOSS_PAYEE_ADDRESS + 7,
+        LOSS_PAYEE_ADDRESS: 7,
       };
 
       expect(result).toEqual(expected);
@@ -74,10 +74,10 @@ describe('api/constants/XLSX-CONFIG/INDEXES/POLICY/LOSS_PAYEE_CONDITIONS', () =>
         },
       };
 
-      const result = LOSS_PAYEE_CONDITIONS(application, mockIndexes);
+      const result = LOSS_PAYEE_CONDITIONS(application, mockIndexes());
 
       const expected = {
-        LOSS_PAYEE_ADDRESS: mockIndexes.LOSS_PAYEE_ADDRESS + 7,
+        LOSS_PAYEE_ADDRESS: 8,
       };
 
       expect(result).toEqual(expected);
@@ -97,10 +97,10 @@ describe('api/constants/XLSX-CONFIG/INDEXES/POLICY/LOSS_PAYEE_CONDITIONS', () =>
         },
       };
 
-      const result = LOSS_PAYEE_CONDITIONS(application, mockIndexes);
+      const result = LOSS_PAYEE_CONDITIONS(application, mockIndexes());
 
       const expected = {
-        LOSS_PAYEE_ADDRESS: mockIndexes.LOSS_PAYEE_ADDRESS + 7,
+        LOSS_PAYEE_ADDRESS: 9,
       };
 
       expect(result).toEqual(expected);
@@ -120,10 +120,10 @@ describe('api/constants/XLSX-CONFIG/INDEXES/POLICY/LOSS_PAYEE_CONDITIONS', () =>
         },
       };
 
-      const result = LOSS_PAYEE_CONDITIONS(application, mockIndexes);
+      const result = LOSS_PAYEE_CONDITIONS(application, mockIndexes());
 
       const expected = {
-        LOSS_PAYEE_ADDRESS: mockIndexes.LOSS_PAYEE_ADDRESS + 4,
+        LOSS_PAYEE_ADDRESS: 6,
       };
 
       expect(result).toEqual(expected);
@@ -140,10 +140,10 @@ describe('api/constants/XLSX-CONFIG/INDEXES/POLICY/LOSS_PAYEE_CONDITIONS', () =>
         },
       };
 
-      const result = LOSS_PAYEE_CONDITIONS(application, mockIndexes);
+      const result = LOSS_PAYEE_CONDITIONS(application, mockIndexes());
 
       const expected = {
-        LOSS_PAYEE_ADDRESS: mockIndexes.LOSS_PAYEE_ADDRESS,
+        LOSS_PAYEE_ADDRESS: 6,
       };
 
       expect(result).toEqual(expected);

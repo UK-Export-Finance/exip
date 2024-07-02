@@ -17,9 +17,16 @@ describe('api/constants/XLSX-CONFIG/INDEXES/EXPORT_CONTRACT', () => {
       it('should return an object with indexes', () => {
         const application = mockApplication;
 
-        application.exportContract.agent.isUsingAgent = true;
-        application.exportContract.finalDestinationKnown = true;
-        application.exportContract.privateMarket.attempted = true;
+        application.exportContract = {
+          ...application.exportContract,
+          agent: {
+            isUsingAgent: true,
+          },
+          finalDestinationKnown: true,
+          privateMarket: {
+            attempted: true,
+          },
+        };
 
         const result = EXPORT_CONTRACT_INDEXES(application);
 
