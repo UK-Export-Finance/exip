@@ -1,4 +1,4 @@
-import { Account, Context } from '../../types';
+import { AccountStatus, Context } from '../../types';
 
 /**
  * getAccountStatusById
@@ -7,14 +7,14 @@ import { Account, Context } from '../../types';
  * @param {String} id: Account status ID
  * @returns {Promise<Account>} Account
  */
-const getAccountStatusById = async (context: Context, id: string): Promise<Account | boolean> => {
+const getAccountStatusById = async (context: Context, id: string): Promise<AccountStatus | boolean> => {
   try {
     console.info('Getting account status by ID  %s', id);
 
-    const accountStatus = await context.query.AccountStatus.findOne({
+    const accountStatus = (await context.query.AccountStatus.findOne({
       where: { id },
       query: 'id isVerified isBlocked isInactive',
-    });
+    })) as AccountStatus;
 
     return accountStatus;
   } catch (err) {

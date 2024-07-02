@@ -416,7 +416,7 @@ const deleteAnAccount = async (email) => {
   } catch (err) {
     console.error(err);
 
-    return err;
+    throw new Error('Deleting an account', { err });
   }
 };
 

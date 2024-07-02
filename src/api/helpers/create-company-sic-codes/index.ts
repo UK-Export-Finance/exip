@@ -1,5 +1,5 @@
 import mapSicCodes from '../map-sic-codes';
-import { Context } from '../../types';
+import { Context, SicCode } from '../../types';
 
 /**
  * createCompanySicCodes
@@ -10,18 +10,23 @@ import { Context } from '../../types';
  * @param {String} Company ID
  * @returns {Promise<Object>} Created company SIC codes
  */
-const createCompanySicCodes = async (context: Context, sicCodes: Array<string>, industrySectorNames: Array<string>, companyId: string) => {
+const createCompanySicCodes = async (
+  context: Context,
+  sicCodes: Array<string>,
+  industrySectorNames: Array<string>,
+  companyId: string,
+): Promise<Array<SicCode>> => {
   console.info('Creating company SIC codes for ', companyId);
 
   try {
     const mappedSicCodes = mapSicCodes(sicCodes, industrySectorNames, companyId);
 
-    let createdSicCodes = [];
+    let createdSicCodes = [] as Array<SicCode>;
 
     if (sicCodes.length) {
-      createdSicCodes = await context.db.CompanySicCode.createMany({
+      createdSicCodes = (await context.db.CompanySicCode.createMany({
         data: mappedSicCodes,
-      });
+      })) as Array<SicCode>;
     }
 
     return createdSicCodes;

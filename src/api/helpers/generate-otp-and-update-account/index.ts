@@ -30,7 +30,7 @@ const generateOTPAndUpdateAccount = async (context: Context, accountId: string):
     // update the account's isInactive flag.
     const accountStatusUpdate = { isInactive: false };
 
-    await update.accountStatus(context, updatedAccount.statusId, accountStatusUpdate);
+    await update.accountStatus(context, String(updatedAccount.statusId), accountStatusUpdate);
 
     return {
       success: true,

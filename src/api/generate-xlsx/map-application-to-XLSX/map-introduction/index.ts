@@ -22,8 +22,8 @@ const mapIntroduction = (application: Application) => {
     xlsxRow(REFERENCE_NUMBER.SUMMARY.TITLE, application.referenceNumber),
     xlsxRow(DATE_SUBMITTED.SUMMARY.TITLE, formatDate(application.submissionDate, DATE_FORMAT.XLSX)),
     xlsxRow(TIME_SUBMITTED.SUMMARY.TITLE, formatTimeOfDay(application.submissionDate)),
-    xlsxRow(FIELDS[FIRST_NAME], application.owner[FIRST_NAME]),
-    xlsxRow(FIELDS[LAST_NAME], application.owner[LAST_NAME]),
+    xlsxRow(String(FIELDS[FIRST_NAME]), application.owner[FIRST_NAME]),
+    xlsxRow(String(FIELDS[LAST_NAME]), application.owner[LAST_NAME]),
     xlsxRow(FIELDS.APPLICANT_EMAIL_ADDRESS, application.owner[EMAIL]),
   ];
 

@@ -564,6 +564,7 @@ export const lists = {
       }),
       totalYearsExporting: integer(),
       totalEmployeesUK: integer(),
+      totalEmployeesInternational: integer(),
       estimatedAnnualTurnover: integer(),
       exportsTurnoverPercentage: integer(),
       turnoverCurrencyCode: text({
