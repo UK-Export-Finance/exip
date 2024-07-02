@@ -1,4 +1,12 @@
-import { isNumber, numberHasDecimal, getPercentageOfNumber, isNumberBelowMinimum, isNumberAboveMaximum, transformEmptyDecimalsToWholeNumber } from '.';
+import {
+  isNumber,
+  numberHasDecimal,
+  getPercentageOfNumber,
+  isNumberBelowMinimum,
+  isNumberAboveMaximum,
+  transformEmptyDecimalsToWholeNumber,
+  doesNumberHaveDecimalPlaces,
+} from '.';
 
 describe('server/helpers/number', () => {
   describe('isNumber', () => {
@@ -135,6 +143,24 @@ describe('server/helpers/number', () => {
       const expected = '100.50';
 
       expect(result).toEqual(expected);
+    });
+  });
+
+  describe('doesNumberHaveDecimalPlaces', () => {
+    it('should return false if whole number provided', () => {
+      const mockValue = '100';
+
+      const result = doesNumberHaveDecimalPlaces(mockValue);
+
+      expect(result).toEqual(false);
+    });
+
+    it('should return true if number with decimals provided', () => {
+      const mockValue = '100.50';
+
+      const result = doesNumberHaveDecimalPlaces(mockValue);
+
+      expect(result).toEqual(true);
     });
   });
 });

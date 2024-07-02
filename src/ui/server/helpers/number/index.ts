@@ -56,4 +56,19 @@ const isNumberAboveMaximum = (value: number, maximum: number) => value > maximum
  */
 const transformEmptyDecimalsToWholeNumber = (value: string) => value.replace(/\.00$/, '');
 
-export { isNumber, numberHasDecimal, getPercentageOfNumber, isNumberBelowMinimum, isNumberAboveMaximum, transformEmptyDecimalsToWholeNumber };
+/**
+ * checks if number has decimal places via modulus check
+ * @param {Number || String} value
+ * @returns {Boolean}
+ */
+const doesNumberHaveDecimalPlaces = (value: number | string) => Number(value) % 1 !== 0;
+
+export {
+  isNumber,
+  numberHasDecimal,
+  getPercentageOfNumber,
+  isNumberBelowMinimum,
+  isNumberAboveMaximum,
+  transformEmptyDecimalsToWholeNumber,
+  doesNumberHaveDecimalPlaces,
+};

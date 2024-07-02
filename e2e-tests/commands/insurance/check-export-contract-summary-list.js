@@ -14,12 +14,7 @@ const {
   USING_AGENT,
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
   AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
-  AGENT_CHARGES: {
-    FIXED_SUM_AMOUNT,
-    FIXED_SUM_CURRENCY_CODE,
-    PERCENTAGE_CHARGE,
-    PAYABLE_COUNTRY_CODE,
-  },
+  AGENT_CHARGES: { FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
 /**
@@ -212,15 +207,19 @@ const checkExportContractSummaryList = {
       cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
     }
   },
-  [FIXED_SUM_AMOUNT]: ({ shouldRender = false }) => {
+  [FIXED_SUM_AMOUNT]: ({ shouldRender = false, agentChargeFixedSumAmount }) => {
     const fieldId = FIXED_SUM_AMOUNT;
 
     if (shouldRender) {
-      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.AGENT_CHARGES);
-
       const currencyCode = application.EXPORT_CONTRACT.AGENT_CHARGES[FIXED_SUM_CURRENCY_CODE];
 
-      const expectedValue = formatCurrency(application.EXPORT_CONTRACT.AGENT_CHARGES[fieldId], currencyCode);
+      let expectedValue = formatCurrency(application.EXPORT_CONTRACT.AGENT_CHARGES[fieldId], currencyCode);
+
+      if (agentChargeFixedSumAmount) {
+        expectedValue = formatCurrency(agentChargeFixedSumAmount, currencyCode, 2);
+      }
+
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.AGENT_CHARGES);
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     } else {
