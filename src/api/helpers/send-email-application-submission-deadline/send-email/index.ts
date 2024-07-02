@@ -7,23 +7,25 @@ import { Application, EmailResponse } from '../../../types';
  * generates an array of promises to send submission deadline emails
  * resolves all promises and logs the number of emails sent
  * @param {Array<Application>} applications: Array of applications
- * @returns {Promise<void>} application submission deadline emails sent
+ * @returns {Array<Promise>} application submission deadline emails sent
  */
 const send = async (applications: Array<Application>) => {
-  const promises = applications.map(async (application) => {
-    const variables = mapApplicationSubmissionDeadlineVariables(application);
+  try {
+    console.info('Sending application submission deadline emails - send helper');
 
-    return sendEmail.submissionDeadlineEmail(variables.email, variables);
-  }) as Array<Promise<EmailResponse>>;
+    const mapped = applications.map(async (application) => {
+      const variables = mapApplicationSubmissionDeadlineVariables(application);
 
-  return Promise.all(promises)
-    .then((sent) => {
-      console.info('Application submission deadline emails sent: ', sent.length);
-    })
-    .catch((err) => {
-      console.error('Error sending application submission deadline email (sendEmail.submissionDeadlineEmail) %O', err);
-      throw new Error(`Sending application submission deadline email (sendEmail.submissionDeadlineEmail) ${err}`);
-    });
+      return sendEmail.submissionDeadlineEmail(variables.email, variables);
+    }) as Array<Promise<EmailResponse>>;
+
+    const promises = await Promise.all(mapped);
+
+    return promises;
+  } catch (err) {
+    console.error('Error sending application submission deadline email (send helper) %O', err);
+    throw new Error(`Sending application submission deadline email (send helper) ${err}`);
+  }
 };
 
 const applicationSubmissionDeadineEmail = {

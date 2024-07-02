@@ -47,6 +47,12 @@ describe('helpers/send-email-application-submission-deadline/send-email', () => 
       expect(sendEmailSubmissionDeadlineSpy).toHaveBeenCalledTimes(1);
       expect(sendEmailSubmissionDeadlineSpy).toHaveBeenCalledWith(variables.email, variables);
     });
+
+    test('it should return an array of length 1', async () => {
+      const result = await applicationSubmissionDeadineEmail.send([application]);
+
+      expect(result.length).toEqual(1);
+    });
   });
 
   describe('error handling', () => {
@@ -56,9 +62,7 @@ describe('helpers/send-email-application-submission-deadline/send-email', () => 
       });
 
       test('should return success as false', async () => {
-        await expect(applicationSubmissionDeadineEmail.send([application])).rejects.toThrow(
-          'Sending application submission deadline email (sendEmail.submissionDeadlineEmail)',
-        );
+        await expect(applicationSubmissionDeadineEmail.send([application])).rejects.toThrow('Sending application submission deadline email (send helper)');
       });
     });
   });
