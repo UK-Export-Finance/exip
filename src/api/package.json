@@ -43,15 +43,15 @@
     "notifications-node-client": "^8.2.0",
     "otplib": "^12.0.1",
     "overload-protection": "^1.2.3",
-    "typescript": "^5.4.2"
+    "typescript": "^5.5.3"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.18.6",
     "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
     "@types/jest": "^29.5.12",
     "@types/jsonwebtoken": "^9.0.6",
-    "@typescript-eslint/eslint-plugin": "^7.14.1",
-    "@typescript-eslint/parser": "^7.14.1",
+    "@typescript-eslint/eslint-plugin": "^7.15.0",
+    "@typescript-eslint/parser": "^7.15.0",
     "babel-jest": "^29.7.0",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
