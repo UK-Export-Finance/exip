@@ -9,7 +9,7 @@ import getPopulatedApplication from '../../../../helpers/get-populated-applicati
 import { createFullApplication, getKeystoneContext, mapApplicationIds } from '../../../../test-helpers';
 import { Application, Context } from '../../../../types';
 
-const { FIELDS, SECTION_TITLES } = XLSX;
+const { FIELDS } = XLSX;
 
 const {
   POLICY_TYPE,
@@ -38,7 +38,6 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-intro', () =>
     const result = mapIntro(policy);
 
     const expected = [
-      xlsxRow(SECTION_TITLES.POLICY, ''),
       xlsxRow(String(FIELDS[POLICY_TYPE]), mapPolicyType(policy[POLICY_TYPE])),
       xlsxRow(String(FIELDS[REQUESTED_START_DATE]), formatDate(policy[REQUESTED_START_DATE], DATE_FORMAT.XLSX)),
     ];
