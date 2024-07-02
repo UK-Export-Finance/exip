@@ -1,5 +1,5 @@
-import crypto from 'crypto';
 import { Connection } from 'mysql2/promise';
+import createCuid from '../create-cuid';
 import executeSqlQuery from '../execute-sql-query';
 import { ApplicationBuyerMvp } from '../../../types';
 
@@ -16,7 +16,7 @@ const moveBuyerRelationshipFields = async (buyers: Array<ApplicationBuyerMvp>, c
   const buyerRelationshipValues = buyers.map((buyer: ApplicationBuyerMvp) => {
     const { application, exporterIsConnectedWithBuyer } = buyer;
 
-    return `('${crypto.randomUUID()}', '${application}', ${exporterIsConnectedWithBuyer})`;
+    return `('${createCuid()}', '${application}', ${exporterIsConnectedWithBuyer})`;
   });
 
   const loggingMessage = 'Creating new buyer relationship for all buyers';

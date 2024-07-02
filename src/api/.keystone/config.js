@@ -2122,7 +2122,9 @@ var lists = {
           max: POLICY3.TOTAL_VALUE_OF_CONTRACT.MAXIMUM
         }
       }),
-      creditPeriodWithBuyer: (0, import_fields.text)(),
+      creditPeriodWithBuyer: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
+      }),
       policyCurrencyCode: (0, import_fields.text)({
         db: { nativeType: "VarChar(3)" }
       }),

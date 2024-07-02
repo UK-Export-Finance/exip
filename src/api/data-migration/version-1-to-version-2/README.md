@@ -40,6 +40,11 @@ This directory contains source code for migrating version 1 of EXIP data into th
 - NominatedLossPayee
 - PrivateMarket
 
+Note - there are 2 new fields that are created with a default currency code (GBP). Otherwise, any applications that are half complete will error when a user tries to continue the application:
+
+1. BuyerTradingHistory table - `currencyCode` column.
+2. Business table - `turnoverCurrencyCode` column.
+
 ## Prerequisites :gear:
 
 To set up and run the API locally, you'll need the following prerequisites:
@@ -48,9 +53,9 @@ To set up and run the API locally, you'll need the following prerequisites:
 - A MySQL database with the version 1 (MVP) data structure.
 - An operational API (parent directory - see the API's README).
 - The `DATABASE_URL` environment variable should be configured to point to your local MySQL database, for example: `mysql://root:@localhost:1234/db-name`.
-- The local `NODE_ENV` environment variable set to `migration`.
-- The local `DATABASE_USER` environment variable set to the database's user.
-- The local `DATABASE_PASSWORD` environment variable set to the database's password.
+- The local `DATABASE_USER` environment variable
+- The local `DATABASE_PASSWORD` environment variable
+- The local `CUID_FINGERPRINT` environment variable
 - `mysql2` NPM package installed as an API dependency.
 - `ts-node` NPM package installed locally.
 
@@ -72,9 +77,22 @@ The migration should successfully do the following:
 9. Create new application relationships.
 10. Exit the process.
 
-## SQL and KeystoneJS queries
+## How to ensure that data migration was successful
 
-The data migration uses a combination of raw SQL queries and KeystoneJS context queries.
+1. All user accounts should have an AccountStatus table.
+2. All applications should be aligned with the version 2 data model (listed above).
+3. In the UI, all existing accounts work as expected (sign in, suspension etc)
+4. In the UI, all existing applications with a status of "in progress" can be progressed and successfully submitted.
+
+:warning: After running the migration script, `npm run dev` in the API will fail. `npm run start` should be used instead.
+
+This is because, during `npm run dev`, KeystoneJS/prisma checks the schema against the database. It will then attempt to automatically build the database, with the latest schema. After running the migration script, this will fail because KeystoneJS/prisma attempts to create foreign key constraints that already exist.
+
+We manage our own data migration, so we do not need these checks to run.
+
+To run `npm run dev` after running the migration script, it can be achieved by adding a `--no-db-push` to the command. However, this should not be necessary since this is for development environments only. In a data migration scenario, `npm run start` should be used.
+
+## SQL and KeystoneJS queries
 
 In many instances, we need to obtain certain pieces of data that are currently stored in the database, and move these to another place.
 
@@ -82,9 +100,7 @@ If the database and the KeystoneJS schema are out of sync (as it would be prior 
 
 Therefore, it is not possible to use KeystoneJS context queries to obtain version 1 data in the database, whilst executing data migration.
 
-When KeystoneJS context queries cannot be used, we use the `mysql2` NPM package to execute raw database queries and create new tables, fields etc.
-
-KeystoneJS context queries can however be used to obtain data that has _not_ changed, but most importantly, the KeystoneJS context queries can be used to very easily create new relationships. This is used extensively in various migration functions.
+Therefore, we use raw SQL queries via the `mysql2` NPM package to obtain data, move data, create new tables and fields etc.
 
 ## What happens to applications that are in progress :microscope:
 

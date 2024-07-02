@@ -1,34 +1,36 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
+import { Connection } from 'mysql2/promise';
+import getAllLossPayees from '../../get-all-loss-payees';
+import executeSqlQuery from '../../execute-sql-query';
 
 /**
  * createApplicationLossPayeeRelationship
  * Update all applications to have a loss payee relationship/ID.
- * @param {Context} context: KeystoneJS context API
- * @param {Array<object>} lossPayees: Array of loss payees
+ * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<Application>>} Updated applications
  */
-const createApplicationLossPayeeRelationship = async (context: Context, lossPayees: Array<object>) => {
+const createApplicationLossPayeeRelationship = async (connection: Connection) => {
   const loggingMessage = 'Updating applications to have loss payee relationships';
 
   console.info(`✅ ${loggingMessage}`);
 
   try {
-    const applicationUpdates = lossPayees.map((lossPayee: object) => ({
-      where: { id: lossPayee.applicationId },
-      data: {
-        nominatedLossPayee: {
-          connect: {
-            id: lossPayee.id,
-          },
-        },
-      },
-    }));
+    const lossPayees = await getAllLossPayees(connection);
 
-    const updated = await context.db.Application.updateMany({
-      data: applicationUpdates,
+    const promises = lossPayees.map(async (lossPayee: object) => {
+      const query = `
+        UPDATE Application SET nominatedLossPayee='${lossPayee.id}' WHERE id='${lossPayee.application}'
+      `;
+
+      const updated = await executeSqlQuery({
+        connection,
+        query,
+        loggingMessage: `Updating nominatedLossPayee column in application table for lossPayee ${lossPayee.id}`,
+      });
+
+      return updated;
     });
 
-    return updated;
+    return Promise.all(promises);
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 

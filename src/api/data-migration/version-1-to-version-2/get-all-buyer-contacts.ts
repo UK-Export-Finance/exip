@@ -3,7 +3,7 @@ import executeSqlQuery from './execute-sql-query';
 
 /**
  * getAllBuyerContacts
- * Get all buyer contacts in the "BuyerContact" table.
+ * Get all entries in the "BuyerContact" table.
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<object>>} executeSqlQuery response
  */

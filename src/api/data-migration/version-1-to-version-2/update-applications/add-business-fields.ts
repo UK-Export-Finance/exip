@@ -11,7 +11,7 @@ const addBusinessFields = async (connection: Connection) => {
   const queries = await Promise.all([
     executeSqlQuery({
       connection,
-      query: `ALTER TABLE Business ADD turnoverCurrencyCode varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''`,
+      query: `ALTER TABLE Business ADD turnoverCurrencyCode varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'GBP'`,
       loggingMessage: 'Adding FIELD turnoverCurrencyCode to business table',
     }),
 

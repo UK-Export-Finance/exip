@@ -1,33 +1,21 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
-import mapArrayOfConnectionObjects from './map-array-of-connection-objects';
+import { Connection } from 'mysql2/promise';
+import executeSqlQuery from './execute-sql-query';
 
 /**
  * getAllApplications
- * Get all applications in the "Application" table.
- * 1) Get all applications via KeystoneJS context.
- * 2) Create an array of application ID "connect" relationships.
- * @param {Context} context: KeystoneJS context API
+ * Get all entries in the "Application" table.
+ * @param {Connection} connection: SQL database connection
  * @returns {Promise<Object>} applications and application ID "connect" relationships
  */
-const getAllApplications = async (context: Context) => {
+const getAllApplications = async (connection: Connection) => {
   const loggingMessage = 'Getting all applications';
 
-  console.info(`✅ ${loggingMessage}`);
-
   try {
-    const applications = (await context.db.Application.findMany()) as Array<object>;
+    const query = 'SELECT * FROM Application';
 
-    console.info('✅ Generating an array of application ID connections');
+    const [applications] = await executeSqlQuery({ connection, query, loggingMessage });
 
-    const applicationIdsConnectArray = mapArrayOfConnectionObjects({
-      idsArray: applications,
-      relationshipName: 'application',
-    });
-
-    return {
-      applications,
-      applicationIdsConnectArray,
-    };
+    return applications;
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 

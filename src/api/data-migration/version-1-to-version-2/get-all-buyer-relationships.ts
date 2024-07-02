@@ -3,7 +3,7 @@ import executeSqlQuery from './execute-sql-query';
 
 /**
  * getAllBuyerRelationships
- * Get all buyer relationships in the "BuyerRelationship" table.
+ * Get all entries in the "BuyerRelationship" table.
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<object>>} executeSqlQuery response
  */

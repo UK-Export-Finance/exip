@@ -1,15 +1,16 @@
-import { format } from 'date-fns';
 import { Connection } from 'mysql2/promise';
+import createAccountStatusRows from './account-status-rows';
+import getAllAccountStatuses from '../get-all-account-statuses';
+import updateAccountStatusColumns from './account-status-columns';
 import getAllAccounts from '../get-all-accounts';
-import executeSqlQuery from '../execute-sql-query';
-import { AccountMvp } from '../../../types';
 
 /**
  * createNewAccountStatusRelationships
  * Create new "account status" relationships for all existing accounts.
  * 1) Get all accounts
- * 2) Create an array of "account status" data - using isVerified and isBlocked from the original accounts data.
- * 3) Create new "account status" entries.
+ * 2) Create account status rows/entries in the "AccountStatus" table
+ * 3) Get all account statuses
+ * 4) Update status ID columns in the "Account" table
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Boolean>}
  */
@@ -21,15 +22,11 @@ const createNewAccountStatusRelationships = async (connection: Connection): Prom
   try {
     const accounts = await getAllAccounts(connection);
 
-    const accountStatusData = accounts.map(
-      (account: AccountMvp) => `('${account.id}', ${account.isBlocked}, ${account.isVerified}, '${format(account.updatedAt, 'yyyy-MM-dd HH:mm')}')`,
-    );
+    const statusRows = await createAccountStatusRows(connection, accounts);
 
-    const query = `
-      INSERT INTO AccountStatus (id, isBlocked, isVerified, updatedAt) VALUES ${accountStatusData};
-    `;
+    const accountStatuses = await getAllAccountStatuses(connection);
 
-    await executeSqlQuery({ connection, query, loggingMessage });
+    await updateAccountStatusColumns(connection, statusRows, accountStatuses);
 
     return true;
   } catch (err) {

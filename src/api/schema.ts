@@ -330,7 +330,9 @@ export const lists = {
           max: POLICY.TOTAL_VALUE_OF_CONTRACT.MAXIMUM,
         },
       }),
-      creditPeriodWithBuyer: text(),
+      creditPeriodWithBuyer: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
       policyCurrencyCode: text({
         db: { nativeType: 'VarChar(3)' },
       }),

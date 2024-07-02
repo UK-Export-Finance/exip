@@ -110,46 +110,54 @@ export const mapNominatedLossPayee = (nominatedLossPayee: ApplicationNominatedLo
  * @returns {Object} Application as a single level object
  */
 const flattenApplicationData = (application: Application): ApplicationFlat => {
-  const { broker, business, buyer, company, declaration, exportContract, nominatedLossPayee, policy, policyContact, sectionReview } = application;
-  const { buyerTradingHistory, contact, relationship } = buyer;
+  try {
+    console.info('Flattening application data');
 
-  const flattened = {
-    ...application.eligibility,
-    version: application.version,
-    referenceNumber: application.referenceNumber,
-    createdAt: application.createdAt,
-    updatedAt: application.updatedAt,
-    dealType: application.dealType,
-    submissionCount: application.submissionCount,
-    submissionDeadline: application.submissionDeadline,
-    submissionType: application.submissionType,
-    submissionDate: application.submissionDate,
-    status: application.status,
-    buyerCountry: application.eligibility?.buyerCountry?.isoCode,
-    ...business,
-    ...mapBroker(broker),
-    ...buyer,
-    ...buyerTradingHistory,
-    ...company,
-    ...contact,
-    ...exportContract,
-    ...getTrueAndFalseAnswers(exportContract),
-    ...exportContract.privateMarket,
-    ...getTrueAndFalseAnswers(exportContract.privateMarket),
-    ...mapExportContractAgentDetails(exportContract.agent),
-    ...exportContract.agent.service,
-    ...getTrueAndFalseAnswers(exportContract.agent.service),
-    ...exportContract.agent.service.charge,
-    ...getTrueAndFalseAnswers(declaration),
-    ...mapNominatedLossPayee(nominatedLossPayee),
-    ...relationship,
-    ...policy,
-    ...policy.jointlyInsuredParty,
-    ...mapPolicyContact(policyContact),
-    ...getTrueAndFalseAnswers(sectionReview),
-  };
+    const { broker, business, buyer, company, declaration, exportContract, nominatedLossPayee, policy, policyContact, sectionReview } = application;
+    const { buyerTradingHistory, contact, relationship } = buyer;
 
-  return flattened;
+    const flattened = {
+      ...application.eligibility,
+      version: application.version,
+      referenceNumber: application.referenceNumber,
+      createdAt: application.createdAt,
+      updatedAt: application.updatedAt,
+      dealType: application.dealType,
+      submissionCount: application.submissionCount,
+      submissionDeadline: application.submissionDeadline,
+      submissionType: application.submissionType,
+      submissionDate: application.submissionDate,
+      status: application.status,
+      buyerCountry: application.eligibility?.buyerCountry?.isoCode,
+      ...business,
+      ...mapBroker(broker),
+      ...buyer,
+      ...buyerTradingHistory,
+      ...company,
+      ...contact,
+      ...exportContract,
+      ...getTrueAndFalseAnswers(exportContract),
+      ...exportContract.privateMarket,
+      ...getTrueAndFalseAnswers(exportContract.privateMarket),
+      ...mapExportContractAgentDetails(exportContract.agent),
+      ...exportContract.agent.service,
+      ...getTrueAndFalseAnswers(exportContract.agent.service),
+      ...exportContract.agent.service.charge,
+      ...getTrueAndFalseAnswers(declaration),
+      ...mapNominatedLossPayee(nominatedLossPayee),
+      ...relationship,
+      ...policy,
+      ...policy.jointlyInsuredParty,
+      ...mapPolicyContact(policyContact),
+      ...getTrueAndFalseAnswers(sectionReview),
+    };
+
+    return flattened;
+  } catch (err) {
+    console.error('Error flattening application data %O', err);
+
+    throw new Error(`Error flattening application data ${err}`);
+  }
 };
 
 export default flattenApplicationData;
