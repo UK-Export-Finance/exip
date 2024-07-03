@@ -1,4 +1,5 @@
 import sendEmail from '../index';
+import replaceCharacterCodesWithCharacters from '../../helpers/replace-character-codes-with-characters';
 import getFullNameString from '../../helpers/get-full-name-string';
 import getApplicationSubmittedEmailTemplateIds from '../../helpers/get-application-submitted-email-template-ids';
 import formatDate from '../../helpers/format-date';
@@ -21,20 +22,26 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
     // shared variables for sending email
     const sharedEmailVars = {
       referenceNumber,
-      buyerName: buyer.companyOrOrganisationName,
+      buyerName: replaceCharacterCodesWithCharacters(String(buyer.companyOrOrganisationName)),
       buyerLocation: buyer.country?.name,
-      companyName: company.companyName,
+      companyName: replaceCharacterCodesWithCharacters(company.companyName),
       requestedStartDate: formatDate(policy.requestedStartDate),
     };
 
-    // email variables for sending email to application owner of application
+    /**
+     * Email variables for sending email to:
+     * the application owner of application
+     */
     const sendOwnerEmailVars = {
       ...sharedEmailVars,
       name: getFullNameString(owner),
       emailAddress: email,
     } as ApplicationSubmissionEmailVariables;
 
-    // email variables for sending email to policy contact named on application
+    /**
+     * Email variables for sending email to:
+     * the policy contact named on application
+     */
     const sendContactEmailVars = {
       ...sharedEmailVars,
       name: getFullNameString(policyContact),
@@ -42,7 +49,7 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
     } as ApplicationSubmissionEmailVariables;
 
     console.info('Sending application submitted email to application account owner: %s', sendOwnerEmailVars.emailAddress);
-    // send "application submitted" email receipt to the application owner
+
     const accountSubmittedResponse = await sendEmail.application.submittedEmail(sendOwnerEmailVars);
 
     if (!accountSubmittedResponse.success) {

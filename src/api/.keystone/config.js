@@ -5361,6 +5361,10 @@ var getCountries = async (context) => {
 };
 var get_countries_default = getCountries;
 
+// helpers/replace-character-codes-with-characters/index.ts
+var replaceCharacterCodesWithCharacters = (str) => str.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#x27;/g, "'").replace(/&#x2F;/g, "/").replace(/&#42;/g, "*").replace(/&amp;/g, "&");
+var replace_character_codes_with_characters_default = replaceCharacterCodesWithCharacters;
+
 // helpers/get-application-submitted-email-template-ids/index.ts
 var {
   APPLICATION: {
@@ -5404,9 +5408,9 @@ var send4 = async (application2, xlsxPath) => {
     const { email } = owner;
     const sharedEmailVars = {
       referenceNumber,
-      buyerName: buyer.companyOrOrganisationName,
+      buyerName: replace_character_codes_with_characters_default(String(buyer.companyOrOrganisationName)),
       buyerLocation: buyer.country?.name,
-      companyName: company.companyName,
+      companyName: replace_character_codes_with_characters_default(company.companyName),
       requestedStartDate: format_date_default(policy.requestedStartDate)
     };
     const sendOwnerEmailVars = {
@@ -6491,10 +6495,6 @@ var XLSX = {
     [YEARS_EXPORTING2]: "How long the business has been exporting for"
   }
 };
-
-// helpers/replace-character-codes-with-characters/index.ts
-var replaceCharacterCodesWithCharacters = (str) => str.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#x27;/g, "'").replace(/&#x2F;/g, "/").replace(/&#42;/g, "*").replace(/&amp;/g, "&");
-var replace_character_codes_with_characters_default = replaceCharacterCodesWithCharacters;
 
 // generate-xlsx/map-application-to-XLSX/helpers/xlsx-row/index.ts
 var { KEY, VALUE } = XLSX_CONFIG;
