@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   database:
-    image: mysql
+    image: mysql:8.4.1
     container_name: exip_db
     restart: always
     command: --mysql-native-password=ON
