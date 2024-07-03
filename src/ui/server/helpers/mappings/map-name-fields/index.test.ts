@@ -57,7 +57,7 @@ describe('server/helpers/mappings/map-name-fields', () => {
 
     const expected = replaceCharacterCodesWithCharacters(fieldValue);
 
-    expect(result.company[BUYER_NAME]).toEqual(expected);
+    expect(result.company[COMPANY_NAME]).toEqual(expected);
   });
 
   it(`should replace character codes in nominatedLossPayee.${LOSS_PAYEE_NAME}`, () => {
