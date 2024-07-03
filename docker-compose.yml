@@ -5,7 +5,7 @@ services:
     image: mysql
     container_name: exip_db
     restart: always
-    command: --default-authentication-plugin=caching_sha2_password
+    command: --caching_sha2_password=ON
     ports:
       - '${DATABASE_PORT}:${DATABASE_PORT}'
     volumes:
