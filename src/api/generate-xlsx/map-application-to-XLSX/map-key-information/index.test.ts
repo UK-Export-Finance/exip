@@ -3,6 +3,7 @@ import { XLSX } from '../../../content-strings';
 import { POLICY_FIELDS } from '../../../content-strings/fields/insurance';
 import FIELD_IDS from '../../../constants/field-ids/insurance';
 import xlsxRow from '../helpers/xlsx-row';
+import replaceCharacterCodesWithCharacters from '../../../helpers/replace-character-codes-with-characters';
 import { mockApplication } from '../../../test-mocks';
 
 const { FIELDS } = XLSX;
@@ -31,7 +32,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-key-information', () => 
 
     const expected = [
       xlsxRow(FIELDS.KEY_INFORMATION_TITLE),
-      xlsxRow(String(FIELDS[EXPORTER_COMPANY_NAME]), mockApplication.company[EXPORTER_COMPANY_NAME]),
+      xlsxRow(String(FIELDS[EXPORTER_COMPANY_NAME]), replaceCharacterCodesWithCharacters(mockApplication.company[EXPORTER_COMPANY_NAME])),
       xlsxRow(String(FIELDS[COUNTRY]), mockApplication.buyer[COUNTRY].name),
       xlsxRow(String(FIELDS[BUYER_COMPANY_NAME]), mockApplication.buyer[BUYER_COMPANY_NAME]),
       xlsxRow(String(CONTENT_STRINGS[POLICY_TYPE].SUMMARY?.TITLE), policy[POLICY_TYPE]),

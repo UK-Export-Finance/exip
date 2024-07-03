@@ -2,6 +2,7 @@ import { XLSX } from '../../../content-strings';
 import { POLICY_FIELDS } from '../../../content-strings/fields/insurance';
 import FIELD_IDS from '../../../constants/field-ids/insurance';
 import xlsxRow from '../helpers/xlsx-row';
+import replaceCharacterCodesWithCharacters from '../../../helpers/replace-character-codes-with-characters';
 import { Application } from '../../../types';
 
 const { FIELDS } = XLSX;
@@ -33,7 +34,7 @@ const mapKeyInformation = (application: Application) => {
 
   const mapped = [
     xlsxRow(FIELDS.KEY_INFORMATION_TITLE),
-    xlsxRow(String(FIELDS[EXPORTER_COMPANY_NAME]), application.company[EXPORTER_COMPANY_NAME]),
+    xlsxRow(String(FIELDS[EXPORTER_COMPANY_NAME]), replaceCharacterCodesWithCharacters(application.company[EXPORTER_COMPANY_NAME])),
     xlsxRow(String(FIELDS[COUNTRY]), application.buyer[COUNTRY].name),
     xlsxRow(String(FIELDS[BUYER_COMPANY_NAME]), application.buyer[BUYER_COMPANY_NAME]),
     xlsxRow(String(CONTENT_STRINGS[POLICY_TYPE].SUMMARY?.TITLE), policy[POLICY_TYPE]),
