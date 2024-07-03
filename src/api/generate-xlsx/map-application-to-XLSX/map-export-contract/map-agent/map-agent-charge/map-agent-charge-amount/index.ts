@@ -1,8 +1,9 @@
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { XLSX } from '../../../../../../content-strings';
 import xlsxRow from '../../../../helpers/xlsx-row';
+import getCountryByIsoCode from '../../../../../../helpers/get-country-by-iso-code';
 import formatCurrency from '../../../../helpers/format-currency';
-import { ApplicationExportContractAgentServiceCharge } from '../../../../../../types';
+import { ApplicationExportContractAgentServiceCharge, Country } from '../../../../../../types';
 
 const { FIELDS } = XLSX;
 
@@ -14,10 +15,13 @@ const {
  * mapAgentChargeAmount
  * Map an application's "export contract agent charge amount" fields into an array of objects for XLSX generation
  * @param {ApplicationExportContractAgentServiceCharge} charge: Export contract agent charge
+ * @param {Array<Country>} countries
  * @returns {Array<object>} Array of objects for XLSX generation
  */
-const mapAgentChargeAmount = (charge: ApplicationExportContractAgentServiceCharge) => {
-  const payableCountryRow = xlsxRow(String(FIELDS.AGENT_CHARGES[PAYABLE_COUNTRY_CODE]), charge[PAYABLE_COUNTRY_CODE]);
+const mapAgentChargeAmount = (charge: ApplicationExportContractAgentServiceCharge, countries: Array<Country>) => {
+  const country = getCountryByIsoCode(countries, charge[PAYABLE_COUNTRY_CODE]);
+
+  const payableCountryRow = xlsxRow(String(FIELDS.AGENT_CHARGES[PAYABLE_COUNTRY_CODE]), country.name);
 
   if (charge[FIXED_SUM_AMOUNT]) {
     const mapped = [

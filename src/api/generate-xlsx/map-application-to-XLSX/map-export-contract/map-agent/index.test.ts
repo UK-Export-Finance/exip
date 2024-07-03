@@ -40,7 +40,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-export-contract/map-agen
         xlsxRow(String(FIELDS.AGENT[COUNTRY_CODE]), country.name),
         xlsxRow(String(FIELDS.AGENT_SERVICE[SERVICE_DESCRIPTION]), mockAgent.service[SERVICE_DESCRIPTION]),
 
-        ...mapAgentCharge(mockAgent.service),
+        ...mapAgentCharge(mockAgent.service, mockCountries),
       ];
 
       expect(result).toEqual(expected);

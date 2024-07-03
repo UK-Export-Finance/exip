@@ -3,7 +3,7 @@ import { XLSX } from '../../../../../content-strings';
 import xlsxRow from '../../../helpers/xlsx-row';
 import mapYesNoField from '../../../helpers/map-yes-no-field';
 import mapAgentChargeAmount from './map-agent-charge-amount';
-import { ApplicationExportContractAgentService } from '../../../../../types';
+import { ApplicationExportContractAgentService, Country } from '../../../../../types';
 
 const { FIELDS } = XLSX;
 
@@ -15,9 +15,10 @@ const {
  * mapAgentCharge
  * Map an application's "export contract agent charge" fields into an array of objects for XLSX generation
  * @param {ApplicationExportContractAgentService} agent: Export contract agent
+ * @param {Array<Country>} countries
  * @returns {Array<object>} Array of objects for XLSX generation
  */
-const mapAgentCharge = (service: ApplicationExportContractAgentService) => {
+const mapAgentCharge = (service: ApplicationExportContractAgentService, countries: Array<Country>) => {
   const { charge } = service;
 
   const chargingAnswer = service[IS_CHARGING];
@@ -25,7 +26,7 @@ const mapAgentCharge = (service: ApplicationExportContractAgentService) => {
   let mapped = [xlsxRow(String(FIELDS.AGENT_SERVICE[IS_CHARGING]), mapYesNoField({ answer: chargingAnswer }))];
 
   if (chargingAnswer) {
-    mapped = [...mapped, ...mapAgentChargeAmount(charge)];
+    mapped = [...mapped, ...mapAgentChargeAmount(charge, countries)];
   }
 
   return mapped;
