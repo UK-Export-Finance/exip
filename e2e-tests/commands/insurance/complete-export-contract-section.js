@@ -54,7 +54,7 @@ const completeExportContractSection = ({
       });
 
       if (alternativeCurrency) {
-        cy.go('back');
+        cy.clickBackLink();
 
         cy.clickProvideAlternativeCurrencyLink();
 
