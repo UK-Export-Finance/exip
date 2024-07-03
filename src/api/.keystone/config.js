@@ -6623,7 +6623,7 @@ var mapKeyInformation = (application2) => {
     xlsx_row_default(FIELDS5.KEY_INFORMATION_TITLE),
     xlsx_row_default(String(FIELDS5[EXPORTER_COMPANY_NAME2]), replace_character_codes_with_characters_default(application2.company[EXPORTER_COMPANY_NAME2])),
     xlsx_row_default(String(FIELDS5[COUNTRY2]), application2.buyer[COUNTRY2].name),
-    xlsx_row_default(String(FIELDS5[BUYER_COMPANY_NAME2]), application2.buyer[BUYER_COMPANY_NAME2]),
+    xlsx_row_default(String(FIELDS5[BUYER_COMPANY_NAME2]), replace_character_codes_with_characters_default(application2.buyer[BUYER_COMPANY_NAME2])),
     xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE5].SUMMARY?.TITLE), policy[POLICY_TYPE5])
   ];
   return mapped;
