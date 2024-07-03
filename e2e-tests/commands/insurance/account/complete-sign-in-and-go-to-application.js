@@ -11,7 +11,7 @@ const {
  * completeSignInAndGoToApplication
  * Create an account, sign in and create an application via the API or via the full eligibility flow.
  * @param {String} email: Account email address
- * @param {Boolean} mockAccount: Flag whether to create the application via API instead of going through the eligibility journey. Defaults to true.
+ * @param {Boolean} createApplicationViaApi: Flag whether to create the application via API instead of going through the eligibility journey. Defaults to true.
  * @param {String} companyNumber: Company number/Companies house number
  * @param {Boolean} totalContractValueOverThreshold: if total contract value in eligibility should be over threshold
  * @return {Object} Account ID, application reference number

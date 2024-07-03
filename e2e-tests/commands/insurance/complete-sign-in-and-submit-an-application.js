@@ -15,6 +15,8 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * @param {Boolean} attemptedPrivateMarketCover: Should submit "yes" to "attempted to insure through the private market" form.
  * @param {Boolean} buyerOutstandingPayments: Exporter has outstanding payments with the buyer.
  * @param {Boolean} buyerFailedToPayOnTime: Buyer has failed to pay the exporter on the time.
+ * @param {String} companyNumber: Company number/Companies house number
+ * @param {Boolean} createApplicationViaApi: Flag whether to create the application via API instead of going through the eligibility journey.
  * @param {Boolean} differentPolicyContact: Should submit an application with a different policy contact to the owner.
  * @param {Boolean} differentTradingName: Should submit "yes" to "have a different trading name" in the "company details" form.
  * @param {Boolean} differentTradingAddress: Should submit "yes" to "trade from a different address" in the "company details" form.
@@ -46,6 +48,8 @@ const completeSignInAndSubmitAnApplication = ({
   attemptedPrivateMarketCover = false,
   buyerOutstandingPayments = false,
   buyerFailedToPayOnTime = false,
+  createApplicationViaApi = false,
+  companyNumber,
   differentPolicyContact = false,
   differentTradingName = false,
   differentTradingAddress = false,
@@ -69,7 +73,11 @@ const completeSignInAndSubmitAnApplication = ({
   alternativeCurrencyTurnover = false,
   alternativeCurrencyPolicy = false,
 }) => {
-  completeSignInAndGoToApplication({ totalContractValueOverThreshold }).then(({ referenceNumber }) => {
+  completeSignInAndGoToApplication({
+    companyNumber,
+    createApplicationViaApi,
+    totalContractValueOverThreshold,
+  }).then(({ referenceNumber }) => {
     if (policyType === APPLICATION.POLICY_TYPE.MULTIPLE) {
       cy.completePrepareApplicationMultiplePolicyType({
         agentChargeMethodFixedSum,
