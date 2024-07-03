@@ -8,7 +8,7 @@ context(
     before(() => {
       cy.completeSignInAndSubmitAnApplication({
         policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
-        alternativeBuyerCurrency: true,
+        alternativeCurrencyBuyer: true,
         exporterHasTradedWithBuyer: true,
         buyerOutstandingPayments: true,
         buyerFailedToPayOnTime: true,

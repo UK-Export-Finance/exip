@@ -24,10 +24,9 @@ const mapAgentChargeAmount = (charge: ApplicationExportContractAgentServiceCharg
   const payableCountryRow = xlsxRow(String(FIELDS.AGENT_CHARGES[PAYABLE_COUNTRY_CODE]), country.name);
 
   if (charge[FIXED_SUM_AMOUNT]) {
-    const mapped = [
-      xlsxRow(String(FIELDS.AGENT_CHARGES[FIXED_SUM_AMOUNT]), formatCurrency(charge[FIXED_SUM_AMOUNT], charge[FIXED_SUM_CURRENCY_CODE])),
-      payableCountryRow,
-    ];
+    const currencyValue = formatCurrency(Number(charge[FIXED_SUM_AMOUNT]), charge[FIXED_SUM_CURRENCY_CODE]);
+
+    const mapped = [xlsxRow(String(FIELDS.AGENT_CHARGES[FIXED_SUM_AMOUNT]), currencyValue), payableCountryRow];
 
     return mapped;
   }

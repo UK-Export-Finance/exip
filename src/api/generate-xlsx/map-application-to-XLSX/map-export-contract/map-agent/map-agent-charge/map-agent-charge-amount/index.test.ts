@@ -33,8 +33,10 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-export-contract/map-agen
 
       const country = getCountryByIsoCode(mockCountries, mockCharge[PAYABLE_COUNTRY_CODE]);
 
+      const currencyValue = formatCurrency(Number(charge[FIXED_SUM_AMOUNT]), charge[FIXED_SUM_CURRENCY_CODE]);
+
       const expected = [
-        xlsxRow(String(FIELDS.AGENT_CHARGES[FIXED_SUM_AMOUNT]), formatCurrency(mockCharge[FIXED_SUM_AMOUNT], charge[FIXED_SUM_CURRENCY_CODE])),
+        xlsxRow(String(FIELDS.AGENT_CHARGES[FIXED_SUM_AMOUNT]), currencyValue),
         xlsxRow(String(FIELDS.AGENT_CHARGES[PAYABLE_COUNTRY_CODE]), country.name),
       ];
 
