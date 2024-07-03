@@ -8,9 +8,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  REQUESTED_JOINTLY_INSURED_PARTY: {
-    REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE,
-  },
+  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
 } = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -53,7 +51,7 @@ context(`Insurance - Policy - Other company details page - Changing ${REQUESTED}
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitOtherCompanyDetailsForm();
+      cy.completeAndSubmitOtherCompanyDetailsForm({});
 
       /**
        * Go back to the "other company"
