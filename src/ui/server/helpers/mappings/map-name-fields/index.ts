@@ -4,11 +4,12 @@ import { Application } from '../../../../types';
 
 const {
   ACCOUNT: { FIRST_NAME, LAST_NAME },
-  YOUR_BUYER: {
-    COMPANY_OR_ORGANISATION: { NAME: BUYER_NAME },
-  },
+  COMPANIES_HOUSE: { COMPANY_NAME },
   POLICY: {
     LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME },
+  },
+  YOUR_BUYER: {
+    COMPANY_OR_ORGANISATION: { NAME: BUYER_NAME },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -19,12 +20,24 @@ const {
  * @returns {Object} Application with mapped name field characters
  */
 const mapNameFields = (application: Application): Application => {
-  const { buyer, policyContact, nominatedLossPayee } = application;
+  const { buyer, company, nominatedLossPayee, policyContact } = application;
 
   if (buyer?.[BUYER_NAME]) {
     const fieldValue = buyer[BUYER_NAME];
 
     buyer[BUYER_NAME] = replaceCharacterCodesWithCharacters(fieldValue);
+  }
+
+  if (company?.[COMPANY_NAME]) {
+    const fieldValue = company[COMPANY_NAME];
+
+    company[COMPANY_NAME] = replaceCharacterCodesWithCharacters(fieldValue);
+  }
+
+  if (nominatedLossPayee?.[LOSS_PAYEE_NAME]) {
+    const fieldValue = nominatedLossPayee[LOSS_PAYEE_NAME];
+
+    nominatedLossPayee[LOSS_PAYEE_NAME] = replaceCharacterCodesWithCharacters(fieldValue);
   }
 
   if (policyContact?.[FIRST_NAME]) {
@@ -37,12 +50,6 @@ const mapNameFields = (application: Application): Application => {
     const fieldValue = policyContact[LAST_NAME];
 
     policyContact[LAST_NAME] = replaceCharacterCodesWithCharacters(fieldValue);
-  }
-
-  if (nominatedLossPayee?.[LOSS_PAYEE_NAME]) {
-    const fieldValue = nominatedLossPayee[LOSS_PAYEE_NAME];
-
-    nominatedLossPayee[LOSS_PAYEE_NAME] = replaceCharacterCodesWithCharacters(fieldValue);
   }
 
   return application;

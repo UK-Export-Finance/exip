@@ -1,6 +1,7 @@
 import { TEMPLATE, FIELD_IDS, pageVariables, HTML_FLAGS, get, post } from '.';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { PAGES } from '../../../../content-strings';
@@ -8,8 +9,8 @@ import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/company-details';
 import { companiesHouseSummaryList } from '../../../../helpers/summary-lists/companies-house';
-import { Request, Response } from '../../../../../types';
 import companyDetailsValidation from './validation/company-details';
+import { Application, Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockPhoneNumbers, referenceNumber } from '../../../../test-mocks';
 
 const {
@@ -101,30 +102,31 @@ describe('controllers/insurance/business/companies-details', () => {
   });
 
   describe('get', () => {
-    describe('when application has populated company data', () => {
-      it('should render the company-details template with correct variables', () => {
-        get(req, res);
-        const { company } = mockApplication;
+    it('should render the company-details template with correct variables', () => {
+      get(req, res);
 
-        const submittedValues = {
-          [HAS_DIFFERENT_TRADING_NAME]: company?.[HAS_DIFFERENT_TRADING_NAME],
-          [TRADING_ADDRESS]: company?.[TRADING_ADDRESS],
-          [WEBSITE]: company?.[WEBSITE],
-          [PHONE_NUMBER]: company?.[PHONE_NUMBER],
-          [DIFFERENT_TRADING_NAME]: company?.[DIFFERENT_TRADING_NAME],
-        };
+      const mappedApplication = mapApplicationToFormFields(mockApplication) as Application;
 
-        expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
-          ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-            BACK_LINK: req.headers.referer,
-            HTML_FLAGS,
-          }),
-          userName: getUserNameFromSession(req.session.user),
-          ...pageVariables(referenceNumber),
-          submittedValues,
-          SUMMARY_LIST: companiesHouseSummaryList(company, IS_APPLICATION_SUMMARY_LIST),
-        });
+      const { company } = mappedApplication;
+
+      const submittedValues = {
+        [HAS_DIFFERENT_TRADING_NAME]: company?.[HAS_DIFFERENT_TRADING_NAME],
+        [TRADING_ADDRESS]: company?.[TRADING_ADDRESS],
+        [WEBSITE]: company?.[WEBSITE],
+        [PHONE_NUMBER]: company?.[PHONE_NUMBER],
+        [DIFFERENT_TRADING_NAME]: company?.[DIFFERENT_TRADING_NAME],
+      };
+
+      expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
+        ...insuranceCorePageVariables({
+          PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
+          BACK_LINK: req.headers.referer,
+          HTML_FLAGS,
+        }),
+        userName: getUserNameFromSession(req.session.user),
+        ...pageVariables(referenceNumber),
+        submittedValues,
+        SUMMARY_LIST: companiesHouseSummaryList(company, IS_APPLICATION_SUMMARY_LIST),
       });
     });
 
@@ -157,6 +159,8 @@ describe('controllers/insurance/business/companies-details', () => {
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
+        const mappedApplication = mapApplicationToFormFields(mockApplication) as Application;
+
         const expectedSubmittedValues = {
           [HAS_DIFFERENT_TRADING_NAME]: sanitiseValue({ key: HAS_DIFFERENT_TRADING_NAME, value: payload[HAS_DIFFERENT_TRADING_NAME] }),
           [TRADING_ADDRESS]: sanitiseValue({ key: TRADING_ADDRESS, value: payload[TRADING_ADDRESS] }),
@@ -179,7 +183,7 @@ describe('controllers/insurance/business/companies-details', () => {
           ...pageVariables(referenceNumber),
           validationErrors,
           submittedValues: expectedSubmittedValues,
-          SUMMARY_LIST: companiesHouseSummaryList(mockApplication.company, IS_APPLICATION_SUMMARY_LIST),
+          SUMMARY_LIST: companiesHouseSummaryList(mappedApplication.company, IS_APPLICATION_SUMMARY_LIST),
         });
       });
     });

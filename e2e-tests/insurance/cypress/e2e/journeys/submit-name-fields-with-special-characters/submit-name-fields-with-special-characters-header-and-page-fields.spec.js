@@ -53,7 +53,7 @@ context('Insurance - Name fields - Header and page fields should render special 
 
     dashboardPage.startNewApplicationButton().click();
 
-    cy.submitInsuranceEligibilityAnswersFromExporterLocationHappyPath();
+    cy.submitInsuranceEligibilityAnswersFromExporterLocationHappyPath({});
 
     cy.getReferenceNumber().then((refNumber) => {
       referenceNumber = refNumber;

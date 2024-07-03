@@ -10,10 +10,10 @@ const {
 /**
  * completeSignInAndGoToApplication
  * Create an account, sign in and create an application via the API or via the full eligibility flow.
- * @param {String} Account email address
- * @param {Boolean} Flag whether to create the application via API instead of going through the eligibility journey. Defaults to true.
- * @param {String} Company number/companies house number to use for application creation
- * @param {Boolean} totalContractValueOverThreshold if total contract value in eligibility should be over threshold
+ * @param {String} email: Account email address
+ * @param {Boolean} mockAccount: Flag whether to create the application via API instead of going through the eligibility journey. Defaults to true.
+ * @param {String} companyNumber: Company number/Companies house number
+ * @param {Boolean} totalContractValueOverThreshold: if total contract value in eligibility should be over threshold
  * @return {Object} Account ID, application reference number
  */
 const completeSignInAndGoToApplication = ({
@@ -43,7 +43,7 @@ const completeSignInAndGoToApplication = ({
    * 5) Sign into the account, submitting a valid OTP.
    * 6) Assert that the user is taken to the "all sections" application page.
    */
-  return completeInsuranceEligibilitySignInAndGoToDashboard(email, companyNumber).then(({ accountId, referenceNumber }) => ({
+  return completeInsuranceEligibilitySignInAndGoToDashboard({ email, companyNumber }).then(({ accountId, referenceNumber }) => ({
     accountId,
     referenceNumber,
   }));

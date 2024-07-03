@@ -69,26 +69,26 @@ const checkYourAnswersEligibilitySummaryList = {
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
-  [COMPANY_NAME]: ({ differentCompanyWithSpecialCharacters = false }) => {
+  [COMPANY_NAME]: ({ withSpecialCharacters = false }) => {
     const fieldId = COMPANY_NAME;
 
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
 
     let expectedValue = COMPANY[COMPANY_NAME];
 
-    if (differentCompanyWithSpecialCharacters) {
+    if (withSpecialCharacters) {
       expectedValue = mockCompanies[COMPANIES_HOUSE_NUMBER_SPECIAL_CHARACTERS_NAME][COMPANY_NAME];
     }
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
-  [COMPANIES_HOUSE_NUMBER]: ({ differentCompanyWithSpecialCharacters = false }) => {
+  [COMPANIES_HOUSE_NUMBER]: ({ withSpecialCharacters = false }) => {
     const fieldId = COMPANIES_HOUSE_NUMBER;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
     let expectedValue = COMPANY[COMPANIES_HOUSE_NUMBER];
 
-    if (differentCompanyWithSpecialCharacters) {
+    if (withSpecialCharacters) {
       expectedValue = mockCompanies[COMPANIES_HOUSE_NUMBER_SPECIAL_CHARACTERS_NAME][COMPANIES_HOUSE_NUMBER];
     }
 

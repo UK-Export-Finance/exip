@@ -5,6 +5,7 @@ import { mockApplication } from '../../../test-mocks';
 
 const {
   ACCOUNT: { FIRST_NAME, LAST_NAME },
+  COMPANIES_HOUSE: { COMPANY_NAME },
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION: { NAME: BUYER_NAME },
   },
@@ -22,6 +23,10 @@ const mockApplicationWithCharacterCodes = {
   buyer: {
     ...mockApplication.buyer,
     [BUYER_NAME]: mockStringWithCharacterCodes,
+  },
+  company: {
+    ...mockApplication.company,
+    [COMPANY_NAME]: mockStringWithCharacterCodes,
   },
   policyContact: {
     ...mockApplication.policyContact,
@@ -45,6 +50,16 @@ describe('server/helpers/mappings/map-name-fields', () => {
     expect(result.buyer[BUYER_NAME]).toEqual(expected);
   });
 
+  it(`should replace character codes in company.${COMPANY_NAME}`, () => {
+    const result = mapNameFields(mockApplicationWithCharacterCodes);
+
+    const fieldValue = mockApplicationWithCharacterCodes.company[COMPANY_NAME];
+
+    const expected = replaceCharacterCodesWithCharacters(fieldValue);
+
+    expect(result.company[BUYER_NAME]).toEqual(expected);
+  });
+
   it(`should replace character codes in nominatedLossPayee.${LOSS_PAYEE_NAME}`, () => {
     const result = mapNameFields(mockApplicationWithCharacterCodes);
 
@@ -53,5 +68,25 @@ describe('server/helpers/mappings/map-name-fields', () => {
     const expected = replaceCharacterCodesWithCharacters(fieldValue);
 
     expect(result.nominatedLossPayee[LOSS_PAYEE_NAME]).toEqual(expected);
+  });
+
+  it(`should replace character codes in policyContact.${FIRST_NAME}`, () => {
+    const result = mapNameFields(mockApplicationWithCharacterCodes);
+
+    const fieldValue = mockApplicationWithCharacterCodes.policyContact[FIRST_NAME];
+
+    const expected = replaceCharacterCodesWithCharacters(fieldValue);
+
+    expect(result.policyContact[FIRST_NAME]).toEqual(expected);
+  });
+
+  it(`should replace character codes in policyContact.${LAST_NAME}`, () => {
+    const result = mapNameFields(mockApplicationWithCharacterCodes);
+
+    const fieldValue = mockApplicationWithCharacterCodes.policyContact[LAST_NAME];
+
+    const expected = replaceCharacterCodesWithCharacters(fieldValue);
+
+    expect(result.policyContact[LAST_NAME]).toEqual(expected);
   });
 });

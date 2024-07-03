@@ -14,7 +14,7 @@ const { COMPANY_NAME } = INSURANCE_FIELD_IDS.COMPANIES_HOUSE;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Eligibility - Check your answers - company name with special characters', () => {
+context('Insurance - Eligibility - Check your answers - Company name with special characters', () => {
   const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
   beforeEach(() => {
@@ -26,10 +26,10 @@ context('Insurance - Eligibility - Check your answers - company name with specia
   });
 
   it(`should render a ${COMPANIES_HOUSE_NUMBER} summary list row`, () => {
-    checkSummaryList[COMPANIES_HOUSE_NUMBER]({ differentCompanyWithSpecialCharacters: true });
+    checkSummaryList[COMPANIES_HOUSE_NUMBER]({ withSpecialCharacters: true });
   });
 
   it(`should render a ${COMPANY_NAME} summary list row with special characters`, () => {
-    checkSummaryList[COMPANY_NAME]({ differentCompanyWithSpecialCharacters: true });
+    checkSummaryList[COMPANY_NAME]({ withSpecialCharacters: true });
   });
 });

@@ -39,7 +39,7 @@ context('Insurance - Dashboard - new application', () => {
     before(() => {
       dashboardPage.startNewApplicationButton().click();
 
-      cy.submitInsuranceEligibilityAnswersFromExporterLocationHappyPath();
+      cy.submitInsuranceEligibilityAnswersFromExporterLocationHappyPath({});
 
       // get the reference number and check we're on the "all sections" and not the "do you have an account" page
       cy.getReferenceNumber().then((refNumber) => {
@@ -67,15 +67,21 @@ context('Insurance - Dashboard - new application', () => {
       let firstReferenceNumber;
       let lastReferenceNumber;
 
-      table.body.firstRow.referenceNumber().invoke('text').then((text) => {
-        firstReferenceNumber = Number(text);
-      });
+      table.body.firstRow
+        .referenceNumber()
+        .invoke('text')
+        .then((text) => {
+          firstReferenceNumber = Number(text);
+        });
 
-      table.body.lastRow.referenceNumber().invoke('text').then((text) => {
-        lastReferenceNumber = Number(text);
+      table.body.lastRow
+        .referenceNumber()
+        .invoke('text')
+        .then((text) => {
+          lastReferenceNumber = Number(text);
 
-        expect(firstReferenceNumber).to.be.greaterThan(lastReferenceNumber);
-      });
+          expect(firstReferenceNumber).to.be.greaterThan(lastReferenceNumber);
+        });
     });
   });
 });
