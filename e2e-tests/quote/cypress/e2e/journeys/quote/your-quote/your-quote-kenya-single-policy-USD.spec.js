@@ -5,12 +5,7 @@ import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { USD_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
 
 const {
-  ELIGIBILITY: {
-    CONTRACT_VALUE,
-    CURRENCY,
-    PERCENTAGE_OF_COVER,
-    BUYER_COUNTRY,
-  },
+  ELIGIBILITY: { CONTRACT_VALUE, CURRENCY, PERCENTAGE_OF_COVER, BUYER_COUNTRY },
   POLICY_TYPE,
   QUOTE,
   POLICY_LENGTH,
