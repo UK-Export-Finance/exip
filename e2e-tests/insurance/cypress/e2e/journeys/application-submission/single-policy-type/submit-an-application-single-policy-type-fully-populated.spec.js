@@ -7,7 +7,7 @@ context(
 
     before(() => {
       cy.completeSignInAndSubmitAnApplication({
-        alternativeBuyerCurrency: true,
+        alternativeCurrencyBuyer: true,
         differentTradingName: true,
         differentTradingAddress: true,
         exporterHasTradedWithBuyer: true,

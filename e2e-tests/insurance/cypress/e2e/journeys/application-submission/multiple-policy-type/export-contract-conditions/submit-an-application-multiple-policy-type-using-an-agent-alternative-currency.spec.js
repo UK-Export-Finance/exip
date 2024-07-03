@@ -1,12 +1,15 @@
-context('Insurance - submit an application - Single policy type, exporter has traded with buyer, has outstanding payments, alternative currency', () => {
+import { APPLICATION } from '../../../../../../../constants';
+
+context('Insurance - submit an application - Multiple policy type, using an agent, fixed sum method, alternative currency', () => {
   let referenceNumber;
 
   before(() => {
     cy.completeSignInAndSubmitAnApplication({
-      alternativeCurrencyBuyer: true,
-      exporterHasTradedWithBuyer: true,
-      buyerOutstandingPayments: true,
-      buyerFailedToPayOnTime: true,
+      isUsingAgent: true,
+      agentIsCharging: true,
+      agentChargeMethodFixedSum: true,
+      alternativeCurrencyExportContract: true,
+      policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });

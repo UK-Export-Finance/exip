@@ -5,6 +5,7 @@
  * @param {Boolean} agentChargeMethodFixedSum: Agent charge method is "fixed sum"
  * @param {String} agentChargeFixedSumAmount: Agent charge fixed sum amount
  * @param {Boolean} agentChargeMethodPercentage: Agent charge method is "percentage"
+ * @param {Boolean} alternativeCurrency: Should submit an "alternative currency". Defaults to false.
  * @param {Boolean} attemptedPrivateMarketCover: Has attempted to insure through the private market
  * @param {Boolean} finalDestinationKnown: "Final destination known"
  * @param {Boolean} isUsingAgent: Exporter is using an agent
@@ -17,6 +18,7 @@ const completeExportContractSection = ({
   agentChargeMethodFixedSum = false,
   agentChargeFixedSumAmount,
   agentChargeMethodPercentage = false,
+  alternativeCurrency = false,
   attemptedPrivateMarketCover = false,
   finalDestinationKnown,
   isUsingAgent = false,
@@ -50,6 +52,16 @@ const completeExportContractSection = ({
         fixedSumAmount: agentChargeFixedSumAmount,
         percentageMethod: agentChargeMethodPercentage,
       });
+
+      if (alternativeCurrency) {
+        cy.clickBackLink();
+
+        cy.clickProvideAlternativeCurrencyLink();
+
+        cy.clickAlternativeCurrencyRadioAndSubmitCurrency({});
+
+        cy.clickSubmitButton();
+      }
     }
   }
 

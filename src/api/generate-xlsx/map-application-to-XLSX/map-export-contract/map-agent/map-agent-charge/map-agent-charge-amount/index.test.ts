@@ -2,8 +2,9 @@ import mapAgentChargeAmount from '.';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { XLSX } from '../../../../../../content-strings';
 import xlsxRow from '../../../../helpers/xlsx-row';
+import getCountryByIsoCode from '../../../../../../helpers/get-country-by-iso-code';
 import formatCurrency from '../../../../helpers/format-currency';
-import { mockApplicationMinimalBrokerBuyerAndCompany } from '../../../../../../test-mocks';
+import { mockApplicationMinimalBrokerBuyerAndCompany, mockCountries } from '../../../../../../test-mocks';
 
 const { FIELDS } = XLSX;
 
@@ -28,11 +29,16 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-export-contract/map-agen
     };
 
     it('should return an array of mapped fields', () => {
-      const result = mapAgentChargeAmount(mockCharge);
+      const result = mapAgentChargeAmount(mockCharge, mockCountries);
+
+      const country = getCountryByIsoCode(mockCountries, mockCharge[PAYABLE_COUNTRY_CODE]);
+
+      const currencyValue = formatCurrency(Number(mockCharge[FIXED_SUM_AMOUNT]), mockCharge[FIXED_SUM_CURRENCY_CODE]);
 
       const expected = [
-        xlsxRow(String(FIELDS.AGENT_CHARGES[FIXED_SUM_AMOUNT]), formatCurrency(mockCharge[FIXED_SUM_AMOUNT], charge[FIXED_SUM_CURRENCY_CODE])),
-        xlsxRow(String(FIELDS.AGENT_CHARGES[PAYABLE_COUNTRY_CODE]), mockCharge[PAYABLE_COUNTRY_CODE]),
+        xlsxRow(String(FIELDS.AGENT_CHARGES[FIXED_SUM_AMOUNT]), currencyValue),
+
+        xlsxRow(String(FIELDS.AGENT_CHARGES[PAYABLE_COUNTRY_CODE]), country.name),
       ];
 
       expect(result).toEqual(expected);
@@ -47,11 +53,13 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-export-contract/map-agen
     };
 
     it('should return an array of mapped fields', () => {
-      const result = mapAgentChargeAmount(mockCharge);
+      const result = mapAgentChargeAmount(mockCharge, mockCountries);
+
+      const country = getCountryByIsoCode(mockCountries, mockCharge[PAYABLE_COUNTRY_CODE]);
 
       const expected = [
         xlsxRow(String(FIELDS.AGENT_CHARGES[PERCENTAGE_CHARGE]), `${charge[PERCENTAGE_CHARGE]}%`),
-        xlsxRow(String(FIELDS.AGENT_CHARGES[PAYABLE_COUNTRY_CODE]), mockCharge[PAYABLE_COUNTRY_CODE]),
+        xlsxRow(String(FIELDS.AGENT_CHARGES[PAYABLE_COUNTRY_CODE]), country.name),
       ];
 
       expect(result).toEqual(expected);
@@ -66,7 +74,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-export-contract/map-agen
         [PERCENTAGE_CHARGE]: false,
       };
 
-      const result = mapAgentChargeAmount(mockCharge);
+      const result = mapAgentChargeAmount(mockCharge, mockCountries);
 
       expect(result).toEqual([]);
     });

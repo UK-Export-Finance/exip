@@ -7233,11 +7233,13 @@ var { FIELDS: FIELDS27 } = XLSX;
 var {
   AGENT_CHARGES: { FIXED_SUM_AMOUNT: FIXED_SUM_AMOUNT2, FIXED_SUM_CURRENCY_CODE, PAYABLE_COUNTRY_CODE: PAYABLE_COUNTRY_CODE2, PERCENTAGE_CHARGE: PERCENTAGE_CHARGE2 }
 } = export_contract_default;
-var mapAgentChargeAmount = (charge) => {
-  const payableCountryRow = xlsx_row_default(String(FIELDS27.AGENT_CHARGES[PAYABLE_COUNTRY_CODE2]), charge[PAYABLE_COUNTRY_CODE2]);
+var mapAgentChargeAmount = (charge, countries) => {
+  const country = get_country_by_iso_code_default(countries, charge[PAYABLE_COUNTRY_CODE2]);
+  const payableCountryRow = xlsx_row_default(String(FIELDS27.AGENT_CHARGES[PAYABLE_COUNTRY_CODE2]), country.name);
   if (charge[FIXED_SUM_AMOUNT2]) {
+    const currencyValue = format_currency_default2(Number(charge[FIXED_SUM_AMOUNT2]), charge[FIXED_SUM_CURRENCY_CODE]);
     const mapped = [
-      xlsx_row_default(String(FIELDS27.AGENT_CHARGES[FIXED_SUM_AMOUNT2]), format_currency_default2(charge[FIXED_SUM_AMOUNT2], charge[FIXED_SUM_CURRENCY_CODE])),
+      xlsx_row_default(String(FIELDS27.AGENT_CHARGES[FIXED_SUM_AMOUNT2]), currencyValue),
       payableCountryRow
     ];
     return mapped;
@@ -7255,12 +7257,12 @@ var { FIELDS: FIELDS28 } = XLSX;
 var {
   AGENT_SERVICE: { IS_CHARGING: IS_CHARGING2 }
 } = export_contract_default;
-var mapAgentCharge = (service) => {
+var mapAgentCharge = (service, countries) => {
   const { charge } = service;
   const chargingAnswer = service[IS_CHARGING2];
   let mapped = [xlsx_row_default(String(FIELDS28.AGENT_SERVICE[IS_CHARGING2]), map_yes_no_field_default({ answer: chargingAnswer }))];
   if (chargingAnswer) {
-    mapped = [...mapped, ...map_agent_charge_amount_default(charge)];
+    mapped = [...mapped, ...map_agent_charge_amount_default(charge, countries)];
   }
   return mapped;
 };
@@ -7285,7 +7287,7 @@ var mapAgent = (agent, countries) => {
       xlsx_row_default(String(FIELDS29.AGENT[FULL_ADDRESS5]), agent[FULL_ADDRESS5]),
       xlsx_row_default(String(FIELDS29.AGENT[COUNTRY_CODE3]), country.name),
       xlsx_row_default(String(FIELDS29.AGENT_SERVICE[SERVICE_DESCRIPTION2]), service[SERVICE_DESCRIPTION2]),
-      ...map_agent_charge_default(service)
+      ...map_agent_charge_default(service, countries)
     ];
   }
   return mapped;
