@@ -1,4 +1,5 @@
 import { Connection } from 'mysql2/promise';
+import addApplicationMigratedField from './add-application-migrated-field';
 import { addNominatedLossPayeeField, addNominatedLossPayeeConstraint } from './nominated-loss-payee';
 import addExportContractFields from './add-export-contract-fields';
 import addBuyerFields from './add-buyer-fields';
@@ -12,6 +13,7 @@ import updateExportContractFinalDestinationCountryCodeVarChar from './update-exp
 import updatePolicyCurrencyCodeVarChar from './update-policy-currency-code-var-char';
 import updatePolicyContactPositionCodeVarChar from './update-policy-contact-position-var-char';
 import updateApplicationVersion from './update-application-version';
+import updateApplicationMigrated from './update-application-migrated';
 
 /**
  * updateApplications
@@ -26,6 +28,7 @@ const updateApplications = async (connection: Connection) => {
 
   try {
     const tables = await Promise.all([
+      addApplicationMigratedField(connection),
       addNominatedLossPayeeField(connection),
       addNominatedLossPayeeConstraint(connection),
       addExportContractFields(connection),
@@ -40,6 +43,7 @@ const updateApplications = async (connection: Connection) => {
       updatePolicyCurrencyCodeVarChar(connection),
       updatePolicyContactPositionCodeVarChar(connection),
       updateApplicationVersion(connection),
+      updateApplicationMigrated(connection),
     ]);
 
     return tables;
