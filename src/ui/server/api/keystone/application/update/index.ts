@@ -4,6 +4,7 @@ import buyer from './buyer';
 import buyerTradingHistory from './buyerTradingHistory';
 import buyerRelationship from './buyerRelationship';
 import company from './company';
+import companyPostDataMigration from './companyPostDataMigration';
 import declarations from '../declarations';
 import companyDifferentTradingAddress from './companyDifferentTradingAddress';
 import exportContract from './exportContract';
@@ -31,6 +32,7 @@ const update = {
   buyerRelationship,
   buyerTradingHistory,
   company,
+  companyPostDataMigration,
   declarations: declarations.update,
   companyDifferentTradingAddress,
   exportContract,

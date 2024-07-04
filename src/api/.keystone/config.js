@@ -594,6 +594,7 @@ var CUSTOM_RESOLVERS = [
   "getCompaniesHouseInformation",
   "getApplicationByReferenceNumber",
   "submitApplication",
+  "updateCompanyPostDataMigration",
   // feedback
   "createFeedbackAndSendEmail",
   "getApimCisCountries",
@@ -3044,6 +3045,12 @@ var typeDefs = `
       iban: String
       bicSwiftCode: String
     ): SuccessResponse
+
+    """ update a company (post data migration) """
+    updateCompanyPostDataMigration(
+      id: String
+      company: CompanyInput
+    ): SuccessResponse
   }
 
   type Query {
@@ -3752,6 +3759,7 @@ var accountSignInChecks = async (context, account2, urlOrigin) => {
     }
     console.info("Signing in account - account is verified. Generating and sending an OTP");
     const { securityCode } = await generate_otp_and_update_account_default(context, accountId);
+    console.log("======== securityCode ", securityCode);
     const name = get_full_name_string_default(account2);
     const emailResponse = await emails_default.accessCodeEmail(email, name, String(securityCode));
     if (emailResponse?.success) {
@@ -7775,6 +7783,41 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
 };
 var verify_account_reactivation_token_default = verifyAccountReactivationToken;
 
+// custom-resolvers/mutations/update-company-post-data-migration/index.ts
+var updateCompanyPostDataMigration = async (root, variables, context) => {
+  try {
+    console.info("Updating company (post data migration) %s", variables.id);
+    const { id, company } = variables;
+    const {
+      registeredOfficeAddress,
+      industrySectorNames: industrySectorNames2,
+      sicCodes,
+      ...otherFields
+    } = company;
+    const updatedCompany = await context.db.Company.updateOne({
+      where: {
+        id
+      },
+      data: otherFields
+    });
+    const { id: addressId, ...addressFields } = registeredOfficeAddress;
+    await context.db.CompanyAddress.updateOne({
+      where: {
+        id: updatedCompany.registeredOfficeAddressId
+      },
+      data: addressFields
+    });
+    await create_company_sic_codes_default(context, sicCodes, industrySectorNames2, updatedCompany.id);
+    return {
+      success: true
+    };
+  } catch (err) {
+    console.error("Error updating company (post data migration) %O", err);
+    throw new Error(`Updating company (post data migration) ${err}`);
+  }
+};
+var update_company_post_data_migration_default = updateCompanyPostDataMigration;
+
 // helpers/encrypt/index.ts
 var import_crypto12 = __toESM(require("crypto"));
 
@@ -8648,6 +8691,7 @@ var customResolvers = {
     submitApplication: submit_application_default,
     createFeedbackAndSendEmail: create_feedback_default,
     verifyAccountReactivationToken: verify_account_reactivation_token_default,
+    updateCompanyPostDataMigration: update_company_post_data_migration_default,
     updateLossPayeeFinancialDetailsUk: update_loss_payee_financial_details_uk_default,
     updateLossPayeeFinancialDetailsInternational: update_loss_payee_financial_details_international_default
   },

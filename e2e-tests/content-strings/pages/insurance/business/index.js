@@ -7,18 +7,14 @@ export const ROOT = {
   INTRO: 'In this section, we want to understand more about your business and the types of products or services you export.',
   LIST: {
     INTRO: "We'll ask you to tell us:",
-    ITEMS: [
-      'what your estimated annual turnover is for this year',
-      'if you have any credit management processes',
-    ],
+    ITEMS: ['what your estimated annual turnover is for this year', 'if you have any credit management processes'],
   },
   OUTRO: 'It should only take a few minutes to complete.',
 };
 
-export const COMPANIES_HOUSE_NUMBER = {
+export const ENTER_COMPANIES_HOUSE_NUMBER = {
   ...SHARED,
   PAGE_TITLE: 'Enter your Companies House registration number (CRN)',
-  NO_COMPANIES_HOUSE_NUMBER: 'I do not have a UK Companies House registration number',
 };
 
 export const COMPANY_DETAILS = {
