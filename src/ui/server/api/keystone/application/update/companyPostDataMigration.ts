@@ -5,7 +5,8 @@ import { ApolloResponse } from '../../../../../types';
 /**
  * updateCompanyPostDataMigration
  * Update an application's "company"
- * TODO update documentation
+ * Note: this is only consumed by V1 applications that have been migrated to V2,
+ * that do not have company data. Company data is required in V2.
  * @param {String} Company ID
  * @param {Object} Company update
  * @returns {Promise<Object>} Updated company
