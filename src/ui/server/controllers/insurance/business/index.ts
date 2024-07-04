@@ -6,7 +6,7 @@ import getUserNameFromSession from '../../../helpers/get-user-name-from-session'
 import { Request, Response } from '../../../../types';
 
 const {
-  EXPORTER_BUSINESS: { COMPANY_DETAILS_ROOT },
+  EXPORTER_BUSINESS: { COMPANY_DETAILS_ROOT, ENTER_COMPANIES_HOUSE_NUMBER },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -27,10 +27,28 @@ export const get = (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
+    let START_NOW_ROUTE = COMPANY_DETAILS_ROOT;
+
+    /**
+     * If an application has:
+     * 1) Migrated from V1 to V2
+     * 2) Does not have a company number,
+     * Change the START_NOW_ROUTE to ENTER_COMPANIES_HOUSE_NUMBER.
+     * Otherwise, such applications will not be able to provide company data,
+     * and it will be impossible to complete the application.
+     */
+    const { migratedV1toV2, company, referenceNumber } = application;
+
+    const userNeedsToProvideCompaniesHouseNumber = migratedV1toV2 && !company.companyNumber;
+
+    if (userNeedsToProvideCompaniesHouseNumber) {
+      START_NOW_ROUTE = ENTER_COMPANIES_HOUSE_NUMBER;
+    }
+
     return res.render(TEMPLATE, {
       ...sectionStartPageVariables({
-        REFERENCE_NUMBER: application.referenceNumber,
-        START_NOW_ROUTE: COMPANY_DETAILS_ROOT,
+        REFERENCE_NUMBER: referenceNumber,
+        START_NOW_ROUTE,
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.ROOT,
         BACK_LINK: req.headers.referer,
       }),

@@ -3284,6 +3284,9 @@ type Mutation {
 
   """ update loss payee financial international """
   updateLossPayeeFinancialDetailsInternational(id: String, bankAddress: String, iban: String, bicSwiftCode: String): SuccessResponse
+
+  """ update a company (post data migration) """
+  updateCompanyPostDataMigration(id: String, company: CompanyInput): SuccessResponse
 }
 
 union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure

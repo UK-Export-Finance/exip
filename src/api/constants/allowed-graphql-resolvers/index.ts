@@ -70,6 +70,7 @@ const CUSTOM_RESOLVERS = [
   'getCompaniesHouseInformation',
   'getApplicationByReferenceNumber',
   'submitApplication',
+  'updateCompanyPostDataMigration',
 
   // feedback
   'createFeedbackAndSendEmail',
