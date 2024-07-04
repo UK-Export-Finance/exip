@@ -56,6 +56,7 @@ model Application {
   sectionReviewId                      String?               @map("sectionReview")
   version                              String                @default("2")
   dealType                             String                @default("EXIP") @mysql.VarChar(4)
+  migratedV1toV2                       Boolean?
   from_ReferenceNumber_application     ReferenceNumber[]     @relation("ReferenceNumber_application")
   from_NominatedLossPayee_application  NominatedLossPayee[]  @relation("NominatedLossPayee_application")
   from_Policy_application              Policy[]              @relation("Policy_application")

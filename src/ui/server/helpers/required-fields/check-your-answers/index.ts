@@ -20,7 +20,7 @@ const requiredFields = (application: ApplicationFlat): Array<string> => [
   ...requiredEligibilityFields(),
   ...requiredExportContractFields(application),
   ...requiredPolicyFields(application[POLICY_TYPE]),
-  ...requiredSectionReviewFields,
+  ...requiredSectionReviewFields(application),
   ...requiredYourBuyerFields({}),
 ];
 
