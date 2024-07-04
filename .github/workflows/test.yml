@@ -311,6 +311,7 @@ jobs:
             "submit-name-fields-with-special-characters/**/*.spec.js",
             "submit-textarea-fields-with-new-line-characters/**/*.spec.js",
             "submit-textarea-fields-with-special-characters/**/*.spec.js",
+            "submit-textarea-fields-with-a-pure-number/**/*.spec.js",
             "task-list/**/*.spec.js",
             "your-business/alternative-trading-address/**/*.spec.js",
             "your-business/change-your-answers/**/*.spec.js",

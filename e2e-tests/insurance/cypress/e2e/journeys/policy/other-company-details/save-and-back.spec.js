@@ -7,9 +7,7 @@ const { REQUESTED_JOINTLY_INSURED_PARTY: FIXTURES } = application;
 
 const {
   ROOT,
-  POLICY: {
-    OTHER_COMPANY_DETAILS,
-  },
+  POLICY: { OTHER_COMPANY_DETAILS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -91,7 +89,7 @@ context('Insurance - Policy - Other company details page - Save and back', () =>
     it('should redirect to `all sections` and retain the `insurance policy` task status as `in progress`', () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitOtherCompanyDetailsForm();
+      cy.completeAndSubmitOtherCompanyDetailsForm({});
 
       cy.clickSaveAndBackButton();
 

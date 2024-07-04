@@ -53,7 +53,7 @@ context(`Insurance - Policy - Other company details page - Changing ${REQUESTED}
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitOtherCompanyDetailsForm();
+      cy.completeAndSubmitOtherCompanyDetailsForm({});
 
       /**
        * Go back to the "other company"
