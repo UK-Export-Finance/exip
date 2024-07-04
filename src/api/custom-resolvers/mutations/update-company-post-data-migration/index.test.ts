@@ -124,5 +124,5 @@ describe('custom-resolvers/update-company-post-data-migration', () => {
     });
   });
 
-  // TODO: error handling for CompanyAddress, CompanySicCode
+  // TODO: EMS-3550 error handling for CompanyAddress, CompanySicCode
 });
