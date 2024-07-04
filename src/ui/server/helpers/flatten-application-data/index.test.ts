@@ -149,6 +149,7 @@ describe('server/helpers/flatten-application-data', () => {
         createdAt: mockApplication.createdAt,
         updatedAt: mockApplication.updatedAt,
         dealType: mockApplication.dealType,
+        migratedV1toV2: mockApplication.migratedV1toV2,
         submissionCount: mockApplication.submissionCount,
         submissionDeadline: mockApplication.submissionDeadline,
         submissionType: mockApplication.submissionType,

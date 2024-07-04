@@ -518,6 +518,7 @@ var INSURANCE_FIELD_IDS = {
     ALTERNATIVE_CURRENCY_CODE: "alternativeCurrencyCode"
   },
   SUBMISSION_DEADLINE: "submissionDeadline",
+  MIGRATED_FROM_V1_TO_V2: "migratedV1toV2",
   ACCOUNT: account_default,
   POLICY: policy_default,
   EXPORTER_BUSINESS: business_default,
@@ -1723,7 +1724,8 @@ var lists = {
         defaultValue: DEAL_TYPE,
         validation: { isRequired: true },
         db: { nativeType: "VarChar(4)" }
-      })
+      }),
+      migratedV1toV2: nullable_checkbox_default()
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData, context }) => {
@@ -7238,10 +7240,7 @@ var mapAgentChargeAmount = (charge, countries) => {
   const payableCountryRow = xlsx_row_default(String(FIELDS27.AGENT_CHARGES[PAYABLE_COUNTRY_CODE2]), country.name);
   if (charge[FIXED_SUM_AMOUNT2]) {
     const currencyValue = format_currency_default2(Number(charge[FIXED_SUM_AMOUNT2]), charge[FIXED_SUM_CURRENCY_CODE]);
-    const mapped = [
-      xlsx_row_default(String(FIELDS27.AGENT_CHARGES[FIXED_SUM_AMOUNT2]), currencyValue),
-      payableCountryRow
-    ];
+    const mapped = [xlsx_row_default(String(FIELDS27.AGENT_CHARGES[FIXED_SUM_AMOUNT2]), currencyValue), payableCountryRow];
     return mapped;
   }
   if (charge[PERCENTAGE_CHARGE2]) {
