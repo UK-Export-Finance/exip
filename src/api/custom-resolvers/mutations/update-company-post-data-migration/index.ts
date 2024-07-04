@@ -37,7 +37,9 @@ const updateCompanyPostDataMigration = async (root: any, variables: UpdateCompan
       data: addressFields,
     });
 
-    await createCompanySicCodes(context, sicCodes, industrySectorNames, updatedCompany.id);
+    if (sicCodes) {
+      await createCompanySicCodes(context, sicCodes, industrySectorNames, updatedCompany.id);
+    }
 
     return {
       success: true,

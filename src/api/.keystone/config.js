@@ -7786,6 +7786,7 @@ var verify_account_reactivation_token_default = verifyAccountReactivationToken;
 var updateCompanyPostDataMigration = async (root, variables, context) => {
   try {
     console.info("Updating company (post data migration) %s", variables.id);
+    console.log(">>> variables ", variables);
     const { id, company } = variables;
     const { registeredOfficeAddress, industrySectorNames: industrySectorNames2, sicCodes, ...otherFields } = company;
     const updatedCompany = await context.db.Company.updateOne({
@@ -7801,7 +7802,9 @@ var updateCompanyPostDataMigration = async (root, variables, context) => {
       },
       data: addressFields
     });
-    await create_company_sic_codes_default(context, sicCodes, industrySectorNames2, updatedCompany.id);
+    if (sicCodes) {
+      await create_company_sic_codes_default(context, sicCodes, industrySectorNames2, updatedCompany.id);
+    }
     return {
       success: true
     };
