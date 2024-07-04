@@ -3759,7 +3759,6 @@ var accountSignInChecks = async (context, account2, urlOrigin) => {
     }
     console.info("Signing in account - account is verified. Generating and sending an OTP");
     const { securityCode } = await generate_otp_and_update_account_default(context, accountId);
-    console.log("======== securityCode ", securityCode);
     const name = get_full_name_string_default(account2);
     const emailResponse = await emails_default.accessCodeEmail(email, name, String(securityCode));
     if (emailResponse?.success) {
@@ -7788,12 +7787,7 @@ var updateCompanyPostDataMigration = async (root, variables, context) => {
   try {
     console.info("Updating company (post data migration) %s", variables.id);
     const { id, company } = variables;
-    const {
-      registeredOfficeAddress,
-      industrySectorNames: industrySectorNames2,
-      sicCodes,
-      ...otherFields
-    } = company;
+    const { registeredOfficeAddress, industrySectorNames: industrySectorNames2, sicCodes, ...otherFields } = company;
     const updatedCompany = await context.db.Company.updateOne({
       where: {
         id

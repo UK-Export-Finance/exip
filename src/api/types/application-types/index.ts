@@ -81,7 +81,7 @@ export interface ApplicationCompanyCore {
   companyName: string;
   companyNumber: string;
   dateOfCreation: Date;
-  differentTradingAddress: ApplicationCompanyDifferentTradingAddress;
+  differentTradingAddress?: ApplicationCompanyDifferentTradingAddress;
   industrySectorNames: Array<string>;
   financialYearEndDate: Date;
   hasDifferentTradingName?: boolean;
