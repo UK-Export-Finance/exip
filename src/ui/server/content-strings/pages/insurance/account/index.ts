@@ -133,7 +133,7 @@ const ACCOUNT = {
       IF_YOU_WOULD_LIKE: 'If you would still like to reset your password we can send you a new link.',
     },
     NEW_PASSWORD: {
-      PAGE_TITLE: 'Reset your password',
+      PAGE_TITLE: 'Reset the password for your UKEF credit insurance account',
     },
     SUCCESS: {
       PAGE_TITLE: "You've successfully reset your password",
