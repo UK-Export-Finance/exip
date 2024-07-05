@@ -10,7 +10,10 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * @param {String} agentChargeFixedSumAmount: Agent charge fixed sum amount
  * @param {Boolean} agentChargeMethodPercentage: Agent charge method is "percentage".
  * @param {Boolean} agentIsCharging: Should submit "yes" to "agent is charging" in the "agent details" form.
- * @param {Boolean} alternativeBuyerCurrency: Should submit an "alternative currency" in the buyer section.
+ * @param {Boolean} alternativeCurrencyBuyer: Should submit an "buyer - alternative currency"
+ * @param {Boolean} alternativeCurrencyExportContract: Select the "agent - alternative currency" option
+ * @param {Boolean} alternativeCurrencyTurnover: Select the "turnover - alternative currency" option
+ * @param {Boolean} alternativeCurrencyPolicy: Select the "policy - alternative currency" option
  * @param {Boolean} attemptedPrivateMarketCover: Should submit "yes" to "attempted to insure through the private market" form.
  * @param {Boolean} buyerOutstandingPayments: Exporter has outstanding payments with the buyer.
  * @param {Boolean} buyerFailedToPayOnTime: Buyer has failed to pay the exporter on the time.
@@ -33,11 +36,12 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * @param {Boolean} submitCheckYourAnswers: Should click each section's "check your answers" submit button.
  * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker".
- * @param {Boolean} alternativeCurrencyTurnover: Select the "alternative currency" option
- * @param {Boolean} alternativeCurrencyPolicy: Select the "alternative currency" option
  */
 const completePrepareApplicationSinglePolicyType = ({
-  alternativeBuyerCurrency = false,
+  alternativeCurrencyBuyer = false,
+  alternativeCurrencyExportContract = false,
+  alternativeCurrencyTurnover = false,
+  alternativeCurrencyPolicy = false,
   differentTradingName = false,
   differentTradingAddress = false,
   hasCreditControlProcess = false,
@@ -64,8 +68,6 @@ const completePrepareApplicationSinglePolicyType = ({
   agentChargeFixedSumAmount,
   agentChargeMethodPercentage = false,
   submitCheckYourAnswers = true,
-  alternativeCurrencyTurnover = false,
-  alternativeCurrencyPolicy = false,
 }) => {
   cy.completeBusinessSection({
     differentTradingName,
@@ -76,7 +78,7 @@ const completePrepareApplicationSinglePolicyType = ({
   });
 
   cy.completeBuyerSection({
-    alternativeCurrency: alternativeBuyerCurrency,
+    alternativeCurrency: alternativeCurrencyBuyer,
     hasConnectionToBuyer,
     exporterHasTradedWithBuyer,
     outstandingPayments: buyerOutstandingPayments,
@@ -106,6 +108,7 @@ const completePrepareApplicationSinglePolicyType = ({
     agentChargeMethodFixedSum,
     agentChargeFixedSumAmount,
     agentChargeMethodPercentage,
+    alternativeCurrency: alternativeCurrencyExportContract,
     attemptedPrivateMarketCover,
     finalDestinationKnown,
     isUsingAgent,

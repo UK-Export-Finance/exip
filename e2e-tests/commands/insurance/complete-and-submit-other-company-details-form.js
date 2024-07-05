@@ -11,9 +11,10 @@ const { REQUESTED_JOINTLY_INSURED_PARTY: FIXTURES } = application;
 /**
  * completeAndSubmitOtherCompanyDetailsForm
  * Complete and submit the "Other company details" form
+ * @param {String} companyName: input for the COMPANY_NAME field
  */
-const completeAndSubmitOtherCompanyDetailsForm = () => {
-  cy.keyboardInput(field(COMPANY_NAME).input(), FIXTURES[COMPANY_NAME]);
+const completeAndSubmitOtherCompanyDetailsForm = ({ companyName = FIXTURES[COMPANY_NAME] }) => {
+  cy.keyboardInput(field(COMPANY_NAME).input(), companyName);
   cy.keyboardInput(autoCompleteField(COUNTRY_CODE).input(), FIXTURES[COUNTRY_CODE]);
   cy.keyboardInput(field(COMPANY_NUMBER).input(), FIXTURES[COMPANY_NUMBER]);
 

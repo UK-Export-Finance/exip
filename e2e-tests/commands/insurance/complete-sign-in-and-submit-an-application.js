@@ -11,7 +11,10 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * @param {Boolean} agentChargeMethodFixedSum: Agent charge method is "fixed sum".
  * @param {Boolean} agentChargeMethodPercentage: Agent charge method is "percentage".
  * @param {Boolean} agentIsCharging: Should submit "yes" to "agent is charging" in the "agent details" form.
- * @param {Boolean} alternativeBuyerCurrency: Should submit an "alternative currency" in the buyer section.
+ * @param {Boolean} alternativeCurrencyBuyer: Should submit an "buyer - alternative currency".
+ * @param {Boolean} alternativeCurrencyExportContract: Select the "export contract - alternative currency" option
+ * @param {Boolean} alternativeCurrencyTurnover: Select the "turnover - alternative currency" option
+ * @param {Boolean} alternativeCurrencyPolicy: Select the "policy - alternative currency" option
  * @param {Boolean} attemptedPrivateMarketCover: Should submit "yes" to "attempted to insure through the private market" form.
  * @param {Boolean} buyerOutstandingPayments: Exporter has outstanding payments with the buyer.
  * @param {Boolean} buyerFailedToPayOnTime: Buyer has failed to pay the exporter on the time.
@@ -36,12 +39,13 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * @param {Boolean} submitCheckYourAnswers: Should click each section's "check your answers" submit button.
  * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker".
- * @param {Boolean} alternativeCurrencyTurnover: Select the "alternative currency" option
- * @param {Boolean} alternativeCurrencyPolicy: Select the "alternative currency" option
  * @return {String} Application reference number
  */
 const completeSignInAndSubmitAnApplication = ({
-  alternativeBuyerCurrency = false,
+  alternativeCurrencyBuyer = false,
+  alternativeCurrencyExportContract = false,
+  alternativeCurrencyTurnover = false,
+  alternativeCurrencyPolicy = false,
   agentIsCharging = false,
   agentChargeMethodFixedSum = false,
   agentChargeMethodPercentage = false,
@@ -70,8 +74,6 @@ const completeSignInAndSubmitAnApplication = ({
   policyValueOverMvpMaximum = false,
   totalContractValueOverThreshold = false,
   usingBroker = false,
-  alternativeCurrencyTurnover = false,
-  alternativeCurrencyPolicy = false,
 }) => {
   completeSignInAndGoToApplication({
     companyNumber,
@@ -84,7 +86,10 @@ const completeSignInAndSubmitAnApplication = ({
         agentChargeMethodPercentage,
         agentIsCharging,
         attemptedPrivateMarketCover,
-        alternativeBuyerCurrency,
+        alternativeCurrencyBuyer,
+        alternativeCurrencyExportContract,
+        alternativeCurrencyTurnover,
+        alternativeCurrencyPolicy,
         buyerOutstandingPayments,
         buyerFailedToPayOnTime,
         differentPolicyContact,
@@ -105,15 +110,16 @@ const completeSignInAndSubmitAnApplication = ({
         referenceNumber,
         totalContractValueOverThreshold,
         usingBroker,
-        alternativeCurrencyTurnover,
-        alternativeCurrencyPolicy,
       });
     } else {
       cy.completePrepareApplicationSinglePolicyType({
         agentChargeMethodFixedSum,
         agentChargeMethodPercentage,
         agentIsCharging,
-        alternativeBuyerCurrency,
+        alternativeCurrencyBuyer,
+        alternativeCurrencyExportContract,
+        alternativeCurrencyTurnover,
+        alternativeCurrencyPolicy,
         attemptedPrivateMarketCover,
         buyerFailedToPayOnTime,
         buyerOutstandingPayments,
@@ -135,8 +141,6 @@ const completeSignInAndSubmitAnApplication = ({
         referenceNumber,
         totalContractValueOverThreshold,
         usingBroker,
-        alternativeCurrencyTurnover,
-        alternativeCurrencyPolicy,
       });
     }
     cy.completeAndSubmitCheckYourAnswers();

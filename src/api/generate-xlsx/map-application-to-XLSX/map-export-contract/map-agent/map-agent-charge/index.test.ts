@@ -4,7 +4,7 @@ import { XLSX } from '../../../../../content-strings';
 import xlsxRow from '../../../helpers/xlsx-row';
 import mapYesNoField from '../../../helpers/map-yes-no-field';
 import mapAgentChargeAmount from './map-agent-charge-amount';
-import { mockApplicationMinimalBrokerBuyerAndCompany as mockApplication } from '../../../../../test-mocks';
+import { mockApplicationMinimalBrokerBuyerAndCompany as mockApplication, mockCountries } from '../../../../../test-mocks';
 
 const { FIELDS } = XLSX;
 
@@ -26,11 +26,11 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-export-contract/map-agen
     };
 
     it('should return an array of mapped fields', () => {
-      const result = mapAgentCharge(mockService);
+      const result = mapAgentCharge(mockService, mockCountries);
 
       const expected = [
         xlsxRow(String(FIELDS.AGENT_SERVICE[IS_CHARGING]), mapYesNoField({ answer: mockService[IS_CHARGING] })),
-        ...mapAgentChargeAmount(mockService.charge),
+        ...mapAgentChargeAmount(mockService.charge, mockCountries),
       ];
 
       expect(result).toEqual(expected);
@@ -44,7 +44,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-export-contract/map-agen
     };
 
     it('should return an array with one field', () => {
-      const result = mapAgentCharge(mockService);
+      const result = mapAgentCharge(mockService, mockCountries);
 
       const expected = [xlsxRow(String(FIELDS.AGENT_SERVICE[IS_CHARGING]), mapYesNoField({ answer: mockService[IS_CHARGING] }))];
 

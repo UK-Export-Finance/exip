@@ -123,6 +123,7 @@ const flattenApplicationData = (application: Application): ApplicationFlat => {
       createdAt: application.createdAt,
       updatedAt: application.updatedAt,
       dealType: application.dealType,
+      migratedV1toV2: application.migratedV1toV2,
       submissionCount: application.submissionCount,
       submissionDeadline: application.submissionDeadline,
       submissionType: application.submissionType,
