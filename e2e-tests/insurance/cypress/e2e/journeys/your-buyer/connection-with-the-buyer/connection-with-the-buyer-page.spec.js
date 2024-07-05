@@ -1,4 +1,9 @@
-import { field as fieldSelector, headingCaption, yesRadio, noRadio } from '../../../../../../pages/shared';
+import {
+  field as fieldSelector,
+  headingCaption,
+  yesRadio,
+  noRadio,
+} from '../../../../../../pages/shared';
 import { connectionWithBuyerPage } from '../../../../../../pages/insurance/your-buyer';
 import { PAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
