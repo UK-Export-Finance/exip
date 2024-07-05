@@ -1,11 +1,4 @@
-import {
-  APPLICATION,
-  ELIGIBILITY,
-  FIELD_IDS,
-  MINIMUM_CHARACTERS,
-  MAXIMUM_CHARACTERS,
-  TOTAL_CONTRACT_VALUE,
-} from '../constants';
+import { APPLICATION, ELIGIBILITY, FIELD_IDS, MINIMUM_CHARACTERS, MAXIMUM_CHARACTERS, TOTAL_CONTRACT_VALUE } from '../constants';
 import formatCurrency from '../helpers/format-currency';
 
 const {
@@ -439,7 +432,7 @@ export const ERROR_MESSAGES = {
         IS_EMPTY: 'Select if the end buyer has ever failed to pay you on time',
       },
       [FIELD_IDS.INSURANCE.CURRENCY.CURRENCY_CODE]: {
-        IS_EMPTY: 'You must select the currency the outstanding or overdue payments are in',
+        IS_EMPTY: 'Select the currency the outstanding or overdue payments are in',
       },
       [FIELD_IDS.INSURANCE.CURRENCY.ALTERNATIVE_CURRENCY_CODE]: {
         IS_EMPTY: 'Enter the currency the outstanding or overdue payments are in',
