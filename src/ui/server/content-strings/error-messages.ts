@@ -212,7 +212,7 @@ export const ERROR_MESSAGES = {
       },
       AGENT_CHARGES_ALTERNATIVE_CURRENCY: {
         [FIELD_IDS.INSURANCE.CURRENCY.CURRENCY_CODE]: {
-          IS_EMPTY: 'You must select the currency the agent is charging you in',
+          IS_EMPTY: 'Select the currency the agent is charging you in',
         },
         [FIELD_IDS.INSURANCE.CURRENCY.ALTERNATIVE_CURRENCY_CODE]: {
           IS_EMPTY: 'Enter the currency the agent is charging you in',
