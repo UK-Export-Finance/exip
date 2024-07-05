@@ -48,7 +48,7 @@ const completeSignInAndSubmitAnApplication = ({
   attemptedPrivateMarketCover = false,
   buyerOutstandingPayments = false,
   buyerFailedToPayOnTime = false,
-  createApplicationViaApi = false,
+  createApplicationViaApi,
   companyNumber,
   differentPolicyContact = false,
   differentTradingName = false,
