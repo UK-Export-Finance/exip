@@ -142,7 +142,7 @@ describe('shared-validation/requested-start-date', () => {
 
   describe('when there are no validation errors', () => {
     it('should return the provided errors object', () => {
-      const futureDate = new Date(date.setMonth(month + 6));
+      const futureDate = new Date(date.setMonth(month + 2));
 
       const mockSubmittedData = {
         [`${FIELD_ID}-day`]: futureDate.getDate(),
