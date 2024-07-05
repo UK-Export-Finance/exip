@@ -10,6 +10,7 @@ const applicationQuery = gql`
         createdAt
         updatedAt
         dealType
+        migratedV1toV2
         submissionCount
         submissionDeadline
         submissionType

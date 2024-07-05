@@ -208,6 +208,7 @@ const mockApplication = {
   sectionReview: mockSectionReview,
   declaration: mockApplicationDeclaration,
   totalContractValueOverThreshold: false,
+  migratedV1toV2: false,
 };
 
 export const mockApplicationAgentServiceChargeEmpty = {

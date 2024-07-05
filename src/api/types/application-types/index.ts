@@ -62,6 +62,7 @@ export interface ApplicationBuyerMvp extends Relationship {
 }
 
 export interface ApplicationCompanyAddressCore {
+  id?: string;
   addressLine1?: string;
   addressLine2?: string;
   careOf?: string;
@@ -80,7 +81,7 @@ export interface ApplicationCompanyCore {
   companyName: string;
   companyNumber: string;
   dateOfCreation: Date;
-  differentTradingAddress: ApplicationCompanyDifferentTradingAddress;
+  differentTradingAddress?: ApplicationCompanyDifferentTradingAddress;
   industrySectorNames: Array<string>;
   financialYearEndDate: Date;
   hasDifferentTradingName?: boolean;
@@ -346,4 +347,9 @@ export interface GetApplicationByReferenceNumberResponse extends SuccessResponse
 
 export interface SubmitApplicationVariables {
   applicationId: string;
+}
+
+export interface UpdateCompanyPostDataMigrationVariables extends Relationship {
+  id: string;
+  company: ApplicationCompanyCore;
 }

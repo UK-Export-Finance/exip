@@ -518,6 +518,7 @@ var INSURANCE_FIELD_IDS = {
     ALTERNATIVE_CURRENCY_CODE: "alternativeCurrencyCode"
   },
   SUBMISSION_DEADLINE: "submissionDeadline",
+  MIGRATED_FROM_V1_TO_V2: "migratedV1toV2",
   ACCOUNT: account_default,
   POLICY: policy_default,
   EXPORTER_BUSINESS: business_default,
@@ -593,6 +594,7 @@ var CUSTOM_RESOLVERS = [
   "getCompaniesHouseInformation",
   "getApplicationByReferenceNumber",
   "submitApplication",
+  "updateCompanyPostDataMigration",
   // feedback
   "createFeedbackAndSendEmail",
   "getApimCisCountries",
@@ -1723,7 +1725,8 @@ var lists = {
         defaultValue: DEAL_TYPE,
         validation: { isRequired: true },
         db: { nativeType: "VarChar(4)" }
-      })
+      }),
+      migratedV1toV2: nullable_checkbox_default()
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData, context }) => {
@@ -3041,6 +3044,12 @@ var typeDefs = `
       bankAddress: String
       iban: String
       bicSwiftCode: String
+    ): SuccessResponse
+
+    """ update a company (post data migration) """
+    updateCompanyPostDataMigration(
+      id: String
+      company: CompanyInput
     ): SuccessResponse
   }
 
@@ -7233,13 +7242,12 @@ var { FIELDS: FIELDS27 } = XLSX;
 var {
   AGENT_CHARGES: { FIXED_SUM_AMOUNT: FIXED_SUM_AMOUNT2, FIXED_SUM_CURRENCY_CODE, PAYABLE_COUNTRY_CODE: PAYABLE_COUNTRY_CODE2, PERCENTAGE_CHARGE: PERCENTAGE_CHARGE2 }
 } = export_contract_default;
-var mapAgentChargeAmount = (charge) => {
-  const payableCountryRow = xlsx_row_default(String(FIELDS27.AGENT_CHARGES[PAYABLE_COUNTRY_CODE2]), charge[PAYABLE_COUNTRY_CODE2]);
+var mapAgentChargeAmount = (charge, countries) => {
+  const country = get_country_by_iso_code_default(countries, charge[PAYABLE_COUNTRY_CODE2]);
+  const payableCountryRow = xlsx_row_default(String(FIELDS27.AGENT_CHARGES[PAYABLE_COUNTRY_CODE2]), country.name);
   if (charge[FIXED_SUM_AMOUNT2]) {
-    const mapped = [
-      xlsx_row_default(String(FIELDS27.AGENT_CHARGES[FIXED_SUM_AMOUNT2]), format_currency_default2(charge[FIXED_SUM_AMOUNT2], charge[FIXED_SUM_CURRENCY_CODE])),
-      payableCountryRow
-    ];
+    const currencyValue = format_currency_default2(Number(charge[FIXED_SUM_AMOUNT2]), charge[FIXED_SUM_CURRENCY_CODE]);
+    const mapped = [xlsx_row_default(String(FIELDS27.AGENT_CHARGES[FIXED_SUM_AMOUNT2]), currencyValue), payableCountryRow];
     return mapped;
   }
   if (charge[PERCENTAGE_CHARGE2]) {
@@ -7255,12 +7263,12 @@ var { FIELDS: FIELDS28 } = XLSX;
 var {
   AGENT_SERVICE: { IS_CHARGING: IS_CHARGING2 }
 } = export_contract_default;
-var mapAgentCharge = (service) => {
+var mapAgentCharge = (service, countries) => {
   const { charge } = service;
   const chargingAnswer = service[IS_CHARGING2];
   let mapped = [xlsx_row_default(String(FIELDS28.AGENT_SERVICE[IS_CHARGING2]), map_yes_no_field_default({ answer: chargingAnswer }))];
   if (chargingAnswer) {
-    mapped = [...mapped, ...map_agent_charge_amount_default(charge)];
+    mapped = [...mapped, ...map_agent_charge_amount_default(charge, countries)];
   }
   return mapped;
 };
@@ -7285,7 +7293,7 @@ var mapAgent = (agent, countries) => {
       xlsx_row_default(String(FIELDS29.AGENT[FULL_ADDRESS5]), agent[FULL_ADDRESS5]),
       xlsx_row_default(String(FIELDS29.AGENT[COUNTRY_CODE3]), country.name),
       xlsx_row_default(String(FIELDS29.AGENT_SERVICE[SERVICE_DESCRIPTION2]), service[SERVICE_DESCRIPTION2]),
-      ...map_agent_charge_default(service)
+      ...map_agent_charge_default(service, countries)
     ];
   }
   return mapped;
@@ -7773,6 +7781,39 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
   }
 };
 var verify_account_reactivation_token_default = verifyAccountReactivationToken;
+
+// custom-resolvers/mutations/update-company-post-data-migration/index.ts
+var updateCompanyPostDataMigration = async (root, variables, context) => {
+  try {
+    console.info("Updating company (post data migration) %s", variables.id);
+    console.log(">>> variables ", variables);
+    const { id, company } = variables;
+    const { registeredOfficeAddress, industrySectorNames: industrySectorNames2, sicCodes, ...otherFields } = company;
+    const updatedCompany = await context.db.Company.updateOne({
+      where: {
+        id
+      },
+      data: otherFields
+    });
+    const { id: addressId, ...addressFields } = registeredOfficeAddress;
+    await context.db.CompanyAddress.updateOne({
+      where: {
+        id: updatedCompany.registeredOfficeAddressId
+      },
+      data: addressFields
+    });
+    if (sicCodes) {
+      await create_company_sic_codes_default(context, sicCodes, industrySectorNames2, updatedCompany.id);
+    }
+    return {
+      success: true
+    };
+  } catch (err) {
+    console.error("Error updating company (post data migration) %O", err);
+    throw new Error(`Updating company (post data migration) ${err}`);
+  }
+};
+var update_company_post_data_migration_default = updateCompanyPostDataMigration;
 
 // helpers/encrypt/index.ts
 var import_crypto12 = __toESM(require("crypto"));
@@ -8647,6 +8688,7 @@ var customResolvers = {
     submitApplication: submit_application_default,
     createFeedbackAndSendEmail: create_feedback_default,
     verifyAccountReactivationToken: verify_account_reactivation_token_default,
+    updateCompanyPostDataMigration: update_company_post_data_migration_default,
     updateLossPayeeFinancialDetailsUk: update_loss_payee_financial_details_uk_default,
     updateLossPayeeFinancialDetailsInternational: update_loss_payee_financial_details_international_default
   },

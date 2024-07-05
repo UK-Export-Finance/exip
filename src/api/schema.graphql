@@ -87,6 +87,7 @@ type Application {
   sectionReview: SectionReview
   version: String
   dealType: String
+  migratedV1toV2: Boolean
 }
 
 scalar DateTime @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
@@ -240,6 +241,7 @@ input ApplicationUpdateInput {
   sectionReview: SectionReviewRelateToOneForUpdateInput
   version: String
   dealType: String
+  migratedV1toV2: Boolean
 }
 
 input EligibilityRelateToOneForUpdateInput {
@@ -343,6 +345,7 @@ input ApplicationCreateInput {
   sectionReview: SectionReviewRelateToOneForCreateInput
   version: String
   dealType: String
+  migratedV1toV2: Boolean
 }
 
 input EligibilityRelateToOneForCreateInput {
@@ -3281,6 +3284,9 @@ type Mutation {
 
   """ update loss payee financial international """
   updateLossPayeeFinancialDetailsInternational(id: String, bankAddress: String, iban: String, bicSwiftCode: String): SuccessResponse
+
+  """ update a company (post data migration) """
+  updateCompanyPostDataMigration(id: String, company: CompanyInput): SuccessResponse
 }
 
 union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure

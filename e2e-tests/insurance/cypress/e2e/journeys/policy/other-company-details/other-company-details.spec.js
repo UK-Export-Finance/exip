@@ -20,7 +20,8 @@ const { REQUESTED_JOINTLY_INSURED_PARTY: FIELD_STRINGS } = FIELDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
-const story = 'As an exporter, I want to inform UKEF of any other company I would like to include on my policy, So that cover is available for all appropriate parties';
+const story =
+  'As an exporter, I want to inform UKEF of any other company I would like to include on my policy, So that cover is available for all appropriate parties';
 
 context(`Insurance - Policy - Other company details page - ${story}`, () => {
   let referenceNumber;
@@ -103,7 +104,7 @@ context(`Insurance - Policy - Other company details page - ${story}`, () => {
     it(`should redirect to ${BROKER_ROOT}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitOtherCompanyDetailsForm();
+      cy.completeAndSubmitOtherCompanyDetailsForm({});
 
       cy.assertUrl(brokerUrl);
     });

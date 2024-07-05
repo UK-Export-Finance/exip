@@ -33,7 +33,7 @@ describe('controllers/insurance/business/save-data/company-details - API error',
       try {
         await save.companyDetails(mockApplication, mockFormBody);
       } catch (err) {
-        const expected = new Error("Updating application's companyDetails");
+        const expected = new Error("Updating application's company details");
         expect(err).toEqual(expected);
       }
     });

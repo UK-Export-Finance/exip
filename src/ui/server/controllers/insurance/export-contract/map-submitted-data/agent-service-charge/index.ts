@@ -1,7 +1,7 @@
 import { APPLICATION } from '../../../../../constants';
 import FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import { objectHasProperty } from '../../../../../helpers/object';
-import { isEmptyString } from '../../../../../helpers/string';
+import { isEmptyString, stripCommas } from '../../../../../helpers/string';
 import { RequestBody } from '../../../../../../types';
 
 const {
@@ -31,7 +31,7 @@ const mapSubmittedData = (formBody: RequestBody): object => {
   const populatedData = formBody;
 
   if (formBody[METHOD] === FIXED_SUM) {
-    populatedData[FIXED_SUM_AMOUNT] = String(populatedData[FIXED_SUM_AMOUNT]);
+    populatedData[FIXED_SUM_AMOUNT] = stripCommas(String(populatedData[FIXED_SUM_AMOUNT]));
     populatedData[PERCENTAGE_CHARGE] = null;
   }
 

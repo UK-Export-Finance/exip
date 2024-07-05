@@ -1,6 +1,6 @@
 import mapApplicationSubmissionDeadlineVariables from '../../map-application-submission-deadline-variables';
 import sendEmail from '../../../emails';
-import { Application, EmailResponse } from '../../../types';
+import { Application } from '../../../types';
 
 /**
  * send
@@ -17,7 +17,7 @@ const send = async (applications: Array<Application>) => {
       const variables = mapApplicationSubmissionDeadlineVariables(application);
 
       return sendEmail.submissionDeadlineEmail(variables.email, variables);
-    }) as Array<Promise<EmailResponse>>;
+    });
 
     const promises = await Promise.all(mapped);
 

@@ -24,7 +24,7 @@ const companyDetails = async (application: Application, formBody: RequestBody, e
     const saveResponse = await api.keystone.application.update.company(companyId, sanitisedData);
     return saveResponse;
   } catch (err) {
-    throw new Error("Updating application's companyDetails");
+    throw new Error("Updating application's company details");
   }
 };
 

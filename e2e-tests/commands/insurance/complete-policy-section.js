@@ -63,7 +63,7 @@ const completePolicySection = ({
   cy.completeAndSubmitAnotherCompanyForm({ otherCompanyInvolved });
 
   if (otherCompanyInvolved) {
-    cy.completeAndSubmitOtherCompanyDetailsForm();
+    cy.completeAndSubmitOtherCompanyDetailsForm({});
   }
 
   cy.completeAndSubmitBrokerForm({ usingBroker });

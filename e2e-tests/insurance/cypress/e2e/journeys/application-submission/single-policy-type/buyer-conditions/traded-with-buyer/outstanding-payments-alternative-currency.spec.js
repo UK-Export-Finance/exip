@@ -3,7 +3,7 @@ context('Insurance - submit an application - Single policy type, exporter has tr
 
   before(() => {
     cy.completeSignInAndSubmitAnApplication({
-      alternativeBuyerCurrency: true,
+      alternativeCurrencyBuyer: true,
       exporterHasTradedWithBuyer: true,
       buyerOutstandingPayments: true,
       buyerFailedToPayOnTime: true,

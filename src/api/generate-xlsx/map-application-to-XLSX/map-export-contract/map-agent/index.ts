@@ -38,7 +38,7 @@ const mapAgent = (agent: ApplicationExportContractAgent, countries: Array<Countr
       xlsxRow(String(FIELDS.AGENT[COUNTRY_CODE]), country.name),
       xlsxRow(String(FIELDS.AGENT_SERVICE[SERVICE_DESCRIPTION]), service[SERVICE_DESCRIPTION]),
 
-      ...mapAgentCharge(service),
+      ...mapAgentCharge(service, countries),
     ];
   }
 
