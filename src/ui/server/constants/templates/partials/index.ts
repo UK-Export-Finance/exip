@@ -8,7 +8,8 @@ export const PARTIALS = {
         CONDITIONAL_YES_HTML: 'partials/insurance/credit-insurance-cover-conditional-yes-html.njk',
       },
       CONNECTION_WITH_BUYER: {
-        CONDITIONAL_YES_HTML: 'partials/insurance/connection-to-the-buyer-conditional-yes-html.njk',
+        CONDITIONAL_YES_HTML: 'partials/insurance/connection-with-the-buyer-conditional-yes-html.njk',
+        HINT_HTML: 'partials/insurance/connection-with-the-buyer-hint.njk',
       },
       OUTSTANDING_PAYMENTS: {
         CONDITIONAL_YES_HTML: 'partials/insurance/buyer-outstanding-payment-conditional-yes-html.njk',

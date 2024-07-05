@@ -43,7 +43,7 @@ export const pageVariables = (referenceNumber: number) => ({
   FIELDS: {
     CONNECTION_WITH_BUYER: {
       ID: CONNECTION_WITH_BUYER,
-      HINT: PAGE_CONTENT_STRINGS.HINT,
+      ...FIELDS[CONNECTION_WITH_BUYER],
     },
     CONNECTION_WITH_BUYER_DESCRIPTION: {
       ID: CONNECTION_WITH_BUYER_DESCRIPTION,
@@ -60,6 +60,7 @@ export const pageVariables = (referenceNumber: number) => ({
  * Conditional flags for the nunjucks template to match design
  */
 export const HTML_FLAGS = {
+  HINT_HTML: TEMPLATES.PARTIALS.INSURANCE.BUYER.CONNECTION_WITH_BUYER.HINT_HTML,
   CONDITIONAL_YES_HTML: CONNECTION_WITH_BUYER_PARTIALS.CONDITIONAL_YES_HTML,
   HORIZONTAL_RADIOS: true,
   NO_RADIO_AS_FIRST_OPTION: true,
@@ -91,7 +92,6 @@ export const get = (req: Request, res: Response) => {
       ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
-      FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
       applicationAnswer: application.buyer.relationship[CONNECTION_WITH_BUYER],
     });
   } catch (err) {
@@ -132,7 +132,6 @@ export const post = async (req: Request, res: Response) => {
         userName: getUserNameFromSession(req.session.user),
         validationErrors,
         submittedValues: sanitiseData(payload),
-        FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
       });
     }
 
