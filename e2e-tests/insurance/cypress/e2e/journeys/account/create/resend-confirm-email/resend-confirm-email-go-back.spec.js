@@ -2,7 +2,6 @@ import { confirmEmailPage } from '../../../../../../../pages/insurance/account/c
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
-  START,
   ACCOUNT: {
     CREATE: { CONFIRM_EMAIL, CONFIRM_EMAIL_RESENT },
   },
@@ -21,7 +20,7 @@ context('Insurance - Account - Create - Resend confirm email page - Go back to c
 
     cy.saveSession();
 
-    cy.navigateToUrl(START);
+    cy.navigateToCheckIfEligibleUrl();
 
     cy.submitEligibilityAndStartAccountCreation();
     cy.completeAndSubmitCreateAccountForm();

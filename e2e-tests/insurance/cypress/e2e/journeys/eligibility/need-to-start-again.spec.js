@@ -5,7 +5,6 @@ import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 const CONTENT_STRINGS = PAGES.NEED_TO_START_AGAIN_PAGE;
 
 const {
-  START,
   ELIGIBILITY: { BUYER_COUNTRY, EXPORTER_LOCATION, NEED_TO_START_AGAIN },
 } = INSURANCE_ROUTES;
 
@@ -16,7 +15,7 @@ const exporterLocationUrl = `${baseUrl}${EXPORTER_LOCATION}`;
 
 context('Insurance Eligibility - Need to start again exit page', () => {
   beforeEach(() => {
-    cy.navigateToUrl(START);
+    cy.navigateToCheckIfEligibleUrl();
 
     cy.saveSession();
 

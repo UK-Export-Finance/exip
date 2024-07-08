@@ -5,7 +5,6 @@ import { summaryList } from '../../../../../../pages/shared';
 const { HAS_END_BUYER } = INSURANCE_FIELD_IDS.ELIGIBILITY;
 
 const {
-  START,
   ELIGIBILITY: { END_BUYER_CHANGE, CHECK_YOUR_ANSWERS, CANNOT_APPLY_MULTIPLE_RISKS },
 } = INSURANCE_ROUTES;
 
@@ -15,7 +14,7 @@ context('Insurance - Eligibility - Change your answers - End buyer - As an expor
   const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
   before(() => {
-    cy.navigateToUrl(START);
+    cy.navigateToCheckIfEligibleUrl();
 
     cy.completeAndSubmitAllInsuranceEligibilityAnswers({});
 

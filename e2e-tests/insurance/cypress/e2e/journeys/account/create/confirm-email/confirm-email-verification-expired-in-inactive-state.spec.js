@@ -6,7 +6,6 @@ import { createDateOneMonthInThePast } from '../../../../../../../helpers/date';
 const { IS_INACTIVE } = ACCOUNT;
 
 const {
-  START,
   ACCOUNT: {
     CREATE: { CONFIRM_EMAIL, VERIFY_EMAIL, CONFIRM_EMAIL_RESENT },
   },
@@ -23,7 +22,7 @@ context(
     before(() => {
       cy.deleteAccount();
 
-      cy.navigateToUrl(START);
+      cy.navigateToCheckIfEligibleUrl();
 
       cy.submitEligibilityAndStartAccountCreation();
       cy.completeAndSubmitCreateAccountForm();

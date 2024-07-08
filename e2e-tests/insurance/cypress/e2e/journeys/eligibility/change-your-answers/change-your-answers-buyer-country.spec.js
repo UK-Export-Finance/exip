@@ -8,7 +8,6 @@ import { XAD } from '../../../../../../fixtures/countries';
 const { BUYER_COUNTRY } = INSURANCE_FIELD_IDS.ELIGIBILITY;
 
 const {
-  START,
   ELIGIBILITY: { BUYER_COUNTRY_CHANGE, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
@@ -22,7 +21,7 @@ context(
     const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
     before(() => {
-      cy.navigateToUrl(START);
+      cy.navigateToCheckIfEligibleUrl();
 
       cy.completeAndSubmitAllInsuranceEligibilityAnswers({});
 

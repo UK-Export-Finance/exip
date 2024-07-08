@@ -6,13 +6,8 @@ import { DATE_ONE_MINUTE_IN_THE_PAST } from '../../../../../../../constants/date
 import api from '../../../../../../../commands/api';
 
 const {
-  START,
   ACCOUNT: {
-    PASSWORD_RESET: {
-      NEW_PASSWORD,
-      LINK_SENT,
-      EXPIRED_LINK,
-    },
+    PASSWORD_RESET: { NEW_PASSWORD, LINK_SENT, EXPIRED_LINK },
   },
 } = INSURANCE_ROUTES;
 
@@ -26,7 +21,7 @@ context('Insurance - Account - Password reset - expired link page - send new lin
   before(() => {
     cy.deleteAccount();
 
-    cy.navigateToUrl(START);
+    cy.navigateToCheckIfEligibleUrl();
     cy.submitEligibilityAndStartAccountCreation();
     cy.completeAndSubmitCreateAccountForm();
 

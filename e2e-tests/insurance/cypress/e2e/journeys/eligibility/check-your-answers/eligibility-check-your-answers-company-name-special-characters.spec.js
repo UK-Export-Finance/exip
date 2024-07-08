@@ -4,7 +4,6 @@ import { COMPANIES_HOUSE_NUMBER_SPECIAL_CHARACTERS_NAME } from '../../../../../.
 import checkSummaryList from '../../../../../../commands/insurance/check-your-answers-eligibility-summary-list';
 
 const {
-  START,
   ELIGIBILITY: { CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
@@ -18,7 +17,7 @@ context('Insurance - Eligibility - Check your answers - company name with specia
   const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
   beforeEach(() => {
-    cy.navigateToUrl(START);
+    cy.navigateToCheckIfEligibleUrl();
 
     cy.completeAndSubmitAllInsuranceEligibilityAnswers({ companyNumber: COMPANIES_HOUSE_NUMBER_SPECIAL_CHARACTERS_NAME });
 

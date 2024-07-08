@@ -4,65 +4,69 @@ import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/route
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.CONFIRM_EMAIL;
 
 const {
-  START,
-  ACCOUNT: { CREATE: { YOUR_DETAILS, CONFIRM_EMAIL } },
+  ACCOUNT: {
+    CREATE: { YOUR_DETAILS, CONFIRM_EMAIL },
+  },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Account - Create - Confirm email page - As an Exporter I want to create an account for UKEF digital service, So that I can readily use it for my Export Insurance Application with UKEF', () => {
-  before(() => {
-    cy.deleteAccount();
+context(
+  'Insurance - Account - Create - Confirm email page - As an Exporter I want to create an account for UKEF digital service, So that I can readily use it for my Export Insurance Application with UKEF',
+  () => {
+    before(() => {
+      cy.deleteAccount();
 
-    cy.navigateToUrl(START);
+      cy.navigateToCheckIfEligibleUrl();
 
-    cy.submitEligibilityAndStartAccountCreation();
-    cy.completeAndSubmitCreateAccountForm();
+      cy.submitEligibilityAndStartAccountCreation();
+      cy.completeAndSubmitCreateAccountForm();
 
-    const expected = `${baseUrl}${CONFIRM_EMAIL}`;
+      const expected = `${baseUrl}${CONFIRM_EMAIL}`;
 
-    cy.assertUrl(expected);
-  });
+      cy.assertUrl(expected);
+    });
 
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  let account;
-  let expectedUrl;
-
-  describe('page URL and content', () => {
     beforeEach(() => {
-      /**
-       * Get the account ID directly from the API,
-       * so that we can assert that `request a new link` has the correct ID.
-       */
-      const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
-
-      cy.getAccountByEmail(accountEmail).then((responseData) => {
-        const [firstAccount] = responseData;
-        account = firstAccount;
-      });
+      cy.saveSession();
     });
 
-    it(`should redirect to ${CONFIRM_EMAIL} and render core page elements and content`, () => {
-      expectedUrl = CONFIRM_EMAIL;
+    let account;
+    let expectedUrl;
 
-      cy.assertUrl(`${baseUrl}${expectedUrl}`);
+    describe('page URL and content', () => {
+      beforeEach(() => {
+        /**
+         * Get the account ID directly from the API,
+         * so that we can assert that `request a new link` has the correct ID.
+         */
+        const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
-      cy.corePageChecks({
-        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-        currentHref: `${CONFIRM_EMAIL}?id=${account.id}`,
-        backLink: YOUR_DETAILS,
-        hasAForm: false,
-        assertAuthenticatedHeader: false,
-        lightHouseThresholds: {
-          performance: 69,
-        },
+        cy.getAccountByEmail(accountEmail).then((responseData) => {
+          const [firstAccount] = responseData;
+          account = firstAccount;
+        });
       });
 
-      // assert confirm email content
-      cy.assertConfirmEmailPageContent(account.id);
+      it(`should redirect to ${CONFIRM_EMAIL} and render core page elements and content`, () => {
+        expectedUrl = CONFIRM_EMAIL;
+
+        cy.assertUrl(`${baseUrl}${expectedUrl}`);
+
+        cy.corePageChecks({
+          pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+          currentHref: `${CONFIRM_EMAIL}?id=${account.id}`,
+          backLink: YOUR_DETAILS,
+          hasAForm: false,
+          assertAuthenticatedHeader: false,
+          lightHouseThresholds: {
+            performance: 69,
+          },
+        });
+
+        // assert confirm email content
+        cy.assertConfirmEmailPageContent(account.id);
+      });
     });
-  });
-});
+  },
+);

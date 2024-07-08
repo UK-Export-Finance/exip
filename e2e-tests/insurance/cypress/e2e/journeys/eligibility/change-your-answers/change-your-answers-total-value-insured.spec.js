@@ -6,7 +6,6 @@ import { FIELDS_ELIGIBILITY as FIELDS } from '../../../../../../content-strings/
 const { TOTAL_CONTRACT_VALUE } = INSURANCE_FIELD_IDS.ELIGIBILITY;
 
 const {
-  START,
   ELIGIBILITY: { TOTAL_VALUE_INSURED_CHANGE, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
@@ -18,7 +17,7 @@ context(
     const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
     before(() => {
-      cy.navigateToUrl(START);
+      cy.navigateToCheckIfEligibleUrl();
 
       cy.completeAndSubmitAllInsuranceEligibilityAnswers({});
 
