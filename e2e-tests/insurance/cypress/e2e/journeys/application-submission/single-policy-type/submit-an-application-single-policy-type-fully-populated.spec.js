@@ -1,5 +1,3 @@
-import header from '../../../../../../partials/header';
-
 context(
   'Insurance - submit an application - Single policy type, fully populated - As an Exporter, I want to submit my completed credit insurance application, So that UKEF can process and make a decision on my application',
   () => {
@@ -50,20 +48,8 @@ context(
       cy.assertApplicationSubmittedUrl(referenceNumber);
     });
 
-    describe('when visiting the dashboard', () => {
-      beforeEach(() => {
-        cy.navigateToDashboardUrl();
-
-        header.navigation.applications().click();
-      });
-
-      it('should render the application`s status as `submitted`', () => {
-        cy.assertDashboardApplicationSubmittedStatus(referenceNumber);
-      });
-
-      it('should NOT render a link for the application number', () => {
-        cy.assertDashboardApplicationNumberLinkDoesNotExist(referenceNumber);
-      });
+    it('should render as expected in the dashboard', () => {
+      cy.assertDashboardApplicationSubmitted(referenceNumber);
     });
   },
 );

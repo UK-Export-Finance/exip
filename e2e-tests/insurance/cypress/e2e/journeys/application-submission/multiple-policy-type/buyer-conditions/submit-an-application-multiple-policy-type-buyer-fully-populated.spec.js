@@ -29,4 +29,8 @@ context('Insurance - submit an application - Multiple policy type, fully populat
   it('should successfully submit the application and redirect to `application submitted`', () => {
     cy.assertApplicationSubmittedUrl(referenceNumber);
   });
+
+  it('should render as expected in the dashboard', () => {
+    cy.assertDashboardApplicationSubmitted(referenceNumber);
+  });
 });

@@ -1,4 +1,3 @@
-import header from '../../../../../../partials/header';
 import { APPLICATION } from '../../../../../../constants';
 
 context(
@@ -26,20 +25,8 @@ context(
       cy.assertApplicationSubmittedUrl(referenceNumber);
     });
 
-    describe('when visiting the dashboard', () => {
-      beforeEach(() => {
-        cy.navigateToDashboardUrl();
-
-        header.navigation.applications().click();
-      });
-
-      it('should render the application`s status as `submitted`', () => {
-        cy.assertDashboardApplicationSubmittedStatus(referenceNumber);
-      });
-
-      it('should NOT render a link for the application number', () => {
-        cy.assertDashboardApplicationNumberLinkDoesNotExist(referenceNumber);
-      });
+    it('should render as expected in the dashboard', () => {
+      cy.assertDashboardApplicationSubmitted(referenceNumber);
     });
   },
 );
