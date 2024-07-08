@@ -6,14 +6,7 @@ import { FIELDS } from '../../content-strings';
 import mockCompanies from '../../fixtures/companies';
 
 const {
-  COMPANIES_HOUSE: {
-    COMPANY_ADDRESS,
-    COMPANY_NUMBER,
-    COMPANY_NAME,
-    COMPANY_INCORPORATED,
-    COMPANY_SIC,
-    INDUSTRY_SECTOR_NAMES,
-  },
+  COMPANIES_HOUSE: { COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_NAME, COMPANY_INCORPORATED, COMPANY_SIC, INDUSTRY_SECTOR_NAMES },
 } = INSURANCE_FIELD_IDS;
 
 const mockCompany = mockCompanies[COMPANIES_HOUSE_NUMBER];
@@ -28,10 +21,10 @@ const assertCompaniesHouseSummaryList = {
 
     cy.checkText(summaryList.field(COMPANY_NUMBER).value(), mockCompany[COMPANY_NUMBER]);
   },
-  name: ({ differentCompanyWithSpecialCharacters = false }) => {
+  name: ({ withSpecialCharacters = false }) => {
     cy.checkText(summaryList.field(COMPANY_NAME).key(), FIELDS[COMPANY_NAME].SUMMARY.TITLE);
 
-    if (differentCompanyWithSpecialCharacters) {
+    if (withSpecialCharacters) {
       cy.checkText(summaryList.field(COMPANY_NAME).value(), mockCompanies[COMPANIES_HOUSE_NUMBER_SPECIAL_CHARACTERS_NAME][COMPANY_NAME]);
     } else {
       cy.checkText(summaryList.field(COMPANY_NAME).value(), mockCompany[COMPANY_NAME]);

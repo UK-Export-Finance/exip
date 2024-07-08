@@ -39,7 +39,7 @@ const baseCompany = {
   [FINANCIAL_YEAR_END_DATE]: '2023-07-31T00:00:00.000Z',
 };
 
-const companyNameSpecialCharacter = {
+export const companyWithSpecialCharacterName = {
   [COMPANY_NUMBER]: COMPANIES_HOUSE_NUMBER_SPECIAL_CHARACTERS_NAME,
   [COMPANY_NAME]: 'STEVENS, FOX & CO. LIMITED',
 };
@@ -50,7 +50,7 @@ const mockCompanies = {
     companyNumber: COMPANIES_HOUSE_NUMBER,
     [FINANCIAL_YEAR_END_DATE]: baseCompany[FINANCIAL_YEAR_END_DATE],
   },
-  [COMPANIES_HOUSE_NUMBER_SPECIAL_CHARACTERS_NAME]: companyNameSpecialCharacter,
+  [COMPANIES_HOUSE_NUMBER_SPECIAL_CHARACTERS_NAME]: companyWithSpecialCharacterName,
   [COMPANIES_HOUSE_NUMBER_NO_SIC_CODE]: {
     ...baseCompany,
     companyNumber: COMPANIES_HOUSE_NUMBER_NO_SIC_CODE,
