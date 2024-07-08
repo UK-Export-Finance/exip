@@ -29,7 +29,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-const startRoute = ROUTES.INSURANCE.START;
+const checkIfEligibleUrl = ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE;
 
 context('Accessibility statement page - Insurance', () => {
   beforeEach(() => {
@@ -48,7 +48,7 @@ context('Accessibility statement page - Insurance', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ACCESSIBILITY_STATEMENT,
-      backLink: startRoute,
+      backLink: checkIfEligibleUrl,
       hasAForm: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: true,

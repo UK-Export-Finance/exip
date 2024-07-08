@@ -1,24 +1,17 @@
 import header from '../../../../partials/header';
-import { ROUTES } from '../../../../constants';
 
 context('Insurance - header', () => {
-  const url = ROUTES.INSURANCE.START;
-
   beforeEach(() => {
     cy.saveSession();
 
-    cy.navigateToUrl(url);
+    cy.navigateToCheckIfEligibleUrl();
   });
 
   it('renders a GOV home link', () => {
     const expectedHref = 'https://www.gov.uk';
     const expectedText = 'GOV.UK';
 
-    cy.checkLink(
-      header.govHomeLink(),
-      expectedHref,
-      expectedText,
-    );
+    cy.checkLink(header.govHomeLink(), expectedHref, expectedText);
   });
 
   it('renders service name link', () => {
