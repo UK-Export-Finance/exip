@@ -35,9 +35,7 @@ context('Complete insurance eligibility, get a quote and then re-visit the insur
   });
 
   it('allows an exporter to start another insurance eligibility when visiting the beginning of the flow', () => {
-    cy.navigateToUrl(START);
-
-    cy.completeStartForm();
+    cy.navigateToCheckIfEligibleUrl();
     cy.completeCheckIfEligibleForm();
     cy.completeExporterLocationForm();
 

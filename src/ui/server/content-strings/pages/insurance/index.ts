@@ -1,5 +1,4 @@
 import { ROUTES, CONTACT_DETAILS } from '../../../constants';
-import { LINKS } from '../../links';
 import { BUTTONS } from '../../buttons';
 import ELIGIBILITY_CONTENT_STRINGS from './eligibility';
 import ACCOUNT from './account';
@@ -39,55 +38,6 @@ const ALL_SECTIONS = {
   REFERENCE_NUMBER: 'Your reference',
 };
 
-const START = {
-  PAGE_TITLE: 'Apply for UKEF credit insurance',
-  INTRO: 'Use this service to make a full application for credit insurance from UK Export Finance (UKEF).',
-  LIST: {
-    INTRO: "You'll need your:",
-    ITEMS: [
-      'company details and finances',
-      "buyer's details",
-      "trading history with the buyer, if you've worked together before",
-      'code of conduct, if you have one',
-    ],
-  },
-  BODY_1: "Depending on your export contract, you may also need your buyer's annual report and accounts.",
-  BODY_2: 'You do not need to complete all answers in one session.',
-  BODY_3: "You'll usually get a decision back within 7 working days, if we do not need to ask you any further questions.",
-  BODY_4: 'If we need to gather extra information, it may take around 2 to 3 weeks.',
-  SIGN_IN: {
-    YOU_CAN: 'You can',
-    LINK: {
-      TEXT: 'sign in to your account',
-      HREF: ROUTES.INSURANCE.ACCOUNT.SIGN_IN.ROOT,
-    },
-    TO_CONTINUE_APPLICATION: "to continue an application, if you've already started one.",
-  },
-  FIND_OUT_MORE: {
-    YOU_CAN: 'You can',
-    LINK: {
-      TEXT: 'find out more about UKEF credit insurance',
-      HREF: LINKS.EXTERNAL.GUIDANCE,
-    },
-    TO_FIND_OUT_MORE: "if you want to know who's eligible and what's covered.",
-  },
-  EXTRA_SUPPORT: {
-    INTRO: "Export finance managers can help if you'd like extra support with your application or have questions about credit insurance.",
-    LINK: {
-      TEXT: 'Find your nearest export finance manager.',
-      HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
-    },
-  },
-  QUOTE: {
-    YOU_CAN: 'You can also',
-    LINK: {
-      TEXT: 'get an instant quote',
-      HREF: ROUTES.QUOTE.START,
-    },
-    IF_YOU_NEED: 'if you need one',
-  },
-};
-
 const NO_ACCESS_TO_APPLICATION_PAGE = {
   PAGE_TITLE: "You don't have access to this application",
   CHECK_URL: "Please check the URL you've entered.",
@@ -103,7 +53,6 @@ const NO_ACCESS_APPLICATION_SUBMITTED_PAGE = {
 };
 
 export default {
-  START,
   ACCOUNT,
   DASHBOARD,
   ALL_SECTIONS,

@@ -7,7 +7,6 @@ import { COUNTRY_APPLICATION_SUPPORT } from '../../../../../fixtures/countries';
 const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
 
 const {
-  START,
   ELIGIBILITY: { BUYER_COUNTRY, CANNOT_APPLY },
 } = INSURANCE_ROUTES;
 
@@ -19,9 +18,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance Eligibility - Cannot apply exit page', () => {
   beforeEach(() => {
-    cy.navigateToUrl(START);
-
-    cy.completeStartForm();
+    cy.navigateToCheckIfEligibleUrl();
     cy.completeCheckIfEligibleForm();
     cy.completeExporterLocationForm();
     cy.completeCompaniesHouseNumberForm();

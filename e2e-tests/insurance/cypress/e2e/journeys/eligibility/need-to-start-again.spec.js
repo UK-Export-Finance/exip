@@ -20,7 +20,7 @@ context('Insurance Eligibility - Need to start again exit page', () => {
 
     cy.saveSession();
 
-    cy.completeStartForm();
+    cy.navigateToCheckIfEligibleUrl();
     cy.completeCheckIfEligibleForm();
 
     cy.navigateToUrl(buyerCountryUrl);

@@ -8,7 +8,6 @@ const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
 const { REASON } = CONTENT_STRINGS;
 
 const {
-  START,
   ELIGIBILITY: { BUYER_COUNTRY, CANNOT_APPLY },
 } = INSURANCE_ROUTES;
 
@@ -24,9 +23,8 @@ context(
     beforeEach(() => {
       cy.saveSession();
 
-      cy.navigateToUrl(START);
+      cy.navigateToCheckIfEligibleUrl();
 
-      cy.completeStartForm();
       cy.completeCheckIfEligibleForm();
       cy.completeExporterLocationForm();
       cy.completeCompaniesHouseNumberForm();

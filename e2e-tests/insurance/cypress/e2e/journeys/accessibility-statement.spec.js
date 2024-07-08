@@ -33,7 +33,7 @@ const startRoute = ROUTES.INSURANCE.START;
 
 context('Accessibility statement page - Insurance', () => {
   beforeEach(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.navigateToCheckIfEligibleUrl();
 
     partials.footer.supportLinks.accessibilityStatement().click();
 
@@ -74,11 +74,7 @@ context('Accessibility statement page - Insurance', () => {
 
     describe('outro', () => {
       it('renders AbilityNet link and outro copy', () => {
-        cy.checkLink(
-          usingOurService.abilityNet.link(),
-          USING_OUR_SERVICE.OUTRO.ABILITY_NET.LINK.HREF,
-          USING_OUR_SERVICE.OUTRO.ABILITY_NET.LINK.TEXT,
-        );
+        cy.checkLink(usingOurService.abilityNet.link(), USING_OUR_SERVICE.OUTRO.ABILITY_NET.LINK.HREF, USING_OUR_SERVICE.OUTRO.ABILITY_NET.LINK.TEXT);
 
         cy.checkText(usingOurService.abilityNet.outro(), USING_OUR_SERVICE.OUTRO.ABILITY_NET.DESCRIPTION);
       });
@@ -95,11 +91,7 @@ context('Accessibility statement page - Insurance', () => {
     });
 
     it('renders a link', () => {
-      cy.checkLink(
-        complianceStatus.link(),
-        COMPLIANCE_STATUS.GUIDLINES_LINK.HREF,
-        COMPLIANCE_STATUS.GUIDLINES_LINK.TEXT,
-      );
+      cy.checkLink(complianceStatus.link(), COMPLIANCE_STATUS.GUIDLINES_LINK.HREF, COMPLIANCE_STATUS.GUIDLINES_LINK.TEXT);
     });
 
     it('renders an outro', () => {
@@ -151,11 +143,7 @@ context('Accessibility statement page - Insurance', () => {
     });
 
     it('renders a link', () => {
-      cy.checkLink(
-        enforcementProcedure.link(),
-        ENFORCEMENT_PROCEDURE.CONTACT.HREF,
-        ENFORCEMENT_PROCEDURE.CONTACT.TEXT,
-      );
+      cy.checkLink(enforcementProcedure.link(), ENFORCEMENT_PROCEDURE.CONTACT.HREF, ENFORCEMENT_PROCEDURE.CONTACT.TEXT);
     });
   });
 

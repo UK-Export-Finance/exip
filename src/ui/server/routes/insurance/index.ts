@@ -1,7 +1,7 @@
 import express from 'express';
 import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../constants/routes/insurance';
 
-import { get as startGet, post as startPost } from '../../controllers/insurance/start';
+import { get as startGet } from '../../controllers/insurance/start';
 import { get as dashboardGet } from '../../controllers/insurance/dashboard';
 import { get as allSectionsGet } from '../../controllers/insurance/all-sections';
 import { get as pageNotFoundGet } from '../../controllers/insurance/page-not-found';
@@ -27,7 +27,6 @@ const insuranceRouter = express.Router();
 /* eslint-enable @typescript-eslint/ban-ts-comment */
 
 insuranceRouter.get(INSURANCE_ROUTES.START, startGet);
-insuranceRouter.post(INSURANCE_ROUTES.START, startPost);
 
 insuranceRouter.get(INSURANCE_ROUTES.DASHBOARD, dashboardGet);
 insuranceRouter.get(`${INSURANCE_ROUTES.DASHBOARD}/page/:pageNumber`, dashboardGet);

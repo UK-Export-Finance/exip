@@ -13,7 +13,7 @@ context('Contact us page - Insurance', () => {
   const url = ROUTES.INSURANCE.CONTACT_US;
 
   beforeEach(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.navigateToCheckIfEligibleUrl();
 
     // click on contact link in footer
     footer.supportLinks.contact().click();
@@ -41,10 +41,7 @@ context('Contact us page - Insurance', () => {
   });
 
   it('renders a `general enquiries` section', () => {
-    cy.checkText(
-      contactUsPage.customerServiceHeading(),
-      GENERAL_ENQUIRIES.HEADING,
-    );
+    cy.checkText(contactUsPage.customerServiceHeading(), GENERAL_ENQUIRIES.HEADING);
 
     cy.assertCustomerServiceContactDetailsContent();
   });

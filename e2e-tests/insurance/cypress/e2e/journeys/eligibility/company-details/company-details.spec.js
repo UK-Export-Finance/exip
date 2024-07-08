@@ -7,7 +7,6 @@ import assertCompaniesHouseSummaryList from '../../../../../../commands/insuranc
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COMPANY_DETAILS;
 
 const {
-  START,
   ELIGIBILITY: { BUYER_COUNTRY, COMPANY_DETAILS, ENTER_COMPANIES_HOUSE_NUMBER },
 } = INSURANCE_ROUTES;
 
@@ -17,9 +16,7 @@ context('Insurance - Eligibility - Companies details page - I want to check if I
   const url = `${baseUrl}${COMPANY_DETAILS}`;
 
   before(() => {
-    cy.navigateToUrl(START);
-
-    cy.completeStartForm();
+    cy.navigateToCheckIfEligibleUrl();
     cy.completeCheckIfEligibleForm();
     cy.completeExporterLocationForm();
     cy.completeCompaniesHouseNumberForm();

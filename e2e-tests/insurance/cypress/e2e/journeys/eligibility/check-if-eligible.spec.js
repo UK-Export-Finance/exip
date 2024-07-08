@@ -15,9 +15,7 @@ context('Insurance Eligibility - check if eligible page', () => {
   const url = `${baseUrl}${CHECK_IF_ELIGIBLE}`;
 
   before(() => {
-    cy.navigateToUrl(START);
-
-    cy.completeStartForm();
+    cy.navigateToCheckIfEligibleUrl();
 
     cy.assertUrl(url);
   });
