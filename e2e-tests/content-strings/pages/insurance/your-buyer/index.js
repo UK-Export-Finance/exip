@@ -55,7 +55,7 @@ export const BUYER_FINANCIAL_INFORMATION = {
   LOOK_INTO_BUYER:
     "We look into your buyer as part of our due diligence process. This includes reviewing their accounts and checking that they're a legitimate company.",
   SHARING:
-    "Sharing your buyer's financial accounts will help us to understand the risks associated with an export. It will also mean we can make a decision more quickly",
+    "Sharing your buyer's financial accounts will help us to understand the risks associated with an export. It will also mean we can make a decision more quickly.",
 };
 
 export const CHECK_YOUR_ANSWERS = {
