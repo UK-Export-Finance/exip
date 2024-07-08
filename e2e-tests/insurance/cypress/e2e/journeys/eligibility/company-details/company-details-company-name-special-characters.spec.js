@@ -35,7 +35,7 @@ context(
     });
 
     it('should render `company name` key and value', () => {
-      assertCompaniesHouseSummaryList.name({ differentCompanyWithSpecialCharacters: true });
+      assertCompaniesHouseSummaryList.name({ withSpecialCharacters: true });
     });
   },
 );

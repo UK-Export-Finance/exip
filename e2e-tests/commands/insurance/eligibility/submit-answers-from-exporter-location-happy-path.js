@@ -15,8 +15,9 @@ const checkAuthHeader = (assertAuthenticatedHeader) => {
  * submitAnswersFromExporterLocationHappyPath
  * Check the auth header before submitting an eligibility fom
  * @param {Boolean} assertAuthenticatedHeader
+ * @param {String} companyNumber
  */
-const submitAnswersFromExporterLocationHappyPath = (assertAuthenticatedHeader = false) => {
+const submitAnswersFromExporterLocationHappyPath = ({ assertAuthenticatedHeader = false, companyNumber }) => {
   checkAuthHeader(assertAuthenticatedHeader);
 
   cy.completeExporterLocationForm();
@@ -27,7 +28,7 @@ const submitAnswersFromExporterLocationHappyPath = (assertAuthenticatedHeader = 
 
   checkAuthHeader(assertAuthenticatedHeader);
 
-  cy.completeAndSubmitCompaniesHouseSearchForm({});
+  cy.completeAndSubmitCompaniesHouseSearchForm({ companyNumber });
 
   checkAuthHeader(assertAuthenticatedHeader);
 

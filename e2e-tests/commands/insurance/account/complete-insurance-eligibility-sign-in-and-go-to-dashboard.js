@@ -14,12 +14,13 @@ const startUrl = `${baseUrl}${START}`;
  * 6) Add a new OTP/access code and get it directly from the API
  * 7) Complete and submit the "enter access code" form
  * 8) Check we are on the "all sections" application page.
- * @param {String} Account email address
+ * @param {String} emailAddress: Account email address
+ * @param {String} companyNumber: Company number/Companies house number
  */
-const completeInsuranceEligibilitySignInAndGoToDashboard = (emailAddress) => {
+const completeInsuranceEligibilitySignInAndGoToDashboard = ({ emailAddress, companyNumber }) => {
   cy.navigateToUrl(startUrl);
 
-  cy.submitInsuranceEligibilityAnswersHappyPath();
+  cy.submitInsuranceEligibilityAnswersHappyPath(companyNumber);
 
   // create an account
   return cy.createAccount({ emailAddress }).then(({ accountId, verifyAccountUrl }) => {

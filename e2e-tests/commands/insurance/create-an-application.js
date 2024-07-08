@@ -45,8 +45,8 @@ const createAnApplication = (accountId, companyNumber, totalContractValueOverThr
       }
 
       /**
-       * pass sectionReview for eligibility to API
-       * has to be set to true for eligibility
+       * declare sectionReview.eligibility=true,
+       * to mimic reviewing the the eligibility answers
        */
       const sectionReview = {
         eligibility: true,
