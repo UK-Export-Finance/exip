@@ -15,7 +15,7 @@ context(
     before(() => {
       cy.navigateToUrl(EXPORTER_LOCATION);
 
-      cy.submitInsuranceEligibilityAnswersFromExporterLocationHappyPath();
+      cy.submitInsuranceEligibilityAnswersFromExporterLocationHappyPath({});
     });
 
     beforeEach(() => {

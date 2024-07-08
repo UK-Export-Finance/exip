@@ -2,6 +2,7 @@ import { PAGES } from '../../../../content-strings';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
@@ -12,7 +13,7 @@ import mapAndSave from '../map-and-save/company-details';
 import { companiesHouseSummaryList } from '../../../../helpers/summary-lists/companies-house';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
-import { Request, Response } from '../../../../../types';
+import { Application, Request, Response } from '../../../../../types';
 
 const {
   YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_NAME },
@@ -71,9 +72,10 @@ const get = (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { company } = application;
+    const mappedApplication = mapApplicationToFormFields(application) as Application;
 
-    // values from application if they exist
+    const { company } = mappedApplication;
+
     const submittedValues = {
       [HAS_DIFFERENT_TRADING_NAME]: company?.[HAS_DIFFERENT_TRADING_NAME],
       [TRADING_ADDRESS]: company?.[TRADING_ADDRESS],
@@ -91,7 +93,7 @@ const get = (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
       ...pageVariables(application.referenceNumber),
       submittedValues,
-      SUMMARY_LIST: companiesHouseSummaryList(company, IS_APPLICATION_SUMMARY_LIST),
+      SUMMARY_LIST: companiesHouseSummaryList(mappedApplication.company, IS_APPLICATION_SUMMARY_LIST),
     });
   } catch (err) {
     console.error('Error getting company details %O', err);
@@ -114,15 +116,19 @@ const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber, company } = application;
+    const mappedApplication = mapApplicationToFormFields(application) as Application;
+
+    const { referenceNumber, company } = mappedApplication;
 
     const payload = constructPayload(req.body, FIELD_IDS);
 
     const sanitisedHasTradingAddress = sanitiseValue({ key: TRADING_ADDRESS, value: payload[TRADING_ADDRESS] });
 
-    // populate submittedValues
     const submittedValues = {
-      // if trading name is string true, then convert to boolean true
+      /**
+       * If trading name is a string of "true",
+       * convert to a boolean.
+       */
       [HAS_DIFFERENT_TRADING_NAME]: sanitiseValue({ key: HAS_DIFFERENT_TRADING_NAME, value: payload[HAS_DIFFERENT_TRADING_NAME] }),
       [TRADING_ADDRESS]: sanitisedHasTradingAddress,
       [WEBSITE]: payload[WEBSITE],

@@ -1,8 +1,15 @@
 import submitInsuranceEligibilityAnswersFromExporterLocationHappyPath from './submit-answers-from-exporter-location-happy-path';
 import { completeStartForm, completeCheckIfEligibleForm } from './forms';
 
-export default () => {
+/**
+ * submitAnswersHappyPath
+ * Submit the eligibility answers
+ * @param {String} companyNumber
+ */
+const submitAnswersHappyPath = (companyNumber) => {
   completeStartForm();
   completeCheckIfEligibleForm();
-  submitInsuranceEligibilityAnswersFromExporterLocationHappyPath();
+  submitInsuranceEligibilityAnswersFromExporterLocationHappyPath({ companyNumber });
 };
+
+export default submitAnswersHappyPath;

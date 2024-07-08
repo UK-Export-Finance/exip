@@ -29,7 +29,7 @@ context(
     it('allows an exporter to complete insurance eligibility when visiting the exporter location page directly', () => {
       cy.navigateToUrl(ELIGIBILITY.EXPORTER_LOCATION);
 
-      cy.submitInsuranceEligibilityAnswersFromExporterLocationHappyPath();
+      cy.submitInsuranceEligibilityAnswersFromExporterLocationHappyPath({});
     });
 
     it('allows an exporter to get another quote when visiting the buyer country page directly', () => {
