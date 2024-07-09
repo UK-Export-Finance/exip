@@ -1,5 +1,5 @@
 import { FIELD_ID, PAGE_VARIABLES, HTML_FLAGS, TEMPLATE, get, post } from '.';
-import { ERROR_MESSAGES, PAGES, UK_GOODS_AND_SERVICES_DESCRIPTION } from '../../../content-strings';
+import { PAGES, UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION, UK_GOODS_AND_SERVICES_DESCRIPTION, ERROR_MESSAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
@@ -11,9 +11,7 @@ import { mockReq, mockRes } from '../../../test-mocks';
 
 const {
   SHARED_PAGES,
-  PARTIALS: {
-    QUOTE: { UK_GOODS_OR_SERVICES },
-  },
+  PARTIALS: { UK_GOODS_OR_SERVICES },
 } = TEMPLATES;
 
 describe('controllers/quote/uk-goods-or-services', () => {
@@ -39,7 +37,7 @@ describe('controllers/quote/uk-goods-or-services', () => {
         FIELD_ID: FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
         PAGE_CONTENT_STRINGS: {
           ...PAGES.UK_GOODS_OR_SERVICES,
-          ...PAGES.QUOTE.UK_GOODS_OR_SERVICES,
+          UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION,
           UK_GOODS_AND_SERVICES_DESCRIPTION,
         },
       };

@@ -16,9 +16,7 @@ const {
 
 const {
   SHARED_PAGES,
-  PARTIALS: {
-    INSURANCE: { UK_GOODS_OR_SERVICES },
-  },
+  PARTIALS: { UK_GOODS_OR_SERVICES },
 } = TEMPLATES;
 
 describe('controllers/insurance/eligibility/uk-goods-or-services', () => {

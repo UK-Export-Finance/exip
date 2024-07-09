@@ -32,7 +32,6 @@ const ukGoodsOrServicesDescription = {
     details: () => cy.get('[data-cy="goods-services-not-sure"]'),
     detailsLink: () => cy.get('[data-cy="goods-services-not-sure-link"]'),
   },
-  calculateThoroughly: () => cy.get('[data-cy="goods-services-will-calculate-thoroughly"]'),
 };
 
 export default ukGoodsOrServicesDescription;

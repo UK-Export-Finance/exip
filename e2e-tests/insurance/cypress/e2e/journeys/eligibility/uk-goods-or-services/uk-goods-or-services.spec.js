@@ -1,10 +1,5 @@
 import { yesNoRadioHint, yesRadio, noRadio } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
-import {
-  FIELDS,
-  PAGES,
-  ERROR_MESSAGES,
-} from '../../../../../../content-strings';
+import { FIELDS, PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
@@ -109,10 +104,6 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
           checkDescriptionSummaryClickRevealsContent();
 
           checkDescriptionContent();
-        });
-
-        it('does NOT render `will calculate thoroughly` copy ', () => {
-          partials.ukGoodsOrServicesDescription.calculateThoroughly().should('not.exist');
         });
       });
     });

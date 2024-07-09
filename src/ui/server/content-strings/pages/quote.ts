@@ -9,10 +9,6 @@ const BUYER_BODY = {
   },
 };
 
-const UK_GOODS_OR_SERVICES = {
-  WILL_CALCULATE_THOROUGHLY: "We'll also calculate this thoroughly if you go on to make a full application.",
-};
-
 const POLICY_TYPE = {
   PAGE_TITLE: 'What kind of policy do you need?',
 };
@@ -102,7 +98,6 @@ const YOUR_QUOTE = {
 
 export default {
   BUYER_BODY,
-  UK_GOODS_OR_SERVICES,
   POLICY_TYPE,
   TELL_US_ABOUT_YOUR_POLICY,
   CHECK_YOUR_ANSWERS,
