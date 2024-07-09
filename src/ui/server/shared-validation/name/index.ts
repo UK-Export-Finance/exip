@@ -15,9 +15,10 @@ const { ACCOUNT } = MAXIMUM_CHARACTERS;
  * @param {String} fieldId
  * @param {String} errorMessage message
  * @param {Object} errors object from previous validation errors
+ * @param {Number} maximum length of name - default to ACCOUNT.NAME value
  * @returns {ValidationErrors}
  */
-const nameValidation = (formBody: RequestBody, fieldId: string, errorMessages: ErrorMessageObject, errors: object) => {
+const nameValidation = (formBody: RequestBody, fieldId: string, errorMessages: ErrorMessageObject, errors: object, maximum = ACCOUNT.NAME) => {
   if (!objectHasProperty(formBody, fieldId)) {
     return emptyFieldValidation(formBody, fieldId, errorMessages.IS_EMPTY, errors);
   }
@@ -28,7 +29,7 @@ const nameValidation = (formBody: RequestBody, fieldId: string, errorMessages: E
     return alphaCharactersOnlyError;
   }
 
-  return maxLengthValidation(formBody[fieldId], fieldId, errorMessages.ABOVE_MAXIMUM, errors, ACCOUNT.NAME);
+  return maxLengthValidation(formBody[fieldId], fieldId, errorMessages.ABOVE_MAXIMUM, errors, maximum);
 };
 
 export default nameValidation;

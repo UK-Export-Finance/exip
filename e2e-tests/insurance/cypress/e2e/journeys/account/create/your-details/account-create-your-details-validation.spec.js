@@ -2,6 +2,7 @@ import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
+import { MAXIMUM_CHARACTERS } from '../../../../../../../constants/validation';
 import assertNameFieldValidation from '../../../../../../../shared-test-assertions/name-field-validation';
 
 const {
@@ -25,6 +26,8 @@ const {
   },
 } = ERROR_MESSAGES;
 
+const { NAME: MAX_CHARACTERS } = MAXIMUM_CHARACTERS.ACCOUNT;
+
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Account - Create - Your details page - empty form validation', () => {
@@ -47,9 +50,11 @@ context('Insurance - Account - Create - Your details page - empty form validatio
   });
 
   const TOTAL_REQUIRED_FIELDS = 4;
+  const nameMaximumCharacters = 'a'.repeat(MAX_CHARACTERS + 1);
 
   assertNameFieldValidation({
     fieldId: FIRST_NAME,
+    nameMaximumCharacters,
     errorIndex: 0,
     errorMessages: YOUR_DETAILS_ERROR_MESSAGES[FIRST_NAME],
     totalExpectedErrors: 4,
@@ -59,6 +64,7 @@ context('Insurance - Account - Create - Your details page - empty form validatio
   assertNameFieldValidation({
     fieldId: LAST_NAME,
     errorIndex: 1,
+    nameMaximumCharacters,
     errorMessages: YOUR_DETAILS_ERROR_MESSAGES[LAST_NAME],
     totalExpectedErrors: 4,
     totalExpectedOtherErrorsWithName: 3,

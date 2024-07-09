@@ -369,6 +369,7 @@ export const ERROR_MESSAGES = {
       },
       [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE_DETAILS.NAME]: {
         IS_EMPTY: 'Enter the name of the loss payee',
+        INCORRECT_FORMAT: 'The name of the loss payee must not include any symbols or special characters',
         ABOVE_MAXIMUM: `The name of the loss payee cannot be more than ${MAXIMUM_CHARACTERS.LOSS_PAYEE_NAME} characters`,
       },
       [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE_DETAILS.LOCATION]: {

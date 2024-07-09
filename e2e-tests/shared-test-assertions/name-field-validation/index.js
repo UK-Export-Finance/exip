@@ -5,6 +5,7 @@ import { field as fieldSelector } from '../../pages/shared';
  * assertNameFieldValidation
  * Assert name field validation
  * @param {String} fieldId: Name field ID
+ * @param {String} nameMaximumCharacters: name with over maximum number of characters
  * @param {Integer} errorIndex: Index of the summary list error
  * @param {Object} errorMessages: Email error messages
  * @param {Integer} totalExpectedErrors: Total expected errors in the form
@@ -14,6 +15,7 @@ import { field as fieldSelector } from '../../pages/shared';
  */
 export const assertNameFieldValidation = ({
   fieldId,
+  nameMaximumCharacters,
   errorIndex,
   errorMessages,
   totalExpectedErrors = 1,
@@ -43,7 +45,7 @@ export const assertNameFieldValidation = ({
       cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: isEmptyErrorMessage });
     });
 
-    it('should render a validation error the name contains special characters', () => {
+    it(`should render a validation error the ${fieldId} contains special characters`, () => {
       cy.submitAndAssertFieldErrors({
         ...assertions,
         value: INVALID_NAMES.SPECIAL_CHARACTERS,
@@ -51,7 +53,7 @@ export const assertNameFieldValidation = ({
       });
     });
 
-    it('should render a validation error the name contains special characters and a space', () => {
+    it(`should render a validation error the ${fieldId} contains special characters and a space`, () => {
       cy.submitAndAssertFieldErrors({
         ...assertions,
         value: INVALID_NAMES.SPECIAL_CHARACTERS_SPACE,
@@ -59,7 +61,7 @@ export const assertNameFieldValidation = ({
       });
     });
 
-    it('should render a validation error the name contains numbers', () => {
+    it(`should render a validation error the ${fieldId} contains numbers`, () => {
       cy.submitAndAssertFieldErrors({
         ...assertions,
         value: INVALID_NAMES.NUMBERS,
@@ -67,16 +69,48 @@ export const assertNameFieldValidation = ({
       });
     });
 
-    it('should render a validation error the name is above the maximum number of characters', () => {
+    it(`should render a validation error the ${fieldId} is above the maximum number of characters`, () => {
       cy.submitAndAssertFieldErrors({
         ...assertions,
-        value: INVALID_NAMES.MAX_LENGTH,
+        value: nameMaximumCharacters,
         expectedErrorMessage: aboveMaximumErrorMessage,
       });
     });
 
-    it(`should NOT render a validation error when ${fieldId} is correctly formatted as a single name`, () => {
+    it(`should NOT render a validation error when ${fieldId} is correctly formatted as a string`, () => {
       cy.keyboardInput(fieldSelector(fieldId).input(), VALID_NAMES.SINGLE);
+
+      cy.clickSubmitButton();
+
+      otherErrors();
+    });
+
+    it(`should NOT render a validation error when ${fieldId} is correctly formatted as a string with a space`, () => {
+      cy.keyboardInput(fieldSelector(fieldId).input(), VALID_NAMES.SPACE);
+
+      cy.clickSubmitButton();
+
+      otherErrors();
+    });
+
+    it(`should NOT render a validation error when ${fieldId} is correctly formatted with apostrophe`, () => {
+      cy.keyboardInput(fieldSelector(fieldId).input(), VALID_NAMES.APOSTROPHE);
+
+      cy.clickSubmitButton();
+
+      otherErrors();
+    });
+
+    it(`should NOT render a validation error when ${fieldId} is correctly formatted with a hyphen`, () => {
+      cy.keyboardInput(fieldSelector(fieldId).input(), VALID_NAMES.HYPHEN);
+
+      cy.clickSubmitButton();
+
+      otherErrors();
+    });
+
+    it(`should NOT render a validation error when ${fieldId} is correctly formatted with hyphens and apostrophies`, () => {
+      cy.keyboardInput(fieldSelector(fieldId).input(), VALID_NAMES.HYPHEN_AND_APOSTROPHE);
 
       cy.clickSubmitButton();
 

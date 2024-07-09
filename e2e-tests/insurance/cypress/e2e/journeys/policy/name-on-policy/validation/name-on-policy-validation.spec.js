@@ -4,6 +4,7 @@ import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insuranc
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
 import account from '../../../../../../../fixtures/account';
+import assertNameFieldValidation from '../../../../../../../shared-test-assertions/name-field-validation';
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -29,7 +30,6 @@ const {
 const {
   NAME_ON_POLICY: {
     OPTIONS,
-    [POSITION]: { MAXIMUM },
   },
 } = FIELDS;
 
@@ -94,6 +94,7 @@ context('Insurance - Policy - Name on policy - Validation', () => {
     };
 
     const ERROR = NAME_ON_POLICY_ERRORS[POSITION];
+    const positionMaximumCharacters = 'a'.repeat(FIELDS.NAME_ON_POLICY[POSITION].MAXIMUM + 1);
 
     describe(`when ${POSITION} is left empty`, () => {
       it('should render validation errors', () => {
@@ -110,28 +111,14 @@ context('Insurance - Policy - Name on policy - Validation', () => {
       });
     });
 
-    it(`should render validation errors when ${POSITION} is over ${MAXIMUM} characters`, () => {
-      const value = 'a'.repeat(FIELDS.NAME_ON_POLICY[POSITION].MAXIMUM + 1);
-
-      cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR.ABOVE_MAXIMUM });
-    });
-
-    it(`should render validation errors when ${POSITION} contains a special character`, () => {
-      const value = 'a!';
-
-      cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR.INCORRECT_FORMAT });
-    });
-
-    it(`should render validation errors when ${POSITION} contains a number`, () => {
-      const value = 'a1';
-
-      cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR.INCORRECT_FORMAT });
-    });
-
-    it(`should render validation errors when ${POSITION} contains a number and special character`, () => {
-      const value = 'a1!';
-
-      cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR.INCORRECT_FORMAT });
+    assertNameFieldValidation({
+      fieldId: POSITION,
+      nameMaximumCharacters: positionMaximumCharacters,
+      errorIndex: 0,
+      errorMessages: NAME_ON_POLICY_ERRORS[POSITION],
+      totalExpectedErrors: 1,
+      totalExpectedOtherErrorsWithName: 0,
+      shouldHaveOtherErrors: false,
     });
   });
 

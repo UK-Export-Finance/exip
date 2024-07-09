@@ -3,7 +3,7 @@ import { MAXIMUM_CHARACTERS } from '../../../../../../../constants/validation';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
-import mockNameWithSpecialCharacters from '../../../../../../../fixtures/name-with-special-characters';
+import assertNameFieldValidation from '../../../../../../../shared-test-assertions/name-field-validation';
 
 const ERRORS = ERROR_MESSAGES.INSURANCE.POLICY;
 
@@ -65,28 +65,13 @@ context('Insurance - Policy - Loss Payee Details - Validation', () => {
     const FIELD_ID = NAME;
     const ERROR = ERRORS[FIELD_ID];
 
-    const assertions = {
-      field: fieldSelector(FIELD_ID),
-      expectedErrorsCount: 2,
-    };
-
-    it(`should render validation errors when ${FIELD_ID} is left empty`, () => {
-      cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: ERROR.IS_EMPTY });
-    });
-
-    it(`should render validation errors when ${FIELD_ID} is over ${MAXIMUM_CHARACTERS.LOSS_PAYEE_NAME} characters`, () => {
-      const value = 'a'.repeat(MAXIMUM_CHARACTERS.LOSS_PAYEE_NAME + 1);
-
-      cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR.ABOVE_MAXIMUM });
-    });
-
-    it(`should NOT render validation errors when ${FIELD_ID} contains numbers and special characters`, () => {
-      const nameValue = mockNameWithSpecialCharacters('name');
-      cy.keyboardInput(fieldSelector(FIELD_ID).input(), nameValue);
-
-      cy.clickSubmitButton();
-
-      cy.assertErrorSummaryListLength(1);
+    assertNameFieldValidation({
+      fieldId: FIELD_ID,
+      errorIndex: 0,
+      nameMaximumCharacters: 'a'.repeat(MAXIMUM_CHARACTERS.LOSS_PAYEE_NAME + 1),
+      errorMessages: ERROR,
+      totalExpectedErrors: 2,
+      totalExpectedOtherErrorsWithName: 1,
     });
   });
 
