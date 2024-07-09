@@ -45,14 +45,15 @@ export const FIELDS = {
   },
   [FIELD_IDS.ELIGIBILITY.AMOUNT_CURRENCY]: {
     SINGLE_POLICY: {
-      LEGEND: 'What\'s the total value of the contract you want to insure?',
+      LEGEND: "What's the total value of the contract you want to insure?",
     },
     MULTIPLE_POLICY: {
-      LEGEND: 'What\'s the maximum amount your buyer will owe you at any single point during the policy?',
+      LEGEND: "What's the maximum amount your buyer will owe you at any single point during the policy?",
     },
   },
   [FIELD_IDS.ELIGIBILITY.CURRENCY]: {
-    LABEL: 'Select a currency (UK sterling, Euros, US dollars, or Japanese yen). You can send out your invoices in most currencies but UKEF only issues policies in these 4 currencies.',
+    LABEL:
+      'Select a currency (UK sterling, Euros, US dollars, or Japanese yen). You can send out your invoices in most currencies but UKEF only issues policies in these 4 currencies.',
   },
   [FIELD_IDS.ELIGIBILITY.CONTRACT_VALUE]: {
     LABEL: 'Contract value',
@@ -124,7 +125,7 @@ export const FIELDS = {
       MULTIPLE: {
         ID: FIELD_IDS.MULTIPLE_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
-        TEXT: 'Multiple contract policy',
+        TEXT: 'Multiple contract policy (revolving credit)',
         HINT: [
           `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER} months`,
           "Best if you'll have an ongoing relationship with the buyer but you're not sure yet how many contracts or sales you'll have",
