@@ -1,6 +1,11 @@
 import { cookiesPage, cookiesSavedPage } from '../../../../pages';
 import partials from '../../../../partials';
-import { BUTTONS, ERROR_MESSAGES, FIELDS, PAGES } from '../../../../content-strings';
+import {
+  BUTTONS,
+  ERROR_MESSAGES,
+  FIELDS,
+  PAGES,
+} from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, COOKIE } from '../../../../constants';
 
 const CONTENT_STRINGS = PAGES.COOKIES_PAGE;
