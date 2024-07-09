@@ -17,7 +17,6 @@ const { [FIELD_ID]: ERROR_MESSAGES_OBJECT } = ERROR_MESSAGES.INSURANCE.POLICY;
  * @param {Object} errors: Other validation errors for the same form
  * @returns {ValidationErrors} nameValidation
  */
-const name = (formBody: RequestBody, errors: object) =>
-  nameValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.LOSS_PAYEE_NAME);
+const name = (formBody: RequestBody, errors: object) => nameValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.LOSS_PAYEE_NAME);
 
 export default name;

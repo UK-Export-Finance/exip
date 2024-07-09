@@ -8,29 +8,18 @@ import assertNameFieldValidation from '../../../../../../../shared-test-assertio
 
 const {
   ROOT: INSURANCE_ROOT,
-  POLICY: {
-    DIFFERENT_NAME_ON_POLICY,
-    NAME_ON_POLICY,
-  },
+  POLICY: { DIFFERENT_NAME_ON_POLICY, NAME_ON_POLICY },
 } = INSURANCE_ROUTES;
 
 const {
   POLICY: {
-    NAME_ON_POLICY: {
-      NAME, POSITION, SAME_NAME, OTHER_NAME,
-    },
+    NAME_ON_POLICY: { NAME, POSITION, SAME_NAME, OTHER_NAME },
   },
-  ACCOUNT: {
-    FIRST_NAME,
-    LAST_NAME,
-    EMAIL,
-  },
+  ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
 } = INSURANCE_FIELD_IDS;
 
 const {
-  NAME_ON_POLICY: {
-    OPTIONS,
-  },
+  NAME_ON_POLICY: { OPTIONS },
 } = FIELDS;
 
 const NAME_ON_POLICY_ERRORS = ERROR_MESSAGES.INSURANCE.POLICY.NAME_ON_POLICY;
