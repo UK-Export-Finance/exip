@@ -2,6 +2,7 @@ import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
+import assertNameFieldValidation from '../../../../../../../shared-test-assertions/name-field-validation';
 
 const {
   START,
@@ -11,12 +12,7 @@ const {
 } = ROUTES;
 
 const {
-  ACCOUNT: {
-    FIRST_NAME,
-    LAST_NAME,
-    EMAIL,
-    PASSWORD,
-  },
+  ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL, PASSWORD },
 } = INSURANCE_FIELD_IDS;
 
 const {
@@ -50,23 +46,20 @@ context('Insurance - Account - Create - Your details page - empty form validatio
 
   const TOTAL_REQUIRED_FIELDS = 4;
 
-  it('should render first name validation error', () => {
-    cy.navigateToUrl(url);
-
-    cy.submitAndAssertFieldErrors({
-      field: fieldSelector(FIRST_NAME),
-      expectedErrorsCount: TOTAL_REQUIRED_FIELDS,
-      expectedErrorMessage: YOUR_DETAILS_ERROR_MESSAGES[FIRST_NAME].IS_EMPTY,
-    });
+  assertNameFieldValidation({
+    fieldId: FIRST_NAME,
+    errorIndex: 0,
+    errorMessages: YOUR_DETAILS_ERROR_MESSAGES[FIRST_NAME],
+    totalExpectedErrors: 4,
+    totalExpectedOtherErrorsWithName: 3,
   });
 
-  it('should render last name a validation error', () => {
-    cy.submitAndAssertFieldErrors({
-      field: fieldSelector(LAST_NAME),
-      errorIndex: 1,
-      expectedErrorsCount: TOTAL_REQUIRED_FIELDS,
-      expectedErrorMessage: YOUR_DETAILS_ERROR_MESSAGES[LAST_NAME].IS_EMPTY,
-    });
+  assertNameFieldValidation({
+    fieldId: LAST_NAME,
+    errorIndex: 1,
+    errorMessages: YOUR_DETAILS_ERROR_MESSAGES[LAST_NAME],
+    totalExpectedErrors: 4,
+    totalExpectedOtherErrorsWithName: 3,
   });
 
   it('should render email validation error', () => {

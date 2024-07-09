@@ -5,7 +5,17 @@ export const REGEX = {
    * - a-z or A-Z characters.
    * - an empty space.
    */
-  ALPHA_CHARACTERS_AND_SPACE: /^[A-Z ]*$/i,
+  ALPHA_CHARACTERS_AND_SPACE: /^[A-Z \-']*$/i,
+
+  /**
+   * ALPHA_CHARACTERS_AND_SPACE_HYPHEN_APOSTROPHE:
+   * Regex that allows only:
+   * - a-z or A-Z characters.
+   * - an empty space.
+   * - a hyphen
+   * - an apostrophe
+   */
+  ALPHA_CHARACTERS_AND_SPACE_HYPHEN_APOSTROPHE: /^[A-Z \-']*$/i,
 
   /**
    * INCLUDES_NUMERICAL_CHARACTERS:

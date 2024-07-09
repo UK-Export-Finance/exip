@@ -1,55 +1,20 @@
 import alphaCharactersOnlyValidation from '.';
-import generateValidationErrors from '../../helpers/validation';
+import regexValidation from '../regex-validation';
+import { mockErrors, mockErrorMessagesObject } from '../../test-mocks';
+import { REGEX } from '../../constants';
 
 const mockFieldId = 'mockId';
-const mockErrorMessage = 'Mock error';
-const mockErrors = {};
-const mockSpecialCharacters = '!@£$%^&*()?';
 
 describe('shared-validation/alpha-characters-only', () => {
   describe('when a string contains numbers', () => {
-    it('should return generateValidationErrors', () => {
-      const mockFieldValue = 'mock 123';
+    it('should return the result of regexValidation', () => {
+      const mockValue = 'mock!';
 
-      const result = alphaCharactersOnlyValidation(mockFieldValue, mockFieldId, mockErrorMessage, mockErrors);
+      const result = alphaCharactersOnlyValidation(mockValue, mockFieldId, mockErrorMessagesObject.INCORRECT_FORMAT, mockErrors);
 
-      const expected = generateValidationErrors(mockFieldId, mockErrorMessage, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when a string contains special characters', () => {
-    it('should return generateValidationErrors', () => {
-      const mockFieldValue = `mock ${mockSpecialCharacters}`;
-
-      const result = alphaCharactersOnlyValidation(mockFieldValue, mockFieldId, mockErrorMessage, mockErrors);
-
-      const expected = generateValidationErrors(mockFieldId, mockErrorMessage, mockErrors);
+      const expected = regexValidation(mockValue, mockFieldId, REGEX.ALPHA_CHARACTERS_AND_SPACE, mockErrorMessagesObject.INCORRECT_FORMAT, mockErrors);
 
       expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when a string contains numbers and special characters', () => {
-    it('should return generateValidationErrors', () => {
-      const mockFieldValue = `mock 123 ${mockSpecialCharacters}`;
-
-      const result = alphaCharactersOnlyValidation(mockFieldValue, mockFieldId, mockErrorMessage, mockErrors);
-
-      const expected = generateValidationErrors(mockFieldId, mockErrorMessage, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when there are no validation errors', () => {
-    it('should return false', () => {
-      const mockValidFieldValue = 'Example valid string';
-
-      const result = alphaCharactersOnlyValidation(mockValidFieldValue, mockFieldId, mockErrorMessage, mockErrors);
-
-      expect(result).toEqual(false);
     });
   });
 });

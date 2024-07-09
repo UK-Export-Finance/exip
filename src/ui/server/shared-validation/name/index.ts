@@ -1,12 +1,11 @@
-import alphaCharactersAndMaxLengthValidation from '../alpha-characters-and-max-length';
-import { ACCOUNT_FIELDS } from '../../content-strings/fields/insurance/account';
+import alphaCharactersHyphenAndApostropheOnlyValidation from '../alpha-characters-hyphen-and-apostrophe-only';
+import { objectHasProperty } from '../../helpers/object';
+import maxLengthValidation from '../max-length';
+import emptyFieldValidation from '../empty-field';
+import { MAXIMUM_CHARACTERS } from '../../constants';
 import { RequestBody, ErrorMessageObject } from '../../../types';
 
-const {
-  MAXIMUM: {
-    NAME: { CHARACTERS: MAX_CHARACTERS },
-  },
-} = ACCOUNT_FIELDS;
+const { ACCOUNT } = MAXIMUM_CHARACTERS;
 
 /**
  * nameValidation
@@ -18,7 +17,18 @@ const {
  * @param {Object} errors object from previous validation errors
  * @returns {ValidationErrors}
  */
-const nameValidation = (formBody: RequestBody, fieldId: string, errorMessages: ErrorMessageObject, errors: object) =>
-  alphaCharactersAndMaxLengthValidation(formBody, fieldId, errorMessages, errors, MAX_CHARACTERS);
+const nameValidation = (formBody: RequestBody, fieldId: string, errorMessages: ErrorMessageObject, errors: object) => {
+  if (!objectHasProperty(formBody, fieldId)) {
+    return emptyFieldValidation(formBody, fieldId, errorMessages.IS_EMPTY, errors);
+  }
+
+  const alphaCharactersOnlyError = alphaCharactersHyphenAndApostropheOnlyValidation(formBody[fieldId], fieldId, errorMessages.INCORRECT_FORMAT, errors);
+
+  if (alphaCharactersOnlyError) {
+    return alphaCharactersOnlyError;
+  }
+
+  return maxLengthValidation(formBody[fieldId], fieldId, errorMessages.ABOVE_MAXIMUM, errors, ACCOUNT.NAME);
+};
 
 export default nameValidation;
