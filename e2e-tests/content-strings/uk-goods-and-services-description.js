@@ -3,7 +3,7 @@ import { LINKS } from './links';
 export const UK_GOODS_AND_SERVICES_DESCRIPTION = {
   INTRO: 'What counts as UK goods and services?',
   INCLUDES: {
-    INTRO: 'UK goods and services includes:',
+    INTRO: 'UK goods and services include:',
     PRODUCTS: 'products made in the UK',
     MANUFACTURED: 'goods manufactured outside the UK but processed or modified in the UK, which would then be eligible for a certificate of UK origin',
     STAFFING_COSTS: {
@@ -24,17 +24,17 @@ export const UK_GOODS_AND_SERVICES_DESCRIPTION = {
   },
   DOES_NOT_COUNT: {
     HEADING: 'What does not count as UK goods and services',
-    TEXT: 'Goods or services from outside the UK that are sent directly to the buyer without processing or modifying them. Instead, these are classed as foreign goods and services.',
+    TEXT: 'Goods or services from outside the UK that are sent to the buyer without processing or modifying them. These count as foreign goods and services.',
   },
   STAFFING_COSTS: {
     HEADING: 'Staffing costs for this export contract',
-    TEXT: 'You can count the following (but only count the actual staffing costs incurred on this specific export contract):',
+    TEXT: 'You can count the following (only count the actual staffing costs from this export contract):',
     LIST: [
       {
         TEXT: 'employees of your UK business',
       },
       {
-        TEXT: 'contractors supplied to work for you by a UK sub-contractor',
+        TEXT: 'contractors supplied to you by a UK-contractor',
       },
       {
         TEXT: "staff seconded from abroad to work for you in the UK on the export contract that you're financially responsible for",
@@ -52,6 +52,6 @@ export const UK_GOODS_AND_SERVICES_DESCRIPTION = {
       TEXT: 'an export finance manager',
       HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
     },
-    BODY_2: "if you'd like to check whether you're eligible around this criteria.",
+    BODY_2: 'if you need more information about what counts for UK goods and services.',
   },
 };

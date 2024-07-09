@@ -23,7 +23,6 @@ const COMPANY_OR_ORGANISATION = {
 const CONNECTION_WITH_BUYER = {
   ...SHARED,
   PAGE_TITLE: 'Are you connected with the buyer in any way?',
-  HINT: "For example, someone in your company is a shareholder or director of the buyer's company.",
 };
 
 const TRADED_WITH_BUYER = {
@@ -57,8 +56,6 @@ const BUYER_FINANCIAL_INFORMATION = {
     "We look into your buyer as part of our due diligence process. This includes reviewing their accounts and checking that they're a legitimate company.",
   SHARING:
     "Sharing your buyer's financial accounts will help us to understand the risks associated with an export. It will also mean we can make a decision more quickly.",
-  DO_NOT_HAVE_TO_SHARE:
-    "You don't have to share their financial accounts if you don't have them or would prefer not to. Sharing this information helps us, but it won't impact the outcome of your application. ",
 };
 
 const CHECK_YOUR_ANSWERS = {
