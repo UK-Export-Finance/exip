@@ -9,7 +9,7 @@ const mockSpecialCharacters = '!@£$%^&*()?';
 
 describe('shared-validation/regex-validation', () => {
   describe('ALPHA_CHARACTERS_AND_SPACE', () => {
-    const regex =  REGEX.ALPHA_CHARACTERS_AND_SPACE;
+    const regex = REGEX.ALPHA_CHARACTERS_AND_SPACE;
 
     describe('when a string contains numbers', () => {
       it('should return generateValidationErrors', () => {
@@ -59,7 +59,7 @@ describe('shared-validation/regex-validation', () => {
   });
 
   describe('ALPHA_CHARACTERS_AND_SPACE_HYPHEN_APOSTROPHE', () => {
-    const regex =  REGEX.ALPHA_CHARACTERS_AND_SPACE_HYPHEN_APOSTROPHE;
+    const regex = REGEX.ALPHA_CHARACTERS_AND_SPACE_HYPHEN_APOSTROPHE;
 
     describe('when a string contains numbers', () => {
       it('should return generateValidationErrors', () => {
