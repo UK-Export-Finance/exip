@@ -17,3 +17,5 @@ Cypress.Commands.add(
   require('../../../../commands/insurance/assert-dashboard-application-number-link-does-not-exist'),
 );
 Cypress.Commands.add('assertDashboardApplicationSubmittedStatus', require('../../../../commands/insurance/assert-dashboard-application-submitted-status'));
+
+Cypress.Commands.add('assertDashboardApplicationSubmitted', require('../../../../commands/insurance/assert-dashboard-application-submitted'));

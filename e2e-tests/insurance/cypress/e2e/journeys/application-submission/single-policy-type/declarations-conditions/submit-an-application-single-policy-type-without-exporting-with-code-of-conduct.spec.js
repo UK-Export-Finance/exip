@@ -18,4 +18,8 @@ context('Insurance - submit an application - Single policy type, without `export
   it('should successfully submit the application and redirect to `application submitted`', () => {
     cy.assertApplicationSubmittedUrl(referenceNumber);
   });
+
+  it('should render in a `submitted` state in the dashboard', () => {
+    cy.assertDashboardApplicationSubmitted(referenceNumber);
+  });
 });
