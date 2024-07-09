@@ -49,7 +49,7 @@ export const ACCOUNT_FIELDS = {
   PASSWORD_RESET: {
     [EMAIL]: {
       LABEL: 'Email address',
-      HINT: 'Enter the email address you used to create your account.',
+      HINT: 'Enter the email address associated with your credit insurance application(s).',
     },
   },
   NEW_PASSWORD: {

@@ -82,7 +82,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
         FIELDS: {
           CONNECTION_WITH_BUYER: {
             ID: CONNECTION_WITH_BUYER,
-            HINT: PAGE_CONTENT_STRINGS.HINT,
+            ...FIELDS[CONNECTION_WITH_BUYER],
           },
           CONNECTION_WITH_BUYER_DESCRIPTION: {
             ID: CONNECTION_WITH_BUYER_DESCRIPTION,
@@ -101,6 +101,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
   describe('HTML_FLAGS', () => {
     it('should have correct properties', () => {
       const expected = {
+        HINT_HTML: TEMPLATES.PARTIALS.INSURANCE.BUYER.CONNECTION_WITH_BUYER.HINT_HTML,
         CONDITIONAL_YES_HTML: CONNECTION_WITH_BUYER_PARTIALS.CONDITIONAL_YES_HTML,
         HORIZONTAL_RADIOS: true,
         NO_RADIO_AS_FIRST_OPTION: true,
@@ -123,7 +124,6 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
-        FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
         applicationAnswer: mockApplication.buyer.relationship[CONNECTION_WITH_BUYER],
       };
 
@@ -219,7 +219,6 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
           userName: getUserNameFromSession(req.session.user),
           validationErrors,
           submittedValues: sanitiseData(payload),
-          FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
         };
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
       });

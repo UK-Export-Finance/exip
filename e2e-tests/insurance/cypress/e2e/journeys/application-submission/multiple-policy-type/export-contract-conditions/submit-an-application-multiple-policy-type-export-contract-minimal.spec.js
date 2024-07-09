@@ -26,4 +26,8 @@ context('Insurance - submit an application - Multiple policy type, minimal expor
   it('should successfully submit the application and redirect to `application submitted`', () => {
     cy.assertApplicationSubmittedUrl(referenceNumber);
   });
+
+  it('should render in a `submitted` state in the dashboard', () => {
+    cy.assertDashboardApplicationSubmitted(referenceNumber);
+  });
 });

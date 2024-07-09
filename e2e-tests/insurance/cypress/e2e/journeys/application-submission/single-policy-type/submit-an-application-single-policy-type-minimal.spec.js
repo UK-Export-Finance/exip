@@ -21,18 +21,8 @@ context(
       cy.assertApplicationSubmittedUrl(referenceNumber);
     });
 
-    describe('when visiting the dashboard', () => {
-      beforeEach(() => {
-        cy.navigateToDashboardUrl();
-      });
-
-      it('should render the application`s status as `submitted`', () => {
-        cy.assertDashboardApplicationSubmittedStatus(referenceNumber);
-      });
-
-      it('should NOT render a link for the application number', () => {
-        cy.assertDashboardApplicationNumberLinkDoesNotExist(referenceNumber);
-      });
+    it('should render in a `submitted` state in the dashboard', () => {
+      cy.assertDashboardApplicationSubmitted(referenceNumber);
     });
   },
 );

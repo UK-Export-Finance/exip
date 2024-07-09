@@ -21,7 +21,10 @@ const {
     NEED_PRE_CREDIT_PERIOD,
     CREDIT_PERIOD_WITH_BUYER,
     REQUESTED_JOINTLY_INSURED_PARTY: {
-      REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE,
+      REQUESTED,
+      COMPANY_NAME,
+      COMPANY_NUMBER,
+      COUNTRY_CODE,
     },
     USING_BROKER,
     BROKER_DETAILS: { NAME, FULL_ADDRESS },
@@ -43,9 +46,7 @@ const {
   POLICY: { TOTAL_MONTHS_OF_COVER },
 } = APPLICATION;
 
-const {
-  POLICY: POLICY_FORM_TITLES,
-} = FORM_TITLES;
+const { POLICY: POLICY_FORM_TITLES } = FORM_TITLES;
 
 export const POLICY_FIELDS = {
   [POLICY_TYPE]: {
@@ -65,7 +66,7 @@ export const POLICY_FIELDS = {
       MULTIPLE: {
         ID: MULTIPLE_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
-        TEXT: 'Multiple contract policy',
+        TEXT: 'Multiple contract policy (revolving credit)',
         HINT_LIST: [
           `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER} months`,
           "Best if you'll have an ongoing relationship with the buyer but you're not sure yet how many contracts or sales you'll have",
