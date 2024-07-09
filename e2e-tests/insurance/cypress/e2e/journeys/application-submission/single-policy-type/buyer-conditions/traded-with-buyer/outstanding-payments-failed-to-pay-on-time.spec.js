@@ -23,7 +23,7 @@ context('Insurance - submit an application - Single policy type, exporter has tr
     cy.assertApplicationSubmittedUrl(referenceNumber);
   });
 
-  it('should render as expected in the dashboard', () => {
+  it('should render in a `submitted` state in the dashboard', () => {
     cy.assertDashboardApplicationSubmitted(referenceNumber);
   });
 });
