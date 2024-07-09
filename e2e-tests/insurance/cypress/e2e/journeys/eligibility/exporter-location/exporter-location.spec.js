@@ -8,12 +8,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 const CONTENT_STRINGS = PAGES.EXPORTER_LOCATION;
 
 const {
-  START,
-  ELIGIBILITY: {
-    CHECK_IF_ELIGIBLE,
-    EXPORTER_LOCATION,
-    COMPANIES_HOUSE_NUMBER,
-  },
+  ELIGIBILITY: { CHECK_IF_ELIGIBLE, EXPORTER_LOCATION, COMPANIES_HOUSE_NUMBER },
 } = INSURANCE_ROUTES;
 
 const {
@@ -24,9 +19,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Exporter location page - as an exporter, I want to check if my company can get UKEF issue credit insurance cover', () => {
   beforeEach(() => {
-    cy.navigateToUrl(START);
-
-    cy.completeStartForm();
+    cy.navigateToCheckIfEligibleUrl();
     cy.completeCheckIfEligibleForm();
 
     const expectedUrl = `${baseUrl}${EXPORTER_LOCATION}`;

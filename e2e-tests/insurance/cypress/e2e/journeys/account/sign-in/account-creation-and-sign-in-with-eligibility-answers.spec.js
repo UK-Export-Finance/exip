@@ -6,7 +6,6 @@ const { table } = dashboardPage;
 
 const {
   DASHBOARD,
-  START,
   ALL_SECTIONS,
   ROOT,
   ACCOUNT: {
@@ -24,7 +23,7 @@ context('Insurance - Account - When answering eligibility answers, creating an a
   before(() => {
     cy.deleteAccount();
 
-    cy.navigateToUrl(START);
+    cy.navigateToCheckIfEligibleUrl();
 
     cy.submitEligibilityAndStartAccountCreation();
 
@@ -73,9 +72,12 @@ context('Insurance - Account - When answering eligibility answers, creating an a
 
       cy.assertLength(table.body.rows(), 1);
 
-      table.body.firstRow.submittedLink().invoke('text').then((refNumber) => {
-        referenceNumber = refNumber;
-      });
+      table.body.firstRow
+        .submittedLink()
+        .invoke('text')
+        .then((refNumber) => {
+          referenceNumber = refNumber;
+        });
     });
   });
 });

@@ -2,7 +2,6 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { COUNTRY_APPLICATION_SUPPORT } from '../../../../../../fixtures/countries';
 
 const {
-  START,
   ELIGIBILITY: { CONTRACT_TOO_SHORT },
 } = INSURANCE_ROUTES;
 
@@ -15,9 +14,8 @@ context(
     beforeEach(() => {
       cy.saveSession();
 
-      cy.navigateToUrl(START);
+      cy.navigateToCheckIfEligibleUrl();
 
-      cy.completeStartForm();
       cy.completeCheckIfEligibleForm();
       cy.completeExporterLocationForm();
       cy.completeCompaniesHouseNumberForm();

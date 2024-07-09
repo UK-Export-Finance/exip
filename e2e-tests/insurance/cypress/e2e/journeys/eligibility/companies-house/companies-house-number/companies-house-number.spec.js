@@ -9,96 +9,96 @@ const {
   ELIGIBILITY: { HAS_COMPANIES_HOUSE_NUMBER: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
-const insuranceStartRoute = ROUTES.INSURANCE.START;
-
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Eligibility - Companies house number page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction if I have UK Companies House Registration Number', () => {
-  const url = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
+context(
+  'Insurance - Eligibility - Companies house number page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction if I have UK Companies House Registration Number',
+  () => {
+    const url = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
 
-  before(() => {
-    cy.navigateToUrl(insuranceStartRoute);
+    before(() => {
+      cy.navigateToCheckIfEligibleUrl();
 
-    cy.completeStartForm();
-    cy.completeCheckIfEligibleForm();
-    cy.completeExporterLocationForm();
+      cy.completeCheckIfEligibleForm();
+      cy.completeExporterLocationForm();
 
-    cy.assertUrl(url);
-  });
-
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  it('renders core page elements', () => {
-    cy.corePageChecks({
-      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER,
-      backLink: ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION,
-      assertAuthenticatedHeader: false,
+      cy.assertUrl(url);
     });
-  });
 
-  describe('page tests', () => {
     beforeEach(() => {
-      cy.navigateToUrl(url);
+      cy.saveSession();
     });
 
-    it('renders `yes` radio button', () => {
-      yesRadio().input().should('exist');
-
-      cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
-
-      cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
+    it('renders core page elements', () => {
+      cy.corePageChecks({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currentHref: ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER,
+        backLink: ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION,
+        assertAuthenticatedHeader: false,
+      });
     });
 
-    it('renders `no` radio button', () => {
-      noRadio().input().should('exist');
-
-      cy.checkText(noRadio().label(), FIELD_VALUES.NO);
-
-      cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
-    });
-  });
-
-  describe('form submission', () => {
-    describe('when submitting an empty form', () => {
+    describe('page tests', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
       });
 
-      it('should render validation errors', () => {
-        const expectedErrorsCount = 1;
+      it('renders `yes` radio button', () => {
+        yesRadio().input().should('exist');
 
-        cy.submitAndAssertRadioErrors({
-          field: yesRadio(FIELD_ID),
-          expectedErrorsCount,
-          expectedErrorMessage: ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY,
-        });
+        cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
+
+        cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
+      });
+
+      it('renders `no` radio button', () => {
+        noRadio().input().should('exist');
+
+        cy.checkText(noRadio().label(), FIELD_VALUES.NO);
+
+        cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
       });
     });
 
-    describe('when submitting the answer as `yes`', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
+    describe('form submission', () => {
+      describe('when submitting an empty form', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+        });
 
-        cy.clickYesRadioInput();
-        cy.clickSubmitButton();
+        it('should render validation errors', () => {
+          const expectedErrorsCount = 1;
+
+          cy.submitAndAssertRadioErrors({
+            field: yesRadio(FIELD_ID),
+            expectedErrorsCount,
+            expectedErrorMessage: ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY,
+          });
+        });
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.ENTER_COMPANIES_HOUSE_NUMBER}`, () => {
-        const expected = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.ENTER_COMPANIES_HOUSE_NUMBER}`;
+      describe('when submitting the answer as `yes`', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
 
-        cy.assertUrl(expected);
-      });
+          cy.clickYesRadioInput();
+          cy.clickSubmitButton();
+        });
 
-      describe('when going back to the page', () => {
-        it('should have the originally submitted answer selected', () => {
-          cy.clickBackLink();
+        it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.ENTER_COMPANIES_HOUSE_NUMBER}`, () => {
+          const expected = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.ENTER_COMPANIES_HOUSE_NUMBER}`;
 
-          cy.assertYesRadioOptionIsChecked();
+          cy.assertUrl(expected);
+        });
+
+        describe('when going back to the page', () => {
+          it('should have the originally submitted answer selected', () => {
+            cy.clickBackLink();
+
+            cy.assertYesRadioOptionIsChecked();
+          });
         });
       });
     });
-  });
-});
+  },
+);

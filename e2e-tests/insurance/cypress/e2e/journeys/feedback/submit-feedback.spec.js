@@ -4,29 +4,26 @@ import { ROUTES } from '../../../../../constants';
 import { FIELD_IDS } from '../../../../../constants/field-ids';
 
 const {
-  FEEDBACK: {
-    SATISFIED,
-    IMPROVEMENT,
-    OTHER_COMMENTS,
-  },
+  FEEDBACK: { SATISFIED, IMPROVEMENT, OTHER_COMMENTS },
 } = FIELD_IDS;
 
 const {
-  START,
   FEEDBACK_SENT,
+  ELIGIBILITY: { CHECK_IF_ELIGIBLE },
 } = ROUTES.INSURANCE;
 
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Feedback - Submit feedback form', () => {
-  const startUrl = `${baseUrl}${START}`;
+  const checkIfEligibileUrl = `${baseUrl}${CHECK_IF_ELIGIBLE}`;
   const feedbackConfirmationUrl = `${baseUrl}${FEEDBACK_SENT}`;
 
   describe('when submitting an empty form', () => {
     beforeEach(() => {
       cy.saveSession();
 
-      cy.navigateToUrl(startUrl);
+      cy.navigateToCheckIfEligibleUrl();
+
       partials.phaseBanner.feedbackLink().click();
       cy.clickSubmitButton();
     });
@@ -38,10 +35,10 @@ context('Insurance - Feedback - Submit feedback form', () => {
     });
 
     describe('when clicking the "back to service button"', () => {
-      it(`should redirect to ${startUrl}`, () => {
+      it(`should redirect to ${checkIfEligibileUrl}`, () => {
         cy.clickSubmitButton();
 
-        cy.assertUrl(startUrl);
+        cy.assertUrl(checkIfEligibileUrl);
       });
     });
   });
@@ -50,7 +47,7 @@ context('Insurance - Feedback - Submit feedback form', () => {
     beforeEach(() => {
       cy.saveSession();
 
-      cy.navigateToUrl(startUrl);
+      cy.navigateToCheckIfEligibleUrl();
       partials.phaseBanner.feedbackLink().click();
 
       field(SATISFIED).label().click();
@@ -66,10 +63,10 @@ context('Insurance - Feedback - Submit feedback form', () => {
     });
 
     describe('when clicking the "back to service button"', () => {
-      it(`should redirect to ${startUrl}`, () => {
+      it(`should redirect to ${checkIfEligibileUrl}`, () => {
         cy.clickSubmitButton();
 
-        cy.assertUrl(startUrl);
+        cy.assertUrl(checkIfEligibileUrl);
       });
     });
   });
@@ -80,7 +77,7 @@ context('Insurance - Feedback - Submit feedback form', () => {
     beforeEach(() => {
       cy.saveSession();
 
-      cy.navigateToUrl(startUrl);
+      cy.navigateToCheckIfEligibleUrl();
       partials.phaseBanner.feedbackLink().click();
 
       field(SATISFIED).label().click();
@@ -96,10 +93,10 @@ context('Insurance - Feedback - Submit feedback form', () => {
     });
 
     describe('when clicking the "back to service button"', () => {
-      it(`should redirect to ${startUrl}`, () => {
+      it(`should redirect to ${checkIfEligibileUrl}`, () => {
         cy.clickSubmitButton();
 
-        cy.assertUrl(startUrl);
+        cy.assertUrl(checkIfEligibileUrl);
       });
     });
   });
@@ -108,7 +105,7 @@ context('Insurance - Feedback - Submit feedback form', () => {
     beforeEach(() => {
       cy.saveSession();
 
-      cy.navigateToUrl(startUrl);
+      cy.navigateToCheckIfEligibleUrl();
       partials.phaseBanner.feedbackLink().click();
 
       cy.keyboardInput(field(IMPROVEMENT).textarea(), 'test');
@@ -122,10 +119,10 @@ context('Insurance - Feedback - Submit feedback form', () => {
     });
 
     describe('when clicking the "back to service button"', () => {
-      it(`should redirect to ${startUrl}`, () => {
+      it(`should redirect to ${checkIfEligibileUrl}`, () => {
         cy.clickSubmitButton();
 
-        cy.assertUrl(startUrl);
+        cy.assertUrl(checkIfEligibileUrl);
       });
     });
   });

@@ -1,7 +1,6 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../../content-strings';
 import {
-  ROUTES,
   COMPANIES_HOUSE_NUMBER as VALID_COMPANIES_HOUSE_NUMBER,
   COMPANIES_HOUSE_NUMBER_NO_LEADING_ZERO,
   COMPANIES_HOUSE_NUMBER_EMPTY,
@@ -26,8 +25,6 @@ const {
   ELIGIBILITY: { COMPANIES_HOUSE_NUMBER: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
-const insuranceStartRoute = ROUTES.INSURANCE.START;
-
 const field = fieldSelector(FIELD_ID);
 
 const baseUrl = Cypress.config('baseUrl');
@@ -37,9 +34,8 @@ context('Insurance - Eligibility - Companies house search page - I want to check
   let companyNumber;
 
   before(() => {
-    cy.navigateToUrl(insuranceStartRoute);
+    cy.navigateToCheckIfEligibleUrl();
 
-    cy.completeStartForm();
     cy.completeCheckIfEligibleForm();
     cy.completeExporterLocationForm();
     cy.completeCompaniesHouseNumberForm();
@@ -159,10 +155,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
 
         cy.interceptCompaniesHousePost({ companyNumber });
 
-        cy.keyboardInput(
-          field.input(),
-          VALID_COMPANIES_HOUSE_NUMBER,
-        );
+        cy.keyboardInput(field.input(), VALID_COMPANIES_HOUSE_NUMBER);
 
         cy.clickSubmitButton();
       });
@@ -177,10 +170,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
         it('should have the originally submitted answer selected', () => {
           cy.clickBackLink();
 
-          cy.checkValue(
-            field,
-            VALID_COMPANIES_HOUSE_NUMBER,
-          );
+          cy.checkValue(field, VALID_COMPANIES_HOUSE_NUMBER);
         });
       });
     });
@@ -191,10 +181,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
 
         cy.interceptCompaniesHousePost({ companyNumber: COMPANIES_HOUSE_NUMBER_NO_LEADING_ZERO });
 
-        cy.keyboardInput(
-          field.input(),
-          COMPANIES_HOUSE_NUMBER_NO_LEADING_ZERO,
-        );
+        cy.keyboardInput(field.input(), COMPANIES_HOUSE_NUMBER_NO_LEADING_ZERO);
 
         cy.clickSubmitButton();
       });
@@ -222,10 +209,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
 
         cy.interceptCompaniesHousePost({ companyNumber: COMPANIES_HOUSE_NUMBER_WITH_SPACES });
 
-        cy.keyboardInput(
-          field.input(),
-          COMPANIES_HOUSE_NUMBER_WITH_SPACES,
-        );
+        cy.keyboardInput(field.input(), COMPANIES_HOUSE_NUMBER_WITH_SPACES);
 
         cy.clickSubmitButton();
       });
@@ -255,10 +239,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
 
         cy.interceptCompaniesHousePost({ companyNumber: lowerCaseCompaniesHouseNumber });
 
-        cy.keyboardInput(
-          field.input(),
-          lowerCaseCompaniesHouseNumber,
-        );
+        cy.keyboardInput(field.input(), lowerCaseCompaniesHouseNumber);
 
         cy.clickSubmitButton();
       });

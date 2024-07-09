@@ -1,10 +1,14 @@
 import { TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
-import { ROUTES, TEMPLATES } from '../../../../constants';
+import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { mockReq, mockRes } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
+
+const {
+  ELIGIBILITY: { CREDIT_PERIOD },
+} = FIELD_IDS;
 
 describe('controllers/insurance/eligibility/check-if-eligible', () => {
   let req: Request;
@@ -22,6 +26,28 @@ describe('controllers/insurance/eligibility/check-if-eligible', () => {
   });
 
   describe('get', () => {
+    it('should add an empty submittedData object to the session', () => {
+      req.session = {
+        submittedData: {
+          quoteEligibility: {
+            [CREDIT_PERIOD]: 1,
+          },
+          insuranceEligibility: {
+            [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: true,
+          },
+        },
+      };
+
+      get(req, res);
+
+      expect(req.session.submittedData).toEqual({
+        quoteEligibility: {
+          [CREDIT_PERIOD]: 1,
+        },
+        insuranceEligibility: {},
+      });
+    });
+
     it('should render template', () => {
       get(req, res);
 

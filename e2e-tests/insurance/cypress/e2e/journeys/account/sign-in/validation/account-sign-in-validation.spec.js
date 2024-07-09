@@ -7,7 +7,6 @@ import { assertEmailFieldValidation } from '../../../../../../../shared-test-ass
 import account from '../../../../../../../fixtures/account';
 
 const {
-  START,
   ACCOUNT: {
     SIGN_IN: { ROOT: SIGN_IN_ROOT },
   },
@@ -18,7 +17,9 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 const {
-  INSURANCE: { ACCOUNT: { SIGN_IN: SIGN_IN_ERROR_MESSAGES } },
+  INSURANCE: {
+    ACCOUNT: { SIGN_IN: SIGN_IN_ERROR_MESSAGES },
+  },
 } = ERROR_MESSAGES;
 
 const TOTAL_REQUIRED_FIELDS = 2;
@@ -51,7 +52,7 @@ context('Insurance - Account - Sign in - Validation', () => {
   before(() => {
     cy.deleteAccount();
 
-    cy.navigateToUrl(START);
+    cy.navigateToCheckIfEligibleUrl();
 
     cy.submitEligibilityAndStartAccountSignIn();
 

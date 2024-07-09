@@ -4,8 +4,9 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../../constants/routes/insurance';
 
 const {
-  START,
-  ACCOUNT: { SIGN_IN: { ENTER_CODE } },
+  ACCOUNT: {
+    SIGN_IN: { ENTER_CODE },
+  },
   DASHBOARD,
   ALL_SECTIONS,
   ROOT,
@@ -16,7 +17,9 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 const {
-  INSURANCE: { ACCOUNT: { [ACCESS_CODE]: ACCESS_CODE_ERROR_MESSAGE } },
+  INSURANCE: {
+    ACCOUNT: { [ACCESS_CODE]: ACCESS_CODE_ERROR_MESSAGE },
+  },
 } = ERROR_MESSAGES;
 
 const field = fieldSelector(ACCESS_CODE);
@@ -30,7 +33,7 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
   before(() => {
     cy.deleteAccount();
 
-    cy.navigateToUrl(START);
+    cy.navigateToCheckIfEligibleUrl();
 
     cy.submitEligibilityAndStartAccountCreation();
     cy.completeAndSubmitCreateAccountForm();

@@ -6,7 +6,6 @@ const {
     SUSPENDED: { VERIFY_EMAIL },
     SIGN_IN: { ENTER_CODE },
   },
-  START,
 } = ROUTES;
 
 const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
@@ -24,7 +23,7 @@ context('Insurance - Account - Create account - Create an account which already 
   beforeEach(() => {
     cy.createAnAccountAndBecomeBlocked({});
 
-    cy.navigateToUrl(START);
+    cy.navigateToCheckIfEligibleUrl();
     cy.completeAndSubmitCreateAccountForm({ navigateToAccountCreationPage: true });
 
     cy.getAccountByEmail(accountEmail).then((responseData) => {

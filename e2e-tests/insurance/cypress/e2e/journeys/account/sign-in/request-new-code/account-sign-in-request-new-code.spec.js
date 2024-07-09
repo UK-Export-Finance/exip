@@ -5,7 +5,6 @@ import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/route
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SIGN_IN.REQUEST_NEW_CODE;
 
 const {
-  START,
   ACCOUNT: {
     SIGN_IN: { ENTER_CODE, REQUEST_NEW_CODE },
   },
@@ -13,104 +12,103 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Account - Sign in - Request new code page - I want to enter the new access code sent to my email by UK Export Finance, So that I can sign in into my UKEF digital service account', () => {
-  const url = `${baseUrl}${REQUEST_NEW_CODE}`;
-  before(() => {
-    cy.deleteAccount();
+context(
+  'Insurance - Account - Sign in - Request new code page - I want to enter the new access code sent to my email by UK Export Finance, So that I can sign in into my UKEF digital service account',
+  () => {
+    const url = `${baseUrl}${REQUEST_NEW_CODE}`;
+    before(() => {
+      cy.deleteAccount();
 
-    cy.navigateToUrl(START);
+      cy.navigateToCheckIfEligibleUrl();
 
-    cy.submitEligibilityAndStartAccountCreation();
-    cy.completeAndSubmitCreateAccountForm();
+      cy.submitEligibilityAndStartAccountCreation();
+      cy.completeAndSubmitCreateAccountForm();
 
-    cy.verifyAccountEmail();
+      cy.verifyAccountEmail();
 
-    cy.completeAndSubmitSignInAccountForm({});
+      cy.completeAndSubmitSignInAccountForm({});
 
-    enterCodePage.requestNewCodeLink().click();
+      enterCodePage.requestNewCodeLink().click();
 
-    cy.assertUrl(url);
-  });
-
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  it('renders core page elements', () => {
-    cy.corePageChecks({
-      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: REQUEST_NEW_CODE,
-      backLink: ENTER_CODE,
-      submitButtonCopy: BUTTONS.SEND_NEW_ACCESS_CODE,
-      assertAuthenticatedHeader: false,
+      cy.assertUrl(url);
     });
-  });
 
-  describe('page tests', () => {
     beforeEach(() => {
-      cy.navigateToUrl(url);
+      cy.saveSession();
     });
 
-    it('should render intro copy', () => {
-      cy.checkIntroText(CONTENT_STRINGS.INTRO);
+    it('renders core page elements', () => {
+      cy.corePageChecks({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currentHref: REQUEST_NEW_CODE,
+        backLink: ENTER_CODE,
+        submitButtonCopy: BUTTONS.SEND_NEW_ACCESS_CODE,
+        assertAuthenticatedHeader: false,
+      });
     });
 
-    describe('expandable details - do not have access to email', () => {
+    describe('page tests', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
       });
 
-      const { doNotHaveAccessToEmail } = requestNewCodePage;
-      const { DO_NOT_HAVE_EMAIL_ACCESS } = CONTENT_STRINGS;
-
-      it('should render summary text with collapsed conditional `details` content', () => {
-        cy.checkText(doNotHaveAccessToEmail.summary(), DO_NOT_HAVE_EMAIL_ACCESS.INTRO);
-
-        doNotHaveAccessToEmail.details().should('not.have.attr', 'open');
+      it('should render intro copy', () => {
+        cy.checkIntroText(CONTENT_STRINGS.INTRO);
       });
 
-      describe('when clicking the summary text', () => {
-        it('should expand the collapsed `details` content', () => {
-          doNotHaveAccessToEmail.summary().click();
+      describe('expandable details - do not have access to email', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+        });
 
-          doNotHaveAccessToEmail.details().should('have.attr', 'open');
+        const { doNotHaveAccessToEmail } = requestNewCodePage;
+        const { DO_NOT_HAVE_EMAIL_ACCESS } = CONTENT_STRINGS;
 
-          doNotHaveAccessToEmail.cannotAccess().should('be.visible');
+        it('should render summary text with collapsed conditional `details` content', () => {
+          cy.checkText(doNotHaveAccessToEmail.summary(), DO_NOT_HAVE_EMAIL_ACCESS.INTRO);
 
-          cy.checkText(doNotHaveAccessToEmail.cannotAccess(), DO_NOT_HAVE_EMAIL_ACCESS.CANNOT_ACCESS);
+          doNotHaveAccessToEmail.details().should('not.have.attr', 'open');
+        });
 
-          cy.checkLink(
-            doNotHaveAccessToEmail.contactUsLink(),
-            DO_NOT_HAVE_EMAIL_ACCESS.CONTACT_US.HREF,
-            DO_NOT_HAVE_EMAIL_ACCESS.CONTACT_US.TEXT,
-          );
+        describe('when clicking the summary text', () => {
+          it('should expand the collapsed `details` content', () => {
+            doNotHaveAccessToEmail.summary().click();
 
-          cy.checkText(doNotHaveAccessToEmail.outro(), DO_NOT_HAVE_EMAIL_ACCESS.OUTRO);
+            doNotHaveAccessToEmail.details().should('have.attr', 'open');
+
+            doNotHaveAccessToEmail.cannotAccess().should('be.visible');
+
+            cy.checkText(doNotHaveAccessToEmail.cannotAccess(), DO_NOT_HAVE_EMAIL_ACCESS.CANNOT_ACCESS);
+
+            cy.checkLink(doNotHaveAccessToEmail.contactUsLink(), DO_NOT_HAVE_EMAIL_ACCESS.CONTACT_US.HREF, DO_NOT_HAVE_EMAIL_ACCESS.CONTACT_US.TEXT);
+
+            cy.checkText(doNotHaveAccessToEmail.outro(), DO_NOT_HAVE_EMAIL_ACCESS.OUTRO);
+          });
         });
       });
     });
-  });
 
-  describe('form submission', () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
+    describe('form submission', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
-      cy.clickSubmitButton();
+        cy.clickSubmitButton();
+      });
+
+      it(`should redirect to ${ENTER_CODE}`, () => {
+        const expected = `${baseUrl}${ENTER_CODE}`;
+        cy.assertUrl(expected);
+      });
+
+      it('should render a success message', () => {
+        enterCodePage.successBanner.container().should('exist');
+
+        const { ENTER_CODE: ENTER_CODE_STRINGS } = PAGES.INSURANCE.ACCOUNT.SIGN_IN;
+
+        const expected = ENTER_CODE_STRINGS.SUCCESS_BANNER.NEW_CODE_SENT;
+
+        cy.checkText(enterCodePage.successBanner.newCodeSent(), expected);
+      });
     });
-
-    it(`should redirect to ${ENTER_CODE}`, () => {
-      const expected = `${baseUrl}${ENTER_CODE}`;
-      cy.assertUrl(expected);
-    });
-
-    it('should render a success message', () => {
-      enterCodePage.successBanner.container().should('exist');
-
-      const { ENTER_CODE: ENTER_CODE_STRINGS } = PAGES.INSURANCE.ACCOUNT.SIGN_IN;
-
-      const expected = ENTER_CODE_STRINGS.SUCCESS_BANNER.NEW_CODE_SENT;
-
-      cy.checkText(enterCodePage.successBanner.newCodeSent(), expected);
-    });
-  });
-});
+  },
+);

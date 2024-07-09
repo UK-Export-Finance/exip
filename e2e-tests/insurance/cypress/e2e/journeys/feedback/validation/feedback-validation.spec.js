@@ -5,26 +5,19 @@ import { ROUTES } from '../../../../../../constants';
 import { FIELD_IDS } from '../../../../../../constants/field-ids';
 
 const {
-  FEEDBACK: {
-    IMPROVEMENT,
-    OTHER_COMMENTS,
-  },
+  FEEDBACK: { IMPROVEMENT, OTHER_COMMENTS },
 } = FIELD_IDS;
 
-const {
-  START,
-  FEEDBACK,
-} = ROUTES.INSURANCE;
+const { FEEDBACK } = ROUTES.INSURANCE;
 
 const ERROR_MESSAGE_IMPROVEMENT = ERROR_MESSAGES[IMPROVEMENT];
 const ERROR_MESSAGE_OTHER_COMMENT = ERROR_MESSAGES[OTHER_COMMENTS];
 
 context('Insurance - Feedback - form validation', () => {
-  const startUrl = START;
   const url = FEEDBACK;
 
   before(() => {
-    cy.navigateToUrl(startUrl);
+    cy.navigateToCheckIfEligibleUrl();
     partials.phaseBanner.feedbackLink().click();
   });
 

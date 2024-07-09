@@ -5,7 +5,6 @@ import { summaryList } from '../../../../../../pages/shared';
 const { HAS_MINIMUM_UK_GOODS_OR_SERVICES } = INSURANCE_FIELD_IDS.ELIGIBILITY;
 
 const {
-  START,
   ELIGIBILITY: { UK_GOODS_OR_SERVICES_CHANGE, CHECK_YOUR_ANSWERS, CANNOT_APPLY },
 } = INSURANCE_ROUTES;
 
@@ -17,7 +16,7 @@ context(
     const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
     before(() => {
-      cy.navigateToUrl(START);
+      cy.navigateToCheckIfEligibleUrl();
 
       cy.completeAndSubmitAllInsuranceEligibilityAnswers({});
 

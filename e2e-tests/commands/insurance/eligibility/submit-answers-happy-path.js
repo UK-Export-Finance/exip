@@ -1,5 +1,5 @@
 import submitInsuranceEligibilityAnswersFromExporterLocationHappyPath from './submit-answers-from-exporter-location-happy-path';
-import { completeStartForm, completeCheckIfEligibleForm } from './forms';
+import { completeCheckIfEligibleForm } from './forms';
 
 /**
  * submitAnswersHappyPath
@@ -7,7 +7,8 @@ import { completeStartForm, completeCheckIfEligibleForm } from './forms';
  * @param {String} companyNumber
  */
 const submitAnswersHappyPath = (companyNumber) => {
-  completeStartForm();
+  cy.navigateToCheckIfEligibleUrl();
+
   completeCheckIfEligibleForm();
   submitInsuranceEligibilityAnswersFromExporterLocationHappyPath({ companyNumber });
 };

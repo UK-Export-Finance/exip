@@ -13,131 +13,126 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 const {
-  START,
-  ELIGIBILITY: {
-    COVER_PERIOD: COVER_PERIOD_ROUTE,
-    LONG_TERM_COVER,
-    TOTAL_VALUE_INSURED,
-    UK_GOODS_OR_SERVICES,
-  },
+  ELIGIBILITY: { COVER_PERIOD: COVER_PERIOD_ROUTE, LONG_TERM_COVER, TOTAL_VALUE_INSURED, UK_GOODS_OR_SERVICES },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
 const { ABOVE, BELOW } = FIELDS_ELIGIBILITY[FIELD_ID].OPTIONS;
 
-context('Insurance - Cover period page - I want to enter the length of my export contract, So that I can cover my exposure for the period of the contract', () => {
-  let url;
+context(
+  'Insurance - Cover period page - I want to enter the length of my export contract, So that I can cover my exposure for the period of the contract',
+  () => {
+    let url;
 
-  before(() => {
-    cy.navigateToUrl(START);
+    before(() => {
+      cy.navigateToCheckIfEligibleUrl();
+      cy.completeCheckIfEligibleForm();
+      cy.completeExporterLocationForm();
+      cy.completeCompaniesHouseNumberForm();
+      cy.completeAndSubmitCompaniesHouseSearchForm({});
+      cy.completeEligibilityCompanyDetailsForm();
+      completeAndSubmitBuyerCountryForm({});
+      cy.completeAndSubmitTotalValueInsuredForm({});
 
-    cy.completeStartForm();
-    cy.completeCheckIfEligibleForm();
-    cy.completeExporterLocationForm();
-    cy.completeCompaniesHouseNumberForm();
-    cy.completeAndSubmitCompaniesHouseSearchForm({});
-    cy.completeEligibilityCompanyDetailsForm();
-    completeAndSubmitBuyerCountryForm({});
-    cy.completeAndSubmitTotalValueInsuredForm({});
+      url = `${baseUrl}${COVER_PERIOD_ROUTE}`;
 
-    url = `${baseUrl}${COVER_PERIOD_ROUTE}`;
-
-    cy.assertUrl(url);
-  });
-
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  it('renders core page elements', () => {
-    cy.corePageChecks({
-      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: COVER_PERIOD_ROUTE,
-      backLink: TOTAL_VALUE_INSURED,
-      assertAuthenticatedHeader: false,
+      cy.assertUrl(url);
     });
-  });
 
-  describe('page tests', () => {
     beforeEach(() => {
-      cy.navigateToUrl(url);
+      cy.saveSession();
     });
 
-    it('renders a hint', () => {
-      cy.checkText(fieldSelector(FIELD_ID).hint(), CONTENT_STRINGS.HINT);
+    it('renders core page elements', () => {
+      cy.corePageChecks({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currentHref: COVER_PERIOD_ROUTE,
+        backLink: TOTAL_VALUE_INSURED,
+        assertAuthenticatedHeader: false,
+      });
     });
 
-    it(`renders a '${COVER_PERIOD.LESS_THAN_2_YEARS.VALUE}' radio button`, () => {
-      const field = fieldSelector(`${FIELD_ID}-${ABOVE.ID}`);
-
-      field.input().should('exist');
-
-      cy.checkText(field.label(), ABOVE.TEXT);
-    });
-
-    it(`renders a '${COVER_PERIOD.MORE_THAN_2_YEARS.VALUE}' radio button`, () => {
-      const field = fieldSelector(`${FIELD_ID}-${BELOW.ID}`);
-
-      field.input().should('exist');
-
-      cy.checkText(field.label(), BELOW.TEXT);
-    });
-  });
-
-  describe('form submission', () => {
-    describe('when submitting an empty form', () => {
+    describe('page tests', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
       });
 
-      it('should render validation errors', () => {
-        const fieldId = `${FIELD_ID}-${BELOW.ID}`;
+      it('renders a hint', () => {
+        cy.checkText(fieldSelector(FIELD_ID).hint(), CONTENT_STRINGS.HINT);
+      });
 
-        const expectedErrorsCount = 1;
+      it(`renders a '${COVER_PERIOD.LESS_THAN_2_YEARS.VALUE}' radio button`, () => {
+        const field = fieldSelector(`${FIELD_ID}-${ABOVE.ID}`);
 
-        cy.submitAndAssertRadioErrors({
-          field: fieldSelector(fieldId),
-          expectedErrorsCount,
-          expectedErrorMessage: ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY,
+        field.input().should('exist');
+
+        cy.checkText(field.label(), ABOVE.TEXT);
+      });
+
+      it(`renders a '${COVER_PERIOD.MORE_THAN_2_YEARS.VALUE}' radio button`, () => {
+        const field = fieldSelector(`${FIELD_ID}-${BELOW.ID}`);
+
+        field.input().should('exist');
+
+        cy.checkText(field.label(), BELOW.TEXT);
+      });
+    });
+
+    describe('form submission', () => {
+      describe('when submitting an empty form', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+        });
+
+        it('should render validation errors', () => {
+          const fieldId = `${FIELD_ID}-${BELOW.ID}`;
+
+          const expectedErrorsCount = 1;
+
+          cy.submitAndAssertRadioErrors({
+            field: fieldSelector(fieldId),
+            expectedErrorsCount,
+            expectedErrorMessage: ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY,
+          });
+        });
+      });
+
+      describe('when submitting the answer as under the threshold', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+
+          cy.completeCoverPeriodForm({ underThreshold: true });
+        });
+
+        it(`should redirect to ${UK_GOODS_OR_SERVICES}`, () => {
+          const expected = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
+
+          cy.assertUrl(expected);
+        });
+
+        describe('when going back to the page', () => {
+          it('should have the originally submitted answer selected', () => {
+            cy.clickBackLink();
+
+            cy.assertCoverPeriodRadios({ underThreshold: true });
+          });
+        });
+      });
+
+      describe('when submitting the answer as over the threshold', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+
+          cy.completeCoverPeriodForm({ underThreshold: false });
+        });
+
+        it(`should redirect to ${LONG_TERM_COVER}`, () => {
+          const expected = `${baseUrl}${LONG_TERM_COVER}`;
+
+          cy.assertUrl(expected);
         });
       });
     });
-
-    describe('when submitting the answer as under the threshold', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-
-        cy.completeCoverPeriodForm({ underThreshold: true });
-      });
-
-      it(`should redirect to ${UK_GOODS_OR_SERVICES}`, () => {
-        const expected = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
-
-        cy.assertUrl(expected);
-      });
-
-      describe('when going back to the page', () => {
-        it('should have the originally submitted answer selected', () => {
-          cy.clickBackLink();
-
-          cy.assertCoverPeriodRadios({ underThreshold: true });
-        });
-      });
-    });
-
-    describe('when submitting the answer as over the threshold', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-
-        cy.completeCoverPeriodForm({ underThreshold: false });
-      });
-
-      it(`should redirect to ${LONG_TERM_COVER}`, () => {
-        const expected = `${baseUrl}${LONG_TERM_COVER}`;
-
-        cy.assertUrl(expected);
-      });
-    });
-  });
-});
+  },
+);

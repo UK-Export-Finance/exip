@@ -3,7 +3,6 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import assertCompaniesHouseSummaryList from '../../../../../../commands/insurance/assert-companies-house-summary-list';
 
 const {
-  START,
   ELIGIBILITY: { COMPANY_DETAILS },
 } = INSURANCE_ROUTES;
 
@@ -15,9 +14,8 @@ context(
     const url = `${baseUrl}${COMPANY_DETAILS}`;
 
     before(() => {
-      cy.navigateToUrl(START);
+      cy.navigateToCheckIfEligibleUrl();
 
-      cy.completeStartForm();
       cy.completeCheckIfEligibleForm();
       cy.completeExporterLocationForm();
       cy.completeCompaniesHouseNumberForm();

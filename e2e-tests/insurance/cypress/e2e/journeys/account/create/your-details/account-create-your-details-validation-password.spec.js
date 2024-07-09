@@ -5,8 +5,9 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/in
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
-  START,
-  ACCOUNT: { CREATE: { YOUR_DETAILS } },
+  ACCOUNT: {
+    CREATE: { YOUR_DETAILS },
+  },
 } = ROUTES;
 
 const {
@@ -35,7 +36,7 @@ context('Insurance - Account - Create - Your details page - form validation - pa
   let url;
 
   before(() => {
-    cy.navigateToUrl(START);
+    cy.navigateToCheckIfEligibleUrl();
 
     cy.submitEligibilityAndStartAccountCreation();
 
