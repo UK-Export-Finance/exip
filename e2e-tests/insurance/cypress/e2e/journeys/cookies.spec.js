@@ -1,11 +1,6 @@
 import { cookiesPage, cookiesSavedPage } from '../../../../pages';
 import partials from '../../../../partials';
-import {
-  BUTTONS,
-  ERROR_MESSAGES,
-  FIELDS,
-  PAGES,
-} from '../../../../content-strings';
+import { BUTTONS, ERROR_MESSAGES, FIELDS, PAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, COOKIE } from '../../../../constants';
 
 const CONTENT_STRINGS = PAGES.COOKIES_PAGE;
@@ -14,20 +9,22 @@ const {
   INSURANCE: {
     COOKIES,
     COOKIES_SAVED,
-    START,
     ACCOUNT: {
       SIGN_IN: { ROOT: SIGN_IN_ROOT },
     },
+    ELIGIBILITY: { CHECK_IF_ELIGIBLE },
   },
 } = ROUTES;
 
 const { OPTIONAL_COOKIES: FIELD_ID } = FIELD_IDS;
 
-context('Cookies page - Insurance', () => {
-  const baseUrl = Cypress.config('baseUrl');
-  const url = COOKIES;
-  const insuranceStartUrl = `${baseUrl}${START}`;
+const baseUrl = Cypress.config('baseUrl');
 
+const url = COOKIES;
+
+const checkIfEligibleUrl = `${baseUrl}${CHECK_IF_ELIGIBLE}`;
+
+context('Cookies page - Insurance', () => {
   beforeEach(() => {
     cy.navigateToCheckIfEligibleUrl();
 
@@ -44,7 +41,7 @@ context('Cookies page - Insurance', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: COOKIES,
-      backLink: START,
+      backLink: CHECK_IF_ELIGIBLE,
       submitButtonCopy: BUTTONS.SAVE_CHANGES,
       assertAuthenticatedHeader: false,
       isInsurancePage: true,
@@ -190,6 +187,9 @@ context('Cookies page - Insurance', () => {
 
       describe('when submitting the answer as `accept`', () => {
         beforeEach(() => {
+          cy.navigateToCheckIfEligibleUrl();
+          partials.footer.supportLinks.cookies().click();
+
           cy.saveSession();
 
           cookiesPage[FIELD_ID].accept.label().click();
@@ -205,7 +205,7 @@ context('Cookies page - Insurance', () => {
         });
 
         it('should render a link button with the URL that was visited prior to submitting an answer in the cookies page', () => {
-          const expectedUrl = insuranceStartUrl;
+          const expectedUrl = checkIfEligibleUrl;
 
           cy.checkLink(cookiesSavedPage.returnToServiceLinkButton(), expectedUrl, BUTTONS.RETURN_TO_SERVICE);
         });
@@ -240,7 +240,7 @@ context('Cookies page - Insurance', () => {
         });
 
         it('should render a link button with the URL that was visited prior to submitting an answer in the cookies page', () => {
-          const expectedUrl = insuranceStartUrl;
+          const expectedUrl = checkIfEligibleUrl;
 
           cy.checkLink(cookiesSavedPage.returnToServiceLinkButton(), expectedUrl, BUTTONS.RETURN_TO_SERVICE);
         });

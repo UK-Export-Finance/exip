@@ -1,10 +1,3 @@
-import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
-
-const { START } = INSURANCE_ROUTES;
-
-const baseUrl = Cypress.config('baseUrl');
-const startUrl = `${baseUrl}${START}`;
-
 /**
  * completeInsuranceEligibilitySignInAndGoToDashboard
  * 1) Complete "insurance eligibility"
@@ -18,8 +11,6 @@ const startUrl = `${baseUrl}${START}`;
  * @param {String} companyNumber: Company number/Companies house number
  */
 const completeInsuranceEligibilitySignInAndGoToDashboard = ({ emailAddress, companyNumber }) => {
-  cy.navigateToUrl(startUrl);
-
   cy.submitInsuranceEligibilityAnswersHappyPath(companyNumber);
 
   // create an account
