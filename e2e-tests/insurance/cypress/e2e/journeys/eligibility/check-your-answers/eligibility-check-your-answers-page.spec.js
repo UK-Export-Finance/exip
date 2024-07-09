@@ -7,7 +7,6 @@ import checkSummaryList from '../../../../../../commands/insurance/check-your-an
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.CHECK_YOUR_ANSWERS;
 
 const {
-  START,
   ELIGIBILITY: { END_BUYER, CHECK_YOUR_ANSWERS, ELIGIBLE_TO_APPLY_ONLINE },
 } = INSURANCE_ROUTES;
 
@@ -32,7 +31,7 @@ context(
     const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
     beforeEach(() => {
-      cy.navigateToUrl(START);
+      cy.navigateToCheckIfEligibleUrl();
 
       cy.completeAndSubmitAllInsuranceEligibilityAnswers({});
 

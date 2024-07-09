@@ -6,7 +6,6 @@ import { MAXIMUM_CHARACTERS } from '../../../../../../../constants/validation';
 import assertNameFieldValidation from '../../../../../../../shared-test-assertions/name-field-validation';
 
 const {
-  START,
   ACCOUNT: {
     CREATE: { YOUR_DETAILS },
   },
@@ -34,7 +33,7 @@ context('Insurance - Account - Create - Your details page - empty form validatio
   let url;
 
   before(() => {
-    cy.navigateToUrl(START);
+    cy.navigateToCheckIfEligibleUrl();
 
     cy.submitEligibilityAndStartAccountCreation();
 

@@ -4,7 +4,6 @@ const {
   ACCOUNT: {
     SUSPENDED: { EMAIL_SENT },
   },
-  START,
 } = ROUTES;
 
 context('Insurance - Account - Create account - Create an account which already exists and is blocked', () => {
@@ -18,7 +17,7 @@ context('Insurance - Account - Create account - Create an account which already 
   beforeEach(() => {
     cy.createAnAccountAndBecomeBlocked({});
 
-    cy.navigateToUrl(START);
+    cy.navigateToCheckIfEligibleUrl();
   });
 
   it(`should redirect to ${emailSentUrl} when creating an account which already exists and is blocked`, () => {

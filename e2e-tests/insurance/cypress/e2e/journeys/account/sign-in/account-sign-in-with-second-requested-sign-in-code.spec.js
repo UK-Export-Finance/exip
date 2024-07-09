@@ -6,7 +6,6 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insur
 import account from '../../../../../../fixtures/account';
 
 const {
-  START,
   ACCOUNT: {
     SIGN_IN: { ROOT: SIGN_IN_ROOT, ENTER_CODE, REQUEST_NEW_CODE },
   },
@@ -24,7 +23,7 @@ context(
     before(() => {
       cy.deleteAccount();
 
-      cy.navigateToUrl(START);
+      cy.navigateToCheckIfEligibleUrl();
 
       cy.submitEligibilityAndStartAccountCreation();
       cy.completeAndSubmitCreateAccountForm();

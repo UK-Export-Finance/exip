@@ -8,7 +8,6 @@ import { assertCountryAutocompleteInput } from '../../../../../../shared-test-as
 const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
 
 const {
-  START,
   ELIGIBILITY: { BUYER_COUNTRY, COMPANY_DETAILS, TOTAL_VALUE_INSURED },
 } = INSURANCE_ROUTES;
 
@@ -20,9 +19,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Buyer country page - as an exporter, I want to check if UKEF offer credit insurance policy for where my buyer is based', () => {
   beforeEach(() => {
-    cy.navigateToUrl(START);
-
-    cy.completeStartForm();
+    cy.navigateToCheckIfEligibleUrl();
     cy.completeCheckIfEligibleForm();
     cy.completeExporterLocationForm();
     cy.completeCompaniesHouseNumberForm();

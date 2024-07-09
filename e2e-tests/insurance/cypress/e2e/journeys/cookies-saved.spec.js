@@ -7,7 +7,11 @@ import { PAGES, BUTTONS } from '../../../../content-strings';
 const CONTENT_STRINGS = PAGES.COOKIES_SAVED_PAGE;
 
 const {
-  INSURANCE: { COOKIES, COOKIES_SAVED, START },
+  INSURANCE: {
+    COOKIES,
+    COOKIES_SAVED,
+    ELIGIBILITY: { CHECK_IF_ELIGIBLE },
+  },
 } = ROUTES;
 
 const { OPTIONAL_COOKIES: FIELD_ID } = FIELD_IDS;
@@ -15,12 +19,11 @@ const { OPTIONAL_COOKIES: FIELD_ID } = FIELD_IDS;
 context('Cookies saved page - Insurance', () => {
   const baseUrl = Cypress.config('baseUrl');
   const url = `${baseUrl}${COOKIES_SAVED}`;
-  const insuranceStartUrl = `${baseUrl}${START}`;
 
   beforeEach(() => {
     cy.login();
 
-    cy.navigateToUrl(insuranceStartUrl);
+    cy.navigateToCheckIfEligibleUrl();
 
     partials.footer.supportLinks.cookies().click();
 
@@ -50,12 +53,8 @@ context('Cookies saved page - Insurance', () => {
   });
 
   it('renders a `return to service` button link', () => {
-    const expectedUrl = insuranceStartUrl;
+    const expectedUrl = `${baseUrl}${CHECK_IF_ELIGIBLE}`;
 
-    cy.checkLink(
-      cookiesSavedPage.returnToServiceLinkButton(),
-      expectedUrl,
-      BUTTONS.RETURN_TO_SERVICE,
-    );
+    cy.checkLink(cookiesSavedPage.returnToServiceLinkButton(), expectedUrl, BUTTONS.RETURN_TO_SERVICE);
   });
 });

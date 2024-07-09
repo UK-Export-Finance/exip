@@ -8,7 +8,6 @@ const { COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER_FIELD_ID, COMPANIES_HOUSE
 const { COMPANY_NAME } = COMPANIES_HOUSE;
 
 const {
-  START,
   ELIGIBILITY: { ENTER_COMPANIES_HOUSE_NUMBER_CHANGE, COMPANY_DETAILS_CHANGE, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
@@ -24,7 +23,7 @@ context(
     const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
     before(() => {
-      cy.navigateToUrl(START);
+      cy.navigateToCheckIfEligibleUrl();
 
       cy.completeAndSubmitAllInsuranceEligibilityAnswers({});
 

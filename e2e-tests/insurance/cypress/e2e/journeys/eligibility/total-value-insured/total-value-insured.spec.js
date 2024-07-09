@@ -13,139 +13,135 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 const {
-  START,
-  ELIGIBILITY: {
-    BUYER_COUNTRY,
-    TOTAL_VALUE_INSURED,
-    COVER_PERIOD,
-  },
+  ELIGIBILITY: { BUYER_COUNTRY, TOTAL_VALUE_INSURED, COVER_PERIOD },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
 const { ABOVE, BELOW } = FIELDS_ELIGIBILITY[FIELD_ID].OPTIONS;
 
-context('Insurance - Total value insured page - I want to enter the value that I want my export to be insured for so that I can obtain UKEF Credit Insurance for my export', () => {
-  let url;
+context(
+  'Insurance - Total value insured page - I want to enter the value that I want my export to be insured for so that I can obtain UKEF Credit Insurance for my export',
+  () => {
+    let url;
 
-  before(() => {
-    cy.navigateToUrl(START);
+    before(() => {
+      cy.navigateToCheckIfEligibleUrl();
+      cy.completeCheckIfEligibleForm();
+      cy.completeExporterLocationForm();
+      cy.completeCompaniesHouseNumberForm();
+      cy.completeAndSubmitCompaniesHouseSearchForm({});
+      cy.completeEligibilityCompanyDetailsForm();
+      completeAndSubmitBuyerCountryForm({});
 
-    cy.completeStartForm();
-    cy.completeCheckIfEligibleForm();
-    cy.completeExporterLocationForm();
-    cy.completeCompaniesHouseNumberForm();
-    cy.completeAndSubmitCompaniesHouseSearchForm({});
-    cy.completeEligibilityCompanyDetailsForm();
-    completeAndSubmitBuyerCountryForm({});
+      url = `${baseUrl}${TOTAL_VALUE_INSURED}`;
 
-    url = `${baseUrl}${TOTAL_VALUE_INSURED}`;
-
-    cy.assertUrl(url);
-  });
-
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  it('renders core page elements', () => {
-    cy.corePageChecks({
-      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: TOTAL_VALUE_INSURED,
-      backLink: BUYER_COUNTRY,
-      assertAuthenticatedHeader: false,
+      cy.assertUrl(url);
     });
-  });
 
-  describe('page tests', () => {
     beforeEach(() => {
-      cy.navigateToUrl(url);
+      cy.saveSession();
     });
 
-    it('renders a hint', () => {
-      cy.checkText(fieldSelector(FIELD_ID).hint(), CONTENT_STRINGS.HINT);
+    it('renders core page elements', () => {
+      cy.corePageChecks({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currentHref: TOTAL_VALUE_INSURED,
+        backLink: BUYER_COUNTRY,
+        assertAuthenticatedHeader: false,
+      });
     });
 
-    it(`renders a '${TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE}' radio button`, () => {
-      const fieldId = `${FIELD_ID}-${ABOVE.ID}`;
-      const field = fieldSelector(fieldId);
-
-      field.input().should('exist');
-
-      cy.checkText(field.label(), ABOVE.TEXT);
-    });
-
-    it(`renders a '${TOTAL_CONTRACT_VALUE.LESS_THAN_250K.VALUE}' radio button`, () => {
-      const fieldId = `${FIELD_ID}-${BELOW.ID}`;
-      const field = fieldSelector(fieldId);
-
-      field.input().should('exist');
-
-      cy.checkText(field.label(), BELOW.TEXT);
-    });
-  });
-
-  describe('form submission', () => {
-    describe('when submitting an empty form', () => {
+    describe('page tests', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
       });
 
-      it('should render validation errors', () => {
+      it('renders a hint', () => {
+        cy.checkText(fieldSelector(FIELD_ID).hint(), CONTENT_STRINGS.HINT);
+      });
+
+      it(`renders a '${TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE}' radio button`, () => {
+        const fieldId = `${FIELD_ID}-${ABOVE.ID}`;
+        const field = fieldSelector(fieldId);
+
+        field.input().should('exist');
+
+        cy.checkText(field.label(), ABOVE.TEXT);
+      });
+
+      it(`renders a '${TOTAL_CONTRACT_VALUE.LESS_THAN_250K.VALUE}' radio button`, () => {
         const fieldId = `${FIELD_ID}-${BELOW.ID}`;
+        const field = fieldSelector(fieldId);
 
-        const expectedErrorsCount = 1;
+        field.input().should('exist');
 
-        cy.submitAndAssertRadioErrors({
-          field: fieldSelector(fieldId),
-          expectedErrorsCount,
-          expectedErrorMessage: ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY,
-        });
+        cy.checkText(field.label(), BELOW.TEXT);
       });
     });
 
-    describe('when submitting the answer as under the threshold', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
+    describe('form submission', () => {
+      describe('when submitting an empty form', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+        });
 
-        cy.completeAndSubmitTotalValueInsuredForm({ underThreshold: true });
+        it('should render validation errors', () => {
+          const fieldId = `${FIELD_ID}-${BELOW.ID}`;
+
+          const expectedErrorsCount = 1;
+
+          cy.submitAndAssertRadioErrors({
+            field: fieldSelector(fieldId),
+            expectedErrorsCount,
+            expectedErrorMessage: ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY,
+          });
+        });
       });
 
-      it(`should redirect to ${COVER_PERIOD}`, () => {
-        const expected = `${baseUrl}${COVER_PERIOD}`;
+      describe('when submitting the answer as under the threshold', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
 
-        cy.assertUrl(expected);
+          cy.completeAndSubmitTotalValueInsuredForm({ underThreshold: true });
+        });
+
+        it(`should redirect to ${COVER_PERIOD}`, () => {
+          const expected = `${baseUrl}${COVER_PERIOD}`;
+
+          cy.assertUrl(expected);
+        });
+
+        describe('when going back to the page', () => {
+          it('should have the originally submitted answer selected', () => {
+            cy.clickBackLink();
+
+            cy.assertTotalValueInsuredRadios({ underThreshold: true });
+          });
+        });
       });
 
-      describe('when going back to the page', () => {
-        it('should have the originally submitted answer selected', () => {
-          cy.clickBackLink();
+      describe('when submitting the answer as over the threshold', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
 
-          cy.assertTotalValueInsuredRadios({ underThreshold: true });
+          cy.completeAndSubmitTotalValueInsuredForm({ underThreshold: false });
+        });
+
+        it(`should redirect to ${COVER_PERIOD}`, () => {
+          const expected = `${baseUrl}${COVER_PERIOD}`;
+
+          cy.assertUrl(expected);
+        });
+
+        describe('when going back to the page', () => {
+          it('should have the originally submitted answer selected', () => {
+            cy.clickBackLink();
+
+            cy.assertTotalValueInsuredRadios({ underThreshold: false });
+          });
         });
       });
     });
-
-    describe('when submitting the answer as over the threshold', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-
-        cy.completeAndSubmitTotalValueInsuredForm({ underThreshold: false });
-      });
-
-      it(`should redirect to ${COVER_PERIOD}`, () => {
-        const expected = `${baseUrl}${COVER_PERIOD}`;
-
-        cy.assertUrl(expected);
-      });
-
-      describe('when going back to the page', () => {
-        it('should have the originally submitted answer selected', () => {
-          cy.clickBackLink();
-
-          cy.assertTotalValueInsuredRadios({ underThreshold: false });
-        });
-      });
-    });
-  });
-});
+  },
+);

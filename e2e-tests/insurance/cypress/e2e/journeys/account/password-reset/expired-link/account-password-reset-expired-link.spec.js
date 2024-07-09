@@ -11,12 +11,8 @@ import api from '../../../../../../../commands/api';
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.EXPIRED_LINK;
 
 const {
-  START,
   ACCOUNT: {
-    PASSWORD_RESET: {
-      NEW_PASSWORD,
-      EXPIRED_LINK,
-    },
+    PASSWORD_RESET: { NEW_PASSWORD, EXPIRED_LINK },
   },
 } = INSURANCE_ROUTES;
 
@@ -30,7 +26,7 @@ context('Insurance - Account - Password reset - expired link page', () => {
   before(() => {
     cy.deleteAccount();
 
-    cy.navigateToUrl(START);
+    cy.navigateToCheckIfEligibleUrl();
     cy.submitEligibilityAndStartAccountCreation();
     cy.completeAndSubmitCreateAccountForm();
 
