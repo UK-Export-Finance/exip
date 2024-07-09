@@ -9,10 +9,6 @@ const BUYER_BODY = {
   },
 };
 
-const UK_GOODS_OR_SERVICES = {
-  WILL_CALCULATE_THOROUGHLY: "We'll also calculate this thoroughly if you go on to make a full application.",
-};
-
 const POLICY_TYPE = {
   PAGE_TITLE: 'What kind of policy do you need?',
 };
@@ -33,7 +29,8 @@ const CANNOT_APPLY = {
   PAGE_TITLE: 'You cannot apply for UKEF credit insurance',
   REASON: {
     INTRO: 'This is because',
-    UNSUPPORTED_COMPANY_COUNTRY: "you're not exporting from a business base in the UK, Channel Islands or Isle of Man.We can only provide cover for UK businesses.",
+    UNSUPPORTED_COMPANY_COUNTRY:
+      "you're not exporting from a business base in the UK, Channel Islands or Isle of Man.We can only provide cover for UK businesses.",
     UNSUPPORTED_BUYER_COUNTRY_1: 'your buyer is based in',
     UNSUPPORTED_BUYER_COUNTRY_2: 'which we cannot provide cover for.',
     NOT_ENOUGH_UK_GOODS_OR_SERVICES: 'your export contract value is not made up from at least 20% UK goods or services.',
@@ -116,7 +113,8 @@ const YOUR_QUOTE = {
       HEADING: 'Brokers',
       ACT_AS: 'They act as an agent between you and UKEF. They can also help you with the application process.',
       THEY_RECEIVE: {
-        INTRO: 'They receive a 15% fee for providing any successful policies at no extra cost to you. UKEF will pay their fee out of the policy premium you pay.',
+        INTRO:
+          'They receive a 15% fee for providing any successful policies at no extra cost to you. UKEF will pay their fee out of the policy premium you pay.',
         LINK: {
           TEXT: 'Use our approved broker list',
           HREF: LINKS.EXTERNAL.APPROVED_BROKER_LIST,
@@ -129,7 +127,6 @@ const YOUR_QUOTE = {
 
 const QUOTE = {
   BUYER_BODY,
-  UK_GOODS_OR_SERVICES,
   POLICY_TYPE,
   TELL_US_ABOUT_YOUR_POLICY,
   CHECK_YOUR_ANSWERS,
