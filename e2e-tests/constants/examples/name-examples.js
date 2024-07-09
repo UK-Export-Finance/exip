@@ -1,6 +1,6 @@
 export const INVALID_NAMES = {
   SPECIAL_CHARACTERS: 'Name!?',
-  SPECIAL_CHARACTERS_SPACE: 'Mock name!',
+  SPECIAL_CHARACTERS_AND_SPACE: 'Mock name!',
   NUMBERS: 'Name1',
 };
 

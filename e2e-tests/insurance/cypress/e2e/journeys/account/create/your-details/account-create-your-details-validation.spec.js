@@ -50,24 +50,26 @@ context('Insurance - Account - Create - Your details page - empty form validatio
   });
 
   const TOTAL_REQUIRED_FIELDS = 4;
-  const nameMaximumCharacters = 'a'.repeat(MAX_CHARACTERS + 1);
+  const maximum = 'a'.repeat(MAX_CHARACTERS + 1);
+  const totalExpectedErrors = 4;
+  const totalExpectedOtherErrorsWithValidName = 3;
 
   assertNameFieldValidation({
     fieldId: FIRST_NAME,
-    nameMaximumCharacters,
+    maximum,
     errorIndex: 0,
     errorMessages: YOUR_DETAILS_ERROR_MESSAGES[FIRST_NAME],
-    totalExpectedErrors: 4,
-    totalExpectedOtherErrorsWithName: 3,
+    totalExpectedErrors,
+    totalExpectedOtherErrorsWithValidName,
   });
 
   assertNameFieldValidation({
     fieldId: LAST_NAME,
     errorIndex: 1,
-    nameMaximumCharacters,
+    maximum,
     errorMessages: YOUR_DETAILS_ERROR_MESSAGES[LAST_NAME],
-    totalExpectedErrors: 4,
-    totalExpectedOtherErrorsWithName: 3,
+    totalExpectedErrors,
+    totalExpectedOtherErrorsWithValidName,
   });
 
   it('should render email validation error', () => {

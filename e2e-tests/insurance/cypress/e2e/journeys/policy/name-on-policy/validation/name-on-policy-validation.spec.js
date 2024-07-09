@@ -104,11 +104,11 @@ context('Insurance - Policy - Name on policy - Validation', () => {
 
     assertNameFieldValidation({
       fieldId: POSITION,
-      nameMaximumCharacters: positionMaximumCharacters,
+      maximum: positionMaximumCharacters,
       errorIndex: 0,
       errorMessages: NAME_ON_POLICY_ERRORS[POSITION],
       totalExpectedErrors: 1,
-      totalExpectedOtherErrorsWithName: 0,
+      totalExpectedOtherErrorsWithValidName: 0,
       shouldHaveOtherErrors: false,
     });
   });

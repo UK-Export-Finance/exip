@@ -62,10 +62,10 @@ context('Insurance - Policy - Loss Payee Details - Validation', () => {
     assertNameFieldValidation({
       fieldId: FIELD_ID,
       errorIndex: 0,
-      nameMaximumCharacters: 'a'.repeat(MAXIMUM_CHARACTERS.LOSS_PAYEE_NAME + 1),
+      maximum: 'a'.repeat(MAXIMUM_CHARACTERS.LOSS_PAYEE_NAME + 1),
       errorMessages: ERROR,
       totalExpectedErrors: 2,
-      totalExpectedOtherErrorsWithName: 1,
+      totalExpectedOtherErrorsWithValidName: 1,
     });
   });
 

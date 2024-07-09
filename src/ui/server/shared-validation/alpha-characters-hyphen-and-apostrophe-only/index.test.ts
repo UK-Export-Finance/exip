@@ -6,21 +6,19 @@ import { REGEX } from '../../constants';
 describe('shared-validation/alpha-characters-hyphen-and-apostrophe-only', () => {
   const mockFieldId = 'Mock field';
 
-  describe('when the value has special characters', () => {
-    it('should return the result of regexValidation', () => {
-      const mockValue = 'mock!';
+  it('should return the result of regexValidation', () => {
+    const mockValue = 'mock!';
 
-      const result = alphaCharactersHyphenAndApostropheOnlyValidation(mockValue, mockFieldId, mockErrorMessagesObject.INCORRECT_FORMAT, mockErrors);
+    const result = alphaCharactersHyphenAndApostropheOnlyValidation(mockValue, mockFieldId, mockErrorMessagesObject.INCORRECT_FORMAT, mockErrors);
 
-      const expected = regexValidation(
-        mockValue,
-        mockFieldId,
-        REGEX.ALPHA_CHARACTERS_AND_SPACE_HYPHEN_APOSTROPHE,
-        mockErrorMessagesObject.INCORRECT_FORMAT,
-        mockErrors,
-      );
+    const expected = regexValidation(
+      mockValue,
+      mockFieldId,
+      REGEX.ALPHA_CHARACTERS_AND_SPACE_HYPHEN_APOSTROPHE,
+      mockErrorMessagesObject.INCORRECT_FORMAT,
+      mockErrors,
+    );
 
-      expect(result).toEqual(expected);
-    });
+    expect(result).toEqual(expected);
   });
 });

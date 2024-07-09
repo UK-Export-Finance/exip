@@ -60,10 +60,10 @@ context('Insurance - Export contract - Agent details page - form validation', ()
     assertNameFieldValidation({
       fieldId: NAME,
       errorIndex: 0,
-      nameMaximumCharacters: 'a'.repeat(MAXIMUM_CHARACTERS.AGENT_NAME + 1),
+      maximum: 'a'.repeat(MAXIMUM_CHARACTERS.AGENT_NAME + 1),
       errorMessages: ERROR_MESSAGES_OBJECT,
       totalExpectedErrors: expectedErrorsCount,
-      totalExpectedOtherErrorsWithName: 2,
+      totalExpectedOtherErrorsWithValidName: 2,
     });
 
     it('should retain all submitted values', () => {

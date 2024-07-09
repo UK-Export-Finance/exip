@@ -19,7 +19,7 @@ const {
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
- * @returns {ValidationErrors}
+ * @returns {ValidationErrors} nameValidation
  */
 const lastNameRules = (formBody: RequestBody, errors: object) => nameValidation(formBody, FIELD_ID, ERROR_MESSAGE, errors);
 

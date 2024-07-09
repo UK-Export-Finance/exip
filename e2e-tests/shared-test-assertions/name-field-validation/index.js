@@ -5,21 +5,21 @@ import { field as fieldSelector } from '../../pages/shared';
  * assertNameFieldValidation
  * Assert name field validation
  * @param {String} fieldId: Name field ID
- * @param {String} nameMaximumCharacters: name with over maximum number of characters
+ * @param {String} maximum: name with over maximum number of characters
  * @param {Integer} errorIndex: Index of the summary list error
  * @param {Object} errorMessages: Email error messages
  * @param {Integer} totalExpectedErrors: Total expected errors in the form
- * @param {Integer} totalExpectedOtherErrorsWithName: Total expected errors in the form when name is valid.
+ * @param {Integer} totalExpectedOtherErrorsWithValidName: Total expected errors in the form when name is valid.
  * @param {Boolean} shouldHaveOtherErrors: If other error messages should be present on the page if fieldId is valid.
  * @returns {Function} Mocha describe block with assertions.
  */
 export const assertNameFieldValidation = ({
   fieldId,
-  nameMaximumCharacters,
+  maximum,
   errorIndex,
   errorMessages,
   totalExpectedErrors = 1,
-  totalExpectedOtherErrorsWithName = 0,
+  totalExpectedOtherErrorsWithValidName = 0,
   shouldHaveOtherErrors = true,
 }) => {
   const assertions = {
@@ -30,7 +30,7 @@ export const assertNameFieldValidation = ({
 
   const otherErrors = () => {
     if (shouldHaveOtherErrors) {
-      cy.assertErrorSummaryListLength(totalExpectedOtherErrorsWithName);
+      cy.assertErrorSummaryListLength(totalExpectedOtherErrorsWithValidName);
     } else {
       cy.assertErrorSummaryListDoesNotExist();
     }
@@ -45,7 +45,7 @@ export const assertNameFieldValidation = ({
       cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: isEmptyErrorMessage });
     });
 
-    it(`should render a validation error the ${fieldId} contains special characters`, () => {
+    it(`should render a validation error when ${fieldId} contains special characters`, () => {
       cy.submitAndAssertFieldErrors({
         ...assertions,
         value: INVALID_NAMES.SPECIAL_CHARACTERS,
@@ -53,15 +53,15 @@ export const assertNameFieldValidation = ({
       });
     });
 
-    it(`should render a validation error the ${fieldId} contains special characters and a space`, () => {
+    it(`should render a validation error when ${fieldId} contains special characters and a space`, () => {
       cy.submitAndAssertFieldErrors({
         ...assertions,
-        value: INVALID_NAMES.SPECIAL_CHARACTERS_SPACE,
+        value: INVALID_NAMES.SPECIAL_CHARACTERS_AND_SPACE,
         expectedErrorMessage: incorrectFormatErrorMessage,
       });
     });
 
-    it(`should render a validation error the ${fieldId} contains numbers`, () => {
+    it(`should render a validation error when ${fieldId} contains numbers`, () => {
       cy.submitAndAssertFieldErrors({
         ...assertions,
         value: INVALID_NAMES.NUMBERS,
@@ -69,10 +69,10 @@ export const assertNameFieldValidation = ({
       });
     });
 
-    it(`should render a validation error the ${fieldId} is above the maximum number of characters`, () => {
+    it(`should render a validation error when ${fieldId} is above the maximum number of characters`, () => {
       cy.submitAndAssertFieldErrors({
         ...assertions,
-        value: nameMaximumCharacters,
+        value: maximum,
         expectedErrorMessage: aboveMaximumErrorMessage,
       });
     });
