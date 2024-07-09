@@ -20,7 +20,11 @@ const {
 
 const {
   YOUR_BUYER: {
-    COMPANY_DETAILS, TRADING_HISTORY, CONNECTION_TO_BUYER, CREDIT_INSURANCE_HISTORY, FINANCIAL_ACCOUNTS,
+    COMPANY_DETAILS,
+    TRADING_HISTORY,
+    CONNECTION_TO_BUYER,
+    CREDIT_INSURANCE_HISTORY,
+    FINANCIAL_ACCOUNTS,
   },
 } = FORM_TITLES;
 
@@ -65,7 +69,13 @@ export const YOUR_BUYER_FIELDS = {
   },
   [CONNECTION_WITH_BUYER]: {
     LABEL: 'Are you connected with the buyer in any way?',
-    HINT: "For example, someone in your company is a shareholder or director of the buyer's company.",
+    HINT: {
+      INTRO: 'For example:',
+      LIST: [
+        "someone in your company is a shareholder or director of the buyer's company",
+        "someone in the buyer's company is a shareholder or director of your company",
+      ],
+    },
     SUMMARY: {
       TITLE: 'Connected with the buyer',
       FORM_TITLE: CONNECTION_TO_BUYER,

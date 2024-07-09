@@ -134,7 +134,7 @@ export const ERROR_MESSAGES = {
         IS_EMPTY: 'Select if you have a process for dealing with late payments',
       },
       [FIELD_IDS.INSURANCE.CURRENCY.CURRENCY_CODE]: {
-        IS_EMPTY: 'You must select the currency you use to calculate your annual turnover',
+        IS_EMPTY: 'Select the currency you use to calculate your annual turnover',
       },
       [FIELD_IDS.INSURANCE.CURRENCY.ALTERNATIVE_CURRENCY_CODE]: {
         IS_EMPTY: 'Enter the currency you use to calculate your annual turnover',
@@ -215,7 +215,7 @@ export const ERROR_MESSAGES = {
       },
       AGENT_CHARGES_ALTERNATIVE_CURRENCY: {
         [FIELD_IDS.INSURANCE.CURRENCY.CURRENCY_CODE]: {
-          IS_EMPTY: 'You must select the currency the agent is charging you in',
+          IS_EMPTY: 'Select the currency the agent is charging you in',
         },
         [FIELD_IDS.INSURANCE.CURRENCY.ALTERNATIVE_CURRENCY_CODE]: {
           IS_EMPTY: 'Enter the currency the agent is charging you in',
@@ -439,7 +439,7 @@ export const ERROR_MESSAGES = {
         IS_EMPTY: 'Select if the end buyer has ever failed to pay you on time',
       },
       [FIELD_IDS.INSURANCE.CURRENCY.CURRENCY_CODE]: {
-        IS_EMPTY: 'You must select the currency the outstanding or overdue payments are in',
+        IS_EMPTY: 'Select the currency the outstanding or overdue payments are in',
       },
       [FIELD_IDS.INSURANCE.CURRENCY.ALTERNATIVE_CURRENCY_CODE]: {
         IS_EMPTY: 'Enter the currency the outstanding or overdue payments are in',

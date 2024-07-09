@@ -5784,7 +5784,7 @@ var POLICY_FIELDS = {
       MULTIPLE: {
         ID: MULTIPLE_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
-        TEXT: "Multiple contract policy",
+        TEXT: "Multiple contract policy (revolving credit)",
         HINT_LIST: [
           `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER} months`,
           "Best if you'll have an ongoing relationship with the buyer but you're not sure yet how many contracts or sales you'll have",
@@ -6242,7 +6242,13 @@ var YOUR_BUYER_FIELDS = {
   },
   [CONNECTION_WITH_BUYER]: {
     LABEL: "Are you connected with the buyer in any way?",
-    HINT: "For example, someone in your company is a shareholder or director of the buyer's company.",
+    HINT: {
+      INTRO: "For example:",
+      LIST: [
+        "someone in your company is a shareholder or director of the buyer's company",
+        "someone in the buyer's company is a shareholder or director of your company"
+      ]
+    },
     SUMMARY: {
       TITLE: "Connected with the buyer",
       FORM_TITLE: CONNECTION_TO_BUYER
@@ -6725,7 +6731,7 @@ var ACCOUNT_FIELDS = {
   PASSWORD_RESET: {
     [EMAIL6]: {
       LABEL: "Email address",
-      HINT: "Enter the email address you used to create your account."
+      HINT: "Enter the email address associated with your credit insurance application(s)."
     }
   },
   NEW_PASSWORD: {
@@ -7786,7 +7792,6 @@ var verify_account_reactivation_token_default = verifyAccountReactivationToken;
 var updateCompanyPostDataMigration = async (root, variables, context) => {
   try {
     console.info("Updating company (post data migration) %s", variables.id);
-    console.log(">>> variables ", variables);
     const { id, company } = variables;
     const { registeredOfficeAddress, industrySectorNames: industrySectorNames2, sicCodes, ...otherFields } = company;
     const updatedCompany = await context.db.Company.updateOne({
