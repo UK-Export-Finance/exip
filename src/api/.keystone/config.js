@@ -4598,14 +4598,14 @@ var map_sic_codes_default = mapSicCodes;
 var createCompanySicCodes = async (context, sicCodes, industrySectorNames2, companyId) => {
   console.info("Creating company SIC codes for ", companyId);
   try {
-    const mappedSicCodes = map_sic_codes_default(sicCodes, industrySectorNames2, companyId);
-    let createdSicCodes = [];
     if (sicCodes.length) {
-      createdSicCodes = await context.db.CompanySicCode.createMany({
+      const mappedSicCodes = map_sic_codes_default(sicCodes, industrySectorNames2, companyId);
+      const createdSicCodes = await context.db.CompanySicCode.createMany({
         data: mappedSicCodes
       });
+      return createdSicCodes;
     }
-    return createdSicCodes;
+    return [];
   } catch (err) {
     console.error("Error creating company SIC codes %O", err);
     throw new Error(`Creating company SIC codes ${err}`);
@@ -7801,6 +7801,10 @@ var updateCompanyPostDataMigration = async (root, variables, context) => {
       data: otherFields
     });
     const { id: addressId, ...addressFields } = registeredOfficeAddress;
+    if (!updatedCompany.registeredOfficeAddressId) {
+      console.error("Unable to update company address - does not exist (post data migration) %O", id);
+      throw new Error(`Unable to update company address - does not exist (post data migration) ${id}`);
+    }
     await context.db.CompanyAddress.updateOne({
       where: {
         id: updatedCompany.registeredOfficeAddressId

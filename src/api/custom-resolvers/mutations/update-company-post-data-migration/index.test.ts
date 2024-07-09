@@ -124,5 +124,38 @@ describe('custom-resolvers/update-company-post-data-migration', () => {
     });
   });
 
-  // TODO: EMS-3550 error handling for CompanyAddress, CompanySicCode
+  describe('when an error occurs whilst updating company SIC codes', () => {
+    it('should throw an error', async () => {
+      const mockVariables = {
+        ...variables,
+        company: {
+          ...variables.company,
+          sicCodes: 'a, b, c',
+        },
+      };
+
+      const expectedMessage = 'Updating company (post data migration) Error: Creating company SIC codes TypeError: sicCodes.forEach is not a function';
+
+      await expect(updateCompanyPostDataMigration({}, mockVariables, context)).rejects.toThrow(expectedMessage);
+    });
+  });
+
+  describe('when an error occurs whilst updating company address data', () => {
+    it('should throw an error', async () => {
+      /**
+       * delete all company address entires
+       * so that the company does not have an address relationship.
+       */
+
+      const companyAddresses = await context.query.CompanyAddress.findMany();
+
+      await context.query.CompanyAddress.deleteMany({
+        where: companyAddresses,
+      });
+
+      const expectedMessage = 'Updating company (post data migration) Error: Unable to update company address - does not exist (post data migration)';
+
+      await expect(updateCompanyPostDataMigration({}, variables, context)).rejects.toThrow(expectedMessage);
+    });
+  });
 });
