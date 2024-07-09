@@ -10,7 +10,6 @@ const {
 } = CONTENT_STRINGS;
 
 const {
-  START,
   ELIGIBILITY: { COMPANY_NOT_ACTIVE, ENTER_COMPANIES_HOUSE_NUMBER },
 } = INSURANCE_ROUTES;
 
@@ -20,9 +19,7 @@ context('Insurance - Eligibility - Company not active - I want to check if I can
   const url = `${baseUrl}${COMPANY_NOT_ACTIVE}`;
 
   before(() => {
-    cy.navigateToUrl(START);
-
-    cy.completeStartForm();
+    cy.navigateToCheckIfEligibleUrl();
     cy.completeCheckIfEligibleForm();
     cy.completeExporterLocationForm();
     cy.completeCompaniesHouseNumberForm();

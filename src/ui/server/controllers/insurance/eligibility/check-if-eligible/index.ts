@@ -6,13 +6,23 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 
 export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE;
 
-export const get = (req: Request, res: Response) =>
-  res.render(TEMPLATE, {
+export const get = (req: Request, res: Response) => {
+  /**
+   * Create a new session,
+   * with empty eligibility answers.
+   */
+  req.session.submittedData = {
+    ...req.session.submittedData,
+    insuranceEligibility: {},
+  };
+
+  return res.render(TEMPLATE, {
     ...corePageVariables({
       PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE,
       BACK_LINK: req.headers.referer,
     }),
     userName: getUserNameFromSession(req.session.user),
   });
+};
 
 export const post = (req: Request, res: Response) => res.redirect(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);

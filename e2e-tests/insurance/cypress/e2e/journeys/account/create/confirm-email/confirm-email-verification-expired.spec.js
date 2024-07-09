@@ -7,7 +7,6 @@ import { createDateOneMonthInThePast } from '../../../../../../../helpers/date';
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.VERIFY_EMAIL_EXPIRED_LINK;
 
 const {
-  START,
   ACCOUNT: {
     CREATE: {
       CONFIRM_EMAIL,
@@ -29,7 +28,7 @@ context(
     before(() => {
       cy.deleteAccount();
 
-      cy.navigateToUrl(START);
+      cy.navigateToCheckIfEligibleUrl();
 
       cy.submitEligibilityAndStartAccountCreation();
       cy.completeAndSubmitCreateAccountForm();

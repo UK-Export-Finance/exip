@@ -5,18 +5,15 @@ import { ROUTES } from '../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.FEEDBACK_SENT_PAGE;
 
-const {
-  START,
-  FEEDBACK_SENT,
-} = ROUTES.INSURANCE;
+const { FEEDBACK_SENT } = ROUTES.INSURANCE;
 
 context('Insurance - Feedback Confirmation page', () => {
-  const startUrl = START;
   const url = FEEDBACK_SENT;
 
   before(() => {
-    cy.navigateToUrl(startUrl);
+    cy.navigateToCheckIfEligibleUrl();
     partials.phaseBanner.feedbackLink().click();
+
     // to reach confirmation page
     cy.clickSubmitButton();
   });

@@ -2,7 +2,6 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { COUNTRY_APPLICATION_SUPPORT } from '../../../../../../fixtures/countries';
 
 const {
-  START,
   ELIGIBILITY: { CANNOT_APPLY },
 } = INSURANCE_ROUTES;
 
@@ -17,9 +16,7 @@ context(`Insurance - Buyer country page - ${contextString} - Unsupported countri
   beforeEach(() => {
     cy.saveSession();
 
-    cy.navigateToUrl(START);
-
-    cy.completeStartForm();
+    cy.navigateToCheckIfEligibleUrl();
     cy.completeCheckIfEligibleForm();
     cy.completeExporterLocationForm();
     cy.completeCompaniesHouseNumberForm();

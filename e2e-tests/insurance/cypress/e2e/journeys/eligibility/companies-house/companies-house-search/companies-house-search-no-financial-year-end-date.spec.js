@@ -2,36 +2,36 @@ import { COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE } from '../../../../.
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
-  START,
   ELIGIBILITY: { COMPANY_DETAILS },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Eligibility - Companies house search page - company with no financial year end date - I want to check if I can use online service to apply for UKEF Export Insurance Policy', () => {
-  const url = `${baseUrl}${COMPANY_DETAILS}`;
+context(
+  'Insurance - Eligibility - Companies house search page - company with no financial year end date - I want to check if I can use online service to apply for UKEF Export Insurance Policy',
+  () => {
+    const url = `${baseUrl}${COMPANY_DETAILS}`;
 
-  before(() => {
-    cy.navigateToUrl(START);
+    before(() => {
+      cy.navigateToCheckIfEligibleUrl();
+      cy.completeCheckIfEligibleForm();
+      cy.completeExporterLocationForm();
+      cy.completeCompaniesHouseNumberForm();
+      cy.completeAndSubmitCompaniesHouseSearchForm({ companyNumber: COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE });
 
-    cy.completeStartForm();
-    cy.completeCheckIfEligibleForm();
-    cy.completeExporterLocationForm();
-    cy.completeCompaniesHouseNumberForm();
-    cy.completeAndSubmitCompaniesHouseSearchForm({ companyNumber: COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE });
+      cy.assertUrl(url);
+    });
 
-    cy.assertUrl(url);
-  });
+    beforeEach(() => {
+      cy.saveSession();
 
-  beforeEach(() => {
-    cy.saveSession();
+      cy.navigateToUrl(url);
+    });
 
-    cy.navigateToUrl(url);
-  });
+    it(`should redirect to ${COMPANY_DETAILS}`, () => {
+      const expected = `${baseUrl}${COMPANY_DETAILS}`;
 
-  it(`should redirect to ${COMPANY_DETAILS}`, () => {
-    const expected = `${baseUrl}${COMPANY_DETAILS}`;
-
-    cy.assertUrl(expected);
-  });
-});
+      cy.assertUrl(expected);
+    });
+  },
+);

@@ -13,9 +13,8 @@ context('Contact us page - Insurance', () => {
   const url = ROUTES.INSURANCE.CONTACT_US;
 
   beforeEach(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.navigateToCheckIfEligibleUrl();
 
-    // click on contact link in footer
     footer.supportLinks.contact().click();
 
     cy.assertUrl(`${baseUrl}${url}`);
@@ -29,7 +28,7 @@ context('Contact us page - Insurance', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.CONTACT_US,
-      backLink: ROUTES.INSURANCE.START,
+      backLink: ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE,
       hasAForm: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: true,
@@ -41,10 +40,7 @@ context('Contact us page - Insurance', () => {
   });
 
   it('renders a `general enquiries` section', () => {
-    cy.checkText(
-      contactUsPage.customerServiceHeading(),
-      GENERAL_ENQUIRIES.HEADING,
-    );
+    cy.checkText(contactUsPage.customerServiceHeading(), GENERAL_ENQUIRIES.HEADING);
 
     cy.assertCustomerServiceContactDetailsContent();
   });

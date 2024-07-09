@@ -7,7 +7,6 @@ import { EXPORT_CONTRACT_TEMPLATES } from './export-contract';
 import { DECLARATIONS_TEMPLATES } from './declarations';
 
 export const INSURANCE_TEMPLATES = {
-  START: 'insurance/start.njk',
   ELIGIBILITY: ELIGIBILITY_TEMPLATES,
   ACCOUNT: ACCOUNT_TEMPLATES,
   DASHBOARD: 'insurance/dashboard.njk',

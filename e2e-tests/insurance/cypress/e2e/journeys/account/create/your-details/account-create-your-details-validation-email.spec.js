@@ -4,8 +4,9 @@ import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/route
 import { assertEmailFieldValidation } from '../../../../../../../shared-test-assertions';
 
 const {
-  START,
-  ACCOUNT: { CREATE: { YOUR_DETAILS } },
+  ACCOUNT: {
+    CREATE: { YOUR_DETAILS },
+  },
 } = ROUTES;
 
 const {
@@ -16,9 +17,7 @@ const {
   INSURANCE: {
     ACCOUNT: {
       CREATE: {
-        YOUR_DETAILS: {
-          [FIELD_ID]: ERROR_MESSAGES_OBJECT,
-        },
+        YOUR_DETAILS: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
       },
     },
   },
@@ -30,7 +29,7 @@ context('Insurance - Account - Create - Your details page - form validation - em
   let url;
 
   before(() => {
-    cy.navigateToUrl(START);
+    cy.navigateToCheckIfEligibleUrl();
 
     cy.submitEligibilityAndStartAccountCreation();
 

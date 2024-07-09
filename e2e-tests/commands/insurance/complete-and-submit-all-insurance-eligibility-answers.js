@@ -7,7 +7,8 @@ import { COMPANIES_HOUSE_NUMBER } from '../../constants/examples';
  * @param {String} companyNumber: companies house number - defaults to COMPANIES_HOUSE_NUMBER
  */
 const completeAndSubmitAllInsuranceEligibilityAnswers = ({ companyNumber = COMPANIES_HOUSE_NUMBER }) => {
-  cy.completeStartForm();
+  cy.navigateToCheckIfEligibleUrl();
+
   cy.completeCheckIfEligibleForm();
   cy.completeExporterLocationForm();
   cy.completeCompaniesHouseNumberForm();

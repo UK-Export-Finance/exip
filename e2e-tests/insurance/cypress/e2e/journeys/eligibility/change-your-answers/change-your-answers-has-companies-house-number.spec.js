@@ -5,7 +5,6 @@ import { summaryList } from '../../../../../../pages/shared';
 const { HAS_COMPANIES_HOUSE_NUMBER } = INSURANCE_FIELD_IDS.ELIGIBILITY;
 
 const {
-  START,
   ELIGIBILITY: { COMPANIES_HOUSE_NUMBER_CHANGE, CHECK_YOUR_ANSWERS, NO_COMPANIES_HOUSE_NUMBER },
 } = INSURANCE_ROUTES;
 
@@ -17,7 +16,7 @@ context(
     const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
     before(() => {
-      cy.navigateToUrl(START);
+      cy.navigateToCheckIfEligibleUrl();
 
       cy.completeAndSubmitAllInsuranceEligibilityAnswers({});
 

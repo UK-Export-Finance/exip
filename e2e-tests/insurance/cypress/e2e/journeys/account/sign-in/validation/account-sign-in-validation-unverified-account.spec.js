@@ -3,7 +3,6 @@ import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/route
 import { PAGES } from '../../../../../../../content-strings';
 
 const {
-  START,
   ACCOUNT: {
     SIGN_IN: { ROOT: SIGN_IN_ROOT },
     CREATE: { CONFIRM_EMAIL_RESENT },
@@ -22,7 +21,7 @@ context('Insurance - Account - Sign in - Validation - unverified account', () =>
   before(() => {
     cy.deleteAccount();
 
-    cy.navigateToUrl(START);
+    cy.navigateToCheckIfEligibleUrl();
 
     // create an account but do not verify the account
     cy.submitEligibilityAndStartAccountCreation();

@@ -5,7 +5,6 @@ import { summaryList } from '../../../../../../pages/shared';
 const { COVER_PERIOD } = INSURANCE_FIELD_IDS.ELIGIBILITY;
 
 const {
-  START,
   ELIGIBILITY: { COVER_PERIOD_CHANGE, CHECK_YOUR_ANSWERS, LONG_TERM_COVER },
 } = INSURANCE_ROUTES;
 
@@ -17,7 +16,7 @@ context(
     const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
     before(() => {
-      cy.navigateToUrl(START);
+      cy.navigateToCheckIfEligibleUrl();
 
       cy.completeAndSubmitAllInsuranceEligibilityAnswers({});
 

@@ -1,4 +1,3 @@
-import startPage from './start';
 import applyOfflinePage from './applyOffline';
 import noAccessToApplicationPage from './noAccessToApplication';
 import dashboardPage from './dashboard';
@@ -13,7 +12,6 @@ import applicationSubmittedPage from './applicationSubmitted';
 import * as feedback from './feedback';
 
 const insurancePages = {
-  startPage,
   applyOfflinePage,
   noAccessToApplicationPage,
   dashboardPage,

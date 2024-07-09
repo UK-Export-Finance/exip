@@ -5,7 +5,6 @@ import { checkIfEligiblePage } from '../../../../../pages/insurance/eligibility'
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE;
 
 const {
-  START,
   ELIGIBILITY: { CHECK_IF_ELIGIBLE, EXPORTER_LOCATION },
 } = INSURANCE_ROUTES;
 
@@ -15,9 +14,7 @@ context('Insurance Eligibility - check if eligible page', () => {
   const url = `${baseUrl}${CHECK_IF_ELIGIBLE}`;
 
   before(() => {
-    cy.navigateToUrl(START);
-
-    cy.completeStartForm();
+    cy.navigateToCheckIfEligibleUrl();
 
     cy.assertUrl(url);
   });
@@ -30,7 +27,7 @@ context('Insurance Eligibility - check if eligible page', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: CHECK_IF_ELIGIBLE,
-      backLink: START,
+      backLink: `${CHECK_IF_ELIGIBLE}#`,
       assertAuthenticatedHeader: false,
     });
   });
