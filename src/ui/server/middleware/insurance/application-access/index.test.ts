@@ -1,7 +1,7 @@
 import applicationAccessMiddleware, { IRRELEVANT_ROUTES } from '.';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
-import { mockReq, mockRes, mockApplication, mockAccount } from '../../../test-mocks';
 import { Next, Request, Response } from '../../../../types';
+import { mockReq, mockRes, mockApplication, mockAccount, referenceNumber } from '../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -80,7 +80,7 @@ describe('middleware/insurance/application-access', () => {
 
   describe('when the route contains a relevant route', () => {
     beforeEach(() => {
-      req.baseUrl = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`;
+      req.baseUrl = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
     });
 
     describe("when req.session.user.id matches the application's owner ID", () => {

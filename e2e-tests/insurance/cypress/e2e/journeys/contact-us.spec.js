@@ -7,16 +7,17 @@ const CONTENT_STRINGS = PAGES.CONTACT_US_PAGE;
 
 const { GENERAL_ENQUIRIES, APPLICATION_ENQUIRES } = CONTENT_STRINGS;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Contact us page - Insurance', () => {
   const url = ROUTES.INSURANCE.CONTACT_US;
 
   beforeEach(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.navigateToCheckIfEligibleUrl();
 
-    // click on contact link in footer
     footer.supportLinks.contact().click();
 
-    cy.assertUrl(`${Cypress.config('baseUrl')}${url}`);
+    cy.assertUrl(`${baseUrl}${url}`);
 
     cy.saveSession();
   });
@@ -27,7 +28,7 @@ context('Contact us page - Insurance', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.CONTACT_US,
-      backLink: ROUTES.INSURANCE.START,
+      backLink: ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE,
       hasAForm: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: true,
@@ -39,10 +40,7 @@ context('Contact us page - Insurance', () => {
   });
 
   it('renders a `general enquiries` section', () => {
-    cy.checkText(
-      contactUsPage.customerServiceHeading(),
-      GENERAL_ENQUIRIES.HEADING,
-    );
+    cy.checkText(contactUsPage.customerServiceHeading(), GENERAL_ENQUIRIES.HEADING);
 
     cy.assertCustomerServiceContactDetailsContent();
   });

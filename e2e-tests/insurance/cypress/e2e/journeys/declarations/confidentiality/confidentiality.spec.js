@@ -24,7 +24,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 const field = singleInputField(FIELD_ID);
 
-context('Insurance - Declarations - Confidentiality page - As an Exporter, I want to make confidentiality declaration for my export insurance application, So that UKEF can be assured of my agreement with regards to confidentiality while processing my export insurance application', () => {
+context('Insurance - Declarations - Confidentiality page - As an Exporter, I want to make confidentiality declaration for my credit insurance application, So that UKEF can be assured of my agreement with regards to confidentiality while processing my credit insurance application', () => {
   let referenceNumber;
   let url;
 
@@ -130,13 +130,11 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
       it('should render a validation error', () => {
         const expectedErrorsCount = 1;
 
-        cy.submitAndAssertRadioErrors(
+        cy.submitAndAssertRadioErrors({
           field,
-          0,
           expectedErrorsCount,
-          ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
-          false,
-        );
+          expectedErrorMessage: ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
+        });
       });
     });
 
@@ -159,7 +157,7 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
 
           cy.navigateToUrl(url);
 
-          field.input().should('be.checked');
+          cy.assertRadioOptionIsChecked(field.input());
         });
       });
     });

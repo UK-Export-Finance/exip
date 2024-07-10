@@ -1,4 +1,5 @@
-import { FIELD_IDS, GBP_CURRENCY_CODE } from '../../../constants';
+import { GBP_CURRENCY_CODE } from '../../../constants';
+import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 import { DEFAULT } from '../../../content-strings';
 import { isSinglePolicyType, isMultiplePolicyType } from '../../policy-type';
 import formatCurrency from '../../format-currency';
@@ -9,11 +10,14 @@ const {
   POLICY: {
     POLICY_TYPE,
     CONTRACT_POLICY: {
+      POLICY_CURRENCY_CODE,
       SINGLE: { TOTAL_CONTRACT_VALUE },
+    },
+    EXPORT_VALUE: {
       MULTIPLE: { MAXIMUM_BUYER_WILL_OWE },
     },
   },
-} = FIELD_IDS.INSURANCE;
+} = INSURANCE_FIELD_IDS;
 
 /**
  * mapValue
@@ -27,12 +31,14 @@ const mapValue = (application: Application) => {
 
     const policyType = policy[POLICY_TYPE];
 
+    const currencyCode = application.policy[POLICY_CURRENCY_CODE] || GBP_CURRENCY_CODE;
+
     if (isSinglePolicyType(policyType) && objectHasProperty(policy, TOTAL_CONTRACT_VALUE)) {
-      return formatCurrency(policy[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE);
+      return formatCurrency(policy[TOTAL_CONTRACT_VALUE], currencyCode);
     }
 
     if (isMultiplePolicyType(policyType) && objectHasProperty(policy, MAXIMUM_BUYER_WILL_OWE)) {
-      return formatCurrency(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE);
+      return formatCurrency(policy[MAXIMUM_BUYER_WILL_OWE], currencyCode);
     }
   }
 

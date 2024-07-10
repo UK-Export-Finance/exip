@@ -17,8 +17,8 @@ const {
  * If so, update the account.
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the VerifyAccountReactivationToken mutation
- * @param {Object} KeystoneJS context API
- * @returns {Object} Object with success or expired flag.
+ * @param {Context} KeystoneJS context API
+ * @returns {Promise<Object>} Object with success or expired flag.
  */
 const verifyAccountReactivationToken = async (
   root: any,
@@ -59,13 +59,17 @@ const verifyAccountReactivationToken = async (
       console.info('Reactivating account %s', account.id);
 
       const accountUpdate = {
-        isBlocked: false,
-        isVerified: true,
         reactivationHash: '',
         reactivationExpiry: null,
       };
 
+      const statusUpdate = {
+        isBlocked: false,
+        isVerified: true,
+      };
+
       await update.account(context, account.id, accountUpdate);
+      await update.accountStatus(context, account.status.id, statusUpdate);
 
       /**
        * Wipe the retry entries

@@ -1,4 +1,3 @@
-import { submitButton, yesRadio, backLink } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
@@ -16,7 +15,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Declarations - Anti-bribery - Code of conduct page - As an Exporter, I want to confirm my company does have code of conduct procedure, So that UKEF can have clarity about how my company operates processing my export insurance application', () => {
+context('Insurance - Declarations - Anti-bribery - Code of conduct page - As an Exporter, I want to confirm my company does have code of conduct procedure, So that UKEF can have clarity about how my company operates processing my credit insurance application', () => {
   let referenceNumber;
   let url;
 
@@ -43,8 +42,8 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
 
     cy.navigateToUrl(url);
 
-    yesRadio().label().click();
-    submitButton().click();
+    cy.clickYesRadioInput();
+    cy.clickSubmitButton();
   });
 
   after(() => {
@@ -58,8 +57,8 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
   });
 
   it('should have the originally submitted answer selected when going back to the page after submission', () => {
-    backLink().click();
+    cy.clickBackLink();
 
-    yesRadio().input().should('be.checked');
+    cy.assertYesRadioOptionIsChecked();
   });
 });

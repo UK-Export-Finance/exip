@@ -1,24 +1,25 @@
 import partials from '../../../../../../../partials';
-import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
 
 const NATURE_OF_BUSINESS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
-
 const {
   NATURE_OF_YOUR_BUSINESS: {
-    YEARS_EXPORTING,
+    YEARS_EXPORTING: FIELD_ID,
   },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
-const fieldId = YEARS_EXPORTING;
-const field = fieldSelector(fieldId);
+const field = fieldSelector(FIELD_ID);
 
-const expectedErrorsCount = 4;
+const assertions = {
+  field,
+  expectedErrorsCount: 3,
+  errorIndex: 1,
+};
+
+const baseUrl = Cypress.config('baseUrl');
 
 describe('Insurance - Your business - Nature of your business page - As an Exporter I want to enter details about the nature of my business - years exporting input validation', () => {
   let referenceNumber;
@@ -28,12 +29,11 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection({});
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
-      cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitCompanyDetails({});
 
-      url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
+      url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -47,97 +47,77 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(`${YEARS_EXPORTING} error`, () => {
-    describe(`when ${YEARS_EXPORTING} is left empty`, () => {
-      const errorMessage = NATURE_OF_BUSINESS_ERRORS[YEARS_EXPORTING].IS_EMPTY;
-
+  describe(`${FIELD_ID} error`, () => {
+    describe(`when ${FIELD_ID} is left empty`, () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
       });
 
-      it(`should display validation errors if ${YEARS_EXPORTING} is left empty`, () => {
-        cy.submitAndAssertFieldErrors(
-          field,
-          null,
-          1,
-          expectedErrorsCount,
-          errorMessage,
-          true,
-        );
+      it(`should display validation errors if ${FIELD_ID} is left empty`, () => {
+        cy.submitAndAssertFieldErrors({
+          ...assertions,
+          expectedErrorMessage: NATURE_OF_BUSINESS_ERRORS[FIELD_ID].IS_EMPTY,
+        });
       });
 
-      it(`should focus to the ${YEARS_EXPORTING} section when clicking the error`, () => {
-        submitButton().click();
+      it(`should focus to the ${FIELD_ID} section when clicking the error`, () => {
+        cy.clickSubmitButton();
 
         partials.errorSummaryListItemLinks().eq(1).click();
         field.input().should('have.focus');
       });
     });
 
-    describe(`when ${YEARS_EXPORTING} is a decimal place number`, () => {
-      const errorMessage = NATURE_OF_BUSINESS_ERRORS[YEARS_EXPORTING].INCORRECT_FORMAT;
-
+    describe(`when ${FIELD_ID} is a decimal place number`, () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
       });
 
-      it(`should display validation errors for ${YEARS_EXPORTING}`, () => {
-        const submittedValue = '5.5';
-
-        cy.submitAndAssertFieldErrors(
-          field,
-          submittedValue,
-          1,
-          expectedErrorsCount,
-          errorMessage,
-          true,
-        );
+      it(`should display validation errors for ${FIELD_ID}`, () => {
+        cy.submitAndAssertFieldErrors({
+          ...assertions,
+          value: '5.5',
+          expectedErrorMessage: NATURE_OF_BUSINESS_ERRORS[FIELD_ID].INCORRECT_FORMAT,
+        });
       });
     });
 
-    describe(`when ${YEARS_EXPORTING} has special characters`, () => {
-      const errorMessage = NATURE_OF_BUSINESS_ERRORS[YEARS_EXPORTING].INCORRECT_FORMAT;
-
+    describe(`when ${FIELD_ID} has special characters`, () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
       });
 
-      it(`should display validation errors for ${YEARS_EXPORTING}`, () => {
-        const submittedValue = '5!';
-
-        cy.submitAndAssertFieldErrors(
-          field,
-          submittedValue,
-          1,
-          expectedErrorsCount,
-          errorMessage,
-          true,
-        );
+      it(`should display validation errors for ${FIELD_ID}`, () => {
+        cy.submitAndAssertFieldErrors({
+          ...assertions,
+          value: '5!',
+          expectedErrorMessage: NATURE_OF_BUSINESS_ERRORS[FIELD_ID].INCORRECT_FORMAT,
+        });
       });
     });
   });
 
-  describe(`when ${YEARS_EXPORTING} is correctly entered as a whole number`, () => {
+  describe(`when ${FIELD_ID} is correctly entered as a whole number`, () => {
     it('should not display validation errors', () => {
       cy.navigateToUrl(url);
 
       cy.keyboardInput(field.input(), '5');
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.checkErrorSummaryListHeading();
-      partials.errorSummaryListItems().should('have.length', 3);
+      cy.assertErrorSummaryListLength(2);
     });
   });
 
-  describe(`when ${YEARS_EXPORTING} is correctly entered with a comma`, () => {
+  describe(`when ${FIELD_ID} is correctly entered with a comma`, () => {
     it('should not display validation errors', () => {
       cy.navigateToUrl(url);
 
       cy.keyboardInput(field.input(), '5,00');
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.checkErrorSummaryListHeading();
-      partials.errorSummaryListItems().should('have.length', 3);
+      cy.assertErrorSummaryListLength(2);
     });
   });
 });

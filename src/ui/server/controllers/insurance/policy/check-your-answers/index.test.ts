@@ -1,45 +1,47 @@
 import { pageVariables, get, post, TEMPLATE } from '.';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { FIELD_IDS, TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import { policySummaryList } from '../../../../helpers/summary-lists/policy';
+import { policySummaryLists } from '../../../../helpers/summary-lists/policy';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCountries, mockCurrencies, mockContact } from '../../../../test-mocks';
+import {
+  mockReq,
+  mockRes,
+  mockApplication,
+  mockCurrencies,
+  mockContact,
+  mockCountries,
+  mockCurrenciesResponse,
+  mockCurrenciesEmptyResponse,
+  mockNominatedLossPayee,
+  referenceNumber,
+} from '../../../../test-mocks';
+import { mockBroker } from '../../../../test-mocks/mock-application';
 
-const { INSURANCE_ROOT } = ROUTES.INSURANCE;
-const {
-  INSURANCE: {
-    POLICY: { CHECK_YOUR_ANSWERS_SAVE_AND_BACK },
-    EXPORTER_BUSINESS: { COMPANIES_HOUSE_NUMBER_ROOT },
-    PROBLEM_WITH_SERVICE,
-  },
-} = ROUTES;
+const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 const { POLICY } = FIELD_IDS.INSURANCE;
 
-const { policy, exportContract, referenceNumber } = mockApplication;
+const { policy, exportContract } = mockApplication;
 
 describe('controllers/insurance/policy/check-your-answers', () => {
   let req: Request;
   let res: Response;
-  let refNumber: number;
 
+  let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
   let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
-  let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
 
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
-    refNumber = Number(mockApplication.referenceNumber);
-
-    api.keystone.countries.getAll = getCountriesSpy;
     api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+    api.keystone.countries.getAll = getCountriesSpy;
   });
 
   afterAll(() => {
@@ -48,11 +50,11 @@ describe('controllers/insurance/policy/check-your-answers', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(refNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELD: FIELDS[POLICY.POLICY_TYPE],
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
       };
 
       expect(result).toEqual(expected);
@@ -66,12 +68,6 @@ describe('controllers/insurance/policy/check-your-answers', () => {
   });
 
   describe('get', () => {
-    it('should call api.keystone.countries.getAll', async () => {
-      await get(req, res);
-
-      expect(getCountriesSpy).toHaveBeenCalledTimes(1);
-    });
-
     it('should call api.keystone.APIM.getCurrencies', async () => {
       await get(req, res);
 
@@ -86,20 +82,32 @@ describe('controllers/insurance/policy/check-your-answers', () => {
         ...exportContract,
       };
 
-      const summaryList = policySummaryList(answers, mockContact, referenceNumber, mockCountries, mockCurrencies);
+      const summaryLists = policySummaryLists(answers, mockContact, mockBroker, mockNominatedLossPayee, referenceNumber, mockCurrencies, mockCountries);
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.CHECK_YOUR_ANSWERS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(refNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(res.locals.application),
-        SUMMARY_LIST: summaryList,
+        SUMMARY_LISTS: summaryLists,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+    });
+
+    it('should call api.keystone.countries.getAll', async () => {
+      await get(req, res);
+
+      expect(getCountriesSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should call api.keystone.APIM.getCurrencies', async () => {
+      await get(req, res);
+
+      expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
     });
 
     describe('when there is no application', () => {
@@ -115,32 +123,6 @@ describe('controllers/insurance/policy/check-your-answers', () => {
     });
 
     describe('api error handling', () => {
-      describe('when the get countries API call fails', () => {
-        beforeEach(() => {
-          getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
-          api.keystone.countries.getAll = getCountriesSpy;
-        });
-
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-          await get(req, res);
-
-          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-        });
-      });
-
-      describe('when the get countries response does not return a populated array', () => {
-        beforeEach(() => {
-          getCountriesSpy = jest.fn(() => Promise.resolve([]));
-          api.keystone.countries.getAll = getCountriesSpy;
-        });
-
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-          await get(req, res);
-
-          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-        });
-      });
-
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
           getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
@@ -156,8 +138,21 @@ describe('controllers/insurance/policy/check-your-answers', () => {
 
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
+          getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when the get countries API call fails', () => {
+        beforeEach(() => {
+          getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          api.keystone.countries.getAll = getCountriesSpy;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -170,10 +165,10 @@ describe('controllers/insurance/policy/check-your-answers', () => {
   });
 
   describe('post', () => {
-    it(`should redirect to ${COMPANIES_HOUSE_NUMBER_ROOT}`, () => {
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${COMPANIES_HOUSE_NUMBER_ROOT}`;
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });

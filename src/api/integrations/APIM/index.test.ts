@@ -3,7 +3,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import APIM from '.';
 import { EXTERNAL_API_ENDPOINTS } from '../../constants';
-import mockCisCountries from '../../test-mocks/mock-CIS-countries';
+import { mockCisCountries } from '../../test-mocks';
 
 dotenv.config();
 

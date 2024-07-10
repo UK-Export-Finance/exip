@@ -10,14 +10,15 @@ import { RequestBody, SubmittedDataInsuranceEligibility } from '../../../../type
  * @returns {Object} Mapped and sanitised data
  */
 const updateSubmittedData = (formData: RequestBody, existingData?: SubmittedDataInsuranceEligibility): SubmittedDataInsuranceEligibility => {
-  const modifiedData = {
+  // only sanitise the new form data
+  const sanitisedFormData = sanitiseData(formData);
+
+  const data = {
     ...existingData,
-    ...formData,
+    ...sanitisedFormData,
   };
 
-  const sanitised = sanitiseData(modifiedData);
-
-  return sanitised;
+  return data;
 };
 
 export { updateSubmittedData };

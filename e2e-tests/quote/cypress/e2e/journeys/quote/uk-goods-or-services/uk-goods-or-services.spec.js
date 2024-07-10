@@ -1,12 +1,18 @@
-import {
-  yesRadio, noRadio, submitButton,
-} from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
+import { yesRadio, noRadio } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm } from '../../../../../../commands/quote/forms';
-import { checkDescriptionSummaryText, checkDescriptionSummaryClickRevealsContent, checkDescriptionContent } from '../../../../../../commands/shared-commands/assertions/check-uk-goods-and-services-description';
+import {
+  checkCalculateDescriptionSummaryText,
+  checkCalculateDescriptionSummaryClickRevealsContent,
+  checkCalculateDescriptionDescriptionContent,
+} from '../../../../../../commands/shared-commands/assertions/check-uk-goods-and-services-calculate-description';
+import {
+  checkDescriptionSummaryText,
+  checkDescriptionSummaryClickRevealsContent,
+  checkDescriptionContent,
+} from '../../../../../../commands/shared-commands/assertions/check-uk-goods-and-services-description';
 
 const CONTENT_STRINGS = {
   ...PAGES.UK_GOODS_OR_SERVICES,
@@ -18,21 +24,17 @@ const {
 } = FIELD_IDS;
 
 const {
-  QUOTE: {
-    UK_GOODS_OR_SERVICES,
-    EXPORTER_LOCATION,
-    POLICY_TYPE,
-  },
+  QUOTE: { UK_GOODS_OR_SERVICES, EXPORTER_LOCATION, POLICY_TYPE },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover', () => {
+context('UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF credit insurance cover', () => {
   const url = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
 
   before(() => {
     cy.login();
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
 
@@ -70,22 +72,31 @@ context('UK goods or services page - as an exporter, I want to check if my expor
       cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
 
-    describe('expandable details', () => {
+    describe('expandable details - how to calculate percentage', () => {
+      it('renders summary text', () => {
+        checkCalculateDescriptionSummaryText();
+      });
+
+      describe('when clicking the summary text', () => {
+        it('should expand the collapsed `details` content', () => {
+          checkCalculateDescriptionSummaryClickRevealsContent();
+
+          checkCalculateDescriptionDescriptionContent();
+        });
+      });
+    });
+
+    describe('expandable details - what counts as UK goods and services', () => {
       it('renders summary text', () => {
         checkDescriptionSummaryText();
       });
 
-      it('clicking summary text reveals details', () => {
-        checkDescriptionSummaryClickRevealsContent();
-      });
+      describe('when clicking the summary text', () => {
+        it('should expand the collapsed `details` content', () => {
+          checkDescriptionSummaryClickRevealsContent();
 
-      it('renders expanded content', () => {
-        checkDescriptionContent();
-      });
-
-      it('renders `will calculate thoroughly` copy ', () => {
-        const expected = CONTENT_STRINGS.WILL_CALCULATE_THOROUGHLY;
-        cy.checkText(partials.ukGoodsOrServicesDescription.calculateThoroughly(), expected);
+          checkDescriptionContent();
+        });
       });
     });
   });
@@ -97,15 +108,10 @@ context('UK goods or services page - as an exporter, I want to check if my expor
       });
 
       it('should render validation errors', () => {
-        const expectedErrorsCount = 1;
-        const expectedErrorMessage = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID].IS_EMPTY;
-
-        cy.submitAndAssertRadioErrors(
-          yesRadio(FIELD_ID),
-          0,
-          expectedErrorsCount,
-          expectedErrorMessage,
-        );
+        cy.submitAndAssertRadioErrors({
+          field: yesRadio(FIELD_ID),
+          expectedErrorMessage: ERROR_MESSAGES.ELIGIBILITY[FIELD_ID].IS_EMPTY,
+        });
       });
     });
 
@@ -113,8 +119,8 @@ context('UK goods or services page - as an exporter, I want to check if my expor
       it(`should redirect to ${POLICY_TYPE}`, () => {
         cy.navigateToUrl(url);
 
-        yesRadio().label().click();
-        submitButton().click();
+        cy.clickYesRadioInput();
+        cy.clickSubmitButton();
 
         const expectedUrl = `${baseUrl}${POLICY_TYPE}`;
 

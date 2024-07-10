@@ -1,41 +1,45 @@
-import { CompanyResponse, SicCode } from '../../types';
+import { SicCode } from '../../types';
 
 /**
- * maps sic codes from response and adds to an array to add to the database
- * @param {CompanyResponse} company
+ * mapSicCodes
+ * Map SIC codes and industry sector names with a company ID.
  * @param {Array<string>} sicCodes
  * @param {Array<string>} industrySectorNames
- * @returns {Array} sicCodesToAdd
+ * @param {String} companyId
+ * @returns {Array} Mapped SIC codes
  */
-const mapSicCodes = (company: CompanyResponse, sicCodes?: Array<string>, industrySectorNames?: Array<string>) => {
+const mapSicCodes = (sicCodes: Array<string>, industrySectorNames: Array<string>, companyId?: string): Array<SicCode> => {
   const mapped = [] as Array<SicCode>;
 
-  if (!sicCodes?.length) {
+  if (!sicCodes.length) {
     return mapped;
   }
 
   sicCodes.forEach((code, index) => {
     let industrySectorName = '';
 
-    // if industrySectorNames has value at index, then add it to the object
+    /**
+     * If industrySectorNames has value at index,
+     * add to the object
+     */
     if (industrySectorNames && industrySectorNames[index]) {
       industrySectorName = industrySectorNames[index];
     }
 
-    const codeToAdd = {
+    const mappedCode = {
       sicCode: code,
       industrySectorName,
       company: {
         connect: {
-          id: company.id,
+          id: companyId,
         },
       },
     } as SicCode;
 
-    mapped.push(codeToAdd);
+    mapped.push(mappedCode);
   });
 
   return mapped;
 };
 
-export { mapSicCodes, CompanyResponse };
+export default mapSicCodes;

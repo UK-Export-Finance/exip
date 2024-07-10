@@ -3,7 +3,7 @@ import { Context } from '../types';
 /**
  * findAll test helper
  * Get all auth retries and delete them.
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Array} Auth retries
  */
 const findAll = async (context: Context) => {
@@ -22,7 +22,7 @@ const findAll = async (context: Context) => {
 /**
  * deleteAll test helper
  * Delete all auth retries
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Array} Deleted auth retries
  */
 const deleteAll = async (context: Context) => {

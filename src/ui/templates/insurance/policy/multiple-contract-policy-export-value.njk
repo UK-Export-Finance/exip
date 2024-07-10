@@ -1,0 +1,83 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% import '../../components/monetary-value-input.njk' as monetaryValueInput %}
+{% import '../../components/form-buttons.njk' as formButtons %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+      <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }} {{ CURRENCY_NAME }}</h1>
+    </div>
+  </div>
+
+  <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+
+        {% set totalSalesToBuyer = FIELDS.TOTAL_SALES_TO_BUYER %}
+        {% set totalSalesToBuyerId = totalSalesToBuyer.ID %}
+
+        {{ monetaryValueInput.render({
+          fieldId: totalSalesToBuyerId,
+          label: totalSalesToBuyer.LABEL,
+          hintText: totalSalesToBuyer.HINT,
+          currencyPrefixSymbol: CURRENCY_PREFIX_SYMBOL,
+          submittedValue: submittedValues[totalSalesToBuyerId] or application.policy[totalSalesToBuyerId],
+          validationError: validationErrors.errorList[totalSalesToBuyerId]
+        }) }}
+
+        {% set maximumBuyerWillOwe = FIELDS.MAXIMUM_BUYER_WILL_OWE %}
+        {% set maximumBuyerWillOweId = maximumBuyerWillOwe.ID %}
+
+        {% set MAXIMUM_HINT = FIELDS.MAXIMUM_BUYER_WILL_OWE.HINT %}
+
+        {% set maximumBuyerWillOweHintHtml %}
+          <p data-cy="{{ maximumBuyerWillOweId }}-hint-for-example">{{ MAXIMUM_HINT.FOR_EXAMPLE }}</p>
+          <p data-cy="{{ maximumBuyerWillOweId }}-hint-no-decimals">{{ MAXIMUM_HINT.NO_DECIMALS }}</p>
+        {% endset %}
+
+        {{ monetaryValueInput.render({
+          fieldId: maximumBuyerWillOweId,
+          label: maximumBuyerWillOwe.LABEL,
+          hintHtml: maximumBuyerWillOweHintHtml,
+          currencyPrefixSymbol: CURRENCY_PREFIX_SYMBOL,
+          submittedValue: submittedValues[maximumBuyerWillOweId] or application.policy[maximumBuyerWillOweId],
+          validationError: validationErrors.errorList[maximumBuyerWillOweId]
+        }) }}
+
+      </div>
+    </div>
+
+    {{ formButtons.render({
+      contentStrings: CONTENT_STRINGS.BUTTONS,
+      saveAndBackUrl: SAVE_AND_BACK_URL
+    }) }}
+
+  </form>
+
+{% endblock %}

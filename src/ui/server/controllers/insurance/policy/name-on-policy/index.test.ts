@@ -10,17 +10,20 @@ import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy-contact';
 import getNameEmailPositionFromOwnerAndPolicy from '../../../../helpers/get-name-email-position-from-owner-and-policy';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE: {
     INSURANCE_ROOT,
     POLICY: {
-      NAME_ON_POLICY_SAVE_AND_BACK,
       CHECK_YOUR_ANSWERS,
+      NAME_ON_POLICY_SAVE_AND_BACK,
       DIFFERENT_NAME_ON_POLICY,
-      NAME_ON_POLICY_CHECK_AND_CHANGE,
+      DIFFERENT_NAME_ON_POLICY_CHANGE,
       DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE,
+      NAME_ON_POLICY_CHANGE,
+      NAME_ON_POLICY_CHECK_AND_CHANGE,
+      PRE_CREDIT_PERIOD,
     },
     CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
     PROBLEM_WITH_SERVICE,
@@ -34,7 +37,6 @@ const {
 describe('controllers/insurance/policy/name-on-policy', () => {
   let req: Request;
   let res: Response;
-  let refNumber: number;
 
   jest.mock('../map-and-save/policy-contact');
 
@@ -43,9 +45,6 @@ describe('controllers/insurance/policy/name-on-policy', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
-    refNumber = Number(mockApplication.referenceNumber);
   });
 
   afterAll(() => {
@@ -54,7 +53,7 @@ describe('controllers/insurance/policy/name-on-policy', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(refNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELDS: {
@@ -67,7 +66,7 @@ describe('controllers/insurance/policy/name-on-policy', () => {
             ...FIELDS.NAME_ON_POLICY[POSITION],
           },
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NAME_ON_POLICY_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -99,7 +98,7 @@ describe('controllers/insurance/policy/name-on-policy', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.NAME_ON_POLICY,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(refNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mockApplication,
         submittedValues,
@@ -135,10 +134,10 @@ describe('controllers/insurance/policy/name-on-policy', () => {
           req.body = validBody;
         });
 
-        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+        it(`should redirect to ${PRE_CREDIT_PERIOD}`, async () => {
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -156,7 +155,7 @@ describe('controllers/insurance/policy/name-on-policy', () => {
         });
       });
 
-      describe(`when ${OTHER_NAME} is selected`, () => {
+      describe(`when ${OTHER_NAME} is submitted`, () => {
         const validBody = {
           [NAME]: OTHER_NAME,
         };
@@ -168,7 +167,7 @@ describe('controllers/insurance/policy/name-on-policy', () => {
         it(`should redirect to ${DIFFERENT_NAME_ON_POLICY}`, async () => {
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -183,6 +182,41 @@ describe('controllers/insurance/policy/name-on-policy', () => {
           expect(mapAndSave.policyContact).toHaveBeenCalledTimes(1);
 
           expect(mapAndSave.policyContact).toHaveBeenCalledWith(payload, mockApplication);
+        });
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        const validBody = {
+          [NAME]: SAME_NAME,
+          [POSITION]: 'Text',
+        };
+
+        describe(`when ${SAME_NAME} is selected`, () => {
+          it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+            req.originalUrl = NAME_ON_POLICY_CHANGE;
+            req.body = validBody;
+
+            await post(req, res);
+
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
+        });
+
+        describe(`when ${OTHER_NAME} is submitted`, () => {
+          it(`should redirect to ${DIFFERENT_NAME_ON_POLICY_CHANGE}`, async () => {
+            req.originalUrl = NAME_ON_POLICY_CHANGE;
+            validBody[NAME] = OTHER_NAME;
+
+            req.body = validBody;
+
+            await post(req, res);
+
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY_CHANGE}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
         });
       });
 
@@ -199,13 +233,13 @@ describe('controllers/insurance/policy/name-on-policy', () => {
 
             await post(req, res);
 
-            const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_AND_CHANGE_ROUTE}`;
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
             expect(res.redirect).toHaveBeenCalledWith(expected);
           });
         });
 
-        describe(`when ${OTHER_NAME} is selected`, () => {
+        describe(`when ${OTHER_NAME} is submitted`, () => {
           it(`should redirect to ${DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE}`, async () => {
             req.originalUrl = NAME_ON_POLICY_CHECK_AND_CHANGE;
             validBody[NAME] = OTHER_NAME;
@@ -214,7 +248,7 @@ describe('controllers/insurance/policy/name-on-policy', () => {
 
             await post(req, res);
 
-            const expected = `${INSURANCE_ROOT}/${refNumber}${DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE}`;
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE}`;
 
             expect(res.redirect).toHaveBeenCalledWith(expected);
           });
@@ -239,7 +273,7 @@ describe('controllers/insurance/policy/name-on-policy', () => {
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.NAME_ON_POLICY,
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables(refNumber),
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           application: mockApplication,
           submittedValues,

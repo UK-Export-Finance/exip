@@ -8,13 +8,16 @@ const {
 
 const FIELD_STRINGS = ACCOUNT_FIELDS[FIELD_ID];
 
-const expectedShowText = `${FIELD_STRINGS.REVEAL.SHOW} password`;
-const expectedHideText = `${FIELD_STRINGS.REVEAL.HIDE} password`;
+const EXPECTED_ARIA_LABELS = {
+  SHOW: `${FIELD_STRINGS.REVEAL.SHOW} password`,
+  HIDE: `${FIELD_STRINGS.REVEAL.HIDE} password`,
+};
 
 const shouldRender = () => {
   passwordField.revealButton().should('exist');
 
-  cy.checkText(passwordField.revealButton(), expectedShowText);
+  cy.checkText(passwordField.revealButton(), FIELD_STRINGS.REVEAL.SHOW);
+  cy.checkAriaLabel(passwordField.revealButton(), EXPECTED_ARIA_LABELS.SHOW);
 };
 
 const afterClick = {
@@ -28,7 +31,8 @@ const afterClick = {
     passwordField.input().should('have.attr', 'type', 'text');
 
     // reveal button text should change to 'hide'
-    cy.checkText(passwordField.revealButton(), expectedHideText);
+    cy.checkText(passwordField.revealButton(), FIELD_STRINGS.REVEAL.HIDE);
+    cy.checkAriaLabel(passwordField.revealButton(), EXPECTED_ARIA_LABELS.HIDE);
   },
 };
 
@@ -40,7 +44,8 @@ const afterSecondClick = {
     passwordField.input().should('have.attr', 'type', 'password');
 
     // reveal button text should change to 'show'
-    cy.checkText(passwordField.revealButton(), expectedShowText);
+    cy.checkText(passwordField.revealButton(), FIELD_STRINGS.REVEAL.SHOW);
+    cy.checkAriaLabel(passwordField.revealButton(), EXPECTED_ARIA_LABELS.SHOW);
   },
 };
 

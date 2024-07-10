@@ -3,7 +3,6 @@ import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 const {
   ROOT: INSURANCE_ROOT,
   CHECK_YOUR_ANSWERS: {
-    ELIGIBILITY,
     TYPE_OF_POLICY,
     YOUR_BUSINESS,
     YOUR_BUYER,
@@ -34,14 +33,6 @@ context('Insurance - no access to application when application is submitted - ch
   });
 
   describe('when trying to access a "check your answers" page in an application that is already submitted', () => {
-    it(`should redirect to ${NO_ACCESS_APPLICATION_SUBMITTED} when navigating to the Check your answers - Eligibility page directly`, () => {
-      const url = `${insuranceRoute}/${referenceNumber}${ELIGIBILITY}`;
-
-      cy.navigateToUrl(url);
-
-      cy.assertUrl(noAccessApplicationSubmittedUrl);
-    });
-
     it(`should redirect to ${NO_ACCESS_APPLICATION_SUBMITTED} when navigating to the Check your answers - Policy page directly`, () => {
       const url = `${insuranceRoute}/${referenceNumber}${TYPE_OF_POLICY}`;
 

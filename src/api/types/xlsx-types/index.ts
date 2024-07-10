@@ -4,6 +4,7 @@ export interface XLSXTitleRowIndexes {
   EXPORTER_CONTACT_DETAILS?: number;
   POLICY: number;
   EXPORTER_BUSINESS: number;
+  EXPORT_CONTRACT: number;
   BUYER: number;
   ELIGIBILITY: number;
   DECLARATIONS: number;
@@ -11,9 +12,12 @@ export interface XLSXTitleRowIndexes {
 
 export interface XLSXRowIndexes {
   TITLES: XLSXTitleRowIndexes;
+  AGENT_ADDRESS: number;
+  ALTERNATIVE_TRADING_ADDRESS?: number;
   COMPANY_ADDRESS: number;
   COMPANY_SIC_CODES: number;
   BROKER_ADDRESS: number;
   BUYER_ADDRESS: number;
   BUYER_CONTACT_DETAILS: number;
+  LOSS_PAYEE_ADDRESS: number;
 }

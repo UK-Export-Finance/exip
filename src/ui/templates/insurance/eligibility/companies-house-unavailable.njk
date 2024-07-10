@@ -1,0 +1,31 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+    </div>
+
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <p class="govuk-body" data-cy="reason">{{ CONTENT_STRINGS.ERROR_REASON }}</p>
+
+      <p class="govuk-body" data-cy="try-again">{{ CONTENT_STRINGS.TRY_AGAIN_PREFIX }} <a class="govuk-link" data-cy="try-again-link" href="{{ TRY_AGAIN_HREF }}">{{ CONTENT_STRINGS.TRY_AGAIN }}</a></p>
+    </div>
+
+  </div>
+
+{% endblock %}

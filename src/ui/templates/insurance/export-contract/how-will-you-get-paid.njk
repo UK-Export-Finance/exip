@@ -1,0 +1,89 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% import '../../components/form-buttons.njk' as formButtons %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+      <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+    </div>
+  </div>
+
+  <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        {% set hintHtml %}
+          <p class="govuk-hint" data-cy="{{ FIELD_ID }}-hint-intro">{{ FIELD.HINT.INTRO }}</p>
+
+          <ul class="govuk-list govuk-list--bullet">
+            {% for item in FIELD.HINT.LIST %}
+              <li class="govuk-hint" data-cy="{{ FIELD_ID }}-hint-list-item-{{ loop.index }}">{{ item }}</li>
+            {% endfor %}
+          </ul>
+
+          <p class="govuk-hint" data-cy="{{ FIELD_ID }}-hint-outro">{{ FIELD.HINT.OUTRO }}</p>
+        {% endset %}
+
+        {{ govukCharacterCount({
+          name: FIELD_ID,
+          id: FIELD_ID,
+          label: {
+            text: FIELD.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            attributes: {
+              'data-cy': FIELD_ID + '-label',
+              id: FIELD_ID + '-label'
+            }
+          },
+          hint: {
+            html: hintHtml
+          },
+          attributes: {
+            'data-cy': FIELD_ID
+          },
+          maxlength: FIELD.MAXIMUM,
+          value: submittedValues[FIELD_ID] or application.exportContract[FIELD_ID],
+          errorMessage: validationErrors.errorList[FIELD_ID] and {
+            text: validationErrors.errorList[FIELD_ID].text,
+            attributes: {
+              "data-cy": FIELD_ID + "-error-message"
+            }
+          }
+        }) }}
+
+      </div>
+    </div>
+
+    {{ formButtons.render({
+      contentStrings: CONTENT_STRINGS.BUTTONS,
+      saveAndBackUrl: SAVE_AND_BACK_URL
+    }) }}
+  </form>
+
+{% endblock %}

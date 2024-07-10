@@ -1,28 +1,31 @@
 import passwordRules from './password';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/account';
-import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import emailAndPasswordValidation from '../../../../../../shared-validation/email-and-password';
+import emailAndPasswordValidation from '../../../../../../shared-validation/email-and-password-incorrect';
+import { mockAccount, mockErrors } from '../../../../../../test-mocks';
 
 const { PASSWORD: FIELD_ID } = FIELD_IDS;
 
-const {
-  ACCOUNT: {
-    SIGN_IN: { [FIELD_ID]: ERROR_MESSAGE },
-  },
-} = ERROR_MESSAGES.INSURANCE;
-
 describe('controllers/insurance/account/sign-in/validation/rules/password', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
+  describe('when a password is not provided', () => {
+    it('should return the result of passwordValidation', () => {
+      const mockFormBody = {};
+      const result = passwordRules(mockFormBody, mockErrors);
 
-  it('should return the result of passwordValidation', () => {
-    const mockFormBody = {};
-    const result = passwordRules(mockFormBody, mockErrors);
+      const expected = emailAndPasswordValidation(mockFormBody);
 
-    const expected = emailAndPasswordValidation(mockFormBody, FIELD_ID, ERROR_MESSAGE.INCORRECT, mockErrors);
+      expect(result).toEqual(expected);
+    });
+  });
 
-    expect(result).toEqual(expected);
+  describe('when a password is provided', () => {
+    it('should return the provided errors', () => {
+      const mockFormBody = { [FIELD_ID]: mockAccount[FIELD_ID] };
+
+      const result = passwordRules(mockFormBody, mockErrors);
+
+      const expected = mockErrors;
+
+      expect(result).toEqual(expected);
+    });
   });
 });

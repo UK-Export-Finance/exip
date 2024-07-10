@@ -1,22 +1,20 @@
-import {
-  field,
-  headingCaption,
-  submitButton,
-  saveAndBackButton,
-} from '../../../../../../pages/shared';
+import { field, headingCaption } from '../../../../../../pages/shared';
 import { insurance } from '../../../../../../pages';
-import partials from '../../../../../../partials';
-import {
-  BUTTONS,
-  ERROR_MESSAGES,
-  PAGES,
-  TASKS,
-} from '../../../../../../content-strings';
+import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
-import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
+import { APPLICATION, FIELD_IDS } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
-const { POLICY } = ROUTES.INSURANCE;
+const {
+  ROOT: INSURANCE_ROOT,
+  ALL_SECTIONS,
+  POLICY: {
+    ROOT: POLICY_ROOT,
+    TYPE_OF_POLICY,
+    SINGLE_CONTRACT_POLICY,
+    MULTIPLE_CONTRACT_POLICY,
+  },
+} = INSURANCE_ROUTES;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.TYPE_OF_POLICY;
 
@@ -25,13 +23,9 @@ const FIELD_ID = FIELD_IDS.INSURANCE.POLICY.POLICY_TYPE;
 const singlePolicyField = insurance.policy.typeOfPolicyPage[FIELD_ID].single;
 const multiplePolicyField = insurance.policy.typeOfPolicyPage[FIELD_ID].multiple;
 
-const { taskList } = partials.insurancePartials;
-
 const goToPageDirectly = (referenceNumber) => {
-  cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY.TYPE_OF_POLICY}`);
+  cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`);
 };
-
-const task = taskList.prepareApplication.tasks.policy;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -43,9 +37,9 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startInsurancePolicySection({});
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${POLICY.TYPE_OF_POLICY}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
       cy.assertUrl(url);
     });
@@ -62,8 +56,8 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${POLICY.TYPE_OF_POLICY}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`,
+      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${POLICY_ROOT}`,
     });
   });
 
@@ -74,10 +68,6 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
 
     it('renders a heading caption', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
-    });
-
-    it('renders an intro paragraph', () => {
-      cy.checkText(insurance.policy.typeOfPolicyPage.intro(), CONTENT_STRINGS.INTRO);
     });
 
     it('renders `single` radio input with label and hint text list', () => {
@@ -105,7 +95,7 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
     });
 
     it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
   });
 
@@ -124,13 +114,12 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
           ...singlePolicyField,
           errorMessage,
         };
-        cy.submitAndAssertRadioErrors(
-          // singlePolicyField,
-          radioField,
-          0,
+
+        cy.submitAndAssertRadioErrors({
+          field: radioField,
           expectedErrorsCount,
-          ERROR_MESSAGES.INSURANCE.POLICY.TYPE_OF_POLICY[FIELD_ID].IS_EMPTY,
-        );
+          expectedErrorMessage: ERROR_MESSAGES.INSURANCE.POLICY.TYPE_OF_POLICY[FIELD_ID].IS_EMPTY,
+        });
       });
     });
 
@@ -139,12 +128,12 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
         cy.navigateToUrl(url);
       });
 
-      it(`should redirect to ${POLICY.SINGLE_CONTRACT_POLICY}`, () => {
+      it(`should redirect to ${SINGLE_CONTRACT_POLICY}`, () => {
         singlePolicyField.label().click();
 
-        submitButton().click();
+        cy.clickSubmitButton();
 
-        const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${POLICY.SINGLE_CONTRACT_POLICY}`;
+        const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 
         cy.assertUrl(expected);
       });
@@ -152,7 +141,7 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
       it('should have the originally submitted answer selected when going back to the page', () => {
         goToPageDirectly(referenceNumber);
 
-        singlePolicyField.input().should('be.checked');
+        cy.assertRadioOptionIsChecked(singlePolicyField.input());
       });
     });
 
@@ -161,10 +150,10 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
         cy.navigateToUrl(url);
       });
 
-      it(`should redirect to ${POLICY.MULTIPLE_CONTRACT_POLICY}`, () => {
-        cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
+      it(`should redirect to ${MULTIPLE_CONTRACT_POLICY}`, () => {
+        cy.completeAndSubmitPolicyTypeForm({ policyType: APPLICATION.POLICY_TYPE.MULTIPLE });
 
-        const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${POLICY.MULTIPLE_CONTRACT_POLICY}`;
+        const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 
         cy.assertUrl(expected);
       });
@@ -172,7 +161,7 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
       it('should have the originally submitted answer selected when going back to the page', () => {
         goToPageDirectly(referenceNumber);
 
-        multiplePolicyField.input().should('be.checked');
+        cy.assertRadioOptionIsChecked(multiplePolicyField.input());
       });
     });
 
@@ -180,10 +169,9 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
       it('should update the status of task `type of policy` to `in progress`', () => {
         cy.navigateToUrl(url);
 
-        cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`);
+        cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 
-        const expected = TASKS.STATUS.IN_PROGRESS;
-        cy.checkText(task.status(), expected);
+        cy.checkTaskPolicyStatusIsInProgress();
       });
     });
   });

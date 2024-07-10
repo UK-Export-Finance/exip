@@ -6,7 +6,7 @@ import { ApplicationSubmissionEmailVariables, EmailResponse } from '../../types'
  * Send "we need some documents from you" email to an account
  * @param {ApplicationSubmissionEmailVariables}
  * @param {Boolean} Flag for sending anti-bribery/trading history template
- * @returns {Object} callNotify response
+ * @returns {Promise<Object>} callNotify response
  */
 export const documentsEmail = async (variables: ApplicationSubmissionEmailVariables, templateId: string): Promise<EmailResponse> => {
   try {

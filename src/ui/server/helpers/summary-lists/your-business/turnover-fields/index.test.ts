@@ -1,31 +1,34 @@
+import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { ROUTES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
+import formatCurrency from '../../../format-currency';
 import generateTurnoverFields from '.';
 import mapPercentage from '../../../map-percentage';
-import mockApplication, { mockBusiness } from '../../../../test-mocks/mock-application';
 import generateChangeLink from '../../../generate-change-link';
+import { mockBusiness, referenceNumber } from '../../../../test-mocks/mock-application';
+
+const {
+  YOUR_BUSINESS: { TURNOVER: FORM_TITLE },
+} = FORM_TITLES;
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
 const {
-  INSURANCE: {
-    EXPORTER_BUSINESS: { TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE },
-  },
-} = ROUTES;
+  EXPORTER_BUSINESS: { TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE },
+} = INSURANCE_ROUTES;
 
 const {
-  TURNOVER: { PERCENTAGE_TURNOVER, ESTIMATED_ANNUAL_TURNOVER },
+  TURNOVER: { PERCENTAGE_TURNOVER, ESTIMATED_ANNUAL_TURNOVER, TURNOVER_CURRENCY_CODE },
 } = FIELD_IDS;
 
 describe('server/helpers/summary-lists/your-business/turnover-fields', () => {
   const mockAnswers = mockBusiness;
-  const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 
-  const expectedBase = [
+  const expectedFields = [
     fieldGroupItem(
       {
         field: getFieldById(FIELDS.TURNOVER, ESTIMATED_ANNUAL_TURNOVER),
@@ -33,7 +36,7 @@ describe('server/helpers/summary-lists/your-business/turnover-fields', () => {
         href: generateChangeLink(TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE, `#${ESTIMATED_ANNUAL_TURNOVER}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
       },
-      `£${mockAnswers[ESTIMATED_ANNUAL_TURNOVER]}`,
+      formatCurrency(mockAnswers[ESTIMATED_ANNUAL_TURNOVER], mockAnswers[TURNOVER_CURRENCY_CODE]),
     ),
     fieldGroupItem(
       {
@@ -49,6 +52,11 @@ describe('server/helpers/summary-lists/your-business/turnover-fields', () => {
   it('should return fields and values from the submitted data/answers', () => {
     const result = generateTurnoverFields(mockAnswers, referenceNumber, checkAndChange);
 
-    expect(result).toEqual(expectedBase);
+    const expected = {
+      title: FORM_TITLE,
+      fields: expectedFields,
+    };
+
+    expect(result).toEqual(expected);
   });
 });

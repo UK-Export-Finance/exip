@@ -1,8 +1,7 @@
-import { field, submitButton } from '../../../../../../../pages/shared';
+import { field } from '../../../../../../../pages/shared';
 import {
-  ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER, VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES,
+  ROUTES, FIELD_IDS, VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES,
 } from '../../../../../../../constants';
-import partials from '../../../../../../../partials';
 
 const {
   EXPORTER_BUSINESS: {
@@ -20,15 +19,12 @@ const companyDetailsFormVariables = {
   [WEBSITE]: WEBSITE_EXAMPLES.VALID,
 };
 
-const { taskList } = partials.insurancePartials;
-const task = taskList.prepareApplication.tasks.business;
-
 const completeAllFields = (phoneNumber) => {
   companyDetailsFormVariables.phoneNumber = phoneNumber;
 
   cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 const baseUrl = Cypress.config('baseUrl');
@@ -42,11 +38,11 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
 
-      natureOfBusinessUrl = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
+      natureOfBusinessUrl = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS_ROOT}`;
 
-      task.link().click();
+      cy.startYourBusinessSection({});
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber, companiesHouseNumber: COMPANIES_HOUSE_NUMBER });
+      cy.completeCompanyDetailsForm({});
 
       cy.assertUrl(url);
     });
@@ -69,11 +65,11 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 
       field(PHONE_NUMBER).input().clear();
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     it('should not display validation errors', () => {
-      partials.errorSummaryListItems().should('have.length', 0);
+      cy.assertErrorSummaryListDoesNotExist();
     });
 
     it('should redirect to next page', () => {
@@ -90,7 +86,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should not display validation errors', () => {
-        partials.errorSummaryListItems().should('have.length', 0);
+        cy.assertErrorSummaryListDoesNotExist();
       });
 
       it('should redirect to next page', () => {
@@ -106,7 +102,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should not display validation errors', () => {
-        partials.errorSummaryListItems().should('have.length', 0);
+        cy.assertErrorSummaryListDoesNotExist();
       });
 
       it('should redirect to next page', () => {
@@ -122,7 +118,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should not display validation errors', () => {
-        partials.errorSummaryListItems().should('have.length', 0);
+        cy.assertErrorSummaryListDoesNotExist();
       });
 
       it('should redirect to next page', () => {
@@ -138,7 +134,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should not display validation errors', () => {
-        partials.errorSummaryListItems().should('have.length', 0);
+        cy.assertErrorSummaryListDoesNotExist();
       });
 
       it('should redirect to next page', () => {
@@ -154,7 +150,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should not display validation errors', () => {
-        partials.errorSummaryListItems().should('have.length', 0);
+        cy.assertErrorSummaryListDoesNotExist();
       });
 
       it('should redirect to next page', () => {
@@ -170,7 +166,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should not display validation errors', () => {
-        partials.errorSummaryListItems().should('have.length', 0);
+        cy.assertErrorSummaryListDoesNotExist();
       });
 
       it('should redirect to next page', () => {
@@ -186,7 +182,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should not display validation errors', () => {
-        partials.errorSummaryListItems().should('have.length', 0);
+        cy.assertErrorSummaryListDoesNotExist();
       });
 
       it('should redirect to next page', () => {
@@ -202,7 +198,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should not display validation errors', () => {
-        partials.errorSummaryListItems().should('have.length', 0);
+        cy.assertErrorSummaryListDoesNotExist();
       });
 
       it('should redirect to next page', () => {
@@ -218,7 +214,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should not display validation errors', () => {
-        partials.errorSummaryListItems().should('have.length', 0);
+        cy.assertErrorSummaryListDoesNotExist();
       });
 
       it('should redirect to next page', () => {

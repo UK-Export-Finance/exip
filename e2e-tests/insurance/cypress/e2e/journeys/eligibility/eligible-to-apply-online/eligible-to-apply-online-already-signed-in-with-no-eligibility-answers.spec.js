@@ -4,8 +4,9 @@ const {
   ELIGIBILITY: { ELIGIBLE_TO_APPLY_ONLINE, NEED_TO_START_AGAIN },
 } = INSURANCE_ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Eligibility - You are eligible to apply online page - user signed in, no eligibility answers', () => {
-  const baseUrl = Cypress.config('baseUrl');
   let referenceNumber;
 
   before(() => {

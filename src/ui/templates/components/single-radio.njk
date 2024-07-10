@@ -1,0 +1,78 @@
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% import './yes-no-radio-buttons.njk' as yesNoRadioButtons %}
+{% import '../components/form-buttons.njk' as formButtons %}
+
+{% macro render(params) %}
+
+  {% set application = params.application %}
+  {% set conditionalHtmlData = params.conditionalHtmlData %}
+  {% set conditionalNo = params.conditionalNo %}
+  {% set conditionalYes = params.conditionalYes %}
+  {% set CONTENT_STRINGS = params.CONTENT_STRINGS %}
+  {% set continueButtonText = params.continueButtonText %}
+  {% set customContentHTML = params.customContentHTML %}
+  {% set dataCyLegend = params.dataCyLegend %}
+  {% set errorMessage = params.errorMessage %}
+  {% set fieldId = params.fieldId %}
+  {% set FIELDS = params.FIELDS %}
+  {% set hintHtmlPartial = params.hasHintHtml %}
+  {% set hintText = params.hintText %}
+  {% set horizontalRadios = params.horizontalRadios %}
+  {% set noRadioAsFirstOption = params.noRadioAsFirstOption %}
+  {% set legendClass = params.legendClass %}
+  {% set legendSpan = params.legendSpan %}
+  {% set legendText = params.legendText %}
+  {% set saveAndBackButtonText = params.saveAndBackButtonText %}
+  {% set saveAndBackUrl = params.saveAndBackUrl %}
+  {% set submittedAnswer = params.submittedAnswer %}
+  {% set submittedValues = params.submittedValues %}
+  {% set validationErrors = params.validationErrors %}
+
+  {% if conditionalYes %}
+    {% set conditionalYesHtml %}
+      {% include conditionalYes %}
+    {% endset %}
+  {% endif %}
+
+  {% if conditionalNo %}
+    {% set conditionalNoHtml %}
+      {% include conditionalNo %}
+    {% endset %}
+  {% endif %}
+
+  {% if hintHtmlPartial %}
+    {% set hintHtml %}
+      {% include hintHtmlPartial %}
+    {% endset %}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      {{ yesNoRadioButtons.render({
+        fieldId: fieldId,
+        dataCyLegend: dataCyLegend,
+        legendText: legendText,
+        legendClass: legendClass,
+        legendSpan: legendSpan,
+        hintText: hintText,
+        hintHtml: hintHtml,
+        submittedAnswer: submittedAnswer,
+        errorMessage: errorMessage,
+        horizontalRadios: horizontalRadios,
+        noRadioAsFirstOption: noRadioAsFirstOption,
+        conditionalYesHtml: conditionalYesHtml,
+        conditionalNoHtml: conditionalNoHtml
+      }) }}
+    </div>
+  </div>
+
+  {% if customContentHTML %}
+    {% include customContentHTML %}
+  {% endif %}
+
+  {{ formButtons.render({
+    contentStrings: CONTENT_STRINGS.BUTTONS,
+    saveAndBackUrl: saveAndBackUrl
+  }) }}
+
+{% endmacro %}

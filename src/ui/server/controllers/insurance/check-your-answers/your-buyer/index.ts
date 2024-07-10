@@ -18,8 +18,7 @@ export const FIELD_ID = FIELD_IDS.CHECK_YOUR_ANSWERS.BUYER;
 const {
   INSURANCE: {
     INSURANCE_ROOT,
-    ALL_SECTIONS,
-    CHECK_YOUR_ANSWERS: { YOUR_BUYER_SAVE_AND_BACK },
+    CHECK_YOUR_ANSWERS: { YOUR_BUYER_SAVE_AND_BACK, TYPE_OF_POLICY },
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
@@ -40,10 +39,10 @@ export const pageVariables = (referenceNumber: number) => ({
 
 /**
  * get
- * Render the check your answers your buyer page
+ * Render the Check your answers - Your buyer page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} check your answers your buyer
+ * @returns {Express.Response.render} Check your answers - Your buyer page
  */
 export const get = async (req: Request, res: Response) => {
   try {
@@ -57,9 +56,15 @@ export const get = async (req: Request, res: Response) => {
 
     const checkAndChange = true;
 
-    const summaryList = yourBuyerSummaryList(application.buyer, referenceNumber, checkAndChange);
+    const summaryList = yourBuyerSummaryList(
+      application.buyer,
+      application.eligibility,
+      referenceNumber,
+      application.totalContractValueOverThreshold,
+      checkAndChange,
+    );
 
-    const fields = requiredFields();
+    const fields = requiredFields({});
 
     const status = sectionStatus(fields, application);
 
@@ -70,11 +75,11 @@ export const get = async (req: Request, res: Response) => {
       }),
       userName: getUserNameFromSession(req.session.user),
       status,
-      SUMMARY_LIST: summaryList,
+      SUMMARY_LISTS: summaryList,
       ...pageVariables(referenceNumber),
     });
   } catch (err) {
-    console.error('Error getting check your answers - policy %O', err);
+    console.error('Error getting Check your answers - Your buyer %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -105,9 +110,9 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`);
   } catch (err) {
-    console.error('Error updating check your answers - your buyer %O', err);
+    console.error('Error updating Check your answers - Your buyer %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

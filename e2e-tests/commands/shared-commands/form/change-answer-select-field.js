@@ -1,4 +1,3 @@
-import { submitButton } from '../../../pages/shared';
 /**
  * changes input for select inputs
  * @param {Object} fieldVariables
@@ -9,7 +8,7 @@ const changeAnswerSelectField = (fieldVariables, input) => {
 
   input.select(newValueInput);
 
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export default changeAnswerSelectField;

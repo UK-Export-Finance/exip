@@ -1,109 +1,40 @@
-import getAccountById from '../../../helpers/get-account-by-id';
-import getCountryByField from '../../../helpers/get-country-by-field';
-import getCreditPeriodValueByField from '../../../helpers/get-cover-period-value-by-field';
-import getTotalContractValueByField from '../../../helpers/get-total-contract-value-by-field';
-import createAnEligibility from '../../../helpers/create-an-eligibility';
-import createABuyer from '../../../helpers/create-a-buyer';
-import createAPolicy from '../../../helpers/create-a-policy';
+import createAnApplicationHelper from '../../../helpers/create-an-application';
+import { APPLICATION } from '../../../constants';
 import { CreateAnApplicationVariables, Context } from '../../../types';
+
+const { STATUS } = APPLICATION;
 
 /**
  * createAnApplication
  * Create an application.
- * 1) Get a country from a provided isoCode.
- * 2) Create a new application with owner relationship.
- * 3) Create eligibility relationship with the country and application.
- * 4) Create buyer relationship with the country and application.
- * 5) Update the application with buyer and eligibility IDs.
+ * 1) Set status to In progress
+ * 2) Create a new application with createAnApplicationHelper.
+ * 3) Returns success flag and application
  * @param {Object} GraphQL root variables
- * @param {Object} GraphQL variables for the CreateAnApplication mutation
- * @param {Object} KeystoneJS context API
- * @returns {Object} Object with success flag
+ * @param {CreateAnApplicationVariables} GraphQL variables for the createAnApplication mutation
+ * @param {Context} KeystoneJS context API
+ * @returns {Promise<Object>} Object with success flag and application
  */
 const createAnApplication = async (root: any, variables: CreateAnApplicationVariables, context: Context) => {
   console.info('Creating application for ', variables.accountId);
 
+  const updatedVariables = variables;
+
+  // set status to in progress
+  updatedVariables.status = STATUS.IN_PROGRESS;
+
   try {
-    const { accountId, eligibilityAnswers } = variables;
+    const updatedApplication = await createAnApplicationHelper(root, updatedVariables, context);
 
-    /**
-     * Check the account exists.
-     * If not, reject.
-     */
-    const account = await getAccountById(context, accountId);
-
-    if (!account) {
+    if (updatedApplication) {
       return {
-        success: false,
+        ...updatedApplication,
+        success: true,
       };
     }
 
-    /**
-     * Get a country's ID from the provided ISO code.
-     * This is required to be used in:
-     * 1) Eligibility buyer country relationship
-     * 2) Buyer country relationship
-     */
-    const { buyerCountryIsoCode, needPreCreditPeriodCover, totalContractValueId, coverPeriodId, ...otherEligibilityAnswers } = eligibilityAnswers;
-
-    const country = await getCountryByField(context, 'isoCode', buyerCountryIsoCode);
-
-    /**
-     * Create the initial application.
-     * We need to do this first so that we can use the application ID.
-     */
-    const application = await context.db.Application.createOne({
-      data: {
-        owner: {
-          connect: { id: accountId },
-        },
-      },
-    });
-
-    const { id: applicationId } = application;
-
-    /**
-     * 1) Create a new buyer with country and application relationship.
-     * 2) Get a totalContractValue DB entry, for linking a relationship to eligibility.
-     * 3) Create a new eligibility with country and application relationship.
-     * 4) Create a new policy with application relationship.
-     */
-    const buyer = await createABuyer(context, country.id, applicationId);
-
-    const totalContractValue = await getTotalContractValueByField(context, 'valueId', totalContractValueId);
-
-    const coverPeriod = await getCreditPeriodValueByField(context, 'valueId', coverPeriodId);
-
-    const eligibility = await createAnEligibility(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers);
-
-    const policy = await createAPolicy(context, applicationId);
-
-    /**
-     * Update the application with relationships for:
-     * 1) Buyer
-     * 2) Eligibility
-     * 3) Policy
-     */
-    const updatedApplication = await context.db.Application.updateOne({
-      where: {
-        id: applicationId,
-      },
-      data: {
-        buyer: {
-          connect: { id: buyer.id },
-        },
-        eligibility: {
-          connect: { id: eligibility.id },
-        },
-        policy: {
-          connect: { id: policy.id },
-        },
-      },
-    });
-
     return {
-      ...updatedApplication,
-      success: true,
+      success: false,
     };
   } catch (err) {
     console.error('Error creating application %O', err);

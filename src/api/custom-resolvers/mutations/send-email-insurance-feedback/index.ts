@@ -6,7 +6,7 @@ import { InsuranceFeedbackVariables, SuccessResponse } from '../../../types';
  * - Sends email with feedback from insurance tool
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the insurance feedback
- * @returns {Object} Object with success flag
+ * @returns {Promise<Object>} Object with success flag
  */
 const sendEmailInsuranceFeedback = async (root: any, variables: InsuranceFeedbackVariables): Promise<SuccessResponse> => {
   try {

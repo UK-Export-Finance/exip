@@ -2,7 +2,6 @@ import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
 const {
   ROOT: INSURANCE_ROOT,
-  ALL_SECTIONS,
   APPLICATION_SUBMITTED,
 } = INSURANCE_ROUTES;
 
@@ -29,9 +28,7 @@ context('Insurance - application submitted page - visit directly without a compl
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should redirect to ${ALL_SECTIONS}`, () => {
-    const url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-    cy.assertUrl(url);
+  it('should redirect to `all sections`', () => {
+    cy.assertAllSectionsUrl(referenceNumber);
   });
 });

@@ -1,18 +1,27 @@
+import { FIELD_VALUES } from '../../../../constants';
 import { DEFAULT } from '../../../../content-strings';
+import { MapYesNoFieldParams } from '../../../../types';
+
+const { YES, NO } = FIELD_VALUES;
 
 /**
  * mapYesNoField
  * Map a "true" or "false" field to Yes/No
- * @param {Boolean} answer
+ * @param {Boolean} answer: The boolean answer to map into a yes/no string.
+ * @param {String} defaultValue: Custom default value.
  * @returns {String} "Yes/No" or DEFAULT.EMPTY
  */
-const mapYesNoField = (answer?: boolean) => {
+const mapYesNoField = ({ answer, defaultValue }: MapYesNoFieldParams): string => {
   if (answer === false) {
-    return 'No';
+    return NO;
   }
 
   if (answer === true) {
-    return 'Yes';
+    return YES;
+  }
+
+  if (defaultValue) {
+    return defaultValue;
   }
 
   return DEFAULT.EMPTY;

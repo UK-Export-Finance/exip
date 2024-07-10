@@ -45,6 +45,20 @@ describe('helpers/strip-empty-form-fields', () => {
     });
   });
 
+  describe('when a field has a value of 0', () => {
+    it('should return the field', () => {
+      const mockFormData = {
+        a: 0,
+      };
+
+      const result = stripEmptyFormFields(mockFormData);
+
+      const expected = { a: 0 };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('when a field has a value of undefined', () => {
     it('should return form fields without the empty field', () => {
       const mockFormData = {
@@ -73,6 +87,31 @@ describe('helpers/strip-empty-form-fields', () => {
       const result = stripEmptyFormFields(mockFormData);
 
       const expected = {
+        d: true,
+        e: 'Mock value',
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when "nullOrEmptyStringFields" is populated', () => {
+    it('should return form fields without the empty fields unless they are in "nullOrEmptyStringFields"', () => {
+      const mockFormData = {
+        a: '',
+        b: null,
+        c: undefined,
+        d: true,
+        e: 'Mock value',
+      };
+
+      const nullOrEmptyStringFields = ['a', 'c'];
+
+      const result = stripEmptyFormFields(mockFormData, nullOrEmptyStringFields);
+
+      const expected = {
+        a: '',
+        c: undefined,
         d: true,
         e: 'Mock value',
       };

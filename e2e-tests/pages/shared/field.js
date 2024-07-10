@@ -14,6 +14,7 @@ const field = (id) => ({
   errorMessage: () => cy.get(`[data-cy="${id}-error-message"]`),
   prefix: () => cy.get(`[data-cy="${id}-prefix"]`),
   suffix: () => cy.get(`[data-cy="${id}-suffix"]`),
+  characterCount: () => cy.get(`[data-cy="${id}"]`).siblings('.govuk-character-count__status'),
 });
 
 export default field;

@@ -10,7 +10,7 @@ import { EmailResponse } from '../../types';
  * @param {String} Name
  * @param {String} Verification hash
  * @param {String} Account ID
- * @returns {Object} callNotify response
+ * @returns {Promise<Object>} callNotify response
  */
 export const confirmEmailAddress = async (
   emailAddress: string,

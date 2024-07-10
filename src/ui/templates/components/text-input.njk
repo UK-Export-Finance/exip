@@ -1,0 +1,91 @@
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
+{% macro render(params) %}
+
+  {% set ariaLabel = params.ariaLabel %}
+  {% set autocomplete = params.autocomplete %}
+  {% set errorMessage = params.errorMessage %}
+  {% set hintText = params.hintText %}
+  {% set hintHtml = params.hintHtml %}
+  {% set id = params.id %}
+  {% set inputmode = params.inputmode %}
+  {% set inputClasses = params.inputClasses %}
+  {% set labelText = params.labelText %}
+  {% set labelClasses = params.labelClasses %}
+  {% set prefixText = params.prefixText %}
+  {% set pattern = params.pattern %}
+  {% set spellcheck = params.spellcheck %}
+  {% set suffixText = params.suffixText %}
+  {% set type = params.type %}
+  {% set value = params.value %}
+
+  {% set inputAttributes = {
+    'data-cy': id + '-input'
+  } %}
+
+  {% if ariaLabel %}
+    {% set inputAttributes = {
+      'data-cy': id + '-input',
+      'aria-label': ariaLabel
+    } %}
+  {% endif %}
+
+  {% if hintHtml %}
+    {% set hint = {
+      html: hintHtml,
+      attributes: {
+        "data-cy": id + "-hint"
+      }
+    } %}
+  {% endif %}
+
+  {% if hintText %}
+    {% set hint = {
+      text: hintText,
+      attributes: {
+        "data-cy": id + "-hint"
+      }
+    } %}
+  {% endif %}
+
+  {{ govukInput({
+    attributes: inputAttributes,
+    autocomplete: autocomplete,
+    classes: inputClasses,
+    errorMessage: errorMessage and {
+      text: errorMessage.text,
+      attributes: {
+        "data-cy": id + "-error-message"
+      }
+    },
+    hint: hint,
+    id: id,
+    inputmode: inputmode,
+    label: {
+      text: labelText,
+      classes: labelClasses,
+      attributes: {
+        id: id + '-label',
+        'data-cy': id + '-label'
+      }
+    },
+    name: id,
+    pattern: pattern,
+    prefix: prefixText and {
+      text: prefixText,
+      attributes: {
+        'data-cy': id + '-prefix'
+      }
+    },
+    spellcheck: spellcheck,
+    suffix: suffixText and {
+      text: suffixText,
+      attributes: {
+        "data-cy": id + "-suffix"
+      }
+    },
+    type: type or "text",
+    value: value
+  }) }}
+
+{% endmacro %}

@@ -4,7 +4,6 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import singleInputPageVariables from '../../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../../helpers/construct-payload';
-import mapApplicationToFormFields from '../../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
 import save from '../../save-data';
 import { Request, Response } from '../../../../../../types';
@@ -36,7 +35,7 @@ export const pageVariables = (referenceNumber: number) => ({
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT_SAVE_AND_BACK}`,
 });
 
-export const TEMPLATE = TEMPLATES.INSURANCE.DECLARATIONS.ANTI_BRIBERY.EXPORTING_WITH_CODE_OF_CONDUCT;
+export const TEMPLATE = TEMPLATES.SHARED_PAGES.SINGLE_RADIO;
 
 /**
  * get
@@ -52,14 +51,11 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
-
   return res.render(TEMPLATE, {
     ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
-    ...pageVariables(refNumber),
+    ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
-    application: mapApplicationToFormFields(res.locals.application),
+    applicationAnswer: application.declaration[FIELD_ID],
   });
 };
 
@@ -77,17 +73,16 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const payload = constructPayload(req.body, [FIELD_ID]);
+  const { referenceNumber } = application;
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
+  const payload = constructPayload(req.body, [FIELD_ID]);
 
   const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY);
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
       ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
-      ...pageVariables(refNumber),
+      ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       validationErrors,
     });

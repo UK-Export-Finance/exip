@@ -4,7 +4,7 @@ import { FIELD_IDS } from '..';
 import { ROUTES } from '../../../../../constants';
 import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
 import { mockReq, mockRes, mockApplication, mockBusinessNatureOfBusiness } from '../../../../../test-mocks';
-import mapAndSave from '../../map-and-save/nature-of-business';
+import mapAndSave from '../../map-and-save/business';
 import { Request, Response } from '../../../../../../types';
 
 const {
@@ -23,7 +23,7 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
     req = mockReq();
     res = mockRes();
 
-    mapAndSave.natureOfBusiness = updateMapAndSave;
+    mapAndSave.business = updateMapAndSave;
   });
 
   afterAll(() => {
@@ -41,7 +41,7 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
       expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
     });
 
-    it('should call mapAndSave.natureOfBusiness once with data from constructPayload', async () => {
+    it('should call mapAndSave.business once with data from constructPayload', async () => {
       req.body = {
         ...validBody,
         injection: 1,
@@ -69,7 +69,7 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
       expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
     });
 
-    it('should call mapAndSave.natureOfBusiness once', async () => {
+    it('should call mapAndSave.business once', async () => {
       req.body = {
         [YEARS_EXPORTING]: '5O',
         [EMPLOYEES_UK]: '2000',
@@ -95,11 +95,11 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
   });
 
   describe('api error handling', () => {
-    describe('when mapAndSave.natureOfBusiness returns false', () => {
+    describe('when mapAndSave.business returns false', () => {
       beforeEach(() => {
         req.body = validBody;
         res.locals = mockRes().locals;
-        mapAndSave.natureOfBusiness = jest.fn(() => Promise.resolve(false));
+        mapAndSave.business = jest.fn(() => Promise.resolve(false));
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -109,11 +109,11 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
       });
     });
 
-    describe('when mapAndSave.natureOfBusiness fails', () => {
+    describe('when mapAndSave.business fails', () => {
       beforeEach(() => {
         res.locals = mockRes().locals;
         updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
-        mapAndSave.natureOfBusiness = updateMapAndSave;
+        mapAndSave.business = updateMapAndSave;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

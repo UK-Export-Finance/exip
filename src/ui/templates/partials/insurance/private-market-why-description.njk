@@ -1,0 +1,21 @@
+{% set contentStrings = CONTENT_STRINGS.PRIVATE_MARKET_WHY_DESCRIPTION %}
+
+{% set whyDescriptionHtml %}
+  <p class="govuk-body" data-cy="{{ fieldId }}-why-description-we-offer">{{ contentStrings.WE_OFFER }}</p>
+  <p class="govuk-body" data-cy="{{ fieldId }}-why-description-here-to-help">{{ contentStrings.HERE_TO_HELP }}</p>
+  <p class="govuk-body" data-cy="{{ fieldId }}-why-description-sharing-information">{{ contentStrings.SHARING_INFORMATION }}</p>
+{% endset %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters-from-desktop">
+
+    {{ govukDetails({
+      summaryText: contentStrings.INTRO,
+      html: whyDescriptionHtml,
+      attributes: {
+        "data-cy": fieldId + "-why-description"
+      }
+    }) }}
+
+  </div>
+</div>

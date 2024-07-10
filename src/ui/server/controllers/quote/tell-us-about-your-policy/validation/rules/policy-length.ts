@@ -34,7 +34,7 @@ const policyLengthRules = (formBody: RequestBody, errors: object) => {
       return updatedErrors;
     }
 
-    if (!isNumber(Number(submittedValue))) {
+    if (!isNumber(submittedValue)) {
       updatedErrors = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_NUMBER, updatedErrors);
 
       return updatedErrors;

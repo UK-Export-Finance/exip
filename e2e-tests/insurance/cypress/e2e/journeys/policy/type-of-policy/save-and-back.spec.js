@@ -1,14 +1,10 @@
-import { saveAndBackButton } from '../../../../../../pages/shared';
 import { insurance } from '../../../../../../pages';
-import partials from '../../../../../../partials';
-import { TASKS } from '../../../../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
-
-const { taskList } = partials.insurancePartials;
-const task = taskList.prepareApplication.tasks.policy;
 
 const FIELD_ID = FIELD_IDS.INSURANCE.POLICY.POLICY_TYPE;
 const multiplePolicyField = insurance.policy.typeOfPolicyPage[FIELD_ID].multiple;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Type of policy page - Save and go back', () => {
   let referenceNumber;
@@ -18,9 +14,9 @@ context('Insurance - Policy - Type of policy page - Save and go back', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startInsurancePolicySection({});
 
-      url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY.TYPE_OF_POLICY}`;
+      url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY.TYPE_OF_POLICY}`;
       cy.assertUrl(url);
     });
   });
@@ -37,19 +33,17 @@ context('Insurance - Policy - Type of policy page - Save and go back', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+      const expected = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });
 
     it('should retain the `type of policy` task status as `not started yet`', () => {
-      const expected = TASKS.STATUS.NOT_STARTED_YET;
-
-      cy.checkText(task.status(), expected);
+      cy.checkTaskPolicyStatusIsNotStartedYet();
     });
   });
 
@@ -57,31 +51,29 @@ context('Insurance - Policy - Type of policy page - Save and go back', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
 
-      task.link().click();
+      cy.startInsurancePolicySection({});
 
       multiplePolicyField.label().click();
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+      const expected = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });
 
-    it('should update the status of task `type of policy`to `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-
-      cy.checkText(task.status(), expected);
+    it('should update the status of task `type of policy` to `in progress`', () => {
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {
       it('should have the originally submitted answer selected', () => {
-        task.link().click();
+        cy.startInsurancePolicySection({});
 
-        multiplePolicyField.input().should('be.checked');
+        cy.assertRadioOptionIsChecked(multiplePolicyField.input());
       });
     });
   });

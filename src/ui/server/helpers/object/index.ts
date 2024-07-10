@@ -1,5 +1,5 @@
 type ObjectType = {
-  [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
 };
 
 /**
@@ -24,6 +24,16 @@ export const objectHasKeysAndValues = (obj: ObjectType) => {
   });
 
   return hasValues;
+};
+
+/**
+ * isAnObjectWithKeysAndValues
+ * Check if a field is an object with keys and values
+ */
+export const isAnObjectWithKeysAndValues = (field: any): object | undefined => {
+  if (typeof field === 'object' && objectHasKeysAndValues(field)) {
+    return field;
+  }
 };
 
 /**

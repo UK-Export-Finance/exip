@@ -23,6 +23,13 @@ const {
 
 const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_CODE_OF_CONDUCT;
 
+const {
+  SHARED_PAGES,
+  PARTIALS: {
+    INSURANCE: { CODE_OF_CONDUCT },
+  },
+} = TEMPLATES;
+
 /**
  * pageVariables
  * Page fields and "save and go back" URL
@@ -30,14 +37,24 @@ const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_CODE_OF_C
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
-  FIELD: {
+  FIELDS: {
     ID: FIELD_ID,
     ...DECLARATIONS_FIELDS[FIELD_ID],
   },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT_SAVE_AND_BACK}`,
 });
 
-export const TEMPLATE = TEMPLATES.INSURANCE.DECLARATIONS.ANTI_BRIBERY.CODE_OF_CONDUCT;
+/**
+ * HTML_FLAGS
+ * Conditional flags for the nunjucks template to match design
+ */
+export const HTML_FLAGS = {
+  CONDITIONAL_YES_HTML: CODE_OF_CONDUCT.CONDITIONAL_YES_HTML,
+  HINT_HTML: CODE_OF_CONDUCT.HINT_HTML,
+  HORIZONTAL_RADIOS: true,
+};
+
+export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
 
 /**
  * get
@@ -53,14 +70,12 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
-
   return res.render(TEMPLATE, {
-    ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
-    ...pageVariables(refNumber),
+    ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
+    ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
     application: mapApplicationToFormFields(res.locals.application),
+    applicationAnswer: application.declaration[FIELD_ID],
   });
 };
 
@@ -78,17 +93,16 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const payload = constructPayload(req.body, [FIELD_ID]);
+  const { referenceNumber } = application;
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
+  const payload = constructPayload(req.body, [FIELD_ID]);
 
   const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY);
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
-      ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
-      ...pageVariables(refNumber),
+      ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
+      ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       validationErrors,
     });

@@ -22,7 +22,7 @@ context('Insurance - Account - Create - Resend confirm email page - Request a ne
     cy.saveSession();
   });
 
-  describe(`when navigating to ${VERIFY_EMAIL} with a valid token query parameter and then signing in with a valid security code`, () => {
+  describe(`when navigating to ${VERIFY_EMAIL} with a valid token query parameter and then signing in with a valid access code`, () => {
     it('should be successful (completeSignInAndOTP command asserts URL)', () => {
       cy.verifyAccountEmail();
       signInPage.successBanner.container().should('exist');

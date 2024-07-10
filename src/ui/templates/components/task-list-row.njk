@@ -4,6 +4,7 @@
 
   {% set task = params.task %}
   {% set groupTitle = params.groupTitle %}
+  {% set tagClasses = params.tagClasses %}
  
   <div class="govuk-summary-list__row">
 
@@ -26,7 +27,8 @@
       {{ statusTag.render({
         status: task.status,
         href: task.href,
-        dataCy: "task-list-group-" + groupTitle + "-task-" + task.title + "-status"
+        dataCy: "task-list-group-" + groupTitle + "-task-" + task.title + "-status",
+        tagClasses: tagClasses
       }) }}
     </dd>
   </div>

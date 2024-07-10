@@ -1,11 +1,11 @@
-import { INSURANCE } from '../../constants';
+import { APPLY } from '../../constants';
 
 /**
  * isInsuranceRoute
- * checks if route has ORIGINAL_URL or if the url contains insurance
- * if empty or contains insurance, then is an insurance route so returns true
- * if does not contain insurance, then returns false
- * @param {String} ORIGINAL_URL of the page the user is on
+ * checks if route has ORIGINAL_URL or if the url contains APPLY
+ * if empty or contains APPLY, then is an APPLY route so returns true
+ * if does not contain APPLY, then returns false
+ * @param {String} ORIGINAL_URL: Current URL
  * @returns {Boolean}
  */
 const isInsuranceRoute = (ORIGINAL_URL?: string) => {
@@ -17,7 +17,7 @@ const isInsuranceRoute = (ORIGINAL_URL?: string) => {
   const originalUrlSplit = ORIGINAL_URL.split('/');
 
   // checks that ORIGINAL_URLSplit[1] exists
-  if (originalUrlSplit.length > 1 && originalUrlSplit[1] === INSURANCE.toLowerCase()) {
+  if (originalUrlSplit.length > 1 && originalUrlSplit[1] === APPLY.toLowerCase()) {
     return true;
   }
 

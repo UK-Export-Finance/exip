@@ -1,0 +1,171 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from 'govuk/components/radios/macro.njk' import govukRadios %}
+{% from "govuk/components/label/macro.njk" import govukLabel %}
+{% import '../../components/accessible-autocomplete-select.njk' as accessibleAutoCompleteSelect %}
+{% import '../../components/form-buttons.njk' as formButtons %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+      <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+    </div>
+  </div>
+
+  <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+
+        {% set methodField = FIELDS.METHOD %}
+        {% set methodId = methodField.ID %}
+
+        {% set fixedSumField = methodField.OPTIONS.FIXED_SUM %}
+        {% set percentageField = methodField.OPTIONS.PERCENTAGE %}
+
+        {% set fixedSumValue = fixedSumField.VALUE %}
+        {% set percentageValue = percentageField.VALUE %}
+
+        {% set methodSubmittedValue = submittedValues[methodId] %}
+        {% set methodApplicationAnswer = application.exportContract.agent.service.charge[methodId] %}
+
+        {% if methodSubmittedValue === fixedSumValue or methodApplicationAnswer === fixedSumValue %}
+          {% set methodIsFixedSum = true %}
+        {% endif %}
+
+        {% if methodSubmittedValue === percentageValue or methodApplicationAnswer === percentageValue %}
+          {% set methodIsPercentage = true %}
+        {% endif %}
+
+        {% set legendHtml %}
+          <legend class="govuk-fieldset__legend govuk-!-font-weight-bold govuk-!-font-size-24" data-cy="{{ methodId }}-legend">{{ methodField.LABEL }}</legend>
+        {% endset %}
+
+        {% set conditionalFixedSumHtml %}
+          {% include CONDITIONAL_FIXED_SUM_HTML %}
+        {% endset %}
+
+        {% set conditionalPercentageHtml %}
+          {% include CONDITIONAL_PERCENTAGE_HTML %}
+        {% endset %}
+
+        {{ govukRadios({
+          idPrefix: methodId,
+          name: methodId,
+          fieldset: {
+            legend: {
+              html: legendHtml
+            }
+          },
+          items: [
+            {
+              label: {
+                attributes: {
+                  id: methodId + '-' + fixedSumField.ID + '-label',
+                  'data-cy': methodId + '-' + fixedSumField.ID + '-label'
+                }
+              },
+              value: fixedSumField.VALUE,
+              text: fixedSumField.TEXT,
+              checked: methodIsFixedSum,
+              attributes: {
+                "data-cy": methodId + '-' + fixedSumField.ID + "-input"
+              },
+              conditional: {
+                html: conditionalFixedSumHtml
+              }
+            },
+            {
+              label: {
+                attributes: {
+                  id: percentageField.ID  + '-label',
+                  'data-cy': methodId + '-' + percentageField.ID + '-label'
+                }
+              },
+              value: percentageField.VALUE,
+              text: percentageField.TEXT,
+              checked: methodIsPercentage,
+              attributes: {
+                "data-cy": methodId + '-' + percentageField.ID + "-input"
+              },
+              conditional: {
+                html: conditionalPercentageHtml
+              }
+            }
+          ],
+          errorMessage: validationErrors.errorList[methodId]and {
+            text: validationErrors.errorList[methodId].text,
+            attributes: {
+              "data-cy": methodId + '-' + fixedSumField.ID + "-error-message"
+            }
+          }
+        }) }}
+      </div>
+    </div>
+    
+    {% set containerClassName = "govuk-form-group govuk-!-margin-bottom-8" %}
+
+    {% set errorMessage = validationErrors.errorList[FIELDS.PAYABLE_COUNTRY_CODE.ID].text %}
+
+    {% if errorMessage %}
+      {% set containerClassName = "govuk-form-group govuk-!-margin-bottom-8 govuk-form-group--error" %}
+    {% endif %}
+
+    <div class="{{ containerClassName }}">
+      {{ govukLabel({
+        for: FIELDS.PAYABLE_COUNTRY_CODE.ID,
+        classes: "govuk-!-font-weight-bold",
+        text: FIELDS.PAYABLE_COUNTRY_CODE.LABEL,
+        attributes: {
+          id: FIELDS.PAYABLE_COUNTRY_CODE.ID + "-label",
+          "data-cy": FIELDS.PAYABLE_COUNTRY_CODE.ID + "-label"
+        }
+      }) }}
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+
+          {{ accessibleAutoCompleteSelect.render({
+            errorMessage: validationErrors.errorList[FIELDS.PAYABLE_COUNTRY_CODE.ID].text,
+            fieldId: FIELDS.PAYABLE_COUNTRY_CODE.ID,
+            integrity: SRI.ACCESSIBILITY,
+            options: countries,
+            inputContainerClasses: "govuk-input--width-20"
+          }) }}
+        </div>
+      </div>
+
+    </div>
+
+    {{ formButtons.render({
+      contentStrings: CONTENT_STRINGS.BUTTONS,
+      saveAndBackUrl: SAVE_AND_BACK_URL
+    }) }}
+        
+  </form>
+
+{% endblock %}

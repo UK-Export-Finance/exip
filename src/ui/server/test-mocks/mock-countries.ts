@@ -8,22 +8,28 @@ const {
 // mock base country that can get a quote and apply online.
 const baseCountry = {
   canGetAQuoteOnline: true,
+  canGetAQuoteOffline: false,
   canGetAQuoteByEmail: false,
   cannotGetAQuote: false,
-  canApplyOnline: true,
-  canApplyOffline: false,
-  cannotApply: false,
+  canApplyForInsuranceOnline: true,
+  noInsuranceSupport: false,
+  shortTermCover: true,
 };
 
 const mockCountries = [
-  // mock country that cannot get a quote
+  /**
+   * mock country that:
+   * - cannot get a quote online
+   * - cannot apply for insurance
+   */
   {
     name: 'Abu Dhabi',
+    ...baseCountry,
     isoCode: 'XAD',
     riskCategory: RISK.STANDARD,
     shortTermCover: false,
-    ...baseCountry,
     canGetAQuoteOnline: false,
+    canApplyForInsuranceOnline: false,
     cannotGetAQuote: true,
   },
   {
@@ -32,7 +38,11 @@ const mockCountries = [
     riskCategory: RISK.STANDARD,
     ...baseCountry,
   },
-  // mock country that cannot get a quote online, but can get a quote by email
+  /**
+   * mock country that:
+   * - cannot get a quote online
+   * - can get a quote by email
+   */
   {
     name: 'Egypt',
     isoCode: 'EGY',
@@ -41,24 +51,50 @@ const mockCountries = [
     canGetAQuoteOnline: false,
     canGetAQuoteByEmail: true,
   },
-  // mock country that can only apply for an application offline
+  /**
+   * mock country that:
+   * - can only apply for insurance offline
+   */
   {
     name: 'Gabon',
     isoCode: 'GAB',
     riskCategory: RISK.VERY_HIGH,
     ...baseCountry,
     canGetAQuoteOnline: false,
-    canApplyOnline: false,
-    canApplyOffline: true,
+    canApplyForInsuranceOnline: false,
   },
+  /**
+   * mock country that:
+   * - cannot get a quote, online or offline
+   * - cannot apply for insurance, online or offline
+   */
   {
     name: 'Gibraltar',
     isoCode: 'GIB',
     ...baseCountry,
     riskCategory: RISK.STANDARD,
     canGetAQuoteOnline: false,
-    canApplyOnline: false,
-    cannotApply: true,
+    canGetAQuoteOffline: false,
+    canApplyForInsuranceOnline: false,
+    noInsuranceSupport: true,
+  },
+  /**
+   * mock country that:
+   * - can get a quote, online or offline
+   * - can apply for insurance, online
+   * - cannot get short term cover
+   */
+  {
+    name: 'France',
+    isoCode: 'FRA',
+    ...baseCountry,
+    riskCategory: RISK.STANDARD,
+    canGetAQuoteOnline: true,
+    canGetAQuoteOffline: true,
+    canApplyForInsuranceOnline: true,
+    canApplyForInsuranceOffline: false,
+    noInsuranceSupport: false,
+    shortTermCover: false,
   },
 ] as Array<Country>;
 

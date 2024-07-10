@@ -1,9 +1,8 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
-{% import '../../components/submit-button.njk' as submitButton %}
+{% import '../../components/text-input.njk' as textInput %}
+{% import '../../components/form-buttons.njk' as formButtons %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -35,7 +34,7 @@
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
           <span class="govuk-caption-xl" data-cy="heading-caption">
-            {{CONTENT_STRINGS.HEADING_CAPTION}}
+            {{ CONTENT_STRINGS.HEADING_CAPTION }}
           </span>
         <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
       </div>
@@ -43,47 +42,23 @@
       <div class="govuk-grid-column-three-quarters-from-desktop">
         <div class="companies-house-search">
 
-          {{ govukInput({
-            hint: {
-              html: FIELDS.COMPANIES_HOUSE_NUMBER.HINT,
-              attributes: {
-                "data-cy": FIELDS.COMPANIES_HOUSE_NUMBER.ID + "-hint"
-              }
-            },
-            attributes: {
-              "data-cy": FIELDS.COMPANIES_HOUSE_NUMBER.ID + "-input"
-            },
+          {{ textInput.render({
             id: FIELDS.COMPANIES_HOUSE_NUMBER.ID,
-            name: FIELDS.COMPANIES_HOUSE_NUMBER.ID,
+            labelText: FIELDS.COMPANIES_HOUSE_NUMBER.LABEL,
             value: submittedValues[FIELDS.COMPANIES_HOUSE_NUMBER.ID],
-            errorMessage: validationErrors.errorList[FIELDS.COMPANIES_HOUSE_NUMBER.ID] and {
-              text: validationErrors.errorList[FIELDS.COMPANIES_HOUSE_NUMBER.ID].text,
-              attributes: {
-                "data-cy": FIELDS.COMPANIES_HOUSE_NUMBER.ID + "-error-message"
-              }
-            }
+            errorMessage: validationErrors.errorList[FIELDS.COMPANIES_HOUSE_NUMBER.ID]
           }) }}
         </div>
 
         <p class="govuk-!-margin-bottom-6"><a class="govuk-link" href="{{EXIT_PAGE_URL}}" data-cy="do-not-have-number">{{CONTENT_STRINGS.NO_COMPANIES_HOUSE_NUMBER}}</a></p>
+
+        {{ formButtons.render({
+          contentStrings: CONTENT_STRINGS.BUTTONS,
+          saveAndBackUrl: SAVE_AND_BACK_URL
+        }) }}
+
       </div>
 
-      <div class="govuk-grid-column-three-quarters-from-desktop">
-        <div class="govuk-button-group">
-          {{ submitButton.render({
-            text: CONTENT_STRINGS.BUTTONS.CONTINUE
-          }) }}
-
-          {{ govukButton({
-            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
-            classes: "govuk-button--secondary",
-            attributes: {
-              'data-cy': 'save-and-back-button',
-              'formaction': SAVE_AND_BACK_URL
-            }
-          }) }}
-        </div>
-      </div>
     </form>
   </div>
 

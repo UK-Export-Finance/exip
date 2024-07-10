@@ -138,20 +138,18 @@ describe('controllers/insurance/dashboard', () => {
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
 
-    describe('api error handling', () => {
-      describe('when there is an error', () => {
-        beforeAll(() => {
-          const mockError = new Error('mock');
-          getApplicationsSpy = jest.fn(() => Promise.reject(mockError));
+    describe('when there is an error calling the API', () => {
+      beforeAll(() => {
+        const mockError = new Error('mock');
+        getApplicationsSpy = jest.fn(() => Promise.reject(mockError));
 
-          api.keystone.applications.getAll = getApplicationsSpy;
-        });
+        api.keystone.applications.getAll = getApplicationsSpy;
+      });
 
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-          await get(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-        });
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

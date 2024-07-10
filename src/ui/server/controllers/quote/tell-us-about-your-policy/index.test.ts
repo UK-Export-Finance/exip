@@ -2,7 +2,7 @@ import { FIELD_IDS, generatePageVariables, TEMPLATE, get, post } from '.';
 import { FIELDS, PAGES } from '../../../content-strings';
 import { FIELD_IDS as ALL_FIELD_IDS, FIELD_VALUES, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
-import mapCurrencies from '../../../helpers/mappings/map-currencies';
+import mapCurrenciesAsSelectOptions from '../../../helpers/mappings/map-currencies/as-select-options';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import corePageVariables from '../../../helpers/page-variables/core';
 import constructPayload from '../../../helpers/construct-payload';
@@ -12,7 +12,7 @@ import mapPercentageOfCover from '../../../helpers/mappings/map-percentage-of-co
 import mapCreditPeriod from '../../../helpers/mappings/map-credit-period';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { isSinglePolicyType, isMultiplePolicyType } from '../../../helpers/policy-type';
-import { mockReq, mockRes, mockAnswers, mockCurrencies, mockSession } from '../../../test-mocks';
+import { mockReq, mockRes, mockAnswers, mockCurrencies, mockCurrenciesResponse, mockCurrenciesEmptyResponse, mockSession } from '../../../test-mocks';
 import { Request, Response, SelectOption } from '../../../../types';
 
 const {
@@ -161,7 +161,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
   });
 
   describe('get', () => {
-    let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
+    let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
 
     beforeEach(() => {
       req.session.submittedData = {
@@ -188,7 +188,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
       const PAGE_VARIABLES = generatePageVariables(policyType);
 
-      const expectedCurrencies = mapCurrencies(mockCurrencies);
+      const expectedCurrencies = mapCurrenciesAsSelectOptions(mockCurrencies);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
         userName: getUserNameFromSession(req.session.user),
@@ -224,7 +224,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
         const PAGE_VARIABLES = generatePageVariables(policyType);
 
-        const expectedCurrencies = mapCurrencies(mockCurrencies, req.session.submittedData.quoteEligibility[CURRENCY].isoCode);
+        const expectedCurrencies = mapCurrenciesAsSelectOptions(mockCurrencies, req.session.submittedData.quoteEligibility[CURRENCY].isoCode);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
           userName: getUserNameFromSession(req.session.user),
@@ -262,7 +262,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
         const PAGE_VARIABLES = generatePageVariables(policyType);
 
-        const expectedCurrencies = mapCurrencies(mockCurrencies, req.session.submittedData.quoteEligibility[CURRENCY].isoCode);
+        const expectedCurrencies = mapCurrenciesAsSelectOptions(mockCurrencies, req.session.submittedData.quoteEligibility[CURRENCY].isoCode);
 
         const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, req.session.submittedData.quoteEligibility[PERCENTAGE_OF_COVER]);
 
@@ -301,7 +301,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
         const PAGE_VARIABLES = generatePageVariables(policyType);
 
-        const expectedCurrencies = mapCurrencies(mockCurrencies, req.session.submittedData.quoteEligibility[CURRENCY].isoCode);
+        const expectedCurrencies = mapCurrenciesAsSelectOptions(mockCurrencies, req.session.submittedData.quoteEligibility[CURRENCY].isoCode);
 
         const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, req.session.submittedData.quoteEligibility[PERCENTAGE_OF_COVER]);
 
@@ -343,7 +343,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
+          getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
@@ -356,7 +356,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
   });
 
   describe('post', () => {
-    let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
+    let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
 
     beforeEach(() => {
       api.keystone.APIM.getCurrencies = getCurrenciesSpy;
@@ -402,7 +402,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           ...generatePageVariables(policyType),
           isSinglePolicyType: isSinglePolicyType(policyType),
           isMultiplePolicyType: isMultiplePolicyType(policyType),
-          currencies: mapCurrencies(mockCurrencies),
+          currencies: mapCurrenciesAsSelectOptions(mockCurrencies),
           validationErrors: generateValidationErrors({
             ...req.session.submittedData.quoteEligibility,
             ...payload,
@@ -444,7 +444,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             ...generatePageVariables(policyType),
             isSinglePolicyType: isSinglePolicyType(policyType),
             isMultiplePolicyType: isMultiplePolicyType(policyType),
-            currencies: mapCurrencies(mockCurrencies, payload[CURRENCY]),
+            currencies: mapCurrenciesAsSelectOptions(mockCurrencies, payload[CURRENCY]),
             validationErrors: generateValidationErrors({
               ...req.session.submittedData.quoteEligibility,
               ...payload,
@@ -486,7 +486,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             ...generatePageVariables(policyType),
             isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
             isMultiplePolicyType: isMultiplePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
-            currencies: mapCurrencies(mockCurrencies, payload[CURRENCY]),
+            currencies: mapCurrenciesAsSelectOptions(mockCurrencies, payload[CURRENCY]),
             validationErrors: generateValidationErrors({
               ...req.session.submittedData.quoteEligibility,
               ...payload,
@@ -527,7 +527,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             ...generatePageVariables(policyType),
             isSinglePolicyType: isSinglePolicyType(policyType),
             isMultiplePolicyType: isMultiplePolicyType(policyType),
-            currencies: mapCurrencies(mockCurrencies, payload[CURRENCY]),
+            currencies: mapCurrenciesAsSelectOptions(mockCurrencies, payload[CURRENCY]),
             validationErrors: generateValidationErrors({
               ...req.session.submittedData.quoteEligibility,
               ...payload,
@@ -599,7 +599,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
+          getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 

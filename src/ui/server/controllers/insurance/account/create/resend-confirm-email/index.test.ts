@@ -86,18 +86,16 @@ describe('controllers/insurance/account/create/resend-confirm-email', () => {
       });
     });
 
-    describe('api error handling', () => {
-      describe('when there is an error', () => {
-        beforeEach(() => {
-          sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.reject(new Error('mock')));
-          api.keystone.account.sendEmailConfirmEmailAddress = sendEmailConfirmEmailAddressSpy;
-        });
+    describe('when there is an error calling the API', () => {
+      beforeAll(() => {
+        sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        api.keystone.account.sendEmailConfirmEmailAddress = sendEmailConfirmEmailAddressSpy;
+      });
 
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-          await get(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-        });
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

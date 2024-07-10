@@ -1,7 +1,7 @@
 import mapAndSave from '.';
 import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import save from '../../save-data/policy-contact';
-import { mockApplication } from '../../../../../test-mocks';
+import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
   NAME_ON_POLICY: { NAME, SAME_NAME },
@@ -14,7 +14,7 @@ describe('controllers/insurance/policy/map-and-save/policy-contact', () => {
     [NAME]: SAME_NAME,
   };
 
-  const mockSavePolicyContactData = jest.fn(() => Promise.resolve({}));
+  const mockSavePolicyContactData = mockSpyPromise();
 
   save.policyContact = mockSavePolicyContactData;
 

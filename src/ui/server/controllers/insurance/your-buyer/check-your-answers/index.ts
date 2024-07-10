@@ -22,14 +22,17 @@ const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 const get = (req: Request, res: Response) => {
   try {
     const { application } = res.locals;
-    const { referenceNumber } = req.params;
-    const refNumber = Number(referenceNumber);
 
     if (!application) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const summaryList = yourBuyerSummaryList(application.buyer, refNumber);
+    const summaryLists = yourBuyerSummaryList(
+      application.buyer,
+      application.eligibility,
+      application.referenceNumber,
+      application.totalContractValueOverThreshold,
+    );
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -38,7 +41,7 @@ const get = (req: Request, res: Response) => {
       }),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
-      SUMMARY_LIST: summaryList,
+      SUMMARY_LISTS: summaryLists,
     });
   } catch (err) {
     console.error('Error getting check your answers %O', err);

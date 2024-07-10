@@ -1,4 +1,4 @@
-import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, mapAnswer, mapSubmittedAnswer, get, post } from '.';
+import { FIELD_ID, PAGE_VARIABLES, HTML_FLAGS, TEMPLATE, mapAnswer, mapSubmittedAnswer, get, post } from '.';
 import { ERROR_MESSAGES, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
@@ -8,6 +8,13 @@ import generateValidationErrors from '../../../shared-validation/yes-no-radios-f
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
+
+const {
+  SHARED_PAGES,
+  PARTIALS: {
+    QUOTE: { BUYER_BODY },
+  },
+} = TEMPLATES;
 
 describe('controllers/quote/buyer-body', () => {
   let req: Request;
@@ -45,9 +52,19 @@ describe('controllers/quote/buyer-body', () => {
     });
   });
 
+  describe('HTML_FLAGS', () => {
+    it('should have correct properties', () => {
+      const expected = {
+        CUSTOM_CONTENT_HTML: BUYER_BODY.CUSTOM_CONTENT_HTML,
+      };
+
+      expect(HTML_FLAGS).toEqual(expected);
+    });
+  });
+
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.QUOTE.BUYER_BODY);
+      expect(TEMPLATE).toEqual(SHARED_PAGES.SINGLE_RADIO);
     });
   });
 
@@ -100,7 +117,7 @@ describe('controllers/quote/buyer-body', () => {
       await get(req, res);
 
       const expectedVariables = {
-        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
+        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl, HTML_FLAGS }),
         userName: getUserNameFromSession(req.session.user),
         submittedValues: {
           ...req.session.submittedData.quoteEligibility,
@@ -120,7 +137,7 @@ describe('controllers/quote/buyer-body', () => {
         const payload = constructPayload(req.body, [FIELD_ID]);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
-          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
+          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl, HTML_FLAGS }),
           userName: getUserNameFromSession(req.session.user),
           validationErrors: generateValidationErrors(payload, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID]),
         });

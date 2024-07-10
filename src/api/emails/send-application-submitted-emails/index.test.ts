@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import sendApplicationSubmittedEmails from '.';
 import sendEmail from '../index';
+import replaceCharacterCodesWithCharacters from '../../helpers/replace-character-codes-with-characters';
 import getFullNameString from '../../helpers/get-full-name-string';
 import getApplicationSubmittedEmailTemplateIds from '../../helpers/get-application-submitted-email-template-ids';
 import formatDate from '../../helpers/format-date';
@@ -56,9 +57,9 @@ describe('emails/send-email-application-submitted', () => {
 
       const sharedEmailVars = {
         referenceNumber,
-        buyerName: companyOrOrganisationName,
+        buyerName: replaceCharacterCodesWithCharacters(String(companyOrOrganisationName)),
         buyerLocation: buyer.country?.name,
-        companyName,
+        companyName: replaceCharacterCodesWithCharacters(companyName),
         requestedStartDate: formatDate(policy.requestedStartDate),
       };
 
@@ -150,8 +151,8 @@ describe('emails/send-email-application-submitted', () => {
           hasAntiBriberyCodeOfConduct: false,
         };
 
-        application.buyer = {
-          ...application.buyer,
+        application.buyer.buyerTradingHistory = {
+          ...application.buyer.buyerTradingHistory,
           exporterHasTradedWithBuyer: true,
         };
       });
@@ -174,8 +175,8 @@ describe('emails/send-email-application-submitted', () => {
           hasAntiBriberyCodeOfConduct: false,
         };
 
-        application.buyer = {
-          ...application.buyer,
+        application.buyer.buyerTradingHistory = {
+          ...application.buyer.buyerTradingHistory,
           exporterHasTradedWithBuyer: false,
         };
       });
@@ -194,8 +195,8 @@ describe('emails/send-email-application-submitted', () => {
           hasAntiBriberyCodeOfConduct: true,
         };
 
-        application.buyer = {
-          ...application.buyer,
+        application.buyer.buyerTradingHistory = {
+          ...application.buyer.buyerTradingHistory,
           exporterHasTradedWithBuyer: false,
         };
       });

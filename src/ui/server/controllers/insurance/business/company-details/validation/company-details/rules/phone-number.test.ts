@@ -3,7 +3,7 @@ import { FIELD_IDS } from '../../../../../../../constants';
 import { RequestBody } from '../../../../../../../../types';
 import phoneNumber from './phone-number';
 import generateValidationErrors from '../../../../../../../helpers/validation';
-import { mockPhoneNumbers } from '../../../../../../../test-mocks';
+import { mockErrors, mockPhoneNumbers } from '../../../../../../../test-mocks';
 
 const { INVALID_PHONE_NUMBERS, VALID_PHONE_NUMBERS } = mockPhoneNumbers;
 
@@ -15,11 +15,6 @@ const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 const errorMessage = EXPORTER_BUSINESS[PHONE_NUMBER].INCORRECT_FORMAT;
 
 describe('controllers/insurance/business/company-details/validation/company-details/rules/phone-number', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [PHONE_NUMBER]: '',
   } as RequestBody;

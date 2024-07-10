@@ -2,6 +2,7 @@ import nameOnPolicyRule from './name-on-policy';
 import { FIELD_IDS } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const {
   POLICY: {
@@ -20,11 +21,6 @@ const {
 describe('controllers/insurance/policy/name-on-policy/validation/rules/name-on-policy', () => {
   const mockBody = {
     [FIELD_ID]: '',
-  };
-
-  const mockErrors = {
-    summary: [],
-    errorList: {},
   };
 
   it('should return the result of emptyFieldValidation', () => {

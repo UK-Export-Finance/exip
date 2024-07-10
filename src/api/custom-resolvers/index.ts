@@ -11,13 +11,24 @@ import {
   sendEmailPasswordResetLink,
   sendEmailReactivateAccountLink,
   createAnApplication,
+  createAnAbandonedApplication,
   deleteApplicationByReferenceNumber,
-  updateCompanyAndCompanyAddress,
   submitApplication,
   createFeedbackAndSendEmail,
   verifyAccountReactivationToken,
+  updateCompanyPostDataMigration,
+  updateLossPayeeFinancialDetailsUk,
+  updateLossPayeeFinancialDetailsInternational,
 } from './mutations';
-import { getAccountPasswordResetToken, getApimCisCountries, getApimCurrencies, getCompaniesHouseInformation, verifyAccountPasswordResetToken } from './queries';
+import {
+  getAccountPasswordResetToken,
+  getApimCisCountries,
+  getApimCurrencies,
+  getCompaniesHouseInformation,
+  getApplicationByReferenceNumber,
+  getOrdnanceSurveyAddress,
+  verifyAccountPasswordResetToken,
+} from './queries';
 
 /**
  * customResolvers
@@ -40,17 +51,22 @@ const customResolvers = {
     sendEmailPasswordResetLink,
     sendEmailReactivateAccountLink,
     createAnApplication,
+    createAnAbandonedApplication,
     deleteApplicationByReferenceNumber,
-    updateCompanyAndCompanyAddress,
     submitApplication,
     createFeedbackAndSendEmail,
     verifyAccountReactivationToken,
+    updateCompanyPostDataMigration,
+    updateLossPayeeFinancialDetailsUk,
+    updateLossPayeeFinancialDetailsInternational,
   },
   Query: {
     getAccountPasswordResetToken,
     getApimCisCountries,
     getApimCurrencies,
     getCompaniesHouseInformation,
+    getApplicationByReferenceNumber,
+    getOrdnanceSurveyAddress,
     verifyAccountPasswordResetToken,
   },
 };

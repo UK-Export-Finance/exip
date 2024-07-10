@@ -10,7 +10,11 @@ import { objectHasProperty } from '../object';
  * @returns {Object} Field or an object with the provided field ID.
  */
 const getFieldById = (fields: object, fieldId: string, fieldIdPrefix?: string) => {
-  // if prefix, then add prefix before fieldId, else set id as fieldId
+  /**
+   * If prefix,
+   * add prefix before fieldId.
+   * Otherwise, set the id as fieldId
+   */
   const id = fieldIdPrefix ? `${fieldIdPrefix}-${fieldId}` : fieldId;
 
   if (objectHasProperty(fields, fieldId)) {

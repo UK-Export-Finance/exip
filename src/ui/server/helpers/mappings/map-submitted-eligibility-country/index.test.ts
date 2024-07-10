@@ -8,24 +8,55 @@ const {
 } = FIELD_IDS;
 
 describe('server/helpers/mappings/map-submitted-eligibility-country', () => {
-  it('should return an object with BUYER_COUNTRY object', () => {
-    const mappedCountries = mapCountries(mockCountries);
+  describe('when a country has canGetAQuoteOnline=true', () => {
+    it('should return an object with BUYER_COUNTRY object with canApplyOnline=true', () => {
+      const mappedCountries = mapCountries(mockCountries);
 
-    const [mappedCountry] = mappedCountries;
+      const [mappedCountry] = mappedCountries;
 
-    const mockCanApplyOnline = false;
+      const countryCanGetAQuoteOnline = {
+        ...mappedCountry,
+        canGetAQuoteOnline: true,
+      };
 
-    const result = mapSubmittedEligibilityCountry(mappedCountry, mockCanApplyOnline);
+      const result = mapSubmittedEligibilityCountry(countryCanGetAQuoteOnline);
 
-    const expected = {
-      [BUYER_COUNTRY]: {
-        name: mappedCountry.name,
-        isoCode: mappedCountry.isoCode,
-        riskCategory: mappedCountry.riskCategory,
-        canApplyOnline: mockCanApplyOnline,
-      },
-    };
+      const expected = {
+        [BUYER_COUNTRY]: {
+          name: mappedCountry.name,
+          isoCode: mappedCountry.isoCode,
+          riskCategory: mappedCountry.riskCategory,
+          canApplyOnline: countryCanGetAQuoteOnline.canGetAQuoteOnline,
+        },
+      };
 
-    expect(result).toEqual(expected);
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when a country has canGetAQuoteOnline=true', () => {
+    it('should return an object with BUYER_COUNTRY object with canApplyOnline=true', () => {
+      const mappedCountries = mapCountries(mockCountries);
+
+      const [mappedCountry] = mappedCountries;
+
+      const countryCanApplyForInsuranceOnline = {
+        ...mappedCountry,
+        canApplyForInsuranceOnline: true,
+      };
+
+      const result = mapSubmittedEligibilityCountry(countryCanApplyForInsuranceOnline);
+
+      const expected = {
+        [BUYER_COUNTRY]: {
+          name: mappedCountry.name,
+          isoCode: mappedCountry.isoCode,
+          riskCategory: mappedCountry.riskCategory,
+          canApplyOnline: countryCanApplyForInsuranceOnline.canApplyForInsuranceOnline,
+        },
+      };
+
+      expect(result).toEqual(expected);
+    });
   });
 });

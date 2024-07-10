@@ -10,7 +10,7 @@ const ERROR_MESSAGE = ERROR_MESSAGES.INSURANCE.POLICY.TYPE_OF_POLICY[FIELD_ID].I
 
 describe('controllers/insurance/policy/type-of-policy/validation', () => {
   describe(`when ${FIELD_ID} is not provided`, () => {
-    it('should return validation error with first policy type field as ID', () => {
+    it('should return a validation error with first policy type field as ID', () => {
       const mockBody = {
         [FIELD_ID]: '',
       };

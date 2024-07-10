@@ -1,6 +1,4 @@
-import {
-  backLink, cannotApplyPage, noRadio, submitButton,
-} from '../../../../../../pages/shared';
+import { backLink, cannotApplyPage } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
@@ -14,19 +12,19 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover - submit `no - UK goods/services is below the minimum`', () => {
+context('UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF credit insurance cover - submit `no - UK goods/services is below the minimum`', () => {
   const url = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
 
   beforeEach(() => {
     cy.login();
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
 
     cy.assertUrl(url);
 
-    noRadio().label().click();
-    submitButton().click();
+    cy.clickNoRadioInput();
+    cy.clickSubmitButton();
   });
 
   it('redirects to exit page', () => {

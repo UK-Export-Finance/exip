@@ -1,7 +1,7 @@
 import { successPage } from '../../../../../../pages/insurance/account/password-reset';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { field, submitButton } from '../../../../../../pages/shared';
+import { field } from '../../../../../../pages/shared';
 import api from '../../../../../../commands/api';
 import account from '../../../../../../fixtures/account';
 
@@ -14,7 +14,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  ACCOUNT: { SECURITY_CODE, PASSWORD },
+  ACCOUNT: { ACCESS_CODE, PASSWORD },
 } = INSURANCE_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -73,22 +73,22 @@ context('Insurance - Account - Password reset and sign in - As an Exporter, I wa
       });
     });
 
-    describe('when submitting a valid security code', () => {
-      let validSecurityCode;
+    describe('when submitting a valid access code', () => {
+      let validAccessCode;
 
       before(() => {
         // create and get an OTP for the exporter's account
-        cy.accountAddAndGetOTP().then((securityCode) => {
-          validSecurityCode = securityCode;
+        cy.accountAddAndGetOTP().then((accessCode) => {
+          validAccessCode = accessCode;
         });
       });
 
       it(`should redirect to ${DASHBOARD}`, () => {
         cy.navigateToUrl(enterCodeUrl);
 
-        cy.keyboardInput(field(SECURITY_CODE).input(), validSecurityCode);
+        cy.keyboardInput(field(ACCESS_CODE).input(), validAccessCode);
 
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const expectedUrl = `${baseUrl}${DASHBOARD}`;
 

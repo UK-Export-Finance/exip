@@ -1,22 +1,30 @@
 import partials from '../../../../../../../partials';
-import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/business';
-import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
+import { MAXIMUM_CHARACTERS } from '../../../../../../../constants';
+import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/business';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const NATURE_OF_BUSINESS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
-
 const {
   NATURE_OF_YOUR_BUSINESS: {
-    GOODS_OR_SERVICES,
+    GOODS_OR_SERVICES: FIELD_ID,
   },
-} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+} = FIELD_IDS;
 
-const { MAXIMUM } = FIELDS.NATURE_OF_YOUR_BUSINESS[GOODS_OR_SERVICES];
+const {
+  ROOT,
+  EXPORTER_BUSINESS: { NATURE_OF_BUSINESS_ROOT },
+} = INSURANCE_ROUTES;
+
+const field = fieldSelector(FIELD_ID);
+const textareaField = { ...field, input: field.textarea };
+
+const assertions = {
+  field: textareaField,
+  expectedErrorsCount: 3,
+};
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -28,12 +36,11 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection({});
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
-      cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitCompanyDetails({});
 
-      url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -49,65 +56,41 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     cy.deleteApplication(referenceNumber);
   });
 
-  const fieldId = GOODS_OR_SERVICES;
-  const field = fieldSelector(fieldId);
-  const textareaField = { ...field, input: field.textarea };
-
-  const expectedErrorsCount = 4;
-
-  describe(`when ${GOODS_OR_SERVICES} is left empty`, () => {
+  describe(`when ${FIELD_ID} is left empty`, () => {
     it('should display validation errors', () => {
-      const errorMessage = NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].IS_EMPTY;
-
-      cy.submitAndAssertFieldErrors(
-        textareaField,
-        null,
-        0,
-        expectedErrorsCount,
-        errorMessage,
-        true,
-      );
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        expectedErrorMessage: NATURE_OF_BUSINESS_ERRORS[FIELD_ID].IS_EMPTY,
+      });
     });
 
-    it(`should focus to the ${GOODS_OR_SERVICES} section when clicking the error`, () => {
-      submitButton().click();
+    it(`should focus to the ${FIELD_ID} section when clicking the error`, () => {
+      cy.clickSubmitButton();
 
       partials.errorSummaryListItemLinks().first().click();
       field.textarea().should('have.focus');
     });
   });
 
-  describe(`when ${GOODS_OR_SERVICES} has over ${MAXIMUM} characters`, () => {
-    beforeEach(() => {
-      cy.keyboardInput(field.textarea(), 'a'.repeat(MAXIMUM + 1));
-      submitButton().click();
-    });
-
-    const errorMessage = NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].ABOVE_MAXIMUM;
-
-    it(`should display validation errors if ${GOODS_OR_SERVICES} left empty`, () => {
-      const submittedValue = 'a'.repeat(MAXIMUM + 1);
-
-      cy.submitAndAssertFieldErrors(
-        textareaField,
-        submittedValue,
-        0,
-        expectedErrorsCount,
-        errorMessage,
-        true,
-      );
+  describe(`when ${FIELD_ID} has over the maximum`, () => {
+    it('should display validation errors', () => {
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: 'a'.repeat(MAXIMUM_CHARACTERS.BUSINESS.GOODS_OR_SERVICES_DESCRIPTION + 1),
+        expectedErrorMessage: NATURE_OF_BUSINESS_ERRORS[FIELD_ID].ABOVE_MAXIMUM,
+      });
     });
   });
 
-  describe(`when ${GOODS_OR_SERVICES} is correctly entered`, () => {
+  describe(`when ${FIELD_ID} is correctly entered`, () => {
     it('should not display validation errors', () => {
       cy.navigateToUrl(url);
 
       cy.keyboardInput(field.textarea(), 'test');
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.checkErrorSummaryListHeading();
-      partials.errorSummaryListItems().should('have.length', 3);
+      cy.assertErrorSummaryListLength(2);
     });
   });
 });

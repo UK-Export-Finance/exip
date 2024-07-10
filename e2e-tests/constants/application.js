@@ -6,17 +6,28 @@ export const APPLICATION = {
   POLICY_TYPE: {
     SINGLE: 'Single contract policy',
     MULTIPLE: 'Multiple contract policy',
+    ABBREVIATED: {
+      SINGLE: 'Single',
+      MULTIPLE: 'Multiple',
+    },
   },
   POLICY: {
     TOTAL_VALUE_OF_CONTRACT: {
       MINIMUM: 1,
-      MAXIMUM: 500000,
     },
     TOTAL_MONTHS_OF_COVER: 12,
-    MAXIMUM_BUYER_CAN_OWE: 500000,
   },
   STATUS: {
     IN_PROGRESS: 'In progress',
     SUBMITTED: 'Submitted to UKEF',
+    ABANDONED: 'Abandoned',
+  },
+  EXPORT_CONTRACT: {
+    AGENT_SERVICE_CHARGE: {
+      METHOD: {
+        FIXED_SUM: 'Fixed sum',
+        PERCENTAGE: 'Percentage',
+      },
+    },
   },
 };

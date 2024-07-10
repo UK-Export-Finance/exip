@@ -1,25 +1,26 @@
 import nameValidation from '.';
-import emptyFieldValidation from '../empty-field';
+import alphaCharactersAndMaxLengthValidation from '../alpha-characters-and-max-length';
+import { ACCOUNT_FIELDS } from '../../content-strings/fields/insurance/account';
+import { mockErrorMessagesObject, mockErrors } from '../../test-mocks';
 import { RequestBody } from '../../../types';
+
+const {
+  MAXIMUM: {
+    NAME: { CHARACTERS: MAX_CHARACTERS },
+  },
+} = ACCOUNT_FIELDS;
 
 describe('shared-validation/name', () => {
   const FIELD_ID = 'field';
 
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
-    [FIELD_ID]: '',
+    [FIELD_ID]: 'Mock name',
   } as RequestBody;
 
-  const errorMessage = 'Is empty';
+  it('should return the result of alphaCharactersAndMaxLengthValidation', () => {
+    const response = nameValidation(mockBody, FIELD_ID, mockErrorMessagesObject, mockErrors);
 
-  it('should return the result of emptyFieldValidation', () => {
-    const response = nameValidation(mockBody, FIELD_ID, errorMessage, mockErrors);
-
-    const expected = emptyFieldValidation(mockBody, FIELD_ID, errorMessage, mockErrors);
+    const expected = alphaCharactersAndMaxLengthValidation(mockBody, FIELD_ID, mockErrorMessagesObject, mockErrors, MAX_CHARACTERS);
 
     expect(response).toEqual(expected);
   });

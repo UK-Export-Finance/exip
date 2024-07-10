@@ -1,13 +1,6 @@
-import {
-  summaryList,
-  field as fieldSelector,
-} from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
-import { FIELD_VALUES } from '../../../../../../constants';
+import { summaryList } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-
-const { taskList } = partials.insurancePartials;
+import { POLICY as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -17,16 +10,8 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
-    NAME_ON_POLICY: { NAME, SAME_NAME, OTHER_NAME },
-    DIFFERENT_NAME_ON_POLICY: {
-      POSITION,
-    },
-  },
-  ACCOUNT: {
-    FIRST_NAME, LAST_NAME, EMAIL,
-  },
-} = INSURANCE_FIELD_IDS;
+  NAME_ON_POLICY: { NAME, SAME_NAME, OTHER_NAME },
+} = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -39,12 +24,15 @@ context(`Insurance - Policy - Different name on Policy page - Changing ${SAME_NA
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      taskList.prepareApplication.tasks.policy.link().click();
-
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.startInsurancePolicySection({});
+      cy.completeAndSubmitPolicyTypeForm({});
       cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
+      cy.completeAndSubmitTotalContractValueForm({});
       cy.completeAndSubmitNameOnPolicyForm({});
+      cy.completeAndSubmitPreCreditPeriodForm({});
+      cy.completeAndSubmitAnotherCompanyForm({});
+      cy.completeAndSubmitBrokerForm({});
+      cy.completeAndSubmitLossPayeeForm({});
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
@@ -60,7 +48,7 @@ context(`Insurance - Policy - Different name on Policy page - Changing ${SAME_NA
     cy.deleteApplication(referenceNumber);
   });
 
-  describe('when changing from same name to different name', () => {
+  describe(`when changing from ${SAME_NAME} to ${OTHER_NAME}`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
@@ -69,11 +57,8 @@ context(`Insurance - Policy - Different name on Policy page - Changing ${SAME_NA
       cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
     });
 
-    it('should not have fields populated on different name on policy age', () => {
-      cy.checkValue(fieldSelector(FIRST_NAME), '');
-      cy.checkValue(fieldSelector(LAST_NAME), '');
-      cy.checkValue(fieldSelector(EMAIL), '');
-      cy.checkValue(fieldSelector(POSITION), '');
+    it('should NOT have fields populated on different name on policy page', () => {
+      cy.assertDifferentNameOnPolicyFieldValues({});
     });
   });
 });

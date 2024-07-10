@@ -1,15 +1,16 @@
+import sanitiseCompaniesHouseNumber from '../../../helpers/sanitise-companies-house-number';
+import companiesHouse from '../../../integrations/companies-house';
+import industrySectorNames from '../../../integrations/industry-sector';
 import { mapCompaniesHouseFields } from '../../../helpers/map-companies-house-fields';
 import { GetCompaniesHouseInformationVariables } from '../../../types';
-import industrySectorNames from '../../../integrations/industry-sector';
-import companiesHouse from '../../../integrations/companies-house';
 
 /**
  * getCompaniesHouseInformation
  * Get companies house information
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the GetCompaniesHouseInformation mutation
- * @param {Object} KeystoneJS context API
- * @returns {Object} Object with success flag and mapped companies house response
+ * @param {Context} KeystoneJS context API
+ * @returns {Promise<Object>} Object with success flag and mapped companies house response
  */
 const getCompaniesHouseInformation = async (root: any, variables: GetCompaniesHouseInformationVariables) => {
   try {
@@ -17,14 +18,15 @@ const getCompaniesHouseInformation = async (root: any, variables: GetCompaniesHo
 
     console.info('Getting Companies House information for %s', companiesHouseNumber);
 
-    const sanitisedRegNo = companiesHouseNumber.toString().padStart(8, '0');
+    const sanitisedNumber = sanitiseCompaniesHouseNumber(companiesHouseNumber);
 
-    const response = await companiesHouse.get(sanitisedRegNo);
+    const response = await companiesHouse.get(sanitisedNumber);
 
     // if no data in response or status is not 200 then return blank object
     if (!response.success || !response.data) {
       return {
         success: false,
+        notFound: response.notFound,
       };
     }
 

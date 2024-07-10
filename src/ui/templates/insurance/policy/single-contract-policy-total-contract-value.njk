@@ -1,0 +1,74 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% import '../../components/monetary-value-input.njk' as monetaryValueInput %}
+{% import '../../components/fieldset-legend.njk' as fieldsetLegend %}
+{% import '../../components/form-buttons.njk' as formButtons %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+    </div>
+  </div>
+
+  <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+
+        {% call govukFieldset({
+          legend: {
+            html: fieldsetLegend.render({
+              id: FIELD.ID,
+              legendText: CONTENT_STRINGS.PAGE_TITLE,
+              isPageHeading: true
+            })
+          }
+        }) %}
+
+          {{ monetaryValueInput.render({
+            fieldId: FIELD.ID,
+            label: FIELD.DYNAMIC_PAGE_TITLE,
+            hintText: FIELD.HINT,
+            currencyPrefixSymbol: CURRENCY_PREFIX_SYMBOL,
+            submittedValue: submittedValues[FIELD.ID] or application.policy[FIELD.ID],
+            validationError: validationErrors.errorList[FIELD.ID]
+          }) }}
+
+        {% endcall %}
+
+      </div>
+    </div>
+
+    {{ formButtons.render({
+      contentStrings: CONTENT_STRINGS.BUTTONS,
+      saveAndBackUrl: SAVE_AND_BACK_URL
+    }) }}
+
+  </form>
+
+{% endblock %}

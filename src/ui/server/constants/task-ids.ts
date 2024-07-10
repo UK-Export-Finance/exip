@@ -9,9 +9,10 @@ export const TASK_IDS = {
     ELIGIBILITY: 'eligibility',
   },
   PREPARE_APPLICATION: {
-    POLICY: 'policy',
     EXPORTER_BUSINESS: 'business',
     BUYER: 'buyer',
+    POLICY: 'policy',
+    EXPORT_CONTRACT: 'exportContract',
   },
   SUBMIT_APPLICATION: {
     CHECK_ANSWERS: 'checkAnswers',

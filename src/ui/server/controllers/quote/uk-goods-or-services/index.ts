@@ -1,4 +1,4 @@
-import { PAGES, UK_GOODS_AND_SERVICES_DESCRIPTION, ERROR_MESSAGES } from '../../../content-strings';
+import { PAGES, UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION, UK_GOODS_AND_SERVICES_DESCRIPTION, ERROR_MESSAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
@@ -8,18 +8,31 @@ import { updateSubmittedData } from '../../../helpers/update-submitted-data/quot
 import isChangeRoute from '../../../helpers/is-change-route';
 import { Request, Response } from '../../../../types';
 
+const {
+  SHARED_PAGES,
+  PARTIALS: { UK_GOODS_OR_SERVICES },
+} = TEMPLATES;
+
 export const FIELD_ID = FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES;
 
 export const PAGE_VARIABLES = {
   FIELD_ID,
   PAGE_CONTENT_STRINGS: {
     ...PAGES.UK_GOODS_OR_SERVICES,
-    ...PAGES.QUOTE.UK_GOODS_OR_SERVICES,
+    UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION,
     UK_GOODS_AND_SERVICES_DESCRIPTION,
   },
 };
 
-export const TEMPLATE = TEMPLATES.QUOTE.UK_GOODS_OR_SERVICES;
+/**
+ * HTML_FLAGS
+ * Conditional flags for the nunjucks template to match design
+ */
+export const HTML_FLAGS = {
+  CUSTOM_CONTENT_HTML: UK_GOODS_OR_SERVICES.CUSTOM_CONTENT_HTML,
+};
+
+export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
 
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {
@@ -27,6 +40,7 @@ export const get = (req: Request, res: Response) =>
     ...singleInputPageVariables({
       ...PAGE_VARIABLES,
       ORIGINAL_URL: req.originalUrl,
+      HTML_FLAGS,
     }),
     BACK_LINK: req.headers.referer,
     submittedValues: req.session.submittedData.quoteEligibility,
@@ -40,7 +54,7 @@ export const post = (req: Request, res: Response) => {
   if (validationErrors) {
     return res.render(TEMPLATE, {
       userName: getUserNameFromSession(req.session.user),
-      ...singleInputPageVariables(PAGE_VARIABLES),
+      ...singleInputPageVariables({ ...PAGE_VARIABLES, ORIGINAL_URL: req.originalUrl, HTML_FLAGS }),
       BACK_LINK: req.headers.referer,
       validationErrors,
     });

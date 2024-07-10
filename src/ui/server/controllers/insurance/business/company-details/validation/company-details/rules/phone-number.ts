@@ -12,18 +12,18 @@ const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 
 /**
  * validates phone number input is the correct format
- * @param {RequestBody} responseBody
- * @param {object} errors
- * @returns {object} errors
+ * @param {RequestBody} formBody
+ * @param {Object} errors: Other validation errors for the same form
+ * @returns {Object} errors
  */
-const phoneNumber = (responseBody: RequestBody, errors: object) => {
+const phoneNumber = (formBody: RequestBody, errors: object) => {
   let updatedErrors = errors;
 
   // as field is optional, only validate if it is not an empty string
-  if (objectHasProperty(responseBody, PHONE_NUMBER)) {
+  if (objectHasProperty(formBody, PHONE_NUMBER)) {
     const errorMessage = EXPORTER_BUSINESS[PHONE_NUMBER].INCORRECT_FORMAT;
     // validates input
-    updatedErrors = validatePhoneNumber(responseBody[PHONE_NUMBER], PHONE_NUMBER, errorMessage, updatedErrors);
+    updatedErrors = validatePhoneNumber(formBody[PHONE_NUMBER], PHONE_NUMBER, errorMessage, updatedErrors);
   }
 
   return updatedErrors;

@@ -9,6 +9,8 @@ import { updateSubmittedData } from '../../../helpers/update-submitted-data/quot
 import { Request, Response } from '../../../../types';
 import { mockReq, mockRes } from '../../../test-mocks';
 
+const { SINGLE_RADIO } = TEMPLATES.SHARED_PAGES;
+
 describe('controllers/quote/exporter-location', () => {
   let req: Request;
   let res: Response;
@@ -39,7 +41,7 @@ describe('controllers/quote/exporter-location', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.EXPORTER_LOCATION);
+      expect(TEMPLATE).toEqual(SINGLE_RADIO);
     });
   });
 
@@ -47,7 +49,7 @@ describe('controllers/quote/exporter-location', () => {
     it('should render template', () => {
       get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.EXPORTER_LOCATION, {
+      expect(res.render).toHaveBeenCalledWith(SINGLE_RADIO, {
         ...singleInputPageVariables({ ...PAGE_VARIABLES, ORIGINAL_URL: req.originalUrl }),
         userName: getUserNameFromSession(req.session.user),
         BACK_LINK: req.headers.referer,
@@ -63,7 +65,7 @@ describe('controllers/quote/exporter-location', () => {
 
         const payload = constructPayload(req.body, [FIELD_ID]);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.EXPORTER_LOCATION, {
+        expect(res.render).toHaveBeenCalledWith(SINGLE_RADIO, {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, ORIGINAL_URL: req.originalUrl }),
           userName: getUserNameFromSession(req.session.user),
           BACK_LINK: req.headers.referer,

@@ -1,16 +1,52 @@
+import { SuccessResponse } from '../generic';
 import { Country } from '../country';
 import { Relationship } from '../relationship';
 
 export interface ApplicationBusiness extends Relationship {
+  application: Relationship;
   goodsOrServicesSupplied: string;
   totalYearsExporting: string;
-  totalEmployeesInternational: string;
   totalEmployeesUK: string;
   estimatedAnnualTurnover: string;
   exportsTurnoverPercentage: string;
+  turnoverCurrencyCode: string;
+}
+
+export interface BuyerTradingHistory extends Relationship {
+  currencyCode?: string;
+  exporterHasTradedWithBuyer?: boolean;
+  failedPayments?: boolean;
+  outstandingPayments?: boolean;
+  totalOutstandingPayments?: number;
+  totalOverduePayments?: number;
+}
+
+export interface ApplicationBuyerRelationship extends Relationship {
+  exporterIsConnectedWithBuyer?: boolean;
+  connectionWithBuyerDescription?: string;
+  exporterHasPreviousCreditInsuranceWithBuyer?: boolean;
+  exporterHasBuyerFinancialAccounts?: boolean;
+  previousCreditInsuranceWithBuyerDescription?: string;
 }
 
 export interface ApplicationBuyer extends Relationship {
+  application?: string;
+  companyOrOrganisationName?: string;
+  address?: string;
+  country?: Country;
+  registrationNumber?: string;
+  website?: string;
+  contactFirstName?: string;
+  contactLastName?: string;
+  contactPosition?: string;
+  contactEmail?: string;
+  canContactBuyer?: boolean;
+  buyerTradingHistory: BuyerTradingHistory;
+  relationship: ApplicationBuyerRelationship;
+}
+
+export interface ApplicationBuyerMvp extends Relationship {
+  application?: string;
   companyOrOrganisationName?: string;
   address?: string;
   country?: Country;
@@ -25,12 +61,8 @@ export interface ApplicationBuyer extends Relationship {
   exporterHasTradedWithBuyer?: boolean;
 }
 
-export interface ApplicationCompany {
-  id: string;
-  companyName?: string;
-}
-
-export interface ApplicationCompanyAddress extends Relationship {
+export interface ApplicationCompanyAddressCore {
+  id?: string;
   addressLine1?: string;
   addressLine2?: string;
   careOf?: string;
@@ -39,6 +71,31 @@ export interface ApplicationCompanyAddress extends Relationship {
   postalCode?: string;
   country?: string;
   premises?: string;
+}
+
+export interface ApplicationCompanyDifferentTradingAddress extends Relationship {
+  fullAddress: string;
+}
+
+export interface ApplicationCompanyCore {
+  companyName: string;
+  companyNumber: string;
+  dateOfCreation: Date;
+  differentTradingAddress?: ApplicationCompanyDifferentTradingAddress;
+  industrySectorNames: Array<string>;
+  financialYearEndDate: Date;
+  hasDifferentTradingName?: boolean;
+  hasDifferentTradingAddress?: boolean;
+  registeredOfficeAddress: ApplicationCompanyAddressCore;
+  sicCodes: Array<string>;
+}
+
+export interface ApplicationCompany extends ApplicationCompanyCore {
+  id: string;
+}
+
+export interface ApplicationCompanyAddress extends ApplicationCompanyAddressCore {
+  id: string;
 }
 
 export interface ApplicationCompanySicCode {
@@ -57,6 +114,46 @@ export interface ApplicationDeclaration extends Relationship {
   agreeHowDataWillBeUsed?: boolean;
 }
 
+export interface ApplicationLossPayeeFinancialInternationalVector extends Relationship {
+  bicSwiftCodeVector?: string;
+  ibanVector?: string;
+}
+
+export interface ApplicationLossPayeeFinancialUkVector extends Relationship {
+  accountNumberVector?: string;
+  sortCodeVector?: string;
+}
+
+export interface ApplicationLossPayeeFinancialInternational extends Relationship {
+  lossPayeeId?: string;
+  vectorId?: string;
+  bankAddress?: string;
+  bicSwiftCode?: string;
+  iban?: string;
+  vector: ApplicationLossPayeeFinancialInternationalVector;
+}
+
+export interface ApplicationLossPayeeFinancialUk extends Relationship {
+  lossPayeeId?: string;
+  vectorId?: string;
+  accountNumber?: string;
+  accountNumberVector?: string;
+  bankAddress?: string;
+  sortCode?: string;
+  sortCodeVector?: string;
+  vector: ApplicationLossPayeeFinancialUkVector;
+}
+
+export interface ApplicationNominatedLossPayee extends Relationship {
+  applicationId?: string;
+  isAppointed?: boolean;
+  name?: string;
+  isLocatedInUk?: boolean;
+  isLocatedInternationally?: boolean;
+  financialUk: ApplicationLossPayeeFinancialUk;
+  financialInternational: ApplicationLossPayeeFinancialInternational;
+}
+
 export interface TotalContractValue extends Relationship {
   value: string;
   valueId: number;
@@ -70,19 +167,51 @@ export interface CoverPeriod extends Relationship {
 export interface ApplicationEligibility extends Relationship {
   buyerCountryIsoCode: string;
   hasCompaniesHouseNumber: boolean;
-  otherPartiesInvolved: boolean;
-  paidByLetterOfCredit: boolean;
-  needPreCreditPeriodCover: boolean;
   totalContractValueId: number;
   totalContractValue: TotalContractValue;
   coverPeriodId: number;
   coverPeriod: CoverPeriod;
 }
 
+export interface ApplicationExportContractAgentServiceCharge extends Relationship {
+  agentServiceId: string;
+  fixedSumAmount?: string;
+  fixedSumCurrencyCode?: string;
+  method?: string;
+  payableCountryCode?: string;
+  percentageCharge?: string;
+}
+
+export interface ApplicationExportContractAgentService extends Relationship {
+  agentIsCharging?: boolean;
+  charge: ApplicationExportContractAgentServiceCharge;
+  id: string;
+  serviceDescription?: string;
+}
+
+export interface ApplicationExportContractAgent extends Relationship {
+  id: string;
+  countryCode?: string;
+  fullAddress?: string;
+  isUsingAgent?: boolean;
+  name?: string;
+  service: ApplicationExportContractAgentService;
+}
+
+export interface ApplicationPrivateMarket extends Relationship {
+  attempted?: boolean;
+  declinedDescription?: string;
+  exportContractId: string;
+}
+
 export interface ApplicationExportContract extends Relationship {
-  goodsOrServicesDescription?: string;
+  agent: ApplicationExportContractAgent;
+  id: string;
+  finalDestinationKnown?: boolean;
   finalDestinationCountryCode?: string;
-  finalDestinationCountry?: Country;
+  goodsOrServicesDescription?: string;
+  paymentTermsDescription?: string;
+  privateMarket: ApplicationPrivateMarket;
 }
 
 export interface ApplicationOwner extends Relationship {
@@ -91,8 +220,26 @@ export interface ApplicationOwner extends Relationship {
   lastName: string;
 }
 
+export interface ApplicationJointlyInsuredParty extends Relationship {
+  policyId: string;
+  requested?: boolean;
+  companyName?: string;
+  companyNumber?: string;
+  country?: Country;
+}
+
 export interface ApplicationPolicy extends Relationship {
-  requestedStartDate?: Date;
+  policyType?: string;
+  requestedStartDate: Date;
+  contractCompletionDate: Date;
+  totalValueOfContract?: number;
+  needPreCreditPeriodCover?: boolean;
+  creditPeriodWithBuyer?: string;
+  policyCurrencyCode?: string;
+  totalMonthsOfCover?: number;
+  totalSalesToBuyer?: number;
+  maximumBuyerWillOwe?: number;
+  jointlyInsuredParty: ApplicationJointlyInsuredParty;
 }
 
 export interface ApplicationPolicyContact extends Relationship {
@@ -117,17 +264,19 @@ export interface Application {
   previousStatus?: string;
   eligibility: ApplicationEligibility;
   exportContract: ApplicationExportContract;
-  owner: ApplicationOwner;
-  policy: ApplicationPolicy;
-  policyContact: ApplicationPolicyContact;
+  broker: Relationship;
+  business: ApplicationBusiness;
+  buyer: ApplicationBuyer;
   company: ApplicationCompany;
   companySicCodes: Array<ApplicationCompanySicCode>;
   companyAddress: ApplicationCompanyAddress;
-  business: ApplicationBusiness;
-  broker: Relationship;
-  buyer: ApplicationBuyer;
-  sectionReview: Relationship;
   declaration: ApplicationDeclaration;
+  nominatedLossPayee: ApplicationNominatedLossPayee;
+  owner: ApplicationOwner;
+  policy: ApplicationPolicy;
+  policyContact: ApplicationPolicyContact;
+  sectionReview: Relationship;
+  version: number;
 }
 
 export interface ApplicationSubmissionEmailVariables {
@@ -145,17 +294,62 @@ export interface ApplicationVersion {
   TOTAL_VALUE_OF_CONTRACT: number;
   DEFAULT_FINAL_DESTINATION_KNOWN: boolean;
   DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: boolean;
+  DEFAULT_CURRENCY?: string;
+  BROKER_ADDRESS_AS_MULTIPLE_FIELDS: boolean;
+}
+
+export interface SectionReview extends Relationship {
+  eligibility: boolean;
+  business?: boolean;
+  policy?: boolean;
+  buyer?: boolean;
 }
 
 export interface CreateAnApplicationVariables {
   accountId: string;
   eligibilityAnswers: ApplicationEligibility;
+  company: ApplicationCompanyCore;
+  sectionReview: SectionReview;
+  status?: string;
+}
+
+export interface CreateExportContractAgentResponse {
+  agent: ApplicationExportContractAgent;
+  agentService: ApplicationExportContractAgentService;
+  agentServiceCharge: ApplicationExportContractAgentServiceCharge;
+}
+
+export interface CreateExportContractResponse {
+  exportContract: ApplicationExportContract;
+  privateMarket: ApplicationPrivateMarket;
+  agent: ApplicationExportContractAgent;
+  agentService: ApplicationExportContractAgentService;
+}
+
+export interface CreatePolicyResponse {
+  policy: ApplicationPolicy;
+  jointlyInsuredParty: ApplicationJointlyInsuredParty;
 }
 
 export interface DeleteApplicationByReferenceNumberVariables {
   referenceNumber: number;
 }
 
+export interface GetApplicationByReferenceNumberVariables {
+  referenceNumber: number;
+  decryptFinancialUk?: boolean;
+  decryptFinancialInternational?: boolean;
+}
+
+export interface GetApplicationByReferenceNumberResponse extends SuccessResponse {
+  application?: Application;
+}
+
 export interface SubmitApplicationVariables {
   applicationId: string;
+}
+
+export interface UpdateCompanyPostDataMigrationVariables extends Relationship {
+  id: string;
+  company: ApplicationCompanyCore;
 }

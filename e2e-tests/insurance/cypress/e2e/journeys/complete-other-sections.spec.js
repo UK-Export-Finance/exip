@@ -11,8 +11,10 @@ const {
 
 const CONTENT_STRINGS = PAGES.INSURANCE.COMPLETE_OTHER_SECTIONS;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Complete other sections page', () => {
-  const insuranceRoute = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}`;
+  const insuranceRoute = `${baseUrl}${INSURANCE_ROOT}`;
 
   let referenceNumber;
   let completeOtherSectionsUrl;
@@ -22,7 +24,7 @@ context('Insurance - Complete other sections page', () => {
       referenceNumber = refNumber;
 
       // go to a page with a new application that will trigger a redirect to this page.
-      cy.navigateToUrl(`${insuranceRoute}/${referenceNumber}${CHECK_YOUR_ANSWERS.ELIGIBILITY}`);
+      cy.navigateToUrl(`${insuranceRoute}/${referenceNumber}${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`);
 
       completeOtherSectionsUrl = `${insuranceRoute}/${referenceNumber}${COMPLETE_OTHER_SECTIONS}`;
 
@@ -53,7 +55,7 @@ context('Insurance - Complete other sections page', () => {
     });
 
     it('renders intro copy', () => {
-      cy.checkText(completeOtherSectionsPage.intro(), CONTENT_STRINGS.INTRO);
+      cy.checkIntroText(CONTENT_STRINGS.INTRO);
     });
 
     it('renders `can access other sections` copy', () => {

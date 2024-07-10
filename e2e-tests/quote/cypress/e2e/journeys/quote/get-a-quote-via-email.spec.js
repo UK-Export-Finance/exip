@@ -1,4 +1,4 @@
-import { countryInput, submitButton } from '../../../../../pages/shared';
+import { autoCompleteField } from '../../../../../pages/shared';
 import { getAQuoteByEmailPage } from '../../../../../pages/quote';
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../constants';
@@ -9,18 +9,20 @@ const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
 const COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY = 'Egypt';
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Get a quote via email exit page', () => {
   beforeEach(() => {
     cy.login();
 
-    cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY);
+    cy.keyboardInput(autoCompleteField(FIELD_ID).input(), COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY);
 
-    const results = countryInput.field(FIELD_ID).results();
+    const results = autoCompleteField(FIELD_ID).results();
     results.first().click();
 
-    submitButton().click();
+    cy.clickSubmitButton();
 
-    const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL}`;
+    const expectedUrl = `${baseUrl}${ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL}`;
 
     cy.assertUrl(expectedUrl);
   });

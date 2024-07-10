@@ -1,6 +1,6 @@
 import partials from '../../../../../../partials';
 import manageAccountPage from '../../../../../../pages/insurance/account/manage';
-import { field, submitButton } from '../../../../../../pages/shared';
+import { field, intro } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
@@ -17,94 +17,86 @@ const {
 } = ROUTES;
 
 const {
-  ACCOUNT: { SECURITY_CODE },
+  ACCOUNT: { ACCESS_CODE },
 } = INSURANCE_FIELD_IDS;
 
-const {
-  PAGE_TITLE,
-  INTRO,
-  CUSTOMER_SERVICE,
-} = CONTENT_STRINGS;
+const { PAGE_TITLE, INTRO, CUSTOMER_SERVICE } = CONTENT_STRINGS;
 
-context('Insurance - Account - Manage - As an Exporter, I want the service to have a page that shows how I can manage my account, So that I can readily access information on how to manage my account', () => {
-  const baseUrl = Cypress.config('baseUrl');
-  const createYourDetailsUrl = `${baseUrl}${YOUR_DETAILS}`;
-  const enterCodeUrl = `${baseUrl}${ENTER_CODE}`;
-  const dashboardUrl = `${baseUrl}${DASHBOARD}`;
-  const manageAccountUrl = `${baseUrl}${MANAGE}`;
-
-  before(() => {
-    cy.deleteAccount();
-
-    cy.navigateToUrl(createYourDetailsUrl);
-
-    cy.completeAndSubmitCreateAccountForm();
-
-    cy.navigateToUrl(enterCodeUrl);
-
-    cy.verifyAccountEmail();
-
-    cy.completeAndSubmitSignInAccountForm({});
-  });
-
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  describe('after signing in with a valid security code and navigating to the `manage account` page', () => {
-    let validSecurityCode;
+context(
+  'Insurance - Account - Manage - As an Exporter, I want the service to have a page that shows how I can manage my account, So that I can readily access information on how to manage my account',
+  () => {
+    const baseUrl = Cypress.config('baseUrl');
+    const createYourDetailsUrl = `${baseUrl}${YOUR_DETAILS}`;
+    const enterCodeUrl = `${baseUrl}${ENTER_CODE}`;
+    const manageAccountUrl = `${baseUrl}${MANAGE}`;
 
     before(() => {
-      cy.accountAddAndGetOTP().then((securityCode) => {
-        validSecurityCode = securityCode;
+      cy.deleteAccount();
 
-        cy.navigateToUrl(enterCodeUrl);
+      cy.navigateToUrl(createYourDetailsUrl);
 
-        cy.keyboardInput(field(SECURITY_CODE).input(), validSecurityCode);
+      cy.completeAndSubmitCreateAccountForm();
 
-        submitButton().click();
+      cy.navigateToUrl(enterCodeUrl);
 
-        partials.header.navigation.manageAccount().click();
-      });
+      cy.verifyAccountEmail();
+
+      cy.completeAndSubmitSignInAccountForm({});
     });
 
-    it(`should redirect to ${MANAGE}`, () => {
-      cy.assertUrl(manageAccountUrl);
+    beforeEach(() => {
+      cy.saveSession();
     });
 
-    describe('page tests', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(dashboardUrl);
+    describe('after signing in with a valid access code and navigating to the `manage account` page', () => {
+      let validAccessCode;
 
-        partials.header.navigation.manageAccount().click();
-      });
+      before(() => {
+        cy.accountAddAndGetOTP().then((accessCode) => {
+          validAccessCode = accessCode;
 
-      it('renders core page elements', () => {
-        cy.corePageChecks({
-          pageTitle: PAGE_TITLE,
-          currentHref: MANAGE,
-          backLink: DASHBOARD,
-          assertBackLink: true,
-          hasAForm: false,
-          assertAuthenticatedHeader: true,
+          cy.navigateToUrl(enterCodeUrl);
+
+          cy.keyboardInput(field(ACCESS_CODE).input(), validAccessCode);
+
+          cy.clickSubmitButton();
+
+          partials.header.navigation.manageAccount().click();
         });
       });
 
-      it('renders an introduction', () => {
-        cy.checkText(
-          manageAccountPage.intro(),
-          INTRO,
-        );
+      it(`should redirect to ${MANAGE}`, () => {
+        cy.assertUrl(manageAccountUrl);
       });
 
-      it('renders a `customer service contact details` section', () => {
-        cy.checkText(
-          manageAccountPage.customerServiceHeading(),
-          CUSTOMER_SERVICE.HEADING,
-        );
+      describe('page tests', () => {
+        beforeEach(() => {
+          cy.navigateToDashboardUrl();
 
-        cy.assertCustomerServiceContactDetailsContent();
+          partials.header.navigation.manageAccount().click();
+        });
+
+        it('renders core page elements', () => {
+          cy.corePageChecks({
+            pageTitle: PAGE_TITLE,
+            currentHref: MANAGE,
+            backLink: DASHBOARD,
+            assertBackLink: true,
+            hasAForm: false,
+            assertAuthenticatedHeader: true,
+          });
+        });
+
+        it('renders an introduction', () => {
+          cy.checkText(intro(), INTRO);
+        });
+
+        it('renders a `customer service contact details` section', () => {
+          cy.checkText(manageAccountPage.customerServiceHeading(), CUSTOMER_SERVICE.HEADING);
+
+          cy.assertCustomerServiceContactDetailsContent();
+        });
       });
     });
-  });
-});
+  },
+);

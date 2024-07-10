@@ -17,9 +17,9 @@ const {
  * lastNameRules
  * Check submitted form data for errors with the last name field
  * Returns generateValidationErrors if there are any errors.
- * @param {Express.Response.body} Express response body
+ * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const lastNameRules = (formBody: RequestBody, errors: object) => emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
 

@@ -1,3 +1,4 @@
+import { Company } from './company';
 import { Country } from './country';
 import { Currency } from './currency';
 
@@ -18,13 +19,24 @@ interface SubmittedDataQuoteEligibility extends SharedEligibility {
   policyLength?: number;
 }
 
+interface SectionReview {
+  eligibility?: boolean;
+}
+
+interface TotalContractValue {
+  value?: string;
+  valueId?: number;
+}
+
 interface InsuranceEligibilityCore extends SharedEligibility {
   hasCompaniesHouseNumber?: boolean;
-  otherPartiesInvolved?: boolean;
-  paidByLetterOfCredit?: boolean;
-  needPreCreditPeriodCover?: boolean;
-  wantCoverOverMaxAmount?: boolean;
-  wantCoverOverMaxPeriod?: boolean;
+  companyNumber?: string;
+  company?: Company;
+  totalContractValue?: TotalContractValue;
+  coverPeriod?: number;
+  hasEndBuyer?: boolean;
+  hasReviewedEligibility?: boolean;
+  sectionReview?: SectionReview;
 }
 
 interface InsuranceEligibility extends InsuranceEligibilityCore {

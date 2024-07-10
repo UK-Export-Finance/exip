@@ -19,3 +19,16 @@ export const createTimestampFromNumbers = (day, month, year) => new Date(`${mont
  * @returns {String} Formatted date
  */
 export const formatDate = (timestamp, dateFormat = DATE_FORMAT.DEFAULT) => format(new Date(timestamp), dateFormat);
+
+/**
+ * createDateOneMonthInThePast
+ * Create a date that is one month in the past.
+ * @returns {String} Date one month in the past
+ */
+export const createDateOneMonthInThePast = () => {
+  const today = new Date();
+
+  const lastMonth = new Date(today.setMonth(today.getMonth() - 1));
+
+  return lastMonth;
+};

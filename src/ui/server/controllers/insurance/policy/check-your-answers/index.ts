@@ -1,4 +1,5 @@
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { FIELD_IDS, TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import api from '../../../../api';
@@ -6,22 +7,16 @@ import { isPopulatedArray } from '../../../../helpers/array';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import { policySummaryList } from '../../../../helpers/summary-lists/policy';
+import { policySummaryLists } from '../../../../helpers/summary-lists/policy';
 import { Request, Response } from '../../../../../types';
 
-const { INSURANCE_ROOT } = ROUTES.INSURANCE;
+const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+
 const { POLICY } = FIELD_IDS.INSURANCE;
-const {
-  INSURANCE: {
-    POLICY: { CHECK_YOUR_ANSWERS_SAVE_AND_BACK },
-    EXPORTER_BUSINESS: { COMPANIES_HOUSE_NUMBER_ROOT },
-    PROBLEM_WITH_SERVICE,
-  },
-} = ROUTES;
 
 export const pageVariables = (referenceNumber: number) => ({
   FIELD: FIELDS[POLICY.POLICY_TYPE],
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS_SAVE_AND_BACK}`,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
 });
 
 export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.CHECK_YOUR_ANSWERS;
@@ -40,13 +35,13 @@ export const get = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber, policy, exportContract, policyContact } = application;
+  const { referenceNumber, policy, exportContract, policyContact, broker, nominatedLossPayee } = application;
 
   try {
+    const { allCurrencies } = await api.keystone.APIM.getCurrencies();
     const countries = await api.keystone.countries.getAll();
-    const currencies = await api.keystone.APIM.getCurrencies();
 
-    if (!isPopulatedArray(countries) || !isPopulatedArray(currencies)) {
+    if (!isPopulatedArray(allCurrencies) || !isPopulatedArray(countries)) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
@@ -55,7 +50,7 @@ export const get = async (req: Request, res: Response) => {
       ...exportContract,
     };
 
-    const summaryList = policySummaryList(answers, policyContact, referenceNumber, countries, currencies);
+    const summaryLists = policySummaryLists(answers, policyContact, broker, nominatedLossPayee, referenceNumber, allCurrencies, countries);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -65,10 +60,10 @@ export const get = async (req: Request, res: Response) => {
       ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(res.locals.application),
-      SUMMARY_LIST: summaryList,
+      SUMMARY_LISTS: summaryLists,
     });
   } catch (err) {
-    console.error('Error getting countries or currencies %O', err);
+    console.error('Error getting currencies and/or countries %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -84,5 +79,5 @@ export const get = async (req: Request, res: Response) => {
 export const post = (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${COMPANIES_HOUSE_NUMBER_ROOT}`);
+  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 };

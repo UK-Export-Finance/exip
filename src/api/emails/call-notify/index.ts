@@ -8,7 +8,7 @@ import { EmailResponse } from '../../types';
  * @param {String} Email address
  * @param {String} Name
  * @param {Object} Email variables
- * @returns {Object} Object with success flag and emailRecipient
+ * @returns {Promise<Object>} Object with success flag and emailRecipient
  */
 export const callNotify = async (templateId: string, emailAddress: string, variables: object, file?: Buffer): Promise<EmailResponse> => {
   try {

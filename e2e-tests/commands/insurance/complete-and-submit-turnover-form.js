@@ -1,19 +1,27 @@
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
-import { field, submitButton } from '../../pages/shared';
+import { field } from '../../pages/shared';
 import application from '../../fixtures/application';
 
 const {
   EXPORTER_BUSINESS: {
-    TURNOVER: {
-      ESTIMATED_ANNUAL_TURNOVER,
-      PERCENTAGE_TURNOVER,
-    },
+    TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
   },
 } = INSURANCE_FIELD_IDS;
 
-export default () => {
+/**
+ * completeAndSubmitTurnoverForm
+ * complete and submit the "turnover" form.
+ * @param {Boolean} alternativeCurrency: Select the "alternative currency" option
+ */
+const completeAndSubmitTurnoverForm = ({ alternativeCurrency = false }) => {
+  if (alternativeCurrency) {
+    cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true });
+  }
+
   cy.keyboardInput(field(ESTIMATED_ANNUAL_TURNOVER).input(), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
   cy.keyboardInput(field(PERCENTAGE_TURNOVER).input(), application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
 
-  submitButton().click();
+  cy.clickSubmitButton();
 };
+
+export default completeAndSubmitTurnoverForm;

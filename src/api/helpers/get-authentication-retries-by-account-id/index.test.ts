@@ -1,6 +1,7 @@
 import getAuthenticationRetriesByAccountId from '.';
 import createAuthenticationRetryEntry from '../create-authentication-retry-entry';
 import accounts from '../../test-helpers/accounts';
+import accountStatus from '../../test-helpers/account-status';
 import authRetries from '../../test-helpers/auth-retries';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import { mockAccount } from '../../test-mocks';
@@ -10,6 +11,8 @@ describe('helpers/get-authentication-retries-by-account-id', () => {
   let context: Context;
   let account: Account;
 
+  const { status, ...mockAccountUpdate } = mockAccount;
+
   beforeAll(async () => {
     context = getKeystoneContext();
   });
@@ -18,12 +21,10 @@ describe('helpers/get-authentication-retries-by-account-id', () => {
     // wipe the table so we have a clean slate.
     await authRetries.deleteAll(context);
 
-    const unblockedAccount = {
-      ...mockAccount,
-      isBlocked: false,
-    };
+    const unblockedAccount = { isBlocked: false };
 
-    account = await accounts.create({ context, data: unblockedAccount });
+    account = await accounts.create({ context, data: mockAccountUpdate });
+    await accountStatus.update(context, account.status.id, unblockedAccount);
 
     // create some new entries
     await createAuthenticationRetryEntry(context, account.id);

@@ -4,13 +4,9 @@ dotenv.config();
 
 const mockBroker = {
   isUsingBroker: true,
-  name: 'Test',
-  addressLine1: 'Test',
-  addressLine2: 'Test',
-  town: 'Test',
-  county: 'Test',
-  postcode: 'SW1A 2HQ',
+  name: 'Mock broker name',
   email: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
+  fullAddress: 'Mock broker address',
 };
 
 export default mockBroker;

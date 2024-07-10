@@ -1,8 +1,11 @@
 import blockAccount from '.';
 import accounts from '../../test-helpers/accounts';
+import accountStatusHelper from '../../test-helpers/account-status';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import { mockAccount } from '../../test-mocks';
 import { Account, Context } from '../../types';
+
+const { status, ...mockAccountUpdate } = mockAccount;
 
 describe('helpers/block-account', () => {
   let context: Context;
@@ -12,20 +15,18 @@ describe('helpers/block-account', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    const unblockedAccount = {
-      ...mockAccount,
-      isBlocked: false,
-    };
+    account = await accounts.create({ context, data: mockAccountUpdate });
+    await accountStatusHelper.update(context, account.status.id, { isBlocked: false });
+    // get updated account
+    account = await accounts.get(context, account.id);
 
-    account = await accounts.create({ context, data: unblockedAccount });
-
-    result = await blockAccount(context, account.id);
+    result = await blockAccount(context, account.status.id);
   });
 
   test('it should update an account to be blocked', async () => {
     account = await accounts.get(context, account.id);
 
-    expect(account.isBlocked).toEqual(true);
+    expect(account.status.isBlocked).toEqual(true);
   });
 
   test('it should return true', async () => {

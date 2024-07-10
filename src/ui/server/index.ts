@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import express from 'express';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
@@ -18,7 +17,7 @@ dotenv.config();
 const { SESSION_SECRET } = process.env;
 
 import configureNunjucks from './nunjucks-configuration';
-import { rootRoute, quoteRoutes, insuranceRoutes } from './routes';
+import { redirectRoutes, rootRoute, quoteRoutes, insuranceRoutes } from './routes';
 import { ROUTES, COOKIE } from './constants';
 import { PAGES } from './content-strings';
 
@@ -27,6 +26,7 @@ import { requiredInsuranceEligibilityDataProvided } from './middleware/required-
 import applicationAccess from './middleware/insurance/application-access';
 import applicationStatus from './middleware/insurance/application-status';
 import getApplication from './middleware/insurance/get-application';
+import getApplicationByReferenceNumber from './middleware/insurance/get-application-by-reference-number';
 import userSession from './middleware/insurance/user-session';
 
 import { http } from './helpers/http';
@@ -117,11 +117,14 @@ ui.use(
   }),
 );
 
+ui.use('/', redirectRoutes);
+
 ui.use('/quote', requiredQuoteEligibilityDataProvided);
-ui.use('/insurance/eligibility', requiredInsuranceEligibilityDataProvided);
-ui.use('/insurance/:referenceNumber/*', getApplication);
-ui.use('/insurance/:referenceNumber/*', applicationAccess);
-ui.use('/insurance/:referenceNumber/*', applicationStatus);
+ui.use('/apply/eligibility', requiredInsuranceEligibilityDataProvided);
+ui.use('/apply/:referenceNumber/*', getApplication);
+ui.use('/apply/:referenceNumber/*', getApplicationByReferenceNumber);
+ui.use('/apply/:referenceNumber/*', applicationAccess);
+ui.use('/apply/:referenceNumber/*', applicationStatus);
 ui.use('/', userSession);
 
 ui.use('/', rootRoute);

@@ -1,0 +1,9 @@
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+
+<p class="govuk-hint" data-cy="{{ FIELDS.CONNECTION_WITH_BUYER.ID }}-hint-intro">{{ FIELDS.CONNECTION_WITH_BUYER.HINT.INTRO }}</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  {% for item in FIELDS.CONNECTION_WITH_BUYER.HINT.LIST %}
+    <li class="govuk-hint" data-cy="{{ FIELDS.CONNECTION_WITH_BUYER.ID }}-hint-list-item-{{ loop.index }}">{{ item }}</li>
+  {% endfor %}
+</ul>

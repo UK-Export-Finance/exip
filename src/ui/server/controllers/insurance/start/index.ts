@@ -1,27 +1,16 @@
-import { PAGES } from '../../../content-strings';
-import { ROUTES, TEMPLATES } from '../../../constants';
-import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
-import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
+import { LINKS } from '../../../content-strings';
 import { Request, Response } from '../../../../types';
 
-export const TEMPLATE = TEMPLATES.INSURANCE.START;
+/**
+ * Redirect to LINKS.EXTERNAL.FULL_APPLICATION
+ * In version 1/MVP, we had our own start page.
+ * In version 2/No PDF, the start page is hosted on GOV.uk.
+ * This redirect ensures that any users who visit the URL,
+ * are redirect to the start page.
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.redirect}
+ */
+export const get = (req: Request, res: Response) => res.redirect(LINKS.EXTERNAL.FULL_APPLICATION);
 
-export const get = (req: Request, res: Response) => {
-  // new insurance eligibility data in session
-  req.session.submittedData = {
-    ...req.session.submittedData,
-    insuranceEligibility: {},
-  };
-
-  return res.render(TEMPLATE, {
-    ...insuranceCorePageVariables({
-      PAGE_CONTENT_STRINGS: PAGES.INSURANCE.START,
-      BACK_LINK: req.headers.referer,
-    }),
-    userName: getUserNameFromSession(req.session.user),
-  });
-};
-
-export const post = (req: Request, res: Response) => {
-  return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE);
-};
+export default get;

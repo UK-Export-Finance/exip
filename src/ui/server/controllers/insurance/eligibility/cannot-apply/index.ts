@@ -6,6 +6,13 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 
 export const TEMPLATE = TEMPLATES.CANNOT_APPLY;
 
+/**
+ * get
+ * Render the "Cannot apply" exit page
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.render} "Cannot apply" exit page
+ */
 export const get = (req: Request, res: Response) => {
   const EXIT_REASON = req.flash('exitReason');
 

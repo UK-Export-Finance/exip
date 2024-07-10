@@ -1,7 +1,7 @@
-import securityCodeRules from './security-code';
+import accessCodeRules from './access-code';
 import { ValidationErrors } from '../../../../../../../../types';
 
-const rules = [securityCodeRules];
+const rules = [accessCodeRules];
 
 const validationRules = rules as Array<() => ValidationErrors>;
 

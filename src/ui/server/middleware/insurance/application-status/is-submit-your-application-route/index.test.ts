@@ -1,6 +1,6 @@
 import isSubmitYourApplicationRoute, { mapSubmitYourApplicationRoutes } from '.';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
-import { mockApplication } from '../../../../test-mocks';
+import { referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -12,8 +12,6 @@ const {
     HOW_YOUR_DATA_WILL_BE_USED,
   },
 } = INSURANCE_ROUTES;
-
-const { referenceNumber } = mockApplication;
 
 describe('middleware/insurance/application-status/is-submit-your-application-route', () => {
   describe('mapSubmitYourApplicationRoutes', () => {
@@ -39,7 +37,7 @@ describe('middleware/insurance/application-status/is-submit-your-application-rou
   describe('isSubmitYourApplicationRoute', () => {
     describe('when a route includes a "submit your application" route', () => {
       it('should return true', () => {
-        const mockUrl = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS.ELIGIBILITY}`;
+        const mockUrl = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`;
 
         const result = isSubmitYourApplicationRoute(mockUrl, referenceNumber);
 

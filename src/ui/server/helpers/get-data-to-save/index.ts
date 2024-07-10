@@ -2,9 +2,9 @@ import getValidFields from '../get-valid-fields';
 
 /**
  * helper function to return valid fields if there is an errorList, else returns all fields
- * @param {object} formBody
- * @param {object} errorList
- * @returns {object} dataToSave
+ * @param {Object} formBody
+ * @param {Object} errorList
+ * @returns {Object} dataToSave
  */
 const getDataToSave = (formBody: object, errorList?: object) => {
   const { ...formData } = formBody;

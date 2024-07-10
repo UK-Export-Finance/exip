@@ -1,30 +1,19 @@
-import {
-  headingCaption,
-  saveAndBackButton,
-  field as fieldSelector,
-} from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
-import {
-  BUTTONS,
-  PAGES,
-} from '../../../../../../content-strings';
+import { headingCaption, field as fieldSelector } from '../../../../../../pages/shared';
+import { PAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { ACCOUNT_FIELDS } from '../../../../../../content-strings/fields/insurance/account';
-import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import mockApplication from '../../../../../../fixtures/application';
 
 const { POLICY_CONTACT } = mockApplication;
 
-const { taskList } = partials.insurancePartials;
-
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.DIFFERENT_NAME_ON_POLICY;
 
 const {
   ROOT: INSURANCE_ROOT,
   POLICY: {
-    CHECK_YOUR_ANSWERS,
+    PRE_CREDIT_PERIOD,
     NAME_ON_POLICY,
     DIFFERENT_NAME_ON_POLICY,
   },
@@ -52,11 +41,10 @@ context('Insurance - Policy - Different name on Policy page - I want to enter th
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      taskList.prepareApplication.tasks.policy.link().click();
-
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.startInsurancePolicySection({});
+      cy.completeAndSubmitPolicyTypeForm({});
       cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
+      cy.completeAndSubmitTotalContractValueForm({});
       cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
@@ -131,27 +119,29 @@ context('Insurance - Policy - Different name on Policy page - I want to enter th
     });
 
     it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+    it(`should redirect to ${PRE_CREDIT_PERIOD}`, () => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitDifferentNameOnPolicyForm({});
 
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`;
       cy.assertUrl(expectedUrl);
     });
 
     it('should should have submitted values when navigating back to page', () => {
       cy.navigateToUrl(url);
 
-      cy.checkValue(fieldSelector(FIRST_NAME), POLICY_CONTACT[FIRST_NAME]);
-      cy.checkValue(fieldSelector(LAST_NAME), POLICY_CONTACT[LAST_NAME]);
-      cy.checkValue(fieldSelector(EMAIL), POLICY_CONTACT[EMAIL]);
-      cy.checkValue(fieldSelector(POSITION), POLICY_CONTACT[POSITION]);
+      cy.assertDifferentNameOnPolicyFieldValues({
+        expectedFirstName: POLICY_CONTACT[FIRST_NAME],
+        expectedLastName: POLICY_CONTACT[LAST_NAME],
+        expectedEmail: POLICY_CONTACT[EMAIL],
+        expectedPosition: POLICY_CONTACT[POSITION],
+      });
     });
   });
 });

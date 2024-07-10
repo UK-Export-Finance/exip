@@ -7,6 +7,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import constructPayload from '../../../../helpers/construct-payload';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
+import emailAndPasswordIncorrectValidationErrors from '../../../../shared-validation/email-and-password-incorrect';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
@@ -255,7 +256,7 @@ describe('controllers/insurance/account/sign-in', () => {
             renderBackLink: true,
             userName: getUserNameFromSession(req.session.user),
             submittedValues: payload,
-            validationErrors: generateValidationErrors({}),
+            validationErrors: emailAndPasswordIncorrectValidationErrors(payload),
           });
         });
       });
@@ -319,20 +320,18 @@ describe('controllers/insurance/account/sign-in', () => {
       });
     });
 
-    describe('api error handling', () => {
-      describe('when there is an error', () => {
-        beforeEach(() => {
-          req.body = validBody;
+    describe('when there is an error calling the API', () => {
+      beforeEach(() => {
+        req.body = validBody;
 
-          accountSignInSpy = jest.fn(() => Promise.reject(new Error('mock')));
-          api.keystone.account.signIn = accountSignInSpy;
-        });
+        accountSignInSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        api.keystone.account.signIn = accountSignInSpy;
+      });
 
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-          await post(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-        });
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

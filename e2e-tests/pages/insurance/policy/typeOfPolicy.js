@@ -10,7 +10,6 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 const typeOfPolicy = {
-  intro: () => cy.get('[data-cy="intro"]'),
   [POLICY_TYPE]: {
     single: {
       ...field(SINGLE_POLICY_TYPE),

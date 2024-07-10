@@ -12,12 +12,11 @@ const { SUBMIT_APPLICATION } = TASKS.LIST;
 const {
   INSURANCE_ROOT,
   DECLARATIONS: { CONFIDENTIALITY },
-  CHECK_YOUR_ANSWERS: { ELIGIBILITY },
+  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS },
 } = INSURANCE_ROUTES;
 
 const {
-  CHECK_YOUR_ANSWERS,
-  CHECK_YOUR_ANSWERS: { POLICY, EXPORTER_BUSINESS, BUYER },
+  CHECK_YOUR_ANSWERS: { BUYER, EXPORT_CONTRACT, EXPORTER_BUSINESS, POLICY },
 } = FIELD_IDS.INSURANCE;
 
 describe('server/helpers/task-list/submit-application', () => {
@@ -42,10 +41,10 @@ describe('server/helpers/task-list/submit-application', () => {
     const expectedDependencies = [...initialChecksFields, ...prepareApplicationFields];
 
     const CHECK_ANSWERS = {
-      href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ELIGIBILITY}`,
+      href: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`,
       title: SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS,
       id: TASK_IDS.SUBMIT_APPLICATION.CHECK_ANSWERS,
-      fields: [CHECK_YOUR_ANSWERS.ELIGIBILITY, POLICY, EXPORTER_BUSINESS, BUYER],
+      fields: [BUYER, EXPORT_CONTRACT, EXPORTER_BUSINESS, POLICY],
       dependencies: expectedDependencies,
     };
 

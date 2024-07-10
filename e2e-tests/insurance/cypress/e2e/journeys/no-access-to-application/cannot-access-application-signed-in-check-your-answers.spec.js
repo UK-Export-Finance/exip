@@ -5,7 +5,6 @@ const {
   ROOT: INSURANCE_ROOT,
   NO_ACCESS_TO_APPLICATION,
   CHECK_YOUR_ANSWERS: {
-    ELIGIBILITY,
     TYPE_OF_POLICY,
     YOUR_BUSINESS,
     YOUR_BUYER,
@@ -53,14 +52,6 @@ context('Insurance - no access to application page - signed in - check your answ
       cy.completeSignInAndGoToApplication({ email: secondAccountEmail }).then(({ referenceNumber: refNumber }) => {
         referenceNumbers = [...referenceNumbers, refNumber];
       });
-    });
-
-    it(`should redirect to ${NO_ACCESS_TO_APPLICATION} when navigating to the Check your answers - Eligibility page directly`, () => {
-      const url = `${insuranceRoute}/${firstApplicationReferenceNumber}${ELIGIBILITY}`;
-
-      cy.navigateToUrl(url);
-
-      cy.assertUrl(cannotAccessUrl);
     });
 
     it(`should redirect to ${NO_ACCESS_TO_APPLICATION} when navigating to the Check your answers - Policy page directly`, () => {

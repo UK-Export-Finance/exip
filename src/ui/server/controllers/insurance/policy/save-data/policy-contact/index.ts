@@ -10,12 +10,11 @@ import { Application, RequestBody } from '../../../../../../types';
  * @param {Application} Application
  * @param {Express.Request.body} Form data
  * @param {Object} Field error list
- * @returns {Object} Saved data
+ * @returns {Promise<Object>} Saved data
  */
 const policyContact = async (application: Application, formBody: RequestBody, errorList?: object) => {
   const dataToSave = getDataToSave(formBody, errorList);
 
-  // sanitise the form data.
   const sanitisedData = sanitiseData(dataToSave);
 
   // send the form data to the API for database update.

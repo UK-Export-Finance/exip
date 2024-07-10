@@ -1,6 +1,6 @@
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import getAccountByField from '../../../helpers/get-account-by-field';
-import { AccountPasswordResetTokenResponse, Context, GetAccountPasswordResetTokenVariables } from '../../../types';
+import { Account, AccountPasswordResetTokenResponse, Context, GetAccountPasswordResetTokenVariables } from '../../../types';
 
 /**
  * getAccountPasswordResetToken
@@ -9,8 +9,8 @@ import { AccountPasswordResetTokenResponse, Context, GetAccountPasswordResetToke
  * - The alternative approach is to have email inbox testing capabilities which can be risky/flaky.
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the GetAccountPasswordResetToken mutation
- * @param {Object} KeystoneJS context API
- * @returns {Object} Object with success flag and Password reset token
+ * @param {Context} KeystoneJS context API
+ * @returns {Promise<Object>} Object with success flag and Password reset token
  */
 const getAccountPasswordResetToken = async (
   root: any,
@@ -26,7 +26,7 @@ const getAccountPasswordResetToken = async (
      * Get the account the email is associated with.
      * If an account does not exist, return success=false
      */
-    const account = await getAccountByField(context, ACCOUNT_FIELD_IDS.EMAIL, email);
+    const account = (await getAccountByField(context, ACCOUNT_FIELD_IDS.EMAIL, email)) as Account;
 
     if (!account) {
       console.info('Unable to get account password reset token - account does not exist');

@@ -1,29 +1,43 @@
-import { REFERENCE_NUMBER, DATE_SUBMITTED, TIME_SUBMITTED } from '../../../content-strings/fields/insurance';
 import { XLSX } from '../../../content-strings';
-import ACCOUNT from '../../../constants/field-ids/insurance/account';
+import { POLICY_FIELDS } from '../../../content-strings/fields/insurance';
+import FIELD_IDS from '../../../constants/field-ids/insurance';
 import xlsxRow from '../helpers/xlsx-row';
-import formatDate from '../../../helpers/format-date';
-import formatTimeOfDay from '../helpers/format-time-of-day';
+import replaceCharacterCodesWithCharacters from '../../../helpers/replace-character-codes-with-characters';
 import { Application } from '../../../types';
 
 const { FIELDS } = XLSX;
 
-const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT;
+const CONTENT_STRINGS = {
+  ...POLICY_FIELDS,
+};
+
+const {
+  EXPORTER_BUSINESS: {
+    COMPANIES_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME },
+  },
+  YOUR_BUYER: {
+    COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME },
+  },
+  POLICY: {
+    TYPE_OF_POLICY: { POLICY_TYPE },
+  },
+} = FIELD_IDS;
 
 /**
  * mapKeyInformation
  * Map key information for an application
  * @param {Application}
- * @returns {Array} Array of objects for XLSX generation
+ * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapKeyInformation = (application: Application) => {
+  const { policy } = application;
+
   const mapped = [
-    xlsxRow(REFERENCE_NUMBER.SUMMARY.TITLE, application.referenceNumber),
-    xlsxRow(DATE_SUBMITTED.SUMMARY.TITLE, formatDate(application.submissionDate, 'dd-MM-yyyy')),
-    xlsxRow(TIME_SUBMITTED.SUMMARY.TITLE, formatTimeOfDay(application.submissionDate)),
-    xlsxRow(FIELDS[FIRST_NAME], application.owner[FIRST_NAME]),
-    xlsxRow(FIELDS[LAST_NAME], application.owner[LAST_NAME]),
-    xlsxRow(FIELDS.APPLICANT_EMAIL_ADDRESS, application.owner[EMAIL]),
+    xlsxRow(FIELDS.KEY_INFORMATION_TITLE),
+    xlsxRow(String(FIELDS[EXPORTER_COMPANY_NAME]), replaceCharacterCodesWithCharacters(application.company[EXPORTER_COMPANY_NAME])),
+    xlsxRow(String(FIELDS[COUNTRY]), application.buyer[COUNTRY].name),
+    xlsxRow(String(FIELDS[BUYER_COMPANY_NAME]), replaceCharacterCodesWithCharacters(application.buyer[BUYER_COMPANY_NAME])),
+    xlsxRow(String(CONTENT_STRINGS[POLICY_TYPE].SUMMARY?.TITLE), policy[POLICY_TYPE]),
   ];
 
   return mapped;

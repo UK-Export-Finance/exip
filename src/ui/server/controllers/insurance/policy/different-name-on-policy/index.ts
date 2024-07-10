@@ -9,13 +9,14 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapNameFields from '../../../../helpers/mappings/map-name-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
-import { Request, Response } from '../../../../../types';
 import mapAndSave from '../map-and-save/policy-contact';
+import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
+import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  POLICY: { DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  POLICY: { DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, PRE_CREDIT_PERIOD },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -74,15 +75,12 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
-
   return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.DIFFERENT_NAME_ON_POLICY,
       BACK_LINK: req.headers.referer,
     }),
-    ...pageVariables(refNumber),
+    ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
     application,
     submittedValues: {
@@ -106,8 +104,7 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
+  const { referenceNumber } = application;
 
   const payload = constructPayload(req.body, FIELD_IDS);
 
@@ -119,7 +116,7 @@ export const post = async (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.DIFFERENT_NAME_ON_POLICY,
         BACK_LINK: req.headers.referer,
       }),
-      ...pageVariables(refNumber),
+      ...pageVariables(application.referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       application,
       submittedValues: payload,
@@ -130,15 +127,20 @@ export const post = async (req: Request, res: Response) => {
   try {
     // save the application
     const saveResponse = await mapAndSave.policyContact(payload, application);
+
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    if (isChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
     if (isCheckAndChangeRoute(req.originalUrl)) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`);
   } catch (err) {
     console.error('Error updating application - policy - Different name on policy %O', err);
 

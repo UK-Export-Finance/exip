@@ -17,13 +17,25 @@ interface PageVariablesContentStrings {
 interface PageVariablesDataCy {
   HEADING: string;
   BACK_LINK: string;
+  INTRO: string;
+}
+
+interface PageVariablesHTMLFlags {
+  CUSTOM_CONTENT_HTML?: string;
+  CONDITIONAL_YES_HTML?: string;
+  CONDITIONAL_NO_HTML?: string;
+  HINT_HTML?: string;
+  HORIZONTAL_RADIOS?: boolean;
+  LEGEND_CLASS?: string;
+  NO_RADIO_AS_FIRST_OPTION?: boolean;
 }
 
 interface CorePageVariablesInitialInput {
   PAGE_CONTENT_STRINGS: PageContentStrings;
   BACK_LINK?: string;
-  START_ROUTE?: string;
   FEEDBACK_ROUTE?: string;
+  HTML_FLAGS?: PageVariablesHTMLFlags;
+  START_ROUTE?: string;
   ORIGINAL_URL?: string;
 }
 
@@ -33,12 +45,24 @@ interface CorePageVariablesInput extends CorePageVariablesInitialInput {
 }
 
 interface CorePageVariables {
+  ATTRIBUTES: object;
   BACK_LINK?: string;
   CONTENT_STRINGS: PageVariablesContentStrings;
   COOKIES_ROUTE?: string;
   DATA_CY: PageVariablesDataCy;
-  START_ROUTE?: string;
   FEEDBACK_ROUTE?: string;
+  HTML_FLAGS?: PageVariablesHTMLFlags;
+  START_ROUTE?: string;
+}
+
+interface SectionStartPageVariables extends CorePageVariables {
+  ALL_SECTIONS_URL: string;
+  START_NOW_URL: string;
+}
+
+interface SectionStartPageVariablesInput extends CorePageVariablesInitialInput {
+  REFERENCE_NUMBER: number;
+  START_NOW_ROUTE: string;
 }
 
 interface SingleInputPageVariablesInitialInput {
@@ -46,6 +70,7 @@ interface SingleInputPageVariablesInitialInput {
   BACK_LINK?: string;
   FIELD_ID: string;
   ORIGINAL_URL?: string;
+  HTML_FLAGS?: PageVariablesHTMLFlags;
 }
 
 interface SingleInputPageVariablesInput extends SingleInputPageVariablesInitialInput {
@@ -65,6 +90,8 @@ export {
   CorePageVariables,
   PageContentStrings,
   PageVariablesContentStrings,
+  SectionStartPageVariables,
+  SectionStartPageVariablesInput,
   SingleInputPageVariablesInitialInput,
   SingleInputPageVariablesInput,
   SingleInputPageVariables,

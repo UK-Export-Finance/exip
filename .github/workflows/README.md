@@ -97,7 +97,7 @@ Each stage in the workflow is associated with one or more jobs that contain spec
 
 - **Security 🔑**: Security measures are implemented in this job.
 
-- **Web App 🔧**: This job configures web applications environment variables, application settings, database connection and other CI/CD configurations.
+- **Web App 🔧**: This job configures web applications and related services.
 
 - **Logs and Diagnostic Settings 📒**: Configure logging and diagnostic settings for monitoring and troubleshooting.
 
@@ -115,7 +115,7 @@ To run this infrastructure automation workflow, follow these steps:
 
 ### Conclusion 🎉
 
-The EXIP Infrastructure Automation workflow streamlines the process of setting up infrastructure components, enhancing security, configuring web applications and database With the automation in place, you can maintain consistent environments for development, staging, and production, and deploy with confidence.
+The EXIP Infrastructure Automation workflow streamlines the process of setting up infrastructure components, enhancing security, and configuring web applications. With the automation in place, you can maintain consistent environments for development, staging, and production, and deploy with confidence.
 
 If you have any questions or need further assistance, please don't hesitate to reach out to the development team. Happy automating! 🤖✨
 

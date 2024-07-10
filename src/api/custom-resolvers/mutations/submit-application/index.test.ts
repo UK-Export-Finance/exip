@@ -3,6 +3,7 @@ import generate from '../../../generate-xlsx';
 import applicationSubmittedEmails from '../../../emails/send-application-submitted-emails';
 import { APPLICATION, DATE_ONE_MINUTE_IN_THE_PAST } from '../../../constants';
 import getPopulatedApplication from '../../../helpers/get-populated-application';
+import getCountries from '../../../helpers/get-countries';
 import { createFullApplication } from '../../../test-helpers';
 import { mockSendEmailResponse } from '../../../test-mocks';
 import { Application, Context, SubmitApplicationVariables, SuccessResponse } from '../../../types';
@@ -96,13 +97,20 @@ describe('custom-resolvers/submit-application', () => {
         where: { id: submittedApplication.id },
       });
 
-      populatedApplication = await getPopulatedApplication(context, fullSubmittedApplication);
+      populatedApplication = await getPopulatedApplication.get({
+        context,
+        application: fullSubmittedApplication,
+        decryptFinancialUk: true,
+        decryptFinancialInternational: true,
+      });
     });
 
     test('it should call generate.XLSX', async () => {
       expect(generateXLSXSpy).toHaveBeenCalledTimes(1);
 
-      expect(generateXLSXSpy).toHaveBeenCalledWith(populatedApplication);
+      const expectedCountries = await getCountries(context);
+
+      expect(generateXLSXSpy).toHaveBeenCalledWith(populatedApplication, expectedCountries);
     });
 
     test('it should call applicationSubmittedEmails.send', async () => {
@@ -150,7 +158,10 @@ describe('custom-resolvers/submit-application', () => {
 
   describe("when the date is NOT before the application's submission deadline", () => {
     it('should return success=false', async () => {
-      // create a new application so we can set submission deadline in the past
+      /**
+       * create a new application,
+       * so we can set submission deadline in the past.
+       */
 
       const oneMinuteInThePast = DATE_ONE_MINUTE_IN_THE_PAST();
 

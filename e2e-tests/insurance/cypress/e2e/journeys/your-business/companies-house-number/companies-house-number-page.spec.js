@@ -1,76 +1,72 @@
-import { companiesHouseNumber } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
-import { field, saveAndBackButton } from '../../../../../../pages/shared';
-import { PAGES, BUTTONS } from '../../../../../../content-strings';
-import { ROUTES, FIELD_IDS } from '../../../../../../constants';
-
-const { ROOT } = ROUTES.INSURANCE;
-
-const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANIES_HOUSE_NUMBER;
+import { field as fieldSelector } from '../../../../../../pages/shared';
+import { PAGES } from '../../../../../../content-strings';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 
 const {
-  COMPANIES_HOUSE_NUMBER,
-} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+  ROOT,
+  EXPORTER_BUSINESS: { ENTER_COMPANIES_HOUSE_NUMBER },
+} = INSURANCE_ROUTES;
 
-const { taskList } = partials.insurancePartials;
+const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.ENTER_COMPANIES_HOUSE_NUMBER;
 
-const task = taskList.prepareApplication.tasks.business;
+const {
+  ELIGIBILITY: { COMPANIES_HOUSE_NUMBER: FIELD_ID },
+} = INSURANCE_FIELD_IDS;
 
-context('Insurance - Your business - Companies house number page - As an Exporter I want to enter my business\'s CRN So that I can apply for UKEF Export Insurance policy', () => {
-  let referenceNumber;
-  let url;
+const field = fieldSelector(FIELD_ID);
 
-  before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
+const baseUrl = Cypress.config('baseUrl');
 
-      task.link().click();
+context(
+  'Insurance - Your business - Enter Companies House number - As an Exporter, I want to enter my Companies House number, So that I can apply for credit insurance with UKEF',
+  () => {
+    let referenceNumber;
+    let url;
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANIES_HOUSE_NUMBER}`;
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-      cy.assertUrl(url);
+        cy.startYourBusinessSection({});
+
+        url = `${baseUrl}${ROOT}/${referenceNumber}${ENTER_COMPANIES_HOUSE_NUMBER}`;
+
+        cy.navigateToUrl(url);
+
+        cy.assertUrl(url);
+      });
     });
-  });
 
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
-
-  it('renders core page elements', () => {
-    cy.corePageChecks({
-      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANIES_HOUSE_NUMBER}`,
-      backLink: `${ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`,
-      lightHouseThresholds: {
-        'best-practices': 93,
-      },
-    });
-  });
-
-  describe('page tests', () => {
     beforeEach(() => {
-      cy.navigateToUrl(url);
+      cy.saveSession();
     });
 
-    it('renders a heading caption', () => {
-      cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    after(() => {
+      cy.deleteApplication(referenceNumber);
     });
 
-    it(`should display the ${COMPANIES_HOUSE_NUMBER} input`, () => {
-      field(COMPANIES_HOUSE_NUMBER).input().should('exist');
-      field(COMPANIES_HOUSE_NUMBER).errorMessage().should('not.exist');
+    it('renders core page elements', () => {
+      cy.corePageChecks({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currentHref: `${ROOT}/${referenceNumber}${ENTER_COMPANIES_HOUSE_NUMBER}`,
+        backLink: `${ROOT}/${referenceNumber}${ENTER_COMPANIES_HOUSE_NUMBER}#`,
+      });
     });
 
-    it('should display a link for no companies house number', () => {
-      cy.checkText(companiesHouseNumber.doNotHaveACompaniesHouseNumber(), CONTENT_STRINGS.NO_COMPANIES_HOUSE_NUMBER);
-    });
+    describe('page tests', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
 
-    it('should display save and go back button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      it('renders a heading caption', () => {
+        cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+      });
+
+      it(`should render a ${FIELD_ID} input`, () => {
+        field.input().should('exist');
+      });
     });
-  });
-});
+  },
+);

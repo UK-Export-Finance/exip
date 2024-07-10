@@ -1,28 +1,22 @@
-import { submitButton } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
-import application from '../../../../../../../fixtures/application';
-
-const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
-
-const { INSURANCE } = ROUTES;
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 
 const {
-  INSURANCE: {
-    POLICY: {
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
-        POLICY_CURRENCY_CODE,
-        SINGLE: {
-          CONTRACT_COMPLETION_DATE,
-          TOTAL_CONTRACT_VALUE,
-        },
-      },
+  ROOT,
+  POLICY: { SINGLE_CONTRACT_POLICY },
+} = INSURANCE_ROUTES;
+
+const {
+  CURRENCY: { CURRENCY_CODE },
+  POLICY: {
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      SINGLE: { CONTRACT_COMPLETION_DATE },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
@@ -31,6 +25,8 @@ const {
     },
   },
 } = ERROR_MESSAGES;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Single contract policy page - form validation', () => {
   let referenceNumber;
@@ -42,11 +38,10 @@ context('Insurance - Policy - Single contract policy page - form validation', ()
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      taskList.prepareApplication.tasks.policy.link().click();
+      cy.startInsurancePolicySection({});
+      cy.completeAndSubmitPolicyTypeForm({});
 
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-
-      url = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY.SINGLE_CONTRACT_POLICY}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 
       cy.assertUrl(url);
     });
@@ -61,12 +56,12 @@ context('Insurance - Policy - Single contract policy page - form validation', ()
   });
 
   it('should render validation errors for all required fields', () => {
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.checkErrorSummaryListHeading();
 
-    const TOTAL_REQUIRED_FIELDS = 5;
-    partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
+    const TOTAL_REQUIRED_FIELDS = 3;
+    cy.assertErrorSummaryListLength(TOTAL_REQUIRED_FIELDS);
 
     cy.checkText(
       partials.errorSummaryListItems().eq(0),
@@ -80,29 +75,7 @@ context('Insurance - Policy - Single contract policy page - form validation', ()
 
     cy.checkText(
       partials.errorSummaryListItems().eq(2),
-      CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
+      CONTRACT_ERROR_MESSAGES[CURRENCY_CODE].IS_EMPTY,
     );
-
-    cy.checkText(
-      partials.errorSummaryListItems().eq(3),
-      CONTRACT_ERROR_MESSAGES[CREDIT_PERIOD_WITH_BUYER].IS_EMPTY,
-    );
-
-    cy.checkText(
-      partials.errorSummaryListItems().eq(4),
-      CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY,
-    );
-  });
-
-  describe(`when ${POLICY_CURRENCY_CODE} is submitted but there are other validation errors`, () => {
-    it(`should retain the submitted ${POLICY_CURRENCY_CODE}`, () => {
-      cy.navigateToUrl(url);
-
-      const currencyCode = application.POLICY[POLICY_CURRENCY_CODE];
-
-      policyCurrencyCodeFormField.input().select(currencyCode);
-
-      policyCurrencyCodeFormField.inputOptionSelected().contains(currencyCode);
-    });
   });
 });

@@ -1,7 +1,6 @@
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { DATE_ONE_MINUTE_IN_THE_PAST } from '../../../../../../constants/dates';
-import { submitButton } from '../../../../../../pages/shared';
 import api from '../../../../../../commands/api';
 
 const {
@@ -64,7 +63,7 @@ context('Insurance - Account - Suspended - Reactivate account after verification
     it(`should redirect to ${EMAIL_SENT}`, () => {
       cy.navigateToUrl(`${verifyEmailUrl}?token=${updatedAccount[REACTIVATION_HASH]}`);
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.assertUrl(emailSentUrl);
     });

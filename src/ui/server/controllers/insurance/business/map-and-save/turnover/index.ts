@@ -1,6 +1,6 @@
 import hasFormData from '../../../../../helpers/has-form-data';
 import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
-import mapTurnoverSubmittedData from '../../turnover/map-submitted-data';
+import mapSubmittedData from '../../turnover/map-submitted-data';
 import save from '../../save-data/business';
 
 /**
@@ -14,8 +14,7 @@ import save from '../../save-data/business';
 const turnover = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
-      // maps through formBody and puts fields in correct format
-      const dataToSave = mapTurnoverSubmittedData(formBody);
+      const dataToSave = mapSubmittedData(formBody);
       let saveResponse;
 
       if (validationErrors) {

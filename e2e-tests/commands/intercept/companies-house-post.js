@@ -1,13 +1,11 @@
-import api from '../api';
 import {
-  COMPANIES_HOUSE_NUMBER,
+  COMPANIES_HOUSE_NUMBER as VALID_COMPANIES_HOUSE_NUMBER,
+  COMPANIES_HOUSE_NUMBER_NOT_FOUND,
 } from '../../constants/examples';
 import { INSURANCE_ROUTES } from '../../constants/routes/insurance';
-import mockCompanies from '../../fixtures/companies';
 
 const {
-  ROOT,
-  EXPORTER_BUSINESS: { COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER_ROUTE, COMPANY_DETAILS },
+  ELIGIBILITY: { COMPANIES_HOUSE_NUMBER, COMPANY_DETAILS },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -16,68 +14,35 @@ const baseUrl = Cypress.config('baseUrl');
  * interceptCompaniesHousePost
  * Intercept a POST to companies house API.
  * This allows us to:
- * - Call the API many times during E2E tests and avoid hitting rate limits.
+ * - Call the API many times during E2E tests without hitting rate limits.
  * - Remove the delay of calling the API and waiting for a response.
  * Steps:
- * 1) Get application data
- * 2) Store the application's company and company address IDs from our database.
- * 3) Invoke cy.intercept() for the "post companies house number route"
- * 4) When the route is intercepted, call our API and manually update the application's company and company address.
- * 5) Return a redirect to the "company details" route, as per the user journey. This page displays the company data stored in the database.
- * @param {String} Application reference number
- * @param {String} Company number - defaults to COMPANIES_HOUSE_NUMBER
+ * 1) Invoke cy.intercept() for the "post companies house number route"
+ * 2) Depending on the company number, return a redirect to a route, as per the user journey.
+ * @param {String} Company number - defaults to VALID_COMPANIES_HOUSE_NUMBER
  */
-const interceptCompaniesHousePost = ({ referenceNumber, companyNumber = COMPANIES_HOUSE_NUMBER }) => {
-  let companyId;
-  let companyAddressId;
-  let companySicCodeIds;
+const interceptCompaniesHousePost = ({ companyNumber = VALID_COMPANIES_HOUSE_NUMBER }) => {
+  console.info('Intercepting companies house POST with company number: %s', companyNumber);
 
   /**
-   * Get the application.
-   * Store the application's company and company address IDs.
+   * Define:
+   * - POST companies house number route to intercept
+   * - GET company details route for redirection
    */
-  api.getApplicationByReferenceNumber(referenceNumber).then((application) => {
-    const {
-      company: {
-        registeredOfficeAddress,
-        sicCodes,
-      },
-    } = application;
-
-    companyId = application.company.id;
-    companyAddressId = registeredOfficeAddress.id;
-    companySicCodeIds = sicCodes.map((sicCode) => ({ id: sicCode.id }));
-  });
-
-  /**
-   * Define routes with the application's reference number:
-   * - POST companies house number route
-   * - GET company details route
-   */
-  const postUrl = `${baseUrl}${ROOT}/${referenceNumber}${COMPANIES_HOUSE_NUMBER_ROUTE}`;
-  const redirectUrl = `${baseUrl}${ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
+  const postUrl = `${baseUrl}${COMPANIES_HOUSE_NUMBER}`;
+  const redirectUrl = `${baseUrl}${COMPANY_DETAILS}`;
 
   /**
    * Intercept the POST companies house number route.
-   * Manually update the application's company data via mock data.
-   * Redirect to GET company details route.
+   * If company number is "not found" - return a 404
+   * Otherwise, redirect to GET company details route.
    */
   cy.intercept({ url: postUrl, method: 'POST' }, async (req) => {
-    const updateObj = mockCompanies[companyNumber];
-
-    if (updateObj) {
-      updateObj.oldSicCodes = companySicCodeIds;
-
-      return api.updateCompanyAndCompanyAddress(
-        companyId,
-        companyAddressId,
-        updateObj,
-      ).then(() => {
-        req.redirect(redirectUrl, 301);
-      });
+    if (companyNumber === COMPANIES_HOUSE_NUMBER_NOT_FOUND) {
+      req.redirect(redirectUrl, 404);
     }
 
-    return null;
+    req.redirect(redirectUrl, 301);
   });
 };
 

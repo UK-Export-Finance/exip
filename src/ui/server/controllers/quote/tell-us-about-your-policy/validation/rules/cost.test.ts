@@ -35,7 +35,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
 
     describe('when policy type is single', () => {
       describe(`when ${CONTRACT_VALUE} is not provided`, () => {
-        it('should return validation error', () => {
+        it('should return a validation error', () => {
           const mockSubmittedData = {
             [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
             [CONTRACT_VALUE]: '',
@@ -50,7 +50,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
       });
 
       describe(`when ${CONTRACT_VALUE} is not a whole number`, () => {
-        it('should return validation error', () => {
+        it('should return a validation error', () => {
           const mockSubmittedData = {
             [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
             [CONTRACT_VALUE]: '123,456.78',
@@ -65,7 +65,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
       });
 
       describe(`when ${CONTRACT_VALUE} has invalid characters`, () => {
-        it('should return validation error', () => {
+        it('should return a validation error', () => {
           const mockSubmittedData = {
             [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
             [CONTRACT_VALUE]: '£123,456',
@@ -80,7 +80,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
       });
 
       describe(`when ${CONTRACT_VALUE} is not a number`, () => {
-        it('should return validation error', () => {
+        it('should return a validation error', () => {
           const mockSubmittedData = {
             [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
             [CONTRACT_VALUE]: 'invalid',
@@ -95,7 +95,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
       });
 
       describe(`when ${CONTRACT_VALUE} is below the minimum`, () => {
-        it('should return validation error', () => {
+        it('should return a validation error', () => {
           const mockSubmittedData = {
             [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
             [CONTRACT_VALUE]: '0',
@@ -125,7 +125,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
 
     describe('when policy type is multiple', () => {
       describe(`when ${MAX_AMOUNT_OWED} is not provided`, () => {
-        it('should return validation error', () => {
+        it('should return a validation error', () => {
           const mockSubmittedData = {
             [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
             [MAX_AMOUNT_OWED]: '',
@@ -140,7 +140,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
       });
 
       describe(`when ${MAX_AMOUNT_OWED} is not a whole number`, () => {
-        it('should return validation error', () => {
+        it('should return a validation error', () => {
           const mockSubmittedData = {
             [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
             [MAX_AMOUNT_OWED]: '123,456.78',
@@ -155,7 +155,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
       });
 
       describe(`when ${MAX_AMOUNT_OWED} has invalid characters`, () => {
-        it('should return validation error', () => {
+        it('should return a validation error', () => {
           const mockSubmittedData = {
             [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
             [MAX_AMOUNT_OWED]: '£123,456',
@@ -170,7 +170,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
       });
 
       describe(`when ${MAX_AMOUNT_OWED} is not a number`, () => {
-        it('should return validation error', () => {
+        it('should return a validation error', () => {
           const mockSubmittedData = {
             [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
             [MAX_AMOUNT_OWED]: 'invalid',
@@ -185,7 +185,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
       });
 
       describe(`when ${MAX_AMOUNT_OWED} is below the minimum`, () => {
-        it('should return validation error', () => {
+        it('should return a validation error', () => {
           const mockSubmittedData = {
             [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
             [MAX_AMOUNT_OWED]: '0',

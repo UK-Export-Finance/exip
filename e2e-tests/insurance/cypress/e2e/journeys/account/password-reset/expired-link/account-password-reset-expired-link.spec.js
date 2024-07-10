@@ -1,4 +1,4 @@
-import { backLink, submitButton } from '../../../../../../../pages/shared';
+import { submitButton } from '../../../../../../../pages/shared';
 import { yourDetailsPage } from '../../../../../../../pages/insurance/account/create';
 import { signInPage } from '../../../../../../../pages/insurance/account/sign-in';
 import { linkExpiredPage } from '../../../../../../../pages/insurance/account/password-reset';
@@ -11,12 +11,8 @@ import api from '../../../../../../../commands/api';
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.EXPIRED_LINK;
 
 const {
-  START,
   ACCOUNT: {
-    PASSWORD_RESET: {
-      NEW_PASSWORD,
-      EXPIRED_LINK,
-    },
+    PASSWORD_RESET: { NEW_PASSWORD, EXPIRED_LINK },
   },
 } = INSURANCE_ROUTES;
 
@@ -30,12 +26,12 @@ context('Insurance - Account - Password reset - expired link page', () => {
   before(() => {
     cy.deleteAccount();
 
-    cy.navigateToUrl(START);
+    cy.navigateToCheckIfEligibleUrl();
     cy.submitEligibilityAndStartAccountCreation();
     cy.completeAndSubmitCreateAccountForm();
 
     // go back to create account page
-    backLink().click();
+    cy.clickBackLink();
 
     // navigate to sign in page
     yourDetailsPage.signInButtonLink().click();

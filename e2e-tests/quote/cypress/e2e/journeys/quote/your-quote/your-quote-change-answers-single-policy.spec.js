@@ -1,10 +1,10 @@
 import {
-  backLink, countryInput, field, submitButton, summaryList,
+  backLink,
+  autoCompleteField,
+  field,
+  summaryList,
 } from '../../../../../../pages/shared';
-import {
-  policyTypePage,
-  tellUsAboutYourPolicyPage,
-} from '../../../../../../pages/quote';
+import { policyTypePage, tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { LINKS } from '../../../../../../content-strings';
 
@@ -30,7 +30,7 @@ const {
   },
 } = ROUTES;
 
-context('Your quote page - change answers (single policy type to multiple policy type) - as an exporter, I want to get an Export insurance quote', () => {
+context('Your quote page - change answers (single policy type to multiple policy type) - as an exporter, I want to get an Credit insurance quote', () => {
   const baseUrl = Cypress.config('baseUrl');
   const url = `${baseUrl}${YOUR_QUOTE}`;
 
@@ -40,7 +40,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     cy.login();
 
     cy.submitQuoteAnswersHappyPathSinglePolicy({});
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.assertUrl(url);
   });
@@ -65,16 +65,12 @@ context('Your quote page - change answers (single policy type to multiple policy
     it('renders a back link with correct url', () => {
       const expectedHref = `${baseUrl}${YOUR_QUOTE}`;
 
-      cy.checkLink(
-        backLink(),
-        expectedHref,
-        LINKS.BACK,
-      );
+      cy.checkLink(backLink(), expectedHref, LINKS.BACK);
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
       cy.keyboardInput(field(CONTRACT_VALUE).input(), '1000');
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}#${CONTRACT_VALUE}-label`;
       cy.assertUrl(expectedUrl);
@@ -83,11 +79,8 @@ context('Your quote page - change answers (single policy type to multiple policy
     it('renders the new answer in the quote', () => {
       cy.keyboardInput(field(CONTRACT_VALUE).input(), '1000');
 
-      // form submit
-      submitButton().click();
-
-      // submit check your answers
-      submitButton().click();
+      // go through 2 get a quote forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 2 });
 
       const expected = '£1,000';
       cy.checkText(row.value(), expected);
@@ -116,16 +109,12 @@ context('Your quote page - change answers (single policy type to multiple policy
     it('renders a back link with correct url', () => {
       const expectedHref = `${baseUrl}${YOUR_QUOTE}`;
 
-      cy.checkLink(
-        backLink(),
-        expectedHref,
-        LINKS.BACK,
-      );
+      cy.checkLink(backLink(), expectedHref, LINKS.BACK);
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
       field(PERCENTAGE_OF_COVER).input().select('85');
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}#${PERCENTAGE_OF_COVER}-label`;
 
@@ -135,11 +124,8 @@ context('Your quote page - change answers (single policy type to multiple policy
     it('renders the new answer in the quote', () => {
       field(PERCENTAGE_OF_COVER).input().select('85');
 
-      // form submit
-      submitButton().click();
-
-      // submit check your answers
-      submitButton().click();
+      // go through 2 get a quote forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 2 });
 
       const expected = '85%';
       cy.checkText(row.value(), expected);
@@ -160,18 +146,16 @@ context('Your quote page - change answers (single policy type to multiple policy
 
     it('renders the new answers and `insured for` in the quote after submitting a new answer', () => {
       policyTypePage[POLICY_TYPE].multiple.label().click();
-      submitButton().click();
 
-      submitButton().click();
+      // go through 2 get a quote forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 2 });
+
       // max amount owed and credit period fields are now required because it's a multiple policy
       cy.keyboardInput(field(MAX_AMOUNT_OWED).input(), '120000');
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
 
-      // submit the "tell us about your policy" form
-      submitButton().click();
-
-      // submit the "check your answers" form
-      submitButton().click();
+      // go through 2 get a quote forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 2 });
 
       const expectedUrl = `${baseUrl}${YOUR_QUOTE}#heading`;
 
@@ -207,19 +191,15 @@ context('Your quote page - change answers (single policy type to multiple policy
     it('renders a back link with correct url', () => {
       const expectedHref = `${baseUrl}${YOUR_QUOTE}`;
 
-      cy.checkLink(
-        backLink(),
-        expectedHref,
-        LINKS.BACK,
-      );
+      cy.checkLink(backLink(), expectedHref, LINKS.BACK);
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      cy.keyboardInput(countryInput.field(BUYER_COUNTRY).input(), 'Bahrain');
-      const results = countryInput.field(BUYER_COUNTRY).results();
+      cy.keyboardInput(autoCompleteField(BUYER_COUNTRY).input(), 'Bahrain');
+      const results = autoCompleteField(BUYER_COUNTRY).results();
       results.first().click();
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}#heading`;
 
@@ -227,15 +207,12 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it('renders the new answer in the quote', () => {
-      cy.keyboardInput(countryInput.field(BUYER_COUNTRY).input(), 'Bahrain');
-      const results = countryInput.field(BUYER_COUNTRY).results();
+      cy.keyboardInput(autoCompleteField(BUYER_COUNTRY).input(), 'Bahrain');
+      const results = autoCompleteField(BUYER_COUNTRY).results();
       results.first().click();
 
-      // form submit
-      submitButton().click();
-
-      // submit check your answers
-      submitButton().click();
+      // go through 2 get a quote forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 2 });
 
       const expected = 'Bahrain';
       cy.checkText(row.value(), expected);

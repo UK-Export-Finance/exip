@@ -1,22 +1,36 @@
-{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
 
 {% macro render(params) %}
 
+  {% set errorMessage = params.errorMessage %}
   {% set fieldId = params.fieldId %}
-  {% set countries = params.countries %}
   {% set integrity = params.integrity %}
+  {% set options = params.options %}
+  {% set inputContainerClasses = params.inputContainerClasses %}
 
-  <select class="govuk-select" id="{{ fieldId }}" name="{{ fieldId }}">
-    <option value="" disabled selected></option>
+  {% if errorMessage %}
+    {{ govukErrorMessage({
+      text: errorMessage,
+      attributes: {
+        "data-cy": fieldId + "-error-message"
+      }
+    }) }}
+  {% endif %}
 
-    {% for country in countries %}
-      {% if country.selected %}
-        <option value="{{ country.text }}" selected>{{ country.text }}</option>
-      {% else %}
-        <option value="{{ country.text }}">{{ country.text }}</option>
-      {% endif %}
-    {% endfor %}
-  </select>
+  <div class="{{ inputContainerClasses }}">
+
+    <select class="govuk-select" id="{{ fieldId }}" name="{{ fieldId }}">
+      <option value="" disabled selected></option>
+
+      {% for option in options %}
+        {% if option.selected %}
+          <option value="{{ option.value }}" selected>{{ option.text }}</option>
+        {% else %}
+          <option value="{{ option.value }}">{{ option.text }}</option>
+        {% endif %}
+      {% endfor %}
+    </select>
+  </div>
 
   <script src="/assets/js/accessibleAutocomplete.js" type="module" integrity="{{ integrity }}" crossorigin="anonymous"></script>
 

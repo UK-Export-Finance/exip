@@ -1,5 +1,6 @@
-import { ROUTES, TEMPLATES } from '../../../../constants';
-import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
+import { TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
@@ -7,8 +8,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import api from '../../../../api';
 import { isPopulatedArray } from '../../../../helpers/array';
-import { objectHasProperty } from '../../../../helpers/object';
-import mapCurrencies from '../../../../helpers/mappings/map-currencies';
+import mapRadioAndSelectOptions from '../../../../helpers/mappings/map-currencies/radio-and-select-options';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy';
@@ -17,25 +17,31 @@ import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route
 import { Request, Response } from '../../../../../types';
 
 const {
-  INSURANCE: {
-    INSURANCE_ROOT,
-    POLICY: { SINGLE_CONTRACT_POLICY_SAVE_AND_BACK, ABOUT_GOODS_OR_SERVICES, CHECK_YOUR_ANSWERS },
-    CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
-    PROBLEM_WITH_SERVICE,
+  INSURANCE_ROOT,
+  POLICY: {
+    SINGLE_CONTRACT_POLICY_SAVE_AND_BACK,
+    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
+    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE,
+    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE,
+    CHECK_YOUR_ANSWERS,
   },
-} = ROUTES;
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 const {
-  CONTRACT_POLICY: {
-    REQUESTED_START_DATE,
-    REQUESTED_START_DATE_DAY,
-    REQUESTED_START_DATE_MONTH,
-    REQUESTED_START_DATE_YEAR,
-    SINGLE: { CONTRACT_COMPLETION_DATE, CONTRACT_COMPLETION_DATE_DAY, CONTRACT_COMPLETION_DATE_MONTH, CONTRACT_COMPLETION_DATE_YEAR, TOTAL_CONTRACT_VALUE },
-    CREDIT_PERIOD_WITH_BUYER,
-    POLICY_CURRENCY_CODE,
+  CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
+  POLICY: {
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      REQUESTED_START_DATE_DAY,
+      REQUESTED_START_DATE_MONTH,
+      REQUESTED_START_DATE_YEAR,
+      SINGLE: { CONTRACT_COMPLETION_DATE, CONTRACT_COMPLETION_DATE_DAY, CONTRACT_COMPLETION_DATE_MONTH, CONTRACT_COMPLETION_DATE_YEAR, TOTAL_CONTRACT_VALUE },
+      POLICY_CURRENCY_CODE,
+    },
   },
-} = POLICY_FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 /**
  * pageVariables
@@ -53,17 +59,12 @@ export const pageVariables = (referenceNumber: number) => ({
       ID: CONTRACT_COMPLETION_DATE,
       ...FIELDS.CONTRACT_POLICY.SINGLE[CONTRACT_COMPLETION_DATE],
     },
-    TOTAL_CONTRACT_VALUE: {
-      ID: TOTAL_CONTRACT_VALUE,
-      ...FIELDS.CONTRACT_POLICY.SINGLE[TOTAL_CONTRACT_VALUE],
+    CURRENCY_CODE: {
+      ID: CURRENCY_CODE,
+      ...FIELDS.CONTRACT_POLICY[CURRENCY_CODE],
     },
-    CREDIT_PERIOD_WITH_BUYER: {
-      ID: CREDIT_PERIOD_WITH_BUYER,
-      ...FIELDS.CONTRACT_POLICY[CREDIT_PERIOD_WITH_BUYER],
-    },
-    POLICY_CURRENCY_CODE: {
-      ID: POLICY_CURRENCY_CODE,
-      ...FIELDS.CONTRACT_POLICY[POLICY_CURRENCY_CODE],
+    ALTERNATIVE_CURRENCY_CODE: {
+      ID: ALTERNATIVE_CURRENCY_CODE,
     },
   },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_SAVE_AND_BACK}`,
@@ -78,14 +79,14 @@ export const FIELD_IDS = [
   CONTRACT_COMPLETION_DATE_DAY,
   CONTRACT_COMPLETION_DATE_MONTH,
   CONTRACT_COMPLETION_DATE_YEAR,
-  TOTAL_CONTRACT_VALUE,
-  CREDIT_PERIOD_WITH_BUYER,
   POLICY_CURRENCY_CODE,
+  CURRENCY_CODE,
+  ALTERNATIVE_CURRENCY_CODE,
 ];
 
 /**
  * get
- * Get the application and render the Single contract policy page
+ * Render the Single contract policy page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} Single contract policy page
@@ -97,33 +98,24 @@ export const get = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
-
   try {
-    const currencies = await api.keystone.APIM.getCurrencies();
+    const { alternativeCurrencies, supportedCurrencies } = await api.keystone.APIM.getCurrencies();
 
-    if (!isPopulatedArray(currencies)) {
+    if (!isPopulatedArray(supportedCurrencies)) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    let mappedCurrencies;
-
-    if (objectHasProperty(application.policy, POLICY_CURRENCY_CODE)) {
-      mappedCurrencies = mapCurrencies(currencies, application.policy[POLICY_CURRENCY_CODE]);
-    } else {
-      mappedCurrencies = mapCurrencies(currencies);
-    }
+    const currencyAnswer = application.policy[POLICY_CURRENCY_CODE];
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY,
         BACK_LINK: req.headers.referer,
       }),
-      ...pageVariables(refNumber),
+      ...pageVariables(application.referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
-      currencies: mappedCurrencies,
+      ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, currencyAnswer),
     });
   } catch (err) {
     console.error('Error getting currencies %O', err);
@@ -146,8 +138,9 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
+  const { policy } = application;
+
+  const { referenceNumber } = application;
 
   const payload = constructPayload(req.body, FIELD_IDS);
 
@@ -155,30 +148,24 @@ export const post = async (req: Request, res: Response) => {
 
   if (validationErrors) {
     try {
-      const currencies = await api.keystone.APIM.getCurrencies();
+      const { alternativeCurrencies, supportedCurrencies } = await api.keystone.APIM.getCurrencies();
 
-      if (!isPopulatedArray(currencies)) {
+      if (!isPopulatedArray(supportedCurrencies)) {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
-      let mappedCurrencies;
-
-      if (objectHasProperty(payload, POLICY_CURRENCY_CODE)) {
-        mappedCurrencies = mapCurrencies(currencies, payload[POLICY_CURRENCY_CODE]);
-      } else {
-        mappedCurrencies = mapCurrencies(currencies);
-      }
+      const currencyAnswer = application.policy[POLICY_CURRENCY_CODE] || payload[CURRENCY_CODE];
 
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(refNumber),
+        ...pageVariables(application.referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(application),
         submittedValues: payload,
-        currencies: mappedCurrencies,
+        ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, currencyAnswer),
         validationErrors,
       });
     } catch (err) {
@@ -196,15 +183,37 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
+    const hasTotalContractValue = policy[TOTAL_CONTRACT_VALUE];
+
+    /**
+     * If the route is a "change" route,
+     * and the application has no TOTAL_CONTRACT_VALUE saved (specifically required for a "single" policy type),
+     * redirect to the TOTAL_CONTRACT_VALUE form.
+     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
+     */
     if (isChangeRoute(req.originalUrl)) {
+      if (!hasTotalContractValue) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE}`);
+      }
+
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
+    /**
+     * If the route is a "check and change" route,
+     * and there is no TOTAL_CONTRACT_VALUE saved (specifically required for a "single" policy type),
+     * redirect to the TOTAL_CONTRACT_VALUE form.
+     * Otherwise, redirect to "check and change" route.
+     */
     if (isCheckAndChangeRoute(req.originalUrl)) {
+      if (!hasTotalContractValue) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE}`);
+      }
+
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`);
   } catch (err) {
     console.error('Error updating application - policy - single contract policy %O', err);
 

@@ -11,7 +11,7 @@ import keystoneDocumentRendererConfig from '../../../../helpers/keystone-documen
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockDeclarations } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockDeclarations, mockSpyPromise, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -22,7 +22,7 @@ const {
 describe('controllers/insurance/declarations/confirmation-and-acknowledgements', () => {
   jest.mock('../save-data');
 
-  let mockSaveDeclaration = jest.fn(() => Promise.resolve({}));
+  let mockSaveDeclaration = mockSpyPromise();
 
   save.declaration = mockSaveDeclaration;
 
@@ -48,14 +48,14 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(mockApplication.referenceNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELD: {
           ID: FIELD_ID,
           ...FIELDS[FIELD_ID],
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -83,7 +83,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(mockApplication.referenceNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         documentContent: mockDeclarations.confirmationAndAcknowledgement.content.document,
         documentConfig: keystoneDocumentRendererConfig(),
@@ -105,19 +105,17 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
       });
     });
 
-    describe('api error handling', () => {
-      describe('when there is an error', () => {
-        beforeAll(() => {
-          getLatestConfirmationAndAcknowledgementSpy = jest.fn(() => Promise.reject(new Error('mock')));
+    describe('when there is an error calling the API', () => {
+      beforeAll(() => {
+        getLatestConfirmationAndAcknowledgementSpy = jest.fn(() => Promise.reject(new Error('mock')));
 
-          api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement = getLatestConfirmationAndAcknowledgementSpy;
-        });
+        api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement = getLatestConfirmationAndAcknowledgementSpy;
+      });
 
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-          await get(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-        });
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });
@@ -150,7 +148,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
       it(`should redirect to ${HOW_YOUR_DATA_WILL_BE_USED}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
@@ -173,7 +171,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS,
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables(mockApplication.referenceNumber),
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           documentContent: mockDeclarations.confirmationAndAcknowledgement.content.document,
           documentConfig: keystoneDocumentRendererConfig(),

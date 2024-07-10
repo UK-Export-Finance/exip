@@ -1,6 +1,4 @@
-import partials from '../../../../../../partials';
-import { field, submitButton, saveAndBackButton } from '../../../../../../pages/shared';
-import { TASKS } from '../../../../../../content-strings';
+import { field } from '../../../../../../pages/shared';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import application from '../../../../../../fixtures/application';
 
@@ -9,21 +7,15 @@ const {
     GOODS_OR_SERVICES,
     YEARS_EXPORTING,
     EMPLOYEES_UK,
-    EMPLOYEES_INTERNATIONAL,
   },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const {
   ROOT,
-  ALL_SECTIONS,
   EXPORTER_BUSINESS: {
-    NATURE_OF_BUSINESS,
+    NATURE_OF_BUSINESS_ROOT,
   },
 } = ROUTES.INSURANCE;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -35,12 +27,11 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection({});
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
-      cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitCompanyDetails({});
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -54,21 +45,19 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     cy.deleteApplication(referenceNumber);
   });
 
-  describe('when no fields are provided', () => {
+  describe('when submitting an empty form via `save and go back` button', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-
-      cy.checkText(task.status(), expected);
+      cy.checkTaskBusinessStatusIsInProgress();
     });
   });
 
@@ -78,30 +67,26 @@ context('Insurance - Your business - Nature of your business page - Save and bac
 
       cy.keyboardInput(field(GOODS_OR_SERVICES).textarea(), application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-
-      cy.checkText(task.status(), expected);
+      cy.checkTaskBusinessStatusIsInProgress();
     });
 
     it(`should retain the ${GOODS_OR_SERVICES} input on the page and the other fields should be empty`, () => {
-      task.link().click();
-      // submit companies house number form
-      submitButton().click();
-      // company details submit
-      submitButton().click();
+      cy.startYourBusinessSection({});
+
+      // go through 2 business forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 2 });
 
       field(GOODS_OR_SERVICES).textarea().should('have.value', application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
       field(YEARS_EXPORTING).input().should('have.value', '');
       field(EMPLOYEES_UK).input().should('have.value', '');
-      field(EMPLOYEES_INTERNATIONAL).input().should('have.value', '');
     });
   });
 
@@ -112,31 +97,27 @@ context('Insurance - Your business - Nature of your business page - Save and bac
       cy.keyboardInput(field(GOODS_OR_SERVICES).textarea(), application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
       cy.keyboardInput(field(YEARS_EXPORTING).input(), application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
       cy.keyboardInput(field(EMPLOYEES_UK).input(), application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
-      cy.keyboardInput(field(EMPLOYEES_INTERNATIONAL).input(), application.EXPORTER_BUSINESS[EMPLOYEES_INTERNATIONAL]);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+      cy.checkTaskBusinessStatusIsInProgress();
     });
 
     it(`should retain the ${GOODS_OR_SERVICES} input on the page and the other fields should be empty`, () => {
-      task.link().click();
-      // submit companies house number form
-      submitButton().click();
+      cy.startYourBusinessSection({});
+
       // company details submit
-      submitButton().click();
+      cy.clickSubmitButton();
 
       field(GOODS_OR_SERVICES).textarea().should('have.value', application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
       field(YEARS_EXPORTING).input().should('have.value', application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
       field(EMPLOYEES_UK).input().should('have.value', application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
-      field(EMPLOYEES_INTERNATIONAL).input().should('have.value', application.EXPORTER_BUSINESS[EMPLOYEES_INTERNATIONAL]);
     });
   });
 });

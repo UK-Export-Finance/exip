@@ -1,7 +1,6 @@
 import { FIELD_IDS } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import generateValidationErrors from '../../../../../../helpers/validation';
-import { objectHasProperty } from '../../../../../../helpers/object';
+import fullAddressValidation from '../../../../../../shared-validation/full-address';
 import { RequestBody } from '../../../../../../../types';
 
 const {
@@ -15,35 +14,17 @@ const {
 const {
   INSURANCE: {
     YOUR_BUYER: {
-      COMPANY_OR_ORGANISATION: { [FIELD_ID]: ERROR_MESSAGE },
+      COMPANY_OR_ORGANISATION: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
     },
   },
 } = ERROR_MESSAGES;
 
-export const MAXIMUM = 300;
-
 /**
- * addressRules
- * Check submitted form data for errors with the address field
- * Returns generateValidationErrors if there are any errors.
- * @param {Express.Response.body} Express response body
- * @param {Object} Errors object from previous validation errors
- * @returns {Object} Validation errors
+ * validate the "full address" field
+ * @param {Express.Request.body} Express response body
+ * @param {Object} errors: Other validation errors for the same form
+ * @returns {ValidationErrors} fullAddressValidation
  */
-const addressRules = (formBody: RequestBody, errors: object) => {
-  const updatedErrors = errors;
-
-  // check if the field is empty
-  if (!objectHasProperty(formBody, FIELD_ID)) {
-    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
-  }
-
-  // check if the field is above the maximum
-  if (formBody[FIELD_ID].length > MAXIMUM) {
-    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors);
-  }
-
-  return updatedErrors;
-};
+const addressRules = (responseBody: RequestBody, errors: object) => fullAddressValidation(responseBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors);
 
 export default addressRules;
