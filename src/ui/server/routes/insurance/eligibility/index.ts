@@ -22,10 +22,8 @@ import { get as cannotApplyGet } from '../../../controllers/insurance/eligibilit
 import { get as needToStartAgainGet, post as needToStartAgainPost } from '../../../controllers/insurance/eligibility/need-to-start-again';
 import { get as talkToEfmTooShortGet } from '../../../controllers/insurance/eligibility/contract-too-short';
 
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
 const insuranceEligibilityRouter = express.Router();
-/* eslint-enable @typescript-eslint/ban-ts-comment */
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE, checkIfEligibleGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE, checkIfEligiblePost);
