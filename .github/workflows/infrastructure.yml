@@ -719,7 +719,7 @@ jobs:
             --name ${{ vars.DOMAIN }} \
             --tags ${{ env.TAGS }}
 
-      - name: A
+      - name: A record
         uses: azure/cli@v1.0.9
         with:
           inlineScript: |
@@ -730,7 +730,7 @@ jobs:
             --target-resource ${{ env.FRONTDOOR }}/afdendpoints/${{ env.ENDPOINT }} \
             --ttl ${{ vars.DNS_TTL }}
 
-      - name: CNAME
+      - name: CNAME record
         uses: azure/cli@v1.0.9
         with:
           inlineScript: |
@@ -741,7 +741,7 @@ jobs:
             --target-resource ${{ env.FRONTDOOR }}/afdendpoints/${{ env.ENDPOINT }} \
             --ttl ${{ vars.DNS_TTL }}
 
-      - name: TXT
+      - name: TXT record
         uses: azure/cli@v1.0.9
         with:
           inlineScript: |
@@ -752,7 +752,7 @@ jobs:
             --value ${{ vars.CA_VERIFICATION }} \
             --if-none-match "*"
 
-      - name: CAA
+      - name: CAA record
         uses: azure/cli@v1.0.9
         with:
           inlineScript: |
