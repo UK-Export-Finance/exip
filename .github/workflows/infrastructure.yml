@@ -674,10 +674,117 @@ jobs:
             --secret name=${{ secrets.MYSQL_USER }} secret=${{ secrets.MYSQL_PASSWORD }} \
             --client-type nodejs
 
-  # 5. Logs and dignostic settings
+  # 5. Public DNS Zone
+  dns:
+    name: DNS 🌐
+    needs: [base, security, webapp]
+    environment: ${{ needs.base.outputs.environment }}
+    runs-on: [self-hosted, EXIP, infrastructure]
+    steps:
+      - name: Pre-production 💫
+        if: contains('["dev", "feature", "staging"]', env.TARGET)
+        run: echo "TYPE=Preproduction" >> $GITHUB_ENV
+
+      - name: Production 💫
+        if: ${{ 'production' == env.TARGET }}
+        run: echo "TYPE=Production" >> $GITHUB_ENV
+
+      - name: Tags 🏷️
+        run: echo TAGS='Environment=${{ env.TYPE }}' \
+          'Product=${{ env.PRODUCT }}' \
+          'Team=development' >> $GITHUB_ENV
+
+      - name: Login 🔐
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Azure defaults ✨
+        uses: azure/cli@v1.0.9
+        with:
+          inlineScript: |
+            # Basic
+            az configure --defaults location=${{ vars.REGION }}
+            az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
+
+            # AFD
+            echo FRONTDOOR=$(az afd profile list --query '[].id' -o tsv) >> $GITHUB_ENV
+            echo ENDPOINT=$(az afd endpoint list --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query '[].name' -o tsv) >> $GITHUB_ENV
+
+      - name: DNS Zone 🌐
+        uses: azure/cli@v1.0.9
+        with:
+          inlineScript: |
+            az network dns zone create \
+            --name ${{ vars.DOMAIN }} \
+            --tags ${{ env.TAGS }}
+
+      - name: A record
+        uses: azure/cli@v1.0.9
+        with:
+          inlineScript: |
+            az network dns record-set a create \
+            --name  "@" \
+            --zone ${{ vars.DOMAIN }} \
+            --if-none-match "*" \
+            --target-resource ${{ env.FRONTDOOR }}/afdendpoints/${{ env.ENDPOINT }} \
+            --ttl ${{ vars.DNS_TTL }}
+
+      - name: CNAME record
+        uses: azure/cli@v1.0.9
+        with:
+          inlineScript: |
+            az network dns record-set cname create \
+            --name  "*" \
+            --zone ${{ vars.DOMAIN }} \
+            --if-none-match "*" \
+            --target-resource ${{ env.FRONTDOOR }}/afdendpoints/${{ env.ENDPOINT }} \
+            --ttl ${{ vars.DNS_TTL }}
+
+      - name: TXT record
+        uses: azure/cli@v1.0.9
+        with:
+          inlineScript: |
+            # CA Verification
+            az network dns record-set txt add-record \
+            --record-set-name  "@" \
+            --zone ${{ vars.DOMAIN }} \
+            --value ${{ vars.CA_VERIFICATION }} \
+            --if-none-match "*"
+
+      - name: CAA record
+        uses: azure/cli@v1.0.9
+        with:
+          inlineScript: |
+            # CREATE
+            az network dns record-set caa create \
+            --name  "@" \
+            --zone ${{ vars.DOMAIN }} \
+            --if-none-match "*" \
+            --ttl ${{ vars.DNS_TTL }}
+
+            # ISSUE
+            az network dns record-set caa add-record \
+            --record-set-name  "@" \
+            --flags ${{ vars.CAA_FLAG }} \
+            --tag "issue" \
+            --value ${{ vars.CAA_ISSUE_VALUE }} \
+            --zone ${{ vars.DOMAIN }} \
+            --ttl ${{ vars.DNS_TTL }}
+
+            # IODEF
+            az network dns record-set caa add-record \
+            --record-set-name  "@" \
+            --flags ${{ vars.CAA_FLAG }} \
+            --tag "iodef" \
+            --value ${{ vars.CAA_IODEF_VALUE }} \
+            --zone ${{ vars.DOMAIN }} \
+            --ttl ${{ vars.DNS_TTL }}
+
+  # 6. Logs and dignostic settings
   log:
     name: Log 📒
-    needs: [base, security, webapp]
+    needs: [base, security, webapp, dns]
     environment: ${{ needs.base.outputs.environment }}
     runs-on: [self-hosted, EXIP, infrastructure]
     steps:
@@ -780,10 +887,10 @@ jobs:
             --workspace $(az monitor log-analytics workspace list --query [].id -o tsv) \
             --metrics "[{category:allMetrics,enabled:true}]"
 
-  # 5. Health check alerts
+  # 7. Various alerts
   alert:
     name: Alert 📢
-    needs: [base, security, webapp]
+    needs: [base, security, webapp, dns]
     environment: ${{ needs.base.outputs.environment }}
     runs-on: [self-hosted, EXIP, infrastructure]
     steps:
@@ -824,7 +931,7 @@ jobs:
             --location global \
             --tags ${{ env.TAGS }}
 
-      - name: Alert 📩
+      - name: Monitor alert 📩
         uses: azure/cli@v1.0.9
         with:
           inlineScript: |
