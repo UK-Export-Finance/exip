@@ -6,10 +6,13 @@ import { EXPORT_CONTRACT } from './export-contract';
 import { DECLARATIONS } from './declarations';
 import { CHECK_YOUR_ANSWERS } from './check-your-answers';
 
-export const INSURANCE_ROOT = '/insurance';
+export const MVP_INSURANCE_ROOT = '/insurance';
+export const INSURANCE_ROOT = '/apply';
+
 const ELIGIBILITY_ROOT = '/eligibility';
 
 export const INSURANCE_ROUTES = {
+  MVP_INSURANCE_ROOT,
   ROOT: INSURANCE_ROOT,
   START: `${INSURANCE_ROOT}/start`,
   ELIGIBILITY: {
