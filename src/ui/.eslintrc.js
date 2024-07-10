@@ -41,12 +41,7 @@ module.exports = {
     'no-underscore-dangle': ['error', { allow: ['_id', '_csrf'] }],
     'import/no-named-as-default': 'off',
     'implicit-arrow-linebreak': 'off',
-    'object-curly-newline': [
-      'error',
-      {
-        consistent: true,
-      },
-    ],
+    'object-curly-newline': 'off',
     'no-unneeded-ternary': 'off',
     '@typescript-eslint/dot-notation': 'off',
     'import/extensions': 'off',

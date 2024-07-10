@@ -7,13 +7,18 @@ module.exports = {
   },
   plugins: ['cypress'],
   rules: {
-    'max-len': ['error', 160, 2, {
-      ignoreUrls: true,
-      ignoreComments: false,
-      ignoreRegExpLiterals: true,
-      ignoreStrings: true,
-      ignoreTemplateLiterals: true,
-    }],
+    'max-len': [
+      'error',
+      160,
+      2,
+      {
+        ignoreUrls: true,
+        ignoreComments: false,
+        ignoreRegExpLiterals: true,
+        ignoreStrings: true,
+        ignoreTemplateLiterals: true,
+      },
+    ],
     'no-console': ['error', { allow: ['info', 'error'] }],
     'import/first': 'off',
     'import/order': 'off',
@@ -28,10 +33,14 @@ module.exports = {
     'cypress/no-force': 'warn',
     'cypress/no-async-tests': 'error',
     'cypress/no-pause': 'error',
-    'prefer-destructuring': ['error', {
-      array: true,
-      object: true,
-    }],
+    'object-curly-newline': 'off',
+    'prefer-destructuring': [
+      'error',
+      {
+        array: true,
+        object: true,
+      },
+    ],
   },
   parserOptions: {
     ecmaVersion: 12, // es2021

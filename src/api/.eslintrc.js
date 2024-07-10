@@ -48,6 +48,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    'object-curly-newline': 'off',
     'prefer-destructuring': [
       'error',
       {

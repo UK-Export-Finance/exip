@@ -10,6 +10,7 @@ const {
 
 const {
   AGENT_DETAILS: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
+
 } = ERROR_MESSAGES.INSURANCE.EXPORT_CONTRACT;
 
 /**
@@ -18,7 +19,7 @@ const {
  * @param {Object} errors: Other validation errors for the same form
  * @returns {ValidationErrors} alphaCharactersAndMaxLengthValidation
  */
-const name = (formBody: RequestBody, errors: object) =>
-  alphaCharactersAndMaxLengthValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.AGENT_NAME);
+const name = (formBody: RequestBody, errors: Object) =>
+  alphaCharactersAndMaxLengthValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, error, MAXIMUM_CHARACTERS.AGENT_NAME);
 
 export default name;
