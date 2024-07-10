@@ -1,11 +1,13 @@
 import Context from '@keystone-6/core/types';
+/* eslint-disable */
 import {
   ApplicationCreateInput,
   BuyerCreateInput,
   PolicyCreateInput,
   LossPayeeFinancialInternationalVectorCreateInput,
   LossPayeeFinancialUkVectorCreateInput,
-} from '.keystone/types'; // eslint-disable-line
+} from '.keystone/types';
+/* eslint-enable */
 import { Account } from '../account';
 
 export interface TestHelperCreate {
