@@ -8,7 +8,6 @@ import cookiesConsentPost from '../../controllers/root/cookies-consent';
 import { get as contactUsGet } from '../../controllers/root/contact-us';
 import problemWithServiceGet from '../../controllers/root/problem-with-service';
 
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
 const rootRouter = express.Router();
 
