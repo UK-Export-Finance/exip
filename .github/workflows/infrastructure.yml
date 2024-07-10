@@ -261,6 +261,7 @@ jobs:
             --storage-size ${{ vars.DB_STORAGE_SIZE_GB }} \
             --sku-name ${{ env.DB_SKU }} \
             --tier ${{ env.DB_TIER }} \
+            --version ${{ vars.DB_VERSION }} \
             --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --subnet snet-database-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --address-prefixes ${{ vars.VNET_ADDRESS_PREFIX }} \
