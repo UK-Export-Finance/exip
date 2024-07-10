@@ -1,7 +1,13 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
 const {
-  ACCOUNT: { CREATE, CREATE_ROOT, PASSWORD_RESET, PASSWORD_RESET_ROOT, SIGN_IN_ROOT },
+  ACCOUNT: {
+    CREATE,
+    CREATE_ROOT,
+    PASSWORD_RESET,
+    PASSWORD_RESET_ROOT,
+    SIGN_IN_ROOT,
+  },
   MVP_INSURANCE_ROOT,
   ROOT,
 } = INSURANCE_ROUTES;
