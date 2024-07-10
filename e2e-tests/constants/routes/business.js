@@ -1,4 +1,4 @@
-const INSURANCE_ROOT = '/insurance';
+const INSURANCE_ROOT = '/apply';
 const BUSINESS = '/your-business';
 
 export const EXPORTER_BUSINESS_ROUTES = {

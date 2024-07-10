@@ -18,7 +18,7 @@ dotenv.config();
 const { SESSION_SECRET } = process.env;
 
 import configureNunjucks from './nunjucks-configuration';
-import { rootRoute, quoteRoutes, insuranceRoutes } from './routes';
+import { redirectRoutes, rootRoute, quoteRoutes, insuranceRoutes } from './routes';
 import { ROUTES, COOKIE } from './constants';
 import { PAGES } from './content-strings';
 
@@ -118,12 +118,14 @@ ui.use(
   }),
 );
 
+ui.use('/', redirectRoutes);
+
 ui.use('/quote', requiredQuoteEligibilityDataProvided);
-ui.use('/insurance/eligibility', requiredInsuranceEligibilityDataProvided);
-ui.use('/insurance/:referenceNumber/*', getApplication);
-ui.use('/insurance/:referenceNumber/*', getApplicationByReferenceNumber);
-ui.use('/insurance/:referenceNumber/*', applicationAccess);
-ui.use('/insurance/:referenceNumber/*', applicationStatus);
+ui.use('/apply/eligibility', requiredInsuranceEligibilityDataProvided);
+ui.use('/apply/:referenceNumber/*', getApplication);
+ui.use('/apply/:referenceNumber/*', getApplicationByReferenceNumber);
+ui.use('/apply/:referenceNumber/*', applicationAccess);
+ui.use('/apply/:referenceNumber/*', applicationStatus);
 ui.use('/', userSession);
 
 ui.use('/', rootRoute);
