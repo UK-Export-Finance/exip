@@ -12,6 +12,7 @@ export const INSURANCE_ROOT = '/apply';
 const ELIGIBILITY_ROOT = '/eligibility';
 
 export const INSURANCE_ROUTES = {
+  MVP_INSURANCE_ROOT,
   ROOT: INSURANCE_ROOT,
   START: `${INSURANCE_ROOT}/start`,
   ELIGIBILITY: {

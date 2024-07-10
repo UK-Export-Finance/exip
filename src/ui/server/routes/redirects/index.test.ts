@@ -17,7 +17,7 @@ describe('routes/redirects', () => {
     expect(get).toHaveBeenCalledTimes(2);
     expect(post).toHaveBeenCalledTimes(0);
 
-    expect(get).toHaveBeenCalledWith(`/${MVP_INSURANCE_ROOT}/:referenceNumber/*`, redirectGet);
-    expect(get).toHaveBeenCalledWith(`/${MVP_INSURANCE_ROOT}*`, redirectGet);
+    expect(get).toHaveBeenCalledWith(`${MVP_INSURANCE_ROOT}/:referenceNumber/*`, redirectGet);
+    expect(get).toHaveBeenCalledWith(`${MVP_INSURANCE_ROOT}*`, redirectGet);
   });
 });
