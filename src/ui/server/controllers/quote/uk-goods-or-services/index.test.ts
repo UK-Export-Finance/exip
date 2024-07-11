@@ -1,5 +1,5 @@
-import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
-import { ERROR_MESSAGES, PAGES, UK_GOODS_AND_SERVICES_DESCRIPTION } from '../../../content-strings';
+import { FIELD_ID, PAGE_VARIABLES, HTML_FLAGS, TEMPLATE, get, post } from '.';
+import { PAGES, UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION, UK_GOODS_AND_SERVICES_DESCRIPTION, ERROR_MESSAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
@@ -8,6 +8,11 @@ import generateValidationErrors from '../../../shared-validation/yes-no-radios-f
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { Request, Response } from '../../../../types';
 import { mockReq, mockRes } from '../../../test-mocks';
+
+const {
+  SHARED_PAGES,
+  PARTIALS: { UK_GOODS_OR_SERVICES },
+} = TEMPLATES;
 
 describe('controllers/quote/uk-goods-or-services', () => {
   let req: Request;
@@ -32,7 +37,7 @@ describe('controllers/quote/uk-goods-or-services', () => {
         FIELD_ID: FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
         PAGE_CONTENT_STRINGS: {
           ...PAGES.UK_GOODS_OR_SERVICES,
-          ...PAGES.QUOTE.UK_GOODS_OR_SERVICES,
+          UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION,
           UK_GOODS_AND_SERVICES_DESCRIPTION,
         },
       };
@@ -41,9 +46,19 @@ describe('controllers/quote/uk-goods-or-services', () => {
     });
   });
 
+  describe('HTML_FLAGS', () => {
+    it('should have correct properties', () => {
+      const expected = {
+        CUSTOM_CONTENT_HTML: UK_GOODS_OR_SERVICES.CUSTOM_CONTENT_HTML,
+      };
+
+      expect(HTML_FLAGS).toEqual(expected);
+    });
+  });
+
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.QUOTE.UK_GOODS_OR_SERVICES);
+      expect(TEMPLATE).toEqual(SHARED_PAGES.SINGLE_RADIO);
     });
   });
 
@@ -51,9 +66,9 @@ describe('controllers/quote/uk-goods-or-services', () => {
     it('should render template', () => {
       get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.UK_GOODS_OR_SERVICES, {
+      expect(res.render).toHaveBeenCalledWith(SHARED_PAGES.SINGLE_RADIO, {
         userName: getUserNameFromSession(req.session.user),
-        ...singleInputPageVariables({ ...PAGE_VARIABLES, ORIGINAL_URL: req.originalUrl }),
+        ...singleInputPageVariables({ ...PAGE_VARIABLES, ORIGINAL_URL: req.originalUrl, HTML_FLAGS }),
         BACK_LINK: req.headers.referer,
         submittedValues: req.session.submittedData.quoteEligibility,
       });
@@ -67,9 +82,9 @@ describe('controllers/quote/uk-goods-or-services', () => {
 
         const payload = constructPayload(req.body, [FIELD_ID]);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.UK_GOODS_OR_SERVICES, {
+        expect(res.render).toHaveBeenCalledWith(SHARED_PAGES.SINGLE_RADIO, {
           userName: getUserNameFromSession(req.session.user),
-          ...singleInputPageVariables(PAGE_VARIABLES),
+          ...singleInputPageVariables({ ...PAGE_VARIABLES, ORIGINAL_URL: req.originalUrl, HTML_FLAGS }),
           BACK_LINK: req.headers.referer,
           validationErrors: generateValidationErrors(payload, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID].IS_EMPTY),
         });

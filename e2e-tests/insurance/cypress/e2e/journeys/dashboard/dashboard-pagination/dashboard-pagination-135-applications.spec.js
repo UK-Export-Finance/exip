@@ -9,8 +9,6 @@ const baseUrl = Cypress.config('baseUrl');
 const totalApplications = MAX_APPLICATIONS_PER_PAGE * 9;
 const totalPages = totalApplications / MAX_APPLICATIONS_PER_PAGE;
 
-const dashboardUrl = `${baseUrl}${DASHBOARD}`;
-
 context(`Insurance - Dashboard - pagination - ${totalApplications} applications`, () => {
   let applications;
 
@@ -20,7 +18,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
         applications = createdApplications;
       });
 
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
     });
   });
 
@@ -34,11 +32,11 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
 
   describe('page tests', () => {
     beforeEach(() => {
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
     });
 
     it('should render 4 pagination list items - 3 links, 1 ellipsis item', () => {
-      pagination.listItems().should('have.length', 4);
+      cy.assertLength(pagination.listItems(), 4);
 
       cy.assertPaginationItemLink({ index: 0 });
       cy.assertPaginationItemLink({ index: 1 });
@@ -59,7 +57,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
 
   describe('when clicking on the `next` link 3 times to get to page 4', () => {
     beforeEach(() => {
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
 
       pagination.nextLink().click();
       pagination.nextLink().click();
@@ -67,7 +65,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
     });
 
     it('should render 7 pagination list items - 6 links, 1 ellipsis item', () => {
-      pagination.listItems().should('have.length', 7);
+      cy.assertLength(pagination.listItems(), 7);
 
       cy.assertPaginationItemLink({ index: 1, pageNumber: 1 });
       cy.assertPaginationItemLink({ index: 2, pageNumber: 2 });
@@ -89,7 +87,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
 
   describe('when clicking on the `next` link 4 times to get to page 5', () => {
     beforeEach(() => {
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
 
       pagination.nextLink().click();
       pagination.nextLink().click();
@@ -98,7 +96,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
     });
 
     it('should render 7 pagination list items - 5 links, 2 ellipsis items', () => {
-      pagination.listItems().should('have.length', 7);
+      cy.assertLength(pagination.listItems(), 7);
 
       cy.assertPaginationItemLink({ index: 1, pageNumber: 1 });
       cy.assertPaginationItemEllipsis({ index: 1 });
@@ -122,7 +120,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
 
   describe('when clicking on the `next` link 5 times to get to page 6', () => {
     beforeEach(() => {
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
 
       pagination.nextLink().click();
       pagination.nextLink().click();
@@ -132,7 +130,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
     });
 
     it('should render 7 pagination list items - 6 links, 1 ellipsis items', () => {
-      pagination.listItems().should('have.length', 7);
+      cy.assertLength(pagination.listItems(), 7);
 
       cy.assertPaginationItemLink({ index: 1, pageNumber: 1 });
       cy.assertPaginationItemEllipsis({ index: 1 });

@@ -3,8 +3,18 @@ import gql from 'graphql-tag';
 const getApimCurrencies = gql`
   query getApimCurrencies {
     getApimCurrencies {
-      isoCode
-      name
+      supportedCurrencies {
+        isoCode
+        name
+      }
+      alternativeCurrencies {
+        isoCode
+        name
+      }
+      allCurrencies {
+        isoCode
+        name
+      }
     }
   }
 `;

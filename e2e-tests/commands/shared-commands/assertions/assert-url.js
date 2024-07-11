@@ -1,5 +1,6 @@
 /**
  * assertUrl
+ * Assert a URL.
  * @param {String} Expected URL
  */
 const assertUrl = (url) => {

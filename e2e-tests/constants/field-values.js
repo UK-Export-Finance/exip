@@ -1,8 +1,22 @@
 import { APPLICATION } from './application';
 
-const { POLICY_TYPE, POLICY } = APPLICATION;
+const {
+  EXPORT_CONTRACT: {
+    AGENT_SERVICE_CHARGE: {
+      METHOD: {
+        FIXED_SUM,
+        PERCENTAGE,
+      },
+    },
+  },
+  POLICY_TYPE,
+  POLICY,
+} = APPLICATION;
 
 export const FIELD_VALUES = {
+  EXPORT_CONTRACT: {
+    AGENT_SERVICE_CHARGE_METHOD: { FIXED_SUM, PERCENTAGE },
+  },
   OPTIONAL_COOKIES: {
     ACCEPT: 'accept',
     REJECT: 'reject',

@@ -1,16 +1,8 @@
-import {
-  yesNoRadioHint, yesRadio, yesRadioInput, noRadio, submitButton,
-} from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
-import {
-  FIELDS,
-  PAGES,
-  ERROR_MESSAGES,
-} from '../../../../../../content-strings';
+import { yesNoRadioHint, yesRadio, noRadio } from '../../../../../../pages/shared';
+import { FIELDS, PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import { completeStartForm, completeCheckIfEligibleForm, completeExporterLocationForm } from '../../../../../../commands/insurance/eligibility/forms';
 import {
   checkCalculateDescriptionSummaryText,
   checkCalculateDescriptionSummaryClickRevealsContent,
@@ -29,22 +21,24 @@ const {
 } = FIELD_IDS;
 
 const {
-  START,
-  ELIGIBILITY: { UK_GOODS_OR_SERVICES, EXPORTER_LOCATION, INSURED_AMOUNT },
+  ELIGIBILITY: { UK_GOODS_OR_SERVICES, END_BUYER, COVER_PERIOD },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover', () => {
+context('Insurance - UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF credit insurance cover', () => {
   const url = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
 
   before(() => {
-    cy.navigateToUrl(START);
-
-    completeStartForm();
-    completeCheckIfEligibleForm();
-    completeAndSubmitBuyerCountryForm();
-    completeExporterLocationForm();
+    cy.navigateToCheckIfEligibleUrl();
+    cy.completeCheckIfEligibleForm();
+    cy.completeExporterLocationForm();
+    cy.completeCompaniesHouseNumberForm();
+    cy.completeAndSubmitCompaniesHouseSearchForm({});
+    cy.completeEligibilityCompanyDetailsForm();
+    completeAndSubmitBuyerCountryForm({});
+    cy.completeAndSubmitTotalValueInsuredForm({});
+    cy.completeCoverPeriodForm({});
 
     cy.assertUrl(url);
   });
@@ -57,7 +51,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: UK_GOODS_OR_SERVICES,
-      backLink: EXPORTER_LOCATION,
+      backLink: COVER_PERIOD,
       assertAuthenticatedHeader: false,
     });
   });
@@ -108,10 +102,6 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
 
           checkDescriptionContent();
         });
-
-        it('does NOT render `will calculate thoroughly` copy ', () => {
-          partials.ukGoodsOrServicesDescription.calculateThoroughly().should('not.exist');
-        });
       });
     });
   });
@@ -124,12 +114,11 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     it('should render validation errors', () => {
       const expectedErrorsCount = 1;
 
-      cy.submitAndAssertRadioErrors(
-        yesRadio(FIELD_ID),
-        0,
+      cy.submitAndAssertRadioErrors({
+        field: yesRadio(FIELD_ID),
         expectedErrorsCount,
-        ERROR_MESSAGES.ELIGIBILITY[FIELD_ID].IS_EMPTY,
-      );
+        expectedErrorMessage: ERROR_MESSAGES.ELIGIBILITY[FIELD_ID].IS_EMPTY,
+      });
     });
   });
 
@@ -137,12 +126,12 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      yesRadio().label().click();
-      submitButton().click();
+      cy.clickYesRadioInput();
+      cy.clickSubmitButton();
     });
 
-    it(`should redirect to ${INSURED_AMOUNT}`, () => {
-      const expectedUrl = `${baseUrl}${INSURED_AMOUNT}`;
+    it(`should redirect to ${END_BUYER}`, () => {
+      const expectedUrl = `${baseUrl}${END_BUYER}`;
 
       cy.assertUrl(expectedUrl);
     });
@@ -151,7 +140,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
       it('should have the originally submitted answer selected', () => {
         cy.clickBackLink();
 
-        yesRadioInput().should('be.checked');
+        cy.assertYesRadioOptionIsChecked();
       });
     });
   });

@@ -2,7 +2,15 @@
 
   {% set id = params.id %}
   {% set legendText = params.legendText %}
+  {% set isPageHeading = params.isPageHeading %}
 
-  <legend class=govuk-label--m id="{{ id }}-legend" data-cy="{{ id }}-legend">{{ legendText }}</legend>
+  {% if isPageHeading %}
+    <legend class="govuk-fieldset__legend">
+      <h1 data-cy="heading" class="govuk-heading-l" id="heading">{{ legendText }}</h1>
+    </legend>
+
+    {% else %}
+    <span class="govuk-label--m" id="{{ id }}-legend" data-cy="{{ id }}-legend">{{ legendText }}</span>
+  {% endif %}
 
 {% endmacro %}

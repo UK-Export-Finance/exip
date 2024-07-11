@@ -1,9 +1,10 @@
 import {
   yesRadio,
+  yesNoRadioHint,
   noRadio,
-  submitButton,
 } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
+import { FIELDS } from '../../../../../../content-strings/fields';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 import { completeAndSubmitBuyerBodyForm } from '../../../../../../commands/quote/forms';
@@ -24,12 +25,12 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Exporter location page - as an exporter, I want to check if my company can get UKEF issue export insurance cover', () => {
+context('Exporter location page - as an exporter, I want to check if my company can get UKEF issue credit insurance cover', () => {
   const url = `${baseUrl}${EXPORTER_LOCATION}`;
 
   beforeEach(() => {
     cy.login();
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
     completeAndSubmitBuyerBodyForm();
 
     cy.assertUrl(url);
@@ -43,6 +44,10 @@ context('Exporter location page - as an exporter, I want to check if my company 
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
     });
+  });
+
+  it('renders a hint', () => {
+    cy.checkText(yesNoRadioHint(), FIELDS[FIELD_ID].HINT);
   });
 
   it('renders `yes` radio button', () => {
@@ -60,23 +65,17 @@ context('Exporter location page - as an exporter, I want to check if my company 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
       it('should render validation errors', () => {
-        const errorIndex = 0;
-        const expectedErrorsCount = 1;
-        const expectedErrorMessage = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID];
-
-        cy.submitAndAssertRadioErrors(
-          yesRadio(FIELD_ID),
-          errorIndex,
-          expectedErrorsCount,
-          expectedErrorMessage,
-        );
+        cy.submitAndAssertRadioErrors({
+          field: yesRadio(FIELD_ID),
+          expectedErrorMessage: ERROR_MESSAGES.ELIGIBILITY[FIELD_ID],
+        });
       });
     });
 
     describe('when submitting the answer as `yes`', () => {
       it(`should redirect to ${UK_GOODS_OR_SERVICES}`, () => {
-        yesRadio().label().click();
-        submitButton().click();
+        cy.clickYesRadioInput();
+        cy.clickSubmitButton();
 
         const expectedUrl = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
 

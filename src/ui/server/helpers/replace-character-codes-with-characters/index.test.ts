@@ -57,7 +57,15 @@ describe('server/helpers/replace-character-codes-with-characters', () => {
     expect(result).toEqual(expected);
   });
 
-  describe('when no value is passed', () => {
+  it('should replace line feed/new line and carriage return character codes', () => {
+    const result = replaceCharacterCodesWithCharacters('\r\ntest\r\n');
+
+    const expected = '\rtest\r';
+
+    expect(result).toEqual(expected);
+  });
+
+  describe('when no value is provided', () => {
     it('should return null', () => {
       const result = replaceCharacterCodesWithCharacters();
 

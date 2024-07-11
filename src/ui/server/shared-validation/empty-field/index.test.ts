@@ -1,19 +1,15 @@
 import emptyFieldValidation from '.';
 import generateValidationErrors from '../../helpers/validation';
+import { mockErrors } from '../../test-mocks';
 
 describe('shared-validation/empty-field', () => {
   let mockFormBody = {};
-
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
 
   const mockFieldId = 'Mock field';
   const mockErrorMessage = 'Enter mock field';
 
   describe('when the field is not provided', () => {
-    it('should return validation error', () => {
+    it('should return a validation error', () => {
       const result = emptyFieldValidation(mockFormBody, mockFieldId, mockErrorMessage, mockErrors);
 
       const expected = generateValidationErrors(mockFieldId, mockErrorMessage, mockErrors);

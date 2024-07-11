@@ -8,8 +8,10 @@ const {
   DASHBOARD,
 } = ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Sign in - Enter code - without completing eligibility', () => {
-  const enterCodeUrl = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
+  const enterCodeUrl = `${baseUrl}${ENTER_CODE}`;
 
   before(() => {
     cy.deleteAccount();
@@ -29,22 +31,22 @@ context('Insurance - Account - Sign in - Enter code - without completing eligibi
     cy.navigateToUrl(enterCodeUrl);
   });
 
-  describe('when submitting a valid security code', () => {
-    let validSecurityCode;
+  describe('when submitting a valid access code', () => {
+    let validAccessCode;
 
     before(() => {
       cy.navigateToUrl(enterCodeUrl);
 
       // create and get an OTP for the exporter's account
-      cy.accountAddAndGetOTP().then((securityCode) => {
-        validSecurityCode = securityCode;
+      cy.accountAddAndGetOTP().then((accessCode) => {
+        validAccessCode = accessCode;
       });
     });
 
     it(`should redirect to ${DASHBOARD}`, () => {
-      cy.completeAndSubmitEnterCodeAccountForm(validSecurityCode);
+      cy.completeAndSubmitEnterCodeAccountForm(validAccessCode);
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
+      const expectedUrl = `${baseUrl}${DASHBOARD}`;
 
       cy.assertUrl(expectedUrl);
     });

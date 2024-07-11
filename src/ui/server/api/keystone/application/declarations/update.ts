@@ -7,7 +7,7 @@ import { ApolloResponse } from '../../../../../types';
  * Update an application's declaration
  * @param {String} Declaration ID
  * @param {Object} Declaration update
- * @returns {Object} Updated declaration
+ * @returns {Promise<Object>} Updated declaration
  */
 const updateDeclaration = async (id: string, update: object) => {
   try {

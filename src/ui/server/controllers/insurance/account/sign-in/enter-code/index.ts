@@ -7,13 +7,13 @@ import constructPayload from '../../../../../helpers/construct-payload';
 import { sanitiseData, sanitiseValue } from '../../../../../helpers/sanitise-data';
 import mapEligibilityAnswers from '../../../../../helpers/map-eligibility-answers';
 import generateValidationErrors from './validation';
-import securityCodeValidationErrors from './validation/rules/security-code';
+import securityCodeValidationErrors from './validation/rules/access-code';
 import canCreateAnApplication from '../../../../../helpers/can-create-an-application';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 
 const {
-  ACCOUNT: { SECURITY_CODE },
+  ACCOUNT: { ACCESS_CODE },
 } = FIELD_IDS.INSURANCE;
 
 const {
@@ -28,7 +28,7 @@ const {
   },
 } = ROUTES;
 
-export const FIELD_ID = SECURITY_CODE;
+export const FIELD_ID = ACCESS_CODE;
 
 /**
  * PAGE_VARIABLES

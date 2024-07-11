@@ -6,7 +6,7 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
 /**
  * mapAndSave
  * Map and save any valid  policy fields
- * @param {Express.Request.body} Express request body
+ * @param {RequestBody} formBody: Form body
  * @param {Application}
  * @param {Object} Validation errors
  * @returns {Boolean}
@@ -14,7 +14,7 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
 const policy = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
-      const populatedData = mapSubmittedData(formBody);
+      const populatedData = mapSubmittedData(formBody, application);
 
       let saveResponse;
 
@@ -33,7 +33,7 @@ const policy = async (formBody: RequestBody, application: Application, validatio
 
     return true;
   } catch (err) {
-    console.error('Error mapping and saving application %O', err);
+    console.error('Error mapping and saving application - policy %O', err);
 
     return false;
   }

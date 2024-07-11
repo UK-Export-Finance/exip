@@ -1,26 +1,30 @@
-export * from './tls';
 export * from './account';
+export * from './attributes';
+export * from './application';
+export * from './companies-house-number-examples';
+export * from './cookie';
 export * from './cover-period';
 export * from './currencies';
-export * from './application';
 export * from './date-format';
 export * from './dates';
+export * from './eligibility';
+export * from './environments';
 export * from './external-apis';
 export * from './field-ids';
 export * from './field-values';
+export * from './integrity';
 export * from './pagination';
 export * from './percentages-of-cover';
 export * from './phone-number-countries';
-export * from './eligibility';
+export * from './regex';
 export * from './routes';
 export * from './supported-currencies';
 export * from './task-ids';
 export * from './templates';
+export * from './tls';
 export * from './total-contract-value';
-export * from './integrity';
-export * from './cookie';
-export * from './environments';
 export * from './ukef-contact-details';
+export * from './validation';
 
 // TODO: Refactor below constants
 export const SERVICE_NAME = 'EXIP';

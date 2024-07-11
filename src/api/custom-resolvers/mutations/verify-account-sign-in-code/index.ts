@@ -1,10 +1,10 @@
-import { isAfter } from 'date-fns';
 import { ACCOUNT } from '../../../constants';
 import getAccountById from '../../../helpers/get-account-by-id';
 import isValidOTP from '../../../helpers/is-valid-otp';
 import deleteAuthenticationRetries from '../../../helpers/delete-authentication-retries';
 import create from '../../../helpers/create-jwt';
 import update from '../../../helpers/update-account';
+import { dateIsInThePast } from '../../../helpers/date';
 import { Context, VerifyAccountSignInCodeVariables, VerifyAccountSignInCodeResponse } from '../../../types';
 
 const {
@@ -13,11 +13,11 @@ const {
 
 /**
  * verifyAccountSignInCode
- * Check if a OTP/security code is valid and if so, wipe the retry entries and generate and return a JWT
+ * Check if a OTP/access code is valid and if so, wipe the retry entries and generate and return a JWT
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the AccountSignIn mutation
- * @param {Object} KeystoneJS context API
- * @returns {Object} Object with success or expired flag.
+ * @param {Context} KeystoneJS context API
+ * @returns {Promise<Object>} Object with success or expired flag.
  */
 const verifyAccountSignInCode = async (root: any, variables: VerifyAccountSignInCodeVariables, context: Context): Promise<VerifyAccountSignInCodeResponse> => {
   try {
@@ -47,9 +47,7 @@ const verifyAccountSignInCode = async (root: any, variables: VerifyAccountSignIn
     const { otpSalt, otpHash, otpExpiry } = account;
 
     // check that the verification period has not expired.
-    const now = new Date();
-
-    const hasExpired = isAfter(now, otpExpiry);
+    const hasExpired = dateIsInThePast(otpExpiry);
 
     if (hasExpired) {
       console.info('Unable to verify account sign in code - verification period has expired');

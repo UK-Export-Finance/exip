@@ -7,7 +7,7 @@ import { ApolloResponse } from '../../../../../types';
  * Update an application's "business"
  * @param {String} Business ID
  * @param {Object} Business update
- * @returns {Object} Updated business
+ * @returns {Promise<Object>} Updated business
  */
 const updateBusiness = async (id: string, update: object) => {
   try {

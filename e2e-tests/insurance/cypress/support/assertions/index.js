@@ -11,3 +11,11 @@ Cypress.Commands.add('assertConfirmEmailPageContent', require('../../../../comma
 Cypress.Commands.add('assertSubmitAndSaveButtons', require('../../../../commands/insurance/assert-submit-and-save-buttons'));
 
 Cypress.Commands.add('assertUncheckedYesNoRadios', require('../../../../commands/shared-commands/assertions/assert-unchecked-yes-no-radios'));
+
+Cypress.Commands.add(
+  'assertDashboardApplicationNumberLinkDoesNotExist',
+  require('../../../../commands/insurance/assert-dashboard-application-number-link-does-not-exist'),
+);
+Cypress.Commands.add('assertDashboardApplicationSubmittedStatus', require('../../../../commands/insurance/assert-dashboard-application-submitted-status'));
+
+Cypress.Commands.add('assertDashboardApplicationSubmitted', require('../../../../commands/insurance/assert-dashboard-application-submitted'));

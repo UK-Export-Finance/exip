@@ -1,8 +1,10 @@
-import { submitButton } from '../../../../pages/shared';
 import { cookiesPage, cookiesSavedPage } from '../../../../pages';
 import partials from '../../../../partials';
 import {
-  BUTTONS, ERROR_MESSAGES, FIELDS, PAGES,
+  BUTTONS,
+  ERROR_MESSAGES,
+  FIELDS,
+  PAGES,
 } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, COOKIE } from '../../../../constants';
 
@@ -12,24 +14,24 @@ const {
   INSURANCE: {
     COOKIES,
     COOKIES_SAVED,
-    START,
     ACCOUNT: {
       SIGN_IN: { ROOT: SIGN_IN_ROOT },
     },
+    ELIGIBILITY: { CHECK_IF_ELIGIBLE },
   },
 } = ROUTES;
 
-const {
-  OPTIONAL_COOKIES: FIELD_ID,
-} = FIELD_IDS;
+const { OPTIONAL_COOKIES: FIELD_ID } = FIELD_IDS;
+
+const baseUrl = Cypress.config('baseUrl');
+
+const url = COOKIES;
+
+const checkIfEligibleUrl = `${baseUrl}${CHECK_IF_ELIGIBLE}`;
 
 context('Cookies page - Insurance', () => {
-  const baseUrl = Cypress.config('baseUrl');
-  const url = COOKIES;
-  const insuranceStartUrl = `${baseUrl}${START}`;
-
   beforeEach(() => {
-    cy.navigateToUrl(START);
+    cy.navigateToCheckIfEligibleUrl();
 
     partials.footer.supportLinks.cookies().click();
 
@@ -44,7 +46,7 @@ context('Cookies page - Insurance', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: COOKIES,
-      backLink: START,
+      backLink: CHECK_IF_ELIGIBLE,
       submitButtonCopy: BUTTONS.SAVE_CHANGES,
       assertAuthenticatedHeader: false,
       isInsurancePage: true,
@@ -173,28 +175,30 @@ context('Cookies page - Insurance', () => {
 
           cy.navigateToUrl(url);
 
-          submitButton().click();
+          cy.clickSubmitButton();
         });
 
         it('should render validation errors', () => {
           const expectedErrorsCount = 1;
           const expectedErrorMessage = ERROR_MESSAGES[FIELD_ID];
 
-          cy.submitAndAssertRadioErrors(
-            cookiesPage[FIELD_ID].accept,
-            0,
+          cy.submitAndAssertRadioErrors({
+            field: cookiesPage[FIELD_ID].accept,
             expectedErrorsCount,
             expectedErrorMessage,
-          );
+          });
         });
       });
 
       describe('when submitting the answer as `accept`', () => {
         beforeEach(() => {
+          cy.navigateToCheckIfEligibleUrl();
+          partials.footer.supportLinks.cookies().click();
+
           cy.saveSession();
 
           cookiesPage[FIELD_ID].accept.label().click();
-          submitButton().click();
+          cy.clickSubmitButton();
         });
 
         it(`should redirect to ${COOKIES_SAVED}`, () => {
@@ -206,13 +210,9 @@ context('Cookies page - Insurance', () => {
         });
 
         it('should render a link button with the URL that was visited prior to submitting an answer in the cookies page', () => {
-          const expectedUrl = insuranceStartUrl;
+          const expectedUrl = checkIfEligibleUrl;
 
-          cy.checkLink(
-            cookiesSavedPage.returnToServiceLinkButton(),
-            expectedUrl,
-            BUTTONS.RETURN_TO_SERVICE,
-          );
+          cy.checkLink(cookiesSavedPage.returnToServiceLinkButton(), expectedUrl, BUTTONS.RETURN_TO_SERVICE);
         });
 
         it('should NOT render the cookie consent banner', () => {
@@ -233,7 +233,7 @@ context('Cookies page - Insurance', () => {
           cy.saveSession();
 
           cookiesPage[FIELD_ID].reject.label().click();
-          submitButton().click();
+          cy.clickSubmitButton();
         });
 
         it(`should redirect to ${COOKIES_SAVED}`, () => {
@@ -245,13 +245,9 @@ context('Cookies page - Insurance', () => {
         });
 
         it('should render a link button with the URL that was visited prior to submitting an answer in the cookies page', () => {
-          const expectedUrl = insuranceStartUrl;
+          const expectedUrl = checkIfEligibleUrl;
 
-          cy.checkLink(
-            cookiesSavedPage.returnToServiceLinkButton(),
-            expectedUrl,
-            BUTTONS.RETURN_TO_SERVICE,
-          );
+          cy.checkLink(cookiesSavedPage.returnToServiceLinkButton(), expectedUrl, BUTTONS.RETURN_TO_SERVICE);
         });
 
         it('should NOT render the cookie consent banner', () => {
@@ -274,17 +270,13 @@ context('Cookies page - Insurance', () => {
           cy.navigateToUrl(url);
 
           cookiesPage[FIELD_ID].accept.label().click();
-          submitButton().click();
+          cy.clickSubmitButton();
         });
 
         it(`should render a link button with the URL to ${SIGN_IN_ROOT}`, () => {
           const expectedUrl = SIGN_IN_ROOT;
 
-          cy.checkLink(
-            cookiesSavedPage.returnToServiceLinkButton(),
-            expectedUrl,
-            BUTTONS.RETURN_TO_SERVICE,
-          );
+          cy.checkLink(cookiesSavedPage.returnToServiceLinkButton(), expectedUrl, BUTTONS.RETURN_TO_SERVICE);
         });
       });
 
@@ -295,17 +287,13 @@ context('Cookies page - Insurance', () => {
           cy.navigateToUrl(url);
 
           cookiesPage[FIELD_ID].reject.label().click();
-          submitButton().click();
+          cy.clickSubmitButton();
         });
 
         it(`should render a link button with the URL to ${SIGN_IN_ROOT}`, () => {
           const expectedUrl = SIGN_IN_ROOT;
 
-          cy.checkLink(
-            cookiesSavedPage.returnToServiceLinkButton(),
-            expectedUrl,
-            BUTTONS.RETURN_TO_SERVICE,
-          );
+          cy.checkLink(cookiesSavedPage.returnToServiceLinkButton(), expectedUrl, BUTTONS.RETURN_TO_SERVICE);
         });
       });
     });

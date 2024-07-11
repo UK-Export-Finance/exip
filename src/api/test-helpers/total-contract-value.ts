@@ -6,7 +6,7 @@ const totalContractValueQuery = 'id value valueId';
 /**
  * create totalContractValue test helper
  * Create an totalContractValue with mock data
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Object} Created totalContractValue
  */
 const create = async ({ context }: TestHelperCreate) => {

@@ -4,7 +4,7 @@ import mapCisCountries from '../../../helpers/map-CIS-countries';
 /**
  * getApimCisCountries
  * Get countries from APIM
- * @returns {Object} APIM response data
+ * @returns {Promise<Object>} APIM response data
  */
 const getApimCisCountries = async () => {
   try {

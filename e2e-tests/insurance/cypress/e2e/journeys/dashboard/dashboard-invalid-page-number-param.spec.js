@@ -29,6 +29,6 @@ context('Insurance - Dashboard - visit with 1 existing application and an invali
   });
 
   it('should ignore the invalid page number and have one application in the table', () => {
-    table.body.rows().should('have.length', 1);
+    cy.assertLength(table.body.rows(), 1);
   });
 });

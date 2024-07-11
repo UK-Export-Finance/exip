@@ -1,0 +1,123 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% from "govuk/components/label/macro.njk" import govukLabel %}
+{% import '../../components/text-input.njk' as textInput %}
+{% import '../../components/accessible-autocomplete-select.njk' as accessibleAutoCompleteSelect %}
+{% import '../../components/form-buttons.njk' as formButtons %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+      <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+    </div>
+  </div>
+
+  <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        {{ textInput.render({
+          id: FIELDS.NAME.ID,
+          labelText: FIELDS.NAME.LABEL,
+          labelClasses: "govuk-!-font-weight-bold",
+          value: submittedValues[FIELDS.NAME.ID] or application.exportContract.agent[FIELDS.NAME.ID],
+          errorMessage: validationErrors.errorList[FIELDS.NAME.ID]
+        }) }}
+      </div>
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        {{ govukCharacterCount({
+          name: FIELDS.FULL_ADDRESS.ID,
+          id: FIELDS.FULL_ADDRESS.ID,
+          label: {
+            text: FIELDS.FULL_ADDRESS.LABEL,
+            classes: "govuk-!-font-weight-bold",
+            attributes: {
+              'data-cy': FIELDS.FULL_ADDRESS.ID + '-label',
+              id: FIELDS.FULL_ADDRESS.ID + '-label'
+            }
+          },
+          hint: {
+            html: descriptionHintHtml
+          },
+          attributes: {
+            'data-cy': FIELDS.FULL_ADDRESS.ID
+          },
+          maxlength: FIELDS.FULL_ADDRESS.MAXIMUM,
+          value: submittedValues[FIELDS.FULL_ADDRESS.ID] or application.exportContract.agent[FIELDS.FULL_ADDRESS.ID],
+          errorMessage: validationErrors.errorList[FIELDS.FULL_ADDRESS.ID] and {
+            text: validationErrors.errorList[FIELDS.FULL_ADDRESS.ID].text,
+            attributes: {
+              "data-cy": FIELDS.FULL_ADDRESS.ID + "-error-message"
+            }
+          }
+        }) }}
+      </div>
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop govuk-!-margin-bottom-8">
+
+        {% set containerClassName = "govuk-form-group" %}
+
+        {% set errorMessage = validationErrors.errorList[FIELDS.COUNTRY_CODE.ID].text %}
+
+        {% if errorMessage %}
+          {% set containerClassName = "govuk-form-group govuk-form-group--error" %}
+        {% endif %}
+
+        <div class="{{ containerClassName }}">
+          {{ govukLabel({
+            for: FIELDS.COUNTRY_CODE.ID,
+            classes: "govuk-!-font-weight-bold",
+            text: FIELDS.COUNTRY_CODE.LABEL,
+            attributes: {
+              id: FIELDS.COUNTRY_CODE.ID + "-label",
+              "data-cy": FIELDS.COUNTRY_CODE.ID + "-label"
+            }
+          }) }}
+
+          {{ accessibleAutoCompleteSelect.render({
+            errorMessage: validationErrors.errorList[FIELDS.COUNTRY_CODE.ID].text,
+            fieldId: FIELDS.COUNTRY_CODE.ID,
+            integrity: SRI.ACCESSIBILITY,
+            options: countries
+          }) }}
+        </div>
+      </div>
+    </div>
+
+    {{ formButtons.render({
+      contentStrings: CONTENT_STRINGS.BUTTONS,
+      saveAndBackUrl: SAVE_AND_BACK_URL
+    }) }}
+  </form>
+
+{% endblock %}

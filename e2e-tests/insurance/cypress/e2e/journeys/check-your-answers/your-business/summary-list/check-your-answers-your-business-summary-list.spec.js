@@ -11,41 +11,29 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  COMPANY_HOUSE: {
-    COMPANY_NAME,
-    COMPANY_NUMBER,
-    COMPANY_ADDRESS,
-    COMPANY_INCORPORATED,
-    COMPANY_SIC,
-    FINANCIAL_YEAR_END_DATE,
-  },
   YOUR_COMPANY: {
     TRADING_ADDRESS,
-    TRADING_NAME,
+    HAS_DIFFERENT_TRADING_NAME,
     WEBSITE,
     PHONE_NUMBER,
   },
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES,
     YEARS_EXPORTING,
-    EMPLOYEES_INTERNATIONAL,
     EMPLOYEES_UK,
   },
   TURNOVER: {
     ESTIMATED_ANNUAL_TURNOVER,
     PERCENTAGE_TURNOVER,
   },
-  BROKER: {
-    USING_BROKER,
-    NAME,
-    ADDRESS_LINE_1,
-    EMAIL,
-  },
+  HAS_CREDIT_CONTROL,
 } = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
 
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Check your answers - Your business - Summary list', () => {
   let referenceNumber;
@@ -55,17 +43,11 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber, usingBroker: true });
+      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
       task.link().click();
 
-      // To get past "Eligibility" check your answers page
-      cy.submitCheckYourAnswersForm();
-
-      // To get past "Policy" check your answers page
-      cy.submitCheckYourAnswersForm();
-
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 
       cy.assertUrl(url);
     });
@@ -81,36 +63,12 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should render a ${COMPANY_NUMBER} summary list row`, () => {
-    checkSummaryList[COMPANY_NUMBER]();
-  });
-
-  it(`should render a ${COMPANY_NAME} summary list row`, () => {
-    checkSummaryList[COMPANY_NAME]();
-  });
-
-  it(`should render a ${COMPANY_ADDRESS} summary list row`, () => {
-    checkSummaryList[COMPANY_ADDRESS]();
-  });
-
-  it(`should render a ${COMPANY_INCORPORATED} summary list row`, () => {
-    checkSummaryList[COMPANY_INCORPORATED]();
-  });
-
-  it(`should render a ${COMPANY_SIC} summary list row`, () => {
-    checkSummaryList[COMPANY_SIC]();
-  });
-
-  it(`should render a ${FINANCIAL_YEAR_END_DATE} summary list row`, () => {
-    checkSummaryList[FINANCIAL_YEAR_END_DATE]();
-  });
-
-  it(`should render a ${TRADING_NAME} summary list row`, () => {
-    checkSummaryList[TRADING_NAME]();
+  it(`should render a ${HAS_DIFFERENT_TRADING_NAME} summary list row`, () => {
+    checkSummaryList[HAS_DIFFERENT_TRADING_NAME]({});
   });
 
   it(`should render a ${TRADING_ADDRESS} summary list row`, () => {
-    checkSummaryList[TRADING_ADDRESS]();
+    checkSummaryList[TRADING_ADDRESS]({});
   });
 
   it(`should render a ${WEBSITE} summary list row`, () => {
@@ -133,10 +91,6 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
     checkSummaryList[EMPLOYEES_UK]();
   });
 
-  it(`should render a ${EMPLOYEES_INTERNATIONAL} summary list row`, () => {
-    checkSummaryList[EMPLOYEES_INTERNATIONAL]();
-  });
-
   it(`should render a ${ESTIMATED_ANNUAL_TURNOVER} summary list row`, () => {
     checkSummaryList[ESTIMATED_ANNUAL_TURNOVER]();
   });
@@ -145,19 +99,7 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
     checkSummaryList[PERCENTAGE_TURNOVER]();
   });
 
-  it(`should render a ${USING_BROKER} summary list row`, () => {
-    checkSummaryList[USING_BROKER]();
-  });
-
-  it(`should render a ${NAME} summary list row`, () => {
-    checkSummaryList[NAME]({});
-  });
-
-  it(`should render a ${ADDRESS_LINE_1} summary list row`, () => {
-    checkSummaryList[ADDRESS_LINE_1]();
-  });
-
-  it(`should render a ${EMAIL} summary list row`, () => {
-    checkSummaryList[EMAIL]();
+  it(`should render a ${HAS_CREDIT_CONTROL} summary list row`, () => {
+    checkSummaryList[HAS_CREDIT_CONTROL]({ isYes: false });
   });
 });

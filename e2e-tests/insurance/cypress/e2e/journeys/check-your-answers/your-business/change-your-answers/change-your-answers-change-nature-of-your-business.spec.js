@@ -17,7 +17,6 @@ const {
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES,
     YEARS_EXPORTING,
-    EMPLOYEES_INTERNATIONAL,
     EMPLOYEES_UK,
   },
 } = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
@@ -49,12 +48,6 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
       task.link().click();
-
-      // To get past "Eligibility" check your answers page
-      cy.submitCheckYourAnswersForm();
-
-      // To get past "Policy" check your answers page
-      cy.submitCheckYourAnswersForm();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 
@@ -101,12 +94,12 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
       });
 
       it('should render the new answer', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        cy.checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered({ fieldVariables });
       });
     });
   });
@@ -140,12 +133,12 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
       });
 
       it('should render the new answer', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        cy.checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered({ fieldVariables });
       });
     });
   });
@@ -179,51 +172,12 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
       });
 
       it('should render the new answer', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        cy.checkChangeAnswerRendered(fieldVariables);
-      });
-    });
-  });
-
-  describe(EMPLOYEES_INTERNATIONAL, () => {
-    const fieldId = EMPLOYEES_INTERNATIONAL;
-
-    let fieldVariables = getFieldVariables(fieldId, referenceNumber);
-
-    describe('when clicking the `change` link', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-      });
-
-      it(`should redirect to ${NATURE_OF_BUSINESS_CHECK_AND_CHANGE}`, () => {
-        cy.navigateToUrl(url);
-        fieldVariables = getFieldVariables(fieldId, referenceNumber);
-
-        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
-      });
-    });
-
-    describe('form submission with a new answer', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        fieldVariables.newValueInput = '35';
-        cy.changeAnswerField(fieldVariables, field(fieldId).input());
-      });
-
-      it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
-      });
-
-      it('should render the new answer', () => {
-        fieldVariables.newValue = fieldVariables.newValueInput;
-        cy.checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered({ fieldVariables });
       });
     });
   });

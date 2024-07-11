@@ -1,11 +1,11 @@
 import gql from 'graphql-tag';
 
-const updateCompanyAndCompanyAddressMutation = gql`
-  mutation updateCompanyAndCompanyAddress($companyId: ID!, $companyAddressId: ID!, $data: CompanyAndCompanyAddressInput!) {
-    updateCompanyAndCompanyAddress(companyId: $companyId, companyAddressId: $companyAddressId, data: $data) {
+const updateApplicationCompanyMutation = gql`
+  mutation updateCompany($where: CompanyWhereUniqueInput!, $data: CompanyUpdateInput!) {
+    updateCompany(where: $where, data: $data) {
       id
     }
   }
 `;
 
-export default updateCompanyAndCompanyAddressMutation;
+export default updateApplicationCompanyMutation;

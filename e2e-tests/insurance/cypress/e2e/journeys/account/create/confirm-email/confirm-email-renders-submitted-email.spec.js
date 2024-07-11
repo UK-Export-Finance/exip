@@ -8,22 +8,27 @@ import account from '../../../../../../../fixtures/account';
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.CONFIRM_EMAIL;
 
 const {
-  START,
-  ACCOUNT: { CREATE: { CONFIRM_EMAIL } },
+  ACCOUNT: {
+    CREATE: { CONFIRM_EMAIL },
+  },
 } = ROUTES;
 
-const { ACCOUNT: { EMAIL } } = INSURANCE_FIELD_IDS;
+const {
+  ACCOUNT: { EMAIL },
+} = INSURANCE_FIELD_IDS;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Account - Create - Confirm email page should render the submitted email', () => {
   beforeEach(() => {
     cy.saveSession();
 
-    cy.navigateToUrl(START);
+    cy.navigateToCheckIfEligibleUrl();
 
     cy.submitEligibilityAndStartAccountCreation();
     cy.completeAndSubmitCreateAccountForm();
 
-    const expected = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
+    const expected = `${baseUrl}${CONFIRM_EMAIL}`;
 
     cy.assertUrl(expected);
   });

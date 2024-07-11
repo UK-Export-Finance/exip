@@ -2,7 +2,7 @@ import getApimCurrencies from '.';
 import APIM from '../../../integrations/APIM';
 import mapCurrencies from '../../../helpers/map-currencies';
 import mockApimCurrenciesResponse from '../../../test-mocks/mock-APIM-currencies-response';
-import mockCurrencies from '../../../test-mocks/mock-currencies';
+import { mockCurrencies } from '../../../test-mocks';
 
 describe('custom-resolvers/get-APIM-currencies', () => {
   jest.mock('../../../integrations/APIM');
@@ -16,12 +16,19 @@ describe('custom-resolvers/get-APIM-currencies', () => {
       APIM.getCurrencies = jest.fn(() => Promise.resolve(mockApimCurrenciesResponse));
     });
 
-    it('should return mapped countries', async () => {
+    it('should return an object with mapped countries ', async () => {
       const response = await getApimCurrencies();
 
-      const mapped = mapCurrencies(mockCurrencies);
+      const mappedSupported = mapCurrencies(mockCurrencies, false);
+      const mappedAlternative = mapCurrencies(mockCurrencies, true);
 
-      expect(response).toEqual(mapped);
+      const expected = {
+        supportedCurrencies: mappedSupported,
+        alternativeCurrencies: mappedAlternative,
+        allCurrencies: [...mappedSupported, ...mappedAlternative],
+      };
+
+      expect(response).toEqual(expected);
     });
   });
 

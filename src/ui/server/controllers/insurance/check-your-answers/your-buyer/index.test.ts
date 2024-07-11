@@ -11,15 +11,14 @@ import sectionStatus from '../../../../helpers/section-status';
 import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromise, referenceNumber } from '../../../../test-mocks';
 
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
 const {
   INSURANCE: {
     INSURANCE_ROOT,
-    ALL_SECTIONS,
-    CHECK_YOUR_ANSWERS: { YOUR_BUYER_SAVE_AND_BACK },
+    CHECK_YOUR_ANSWERS: { YOUR_BUYER_SAVE_AND_BACK, TYPE_OF_POLICY },
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
@@ -27,7 +26,7 @@ const {
 describe('controllers/insurance/check-your-answers/your-buyer', () => {
   jest.mock('../save-data');
 
-  let mockSaveSectionReview = jest.fn(() => Promise.resolve({}));
+  let mockSaveSectionReview = mockSpyPromise();
 
   save.sectionReview = mockSaveSectionReview;
 
@@ -37,8 +36,6 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
   });
 
   describe('FIELD_ID', () => {
@@ -51,14 +48,14 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(mockApplication.referenceNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELD: {
           ID: FIELD_ID,
           ...FIELDS[FIELD_ID],
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${YOUR_BUYER_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -75,9 +72,15 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
     it('should render template', async () => {
       await get(req, res);
       const checkAndChange = true;
-      const summaryList = yourBuyerSummaryList(mockApplication.buyer, mockApplication.referenceNumber, checkAndChange);
+      const summaryList = yourBuyerSummaryList(
+        mockApplication.buyer,
+        mockApplication.eligibility,
+        referenceNumber,
+        mockApplication.totalContractValueOverThreshold,
+        checkAndChange,
+      );
 
-      const fields = requiredFields();
+      const fields = requiredFields({});
 
       const status = sectionStatus(fields, mockApplication);
 
@@ -88,8 +91,8 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
         }),
         userName: getUserNameFromSession(req.session.user),
         status,
-        SUMMARY_LIST: summaryList,
-        ...pageVariables(mockApplication.referenceNumber),
+        SUMMARY_LISTS: summaryList,
+        ...pageVariables(referenceNumber),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -126,10 +129,10 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
       expect(save.sectionReview).toHaveBeenCalledWith(mockApplication, payload);
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, async () => {
+    it(`should redirect to ${TYPE_OF_POLICY}`, async () => {
       await post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });

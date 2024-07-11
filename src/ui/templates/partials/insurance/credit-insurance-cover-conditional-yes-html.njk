@@ -1,0 +1,33 @@
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+
+{% set fieldId = FIELDS.PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER.ID %}
+
+{{ govukCharacterCount({
+  name: fieldId,
+  id: fieldId,
+  label: {
+    text: FIELDS.PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER.LABEL,
+    classes: "govuk-label--m",
+    attributes: {
+      'data-cy': fieldId + '-label',
+      id: fieldId + '-label'
+    }
+  },
+  hint: {
+    text: FIELDS.PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER.HINT,
+    attributes: {
+      'data-cy': fieldId + '-hint'
+    }
+  },
+  attributes: {
+    'data-cy': fieldId
+  },
+  value: submittedValues[FIELDS.PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER.ID] or application.buyer.relationship[FIELDS.PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER.ID],
+  maxlength: FIELDS.PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER.MAXIMUM,
+  errorMessage: validationErrors.errorList[fieldId] and {
+    text: validationErrors.errorList[fieldId].text,
+    attributes: {
+      "data-cy": fieldId + "-error-message"
+    }
+  }
+}) }}

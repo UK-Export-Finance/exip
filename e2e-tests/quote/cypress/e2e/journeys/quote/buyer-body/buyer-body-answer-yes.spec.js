@@ -1,6 +1,4 @@
-import {
-  backLink, yesRadio, yesRadioInput, submitButton,
-} from '../../../../../../pages/shared';
+import { backLink } from '../../../../../../pages/shared';
 import { getAQuoteByEmailPage } from '../../../../../../pages/quote';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
@@ -17,7 +15,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
 
   before(() => {
     cy.login();
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
 
     cy.assertUrl(url);
   });
@@ -27,8 +25,8 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
 
     cy.navigateToUrl(url);
 
-    yesRadio().label().click();
-    submitButton().click();
+    cy.clickYesRadioInput();
+    cy.clickSubmitButton();
   });
 
   it('redirects to exit page', () => {
@@ -57,7 +55,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
     it('auto checks the previously submitted answer', () => {
       cy.clickBackLink();
 
-      yesRadioInput().should('be.checked');
+      cy.assertYesRadioOptionIsChecked();
     });
   });
 });

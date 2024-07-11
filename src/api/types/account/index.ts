@@ -87,6 +87,17 @@ export interface AccountSignInVariables {
   password: string;
 }
 
+export interface AccountStatusCore {
+  isVerified?: boolean;
+  isBlocked?: boolean;
+  isInactive?: boolean;
+  updatedAt?: Date;
+}
+
+export interface AccountStatus extends AccountStatusCore {
+  id: string;
+}
+
 export interface AccountCreationCore {
   email: string;
   firstName: string;
@@ -95,18 +106,32 @@ export interface AccountCreationCore {
   hash: string;
   verificationHash?: string;
   verificationExpiry?: Date;
-  optSalt?: string;
-  optHash?: string;
+  otpSalt?: string;
+  otpHash?: string;
   otpExpiry?: Date;
   sessionIdentifier?: string;
   passwordResetHash?: string;
   passwordResetExpiry?: Date;
-  isVerified: boolean;
   reactivationHash?: string;
   reactivationExpiry?: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface Account extends AccountCreationCore {
+  id: string;
+  statusId: string;
+  status: AccountStatus;
+}
+
+export interface AccountMvp extends AccountCreationCore {
+  id: string;
+  isVerified?: boolean;
+  isBlocked?: boolean;
+  statusId?: string;
+}
+
+export interface AuthenticationRetry {
   id: string;
 }
 
@@ -156,6 +181,7 @@ export interface VerifyEmailAddressResponse extends SuccessResponse {
 }
 
 export interface VerifyEmailAddressVariables {
+  id: string;
   token: string;
   accountId: string;
 }

@@ -12,10 +12,8 @@ import { get as getAQuoteByEmailGet } from '../../controllers/quote/get-a-quote-
 import { get as yourQuoteGet } from '../../controllers/quote/your-quote';
 import { get as needToStartAgainGet, post as needToStartAgainPost } from '../../controllers/quote/need-to-start-again';
 
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
 const quoteRouter = express.Router();
-/* eslint-enable @typescript-eslint/ban-ts-comment */
 
 quoteRouter.get(ROUTES.QUOTE.BUYER_COUNTRY, buyerCountryGet);
 quoteRouter.post(ROUTES.QUOTE.BUYER_COUNTRY, buyerCountryPost);

@@ -1,11 +1,13 @@
-import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { FIELD_VALUES } from '../../../../../../../constants';
+import { APPLICATION } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
-const { taskList } = partials.insurancePartials;
+const {
+  POLICY: { TOTAL_MONTHS_OF_COVER: MAXIMUM_MONTHS_OF_COVER },
+  POLICY_TYPE,
+} = APPLICATION;
 
 const {
   POLICY: {
@@ -30,47 +32,87 @@ const {
   },
 } = ERROR_MESSAGES;
 
+const assertions = {
+  field: fieldSelector(TOTAL_MONTHS_OF_COVER),
+  errorIndex: 1,
+  expectedErrorsCount: 3,
+};
+
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Multiple contract policy page - form validation - total months of cover', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      taskList.prepareApplication.tasks.policy.link().click();
+      cy.startInsurancePolicySection({});
+      cy.completeAndSubmitPolicyTypeForm({ policyType: POLICY_TYPE.MULTIPLE });
 
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
-      const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 
-      cy.assertUrl(expectedUrl);
+      cy.assertUrl(url);
     });
   });
 
   beforeEach(() => {
     cy.saveSession();
+
+    cy.visit(url);
   });
 
   after(() => {
     cy.deleteApplication(referenceNumber);
   });
 
-  const field = fieldSelector(TOTAL_MONTHS_OF_COVER);
-
   describe('when total months of cover is not provided', () => {
     it('should render a validation error', () => {
-      submitButton().click();
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        expectedErrorMessage: CONTRACT_ERROR_MESSAGES[TOTAL_MONTHS_OF_COVER].IS_EMPTY,
+      });
+    });
+  });
 
-      cy.checkText(
-        partials.errorSummaryListItems().eq(1),
-        CONTRACT_ERROR_MESSAGES[TOTAL_MONTHS_OF_COVER].IS_EMPTY,
-      );
+  describe('when total months of cover is not a number', () => {
+    it('should render a validation error', () => {
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: 'one',
+        expectedErrorMessage: CONTRACT_ERROR_MESSAGES[TOTAL_MONTHS_OF_COVER].INCORRECT_FORMAT,
+      });
+    });
+  });
 
-      cy.checkText(
-        field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES[TOTAL_MONTHS_OF_COVER].IS_EMPTY}`,
-      );
+  describe('when total months of cover contains a decimal', () => {
+    it('should render a validation error', () => {
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: '7.5',
+        expectedErrorMessage: CONTRACT_ERROR_MESSAGES[TOTAL_MONTHS_OF_COVER].INCORRECT_FORMAT,
+      });
+    });
+  });
+
+  describe('when total months of cover is below the minimum', () => {
+    it('should render a validation error', () => {
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: '0',
+        expectedErrorMessage: CONTRACT_ERROR_MESSAGES[TOTAL_MONTHS_OF_COVER].BELOW_MINIMUM,
+      });
+    });
+  });
+
+  describe('when total months of cover is above the maximum', () => {
+    it('should render a validation error', () => {
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: MAXIMUM_MONTHS_OF_COVER + 1,
+        expectedErrorMessage: CONTRACT_ERROR_MESSAGES[TOTAL_MONTHS_OF_COVER].ABOVE_MAXIMUM,
+      });
     });
   });
 });

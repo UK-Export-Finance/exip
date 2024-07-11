@@ -12,8 +12,8 @@ describe('api/generate-xlsx/map-application-to-xlsx/helpers/xlsx-row', () => {
     const result = xlsxRow(mockFieldName, mockFieldAnswer);
 
     const expected = {
-      [KEY.ID]: mockFieldName,
-      [VALUE.ID]: replaceCharacterCodesWithCharacters(mockFieldAnswer),
+      [KEY]: mockFieldName,
+      [VALUE]: replaceCharacterCodesWithCharacters(mockFieldAnswer),
     };
 
     expect(result).toEqual(expected);
@@ -24,8 +24,8 @@ describe('api/generate-xlsx/map-application-to-xlsx/helpers/xlsx-row', () => {
       const result = xlsxRow(mockFieldName, 0);
 
       const expected = {
-        [KEY.ID]: mockFieldName,
-        [VALUE.ID]: replaceCharacterCodesWithCharacters(String(0)),
+        [KEY]: mockFieldName,
+        [VALUE]: replaceCharacterCodesWithCharacters(String(0)),
       };
 
       expect(result).toEqual(expected);
@@ -37,8 +37,8 @@ describe('api/generate-xlsx/map-application-to-xlsx/helpers/xlsx-row', () => {
       const result = xlsxRow(mockFieldName);
 
       const expected = {
-        [KEY.ID]: mockFieldName,
-        [VALUE.ID]: replaceCharacterCodesWithCharacters(''),
+        [KEY]: mockFieldName,
+        [VALUE]: replaceCharacterCodesWithCharacters(''),
       };
 
       expect(result).toEqual(expected);

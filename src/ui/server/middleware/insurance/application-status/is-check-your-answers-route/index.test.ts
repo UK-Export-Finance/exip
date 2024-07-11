@@ -1,10 +1,8 @@
 import isCheckYourAnswersRoute, { mapCheckYourAnswersRoutes } from '.';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
-import { mockApplication } from '../../../../test-mocks';
+import { referenceNumber } from '../../../../test-mocks';
 
 const { CHECK_YOUR_ANSWERS, INSURANCE_ROOT } = INSURANCE_ROUTES;
-
-const { referenceNumber } = mockApplication;
 
 describe('middleware/insurance/application-status/is-check-your-answers-route', () => {
   describe('mapCheckYourAnswersRoutes', () => {
@@ -22,7 +20,7 @@ describe('middleware/insurance/application-status/is-check-your-answers-route', 
   describe('isCheckYourAnswersRoute', () => {
     describe('when a route includes a "check your answers" route', () => {
       it('should return true', () => {
-        const mockUrl = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS.ELIGIBILITY}`;
+        const mockUrl = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`;
 
         const result = isCheckYourAnswersRoute(mockUrl, referenceNumber);
 

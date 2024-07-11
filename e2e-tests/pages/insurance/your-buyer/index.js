@@ -1,4 +1,5 @@
 import companyOrOrganisationPage from './companyOrOrganisation';
-import workingWithBuyerPage from './workingWithBuyer';
+import connectionWithBuyerPage from './connectionWithBuyer';
+import buyerFinancialInformationPage from './buyerFinancialAccounts';
 
-export { companyOrOrganisationPage, workingWithBuyerPage };
+export { companyOrOrganisationPage, connectionWithBuyerPage, buyerFinancialInformationPage };

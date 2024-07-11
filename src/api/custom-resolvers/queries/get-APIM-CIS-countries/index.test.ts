@@ -2,7 +2,7 @@ import getApimCisCountries from '.';
 import APIM from '../../../integrations/APIM';
 import mapCisCountries from '../../../helpers/map-CIS-countries';
 import mockCisCountriesResponse from '../../../test-mocks/mock-APIM-CIS-countries-response';
-import mockCisCountries from '../../../test-mocks/mock-CIS-countries';
+import { mockCisCountries } from '../../../test-mocks';
 
 describe('custom-resolvers/get-APIM-CIS-countries', () => {
   jest.mock('../../../integrations/APIM');

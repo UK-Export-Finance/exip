@@ -1,13 +1,11 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/hint/macro.njk" import govukHint %}
 {% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
-{% import '../../components/personal-details-input.njk' as personalDetailsInput %}
-{% import '../../components/submit-button.njk' as submitButton %}
-{% import '../../components/fieldset-legend.njk' as fieldsetLegend %}
+{% import '../../components/text-input.njk' as textInput %}
+{% import '../../components/form-buttons.njk' as formButtons %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -39,7 +37,7 @@
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
         <span class="govuk-caption-xl" data-cy="heading-caption">
-          {{CONTENT_STRINGS.HEADING_CAPTION}}
+          {{ CONTENT_STRINGS.HEADING_CAPTION }}
         </span>
         <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
@@ -55,60 +53,51 @@
         {% call govukFieldset({
         }) %}
 
-          {{ personalDetailsInput.render({
-            class: "govuk-input--width-11",
-            fieldId: FIELDS.FIRST_NAME.ID,
-            label: FIELDS.FIRST_NAME.LABEL,
-            labelClass: "govuk-label--s",
-            validationErrors: validationErrors,
-            submittedValues: submittedValues
+          {{ textInput.render({
+            inputClasses: "govuk-!-width-one-half",
+            id: FIELDS.FIRST_NAME.ID,
+            labelText: FIELDS.FIRST_NAME.LABEL,
+            labelClasses: "govuk-label--s",
+            errorMessage: validationErrors.errorList[FIELDS.FIRST_NAME.ID],
+            value: submittedValues[FIELDS.FIRST_NAME.ID]
           }) }}
 
-          {{ personalDetailsInput.render({
-            class: "govuk-input--width-11",
-            fieldId: FIELDS.LAST_NAME.ID,
-            label: FIELDS.LAST_NAME.LABEL,
-            labelClass: "govuk-label--s",
-            validationErrors: validationErrors,
-            submittedValues: submittedValues
+          {{ textInput.render({
+            inputClasses: "govuk-!-width-one-half",
+            id: FIELDS.LAST_NAME.ID,
+            labelText: FIELDS.LAST_NAME.LABEL,
+            labelClasses: "govuk-label--s",
+            errorMessage: validationErrors.errorList[FIELDS.LAST_NAME.ID],
+            value: submittedValues[FIELDS.LAST_NAME.ID]
           }) }}
 
-          {{ personalDetailsInput.render({
-            class: "govuk-input--width-11",
-            fieldId: FIELDS.EMAIL_ADDRESS.ID,
-            label: FIELDS.EMAIL_ADDRESS.LABEL,
-            labelClass: "govuk-label--s",
-            validationErrors: validationErrors,
-            submittedValues: submittedValues
+          {{ textInput.render({
+            inputClasses: "govuk-!-width-one-half",
+            id: FIELDS.EMAIL_ADDRESS.ID,
+            labelText: FIELDS.EMAIL_ADDRESS.LABEL,
+            labelClasses: "govuk-label--s",
+            type: "email",
+            autocomplete: true,
+            spellcheck: false,
+            errorMessage: validationErrors.errorList[FIELDS.EMAIL_ADDRESS.ID],
+            value: submittedValues[FIELDS.EMAIL_ADDRESS.ID]
           }) }}
 
-          {{ personalDetailsInput.render({
-            class: "govuk-input--width-11",
-            fieldId: FIELDS.POSITION.ID,
-            label: FIELDS.POSITION.LABEL,
-            labelClass: "govuk-label--s",
-            validationErrors: validationErrors,
-            submittedValues: submittedValues
+          {{ textInput.render({
+            inputClasses: "govuk-!-width-one-half",
+            id: FIELDS.POSITION.ID,
+            labelText: FIELDS.POSITION.LABEL,
+            labelClasses: "govuk-label--s",
+            errorMessage: validationErrors.errorList[FIELDS.POSITION.ID],
+            value: submittedValues[FIELDS.POSITION.ID]
           }) }}
         {% endcall %}
       </div>
 
-      <div class="govuk-grid-column-three-quarters-from-desktop govuk-!-margin-top-5">
-        <div class="govuk-button-group">
-          {{ submitButton.render({
-            text: CONTENT_STRINGS.BUTTONS.CONTINUE
-          }) }}
-
-          {{ govukButton({
-            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
-            classes: "govuk-button--secondary",
-            attributes: {
-              'data-cy': 'save-and-back-button',
-              'formaction': SAVE_AND_BACK_URL
-            }
-          }) }}
-        </div>
-      </div>
+      {{ formButtons.render({
+        contentStrings: CONTENT_STRINGS.BUTTONS,
+        saveAndBackUrl: SAVE_AND_BACK_URL
+      }) }}
     </form>
   </div>
 

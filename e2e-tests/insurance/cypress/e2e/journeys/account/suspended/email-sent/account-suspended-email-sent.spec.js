@@ -1,5 +1,4 @@
 import { emailSentPage } from '../../../../../../../pages/insurance/account/suspended';
-import { submitButton } from '../../../../../../../pages/shared';
 import { PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 
@@ -67,7 +66,7 @@ context('Insurance - Account - Suspended - Email sent page - As an Exporter, I w
 
         cy.navigateToUrl(accountSuspendedUrlWithIdParam);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it('should render `we sent link` copy', () => {

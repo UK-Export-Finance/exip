@@ -27,12 +27,14 @@ const {
   PREPERATION_OF_STATEMENT,
 } = CONTENT_STRINGS;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Accessibility statement page - Quote', () => {
   beforeEach(() => {
     cy.login();
 
     partials.footer.supportLinks.accessibilityStatement().click();
-    cy.assertUrl(`${Cypress.config('baseUrl')}${ROUTES.ACCESSIBILITY_STATEMENT}`);
+    cy.assertUrl(`${baseUrl}${ROUTES.ACCESSIBILITY_STATEMENT}`);
 
     cy.saveSession();
   });

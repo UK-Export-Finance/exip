@@ -6,7 +6,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { yourBuyerSummaryList } from '../../../../helpers/summary-lists/your-buyer';
 import { Request, Response, ApplicationBuyer } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockBuyer } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockBuyer, referenceNumber } from '../../../../test-mocks';
 
 const { CHECK_YOUR_ANSWERS } = PAGES.INSURANCE.YOUR_BUYER;
 const { CHECK_YOUR_ANSWERS: CHECK_YOUR_ANSWERS_TEMPLATE } = TEMPLATES.INSURANCE.YOUR_BUYER;
@@ -22,8 +22,6 @@ describe('controllers/insurance/your-buyer/check-your-answers', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
   });
 
   describe('TEMPLATE', () => {
@@ -39,7 +37,12 @@ describe('controllers/insurance/your-buyer/check-your-answers', () => {
         ...mockBuyer,
       } as ApplicationBuyer;
 
-      const summaryList = yourBuyerSummaryList(mockApplicationBuyer, mockApplication.referenceNumber);
+      const summaryList = yourBuyerSummaryList(
+        mockApplicationBuyer,
+        mockApplication.eligibility,
+        referenceNumber,
+        mockApplication.totalContractValueOverThreshold,
+      );
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
@@ -48,7 +51,7 @@ describe('controllers/insurance/your-buyer/check-your-answers', () => {
         }),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
-        SUMMARY_LIST: summaryList,
+        SUMMARY_LISTS: summaryList,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -71,7 +74,7 @@ describe('controllers/insurance/your-buyer/check-your-answers', () => {
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });

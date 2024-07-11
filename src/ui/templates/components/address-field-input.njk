@@ -1,4 +1,4 @@
-{% from "govuk/components/input/macro.njk" import govukInput %}
+{% import './text-input.njk' as textInput %}
 
 {% macro render(params) %}
 
@@ -8,28 +8,13 @@
   {% set validationErrors = params.validationErrors %}
   {% set submittedValues = params.submittedValues %}
 
-  {{ govukInput({
+  {{ textInput.render({
     id: id,
-    name: id,
+    labelText: label,
+    labelClasses: "govuk-body govuk-!-font-weight-bold",
+    inputClasses: "govuk-input--width-20",
     value: submittedValues[id] or application[id],
-    label: {
-      text: label,
-      classes: "govuk-body govuk-!-font-weight-bold",
-      attributes: {
-        id: id + '-label',
-        "data-cy": id + "-label"
-      }
-    },
-    classes: "govuk-input--width-20",
-    attributes: {
-      "data-cy": id + "-input"
-    },
-    errorMessage: validationErrors.errorList[id] and {
-      text: validationErrors.errorList[id].text,
-      attributes: {
-        "data-cy": id + "-error-message"
-      }
-    }
+    errorMessage: validationErrors.errorList[id]
   }) }}
 
 {% endmacro %}

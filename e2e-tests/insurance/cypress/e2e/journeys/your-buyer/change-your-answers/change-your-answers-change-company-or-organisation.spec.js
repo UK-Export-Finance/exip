@@ -1,36 +1,17 @@
-import partials from '../../../../../../partials';
-import {
-  FIELD_IDS,
-  FIELD_VALUES,
-  ROUTES,
-  WEBSITE_EXAMPLES,
-} from '../../../../../../constants';
-import {
-  field,
-  submitButton,
-  summaryList,
-  noRadio,
-} from '../../../../../../pages/shared';
+import { WEBSITE_EXAMPLES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
+import { field as fieldSelector, summaryList } from '../../../../../../pages/shared';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
-import application from '../../../../../../fixtures/application';
 
 const {
-  INSURANCE: {
-    YOUR_BUYER: {
-      COMPANY_OR_ORGANISATION: {
-        NAME,
-        ADDRESS,
-        REGISTRATION_NUMBER,
-        WEBSITE,
-        FIRST_NAME,
-        LAST_NAME,
-        POSITION,
-        EMAIL,
-        CAN_CONTACT_BUYER,
-      },
-    },
+  COMPANY_OR_ORGANISATION: {
+    NAME,
+    ADDRESS,
+    REGISTRATION_NUMBER,
+    WEBSITE,
   },
-} = FIELD_IDS;
+} = YOUR_BUYER_FIELD_IDS;
 
 const {
   ROOT,
@@ -38,11 +19,9 @@ const {
     COMPANY_OR_ORGANISATION_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.buyer;
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Your buyer - Change your answers - Company or organisation - As an exporter, I want to change my answers to the company or organisation section', () => {
   let referenceNumber;
@@ -52,12 +31,14 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startInsuranceYourBuyerSection({});
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
-      cy.completeAndSubmitWorkingWithBuyerForm({});
+      cy.completeAndSubmitConnectionWithTheBuyerForm({});
+      cy.completeAndSubmitTradedWithBuyerForm({});
+      cy.completeAndSubmitBuyerFinancialInformationForm({});
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
   });
 
@@ -78,7 +59,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, NAME);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: COMPANY_OR_ORGANISATION_CHANGE, fieldId: NAME });
       });
     });
 
@@ -90,13 +71,13 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(field(fieldId).input(), newAnswer);
+        cy.keyboardInput(fieldSelector(fieldId).input(), newAnswer);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {
@@ -114,7 +95,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, ADDRESS);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: COMPANY_OR_ORGANISATION_CHANGE, fieldId: ADDRESS });
       });
     });
 
@@ -126,13 +107,15 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(field(fieldId).input(), newAnswer);
+        const field = fieldSelector(fieldId);
 
-        submitButton().click();
+        cy.keyboardInput(field.textarea(), newAnswer);
+
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {
@@ -160,7 +143,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, REGISTRATION_NUMBER);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: COMPANY_OR_ORGANISATION_CHANGE, fieldId: REGISTRATION_NUMBER });
       });
     });
 
@@ -172,13 +155,13 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(field(fieldId).input(), newAnswer);
+        cy.keyboardInput(fieldSelector(fieldId).input(), newAnswer);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {
@@ -196,7 +179,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, WEBSITE);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: COMPANY_OR_ORGANISATION_CHANGE, fieldId: WEBSITE });
       });
     });
 
@@ -208,104 +191,17 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(field(fieldId).input(), newAnswer);
+        cy.keyboardInput(fieldSelector(fieldId).input(), newAnswer);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {
         cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
-      });
-    });
-  });
-
-  describe(FIRST_NAME, () => {
-    const fieldId = FIRST_NAME;
-
-    describe('when clicking the `change` link', () => {
-      it(`should redirect to ${COMPANY_OR_ORGANISATION_CHANGE}`, () => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, FIRST_NAME);
-      });
-    });
-
-    describe('form submission with a new answer', () => {
-      const newAnswerFirstName = 'Jim';
-      const newAnswerLastName = 'Jim';
-      const newAnswerPosition = 'Worker';
-
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.keyboardInput(field(fieldId).input(), newAnswerFirstName);
-        cy.keyboardInput(field(LAST_NAME).input(), newAnswerLastName);
-        cy.keyboardInput(field(POSITION).input(), newAnswerPosition);
-
-        submitButton().click();
-      });
-
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
-      });
-
-      it('should render the new answer', () => {
-        const expectedKey = FIELDS.COMPANY_OR_ORGANISATION[fieldId].SUMMARY.TITLE;
-
-        const row = summaryList.field(fieldId);
-
-        cy.checkText(
-          row.key(),
-          expectedKey,
-        );
-
-        // as html, cannot use checkText so checking contains following fields
-        row.value().contains(newAnswerFirstName);
-        row.value().contains(newAnswerLastName);
-        row.value().contains(newAnswerPosition);
-        row.value().contains(application.BUYER[EMAIL]);
-      });
-    });
-  });
-
-  describe(CAN_CONTACT_BUYER, () => {
-    const fieldId = CAN_CONTACT_BUYER;
-
-    describe('when clicking the `change` link', () => {
-      it(`should redirect to ${COMPANY_OR_ORGANISATION_CHANGE}`, () => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, CAN_CONTACT_BUYER);
-      });
-    });
-
-    describe('form submission with a new answer', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        noRadio().label().click();
-
-        submitButton().click();
-      });
-
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
-      });
-
-      it('should render the new answer', () => {
-        cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.NO);
       });
     });
   });

@@ -12,4 +12,3 @@ import './application';
 import './assertions';
 import './declarations';
 import './eligibility';
-import './intercept';

@@ -2,11 +2,18 @@ import mockIndustrySectors from '../../test-mocks/mock-industry-sectors';
 import { mapCompaniesHouseFields } from '.';
 import createFullTimestampFromDayAndMonth from '../create-full-timestamp-from-day-month';
 import mapSicCodeDescriptions from '../map-sic-code-descriptions';
+import { EXTERNAL_API_DEFINITIONS } from '../../constants';
 import { CompaniesHouseResponse } from '../../types';
+
+const {
+  COMPANIES_HOUSE: { COMPANY_STATUS },
+} = EXTERNAL_API_DEFINITIONS;
 
 describe('mapCompaniesHouseFields()', () => {
   const companiesHouseResponseMock = {
     company_name: 'Test name',
+    company_number: '123',
+    company_status: COMPANY_STATUS.ACTIVE,
     registered_office_address: {
       care_of: undefined,
       premises: undefined,
@@ -17,7 +24,6 @@ describe('mapCompaniesHouseFields()', () => {
       postal_code: 'SW1A 2HQ',
       country: undefined,
     },
-    company_number: '123',
     date_of_creation: '2022-05-10',
     sic_codes: ['1'],
     success: true,
@@ -54,6 +60,7 @@ describe('mapCompaniesHouseFields()', () => {
           companiesHouseResponseMock.accounts.accounting_reference_date.day,
           companiesHouseResponseMock.accounts.accounting_reference_date.month,
         ),
+        isActive: true,
       };
 
       expect(result).toEqual(expected);
@@ -89,9 +96,23 @@ describe('mapCompaniesHouseFields()', () => {
           companiesHouseResponseMock.accounts.accounting_reference_date.day,
           companiesHouseResponseMock.accounts.accounting_reference_date.month,
         ),
+        isActive: true,
       };
 
       expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when company_status is not "${COMPANY_STATUS.ACTIVE}`, () => {
+    it('should return isActive as false', () => {
+      const inactiveCompany = {
+        ...companiesHouseResponseMock,
+        company_status: `not-${COMPANY_STATUS.ACTIVE}`,
+      };
+
+      const result = mapCompaniesHouseFields(inactiveCompany, mockIndustrySectors);
+
+      expect(result.isActive).toEqual(false);
     });
   });
 });

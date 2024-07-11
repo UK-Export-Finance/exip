@@ -7,12 +7,23 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/turnover';
+import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
+import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import {
+  mockReq,
+  mockRes,
+  mockApplication,
+  referenceNumber,
+  mockCurrencies,
+  mockCurrenciesResponse,
+  mockCurrenciesEmptyResponse,
+} from '../../../../test-mocks';
 
-const { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER } = BUSINESS_FIELD_IDS.TURNOVER;
+const { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER, TURNOVER_CURRENCY_CODE } = BUSINESS_FIELD_IDS.TURNOVER;
 
 const { TURNOVER } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { TURNOVER: TURNOVER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
@@ -24,19 +35,34 @@ const {
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
-const { TURNOVER_SAVE_AND_BACK, BROKER_ROOT, CHECK_YOUR_ANSWERS, TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE } = EXPORTER_BUSINESS_ROUTES;
+const {
+  TURNOVER_ALTERNATIVE_CURRENCY,
+  TURNOVER_SAVE_AND_BACK,
+  TURNOVER_CHANGE,
+  TURNOVER_CHECK_AND_CHANGE,
+  TURNOVER_ALTERNATIVE_CURRENCY_CHANGE,
+  TURNOVER_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE,
+} = EXPORTER_BUSINESS_ROUTES;
+
+const { CREDIT_CONTROL, CHECK_YOUR_ANSWERS } = EXPORTER_BUSINESS_ROUTES;
 
 const { TURNOVER: TURNOVER_FIELDS } = FIELDS;
 
 jest.mock('../map-and-save/turnover');
 
+const currencyValue = mockApplication.business[TURNOVER_CURRENCY_CODE];
+
 describe('controllers/insurance/business/turnover', () => {
   let req: Request;
   let res: Response;
 
+  let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
+
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
+
+    api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
 
   afterAll(() => {
@@ -57,7 +83,9 @@ describe('controllers/insurance/business/turnover', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(mockApplication.referenceNumber);
+      const result = pageVariables(referenceNumber, mockCurrencies, currencyValue);
+
+      const currency = getCurrencyByCode(mockCurrencies, String(currencyValue));
 
       const expected = {
         FIELDS: {
@@ -74,16 +102,50 @@ describe('controllers/insurance/business/turnover', () => {
             ...TURNOVER_FIELDS[PERCENTAGE_TURNOVER],
           },
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_SAVE_AND_BACK}`,
+        PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_SAVE_AND_BACK}`,
+        TURNOVER_LEGEND: `${TURNOVER_FIELDS[ESTIMATED_ANNUAL_TURNOVER].LEGEND} ${currency.name}?`,
+        CURRENCY_PREFIX_SYMBOL: currency.symbol,
       };
 
       expect(result).toEqual(expected);
     });
+
+    describe('when isChange is provided as true', () => {
+      it(`should return "PROVIDE_ALTERNATIVE_CURRENCY_URL" as ${TURNOVER_ALTERNATIVE_CURRENCY_CHANGE}`, () => {
+        const isChange = true;
+
+        const result = pageVariables(referenceNumber, mockCurrencies, currencyValue, isChange);
+
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY_CHANGE}`;
+
+        expect(result.PROVIDE_ALTERNATIVE_CURRENCY_URL).toEqual(expected);
+      });
+    });
+
+    describe('when isCheckAndChange is provided as true', () => {
+      it(`should return "PROVIDE_ALTERNATIVE_CURRENCY_URL" as ${TURNOVER_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`, () => {
+        const isChange = false;
+        const isCheckAndChange = true;
+
+        const result = pageVariables(referenceNumber, mockCurrencies, currencyValue, isChange, isCheckAndChange);
+
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`;
+
+        expect(result.PROVIDE_ALTERNATIVE_CURRENCY_URL).toEqual(expected);
+      });
+    });
   });
 
   describe('get', () => {
-    it('should render the turnover template with correct variables', () => {
-      get(req, res);
+    it('should call api.keystone.APIM.getCurrencies', async () => {
+      await get(req, res);
+
+      expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should render the turnover template with correct variables', async () => {
+      await get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TURNOVER_TEMPLATE, {
         ...insuranceCorePageVariables({
@@ -92,7 +154,7 @@ describe('controllers/insurance/business/turnover', () => {
         }),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
-        ...pageVariables(mockApplication.referenceNumber),
+        ...pageVariables(referenceNumber, mockCurrencies, currencyValue),
       });
     });
 
@@ -107,10 +169,47 @@ describe('controllers/insurance/business/turnover', () => {
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
+
+    describe('api error handling', () => {
+      describe('when the get currencies API call fails', () => {
+        beforeEach(() => {
+          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when the get currencies response does not return a populated array', () => {
+        beforeEach(() => {
+          getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+    });
   });
 
   describe('post', () => {
-    mapAndSave.turnover = jest.fn(() => Promise.resolve(true));
+    beforeEach(() => {
+      getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
+      api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+      mapAndSave.turnover = jest.fn(() => Promise.resolve(true));
+    });
+
+    const validBody = {
+      [ESTIMATED_ANNUAL_TURNOVER]: '5',
+      [PERCENTAGE_TURNOVER]: '3',
+    };
 
     describe('when there are validation errors', () => {
       it('should render template with validation errors and submitted values', async () => {
@@ -128,35 +227,27 @@ describe('controllers/insurance/business/turnover', () => {
             BACK_LINK: req.headers.referer,
           }),
           userName: getUserNameFromSession(req.session.user),
-          ...pageVariables(mockApplication.referenceNumber),
+          ...pageVariables(referenceNumber, mockCurrencies, currencyValue),
           validationErrors,
           application: mapApplicationToFormFields(mockApplication),
-          submittedValues: payload,
+          submittedValues: sanitiseData(payload),
         });
       });
     });
 
     describe('when there are no validation errors', () => {
-      const body = {
-        [ESTIMATED_ANNUAL_TURNOVER]: '5',
-        [PERCENTAGE_TURNOVER]: '3',
-      };
+      beforeEach(() => {
+        req.body = validBody;
+      });
 
       it('should redirect to next page', async () => {
-        req.body = body;
-
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BROKER_ROOT}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
       it('should call mapAndSave.turnover once with data from constructPayload and application', async () => {
-        req.body = {
-          ...body,
-          injection: 1,
-        };
-
         await post(req, res);
 
         const payload = constructPayload(req.body, FIELD_IDS);
@@ -168,26 +259,22 @@ describe('controllers/insurance/business/turnover', () => {
 
       describe("when the url's last substring is `change`", () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-          req.body = body;
-
           req.originalUrl = TURNOVER_CHANGE;
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });
 
       describe("when the url's last substring is `check-and-change`", () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
-          req.body = body;
-
           req.originalUrl = TURNOVER_CHECK_AND_CHANGE;
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -203,6 +290,34 @@ describe('controllers/insurance/business/turnover', () => {
         post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('when the get currencies API call fails', () => {
+        beforeEach(() => {
+          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when the get currencies response does not return a populated array', () => {
+        beforeEach(() => {
+          getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
       });
     });
   });

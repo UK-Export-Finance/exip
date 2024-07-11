@@ -3,6 +3,7 @@ import verifyAccountEmailAddress from '.';
 import { ACCOUNT, FIELD_IDS, DATE_ONE_MINUTE_IN_THE_PAST } from '../../../constants';
 import encryptPassword from '../../../helpers/encrypt-password';
 import accounts from '../../../test-helpers/accounts';
+import accountStatusHelper from '../../../test-helpers/account-status';
 import authRetries from '../../../test-helpers/auth-retries';
 import { mockAccount } from '../../../test-mocks';
 import { Account, Context, VerifyEmailAddressResponse, VerifyEmailAddressVariables } from '../../../types';
@@ -24,6 +25,8 @@ const {
     ACCOUNT: { EMAIL, ID, IS_VERIFIED, VERIFICATION_HASH, VERIFICATION_EXPIRY },
   },
 } = FIELD_IDS;
+
+const { status, ...mockAccountUpdate } = mockAccount;
 
 describe('custom-resolvers/verify-account-email-address', () => {
   let context: Context;
@@ -58,8 +61,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
     const verificationExpiry = EMAIL_VERIFICATION_EXPIRY();
 
     const unverifiedAccount = {
-      ...mockAccount,
-      [IS_VERIFIED]: false,
+      ...mockAccountUpdate,
       salt,
       hash,
       verificationHash,
@@ -68,7 +70,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
 
     account = await accounts.create({ context, data: unverifiedAccount });
 
-    expect(account.isVerified).toEqual(false);
+    expect(account.status.isVerified).toEqual(false);
 
     variables.token = verificationHash;
 
@@ -89,7 +91,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
   });
 
   test(`should update the account to be ${IS_VERIFIED}=true`, () => {
-    expect(account[IS_VERIFIED]).toEqual(true);
+    expect(account.status[IS_VERIFIED]).toEqual(true);
   });
 
   test(`should remove ${VERIFICATION_HASH} from the account`, () => {
@@ -97,7 +99,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
   });
 
   test(`should nullify ${VERIFICATION_EXPIRY} from the account`, () => {
-    expect(account[VERIFICATION_EXPIRY]).toEqual(null);
+    expect(account[VERIFICATION_EXPIRY]).toBeNull();
   });
 
   test('should remove all entries for the account in the AuthenticationRetry table', async () => {
@@ -111,13 +113,15 @@ describe('custom-resolvers/verify-account-email-address', () => {
       const oneMinuteInThePast = DATE_ONE_MINUTE_IN_THE_PAST();
 
       const accountVerificationExpired = {
-        ...mockAccount,
-        isVerified: false,
+        ...mockAccountUpdate,
         verificationHash,
         [VERIFICATION_EXPIRY]: oneMinuteInThePast,
       };
 
       account = await accounts.create({ context, data: accountVerificationExpired });
+      await accountStatusHelper.update(context, account.status.id, { [IS_VERIFIED]: false });
+      // get updated account
+      account = await accounts.get(context, account.id);
 
       result = await verifyAccountEmailAddress({}, variables, context);
 
@@ -133,12 +137,10 @@ describe('custom-resolvers/verify-account-email-address', () => {
 
   describe('when an account is already verified', () => {
     test('it should return success=true', async () => {
-      const verifiedAccount = {
-        ...mockAccount,
-        [IS_VERIFIED]: true,
-      };
-
-      account = await accounts.create({ context, data: verifiedAccount });
+      account = await accounts.create({ context, data: mockAccountUpdate });
+      await accountStatusHelper.update(context, account.status.id, { [IS_VERIFIED]: true });
+      // get updated account
+      account = await accounts.get(context, account.id);
 
       result = await verifyAccountEmailAddress({}, variables, context);
 

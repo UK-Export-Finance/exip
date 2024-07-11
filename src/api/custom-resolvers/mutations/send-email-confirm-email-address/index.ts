@@ -5,8 +5,8 @@ import { Context, SendConfirmEmailAddressVariables } from '../../../types';
  * sendEmailConfirmEmailAddress
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the SendEmailConfirmEmailAddress mutation
- * @param {Object} KeystoneJS context API
- * @returns {Object} Object with success flag / result of sendEmailConfirmEmailAddress
+ * @param {Context} KeystoneJS context API
+ * @returns {Promise<Object>} Object with success flag / result of sendEmailConfirmEmailAddress
  */
 const sendEmailConfirmEmailAddressMutation = async (root: any, variables: SendConfirmEmailAddressVariables, context: Context) => {
   try {

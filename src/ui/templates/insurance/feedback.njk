@@ -125,7 +125,7 @@
         {{ govukCharacterCount({
           name: FIELDS.IMPROVEMENT.ID,
           id: FIELDS.IMPROVEMENT.ID,
-          maxlength: MAXIMUM,
+          maxlength: FIELDS.IMPROVEMENT.MAXIMUM,
           value: submittedValues[FIELDS.IMPROVEMENT.ID],
           label: {
             text: FIELDS.IMPROVEMENT.LABEL,
@@ -158,7 +158,7 @@
         {{ govukCharacterCount({
           name: FIELDS.OTHER_COMMENTS.ID,
           id: FIELDS.OTHER_COMMENTS.ID,
-          maxlength: MAXIMUM,
+          maxlength: FIELDS.OTHER_COMMENTS.MAXIMUM,
           value: submittedValues[FIELDS.OTHER_COMMENTS.ID],
           label: {
             text: FIELDS.OTHER_COMMENTS.LABEL,

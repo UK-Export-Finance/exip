@@ -1,6 +1,5 @@
 import { ACCOUNT } from '../../../constants/account';
 import completeAndSubmitSignInAccountForm from './complete-and-submit-sign-in-account-form';
-import { backLink } from '../../../pages/shared';
 
 const attemptsToMake = [...Array(ACCOUNT.MAX_AUTH_RETRIES)];
 
@@ -22,7 +21,7 @@ const completeAndSubmitSignInAccountFormMaximumInvalidRetries = ({
     const isLastAttempt = index + 1 === attemptsToMake.length;
 
     if (!isLastAttempt && clickBackLinkOnLastAttempt) {
-      backLink().click();
+      cy.clickBackLink();
     }
   });
 };

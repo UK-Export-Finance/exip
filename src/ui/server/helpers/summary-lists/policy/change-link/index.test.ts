@@ -1,6 +1,6 @@
 import changeLink from '.';
 import { FIELD_VALUES, ROUTES } from '../../../../constants';
-import { mockApplication } from '../../../../test-mocks';
+import { referenceNumber } from '../../../../test-mocks';
 import generateChangeLink from '../../../generate-change-link';
 
 const {
@@ -15,8 +15,6 @@ const {
 } = ROUTES;
 
 describe('server/helpers/summary-lists/policy/change-link', () => {
-  const { referenceNumber } = mockApplication;
-
   const mockFieldId = 'mockField';
   const checkAndChange = false;
 

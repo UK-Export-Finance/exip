@@ -1,6 +1,5 @@
 import { FIELD_IDS, ROUTES } from '../../../../constants';
 import { cookiesPage, cookiesSavedPage } from '../../../../pages';
-import { submitButton } from '../../../../pages/shared';
 
 const {
   INSURANCE: { COOKIES, DASHBOARD },
@@ -21,7 +20,7 @@ context('Cookies saved page - Insurance - visit the page directly as a signed in
 
       cookiesPage[FIELD_ID].accept.label().click();
 
-      submitButton().click();
+      cy.clickSubmitButton();
     });
   });
 
@@ -43,7 +42,7 @@ context('Cookies saved page - Insurance - visit the page directly as a signed in
 
       cookiesPage[FIELD_ID].accept.label().click();
 
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     it(`should redirect to the ${DASHBOARD}`, () => {

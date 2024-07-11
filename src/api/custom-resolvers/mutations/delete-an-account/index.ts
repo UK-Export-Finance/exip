@@ -1,6 +1,6 @@
 import getAccountByField from '../../../helpers/get-account-by-field';
 import getAuthenticationRetriesByAccountId from '../../../helpers/get-authentication-retries-by-account-id';
-import { Account, AccountDeletionVariables, Context } from '../../../types';
+import { Account, AccountDeletionVariables, AuthenticationRetry, Context } from '../../../types';
 
 /**
  * deleteAnAccount
@@ -11,8 +11,8 @@ import { Account, AccountDeletionVariables, Context } from '../../../types';
  * 3) Delete the account.
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the DeleteAnAccount mutation
- * @param {Object} KeystoneJS context API
- * @returns {Object} Object with success flag
+ * @param {Context} KeystoneJS context API
+ * @returns {Promise<Object>} Object with success flag
  */
 const deleteAnAccount = async (root: any, variables: AccountDeletionVariables, context: Context) => {
   console.info('Deleting account ', variables.email);
@@ -39,7 +39,7 @@ const deleteAnAccount = async (root: any, variables: AccountDeletionVariables, c
     if (retries.length) {
       console.info('Deleting authentication retry entries');
 
-      const retriesArray = retries.map((retry) => ({
+      const retriesArray = retries.map((retry: AuthenticationRetry) => ({
         id: retry.id,
       }));
 

@@ -1,13 +1,13 @@
 const COMPANY_DETAILS = {
   PAGE_TITLE: 'Your company details',
-  TRADING_NAME: 'Do you use a different trading name for this company?',
+  BODY: 'This information comes from Companies House.',
+  HAS_DIFFERENT_TRADING_NAME: 'Do you use a different trading name for this company?',
   TRADING_ADDRESS: 'Do you trade from a different address to your registered office address for this company?',
   WEBSITE: 'Enter your company website, if you have one (optional)',
-  TABLE_NAME: 'Your company',
-  YOUR_BUSINESS_HEADING: 'Your company',
   PHONE_NUMBER: 'Your UK telephone number (optional)',
   PHONE_NUMBER_HINT: 'We may need to contact you about your application',
-  DIFFERENT_COMPANIES_HOUSE_NUMBER: 'Enter a different Companies House registration number (CRN)',
+  DIFFERENT_TRADING_NAME: "What's your organisation's alternative trading name?",
+  DIFFERENT_TRADING_NAME_HINT: 'Your official trading name will still be on the policy.',
 };
 
 export { COMPANY_DETAILS };

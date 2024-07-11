@@ -1,4 +1,4 @@
-import { backLink, submitButton, summaryList } from '../../../../../../pages/shared';
+import { backLink, summaryList } from '../../../../../../pages/shared';
 import {
   tellUsAboutYourPolicyPage,
 } from '../../../../../../pages/quote';
@@ -61,7 +61,7 @@ context('Change your answers (policy credit period field) - as an exporter, I wa
   it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
     tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('2');
 
-    submitButton().click();
+    cy.clickSubmitButton();
 
     const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}#${CREDIT_PERIOD}-label`;
 
@@ -69,7 +69,7 @@ context('Change your answers (policy credit period field) - as an exporter, I wa
   });
 
   it('renders the new answer in `Check your answers` page', () => {
-    submitButton().click();
+    cy.clickSubmitButton();
 
     row = summaryList.field(CREDIT_PERIOD);
 

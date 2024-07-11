@@ -2,6 +2,7 @@ import rule from './credit-period';
 import { FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import generateValidationErrors from '../../../../../helpers/validation';
+import { mockErrors } from '../../../../../test-mocks';
 
 const {
   ELIGIBILITY: { CREDIT_PERIOD },
@@ -9,14 +10,9 @@ const {
 } = FIELD_IDS;
 
 describe('controllers/quote/tell-us-about-your-policy/validation/rules/credit-period', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   describe('when policy type is multiple', () => {
     describe(`when ${CREDIT_PERIOD} is not provided`, () => {
-      it('should return validation error', () => {
+      it('should return a validation error', () => {
         const mockSubmittedData = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
           [CREDIT_PERIOD]: '',
@@ -31,7 +27,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/credit-pe
     });
 
     describe(`when ${CREDIT_PERIOD} is below the minimum`, () => {
-      it('should return validation error', () => {
+      it('should return a validation error', () => {
         const mockSubmittedData = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
           [CREDIT_PERIOD]: '0',
@@ -46,7 +42,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/credit-pe
     });
 
     describe(`when ${CREDIT_PERIOD} is above the maximum`, () => {
-      it('should return validation error', () => {
+      it('should return a validation error', () => {
         const mockSubmittedData = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
           [CREDIT_PERIOD]: '3',

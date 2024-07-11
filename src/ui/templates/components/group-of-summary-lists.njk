@@ -1,0 +1,13 @@
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% macro render(params) %}
+  {% set summaryLists = params.summaryLists %}
+ 
+  {% for list in summaryLists %}
+    {{ govukSummaryList({
+      card: list.card,
+      rows: list.rows
+    }) }}
+  {% endfor %}
+
+{% endmacro %}

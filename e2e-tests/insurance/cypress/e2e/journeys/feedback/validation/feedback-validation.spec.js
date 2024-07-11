@@ -5,28 +5,19 @@ import { ROUTES } from '../../../../../../constants';
 import { FIELD_IDS } from '../../../../../../constants/field-ids';
 
 const {
-  FEEDBACK: {
-    IMPROVEMENT,
-    OTHER_COMMENTS,
-  },
+  FEEDBACK: { IMPROVEMENT, OTHER_COMMENTS },
 } = FIELD_IDS;
 
-const {
-  START,
-  FEEDBACK,
-} = ROUTES.INSURANCE;
+const { FEEDBACK } = ROUTES.INSURANCE;
 
 const ERROR_MESSAGE_IMPROVEMENT = ERROR_MESSAGES[IMPROVEMENT];
 const ERROR_MESSAGE_OTHER_COMMENT = ERROR_MESSAGES[OTHER_COMMENTS];
 
-const TOTAL_REQUIRED_FIELDS = 1;
-
 context('Insurance - Feedback - form validation', () => {
-  const startUrl = START;
   const url = FEEDBACK;
 
   before(() => {
-    cy.navigateToUrl(startUrl);
+    cy.navigateToCheckIfEligibleUrl();
     partials.phaseBanner.feedbackLink().click();
   });
 
@@ -39,26 +30,26 @@ context('Insurance - Feedback - form validation', () => {
       cy.navigateToUrl(url);
     });
 
-    it('should display validation errors', () => {
+    it(`should render an ${IMPROVEMENT} validation error`, () => {
       const field = fieldSelector(IMPROVEMENT);
-      const value = 'a'.repeat(1201);
-      const fieldIndex = 0;
-      const expectedMessage = String(ERROR_MESSAGE_IMPROVEMENT);
-
       const textareaField = { ...field, input: field.textarea };
 
-      cy.submitAndAssertFieldErrors(textareaField, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
+      cy.submitAndAssertFieldErrors({
+        field: textareaField,
+        value: 'a'.repeat(1201),
+        expectedErrorMessage: String(ERROR_MESSAGE_IMPROVEMENT),
+      });
     });
 
-    it('should display validation errors', () => {
+    it(`should render an ${OTHER_COMMENTS} validation error`, () => {
       const field = fieldSelector(OTHER_COMMENTS);
-      const value = 'a'.repeat(1201);
-      const fieldIndex = 0;
-      const expectedMessage = String(ERROR_MESSAGE_OTHER_COMMENT);
-
       const textareaField = { ...field, input: field.textarea };
 
-      cy.submitAndAssertFieldErrors(textareaField, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
+      cy.submitAndAssertFieldErrors({
+        field: textareaField,
+        value: 'a'.repeat(1201),
+        expectedErrorMessage: String(ERROR_MESSAGE_OTHER_COMMENT),
+      });
     });
   });
 });

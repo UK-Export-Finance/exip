@@ -7,13 +7,14 @@ import insuranceCorePageVariables from '../../../../../helpers/page-variables/co
 import constructPayload from '../../../../../helpers/construct-payload';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
-import generateAccountAlreadyExistsValidationErrors from './validation/account-already-exists';
+import generateAccountAlreadyExistsValidation from './validation/account-already-exists/invalid-password';
+import accountAlreadyExistsAlreadyVerifiedValidation from './validation/account-already-exists/already-verified';
 import saveData from './save-data';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import mapEligibilityAnswers from '../../../../../helpers/map-eligibility-answers';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockAccount, mockApplication, mockSession } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockAccount, mockSession, referenceNumber } from '../../../../../test-mocks';
 
 const { FIRST_NAME, LAST_NAME, EMAIL, PASSWORD } = ACCOUNT_FIELD_IDS;
 
@@ -22,13 +23,12 @@ const {
     ACCOUNT: {
       CREATE: { CONFIRM_EMAIL },
       SIGN_IN,
+      SUSPENDED: { EMAIL_SENT },
     },
     DASHBOARD,
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
-
-const { referenceNumber } = mockApplication;
 
 describe('controllers/insurance/account/create/your-details', () => {
   let req: Request;
@@ -209,6 +209,23 @@ describe('controllers/insurance/account/create/your-details', () => {
           expect(res.redirect).toHaveBeenCalledWith(CONFIRM_EMAIL);
         });
 
+        describe('when saveData.account returns isBlocked', () => {
+          beforeEach(() => {
+            const response = {
+              ...mockSaveDataResponse,
+              isBlocked: true,
+            };
+
+            saveData.account = jest.fn(() => Promise.resolve(response));
+          });
+
+          it(`should redirect to ${EMAIL_SENT}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(EMAIL_SENT);
+          });
+        });
+
         describe('when an application is not successfully created', () => {
           beforeEach(() => {
             // @ts-ignore
@@ -256,9 +273,9 @@ describe('controllers/insurance/account/create/your-details', () => {
           });
         });
 
-        describe('when success=false is returned', () => {
+        describe('when isVerified=true is returned', () => {
           beforeEach(() => {
-            const saveDataSpy = jest.fn(() => Promise.resolve({ success: false }));
+            const saveDataSpy = jest.fn(() => Promise.resolve({ isVerified: true }));
 
             saveData.account = saveDataSpy;
           });
@@ -276,7 +293,32 @@ describe('controllers/insurance/account/create/your-details', () => {
               ...PAGE_VARIABLES,
               userName: getUserNameFromSession(req.session.user),
               submittedValues: payload,
-              validationErrors: generateAccountAlreadyExistsValidationErrors(),
+              validationErrors: accountAlreadyExistsAlreadyVerifiedValidation(),
+            });
+          });
+        });
+
+        describe('when isVerified=true is NOT returned', () => {
+          beforeEach(() => {
+            const saveDataSpy = jest.fn(() => Promise.resolve({ isVerified: false }));
+
+            saveData.account = saveDataSpy;
+          });
+
+          it('should render template with validation errors from constructPayload function', async () => {
+            await post(req, res);
+
+            const payload = constructPayload(req.body, FIELD_IDS);
+
+            expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+              ...insuranceCorePageVariables({
+                PAGE_CONTENT_STRINGS,
+                BACK_LINK: req.headers.referer,
+              }),
+              ...PAGE_VARIABLES,
+              userName: getUserNameFromSession(req.session.user),
+              submittedValues: payload,
+              validationErrors: generateAccountAlreadyExistsValidation(),
             });
           });
         });

@@ -1,9 +1,7 @@
 import { INSURANCE_FIELD_IDS } from '../constants/field-ids/insurance';
 
 const {
-  EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: { INDUSTRY_SECTOR_NAME },
-  },
+  COMPANIES_HOUSE: { INDUSTRY_SECTOR_NAME },
 } = INSURANCE_FIELD_IDS;
 
 const mockSicCodes = [
@@ -26,6 +24,18 @@ const mockSicCodes = [
   {
     code: '56102',
     [INDUSTRY_SECTOR_NAME]: 'Unlicensed restaurants and cafes',
+  },
+  {
+    code: '25300',
+    [INDUSTRY_SECTOR_NAME]: 'Manufacture of steam generators, except central heating hot water boilers',
+  },
+  {
+    code: '25620',
+    [INDUSTRY_SECTOR_NAME]: 'Machining',
+  },
+  {
+    code: '28110',
+    [INDUSTRY_SECTOR_NAME]: 'Manufacture of engines and turbines, except aircraft, vehicle and cycle engines',
   },
 ];
 

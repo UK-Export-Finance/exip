@@ -1,4 +1,3 @@
-import { backLink } from '../../../../../../../pages/shared';
 import { yourDetailsPage } from '../../../../../../../pages/insurance/account/create';
 import { signInPage } from '../../../../../../../pages/insurance/account/sign-in';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -23,7 +22,7 @@ context('Insurance - Account - Password reset - Submitting the form successfully
     cy.completeAndSubmitCreateAccountForm({ navigateToAccountCreationPage: true });
 
     // go back to create account page
-    backLink().click();
+    cy.clickBackLink();
 
     // navigate to sign in page
     yourDetailsPage.signInButtonLink().click();

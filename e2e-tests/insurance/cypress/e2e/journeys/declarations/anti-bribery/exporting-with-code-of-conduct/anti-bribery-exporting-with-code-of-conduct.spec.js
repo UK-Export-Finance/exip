@@ -1,7 +1,6 @@
 import {
   headingCaption,
   yesRadio,
-  yesRadioInput,
   noRadio,
 } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
@@ -28,7 +27,7 @@ const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.WILL_EXPORT_WITH_CODE_OF_CONDU
 
 const baseUrl = Cypress.config('baseUrl');
 
-context("Insurance - Declarations - Anti-bribery - Exporting with code of conduct page - As an Exporter, I want to confirm if I will use my company's anti - bribery code of conduct for my export insurance application, So that UKEF can refer to it as applicable when processing my export insurance application", () => {
+context("Insurance - Declarations - Anti-bribery - Exporting with code of conduct page - As an Exporter, I want to confirm if I will use my company's anti - bribery code of conduct for my credit insurance application, So that UKEF can refer to it as applicable when processing my credit insurance application", () => {
   let referenceNumber;
   let url;
 
@@ -106,12 +105,11 @@ context("Insurance - Declarations - Anti-bribery - Exporting with code of conduc
       it('should render a validation error', () => {
         const expectedErrorsCount = 1;
 
-        cy.submitAndAssertRadioErrors(
-          yesRadio(FIELD_ID),
-          0,
+        cy.submitAndAssertRadioErrors({
+          field: yesRadio(FIELD_ID),
           expectedErrorsCount,
-          ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
-        );
+          expectedErrorMessage: ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
+        });
       });
     });
 
@@ -130,7 +128,7 @@ context("Insurance - Declarations - Anti-bribery - Exporting with code of conduc
         it('should have the submitted value', () => {
           cy.navigateToUrl(url);
 
-          yesRadioInput().should('be.checked');
+          cy.assertYesRadioOptionIsChecked();
         });
       });
     });

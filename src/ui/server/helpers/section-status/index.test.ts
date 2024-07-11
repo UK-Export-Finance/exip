@@ -34,5 +34,3 @@ describe('server/helpers/section-status', () => {
     });
   });
 });
-
-// DEFAULT

@@ -32,6 +32,7 @@ COPY --chown=node:node ./auth.ts .
 COPY --chown=node:node ./.keystone ./.keystone
 COPY --chown=node:node ./apollo ./apollo
 COPY --chown=node:node ./constants ./constants
+COPY --chown=node:node ./cron ./cron
 COPY --chown=node:node ./custom-resolvers ./custom-resolvers
 COPY --chown=node:node ./custom-schema ./custom-schema
 COPY --chown=node:node ./content-strings ./content-strings
@@ -78,6 +79,7 @@ COPY --chown=node:node --from=build /app/node_modules ./node_modules
 COPY --chown=node:node --from=build /app/.keystone ./.keystone
 COPY --chown=node:node --from=build /app/apollo ./apollo
 COPY --chown=node:node --from=build /app/constants ./constants
+COPY --chown=node:node --from=build /app/cron ./cron
 COPY --chown=node:node --from=build /app/custom-resolvers ./custom-resolvers
 COPY --chown=node:node --from=build /app/custom-schema ./custom-schema
 COPY --chown=node:node --from=build /app/content-strings ./content-strings

@@ -26,36 +26,34 @@
         classes: "govuk-!-margin-bottom-9"
       }) }}
 
-      <p class="govuk-body" data-cy="intro">{{ CONTENT_STRINGS.INTRO }}</p>
-
       <h3 class="govuk-heading-m" data-cy="what-happens-next-heading">{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.HEADING}}</h3>
 
-      <p class="govuk-body" data-cy="what-happens-next-intro">{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.WILL_CONTACT_YOU.INTRO }}</p>
+      <p class="govuk-body" data-cy="what-happens-next-intro">{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.INTRO }}</p>
 
-      <ul class="govuk-list govuk-list--bullet">
-        {% for item in CONTENT_STRINGS.WHAT_HAPPENS_NEXT.WILL_CONTACT_YOU.LIST %}
-          <li data-cy="what-happens-next-list-item-{{ loop.index }}">{{ item }}</li>
-        {% endfor %}
-      </ul>
+      <p class="govuk-body" data-cy="what-happens-next-will-send-email">{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.WILL_SEND_EMAIL }}</p>
 
-      <p class="govuk-body" data-cy="what-happens-next-climate-change-factors">{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.CLIMATE_CHANGE_FACTORS }}</p>
+      <p class="govuk-body" data-cy="what-happens-next-may-also-contact">{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.MAY_ALSO_CONTACT }}</p>
 
       <h3 class="govuk-heading-m" data-cy="decision-from-us-heading">{{ CONTENT_STRINGS.DECISION_FROM_US.HEADING}}</h3>
 
       <p class="govuk-body" data-cy="decision-from-us-timeframe">{{ CONTENT_STRINGS.DECISION_FROM_US.TIMEFRAME }}</p>
 
-      <p class="govuk-body" data-cy="decision-from-us-extra-info">{{ CONTENT_STRINGS.DECISION_FROM_US.EXTRA_INFO }}</p>
-
-      <p><a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.ACTIONS.START_NEW_APPLICATION.HREF }}" data-cy="start-new-application">{{ CONTENT_STRINGS.ACTIONS.START_NEW_APPLICATION.TEXT }}</a></p>
-
-      <p><a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.ACTIONS.GIVE_FEEDBACK.HREF }}" data-cy="give-feedback">{{ CONTENT_STRINGS.ACTIONS.GIVE_FEEDBACK.TEXT }}</a></p>
-
-      <h3 class="govuk-heading-m" data-cy="research-heading">{{ CONTENT_STRINGS.RESEARCH.HEADING}}</h3>
-      
       <p class="govuk-body">
-        <span data-cy="research-carry-out">{{ CONTENT_STRINGS.RESEARCH.CARRY_OUT }}</span>
-        <a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.RESEARCH.TAKE_PART.HREF }}" data-cy="research-take-part-link">{{ CONTENT_STRINGS.RESEARCH.TAKE_PART.TEXT }}</a>
-        <span data-cy="research-if-you-like">{{ CONTENT_STRINGS.RESEARCH.IF_YOU_LIKE }}</span>
+        <span data-cy="decision-from-us-questions-intro">{{ CONTENT_STRINGS.DECISION_FROM_US.HAVE_ANY_QUESTIONS.INTRO }}</span>
+        <a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.DECISION_FROM_US.HAVE_ANY_QUESTIONS.LINK.HREF }}" data-cy="decision-from-us-questions-link">{{ CONTENT_STRINGS.DECISION_FROM_US.HAVE_ANY_QUESTIONS.LINK.TEXT }}</a>.
+      </p>
+
+      <h3 class="govuk-heading-m" data-cy="help-us-improve-heading">{{ CONTENT_STRINGS.HELP_US_IMPROVE.HEADING}}</h3>
+
+      <p class="govuk-body">
+        <span data-cy="help-us-improve-carry-out">{{ CONTENT_STRINGS.HELP_US_IMPROVE.CARRY_OUT }}</span>
+        <a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.HELP_US_IMPROVE.TAKE_PART.HREF }}" data-cy="help-us-improve-take-part-link">{{ CONTENT_STRINGS.HELP_US_IMPROVE.TAKE_PART.TEXT }}</a>
+        <span data-cy="help-us-improve-if-you-like">{{ CONTENT_STRINGS.HELP_US_IMPROVE.IF_YOU_LIKE }}</span>
+
+        <span data-cy="help-us-improve-feedback-intro">{{ CONTENT_STRINGS.HELP_US_IMPROVE.FEEDBACK.INTRO }}</span>
+        <span data-cy="help-us-improve-feedback-text">
+          <a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.HELP_US_IMPROVE.FEEDBACK.LINK.HREF }}" data-cy="help-us-improve-feedback-link">{{ CONTENT_STRINGS.HELP_US_IMPROVE.FEEDBACK.LINK.TEXT }}</a>.
+        </span>
       </p>
 
     </div>

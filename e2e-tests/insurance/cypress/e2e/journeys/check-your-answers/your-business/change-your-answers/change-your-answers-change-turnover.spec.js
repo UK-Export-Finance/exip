@@ -1,7 +1,9 @@
 import partials from '../../../../../../../partials';
 import { field, summaryList } from '../../../../../../../pages/shared';
+import { GBP_CURRENCY_CODE } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import formatCurrency from '../../../../../../../helpers/format-currency';
 
 const {
   ROOT,
@@ -34,6 +36,8 @@ const getFieldVariables = (fieldId, referenceNumber) => ({
   changeLink: summaryList.field(fieldId).changeLink,
 });
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Check your answers - Turnover - Your business - Summary list', () => {
   let referenceNumber;
   let url;
@@ -46,13 +50,7 @@ context('Insurance - Check your answers - Turnover - Your business - Summary lis
 
       task.link().click();
 
-      // To get past "Eligibility" check your answers page
-      cy.submitCheckYourAnswersForm();
-
-      // To get past "Policy" check your answers page
-      cy.submitCheckYourAnswersForm();
-
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 
       cy.assertUrl(url);
     });
@@ -97,12 +95,13 @@ context('Insurance - Check your answers - Turnover - Your business - Summary lis
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
       });
 
       it('should render the new answer', () => {
-        fieldVariables.newValue = `£${fieldVariables.newValueInput}`;
-        cy.checkChangeAnswerRendered(fieldVariables);
+        fieldVariables.newValue = formatCurrency(fieldVariables.newValueInput, GBP_CURRENCY_CODE);
+
+        cy.checkChangeAnswerRendered({ fieldVariables });
       });
     });
   });
@@ -136,12 +135,12 @@ context('Insurance - Check your answers - Turnover - Your business - Summary lis
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
       });
 
       it('should render the new answer', () => {
         fieldVariables.newValue = `${fieldVariables.newValueInput}%`;
-        cy.checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered({ fieldVariables });
       });
     });
   });

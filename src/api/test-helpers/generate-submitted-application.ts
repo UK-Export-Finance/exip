@@ -12,10 +12,11 @@ import mapApplicationIds from './map-application-ids';
  */
 export const generateSubmittedApplication = async () => {
   const context = getKeystoneContext();
-  const application = await createFullApplication(context);
+  const fullApplication = await createFullApplication(context);
 
-  const applicationIds = mapApplicationIds(application);
-  const populatedApplication = await getPopulatedApplication(context, applicationIds);
+  const application = mapApplicationIds(fullApplication);
+
+  const populatedApplication = await getPopulatedApplication.get({ context, application });
 
   const submittedApplication = {
     ...populatedApplication,

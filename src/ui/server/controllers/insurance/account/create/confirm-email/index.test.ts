@@ -98,18 +98,16 @@ describe('controllers/insurance/account/create/confirm-email', () => {
       });
     });
 
-    describe('api error handling', () => {
-      describe('when there is an error', () => {
-        beforeAll(() => {
-          getAccountSpy = jest.fn(() => Promise.reject(new Error('mock')));
-          api.keystone.account.get = getAccountSpy;
-        });
+    describe('when there is an error calling the API', () => {
+      beforeAll(() => {
+        getAccountSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        api.keystone.account.get = getAccountSpy;
+      });
 
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-          await get(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-        });
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

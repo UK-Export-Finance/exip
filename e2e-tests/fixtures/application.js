@@ -1,95 +1,94 @@
 import {
+  APPLICATION,
+  COVER_PERIOD as COVER_PERIOD_CONSTANTS,
   FIELD_IDS,
   FIELD_VALUES,
-  COMPANIES_HOUSE_NUMBER,
-  COVER_PERIOD as COVER_PERIOD_CONSTANTS,
   TOTAL_CONTRACT_VALUE as TOTAL_CONTRACT_VALUE_CONSTANTS,
   WEBSITE_EXAMPLES,
 } from '../constants';
+import { COMPANIES_HOUSE_NUMBER } from '../constants/examples';
+import { mockAccountNumber0 } from './account-numbers';
 import { GBP_CURRENCY_CODE } from './currencies';
-import mockCountries from './countries';
-import sicCodes from './sic-codes';
+import { COUNTRY_APPLICATION_SUPPORT } from './countries';
+import { mockAddress0 } from './addresses';
+import { mockBicSwiftCode0 } from './bic-swift-codes';
+import mockCompanies from './companies';
+import { mockIban0 } from './ibans';
+import { mockSortCode0 } from './sort-codes';
+
+const { AGENT_SERVICE_CHARGE } = APPLICATION.EXPORT_CONTRACT;
 
 const {
   INSURANCE: {
-    ACCOUNT: {
-      FIRST_NAME: ACCOUNT_FIRST_NAME,
-      LAST_NAME: ACCOUNT_LAST_NAME,
-      EMAIL: ACCOUNT_EMAIL,
-    },
+    ACCOUNT: { FIRST_NAME: ACCOUNT_FIRST_NAME, LAST_NAME: ACCOUNT_LAST_NAME, EMAIL: ACCOUNT_EMAIL },
     ELIGIBILITY: {
       COVER_PERIOD_ID,
-      TOTAL_CONTRACT_VALUE_ID,
-      OTHER_PARTIES_INVOLVED,
-      LETTER_OF_CREDIT,
-      PRE_CREDIT_PERIOD,
-      COMPANIES_HOUSE_NUMBER: ELIGIBILITY_COMPANIES_HOUSE_NUMBER,
+      HAS_COMPANIES_HOUSE_NUMBER,
+      HAS_END_BUYER,
       HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+      TOTAL_CONTRACT_VALUE_ID,
       VALID_EXPORTER_LOCATION,
+      BUYER_COUNTRY,
     },
     POLICY: {
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
         POLICY_CURRENCY_CODE,
         SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
-        MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
+        MULTIPLE: { TOTAL_MONTHS_OF_COVER },
       },
-      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
+      EXPORT_VALUE: {
+        MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
+      },
       DIFFERENT_NAME_ON_POLICY: { POSITION: CONTACT_POSITION },
+      NEED_PRE_CREDIT_PERIOD,
+      CREDIT_PERIOD_WITH_BUYER,
+      REQUESTED_JOINTLY_INSURED_PARTY: { COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
+      USING_BROKER,
+      BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS: BROKER_FULL_ADDRESS },
+      LOSS_PAYEE_FINANCIAL_UK: { ACCOUNT_NUMBER, SORT_CODE },
+      LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
+      FINANCIAL_ADDRESS,
+      LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME },
+    },
+    EXPORT_CONTRACT: {
+      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
+      HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
+      PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
+      AGENT_DETAILS: { COUNTRY_CODE: AGENT_COUNTRY_CODE, FULL_ADDRESS: AGENT_FULL_ADDRESS, NAME: AGENT_NAME },
+      AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
+      AGENT_CHARGES: {
+        METHOD,
+        PAYABLE_COUNTRY_CODE,
+        FIXED_SUM_AMOUNT,
+        PERCENTAGE_CHARGE,
+      },
     },
     EXPORTER_BUSINESS: {
-      COMPANY_HOUSE: {
-        COMPANY_SIC,
-        INDUSTRY_SECTOR_NAME,
-        INDUSTRY_SECTOR_NAMES,
-        COMPANY_NUMBER,
-        COMPANY_NAME,
-        COMPANY_INCORPORATED,
-      },
-      YOUR_COMPANY: {
-        ADDRESS: YOUR_COMPANY_ADDRESS,
-      },
-      NATURE_OF_YOUR_BUSINESS: {
-        GOODS_OR_SERVICES,
-        YEARS_EXPORTING,
-        EMPLOYEES_UK,
-        EMPLOYEES_INTERNATIONAL,
-      },
-      TURNOVER: {
-        FINANCIAL_YEAR_END_DATE,
-        ESTIMATED_ANNUAL_TURNOVER,
-        PERCENTAGE_TURNOVER,
-      },
-      BROKER: {
-        USING_BROKER,
-        NAME,
-        ADDRESS_LINE_1,
-        ADDRESS_LINE_2,
-        TOWN,
-        COUNTY,
-        POSTCODE,
-        EMAIL,
-      },
+      ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS: EXPORTER_BUSINESS_FULL_ALT_TRADING_ADDRESS },
+      NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
+      TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+      HAS_CREDIT_CONTROL,
+      YOUR_COMPANY: { DIFFERENT_TRADING_NAME },
     },
     YOUR_BUYER: {
       COMPANY_OR_ORGANISATION: {
-        NAME: COMPANY_OR_ORGANISATION_NAME,
         ADDRESS,
         COUNTRY,
+        NAME: COMPANY_OR_ORGANISATION_NAME,
         REGISTRATION_NUMBER,
         WEBSITE,
-        FIRST_NAME,
-        LAST_NAME,
-        POSITION,
-        EMAIL: BUYER_EMAIL,
-        CAN_CONTACT_BUYER,
       },
-      WORKING_WITH_BUYER: {
-        CONNECTED_WITH_BUYER,
-        TRADED_WITH_BUYER,
-      },
+      CONNECTION_WITH_BUYER,
+      CONNECTION_WITH_BUYER_DESCRIPTION,
+      TRADED_WITH_BUYER,
+      HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+      PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+      TOTAL_OUTSTANDING_PAYMENTS,
+      TOTAL_AMOUNT_OVERDUE,
+      HAS_BUYER_FINANCIAL_ACCOUNTS,
     },
+    CURRENCY: { CURRENCY_CODE },
   },
 } = FIELD_IDS;
 
@@ -104,92 +103,114 @@ const date = new Date();
  * move on the following year.
  * Note: JS months range (0 - 11)
  */
-export const startDate = new Date(date.setMonth((date.getMonth() + 3))); // Add 3 months
-export const endDate = new Date(date.setMonth((date.getMonth() + 6))); // Add 6 months
+export const startDate = new Date(date.setMonth(date.getMonth() + 3)); // Add 3 months
+export const endDate = new Date(date.setMonth(date.getMonth() + 6)); // Add 6 months
 
 const application = {
   ELIGIBILITY: {
-    buyerCountryIsoCode: mockCountries[1].isoCode,
-    [VALID_EXPORTER_LOCATION]: true,
+    buyerCountryIsoCode: COUNTRY_APPLICATION_SUPPORT.ONLINE.ISO_CODE,
+    [COVER_PERIOD_ID]: COVER_PERIOD_CONSTANTS.LESS_THAN_2_YEARS.DB_ID,
+    [HAS_COMPANIES_HOUSE_NUMBER]: true,
+    [HAS_END_BUYER]: false,
     [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
-    [COVER_PERIOD_ID]: TOTAL_CONTRACT_VALUE_CONSTANTS.LESS_THAN_500K.DB_ID,
-    [TOTAL_CONTRACT_VALUE_ID]: COVER_PERIOD_CONSTANTS.LESS_THAN_2_YEARS.DB_ID,
-    [OTHER_PARTIES_INVOLVED]: false,
-    [LETTER_OF_CREDIT]: false,
-    [PRE_CREDIT_PERIOD]: false,
-    [ELIGIBILITY_COMPANIES_HOUSE_NUMBER]: true,
+    [TOTAL_CONTRACT_VALUE_ID]: TOTAL_CONTRACT_VALUE_CONSTANTS.LESS_THAN_250K.DB_ID,
+    [VALID_EXPORTER_LOCATION]: true,
+  },
+  [BUYER_COUNTRY]: COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME,
+  COMPANY: mockCompanies[COMPANIES_HOUSE_NUMBER],
+  YOUR_COMPANY: {
+    [DIFFERENT_TRADING_NAME]: 'Mock different trading name',
   },
   POLICY: {
     [REQUESTED_START_DATE]: {
       day: '1',
-      month: (startDate.getMonth() + 1),
+      month: startDate.getMonth() + 1,
       year: startDate.getFullYear(),
     },
     [CONTRACT_COMPLETION_DATE]: {
       day: '1',
-      month: (endDate.getMonth() + 1),
+      month: endDate.getMonth() + 1,
       year: endDate.getFullYear(),
     },
     [TOTAL_CONTRACT_VALUE]: '10000',
-    [CREDIT_PERIOD_WITH_BUYER]: 'mock free text',
     [POLICY_CURRENCY_CODE]: GBP_CURRENCY_CODE,
     [TOTAL_MONTHS_OF_COVER]: '2',
     [TOTAL_SALES_TO_BUYER]: '1000',
     [MAXIMUM_BUYER_WILL_OWE]: '500',
+    [NEED_PRE_CREDIT_PERIOD]: 'false',
+    [CREDIT_PERIOD_WITH_BUYER]: 'Mock description',
+    [LOSS_PAYEE_NAME]: 'Mock name',
+    LOSS_PAYEE_FINANCIAL_UK: {
+      [SORT_CODE]: mockSortCode0,
+      [ACCOUNT_NUMBER]: mockAccountNumber0,
+      [FINANCIAL_ADDRESS]: mockAddress0,
+    },
+    LOSS_PAYEE_FINANCIAL_INTERNATIONAL: {
+      [BIC_SWIFT_CODE]: mockBicSwiftCode0,
+      [IBAN]: mockIban0,
+      [FINANCIAL_ADDRESS]: mockAddress0,
+    },
+  },
+  REQUESTED_JOINTLY_INSURED_PARTY: {
+    [COMPANY_NAME]: 'Mock jointly insured company name',
+    [COUNTRY_CODE]: COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME,
+    [COMPANY_NUMBER]: 'Mock jointly insured company number',
   },
   EXPORT_CONTRACT: {
     [DESCRIPTION]: 'Mock description',
-    [FINAL_DESTINATION]: mockCountries[1].isoCode,
-  },
-  EXPORTER_COMPANY: {
-    [COMPANY_NUMBER]: COMPANIES_HOUSE_NUMBER,
-    [COMPANY_NAME]: 'DHG PROPERTY FINANCE LIMITED',
-    [COMPANY_INCORPORATED]: '2014-04-10T00:00:00.000Z',
-    [YOUR_COMPANY_ADDRESS]: {
-      addressLine1: 'Unit 3 Lewis Court',
-      addressLine2: 'Portmanmoor Road',
-      careOf: '',
-      locality: 'Cardiff',
-      region: 'South Glamorgan',
-      postalCode: 'CF24 5HQ',
-      country: '',
-      premises: '',
+    [FINAL_DESTINATION]: COUNTRY_APPLICATION_SUPPORT.ONLINE.ISO_CODE,
+    HOW_WILL_YOU_GET_PAID: {
+      [PAYMENT_TERMS_DESCRIPTION]: mockAddress0,
     },
-    [COMPANY_SIC]: [sicCodes[0].code],
-    [INDUSTRY_SECTOR_NAMES]: [sicCodes[0][INDUSTRY_SECTOR_NAME]],
-    [FINANCIAL_YEAR_END_DATE]: '2023-07-31T00:00:00.000Z',
+    PRIVATE_MARKET: {
+      [ATTEMPTED]: true,
+      [DECLINED_DESCRIPTION]: mockAddress0,
+    },
+    AGENT_DETAILS: {
+      [AGENT_NAME]: 'Mock export contract agent name',
+      [AGENT_COUNTRY_CODE]: COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME,
+      [AGENT_FULL_ADDRESS]: mockAddress0,
+    },
+    AGENT_SERVICE: {
+      [IS_CHARGING]: false,
+      [SERVICE_DESCRIPTION]: mockAddress0,
+    },
+    AGENT_CHARGES: {
+      [PERCENTAGE_CHARGE]: '10',
+      [FIXED_SUM_AMOUNT]: '1500',
+      [METHOD]: AGENT_SERVICE_CHARGE.METHOD.FIXED_SUM,
+      [PAYABLE_COUNTRY_CODE]: COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME,
+    },
   },
   EXPORTER_BUSINESS: {
     [GOODS_OR_SERVICES]: 'abc',
     [YEARS_EXPORTING]: '0',
-    [EMPLOYEES_INTERNATIONAL]: '2005',
     [EMPLOYEES_UK]: '2000',
     [ESTIMATED_ANNUAL_TURNOVER]: '65000',
     [PERCENTAGE_TURNOVER]: '0',
+    [HAS_CREDIT_CONTROL]: true,
   },
-  EXPORTER_BROKER: {
-    [USING_BROKER]: FIELD_VALUES.YES,
-    [NAME]: 'name',
-    [ADDRESS_LINE_1]: 'Address line 1',
-    [ADDRESS_LINE_2]: 'Address line 2',
-    [TOWN]: 'town',
-    [COUNTY]: 'county',
-    [POSTCODE]: 'SW1A 2HQ',
+  BROKER: {
+    [USING_BROKER]: true,
+    [NAME]: 'Mock broker name',
     [EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1'),
+    [BROKER_FULL_ADDRESS]: mockAddress0,
   },
   BUYER: {
     [COMPANY_OR_ORGANISATION_NAME]: 'Test name',
     [ADDRESS]: 'Test address',
-    [COUNTRY]: mockCountries[1].name,
+    [COUNTRY]: COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME,
     [REGISTRATION_NUMBER]: '12345',
     [WEBSITE]: WEBSITE_EXAMPLES.VALID,
-    [FIRST_NAME]: 'Bob',
-    [LAST_NAME]: 'Smith',
-    [POSITION]: 'CEO',
-    [BUYER_EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1'),
-    [CAN_CONTACT_BUYER]: FIELD_VALUES.YES,
-    [CONNECTED_WITH_BUYER]: FIELD_VALUES.YES,
-    [TRADED_WITH_BUYER]: FIELD_VALUES.YES,
+    [CONNECTION_WITH_BUYER]: FIELD_VALUES.NO,
+    [TRADED_WITH_BUYER]: FIELD_VALUES.NO,
+    [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: FIELD_VALUES.NO,
+    [CONNECTION_WITH_BUYER_DESCRIPTION]: 'Mock connection with buyer description',
+    [PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: 'Mock cover with buyer',
+    [TOTAL_OUTSTANDING_PAYMENTS]: '1000',
+    [TOTAL_AMOUNT_OVERDUE]: '2000',
+    [HAS_BUYER_FINANCIAL_ACCOUNTS]: FIELD_VALUES.NO,
+    [CURRENCY_CODE]: GBP_CURRENCY_CODE,
   },
   POLICY_CONTACT: {
     [ACCOUNT_FIRST_NAME]: 'Bob',
@@ -197,10 +218,11 @@ const application = {
     [ACCOUNT_EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1'),
     [CONTACT_POSITION]: 'CEO',
   },
+  DIFFERENT_TRADING_ADDRESS: {
+    [EXPORTER_BUSINESS_FULL_ALT_TRADING_ADDRESS]: 'Mock full address',
+  },
 };
 
-export const country = {
-  ...mockCountries[1],
-};
+export const country = COUNTRY_APPLICATION_SUPPORT.ONLINE;
 
 export default application;

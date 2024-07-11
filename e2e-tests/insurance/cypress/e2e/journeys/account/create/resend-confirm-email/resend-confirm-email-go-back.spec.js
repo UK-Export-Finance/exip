@@ -2,12 +2,15 @@ import { confirmEmailPage } from '../../../../../../../pages/insurance/account/c
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
-  START,
-  ACCOUNT: { CREATE: { CONFIRM_EMAIL, CONFIRM_EMAIL_RESENT } },
+  ACCOUNT: {
+    CREATE: { CONFIRM_EMAIL, CONFIRM_EMAIL_RESENT },
+  },
 } = ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Create - Resend confirm email page - Go back to confirm email page via back button', () => {
-  const confirmEmailUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
+  const confirmEmailUrl = `${baseUrl}${CONFIRM_EMAIL}`;
 
   let expectedUrl;
   let account;
@@ -17,7 +20,7 @@ context('Insurance - Account - Create - Resend confirm email page - Go back to c
 
     cy.saveSession();
 
-    cy.navigateToUrl(START);
+    cy.navigateToCheckIfEligibleUrl();
 
     cy.submitEligibilityAndStartAccountCreation();
     cy.completeAndSubmitCreateAccountForm();
@@ -28,7 +31,7 @@ context('Insurance - Account - Create - Resend confirm email page - Go back to c
   beforeEach(() => {
     /**
      * Get the account ID directly from the API,
-     * so that we can assert that the URL and `request a new link` has the correct ID.
+     * so that we can assert that the URLs have the correct ID.
      */
     const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
@@ -40,7 +43,7 @@ context('Insurance - Account - Create - Resend confirm email page - Go back to c
 
       confirmEmailPage.havingProblems.requestNew.link().click();
 
-      expectedUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL_RESENT}?id=${account.id}`;
+      expectedUrl = `${baseUrl}${CONFIRM_EMAIL_RESENT}?id=${account.id}`;
 
       cy.assertUrl(expectedUrl);
 
@@ -49,7 +52,7 @@ context('Insurance - Account - Create - Resend confirm email page - Go back to c
   });
 
   it('renders the page without error and have the account ID in the URL params', () => {
-    expectedUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}?id=${account.id}`;
+    expectedUrl = `${baseUrl}${CONFIRM_EMAIL}?id=${account.id}`;
 
     cy.assertUrl(expectedUrl);
 

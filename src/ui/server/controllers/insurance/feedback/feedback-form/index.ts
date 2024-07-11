@@ -1,5 +1,5 @@
 import { PAGES, FIELDS } from '../../../../content-strings';
-import { TEMPLATES, ROUTES, INSURANCE, SERVICE_NAME } from '../../../../constants';
+import { TEMPLATES, ROUTES, APPLY, SERVICE_NAME } from '../../../../constants';
 import { FEEDBACK_FIELD_IDS } from '../../../../constants/field-ids/feedback';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { objectHasKeysAndValues } from '../../../../helpers/object';
@@ -84,10 +84,8 @@ const post = async (req: Request, res: Response) => {
 
     const payload = constructPayload(submittedFeedback, FIELD_IDS);
 
-    // run validation on inputs
     const validationErrors = generateValidationErrors(payload);
 
-    // if any errors then render template with errors
     if (validationErrors) {
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
@@ -115,7 +113,7 @@ const post = async (req: Request, res: Response) => {
         [IMPROVEMENT]: payload[IMPROVEMENT],
         [OTHER_COMMENTS]: payload[OTHER_COMMENTS],
         [REFERRAL_URL]: referralUrl?.toString(),
-        [SERVICE]: INSURANCE,
+        [SERVICE]: APPLY,
         [PRODUCT]: SERVICE_NAME,
       } as InsuranceFeedbackVariables;
 

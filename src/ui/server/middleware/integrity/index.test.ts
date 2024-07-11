@@ -3,7 +3,7 @@ import { Request, Response } from '../../../types';
 import { integrity } from '.';
 import { INTEGRITY } from '../../constants';
 
-const { JS, GOVUK, FORM, COOKIES, GA, GA_TAG_MANAGER, MOJ, ACCESSIBILITY } = INTEGRITY;
+const { JS, GOVUK, FORM, COOKIES, GA, GA_TAG_MANAGER, ACCESSIBILITY } = INTEGRITY;
 const req: Request = mockReq();
 const res: Response = mockRes();
 const next = mockNext;
@@ -19,7 +19,6 @@ describe('middleware/integrity', () => {
       COOKIES,
       GA,
       GA_TAG_MANAGER,
-      MOJ,
       ACCESSIBILITY,
     });
   });
@@ -29,7 +28,6 @@ describe('middleware/integrity', () => {
 
     expect(res.locals.SRI?.JS).toBeDefined();
     expect(res.locals.SRI?.ACCESSIBILITY).toBeDefined();
-    expect(res.locals.SRI?.MOJ).toBeDefined();
     expect(res.locals.SRI?.GOVUK).toBeDefined();
     expect(res.locals.SRI?.FORM).toBeDefined();
     expect(res.locals.SRI?.COOKIES).toBeDefined();
@@ -42,7 +40,6 @@ describe('middleware/integrity', () => {
 
     expect(res.locals.SRI?.JS).toContain('sha512');
     expect(res.locals.SRI?.ACCESSIBILITY).toContain('sha512');
-    expect(res.locals.SRI?.MOJ).toContain('sha512');
     expect(res.locals.SRI?.GOVUK).toContain('sha512');
     expect(res.locals.SRI?.FORM).toContain('sha512');
     expect(res.locals.SRI?.COOKIES).toContain('sha512');

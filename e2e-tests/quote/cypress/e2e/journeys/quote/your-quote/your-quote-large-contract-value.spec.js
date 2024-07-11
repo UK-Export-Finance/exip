@@ -5,7 +5,7 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../../../../commands/quote/forms';
-import { field, submitButton, summaryList } from '../../../../../../pages/shared';
+import { field, summaryList } from '../../../../../../pages/shared';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { GBP_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
 
@@ -21,11 +21,11 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Get a quote/your quote page (large contract value) - as an exporter, I want to get an Export insurance quote', () => {
+context('Get a quote/your quote page (large contract value) - as an exporter, I want to get an Credit insurance quote', () => {
   before(() => {
     cy.login();
 
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
     completeAndSubmitUkContentForm();
@@ -43,7 +43,7 @@ context('Get a quote/your quote page (large contract value) - as an exporter, I 
     field(CURRENCY).input().select(GBP_CURRENCY_CODE);
     field(PERCENTAGE_OF_COVER).input().select('90');
 
-    submitButton().click();
+    cy.clickSubmitButton();
 
     const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
@@ -55,7 +55,7 @@ context('Get a quote/your quote page (large contract value) - as an exporter, I 
     const expectedAmount = '£12,345,678';
     cy.checkText(answersAmount, expectedAmount);
 
-    submitButton().click();
+    cy.clickSubmitButton();
 
     // Check contract value formatting in the quote
     const expectedValue = '£11,111,110.20';

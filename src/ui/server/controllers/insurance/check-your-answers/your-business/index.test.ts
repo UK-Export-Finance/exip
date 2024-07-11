@@ -5,13 +5,15 @@ import FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import { yourBusinessSummaryList } from '../../../../helpers/summary-lists/your-business';
+import { yourBusinessSummaryLists } from '../../../../helpers/summary-lists/your-business';
 import requiredFields from '../../../../helpers/required-fields/business';
 import sectionStatus from '../../../../helpers/section-status';
 import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromise, referenceNumber } from '../../../../test-mocks';
+
+const { company, business } = mockApplication;
 
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
@@ -26,7 +28,7 @@ const {
 describe('controllers/insurance/check-your-answers/your-business', () => {
   jest.mock('../save-data');
 
-  let mockSaveSectionReview = jest.fn(() => Promise.resolve({}));
+  let mockSaveSectionReview = mockSpyPromise();
 
   save.sectionReview = mockSaveSectionReview;
 
@@ -36,8 +38,6 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
   });
 
   describe('FIELD_ID', () => {
@@ -50,14 +50,14 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(mockApplication.referenceNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELD: {
           ID: FIELD_ID,
           ...FIELDS[FIELD_ID],
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${YOUR_BUSINESS_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -74,17 +74,11 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
     it('should render template', async () => {
       await get(req, res);
       const checkAndChange = true;
-      const summaryList = yourBusinessSummaryList(
-        mockApplication.company,
-        mockApplication.business,
-        mockApplication.broker,
-        mockApplication.referenceNumber,
-        checkAndChange,
-      );
+      const summaryList = yourBusinessSummaryLists(company, business, referenceNumber, checkAndChange);
 
-      const exporterFields = requiredFields(mockApplication.broker.isUsingBroker);
+      const businessFields = requiredFields(company.hasDifferentTradingName);
 
-      const status = sectionStatus(exporterFields, mockApplication);
+      const status = sectionStatus(businessFields, mockApplication);
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
@@ -93,8 +87,8 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
         }),
         userName: getUserNameFromSession(req.session.user),
         status,
-        SUMMARY_LIST: summaryList,
-        ...pageVariables(mockApplication.referenceNumber),
+        SUMMARY_LISTS: summaryList,
+        ...pageVariables(referenceNumber),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -134,7 +128,7 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
     it(`should redirect to ${YOUR_BUYER}`, async () => {
       await post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${YOUR_BUYER}`;
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });

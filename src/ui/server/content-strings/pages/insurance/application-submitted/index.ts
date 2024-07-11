@@ -1,43 +1,41 @@
-import { ROUTES } from '../../../../constants';
-import { BUTTONS } from '../../../buttons';
+import { CONTACT_DETAILS, ROUTES } from '../../../../constants';
 import { LINKS } from '../../../links';
 
 const APPLICATION_SUBMITTED = {
   PAGE_TITLE: 'Application submitted',
   YOUR_REFERENCE: 'Your reference',
-  INTRO: "We've emailed you a receipt of your application.",
   WHAT_HAPPENS_NEXT: {
     HEADING: 'What happens next?',
-    WILL_CONTACT_YOU: {
-      INTRO: "We'll contact you by email shortly if you told us you have:",
-      LIST: ['an anti-bribery code of conduct', 'a trading history with the buyer'],
-    },
-    CLIMATE_CHANGE_FACTORS:
-      'We also take climate change factors into account before deciding if we can offer export insurance for your business. We may contact you with extra questions if we need to assess the environmental impact of your exports.',
+    INTRO: "We've emailed you a receipt of your application.",
+    WILL_SEND_EMAIL: "Next, we'll send you an email requesting your anti-bribery code of conduct and your trading history with the buyer.",
+    MAY_ALSO_CONTACT: 'We may also contact you with extra questions if we need to assess the environmental impact of your exports.',
   },
   DECISION_FROM_US: {
     HEADING: "When you'll get a decision from us",
-    TIMEFRAME: "You'll usually get a decision back within 7 working days, if we do not need to ask you any further questions.",
-    EXTRA_INFO: 'If we need to gather extra information, it may take 2 to 3 weeks.',
-  },
-  ACTIONS: {
-    START_NEW_APPLICATION: {
-      TEXT: BUTTONS.START_A_NEW_APPLICATION,
-      HREF: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
-    },
-    GIVE_FEEDBACK: {
-      TEXT: LINKS.GIVE_FEEDBACK,
-      HREF: ROUTES.INSURANCE.FEEDBACK,
+    TIMEFRAME: "You'll usually get a decision within 7 working days. If we need any more information from you, it may take 2 to 3 weeks.",
+    HAVE_ANY_QUESTIONS: {
+      INTRO: 'If you have any questions about your application, email',
+      LINK: {
+        TEXT: CONTACT_DETAILS.EMAIL.UNDERWRITING,
+        HREF: `mailto:${CONTACT_DETAILS.EMAIL.UNDERWRITING}`,
+      },
     },
   },
-  RESEARCH: {
-    HEADING: 'Take part in research',
+  HELP_US_IMPROVE: {
+    HEADING: 'Help us improve this service',
     CARRY_OUT: 'We regularly carry out research to improve our services. You can',
     TAKE_PART: {
       TEXT: 'take part',
       HREF: LINKS.EXTERNAL.RESEARCH,
     },
     IF_YOU_LIKE: "if you'd like to be involved.",
+    FEEDBACK: {
+      INTRO: 'You can also',
+      LINK: {
+        TEXT: LINKS.GIVE_FEEDBACK_LOWERCASE,
+        HREF: ROUTES.INSURANCE.FEEDBACK,
+      },
+    },
   },
 };
 

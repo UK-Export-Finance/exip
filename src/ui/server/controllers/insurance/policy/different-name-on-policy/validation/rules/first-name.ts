@@ -1,21 +1,23 @@
+import { MAXIMUM_CHARACTERS } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/account';
+import alphaCharactersAndMaxLengthValidation from '../../../../../../shared-validation/alpha-characters-and-max-length';
 import { RequestBody } from '../../../../../../../types';
-import nameValidation from '../../../../../../shared-validation/name';
 
 const { FIRST_NAME: FIELD_ID } = FIELD_IDS;
 
 const {
-  DIFFERENT_NAME_ON_POLICY: { [FIELD_ID]: ERROR_MESSAGE },
+  DIFFERENT_NAME_ON_POLICY: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
 } = ERROR_MESSAGES.INSURANCE.POLICY;
 
 /**
- * validates last name field
+ * validates first name field
  * checks if response has been provided
- * @param {RequestBody} responseBody
- * @param {object} errors
- * @returns {object} errors
+ * @param {RequestBody} formBody
+ * @param {Object} errors: Other validation errors for the same form
+ * @returns {ValidationErrors} alphaCharactersAndMaxLengthValidation
  */
-const firstName = (responseBody: RequestBody, errors: object) => nameValidation(responseBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
+const firstName = (formBody: RequestBody, errors: object) =>
+  alphaCharactersAndMaxLengthValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.POLICY_CONTACT_NAME);
 
 export default firstName;

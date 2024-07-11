@@ -1,5 +1,4 @@
-import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES, WEBSITE_EXAMPLES } from '../../../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
@@ -21,11 +20,9 @@ const {
 
 const ERROR_MESSAGE = COMPANY_OR_ORG_ERROR_MESSAGES[FIELD_ID];
 
-const { taskList } = partials.insurancePartials;
+const baseUrl = Cypress.config('baseUrl');
 
-const task = taskList.prepareApplication.tasks.buyer;
-
-context('Insurance - Your Buyer - Company or organisation page - form validation - website', () => {
+context('Insurance - Your buyer - Company or organisation page - form validation - website', () => {
   let referenceNumber;
   let url;
 
@@ -33,9 +30,9 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startInsuranceYourBuyerSection({});
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
 
       cy.assertUrl(url);
     });
@@ -51,38 +48,35 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     cy.deleteApplication(referenceNumber);
   });
 
-  // for error assertion - common fields
-  const ERROR_ASSERTIONS = {
+  const assertions = {
     field: fieldSelector(FIELD_ID),
-    numberOfExpectedErrors: 8,
     errorIndex: 2,
+    expectedErrorsCount: 3,
   };
 
   it(`should display validation errors if when ${FIELD_ID} is the incorrect format`, () => {
-    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-    const value = WEBSITE_EXAMPLES.INVALID;
-
-    const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
-
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+    cy.submitAndAssertFieldErrors({
+      ...assertions,
+      value: WEBSITE_EXAMPLES.INVALID,
+      expectedErrorMessage: ERROR_MESSAGE.INCORRECT_FORMAT,
+    });
   });
 
   it(`should display validation errors when ${FIELD_ID} is above 191 characters`, () => {
-    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-    const value = WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH;
-
-    const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
-
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+    cy.submitAndAssertFieldErrors({
+      ...assertions,
+      value: WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH,
+      expectedErrorMessage: ERROR_MESSAGE.INCORRECT_FORMAT,
+    });
   });
 
   describe(`when ${FIELD_ID} is correctly entered`, () => {
     it('should not display validation errors', () => {
       cy.keyboardInput(fieldSelector(FIELD_ID).input(), WEBSITE_EXAMPLES.VALID);
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
-      partials.errorSummaryListItems().should('have.length', 7);
+      cy.assertErrorSummaryListLength(2);
     });
   });
 });

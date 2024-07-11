@@ -24,6 +24,8 @@ const {
 
 const FIELD_STRINGS = ACCOUNT_FIELDS.NEW_PASSWORD[PASSWORD];
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Password reset - new password page - As an Exporter, I want to reset my password, So that I can securely access my digital service account with UKEF', () => {
   let url;
   let resetPasswordToken;
@@ -38,7 +40,7 @@ context('Insurance - Account - Password reset - new password page - As an Export
 
     cy.completeAndSubmitPasswordResetForm({});
 
-    url = `${Cypress.config('baseUrl')}${LINK_SENT}`;
+    url = `${baseUrl}${LINK_SENT}`;
 
     cy.assertUrl(url);
   });
@@ -52,7 +54,7 @@ context('Insurance - Account - Password reset - new password page - As an Export
       // Get an account's password reset token
       resetPasswordToken = await api.getAccountPasswordResetToken();
 
-      url = `${Cypress.config('baseUrl')}${NEW_PASSWORD}?token=${resetPasswordToken}`;
+      url = `${baseUrl}${NEW_PASSWORD}?token=${resetPasswordToken}`;
     });
 
     describe('page tests', () => {
@@ -95,7 +97,7 @@ context('Insurance - Account - Password reset - new password page - As an Export
 
         cy.completeAndSubmitNewPasswordAccountForm({ password: newPassword });
 
-        const expected = `${Cypress.config('baseUrl')}${SUCCESS}`;
+        const expected = `${baseUrl}${SUCCESS}`;
         cy.assertUrl(expected);
       });
     });

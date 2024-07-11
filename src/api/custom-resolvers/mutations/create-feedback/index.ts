@@ -6,8 +6,8 @@ import { Context, InsuranceFeedbackVariables } from '../../../types';
  * adds createdAt timestamp to feedback
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the createInsuranceFeedback mutation
- * @param {Object} KeystoneJS context API
- * @returns {Object} with success true or false and response
+ * @param {Context} KeystoneJS context API
+ * @returns {Promise<Object>} with success true or false and response
  */
 const createFeedback = async (root: any, variables: InsuranceFeedbackVariables, context: Context) => {
   console.info('Creating feedback');

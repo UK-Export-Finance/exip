@@ -2,7 +2,7 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
+{% import '../../../components/text-input.njk' as textInput %}
 {% import '../../../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
@@ -47,7 +47,7 @@
 
   <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
-  <p data-cy="intro">{{ CONTENT_STRINGS.INTRO }}</p>
+  <p data-cy="{{ DATA_CY.INTRO }}">{{ CONTENT_STRINGS.INTRO }}</p>
 
   <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
 
@@ -56,29 +56,15 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters-from-desktop">
 
-        {{ govukInput({
-          label: {
-            text: FIELD.LABEL,
-            attributes: {
-              'data-cy': FIELD.ID + '-label'
-            }
-          },
-          classes: "govuk-input--width-4 govuk-input--extra-letter-spacing",
-          attributes: {
-            'data-cy': FIELD.ID + '-input'
-          },
+        {{ textInput.render({
           id: FIELD.ID,
-          name: FIELD.ID,
           inputmode: "numeric",
           pattern: "[0-9]*",
           spellcheck: false,
-          errorMessage: validationErrors.errorList[FIELD.ID] and {
-            text: validationErrors.errorList[FIELD.ID].text,
-            attributes: {
-              "data-cy": FIELD.ID + "-error-message"
-            }
-          },
-          value: submittedValues[FIELD.ID]
+          labelText: FIELD.LABEL,
+          inputClasses: "govuk-input--width-4 govuk-input--extra-letter-spacing",
+          value: submittedValues[FIELD.ID],
+          errorMessage: validationErrors.errorList[FIELD.ID]
         }) }}
 
         <div class="govuk-button-group">

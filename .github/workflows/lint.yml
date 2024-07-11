@@ -99,7 +99,7 @@ jobs:
 
       - name: Linting
         working-directory: ./
-        run: npm run lint
+        run: npm run lint:all
 
   # 3. Prettier
   prettier:

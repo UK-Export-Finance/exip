@@ -1,13 +1,6 @@
 import { MAX_APPLICATIONS_PER_PAGE } from '../../../../../../constants';
-import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-
-const { DASHBOARD } = INSURANCE_ROUTES;
-
-const baseUrl = Cypress.config('baseUrl');
 
 const totalApplications = MAX_APPLICATIONS_PER_PAGE;
-
-const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
 context(`Insurance - Dashboard - pagination - ${totalApplications} applications`, () => {
   let applications;
@@ -18,7 +11,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
         applications = createdApplications;
       });
 
-      cy.navigateToUrl(dashboardUrl);
+      cy.navigateToDashboardUrl();
     });
   });
 

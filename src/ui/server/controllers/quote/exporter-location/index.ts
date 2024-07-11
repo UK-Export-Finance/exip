@@ -15,7 +15,7 @@ export const PAGE_VARIABLES = {
   PAGE_CONTENT_STRINGS: PAGES.EXPORTER_LOCATION,
 };
 
-export const TEMPLATE = TEMPLATES.SHARED_PAGES.EXPORTER_LOCATION;
+export const TEMPLATE = TEMPLATES.SHARED_PAGES.SINGLE_RADIO;
 
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {

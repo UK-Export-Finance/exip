@@ -45,23 +45,19 @@ describe('controllers/insurance/declarations/save-data', () => {
     expect(result).toEqual(mockUpdateApplicationResponse);
   });
 
-  describe('api error handling', () => {
-    describe('update declarations call', () => {
-      describe('when there is an error', () => {
-        beforeEach(() => {
-          updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
-          api.keystone.application.update.declarations = updateApplicationSpy;
-        });
+  describe('when there is an error calling the API', () => {
+    beforeEach(() => {
+      updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+      api.keystone.application.update.declarations = updateApplicationSpy;
+    });
 
-        it('should throw an error', async () => {
-          try {
-            await save.declaration(mockApplication, mockFormBody);
-          } catch (err) {
-            const expected = new Error("Updating application's declarations");
-            expect(err).toEqual(expected);
-          }
-        });
-      });
+    it('should throw an error', async () => {
+      try {
+        await save.declaration(mockApplication, mockFormBody);
+      } catch (err) {
+        const expected = new Error("Updating application's declarations");
+        expect(err).toEqual(expected);
+      }
     });
   });
 });

@@ -1,6 +1,6 @@
 import partials from '../../../../../partials';
 import { field as fieldSelector } from '../../../../../pages/shared';
-import { BUTTONS, PAGES, FIELDS } from '../../../../../content-strings';
+import { BUTTONS, PAGES, FIELDS as FIELD_STRINGS } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { FIELD_IDS } from '../../../../../constants/field-ids';
 
@@ -20,71 +20,82 @@ const {
 } = FIELD_IDS;
 
 const {
-  START,
+  ELIGIBILITY: { CHECK_IF_ELIGIBLE },
   FEEDBACK,
 } = ROUTES.INSURANCE;
 
-context('Insurance - Feedback - As an exporter I want to give feedback on the UKEF EXIP Digital Service so that UKEF will have clarity on how the digital service is/or not meeting my EXIP application needs', () => {
-  const startUrl = START;
-  const url = FEEDBACK;
+context(
+  'Insurance - Feedback - As an exporter I want to give feedback on the UKEF EXIP Digital Service so that UKEF will have clarity on how the digital service is/or not meeting my EXIP application needs',
+  () => {
+    const url = FEEDBACK;
 
-  before(() => {
-    cy.navigateToUrl(startUrl);
-    partials.phaseBanner.feedbackLink().click();
-  });
+    before(() => {
+      cy.navigateToCheckIfEligibleUrl();
 
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  it('renders core page elements', () => {
-    cy.corePageChecks({
-      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: url,
-      backLink: startUrl,
-      submitButtonCopy: BUTTONS.SEND_FEEDBACK,
-      assertAuthenticatedHeader: false,
+      partials.phaseBanner.feedbackLink().click();
     });
-  });
 
-  describe('page tests', () => {
     beforeEach(() => {
-      cy.navigateToUrl(url);
+      cy.saveSession();
     });
 
-    it(`should render the ${SATISFACTION} radios`, () => {
-      const field = fieldSelector(SATISFACTION);
-
-      cy.checkText(field.heading(), FIELDS[SATISFACTION].TITLE);
-      cy.checkText(field.label(), FIELDS[SATISFACTION].LABEL);
-
-      cy.checkText(fieldSelector(VERY_SATISFIED).label(), FIELDS[SATISFACTION].VERY_SATISFIED);
-      cy.checkText(fieldSelector(SATISFIED).label(), FIELDS[SATISFACTION].SATISFIED);
-      cy.checkText(fieldSelector(NEITHER).label(), FIELDS[SATISFACTION].NEITHER);
-      cy.checkText(fieldSelector(DISSATISFIED).label(), FIELDS[SATISFACTION].DISSATISFIED);
-      cy.checkText(fieldSelector(VERY_DISSATISIFED).label(), FIELDS[SATISFACTION].VERY_DISSATISIFED);
-
-      fieldSelector(VERY_SATISFIED).input().should('exist');
-      fieldSelector(SATISFIED).input().should('exist');
-      fieldSelector(NEITHER).input().should('exist');
-      fieldSelector(DISSATISFIED).input().should('exist');
-      fieldSelector(VERY_DISSATISIFED).input().should('exist');
+    it('renders core page elements', () => {
+      cy.corePageChecks({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currentHref: url,
+        backLink: CHECK_IF_ELIGIBLE,
+        submitButtonCopy: BUTTONS.SEND_FEEDBACK,
+        assertAuthenticatedHeader: false,
+      });
     });
 
-    it(`should render the ${IMPROVEMENT} section`, () => {
-      const field = fieldSelector(IMPROVEMENT);
+    describe('page tests', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
 
-      cy.checkText(field.label(), FIELDS[IMPROVEMENT].LABEL);
-      cy.checkText(field.hint(), FIELDS[IMPROVEMENT].HINT);
-      field.textarea().should('exist');
+      it(`should render the ${SATISFACTION} radios`, () => {
+        const field = fieldSelector(SATISFACTION);
+
+        cy.checkText(field.heading(), FIELD_STRINGS[SATISFACTION].TITLE);
+        cy.checkText(field.label(), FIELD_STRINGS[SATISFACTION].LABEL);
+
+        cy.checkText(fieldSelector(VERY_SATISFIED).label(), FIELD_STRINGS[SATISFACTION].VERY_SATISFIED);
+        cy.checkText(fieldSelector(SATISFIED).label(), FIELD_STRINGS[SATISFACTION].SATISFIED);
+        cy.checkText(fieldSelector(NEITHER).label(), FIELD_STRINGS[SATISFACTION].NEITHER);
+        cy.checkText(fieldSelector(DISSATISFIED).label(), FIELD_STRINGS[SATISFACTION].DISSATISFIED);
+        cy.checkText(fieldSelector(VERY_DISSATISIFED).label(), FIELD_STRINGS[SATISFACTION].VERY_DISSATISIFED);
+
+        fieldSelector(VERY_SATISFIED).input().should('exist');
+        fieldSelector(SATISFIED).input().should('exist');
+        fieldSelector(NEITHER).input().should('exist');
+        fieldSelector(DISSATISFIED).input().should('exist');
+        fieldSelector(VERY_DISSATISIFED).input().should('exist');
+      });
+
+      it(`should render the ${IMPROVEMENT} textarea`, () => {
+        const fieldId = IMPROVEMENT;
+        const fieldStrings = FIELD_STRINGS[fieldId];
+
+        cy.assertTextareaRendering({
+          fieldId,
+          expectedLabel: fieldStrings.LABEL,
+          expectedHint: fieldStrings.HINT,
+          maximumCharacters: fieldStrings.MAXIMUM,
+        });
+      });
+
+      it(`should render the ${OTHER_COMMENTS} textarea`, () => {
+        const fieldId = OTHER_COMMENTS;
+        const fieldStrings = FIELD_STRINGS[fieldId];
+
+        cy.assertTextareaRendering({
+          fieldId,
+          expectedLabel: fieldStrings.LABEL,
+          expectedHint: fieldStrings.HINT,
+          maximumCharacters: fieldStrings.MAXIMUM,
+        });
+      });
     });
-
-    it(`should render the ${OTHER_COMMENTS} section`, () => {
-      const field = fieldSelector(OTHER_COMMENTS);
-
-      cy.checkText(field.label(), FIELDS[OTHER_COMMENTS].LABEL);
-      cy.checkText(field.hint(), FIELDS[OTHER_COMMENTS].HINT);
-      field.textarea().should('exist');
-    });
-  });
-});
+  },
+);

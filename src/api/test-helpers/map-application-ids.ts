@@ -7,7 +7,8 @@ import { Application } from '../types';
  * @returns {Object} IDs in an application
  */
 export const mapApplicationIds = (application: Application) => {
-  const { company, business, broker, buyer, declaration, eligibility, exportContract, id, owner, policy, policyContact } = application;
+  const { company, business, broker, buyer, declaration, eligibility, exportContract, id, owner, policy, policyContact, nominatedLossPayee, sectionReview } =
+    application;
 
   const ids = {
     companyId: company.id,
@@ -21,6 +22,8 @@ export const mapApplicationIds = (application: Application) => {
     ownerId: owner.id,
     policyId: policy.id,
     policyContactId: policyContact.id,
+    nominatedLossPayeeId: nominatedLossPayee.id,
+    sectionReviewId: sectionReview.id,
   };
 
   return ids;

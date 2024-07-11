@@ -1,6 +1,24 @@
-import { isEmptyString, stripCommas, isPopulatedString, stringsAreDefined, stringsAreEqual } from '.';
+import { isAString, isEmptyString, stripCommas, isPopulatedString, stringsAreDefined, stringsAreEqual, isBelowMinLength, isAboveMaxLength } from '.';
 
 describe('server/helpers/string', () => {
+  describe('isAString', () => {
+    describe('when a value is a string', () => {
+      it('should return true', () => {
+        const result = isAString('mock');
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    describe('when a value is NOT a string', () => {
+      it('should return false', () => {
+        const result = isAString(1);
+
+        expect(result).toEqual(false);
+      });
+    });
+  });
+
   describe('isEmptyString', () => {
     describe('when a string is empty', () => {
       it('should return true', () => {
@@ -30,7 +48,6 @@ describe('server/helpers/string', () => {
 
     describe('when a string is undefined', () => {
       it('should return false', () => {
-        // required to test if undefined
         const result = isPopulatedString(undefined);
 
         expect(result).toEqual(false);
@@ -112,6 +129,74 @@ describe('server/helpers/string', () => {
         const result = stringsAreEqual('test1', 'test');
 
         expect(result).toEqual(false);
+      });
+    });
+  });
+
+  describe('isBelowMinLength', () => {
+    const mockMinLength = 10;
+
+    describe('string is below minimum provided length', () => {
+      it('should return true', () => {
+        const string = 'a'.repeat(mockMinLength - 1);
+
+        const response = isBelowMinLength(string, mockMinLength);
+
+        expect(response).toEqual(true);
+      });
+    });
+
+    describe('string is the same as minimum provided length', () => {
+      it('should return false', () => {
+        const string = 'a'.repeat(mockMinLength);
+
+        const response = isBelowMinLength(string, mockMinLength);
+
+        expect(response).toEqual(false);
+      });
+    });
+
+    describe('string is the above the minimum provided length', () => {
+      it('should return false', () => {
+        const string = 'a'.repeat(mockMinLength + 1);
+
+        const response = isBelowMinLength(string, mockMinLength);
+
+        expect(response).toEqual(false);
+      });
+    });
+  });
+
+  describe('isAboveMaxLength', () => {
+    const mockMaxLength = 191;
+
+    describe('string is above maximum provided length', () => {
+      it('should return true', () => {
+        const string = 'a'.repeat(mockMaxLength + 1);
+
+        const response = isAboveMaxLength(string, mockMaxLength);
+
+        expect(response).toEqual(true);
+      });
+    });
+
+    describe('string is the same as maximum provided length', () => {
+      it('should return false', () => {
+        const string = 'a'.repeat(mockMaxLength);
+
+        const response = isAboveMaxLength(string, mockMaxLength);
+
+        expect(response).toEqual(false);
+      });
+    });
+
+    describe('string is the below the maximum provided length', () => {
+      it('should return false', () => {
+        const string = 'a';
+
+        const response = isAboveMaxLength(string, mockMaxLength);
+
+        expect(response).toEqual(false);
       });
     });
   });

@@ -1,19 +1,16 @@
 import applicationStatusMiddleware from '.';
-import { ROUTES } from '../../../constants/routes';
+import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import { APPLICATION } from '../../../constants';
 import POLICY_FIELD_IDS from '../../../constants/field-ids/insurance/policy';
-import { mockReq, mockRes, mockApplication, mockAccount } from '../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockAccount, referenceNumber } from '../../../test-mocks';
 import { Next, Request, Response } from '../../../../types';
 
-const {
-  INSURANCE: { INSURANCE_ROOT, NO_ACCESS_APPLICATION_SUBMITTED, APPLICATION_SUBMITTED, CHECK_YOUR_ANSWERS, COMPLETE_OTHER_SECTIONS },
-} = ROUTES;
+const { APPLICATION_SUBMITTED, NO_ACCESS_TO_APPLICATION, NO_ACCESS_APPLICATION_SUBMITTED, INSURANCE_ROOT, COMPLETE_OTHER_SECTIONS, CHECK_YOUR_ANSWERS } =
+  INSURANCE_ROUTES;
 
 const {
   TYPE_OF_POLICY: { POLICY_TYPE },
 } = POLICY_FIELD_IDS;
-
-const { referenceNumber } = mockApplication;
 
 describe('middleware/insurance/application-status', () => {
   let req: Request;
@@ -48,6 +45,29 @@ describe('middleware/insurance/application-status', () => {
       await applicationStatusMiddleware(req, res, next);
 
       expect(res.redirect).toHaveBeenCalledWith(NO_ACCESS_APPLICATION_SUBMITTED);
+    });
+
+    describe(`when res.locals.application has a status of ${APPLICATION.STATUS.ABANDONED}`, () => {
+      beforeEach(() => {
+        req.session.user = {
+          ...mockAccount,
+          id: mockApplication.owner.id,
+        };
+
+        res.locals.application = {
+          ...mockApplication,
+          status: APPLICATION.STATUS.ABANDONED,
+          id: mockApplication.owner.id,
+        };
+
+        next = nextSpy;
+      });
+
+      it(`should redirect to ${NO_ACCESS_TO_APPLICATION}`, async () => {
+        await applicationStatusMiddleware(req, res, next);
+
+        expect(res.redirect).toHaveBeenCalledWith(NO_ACCESS_TO_APPLICATION);
+      });
     });
 
     describe(`when the route is ${APPLICATION_SUBMITTED}`, () => {

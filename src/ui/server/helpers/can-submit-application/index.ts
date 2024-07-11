@@ -15,6 +15,8 @@ import { Application } from '../../../types';
  * @returns {Boolean}
  */
 const canSubmitApplication = (application: Application): boolean => {
+  console.info('Checking if an application can be submitted (canSubmitApplication helper)');
+
   const { status, submissionCount, submissionDeadline } = application;
 
   // check the application is complete
@@ -33,8 +35,12 @@ const canSubmitApplication = (application: Application): boolean => {
   const isFirstSubmission = submissionCount === 0;
 
   if (isComplete && isInProgress && validSubmissionDate && isFirstSubmission) {
+    console.info('Checking if an application can be submitted - application is valid (canSubmitApplication helper)');
+
     return true;
   }
+
+  console.info('Checking if an application can be submitted - application is invalid (canSubmitApplication helper)');
 
   return false;
 };

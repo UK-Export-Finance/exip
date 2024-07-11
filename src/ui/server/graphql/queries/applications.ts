@@ -2,7 +2,12 @@ import gql from 'graphql-tag';
 
 const applicationsQuery = gql`
   query applications($accountId: ID!, $take: Int!, $skip: Int!) {
-    applications(where: { owner: { id: { equals: $accountId } } }, orderBy: { updatedAt: desc }, take: $take, skip: $skip) {
+    applications(
+      where: { AND: [{ owner: { id: { equals: $accountId } } }, { status: { not: { equals: "Abandoned" } } }] }
+      orderBy: { updatedAt: desc }
+      take: $take
+      skip: $skip
+    ) {
       status
       referenceNumber
       buyer {
@@ -12,13 +17,14 @@ const applicationsQuery = gql`
         companyOrOrganisationName
       }
       policy {
+        policyCurrencyCode
         policyType
         totalValueOfContract
         maximumBuyerWillOwe
       }
       submissionDate
     }
-    applicationsCount(where: { owner: { id: { equals: $accountId } } })
+    applicationsCount(where: { AND: [{ owner: { id: { equals: $accountId } } }, { status: { not: { equals: "Abandoned" } } }] })
   }
 `;
 

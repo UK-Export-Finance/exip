@@ -18,8 +18,10 @@ const {
   ACCOUNT: { PASSWORD },
 } = INSURANCE_FIELD_IDS;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Password reset - success page - I want to reset my password, So that I can securely access my digital service account with UKEF', () => {
-  const successUrl = `${Cypress.config('baseUrl')}${SUCCESS}`;
+  const successUrl = `${baseUrl}${SUCCESS}`;
   let newPasswordUrl;
 
   before(() => {
@@ -42,7 +44,7 @@ context('Insurance - Account - Password reset - success page - I want to reset m
       // Get an account's password reset token
       const resetPasswordToken = await api.getAccountPasswordResetToken();
 
-      newPasswordUrl = `${Cypress.config('baseUrl')}${NEW_PASSWORD}?token=${resetPasswordToken}`;
+      newPasswordUrl = `${baseUrl}${NEW_PASSWORD}?token=${resetPasswordToken}`;
     });
 
     describe('when progressing to the password reset success page', () => {

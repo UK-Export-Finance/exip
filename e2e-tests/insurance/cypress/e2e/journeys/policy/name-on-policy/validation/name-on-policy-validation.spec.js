@@ -1,18 +1,13 @@
-import { field } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
 import account from '../../../../../../../fixtures/account';
 
-const { taskList } = partials.insurancePartials;
-
 const {
   ROOT: INSURANCE_ROOT,
   POLICY: {
-    CHECK_YOUR_ANSWERS,
     DIFFERENT_NAME_ON_POLICY,
     NAME_ON_POLICY,
   },
@@ -31,6 +26,13 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
+const {
+  NAME_ON_POLICY: {
+    OPTIONS,
+    [POSITION]: { MAXIMUM },
+  },
+} = FIELDS;
+
 const NAME_ON_POLICY_ERRORS = ERROR_MESSAGES.INSURANCE.POLICY.NAME_ON_POLICY;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -44,11 +46,10 @@ context('Insurance - Policy - Name on policy - Validation', () => {
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      taskList.prepareApplication.tasks.policy.link().click();
-
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.startInsurancePolicySection({});
+      cy.completeAndSubmitPolicyTypeForm({});
       cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
+      cy.completeAndSubmitTotalContractValueForm({});
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
 
@@ -64,7 +65,7 @@ context('Insurance - Policy - Name on policy - Validation', () => {
     cy.deleteApplication(referenceNumber);
   });
 
-  describe('No radios selected', () => {
+  describe('when no radios are selected', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
     });
@@ -73,70 +74,76 @@ context('Insurance - Policy - Name on policy - Validation', () => {
       const expectedErrorsCount = 1;
       const expectedErrorMessage = NAME_ON_POLICY_ERRORS[NAME].IS_EMPTY;
 
-      cy.submitAndAssertRadioErrors(
-        field(SAME_NAME),
-        0,
+      cy.submitAndAssertRadioErrors({
+        field: fieldSelector(SAME_NAME),
         expectedErrorsCount,
         expectedErrorMessage,
-      );
+      });
     });
   });
 
-  describe(`${POSITION} not entered`, () => {
+  describe(POSITION, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      field(SAME_NAME).label().click();
+      fieldSelector(SAME_NAME).label().click();
     });
 
-    it('should display validation error', () => {
-      const expectedErrorsCount = 1;
-      const expectedErrorMessage = NAME_ON_POLICY_ERRORS[POSITION].IS_EMPTY;
+    const assertions = {
+      field: fieldSelector(POSITION),
+    };
 
-      cy.submitAndAssertFieldErrors(
-        field(POSITION),
-        null,
-        0,
-        expectedErrorsCount,
-        expectedErrorMessage,
-        false,
-      );
+    const ERROR = NAME_ON_POLICY_ERRORS[POSITION];
+
+    describe(`when ${POSITION} is left empty`, () => {
+      it('should render validation errors', () => {
+        cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: ERROR.IS_EMPTY });
+      });
+
+      it(`should render the ${SAME_NAME} radio text`, () => {
+        const nameAndEmail = `${account[FIRST_NAME]} ${account[LAST_NAME]} (${account[EMAIL]})`;
+        cy.checkText(fieldSelector(SAME_NAME).label(), nameAndEmail);
+      });
+
+      it(`should render the ${OTHER_NAME} radio text`, () => {
+        cy.checkText(fieldSelector(OTHER_NAME).label(), OPTIONS.OTHER_NAME.TEXT);
+      });
     });
 
-    it(`should render the ${SAME_NAME} radio text`, () => {
-      const nameAndEmail = `${account[FIRST_NAME]} ${account[LAST_NAME]} (${account[EMAIL]})`;
-      cy.checkText(field(SAME_NAME).label(), nameAndEmail);
+    it(`should render validation errors when ${POSITION} is over ${MAXIMUM} characters`, () => {
+      const value = 'a'.repeat(FIELDS.NAME_ON_POLICY[POSITION].MAXIMUM + 1);
+
+      cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR.ABOVE_MAXIMUM });
     });
 
-    it(`should render the ${OTHER_NAME} radio text`, () => {
-      cy.checkText(field(OTHER_NAME).label(), FIELDS.NAME_ON_POLICY.OPTIONS.OTHER_NAME.TEXT);
+    it(`should render validation errors when ${POSITION} contains a special character`, () => {
+      const value = 'a!';
+
+      cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR.INCORRECT_FORMAT });
+    });
+
+    it(`should render validation errors when ${POSITION} contains a number`, () => {
+      const value = 'a1';
+
+      cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR.INCORRECT_FORMAT });
+    });
+
+    it(`should render validation errors when ${POSITION} contains a number and special character`, () => {
+      const value = 'a1!';
+
+      cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR.INCORRECT_FORMAT });
     });
   });
 
-  describe(`${POSITION} entered`, () => {
+  describe(`when ${OTHER_NAME} is selected`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
     });
 
-    it('should not display validation error and redirect to the next page', () => {
-      cy.completeAndSubmitNameOnPolicyForm({});
-
-      partials.errorSummaryListItems().should('not.exist');
-
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      cy.assertUrl(expectedUrl);
-    });
-  });
-
-  describe(`${OTHER_NAME} selected`, () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
-    });
-
-    it('should not display validation error and redirect to the next page', () => {
+    it('should NOT display validation error, but redirect to the next page', () => {
       cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
 
-      partials.errorSummaryListItems().should('not.exist');
+      cy.assertErrorSummaryListDoesNotExist();
 
       const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
       cy.assertUrl(expectedUrl);

@@ -130,7 +130,7 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
   it("should nullify the account's OTP fields", () => {
     expect(updatedAccount.otpSalt).toEqual('');
     expect(updatedAccount.otpHash).toEqual('');
-    expect(updatedAccount.otpExpiry).toEqual(null);
+    expect(updatedAccount.otpExpiry).toBeNull();
   });
 
   describe('when the provided sign in code is invalid', () => {

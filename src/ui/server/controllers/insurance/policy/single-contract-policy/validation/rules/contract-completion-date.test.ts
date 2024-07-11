@@ -1,130 +1,45 @@
 import contractCompletionDateRules from './contract-completion-date';
-import { FIELD_IDS, ELIGIBILITY } from '../../../../../../constants';
+import { ELIGIBILITY } from '../../../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import dateRules from '../../../../../../shared-validation/date';
 import generateValidationErrors from '../../../../../../helpers/validation';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const {
-  INSURANCE: {
-    POLICY: {
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        SINGLE: { CONTRACT_COMPLETION_DATE },
-      },
+  POLICY: {
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      SINGLE: { CONTRACT_COMPLETION_DATE },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
     POLICY: {
       CONTRACT_POLICY: {
-        SINGLE: { [CONTRACT_COMPLETION_DATE]: ERROR_MESSAGE },
+        SINGLE: { [CONTRACT_COMPLETION_DATE]: ERROR_MESSAGES_OBJECT },
       },
     },
   },
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/policy/single-contract-policy/validation/rules/contract-completion-date', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
-  describe('when day field is not provided', () => {
-    it('should return validation error', () => {
+  describe('when fields are invalid', () => {
+    it('should return validation the result of dateRules', () => {
       const mockSubmittedData = {
-        [`${CONTRACT_COMPLETION_DATE}-month`]: '1',
-        [`${CONTRACT_COMPLETION_DATE}-year`]: '2022',
+        [`${CONTRACT_COMPLETION_DATE}-day`]: '1',
       };
 
       const result = contractCompletionDateRules(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(CONTRACT_COMPLETION_DATE, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when month field is not provided', () => {
-    it('should return validation error', () => {
-      const mockSubmittedData = {
-        [`${CONTRACT_COMPLETION_DATE}-day`]: '10',
-        [`${CONTRACT_COMPLETION_DATE}-year`]: '2022',
-      };
-
-      const result = contractCompletionDateRules(mockSubmittedData, mockErrors);
-
-      const expected = generateValidationErrors(CONTRACT_COMPLETION_DATE, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when year field is not provided', () => {
-    it('should return validation error', () => {
-      const mockSubmittedData = {
-        [`${CONTRACT_COMPLETION_DATE}-day`]: '10',
-        [`${CONTRACT_COMPLETION_DATE}-month`]: '1',
-      };
-
-      const result = contractCompletionDateRules(mockSubmittedData, mockErrors);
-
-      const expected = generateValidationErrors(CONTRACT_COMPLETION_DATE, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when any day/month/year field is NOT a number', () => {
-    it('should return validation error', () => {
-      const mockSubmittedData = {
-        [`${CONTRACT_COMPLETION_DATE}-day`]: 'One',
-        [`${CONTRACT_COMPLETION_DATE}-month`]: '!@',
-        [`${CONTRACT_COMPLETION_DATE}-year`]: ' ',
-      };
-
-      const result = contractCompletionDateRules(mockSubmittedData, mockErrors);
-
-      const expected = generateValidationErrors(CONTRACT_COMPLETION_DATE, ERROR_MESSAGE.NOT_A_NUMBER, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when the date is invalid', () => {
-    it('should return validation error', () => {
-      const date = new Date();
-      const day = date.getDate();
-      const month = date.getMonth();
-
-      const mockSubmittedData = {
-        [`${CONTRACT_COMPLETION_DATE}-day`]: day,
-        [`${CONTRACT_COMPLETION_DATE}-month`]: '24',
-        [`${CONTRACT_COMPLETION_DATE}-year`]: month,
-      };
-
-      const result = contractCompletionDateRules(mockSubmittedData, mockErrors);
-
-      const expected = generateValidationErrors(CONTRACT_COMPLETION_DATE, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when the date is in the past', () => {
-    it('should return validation error', () => {
-      const today = new Date();
-      const yesterday = new Date(today.setDate(today.getDate() - 1));
-
-      const mockSubmittedData = {
-        [`${CONTRACT_COMPLETION_DATE}-day`]: yesterday.getDate(),
-        [`${CONTRACT_COMPLETION_DATE}-month`]: yesterday.getMonth() + 1,
-        [`${CONTRACT_COMPLETION_DATE}-year`]: yesterday.getFullYear(),
-      };
-
-      const result = contractCompletionDateRules(mockSubmittedData, mockErrors);
-
-      const expected = generateValidationErrors(CONTRACT_COMPLETION_DATE, ERROR_MESSAGE.BEFORE_EARLIEST, mockErrors);
+      const expected = dateRules({
+        formBody: mockSubmittedData,
+        errors: mockErrors,
+        fieldId: CONTRACT_COMPLETION_DATE,
+        errorMessages: ERROR_MESSAGES_OBJECT,
+      });
 
       expect(result).toEqual(expected);
     });
@@ -155,7 +70,7 @@ describe('controllers/insurance/policy/single-contract-policy/validation/rules/c
     });
 
     describe(`when ${CONTRACT_COMPLETION_DATE} is the same as ${REQUESTED_START_DATE}`, () => {
-      it('should return validation error', () => {
+      it('should return a validation error', () => {
         const mockSubmittedData = {
           ...requestedStartDateFields,
           [`${CONTRACT_COMPLETION_DATE}-day`]: futureDate.getDate(),
@@ -165,7 +80,7 @@ describe('controllers/insurance/policy/single-contract-policy/validation/rules/c
 
         const result = contractCompletionDateRules(mockSubmittedData, mockErrors);
 
-        const expected = generateValidationErrors(CONTRACT_COMPLETION_DATE, ERROR_MESSAGE.CANNOT_BE_THE_SAME, mockErrors);
+        const expected = generateValidationErrors(CONTRACT_COMPLETION_DATE, ERROR_MESSAGES_OBJECT.CANNOT_BE_THE_SAME, mockErrors);
 
         expect(result).toEqual(expected);
       });
@@ -179,7 +94,7 @@ describe('controllers/insurance/policy/single-contract-policy/validation/rules/c
       let nextYear1week = new Date(nextYear);
       nextYear1week = new Date(nextYear1week.setDate(day + 1 * 7));
 
-      it('should return validation error', () => {
+      it('should return a validation error', () => {
         const mockSubmittedData = {
           [`${REQUESTED_START_DATE}-day`]: nextYear1week.getDate(),
           [`${REQUESTED_START_DATE}-month`]: nextYear1week.getMonth() + 1,
@@ -191,7 +106,7 @@ describe('controllers/insurance/policy/single-contract-policy/validation/rules/c
 
         const result = contractCompletionDateRules(mockSubmittedData, mockErrors);
 
-        const expected = generateValidationErrors(CONTRACT_COMPLETION_DATE, ERROR_MESSAGE.CANNOT_BE_BEFORE, mockErrors);
+        const expected = generateValidationErrors(CONTRACT_COMPLETION_DATE, ERROR_MESSAGES_OBJECT.CANNOT_BE_BEFORE, mockErrors);
 
         expect(result).toEqual(expected);
       });
@@ -206,7 +121,7 @@ describe('controllers/insurance/policy/single-contract-policy/validation/rules/c
       const futureYear = new Date(futureDate.setFullYear(futureDateYear + ELIGIBILITY.MAX_COVER_PERIOD_YEARS));
       const completionDate = new Date(futureYear.setDate(day + 1));
 
-      it('should return validation error', () => {
+      it('should return a validation error', () => {
         const mockSubmittedData = {
           [`${REQUESTED_START_DATE}-day`]: day,
           [`${REQUESTED_START_DATE}-month`]: month,
@@ -218,7 +133,7 @@ describe('controllers/insurance/policy/single-contract-policy/validation/rules/c
 
         const result = contractCompletionDateRules(mockSubmittedData, mockErrors);
 
-        const expected = generateValidationErrors(CONTRACT_COMPLETION_DATE, ERROR_MESSAGE.AFTER_LATEST, mockErrors);
+        const expected = generateValidationErrors(CONTRACT_COMPLETION_DATE, ERROR_MESSAGES_OBJECT.AFTER_LATEST, mockErrors);
 
         expect(result).toEqual(expected);
       });

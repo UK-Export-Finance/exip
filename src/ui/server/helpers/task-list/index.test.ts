@@ -2,11 +2,11 @@ import generateTaskList, { mapTask, generateTaskStatusesAndLinks, generateSimpli
 import { taskStatus, taskLink } from './task-helpers';
 import generateGroupsAndTasks from './generate-groups-and-tasks';
 import flattenApplicationData from '../flatten-application-data';
-import { mockApplication } from '../../test-mocks';
+import { mockApplication, referenceNumber } from '../../test-mocks';
 
 describe('server/helpers/task-list', () => {
   const mockApplicationFlat = flattenApplicationData(mockApplication);
-  const mockTaskListData = generateGroupsAndTasks(mockApplication.referenceNumber);
+  const mockTaskListData = generateGroupsAndTasks(referenceNumber);
 
   const { 0: mockTaskGroup } = mockTaskListData;
   const { tasks: group1Tasks } = mockTaskGroup;
@@ -53,9 +53,7 @@ describe('server/helpers/task-list', () => {
       const result = generateTaskStatusesAndLinks(mockTaskListData, mockApplicationFlat);
 
       const expectedTasks = {
-        initialChecks: () => {
-          return group1Tasks.map((task) => mapTask(task, mockApplicationFlat));
-        },
+        initialChecks: () => group1Tasks.map((task) => mapTask(task, mockApplicationFlat)),
         prepareApplication: () => {
           const { 1: tasksListData } = mockTaskListData;
           const { tasks: group2Tasks } = tasksListData;
@@ -107,6 +105,7 @@ describe('server/helpers/task-list', () => {
         },
         {
           title: taskListDataWithStates[1].title,
+          hint: taskListDataWithStates[1].hint,
           tasks: Object.values(taskListDataWithStates[1].tasks).map((task) => ({
             id: task.id,
             href: task.href,
