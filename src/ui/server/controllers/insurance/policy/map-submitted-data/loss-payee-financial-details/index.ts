@@ -11,6 +11,7 @@ const {
 /**
  * mapSubmittedData
  * if SORT_CODE, IBAN or BIC_SWIFT_CODE then run stripHyphensAndSpacesFromString to remove hyphens and spaces
+ * capitalises IBAN and BIC_SWIFT_CODE
  * @param {RequestBody} formBody
  * @returns {Object} populated data
  */
@@ -23,13 +24,11 @@ const mapSubmittedData = (formBody: RequestBody): object => {
 
   if (objectHasProperty(populatedData, IBAN)) {
     const iban = stripHyphensAndSpacesFromString(formBody[IBAN]);
-    // make upper case
     populatedData[IBAN] = iban.toUpperCase();
   }
 
   if (objectHasProperty(populatedData, BIC_SWIFT_CODE)) {
     const bicSwiftCode = stripHyphensAndSpacesFromString(formBody[BIC_SWIFT_CODE]);
-    // make upper case
     populatedData[BIC_SWIFT_CODE] = bicSwiftCode.toUpperCase();
   }
 
