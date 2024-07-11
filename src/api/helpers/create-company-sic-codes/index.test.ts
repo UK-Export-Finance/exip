@@ -24,7 +24,7 @@ describe('helpers/create-company-sic-codes', () => {
     company = (await companyHelpers.createCompany({ context })) as object;
   });
 
-  test('it should return mapped SIC codes with company ID', async () => {
+  it('should return mapped SIC codes with company ID', async () => {
     const result = await createCompanySicCodes(context, mockSicCodes, mocIndustrySectorNames, company.id);
 
     const [firstEntry, secondEntry] = result;
@@ -44,8 +44,18 @@ describe('helpers/create-company-sic-codes', () => {
     expect(secondEntry.industrySectorName).toEqual('');
   });
 
+  describe('when sicCodes is not populated', () => {
+    it('should return an empty array', async () => {
+      const emptySicCodes = [] as Array<string>;
+
+      const result = await createCompanySicCodes(context, emptySicCodes, mocIndustrySectorNames, company.id);
+
+      expect(result).toEqual([]);
+    });
+  });
+
   describe('when an invalid company ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createCompanySicCodes(context, mockSicCodes, mocIndustrySectorNames, invalidId);
       } catch (err) {

@@ -30,6 +30,11 @@ const updateCompanyPostDataMigration = async (root: any, variables: UpdateCompan
 
     const { id: addressId, ...addressFields } = registeredOfficeAddress;
 
+    if (!updatedCompany.registeredOfficeAddressId) {
+      console.error('Unable to update company address - does not exist (post data migration) %O', id);
+      throw new Error(`Unable to update company address - does not exist (post data migration) ${id}`);
+    }
+
     await context.db.CompanyAddress.updateOne({
       where: {
         id: updatedCompany.registeredOfficeAddressId,

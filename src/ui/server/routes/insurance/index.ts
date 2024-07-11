@@ -21,10 +21,8 @@ import insuranceDeclarationsRouter from './declarations';
 import insuranceAccountRouter from './account';
 import insuranceCheckYourAnswersRouter from './check-your-answers';
 
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
 const insuranceRouter = express.Router();
-/* eslint-enable @typescript-eslint/ban-ts-comment */
 
 insuranceRouter.get(INSURANCE_ROUTES.START, startGet);
 

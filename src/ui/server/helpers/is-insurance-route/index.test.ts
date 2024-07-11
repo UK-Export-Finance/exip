@@ -16,7 +16,7 @@ describe('helpers/is-insurance-route', () => {
     expect(response).toEqual(true);
   });
 
-  it('should return false if does not contain insurance', () => {
+  it('should return false if does NOT contain insurance', () => {
     const url = 'url/test';
 
     const response = isInsuranceRoute(url);
@@ -24,7 +24,7 @@ describe('helpers/is-insurance-route', () => {
     expect(response).toEqual(false);
   });
 
-  it('should return false if url does not have any "/" in it', () => {
+  it('should return false if url does NOT have any "/" in it', () => {
     const url = 'url';
 
     const response = isInsuranceRoute(url);

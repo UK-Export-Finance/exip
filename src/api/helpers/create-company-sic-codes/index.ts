@@ -19,17 +19,17 @@ const createCompanySicCodes = async (
   console.info('Creating company SIC codes for ', companyId);
 
   try {
-    const mappedSicCodes = mapSicCodes(sicCodes, industrySectorNames, companyId);
-
-    let createdSicCodes = [] as Array<SicCode>;
-
     if (sicCodes.length) {
-      createdSicCodes = (await context.db.CompanySicCode.createMany({
+      const mappedSicCodes = mapSicCodes(sicCodes, industrySectorNames, companyId);
+
+      const createdSicCodes = (await context.db.CompanySicCode.createMany({
         data: mappedSicCodes,
       })) as Array<SicCode>;
+
+      return createdSicCodes;
     }
 
-    return createdSicCodes;
+    return [];
   } catch (err) {
     console.error('Error creating company SIC codes %O', err);
 
