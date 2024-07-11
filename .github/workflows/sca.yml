@@ -14,7 +14,7 @@ on:
     branches: [main, main-*]
 
 env:
-  environment: "qa"
+  environment: 'qa'
   timezone: ${{ vars.TIMEZONE }}
 
 jobs:
@@ -85,23 +85,3 @@ jobs:
         uses: fossas/fossa-action@main
         with:
           api-key: ${{ secrets.FOSSA_API_KEY }}
-
-  # 5. Validation
-  validation:
-    name: Validation 🔍
-    needs: setup
-    environment:
-      name: ${{ needs.setup.outputs.environment }}
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Repository
-        uses: actions/checkout@v4
-
-      - name: Dependencies
-        working-directory: ./
-        run: npm ci --legacy-peer-deps
-
-      - name: Validate
-        working-directory: ./
-        run: npm run validate:yml
