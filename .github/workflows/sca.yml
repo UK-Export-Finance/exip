@@ -63,7 +63,7 @@ jobs:
 
       - name: Dependencies
         working-directory: ./
-        run: npm ci:all --legacy-peer-deps
+        run: npm ci:all
 
       - name: Spell check
         working-directory: ./
