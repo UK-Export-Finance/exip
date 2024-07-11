@@ -67,7 +67,7 @@
     "@typescript-eslint/eslint-plugin": "^7.15.0",
     "@typescript-eslint/parser": "^7.15.0",
     "commitlint": "^19.3.0",
-    "cspell": "^8.9.1",
+    "cspell": "^8.10.4",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-base": "^15.0.0",
@@ -84,7 +84,7 @@
     "lint-staged": "^15.2.7",
     "prettier": "^3.3.2",
     "sort-package-json": "^2.10.0",
-    "ts-jest": "^29.1.5",
+    "ts-jest": "^29.2.0",
     "typescript": "5.4.5",
     "yaml-lint": "^1.7.0"
   },
