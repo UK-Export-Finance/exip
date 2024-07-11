@@ -27,7 +27,7 @@ if [ -n "$selection" ]; then
             branch=main
         ############### FEATURE ###############
         elif [ "$destination" = "feature" ]; then
-            branch=main-application-no-pdf
+            branch=main-iterations
         ############### STAGING ###############
         elif [ "$destination" = "staging" ]; then
             branch=dev
