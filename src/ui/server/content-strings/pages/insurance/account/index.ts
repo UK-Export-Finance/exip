@@ -1,5 +1,5 @@
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
-import { CUSTOMER_SERVICE_CONTACT_DETAILS } from '../../../contact';
+import { CONTACT_DETAILS } from '../../../contact';
 import { LINKS } from '../../../links';
 
 const ACCOUNT = {
@@ -22,23 +22,9 @@ const ACCOUNT = {
       PAGE_TITLE: 'Confirm your email address',
       WE_SENT_LINK_TO: "We've sent you a link to",
       CHECK_YOUR_EMAIL: 'Check your email and follow the link to confirm your email address and activate your account.',
-      HAVING_PROBLEMS: {
-        HEADING: 'Having problems?',
-        REQUEST_NEW: {
-          YOU_CAN: 'You can',
-          LINK: {
-            TEXT: 'request a new link,',
-            HREF: INSURANCE_ROUTES.ACCOUNT.CREATE.RESEND_CONFIRM_EMAIL,
-          },
-          IF_NOT_RECEIVED: 'if you do not receive anything after 5 minutes.',
-        },
-        WRONG_EMAIL: {
-          ENTERED_INCORRECTLY: "If you entered the wrong email address, you'll need to",
-          CREATE_ACCOUNT_AGAIN: {
-            TEXT: 'create your account again.',
-            HREF: INSURANCE_ROUTES.ACCOUNT.CREATE.YOUR_DETAILS,
-          },
-        },
+      CONTACT_DETAILS: {
+        ...CONTACT_DETAILS,
+        OUTRO: "if you're still having problems.",
       },
     },
     CONFIRM_EMAIL_RESENT: {
@@ -141,10 +127,13 @@ const ACCOUNT = {
   },
   MANAGE: {
     PAGE_TITLE: 'Your account',
-    INTRO: 'To update information relating to your account (for example your email address), please contact our customer service helpline.',
-    CUSTOMER_SERVICE: {
-      HEADING: 'UK Export Finance customer service helpline',
-      ...CUSTOMER_SERVICE_CONTACT_DETAILS,
+    INTRO: 'To update information relating to your account (for example your email address),',
+    CONTACT_DETAILS: {
+      ...CONTACT_DETAILS,
+      EMAIL: {
+        ...CONTACT_DETAILS.EMAIL,
+        PREFIX: 'email',
+      },
     },
   },
   SIGNED_OUT: {
@@ -159,7 +148,10 @@ const ACCOUNT = {
       PAGE_TITLE: 'Check your email',
       WE_SENT_LINK_TO: "We've sent you a link to",
       CHECK_YOUR_EMAIL: 'Check your email and follow the link to confirm your email address and reactivate your account.',
-      HAVING_PROBLEMS: 'Having problems?',
+      CONTACT_DETAILS: {
+        ...CONTACT_DETAILS,
+        OUTRO: "if you're still having problems.",
+      },
     },
     VERIFY_EMAIL_EXPIRED_LINK: {
       PAGE_TITLE: 'Your link has expired',

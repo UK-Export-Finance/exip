@@ -2,8 +2,8 @@ import INSURANCE_PAGES from './insurance';
 import QUOTE_PAGES from './quote';
 import { ACTIONS } from '../actions';
 import { LINKS } from '../links';
-import { CONTACT_DETAILS, ROUTES } from '../../constants';
-import { CUSTOMER_SERVICE_CONTACT_DETAILS } from '../contact';
+import { ROUTES } from '../../constants';
+import { CONTACT_DETAILS } from '../contact';
 
 const BUYER_COUNTRY = {
   PAGE_TITLE: 'Where is your buyer based?',
@@ -188,17 +188,14 @@ const CONTACT_US_PAGE = {
   PAGE_TITLE: 'Contact us',
   WHO_TO_CONTACT: 'Who you need to contact depends on your type of query.',
   GENERAL_ENQUIRIES: {
-    HEADING: 'General enquiries or questions about UK Export Finance products',
-    ...CUSTOMER_SERVICE_CONTACT_DETAILS,
+    HEADING: "Questions about an application you're working on or technical issues with the service",
+    ...CONTACT_DETAILS,
   },
   APPLICATION_ENQUIRES: {
     HEADING: "If you have a question about an application you've submitted",
-    EMAIL: {
-      PREFIX: 'Email: ',
-      VALUE: CONTACT_DETAILS.EMAIL.UNDERWRITING,
-    },
-    QUOTE: 'Quote your application reference number',
+    ...CONTACT_DETAILS,
   },
+  QUOTE_REFERENCE_NUMBER: 'Quote your application reference number',
 };
 
 const FEEDBACK_PAGE = {

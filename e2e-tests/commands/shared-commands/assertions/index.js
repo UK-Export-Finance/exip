@@ -45,8 +45,6 @@ Cypress.Commands.add('checkChangeAnswerRendered', checkChangeAnswerRendered);
 
 Cypress.Commands.add('checkCurrencyOption', require('./check-currency-option'));
 
-Cypress.Commands.add('assertCustomerServiceContactDetailsContent', require('./assert-customer-service-contact-details-content'));
-
 Cypress.Commands.add('checkErrorSummaryListHeading', require('./check-error-summary-list-heading'));
 
 Cypress.Commands.add('checkFooterLinks', require('./check-footer-links'));

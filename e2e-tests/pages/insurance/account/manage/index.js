@@ -1,5 +1,5 @@
 const manageAccountPage = {
-  customerServiceHeading: () => cy.get('[data-cy="customer-service-heading"]'),
+  email: () => cy.get('[data-cy="email"]'),
 };
 
 export default manageAccountPage;

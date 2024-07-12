@@ -8,6 +8,12 @@ import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/i
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.MANAGE;
 
 const {
+  PAGE_TITLE,
+  INTRO,
+  CONTACT_DETAILS: { EMAIL },
+} = CONTENT_STRINGS;
+
+const {
   ACCOUNT: {
     CREATE: { YOUR_DETAILS },
     SIGN_IN: { ENTER_CODE },
@@ -19,8 +25,6 @@ const {
 const {
   ACCOUNT: { ACCESS_CODE },
 } = INSURANCE_FIELD_IDS;
-
-const { PAGE_TITLE, INTRO, CUSTOMER_SERVICE } = CONTENT_STRINGS;
 
 context(
   'Insurance - Account - Manage - As an Exporter, I want the service to have a page that shows how I can manage my account, So that I can readily access information on how to manage my account',
@@ -87,14 +91,12 @@ context(
           });
         });
 
-        it('renders an introduction', () => {
+        it('renders `intro` copy', () => {
           cy.checkText(intro(), INTRO);
         });
 
-        it('renders a `customer service contact details` section', () => {
-          cy.checkText(manageAccountPage.customerServiceHeading(), CUSTOMER_SERVICE.HEADING);
-
-          cy.assertCustomerServiceContactDetailsContent();
+        it('renders `email us` copy', () => {
+          cy.checkText(manageAccountPage.email(), `${EMAIL.PREFIX} ${EMAIL.VALUE}`);
         });
       });
     });
