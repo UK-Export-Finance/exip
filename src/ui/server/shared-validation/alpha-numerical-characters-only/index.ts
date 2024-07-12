@@ -33,7 +33,7 @@ const alphaNumericalCharactersOnlyValidation = (fieldValue: string, fieldId: str
 
   /**
    * if the field value does not match the alpha numerical characters validation
-   * or if the field value does NOT contain an error for only numerical values (string is numbers only)
+   * or if the field value does NOT contain an error for only numerical values (if string is numbers only)
    * then return generate and return validation errors
    */
   if (validationAlphaNum.error || !validationNumbersOnly.error) {
