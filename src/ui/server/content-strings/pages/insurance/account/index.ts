@@ -22,9 +22,23 @@ const ACCOUNT = {
       PAGE_TITLE: 'Confirm your email address',
       WE_SENT_LINK_TO: "We've sent you a link to",
       CHECK_YOUR_EMAIL: 'Check your email and follow the link to confirm your email address and activate your account.',
-      CONTACT_DETAILS: {
-        ...CONTACT_DETAILS,
-        OUTRO: "if you're still having problems.",
+      HAVING_PROBLEMS: {
+        HEADING: 'Having problems?',
+        REQUEST_NEW: {
+          YOU_CAN: 'You can',
+          LINK: {
+            TEXT: 'request a new link,',
+            HREF: INSURANCE_ROUTES.ACCOUNT.CREATE.RESEND_CONFIRM_EMAIL,
+          },
+          IF_NOT_RECEIVED: 'if you do not receive anything after 5 minutes.',
+        },
+        WRONG_EMAIL: {
+          ENTERED_INCORRECTLY: "If you entered the wrong email address, you'll need to",
+          CREATE_ACCOUNT_AGAIN: {
+            TEXT: 'create your account again.',
+            HREF: INSURANCE_ROUTES.ACCOUNT.CREATE.YOUR_DETAILS,
+          },
+        },
       },
     },
     CONFIRM_EMAIL_RESENT: {
