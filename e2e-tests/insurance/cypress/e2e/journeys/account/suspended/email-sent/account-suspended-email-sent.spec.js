@@ -81,7 +81,9 @@ context(
         });
 
         it('should render `email if having problems`', () => {
-          cy.checkText(emailSentPage.email(), `${EMAIL.PREFIX} ${EMAIL.VALUE}`);
+          cy.checkText(emailSentPage.emailPrefix(), EMAIL.PREFIX);
+
+          cy.checkLink(emailSentPage.emailLink(), EMAIL.VALUE, EMAIL.TEXT);
 
           cy.checkText(emailSentPage.emailOutro(), OUTRO);
         });

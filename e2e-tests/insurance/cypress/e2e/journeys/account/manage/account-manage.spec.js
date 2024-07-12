@@ -95,8 +95,12 @@ context(
           cy.checkText(intro(), INTRO);
         });
 
+        it('renders `email prefix` copy', () => {
+          cy.checkText(manageAccountPage.emailPrefix(), EMAIL.PREFIX);
+        });
+
         it('renders `email us` copy', () => {
-          cy.checkText(manageAccountPage.email(), `${EMAIL.PREFIX} ${EMAIL.VALUE}`);
+          cy.checkLink(manageAccountPage.emailLink(), EMAIL.VALUE, EMAIL.TEXT);
         });
       });
     });

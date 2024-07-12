@@ -25,7 +25,10 @@
       <p data-cy="check-your-email">{{ CONTENT_STRINGS.CHECK_YOUR_EMAIL }}</p>
 
       <p>
-        <span data-cy="email">{{ CONTENT_STRINGS.CONTACT_DETAILS.EMAIL.PREFIX }} {{ CONTENT_STRINGS.CONTACT_DETAILS.EMAIL.VALUE }}</span>
+        <span data-cy="email-prefix">{{ CONTENT_STRINGS.CONTACT_DETAILS.EMAIL.PREFIX }} </span>
+
+        <a class="govuk-link" href="{{ CONTENT_STRINGS.CONTACT_DETAILS.EMAIL.VALUE }}" data-cy="email-link">{{ CONTENT_STRINGS.CONTACT_DETAILS.EMAIL.TEXT }}</a>
+
         <span data-cy="email-outro">{{ CONTENT_STRINGS.CONTACT_DETAILS.OUTRO }}</span>
       </p>
 
