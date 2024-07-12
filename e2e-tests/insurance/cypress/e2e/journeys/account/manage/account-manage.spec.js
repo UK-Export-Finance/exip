@@ -1,6 +1,5 @@
 import partials from '../../../../../../partials';
-import manageAccountPage from '../../../../../../pages/insurance/account/manage';
-import { field, intro } from '../../../../../../pages/shared';
+import { emailPrefix, emailLink, field, intro } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
@@ -96,11 +95,11 @@ context(
         });
 
         it('renders `email prefix` copy', () => {
-          cy.checkText(manageAccountPage.emailPrefix(), EMAIL.PREFIX);
+          cy.checkText(emailPrefix(), EMAIL.PREFIX);
         });
 
         it('renders `email us` copy', () => {
-          cy.checkLink(manageAccountPage.emailLink(), EMAIL.VALUE, EMAIL.TEXT);
+          cy.checkLink(emailLink(), EMAIL.VALUE, EMAIL.TEXT);
         });
       });
     });

@@ -1,4 +1,5 @@
 import { emailSentPage } from '../../../../../../../pages/insurance/account/suspended';
+import { emailPrefix, emailLink } from '../../../../../../../pages/shared';
 import { PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 
@@ -81,9 +82,9 @@ context(
         });
 
         it('should render `email if having problems`', () => {
-          cy.checkText(emailSentPage.emailPrefix(), EMAIL.PREFIX);
+          cy.checkText(emailPrefix(), EMAIL.PREFIX);
 
-          cy.checkLink(emailSentPage.emailLink(), EMAIL.VALUE, EMAIL.TEXT);
+          cy.checkLink(emailLink(), EMAIL.VALUE, EMAIL.TEXT);
 
           cy.checkText(emailSentPage.emailOutro(), OUTRO);
         });
