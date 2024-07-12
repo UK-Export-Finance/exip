@@ -125,7 +125,7 @@ jobs:
         working-directory: ./
         run: npm run ci:all
 
-      # TODO: Enable post eslint prettier configuration
+      # TODO: EMS-3571
       # - name: Linting
       #   working-directory: ./
       #   run: npm run prettier:all
@@ -154,7 +154,7 @@ jobs:
         working-directory: ./
         run: npm run ci:all
 
-      # TODO: Enable post TSC error resolution
+      # TODO: EMS-3570
       # - name: Validate
       #   working-directory: ./
       #   run: npm run type-check:all
