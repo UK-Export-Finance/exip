@@ -3,9 +3,16 @@ import footer from '../../../../../partials/footer';
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 
+const { generalEnquiries, applicationEnquiries } = contactUsPage;
+
 const CONTENT_STRINGS = PAGES.CONTACT_US_PAGE;
 
-const { GENERAL_ENQUIRIES, APPLICATION_ENQUIRES } = CONTENT_STRINGS;
+const {
+  GENERAL_ENQUIRIES,
+  APPLICATION_ENQUIRES,
+  CONTACT_DETAILS: { EMAIL },
+  QUOTE_REFERENCE_NUMBER,
+} = CONTENT_STRINGS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -40,20 +47,39 @@ context('Contact us page - Quote', () => {
     cy.checkText(contactUsPage.whoToContactText(), CONTENT_STRINGS.WHO_TO_CONTACT);
   });
 
-  it('renders a `general enquiries` section', () => {
-    cy.checkText(
-      contactUsPage.customerServiceHeading(),
-      GENERAL_ENQUIRIES.HEADING,
-    );
+  describe('`application enquiries` section', () => {
+    it('renders a heading', () => {
+      cy.checkText(generalEnquiries.heading(), GENERAL_ENQUIRIES.HEADING);
+    });
 
-    cy.assertCustomerServiceContactDetailsContent(GENERAL_ENQUIRIES.HEADING);
+    it('renders `email prefix` copy', () => {
+      cy.checkText(generalEnquiries.emailPrefix(), EMAIL.PREFIX);
+    });
+
+    it('renders an email link', () => {
+      cy.checkLink(generalEnquiries.emailLink(), EMAIL.VALUE, EMAIL.TEXT);
+    });
+
+    it('renders a `quote reference number` link', () => {
+      cy.checkText(generalEnquiries.quoteReferenceNumber(), QUOTE_REFERENCE_NUMBER);
+    });
   });
 
-  it('renders an `application enquiries` section', () => {
-    const { applicationEnquires } = contactUsPage;
+  describe('`application enquiries` section', () => {
+    it('renders a heading', () => {
+      cy.checkText(applicationEnquiries.heading(), APPLICATION_ENQUIRES.HEADING);
+    });
 
-    cy.checkText(applicationEnquires.heading(), APPLICATION_ENQUIRES.HEADING);
-    cy.checkText(applicationEnquires.email(), `${APPLICATION_ENQUIRES.EMAIL.PREFIX} ${APPLICATION_ENQUIRES.EMAIL.VALUE}`);
-    cy.checkText(applicationEnquires.quoteReferenceNumber(), APPLICATION_ENQUIRES.QUOTE);
+    it('renders `email prefix` copy', () => {
+      cy.checkText(applicationEnquiries.emailPrefix(), EMAIL.PREFIX);
+    });
+
+    it('renders an email link', () => {
+      cy.checkLink(applicationEnquiries.emailLink(), EMAIL.VALUE, EMAIL.TEXT);
+    });
+
+    it('renders a `quote reference number` link', () => {
+      cy.checkText(applicationEnquiries.quoteReferenceNumber(), QUOTE_REFERENCE_NUMBER);
+    });
   });
 });

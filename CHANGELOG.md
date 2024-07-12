@@ -2,10 +2,9 @@
 
 ## [2.10.1](https://github.com/UK-Export-Finance/exip/compare/v2.10.0...v2.10.1) (2024-07-12)
 
-
 ### Bug Fixes
 
-* **EMS-3560:** update az cli to v2 ([#2720](https://github.com/UK-Export-Finance/exip/issues/2720)) ([62fe0ac](https://github.com/UK-Export-Finance/exip/commit/62fe0acda1138c41b27bac5ad5a78e1d83b09a12))
+- **EMS-3560:** update az cli to v2 ([#2720](https://github.com/UK-Export-Finance/exip/issues/2720)) ([62fe0ac](https://github.com/UK-Export-Finance/exip/commit/62fe0acda1138c41b27bac5ad5a78e1d83b09a12))
 
 ## [2.10.0](https://github.com/UK-Export-Finance/exip/compare/v2.9.1...v2.10.0) (2024-07-12)
 

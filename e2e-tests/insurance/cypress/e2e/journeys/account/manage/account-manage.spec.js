@@ -1,11 +1,21 @@
 import partials from '../../../../../../partials';
-import manageAccountPage from '../../../../../../pages/insurance/account/manage';
-import { field, intro } from '../../../../../../pages/shared';
+import {
+  emailPrefix,
+  emailLink,
+  field,
+  intro,
+} from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.MANAGE;
+
+const {
+  PAGE_TITLE,
+  INTRO,
+  CONTACT_DETAILS: { EMAIL },
+} = CONTENT_STRINGS;
 
 const {
   ACCOUNT: {
@@ -19,8 +29,6 @@ const {
 const {
   ACCOUNT: { ACCESS_CODE },
 } = INSURANCE_FIELD_IDS;
-
-const { PAGE_TITLE, INTRO, CUSTOMER_SERVICE } = CONTENT_STRINGS;
 
 context(
   'Insurance - Account - Manage - As an Exporter, I want the service to have a page that shows how I can manage my account, So that I can readily access information on how to manage my account',
@@ -87,14 +95,16 @@ context(
           });
         });
 
-        it('renders an introduction', () => {
+        it('renders `intro` copy', () => {
           cy.checkText(intro(), INTRO);
         });
 
-        it('renders a `customer service contact details` section', () => {
-          cy.checkText(manageAccountPage.customerServiceHeading(), CUSTOMER_SERVICE.HEADING);
+        it('renders `email prefix` copy', () => {
+          cy.checkText(emailPrefix(), EMAIL.PREFIX);
+        });
 
-          cy.assertCustomerServiceContactDetailsContent();
+        it('renders `email us` copy', () => {
+          cy.checkLink(emailLink(), EMAIL.VALUE, EMAIL.TEXT);
         });
       });
     });

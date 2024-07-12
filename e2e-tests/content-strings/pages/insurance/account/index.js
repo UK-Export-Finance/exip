@@ -1,5 +1,5 @@
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
-import { CUSTOMER_SERVICE_CONTACT_DETAILS } from '../../../contact';
+import { CONTACT_DETAILS } from '../../../contact';
 import { LINKS } from '../../../links';
 
 const ACCOUNT = {
@@ -141,10 +141,13 @@ const ACCOUNT = {
   },
   MANAGE: {
     PAGE_TITLE: 'Your account',
-    INTRO: 'To update information relating to your account (for example your email address), please contact our customer service helpline.',
-    CUSTOMER_SERVICE: {
-      HEADING: 'UK Export Finance customer service helpline',
-      ...CUSTOMER_SERVICE_CONTACT_DETAILS,
+    INTRO: 'To update information relating to your account (for example your email address),',
+    CONTACT_DETAILS: {
+      ...CONTACT_DETAILS,
+      EMAIL: {
+        ...CONTACT_DETAILS.EMAIL,
+        PREFIX: 'email',
+      },
     },
   },
   SIGNED_OUT: {
@@ -159,7 +162,10 @@ const ACCOUNT = {
       PAGE_TITLE: 'Check your email',
       WE_SENT_LINK_TO: "We've sent you a link to",
       CHECK_YOUR_EMAIL: 'Check your email and follow the link to confirm your email address and reactivate your account.',
-      HAVING_PROBLEMS: 'Having problems?',
+      CONTACT_DETAILS: {
+        ...CONTACT_DETAILS,
+        OUTRO: "if you're still having problems.",
+      },
     },
     VERIFY_EMAIL_EXPIRED_LINK: {
       PAGE_TITLE: 'Your link has expired',

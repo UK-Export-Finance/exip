@@ -1,18 +1,9 @@
-import { CONTACT_DETAILS } from '../../constants';
-import { LINKS } from '../links';
+import { UKEF_CONTACT_DETAILS } from '../../constants';
 
-export const CUSTOMER_SERVICE_CONTACT_DETAILS = {
-  TELEPHONE: {
-    PREFIX: 'Telephone: ',
-    VALUE: CONTACT_DETAILS.TELEPHONE,
-  },
+export const CONTACT_DETAILS = {
   EMAIL: {
-    PREFIX: 'Email: ',
-    VALUE: CONTACT_DETAILS.EMAIL.CUSTOMER_SERVICE,
-  },
-  OPENING_TIMES: 'Opening times: Monday to Friday, 9am to 5pm (excluding public holidays)',
-  CALL_CHARGES: {
-    TEXT: 'Call charges',
-    HREF: LINKS.EXTERNAL.CALL_CHARGES,
+    PREFIX: 'Email',
+    TEXT: UKEF_CONTACT_DETAILS.EMAIL.CREDIT_INSURANCE_SUPPORT,
+    VALUE: `mailto:${UKEF_CONTACT_DETAILS.EMAIL.CREDIT_INSURANCE_SUPPORT}`,
   },
 };
