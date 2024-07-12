@@ -1,13 +1,14 @@
-import { REGEX } from '../../constants';
+import Joi from 'joi';
 import generateValidationErrors from '../../helpers/validation';
+import { REGEX } from '../../constants';
 
 /**
  * alphaNumericalCharactersOnlyValidation
- * Check that a string contains only alpha numerical characters. This function:
- * - Consumes 2x simple regexes with the string.match method
- * - Compares the length of the regex results VS the provided field value.
- * - If the lengths do NOT match, return validation errors.
- * The alternative to this approach is to have one extremely long regex.
+ * Check that a string contains only alpha or alphanumerical characters or just alpha characters.
+ * This function:
+ * - Uses joi to check that the field value is an alphanumeric string
+ * - Uses joi to check if the field value only contains numbers
+ * - If the field values is not an alpha or alphanumberic string, or if the field value is only numbers, then returns an error
  * @param {String} fieldValue: Field value to assert
  * @param {String} fieldId: Field ID
  * @param {String} errorMessage: Error message to use if invalid
@@ -17,33 +18,29 @@ import generateValidationErrors from '../../helpers/validation';
 const alphaNumericalCharactersOnlyValidation = (fieldValue: string, fieldId: string, errorMessage: string, errors: object) => {
   /**
    * Check the string contains:
-   * 1) Uppercase alpha characters
-   * 2) numerical characters
+   * 1) alpha characters
+   * 2) alpha characters and numerical characters
+   * 3) does not contain only numerical characters
+   * 4) does not contain only special characters
    */
-  const alphaCharacters = fieldValue.match(REGEX.INCLUDES_UPPERCASE_ALPHA_CHARACTERS);
-  const numericalCharacters = fieldValue.match(REGEX.INCLUDES_NUMERICAL_CHARACTERS);
+  const joiString = Joi.string();
+
+  const alphaNumSchema = () => joiString.alphanum().required();
+  const numbersOnlySchema = () => Joi.string().pattern(REGEX.NUMERICAL_CHARACTERS);
+
+  const validationAlphaNum = alphaNumSchema().validate(fieldValue);
+  const validationNumbersOnly = numbersOnlySchema().validate(fieldValue);
 
   /**
-   * If the string contains alpha and numerical characters, generate a total length of these valid characters.
-   * NOTE: Such characters can be positioned differently, for example, alpha characters in "AB7CD" would return an array with 2x items.
-   * We therefore need to use .join('') to create a single item for the appropriate characters.
-   * If this length does NOT match the total fieldValue length,
-   * an invalid character has been provided, e.g an empty space or special character.
-   * Anything other than an alpha or numerical character is invalid.
+   * if the field value does not match the alpha numerical characters validation
+   * or if the field value does not contain an error for only numerical values (string is numbers only)
+   * then return generate and return validation errors
    */
-  if (alphaCharacters && numericalCharacters) {
-    const validCharacters = [...alphaCharacters.join(''), ...numericalCharacters.join('')];
-
-    if (validCharacters.length === fieldValue.length) {
-      return false;
-    }
+  if (validationAlphaNum.error || !validationNumbersOnly.error) {
+    return generateValidationErrors(fieldId, errorMessage, errors);
   }
 
-  /**
-   * Otherwise, the provided fieldValue is invalid.
-   * Return validation errors.
-   */
-  return generateValidationErrors(fieldId, errorMessage, errors);
+  return false;
 };
 
 export default alphaNumericalCharactersOnlyValidation;

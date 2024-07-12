@@ -15,6 +15,13 @@ export const REGEX = {
   INCLUDES_NUMERICAL_CHARACTERS: /\d+/g,
 
   /**
+   * NUMERICAL_CHARACTERS:
+   * Regex that checks a string includes 0-9 characters without the global flag.
+   * Note: \d is exactly the same as [0-9]
+   */
+  NUMERICAL_CHARACTERS: /^\d+$/,
+
+  /**
    * INCLUDES_UPPERCASE_ALPHA_CHARACTERS:
    * Regex that checks a string includes uppercase A-Z characters.
    */
