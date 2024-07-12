@@ -23,13 +23,11 @@ const mapSubmittedData = (formBody: RequestBody): object => {
   }
 
   if (objectHasProperty(populatedData, IBAN)) {
-    const iban = stripHyphensAndSpacesFromString(formBody[IBAN]);
-    populatedData[IBAN] = iban.toUpperCase();
+    populatedData[IBAN] = stripHyphensAndSpacesFromString(formBody[IBAN]).toUpperCase();
   }
 
   if (objectHasProperty(populatedData, BIC_SWIFT_CODE)) {
-    const bicSwiftCode = stripHyphensAndSpacesFromString(formBody[BIC_SWIFT_CODE]);
-    populatedData[BIC_SWIFT_CODE] = bicSwiftCode.toUpperCase();
+    populatedData[BIC_SWIFT_CODE] = stripHyphensAndSpacesFromString(formBody[BIC_SWIFT_CODE]).toUpperCase();
   }
 
   return populatedData;
