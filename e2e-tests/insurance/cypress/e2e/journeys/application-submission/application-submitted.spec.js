@@ -12,7 +12,7 @@ const {
   FEEDBACK,
 } = INSURANCE_ROUTES;
 
-const { 
+const {
   panel,
   whatHappensNext,
   decisionFromUs,
