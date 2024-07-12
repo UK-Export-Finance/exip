@@ -4,13 +4,13 @@ export const contactUsPage = {
   generalEnquiries: {
     heading: () => cy.get('[data-cy="general-enquiries-heading"]'),
     emailPrefix: () => cy.get('[data-cy="general-enquiries-email-prefix"]'),
-    email: () => cy.get('[data-cy="general-enquiries-email"]'),
+    emailLink: () => cy.get('[data-cy="general-enquiries-email-link"]'),
     quoteReferenceNumber: () => cy.get('[data-cy="general-enquiries-quote-reference-number"]'),
   },
   applicationEnquiries: {
     heading: () => cy.get('[data-cy="application-enquiries-heading"]'),
     emailPrefix: () => cy.get('[data-cy="application-enquiries-email-prefix"]'),
-    email: () => cy.get('[data-cy="application-enquiries-email"]'),
+    emailLink: () => cy.get('[data-cy="application-enquiries-email-link"]'),
     quoteReferenceNumber: () => cy.get('[data-cy="application-enquiries-quote-reference-number"]'),
   },
 };
