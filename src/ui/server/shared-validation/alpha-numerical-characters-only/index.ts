@@ -26,14 +26,14 @@ const alphaNumericalCharactersOnlyValidation = (fieldValue: string, fieldId: str
   const joiString = Joi.string();
 
   const alphaNumSchema = () => joiString.alphanum().required();
-  const numbersOnlySchema = () => Joi.string().pattern(REGEX.NUMERICAL_CHARACTERS);
+  const numbersOnlySchema = () => Joi.string().pattern(REGEX.ONLY_NUMERICAL_CHARACTERS);
 
   const validationAlphaNum = alphaNumSchema().validate(fieldValue);
   const validationNumbersOnly = numbersOnlySchema().validate(fieldValue);
 
   /**
    * if the field value does not match the alpha numerical characters validation
-   * or if the field value does not contain an error for only numerical values (string is numbers only)
+   * or if the field value does NOT contain an error for only numerical values (string is numbers only)
    * then return generate and return validation errors
    */
   if (validationAlphaNum.error || !validationNumbersOnly.error) {

@@ -19,7 +19,7 @@ export const REGEX = {
    * Regex that checks a string includes 0-9 characters without the global flag.
    * Note: \d is exactly the same as [0-9]
    */
-  NUMERICAL_CHARACTERS: /^\d+$/,
+  ONLY_NUMERICAL_CHARACTERS: /^\d+$/,
 
   /**
    * INCLUDES_UPPERCASE_ALPHA_CHARACTERS:
