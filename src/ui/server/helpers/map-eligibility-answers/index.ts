@@ -15,23 +15,21 @@ const {
  * @returns {Object} answers object
  */
 const mapEligibilityAnswers = (answers: SubmittedDataInsuranceEligibility) => {
-  if (answers.buyerCountry) {
-    const { buyerCountry, totalContractValue, coverPeriod, hasReviewedEligibility, ...otherAnswers } = answers;
+  console.info('Mapping eligibility session data');
 
-    const mapped = {
-      ...otherAnswers,
-      [BUYER_COUNTRY_ISO_CODE]: buyerCountry?.isoCode,
-      [COVER_PERIOD_ID]: coverPeriod,
-      [TOTAL_CONTRACT_VALUE_ID]: totalContractValue,
-      sectionReview: {
-        eligibility: hasReviewedEligibility,
-      },
-    };
+  const { buyerCountry, totalContractValue, coverPeriod, hasReviewedEligibility, ...otherAnswers } = answers;
 
-    return mapped;
-  }
+  const mapped = {
+    ...otherAnswers,
+    [BUYER_COUNTRY_ISO_CODE]: buyerCountry?.isoCode,
+    [COVER_PERIOD_ID]: coverPeriod,
+    [TOTAL_CONTRACT_VALUE_ID]: totalContractValue,
+    sectionReview: {
+      eligibility: hasReviewedEligibility,
+    },
+  };
 
-  return answers;
+  return mapped;
 };
 
 export default mapEligibilityAnswers;

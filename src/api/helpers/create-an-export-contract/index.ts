@@ -27,7 +27,7 @@ const createAnExportContract = async (context: Context, applicationId: string): 
     const { agent, agentService } = await createAnExportContractAgent(context, exportContract.id);
 
     return {
-      exportContract,
+      ...exportContract,
       privateMarket,
       agent,
       agentService,

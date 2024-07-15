@@ -16,7 +16,7 @@ const { STATUS } = APPLICATION;
  * @returns {Promise<Object>} Object with success flag and application
  */
 const createAnApplication = async (root: any, variables: CreateAnApplicationVariables, context: Context) => {
-  console.info('Creating application for ', variables.accountId);
+  console.info('Creating application for user ', variables.accountId);
 
   const updatedVariables = variables;
 
@@ -37,9 +37,9 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
       success: false,
     };
   } catch (err) {
-    console.error('Error creating application %O', err);
+    console.error(`Error creating application for user ${variables.accountId} %O`, err);
 
-    throw new Error(`Creating application ${err}`);
+    throw new Error(`Creating application for user ${variables.accountId} ${err}`);
   }
 };
 

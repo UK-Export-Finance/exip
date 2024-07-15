@@ -13,6 +13,7 @@ const month = date.getMonth();
 
 export const mockApplicationEligibility = {
   buyerCountry: mockCountries[0],
+  buyerCountryIsoCode: mockCountries[0].isoCode,
   coverPeriod: {
     valueId: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
   },
@@ -102,16 +103,24 @@ export const mockCompany = {
   companyName: 'Test Name',
   companyNumber: '0123456',
   companyWebsite: '',
-  differentTradingAddress: {},
+  // differentTradingAddress: {},
   hasDifferentTradingName: false,
   hasDifferentTradingAddress: false,
-  dateOfCreation: '2014-04-10T00:00:00.000Z',
+  // dateOfCreation: '2014-04-10T00:00:00.000Z',
+  dateOfCreation: new Date(),
   sicCodes: [
     {
       id: 'clcyyxldc0634m8novkr94spo',
       sicCode: '64999',
     },
   ],
+  industrySectorNames: ['a', 'b'],
+  // industrySectorNames: [
+  //   {
+  //     id: 'clcyyxldc0634m8novkr94spo',
+  //     sicCode: '64999',
+  //   },
+  // ],
   registeredOfficeAddress: {
     id: 'claydona0158m8noaglyy94t',
     addressLine1: 'Line 1',

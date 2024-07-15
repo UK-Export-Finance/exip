@@ -1,3 +1,4 @@
+import Context from '@keystone-6/core/types';
 import { SuccessResponse } from '../generic';
 import { Country } from '../country';
 import { Relationship } from '../relationship';
@@ -311,6 +312,20 @@ export interface CreateAnApplicationVariables {
   company: ApplicationCompanyCore;
   sectionReview: SectionReview;
   status?: string;
+}
+
+export interface CreateInitialApplicationParams {
+  context: Context;
+  accountId: string;
+  status: string;
+}
+
+export interface CreateApplicationRelationshipParams {
+  context: Context;
+  applicationId: string;
+  companyData: ApplicationCompanyCore;
+  eligibilityAnswers: ApplicationEligibility;
+  sectionReviewData: SectionReview;
 }
 
 export interface CreateExportContractAgentResponse {

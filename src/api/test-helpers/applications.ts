@@ -12,7 +12,7 @@ const applicationQuery =
  * @param {Context} KeystoneJS context API, application data
  * @returns {Object} Created application
  */
-const create = async ({ context, data }: TestHelperApplicationCreate) => {
+const create = async ({ context, data = {} }: TestHelperApplicationCreate) => {
   try {
     console.info('Creating an application (test helpers)');
 

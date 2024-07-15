@@ -32,21 +32,18 @@ describe('helpers/create-a-buyer', () => {
   test('it should return a buyer and buyer trading history with respective IDs', async () => {
     const result = await createABuyer(context, country.id, application.id);
 
-    const { buyer } = result;
+    const { buyerTradingHistory } = result;
 
-    const { buyerTradingHistory } = buyer;
-
-    expect(buyer).toBeDefined();
+    expect(result).toBeDefined();
     expect(buyerTradingHistory).toBeDefined();
-    expect(typeof buyer.id).toEqual('string');
+    expect(typeof result.id).toEqual('string');
     expect(typeof buyerTradingHistory.id).toEqual('string');
-    expect(buyer.id.length).toBeGreaterThan(0);
+    expect(result.id.length).toBeGreaterThan(0);
     expect(buyerTradingHistory.id.length).toBeGreaterThan(0);
   });
 
   test('it should return empty buyer fields', async () => {
-    const result = await createABuyer(context, country.id, application.id);
-    const { buyer } = result;
+    const { buyer } = await createABuyer(context, country.id, application.id);
 
     expect(buyer.address).toEqual('');
     expect(buyer.applicationId).toEqual(application.id);
@@ -57,10 +54,7 @@ describe('helpers/create-a-buyer', () => {
   });
 
   test('it should return empty buyerTradingAddress fields with default currencyCode', async () => {
-    const result = await createABuyer(context, country.id, application.id);
-    const {
-      buyer: { buyerTradingHistory },
-    } = result;
+    const { buyerTradingHistory } = await createABuyer(context, country.id, application.id);
 
     expect(buyerTradingHistory.currencyCode).toEqual(GBP);
     expect(buyerTradingHistory.outstandingPayments).toBeNull();
@@ -68,10 +62,7 @@ describe('helpers/create-a-buyer', () => {
   });
 
   test('it should return empty buyer relationship fields', async () => {
-    const result = await createABuyer(context, country.id, application.id);
-    const {
-      buyer: { relationship },
-    } = result;
+    const { relationship } = await createABuyer(context, country.id, application.id);
 
     expect(relationship.exporterIsConnectedWithBuyer).toBeNull();
     expect(relationship.connectionWithBuyerDescription).toEqual('');

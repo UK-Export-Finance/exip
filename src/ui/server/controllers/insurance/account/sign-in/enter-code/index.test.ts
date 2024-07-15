@@ -1,14 +1,15 @@
 import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, PAGE_CONTENT_STRINGS, get, post } from '.';
 import { PAGES } from '../../../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
+import { FIELD_IDS, TEMPLATES } from '../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../../helpers/construct-payload';
-import { sanitiseData, sanitiseValue } from '../../../../../helpers/sanitise-data';
-import mapEligibilityAnswers from '../../../../../helpers/map-eligibility-answers';
+import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import accessCodeValidationErrors from './validation/rules/access-code';
+import application from '../../../../../helpers/create-an-application';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockAccount, referenceNumber, mockSession, mockApplications } from '../../../../../test-mocks';
@@ -18,16 +19,14 @@ const {
 } = FIELD_IDS.INSURANCE;
 
 const {
-  INSURANCE: {
-    ACCOUNT: {
-      SIGN_IN: { ROOT: SIGN_IN_ROOT },
-    },
-    DASHBOARD,
-    INSURANCE_ROOT,
-    ALL_SECTIONS,
-    PROBLEM_WITH_SERVICE,
+  ACCOUNT: {
+    SIGN_IN: { ROOT: SIGN_IN_ROOT },
   },
-} = ROUTES;
+  DASHBOARD,
+  INSURANCE_ROOT,
+  ALL_SECTIONS,
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 describe('controllers/insurance/account/sign-in/enter-code', () => {
   let req: Request;
@@ -153,7 +152,10 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
 
     let verifyAccountSignInCodeSpy = jest.fn(() => Promise.resolve(verifyAccountSignInCodeResponse));
 
-    const mockCreateApplicationResponse = { referenceNumber };
+    const mockCreateApplicationResponse = {
+      referenceNumber,
+      success: true,
+    };
 
     let createApplicationSpy = jest.fn(() => Promise.resolve(mockCreateApplicationResponse));
 
@@ -166,7 +168,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
     beforeEach(() => {
       api.keystone.account.verifyAccountSignInCode = verifyAccountSignInCodeSpy;
       api.keystone.applications.getAll = getApplicationsSpy;
-      api.keystone.application.create = createApplicationSpy;
+      application.create = createApplicationSpy;
     });
 
     describe('when there is no req.session.accountId', () => {
@@ -277,16 +279,12 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
           expect(req.session.submittedData.insuranceEligibility).toEqual({});
         });
 
-        it('should call api.keystone.application.create', async () => {
-          const sanitisedData = sanitiseData(req.session.submittedData.insuranceEligibility);
-
-          const eligibilityAnswers = mapEligibilityAnswers(sanitisedData);
-
+        it('should call application.create', async () => {
           await post(req, res);
 
           expect(createApplicationSpy).toHaveBeenCalledTimes(1);
 
-          expect(createApplicationSpy).toHaveBeenCalledWith(eligibilityAnswers, verifyAccountSignInCodeResponse.accountId);
+          expect(createApplicationSpy).toHaveBeenCalledWith(mockSession.submittedData.insuranceEligibility, verifyAccountSignInCodeResponse.accountId);
         });
 
         it(`should redirect to ${DASHBOARD}`, async () => {
@@ -299,10 +297,14 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
 
         describe('when an application is not successfully created', () => {
           beforeEach(() => {
-            // @ts-ignore
-            createApplicationSpy = jest.fn(() => Promise.resolve());
+            createApplicationSpy = jest.fn(() =>
+              Promise.resolve({
+                ...mockCreateApplicationResponse,
+                success: false,
+              }),
+            );
 
-            api.keystone.application.create = createApplicationSpy;
+            application.create = createApplicationSpy;
           });
 
           it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -310,11 +312,19 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
 
             expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
           });
+
+          it('should NOT wipe req.session.submittedData.insuranceEligibility', async () => {
+            await post(req, res);
+
+            const expected = mockSession.submittedData.insuranceEligibility;
+
+            expect(req.session.submittedData.insuranceEligibility).toEqual(expected);
+          });
         });
       });
 
       describe('when req.session.submittedData.insuranceEligibility is an empty object', () => {
-        it('should NOT call api.keystone.application.create', async () => {
+        it('should NOT call application.create', async () => {
           req.session.submittedData.insuranceEligibility = {};
 
           await post(req, res);
@@ -370,18 +380,34 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
         });
       });
 
-      describe('when the create application API call fails', () => {
+      describe('when the application.create call fails', () => {
         beforeEach(() => {
+          req.session = {
+            ...req.session,
+            submittedData: {
+              ...req.session.submittedData,
+              insuranceEligibility: mockSession.submittedData.insuranceEligibility,
+            },
+          };
+
           req.body = validBody;
 
           createApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
-          api.keystone.application.create = createApplicationSpy;
+          application.create = createApplicationSpy;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           await post(req, res);
 
           expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+
+        it('should NOT wipe req.session.submittedData.insuranceEligibility', async () => {
+          await post(req, res);
+
+          const expected = mockSession.submittedData.insuranceEligibility;
+
+          expect(req.session.submittedData.insuranceEligibility).toEqual(expected);
         });
       });
 
@@ -391,7 +417,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
 
           api.keystone.account.verifyAccountSignInCode = verifyAccountSignInCodeSpy;
           api.keystone.applications.getAll = () => Promise.reject(new Error('mock'));
-          api.keystone.application.create = createApplicationSpy;
+          application.create = createApplicationSpy;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
