@@ -3759,7 +3759,6 @@ var accountSignInChecks = async (context, account2, urlOrigin) => {
     }
     console.info("Signing in account - account is verified. Generating and sending an OTP");
     const { securityCode } = await generate_otp_and_update_account_default(context, accountId);
-    console.log("====== securityCode ", securityCode);
     const name = get_full_name_string_default(account2);
     const emailResponse = await emails_default.accessCodeEmail(email, name, String(securityCode));
     if (emailResponse?.success) {
@@ -4218,8 +4217,9 @@ var send_email_reactivate_account_link_default2 = sendEmailReactivateAccountLink
 
 // helpers/create-an-application/create-initial-application/index.ts
 var { SUBMISSION_TYPE: SUBMISSION_TYPE2 } = APPLICATION;
-var createInitialApplication = async (context, accountId) => {
+var createInitialApplication = async ({ context, accountId, status }) => {
   try {
+    console.info("Creating initial application (createInitialApplication helper) for user %s", accountId);
     const application2 = await context.db.Application.createOne({
       data: {
         owner: {
@@ -4231,6 +4231,8 @@ var createInitialApplication = async (context, accountId) => {
     });
     return application2;
   } catch (err) {
+    console.error(`Error creating initial application (createInitialApplication helper) for user ${accountId} %O`, err);
+    throw new Error(`Creating initial application (createInitialApplication helper) for user ${accountId} ${err}`);
   }
 };
 var initialApplication = {
@@ -4433,11 +4435,9 @@ var createABuyer = async (context, countryId, applicationId) => {
     const buyerRelationship = await create_a_buyer_relationship_default(context, buyer.id, applicationId);
     const buyerContact = await create_a_buyer_contact_default(context, buyer.id, applicationId);
     return {
-      // buyer: {
       ...buyer,
       buyerTradingHistory,
       relationship: buyerRelationship,
-      // },
       buyerContact
     };
   } catch (err) {
@@ -4618,10 +4618,10 @@ var mapSicCodes = (sicCodes, industrySectorNames2, companyId) => {
 var map_sic_codes_default = mapSicCodes;
 
 // helpers/create-company-sic-codes/index.ts
-var createCompanySicCodes = async (context, sicCodes, industrySectorNames2, companyId) => {
-  console.info("Creating company SIC codes for ", companyId);
+var createCompanySicCodes = async (context, companyId, sicCodes, industrySectorNames2) => {
+  console.info("Creating company SIC codes for %s", companyId);
   try {
-    if (sicCodes.length) {
+    if (sicCodes && sicCodes.length) {
       const mappedSicCodes = map_sic_codes_default(sicCodes, industrySectorNames2, companyId);
       const createdSicCodes = await context.db.CompanySicCode.createMany({
         data: mappedSicCodes
@@ -4630,8 +4630,8 @@ var createCompanySicCodes = async (context, sicCodes, industrySectorNames2, comp
     }
     return [];
   } catch (err) {
-    console.error("Error creating company SIC codes %O", err);
-    throw new Error(`Creating company SIC codes ${err}`);
+    console.error(`Error creating company SIC codes for ${companyId} %O`, err);
+    throw new Error(`Creating company SIC codes for ${companyId} ${err}`);
   }
 };
 var create_company_sic_codes_default = createCompanySicCodes;
@@ -4671,7 +4671,7 @@ var createACompany = async (context, applicationId, companyData) => {
       }
     });
     const companyAddress = await create_a_company_address_default(context, registeredOfficeAddress, company.id);
-    const createdSicCodes = await create_company_sic_codes_default(context, sicCodes, industrySectorNames2, company.id);
+    const createdSicCodes = await create_company_sic_codes_default(context, company.id, sicCodes, industrySectorNames2);
     const createdDifferentTradingAddress = await create_a_company_different_trading_address_default(context, company.id);
     return {
       ...company,
@@ -4824,6 +4824,7 @@ var createApplicationRelationships = async ({
   sectionReviewData
 }) => {
   try {
+    console.info("Creating application relationships (createApplicationRelationships helper) for application %s", applicationId);
     const { buyerCountryIsoCode, totalContractValueId, coverPeriodId, ...otherEligibilityAnswers } = eligibilityAnswers;
     const country = await get_country_by_field_default(context, "isoCode", buyerCountryIsoCode);
     const coverPeriod = await get_cover_period_value_by_field_default(context, "valueId", coverPeriodId);
@@ -4849,6 +4850,8 @@ var createApplicationRelationships = async ({
     };
     return relationshipIds;
   } catch (err) {
+    console.error(`Error creating application relationships (createApplicationRelationships helper) for application ${applicationId} %O`, err);
+    throw new Error(`Creating application relationships (createApplicationRelationships helper) for application ${applicationId} ${err}`);
   }
 };
 var applicationRelationships = {
@@ -4856,34 +4859,20 @@ var applicationRelationships = {
 };
 var create_application_relationships_default = applicationRelationships;
 
-// helpers/create-an-application/index.ts
-var { SUBMISSION_TYPE: SUBMISSION_TYPE3 } = APPLICATION;
-var createAnApplication = async (root, variables, context) => {
-  console.info("Creating an application (createAnApplication helper) for user %s", variables.accountId);
+// helpers/create-an-application/update-application-columns/index.ts
+var updateApplicationColumns = async ({
+  context,
+  applicationId,
+  buyerId,
+  companyId,
+  eligibilityId,
+  exportContractId,
+  nominatedLossPayeeId,
+  policyId,
+  sectionReviewId
+}) => {
   try {
-    const { accountId, eligibilityAnswers, company: companyData, sectionReview: sectionReviewData, status: status2 } = variables;
-    const account2 = await get_account_by_id_default(context, accountId);
-    if (!account2) {
-      console.info("Rejecting application creation - no account found (createAnApplication helper)");
-      return null;
-    }
-    const application2 = await create_initial_application_default.create(context, accountId);
-    const { id: applicationId } = application2;
-    const {
-      buyerId,
-      companyId,
-      eligibilityId,
-      exportContractId,
-      nominatedLossPayeeId,
-      policyId,
-      sectionReviewId
-    } = await create_application_relationships_default.create({
-      context,
-      applicationId,
-      companyData,
-      eligibilityAnswers,
-      sectionReviewData
-    });
+    console.info("Updating application relationship columns (updateApplicationColumns helper) for application %s", applicationId);
     const updatedApplication = await context.db.Application.updateOne({
       where: {
         id: applicationId
@@ -4911,6 +4900,51 @@ var createAnApplication = async (root, variables, context) => {
           connect: { id: sectionReviewId }
         }
       }
+    });
+    return updatedApplication;
+  } catch (err) {
+    console.error(`Error updating application relationship columns (updateApplicationColumns helper) for application ${applicationId} %O`, err);
+    throw new Error(`Updating application relationship columns (updateApplicationColumns helper) for application ${applicationId} ${err}`);
+  }
+};
+var applicationColumns = {
+  update: updateApplicationColumns
+};
+var update_application_columns_default = applicationColumns;
+
+// helpers/create-an-application/index.ts
+var createAnApplication = async (root, variables, context) => {
+  console.info("Creating an application (createAnApplication helper) for user %s", variables.accountId);
+  try {
+    const { accountId, eligibilityAnswers, company: companyData, sectionReview: sectionReviewData, status } = variables;
+    const account2 = await get_account_by_id_default(context, accountId);
+    if (!account2) {
+      console.info("Rejecting application creation - no account found (createAnApplication helper)");
+      return null;
+    }
+    const application2 = await create_initial_application_default.create({
+      context,
+      accountId,
+      status
+    });
+    const { id: applicationId } = application2;
+    const { buyerId, companyId, eligibilityId, exportContractId, nominatedLossPayeeId, policyId, sectionReviewId } = await create_application_relationships_default.create({
+      context,
+      applicationId,
+      companyData,
+      eligibilityAnswers,
+      sectionReviewData
+    });
+    const updatedApplication = await update_application_columns_default.update({
+      context,
+      applicationId,
+      buyerId,
+      companyId,
+      eligibilityId,
+      exportContractId,
+      nominatedLossPayeeId,
+      policyId,
+      sectionReviewId
     });
     return updatedApplication;
   } catch (err) {
@@ -7726,8 +7760,8 @@ var submitApplication = async (root, variables, context) => {
       where: { id: variables.applicationId }
     });
     if (application2) {
-      const { status: status2, submissionDeadline, submissionCount } = application2;
-      const isInProgress = status2 === APPLICATION.STATUS.IN_PROGRESS;
+      const { status, submissionDeadline, submissionCount } = application2;
+      const isInProgress = status === APPLICATION.STATUS.IN_PROGRESS;
       const now2 = /* @__PURE__ */ new Date();
       const validSubmissionDate = (0, import_date_fns6.isAfter)(new Date(submissionDeadline), now2);
       const isFirstSubmission = submissionCount === 0;
@@ -8136,9 +8170,9 @@ var APIM = {
           "Content-Type": "application/json",
           [String(APIM_MDM_KEY)]: APIM_MDM_VALUE
         },
-        validateStatus(status2) {
+        validateStatus(status) {
           const acceptableStatus = [200];
-          return acceptableStatus.includes(status2);
+          return acceptableStatus.includes(status);
         }
       });
       if (response.data && response.status === 200) {
@@ -8165,9 +8199,9 @@ var APIM = {
           "Content-Type": "application/json",
           [String(APIM_MDM_KEY)]: APIM_MDM_VALUE
         },
-        validateStatus(status2) {
+        validateStatus(status) {
           const acceptableStatus = [200];
-          return acceptableStatus.includes(status2);
+          return acceptableStatus.includes(status);
         }
       });
       if (response.data && response.status === 200) {
@@ -8413,9 +8447,9 @@ var companiesHouse = {
         method: "get",
         url: `${companiesHouseURL}/company/${companyNumber}`,
         auth: { username, password: "" },
-        validateStatus(status2) {
+        validateStatus(status) {
           const acceptableStatus = [200, 404];
-          return acceptableStatus.includes(status2);
+          return acceptableStatus.includes(status);
         }
       });
       if (response.status === 404) {
@@ -8459,9 +8493,9 @@ var industrySectorNames = {
         method: "get",
         url: `${APIM_MDM_URL2}${APIM_MDM2.INDUSTRY_SECTORS}`,
         headers,
-        validateStatus(status2) {
+        validateStatus(status) {
           const acceptableStatus = [200, 404];
-          return acceptableStatus.includes(status2);
+          return acceptableStatus.includes(status);
         }
       });
       if (!response.data || response.status !== 200) {
@@ -8612,9 +8646,9 @@ var ordnanceSurvey = {
       const response = await (0, import_axios4.default)({
         method: "get",
         url: `${ORDNANCE_SURVEY_API_URL}${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ORDNANCE_SURVEY_API_KEY}`,
-        validateStatus(status2) {
+        validateStatus(status) {
           const acceptableStatus = [200, 404];
-          return acceptableStatus.includes(status2);
+          return acceptableStatus.includes(status);
         }
       });
       if (!response?.data?.results || response.status !== 200) {

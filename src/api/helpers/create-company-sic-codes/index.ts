@@ -16,7 +16,7 @@ const createCompanySicCodes = async (
   sicCodes?: Array<string>,
   industrySectorNames?: Array<string>,
 ): Promise<Array<SicCode>> => {
-  console.info('Creating company SIC codes for ', companyId);
+  console.info('Creating company SIC codes for %s', companyId);
 
   try {
     if (sicCodes && sicCodes.length) {
@@ -31,9 +31,9 @@ const createCompanySicCodes = async (
 
     return [];
   } catch (err) {
-    console.error('Error creating company SIC codes %O', err);
+    console.error(`Error creating company SIC codes for ${companyId} %O`, err);
 
-    throw new Error(`Creating company SIC codes ${err}`);
+    throw new Error(`Creating company SIC codes for ${companyId} ${err}`);
   }
 };
 
