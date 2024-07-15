@@ -2,18 +2,10 @@ import checkSummaryList from '../../../../../../../commands/insurance/check-poli
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
-const {
-  ROOT: INSURANCE_ROOT,
-  POLICY,
-} = INSURANCE_ROUTES;
+const { ROOT: INSURANCE_ROOT, POLICY } = INSURANCE_ROUTES;
 
 const {
-  REQUESTED_JOINTLY_INSURED_PARTY: {
-    REQUESTED,
-    COMPANY_NAME,
-    COMPANY_NUMBER,
-    COUNTRY_CODE,
-  },
+  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
 } = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');

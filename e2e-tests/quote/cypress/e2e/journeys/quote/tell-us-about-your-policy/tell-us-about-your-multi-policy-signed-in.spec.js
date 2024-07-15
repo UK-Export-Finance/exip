@@ -11,10 +11,7 @@ import { ROUTES } from '../../../../../../constants';
 const CONTENT_STRINGS = PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 
 const {
-  QUOTE: {
-    TELL_US_ABOUT_YOUR_POLICY,
-    POLICY_TYPE,
-  },
+  QUOTE: { TELL_US_ABOUT_YOUR_POLICY, POLICY_TYPE },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');

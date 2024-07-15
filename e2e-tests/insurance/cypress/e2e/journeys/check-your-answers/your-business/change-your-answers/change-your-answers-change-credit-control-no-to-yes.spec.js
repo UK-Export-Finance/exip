@@ -6,14 +6,10 @@ import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insuranc
 
 const {
   ROOT,
-  CHECK_YOUR_ANSWERS: {
-    YOUR_BUSINESS,
-  },
+  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS },
 } = INSURANCE_ROUTES;
 
-const {
-  HAS_CREDIT_CONTROL: FIELD_ID,
-} = FIELD_IDS;
+const { HAS_CREDIT_CONTROL: FIELD_ID } = FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
 
@@ -23,47 +19,50 @@ const baseUrl = Cypress.config('baseUrl');
 
 let referenceNumber;
 
-context('Insurance - Check your answers - Company details - Credit control - No to yes - As an exporter, I want to change my answers to the credit control section', () => {
-  let url;
+context(
+  'Insurance - Check your answers - Company details - Credit control - No to yes - As an exporter, I want to change my answers to the credit control section',
+  () => {
+    let url;
 
-  before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({
-        referenceNumber,
-        hasCreditControlProcess: false,
+        cy.completePrepareApplicationSinglePolicyType({
+          referenceNumber,
+          hasCreditControlProcess: false,
+        });
+
+        task.link().click();
+
+        url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
+
+        cy.assertUrl(url);
       });
-
-      task.link().click();
-
-      url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
-
-      cy.assertUrl(url);
     });
-  });
 
-  beforeEach(() => {
-    cy.saveSession();
+    beforeEach(() => {
+      cy.saveSession();
 
-    cy.navigateToUrl(url);
+      cy.navigateToUrl(url);
 
-    summaryList.field(FIELD_ID).changeLink().click();
+      summaryList.field(FIELD_ID).changeLink().click();
 
-    cy.completeAndSubmitCreditControlForm({ hasCreditControlProcess: true });
-  });
+      cy.completeAndSubmitCreditControlForm({ hasCreditControlProcess: true });
+    });
 
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
+    after(() => {
+      cy.deleteApplication(referenceNumber);
+    });
 
-  it(`should redirect to ${YOUR_BUSINESS}`, () => {
-    cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId: FIELD_ID });
-  });
+    it(`should redirect to ${YOUR_BUSINESS}`, () => {
+      cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId: FIELD_ID });
+    });
 
-  it('should render the new answer and retain a `completed` status tag', () => {
-    cy.assertSummaryListRowValue(summaryList, FIELD_ID, FIELD_VALUES.YES);
+    it('should render the new answer and retain a `completed` status tag', () => {
+      cy.assertSummaryListRowValue(summaryList, FIELD_ID, FIELD_VALUES.YES);
 
-    cy.checkTaskStatusCompleted(status);
-  });
-});
+      cy.checkTaskStatusCompleted(status);
+    });
+  },
+);

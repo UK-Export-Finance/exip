@@ -7,10 +7,7 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids
 
 const {
   ROOT: INSURANCE_ROOT,
-  POLICY: {
-    MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
-    NAME_ON_POLICY,
-  },
+  POLICY: { MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE, NAME_ON_POLICY },
 } = INSURANCE_ROUTES;
 
 const {
@@ -24,9 +21,7 @@ const {
 const {
   INSURANCE: {
     POLICY: {
-      EXPORT_VALUE: {
-        MULTIPLE: CONTRACT_ERROR_MESSAGES,
-      },
+      EXPORT_VALUE: { MULTIPLE: CONTRACT_ERROR_MESSAGES },
     },
   },
 } = ERROR_MESSAGES;
@@ -68,75 +63,45 @@ context('Insurance - Policy - Multiple contract policy - Export value page - for
   it('should render a validation error when total sales to buyer is not provided', () => {
     cy.clickSubmitButton();
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(0),
-      CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT,
-    );
+    cy.checkText(partials.errorSummaryListItems().eq(0), CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT);
 
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT}`,
-    );
+    cy.checkText(field.errorMessage(), `Error: ${CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT}`);
   });
 
   it('should render a validation error when total sales to buyer is not a number', () => {
     cy.keyboardInput(fieldSelector(TOTAL_SALES_TO_BUYER).input(), 'ten!');
     cy.clickSubmitButton();
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(0),
-      CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT,
-    );
+    cy.checkText(partials.errorSummaryListItems().eq(0), CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT);
 
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT}`,
-    );
+    cy.checkText(field.errorMessage(), `Error: ${CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT}`);
   });
 
   it('should render a validation error when total sales to buyer contains a decimal', () => {
     cy.keyboardInput(fieldSelector(TOTAL_SALES_TO_BUYER).input(), '1.2');
     cy.clickSubmitButton();
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(0),
-      CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT,
-    );
+    cy.checkText(partials.errorSummaryListItems().eq(0), CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT);
 
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT}`,
-    );
+    cy.checkText(field.errorMessage(), `Error: ${CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT}`);
   });
 
   it('should render a validation error when total sales to buyer contains a comma and decimal', () => {
     cy.keyboardInput(fieldSelector(TOTAL_SALES_TO_BUYER).input(), '1,234.56');
     cy.clickSubmitButton();
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(0),
-      CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT,
-    );
+    cy.checkText(partials.errorSummaryListItems().eq(0), CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT);
 
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT}`,
-    );
+    cy.checkText(field.errorMessage(), `Error: ${CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT}`);
   });
 
   it('should render a validation error when total sales to buyer is below the minimum', () => {
     cy.keyboardInput(fieldSelector(TOTAL_SALES_TO_BUYER).input(), '0');
     cy.clickSubmitButton();
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(0),
-      CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].BELOW_MINIMUM,
-    );
+    cy.checkText(partials.errorSummaryListItems().eq(0), CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].BELOW_MINIMUM);
 
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].BELOW_MINIMUM}`,
-    );
+    cy.checkText(field.errorMessage(), `Error: ${CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].BELOW_MINIMUM}`);
   });
 
   describe('when total sales to buyer is valid and contains a comma', () => {

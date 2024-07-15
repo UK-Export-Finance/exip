@@ -20,25 +20,15 @@ const {
       REQUESTED_START_DATE,
       POLICY_CURRENCY_CODE,
       SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
-      MULTIPLE: {
-        TOTAL_MONTHS_OF_COVER,
-      },
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER },
     },
     EXPORT_VALUE: {
-      MULTIPLE: {
-        TOTAL_SALES_TO_BUYER,
-        MAXIMUM_BUYER_WILL_OWE,
-      },
+      MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
     },
     NAME_ON_POLICY: { NAME, POSITION },
     USING_BROKER,
     BROKER_DETAILS,
-    REQUESTED_JOINTLY_INSURED_PARTY: {
-      REQUESTED,
-      COMPANY_NAME,
-      COMPANY_NUMBER,
-      COUNTRY_CODE,
-    },
+    REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
     LOSS_PAYEE: { IS_APPOINTED: LOSS_PAYEE_IS_APPOINTED },
     LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME },
     LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
@@ -48,17 +38,11 @@ const {
   ACCOUNT: { EMAIL, FIRST_NAME, LAST_NAME },
 } = INSURANCE_FIELD_IDS;
 
-const {
-  CONTRACT_POLICY,
-  EXPORT_VALUE,
-  NAME_ON_POLICY,
-  DIFFERENT_NAME_ON_POLICY,
-  REQUESTED_JOINTLY_INSURED_PARTY,
-} = FIELDS;
+const { CONTRACT_POLICY, EXPORT_VALUE, NAME_ON_POLICY, DIFFERENT_NAME_ON_POLICY, REQUESTED_JOINTLY_INSURED_PARTY } = FIELDS;
 
 const { POLICY_CONTACT } = application;
 
-const checkPolicySummaryList = ({
+const checkPolicySummaryList = {
   [REQUESTED_START_DATE]: () => {
     const fieldId = REQUESTED_START_DATE;
     const { day, month, year } = application.POLICY[fieldId];
@@ -245,19 +229,13 @@ const checkPolicySummaryList = ({
 
       const row = summaryList.field(fieldId);
 
-      cy.checkText(
-        row.key(),
-        expectedKey,
-      );
+      cy.checkText(row.key(), expectedKey);
 
       row.value().contains(EXPECTED_SINGLE_LINE_STRING);
 
       const expectedLineBreaks = 3;
 
-      cy.assertLength(
-        row.valueHtmlLineBreak(),
-        expectedLineBreaks,
-      );
+      cy.assertLength(row.valueHtmlLineBreak(), expectedLineBreaks);
     },
     [BROKER_DETAILS.EMAIL]: () => {
       const fieldId = BROKER_DETAILS.NAME;
@@ -378,19 +356,13 @@ const checkPolicySummaryList = ({
       if (shouldRender) {
         const row = summaryList.field(fieldId);
 
-        cy.checkText(
-          row.key(),
-          expectedKey,
-        );
+        cy.checkText(row.key(), expectedKey);
 
         row.value().contains(EXPECTED_SINGLE_LINE_STRING);
 
         const expectedLineBreaks = 3;
 
-        cy.assertLength(
-          row.valueHtmlLineBreak(),
-          expectedLineBreaks,
-        );
+        cy.assertLength(row.valueHtmlLineBreak(), expectedLineBreaks);
       } else {
         cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
       }
@@ -448,6 +420,6 @@ const checkPolicySummaryList = ({
       }
     },
   },
-});
+};
 
 export default checkPolicySummaryList;

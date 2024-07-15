@@ -1,14 +1,10 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import {
-  ROUTES, FIELD_IDS, WEBSITE_EXAMPLES,
-} from '../../../../../../../constants';
+import { ROUTES, FIELD_IDS, WEBSITE_EXAMPLES } from '../../../../../../../constants';
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: {
-      WEBSITE,
-    },
+    YOUR_COMPANY: { WEBSITE },
   },
 } = FIELD_IDS.INSURANCE;
 

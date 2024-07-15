@@ -6,13 +6,8 @@ import checkSummaryList from '../../../../../../../../commands/insurance/check-e
 
 const {
   ROOT,
-  CHECK_YOUR_ANSWERS: {
-    EXPORT_CONTRACT,
-  },
-  EXPORT_CONTRACT: {
-    PRIVATE_MARKET_CHECK_AND_CHANGE,
-    DECLINED_BY_PRIVATE_MARKET,
-  },
+  CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT },
+  EXPORT_CONTRACT: { PRIVATE_MARKET_CHECK_AND_CHANGE, DECLINED_BY_PRIVATE_MARKET },
 } = INSURANCE_ROUTES;
 
 const {

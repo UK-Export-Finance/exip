@@ -6,22 +6,13 @@ import formatCurrency from '../../../../../../helpers/format-currency';
 import { EUR_CURRENCY_CODE, NON_STANDARD_CURRENCY_CODE, SYMBOLS } from '../../../../../../fixtures/currencies';
 
 const {
-  CURRENCY: {
-    CURRENCY_CODE,
-  },
-  YOUR_BUYER: {
-    OUTSTANDING_PAYMENTS,
-    TOTAL_AMOUNT_OVERDUE,
-    TOTAL_OUTSTANDING_PAYMENTS,
-  },
+  CURRENCY: { CURRENCY_CODE },
+  YOUR_BUYER: { OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE, TOTAL_OUTSTANDING_PAYMENTS },
 } = INSURANCE_FIELD_IDS;
 
 const {
   ROOT,
-  YOUR_BUYER: {
-    ALTERNATIVE_CURRENCY_CHANGE,
-    CHECK_YOUR_ANSWERS,
-  },
+  YOUR_BUYER: { ALTERNATIVE_CURRENCY_CHANGE, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');

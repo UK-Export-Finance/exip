@@ -11,9 +11,7 @@ const {
 const { OUTSTANDING_PAYMENTS, FAILED_PAYMENTS } = FIELD_IDS;
 
 const {
-  INSURANCE: {
-    YOUR_BUYER: ERRORS,
-  },
+  INSURANCE: { YOUR_BUYER: ERRORS },
 } = ERROR_MESSAGES;
 
 const baseUrl = Cypress.config('baseUrl');

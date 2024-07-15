@@ -4,16 +4,12 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT: INSURANCE_ROOT,
-  POLICY: {
-    SINGLE_CONTRACT_POLICY,
-  },
+  POLICY: { SINGLE_CONTRACT_POLICY },
 } = INSURANCE_ROUTES;
 
 const {
   POLICY: {
-    CONTRACT_POLICY: {
-      REQUESTED_START_DATE,
-    },
+    CONTRACT_POLICY: { REQUESTED_START_DATE },
   },
 } = INSURANCE_FIELD_IDS;
 

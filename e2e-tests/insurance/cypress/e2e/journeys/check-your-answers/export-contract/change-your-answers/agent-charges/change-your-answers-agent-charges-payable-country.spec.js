@@ -6,9 +6,7 @@ import { XAD } from '../../../../../../../../fixtures/countries';
 
 const {
   ROOT,
-  CHECK_YOUR_ANSWERS: {
-    EXPORT_CONTRACT,
-  },
+  CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT },
   EXPORT_CONTRACT: { AGENT_CHARGES_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 

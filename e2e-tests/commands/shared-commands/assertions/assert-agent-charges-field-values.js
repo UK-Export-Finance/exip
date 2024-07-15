@@ -4,9 +4,7 @@ import FIELD_IDS from '../../../constants/field-ids/insurance/export-contract';
 import application from '../../../fixtures/application';
 
 const {
-  AGENT_CHARGES: {
-    METHOD, FIXED_SUM, FIXED_SUM_AMOUNT, PERCENTAGE, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE,
-  },
+  AGENT_CHARGES: { METHOD, FIXED_SUM, FIXED_SUM_AMOUNT, PERCENTAGE, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
 /**
@@ -26,28 +24,18 @@ const assertAgentChargesFieldValues = ({
   expectedPayableCountry = application.EXPORT_CONTRACT.AGENT_CHARGES[PAYABLE_COUNTRY_CODE],
 }) => {
   if (fixedSumMethod) {
-    cy.assertRadioOptionIsChecked(
-      agentChargesPage[METHOD][FIXED_SUM].input(),
-    );
+    cy.assertRadioOptionIsChecked(agentChargesPage[METHOD][FIXED_SUM].input());
 
     if (expectedFixedSumAmount) {
-      cy.checkValue(
-        field(FIXED_SUM_AMOUNT),
-        expectedFixedSumAmount,
-      );
+      cy.checkValue(field(FIXED_SUM_AMOUNT), expectedFixedSumAmount);
     }
   }
 
   if (percentageMethod) {
-    cy.assertRadioOptionIsChecked(
-      agentChargesPage[METHOD][PERCENTAGE].input(),
-    );
+    cy.assertRadioOptionIsChecked(agentChargesPage[METHOD][PERCENTAGE].input());
 
     if (expectedChargePercentage) {
-      cy.checkValue(
-        field(PERCENTAGE_CHARGE),
-        expectedChargePercentage,
-      );
+      cy.checkValue(field(PERCENTAGE_CHARGE), expectedChargePercentage);
     }
   }
 

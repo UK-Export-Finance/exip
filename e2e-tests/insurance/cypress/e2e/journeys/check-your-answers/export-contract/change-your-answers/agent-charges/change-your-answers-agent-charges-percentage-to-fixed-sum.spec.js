@@ -6,16 +6,12 @@ import checkSummaryList from '../../../../../../../../commands/insurance/check-e
 
 const {
   ROOT,
-  CHECK_YOUR_ANSWERS: {
-    EXPORT_CONTRACT,
-  },
+  CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT },
   EXPORT_CONTRACT: { AGENT_CHARGES_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {
-  AGENT_CHARGES: {
-    FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE,
-  },
+  AGENT_CHARGES: { FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;

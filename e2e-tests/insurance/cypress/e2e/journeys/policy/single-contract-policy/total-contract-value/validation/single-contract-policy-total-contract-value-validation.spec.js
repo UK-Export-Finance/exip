@@ -6,27 +6,20 @@ import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insur
 
 const {
   ROOT: INSURANCE_ROOT,
-  POLICY: {
-    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
-    NAME_ON_POLICY,
-  },
+  POLICY: { SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE, NAME_ON_POLICY },
 } = INSURANCE_ROUTES;
 
 const {
   POLICY: {
     CONTRACT_POLICY: {
-      SINGLE: {
-        TOTAL_CONTRACT_VALUE,
-      },
+      SINGLE: { TOTAL_CONTRACT_VALUE },
     },
   },
 } = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
-    POLICY: {
-      CONTRACT_POLICY: CONTRACT_POLICY_ERROR_MESSAGES,
-    },
+    POLICY: { CONTRACT_POLICY: CONTRACT_POLICY_ERROR_MESSAGES },
   },
 } = ERROR_MESSAGES;
 
@@ -65,90 +58,54 @@ context('Insurance - Policy - Single contract policy - Total contract value page
   it('should render a validation error when total contract value is not provided', () => {
     cy.clickSubmitButton();
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(0),
-      CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
-    );
+    cy.checkText(partials.errorSummaryListItems().eq(0), CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT);
 
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
-    );
+    cy.checkText(field.errorMessage(), `Error: ${CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`);
   });
 
   it('should render a validation error when total contract value is not a number', () => {
     cy.keyboardInput(field.input(), 'Fifty');
     cy.clickSubmitButton();
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(0),
-      CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
-    );
+    cy.checkText(partials.errorSummaryListItems().eq(0), CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT);
 
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
-    );
+    cy.checkText(field.errorMessage(), `Error: ${CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`);
   });
 
   it('should render a validation error when total contract value is not a whole number', () => {
     cy.keyboardInput(field.input().clear(), '123.456');
     cy.clickSubmitButton();
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(0),
-      CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
-    );
+    cy.checkText(partials.errorSummaryListItems().eq(0), CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT);
 
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
-    );
+    cy.checkText(field.errorMessage(), `Error: ${CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`);
   });
 
   it('should render a validation error when total sales to buyer contains a decimal', () => {
     cy.keyboardInput(field.input().clear(), '1.2');
     cy.clickSubmitButton();
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(0),
-      CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
-    );
+    cy.checkText(partials.errorSummaryListItems().eq(0), CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT);
 
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
-    );
+    cy.checkText(field.errorMessage(), `Error: ${CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`);
   });
 
   it('should render a validation error when total sales to buyer contains a comma and decimal', () => {
     cy.keyboardInput(field.input(), '1,234.56');
     cy.clickSubmitButton();
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(0),
-      CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
-    );
+    cy.checkText(partials.errorSummaryListItems().eq(0), CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT);
 
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
-    );
+    cy.checkText(field.errorMessage(), `Error: ${CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`);
   });
 
   it('should render a validation error when total contract value is below the minimum', () => {
     cy.keyboardInput(field.input(), '0');
     cy.clickSubmitButton();
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(0),
-      CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].BELOW_MINIMUM,
-    );
+    cy.checkText(partials.errorSummaryListItems().eq(0), CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].BELOW_MINIMUM);
 
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].BELOW_MINIMUM}`,
-    );
+    cy.checkText(field.errorMessage(), `Error: ${CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].BELOW_MINIMUM}`);
   });
 
   it('should redirect to the next page when total contract value is valid and contains a comma as all fields are valid', () => {

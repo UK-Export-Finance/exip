@@ -1,18 +1,11 @@
 import { FIELD_IDS } from '../../../../constants';
 
 const { ACCOUNT } = FIELD_IDS.INSURANCE;
-const {
-  FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ACCESS_CODE,
-} = ACCOUNT;
+const { FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ACCESS_CODE } = ACCOUNT;
 
 const PASSWORD_HINT = {
   INTRO: 'Your password must contain at least 14 characters and have:',
-  RULES: [
-    'an uppercase letter',
-    'a lowercase letter',
-    'a number',
-    'a special character (for example @%!?*)',
-  ],
+  RULES: ['an uppercase letter', 'a lowercase letter', 'a number', 'a special character (for example @%!?*)'],
 };
 
 export const ACCOUNT_FIELDS = {

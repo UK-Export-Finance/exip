@@ -1,10 +1,5 @@
 import partials from '../../../../../../partials';
-import {
-  emailPrefix,
-  emailLink,
-  field,
-  intro,
-} from '../../../../../../pages/shared';
+import { emailPrefix, emailLink, field, intro } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';

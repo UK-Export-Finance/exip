@@ -4,9 +4,7 @@ import FIELD_IDS from '../../constants/field-ids/insurance/export-contract';
 import application from '../../fixtures/application';
 
 const {
-  AGENT_CHARGES: {
-    METHOD, FIXED_SUM, FIXED_SUM_AMOUNT, PERCENTAGE, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE,
-  },
+  AGENT_CHARGES: { METHOD, FIXED_SUM, FIXED_SUM_AMOUNT, PERCENTAGE, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
 /**

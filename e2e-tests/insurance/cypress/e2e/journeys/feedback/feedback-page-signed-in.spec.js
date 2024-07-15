@@ -4,11 +4,7 @@ import { ROUTES } from '../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.FEEDBACK_PAGE;
 
-const {
-  ALL_SECTIONS,
-  FEEDBACK,
-  ROOT,
-} = ROUTES.INSURANCE;
+const { ALL_SECTIONS, FEEDBACK, ROOT } = ROUTES.INSURANCE;
 
 const baseUrl = Cypress.config('baseUrl');
 

@@ -2,7 +2,9 @@ import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/route
 
 const {
   ROOT,
-  ACCOUNT: { CREATE: { YOUR_DETAILS } },
+  ACCOUNT: {
+    CREATE: { YOUR_DETAILS },
+  },
   ALL_SECTIONS,
   DASHBOARD,
 } = ROUTES;

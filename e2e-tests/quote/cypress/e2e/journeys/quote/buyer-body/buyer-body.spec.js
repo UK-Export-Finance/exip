@@ -11,11 +11,7 @@ const {
 } = FIELD_IDS;
 
 const {
-  QUOTE: {
-    BUYER_BODY,
-    BUYER_COUNTRY,
-    EXPORTER_LOCATION,
-  },
+  QUOTE: { BUYER_BODY, BUYER_COUNTRY, EXPORTER_LOCATION },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');

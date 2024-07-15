@@ -5,20 +5,12 @@ import { FIELD_VALUES } from '../../../../../../../constants';
 
 const {
   USING_BROKER: FIELD_ID,
-  BROKER_DETAILS: {
-    NAME,
-    EMAIL,
-    FULL_ADDRESS,
-  },
+  BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 const {
   ROOT,
-  POLICY: {
-    BROKER_CHANGE,
-    BROKER_DETAILS_ROOT,
-    CHECK_YOUR_ANSWERS,
-  },
+  POLICY: { BROKER_CHANGE, BROKER_DETAILS_ROOT, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');

@@ -9,38 +9,41 @@ const {
 
 const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
-context('Insurance - Account - Suspended - Verify email - As an Exporter - I want to reactivate my suspended digital service account , So that I can securely access my account and applications with UKEF', () => {
-  const baseUrl = Cypress.config('baseUrl');
-  const accountReactivatedUrl = `${baseUrl}${REACTIVATED_ROOT}`;
+context(
+  'Insurance - Account - Suspended - Verify email - As an Exporter - I want to reactivate my suspended digital service account , So that I can securely access my account and applications with UKEF',
+  () => {
+    const baseUrl = Cypress.config('baseUrl');
+    const accountReactivatedUrl = `${baseUrl}${REACTIVATED_ROOT}`;
 
-  let account;
+    let account;
 
-  before(() => {
-    cy.createAnAccountAndBecomeBlocked({ startReactivationJourney: true });
-  });
-
-  after(() => {
-    cy.deleteAccount();
-  });
-
-  describe(`when visting ${VERIFY_EMAIL} with a valid token`, () => {
     before(() => {
-      /**
-       * Get the reactivation hash directly from the API,
-       * so that we can navigate to the VERIFY_EMAIL URL with a valid token
-       */
-      cy.getAccountByEmail(accountEmail).then((responseData) => {
-        const [firstAccount] = responseData;
-        account = firstAccount;
+      cy.createAnAccountAndBecomeBlocked({ startReactivationJourney: true });
+    });
 
-        const verifyEmailUrl = `${baseUrl}${VERIFY_EMAIL}?token=${account.reactivationHash}`;
+    after(() => {
+      cy.deleteAccount();
+    });
 
-        cy.navigateToUrl(verifyEmailUrl);
+    describe(`when visting ${VERIFY_EMAIL} with a valid token`, () => {
+      before(() => {
+        /**
+         * Get the reactivation hash directly from the API,
+         * so that we can navigate to the VERIFY_EMAIL URL with a valid token
+         */
+        cy.getAccountByEmail(accountEmail).then((responseData) => {
+          const [firstAccount] = responseData;
+          account = firstAccount;
+
+          const verifyEmailUrl = `${baseUrl}${VERIFY_EMAIL}?token=${account.reactivationHash}`;
+
+          cy.navigateToUrl(verifyEmailUrl);
+        });
+      });
+
+      it(`should redirect to ${REACTIVATED_ROOT}`, () => {
+        cy.assertUrl(accountReactivatedUrl);
       });
     });
-
-    it(`should redirect to ${REACTIVATED_ROOT}`, () => {
-      cy.assertUrl(accountReactivatedUrl);
-    });
-  });
-});
+  },
+);

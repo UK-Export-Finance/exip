@@ -1,14 +1,9 @@
 import { field } from '../../../../../../../pages/shared';
-import {
-  ROUTES, FIELD_IDS, VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES,
-} from '../../../../../../../constants';
+import { ROUTES, FIELD_IDS, VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES } from '../../../../../../../constants';
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: {
-      PHONE_NUMBER,
-      WEBSITE,
-    },
+    YOUR_COMPANY: { PHONE_NUMBER, WEBSITE },
   },
 } = FIELD_IDS.INSURANCE;
 

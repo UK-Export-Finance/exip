@@ -7,19 +7,12 @@ import formatCurrency from '../../../../../../../helpers/format-currency';
 
 const {
   ROOT,
-  CHECK_YOUR_ANSWERS: {
-    YOUR_BUSINESS,
-  },
-  EXPORTER_BUSINESS: {
-    TURNOVER_CHECK_AND_CHANGE,
-  },
+  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS },
+  EXPORTER_BUSINESS: { TURNOVER_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {
-  TURNOVER: {
-    ESTIMATED_ANNUAL_TURNOVER,
-    PERCENTAGE_TURNOVER,
-  },
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
 } = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
 
 const { taskList } = partials.insurancePartials;

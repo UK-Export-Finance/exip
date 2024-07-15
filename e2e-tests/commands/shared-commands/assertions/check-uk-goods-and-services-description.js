@@ -81,8 +81,4 @@ const checkDescriptionContent = () => {
   checkDescriptionContentSections.notSure();
 };
 
-export {
-  checkDescriptionSummaryText,
-  checkDescriptionSummaryClickRevealsContent,
-  checkDescriptionContent,
-};
+export { checkDescriptionSummaryText, checkDescriptionSummaryClickRevealsContent, checkDescriptionContent };

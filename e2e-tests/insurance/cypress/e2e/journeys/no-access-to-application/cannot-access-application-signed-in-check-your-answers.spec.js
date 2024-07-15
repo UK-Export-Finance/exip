@@ -4,11 +4,7 @@ import { COOKIE } from '../../../../../constants';
 const {
   ROOT: INSURANCE_ROOT,
   NO_ACCESS_TO_APPLICATION,
-  CHECK_YOUR_ANSWERS: {
-    TYPE_OF_POLICY,
-    YOUR_BUSINESS,
-    YOUR_BUYER,
-  },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY, YOUR_BUSINESS, YOUR_BUYER },
 } = INSURANCE_ROUTES;
 
 const firstAccountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');

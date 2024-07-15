@@ -4,11 +4,7 @@ import { POLICY as POLICY_FIELD_IDS } from '../../../constants/field-ids/insuran
 import mockApplication from '../../../fixtures/application';
 
 const {
-  BROKER_DETAILS: {
-    NAME,
-    EMAIL,
-    FULL_ADDRESS,
-  },
+  BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 /**

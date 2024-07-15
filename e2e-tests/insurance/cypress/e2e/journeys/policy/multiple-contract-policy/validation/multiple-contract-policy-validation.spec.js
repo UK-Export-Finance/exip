@@ -14,18 +14,14 @@ const {
   POLICY: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
-      MULTIPLE: {
-        TOTAL_MONTHS_OF_COVER,
-      },
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER },
     },
   },
 } = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
-    POLICY: {
-      CONTRACT_POLICY: CONTRACT_ERROR_MESSAGES,
-    },
+    POLICY: { CONTRACT_POLICY: CONTRACT_ERROR_MESSAGES },
   },
 } = ERROR_MESSAGES;
 
@@ -66,19 +62,10 @@ context('Insurance - Policy - Multiple contract policy page - form validation', 
     const TOTAL_REQUIRED_FIELDS = 3;
     cy.assertErrorSummaryListLength(TOTAL_REQUIRED_FIELDS);
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(0),
-      CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].INCORRECT_FORMAT,
-    );
+    cy.checkText(partials.errorSummaryListItems().eq(0), CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].INCORRECT_FORMAT);
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(1),
-      CONTRACT_ERROR_MESSAGES.MULTIPLE[TOTAL_MONTHS_OF_COVER].IS_EMPTY,
-    );
+    cy.checkText(partials.errorSummaryListItems().eq(1), CONTRACT_ERROR_MESSAGES.MULTIPLE[TOTAL_MONTHS_OF_COVER].IS_EMPTY);
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(2),
-      CONTRACT_ERROR_MESSAGES[CURRENCY_CODE].IS_EMPTY,
-    );
+    cy.checkText(partials.errorSummaryListItems().eq(2), CONTRACT_ERROR_MESSAGES[CURRENCY_CODE].IS_EMPTY);
   });
 });

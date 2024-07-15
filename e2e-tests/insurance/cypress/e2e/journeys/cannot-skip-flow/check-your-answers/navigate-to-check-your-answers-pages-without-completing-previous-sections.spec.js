@@ -3,11 +3,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 const {
   ROOT: INSURANCE_ROOT,
   COMPLETE_OTHER_SECTIONS,
-  CHECK_YOUR_ANSWERS: {
-    TYPE_OF_POLICY,
-    YOUR_BUSINESS,
-    YOUR_BUYER,
-  },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY, YOUR_BUSINESS, YOUR_BUYER },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');

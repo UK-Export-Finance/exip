@@ -40,9 +40,6 @@ context('Insurance - Name fields - Dashboard fields should render special charac
   });
 
   it('should render special characters exactly as they were submitted', () => {
-    cy.checkText(
-      dashboardPage.table.body.firstRow.buyerName(),
-      nameWithSpecialCharacters,
-    );
+    cy.checkText(dashboardPage.table.body.firstRow.buyerName(), nameWithSpecialCharacters);
   });
 });

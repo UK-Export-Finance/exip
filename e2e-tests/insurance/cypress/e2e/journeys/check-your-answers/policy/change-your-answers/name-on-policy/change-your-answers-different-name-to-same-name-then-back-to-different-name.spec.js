@@ -5,12 +5,8 @@ import { summaryList } from '../../../../../../../../pages/shared';
 
 const {
   ROOT: INSURANCE_ROOT,
-  POLICY: {
-    NAME_ON_POLICY_CHECK_AND_CHANGE,
-  },
-  CHECK_YOUR_ANSWERS: {
-    TYPE_OF_POLICY,
-  },
+  POLICY: { NAME_ON_POLICY_CHECK_AND_CHANGE },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
 } = INSURANCE_ROUTES;
 
 const {
@@ -35,62 +31,65 @@ const fieldId = NAME;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(`Insurance - Change your answers - Policy - Different name on Policy page - Changing ${OTHER_NAME} to ${SAME_NAME} and then back to ${OTHER_NAME} should not populate fields on different name on policy page`, () => {
-  let url;
-  let referenceNumber;
+context(
+  `Insurance - Change your answers - Policy - Different name on Policy page - Changing ${OTHER_NAME} to ${SAME_NAME} and then back to ${OTHER_NAME} should not populate fields on different name on policy page`,
+  () => {
+    let url;
+    let referenceNumber;
 
-  before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
-      cy.completePrepareApplicationMultiplePolicyType({ differentPolicyContact: true });
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
+        cy.completePrepareApplicationMultiplePolicyType({ differentPolicyContact: true });
 
-      task.link().click();
+        task.link().click();
 
-      // To get past previous "Check your answers" pages
-      cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });
+        // To get past previous "Check your answers" pages
+        cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
+        url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
-      cy.assertUrl(url);
+        cy.assertUrl(url);
+      });
     });
-  });
 
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
-
-  describe('when clicking the `change` link', () => {
     beforeEach(() => {
-      cy.navigateToUrl(url);
+      cy.saveSession();
     });
 
-    it(`should redirect to ${NAME_ON_POLICY_CHECK_AND_CHANGE}`, () => {
-      cy.navigateToUrl(url);
-      const fieldVariables = getFieldVariables(fieldId, referenceNumber);
-
-      cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
-    });
-  });
-
-  describe(`when changing from ${OTHER_NAME} to ${SAME_NAME} and then back to ${OTHER_NAME}`, () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
-
-      summaryList.field(NAME).changeLink().click();
-
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
-
-      summaryList.field(NAME).changeLink().click();
-
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
+    after(() => {
+      cy.deleteApplication(referenceNumber);
     });
 
-    it('should NOT have fields populated on different name on policy page', () => {
-      cy.assertDifferentNameOnPolicyFieldValues({});
+    describe('when clicking the `change` link', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
+      it(`should redirect to ${NAME_ON_POLICY_CHECK_AND_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+        const fieldVariables = getFieldVariables(fieldId, referenceNumber);
+
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
+      });
     });
-  });
-});
+
+    describe(`when changing from ${OTHER_NAME} to ${SAME_NAME} and then back to ${OTHER_NAME}`, () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList.field(NAME).changeLink().click();
+
+        cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
+
+        summaryList.field(NAME).changeLink().click();
+
+        cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
+      });
+
+      it('should NOT have fields populated on different name on policy page', () => {
+        cy.assertDifferentNameOnPolicyFieldValues({});
+      });
+    });
+  },
+);

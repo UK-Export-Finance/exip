@@ -4,11 +4,7 @@ import mockStringWithSpecialCharacters from '../../../../../fixtures/string-with
 
 const {
   ROOT,
-  EXPORT_CONTRACT: {
-    ABOUT_GOODS_OR_SERVICES,
-    DECLINED_BY_PRIVATE_MARKET,
-    AGENT_SERVICE,
-  },
+  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES, DECLINED_BY_PRIVATE_MARKET, AGENT_SERVICE },
 } = INSURANCE_ROUTES;
 
 const {
