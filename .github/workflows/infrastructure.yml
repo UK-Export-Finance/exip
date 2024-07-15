@@ -165,6 +165,12 @@ jobs:
             --address-prefixes ${{ vars.VNET_SUBNET_PRIVATE_PREFIX }} \
             --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
+            az network vnet subnet create \
+            --name snet-keyvault-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --address-prefixes ${{ vars.VNET_SUBNET_KEYVAULT_PREFIX }} \
+            --vnet-name vnet${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --service-endpoints $(az network vnet list-endpoint-services --query '[?contains(name, `KeyVault`)].name' -o tsv)
+
       - name: VNET Peer - AMI 🔀
         uses: azure/cli@v2
         with:
@@ -389,6 +395,15 @@ jobs:
             --group-id sites \
             --tags ${{ env.TAGS }}
 
+            #Key Vault
+            az network private-endpoint create \
+            --name private-endpoint-keyvault${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --private-connection-resource-id $(az keyvault show --name kv-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv) \
+            --connection-name private-link-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --subnet snet-private-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --vnet-name vnet${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --group-id $(az network private-link-resource list --id $(az keyvault show --name kv-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv))
+
       - name: Private DNS 🌍
         uses: azure/cli@v2
         with:
@@ -536,6 +551,18 @@ jobs:
             --negate \
             --name IPAllowListRule \
             --policy-name waf${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}
+
+      - name: Key Vault 🔑
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            az keyvault create \
+            --name kv-${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }} \
+            --default-action Deny \
+            --enable-purge-protection true \
+            --public-network-access Disabled \
+            --network-acls-ips ${{ secrets.WAF_ALLOWED_IP }} \
+            --network-acls-vnets $(az network vnet subnet list --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query '[?contains(name, `keyvault`)].id' -o tsv)
 
   # 4. WebApp configuration
   webapp:
