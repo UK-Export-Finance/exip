@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.11.1](https://github.com/UK-Export-Finance/exip/compare/v2.11.0...v2.11.1) (2024-07-15)
+
+
+### Bug Fixes
+
+* **EMS-3439-3504:** uk goods or services, application submission email copy fixes ([#2728](https://github.com/UK-Export-Finance/exip/issues/2728)) ([125154e](https://github.com/UK-Export-Finance/exip/commit/125154ea28b8aeae6b65fc41889e97ca9de59cd4))
+
 ## [2.11.0](https://github.com/UK-Export-Finance/exip/compare/v2.10.1...v2.11.0) (2024-07-12)
 
 
