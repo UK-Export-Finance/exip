@@ -5424,12 +5424,14 @@ var send4 = async (application2, xlsxPath) => {
     };
     const sendOwnerEmailVars = {
       ...sharedEmailVars,
-      name: get_full_name_string_default(owner),
+      buyerName: replace_character_codes_with_characters_default(String(buyer.companyOrOrganisationName)),
+      name: replace_character_codes_with_characters_default(get_full_name_string_default(owner)),
       emailAddress: email
     };
     const sendContactEmailVars = {
       ...sharedEmailVars,
-      name: get_full_name_string_default(policyContact),
+      buyerName: replace_character_codes_with_characters_default(String(buyer.companyOrOrganisationName)),
+      name: replace_character_codes_with_characters_default(get_full_name_string_default(policyContact)),
       emailAddress: policyContact.email
     };
     console.info("Sending application submitted email to application account owner: %s", sendOwnerEmailVars.emailAddress);

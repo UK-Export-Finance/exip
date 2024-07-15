@@ -5,7 +5,8 @@ export const UK_GOODS_AND_SERVICES_DESCRIPTION = {
   INCLUDES: {
     INTRO: 'UK goods and services include:',
     PRODUCTS: 'products made in the UK',
-    MANUFACTURED: 'goods manufactured outside the UK but processed or modified in the UK, which would then be eligible for a certificate of UK origin',
+    MANUFACTURED_1: 'goods manufactured outside the UK but processed or modified in the UK, which would then be eligible for a certificate of UK origin',
+    MANUFACTURED_2: 'goods manufactured outside of the UK but are eligible for a certificate of UK origin',
     STAFFING_COSTS: {
       LINK: {
         TEXT: 'staffing costs',
