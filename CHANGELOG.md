@@ -1,11 +1,16 @@
 # Changelog
 
-## [2.11.2](https://github.com/UK-Export-Finance/exip/compare/v2.11.1...v2.11.2) (2024-07-16)
+## [2.12.0](https://github.com/UK-Export-Finance/exip/compare/v2.11.2...v2.12.0) (2024-07-16)
 
+### Features
+
+- **EMS-3587-3425:** contact page - content iterations ([#2742](https://github.com/UK-Export-Finance/exip/issues/2742)) ([7232698](https://github.com/UK-Export-Finance/exip/commit/7232698af6f27a8769f2e62ca96a8bd61a52136e))
+
+## [2.11.2](https://github.com/UK-Export-Finance/exip/compare/v2.11.1...v2.11.2) (2024-07-16)
 
 ### Bug Fixes
 
-* **EMS-3590-3591-3423:** header link, integrity hashes ([#2738](https://github.com/UK-Export-Finance/exip/issues/2738)) ([46c4d01](https://github.com/UK-Export-Finance/exip/commit/46c4d01bc447753dccb3af0910d9bbcec53f4e6c))
+- **EMS-3590-3591-3423:** header link, integrity hashes ([#2738](https://github.com/UK-Export-Finance/exip/issues/2738)) ([46c4d01](https://github.com/UK-Export-Finance/exip/commit/46c4d01bc447753dccb3af0910d9bbcec53f4e6c))
 
 ## [2.11.1](https://github.com/UK-Export-Finance/exip/compare/v2.11.0...v2.11.1) (2024-07-15)
 
