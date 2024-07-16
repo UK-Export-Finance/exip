@@ -50,7 +50,6 @@ const createApplicationRelationships = async ({
      */
     const country = await getCountryByField(context, 'isoCode', buyerCountryIsoCode);
 
-    // TODO: unit test.
     if (!country) {
       console.error(
         `Unable to create application relationships - buyer country not found (createApplicationRelationships helper) for application ${applicationId}`,

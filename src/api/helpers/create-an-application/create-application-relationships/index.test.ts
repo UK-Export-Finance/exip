@@ -2,6 +2,7 @@ import applicationRelationships from '.';
 import initialApplication from '../create-initial-application';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 import accounts from '../../../test-helpers/accounts';
+import { mockApplicationEligibility } from '../../../test-mocks/mock-application';
 import { Context, Account, Application } from '../../../types';
 
 describe('helpers/create-an-application/create-initial-application', () => {
@@ -44,6 +45,30 @@ describe('helpers/create-an-application/create-initial-application', () => {
     expect(typeof result.policyId).toEqual('string');
     expect(result.sectionReviewId).toBeDefined();
     expect(typeof result.sectionReviewId).toEqual('string');
+  });
+
+  describe('when a buyer country is not found', () => {
+    test('it should throw an error', async () => {
+      try {
+        // pass empty context object to force an error
+        result = await applicationRelationships.create({
+          context,
+          applicationId: application.id,
+          companyData: {},
+          eligibilityAnswers: {
+            ...mockApplicationEligibility,
+            buyerCountryIsoCode: 'INVALID',
+          },
+          sectionReviewData: {},
+        });
+      } catch (err) {
+        const errorString = String(err);
+
+        expect(errorString.includes(`Unable to create application relationships - buyer country not found (createApplicationRelationships helper) for application ${application.id}`)).toEqual(
+          true,
+        );
+      }
+    });
   });
 
   describe('when creation is not successful', () => {
