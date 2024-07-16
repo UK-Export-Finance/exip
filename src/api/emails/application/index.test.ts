@@ -66,7 +66,7 @@ describe('emails/application', () => {
           await application.submittedEmail(variables);
         } catch (err) {
           const expected = new Error(
-            `Sending application submitted email to to application owner or provided business contact Error: Sending email ${mockErrorMessage}`,
+            `Sending application submitted email to to application owner or provided business contact Error: Sending email ${new Error(mockErrorMessage)}`,
           );
 
           expect(err).toEqual(expected);
@@ -113,7 +113,7 @@ describe('emails/application', () => {
         try {
           await application.underwritingTeam(variables, mockFilePath, templateId);
         } catch (err) {
-          const expected = new Error(`Sending application submitted email to underwriting team Error: Sending email ${mockErrorMessage}`);
+          const expected = new Error(`Sending application submitted email to underwriting team Error: Sending email ${new Error(mockErrorMessage)}`);
 
           expect(err).toEqual(expected);
         }

@@ -69,7 +69,7 @@ describe('custom-resolvers/get-APIM-currencies', () => {
       try {
         await getApimCurrencies();
       } catch (err) {
-        const expected = new Error(`Getting and mapping currencies from APIM ${mockErrorMessage}`);
+        const expected = new Error(`Getting and mapping currencies from APIM ${new Error(mockErrorMessage)}`);
 
         expect(err).toEqual(expected);
       }

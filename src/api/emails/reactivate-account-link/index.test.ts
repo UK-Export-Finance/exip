@@ -47,7 +47,7 @@ describe('emails/reactivate-account-link', () => {
       try {
         await reactivateAccountLink(mockUrlOrigin, email, fullName, mockReactivationHash);
       } catch (err) {
-        const expected = new Error(`Sending email for account reactivation Error: Sending email ${mockErrorMessage}`);
+        const expected = new Error(`Sending email for account reactivation Error: Sending email ${new Error(mockErrorMessage)}`);
 
         expect(err).toEqual(expected);
       }

@@ -47,7 +47,7 @@ describe('emails/password-reset-link', () => {
       try {
         await passwordResetLink(mockUrlOrigin, email, fullName, mockPasswordResetHash);
       } catch (err) {
-        const expected = new Error(`Sending email for account password reset Error: Sending email ${mockErrorMessage}`);
+        const expected = new Error(`Sending email for account password reset Error: Sending email ${new Error(mockErrorMessage)}`);
 
         expect(err).toEqual(expected);
       }

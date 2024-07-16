@@ -187,7 +187,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
       } catch (err) {
         expect(passwordResetLinkSpy).toHaveBeenCalledTimes(1);
 
-        const expected = new Error(`Checking account and sending password reset email (sendEmailPasswordResetLink mutation) ${mockErrorMessage}`);
+        const expected = new Error(`Checking account and sending password reset email (sendEmailPasswordResetLink mutation) ${new Error(mockErrorMessage)}`);
         expect(err).toEqual(expected);
       }
     });

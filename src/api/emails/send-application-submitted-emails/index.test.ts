@@ -294,7 +294,7 @@ describe('emails/send-email-application-submitted', () => {
         try {
           await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
         } catch (err) {
-          const expected = new Error(`Sending application submitted emails ${mockErrorMessage}`);
+          const expected = new Error(`Sending application submitted emails ${new Error(mockErrorMessage)}`);
 
           expect(err).toEqual(expected);
         }

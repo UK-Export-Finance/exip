@@ -57,7 +57,7 @@ describe('helpers/get-application', () => {
       try {
         await getApplication(referenceNumber);
       } catch (err) {
-        expect(err).toEqual(new Error(`Getting application ${mockErrorMessage}`));
+        expect(err).toEqual(new Error(`Getting application ${new Error(mockErrorMessage)}`));
       }
     });
   });

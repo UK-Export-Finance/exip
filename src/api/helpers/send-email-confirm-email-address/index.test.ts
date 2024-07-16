@@ -123,7 +123,7 @@ describe('helpers/send-email-confirm-email-address', () => {
       try {
         await confirmEmailAddressEmail.send(context, mockUrlOrigin, account.id);
       } catch (err) {
-        const expected = new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${mockErrorMessage}`);
+        const expected = new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${new Error(mockErrorMessage)}`);
 
         expect(err).toEqual(expected);
       }

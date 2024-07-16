@@ -45,7 +45,7 @@ describe('emails/access-code-email', () => {
       try {
         await accessCodeEmail(email, fullName, mockSecurityCode);
       } catch (err) {
-        const expected = new Error(`Sending access code email for account sign in Error: Sending email ${mockErrorMessage}`);
+        const expected = new Error(`Sending access code email for account sign in Error: Sending email ${new Error(mockErrorMessage)}`);
 
         expect(err).toEqual(expected);
       }

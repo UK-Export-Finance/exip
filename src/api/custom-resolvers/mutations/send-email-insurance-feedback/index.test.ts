@@ -45,7 +45,7 @@ describe('custom-resolvers/send-email-insurance-feedback', () => {
       try {
         await sendEmailInsuranceFeedback({}, variables);
       } catch (err) {
-        const expected = new Error(`Generating and sending email for insurance feedback ${mockErrorMessage}`);
+        const expected = new Error(`Generating and sending email for insurance feedback ${new Error(mockErrorMessage)}`);
 
         expect(err).toEqual(expected);
       }

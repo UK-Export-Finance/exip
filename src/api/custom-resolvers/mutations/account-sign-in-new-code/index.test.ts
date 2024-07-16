@@ -97,7 +97,7 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
       } catch (err) {
         expect(accessCodeEmailSpy).toHaveBeenCalledTimes(1);
 
-        const expected = new Error(`Generating and sending new sign in code for account (accountSignInSendNewCode mutation) ${mockErrorMessage}`);
+        const expected = new Error(`Generating and sending new sign in code for account (accountSignInSendNewCode mutation) ${new Error(mockErrorMessage)}`);
         expect(err).toEqual(expected);
       }
     });

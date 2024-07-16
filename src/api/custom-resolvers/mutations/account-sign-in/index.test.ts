@@ -206,7 +206,7 @@ describe('custom-resolvers/account-sign-in', () => {
       } catch (err) {
         expect(accessCodeEmailSpy).toHaveBeenCalledTimes(1);
 
-        const expected = new Error(`Validating password or sending email for account sign in (accountSignIn mutation) ${mockErrorMessage}`);
+        const expected = new Error(`Validating password or sending email for account sign in (accountSignIn mutation) ${new Error(mockErrorMessage)}`);
         expect(err).toEqual(expected);
       }
     });

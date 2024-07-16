@@ -51,7 +51,7 @@ describe('emails/documents', () => {
       try {
         await documentsEmail(variables, templateId);
       } catch (err) {
-        const expected = new Error(`Sending documents email Error: Sending email ${mockErrorMessage}`);
+        const expected = new Error(`Sending documents email Error: Sending email ${new Error(mockErrorMessage)}`);
 
         expect(err).toEqual(expected);
       }
