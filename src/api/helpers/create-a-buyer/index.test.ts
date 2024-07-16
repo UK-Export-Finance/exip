@@ -22,7 +22,7 @@ describe('helpers/create-a-buyer', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await applications.create({ context, data: {} })) as Application;
+    application = (await applications.create({ context })) as Application;
 
     const countryIsoCode = mockCountries[0].isoCode;
 

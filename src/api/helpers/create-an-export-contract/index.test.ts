@@ -19,7 +19,7 @@ describe('helpers/create-an-export-contract', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await applications.create({ context, data: {} })) as Application;
+    application = (await applications.create({ context })) as Application;
   });
 
   test('it should return an export contract with ID and privateMarket relationship', async () => {

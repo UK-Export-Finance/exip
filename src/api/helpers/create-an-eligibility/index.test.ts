@@ -25,7 +25,7 @@ describe('helpers/create-an-eligibility', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await applications.create({ context, data: {} })) as Application;
+    application = (await applications.create({ context })) as Application;
 
     const countryIsCode = mockCountries[0].isoCode;
 

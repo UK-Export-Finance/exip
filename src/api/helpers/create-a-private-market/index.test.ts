@@ -20,7 +20,7 @@ describe('helpers/create-a-private-market', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await applications.create({ context, data: {} })) as Application;
+    application = (await applications.create({ context })) as Application;
     const createdExportContract = await createAnExportContract(context, application.id);
 
     const { exportContract } = createdExportContract;
