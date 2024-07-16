@@ -37,4 +37,22 @@ describe('controllers/insurance/policy/map-submitted-data/loss-payee-financial-d
       expect(result).toEqual(mockBody);
     });
   });
+
+  describe(`when form body ${IBAN} and ${BIC_SWIFT_CODE} are lower case`, () => {
+    const mockBody = {
+      [IBAN]: 'aa-bb-cc-dd-ee',
+      [BIC_SWIFT_CODE]: 'Bbkeng2l 123',
+    };
+
+    it(`should return mockBody with ${SORT_CODE}, ${IBAN} and ${BIC_SWIFT_CODE} mapped through stripHyphensAndSpacesFromString`, () => {
+      const result = mapSubmittedData(mockBody);
+
+      const expected = {
+        [IBAN]: stripHyphensAndSpacesFromString(mockBody[IBAN]).toUpperCase(),
+        [BIC_SWIFT_CODE]: stripHyphensAndSpacesFromString(mockBody[BIC_SWIFT_CODE]).toUpperCase(),
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
 });
