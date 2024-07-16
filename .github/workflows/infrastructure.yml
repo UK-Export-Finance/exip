@@ -171,7 +171,7 @@ jobs:
             --name snet-keyvault-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --address-prefixes ${{ vars.VNET_SUBNET_KEYVAULT_PREFIX }} \
             --vnet-name vnet${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --service-endpoints $(az network vnet list-endpoint-services --query '[?contains(name, `KeyVault`)].name' -o tsv)
+            --service-endpoints Microsoft.KeyVault
 
       - name: VNET Peer - AMI 🔀
         uses: azure/cli@v2
