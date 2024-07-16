@@ -200,7 +200,8 @@ const CONTACT_US_PAGE = {
 };
 
 const PROBLEM_WITH_SERVICE_PAGE = {
-  PAGE_TITLE: 'Problem with the service',
+  PAGE_TITLE: 'Sorry, there is a problem with the service',
+  BODY: 'Contact us if you think this is an error or you cannot continue your application.',
 };
 
 const FEEDBACK_PAGE = {

@@ -181,7 +181,9 @@ const PAGE_NOT_FOUND_PAGE = {
 };
 
 const PROBLEM_WITH_SERVICE_PAGE = {
-  PAGE_TITLE: 'Problem with the service',
+  PAGE_TITLE: 'Sorry, there is a problem with the service',
+  BODY: 'Contact us if you think this is an error or you cannot continue your application.',
+  CONTACT_DETAILS,
 };
 
 const CONTACT_US_PAGE = {

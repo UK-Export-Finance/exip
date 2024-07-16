@@ -1,5 +1,6 @@
-import creditPeriodWithBuyer from './creditPeriodWithBuyer';
+import contactDetails from './contactDetails';
 import cookieBanner from './cookieBanner';
+import creditPeriodWithBuyer from './creditPeriodWithBuyer';
 import footer from './footer';
 import header from './header';
 import insurancePartials from './insurance';
@@ -10,6 +11,7 @@ import ukGoodsOrServicesCalculateDescription from './ukGoodsOrServicesCalculateD
 import ukGoodsOrServicesDescription from './ukGoodsAndServicesDescription';
 
 const partials = {
+  contactDetails,
   cookieBanner,
   creditPeriodWithBuyer,
   errorSummaryListHeading: () => cy.get('.govuk-error-summary h2'),

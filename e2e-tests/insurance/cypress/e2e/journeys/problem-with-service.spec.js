@@ -1,3 +1,4 @@
+import { body } from '../../../../pages/shared';
 import { PAGES } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 
@@ -28,5 +29,13 @@ context('Problem with service page - Insurance', () => {
       isInsurancePage: true,
       assertCookies: false,
     });
+  });
+
+  it('renders body text', () => {
+    cy.checkText(body(), CONTENT_STRINGS.BODY);
+  });
+
+  it('renders a `contact details` section', () => {
+    cy.assertContactDetailsContent();
   });
 });
