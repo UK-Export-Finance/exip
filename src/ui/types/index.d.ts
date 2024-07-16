@@ -44,6 +44,7 @@ import { RadioOption } from './radio-option';
 import { SelectOption } from './select-option';
 import { SicCode } from './sic-code';
 import {
+  CanCreateApplicationEligibilityFlags,
   SubmittedDataQuoteEligibility,
   InsuranceEligibility,
   InsuranceEligibilityCore,
@@ -116,6 +117,7 @@ export {
   ApplicationByReferenceNumberVariables,
   ApolloResponse,
   ApplicationOwner,
+  CanCreateApplicationEligibilityFlags,
   Company,
   CompaniesHouseResponse,
   Connect,

@@ -1,21 +1,14 @@
 import { objectHasKeysAndValues } from '../object';
-import { RequestSession } from '../../../types';
-
-// TODO: instead of objectHasKeysAndValues,
-// check the following values exist.
-// ApplicationEligibility
-// buyerCountryIsoCode: String!
-// coverPeriodId: Int!
-// hasCompaniesHouseNumber: Boolean!
-// hasEndBuyer: Boolean!
-// hasMinimumUkGoodsOrServices: Boolean!
-// totalContractValueId: Int!
-// validExporterLocation: Boolean!
+import getSubmittedEligibilityFields from './get-submitted-eligibility-fields';
+import missingEligibilityFields from './log-missing-eligibility-fields';
+import hasRequiredEligibilityFields from './has-required-eligibility-fields';
+import { InsuranceEligibility, RequestSession } from '../../../types';
 
 /**
  * canCreateAnApplication
- * Check if there are eligibility answers in the session.
- * If so, return true
+ * Check if the session's eligibility answers has all fields
+ * that are required to create an application.
+ * If so, return true. Otherwise, return false.
  * @param {Express.Request.session} Express request session
  * @returns {Boolean}
  */
@@ -23,10 +16,24 @@ const canCreateAnApplication = (session: RequestSession) => {
   console.info('Checking if an application can be created from eligibility session data');
 
   if (session.submittedData && objectHasKeysAndValues(session.submittedData.insuranceEligibility)) {
-    console.info('Application can be created from eligibility session data');
+    console.info('Eligibility session has some data');
 
-    return true;
+    const { insuranceEligibility } = session.submittedData;
+
+    const eligibilityAnswers = insuranceEligibility as InsuranceEligibility;
+
+    const submittedFields = getSubmittedEligibilityFields(eligibilityAnswers);
+
+    missingEligibilityFields.log(submittedFields);
+
+    if (hasRequiredEligibilityFields(submittedFields)) {
+      console.info('Eligibility session has all required data - application can be created from eligibility session data');
+
+      return true;
+    }
   }
+
+  console.info('Application cannot be created from eligibility session data');
 
   return false;
 };
