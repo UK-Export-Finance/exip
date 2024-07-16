@@ -187,15 +187,16 @@ const PAGE_NOT_FOUND_PAGE = {
 
 const CONTACT_US_PAGE = {
   PAGE_TITLE: 'Contact us',
-  WHO_TO_CONTACT: 'Who you need to contact depends on your type of query.',
+  INTRO: 'Who you need to contact depends on your type of query.',
+  QUOTE_REFERENCE_NUMBER: 'Quote your application reference number.',
+  CONTACT_DETAILS,
   GENERAL_ENQUIRIES: {
     HEADING: "Questions about an application you're working on or technical issues with the service",
   },
   APPLICATION_ENQUIRES: {
-    HEADING: "If you have a question about an application you've submitted",
+    HEADING: "Questions about an application you've submitted",
+    CONTACT_DETAILS,
   },
-  CONTACT_DETAILS,
-  QUOTE_REFERENCE_NUMBER: 'Quote your application reference number',
 };
 
 const PROBLEM_WITH_SERVICE_PAGE = {
