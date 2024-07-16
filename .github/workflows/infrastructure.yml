@@ -411,12 +411,12 @@ jobs:
 
             #Key Vault
             az network private-endpoint create \
-            --name private-endpoint-keyvault${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --name private-endpoint-keyvault-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --private-connection-resource-id $(az keyvault show --name kv-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv) \
             --connection-name private-link-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --subnet snet-private-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --group-id $(az network private-link-resource list --id $(az keyvault show --name kv-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv)) \
+            --group-id vault \
             --tags ${{ env.TAGS }}
 
       - name: Private DNS 🌍
