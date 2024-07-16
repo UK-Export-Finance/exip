@@ -4,23 +4,17 @@ import applicationRelationships from './create-application-relationships';
 import applicationColumns from './update-application-columns';
 import { CreateAnApplicationVariables, Context } from '../../types';
 
-// TODO
-// TODO: update documentation
-
 /**
  * createAnApplication
  * Create an application helper.
- * 1) Get a country from a provided isoCode.
- * 2) Create a new application with owner relationship.
- * 3) Create eligibility relationship with the country and application.
- * 4) Create buyer relationship with the country and application.
- * 5) Update the application with buyer and eligibility IDs.
- * 6) Updates status and sets submissionType to MIA
- * 7) Returns an application or null
+ * 1) Get an account by ID.
+ * 2) Create the initial application.
+ * 3) Create application relationships.
+ * 4) Update the application's relationship columns.
  * @param {Object} GraphQL root variables
  * @param {CreateAnApplicationVariables} GraphQL variables for the CreateAnApplication
  * @param {Context} KeystoneJS context API
- * @returns {Promise<Application>} Created application or null
+ * @returns {Promise<Application>} Created application
  */
 const createAnApplication = async (root: any, variables: CreateAnApplicationVariables, context: Context) => {
   console.info('Creating an application (createAnApplication helper) for user %s', variables.accountId);
