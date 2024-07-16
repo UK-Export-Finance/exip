@@ -9,7 +9,7 @@ const { STATUS, SUBMISSION_TYPE } = APPLICATION;
  * This needs to be done first so that we can use the application ID.
  * @param {Context} context: KeystoneJS context API
  * @param {String} accountId: Account ID to own the application
- * @param {String} status: Application status
+ * @param {String} status: Application status. Defaults to IN_PROGRESS
  * @returns {Promise<Application>} Created application
  */
 const createInitialApplication = async ({ context, accountId, status = STATUS.IN_PROGRESS }: CreateInitialApplicationParams) => {
