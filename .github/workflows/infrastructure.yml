@@ -170,7 +170,7 @@ jobs:
             az network vnet subnet create \
             --name snet-keyvault-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --address-prefixes ${{ vars.VNET_SUBNET_KEYVAULT_PREFIX }} \
-            --vnet-name vnet${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --service-endpoints Microsoft.KeyVault
 
       - name: VNET Peer - AMI 🔀
@@ -403,7 +403,7 @@ jobs:
             --private-connection-resource-id $(az keyvault show --name kv-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv) \
             --connection-name private-link-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --subnet snet-private-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-            --vnet-name vnet${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --group-id $(az network private-link-resource list --id $(az keyvault show --name kv-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv)) \
             --tags ${{ env.TAGS }}
 
