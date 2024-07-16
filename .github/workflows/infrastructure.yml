@@ -36,6 +36,8 @@ on:
   push:
     branches:
       - infrastructure
+      # TODO: Remove below prior to merge
+      - feat/EMS-2186-ia-c-key-vault-cost-alerts
 
 env:
   PRODUCT: exip
@@ -402,7 +404,8 @@ jobs:
             --connection-name private-link-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --subnet snet-private-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --vnet-name vnet${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --group-id $(az network private-link-resource list --id $(az keyvault show --name kv-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv))
+            --group-id $(az network private-link-resource list --id $(az keyvault show --name kv-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv)) \
+            --tags ${{ env.TAGS }}
 
       - name: Private DNS 🌍
         uses: azure/cli@v2
