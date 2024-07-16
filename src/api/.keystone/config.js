@@ -6737,7 +6737,7 @@ var ACCOUNT_FIELDS = {
   },
   NEW_PASSWORD: {
     [PASSWORD]: {
-      LABEL: "Enter a new password",
+      LABEL: "Create a password",
       HINT: PASSWORD_HINT
     }
   }
