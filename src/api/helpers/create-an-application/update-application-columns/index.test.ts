@@ -1,18 +1,14 @@
 import applicationColumns from '.';
 import initialApplication from '../create-initial-application';
 import applicationRelationships from '../create-application-relationships';
-import { APPLICATION } from '../../../constants';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 import accounts from '../../../test-helpers/accounts';
 import { Context, Account, Application } from '../../../types';
-
-const { STATUS } = APPLICATION;
 
 describe('helpers/create-an-application/update-application-columns', () => {
   let context: Context;
   let account: Account;
   let accountId = '';
-  const status = STATUS.IN_PROGRESS;
   let application: Application;
   let result: Application;
   let createdRelationships: object;
@@ -24,7 +20,7 @@ describe('helpers/create-an-application/update-application-columns', () => {
 
     accountId = account.id;
 
-    application = await initialApplication.create({ context, accountId, status });
+    application = await initialApplication.create({ context, accountId });
 
     createdRelationships = await applicationRelationships.create({
       context,

@@ -1,7 +1,7 @@
 import { APPLICATION } from '../../../constants';
 import { CreateInitialApplicationParams } from '../../../types';
 
-const { SUBMISSION_TYPE } = APPLICATION;
+const { STATUS, SUBMISSION_TYPE } = APPLICATION;
 
 /**
  * Create the initial application,
@@ -12,7 +12,7 @@ const { SUBMISSION_TYPE } = APPLICATION;
  * @param {String} status: Application status
  * @returns {Promise<Application>} Created application
  */
-const createInitialApplication = async ({ context, accountId, status }: CreateInitialApplicationParams) => {
+const createInitialApplication = async ({ context, accountId, status = STATUS.IN_PROGRESS }: CreateInitialApplicationParams) => {
   try {
     console.info('Creating initial application (createInitialApplication helper) for user %s', accountId);
 

@@ -317,7 +317,7 @@ export interface CreateAnApplicationVariables {
 export interface CreateInitialApplicationParams {
   context: Context;
   accountId: string;
-  status: string;
+  status?: string;
 }
 
 export interface CreateApplicationRelationshipParams {

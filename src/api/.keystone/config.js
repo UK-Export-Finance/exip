@@ -4216,8 +4216,8 @@ var sendEmailReactivateAccountLink = async (root, variables, context) => {
 var send_email_reactivate_account_link_default2 = sendEmailReactivateAccountLink;
 
 // helpers/create-an-application/create-initial-application/index.ts
-var { SUBMISSION_TYPE: SUBMISSION_TYPE2 } = APPLICATION;
-var createInitialApplication = async ({ context, accountId, status }) => {
+var { STATUS: STATUS2, SUBMISSION_TYPE: SUBMISSION_TYPE2 } = APPLICATION;
+var createInitialApplication = async ({ context, accountId, status = STATUS2.IN_PROGRESS }) => {
   try {
     console.info("Creating initial application (createInitialApplication helper) for user %s", accountId);
     const application2 = await context.db.Application.createOne({
@@ -4828,8 +4828,12 @@ var createApplicationRelationships = async ({
     const { buyerCountryIsoCode, totalContractValueId, coverPeriodId, ...otherEligibilityAnswers } = eligibilityAnswers;
     const country = await get_country_by_field_default(context, "isoCode", buyerCountryIsoCode);
     if (!country) {
-      console.error(`Unable to create application relationships - buyer country not found (createApplicationRelationships helper) for application ${applicationId}`);
-      throw new Error(`Unable to create application relationships - buyer country not found (createApplicationRelationships helper) for application ${applicationId}`);
+      console.error(
+        `Unable to create application relationships - buyer country not found (createApplicationRelationships helper) for application ${applicationId}`
+      );
+      throw new Error(
+        `Unable to create application relationships - buyer country not found (createApplicationRelationships helper) for application ${applicationId}`
+      );
     }
     const coverPeriod = await get_cover_period_value_by_field_default(context, "valueId", coverPeriodId);
     const totalContractValue = await get_total_contract_value_by_field_default(context, "valueId", totalContractValueId);
@@ -4959,11 +4963,11 @@ var createAnApplication = async (root, variables, context) => {
 var create_an_application_default = createAnApplication;
 
 // custom-resolvers/mutations/create-an-application/index.ts
-var { STATUS: STATUS2 } = APPLICATION;
+var { STATUS: STATUS3 } = APPLICATION;
 var createAnApplication2 = async (root, variables, context) => {
   console.info("Creating application for user ", variables.accountId);
   const updatedVariables = variables;
-  updatedVariables.status = STATUS2.IN_PROGRESS;
+  updatedVariables.status = STATUS3.IN_PROGRESS;
   try {
     const updatedApplication = await create_an_application_default(root, updatedVariables, context);
     if (updatedApplication) {
@@ -4983,11 +4987,11 @@ var createAnApplication2 = async (root, variables, context) => {
 var create_an_application_default2 = createAnApplication2;
 
 // custom-resolvers/mutations/create-an-abandoned-application/index.ts
-var { STATUS: STATUS3 } = APPLICATION;
+var { STATUS: STATUS4 } = APPLICATION;
 var createAnAbandonedApplication = async (root, variables, context) => {
   console.info("Creating an abandoned application for ", variables.accountId);
   const abandonedApplicationVariables = variables;
-  abandonedApplicationVariables.status = STATUS3.ABANDONED;
+  abandonedApplicationVariables.status = STATUS4.ABANDONED;
   try {
     const createdApplication = await create_an_application_default(root, abandonedApplicationVariables, context);
     if (createdApplication) {
@@ -4996,7 +5000,7 @@ var createAnAbandonedApplication = async (root, variables, context) => {
           id: createdApplication.id
         },
         data: {
-          status: STATUS3.ABANDONED
+          status: STATUS4.ABANDONED
         }
       });
       return {

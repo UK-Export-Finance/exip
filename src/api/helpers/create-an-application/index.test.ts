@@ -35,7 +35,7 @@ describe('helpers/create-an-application', () => {
     sectionReview: {
       eligibility: true,
     },
-    status: STATUS.IN_PROGRESS,
+    status: STATUS.ABANDONED,
     submissionType: SUBMISSION_TYPE.MIA,
   };
 

@@ -12,8 +12,6 @@ describe('helpers/create-an-application/create-initial-application', () => {
   let account: Account;
   let accountId = '';
 
-  // TODO: default status in the function.
-  const status = STATUS.IN_PROGRESS;
   let result: Application;
 
   beforeAll(async () => {
@@ -23,10 +21,10 @@ describe('helpers/create-an-application/create-initial-application', () => {
 
     accountId = account.id;
 
-    result = await initialApplication.create({ context, accountId, status });
+    result = await initialApplication.create({ context, accountId });
   });
 
-  test('it should return an application', () => {
+  test('it should return an application with default data', () => {
     expect(result.referenceNumber).toBeDefined();
     expect(typeof result.referenceNumber).toEqual('number');
 
@@ -78,11 +76,19 @@ describe('helpers/create-an-application/create-initial-application', () => {
     expect(submissionDeadlineYear).toEqual(expectedYear);
   });
 
+  describe('when a status is provided', () => {
+    test('it should return an application with the provided status', async() => {
+      result = await initialApplication.create({ context, accountId, status: STATUS.ABANDONED });
+
+      expect(result.status).toEqual(STATUS.ABANDONED);
+    });
+  });
+
   describe('when creation is not successful', () => {
     test('it should throw an error', async () => {
       try {
         // pass empty context object to force an error
-        await initialApplication.create({ context: {}, accountId, status });
+        await initialApplication.create({ context: {}, accountId });
       } catch (err) {
         const errorString = String(err);
 
