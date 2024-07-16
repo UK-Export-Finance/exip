@@ -1,4 +1,7 @@
+import { LINKS } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
+
+const { EXTERNAL } = LINKS;
 
 const {
   ELIGIBILITY: { CHECK_IF_ELIGIBLE },
@@ -9,14 +12,12 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-const checkIfEligibleUrl = `${baseUrl}${CHECK_IF_ELIGIBLE}`;
-
 context(`Insurance - Redirects - '${MVP_INSURANCE_ROOT}' URLs should redirect to the '${ROOT}' equivalent URL`, () => {
   describe(`${MVP_INSURANCE_ROOT}${START_ROOT}`, () => {
-    it(`should redirect to ${MVP_INSURANCE_ROOT}${START_ROOT}`, () => {
+    it(`should redirect to ${EXTERNAL.FULL_APPLICATION}`, () => {
       cy.navigateToUrl(`${MVP_INSURANCE_ROOT}${START_ROOT}`);
 
-      cy.assertUrl(checkIfEligibleUrl);
+      cy.assertUrl(EXTERNAL.FULL_APPLICATION);
     });
   });
 
@@ -24,7 +25,9 @@ context(`Insurance - Redirects - '${MVP_INSURANCE_ROOT}' URLs should redirect to
     it(`should redirect to ${CHECK_IF_ELIGIBLE}`, () => {
       cy.navigateToUrl('/insurance/eligibility/check-if-eligible');
 
-      cy.assertUrl(checkIfEligibleUrl);
+      const expectedUrl = `${baseUrl}${CHECK_IF_ELIGIBLE}`;
+
+      cy.assertUrl(expectedUrl);
     });
   });
 });
