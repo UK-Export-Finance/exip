@@ -16,7 +16,7 @@ const getApplication = async (referenceNumber: number) => {
       console.error('GraphQL network error getting application %O', response.networkError.result.errors);
     }
 
-    if (response?.data?.referenceNumber && response?.data?.referenceNumber?.application) {
+    if (response?.data?.referenceNumber?.application) {
       const { data } = response;
 
       return {

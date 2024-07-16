@@ -6,7 +6,7 @@ import api from '../../../../api';
 import getCountryByIsoCode from '../../../../helpers/get-country-by-iso-code';
 import mapSubmittedEligibilityCountry from '../../../../helpers/mappings/map-submitted-eligibility-country';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
-import { Country, Request, Response } from '../../../../../types';
+import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockCountries } from '../../../../test-mocks';
 
 const {
@@ -118,7 +118,7 @@ describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
       it('should update the session with populated country object', async () => {
         await post(req, res);
 
-        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, countryNoShortTermCover.isoCode) as Country;
+        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, countryNoShortTermCover.isoCode);
 
         const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
 

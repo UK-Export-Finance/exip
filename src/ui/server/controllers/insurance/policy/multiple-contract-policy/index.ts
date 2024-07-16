@@ -85,7 +85,7 @@ export const FIELD_IDS = [
   ALTERNATIVE_CURRENCY_CODE,
 ];
 
-export const totalMonthsOfCoverOptions = FIELDS.CONTRACT_POLICY.MULTIPLE[TOTAL_MONTHS_OF_COVER].OPTIONS as Array<number>;
+export const totalMonthsOfCoverOptions = FIELDS.CONTRACT_POLICY.MULTIPLE[TOTAL_MONTHS_OF_COVER].OPTIONS;
 
 /**
  * get
