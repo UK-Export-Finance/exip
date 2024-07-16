@@ -103,10 +103,8 @@ export const mockCompany = {
   companyName: 'Test Name',
   companyNumber: '0123456',
   companyWebsite: '',
-  // differentTradingAddress: {},
   hasDifferentTradingName: false,
   hasDifferentTradingAddress: false,
-  // dateOfCreation: '2014-04-10T00:00:00.000Z',
   dateOfCreation: new Date(),
   sicCodes: [
     {
@@ -114,13 +112,7 @@ export const mockCompany = {
       sicCode: '64999',
     },
   ],
-  industrySectorNames: ['a', 'b'],
-  // industrySectorNames: [
-  //   {
-  //     id: 'clcyyxldc0634m8novkr94spo',
-  //     sicCode: '64999',
-  //   },
-  // ],
+  industrySectorNames: ['64999', '64998'],
   registeredOfficeAddress: {
     id: 'claydona0158m8noaglyy94t',
     addressLine1: 'Line 1',
