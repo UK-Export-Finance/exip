@@ -368,3 +368,15 @@ export interface UpdateCompanyPostDataMigrationVariables extends Relationship {
   id: string;
   company: ApplicationCompanyCore;
 }
+
+export interface UpdateApplicationRelationshipParams {
+  context: Context;
+  applicationId: string;
+  buyerId: string;
+  companyId: string;
+  eligibilityId: string;
+  exportContractId: string;
+  nominatedLossPayeeId: string;
+  policyId: string;
+  sectionReviewId: string;
+}

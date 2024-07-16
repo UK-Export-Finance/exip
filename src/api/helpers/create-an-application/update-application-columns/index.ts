@@ -1,16 +1,4 @@
-import { Context } from '../../../types';
-
-interface Temp {
-  context: Context;
-  applicationId: string;
-  buyerId: string;
-  companyId: string;
-  eligibilityId: string;
-  exportContractId: string;
-  nominatedLossPayeeId: string;
-  policyId: string;
-  sectionReviewId: string;
-}
+import { UpdateApplicationRelationshipParams } from '../../../types';
 
 /**
  * updateApplicationColumns
@@ -42,7 +30,7 @@ const updateApplicationColumns = async ({
   nominatedLossPayeeId,
   policyId,
   sectionReviewId,
-}: Temp) => {
+}: UpdateApplicationRelationshipParams) => {
   try {
     console.info('Updating application relationship columns (updateApplicationColumns helper) for application %s', applicationId);
 
