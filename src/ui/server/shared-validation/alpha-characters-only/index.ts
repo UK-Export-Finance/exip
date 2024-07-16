@@ -1,6 +1,5 @@
-import Joi from 'joi';
 import { REGEX } from '../../constants';
-import generateValidationErrors from '../../helpers/validation';
+import regexValidation from '../regex-validation';
 
 /**
  * alphaCharactersOnlyValidation
@@ -11,20 +10,7 @@ import generateValidationErrors from '../../helpers/validation';
  * @param {Object} Validation errors
  * @returns {Object | Boolean} Validation errors
  */
-const alphaCharactersOnlyValidation = (fieldValue: string, fieldId: string, errorMessage: string, errors: object) => {
-  const joiString = Joi.string();
-
-  const regex = REGEX.ALPHA_CHARACTERS_AND_SPACE;
-
-  const schema = () => joiString.regex(regex).required();
-
-  const validation = schema().validate(fieldValue);
-
-  if (validation.error) {
-    return generateValidationErrors(fieldId, errorMessage, errors);
-  }
-
-  return false;
-};
+const alphaCharactersOnlyValidation = (fieldValue: string, fieldId: string, errorMessage: string, errors: object) =>
+  regexValidation(fieldValue, fieldId, REGEX.ALPHA_CHARACTERS_AND_SPACE, errorMessage, errors);
 
 export default alphaCharactersOnlyValidation;

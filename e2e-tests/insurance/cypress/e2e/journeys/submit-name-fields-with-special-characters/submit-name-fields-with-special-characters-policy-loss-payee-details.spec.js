@@ -1,23 +1,16 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../constants/field-ids/insurance';
 import { field } from '../../../../../pages/shared';
-import mockNameWithSpecialCharacters from '../../../../../fixtures/name-with-special-characters';
 import application from '../../../../../fixtures/application';
 
 const {
   ROOT: INSURANCE_ROOT,
-  POLICY: {
-    LOSS_PAYEE_DETAILS_ROOT,
-    LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
-    LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
-  },
+  POLICY: { LOSS_PAYEE_DETAILS_ROOT, LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT, LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT },
 } = INSURANCE_ROUTES;
 
 const {
   POLICY: {
-    LOSS_PAYEE_DETAILS: {
-      NAME,
-    },
+    LOSS_PAYEE_DETAILS: { NAME },
     FINANCIAL_ADDRESS,
   },
 } = INSURANCE_FIELD_IDS;
@@ -26,7 +19,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 const { POLICY } = application;
 
-const nameValue = mockNameWithSpecialCharacters(POLICY[NAME]);
+const nameValue = `${POLICY[NAME]}-'`;
 
 context('Insurance - Name fields - Loss payee details - Name field should render special characters without character codes after submission', () => {
   let referenceNumber;
