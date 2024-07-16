@@ -19,7 +19,7 @@ const applications = {
       const variables = {
         accountId,
         take: MAX_APPLICATIONS_PER_PAGE,
-        skip: skip || 0,
+        skip: skip ?? 0,
       };
 
       const response = (await apollo('GET', getApplicationsQuery, variables)) as ApolloResponse;
