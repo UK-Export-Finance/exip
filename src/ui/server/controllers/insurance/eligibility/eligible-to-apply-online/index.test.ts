@@ -5,7 +5,7 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import application from '../../../../helpers/create-an-application';
-import { mockAccount, referenceNumber, mockSession, mockReq, mockRes } from '../../../../test-mocks';
+import { mockAccount, referenceNumber, mockSession, mockReq, mockRes, mockCreateApplicationResponse } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -19,12 +19,6 @@ const {
 describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
   let req: Request;
   let res: Response;
-
-  // TODO: move to test-mocks
-  const mockCreateApplicationResponse = {
-    referenceNumber,
-    success: true,
-  };
 
   beforeEach(() => {
     req = mockReq();

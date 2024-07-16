@@ -13,7 +13,7 @@ import accountAlreadyExistsAlreadyVerifiedValidation from './validation/account-
 import saveData from './save-data';
 import application from '../../../../../helpers/create-an-application';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockAccount, mockSession, referenceNumber } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockAccount, mockSession, mockCreateApplicationResponse } from '../../../../../test-mocks';
 
 const { FIRST_NAME, LAST_NAME, EMAIL, PASSWORD } = ACCOUNT_FIELD_IDS;
 
@@ -120,11 +120,6 @@ describe('controllers/insurance/account/create/your-details', () => {
       [LAST_NAME]: mockAccount.lastName,
       [EMAIL]: mockAccount.email,
       [PASSWORD]: mockAccount.password,
-    };
-
-    const mockCreateApplicationResponse = {
-      referenceNumber,
-      success: true,
     };
 
     let createApplicationSpy = jest.fn(() => Promise.resolve(mockCreateApplicationResponse));

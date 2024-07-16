@@ -12,7 +12,7 @@ import accessCodeValidationErrors from './validation/rules/access-code';
 import application from '../../../../../helpers/create-an-application';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockAccount, referenceNumber, mockSession, mockApplications } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockAccount, mockSession, mockApplications, mockCreateApplicationResponse } from '../../../../../test-mocks';
 
 const {
   ACCOUNT: { ACCESS_CODE },
@@ -151,11 +151,6 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
     };
 
     let verifyAccountSignInCodeSpy = jest.fn(() => Promise.resolve(verifyAccountSignInCodeResponse));
-
-    const mockCreateApplicationResponse = {
-      referenceNumber,
-      success: true,
-    };
 
     let createApplicationSpy = jest.fn(() => Promise.resolve(mockCreateApplicationResponse));
 

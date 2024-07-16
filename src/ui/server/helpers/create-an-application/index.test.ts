@@ -2,11 +2,9 @@ import application from '.';
 import { sanitiseData } from '../sanitise-data';
 import mapEligibilityAnswers from '../map-eligibility-answers';
 import api from '../../api';
-import { referenceNumber, mockEligibility, mockAccount } from '../../test-mocks';
+import { mockEligibility, mockAccount, mockCreateApplicationResponse } from '../../test-mocks';
 
 describe('helpers/create-an-application', () => {
-  const mockCreateApplicationResponse = { referenceNumber };
-
   let createApplicationSpy = jest.fn(() => Promise.resolve(mockCreateApplicationResponse));
 
   beforeEach(() => {
