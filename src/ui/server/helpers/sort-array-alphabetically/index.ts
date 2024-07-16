@@ -5,6 +5,10 @@
  * @param {String} Target field to sort by
  * @returns {Array} Array of objects sorted alphabetically
  */
-const sortArrayAlphabetically = (arr: Array<any>, field: string) => arr.sort((a, b) => a[field].localeCompare(b[field]));
+const sortArrayAlphabetically = (arr: Array<any>, field: string) => {
+  const alphabetical = arr.sort((a, b) => a[field].localeCompare(b[field]));
+
+  return alphabetical;
+};
 
 export default sortArrayAlphabetically;
