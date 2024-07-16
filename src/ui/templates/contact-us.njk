@@ -5,6 +5,9 @@
   {{ CONTENT_STRINGS.PAGE_TITLE }}
 {% endblock %}
 
+{% set GENERAL_ENQUIRIES = CONTENT_STRINGS.GENERAL_ENQUIRIES %}
+{% set APPLICATION_ENQUIRES = CONTENT_STRINGS.APPLICATION_ENQUIRES %}
+
 {% block content %}
 
  {{ govukBackLink({
@@ -20,27 +23,21 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters-from-desktop">
 
-      <p class="govuk-body" data-cy="who-to-contact">{{ CONTENT_STRINGS.WHO_TO_CONTACT }}</p>
-
-      <h2 class="govuk-heading-m govuk-!-margin-top-9" data-cy="general-enquiries-heading">{{ CONTENT_STRINGS.GENERAL_ENQUIRIES.HEADING }}</h2>
-
-      <p class="govuk-body">
-        <span data-cy="general-enquiries-email-prefix">{{ CONTENT_STRINGS.GENERAL_ENQUIRIES.EMAIL.PREFIX }} </span>
-
-        <a class="govuk-link" href="{{ CONTENT_STRINGS.GENERAL_ENQUIRIES.EMAIL.VALUE }}" data-cy="general-enquiries-email-link">{{ CONTENT_STRINGS.GENERAL_ENQUIRIES.EMAIL.TEXT }}</a>
-      </p>
+      <p class="govuk-body" data-cy="intro">{{ CONTENT_STRINGS.INTRO }}</p>
 
       <p data-cy="general-enquiries-quote-reference-number">{{ CONTENT_STRINGS.QUOTE_REFERENCE_NUMBER }}</p>
 
-      <h2 class="govuk-heading-m govuk-!-margin-top-9" data-cy="application-enquiries-heading">{{ CONTENT_STRINGS.APPLICATION_ENQUIRES.HEADING }}</h2>
+      <h2 class="govuk-heading-m govuk-!-margin-top-9" data-cy="general-enquiries-heading">{{ GENERAL_ENQUIRIES.HEADING }}</h2>
+
+      {% include "partials/contact-details.njk" %}
+
+      <h2 class="govuk-heading-m govuk-!-margin-top-9" data-cy="application-enquiries-heading">{{ APPLICATION_ENQUIRES.HEADING }}</h2>
 
       <p class="govuk-body">
-        <span data-cy="application-enquiries-email-prefix">{{ CONTENT_STRINGS.APPLICATION_ENQUIRES.EMAIL.PREFIX }} </span>
+        <span data-cy="application-enquiries-email-prefix">{{ APPLICATION_ENQUIRES.CONTACT_DETAILS.UNDERWRITING_EMAIL.PREFIX }}: </span>
 
-        <a class="govuk-link" href="{{ CONTENT_STRINGS.APPLICATION_ENQUIRES.EMAIL.VALUE }}" data-cy="application-enquiries-email-link">{{ CONTENT_STRINGS.APPLICATION_ENQUIRES.EMAIL.TEXT }}</a>
+        <a class="govuk-link" href="{{ APPLICATION_ENQUIRES.CONTACT_DETAILS.UNDERWRITING_EMAIL.VALUE }}" data-cy="application-enquiries-email-link">{{ APPLICATION_ENQUIRES.CONTACT_DETAILS.UNDERWRITING_EMAIL.TEXT }}</a>
       </p>
-
-      <p class="govuk-body" data-cy="application-enquiries-quote-reference-number">{{ CONTENT_STRINGS.QUOTE_REFERENCE_NUMBER }}</p>
     </div>
   </div>
 
