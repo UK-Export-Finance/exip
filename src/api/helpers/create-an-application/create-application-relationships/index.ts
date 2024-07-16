@@ -10,20 +10,19 @@ import createAnExportContract from '../../create-an-export-contract';
 import createASectionReview from '../../create-a-section-review';
 import { CreateApplicationRelationshipParams } from '../../../types';
 
-// TODO: review documentation steps
-
 /**
  * createApplicationRelationships
  * Create application relationships
- * 1) Create a new buyer with country and application relationship.
- * 2) Get a totalContractValue DB entry, for linking a relationship to eligibility.
- * 3) Create a cover period value from the DB.
- * 4) Create a new eligibility with country and application relationship.
- * 5) Create a new export contract with application relationship.
- * 6) Create a new policy with application relationship.
- * 7) Create a new nominated loss payee with application relationship.
- * 8) Create a new company with application relationship.
- * 9) Create a new sectionReview with application relationship
+ * 1) Get the buyer country
+ * 2) Create a cover period value from the DB.
+ * 3) Get a totalContractValue DB entry, for linking a relationship to eligibility.
+ * 4) Create a new buyer with country and application relationship.
+ * 5) Create a new eligibility with country and application relationship.
+ * 6) Create a new export contract with application relationship.
+ * 7) Create a new policy with application relationship.
+ * 8) Create a new nominated loss payee with application relationship.
+ * 9) Create a new company with application relationship.
+ * 10) Create a new sectionReview with application relationship
  * @param {Context} context: KeystoneJS context API
  * @param {String} applicationId: Application ID
  * @param {ApplicationCompanyCore} companyData: Company data
@@ -50,6 +49,17 @@ const createApplicationRelationships = async ({
      * 2) Buyer country relationship
      */
     const country = await getCountryByField(context, 'isoCode', buyerCountryIsoCode);
+
+    // TODO: unit test.
+    if (!country) {
+      console.error(
+        `Unable to create application relationships - buyer country not found (createApplicationRelationships helper) for application ${applicationId}`,
+      );
+
+      throw new Error(
+        `Unable to create application relationships - buyer country not found (createApplicationRelationships helper) for application ${applicationId}`,
+      );
+    }
 
     const coverPeriod = await getCreditPeriodValueByField(context, 'valueId', coverPeriodId);
     const totalContractValue = await getTotalContractValueByField(context, 'valueId', totalContractValueId);

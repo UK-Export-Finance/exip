@@ -4827,6 +4827,10 @@ var createApplicationRelationships = async ({
     console.info("Creating application relationships (createApplicationRelationships helper) for application %s", applicationId);
     const { buyerCountryIsoCode, totalContractValueId, coverPeriodId, ...otherEligibilityAnswers } = eligibilityAnswers;
     const country = await get_country_by_field_default(context, "isoCode", buyerCountryIsoCode);
+    if (!country) {
+      console.error(`Unable to create application relationships - buyer country not found (createApplicationRelationships helper) for application ${applicationId}`);
+      throw new Error(`Unable to create application relationships - buyer country not found (createApplicationRelationships helper) for application ${applicationId}`);
+    }
     const coverPeriod = await get_cover_period_value_by_field_default(context, "valueId", coverPeriodId);
     const totalContractValue = await get_total_contract_value_by_field_default(context, "valueId", totalContractValueId);
     const relationships = await Promise.all([
@@ -7906,7 +7910,7 @@ var updateCompanyPostDataMigration = async (root, variables, context) => {
       data: addressFields
     });
     if (sicCodes) {
-      await create_company_sic_codes_default(context, sicCodes, industrySectorNames2, updatedCompany.id);
+      await create_company_sic_codes_default(context, updatedCompany.id, sicCodes, industrySectorNames2);
     }
     return {
       success: true
