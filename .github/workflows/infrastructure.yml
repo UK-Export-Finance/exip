@@ -378,7 +378,7 @@ jobs:
         with:
           inlineScript: |
             az keyvault create \
-            --name kv-${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }} \
+            --name kv-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --default-action Deny \
             --enable-purge-protection true \
             --public-network-access Disabled \
