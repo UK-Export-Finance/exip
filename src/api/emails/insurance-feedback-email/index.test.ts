@@ -3,7 +3,7 @@ import notify from '../../integrations/notify';
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
 import formatDate from '../../helpers/format-date';
 import mapFeedbackSatisfaction from '../../helpers/map-feedback-satisfaction';
-import { mockAccount, mockInsuranceFeedback, mockSendEmailResponse } from '../../test-mocks';
+import { mockAccount, mockInsuranceFeedback, mockSendEmailResponse, mockErrorMessage } from '../../test-mocks';
 
 describe('emails/insurance-feedback-email', () => {
   const sendEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
@@ -11,8 +11,6 @@ describe('emails/insurance-feedback-email', () => {
   const { email } = mockAccount;
 
   const templateId = EMAIL_TEMPLATE_IDS.FEEDBACK.INSURANCE;
-
-  const mockErrorMessage = 'Mock error';
 
   beforeAll(async () => {
     notify.sendEmail = sendEmailSpy;
@@ -75,7 +73,7 @@ describe('emails/insurance-feedback-email', () => {
 
   describe('error handling', () => {
     beforeAll(async () => {
-      notify.sendEmail = jest.fn(() => Promise.reject(mockErrorMessage));
+      notify.sendEmail = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
     });
 
     test('should throw an error', async () => {
