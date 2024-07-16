@@ -1,0 +1,14 @@
+{% set contactDetails = CONTENT_STRINGS.CONTACT_DETAILS %}
+
+{% set EMAIL = contactDetails.EMAIL %}
+{% set PHONE = contactDetails.PHONE %}
+{% set OPENING_TIMES = contactDetails.OPENING_TIMES %}
+
+<p data-cy="contact-details-email">
+  <span data-cy="email-prefix">{{ EMAIL.PREFIX }}: </span>
+  <a class="govuk-link" href="{{ EMAIL.VALUE }}" data-cy="email-link">{{ EMAIL.TEXT }}</a>
+</p>
+
+<p data-cy="contact-details-phone">{{ PHONE.PREFIX }}: {{ PHONE.VALUE }}</p>
+
+<p data-cy="contact-details-opening-times">{{ OPENING_TIMES }}</p>

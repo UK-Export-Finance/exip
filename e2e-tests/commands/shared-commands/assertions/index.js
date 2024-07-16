@@ -28,6 +28,8 @@ Cypress.Commands.add('assertSuffix', require('./assert-suffix'));
 Cypress.Commands.add('assertTextareaRendering', require('./assert-textarea-rendering'));
 Cypress.Commands.add('assertDynamicCharacterCount', require('./assert-dynamic-character-count'));
 
+Cypress.Commands.add('assertContactDetailsContent', require('./assert-contact-details-content'));
+
 Cypress.Commands.add('checkAriaLabel', require('./check-aria-label'));
 Cypress.Commands.add('checkClassName', require('./check-class-name'));
 Cypress.Commands.add('checkEmailFieldRendering', require('./check-email-field-rendering'));
