@@ -1,7 +1,7 @@
 import { MAXIMUM_CHARACTERS } from '../../../../../../../constants';
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import alphaCharactersAndMaxLengthValidation from '../../../../../../../shared-validation/alpha-characters-and-max-length';
+import nameValidation from '../../../../../../../shared-validation/name';
 import { RequestBody } from '../../../../../../../../types';
 
 const {
@@ -16,9 +16,8 @@ const {
  * validate the "agent name" field
  * @param {RequestBody} formBody: Form body
  * @param {Object} errors: Other validation errors for the same form
- * @returns {ValidationErrors} alphaCharactersAndMaxLengthValidation
+ * @returns {ValidationErrors} nameValidation
  */
-const name = (formBody: RequestBody, errors: object) =>
-  alphaCharactersAndMaxLengthValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.AGENT_NAME);
+const name = (formBody: RequestBody, errors: object) => nameValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.AGENT_NAME);
 
 export default name;
