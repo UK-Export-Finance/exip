@@ -6,4 +6,9 @@ export const CONTACT_DETAILS = {
     TEXT: UKEF_CONTACT_DETAILS.EMAIL.CREDIT_INSURANCE_SUPPORT,
     VALUE: `mailto:${UKEF_CONTACT_DETAILS.EMAIL.CREDIT_INSURANCE_SUPPORT}`,
   },
+  PHONE: {
+    PREFIX: 'Phone',
+    VALUE: UKEF_CONTACT_DETAILS.PHONE,
+  },
+  OPENING_TIMES: 'Opening times: Monday to Friday, 9am to 5pm (excluding public holidays)',
 };
