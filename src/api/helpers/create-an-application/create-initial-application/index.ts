@@ -4,8 +4,9 @@ import { CreateInitialApplicationParams } from '../../../types';
 const { STATUS, SUBMISSION_TYPE } = APPLICATION;
 
 /**
- * Create the initial application,
- * with a default submission type of SUBMISSION_TYPE.MIA.
+ * Create the initial application, with default:
+ * - submissionType of MIA.
+ * - status of IN_PROGRESS.
  * This needs to be done first so that we can use the application ID.
  * @param {Context} context: KeystoneJS context API
  * @param {String} accountId: Account ID to own the application
