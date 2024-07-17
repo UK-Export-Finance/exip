@@ -6,7 +6,6 @@ export const CORE_LOG_MESSAGE = 'Eligibility session data does not have a';
  * logMissingEligibilityFields
  * Log out any specific missing or invalid eligibility answers/flags
  * @param {CanCreateApplicationEligibilityFlags} eligibilityAnswerFlags: Eligibility answer flags
- * @returns {null}
  */
 const logMissingEligibilityFields = ({
   hasBuyerCountry,

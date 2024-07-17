@@ -5,7 +5,7 @@ import accounts from '../../../test-helpers/accounts';
 import { mockApplicationEligibility } from '../../../test-mocks/mock-application';
 import { Context, Account, Application } from '../../../types';
 
-describe('helpers/create-an-application/create-initial-application', () => {
+describe('helpers/create-an-application/create-application-relationships', () => {
   let context: Context;
   let account: Account;
   let accountId = '';
@@ -64,9 +64,11 @@ describe('helpers/create-an-application/create-initial-application', () => {
       } catch (err) {
         const errorString = String(err);
 
-        expect(errorString.includes(`Unable to create application relationships - buyer country not found (createApplicationRelationships helper) for application ${application.id}`)).toEqual(
-          true,
-        );
+        expect(
+          errorString.includes(
+            `Unable to create application relationships - buyer country not found (createApplicationRelationships helper) for application ${application.id}`,
+          ),
+        ).toEqual(true);
       }
     });
   });

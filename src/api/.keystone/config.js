@@ -4618,7 +4618,7 @@ var map_sic_codes_default = mapSicCodes;
 var createCompanySicCodes = async (context, companyId, sicCodes, industrySectorNames2) => {
   console.info("Creating company SIC codes for %s", companyId);
   try {
-    if (sicCodes && sicCodes.length) {
+    if (sicCodes?.length) {
       const mappedSicCodes = map_sic_codes_default(sicCodes, industrySectorNames2, companyId);
       const createdSicCodes = await context.db.CompanySicCode.createMany({
         data: mappedSicCodes

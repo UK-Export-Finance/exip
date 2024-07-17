@@ -77,7 +77,7 @@ describe('helpers/create-an-application/create-initial-application', () => {
   });
 
   describe('when a status is provided', () => {
-    test('it should return an application with the provided status', async() => {
+    test('it should return an application with the provided status', async () => {
       const { status } = await initialApplication.create({ context, accountId, status: STATUS.ABANDONED });
 
       expect(status).toEqual(STATUS.ABANDONED);
@@ -86,14 +86,9 @@ describe('helpers/create-an-application/create-initial-application', () => {
 
   describe('when creation is not successful', () => {
     test('it should throw an error', async () => {
-      try {
-        // pass empty context object to force an error
-        await initialApplication.create({ context: {}, accountId });
-      } catch (err) {
-        const errorString = String(err);
-
-        expect(errorString.includes(`Creating initial application (createInitialApplication helper) for user ${account.id}`)).toEqual(true);
-      }
+      await expect(initialApplication.create({ context: {}, accountId })).rejects.toThrow(
+        `Creating initial application (createInitialApplication helper) for user ${account.id}`,
+      );
     });
   });
 });
