@@ -41,7 +41,7 @@ describe('custom-resolvers/update-loss-payee-financial-details-uk', () => {
       variables.id = lossPayeeFinancialDetailsUk.id;
       variables.vector = vector;
 
-      lossPayeeFinancialDetailsUkResponse = (await updateLossPayeeFinancialDetailsUk({}, variables, context)) as SuccessResponse;
+      lossPayeeFinancialDetailsUkResponse = await updateLossPayeeFinancialDetailsUk({}, variables, context);
     });
 
     it('should return success as true', () => {

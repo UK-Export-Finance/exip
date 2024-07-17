@@ -5,7 +5,7 @@
  * @returns {Boolean}
  */
 export const isPopulatedArray = (arr?: Array<any>): boolean => {
-  if (arr && arr.length) {
+  if (arr?.length) {
     return true;
   }
 

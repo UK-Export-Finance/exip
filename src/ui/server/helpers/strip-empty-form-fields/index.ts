@@ -1,4 +1,4 @@
-import { RequestBody } from '../../../types';
+import { RequestBody, ObjectType } from '../../../types';
 
 /**
  * stripEmptyFormFields
@@ -8,7 +8,7 @@ import { RequestBody } from '../../../types';
  * @returns {Object} Form data without empty values
  */
 const stripEmptyFormFields = (formBody: RequestBody, nullOrEmptyStringFields?: Array<string>) => {
-  const fieldsWithValues = {};
+  const fieldsWithValues = {} as ObjectType;
 
   const keys = Object.keys(formBody);
 
@@ -27,7 +27,7 @@ const stripEmptyFormFields = (formBody: RequestBody, nullOrEmptyStringFields?: A
      * if array exists and if key is in array
      * then keeps the key and value pair in form data - even if empty
      */
-    const shouldBeNullOrEmptyString = nullOrEmptyStringFields && nullOrEmptyStringFields.includes(key);
+    const shouldBeNullOrEmptyString = nullOrEmptyStringFields?.includes(key);
 
     if (hasValue || shouldBeNullOrEmptyString) {
       fieldsWithValues[key] = value;

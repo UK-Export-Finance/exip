@@ -84,6 +84,7 @@ import {
 } from './page-variables';
 import { InsuranceFeedbackVariables } from './feedback';
 import { SanitiseValueObjParams } from './sanitise-value';
+import { ObjectType } from './object';
 
 export {
   Account,
@@ -137,6 +138,7 @@ export {
   InsuranceFeedbackVariables,
   Next,
   Object,
+  ObjectType,
   PageContentStrings,
   PageVariablesContentStrings,
   PricingGrid,

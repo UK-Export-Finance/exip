@@ -3,11 +3,11 @@ import accessibleAutocomplete from 'accessible-autocomplete';
 const init = () => {
   window.accessibleAutocomplete = accessibleAutocomplete;
 
-  var countryCode = document.getElementById('countryCode');
-  var buyerCountry = document.getElementById('buyerCountry');
-  var finalDestinationCountryCode = document.getElementById('finalDestinationCountryCode');
-  var alternativeCurrency = document.getElementById('alternativeCurrencyCode');
-  var payableCountryCode = document.getElementById('payableCountryCode');
+  const countryCode = document.getElementById('countryCode');
+  const buyerCountry = document.getElementById('buyerCountry');
+  const finalDestinationCountryCode = document.getElementById('finalDestinationCountryCode');
+  const alternativeCurrency = document.getElementById('alternativeCurrencyCode');
+  const payableCountryCode = document.getElementById('payableCountryCode');
 
   accessibleAutocomplete.enhanceSelectElement({
     selectElement: countryCode || buyerCountry || finalDestinationCountryCode || alternativeCurrency || payableCountryCode,
