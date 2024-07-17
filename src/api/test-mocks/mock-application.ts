@@ -13,7 +13,6 @@ const month = date.getMonth();
 
 export const mockApplicationEligibility = {
   buyerCountry: mockCountries[0],
-  // buyerCountryIsoCode: mockCountries[0].isoCode,
   coverPeriod: {
     valueId: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
   },
