@@ -380,7 +380,6 @@ jobs:
             az keyvault create \
             --name kv-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --default-action Deny \
-            --enable-purge-protection true \
             --public-network-access Disabled \
             --network-acls-ips ${{ secrets.WAF_ALLOWED_IP }} \
             --network-acls-vnets $(az network vnet subnet list --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query '[?contains(name, `keyvault`)].id' -o tsv)
