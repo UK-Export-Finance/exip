@@ -273,7 +273,7 @@ const getPopulatedApplication = async ({
     throw new Error(generateErrorMessage('sectionReview', application.id));
   }
 
-  const totalContractValueOverThreshold = mapTotalContractValueOverThreshold(application);
+  const totalContractValueOverThreshold = mapTotalContractValueOverThreshold(populatedEligibility);
 
   const populatedApplication = {
     ...application,

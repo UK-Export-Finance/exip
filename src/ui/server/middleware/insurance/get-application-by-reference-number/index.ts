@@ -3,11 +3,21 @@ import getApplicationByReferenceNumber from '../../../helpers/get-application-by
 import getApplicationByReferenceNumberVariables from '../../../helpers/get-application-by-reference-number-variables';
 import { Next, Request, Response } from '../../../../types';
 
-const { PAGE_NOT_FOUND } = INSURANCE_ROUTES;
-
-const { POLICY } = INSURANCE_ROUTES;
 const {
-  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_YOUR_ANSWERS_APPLICATION_TYPE_OF_POLICY },
+  ALL_SECTIONS,
+  APPLICATION_SUBMITTED,
+  CHECK_YOUR_ANSWERS: {
+    TYPE_OF_POLICY: CHECK_YOUR_ANSWERS_APPLICATION_TYPE_OF_POLICY,
+    YOUR_BUSINESS: CHECK_YOUR_ANSWERS_APPLICATION_YOUR_BUSINESS,
+    YOUR_BUYER: CHECK_YOUR_ANSWERS_APPLICATION_YOUR_BUYER,
+  },
+  COMPLETE_OTHER_SECTIONS,
+  DECLARATIONS,
+  EXPORTER_BUSINESS,
+  EXPORT_CONTRACT,
+  PAGE_NOT_FOUND,
+  POLICY,
+  YOUR_BUYER,
 } = INSURANCE_ROUTES;
 
 /**
@@ -16,18 +26,17 @@ const {
  * @returns {Array} Routes
  */
 export const RELEVANT_ROUTES = [
+  ALL_SECTIONS,
+  EXPORTER_BUSINESS.ROOT,
   POLICY.ROOT,
-  POLICY.LOSS_PAYEE_ROOT,
-  POLICY.LOSS_PAYEE_CHANGE,
-  POLICY.LOSS_PAYEE_CHECK_AND_CHANGE,
-  POLICY.LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
-  POLICY.LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
-  POLICY.LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE,
-  POLICY.LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
-  POLICY.LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE,
-  POLICY.LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE,
-  POLICY.CHECK_YOUR_ANSWERS,
+  YOUR_BUYER.ROOT,
+  EXPORT_CONTRACT.ROOT,
+  DECLARATIONS.ROOT,
   CHECK_YOUR_ANSWERS_APPLICATION_TYPE_OF_POLICY,
+  CHECK_YOUR_ANSWERS_APPLICATION_YOUR_BUSINESS,
+  CHECK_YOUR_ANSWERS_APPLICATION_YOUR_BUYER,
+  COMPLETE_OTHER_SECTIONS,
+  APPLICATION_SUBMITTED,
 ];
 
 /**
@@ -41,10 +50,10 @@ const getApplicationByReferenceNumberMiddleware = async (req: Request, res: Resp
   const { originalUrl: url } = req;
 
   /**
-   * This middleware only needs to be run if we're in routes which need decryption.
-   * If we are on a route which does not need decryption,
-   * skip these checks by calling next(), so that the user flow continues.
-   * Irrelevant route examples: all routes apart from POLICY financial details.
+   * This middleware only needs to be run if we're in a routes which needs an application.
+   * If we are on a route which does not require an application,
+   * call next(), so that the user flow continues.
+   * Irrelevant route examples: PAGE_NOT_FOUND, ACCESSIBILITY_STATEMENT
    */
   if (!RELEVANT_ROUTES.some((route) => url.includes(route))) {
     return next();
@@ -54,12 +63,18 @@ const getApplicationByReferenceNumberMiddleware = async (req: Request, res: Resp
 
   if (referenceNumber) {
     try {
-      // generate variables for getting application, such as decryptFinancialUk
+      /**
+       * generate variables for getting application,
+       * Currently only used for decrypting certain pieces of data.
+       */
       const variables = getApplicationByReferenceNumberVariables(referenceNumber, url);
 
       const application = await getApplicationByReferenceNumber(variables);
 
       if (application) {
+        // TODO: unit test.
+        res.locals.application = application;
+
         return next();
       }
 

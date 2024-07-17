@@ -20,6 +20,7 @@ const applicationByReferenceNumberQuery = gql`
         submissionType
         submissionDate
         status
+        totalContractValueOverThreshold
         eligibility {
           id
           buyerCountry {

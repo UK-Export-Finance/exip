@@ -281,6 +281,7 @@ const typeDefs = `
     submissionDate: DateTime
     referenceNumber: Int
     status: String!
+    totalContractValueOverThreshold: Boolean
     eligibility: Eligibility
     exportContract: ExportContract
     policy: Policy
