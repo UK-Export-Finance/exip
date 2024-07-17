@@ -1,4 +1,4 @@
-import { RequestBody, FieldsWithValues } from '../../../types';
+import { RequestBody, ObjectType } from '../../../types';
 
 /**
  * stripEmptyFormFields
@@ -8,7 +8,7 @@ import { RequestBody, FieldsWithValues } from '../../../types';
  * @returns {Object} Form data without empty values
  */
 const stripEmptyFormFields = (formBody: RequestBody, nullOrEmptyStringFields?: Array<string>) => {
-  const fieldsWithValues = {} as FieldsWithValues;
+  const fieldsWithValues = {} as ObjectType;
 
   const keys = Object.keys(formBody);
 

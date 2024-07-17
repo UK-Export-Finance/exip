@@ -1,10 +1,7 @@
 import sanitiseArrayOfStrings from '../sanitise-array-of-strings';
 import { isAnObjectWithKeysAndValues } from '../../object';
 import sanitiseValue from '../sanitise-value';
-
-type ObjectType = {
-  [key: string]: any;
-};
+import { ObjectType } from '../../../../types';
 
 /**
  * sanitiseObject
@@ -16,7 +13,7 @@ type ObjectType = {
  * @returns {Boolean}
  */
 const sanitiseObject = (obj: ObjectType) => {
-  const sanitised = {};
+  const sanitised = {} as ObjectType;
 
   Object.keys(obj).forEach((key) => {
     const value = obj[key];

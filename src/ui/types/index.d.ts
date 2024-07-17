@@ -85,8 +85,8 @@ import {
 import { InsuranceFeedbackVariables } from './feedback';
 import { SanitiseValueObjParams } from './sanitise-value';
 
-type FieldsWithValues = {
-  [key: string]: string;
+type ObjectType = {
+  [key: string]: any;
 };
 
 export {
@@ -135,13 +135,13 @@ export {
   DateValidationFormatRulesParams,
   DateValidationFormatRules,
   ErrorMessageObject,
-  FieldsWithValues,
   Business,
   InsuranceEligibility,
   InsuranceEligibilityCore,
   InsuranceFeedbackVariables,
   Next,
   Object,
+  ObjectType,
   PageContentStrings,
   PageVariablesContentStrings,
   PricingGrid,
