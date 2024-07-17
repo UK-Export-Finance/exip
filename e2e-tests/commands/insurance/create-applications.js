@@ -57,8 +57,7 @@ const createApplications = (accountId, count) => {
           const applicationsData = mockApplications(accountId, buyer.id, count);
 
           return api.createApplications(applicationsData).then((applications) => applications);
-        }),
-      );
+        }));
     } catch (err) {
       console.error('Creating applications', err);
 
