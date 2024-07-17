@@ -9,11 +9,6 @@ const PASSWORD_HINT = {
 };
 
 export const ACCOUNT_FIELDS = {
-  MAXIMUM: {
-    NAME: {
-      CHARACTERS: 100,
-    },
-  },
   [FIRST_NAME]: {
     LABEL: 'First name',
   },
@@ -59,7 +54,7 @@ export const ACCOUNT_FIELDS = {
   },
   NEW_PASSWORD: {
     [PASSWORD]: {
-      LABEL: 'Enter a new password',
+      LABEL: 'Create a password',
       HINT: PASSWORD_HINT,
     },
   },

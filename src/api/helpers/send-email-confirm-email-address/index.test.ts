@@ -3,7 +3,7 @@ import getFullNameString from '../get-full-name-string';
 import sendEmail from '../../emails';
 import accounts from '../../test-helpers/accounts';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
-import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../test-mocks';
+import { mockAccount, mockUrlOrigin, mockSendEmailResponse, mockErrorMessage } from '../../test-mocks';
 import { DATE_24_HOURS_IN_THE_PAST, DATE_24_HOURS_FROM_NOW } from '../../constants';
 import { Account, Context } from '../../types';
 
@@ -116,14 +116,14 @@ describe('helpers/send-email-confirm-email-address', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      sendEmail.confirmEmailAddress = jest.fn(() => Promise.reject(mockSendEmailResponse));
+      sendEmail.confirmEmailAddress = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
     });
 
     test('should throw an error', async () => {
       try {
         await confirmEmailAddressEmail.send(context, mockUrlOrigin, account.id);
       } catch (err) {
-        const expected = new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${mockSendEmailResponse}`);
+        const expected = new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${new Error(mockErrorMessage)}`);
 
         expect(err).toEqual(expected);
       }

@@ -11,6 +11,8 @@ import field from './field';
 const allSectionsLink = () => cy.get('[data-cy="all-sections-link"]');
 const backLink = () => cy.get('[data-cy="back-link"]');
 const body = () => cy.get('[data-cy="body"]');
+const emailPrefix = () => cy.get('[data-cy="email-prefix"]');
+const emailLink = () => cy.get('[data-cy="email-link"]');
 const form = () => cy.get('[data-cy="form"]');
 const heading = () => cy.get('[data-cy="heading"]');
 const headingCaption = () => cy.get('[data-cy="heading-caption"]');
@@ -56,6 +58,8 @@ export {
   autoCompleteField,
   backLink,
   body,
+  emailPrefix,
+  emailLink,
   form,
   heading,
   headingCaption,

@@ -1,7 +1,7 @@
 import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
-import alphaCharactersAndMaxLengthValidation from '../../../../../../shared-validation/alpha-characters-and-max-length';
+import nameValidation from '../../../../../../shared-validation/name';
 import { RequestBody } from '../../../../../../../types';
 
 const {
@@ -32,7 +32,7 @@ const MAXIMUM = Number(NAME_ON_POLICY[FIELD_ID].MAXIMUM);
  */
 const positionRule = (formBody: RequestBody, errors: object) => {
   if (formBody[NAME] === SAME_NAME) {
-    return alphaCharactersAndMaxLengthValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM);
+    return nameValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM);
   }
 
   return errors;

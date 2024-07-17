@@ -1,6 +1,6 @@
 import sendEmailInsuranceFeedback from '.';
 import sendEmail from '../../../emails';
-import { mockInsuranceFeedbackEmail, mockSendEmailResponse, mockAccount } from '../../../test-mocks';
+import { mockInsuranceFeedbackEmail, mockSendEmailResponse, mockAccount, mockErrorMessage } from '../../../test-mocks';
 import { InsuranceFeedbackVariables } from '../../../types';
 
 describe('custom-resolvers/send-email-insurance-feedback', () => {
@@ -38,14 +38,14 @@ describe('custom-resolvers/send-email-insurance-feedback', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      sendEmail.insuranceFeedbackEmail = jest.fn(() => Promise.reject(mockSendEmailResponse));
+      sendEmail.insuranceFeedbackEmail = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
     });
 
     test('should throw an error', async () => {
       try {
         await sendEmailInsuranceFeedback({}, variables);
       } catch (err) {
-        const expected = new Error(`Generating and sending email for insurance feedback ${mockSendEmailResponse}`);
+        const expected = new Error(`Generating and sending email for insurance feedback ${new Error(mockErrorMessage)}`);
 
         expect(err).toEqual(expected);
       }

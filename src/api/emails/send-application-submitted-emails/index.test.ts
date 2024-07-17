@@ -7,7 +7,7 @@ import getApplicationSubmittedEmailTemplateIds from '../../helpers/get-applicati
 import formatDate from '../../helpers/format-date';
 import { createFullApplication, getKeystoneContext } from '../../test-helpers';
 import { Application, ApplicationSubmissionEmailVariables, Context } from '../../types';
-import { mockSendEmailResponse } from '../../test-mocks';
+import { mockSendEmailResponse, mockErrorMessage } from '../../test-mocks';
 
 dotenv.config();
 
@@ -64,15 +64,17 @@ describe('emails/send-email-application-submitted', () => {
       };
 
       expectedSendOwnerEmailVars = {
-        emailAddress: email,
-        name: getFullNameString(owner),
         ...sharedEmailVars,
+        emailAddress: email,
+        buyerName: replaceCharacterCodesWithCharacters(String(buyer.companyOrOrganisationName)),
+        name: replaceCharacterCodesWithCharacters(getFullNameString(owner)),
       } as ApplicationSubmissionEmailVariables;
 
       expectedContactSendEmailVars = {
-        emailAddress: policyContact.email,
-        name: getFullNameString(policyContact),
         ...sharedEmailVars,
+        emailAddress: policyContact.email,
+        buyerName: replaceCharacterCodesWithCharacters(String(buyer.companyOrOrganisationName)),
+        name: replaceCharacterCodesWithCharacters(getFullNameString(policyContact)),
       } as ApplicationSubmissionEmailVariables;
     });
 
@@ -287,14 +289,14 @@ describe('emails/send-email-application-submitted', () => {
 
     describe('when sendEmail.application.submittedEmail fails', () => {
       beforeEach(() => {
-        sendEmail.application.submittedEmail = jest.fn(() => Promise.reject(mockSendEmailResponse));
+        sendEmail.application.submittedEmail = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
       });
 
       test('should throw an error', async () => {
         try {
           await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
         } catch (err) {
-          const expected = new Error(`Sending application submitted emails ${mockSendEmailResponse}`);
+          const expected = new Error(`Sending application submitted emails ${new Error(mockErrorMessage)}`);
 
           expect(err).toEqual(expected);
         }
