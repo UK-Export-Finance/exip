@@ -1,5 +1,4 @@
 import dashboardPage from '../../../../../pages/insurance/dashboard';
-import partials from '../../../../../partials';
 import { BUTTONS, PAGES } from '../../../../../content-strings';
 import { DATE_FORMAT } from '../../../../../constants';
 import { formatDate } from '../../../../../helpers/date';
@@ -17,7 +16,7 @@ context('Insurance - Dashboard - submitted application', () => {
     cy.completeSignInAndSubmitAnApplication({}).then((refNumber) => {
       referenceNumber = refNumber;
 
-      partials.cy.clickHeaderApplicationsLink();
+      cy.clickHeaderApplicationsLink();
     });
   });
 

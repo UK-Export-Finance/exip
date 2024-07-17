@@ -1,5 +1,4 @@
 import { FIELD_IDS } from '../../../../../constants';
-import partials from '../../../../../partials';
 import dashboardPage from '../../../../../pages/insurance/dashboard';
 import mockApplication from '../../../../../fixtures/application';
 import mockNameWithSpecialCharacters from '../../../../../fixtures/name-with-special-characters';
@@ -27,7 +26,7 @@ context('Insurance - Name fields - Dashboard fields should render special charac
         buyerName: nameWithSpecialCharacters,
       });
 
-      partials.cy.clickHeaderApplicationsLink();
+      cy.clickHeaderApplicationsLink();
     });
   });
 
@@ -40,9 +39,6 @@ context('Insurance - Name fields - Dashboard fields should render special charac
   });
 
   it('should render special characters exactly as they were submitted', () => {
-    cy.checkText(
-      dashboardPage.table.body.firstRow.buyerName(),
-      nameWithSpecialCharacters,
-    );
+    cy.checkText(dashboardPage.table.body.firstRow.buyerName(), nameWithSpecialCharacters);
   });
 });

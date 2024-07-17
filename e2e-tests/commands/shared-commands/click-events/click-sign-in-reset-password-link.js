@@ -1,7 +1,7 @@
 import { signInPage } from '../../../pages/insurance/account/sign-in';
 
 /**
- * clickSignInButtonLink
+ * clickSignInResetPasswordLink
  * Click the "reset password" link in the "sign in" form.
  */
 const clickSignInResetPasswordLink = () => {
