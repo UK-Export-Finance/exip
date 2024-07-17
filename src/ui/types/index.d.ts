@@ -84,10 +84,7 @@ import {
 } from './page-variables';
 import { InsuranceFeedbackVariables } from './feedback';
 import { SanitiseValueObjParams } from './sanitise-value';
-
-type ObjectType = {
-  [key: string]: any;
-};
+import { ObjectType } from './object';
 
 export {
   Account,
