@@ -5431,12 +5431,14 @@ var send4 = async (application2, xlsxPath) => {
     };
     const sendOwnerEmailVars = {
       ...sharedEmailVars,
-      name: get_full_name_string_default(owner),
+      buyerName: replace_character_codes_with_characters_default(String(buyer.companyOrOrganisationName)),
+      name: replace_character_codes_with_characters_default(get_full_name_string_default(owner)),
       emailAddress: email
     };
     const sendContactEmailVars = {
       ...sharedEmailVars,
-      name: get_full_name_string_default(policyContact),
+      buyerName: replace_character_codes_with_characters_default(String(buyer.companyOrOrganisationName)),
+      name: replace_character_codes_with_characters_default(get_full_name_string_default(policyContact)),
       emailAddress: policyContact.email
     };
     console.info("Sending application submitted email to application account owner: %s", sendOwnerEmailVars.emailAddress);
@@ -5561,7 +5563,6 @@ var LINKS = {
     ACCESSIBILITY_GUIDLINES: "https://www.w3.org/TR/WCAG21",
     BRIBERY_ACT_2010_GUIDANCE: "https://www.justice.gov.uk/downloads/legislation/bribery-act-2010-guidance.pdf",
     ICO_MAKE_A_COMPLAINT: "https://ico.org.uk/make-a-complaint",
-    CALL_CHARGES: "https://www.gov.uk/call-charges",
     COMPANIES_HOUSE: "https://find-and-update.company-information.service.gov.uk"
   }
 };
@@ -6743,7 +6744,7 @@ var ACCOUNT_FIELDS = {
   },
   NEW_PASSWORD: {
     [PASSWORD]: {
-      LABEL: "Enter a new password",
+      LABEL: "Create a password",
       HINT: PASSWORD_HINT
     }
   }

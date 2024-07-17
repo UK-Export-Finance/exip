@@ -1,6 +1,6 @@
 {
   "name": "@uk-export-finance/exip",
-  "version": "2.9.1",
+  "version": "2.12.0",
   "description": "Export Insurance Policies",
   "homepage": "https://github.com/UK-Export-Finance/exip#readme",
   "bugs": {
@@ -13,17 +13,18 @@
   "license": "MIT",
   "author": "UK Export Finance",
   "scripts": {
-    "audit:all": "npm audit && npm audit --prefix ./src/ui && npm audit --prefix ./src/api && npm audit --prefix ./generate-exip-pricing-grid",
-    "ci:all": "npm ci --legacy-peer-deps && npm ci --legacy-peer-deps --prefix ./src/ui && npm ci --legacy-peer-deps --prefix ./src/api && npm ci --legacy-peer-deps --prefix ./generate-exip-pricing-grid",
+    "audit:all": "npm audit && cd src/ui && npm audit && cd ../api && npm audit && cd ../../generate-exip-pricing-grid && npm audit",
+    "ci:all": "npm ci --legacy-peer-deps && cd src/ui && npm ci --legacy-peer-deps && cd ../api && npm ci --legacy-peer-deps && cd ../../generate-exip-pricing-grid && npm ci --legacy-peer-deps",
     "housekeeping": "npm run update:all && npm run install:all && npm run lint:fix:all && npm run audit:all",
     "postinstall": "husky install",
     "install:all": "npm i --legacy-peer-deps && cd ./generate-exip-pricing-grid && npm i --legacy-peer-deps && cd .. && cd ./src/ui && npm i --legacy-peer-deps && cd .. && cd ./api && npm i --legacy-peer-deps",
-    "lint:all": "npm i --legacy-peer-deps && npm i --legacy-peer-deps --prefix ./src/ui && eslint --ext .ts src/ui && npm i --legacy-peer-deps --prefix ./src/api && eslint --ext .ts src/api && eslint --ext .js e2e-tests",
+    "lint:all": "npm i --legacy-peer-deps && cd ./src/ui && npm i --legacy-peer-deps && eslint --ext .ts ./ && cd ../api && npm i --legacy-peer-deps && eslint --ext .ts ./ && cd ../../e2e-tests && eslint --ext .js ./",
     "lint:fix": "prettier --write src/ui  && eslint --ext .ts src/api --fix && eslint --ext .ts src/ui --fix &&  eslint --ext .js e2e-tests --fix",
     "lint:fix:all": "prettier --write src/ui  && eslint --ext .ts src/api --fix && eslint --ext .ts src/ui --fix &&  eslint --ext .js e2e-tests --fix",
     "prettier:all": "prettier --no-error-on-unmatched-pattern --check **/*.{ts,js} --ignore-path ./prettierignore",
     "spellcheck": "cspell lint --gitignore --no-must-find-files --quiet --unique --no-progress --show-suggestions --color '**/*'",
-    "update:all": "npm update --save --legacy-peer-deps && npm update --save --legacy-peer-deps --prefix ./src/ui && npm update --save --legacy-peer-deps --prefix ./src/api && npm update --save --legacy-peer-deps --prefix ./generate-exip-pricing-grid",
+    "type-check:all": "cd src/ui && tsc --noEmit --pretty && cd ../api && tsc --noEmit --pretty && cd ../../e2e-tests && tsc --noEmit --pretty",
+    "update:all": "npm update --save --legacy-peer-deps && cd src/ui && npm update --save --legacy-peer-deps && cd ../api && npm update --save --legacy-peer-deps && cd ../../generate-exip-pricing-grid && npm update --save --legacy-peer-deps",
     "validate:yml": "npx yaml-lint **/*.yml --ignore=**/node_modules"
   },
   "lint-staged": {
@@ -63,9 +64,9 @@
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "19.2.2",
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.14.9",
-    "@typescript-eslint/eslint-plugin": "^7.15.0",
-    "@typescript-eslint/parser": "^7.15.0",
+    "@types/node": "^20.14.10",
+    "@typescript-eslint/eslint-plugin": "^7.16.1",
+    "@typescript-eslint/parser": "^7.16.1",
     "commitlint": "^19.3.0",
     "cspell": "^8.10.4",
     "eslint": "^8.57.0",
@@ -84,7 +85,7 @@
     "lint-staged": "^15.2.7",
     "prettier": "^3.3.2",
     "sort-package-json": "^2.10.0",
-    "ts-jest": "^29.2.0",
+    "ts-jest": "^29.2.2",
     "typescript": "5.4.5",
     "yaml-lint": "^1.7.0"
   },

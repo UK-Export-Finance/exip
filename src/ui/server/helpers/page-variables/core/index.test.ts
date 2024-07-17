@@ -14,8 +14,12 @@ import { ATTRIBUTES, ROUTES, TEMPLATES } from '../../../constants';
 
 const { THERE_IS_A_PROBLEM } = ERROR_MESSAGES;
 
-const { START: quoteStart } = ROUTES.QUOTE;
-const { START: insuranceStart } = ROUTES.INSURANCE;
+const {
+  QUOTE: { START: quoteStart },
+  INSURANCE: {
+    ELIGIBILITY: { CHECK_IF_ELIGIBLE: insuranceStart },
+  },
+} = ROUTES;
 
 const { CONDITIONAL_YES_HTML } = TEMPLATES.PARTIALS.INSURANCE.BUYER.CONNECTION_WITH_BUYER;
 

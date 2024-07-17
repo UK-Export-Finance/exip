@@ -3,7 +3,7 @@ import generate from '../../../helpers/generate-otp';
 import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
 import accounts from '../../../test-helpers/accounts';
-import { mockOTP, mockSendEmailResponse } from '../../../test-mocks';
+import { mockOTP, mockSendEmailResponse, mockErrorMessage } from '../../../test-mocks';
 import { Account, AccountSignInSendNewCodeVariables, AccountSignInResponse } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
@@ -88,7 +88,7 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      sendEmail.accessCodeEmail = jest.fn(() => Promise.reject(mockSendEmailResponse));
+      sendEmail.accessCodeEmail = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
     });
 
     test('should throw an error', async () => {
@@ -97,7 +97,7 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
       } catch (err) {
         expect(accessCodeEmailSpy).toHaveBeenCalledTimes(1);
 
-        const expected = new Error(`Generating and sending new sign in code for account (accountSignInSendNewCode mutation) ${mockSendEmailResponse}`);
+        const expected = new Error(`Generating and sending new sign in code for account (accountSignInSendNewCode mutation) ${new Error(mockErrorMessage)}`);
         expect(err).toEqual(expected);
       }
     });

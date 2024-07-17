@@ -199,3 +199,5 @@ export const mockRes = () => {
 };
 
 export const mockSpyPromise = () => jest.fn().mockResolvedValue({});
+
+export const mockErrorMessage = 'Mock error';

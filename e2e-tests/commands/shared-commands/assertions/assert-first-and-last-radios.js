@@ -13,11 +13,11 @@ import { radioInputs } from '../../../pages/shared';
 const assertYesNoRadiosOrder = ({ noRadioFirst = false }) => {
   cy.get(radioInputs).each((element, index) => {
     switch (noRadioFirst) {
-      case true && index === 0:
+      case noRadioFirst === true && index === 0:
         cy.wrap(element).should('have.attr', 'data-cy', 'no-input');
         break;
 
-      case true && index === 1:
+      case noRadioFirst === true && index === 1:
         cy.wrap(element).should('have.attr', 'data-cy', 'yes-input');
         break;
 
