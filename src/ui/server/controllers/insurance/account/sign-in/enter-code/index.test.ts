@@ -268,18 +268,18 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
           api.keystone.applications.getAll = () => Promise.resolve({ applications: mockApplications, totalApplications: 3 });
         });
 
-        it('should wipe req.session.submittedData.insuranceEligibility', async () => {
-          await post(req, res);
-
-          expect(req.session.submittedData.insuranceEligibility).toEqual({});
-        });
-
         it('should call application.create', async () => {
           await post(req, res);
 
           expect(createApplicationSpy).toHaveBeenCalledTimes(1);
 
           expect(createApplicationSpy).toHaveBeenCalledWith(mockSession.submittedData.insuranceEligibility, verifyAccountSignInCodeResponse.accountId);
+        });
+
+        it('should wipe req.session.submittedData.insuranceEligibility', async () => {
+          await post(req, res);
+
+          expect(req.session.submittedData.insuranceEligibility).toEqual({});
         });
 
         it(`should redirect to ${DASHBOARD}`, async () => {
