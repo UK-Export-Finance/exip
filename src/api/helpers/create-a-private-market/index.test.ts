@@ -21,11 +21,10 @@ describe('helpers/create-a-private-market', () => {
     context = getKeystoneContext();
 
     application = (await applications.create({ context })) as Application;
+
     const createdExportContract = await createAnExportContract(context, application.id);
 
-    const { exportContract } = createdExportContract;
-
-    applicationExportContract = exportContract;
+    applicationExportContract = createdExportContract;
   });
 
   test('it should return a privateMarket with ID', async () => {

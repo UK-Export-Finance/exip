@@ -35,15 +35,13 @@ describe('helpers/create-an-export-contract', () => {
   test('it should return empty exportContract fields, application relationship and default finalDestinationKnown', async () => {
     const result = await createAnExportContract(context, application.id);
 
-    const { exportContract } = result;
+    expect(result.applicationId).toEqual(application.id);
 
-    expect(exportContract.applicationId).toEqual(application.id);
+    expect(result.finalDestinationCountryCode).toEqual('');
 
-    expect(exportContract.finalDestinationCountryCode).toEqual('');
-
-    expect(exportContract.finalDestinationKnown).toEqual(APPLICATION.DEFAULT_FINAL_DESTINATION_KNOWN);
-    expect(exportContract.goodsOrServicesDescription).toEqual('');
-    expect(exportContract.paymentTermsDescription).toEqual('');
+    expect(result.finalDestinationKnown).toEqual(APPLICATION.DEFAULT_FINAL_DESTINATION_KNOWN);
+    expect(result.goodsOrServicesDescription).toEqual('');
+    expect(result.paymentTermsDescription).toEqual('');
   });
 
   test('it should return empty privateMarket fields', async () => {

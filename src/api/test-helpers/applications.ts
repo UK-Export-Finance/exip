@@ -1,7 +1,7 @@
 import { APPLICATION } from '../constants';
 import { Application, TestHelperApplicationCreate, TestHelperApplicationGet, TestHelperApplicationUpdate, Context } from '../types';
 
-const { GET_QUERY } = APPLICATION;
+const { GET_QUERY, STATUS } = APPLICATION;
 
 const applicationQuery =
   'id createdAt updatedAt referenceNumber dealType submissionCount submissionDeadline submissionType status previousStatus version eligibility { id } exportContract { id } owner { id } company { id } business { id } broker { id } buyer { id buyerTradingHistory { id } } sectionReview { id } declaration { id } policyContact { id }';
@@ -17,7 +17,10 @@ const create = async ({ context, data = {} }: TestHelperApplicationCreate) => {
     console.info('Creating an application (test helpers)');
 
     const application = (await context.query.Application.createOne({
-      data,
+      data: {
+        status: STATUS.IN_PROGRESS,
+        ...data,
+      },
       query: applicationQuery,
     })) as Application;
 

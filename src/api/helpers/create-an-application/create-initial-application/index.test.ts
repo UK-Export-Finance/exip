@@ -78,9 +78,9 @@ describe('helpers/create-an-application/create-initial-application', () => {
 
   describe('when a status is provided', () => {
     test('it should return an application with the provided status', async() => {
-      result = await initialApplication.create({ context, accountId, status: STATUS.ABANDONED });
+      const { status } = await initialApplication.create({ context, accountId, status: STATUS.ABANDONED });
 
-      expect(result.status).toEqual(STATUS.ABANDONED);
+      expect(status).toEqual(STATUS.ABANDONED);
     });
   });
 

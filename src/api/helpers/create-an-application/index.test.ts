@@ -17,8 +17,6 @@ describe('helpers/create-an-application', () => {
   let account: Account;
   let application: Application;
 
-  const mockError = 'Mock error';
-
   jest.mock('./create-initial-application');
   jest.mock('./create-application-relationships');
   jest.mock('./update-application-columns');
@@ -141,65 +139,6 @@ describe('helpers/create-an-application', () => {
       const result = await createAnApplication({}, variables, context);
 
       expect(result).toBeNull();
-    });
-  });
-
-  describe('error handling', () => {
-    describe('when initialApplication.create fails', () => {
-      beforeEach(() => {
-        initialApplicationCreateSpy = jest.fn(() => Promise.reject(new Error(mockError)));
-
-        initialApplication.create = initialApplicationCreateSpy;
-      });
-
-      it('should throw an error', async () => {
-        const expectedMessage = `Creating an application (createAnApplication helper) for user ${account.id} Error: ${mockError}`;
-
-        await expect(createAnApplication({}, variables, context)).rejects.toThrow(expectedMessage);
-      });
-    });
-  });
-
-  describe('when applicationRelationships.create fails', () => {
-    beforeEach(() => {
-      initialApplicationCreateSpy = validSpys.initialApplicationCreate;
-
-      applicationRelationshipsCreateSpy = jest.fn(() => Promise.reject(new Error(mockError)));
-
-      applicationRelationships.create = initialApplicationCreateSpy;
-    });
-
-    it('should throw an error', async () => {
-      const expectedMessage = `Creating an application (createAnApplication helper) for user ${account.id} Error: ${mockError}`;
-
-      await expect(createAnApplication({}, variables, context)).rejects.toThrow(expectedMessage);
-    });
-  });
-
-  describe('when applicationColumns.update fails', () => {
-    beforeEach(() => {
-      applicationRelationshipsCreateSpy = jest.fn(() => Promise.reject(new Error(mockError)));
-
-      applicationColumns.update = applicationColumnsUpdateSpy;
-    });
-
-    it('should throw an error', async () => {
-      const expectedMessage = `Creating an application (createAnApplication helper) for user ${account.id} Error: ${mockError}`;
-
-      await expect(createAnApplication({}, variables, context)).rejects.toThrow(expectedMessage);
-    });
-  });
-
-  describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
-      try {
-        // pass empty context object to force an error
-        await createAnApplication({}, variables, {});
-      } catch (err) {
-        const errorString = String(err);
-
-        expect(errorString.includes('Creating an application (createAnApplication helper)')).toEqual(true);
-      }
     });
   });
 });

@@ -43,14 +43,14 @@ describe('helpers/create-a-buyer', () => {
   });
 
   test('it should return empty buyer fields', async () => {
-    const { buyer } = await createABuyer(context, country.id, application.id);
+    const result = await createABuyer(context, country.id, application.id);
 
-    expect(buyer.address).toEqual('');
-    expect(buyer.applicationId).toEqual(application.id);
-    expect(buyer.companyOrOrganisationName).toEqual('');
-    expect(buyer.countryId).toEqual(country.id);
-    expect(buyer.registrationNumber).toEqual('');
-    expect(buyer.website).toEqual('');
+    expect(result.address).toEqual('');
+    expect(result.applicationId).toEqual(application.id);
+    expect(result.companyOrOrganisationName).toEqual('');
+    expect(result.countryId).toEqual(country.id);
+    expect(result.registrationNumber).toEqual('');
+    expect(result.website).toEqual('');
   });
 
   test('it should return empty buyerTradingAddress fields with default currencyCode', async () => {
@@ -72,8 +72,7 @@ describe('helpers/create-a-buyer', () => {
   });
 
   test('it should return empty buyerContact fields', async () => {
-    const result = await createABuyer(context, country.id, application.id);
-    const { buyerContact } = result;
+    const { buyerContact } = await createABuyer(context, country.id, application.id);
 
     expect(buyerContact.contactFirstName).toEqual('');
     expect(buyerContact.contactLastName).toEqual('');

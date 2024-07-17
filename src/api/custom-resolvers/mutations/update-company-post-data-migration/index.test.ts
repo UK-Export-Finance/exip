@@ -134,7 +134,7 @@ describe('custom-resolvers/update-company-post-data-migration', () => {
         },
       };
 
-      const expectedMessage = 'Updating company (post data migration) Error: Creating company SIC codes TypeError: sicCodes.forEach is not a function';
+      const expectedMessage = `Updating company (post data migration) Error: Creating company SIC codes for ${company.id} TypeError: sicCodes.forEach is not a function`;
 
       await expect(updateCompanyPostDataMigration({}, mockVariables, context)).rejects.toThrow(expectedMessage);
     });

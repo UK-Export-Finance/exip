@@ -1668,8 +1668,7 @@ var {
   POLICY_TYPE: POLICY_TYPE2,
   SUBMISSION_COUNT_DEFAULT,
   SUBMISSION_DEADLINE_IN_MONTHS,
-  SUBMISSION_TYPE,
-  STATUS
+  SUBMISSION_TYPE
 } = APPLICATION;
 var lists = {
   ReferenceNumber: {
@@ -1774,8 +1773,6 @@ var lists = {
             modifiedData.createdAt = now2;
             modifiedData.updatedAt = now2;
             modifiedData.submissionDeadline = (0, import_date_fns3.addMonths)(new Date(now2), SUBMISSION_DEADLINE_IN_MONTHS);
-            modifiedData.submissionType = SUBMISSION_TYPE.MIA;
-            modifiedData.status = STATUS.IN_PROGRESS;
             return modifiedData;
           } catch (err) {
             console.error("Error adding default data to a new application. %O", err);
@@ -4216,8 +4213,8 @@ var sendEmailReactivateAccountLink = async (root, variables, context) => {
 var send_email_reactivate_account_link_default2 = sendEmailReactivateAccountLink;
 
 // helpers/create-an-application/create-initial-application/index.ts
-var { STATUS: STATUS2, SUBMISSION_TYPE: SUBMISSION_TYPE2 } = APPLICATION;
-var createInitialApplication = async ({ context, accountId, status = STATUS2.IN_PROGRESS }) => {
+var { STATUS, SUBMISSION_TYPE: SUBMISSION_TYPE2 } = APPLICATION;
+var createInitialApplication = async ({ context, accountId, status = STATUS.IN_PROGRESS }) => {
   try {
     console.info("Creating initial application (createInitialApplication helper) for user %s", accountId);
     const application2 = await context.db.Application.createOne({
@@ -4963,11 +4960,11 @@ var createAnApplication = async (root, variables, context) => {
 var create_an_application_default = createAnApplication;
 
 // custom-resolvers/mutations/create-an-application/index.ts
-var { STATUS: STATUS3 } = APPLICATION;
+var { STATUS: STATUS2 } = APPLICATION;
 var createAnApplication2 = async (root, variables, context) => {
   console.info("Creating application for user ", variables.accountId);
   const updatedVariables = variables;
-  updatedVariables.status = STATUS3.IN_PROGRESS;
+  updatedVariables.status = STATUS2.IN_PROGRESS;
   try {
     const updatedApplication = await create_an_application_default(root, updatedVariables, context);
     if (updatedApplication) {
@@ -4987,11 +4984,11 @@ var createAnApplication2 = async (root, variables, context) => {
 var create_an_application_default2 = createAnApplication2;
 
 // custom-resolvers/mutations/create-an-abandoned-application/index.ts
-var { STATUS: STATUS4 } = APPLICATION;
+var { STATUS: STATUS3 } = APPLICATION;
 var createAnAbandonedApplication = async (root, variables, context) => {
   console.info("Creating an abandoned application for ", variables.accountId);
   const abandonedApplicationVariables = variables;
-  abandonedApplicationVariables.status = STATUS4.ABANDONED;
+  abandonedApplicationVariables.status = STATUS3.ABANDONED;
   try {
     const createdApplication = await create_an_application_default(root, abandonedApplicationVariables, context);
     if (createdApplication) {
@@ -5000,7 +4997,7 @@ var createAnAbandonedApplication = async (root, variables, context) => {
           id: createdApplication.id
         },
         data: {
-          status: STATUS4.ABANDONED
+          status: STATUS3.ABANDONED
         }
       });
       return {

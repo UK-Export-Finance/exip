@@ -23,9 +23,7 @@ describe('helpers/create-a-jointly-insured-party', () => {
     application = (await applications.create({ context })) as Application;
     const createdPolicy = await createAPolicy(context, application.id);
 
-    const { policy } = createdPolicy;
-
-    applicationPolicy = policy;
+    applicationPolicy = createdPolicy;
   });
 
   test('it should return a jointlyInsuredParty with ID', async () => {

@@ -21,9 +21,7 @@ describe('helpers/create-an-export-contract-agent', () => {
     context = getKeystoneContext();
 
     application = (await applications.create({ context })) as Application;
-    const { exportContract } = await createAnExportContract(context, application.id);
-
-    applicationExportContract = exportContract;
+    applicationExportContract = await createAnExportContract(context, application.id);
   });
 
   test('it should return an agent ID', async () => {
