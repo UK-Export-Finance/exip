@@ -165,6 +165,12 @@ jobs:
             --address-prefixes ${{ vars.VNET_SUBNET_PRIVATE_PREFIX }} \
             --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
+            az network vnet subnet create \
+            --name snet-keyvault-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --address-prefixes ${{ vars.VNET_SUBNET_KEYVAULT_PREFIX }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --service-endpoints Microsoft.KeyVault
+
       - name: VNET Peer - AMI 🔀
         uses: azure/cli@v2
         with:
@@ -365,6 +371,17 @@ jobs:
           inlineScript: |
             az extension add --name front-door
 
+      - name: Key Vault 🔑
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            az keyvault create \
+            --name kv-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --default-action Deny \
+            --public-network-access Disabled \
+            --network-acls-ips ${{ secrets.WAF_ALLOWED_IP }} \
+            --network-acls-vnets $(az network vnet subnet list --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query '[?contains(name, `keyvault`)].id' -o tsv)
+
       - name: Private endpoint 🔏
         uses: azure/cli@v2
         with:
@@ -387,6 +404,16 @@ jobs:
             --subnet snet-private-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --group-id sites \
+            --tags ${{ env.TAGS }}
+
+            #Key Vault
+            az network private-endpoint create \
+            --name private-endpoint-keyvault-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --private-connection-resource-id $(az keyvault show --name kv-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv) \
+            --connection-name private-link-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --subnet snet-private-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --group-id vault \
             --tags ${{ env.TAGS }}
 
       - name: Private DNS 🌍
@@ -769,13 +796,13 @@ jobs:
             --record-set-name  "@" \
             --zone ${{ vars.DOMAIN_QUOTE }} \
             --value ${{ vars.CA_VERIFICATION }} \
-            --if-none-match "*"
+            --if-none-match
 
             az network dns record-set txt add-record \
             --record-set-name  "@" \
             --zone ${{ vars.DOMAIN_INSURANCE }} \
             --value ${{ vars.CA_VERIFICATION }} \
-            --if-none-match "*"
+            --if-none-match
 
       - name: CAA records
         uses: azure/cli@v2
