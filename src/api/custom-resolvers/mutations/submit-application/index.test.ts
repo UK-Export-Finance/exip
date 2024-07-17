@@ -162,19 +162,13 @@ describe('custom-resolvers/submit-application', () => {
        * create a new application,
        * so we can set submission deadline in the past.
        */
-
-      const oneMinuteInThePast = DATE_ONE_MINUTE_IN_THE_PAST();
-
-      const newApplication = (await context.query.Application.createOne({
-        query: 'id',
-        data: {},
-      })) as Application;
+      const newApplication = await applications.create({ context });
 
       // update the submission deadline
       await context.query.Application.updateOne({
         where: { id: newApplication.id },
         data: {
-          submissionDeadline: oneMinuteInThePast,
+          submissionDeadline: DATE_ONE_MINUTE_IN_THE_PAST(),
         },
       });
 

@@ -25,7 +25,7 @@ const createAPolicy = async (context: Context, applicationId: string): Promise<C
     const jointlyInsuredParty = await createAJointlyInsuredParty(context, policy.id);
 
     return {
-      policy,
+      ...policy,
       jointlyInsuredParty,
     };
   } catch (err) {

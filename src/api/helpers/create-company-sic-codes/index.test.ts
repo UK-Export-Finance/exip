@@ -1,10 +1,11 @@
 import createCompanySicCodes from '.';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import companyHelpers from '../../test-helpers/company';
+import { mockCompanySicCode } from '../../test-mocks';
 import { Context } from '../../types';
 
-const mockSicCodes = ['1', '2'];
-const mocIndustrySectorNames = ['Mock sector name'];
+const mockSicCodes = [mockCompanySicCode.sicCode, mockCompanySicCode.sicCode];
+const mocIndustrySectorNames = [mockCompanySicCode.industrySectorName];
 
 const invalidId = 'invalid-id';
 
@@ -25,7 +26,7 @@ describe('helpers/create-company-sic-codes', () => {
   });
 
   it('should return mapped SIC codes with company ID', async () => {
-    const result = await createCompanySicCodes(context, mockSicCodes, mocIndustrySectorNames, company.id);
+    const result = await createCompanySicCodes(context, company.id, mockSicCodes, mocIndustrySectorNames);
 
     const [firstEntry, secondEntry] = result;
 
@@ -48,7 +49,7 @@ describe('helpers/create-company-sic-codes', () => {
     it('should return an empty array', async () => {
       const emptySicCodes = [] as Array<string>;
 
-      const result = await createCompanySicCodes(context, emptySicCodes, mocIndustrySectorNames, company.id);
+      const result = await createCompanySicCodes(context, company.id, emptySicCodes, mocIndustrySectorNames);
 
       expect(result).toEqual([]);
     });
@@ -57,7 +58,7 @@ describe('helpers/create-company-sic-codes', () => {
   describe('when an invalid company ID is passed', () => {
     it('should throw an error', async () => {
       try {
-        await createCompanySicCodes(context, mockSicCodes, mocIndustrySectorNames, invalidId);
+        await createCompanySicCodes(context, invalidId, mockSicCodes, mocIndustrySectorNames);
       } catch (err) {
         assertError(err);
       }
@@ -68,7 +69,7 @@ describe('helpers/create-company-sic-codes', () => {
     test('it should throw an error', async () => {
       try {
         // pass empty context object to force an error
-        await createCompanySicCodes({}, mockSicCodes, mocIndustrySectorNames, invalidId);
+        await createCompanySicCodes({}, invalidId, mockSicCodes, mocIndustrySectorNames);
       } catch (err) {
         assertError(err);
       }

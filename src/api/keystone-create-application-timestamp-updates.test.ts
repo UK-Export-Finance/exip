@@ -15,7 +15,7 @@ describe('Keystone - Application timestamp updates', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await applications.create({ context, data: {} })) as Application;
+    application = (await applications.create({ context })) as Application;
 
     // create buyer and associate with the application.
     const buyer = await buyers.create({

@@ -1,14 +1,15 @@
 import { PAGES } from '../../../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
+import { FIELD_IDS, TEMPLATES } from '../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../../helpers/construct-payload';
-import { sanitiseData, sanitiseValue } from '../../../../../helpers/sanitise-data';
-import mapEligibilityAnswers from '../../../../../helpers/map-eligibility-answers';
+import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import securityCodeValidationErrors from './validation/rules/access-code';
 import canCreateAnApplication from '../../../../../helpers/can-create-an-application';
+import application from '../../../../../helpers/create-an-application';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 
@@ -17,16 +18,14 @@ const {
 } = FIELD_IDS.INSURANCE;
 
 const {
-  INSURANCE: {
-    ACCOUNT: {
-      SIGN_IN: { ROOT: SIGN_IN_ROOT },
-    },
-    INSURANCE_ROOT,
-    DASHBOARD,
-    ALL_SECTIONS,
-    PROBLEM_WITH_SERVICE,
+  ACCOUNT: {
+    SIGN_IN: { ROOT: SIGN_IN_ROOT },
   },
-} = ROUTES;
+  INSURANCE_ROOT,
+  DASHBOARD,
+  ALL_SECTIONS,
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 export const FIELD_ID = ACCESS_CODE;
 
@@ -125,8 +124,12 @@ export const post = async (req: Request, res: Response) => {
 
     const response = await api.keystone.account.verifyAccountSignInCode(req.session.accountId, String(securityCode));
 
-    // valid sign in code - update the session and redirect to the dashboard
     if (response.success) {
+      /**
+       * Valid sign in code provided.
+       * Update the session and redirect to the dashboard
+       */
+
       const { accountId, firstName, lastName, email, token, expires } = response;
 
       req.session.user = {
@@ -140,38 +143,42 @@ export const post = async (req: Request, res: Response) => {
 
       /**
        * If there are eligibility answers in the session:
-       * 1) Sanitise and store eligibility answers.
-       * 2) Remove eligibility answers from the session.
-       * 3) Create an application
-       * 4) Redirect to the next part of the flow - "dashboard"
+       * 1) Create an application
+       * 2) Redirect to the next part of the flow - ALL_SECTIONS or DASHBOARD
        */
       if (canCreateAnApplication(req.session)) {
-        const sanitisedData = sanitiseData(req.session.submittedData.insuranceEligibility);
+        console.info('Account - sign in - enter code - can create an application for user %s', accountId);
 
-        const eligibilityAnswers = mapEligibilityAnswers(sanitisedData);
+        const createdApplication = await application.create(req.session.submittedData.insuranceEligibility, accountId);
 
-        req.session.submittedData.insuranceEligibility = {};
-
-        const application = await api.keystone.application.create(eligibilityAnswers, accountId);
-
-        if (!application) {
+        if (!createdApplication.success) {
           console.error('Error creating application');
           return res.redirect(PROBLEM_WITH_SERVICE);
+        }
+
+        if (createdApplication.success) {
+          req.session.submittedData.insuranceEligibility = {};
         }
       }
 
       const { applications } = await api.keystone.applications.getAll(req.session.user.id);
 
       /**
-       * if there is only 1 application for the user
-       * then redirect straight to that application's all sections section
+       * If there is only 1 application for the user,
+       * Redirect straight to the application's ALL_SECTIONS.
        */
       if (applications && applications.length === 1) {
-        const referenceNumber = applications[0]?.referenceNumber;
+        const [firstApplication] = applications;
+
+        const { referenceNumber } = firstApplication;
+
         return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
       }
 
-      // otherwise, redirect to the next part of the flow - dashboard
+      /**
+       * Otherwise, more than 1 application exists.
+       * Redirect to DASHBOARD.
+       */
       return res.redirect(DASHBOARD);
     }
 
