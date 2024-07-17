@@ -30,7 +30,7 @@ context('Insurance - Eligibility - start and complete for a second time after cr
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      partials.header.navigation.applications().click();
+      partials.cy.clickHeaderApplicationsLink();
 
       dashboardPage.startNewApplicationButton().click();
 

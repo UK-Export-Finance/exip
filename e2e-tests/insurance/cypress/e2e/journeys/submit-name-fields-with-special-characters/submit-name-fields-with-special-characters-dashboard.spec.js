@@ -27,7 +27,7 @@ context('Insurance - Name fields - Dashboard fields should render special charac
         buyerName: nameWithSpecialCharacters,
       });
 
-      partials.header.navigation.applications().click();
+      partials.cy.clickHeaderApplicationsLink();
     });
   });
 

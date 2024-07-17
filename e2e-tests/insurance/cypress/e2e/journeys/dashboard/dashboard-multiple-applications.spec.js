@@ -1,5 +1,4 @@
 import dashboardPage from '../../../../../pages/insurance/dashboard';
-import header from '../../../../../partials/header';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
 const { table } = dashboardPage;
@@ -17,7 +16,7 @@ context('Insurance - Dashboard - new application', () => {
 
       url = `${baseUrl}${DASHBOARD}`;
 
-      header.navigation.applications().click();
+      cy.clickHeaderApplicationsLink();
 
       cy.assertUrl(url);
 
@@ -52,7 +51,7 @@ context('Insurance - Dashboard - new application', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      header.navigation.applications().click();
+      cy.clickHeaderApplicationsLink();
     });
 
     after(() => {

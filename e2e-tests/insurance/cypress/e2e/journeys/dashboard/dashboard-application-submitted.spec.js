@@ -17,7 +17,7 @@ context('Insurance - Dashboard - submitted application', () => {
     cy.completeSignInAndSubmitAnApplication({}).then((refNumber) => {
       referenceNumber = refNumber;
 
-      partials.header.navigation.applications().click();
+      partials.cy.clickHeaderApplicationsLink();
     });
   });
 
