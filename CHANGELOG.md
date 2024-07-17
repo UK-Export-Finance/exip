@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.12.1](https://github.com/UK-Export-Finance/exip/compare/v2.12.0...v2.12.1) (2024-07-17)
+
+
+### Bug Fixes
+
+* **DTFS2-7284:** fixed private endpoint ([f23e285](https://github.com/UK-Export-Finance/exip/commit/f23e285be2b2a25a50c02d02f141907fe2f33454))
+* **EM-2186:** fixed conditional deployment ([41d5d4c](https://github.com/UK-Export-Finance/exip/commit/41d5d4cb9615d8afd7b3aec22a41fc8f1bc43d4e))
+* **EMS-2186:** removed * from flag ([8f7721f](https://github.com/UK-Export-Finance/exip/commit/8f7721f29bb450e2684fb8403d0a4f5b9e14fce4))
+* **EMS-2186:** removed purge protection ([ac65a2e](https://github.com/UK-Export-Finance/exip/commit/ac65a2e023ced9a73f12bf78142b307a5a0fc725))
+
 ## [2.12.0](https://github.com/UK-Export-Finance/exip/compare/v2.11.2...v2.12.0) (2024-07-16)
 
 ### Features
