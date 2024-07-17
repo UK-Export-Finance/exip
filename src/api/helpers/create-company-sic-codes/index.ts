@@ -19,7 +19,7 @@ const createCompanySicCodes = async (
   console.info('Creating company SIC codes for %s', companyId);
 
   try {
-    if (sicCodes && sicCodes.length) {
+    if (sicCodes?.length) {
       const mappedSicCodes = mapSicCodes(sicCodes, industrySectorNames, companyId);
 
       const createdSicCodes = (await context.db.CompanySicCode.createMany({

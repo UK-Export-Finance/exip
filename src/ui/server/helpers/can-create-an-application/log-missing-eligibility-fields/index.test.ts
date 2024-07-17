@@ -83,6 +83,11 @@ describe('server/helpers/can-create-an-application/log-missing-eligibility-field
     });
   });
 
-  // TODO: when empty object.
-  // TODO: when all valid
+  describe('when all fields are valid', () => {
+    it('should NOT log anything', () => {
+      missingEligibilityFields.log(baseParams);
+
+      expect(consoleSpy).not.toHaveBeenCalled();
+    });
+  });
 });

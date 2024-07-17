@@ -21,12 +21,25 @@ export const PAGE_VARIABLES = {
 
 export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE;
 
+/**
+ * get
+ * Render the "Eligible to apply online" page
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.render} "Eligible to apply online" page
+ */
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, { ...corePageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }), userName: getUserNameFromSession(req.session.user) });
 
-// TODO: documentation
-// TODO
-
+/**
+ * post
+ * Post the "Eligible to apply online" form.
+ * If there are valid eligibility answers in the session,
+ * create an application before redirecting.
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.redirect} Next part of the flow
+ */
 export const post = async (req: Request, res: Response) => {
   try {
     if (req.session.user) {
