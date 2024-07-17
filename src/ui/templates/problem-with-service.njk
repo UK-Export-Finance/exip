@@ -6,6 +6,16 @@
 
 {% block content %}
 
-  <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+    </div>
+  </div>
+
+  <p class="govuk-body" data-cy="body">{{ CONTENT_STRINGS.BODY }}</p>
+
+  {% include "partials/contact-details.njk" %}
 
 {% endblock %}
