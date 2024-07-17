@@ -1,7 +1,6 @@
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../../constants';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
-import { CUSTOMER_SERVICE_CONTACT_DETAILS } from '../../../../../content-strings/contact';
 import { Request, Response } from '../../../../../../types';
 
 const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
@@ -42,6 +41,5 @@ export const get = (req: Request, res: Response) => {
       BACK_LINK: req.headers.referer,
     }),
     accountEmail,
-    CUSTOMER_SERVICE_CONTACT_DETAILS,
   });
 };

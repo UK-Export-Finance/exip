@@ -28,6 +28,8 @@ Cypress.Commands.add('assertSuffix', require('./assert-suffix'));
 Cypress.Commands.add('assertTextareaRendering', require('./assert-textarea-rendering'));
 Cypress.Commands.add('assertDynamicCharacterCount', require('./assert-dynamic-character-count'));
 
+Cypress.Commands.add('assertContactDetailsContent', require('./assert-contact-details-content'));
+
 Cypress.Commands.add('checkAriaLabel', require('./check-aria-label'));
 Cypress.Commands.add('checkClassName', require('./check-class-name'));
 Cypress.Commands.add('checkEmailFieldRendering', require('./check-email-field-rendering'));
@@ -44,8 +46,6 @@ Cypress.Commands.add('checkChangeLinkUrl', checkChangeLinkUrl);
 Cypress.Commands.add('checkChangeAnswerRendered', checkChangeAnswerRendered);
 
 Cypress.Commands.add('checkCurrencyOption', require('./check-currency-option'));
-
-Cypress.Commands.add('assertCustomerServiceContactDetailsContent', require('./assert-customer-service-contact-details-content'));
 
 Cypress.Commands.add('checkErrorSummaryListHeading', require('./check-error-summary-list-heading'));
 

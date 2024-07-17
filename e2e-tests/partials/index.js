@@ -1,6 +1,6 @@
-import creditPeriodWithBuyer from './creditPeriodWithBuyer';
+import contactDetails from './contactDetails';
 import cookieBanner from './cookieBanner';
-import customerServiceContactDetails from './customerServiceContactDetails';
+import creditPeriodWithBuyer from './creditPeriodWithBuyer';
 import footer from './footer';
 import header from './header';
 import insurancePartials from './insurance';
@@ -11,9 +11,9 @@ import ukGoodsOrServicesCalculateDescription from './ukGoodsOrServicesCalculateD
 import ukGoodsOrServicesDescription from './ukGoodsAndServicesDescription';
 
 const partials = {
+  contactDetails,
   cookieBanner,
   creditPeriodWithBuyer,
-  customerServiceContactDetails,
   errorSummaryListHeading: () => cy.get('.govuk-error-summary h2'),
   errorSummaryListItems: () => cy.get('.govuk-error-summary li'),
   errorSummaryListItemLinks: () => cy.get('.govuk-error-summary li a'),

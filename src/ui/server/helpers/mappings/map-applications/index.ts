@@ -18,7 +18,7 @@ export const mapApplication = (application: Application) => {
     status,
     referenceNumber,
     buyerLocation: buyer.country?.name ? buyer.country.name : DEFAULT.EMPTY,
-    buyerName: replaceCharacterCodesWithCharacters(buyer.companyOrOrganisationName) || DEFAULT.EMPTY,
+    buyerName: replaceCharacterCodesWithCharacters(buyer.companyOrOrganisationName) ?? DEFAULT.EMPTY,
     value: mapValue(application),
     submitted: submissionDate ? formatDate(new Date(submissionDate), DATE_FORMAT.SHORT_MONTH) : BUTTONS.CONTINUE,
   };

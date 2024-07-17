@@ -22,22 +22,23 @@ const checkDescriptionContentSections = {
 
     cy.checkText(partials.ukGoodsOrServicesDescription.includes.listItem1(), CONTENT_STRINGS.INCLUDES.PRODUCTS);
 
-    cy.checkText(partials.ukGoodsOrServicesDescription.includes.listItem2(), CONTENT_STRINGS.INCLUDES.MANUFACTURED);
+    cy.checkText(partials.ukGoodsOrServicesDescription.includes.listItem2(), CONTENT_STRINGS.INCLUDES.MANUFACTURED_1);
+    cy.checkText(partials.ukGoodsOrServicesDescription.includes.listItem3(), CONTENT_STRINGS.INCLUDES.MANUFACTURED_2);
 
     const expectedStaffingCostText = `${CONTENT_STRINGS.INCLUDES.STAFFING_COSTS.LINK.TEXT} ${CONTENT_STRINGS.INCLUDES.STAFFING_COSTS.TEXT}`;
-    cy.checkText(partials.ukGoodsOrServicesDescription.includes.listItem3(), expectedStaffingCostText);
+    cy.checkText(partials.ukGoodsOrServicesDescription.includes.listItem4(), expectedStaffingCostText);
 
     cy.checkLink(
-      partials.ukGoodsOrServicesDescription.includes.listItem3Link(),
+      partials.ukGoodsOrServicesDescription.includes.listItem4Link(),
       CONTENT_STRINGS.INCLUDES.STAFFING_COSTS.LINK.HREF,
       CONTENT_STRINGS.INCLUDES.STAFFING_COSTS.LINK.TEXT,
     );
 
     const expectedPhysicalAssetsText = `${CONTENT_STRINGS.INCLUDES.NON_PHYSICAL_ASSETS.LINK.TEXT} ${CONTENT_STRINGS.INCLUDES.NON_PHYSICAL_ASSETS.TEXT}`;
-    cy.checkText(partials.ukGoodsOrServicesDescription.includes.listItem4(), expectedPhysicalAssetsText);
+    cy.checkText(partials.ukGoodsOrServicesDescription.includes.listItem5(), expectedPhysicalAssetsText);
 
     cy.checkLink(
-      partials.ukGoodsOrServicesDescription.includes.listItem4Link(),
+      partials.ukGoodsOrServicesDescription.includes.listItem5Link(),
       CONTENT_STRINGS.INCLUDES.NON_PHYSICAL_ASSETS.LINK.HREF,
       CONTENT_STRINGS.INCLUDES.NON_PHYSICAL_ASSETS.LINK.TEXT,
     );
@@ -81,8 +82,4 @@ const checkDescriptionContent = () => {
   checkDescriptionContentSections.notSure();
 };
 
-export {
-  checkDescriptionSummaryText,
-  checkDescriptionSummaryClickRevealsContent,
-  checkDescriptionContent,
-};
+export { checkDescriptionSummaryText, checkDescriptionSummaryClickRevealsContent, checkDescriptionContent };

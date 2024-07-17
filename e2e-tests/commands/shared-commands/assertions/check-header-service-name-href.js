@@ -2,8 +2,12 @@ import { PRODUCT } from '../../../content-strings';
 import header from '../../../partials/header';
 import { ROUTES } from '../../../constants';
 
-const { ROOT: quoteStart } = ROUTES;
-const { START: insuranceStart } = ROUTES.INSURANCE;
+const {
+  QUOTE: { START: quoteStart },
+  INSURANCE: {
+    ELIGIBILITY: { CHECK_IF_ELIGIBLE: insuranceStart },
+  },
+} = ROUTES;
 
 /**
  * checks service name based on if isInsuranceRoute is true or false

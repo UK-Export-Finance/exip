@@ -1,10 +1,12 @@
 export const contactUsPage = {
   heading: () => cy.get('[data-cy="heading"]'),
-  whoToContactText: () => cy.get('[data-cy="who-to-contact"]'),
-  customerServiceHeading: () => cy.get('[data-cy="customer-service-heading"]'),
-  applicationEnquires: {
+  quoteReferenceNumber: () => cy.get('[data-cy="general-enquiries-quote-reference-number"]'),
+  generalEnquiries: {
+    heading: () => cy.get('[data-cy="general-enquiries-heading"]'),
+  },
+  applicationEnquiries: {
     heading: () => cy.get('[data-cy="application-enquiries-heading"]'),
-    email: () => cy.get('[data-cy="application-enquiries-email"]'),
-    quoteReferenceNumber: () => cy.get('[data-cy="application-enquiries-quote-reference-number"]'),
+    emailPrefix: () => cy.get('[data-cy="application-enquiries-email-prefix"]'),
+    emailLink: () => cy.get('[data-cy="application-enquiries-email-link"]'),
   },
 };

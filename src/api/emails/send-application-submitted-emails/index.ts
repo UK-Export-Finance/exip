@@ -34,7 +34,8 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
      */
     const sendOwnerEmailVars = {
       ...sharedEmailVars,
-      name: getFullNameString(owner),
+      buyerName: replaceCharacterCodesWithCharacters(String(buyer.companyOrOrganisationName)),
+      name: replaceCharacterCodesWithCharacters(getFullNameString(owner)),
       emailAddress: email,
     } as ApplicationSubmissionEmailVariables;
 
@@ -44,7 +45,8 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
      */
     const sendContactEmailVars = {
       ...sharedEmailVars,
-      name: getFullNameString(policyContact),
+      buyerName: replaceCharacterCodesWithCharacters(String(buyer.companyOrOrganisationName)),
+      name: replaceCharacterCodesWithCharacters(getFullNameString(policyContact)),
       emailAddress: policyContact.email,
     } as ApplicationSubmissionEmailVariables;
 
