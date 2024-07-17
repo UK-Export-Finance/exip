@@ -129,7 +129,7 @@ describe('api/helpers/get-populated-application', () => {
   it('should return an application with a totalContractValueOverThreshold flag', async () => {
     const result = await getPopulatedApplication.get({ context, application });
 
-    const expected = mapTotalContractValueOverThreshold(fullApplication.eligibility);
+    const expected = mapTotalContractValueOverThreshold(result.eligibility);
 
     expect(result.totalContractValueOverThreshold).toEqual(expected);
   });
