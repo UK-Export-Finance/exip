@@ -5,8 +5,17 @@ import mockCompany from './mock-company';
 import { RequestSession } from '../../types';
 
 const {
-  ELIGIBILITY: { BUYER_COUNTRY, CURRENCY, VALID_EXPORTER_LOCATION, HAS_MINIMUM_UK_GOODS_OR_SERVICES },
-} = FIELD_IDS;
+  ELIGIBILITY: {
+    BUYER_COUNTRY,
+    COVER_PERIOD,
+    HAS_END_BUYER,
+    HAS_COMPANIES_HOUSE_NUMBER,
+    HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+    HAS_REVIEWED_ELIGIBILITY,
+    TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID,
+    VALID_EXPORTER_LOCATION,
+  },
+} = FIELD_IDS.INSURANCE;
 
 const mockSession = {
   submittedData: {
@@ -16,23 +25,24 @@ const mockSession = {
         ...mockCountries[0],
         canApplyOnline: true,
       },
-      [CURRENCY]: {
+      currency: {
         name: 'UK Sterling',
         isoCode: GBP_CURRENCY_CODE,
       },
     },
     insuranceEligibility: {
-      [VALID_EXPORTER_LOCATION]: true,
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_COMPANIES_HOUSE_NUMBER]: true,
-      company: mockCompany,
+      [HAS_COMPANIES_HOUSE_NUMBER]: true,
       [BUYER_COUNTRY]: {
         ...mockCountries[0],
         canApplyOnline: true,
       },
+      company: mockCompany,
+      [COVER_PERIOD]: true,
+      [HAS_END_BUYER]: false,
       [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_END_BUYER]: false,
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.TOTAL_CONTRACT_VALUE]: TOTAL_CONTRACT_VALUE.LESS_THAN_250K.DB_ID,
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.COVER_PERIOD]: false,
+      [HAS_REVIEWED_ELIGIBILITY]: true,
+      [TOTAL_CONTRACT_VALUE_FIELD_ID]: TOTAL_CONTRACT_VALUE.LESS_THAN_250K.DB_ID,
+      [VALID_EXPORTER_LOCATION]: true,
     },
   },
 } as RequestSession;

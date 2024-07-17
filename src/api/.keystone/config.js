@@ -1668,8 +1668,7 @@ var {
   POLICY_TYPE: POLICY_TYPE2,
   SUBMISSION_COUNT_DEFAULT,
   SUBMISSION_DEADLINE_IN_MONTHS,
-  SUBMISSION_TYPE,
-  STATUS
+  SUBMISSION_TYPE
 } = APPLICATION;
 var lists = {
   ReferenceNumber: {
@@ -1774,8 +1773,6 @@ var lists = {
             modifiedData.createdAt = now2;
             modifiedData.updatedAt = now2;
             modifiedData.submissionDeadline = (0, import_date_fns3.addMonths)(new Date(now2), SUBMISSION_DEADLINE_IN_MONTHS);
-            modifiedData.submissionType = SUBMISSION_TYPE.MIA;
-            modifiedData.status = STATUS.IN_PROGRESS;
             return modifiedData;
           } catch (err) {
             console.error("Error adding default data to a new application. %O", err);
@@ -4215,6 +4212,31 @@ var sendEmailReactivateAccountLink = async (root, variables, context) => {
 };
 var send_email_reactivate_account_link_default2 = sendEmailReactivateAccountLink;
 
+// helpers/create-an-application/create-initial-application/index.ts
+var { STATUS, SUBMISSION_TYPE: SUBMISSION_TYPE2 } = APPLICATION;
+var createInitialApplication = async ({ context, accountId, status = STATUS.IN_PROGRESS }) => {
+  try {
+    console.info("Creating initial application (createInitialApplication helper) for user %s", accountId);
+    const application2 = await context.db.Application.createOne({
+      data: {
+        owner: {
+          connect: { id: accountId }
+        },
+        status,
+        submissionType: SUBMISSION_TYPE2.MIA
+      }
+    });
+    return application2;
+  } catch (err) {
+    console.error(`Error creating initial application (createInitialApplication helper) for user ${accountId} %O`, err);
+    throw new Error(`Creating initial application (createInitialApplication helper) for user ${accountId} ${err}`);
+  }
+};
+var initialApplication = {
+  create: createInitialApplication
+};
+var create_initial_application_default = initialApplication;
+
 // helpers/get-country-by-field/index.ts
 var getCountryByField = async (context, field, value) => {
   try {
@@ -4410,11 +4432,9 @@ var createABuyer = async (context, countryId, applicationId) => {
     const buyerRelationship = await create_a_buyer_relationship_default(context, buyer.id, applicationId);
     const buyerContact = await create_a_buyer_contact_default(context, buyer.id, applicationId);
     return {
-      buyer: {
-        ...buyer,
-        buyerTradingHistory,
-        relationship: buyerRelationship
-      },
+      ...buyer,
+      buyerTradingHistory,
+      relationship: buyerRelationship,
       buyerContact
     };
   } catch (err) {
@@ -4457,7 +4477,7 @@ var createAPolicy = async (context, applicationId) => {
     });
     const jointlyInsuredParty = await create_a_jointly_insured_party_default(context, policy.id);
     return {
-      policy,
+      ...policy,
       jointlyInsuredParty
     };
   } catch (err) {
@@ -4595,10 +4615,10 @@ var mapSicCodes = (sicCodes, industrySectorNames2, companyId) => {
 var map_sic_codes_default = mapSicCodes;
 
 // helpers/create-company-sic-codes/index.ts
-var createCompanySicCodes = async (context, sicCodes, industrySectorNames2, companyId) => {
-  console.info("Creating company SIC codes for ", companyId);
+var createCompanySicCodes = async (context, companyId, sicCodes, industrySectorNames2) => {
+  console.info("Creating company SIC codes for %s", companyId);
   try {
-    if (sicCodes.length) {
+    if (sicCodes?.length) {
       const mappedSicCodes = map_sic_codes_default(sicCodes, industrySectorNames2, companyId);
       const createdSicCodes = await context.db.CompanySicCode.createMany({
         data: mappedSicCodes
@@ -4607,8 +4627,8 @@ var createCompanySicCodes = async (context, sicCodes, industrySectorNames2, comp
     }
     return [];
   } catch (err) {
-    console.error("Error creating company SIC codes %O", err);
-    throw new Error(`Creating company SIC codes ${err}`);
+    console.error(`Error creating company SIC codes for ${companyId} %O`, err);
+    throw new Error(`Creating company SIC codes for ${companyId} ${err}`);
   }
 };
 var create_company_sic_codes_default = createCompanySicCodes;
@@ -4648,7 +4668,7 @@ var createACompany = async (context, applicationId, companyData) => {
       }
     });
     const companyAddress = await create_a_company_address_default(context, registeredOfficeAddress, company.id);
-    const createdSicCodes = await create_company_sic_codes_default(context, sicCodes, industrySectorNames2, company.id);
+    const createdSicCodes = await create_company_sic_codes_default(context, company.id, sicCodes, industrySectorNames2);
     const createdDifferentTradingAddress = await create_a_company_different_trading_address_default(context, company.id);
     return {
       ...company,
@@ -4760,7 +4780,7 @@ var createAnExportContract = async (context, applicationId) => {
     const privateMarket = await create_a_private_market_default(context, exportContract.id);
     const { agent, agentService } = await create_an_export_contract_agent_default(context, exportContract.id);
     return {
-      exportContract,
+      ...exportContract,
       privateMarket,
       agent,
       agentService
@@ -4792,70 +4812,149 @@ var createASectionReview = async (context, applicationId, sectionReviewData) => 
 };
 var create_a_section_review_default = createASectionReview;
 
-// helpers/create-an-application/index.ts
-var { SUBMISSION_TYPE: SUBMISSION_TYPE2 } = APPLICATION;
-var createAnApplication = async (root, variables, context) => {
-  console.info("Creating an application (createAnApplication helper)");
+// helpers/create-an-application/create-application-relationships/index.ts
+var createApplicationRelationships = async ({
+  context,
+  applicationId,
+  companyData,
+  eligibilityAnswers,
+  sectionReviewData
+}) => {
   try {
-    const { accountId, eligibilityAnswers, company: companyData, sectionReview: sectionReviewData, status } = variables;
-    const account2 = await get_account_by_id_default(context, accountId);
-    if (!account2) {
-      return null;
-    }
+    console.info("Creating application relationships (createApplicationRelationships helper) for application %s", applicationId);
     const { buyerCountryIsoCode, totalContractValueId, coverPeriodId, ...otherEligibilityAnswers } = eligibilityAnswers;
     const country = await get_country_by_field_default(context, "isoCode", buyerCountryIsoCode);
-    const submissionType = SUBMISSION_TYPE2.MIA;
-    const application2 = await context.db.Application.createOne({
-      data: {
-        owner: {
-          connect: { id: accountId }
-        },
-        status,
-        submissionType
-      }
-    });
-    const { id: applicationId } = application2;
-    const { buyer } = await create_a_buyer_default(context, country.id, applicationId);
-    const totalContractValue = await get_total_contract_value_by_field_default(context, "valueId", totalContractValueId);
+    if (!country) {
+      console.error(
+        `Unable to create application relationships - buyer country not found (createApplicationRelationships helper) for application ${applicationId}`
+      );
+      throw new Error(
+        `Unable to create application relationships - buyer country not found (createApplicationRelationships helper) for application ${applicationId}`
+      );
+    }
     const coverPeriod = await get_cover_period_value_by_field_default(context, "valueId", coverPeriodId);
-    const eligibility = await create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers);
-    const { exportContract } = await create_an_export_contract_default(context, applicationId);
-    const { policy } = await create_a_policy_default(context, applicationId);
-    const nominatedLossPayee = await create_a_nominated_loss_payee_default(context, applicationId);
-    const company = await create_a_company_default(context, applicationId, companyData);
-    const sectionReview = await create_a_section_review_default(context, applicationId, sectionReviewData);
+    const totalContractValue = await get_total_contract_value_by_field_default(context, "valueId", totalContractValueId);
+    const relationships = await Promise.all([
+      await create_a_buyer_default(context, country.id, applicationId),
+      await create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
+      await create_an_export_contract_default(context, applicationId),
+      await create_a_policy_default(context, applicationId),
+      await create_a_nominated_loss_payee_default(context, applicationId),
+      await create_a_company_default(context, applicationId, companyData),
+      await create_a_section_review_default(context, applicationId, sectionReviewData)
+    ]);
+    const [buyer, eligibility, exportContract, policy, nominatedLossPayee, company, sectionReview] = relationships;
+    const relationshipIds = {
+      buyerId: buyer.id,
+      companyId: company.id,
+      eligibilityId: eligibility.id,
+      exportContractId: exportContract.id,
+      nominatedLossPayeeId: nominatedLossPayee.id,
+      policyId: policy.id,
+      sectionReviewId: sectionReview.id
+    };
+    return relationshipIds;
+  } catch (err) {
+    console.error(`Error creating application relationships (createApplicationRelationships helper) for application ${applicationId} %O`, err);
+    throw new Error(`Creating application relationships (createApplicationRelationships helper) for application ${applicationId} ${err}`);
+  }
+};
+var applicationRelationships = {
+  create: createApplicationRelationships
+};
+var create_application_relationships_default = applicationRelationships;
+
+// helpers/create-an-application/update-application-columns/index.ts
+var updateApplicationColumns = async ({
+  context,
+  applicationId,
+  buyerId,
+  companyId,
+  eligibilityId,
+  exportContractId,
+  nominatedLossPayeeId,
+  policyId,
+  sectionReviewId
+}) => {
+  try {
+    console.info("Updating application relationship columns (updateApplicationColumns helper) for application %s", applicationId);
     const updatedApplication = await context.db.Application.updateOne({
       where: {
         id: applicationId
       },
       data: {
         buyer: {
-          connect: { id: buyer.id }
+          connect: { id: buyerId }
         },
         company: {
-          connect: { id: company.id }
+          connect: { id: companyId }
         },
         eligibility: {
-          connect: { id: eligibility.id }
+          connect: { id: eligibilityId }
         },
         exportContract: {
-          connect: { id: exportContract.id }
+          connect: { id: exportContractId }
         },
         nominatedLossPayee: {
-          connect: { id: nominatedLossPayee.id }
+          connect: { id: nominatedLossPayeeId }
         },
         policy: {
-          connect: { id: policy.id }
+          connect: { id: policyId }
         },
         sectionReview: {
-          connect: { id: sectionReview.id }
+          connect: { id: sectionReviewId }
         }
       }
     });
     return updatedApplication;
   } catch (err) {
-    console.error("Error creating an application (createAnApplication helper) %O", err);
-    throw new Error(`Creating an application (createAnApplication helper) ${err}`);
+    console.error(`Error updating application relationship columns (updateApplicationColumns helper) for application ${applicationId} %O`, err);
+    throw new Error(`Updating application relationship columns (updateApplicationColumns helper) for application ${applicationId} ${err}`);
+  }
+};
+var applicationColumns = {
+  update: updateApplicationColumns
+};
+var update_application_columns_default = applicationColumns;
+
+// helpers/create-an-application/index.ts
+var createAnApplication = async (root, variables, context) => {
+  console.info("Creating an application (createAnApplication helper) for user %s", variables.accountId);
+  try {
+    const { accountId, eligibilityAnswers, company: companyData, sectionReview: sectionReviewData, status } = variables;
+    const account2 = await get_account_by_id_default(context, accountId);
+    if (!account2) {
+      console.info("Rejecting application creation - no account found (createAnApplication helper)");
+      return null;
+    }
+    const application2 = await create_initial_application_default.create({
+      context,
+      accountId,
+      status
+    });
+    const { id: applicationId } = application2;
+    const { buyerId, companyId, eligibilityId, exportContractId, nominatedLossPayeeId, policyId, sectionReviewId } = await create_application_relationships_default.create({
+      context,
+      applicationId,
+      companyData,
+      eligibilityAnswers,
+      sectionReviewData
+    });
+    const updatedApplication = await update_application_columns_default.update({
+      context,
+      applicationId,
+      buyerId,
+      companyId,
+      eligibilityId,
+      exportContractId,
+      nominatedLossPayeeId,
+      policyId,
+      sectionReviewId
+    });
+    return updatedApplication;
+  } catch (err) {
+    console.error(`Error creating an application (createAnApplication helper) for user ${variables.accountId} %O`, err);
+    throw new Error(`Creating an application (createAnApplication helper) for user ${variables.accountId} ${err}`);
   }
 };
 var create_an_application_default = createAnApplication;
@@ -4863,7 +4962,7 @@ var create_an_application_default = createAnApplication;
 // custom-resolvers/mutations/create-an-application/index.ts
 var { STATUS: STATUS2 } = APPLICATION;
 var createAnApplication2 = async (root, variables, context) => {
-  console.info("Creating application for ", variables.accountId);
+  console.info("Creating application for user ", variables.accountId);
   const updatedVariables = variables;
   updatedVariables.status = STATUS2.IN_PROGRESS;
   try {
@@ -4878,8 +4977,8 @@ var createAnApplication2 = async (root, variables, context) => {
       success: false
     };
   } catch (err) {
-    console.error("Error creating application %O", err);
-    throw new Error(`Creating application ${err}`);
+    console.error(`Error creating application for user ${variables.accountId} %O`, err);
+    throw new Error(`Creating application for user ${variables.accountId} ${err}`);
   }
 };
 var create_an_application_default2 = createAnApplication2;
@@ -7813,7 +7912,7 @@ var updateCompanyPostDataMigration = async (root, variables, context) => {
       data: addressFields
     });
     if (sicCodes) {
-      await create_company_sic_codes_default(context, sicCodes, industrySectorNames2, updatedCompany.id);
+      await create_company_sic_codes_default(context, updatedCompany.id, sicCodes, industrySectorNames2);
     }
     return {
       success: true

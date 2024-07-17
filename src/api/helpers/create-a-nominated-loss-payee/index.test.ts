@@ -18,7 +18,7 @@ describe('helpers/create-a-nominated-loss-payee', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await applications.create({ context, data: {} })) as Application;
+    application = (await applications.create({ context })) as Application;
   });
 
   test('it should return a nominated loss payee with ID', async () => {

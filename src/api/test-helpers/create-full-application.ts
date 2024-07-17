@@ -10,12 +10,14 @@ import createACompany from '../helpers/create-a-company';
 import createAnExportContract from '../helpers/create-an-export-contract';
 import createANominatedLossPayee from '../helpers/create-a-nominated-loss-payee';
 import sectionReviewCreate from './sectionReview';
-import { FIELD_VALUES, GBP_CURRENCY_CODE } from '../constants';
+import { APPLICATION, FIELD_VALUES, GBP_CURRENCY_CODE } from '../constants';
 import { mockApplicationEligibility, mockExportContract, mockBusiness, mockPolicyContact } from '../test-mocks/mock-application';
 import { mockApplicationDeclaration } from '../test-mocks';
 import mockCompany from '../test-mocks/mock-company';
 import mockCountries from '../test-mocks/mock-countries';
 import { Application, ApplicationBusiness, ApplicationDeclaration, ApplicationExportContract, ApplicationPolicy, ApplicationPolicyContact } from '../types';
+
+const { STATUS } = APPLICATION;
 
 const { POLICY_TYPE } = FIELD_VALUES;
 
@@ -52,6 +54,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
           id: account.id,
         },
       },
+      status: STATUS.IN_PROGRESS,
     },
   })) as Application;
 
@@ -75,18 +78,16 @@ export const createFullApplication = async (context: Context, policyType?: strin
   const broker = await createABroker(context, application.id);
 
   // create a buyer and associate with the application.
-  const { buyer } = await createABuyer(context, country.id, application.id);
+  const buyer = await createABuyer(context, country.id, application.id);
 
   // create a policy and associate with the application.
-  const { policy: createdPolicy } = await createAPolicy(context, application.id);
-
-  let policy = createdPolicy;
+  const createdPolicy = await createAPolicy(context, application.id);
 
   // create a company and associate with the application.
   const company = await createACompany(context, application.id, mockCompany);
 
   // create an exportContract and associate with the application.
-  const { exportContract } = await createAnExportContract(context, application.id);
+  const exportContract = await createAnExportContract(context, application.id);
 
   // create a nominatedLossPayee and associate with the application.
   const nominatedLossPayee = await createANominatedLossPayee(context, application.id);
@@ -120,7 +121,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
         connect: { id: exportContract.id },
       },
       policy: {
-        connect: { id: policy.id },
+        connect: { id: createdPolicy.id },
       },
       nominatedLossPayee: {
         connect: { id: nominatedLossPayee.id },
@@ -148,9 +149,9 @@ export const createFullApplication = async (context: Context, policyType?: strin
     policyData.policyType = POLICY_TYPE.MULTIPLE;
   }
 
-  policy = (await context.query.Policy.updateOne({
+  const policy = (await context.query.Policy.updateOne({
     where: {
-      id: policy.id,
+      id: createdPolicy.id,
     },
     data: policyData,
     query:

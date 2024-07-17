@@ -301,16 +301,25 @@ const createAnAbandonedApplication = (accountId, eligibilityAnswers, company, se
  * @param {Array} Array of applications
  * @returns {Array} Created applications
  */
-const createApplications = (applications) =>
-  apollo
-    .query({
-      query: queryStrings.createApplications(),
-      variables: {
-        data: applications,
-      },
-      context: APOLLO_CONTEXT,
-    })
-    .then((response) => response.data.createApplications);
+const createApplications = (applications) => {
+  try {
+    const responseBody = apollo
+      .query({
+        query: queryStrings.createApplications(),
+        variables: {
+          data: applications,
+        },
+        context: APOLLO_CONTEXT,
+      })
+      .then((response) => response.data.createApplications);
+
+    return responseBody;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error('Creating applications', { err });
+  }
+};
 
 /**
  * getAccountByEmail

@@ -19,7 +19,7 @@ describe('helpers/create-a-company', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await applications.create({ context, data: {} })) as Application;
+    application = (await applications.create({ context })) as Application;
   });
 
   test('it should return a company with address, SIC code and different trading address relationships', async () => {

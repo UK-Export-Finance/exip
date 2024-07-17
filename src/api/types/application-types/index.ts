@@ -1,3 +1,4 @@
+import Context from '@keystone-6/core/types';
 import { SuccessResponse } from '../generic';
 import { Country } from '../country';
 import { Relationship } from '../relationship';
@@ -313,6 +314,20 @@ export interface CreateAnApplicationVariables {
   status?: string;
 }
 
+export interface CreateInitialApplicationParams {
+  context: Context;
+  accountId: string;
+  status?: string;
+}
+
+export interface CreateApplicationRelationshipParams {
+  context: Context;
+  applicationId: string;
+  companyData: ApplicationCompanyCore;
+  eligibilityAnswers: ApplicationEligibility;
+  sectionReviewData: SectionReview;
+}
+
 export interface CreateExportContractAgentResponse {
   agent: ApplicationExportContractAgent;
   agentService: ApplicationExportContractAgentService;
@@ -352,4 +367,16 @@ export interface SubmitApplicationVariables {
 export interface UpdateCompanyPostDataMigrationVariables extends Relationship {
   id: string;
   company: ApplicationCompanyCore;
+}
+
+export interface UpdateApplicationRelationshipParams {
+  context: Context;
+  applicationId: string;
+  buyerId: string;
+  companyId: string;
+  eligibilityId: string;
+  exportContractId: string;
+  nominatedLossPayeeId: string;
+  policyId: string;
+  sectionReviewId: string;
 }

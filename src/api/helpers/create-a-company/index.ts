@@ -37,7 +37,7 @@ const createACompany = async (context: Context, applicationId: string, companyDa
     /**
      * Create company SIC codes.
      */
-    const createdSicCodes = await createCompanySicCodes(context, sicCodes, industrySectorNames, company.id);
+    const createdSicCodes = await createCompanySicCodes(context, company.id, sicCodes, industrySectorNames);
 
     /**
      * Create different trading address with company relationship.

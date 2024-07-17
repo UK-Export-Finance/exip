@@ -39,11 +39,9 @@ const createABuyer = async (context: Context, countryId: string, applicationId: 
     const buyerContact = await createABuyerContact(context, buyer.id, applicationId);
 
     return {
-      buyer: {
-        ...buyer,
-        buyerTradingHistory,
-        relationship: buyerRelationship,
-      },
+      ...buyer,
+      buyerTradingHistory,
+      relationship: buyerRelationship,
       buyerContact,
     };
   } catch (err) {

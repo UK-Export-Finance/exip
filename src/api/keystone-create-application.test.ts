@@ -14,7 +14,7 @@ describe('Keystone - Create an Application', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await applications.create({ context, data: {} })) as Application;
+    application = (await applications.create({ context })) as Application;
 
     /**
      * Create buyer trading history,
