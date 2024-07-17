@@ -72,7 +72,6 @@ const getApplicationByReferenceNumberMiddleware = async (req: Request, res: Resp
       const application = await getApplicationByReferenceNumber(variables);
 
       if (application) {
-        // TODO: unit test.
         res.locals.application = application;
 
         return next();
