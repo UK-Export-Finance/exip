@@ -1,4 +1,4 @@
-import { ROUTES, CONTACT_DETAILS } from '../../../constants';
+import { ROUTES, UKEF_CONTACT_DETAILS } from '../../../constants';
 import { BUTTONS } from '../../buttons';
 import POLICY from './policy';
 import * as ELIGIBILITY_PAGES from './eligibility';
@@ -49,7 +49,7 @@ const NO_ACCESS_APPLICATION_SUBMITTED_PAGE = {
   CONTACT_FURTHER_INFORMATION: 'We will contact you if any further information is required, and when a decision has been made.',
   WITHDRAW:
     'If you would like to withdraw your application or have any other queries, please contact our underwriting team quoting your application reference number:',
-  CONTACT: CONTACT_DETAILS.EMAIL.UNDERWRITING,
+  CONTACT: UKEF_CONTACT_DETAILS.EMAIL.UNDERWRITING,
 };
 
 const INSURANCE = {

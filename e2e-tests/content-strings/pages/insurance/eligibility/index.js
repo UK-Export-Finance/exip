@@ -1,4 +1,4 @@
-import { CONTACT_DETAILS, GBP_CURRENCY_CODE, TOTAL_CONTRACT_VALUE } from '../../../../constants';
+import { UKEF_CONTACT_DETAILS, GBP_CURRENCY_CODE, TOTAL_CONTRACT_VALUE } from '../../../../constants';
 import formatCurrency from '../../../../helpers/format-currency';
 import { ACTIONS } from '../../../actions';
 import { LINKS } from '../../../links';
@@ -43,7 +43,7 @@ export const LONG_TERM_COVER = {
         HREF: ACTIONS.CONTACT_EFM.LINK.HREF,
       },
     },
-    CONTACT_UKEF_TEAM: `or our team at ${CONTACT_DETAILS.EMAIL.UNDERWRITING} if you have any questions.`,
+    CONTACT_UKEF_TEAM: `or our team at ${UKEF_CONTACT_DETAILS.EMAIL.UNDERWRITING} if you have any questions.`,
   },
 };
 
@@ -148,6 +148,6 @@ export const CONTRACT_TOO_SHORT = {
       TEXT: 'your nearest export finance manager',
       HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
     },
-    TEXT: `to learn more about your options. If you have any questions, get in touch with our team at ${CONTACT_DETAILS.EMAIL.UNDERWRITING}.`,
+    TEXT: `to learn more about your options. If you have any questions, get in touch with our team at ${UKEF_CONTACT_DETAILS.EMAIL.UNDERWRITING}.`,
   },
 };

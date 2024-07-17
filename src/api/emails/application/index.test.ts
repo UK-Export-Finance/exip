@@ -3,7 +3,7 @@ import notify from '../../integrations/notify';
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
 import getFullNameString from '../../helpers/get-full-name-string';
 import fileSystem from '../../file-system';
-import { mockAccount, mockApplication, mockCompany, mockBuyer, mockSendEmailResponse } from '../../test-mocks';
+import { mockAccount, mockApplication, mockCompany, mockBuyer, mockSendEmailResponse, mockErrorMessage } from '../../test-mocks';
 
 describe('emails/application', () => {
   const sendEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
@@ -32,8 +32,6 @@ describe('emails/application', () => {
 
   const mockFilePath = '/path-to-file';
 
-  const mockErrorMessage = 'Mock error';
-
   describe('account', () => {
     const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
 
@@ -60,7 +58,7 @@ describe('emails/application', () => {
 
     describe('error handling', () => {
       beforeAll(async () => {
-        notify.sendEmail = jest.fn(() => Promise.reject(mockErrorMessage));
+        notify.sendEmail = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
       });
 
       test('should throw an error', async () => {
@@ -68,7 +66,7 @@ describe('emails/application', () => {
           await application.submittedEmail(variables);
         } catch (err) {
           const expected = new Error(
-            `Sending application submitted email to to application owner or provided business contact Error: Sending email ${mockErrorMessage}`,
+            `Sending application submitted email to to application owner or provided business contact Error: Sending email ${new Error(mockErrorMessage)}`,
           );
 
           expect(err).toEqual(expected);
@@ -108,14 +106,14 @@ describe('emails/application', () => {
 
     describe('error handling', () => {
       beforeAll(async () => {
-        notify.sendEmail = jest.fn(() => Promise.reject(mockErrorMessage));
+        notify.sendEmail = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
       });
 
       test('should throw an error', async () => {
         try {
           await application.underwritingTeam(variables, mockFilePath, templateId);
         } catch (err) {
-          const expected = new Error(`Sending application submitted email to underwriting team Error: Sending email ${mockErrorMessage}`);
+          const expected = new Error(`Sending application submitted email to underwriting team Error: Sending email ${new Error(mockErrorMessage)}`);
 
           expect(err).toEqual(expected);
         }

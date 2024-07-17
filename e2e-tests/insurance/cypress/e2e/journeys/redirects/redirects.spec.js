@@ -7,14 +7,17 @@ const {
   ELIGIBILITY: { CHECK_IF_ELIGIBLE },
   MVP_INSURANCE_ROOT,
   ROOT,
+  START_ROOT,
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
+const mvpStartRoute = `${MVP_INSURANCE_ROOT}${START_ROOT}`;
+
 context(`Insurance - Redirects - '${MVP_INSURANCE_ROOT}' URLs should redirect to the '${ROOT}' equivalent URL`, () => {
-  describe(`/${MVP_INSURANCE_ROOT}/start`, () => {
+  describe(mvpStartRoute, () => {
     it(`should redirect to ${EXTERNAL.FULL_APPLICATION}`, () => {
-      cy.navigateToUrl('/insurance/start');
+      cy.navigateToUrl(mvpStartRoute);
 
       cy.assertUrl(EXTERNAL.FULL_APPLICATION);
     });
