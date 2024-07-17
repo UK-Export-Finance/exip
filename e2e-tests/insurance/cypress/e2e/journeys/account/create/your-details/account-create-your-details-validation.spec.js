@@ -13,7 +13,10 @@ const {
 
 const {
   ACCOUNT: {
-    FIRST_NAME, LAST_NAME, EMAIL, PASSWORD,
+    FIRST_NAME,
+    LAST_NAME,
+    EMAIL,
+    PASSWORD,
   },
 } = INSURANCE_FIELD_IDS;
 

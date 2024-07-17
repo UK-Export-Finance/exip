@@ -19,7 +19,7 @@ describe('helpers/create-a-section-review', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await applications.create({ context, data: {} })) as Application;
+    application = (await applications.create({ context })) as Application;
 
     sectionReview = { eligibility: true };
   });

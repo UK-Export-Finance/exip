@@ -19,7 +19,6 @@ const {
   SUBMISSION_COUNT_DEFAULT,
   SUBMISSION_DEADLINE_IN_MONTHS,
   SUBMISSION_TYPE,
-  STATUS,
 } = APPLICATION;
 
 export const lists = {
@@ -143,12 +142,6 @@ export const lists = {
             modifiedData.createdAt = now;
             modifiedData.updatedAt = now;
             modifiedData.submissionDeadline = addMonths(new Date(now), SUBMISSION_DEADLINE_IN_MONTHS);
-
-            // add default submission type
-            modifiedData.submissionType = SUBMISSION_TYPE.MIA;
-
-            // add default status
-            modifiedData.status = STATUS.IN_PROGRESS;
 
             return modifiedData;
           } catch (err) {

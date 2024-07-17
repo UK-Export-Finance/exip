@@ -9,6 +9,7 @@ import mockCountries from './mock-countries';
 import mockCurrencies, { EUR, HKD, JPY, GBP, USD, mockCurrenciesResponse, mockCurrenciesEmptyResponse } from './mock-currencies';
 import mockCompaniesHouseResponse from './mock-companies-house-response';
 import mockCompany from './mock-company';
+import mockCreateApplicationResponse from './mock-create-application-response';
 import mockApplication, {
   mockExportContractAgent,
   mockExportContractAgentIsNotUsing,
@@ -151,6 +152,7 @@ export {
   mockCountries,
   mockCompaniesHouseResponse,
   mockCompany,
+  mockCreateApplicationResponse,
   mockCurrencies,
   mockCurrenciesResponse,
   mockCurrenciesEmptyResponse,

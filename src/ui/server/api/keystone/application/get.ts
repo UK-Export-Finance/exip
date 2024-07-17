@@ -4,16 +4,16 @@ import { ApolloResponse } from '../../../../types';
 
 const getApplication = async (referenceNumber: number) => {
   try {
-    console.info('Getting application');
+    console.info('Getting application %s', referenceNumber);
 
     const response = (await apollo('GET', getApplicationQuery, { referenceNumber })) as ApolloResponse;
 
     if (response.errors) {
-      console.error('GraphQL error getting application %O', response.errors);
+      console.error(`GraphQL error getting application ${referenceNumber} %O`, response.errors);
     }
 
     if (response?.networkError?.result?.errors) {
-      console.error('GraphQL network error getting application %O', response.networkError.result.errors);
+      console.error(`GraphQL network error getting application ${referenceNumber} %O`, response.networkError.result.errors);
     }
 
     if (response?.data?.referenceNumber?.application) {
@@ -26,10 +26,10 @@ const getApplication = async (referenceNumber: number) => {
     }
 
     console.error('Error with GraphQL getApplicationQuery %O', response);
-    throw new Error('Getting application');
+    throw new Error(`Getting application ${referenceNumber}`);
   } catch (err) {
-    console.error('Error getting application %O', err);
-    throw new Error('Getting application');
+    console.error(`Error getting application ${referenceNumber} %O`, err);
+    throw new Error(`Getting application ${referenceNumber}`);
   }
 };
 

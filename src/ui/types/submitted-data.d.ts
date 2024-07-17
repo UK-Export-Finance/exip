@@ -2,6 +2,17 @@ import { Company } from './company';
 import { Country } from './country';
 import { Currency } from './currency';
 
+interface CanCreateApplicationEligibilityFlags {
+  hasBuyerCountry?: boolean;
+  hasCompanyNumber?: boolean;
+  hasCoverPeriod?: boolean;
+  hasCompaniesHouseNumber?: boolean;
+  hasEndBuyer?: boolean;
+  hasMinimumUkGoodsOrServices?: boolean;
+  hasReviewedEligibility?: boolean;
+  hasTotalContractValue?: boolean;
+}
+
 type SharedEligibility = {
   hasMinimumUkGoodsOrServices?: boolean;
   validExporterLocation?: boolean;
@@ -29,14 +40,14 @@ interface TotalContractValue {
 }
 
 interface InsuranceEligibilityCore extends SharedEligibility {
-  hasCompaniesHouseNumber?: boolean;
   companyNumber?: string;
   company?: Company;
-  totalContractValue?: TotalContractValue;
   coverPeriod?: number;
+  hasCompaniesHouseNumber?: boolean;
   hasEndBuyer?: boolean;
   hasReviewedEligibility?: boolean;
   sectionReview?: SectionReview;
+  totalContractValue?: TotalContractValue;
 }
 
 interface InsuranceEligibility extends InsuranceEligibilityCore {
@@ -52,4 +63,11 @@ type SubmittedData = {
   insuranceEligibility: SubmittedDataInsuranceEligibility;
 };
 
-export { SubmittedDataQuoteEligibility, InsuranceEligibility, InsuranceEligibilityCore, SubmittedDataInsuranceEligibility, SubmittedData };
+export {
+  CanCreateApplicationEligibilityFlags,
+  InsuranceEligibility,
+  InsuranceEligibilityCore,
+  SubmittedData,
+  SubmittedDataInsuranceEligibility,
+  SubmittedDataQuoteEligibility,
+};

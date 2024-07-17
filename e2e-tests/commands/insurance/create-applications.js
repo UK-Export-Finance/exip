@@ -1,4 +1,7 @@
 import api from '../api';
+import { APPLICATION } from '../../constants';
+
+const { STATUS } = APPLICATION;
 
 /**
  * mockApplication
@@ -9,6 +12,7 @@ import api from '../api';
  */
 const mockApplication = (accountId, buyerId) => ({
   referenceNumber: 123,
+  status: STATUS.IN_PROGRESS,
   owner: {
     connect: {
       id: accountId,

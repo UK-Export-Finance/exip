@@ -10,7 +10,7 @@ describe('helpers/create-a-broker', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await applications.create({ context, data: {} })) as Application;
+    application = (await applications.create({ context })) as Application;
   });
 
   test('it should return a broker', async () => {

@@ -20,7 +20,7 @@ describe('helpers/create-an-export-contract-agent-service', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await applications.create({ context, data: {} })) as Application;
+    application = (await applications.create({ context })) as Application;
     const { agent } = await createAnExportContract(context, application.id);
 
     applicationExportContractAgent = agent;
