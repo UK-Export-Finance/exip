@@ -1,4 +1,3 @@
-import { yourDetailsPage } from '../../../../../../pages/insurance/account/create';
 import { ACCOUNT as ROUTES } from '../../../../../../constants/routes/insurance/account';
 import api from '../../../../../../commands/api';
 import { createDateOneMonthInThePast } from '../../../../../../helpers/date';
@@ -34,7 +33,7 @@ context('Insurance - Account - Sign in - expired verification', () => {
      * navigate to the sign in page,
      * without a verified  account.
      */
-    yourDetailsPage.signInButtonLink().click();
+    cy.clickSignInButtonLink();
 
     cy.assertUrl(signInUrl);
   });

@@ -1,4 +1,3 @@
-import { yourDetailsPage } from '../../../../../../../pages/insurance/account/create';
 import { signInPage } from '../../../../../../../pages/insurance/account/sign-in';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -29,7 +28,7 @@ context('Insurance - Account - Password reset - expired link page - send new lin
     cy.clickBackLink();
 
     // navigate to sign in page
-    yourDetailsPage.signInButtonLink().click();
+    cy.clickSignInButtonLink();
 
     // navigate to password reset page
     signInPage.resetPasswordLink().click();

@@ -16,12 +16,7 @@ const {
 } = ROUTES;
 
 const {
-  ACCOUNT: {
-    FIRST_NAME,
-    LAST_NAME,
-    EMAIL,
-    PASSWORD,
-  },
+  ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL, PASSWORD },
 } = INSURANCE_FIELD_IDS;
 
 const FIELD_STRINGS = ACCOUNT_FIELDS.CREATE.YOUR_DETAILS;
@@ -137,7 +132,7 @@ context(
 
       describe('when clicking `already got an account`', () => {
         it(`should redirect to ${SIGN_IN.ROOT}`, () => {
-          yourDetailsPage.signInButtonLink().click();
+          cy.clickSignInButtonLink();
 
           const expectedUrl = `${baseUrl}${SIGN_IN.ROOT}`;
 

@@ -1,4 +1,4 @@
-import signedOutPage from '../../../../../../pages/insurance/account/signed-out';
+import { signInButtonLink } from '../../../../../../pages/shared';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -44,11 +44,11 @@ context(
       });
 
       it('renders a `sign in` button link', () => {
-        cy.checkLink(signedOutPage.signIn(), SIGN_IN_ROOT, BUTTONS.SIGN_IN);
+        cy.checkLink(signInButtonLink(), SIGN_IN_ROOT, BUTTONS.SIGN_IN);
       });
 
       it(`should redirect to ${SIGN_IN_ROOT} when clicking 'sign in'`, () => {
-        signedOutPage.signIn().click();
+        cy.clickSignInButtonLink();
 
         const expectedUrl = `${baseUrl}${SIGN_IN_ROOT}`;
 
