@@ -36,8 +36,6 @@ on:
   push:
     branches:
       - infrastructure
-      # TODO: Remove below prior to merge
-      - feat/EMS-2186-ia-c-key-vault-cost-alerts
 
 env:
   PRODUCT: exip
