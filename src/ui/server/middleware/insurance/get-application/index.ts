@@ -1,6 +1,5 @@
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import getApplication from '../../../helpers/get-application';
-import mapTotalContractValueOverThreshold from '../map-total-contract-value-over-threshold';
 import { Next, Request, Response } from '../../../../types';
 
 const { PAGE_NOT_FOUND } = INSURANCE_ROUTES;
@@ -80,9 +79,6 @@ const getApplicationMiddleware = async (req: Request, res: Response, next: Next)
       const application = await getApplication(Number(referenceNumber));
 
       if (application) {
-        // TODO: EMS-3467: move to getPopulatedApplication.
-        res.locals.application = mapTotalContractValueOverThreshold(application);
-
         return next();
       }
 

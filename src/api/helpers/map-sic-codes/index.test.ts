@@ -1,7 +1,7 @@
 import mapSicCodes from '.';
 import mockSectors from '../../test-mocks/mock-industry-sectors';
 
-describe('mapSicCodes', () => {
+describe('api/helpers/map-sic-codes', () => {
   const mockSicCodes = ['12345', '98765'];
   const mockIndustrySectorNames = [mockSectors[0].ukefIndustryName, mockSectors[1].ukefIndustryName];
   const mockCompanyId = '100';

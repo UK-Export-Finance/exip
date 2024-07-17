@@ -5,6 +5,7 @@ import getCountryByField from '../get-country-by-field';
 import mapPolicy from './map-policy';
 import getNominatedLossPayee from './nominated-loss-payee';
 import mockCountries from '../../test-mocks/mock-countries';
+import mapTotalContractValueOverThreshold from '../map-total-contract-value-over-threshold';
 import { Application, Context } from '../../types';
 import mockApplication from '../../test-mocks/mock-application';
 
@@ -123,5 +124,13 @@ describe('api/helpers/get-populated-application', () => {
     const result = await getPopulatedApplication.get({ context, application });
 
     expect(result.sectionReview.id).toEqual(application.sectionReviewId);
+  });
+
+  it('should return an application with a totalContractValueOverThreshold flag', async () => {
+    const result = await getPopulatedApplication.get({ context, application });
+
+    const expected = mapTotalContractValueOverThreshold(application);
+
+    expect(result.totalContractValueOverThreshold).toEqual(expected);
   });
 });

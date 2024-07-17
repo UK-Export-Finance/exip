@@ -1,14 +1,13 @@
-import { Application } from '../../../../types';
-import { TOTAL_CONTRACT_VALUE } from '../../../constants';
+import { Application } from '../../types';
+import { TOTAL_CONTRACT_VALUE } from '../../constants';
 
 /**
  * mapTotalContractValueOverThreshold
- * maps totalContractValue
- * checks if eligibility totalContractValue is above or below threshold
- * if below, then sets application totalContractValueOverThreshold to false
- * if above, then sets application totalContractValueOverThreshold to true
+ * set for flag for if eligibility totalContractValue is above or below threshold
+ * if below, set application totalContractValueOverThreshold to false
+ * if above, set application totalContractValueOverThreshold to true
  * @param {Application} application
- * @returns {Application} modifiedApplication
+ * @returns {Application} modified application
  */
 const mapTotalContractValueOverThreshold = (application: Application) => {
   const modifiedApplication = application;

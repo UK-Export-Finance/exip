@@ -73,6 +73,7 @@ export const mockApplicationMinimalBrokerBuyerAndCompany = {
 
 export const mockApplicationSinglePolicyTotalContractValueOverThreshold = {
   ...mockApplicationMinimalBrokerBuyerAndCompany,
+  totalContractValueOverThreshold: true,
   policy: {
     ...mockApplicationMinimalBrokerBuyerAndCompany.policy,
     [POLICY_TYPE]: APPLICATION.POLICY_TYPE.SINGLE,
@@ -87,6 +88,7 @@ export const mockApplicationSinglePolicyTotalContractValueOverThreshold = {
 
 export const mockApplicationMultiplePolicyTotalContractValueOverThreshold = {
   ...mockApplicationMinimalBrokerBuyerAndCompany,
+  totalContractValueOverThreshold: true,
   policy: {
     ...mockApplicationMinimalBrokerBuyerAndCompany.policy,
     [POLICY_TYPE]: APPLICATION.POLICY_TYPE.MULTIPLE,

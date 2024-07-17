@@ -1,5 +1,4 @@
 import mapPreviousCoverWithBuyer from '.';
-import { TOTAL_CONTRACT_VALUE } from '../../../../constants/total-contract-value';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/your-buyer';
 import { XLSX } from '../../../../content-strings';
 import mapYesNoField from '../../helpers/map-yes-no-field';
@@ -12,11 +11,10 @@ const { FIELDS } = XLSX;
 
 const {
   buyer: { relationship },
-  eligibility,
 } = mockApplicationSinglePolicyTotalContractValueOverThreshold;
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-buyer/map-previous-cover-with-buyer', () => {
-  describe(`when the total contract value is ${TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE}`, () => {
+  describe('when the total contract value is over the threshold', () => {
     describe(`${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} is true`, () => {
       it(`should return an array of mapped fields with ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER}`, () => {
         const mockRelationship = {
@@ -24,7 +22,11 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-buyer/map-previous-cover
           [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: true,
         };
 
-        const result = mapPreviousCoverWithBuyer(eligibility, mockRelationship);
+        const application = mockApplicationSinglePolicyTotalContractValueOverThreshold;
+
+        application.buyer.relationship = mockRelationship;
+
+        const result = mapPreviousCoverWithBuyer(application);
 
         const expected = [
           xlsxRow(
@@ -47,7 +49,11 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-buyer/map-previous-cover
           exporterHasPreviousCreditInsuranceWithBuyer: false,
         };
 
-        const result = mapPreviousCoverWithBuyer(eligibility, mockRelationship);
+        const application = mockApplicationSinglePolicyTotalContractValueOverThreshold;
+
+        application.buyer.relationship = mockRelationship;
+
+        const result = mapPreviousCoverWithBuyer(application);
 
         const expected = [
           xlsxRow(
@@ -63,9 +69,9 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-buyer/map-previous-cover
     });
   });
 
-  describe(`when the total contract value is NOT ${TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE}`, () => {
+  describe('when the total contract value is NOT over the threshold', () => {
     it('should return an empty array', () => {
-      const result = mapPreviousCoverWithBuyer(mockApplication.eligibility, relationship);
+      const result = mapPreviousCoverWithBuyer(mockApplication);
 
       expect(result).toEqual([]);
     });
