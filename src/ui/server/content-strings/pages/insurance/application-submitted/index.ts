@@ -1,4 +1,4 @@
-import { CONTACT_DETAILS, ROUTES } from '../../../../constants';
+import { UKEF_CONTACT_DETAILS, ROUTES } from '../../../../constants';
 import { LINKS } from '../../../links';
 
 const APPLICATION_SUBMITTED = {
@@ -16,8 +16,8 @@ const APPLICATION_SUBMITTED = {
     HAVE_ANY_QUESTIONS: {
       INTRO: 'If you have any questions about your application, email',
       LINK: {
-        TEXT: CONTACT_DETAILS.EMAIL.UNDERWRITING,
-        HREF: `mailto:${CONTACT_DETAILS.EMAIL.UNDERWRITING}`,
+        TEXT: UKEF_CONTACT_DETAILS.EMAIL.UNDERWRITING,
+        HREF: `mailto:${UKEF_CONTACT_DETAILS.EMAIL.UNDERWRITING}`,
       },
     },
   },

@@ -8,13 +8,16 @@ import { CHECK_YOUR_ANSWERS } from './check-your-answers';
 
 export const MVP_INSURANCE_ROOT = '/insurance';
 export const INSURANCE_ROOT = '/apply';
+export const START_ROOT = '/start';
 
 const ELIGIBILITY_ROOT = '/eligibility';
 
 export const INSURANCE_ROUTES = {
   MVP_INSURANCE_ROOT,
   ROOT: INSURANCE_ROOT,
-  START: `${INSURANCE_ROOT}/start`,
+  ELIGIBILITY_ROOT,
+  START_ROOT,
+  START: `${INSURANCE_ROOT}${START_ROOT}`,
   ELIGIBILITY: {
     CHECK_IF_ELIGIBLE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/check-if-eligible`,
     CANNOT_APPLY: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/cannot-apply`,

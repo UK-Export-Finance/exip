@@ -2,8 +2,8 @@ import INSURANCE_PAGES from './insurance';
 import QUOTE_PAGES from './quote';
 import { ACTIONS } from '../actions';
 import { LINKS } from '../links';
-import { CONTACT_DETAILS, ROUTES } from '../../constants';
-import { CUSTOMER_SERVICE_CONTACT_DETAILS } from '../contact';
+import { ROUTES } from '../../constants';
+import { CONTACT_DETAILS } from '../contact';
 
 const BUYER_COUNTRY = {
   PAGE_TITLE: 'Where is your buyer based?',
@@ -181,23 +181,22 @@ const PAGE_NOT_FOUND_PAGE = {
 };
 
 const PROBLEM_WITH_SERVICE_PAGE = {
-  PAGE_TITLE: 'Problem with the service',
+  PAGE_TITLE: 'Sorry, there is a problem with the service',
+  BODY: 'Contact us if you think this is an error or you cannot continue your application.',
+  CONTACT_DETAILS,
 };
 
 const CONTACT_US_PAGE = {
   PAGE_TITLE: 'Contact us',
-  WHO_TO_CONTACT: 'Who you need to contact depends on your type of query.',
+  INTRO: 'Who you need to contact depends on your type of query.',
+  QUOTE_REFERENCE_NUMBER: 'Quote your application reference number.',
+  CONTACT_DETAILS,
   GENERAL_ENQUIRIES: {
-    HEADING: 'General enquiries or questions about UK Export Finance products',
-    ...CUSTOMER_SERVICE_CONTACT_DETAILS,
+    HEADING: "Questions about an application you're working on or technical issues with the service",
   },
   APPLICATION_ENQUIRES: {
-    HEADING: "If you have a question about an application you've submitted",
-    EMAIL: {
-      PREFIX: 'Email: ',
-      VALUE: CONTACT_DETAILS.EMAIL.UNDERWRITING,
-    },
-    QUOTE: 'Quote your application reference number',
+    HEADING: "Questions about an application you've submitted",
+    CONTACT_DETAILS,
   },
 };
 

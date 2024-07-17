@@ -1,5 +1,5 @@
 import applicationSubmittedPage from '../../../../../pages/insurance/applicationSubmitted';
-import { CONTACT_DETAILS } from '../../../../../constants';
+import { UKEF_CONTACT_DETAILS } from '../../../../../constants';
 import { PAGES, LINKS } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
@@ -98,11 +98,7 @@ context('Insurance - application submitted page', () => {
       });
 
       it('renders `questions` link', () => {
-        cy.checkLink(
-          decisionFromUs.questions.link(),
-          `mailto:${CONTACT_DETAILS.EMAIL.UNDERWRITING}`,
-          CONTACT_DETAILS.EMAIL.UNDERWRITING,
-        );
+        cy.checkLink(decisionFromUs.questions.link(), `mailto:${UKEF_CONTACT_DETAILS.EMAIL.UNDERWRITING}`, UKEF_CONTACT_DETAILS.EMAIL.UNDERWRITING);
       });
     });
 
@@ -116,11 +112,7 @@ context('Insurance - application submitted page', () => {
       });
 
       it('renders a `take part` link', () => {
-        cy.checkLink(
-          helpUsImprove.takePartLink(),
-          LINKS.EXTERNAL.RESEARCH,
-          CONTENT_STRINGS.HELP_US_IMPROVE.TAKE_PART.TEXT,
-        );
+        cy.checkLink(helpUsImprove.takePartLink(), LINKS.EXTERNAL.RESEARCH, CONTENT_STRINGS.HELP_US_IMPROVE.TAKE_PART.TEXT);
       });
 
       it('renders a `if you like` copy', () => {
@@ -132,16 +124,9 @@ context('Insurance - application submitted page', () => {
       });
 
       it('renders a `feedback` link', () => {
-        cy.checkText(
-          helpUsImprove.feedback.text(),
-          `${CONTENT_STRINGS.HELP_US_IMPROVE.FEEDBACK.LINK.TEXT}.`,
-        );
+        cy.checkText(helpUsImprove.feedback.text(), `${CONTENT_STRINGS.HELP_US_IMPROVE.FEEDBACK.LINK.TEXT}.`);
 
-        cy.checkLink(
-          helpUsImprove.feedback.link(),
-          FEEDBACK,
-          CONTENT_STRINGS.HELP_US_IMPROVE.FEEDBACK.LINK.TEXT,
-        );
+        cy.checkLink(helpUsImprove.feedback.link(), FEEDBACK, CONTENT_STRINGS.HELP_US_IMPROVE.FEEDBACK.LINK.TEXT);
       });
     });
   });

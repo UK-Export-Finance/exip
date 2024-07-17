@@ -16,5 +16,5 @@ export * from './percentages-of-cover';
 export * from './routes';
 export * from './supported-currencies';
 export * from './total-contract-value';
-export * from './ukef-contact-details';
+export * from './contact-details';
 export * from './validation';

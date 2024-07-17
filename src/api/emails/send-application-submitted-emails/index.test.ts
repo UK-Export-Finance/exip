@@ -64,15 +64,17 @@ describe('emails/send-email-application-submitted', () => {
       };
 
       expectedSendOwnerEmailVars = {
-        emailAddress: email,
-        name: getFullNameString(owner),
         ...sharedEmailVars,
+        emailAddress: email,
+        buyerName: replaceCharacterCodesWithCharacters(String(buyer.companyOrOrganisationName)),
+        name: replaceCharacterCodesWithCharacters(getFullNameString(owner)),
       } as ApplicationSubmissionEmailVariables;
 
       expectedContactSendEmailVars = {
-        emailAddress: policyContact.email,
-        name: getFullNameString(policyContact),
         ...sharedEmailVars,
+        emailAddress: policyContact.email,
+        buyerName: replaceCharacterCodesWithCharacters(String(buyer.companyOrOrganisationName)),
+        name: replaceCharacterCodesWithCharacters(getFullNameString(policyContact)),
       } as ApplicationSubmissionEmailVariables;
     });
 

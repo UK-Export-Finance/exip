@@ -21,7 +21,7 @@ export const LINKS = {
     EXPORT_FINANCE_MANAGERS: 'https://www.gov.uk/government/publications/find-an-export-finance-manager',
     APPROVED_BROKER_LIST: 'https://www.gov.uk/government/publications/uk-export-finance-insurance-list-of-approved-brokers/export-insurance-approved-brokers',
     PROPOSAL_FORM:
-    'https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1075267/10489_UKEF_Export_Insurance_Proposal_Form_20220513-fillable.pdf',
+      'https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1075267/10489_UKEF_Export_Insurance_Proposal_Form_20220513-fillable.pdf',
     NBI_FORM:
       'https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1041659/export-insurance-non-binding-indication-request-form_20170609.pdf',
     FULL_APPLICATION: 'https://www.gov.uk/guidance/apply-for-ukef-export-insurance',
@@ -30,7 +30,6 @@ export const LINKS = {
     ACCESSIBILITY_GUIDLINES: 'https://www.w3.org/TR/WCAG21',
     BRIBERY_ACT_2010_GUIDANCE: 'https://www.justice.gov.uk/downloads/legislation/bribery-act-2010-guidance.pdf',
     ICO_MAKE_A_COMPLAINT: 'https://ico.org.uk/make-a-complaint',
-    CALL_CHARGES: 'https://www.gov.uk/call-charges',
     COMPANIES_HOUSE: 'https://find-and-update.company-information.service.gov.uk',
   },
 };
