@@ -32,11 +32,19 @@ const alphaNumericalCharactersOnlyValidation = (fieldValue: string, fieldId: str
   const validationNumbersOnly = numbersOnlySchema().validate(fieldValue);
 
   /**
-   * if the field value does not match the alpha numerical characters validation
-   * or if the field value does NOT contain an error for only numerical values (if string is numbers only)
-   * then return generate and return validation errors
+   * if a string only has numbers
+   * then it will not not fail validation against REGEX.ONLY_NUMERICAL_CHARACTERS
+   * hence if NOT validationNumbersOnly.error (if there is no validationNumbersOnly.error defined),
+   * then string only contains numbers
    */
-  if (validationAlphaNum.error || !validationNumbersOnly.error) {
+  const isNumbersOnly = !validationNumbersOnly.error;
+
+  /**
+   * if the field value does not match the alpha numerical characters validation
+   * or if the field value only contains numbers
+   * then generate and return validation errors
+   */
+  if (validationAlphaNum.error || isNumbersOnly) {
     return generateValidationErrors(fieldId, errorMessage, errors);
   }
 
