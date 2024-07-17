@@ -798,13 +798,13 @@ jobs:
             --record-set-name  "@" \
             --zone ${{ vars.DOMAIN_QUOTE }} \
             --value ${{ vars.CA_VERIFICATION }} \
-            --if-none-match "*"
+            --if-none-match
 
             az network dns record-set txt add-record \
             --record-set-name  "@" \
             --zone ${{ vars.DOMAIN_INSURANCE }} \
             --value ${{ vars.CA_VERIFICATION }} \
-            --if-none-match "*"
+            --if-none-match
 
       - name: CAA records
         uses: azure/cli@v2
