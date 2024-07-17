@@ -1,4 +1,3 @@
-import { signInPage } from '../../../../../../../pages/insurance/account/sign-in';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
@@ -29,7 +28,7 @@ context(
       cy.clickSignInButtonLink();
 
       // navigate to password reset page
-      signInPage.resetPasswordLink().click();
+      cy.clickSignInResetPasswordLink();
 
       cy.assertUrl(passwordResetUrl);
     });

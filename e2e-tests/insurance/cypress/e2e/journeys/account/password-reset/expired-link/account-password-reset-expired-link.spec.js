@@ -1,5 +1,4 @@
 import { submitButton } from '../../../../../../../pages/shared';
-import { signInPage } from '../../../../../../../pages/insurance/account/sign-in';
 import { linkExpiredPage } from '../../../../../../../pages/insurance/account/password-reset';
 import { PAGES, BUTTONS } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -36,7 +35,7 @@ context('Insurance - Account - Password reset - expired link page', () => {
     cy.clickSignInButtonLink();
 
     // navigate to password reset page
-    signInPage.resetPasswordLink().click();
+    cy.clickSignInResetPasswordLink();
 
     cy.completeAndSubmitPasswordResetForm({});
   });

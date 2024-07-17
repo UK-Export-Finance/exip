@@ -1,4 +1,3 @@
-import { signInPage } from '../../../../../../pages/insurance/account/sign-in';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { ACCOUNT_FIELDS } from '../../../../../../content-strings/fields/insurance/account';
@@ -38,7 +37,7 @@ context(
       cy.clickSignInButtonLink();
 
       // navigate to password reset page
-      signInPage.resetPasswordLink().click();
+      cy.clickSignInResetPasswordLink();
 
       url = `${baseUrl}${PASSWORD_RESET_ROOT}`;
 
