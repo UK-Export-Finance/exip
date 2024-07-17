@@ -6,11 +6,7 @@ import sanitiseArrayOfStrings from './sanitise-array-of-strings';
 import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
 import sanitiseValue from './sanitise-value';
 export * from './sanitise-value';
-import { RequestBody } from '../../../types';
-
-type ObjectType = {
-  [key: string]: any;
-};
+import { RequestBody, ObjectType } from '../../../types';
 
 const {
   EXPORTER_BUSINESS: {
@@ -146,7 +142,7 @@ export const sanitiseData = (formBody: RequestBody) => {
     delete formData._csrf;
   }
 
-  const sanitised = {};
+  const sanitised = {} as ObjectType;
 
   const keys = Object.keys(formData);
 
