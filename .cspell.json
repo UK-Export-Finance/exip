@@ -59,6 +59,7 @@
         "Curncy",
         "datafixes",
         "Dockerised",
+        "DTFS",
         "dtos",
         "EASS",
         "ecgd",
@@ -145,6 +146,7 @@
         "Useds",
         "venv",
         "VNET",
+        "vnets",
         "XLSX"
     ],
     "dictionaries": [
