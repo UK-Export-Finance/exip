@@ -1,5 +1,3 @@
-import header from '../../partials/header';
-
 /**
  * assertDashboardApplicationSubmitted
  * Assert that in the dashboard, a submitted application has:
@@ -10,7 +8,7 @@ import header from '../../partials/header';
 const assertDashboardApplicationSubmitted = (referenceNumber) => {
   cy.navigateToDashboardUrl();
 
-  header.navigation.applications().click();
+  cy.clickHeaderApplicationsLink();
 
   cy.assertDashboardApplicationSubmittedStatus(referenceNumber);
   cy.assertDashboardApplicationNumberLinkDoesNotExist(referenceNumber);

@@ -1,5 +1,4 @@
 import dashboardPage from '../../../../../pages/insurance/dashboard';
-import header from '../../../../../partials/header';
 import { PAGES } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
@@ -78,7 +77,7 @@ context('Insurance - Dashboard - no applications', () => {
       });
 
       // go to the dashboard
-      header.navigation.applications().click();
+      cy.clickHeaderApplicationsLink();
 
       // check that the dashboard is now populated
       cy.assertLength(dashboardPage.table.body.rows(), 1);

@@ -1,5 +1,4 @@
 import dashboardPage from '../../../../../pages/insurance/dashboard';
-import header from '../../../../../partials/header';
 import { ROUTES } from '../../../../../constants';
 
 const {
@@ -17,7 +16,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        header.navigation.applications().click();
+        cy.clickHeaderApplicationsLink();
 
         dashboardPage.getAQuoteButton().click();
 

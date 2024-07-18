@@ -4597,7 +4597,7 @@ var mapSicCodes = (sicCodes, industrySectorNames2, companyId) => {
   }
   sicCodes.forEach((code, index) => {
     let industrySectorName = "";
-    if (industrySectorNames2 && industrySectorNames2[index]) {
+    if (industrySectorNames2?.[index]) {
       industrySectorName = industrySectorNames2[index];
     }
     const mappedCode = {
@@ -8367,7 +8367,10 @@ var mapCisCountry = (country) => {
 var map_CIS_country_default = mapCisCountry;
 
 // helpers/sort-array-alphabetically/index.ts
-var sortArrayAlphabetically = (arr, field) => arr.sort((a, b) => a[field].localeCompare(b[field]));
+var sortArrayAlphabetically = (arr, field) => {
+  const alphabetical = arr.sort((a, b) => a[field].localeCompare(b[field]));
+  return alphabetical;
+};
 var sort_array_alphabetically_default = sortArrayAlphabetically;
 
 // helpers/map-CIS-countries/index.ts

@@ -42,6 +42,7 @@ const outro = () => cy.get('[data-cy="outro"]');
 const radioInputs = () => cy.get('.govuk-radios__item > input');
 const submitButton = () => cy.get('[data-cy="submit-button"]');
 const saveAndBackButton = () => cy.get('[data-cy="save-and-back-button"]');
+const signInButtonLink = () => cy.get('[data-cy="sign-in-button-link"]');
 const startNowLink = () => cy.get('[data-cy="start-now-link"]');
 const status = () => cy.get('[data-cy="status"]');
 const warning = () => cy.get('[data-cy="warning"]');
@@ -80,6 +81,7 @@ export {
   radioInputs,
   submitButton,
   saveAndBackButton,
+  signInButtonLink,
   startNowLink,
   status,
   singleInputField,

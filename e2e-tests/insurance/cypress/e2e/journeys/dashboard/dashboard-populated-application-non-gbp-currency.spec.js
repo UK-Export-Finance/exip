@@ -1,5 +1,4 @@
 import dashboardPage from '../../../../../pages/insurance/dashboard';
-import partials from '../../../../../partials';
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES, FIELD_VALUES } from '../../../../../constants';
 import { POLICY as FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
@@ -35,7 +34,7 @@ context('Insurance - Dashboard - populated application - alternative (non GBP) c
 
       url = `${baseUrl}${DASHBOARD}`;
 
-      partials.header.navigation.applications().click();
+      cy.clickHeaderApplicationsLink();
 
       cy.assertUrl(url);
     });
@@ -70,7 +69,7 @@ context('Insurance - Dashboard - populated application - alternative (non GBP) c
     });
 
     it(`should render a formatted value of ${TOTAL_CONTRACT_VALUE} in the ${TABLE_HEADERS.VALUE} cell`, () => {
-      partials.header.navigation.applications().click();
+      cy.clickHeaderApplicationsLink();
 
       const cell = table.body.row(referenceNumber).value();
 
@@ -101,7 +100,7 @@ context('Insurance - Dashboard - populated application - alternative (non GBP) c
     });
 
     it(`should render a formatted value of ${MAXIMUM_BUYER_WILL_OWE} in the ${TABLE_HEADERS.VALUE} cell`, () => {
-      partials.header.navigation.applications().click();
+      cy.clickHeaderApplicationsLink();
 
       const cell = table.body.row(referenceNumber).value();
 
