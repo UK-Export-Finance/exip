@@ -31,9 +31,9 @@ describe('helpers/create-an-eligibility', () => {
 
     country = await getCountryByField(context, 'isoCode', countryIsCode);
 
-    coverPeriod = await coverPeriodTestHelper.create({ context });
+    coverPeriod = await coverPeriodTestHelper.create(context);
 
-    totalContractValue = await totalContractValueTestHelper.create({ context });
+    totalContractValue = await totalContractValueTestHelper.create(context);
   });
 
   test('it should return a eligibility with ID', async () => {

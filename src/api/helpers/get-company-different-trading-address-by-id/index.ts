@@ -11,7 +11,7 @@ const getCompanyDifferentTradingAddressById = async (context: Context, id: strin
   try {
     console.info(`Getting company different trading address by ID ${id}`);
 
-    const differentTradingAddress = await context.db.CompanyAddress.findOne({
+    const differentTradingAddress = await context.db.CompanyDifferentTradingAddress.findOne({
       where: { id },
     });
 

@@ -30,7 +30,7 @@ describe('custom-resolvers/update-company-post-data-migration', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    company = await companyHelpers.createCompany({ context });
+    company = await companyHelpers.createCompany(context);
 
     companyAddress = await context.db.CompanyAddress.createOne({
       data: {

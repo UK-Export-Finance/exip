@@ -25,7 +25,7 @@ describe('helpers/create-a-buyer-trading-history', () => {
 
     applicationId = application.id;
 
-    buyer = (await buyerHelpers.create({ context, data: {} })) as ApplicationBuyer;
+    buyer = (await buyerHelpers.create(context)) as ApplicationBuyer;
   });
 
   test('it should return a buyer trading history with respective IDs', async () => {

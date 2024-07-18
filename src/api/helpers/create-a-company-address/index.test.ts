@@ -21,7 +21,7 @@ describe('helpers/create-a-company-address', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    company = (await companyHelpers.createCompany({ context })) as object;
+    company = (await companyHelpers.createCompany(context)) as object;
   });
 
   test('it should return a company address with ID', async () => {

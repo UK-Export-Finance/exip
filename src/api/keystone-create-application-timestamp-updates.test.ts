@@ -1,7 +1,7 @@
 import updateApplication from './helpers/update-application';
 import getKeystoneContext from './test-helpers/get-keystone-context';
 import applications from './test-helpers/applications';
-import buyer from './test-helpers/buyer';
+import buyerHelper from './test-helpers/buyer';
 import buyerTradingHistoryHelper from './test-helpers/buyer-trading-history';
 import policies from './test-helpers/policies';
 import { Application, Context } from './types';
@@ -18,7 +18,7 @@ describe('Keystone - Application timestamp updates', () => {
     application = (await applications.create({ context })) as Application;
 
     // create buyer and associate with the application.
-    const buyer = await buyer.create({
+    const buyer = await buyerHelper.create({
       context,
       data: {
         application: {

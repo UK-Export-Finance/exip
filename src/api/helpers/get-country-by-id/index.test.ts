@@ -16,7 +16,7 @@ describe('helpers/get-country-by-id', () => {
   });
 
   it('should return a country by ID', async () => {
-    const result = (await getCountryById(context, createdCountry.id));
+    const result = await getCountryById(context, createdCountry.id);
 
     expect(result.id).toEqual(createdCountry.id);
   });

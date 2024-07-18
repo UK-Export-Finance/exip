@@ -18,7 +18,7 @@ describe('helpers/create-a-company-different-trading-address', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    company = (await companyHelpers.createCompany({ context })) as object;
+    company = (await companyHelpers.createCompany(context)) as object;
   });
 
   test('it should return a company different trading address with ID', async () => {

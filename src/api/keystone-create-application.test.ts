@@ -5,7 +5,7 @@ import getBrokerById from './helpers/get-broker-by-id';
 import getDeclarationById from './helpers/get-declaration-by-id';
 import getKeystoneContext from './test-helpers/get-keystone-context';
 import applications from './test-helpers/applications';
-import buyer from './test-helpers/buyer';
+import buyerHelper from './test-helpers/buyer';
 import buyerTradingHistoryHelper from './test-helpers/buyer-trading-history';
 import policies from './test-helpers/policies';
 import { Application, ApplicationBuyer, ApplicationBusiness, Context } from './types';
@@ -23,7 +23,7 @@ describe('Keystone - Create an Application', () => {
      * Create buyer trading history,
      * Associate with the application.
      */
-    const buyer = (await buyer.create({
+    const buyer = (await buyerHelper.create({
       context,
       data: {
         application: {
@@ -206,7 +206,7 @@ describe('Keystone - Create an Application', () => {
   });
 
   test('it should add the application ID to the broker entry', async () => {
-    broker = await getBrokerById(context, application.broker.id);
+    const broker = await getBrokerById(context, application.broker.id);
 
     expect(broker.application.id).toEqual(application.id);
   });

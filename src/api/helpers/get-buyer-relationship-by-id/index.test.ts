@@ -1,6 +1,6 @@
 import getBuyerRelationshipById from '.';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
-import buyer from '../../test-helpers/buyer';
+import buyerRelationship from '../../test-helpers/buyer-relationship';
 import { Context, ApplicationBuyerRelationship } from '../../types';
 
 describe('helpers/get-buyer-relationship-by-id', () => {
@@ -12,7 +12,7 @@ describe('helpers/get-buyer-relationship-by-id', () => {
   });
 
   beforeEach(async () => {
-    createdRelationship = await buyer.create(context) as ApplicationBuyerRelationship;
+    createdRelationship = await buyerRelationship.create(context) as ApplicationBuyerRelationship;
   });
 
   it('should return a buyer relationship by ID', async () => {

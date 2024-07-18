@@ -38,7 +38,22 @@ describe('helpers/get-company-sic-codes-by-company-id', () => {
   it('should return all company SIC codes by company ID', async () => {
     const result = (await getCompanySicCodesByCompanyId(context, createdSicCodes.id));
 
-    const expected = await company.getCompanySicCodes(context, companyId);
+    const [sicCode0, sicCode1] = await company.getCompanySicCodes(context, companyId);
+
+    const expected = [
+      {
+        id: sicCode0.id,
+        companyId: createdCompany.id,
+        industrySectorName: sicCode0.industrySectorName,
+        sicCode: sicCode0.sicCode,
+      },
+      {
+        id: sicCode1.id,
+        companyId: createdCompany.id,
+        industrySectorName: sicCode0.industrySectorName,
+        sicCode: sicCode0.sicCode,
+      },
+    ];
 
     expect(result).toEqual(expected);
   });

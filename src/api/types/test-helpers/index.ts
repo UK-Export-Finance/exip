@@ -50,7 +50,7 @@ export interface TestHelperBuyerCreate extends TestHelperCreate {
 }
 
 export interface TestHelperPolicyCreate extends TestHelperCreate {
-  data: PolicyCreateInput;
+  data?: PolicyCreateInput;
 }
 
 export interface TestHelperPolicyUpdate extends TestHelperCreate {

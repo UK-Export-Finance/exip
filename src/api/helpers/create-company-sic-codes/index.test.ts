@@ -22,7 +22,7 @@ describe('helpers/create-company-sic-codes', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    company = (await companyHelpers.createCompany({ context })) as object;
+    company = (await companyHelpers.createCompany(context)) as object;
   });
 
   it('should return mapped SIC codes with company ID', async () => {

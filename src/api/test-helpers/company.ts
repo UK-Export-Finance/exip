@@ -1,4 +1,5 @@
-import { ApplicationCompany, ApplicationCompanyAddress, ApplicationCompanyDifferentTradingAddress, ApplicationCompanySicCode, Context, TestHelperCreate } from '../types';
+import { Context } from '.keystone/types'; // eslint-disable-line
+import { ApplicationCompany, ApplicationCompanyAddress, ApplicationCompanySicCode } from '../types';
 
 /**
  * create company test helper
@@ -6,7 +7,7 @@ import { ApplicationCompany, ApplicationCompanyAddress, ApplicationCompanyDiffer
  * @param {Context} KeystoneJS context API
  * @returns {Object} Created company id
  */
-const createCompany = async ({ context }: TestHelperCreate) => {
+const createCompany = async (context: Context) => {
   try {
     console.info('Creating a company (test helpers)');
     const company = (await context.query.Company.createOne({
@@ -94,14 +95,12 @@ const deleteCompanySicCode = async (context: Context, companySicId: string) => {
  * @param {Context} KeystoneJS context API
  * @returns {Object} Created company address id
  */
-const createCompanyAddress = async ({ context }: TestHelperCreate) => {
+const createCompanyAddress = async (context: Context) => {
   try {
     console.info('Creating a company address (test helpers)');
 
-    const companyInput = {};
-
     const company = (await context.query.CompanyAddress.createOne({
-      data: companyInput,
+      data: {},
       query: 'id',
     })) as ApplicationCompanyAddress;
 
@@ -125,8 +124,14 @@ const createCompanySicCode = async (context: Context, companyId: string) => {
     console.info('Creating a company SIC code (test helpers)');
 
     const companySicCode = (await context.query.CompanySicCode.createOne({
-      query: 'id',
-      data: { companyId },
+
+      data: {
+        company: {
+          connect: {
+            id: companyId,
+          },
+        },
+      }
     })) as ApplicationCompanySicCode;
 
     return companySicCode;
@@ -147,10 +152,16 @@ const createCompanyDifferentTradingAddress = async (context: Context, companyId:
   try {
     console.info('Creating a company different trading address (test helpers)');
 
-    const differentTradingAddress = (await context.query.CompanySicCode.createOne({
+    const differentTradingAddress = (await context.query.CompanyDifferentTradingAddress.createOne({
       query: 'id',
-      data: { companyId },
-    })) as ApplicationCompanyDifferentTradingAddress;
+      data: {
+        company: {
+          connect: {
+            id: companyId,
+          },
+        },
+      },
+    }));
 
     return differentTradingAddress;
   } catch (err) {

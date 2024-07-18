@@ -24,7 +24,7 @@ describe('helpers/create-a-buyer-relationship', () => {
 
     applicationId = application.id;
 
-    buyer = (await buyerHelpers.create({ context, data: {} })) as ApplicationBuyer;
+    buyer = (await buyerHelpers.create(context)) as ApplicationBuyer;
   });
 
   test('it should return a buyer relationship with respective IDs', async () => {

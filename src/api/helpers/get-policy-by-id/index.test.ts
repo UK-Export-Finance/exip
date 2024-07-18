@@ -12,7 +12,7 @@ describe('helpers/get-policy-by-id', () => {
   });
 
   beforeEach(async () => {
-    createdPolicy = await policy.create(context) as ApplicationPolicy;
+    createdPolicy = await policy.create({ context }) as ApplicationPolicy;
   });
 
   it('should return a total contract value by ID', async () => {
