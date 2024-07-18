@@ -56,7 +56,7 @@ const DIFFERENT_NAME_ON_POLICY = {
 
 const PRE_CREDIT_PERIOD = {
   ...SHARED,
-  PAGE_TITLE: 'Do you need cover for a period before you supply the goods or services to the buyer?',
+  PAGE_TITLE: 'Do you need pre-credit cover before you supply the goods or services to the buyer?',
 };
 
 const ANOTHER_COMPANY = {

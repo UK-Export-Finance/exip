@@ -1,9 +1,4 @@
-import {
-  APPLICATION,
-  ELIGIBILITY,
-  FIELD_VALUES,
-  MAXIMUM_CHARACTERS,
-} from '../../../../constants';
+import { APPLICATION, ELIGIBILITY, FIELD_VALUES, MAXIMUM_CHARACTERS } from '../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../constants/field-ids/insurance';
 import { FORM_TITLES } from '../../../form-titles';
 
@@ -20,21 +15,11 @@ const {
     DIFFERENT_NAME_ON_POLICY,
     NEED_PRE_CREDIT_PERIOD,
     CREDIT_PERIOD_WITH_BUYER,
-    REQUESTED_JOINTLY_INSURED_PARTY: {
-      REQUESTED,
-      COMPANY_NAME,
-      COMPANY_NUMBER,
-      COUNTRY_CODE,
-    },
+    REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
     USING_BROKER,
     BROKER_DETAILS: { NAME, FULL_ADDRESS },
     LOSS_PAYEE: { IS_APPOINTED },
-    LOSS_PAYEE_DETAILS: {
-      NAME: LOSS_PAYEE_NAME,
-      LOCATION,
-      IS_LOCATED_IN_UK,
-      IS_LOCATED_INTERNATIONALLY,
-    },
+    LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY },
     LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
     LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
     FINANCIAL_ADDRESS,
@@ -192,14 +177,13 @@ export const POLICY_FIELDS = {
     },
   },
   [NEED_PRE_CREDIT_PERIOD]: {
-    HINT: 'This is known as the pre-credit period',
     SUMMARY: {
       TITLE: 'Pre-credit period',
       FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
     },
   },
   [CREDIT_PERIOD_WITH_BUYER]: {
-    LABEL: 'What period of pre-credit cover do you require?',
+    LABEL: 'How long do you need pre-credit cover for?',
     SUMMARY: {
       TITLE: 'Period of pre-credit cover',
       FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
