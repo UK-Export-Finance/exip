@@ -1,9 +1,28 @@
 import { Context, Application as KeystoneApplication } from '.keystone/types'; // eslint-disable-line
-import getAccountById from '../get-account-by-id';
+// import getAccountById from '../get-account-by-id';
 import getCountryByField from '../get-country-by-field';
 import mapPolicy from './map-policy';
+import { Application } from '../../types';
+
+
+import getEligibilityById from '../get-eligibility-by-id';
+import getCoverPeriodById from '../get-cover-period-by-id';
+import getTotalContractValuedById from '../get-total-contract-value-by-id';
+import getAccountById from '../get-account-by-id';
+import getPolicyById from '../get-policy-by-id';
+import getPolicyContactById from '../get-policy-contact-by-id';
 import getNominatedLossPayee from './nominated-loss-payee';
-import { Application, ApplicationPolicy } from '../../types';
+import getExportContractById from '../get-export-contract-by-id';
+import getExportContractAgentById from '../get-export-contract-agent-by-id';
+import getExportContractAgentServiceById from '../get-export-contract-agent-service-by-id';
+import getExportContractAgentServiceChargeById from '../get-export-contract-agent-service-charge-by-id';
+import getPrivateMarketById from '../get-private-market-by-id';
+import getCompanyById from '../get-company-by-id';
+import getCompanyAddressById from '../get-company-address-by-id';
+import getCompanySicCodesByCompanyId from '../get-company-sic-codes-by-company-id';
+import getCompanyDifferentTradingAddressById from '../get-company-different-trading-address-by-id';
+
+
 
 export const generateErrorMessage = (section: string, applicationId: number) =>
   `Getting populated application - no ${section} found for application ${applicationId}`;
@@ -45,97 +64,30 @@ const getPopulatedApplication = async ({
     sectionReviewId,
   } = application;
 
-  const eligibility = await context.db.Eligibility.findOne({
-    where: { id: eligibilityId },
-  });
+  const eligibility = await getEligibilityById(context, eligibilityId);
 
-  if (!eligibility) {
-    throw new Error(generateErrorMessage('eligibility', application.id));
-  }
+  const coverPeriod = await getCoverPeriodById(context, eligibility.coverPeriodId);
 
-  const coverPeriod = await context.db.CoverPeriod.findOne({
-    where: { id: eligibility.coverPeriodId },
-  });
-
-  if (!coverPeriod) {
-    throw new Error(generateErrorMessage('coverPeriod', application.id));
-  }
-
-  const totalContractValue = await context.db.TotalContractValue.findOne({
-    where: { id: eligibility.totalContractValueId },
-  });
-
-  if (!totalContractValue) {
-    throw new Error(generateErrorMessage('totalContractValue', application.id));
-  }
+  const totalContractValue = await getTotalContractValuedById(context, eligibility.totalContractValueId);
 
   const account = await getAccountById(context, ownerId);
 
-  if (!account) {
-    throw new Error(generateErrorMessage('account', application.id));
-  }
+  const policy = await getPolicyById(context, policyId);
 
-  const policy = (await context.query.Policy.findOne({
-    where: { id: policyId },
-    query:
-      'id policyType requestedStartDate contractCompletionDate totalValueOfContract creditPeriodWithBuyer policyCurrencyCode totalMonthsOfCover totalSalesToBuyer maximumBuyerWillOwe needPreCreditPeriodCover jointlyInsuredParty { id companyName companyNumber countryCode requested }',
-  })) as ApplicationPolicy;
+  const policyContact = await getPolicyContactById(context, policyContactId);
 
-  if (!policy) {
-    throw new Error(generateErrorMessage('policy', application.id));
-  }
-
-  const policyContact = await context.db.PolicyContact.findOne({
-    where: { id: policyContactId },
-  });
-
-  if (!policyContact) {
-    throw new Error(generateErrorMessage('policyContact', application.id));
-  }
-
+  // TODO: update this helper to use a "byId" function
   const nominatedLossPayee = await getNominatedLossPayee(context, nominatedLossPayeeId, decryptFinancialUk, decryptFinancialInternational);
 
-  const populatedPolicy = mapPolicy(policy);
+  const exportContract = await getExportContractById(context, exportContractId);
 
-  const exportContract = await context.db.ExportContract.findOne({
-    where: { id: exportContractId },
-  });
+  const exportContractAgent = await getExportContractAgentById(context, exportContract.agentId);
 
-  if (!exportContract) {
-    throw new Error(generateErrorMessage('exportContract', application.id));
-  }
+  const exportContractAgentService = await getExportContractAgentServiceById(context, exportContractAgent.serviceId);
 
-  const exportContractAgent = await context.db.ExportContractAgent.findOne({
-    where: { id: exportContract.agentId },
-  });
+  const exportContractAgentServiceCharge = await getExportContractAgentServiceChargeById(context, exportContractAgentService.chargeId);
 
-  if (!exportContractAgent) {
-    throw new Error(generateErrorMessage('exportContractAgent', application.id));
-  }
-
-  const exportContractAgentService = await context.db.ExportContractAgentService.findOne({
-    where: { id: exportContractAgent.serviceId },
-  });
-
-  if (!exportContractAgentService) {
-    throw new Error(generateErrorMessage('exportContractAgentService', application.id));
-  }
-
-  const exportContractAgentServiceCharge = await context.db.ExportContractAgentServiceCharge.findOne({
-    where: { id: exportContractAgentService.chargeId },
-  });
-
-  if (!exportContractAgentServiceCharge) {
-    throw new Error(generateErrorMessage('exportContractAgentServiceCharge', application.id));
-  }
-
-  const privateMarket = await context.db.PrivateMarket.findOne({
-    where: { id: exportContract.privateMarketId },
-  });
-
-  if (!privateMarket) {
-    throw new Error(generateErrorMessage('privateMarket', application.id));
-  }
+  const privateMarket = await getPrivateMarketById(context, exportContract.privateMarketId);
 
   const finalDestinationCountry = await getCountryByField(context, 'isoCode', exportContract.finalDestinationCountryCode);
 
@@ -152,41 +104,13 @@ const getPopulatedApplication = async ({
     privateMarket,
   };
 
-  const company = await context.db.Company.findOne({
-    where: { id: companyId },
-  });
+  const company = await getCompanyById(context, companyId);
 
-  if (!company) {
-    throw new Error(generateErrorMessage('company', application.id));
-  }
+  const companyAddress = await getCompanyAddressById(context, company.registeredOfficeAddressId);
 
-  const companySicCodes = await context.db.CompanySicCode.findMany({
-    where: {
-      company: {
-        id: { equals: company.id },
-      },
-    },
-  });
+  const companySicCodes = await getCompanySicCodesByCompanyId(context, company.id);
 
-  if (!company) {
-    throw new Error(generateErrorMessage('companySicCode', application.id));
-  }
-
-  const companyAddress = await context.db.CompanyAddress.findOne({
-    where: { id: company.registeredOfficeAddressId },
-  });
-
-  if (!companyAddress) {
-    throw new Error(generateErrorMessage('companyAddress', application.id));
-  }
-
-  const differentTradingAddress = await context.db.CompanyDifferentTradingAddress.findOne({
-    where: { id: company.differentTradingAddressId },
-  });
-
-  if (!differentTradingAddress) {
-    throw new Error(generateErrorMessage('differentTradingAddress', application.id));
-  }
+  const differentTradingAddress = await getCompanyDifferentTradingAddressById(context, company.differentTradingAddressId);
 
   const populatedCompany = {
     ...company,
@@ -198,49 +122,25 @@ const getPopulatedApplication = async ({
     where: { id: businessId },
   });
 
-  if (!business) {
-    throw new Error(generateErrorMessage('business', application.id));
-  }
-
   const broker = await context.db.Broker.findOne({
     where: { id: brokerId },
   });
-
-  if (!broker) {
-    throw new Error(generateErrorMessage('broker', application.id));
-  }
 
   const buyer = await context.db.Buyer.findOne({
     where: { id: buyerId },
   });
 
-  if (!buyer) {
-    throw new Error(generateErrorMessage('buyer', application.id));
-  }
-
   const buyerRelationship = await context.db.BuyerRelationship.findOne({
     where: { id: buyer.relationshipId },
   });
-
-  if (!buyerRelationship) {
-    throw new Error(generateErrorMessage('buyerRelationship', application.id));
-  }
 
   const buyerTradingHistory = await context.db.BuyerTradingHistory.findOne({
     where: { id: buyer.buyerTradingHistoryId },
   });
 
-  if (!buyerTradingHistory) {
-    throw new Error(generateErrorMessage('buyerTradingHistory', application.id));
-  }
-
   const buyerCountry = await context.db.Country.findOne({
     where: { id: buyer.countryId },
   });
-
-  if (!buyerCountry) {
-    throw new Error(generateErrorMessage('populated buyer', application.id));
-  }
 
   const populatedEligibility = {
     ...eligibility,
@@ -260,17 +160,9 @@ const getPopulatedApplication = async ({
     where: { id: declarationId },
   });
 
-  if (!declaration) {
-    throw new Error(generateErrorMessage('declaration', application.id));
-  }
-
   const sectionReview = await context.db.SectionReview.findOne({
     where: { id: sectionReviewId },
   });
-
-  if (!sectionReview) {
-    throw new Error(generateErrorMessage('sectionReview', application.id));
-  }
 
   const populatedApplication = {
     ...application,
@@ -283,7 +175,7 @@ const getPopulatedApplication = async ({
     declaration,
     exportContract: populatedExportContract,
     owner: account,
-    policy: populatedPolicy,
+    policy: mapPolicy(policy),
     policyContact,
     nominatedLossPayee,
     sectionReview,

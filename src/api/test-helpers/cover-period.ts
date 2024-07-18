@@ -4,7 +4,7 @@ import { CoverPeriod, TestHelperCreate } from '../types';
 const coverPeriodQuery = 'id value valueId';
 
 /**
- * create coverPeriod test helper
+ * Create coverPeriod test helper
  * Create an coverPeriod with mock data
  * @param {Context} KeystoneJS context API
  * @returns {Object} Created coverPeriod

@@ -1,8 +1,8 @@
-import { ApplicationCompany, ApplicationCompanyAddress, Context, TestHelperCreate } from '../types';
+import { ApplicationCompany, ApplicationCompanyAddress, ApplicationCompanyDifferentTradingAddress, ApplicationCompanySicCode, Context, TestHelperCreate } from '../types';
 
 /**
  * create company test helper
- * Creates a blank company.
+ * Creates a empty company.
  * @param {Context} KeystoneJS context API
  * @returns {Object} Created company id
  */
@@ -68,14 +68,14 @@ const deleteCompanyAddress = async (context: Context, companyAddressId: string) 
 };
 
 /**
- * delete company sic code test helper
- * deletes a company sic code by companyId.
+ * delete company SIC code test helper
+ * deletes a company SIC code by companyId.
  * @param {Context} KeystoneJS context API
  * @returns {Array} Delete response
  */
 const deleteCompanySicCode = async (context: Context, companySicId: string) => {
   try {
-    console.info('Deleting company sic code (test helpers)', companySicId);
+    console.info('Deleting company SIC code (test helpers)', companySicId);
 
     const response = await context.query.CompanySicCode.deleteMany({
       where: [{ id: companySicId }],
@@ -84,13 +84,13 @@ const deleteCompanySicCode = async (context: Context, companySicId: string) => {
     return response;
   } catch (err) {
     console.error(err);
-    throw new Error(`Deleting company sicCode(test helpers) ${err}`);
+    throw new Error(`Deleting company SIC code (test helpers) ${err}`);
   }
 };
 
 /**
  * create company address test helper
- * Creates a blank company address.
+ * Creates a empty company address.
  * @param {Context} KeystoneJS context API
  * @returns {Object} Created company address id
  */
@@ -109,6 +109,54 @@ const createCompanyAddress = async ({ context }: TestHelperCreate) => {
   } catch (err) {
     console.error(err);
     return err;
+  }
+};
+
+
+/**
+ * create company SIC code test helper
+ * Creates an empty company SIC code.
+ * @param {Context} KeystoneJS context API
+ * @param {String} companyId
+ * @returns {Object} Created SIC code id
+ */
+const createCompanySicCode = async (context: Context, companyId: string) => {
+  try {
+    console.info('Creating a company SIC code (test helpers)');
+
+    const companySicCode = (await context.query.CompanySicCode.createOne({
+      query: 'id',
+      data: { companyId },
+    })) as ApplicationCompanySicCode;
+
+    return companySicCode;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+};
+
+/**
+ * create company different trading address test helper
+ * Creates an empty company different trading address.
+ * @param {Context} KeystoneJS context API
+ * @param {String} companyId
+ * @returns {Promise<ApplicationCompanyDifferentTradingAddress>} Created SIC code id
+ */
+const createCompanyDifferentTradingAddress = async (context: Context, companyId: string) => {
+  try {
+    console.info('Creating a company different trading address (test helpers)');
+
+    const differentTradingAddress = (await context.query.CompanySicCode.createOne({
+      query: 'id',
+      data: { companyId },
+    })) as ApplicationCompanyDifferentTradingAddress;
+
+    return differentTradingAddress;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error(`Creating a company different trading address (test helpers) ${err}`);
   }
 };
 
@@ -159,15 +207,15 @@ const getCompanyAddress = async (context: Context, companyAddressId: string) => 
 };
 
 /**
- * get company sic code test helper
- * Get a company sic code address by companyId
+ * get company SIC code test helper
+ * Get a company SIC codes by companyId
  * @param {Context} KeystoneJS context API
  * @param {String} companyId
- * @returns {Array} company sic codes
+ * @returns {Array} company SIC codes
  */
-const getCompanySicCode = async (context: Context, companyId: string) => {
+const getCompanySicCodes = async (context: Context, companyId: string) => {
   try {
-    console.info('Getting a company sic codes by ID (test helpers)');
+    console.info('Getting company SIC codes by company ID (test helpers)');
 
     const companySic = await context.query.CompanySicCode.findMany({
       where: {
@@ -181,19 +229,21 @@ const getCompanySicCode = async (context: Context, companyId: string) => {
     return companySic;
   } catch (err) {
     console.error(err);
-    throw new Error(`Getting a company sic code by ID (test helpers) ${err}`);
+    throw new Error(`Getting company SIC code by company ID (test helpers) ${err}`);
   }
 };
 
 const accounts = {
   createCompany,
   createCompanyAddress,
+  createCompanySicCode,
+  createCompanyDifferentTradingAddress,
   deleteCompany,
   deleteCompanyAddress,
   deleteCompanySicCode,
   getCompany,
   getCompanyAddress,
-  getCompanySicCode,
+  getCompanySicCodes,
 };
 
 export default accounts;
