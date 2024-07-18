@@ -15,6 +15,7 @@ context(
     const accountSuspendedUrl = `${baseUrl}${SUSPENDED_ROOT}`;
 
     let account;
+    let expectedUrl;
 
     before(() => {
       cy.deleteAccount();
@@ -53,7 +54,7 @@ context(
           const [firstAccount] = responseData;
           account = firstAccount;
 
-          const expectedUrl = `${accountSuspendedUrl}?id=${account.id}`;
+          expectedUrl = `${accountSuspendedUrl}?id=${account.id}`;
 
           cy.assertUrl(expectedUrl);
         });
@@ -70,8 +71,6 @@ context(
       });
 
       it(`should redirect to ${SUSPENDED_ROOT} with ID query param`, () => {
-        const expectedUrl = `${accountSuspendedUrl}?id=${account.id}`;
-
         cy.assertUrl(expectedUrl);
       });
     });
