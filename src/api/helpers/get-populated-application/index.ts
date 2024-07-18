@@ -6,12 +6,7 @@ import getAccountById from '../get-account-by-id';
 import getPolicyById from '../get-policy-by-id';
 import getPolicyContactById from '../get-policy-contact-by-id';
 import getNominatedLossPayee from './nominated-loss-payee';
-import getExportContractById from '../get-export-contract-by-id';
-import getExportContractAgentById from '../get-export-contract-agent-by-id';
-import getExportContractAgentServiceById from '../get-export-contract-agent-service-by-id';
-import getExportContractAgentServiceChargeById from '../get-export-contract-agent-service-charge-by-id';
-import getPrivateMarketById from '../get-private-market-by-id';
-import getCountryByField from '../get-country-by-field';
+import getPopulatedExportContract from '../get-populated-export-contract';
 import getCompanyById from '../get-company-by-id';
 import getCompanyAddressById from '../get-company-address-by-id';
 import getCompanySicCodesByCompanyId from '../get-company-sic-codes-by-company-id';
@@ -81,30 +76,7 @@ const getPopulatedApplication = async ({
     // TODO: update this helper to use a "byId" function
     const nominatedLossPayee = await getNominatedLossPayee(context, nominatedLossPayeeId, decryptFinancialUk, decryptFinancialInternational);
 
-    const exportContract = await getExportContractById(context, exportContractId);
-
-    const exportContractAgent = await getExportContractAgentById(context, exportContract.agentId);
-
-    const exportContractAgentService = await getExportContractAgentServiceById(context, exportContractAgent.serviceId);
-
-    const exportContractAgentServiceCharge = await getExportContractAgentServiceChargeById(context, exportContractAgentService.chargeId);
-
-    const privateMarket = await getPrivateMarketById(context, exportContract.privateMarketId);
-
-    const finalDestinationCountry = await getCountryByField(context, 'isoCode', exportContract.finalDestinationCountryCode);
-
-    const populatedExportContract = {
-      ...exportContract,
-      agent: {
-        ...exportContractAgent,
-        service: {
-          ...exportContractAgentService,
-          charge: exportContractAgentServiceCharge,
-        },
-      },
-      finalDestinationCountry,
-      privateMarket,
-    };
+    const populatedExportContract = await getPopulatedExportContract(context, exportContractId);
 
     const company = await getCompanyById(context, companyId);
 
