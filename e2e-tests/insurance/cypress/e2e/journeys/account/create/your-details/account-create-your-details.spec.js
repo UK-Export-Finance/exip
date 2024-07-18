@@ -1,5 +1,5 @@
 import { yourDetailsPage } from '../../../../../../../pages/insurance/account/create';
-import { field as fieldSelector } from '../../../../../../../pages/shared';
+import { field as fieldSelector, signInButtonLink } from '../../../../../../../pages/shared';
 import { BUTTONS, PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { ACCOUNT_FIELDS } from '../../../../../../../content-strings/fields/insurance/account';
@@ -132,7 +132,7 @@ context(
         const expectedHref = SIGN_IN.ROOT;
         const expectedText = BUTTONS.SIGN_IN;
 
-        cy.checkLink(yourDetailsPage.signInButtonLink(), expectedHref, expectedText);
+        cy.checkLink(signInButtonLink(), expectedHref, expectedText);
       });
 
       describe('when clicking `already got an account`', () => {
