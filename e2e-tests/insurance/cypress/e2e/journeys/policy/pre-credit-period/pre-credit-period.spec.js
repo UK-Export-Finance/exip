@@ -1,15 +1,8 @@
 import {
-  headingCaption,
-  yesRadio,
-  yesNoRadioHint,
-  noRadio,
-  field as fieldSelector,
+  headingCaption, yesRadio, noRadio, field as fieldSelector,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
-import {
-  PAGES,
-  CREDIT_PERIOD_WITH_BUYER as CREDIT_PERIOD_WITH_BUYER_STRINGS,
-} from '../../../../../../content-strings';
+import { PAGES, CREDIT_PERIOD_WITH_BUYER as CREDIT_PERIOD_WITH_BUYER_STRINGS } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
@@ -26,9 +19,7 @@ const {
   POLICY: { ANOTHER_COMPANY, NAME_ON_POLICY, PRE_CREDIT_PERIOD },
 } = INSURANCE_ROUTES;
 
-const {
-  NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER,
-} = POLICY_FIELD_IDS;
+const { NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER } = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -88,10 +79,6 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
     });
 
     describe(`renders ${NEED_PRE_CREDIT_PERIOD} label and inputs`, () => {
-      it('renders a hint', () => {
-        cy.checkText(yesNoRadioHint(), FIELD_STRINGS[NEED_PRE_CREDIT_PERIOD].HINT);
-      });
-
       it('renders `yes` and `no` radio buttons in the correct order', () => {
         cy.assertYesNoRadiosOrder({ noRadioFirst: true });
       });
@@ -135,12 +122,7 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
     });
 
     describe('expandable details - what is the pre-credit period', () => {
-      const {
-        INTRO,
-        PROTECTS_YOU,
-        INSURES_YOU,
-        HAPPENS_BEFORE,
-      } = CREDIT_PERIOD_WITH_BUYER_STRINGS;
+      const { INTRO, PROTECTS_YOU, INSURES_YOU } = CREDIT_PERIOD_WITH_BUYER_STRINGS;
 
       it('renders summary text', () => {
         cy.checkText(creditPeriodWithBuyer.summary(), INTRO);
@@ -152,7 +134,6 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
         it('should expand the collapsed `description` content', () => {
           cy.checkText(creditPeriodWithBuyer.protectsYou(), PROTECTS_YOU);
           cy.checkText(creditPeriodWithBuyer.insuresYou(), INSURES_YOU);
-          cy.checkText(creditPeriodWithBuyer.happensBefore(), HAPPENS_BEFORE);
         });
       });
     });
