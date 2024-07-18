@@ -118,7 +118,6 @@ describe('controllers/insurance/export-contract/private-market', () => {
         ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
-        FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
         applicationAnswer: mockApplication.exportContract.privateMarket[FIELD_ID],
       };
 
@@ -157,7 +156,6 @@ describe('controllers/insurance/export-contract/private-market', () => {
           ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
           ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
-          FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
           submittedValues: payload,
           validationErrors,
         });
