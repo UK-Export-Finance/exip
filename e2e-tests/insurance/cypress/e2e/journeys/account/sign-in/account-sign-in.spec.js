@@ -1,5 +1,4 @@
 import { signInPage } from '../../../../../../pages/insurance/account/sign-in';
-import { yourDetailsPage } from '../../../../../../pages/insurance/account/create';
 import passwordField from '../../../../../../partials/insurance/passwordField';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -40,7 +39,7 @@ context(
       cy.go('back');
 
       // navigate to sign in page
-      yourDetailsPage.signInButtonLink().click();
+      cy.clickSignInButtonLink();
 
       url = `${baseUrl}${SIGN_IN_ROOT}`;
 

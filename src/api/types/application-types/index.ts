@@ -277,6 +277,7 @@ export interface Application {
   policy: ApplicationPolicy;
   policyContact: ApplicationPolicyContact;
   sectionReview: Relationship;
+  totalContractValueOverThreshold: boolean;
   version: number;
 }
 

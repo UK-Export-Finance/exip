@@ -26,7 +26,7 @@ context(
 
         firstReferenceNumber = refNumber;
 
-        header.navigation.applications().click();
+        cy.clickHeaderApplicationsLink();
 
         cy.assertUrl(dashboardUrl);
       });

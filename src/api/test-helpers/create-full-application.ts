@@ -73,7 +73,6 @@ export const createFullApplication = async (context: Context, policyType?: strin
     createdTotalContractValue.id,
     otherEligibilityAnswers,
   );
-  
 
   // create a broker and associate with the application.
   const broker = await createABroker(context, application.id);

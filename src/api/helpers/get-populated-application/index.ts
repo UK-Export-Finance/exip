@@ -3,6 +3,7 @@ import getAccountById from '../get-account-by-id';
 import getCountryByField from '../get-country-by-field';
 import mapPolicy from './map-policy';
 import getNominatedLossPayee from './nominated-loss-payee';
+import mapTotalContractValueOverThreshold from '../map-total-contract-value-over-threshold';
 import { Application, ApplicationPolicy } from '../../types';
 
 export const generateErrorMessage = (section: string, applicationId: number) =>
@@ -272,6 +273,8 @@ const getPopulatedApplication = async ({
     throw new Error(generateErrorMessage('sectionReview', application.id));
   }
 
+  const totalContractValueOverThreshold = mapTotalContractValueOverThreshold(populatedEligibility);
+
   const populatedApplication = {
     ...application,
     eligibility: populatedEligibility,
@@ -287,6 +290,7 @@ const getPopulatedApplication = async ({
     policyContact,
     nominatedLossPayee,
     sectionReview,
+    totalContractValueOverThreshold,
   };
 
   return populatedApplication;
