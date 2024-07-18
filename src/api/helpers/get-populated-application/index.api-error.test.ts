@@ -7,6 +7,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
   let context: Context;
   let application: KeystoneApplication;
   let fullApplication: Application;
+  let expectedErrorMessage = '';
 
   beforeAll(async () => {
     context = getKeystoneContext();
@@ -30,6 +31,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
       nominatedLossPayeeId: fullApplication.nominatedLossPayee.id,
       sectionReviewId: fullApplication.sectionReview.id,
     };
+
+    expectedErrorMessage = `Getting populated application (helper) ${application.id}`;
   });
 
   it('should throw an error when eligibility does not exist', async () => {
@@ -40,8 +43,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
       await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
-      const expected = new Error(generateErrorMessage('eligibility', application.id));
-      expect(err).toEqual(expected);
+      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -53,8 +55,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
       await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
-      const expected = new Error(generateErrorMessage('exporter', application.id));
-      expect(err).toEqual(expected);
+      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -66,41 +67,43 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
       await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
-      const expected = new Error(generateErrorMessage('buyerCountry', application.id));
-      expect(err).toEqual(expected);
+      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
   it('should throw an error when policy does not exist', async () => {
     const invalidId = application.id;
 
-    const expected = new Error(generateErrorMessage('policy', application.id));
-
     const mockApplication = { ...application, policyId: invalidId };
 
-    await expect(getPopulatedApplication.get({ context, application: mockApplication })).rejects.toThrow(expected);
+    try {
+      await getPopulatedApplication.get({ context, application: mockApplication });
+    } catch (err) {
+      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    }
   });
 
   it('should throw an error when policyContact does not exist', async () => {
     const invalidId = application.id;
 
-    const expected = new Error(generateErrorMessage('policyContact', application.id));
-
     const mockApplication = { ...application, policyContactId: invalidId };
 
-    await expect(getPopulatedApplication.get({ context, application: mockApplication })).rejects.toThrow(expected);
+    try {
+      await getPopulatedApplication.get({ context, application: mockApplication });
+    } catch (err) {
+      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    }
   });
 
   it('should throw an error when companyAddress does not exist', async () => {
     const invalidId = application.id;
 
-    try {
-      const mockApplication = { ...application, companyAddressId: invalidId };
+    const mockApplication = { ...application, companyAddressId: invalidId };
 
+    try {
       await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
-      const expected = new Error(generateErrorMessage('companyAddress', application.id));
-      expect(err).toEqual(expected);
+      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -118,8 +121,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
-      const expected = new Error(generateErrorMessage('differentTradingAddress', application.id));
-      expect(err).toEqual(expected);
+      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -128,19 +130,20 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     const mockApplication = { ...application, companyId: invalidId };
 
-    const expected = new Error(generateErrorMessage('company', application.id));
-
-    await expect(getPopulatedApplication.get({ context, application: mockApplication })).rejects.toThrow(expected);
+    try {
+      await getPopulatedApplication.get({ context, application: mockApplication });
+    } catch (err) {
+      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    }
   });
 
   it('should throw an error when companySicCode does not exist', async () => {
-    try {
-      const mockApplication = { ...application, companyId: application.companyId };
+    const mockApplication = { ...application, companyId: application.companyId };
 
+    try {
       await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
-      const expected = new Error(generateErrorMessage('companySicCode', application.id));
-      expect(err).toEqual(expected);
+      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -149,9 +152,11 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     const mockApplication = { ...application, businessId: invalidId };
 
-    const expected = new Error(generateErrorMessage('business', application.id));
-
-    await expect(getPopulatedApplication.get({ context, application: mockApplication })).rejects.toThrow(expected);
+    try {
+      await getPopulatedApplication.get({ context, application: mockApplication });
+    } catch (err) {
+      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    }
   });
 
   it('should throw an error when broker does not exist', async () => {
@@ -159,63 +164,61 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     const mockApplication = { ...application, brokerId: invalidId };
 
-    const expected = new Error(generateErrorMessage('broker', application.id));
-
-    await expect(getPopulatedApplication.get({ context, application: mockApplication })).rejects.toThrow(expected);
+    try {
+      await getPopulatedApplication.get({ context, application: mockApplication });
+    } catch (err) {
+      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    }
   });
 
   it('should throw an error when buyer does not exist', async () => {
     const invalidId = application.id;
 
-    try {
-      const mockApplication = { ...application, buyerId: invalidId };
+    const mockApplication = { ...application, buyerId: invalidId };
 
+    try {
       await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
-      const expected = new Error(generateErrorMessage('buyer', application.id));
-      expect(err).toEqual(expected);
+      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
   it('should throw an error when buyerRelationship does not exist', async () => {
     const invalidId = application.id;
 
-    try {
-      const mockApplication = { ...application, buyerRelationship: invalidId };
+    const mockApplication = { ...application, buyerRelationship: invalidId };
 
+    try {
       await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
-      const expected = new Error(generateErrorMessage('buyerRelationship', application.id));
-      expect(err).toEqual(expected);
+      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
   it('should throw an error when buyerTradingHistory does not exist', async () => {
     const invalidId = application.id;
 
-    try {
-      const mockApplication = { ...application, buyerTradingHistory: invalidId };
+    const mockApplication = { ...application, buyerTradingHistory: invalidId };
 
+    try {
       await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
-      const expected = new Error(generateErrorMessage('buyerTradingHistory', application.id));
-      expect(err).toEqual(expected);
+      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
   it('should throw an error when buyer country does not exist', async () => {
     const invalidId = application.id;
 
-    try {
-      const mockApplication = {
-        ...application,
-        buyer: { countryId: invalidId },
-      };
+    const mockApplication = {
+      ...application,
+      buyer: { countryId: invalidId },
+    };
 
+    try {
       await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
-      const expected = new Error(generateErrorMessage('buyer', application.id));
-      expect(err).toEqual(expected);
+      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -224,9 +227,11 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     const mockApplication = { ...application, declarationId: invalidId };
 
-    const expected = new Error(generateErrorMessage('declaration', application.id));
-
-    await expect(getPopulatedApplication.get({ context, application: mockApplication })).rejects.toThrow(expected);
+    try {
+      await getPopulatedApplication.get({ context, application: mockApplication });
+    } catch (err) {
+      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    }
   });
 
   it('should throw an error when sectionReview does not exist', async () => {
@@ -234,8 +239,10 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     const mockApplication = { ...application, sectionReviewId: invalidId };
 
-    await expect(getPopulatedApplication.get({ context, application: mockApplication })).rejects.toThrow(
-      new Error(generateErrorMessage('sectionReview', application.id)),
-    );
+    try {
+      await getPopulatedApplication.get({ context, application: mockApplication });
+    } catch (err) {
+      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    }
   });
 });

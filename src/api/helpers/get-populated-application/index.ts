@@ -48,128 +48,134 @@ const getPopulatedApplication = async ({
   decryptFinancialUk = false,
   decryptFinancialInternational = false,
 }: GetPopulatedApplicationParams): Promise<Application> => {
-  console.info(`Getting populated application (helper) ${application.id}`);
+  try {
+    console.info(`Getting populated application (helper) ${application.id}`);
 
-  const {
-    eligibilityId,
-    ownerId,
-    policyId,
-    policyContactId,
-    exportContractId,
-    companyId,
-    businessId,
-    brokerId,
-    buyerId,
-    declarationId,
-    nominatedLossPayeeId,
-    sectionReviewId,
-  } = application;
+    const {
+      eligibilityId,
+      ownerId,
+      policyId,
+      policyContactId,
+      exportContractId,
+      companyId,
+      businessId,
+      brokerId,
+      buyerId,
+      declarationId,
+      nominatedLossPayeeId,
+      sectionReviewId,
+    } = application;
 
-  const eligibility = await getEligibilityById(context, eligibilityId);
+    const eligibility = await getEligibilityById(context, eligibilityId);
 
-  const coverPeriod = await getCoverPeriodById(context, eligibility.coverPeriodId);
+    const coverPeriod = await getCoverPeriodById(context, eligibility.coverPeriodId);
 
-  const totalContractValue = await getTotalContractValuedById(context, eligibility.totalContractValueId);
+    const totalContractValue = await getTotalContractValuedById(context, eligibility.totalContractValueId);
 
-  const account = await getAccountById(context, ownerId);
+    const account = await getAccountById(context, ownerId);
 
-  const policy = await getPolicyById(context, policyId);
+    const policy = await getPolicyById(context, policyId);
 
-  const policyContact = await getPolicyContactById(context, policyContactId);
+    const policyContact = await getPolicyContactById(context, policyContactId);
 
-  // TODO: update this helper to use a "byId" function
-  const nominatedLossPayee = await getNominatedLossPayee(context, nominatedLossPayeeId, decryptFinancialUk, decryptFinancialInternational);
+    // TODO: update this helper to use a "byId" function
+    const nominatedLossPayee = await getNominatedLossPayee(context, nominatedLossPayeeId, decryptFinancialUk, decryptFinancialInternational);
 
-  const exportContract = await getExportContractById(context, exportContractId);
+    const exportContract = await getExportContractById(context, exportContractId);
 
-  const exportContractAgent = await getExportContractAgentById(context, exportContract.agentId);
+    const exportContractAgent = await getExportContractAgentById(context, exportContract.agentId);
 
-  const exportContractAgentService = await getExportContractAgentServiceById(context, exportContractAgent.serviceId);
+    const exportContractAgentService = await getExportContractAgentServiceById(context, exportContractAgent.serviceId);
 
-  const exportContractAgentServiceCharge = await getExportContractAgentServiceChargeById(context, exportContractAgentService.chargeId);
+    const exportContractAgentServiceCharge = await getExportContractAgentServiceChargeById(context, exportContractAgentService.chargeId);
 
-  const privateMarket = await getPrivateMarketById(context, exportContract.privateMarketId);
+    const privateMarket = await getPrivateMarketById(context, exportContract.privateMarketId);
 
-  const finalDestinationCountry = await getCountryByField(context, 'isoCode', exportContract.finalDestinationCountryCode);
+    const finalDestinationCountry = await getCountryByField(context, 'isoCode', exportContract.finalDestinationCountryCode);
 
-  const populatedExportContract = {
-    ...exportContract,
-    agent: {
-      ...exportContractAgent,
-      service: {
-        ...exportContractAgentService,
-        charge: exportContractAgentServiceCharge,
+    const populatedExportContract = {
+      ...exportContract,
+      agent: {
+        ...exportContractAgent,
+        service: {
+          ...exportContractAgentService,
+          charge: exportContractAgentServiceCharge,
+        },
       },
-    },
-    finalDestinationCountry,
-    privateMarket,
-  };
+      finalDestinationCountry,
+      privateMarket,
+    };
 
-  const company = await getCompanyById(context, companyId);
+    const company = await getCompanyById(context, companyId);
 
-  const companyAddress = await getCompanyAddressById(context, company.registeredOfficeAddressId);
+    const companyAddress = await getCompanyAddressById(context, company.registeredOfficeAddressId);
 
-  const companySicCodes = await getCompanySicCodesByCompanyId(context, company.id);
+    const companySicCodes = await getCompanySicCodesByCompanyId(context, company.id);
 
-  const differentTradingAddress = await getCompanyDifferentTradingAddressById(context, company.differentTradingAddressId);
+    const differentTradingAddress = await getCompanyDifferentTradingAddressById(context, company.differentTradingAddressId);
 
-  const populatedCompany = {
-    ...company,
-    registeredOfficeAddress: companyAddress,
-    differentTradingAddress,
-  };
+    const populatedCompany = {
+      ...company,
+      registeredOfficeAddress: companyAddress,
+      differentTradingAddress,
+    };
 
-  const business = await getBusinessById(context, businessId);
+    const business = await getBusinessById(context, businessId);
 
-  const broker = await getBrokerById(context, brokerId);
+    const broker = await getBrokerById(context, brokerId);
 
-  const buyer = await getBuyerById(context, buyerId);
+    const buyer = await getBuyerById(context, buyerId);
 
-  const buyerRelationship = await getBuyerRelationshipById(context, buyer.relationshipId);
+    const buyerRelationship = await getBuyerRelationshipById(context, buyer.relationshipId);
 
-  const buyerTradingHistory = await getBuyerTradingHistoryById(context, buyer.buyerTradingHistoryId);
+    const buyerTradingHistory = await getBuyerTradingHistoryById(context, buyer.buyerTradingHistoryId);
 
-  const buyerCountry = await getCountryById(context, buyer.countryId);
+    const buyerCountry = await getCountryById(context, buyer.countryId);
 
-  const populatedEligibility = {
-    ...eligibility,
-    buyerCountry,
-    coverPeriod,
-    totalContractValue,
-  };
+    const populatedEligibility = {
+      ...eligibility,
+      buyerCountry,
+      coverPeriod,
+      totalContractValue,
+    };
 
-  const populatedBuyer = {
-    ...buyer,
-    country: buyerCountry,
-    relationship: buyerRelationship,
-    buyerTradingHistory,
-  };
+    const populatedBuyer = {
+      ...buyer,
+      country: buyerCountry,
+      relationship: buyerRelationship,
+      buyerTradingHistory,
+    };
 
-  const declaration = await getDeclarationById(context, declarationId);
+    const declaration = await getDeclarationById(context, declarationId);
 
-  const sectionReview = await getSectionReviewById(context, sectionReviewId);
+    const sectionReview = await getSectionReviewById(context, sectionReviewId);
 
-  const totalContractValueOverThreshold = mapTotalContractValueOverThreshold(populatedEligibility);
+    const totalContractValueOverThreshold = mapTotalContractValueOverThreshold(populatedEligibility);
 
-  const populatedApplication = {
-    ...application,
-    eligibility: populatedEligibility,
-    broker,
-    business,
-    buyer: populatedBuyer,
-    company: populatedCompany,
-    companySicCodes,
-    declaration,
-    exportContract: populatedExportContract,
-    owner: account,
-    policy: mapPolicy(policy),
-    policyContact,
-    nominatedLossPayee,
-    sectionReview,
-    totalContractValueOverThreshold,
-  };
+    const populatedApplication = {
+      ...application,
+      eligibility: populatedEligibility,
+      broker,
+      business,
+      buyer: populatedBuyer,
+      company: populatedCompany,
+      companySicCodes,
+      declaration,
+      exportContract: populatedExportContract,
+      owner: account,
+      policy: mapPolicy(policy),
+      policyContact,
+      nominatedLossPayee,
+      sectionReview,
+      totalContractValueOverThreshold,
+    };
 
-  return populatedApplication;
+    return populatedApplication;
+  } catch (err) {
+    console.error(`Getting populated application (helper) ${application.id} %O`, err);
+
+    throw new Error(`Error Getting populated application (helper) ${application.id} ${err}`);
+  }
 };
 
 const populatedApplication = {
