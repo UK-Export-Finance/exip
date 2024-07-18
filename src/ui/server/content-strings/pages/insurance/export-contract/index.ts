@@ -26,7 +26,6 @@ const HOW_WILL_YOU_GET_PAID = {
 const PRIVATE_MARKET = {
   ...SHARED,
   PAGE_TITLE: 'Have you tried to insure this export through the private insurance market?',
-  HINT: 'We may ask for proof that you have been unable to insure the export through an alternative provider.',
 };
 
 const DECLINED_BY_PRIVATE_MARKET = {

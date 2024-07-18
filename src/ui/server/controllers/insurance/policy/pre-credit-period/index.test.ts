@@ -51,7 +51,6 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
     it('should have the correct properties', () => {
       const expected = {
         ...PAGES.INSURANCE.POLICY.PRE_CREDIT_PERIOD,
-        HINT: FIELDS[NEED_PRE_CREDIT_PERIOD].HINT,
         CREDIT_PERIOD_WITH_BUYER: CREDIT_PERIOD_WITH_BUYER_STRINGS,
       };
 
@@ -65,7 +64,6 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
 
       const expected = {
         FIELD_ID: NEED_PRE_CREDIT_PERIOD,
-        FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
         FIELDS: {
           NEED_PRE_CREDIT_PERIOD: {
             ID: NEED_PRE_CREDIT_PERIOD,
