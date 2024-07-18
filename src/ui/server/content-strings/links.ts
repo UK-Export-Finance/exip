@@ -28,7 +28,7 @@ export const LINKS = {
     ABILITY_NET: 'https://mcmw.abilityNet.org.uk',
     EQUALITY_ADVISORY_SERVICE: 'https://www.equalityadvisoryservice.com',
     ACCESSIBILITY_GUIDLINES: 'https://www.w3.org/TR/WCAG21',
-    BRIBERY_ACT_2010_GUIDANCE: 'https://www.justice.gov.uk/downloads/legislation/bribery-act-2010-guidance.pdf',
+    BRIBERY_ACT_2010_GUIDANCE: 'https://assets.publishing.service.gov.uk/media/5d80cfc3ed915d51e9aff85a/bribery-act-2010-guidance.pdf',
     ICO_MAKE_A_COMPLAINT: 'https://ico.org.uk/make-a-complaint',
     COMPANIES_HOUSE: 'https://find-and-update.company-information.service.gov.uk',
   },
