@@ -1,8 +1,11 @@
 import { addMonths } from 'date-fns';
 import { APPLICATION } from './constants';
+import getBusinessById from './helpers/get-business-by-id';
+import getBrokerById from './helpers/get-broker-by-id';
+import getDeclarationById from './helpers/get-declaration-by-id';
 import getKeystoneContext from './test-helpers/get-keystone-context';
 import applications from './test-helpers/applications';
-import buyers from './test-helpers/buyers';
+import buyer from './test-helpers/buyer';
 import buyerTradingHistoryHelper from './test-helpers/buyer-trading-history';
 import policies from './test-helpers/policies';
 import { Application, ApplicationBuyer, ApplicationBusiness, Context } from './types';
@@ -20,7 +23,7 @@ describe('Keystone - Create an Application', () => {
      * Create buyer trading history,
      * Associate with the application.
      */
-    const buyer = (await buyers.create({
+    const buyer = (await buyer.create({
       context,
       data: {
         application: {
@@ -191,12 +194,7 @@ describe('Keystone - Create an Application', () => {
     let business: ApplicationBusiness;
 
     beforeAll(async () => {
-      business = await context.query.Business.findOne({
-        where: {
-          id: application.business.id,
-        },
-        query: 'id application { id } turnoverCurrencyCode',
-      });
+      business = await getBusinessById(context, application.business.id);
     });
     test('it should add the application ID to the business entry', async () => {
       expect(business.application.id).toEqual(application.id);
@@ -208,23 +206,13 @@ describe('Keystone - Create an Application', () => {
   });
 
   test('it should add the application ID to the broker entry', async () => {
-    const broker = await context.query.Broker.findOne({
-      where: {
-        id: application.broker.id,
-      },
-      query: 'id application { id }',
-    });
+    broker = await getBrokerById(context, application.broker.id);
 
     expect(broker.application.id).toEqual(application.id);
   });
 
   test('it should add the application ID to the declaration entry', async () => {
-    const declaration = await context.query.Declaration.findOne({
-      where: {
-        id: application.declaration.id,
-      },
-      query: 'id application { id }',
-    });
+    const declaration = await getDeclarationById(context, application.declaration.id);
 
     expect(declaration.application.id).toEqual(application.id);
   });

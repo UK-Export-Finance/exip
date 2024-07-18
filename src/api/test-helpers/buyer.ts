@@ -21,8 +21,8 @@ const create = async ({ context, data }: TestHelperBuyerCreate) => {
   }
 };
 
-const buyers = {
+const buyer = {
   create,
 };
 
-export default buyers;
+export default buyer;

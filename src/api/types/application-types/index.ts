@@ -3,6 +3,13 @@ import { SuccessResponse } from '../generic';
 import { Country } from '../country';
 import { Relationship } from '../relationship';
 
+export interface ApplicationBroker extends Relationship {
+  isUsingBroker?: boolean;
+  name?: string;
+  fullAddress?: string;
+  email?: string;
+}
+
 export interface ApplicationBusiness extends Relationship {
   application: Relationship;
   goodsOrServicesSupplied: string;
@@ -28,6 +35,13 @@ export interface ApplicationBuyerRelationship extends Relationship {
   exporterHasPreviousCreditInsuranceWithBuyer?: boolean;
   exporterHasBuyerFinancialAccounts?: boolean;
   previousCreditInsuranceWithBuyerDescription?: string;
+}
+
+export interface ApplicationBuyerTradingHistory extends Relationship {
+  exporterHasTradedWithBuyer?: boolean;
+  currencyCode?: string;
+  outstandingPayments?: boolean;
+  failedPayments?: boolean;
 }
 
 export interface ApplicationBuyer extends Relationship {

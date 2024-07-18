@@ -2,7 +2,7 @@ import createABuyerTradingHistory from '.';
 import { Context, Application, ApplicationBuyer } from '../../types';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applicationHelpers from '../../test-helpers/applications';
-import buyerHelpers from '../../test-helpers/buyers';
+import buyerHelpers from '../../test-helpers/buyer';
 import { GBP } from '../../constants';
 
 const invalidId = 'invalid-id';

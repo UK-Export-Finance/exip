@@ -1,11 +1,4 @@
 import { Context, Application as KeystoneApplication } from '.keystone/types'; // eslint-disable-line
-// import getAccountById from '../get-account-by-id';
-import getCountryByField from '../get-country-by-field';
-import mapPolicy from './map-policy';
-import mapTotalContractValueOverThreshold from '../map-total-contract-value-over-threshold';
-import { Application, ApplicationPolicy } from '../../types';
-
-
 import getEligibilityById from '../get-eligibility-by-id';
 import getCoverPeriodById from '../get-cover-period-by-id';
 import getTotalContractValuedById from '../get-total-contract-value-by-id';
@@ -18,15 +11,22 @@ import getExportContractAgentById from '../get-export-contract-agent-by-id';
 import getExportContractAgentServiceById from '../get-export-contract-agent-service-by-id';
 import getExportContractAgentServiceChargeById from '../get-export-contract-agent-service-charge-by-id';
 import getPrivateMarketById from '../get-private-market-by-id';
+import getCountryByField from '../get-country-by-field';
 import getCompanyById from '../get-company-by-id';
 import getCompanyAddressById from '../get-company-address-by-id';
 import getCompanySicCodesByCompanyId from '../get-company-sic-codes-by-company-id';
 import getCompanyDifferentTradingAddressById from '../get-company-different-trading-address-by-id';
-
-
-
-export const generateErrorMessage = (section: string, applicationId: number) =>
-  `Getting populated application - no ${section} found for application ${applicationId}`;
+import getBusinessById from '../get-business-by-id';
+import getBrokerById from '../get-broker-by-id';
+import getBuyerById from '../get-buyer-by-id';
+import getBuyerRelationshipById from '../get-buyer-relationship-by-id';
+import getBuyerTradingHistoryById from '../get-buyer-trading-history-by-id';
+import getCountryById from '../get-country-by-id';
+import getDeclarationById from '../get-declaration-by-id';
+import getSectionReviewById from '../get-section-review-by-id';
+import mapTotalContractValueOverThreshold from '../map-total-contract-value-over-threshold';
+import mapPolicy from './map-policy';
+import { Application } from '../../types';
 
 interface GetPopulatedApplicationParams {
   context: Context;
@@ -119,29 +119,17 @@ const getPopulatedApplication = async ({
     differentTradingAddress,
   };
 
-  const business = await context.db.Business.findOne({
-    where: { id: businessId },
-  });
+  const business = await getBusinessById(context, businessId);
 
-  const broker = await context.db.Broker.findOne({
-    where: { id: brokerId },
-  });
+  const broker = await getBrokerById(context, brokerId);
 
-  const buyer = await context.db.Buyer.findOne({
-    where: { id: buyerId },
-  });
+  const buyer = await getBuyerById(context, buyerId);
 
-  const buyerRelationship = await context.db.BuyerRelationship.findOne({
-    where: { id: buyer.relationshipId },
-  });
+  const buyerRelationship = await getBuyerRelationshipById(context, buyer.relationshipId);
 
-  const buyerTradingHistory = await context.db.BuyerTradingHistory.findOne({
-    where: { id: buyer.buyerTradingHistoryId },
-  });
+  const buyerTradingHistory = await getBuyerTradingHistoryById(context, buyer.buyerTradingHistoryId);
 
-  const buyerCountry = await context.db.Country.findOne({
-    where: { id: buyer.countryId },
-  });
+  const buyerCountry = await getCountryById(context, buyer.countryId);
 
   const populatedEligibility = {
     ...eligibility,
@@ -157,13 +145,9 @@ const getPopulatedApplication = async ({
     buyerTradingHistory,
   };
 
-  const declaration = await context.db.Declaration.findOne({
-    where: { id: declarationId },
-  });
+  const declaration = await getDeclarationById(context, declarationId);
 
-  const sectionReview = await context.db.SectionReview.findOne({
-    where: { id: sectionReviewId },
-  });
+  const sectionReview = await getSectionReviewById(context, sectionReviewId);
 
   const totalContractValueOverThreshold = mapTotalContractValueOverThreshold(populatedEligibility);
 
