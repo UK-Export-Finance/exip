@@ -31,5 +31,6 @@ export const LINKS = {
     BRIBERY_ACT_2010_GUIDANCE: 'https://www.justice.gov.uk/downloads/legislation/bribery-act-2010-guidance.pdf',
     ICO_MAKE_A_COMPLAINT: 'https://ico.org.uk/make-a-complaint',
     COMPANIES_HOUSE: 'https://find-and-update.company-information.service.gov.uk',
+    PRIVACY_NOTICE: 'https://www.gov.uk/government/publications/ukef-privacy-notice/ukef-privacy-notice--2',
   },
 };
