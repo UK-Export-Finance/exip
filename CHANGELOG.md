@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.12.2](https://github.com/UK-Export-Finance/exip/compare/v2.12.1...v2.12.2) (2024-07-18)
+
+
+### Bug Fixes
+
+* **EMS-3604:** no PDF - Anti-bribery code of conduct - Incorrect link ([#2768](https://github.com/UK-Export-Finance/exip/issues/2768)) ([331cc7b](https://github.com/UK-Export-Finance/exip/commit/331cc7bfe59741d669079d68e1f595401d76fe80))
+
 ## [2.12.1](https://github.com/UK-Export-Finance/exip/compare/v2.12.0...v2.12.1) (2024-07-17)
 
 
