@@ -7,7 +7,6 @@ const {
 const privateMarketWhyDescription = {
   summary: () => cy.get(`[data-cy="${ATTEMPTED}-why-description"] summary`),
   details: () => cy.get(`[data-cy="${ATTEMPTED}-why-description"]`),
-  weOffer: () => cy.get(`[data-cy="${ATTEMPTED}-why-description-we-offer"]`),
   hereToHelp: () => cy.get(`[data-cy="${ATTEMPTED}-why-description-here-to-help"]`),
   sharingInformation: () => cy.get(`[data-cy="${ATTEMPTED}-why-description-sharing-information"]`),
 };
