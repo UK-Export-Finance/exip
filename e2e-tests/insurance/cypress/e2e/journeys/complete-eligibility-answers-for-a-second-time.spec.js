@@ -1,15 +1,12 @@
 import dashboardPage from '../../../../pages/insurance/dashboard';
 import { autoCompleteField, field } from '../../../../pages/shared';
-import partials from '../../../../partials';
 import { ROUTES, FIELD_IDS } from '../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../commands/forms';
 
 const {
   INSURANCE: {
     COMPANIES_HOUSE: { COMPANY_NUMBER },
-    ELIGIBILITY: {
-      BUYER_COUNTRY,
-    },
+    ELIGIBILITY: { BUYER_COUNTRY },
   },
 } = FIELD_IDS;
 
@@ -30,7 +27,7 @@ context('Insurance - Eligibility - start and complete for a second time after cr
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      partials.header.navigation.applications().click();
+      cy.clickHeaderApplicationsLink();
 
       dashboardPage.startNewApplicationButton().click();
 

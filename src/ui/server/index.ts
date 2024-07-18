@@ -25,7 +25,6 @@ import { requiredQuoteEligibilityDataProvided } from './middleware/required-data
 import { requiredInsuranceEligibilityDataProvided } from './middleware/required-data-provided/insurance/eligibility';
 import applicationAccess from './middleware/insurance/application-access';
 import applicationStatus from './middleware/insurance/application-status';
-import getApplication from './middleware/insurance/get-application';
 import getApplicationByReferenceNumber from './middleware/insurance/get-application-by-reference-number';
 import userSession from './middleware/insurance/user-session';
 
@@ -121,7 +120,6 @@ ui.use('/', redirectRoutes);
 
 ui.use('/quote', requiredQuoteEligibilityDataProvided);
 ui.use('/apply/eligibility', requiredInsuranceEligibilityDataProvided);
-ui.use('/apply/:referenceNumber/*', getApplication);
 ui.use('/apply/:referenceNumber/*', getApplicationByReferenceNumber);
 ui.use('/apply/:referenceNumber/*', applicationAccess);
 ui.use('/apply/:referenceNumber/*', applicationStatus);

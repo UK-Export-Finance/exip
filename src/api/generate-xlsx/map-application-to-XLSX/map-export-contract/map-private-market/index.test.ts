@@ -1,10 +1,9 @@
 import mapPrivateMarket from '.';
-import { TOTAL_CONTRACT_VALUE } from '../../../../constants/total-contract-value';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
 import { XLSX } from '../../../../content-strings';
 import xlsxRow from '../../helpers/xlsx-row';
 import mapYesNoField from '../../helpers/map-yes-no-field';
-import { mockApplication } from '../../../../test-mocks';
+import { mockApplication, mockApplicationSinglePolicyTotalContractValueOverThreshold } from '../../../../test-mocks';
 
 const { FIELDS } = XLSX;
 
@@ -13,17 +12,11 @@ const {
 } = FIELD_IDS;
 
 const {
-  eligibility,
   exportContract: { privateMarket },
 } = mockApplication;
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-private-market', () => {
-  describe(`when the total contract value is ${TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE}`, () => {
-    const mockTotalContractValue = {
-      ...eligibility.totalContractValue,
-      value: TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE,
-    };
-
+  describe('when the total contract value is over the threshold', () => {
     describe(`when ${ATTEMPTED} is true`, () => {
       it('should return an array of mapped fields', () => {
         const mockPrivateMarket = {
@@ -31,7 +24,11 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-private-market', () => {
           [ATTEMPTED]: true,
         };
 
-        const result = mapPrivateMarket(mockPrivateMarket, mockTotalContractValue);
+        const application = mockApplicationSinglePolicyTotalContractValueOverThreshold;
+
+        application.exportContract.privateMarket = mockPrivateMarket;
+
+        const result = mapPrivateMarket(application);
 
         const expected = [
           xlsxRow(String(FIELDS.EXPORT_CONTRACT[ATTEMPTED]), mapYesNoField({ answer: mockPrivateMarket[ATTEMPTED] })),
@@ -49,7 +46,11 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-private-market', () => {
           [ATTEMPTED]: false,
         };
 
-        const result = mapPrivateMarket(mockPrivateMarket, mockTotalContractValue);
+        const application = mockApplicationSinglePolicyTotalContractValueOverThreshold;
+
+        application.exportContract.privateMarket = mockPrivateMarket;
+
+        const result = mapPrivateMarket(application);
 
         const expected = [xlsxRow(String(FIELDS.EXPORT_CONTRACT[ATTEMPTED]), mapYesNoField({ answer: mockPrivateMarket[ATTEMPTED] }))];
 
@@ -58,14 +59,9 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-private-market', () => {
     });
   });
 
-  describe(`when the total contract value is NOT ${TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE}`, () => {
+  describe('when the total contract value is NOT over the threshold', () => {
     it('should return an empty array', () => {
-      const mockTotalContractValue = {
-        ...eligibility.totalContractValue,
-        value: TOTAL_CONTRACT_VALUE.LESS_THAN_250K.VALUE,
-      };
-
-      const result = mapPrivateMarket(privateMarket, mockTotalContractValue);
+      const result = mapPrivateMarket(mockApplication);
 
       expect(result).toEqual([]);
     });

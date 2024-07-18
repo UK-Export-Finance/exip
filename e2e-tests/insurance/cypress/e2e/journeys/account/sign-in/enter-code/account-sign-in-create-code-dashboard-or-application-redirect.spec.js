@@ -41,7 +41,7 @@ context(
         // creates account and application
         cy.completeSignInAndGoToApplication({}).then(() => {
           // go to all applications for user
-          header.navigation.applications().click();
+          cy.clickHeaderApplicationsLink();
           // click on start new application page
           dashboardPage.startNewApplicationButton().click();
 

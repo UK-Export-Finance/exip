@@ -88,7 +88,7 @@ describe('helpers/create-an-application - error handling', () => {
 
   describe('when applicationRelationships.create fails', () => {
     beforeEach(() => {
-      applicationRelationships.create = jest.fn(() => Promise.reject(new Error(mockError)));;
+      applicationRelationships.create = jest.fn(() => Promise.reject(new Error(mockError)));
     });
 
     it('should throw an error', async () => {

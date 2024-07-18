@@ -1,4 +1,3 @@
-import header from '../../../../partials/header';
 import dashboardPage from '../../../../pages/insurance/dashboard';
 
 context('Insurance - header - authenticated - complete insurance eligibility', () => {
@@ -9,7 +8,7 @@ context('Insurance - header - authenticated - complete insurance eligibility', (
       referenceNumber = refNumber;
 
       // go to the dashboard
-      header.navigation.applications().click();
+      cy.clickHeaderApplicationsLink();
 
       // start a new application
       dashboardPage.startNewApplicationButton().click();

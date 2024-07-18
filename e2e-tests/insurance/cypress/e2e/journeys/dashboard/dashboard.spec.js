@@ -1,5 +1,4 @@
 import dashboardPage from '../../../../../pages/insurance/dashboard';
-import header from '../../../../../partials/header';
 import { DEFAULT, PAGES, BUTTONS } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../constants/field-ids/insurance';
@@ -39,7 +38,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        header.navigation.applications().click();
+        cy.clickHeaderApplicationsLink();
 
         cy.assertUrl(dashboardUrl);
       });

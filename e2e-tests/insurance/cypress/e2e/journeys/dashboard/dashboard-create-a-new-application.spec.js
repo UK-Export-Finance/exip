@@ -1,5 +1,4 @@
 import dashboardPage from '../../../../../pages/insurance/dashboard';
-import header from '../../../../../partials/header';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
 const {
@@ -16,7 +15,7 @@ context('Insurance - Dashboard - Start new application button - As an Exporter, 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumbers = [refNumber];
 
-      header.navigation.applications().click();
+      cy.clickHeaderApplicationsLink();
 
       dashboardPage.startNewApplicationButton().click();
 

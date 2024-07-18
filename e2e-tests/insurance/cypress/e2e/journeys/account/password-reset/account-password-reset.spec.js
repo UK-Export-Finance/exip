@@ -1,5 +1,3 @@
-import { signInPage } from '../../../../../../pages/insurance/account/sign-in';
-import { yourDetailsPage } from '../../../../../../pages/insurance/account/create';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { ACCOUNT_FIELDS } from '../../../../../../content-strings/fields/insurance/account';
@@ -22,72 +20,75 @@ const FIELD_STRINGS = ACCOUNT_FIELDS.PASSWORD_RESET;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Account - Password reset page - As an Exporter, I want to reset my password on my UKEF digital service account, So that I can maintain my account security and sign in into my UKEF digital service account', () => {
-  let url;
+context(
+  'Insurance - Account - Password reset page - As an Exporter, I want to reset my password on my UKEF digital service account, So that I can maintain my account security and sign in into my UKEF digital service account',
+  () => {
+    let url;
 
-  before(() => {
-    cy.deleteAccount();
+    before(() => {
+      cy.deleteAccount();
 
-    cy.completeAndSubmitCreateAccountForm({ navigateToAccountCreationPage: true });
+      cy.completeAndSubmitCreateAccountForm({ navigateToAccountCreationPage: true });
 
-    // go back to create account page
-    cy.clickBackLink();
+      // go back to create account page
+      cy.clickBackLink();
 
-    // navigate to sign in page
-    yourDetailsPage.signInButtonLink().click();
+      // navigate to sign in page
+      cy.clickSignInButtonLink();
 
-    // navigate to password reset page
-    signInPage.resetPasswordLink().click();
+      // navigate to password reset page
+      cy.clickSignInResetPasswordLink();
 
-    url = `${baseUrl}${PASSWORD_RESET_ROOT}`;
+      url = `${baseUrl}${PASSWORD_RESET_ROOT}`;
 
-    cy.assertUrl(url);
-  });
-
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteAccount();
-  });
-
-  it('renders core page elements', () => {
-    cy.corePageChecks({
-      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: PASSWORD_RESET_ROOT,
-      backLink: SIGN_IN_ROOT,
-      assertAuthenticatedHeader: false,
-      submitButtonCopy: BUTTONS.SUBMIT,
+      cy.assertUrl(url);
     });
-  });
 
-  describe('page tests', () => {
     beforeEach(() => {
-      cy.navigateToUrl(url);
+      cy.saveSession();
     });
 
-    it('renders `email` label, hint and input', () => {
-      const fieldId = EMAIL;
+    after(() => {
+      cy.deleteAccount();
+    });
 
-      cy.checkEmailFieldRendering({
-        fieldId,
-        contentStrings: FIELD_STRINGS[fieldId],
+    it('renders core page elements', () => {
+      cy.corePageChecks({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currentHref: PASSWORD_RESET_ROOT,
+        backLink: SIGN_IN_ROOT,
+        assertAuthenticatedHeader: false,
+        submitButtonCopy: BUTTONS.SUBMIT,
       });
     });
-  });
 
-  describe('form submission', () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
+    describe('page tests', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
 
-      cy.completeAndSubmitPasswordResetForm({});
+      it('renders `email` label, hint and input', () => {
+        const fieldId = EMAIL;
+
+        cy.checkEmailFieldRendering({
+          fieldId,
+          contentStrings: FIELD_STRINGS[fieldId],
+        });
+      });
     });
 
-    it(`should redirect to ${LINK_SENT}`, () => {
-      const expected = `${baseUrl}${LINK_SENT}`;
+    describe('form submission', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
-      cy.assertUrl(expected);
+        cy.completeAndSubmitPasswordResetForm({});
+      });
+
+      it(`should redirect to ${LINK_SENT}`, () => {
+        const expected = `${baseUrl}${LINK_SENT}`;
+
+        cy.assertUrl(expected);
+      });
     });
-  });
-});
+  },
+);

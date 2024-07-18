@@ -2,7 +2,8 @@ import { Context, Application as KeystoneApplication } from '.keystone/types'; /
 // import getAccountById from '../get-account-by-id';
 import getCountryByField from '../get-country-by-field';
 import mapPolicy from './map-policy';
-import { Application } from '../../types';
+import mapTotalContractValueOverThreshold from '../map-total-contract-value-over-threshold';
+import { Application, ApplicationPolicy } from '../../types';
 
 
 import getEligibilityById from '../get-eligibility-by-id';
@@ -164,6 +165,8 @@ const getPopulatedApplication = async ({
     where: { id: sectionReviewId },
   });
 
+  const totalContractValueOverThreshold = mapTotalContractValueOverThreshold(populatedEligibility);
+
   const populatedApplication = {
     ...application,
     eligibility: populatedEligibility,
@@ -179,6 +182,7 @@ const getPopulatedApplication = async ({
     policyContact,
     nominatedLossPayee,
     sectionReview,
+    totalContractValueOverThreshold,
   };
 
   return populatedApplication;
