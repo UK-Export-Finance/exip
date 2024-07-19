@@ -1,4 +1,9 @@
-import { headingCaption, yesRadio, noRadio, field as fieldSelector } from '../../../../../../pages/shared';
+import {
+  headingCaption,
+  yesRadio,
+  noRadio,
+  field as fieldSelector,
+} from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { PAGES, CREDIT_PERIOD_WITH_BUYER as CREDIT_PERIOD_WITH_BUYER_STRINGS } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
@@ -21,8 +26,7 @@ const { NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER } = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
-const story =
-  'As an exporter, I want to state whether I require pre-credit cover, So that I can be insured against costs accrued for preparation of the good or service I am exporting if needed';
+const story = 'As an exporter, I want to state whether I require pre-credit cover, So that I can be insured against costs accrued for preparation of the good or service I am exporting if needed';
 
 context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
   let referenceNumber;
