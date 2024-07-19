@@ -63,7 +63,6 @@ const getPopulatedApplication = async ({
 
     const policyContact = await getPolicyContactById(context, policyContactId);
 
-    // TODO: update this helper to use a "byId" function
     const nominatedLossPayee = await getNominatedLossPayee(context, nominatedLossPayeeId, decryptFinancialUk, decryptFinancialInternational);
 
     const populatedExportContract = await getPopulatedExportContract(context, exportContractId);
