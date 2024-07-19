@@ -35,6 +35,57 @@ describe('api/helpers/get-populated-application - error handling', () => {
     expectedErrorMessage = `Getting populated application (helper) ${application.id}`;
   });
 
+  it('should throw an error when buyer does not exist', async () => {
+    const invalidId = application.id;
+
+    const mockApplication = { ...application, buyerId: invalidId };
+
+    try {
+      await getPopulatedApplication.get({ context, application: mockApplication });
+    } catch (err) {
+      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    }
+  });
+
+  it('should throw an error when buyerRelationship does not exist', async () => {
+    const invalidId = application.id;
+
+    const mockApplication = { ...application, buyerRelationship: invalidId };
+
+    try {
+      await getPopulatedApplication.get({ context, application: mockApplication });
+    } catch (err) {
+      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    }
+  });
+
+  it('should throw an error when buyerTradingHistory does not exist', async () => {
+    const invalidId = application.id;
+
+    const mockApplication = { ...application, buyerTradingHistory: invalidId };
+
+    try {
+      await getPopulatedApplication.get({ context, application: mockApplication });
+    } catch (err) {
+      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    }
+  });
+
+  it('should throw an error when buyerCountry does not exist', async () => {
+    const invalidId = application.id;
+
+    const mockApplication = {
+      ...application,
+      buyer: { countryId: invalidId },
+    };
+
+    try {
+      await getPopulatedApplication.get({ context, application: mockApplication });
+    } catch (err) {
+      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    }
+  });
+
   it('should throw an error when eligibility does not exist', async () => {
     const invalidId = application.policyId;
 
@@ -203,7 +254,6 @@ describe('api/helpers/get-populated-application - error handling', () => {
     }
   });
 
-
   it('should throw an error when companyAddress does not exist', async () => {
     const invalidId = application.id;
 
@@ -272,57 +322,6 @@ describe('api/helpers/get-populated-application - error handling', () => {
     const invalidId = application.id;
 
     const mockApplication = { ...application, brokerId: invalidId };
-
-    try {
-      await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
-    }
-  });
-
-  it('should throw an error when buyer does not exist', async () => {
-    const invalidId = application.id;
-
-    const mockApplication = { ...application, buyerId: invalidId };
-
-    try {
-      await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
-    }
-  });
-
-  it('should throw an error when buyerRelationship does not exist', async () => {
-    const invalidId = application.id;
-
-    const mockApplication = { ...application, buyerRelationship: invalidId };
-
-    try {
-      await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
-    }
-  });
-
-  it('should throw an error when buyerTradingHistory does not exist', async () => {
-    const invalidId = application.id;
-
-    const mockApplication = { ...application, buyerTradingHistory: invalidId };
-
-    try {
-      await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
-    }
-  });
-
-  it('should throw an error when buyerCountry does not exist', async () => {
-    const invalidId = application.id;
-
-    const mockApplication = {
-      ...application,
-      buyer: { countryId: invalidId },
-    };
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });

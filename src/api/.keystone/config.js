@@ -5114,6 +5114,27 @@ var getTotalContractValueById = async (context, id) => {
 };
 var get_total_contract_value_by_id_default = getTotalContractValueById;
 
+// helpers/get-populated-eligibility/index.ts
+var getPopulatedEligibility = async (context, id, buyerCountry) => {
+  try {
+    console.info(`Getting populated eligibility ${id}`);
+    const eligibility = await get_eligibility_by_id_default(context, id);
+    const coverPeriod = await get_cover_period_by_id_default(context, eligibility.coverPeriodId);
+    const totalContractValue = await get_total_contract_value_by_id_default(context, eligibility.totalContractValueId);
+    const populatedEligibility = {
+      ...eligibility,
+      buyerCountry,
+      coverPeriod,
+      totalContractValue
+    };
+    return populatedEligibility;
+  } catch (err) {
+    console.error(`Getting populated eligibility ${id} %O`, err);
+    throw new Error(`Error Getting populated eligibility ${id} ${err}`);
+  }
+};
+var get_populated_eligibility_default = getPopulatedEligibility;
+
 // helpers/get-policy-by-id/index.ts
 var getPolicyById = async (context, id) => {
   try {
@@ -5377,6 +5398,36 @@ var getPrivateMarketById = async (context, id) => {
 };
 var get_private_market_by_id_default = getPrivateMarketById;
 
+// helpers/get-populated-export-contract/index.ts
+var getPopulatedExportContract = async (context, id) => {
+  try {
+    console.info(`Getting populated exportContract ${id}`);
+    const exportContract = await get_export_contract_by_id_default(context, id);
+    const exportContractAgent = await get_export_contract_agent_by_id_default(context, exportContract.agentId);
+    const exportContractAgentService = await get_export_contract_agent_service_by_id_default(context, exportContractAgent.serviceId);
+    const exportContractAgentServiceCharge = await get_export_contract_agent_service_charge_by_id_default(context, exportContractAgentService.chargeId);
+    const privateMarket = await get_private_market_by_id_default(context, exportContract.privateMarketId);
+    const finalDestinationCountry = await get_country_by_field_default(context, "isoCode", exportContract.finalDestinationCountryCode);
+    const populatedExportContract = {
+      ...exportContract,
+      agent: {
+        ...exportContractAgent,
+        service: {
+          ...exportContractAgentService,
+          charge: exportContractAgentServiceCharge
+        }
+      },
+      finalDestinationCountry,
+      privateMarket
+    };
+    return populatedExportContract;
+  } catch (err) {
+    console.error(`Getting populated exportContract ${id} %O`, err);
+    throw new Error(`Error Getting populated exportContract ${id} ${err}`);
+  }
+};
+var get_populated_export_contract_default = getPopulatedExportContract;
+
 // helpers/get-company-by-id/index.ts
 var getCompanyById = async (context, id) => {
   try {
@@ -5441,6 +5492,28 @@ var getCompanyDifferentTradingAddressById = async (context, id) => {
 };
 var get_company_different_trading_address_by_id_default = getCompanyDifferentTradingAddressById;
 
+// helpers/get-populated-company/index.ts
+var getPopulatedCompany = async (context, id) => {
+  try {
+    console.info(`Getting populated company ${id}`);
+    const company = await get_company_by_id_default(context, id);
+    const companyAddress = await get_company_address_by_id_default(context, company.registeredOfficeAddressId);
+    const companySicCodes = await get_company_sic_codes_by_company_id_default(context, company.id);
+    const differentTradingAddress = await get_company_different_trading_address_by_id_default(context, company.differentTradingAddressId);
+    const populatedCompany = {
+      ...company,
+      companySicCodes,
+      registeredOfficeAddress: companyAddress,
+      differentTradingAddress
+    };
+    return populatedCompany;
+  } catch (err) {
+    console.error(`Getting populated company ${id} %O`, err);
+    throw new Error(`Error Getting populated company ${id} ${err}`);
+  }
+};
+var get_populated_company_default = getPopulatedCompany;
+
 // helpers/get-business-by-id/index.ts
 var getBusinessById = async (context, id) => {
   try {
@@ -5486,6 +5559,21 @@ var getBuyerById = async (context, id) => {
 };
 var get_buyer_by_id_default = getBuyerById;
 
+// helpers/get-country-by-id/index.ts
+var getCountryById = async (context, id) => {
+  try {
+    console.info(`Getting country by ID ${id}`);
+    const country = await context.db.Country.findOne({
+      where: { id }
+    });
+    return country;
+  } catch (err) {
+    console.error(`Getting country by ID ${id} %O`, err);
+    throw new Error(`Error Getting country by ID ${id} ${err}`);
+  }
+};
+var get_country_by_id_default = getCountryById;
+
 // helpers/get-buyer-relationship-by-id/index.ts
 var getBuyerRelationshipById = async (context, id) => {
   try {
@@ -5516,20 +5604,27 @@ var getBuyerTradingHistoryById = async (context, id) => {
 };
 var get_buyer_trading_history_by_id_default = getBuyerTradingHistoryById;
 
-// helpers/get-country-by-id/index.ts
-var getCountryById = async (context, id) => {
+// helpers/get-populated-buyer/index.ts
+var getPopulatedBuyer = async (context, id) => {
   try {
-    console.info(`Getting country by ID ${id}`);
-    const country = await context.db.Country.findOne({
-      where: { id }
-    });
-    return country;
+    console.info(`Getting populated buyer ${id}`);
+    const buyer = await get_buyer_by_id_default(context, id);
+    const buyerCountry = await get_country_by_id_default(context, buyer.countryId);
+    const buyerRelationship = await get_buyer_relationship_by_id_default(context, buyer.relationshipId);
+    const buyerTradingHistory = await get_buyer_trading_history_by_id_default(context, buyer.buyerTradingHistoryId);
+    const populatedBuyer = {
+      ...buyer,
+      country: buyerCountry,
+      relationship: buyerRelationship,
+      buyerTradingHistory
+    };
+    return populatedBuyer;
   } catch (err) {
-    console.error(`Getting country by ID ${id} %O`, err);
-    throw new Error(`Error Getting country by ID ${id} ${err}`);
+    console.error(`Getting populated buyer ${id} %O`, err);
+    throw new Error(`Error Getting populated buyer ${id} ${err}`);
   }
 };
-var get_country_by_id_default = getCountryById;
+var get_populated_buyer_default = getPopulatedBuyer;
 
 // helpers/get-declaration-by-id/index.ts
 var getDeclarationById = async (context, id) => {
@@ -5584,94 +5679,57 @@ var getPopulatedApplication = async ({
   decryptFinancialUk: decryptFinancialUk2 = false,
   decryptFinancialInternational: decryptFinancialInternational2 = false
 }) => {
-  console.info(`Getting populated application (helper) ${application2.id}`);
-  const {
-    eligibilityId,
-    ownerId,
-    policyId,
-    policyContactId,
-    exportContractId,
-    companyId,
-    businessId,
-    brokerId,
-    buyerId,
-    declarationId,
-    nominatedLossPayeeId,
-    sectionReviewId
-  } = application2;
-  const eligibility = await get_eligibility_by_id_default(context, eligibilityId);
-  const coverPeriod = await get_cover_period_by_id_default(context, eligibility.coverPeriodId);
-  const totalContractValue = await get_total_contract_value_by_id_default(context, eligibility.totalContractValueId);
-  const account2 = await get_account_by_id_default(context, ownerId);
-  const policy = await get_policy_by_id_default(context, policyId);
-  const policyContact = await get_policy_contact_by_id_default(context, policyContactId);
-  const nominatedLossPayee = await nominated_loss_payee_default(context, nominatedLossPayeeId, decryptFinancialUk2, decryptFinancialInternational2);
-  const exportContract = await get_export_contract_by_id_default(context, exportContractId);
-  const exportContractAgent = await get_export_contract_agent_by_id_default(context, exportContract.agentId);
-  const exportContractAgentService = await get_export_contract_agent_service_by_id_default(context, exportContractAgent.serviceId);
-  const exportContractAgentServiceCharge = await get_export_contract_agent_service_charge_by_id_default(context, exportContractAgentService.chargeId);
-  const privateMarket = await get_private_market_by_id_default(context, exportContract.privateMarketId);
-  const finalDestinationCountry = await get_country_by_field_default(context, "isoCode", exportContract.finalDestinationCountryCode);
-  const populatedExportContract = {
-    ...exportContract,
-    agent: {
-      ...exportContractAgent,
-      service: {
-        ...exportContractAgentService,
-        charge: exportContractAgentServiceCharge
-      }
-    },
-    finalDestinationCountry,
-    privateMarket
-  };
-  const company = await get_company_by_id_default(context, companyId);
-  const companyAddress = await get_company_address_by_id_default(context, company.registeredOfficeAddressId);
-  const companySicCodes = await get_company_sic_codes_by_company_id_default(context, company.id);
-  const differentTradingAddress = await get_company_different_trading_address_by_id_default(context, company.differentTradingAddressId);
-  const populatedCompany = {
-    ...company,
-    registeredOfficeAddress: companyAddress,
-    differentTradingAddress
-  };
-  const business = await get_business_by_id_default(context, businessId);
-  const broker = await get_broker_by_id_default(context, brokerId);
-  const buyer = await get_buyer_by_id_default(context, buyerId);
-  const buyerRelationship = await get_buyer_relationship_by_id_default(context, buyer.relationshipId);
-  const buyerTradingHistory = await get_buyer_trading_history_by_id_default(context, buyer.buyerTradingHistoryId);
-  const buyerCountry = await get_country_by_id_default(context, buyer.countryId);
-  const populatedEligibility = {
-    ...eligibility,
-    buyerCountry,
-    coverPeriod,
-    totalContractValue
-  };
-  const populatedBuyer = {
-    ...buyer,
-    country: buyerCountry,
-    relationship: buyerRelationship,
-    buyerTradingHistory
-  };
-  const declaration = await get_declaration_by_id_default(context, declarationId);
-  const sectionReview = await get_section_review_by_id_default(context, sectionReviewId);
-  const totalContractValueOverThreshold = map_total_contract_value_over_threshold_default(populatedEligibility);
-  const populatedApplication2 = {
-    ...application2,
-    eligibility: populatedEligibility,
-    broker,
-    business,
-    buyer: populatedBuyer,
-    company: populatedCompany,
-    companySicCodes,
-    declaration,
-    exportContract: populatedExportContract,
-    owner: account2,
-    policy: map_policy_default(policy),
-    policyContact,
-    nominatedLossPayee,
-    sectionReview,
-    totalContractValueOverThreshold
-  };
-  return populatedApplication2;
+  try {
+    console.info(`Getting populated application (helper) ${application2.id}`);
+    const {
+      eligibilityId,
+      ownerId,
+      policyId,
+      policyContactId,
+      exportContractId,
+      companyId,
+      businessId,
+      brokerId,
+      buyerId,
+      declarationId,
+      nominatedLossPayeeId,
+      sectionReviewId
+    } = application2;
+    const populatedBuyer = await get_populated_buyer_default(context, buyerId);
+    const populatedEligibility = await get_populated_eligibility_default(context, eligibilityId, populatedBuyer.country);
+    const account2 = await get_account_by_id_default(context, ownerId);
+    const policy = await get_policy_by_id_default(context, policyId);
+    const policyContact = await get_policy_contact_by_id_default(context, policyContactId);
+    const nominatedLossPayee = await nominated_loss_payee_default(context, nominatedLossPayeeId, decryptFinancialUk2, decryptFinancialInternational2);
+    const populatedExportContract = await get_populated_export_contract_default(context, exportContractId);
+    const { companySicCodes, ...populatedCompany } = await get_populated_company_default(context, companyId);
+    const business = await get_business_by_id_default(context, businessId);
+    const broker = await get_broker_by_id_default(context, brokerId);
+    const declaration = await get_declaration_by_id_default(context, declarationId);
+    const sectionReview = await get_section_review_by_id_default(context, sectionReviewId);
+    const totalContractValueOverThreshold = map_total_contract_value_over_threshold_default(populatedEligibility);
+    const populatedApplication2 = {
+      ...application2,
+      eligibility: populatedEligibility,
+      broker,
+      business,
+      buyer: populatedBuyer,
+      company: populatedCompany,
+      companySicCodes,
+      declaration,
+      exportContract: populatedExportContract,
+      owner: account2,
+      policy: map_policy_default(policy),
+      policyContact,
+      nominatedLossPayee,
+      sectionReview,
+      totalContractValueOverThreshold
+    };
+    return populatedApplication2;
+  } catch (err) {
+    console.error(`Getting populated application (helper) ${application2.id} %O`, err);
+    throw new Error(`Error Getting populated application (helper) ${application2.id} ${err}`);
+  }
 };
 var populatedApplication = {
   get: getPopulatedApplication

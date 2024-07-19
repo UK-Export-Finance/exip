@@ -1,0 +1,43 @@
+import { Context } from '.keystone/types'; // eslint-disable-line
+import getEligibilityById from '../get-eligibility-by-id';
+import getCoverPeriodById from '../get-cover-period-by-id';
+import getTotalContractValuedById from '../get-total-contract-value-by-id';
+import { Country } from '../../types';
+
+// TODO
+// TODO: unit test
+// TODO: unit test
+/**
+ * getPopulatedEligibility
+ * Get a populated eligibility
+ * @param {Context} context: KeystoneJS context API
+ * @param {String} id: Eligibility ID
+ * @param {Country} buyerCountry: Buyer country
+ * @returns {Promise<ApplicationEligibility>}
+ */
+const getPopulatedEligibility = async (context: Context, id: string, buyerCountry: Country) => {
+  try {
+    console.info(`Getting populated eligibility ${id}`);
+
+    const eligibility = await getEligibilityById(context, id);
+
+    const coverPeriod = await getCoverPeriodById(context, eligibility.coverPeriodId);
+
+    const totalContractValue = await getTotalContractValuedById(context, eligibility.totalContractValueId);
+
+    const populatedEligibility = {
+      ...eligibility,
+      buyerCountry,
+      coverPeriod,
+      totalContractValue,
+    };
+
+    return populatedEligibility;
+  } catch (err) {
+    console.error(`Getting populated eligibility ${id} %O`, err);
+
+    throw new Error(`Error Getting populated eligibility ${id} ${err}`);
+  }
+};
+
+export default getPopulatedEligibility;

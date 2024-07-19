@@ -1,22 +1,14 @@
 import { Context, Application as KeystoneApplication } from '.keystone/types'; // eslint-disable-line
-import getEligibilityById from '../get-eligibility-by-id';
-import getCoverPeriodById from '../get-cover-period-by-id';
-import getTotalContractValuedById from '../get-total-contract-value-by-id';
+import getPopulatedEligibility from '../get-populated-eligibility';
 import getAccountById from '../get-account-by-id';
 import getPolicyById from '../get-policy-by-id';
 import getPolicyContactById from '../get-policy-contact-by-id';
 import getNominatedLossPayee from './nominated-loss-payee';
 import getPopulatedExportContract from '../get-populated-export-contract';
-import getCompanyById from '../get-company-by-id';
-import getCompanyAddressById from '../get-company-address-by-id';
-import getCompanySicCodesByCompanyId from '../get-company-sic-codes-by-company-id';
-import getCompanyDifferentTradingAddressById from '../get-company-different-trading-address-by-id';
+import getPopulatedCompany from '../get-populated-company';
 import getBusinessById from '../get-business-by-id';
 import getBrokerById from '../get-broker-by-id';
-import getBuyerById from '../get-buyer-by-id';
-import getBuyerRelationshipById from '../get-buyer-relationship-by-id';
-import getBuyerTradingHistoryById from '../get-buyer-trading-history-by-id';
-import getCountryById from '../get-country-by-id';
+import getPopulatedBuyer from '../get-populated-buyer';
 import getDeclarationById from '../get-declaration-by-id';
 import getSectionReviewById from '../get-section-review-by-id';
 import mapTotalContractValueOverThreshold from '../map-total-contract-value-over-threshold';
@@ -61,11 +53,9 @@ const getPopulatedApplication = async ({
       sectionReviewId,
     } = application;
 
-    const eligibility = await getEligibilityById(context, eligibilityId);
+    const populatedBuyer = await getPopulatedBuyer(context, buyerId);
 
-    const coverPeriod = await getCoverPeriodById(context, eligibility.coverPeriodId);
-
-    const totalContractValue = await getTotalContractValuedById(context, eligibility.totalContractValueId);
+    const populatedEligibility = await getPopulatedEligibility(context, eligibilityId, populatedBuyer.country);
 
     const account = await getAccountById(context, ownerId);
 
@@ -78,45 +68,11 @@ const getPopulatedApplication = async ({
 
     const populatedExportContract = await getPopulatedExportContract(context, exportContractId);
 
-    const company = await getCompanyById(context, companyId);
-
-    const companyAddress = await getCompanyAddressById(context, company.registeredOfficeAddressId);
-
-    const companySicCodes = await getCompanySicCodesByCompanyId(context, company.id);
-
-    const differentTradingAddress = await getCompanyDifferentTradingAddressById(context, company.differentTradingAddressId);
-
-    const populatedCompany = {
-      ...company,
-      registeredOfficeAddress: companyAddress,
-      differentTradingAddress,
-    };
+    const { companySicCodes, ...populatedCompany } = await getPopulatedCompany(context, companyId);
 
     const business = await getBusinessById(context, businessId);
 
     const broker = await getBrokerById(context, brokerId);
-
-    const buyer = await getBuyerById(context, buyerId);
-
-    const buyerRelationship = await getBuyerRelationshipById(context, buyer.relationshipId);
-
-    const buyerTradingHistory = await getBuyerTradingHistoryById(context, buyer.buyerTradingHistoryId);
-
-    const buyerCountry = await getCountryById(context, buyer.countryId);
-
-    const populatedEligibility = {
-      ...eligibility,
-      buyerCountry,
-      coverPeriod,
-      totalContractValue,
-    };
-
-    const populatedBuyer = {
-      ...buyer,
-      country: buyerCountry,
-      relationship: buyerRelationship,
-      buyerTradingHistory,
-    };
 
     const declaration = await getDeclarationById(context, declarationId);
 
