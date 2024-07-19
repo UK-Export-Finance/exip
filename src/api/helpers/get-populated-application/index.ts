@@ -27,7 +27,9 @@ interface GetPopulatedApplicationParams {
  * Get data associated with an application
  * @param {Context} KeystoneJS context API
  * @param {Application}
- * @returns {Promise<Object>} Populated application
+ * @param {Boolean} decryptFinancialUk: should financialUk data be decrypted
+ * @param {Boolean} decryptFinancialInternational: should financialInternational data be decrypted
+ * @returns {Promise<Application>} Populated application
  */
 const getPopulatedApplication = async ({
   context,
