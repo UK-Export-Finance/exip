@@ -5,13 +5,14 @@ import { ApplicationExportContractAgent } from '../types';
  * Create an export contract agent test helper
  * Create an export contract agent
  * @param {Context} context: KeystoneJS context API
+ * @param {ApplicationExportContractAgent} data
  * @returns {ApplicationExportContractAgent} Created export contract agent
  */
-const create = async (context: Context) => {
+const create = async (context: Context, data = {}) => {
   try {
     console.info('Creating an exportContractAgent (test helpers)');
 
-    const agent = (await context.query.ExportContractAgent.createOne({ data: {} })) as ApplicationExportContractAgent;
+    const agent = (await context.query.ExportContractAgent.createOne({ data })) as ApplicationExportContractAgent;
 
     return agent;
   } catch (err) {

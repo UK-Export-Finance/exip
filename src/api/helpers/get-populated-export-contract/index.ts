@@ -1,14 +1,9 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import getExportContractById from '../get-export-contract-by-id';
-import getExportContractAgentById from '../get-export-contract-agent-by-id';
-import getExportContractAgentServiceById from '../get-export-contract-agent-service-by-id';
-import getExportContractAgentServiceChargeById from '../get-export-contract-agent-service-charge-by-id';
+import getPopulatedAgent from './get-populated-agent';
 import getPrivateMarketById from '../get-private-market-by-id';
 import getCountryByField from '../get-country-by-field';
 
-// TODO
-// TODO: unit test
-// TODO: unit test
 /**
  * getPopulatedExportContract
  * Get a populated export contract
@@ -22,11 +17,7 @@ const getPopulatedExportContract = async (context: Context, id: string) => {
 
     const exportContract = await getExportContractById(context, id);
 
-    const exportContractAgent = await getExportContractAgentById(context, exportContract.agentId);
-
-    const exportContractAgentService = await getExportContractAgentServiceById(context, exportContractAgent.serviceId);
-
-    const exportContractAgentServiceCharge = await getExportContractAgentServiceChargeById(context, exportContractAgentService.chargeId);
+    const exportContractAgent = await getPopulatedAgent(context, exportContract.agentId);
 
     const privateMarket = await getPrivateMarketById(context, exportContract.privateMarketId);
 
@@ -34,13 +25,7 @@ const getPopulatedExportContract = async (context: Context, id: string) => {
 
     const populatedExportContract = {
       ...exportContract,
-      agent: {
-        ...exportContractAgent,
-        service: {
-          ...exportContractAgentService,
-          charge: exportContractAgentServiceCharge,
-        },
-      },
+      agent: exportContractAgent,
       finalDestinationCountry,
       privateMarket,
     };

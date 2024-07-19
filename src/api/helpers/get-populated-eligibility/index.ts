@@ -4,9 +4,6 @@ import getCoverPeriodById from '../get-cover-period-by-id';
 import getTotalContractValuedById from '../get-total-contract-value-by-id';
 import { Country } from '../../types';
 
-// TODO
-// TODO: unit test
-// TODO: unit test
 /**
  * getPopulatedEligibility
  * Get a populated eligibility

@@ -5383,6 +5383,28 @@ var getExportContractAgentServiceChargeById = async (context, id) => {
 };
 var get_export_contract_agent_service_charge_by_id_default = getExportContractAgentServiceChargeById;
 
+// helpers/get-populated-export-contract/get-populated-agent/index.ts
+var getPopulatedAgent = async (context, id) => {
+  try {
+    console.info(`Getting populated exportContract agent ${id}`);
+    const exportContractAgent = await get_export_contract_agent_by_id_default(context, id);
+    const exportContractAgentService = await get_export_contract_agent_service_by_id_default(context, exportContractAgent.serviceId);
+    const exportContractAgentServiceCharge = await get_export_contract_agent_service_charge_by_id_default(context, exportContractAgentService.chargeId);
+    const populatedAgent = {
+      ...exportContractAgent,
+      service: {
+        ...exportContractAgentService,
+        charge: exportContractAgentServiceCharge
+      }
+    };
+    return populatedAgent;
+  } catch (err) {
+    console.error(`Getting populated exportContract agent ${id} %O`, err);
+    throw new Error(`Error Getting populated exportContract agent ${id} ${err}`);
+  }
+};
+var get_populated_agent_default = getPopulatedAgent;
+
 // helpers/get-private-market-by-id/index.ts
 var getPrivateMarketById = async (context, id) => {
   try {
@@ -5403,20 +5425,12 @@ var getPopulatedExportContract = async (context, id) => {
   try {
     console.info(`Getting populated exportContract ${id}`);
     const exportContract = await get_export_contract_by_id_default(context, id);
-    const exportContractAgent = await get_export_contract_agent_by_id_default(context, exportContract.agentId);
-    const exportContractAgentService = await get_export_contract_agent_service_by_id_default(context, exportContractAgent.serviceId);
-    const exportContractAgentServiceCharge = await get_export_contract_agent_service_charge_by_id_default(context, exportContractAgentService.chargeId);
+    const exportContractAgent = await get_populated_agent_default(context, exportContract.agentId);
     const privateMarket = await get_private_market_by_id_default(context, exportContract.privateMarketId);
     const finalDestinationCountry = await get_country_by_field_default(context, "isoCode", exportContract.finalDestinationCountryCode);
     const populatedExportContract = {
       ...exportContract,
-      agent: {
-        ...exportContractAgent,
-        service: {
-          ...exportContractAgentService,
-          charge: exportContractAgentServiceCharge
-        }
-      },
+      agent: exportContractAgent,
       finalDestinationCountry,
       privateMarket
     };

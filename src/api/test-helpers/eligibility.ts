@@ -5,16 +5,16 @@ import { ApplicationEligibility } from '../types/application-types';
  * create eligibility test helper
  * Create an eligibility with mock data
  * @param {Context} context: KeystoneJS context API
+ * @param {ApplicationEligibility} data
  * @returns {Promise<ApplicationEligibility>} Eligibility
  */
-const create = async (context: Context) => {
+const create = async (context: Context, data = {}) => {
   try {
     console.info('Creating an eligibility (test helpers)');
 
     const eligibility = (await context.query.Eligibility.createOne({
-      data: {},
-      query:
-        'id hasEndBuyer hasMinimumUkGoodsOrServices hasCompaniesHouseNumber otherPartiesInvolved paidByLetterOfCredit validExporterLocation',
+      data,
+      query: 'id hasEndBuyer hasMinimumUkGoodsOrServices hasCompaniesHouseNumber otherPartiesInvolved paidByLetterOfCredit validExporterLocation',
     })) as ApplicationEligibility;
 
     return eligibility;
@@ -37,8 +37,7 @@ const get = async (context: Context, eligibilityId: string): Promise<Application
 
     const eligibility = (await context.query.Eligibility.findOne({
       where: { id: eligibilityId },
-      query:
-        'id hasEndBuyer hasMinimumUkGoodsOrServices hasCompaniesHouseNumber otherPartiesInvolved paidByLetterOfCredit validExporterLocation',
+      query: 'id hasEndBuyer hasMinimumUkGoodsOrServices hasCompaniesHouseNumber otherPartiesInvolved paidByLetterOfCredit validExporterLocation',
     })) as ApplicationEligibility;
 
     return eligibility;
