@@ -12,6 +12,8 @@ describe('helpers/get-populated-buyer', () => {
   let createdBuyer: ApplicationBuyer;
   let createdRelationship: ApplicationBuyerRelationship;
   let createdTradingHistory: ApplicationBuyerTradingHistory;
+  let buyerCountryConnectObject = {};
+  let buyerRelationshipConnectObject = {};
 
   beforeAll(async () => {
     context = getKeystoneContext();
@@ -20,22 +22,26 @@ describe('helpers/get-populated-buyer', () => {
   beforeEach(async () => {
     createdCountry = (await country.create(context)) as Country;
 
-    const initBuyer = {
-      country: {
-        connect: {
-          id: createdCountry.id,
-        },
+    buyerCountryConnectObject = {
+      connect: {
+        id: createdCountry.id,
       },
+    };
+
+    const initBuyer = {
+      country: buyerCountryConnectObject,
     };
 
     createdBuyer = (await buyer.create(context, initBuyer)) as ApplicationBuyer;
 
-    const buyerRelationshipObject = {
-      buyer: {
-        connect: {
-          id: createdBuyer.id,
-        },
+    buyerRelationshipConnectObject = {
+      connect: {
+        id: createdBuyer.id,
       },
+    };
+
+    const buyerRelationshipObject = {
+      buyer: buyerRelationshipConnectObject,
     };
 
     createdRelationship = (await buyerRelationship.create(context, buyerRelationshipObject)) as ApplicationBuyerRelationship;
@@ -88,11 +94,7 @@ describe('helpers/get-populated-buyer', () => {
       const invalidId = 'invalid-id';
 
       const buyerObject = {
-        country: {
-          connect: {
-            id: createdCountry.id,
-          },
-        },
+        country: buyerCountryConnectObject,
         relationship: {
           connect: {
             id: invalidId,
@@ -117,16 +119,8 @@ describe('helpers/get-populated-buyer', () => {
       const invalidId = 'invalid-id';
 
       const buyerObject = {
-        country: {
-          connect: {
-            id: createdCountry.id,
-          },
-        },
-        relationship: {
-          connect: {
-            id: createdRelationship.id,
-          },
-        },
+        country: buyerCountryConnectObject,
+        relationship: buyerRelationshipConnectObject,
         buyerTradingHistory: {
           connect: {
             id: invalidId,

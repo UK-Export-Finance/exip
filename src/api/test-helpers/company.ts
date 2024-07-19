@@ -4,14 +4,15 @@ import { ApplicationCompany, ApplicationCompanyAddress, ApplicationCompanySicCod
 /**
  * create company test helper
  * Creates a empty company.
- * @param {Context} KeystoneJS context API
- * @returns {Object} Created company id
+ * @param {Context} context: KeystoneJS context API
+ * @param {ApplicationCompany} data
+ * @returns {ApplicationCompany} Created company
  */
-const createCompany = async (context: Context) => {
+const createCompany = async (context: Context, data = {}) => {
   try {
     console.info('Creating a company (test helpers)');
     const company = (await context.query.Company.createOne({
-      data: {},
+      data,
       query: 'id',
     })) as ApplicationCompany;
 
@@ -92,15 +93,16 @@ const deleteCompanySicCode = async (context: Context, companySicId: string) => {
 /**
  * create company address test helper
  * Creates a empty company address.
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
+ * @param {ApplicationCompanyAddress} data
  * @returns {Object} Created company address id
  */
-const createCompanyAddress = async (context: Context) => {
+const createCompanyAddress = async (context: Context, data = {}) => {
   try {
     console.info('Creating a company address (test helpers)');
 
     const company = (await context.query.CompanyAddress.createOne({
-      data: {},
+      data,
       query: 'id',
     })) as ApplicationCompanyAddress;
 
@@ -110,7 +112,6 @@ const createCompanyAddress = async (context: Context) => {
     return err;
   }
 };
-
 
 /**
  * create company SIC code test helper
@@ -124,14 +125,13 @@ const createCompanySicCode = async (context: Context, companyId: string) => {
     console.info('Creating a company SIC code (test helpers)');
 
     const companySicCode = (await context.query.CompanySicCode.createOne({
-
       data: {
         company: {
           connect: {
             id: companyId,
           },
         },
-      }
+      },
     })) as ApplicationCompanySicCode;
 
     return companySicCode;
@@ -152,7 +152,7 @@ const createCompanyDifferentTradingAddress = async (context: Context, companyId:
   try {
     console.info('Creating a company different trading address (test helpers)');
 
-    const differentTradingAddress = (await context.query.CompanyDifferentTradingAddress.createOne({
+    const differentTradingAddress = await context.query.CompanyDifferentTradingAddress.createOne({
       query: 'id',
       data: {
         company: {
@@ -161,7 +161,7 @@ const createCompanyDifferentTradingAddress = async (context: Context, companyId:
           },
         },
       },
-    }));
+    });
 
     return differentTradingAddress;
   } catch (err) {

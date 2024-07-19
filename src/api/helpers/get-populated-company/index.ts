@@ -4,9 +4,6 @@ import getCompanyAddressById from '../get-company-address-by-id';
 import getCompanySicCodesByCompanyId from '../get-company-sic-codes-by-company-id';
 import getCompanyDifferentTradingAddressById from '../get-company-different-trading-address-by-id';
 
-// TODO
-// TODO: unit test
-// TODO: unit test
 /**
  * getPopulatedCompany
  * Get a populated company
