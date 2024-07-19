@@ -3,6 +3,7 @@ export const APPLICATION = {
     MIA: 'Manual Inclusion Application',
   },
   SUBMISSION_DEADLINE_IN_MONTHS: 1,
+  SUBMISSION_DEADLINE_IN_DAYS: 30,
   POLICY_TYPE: {
     SINGLE: 'Single contract policy',
     MULTIPLE: 'Multiple contract policy',

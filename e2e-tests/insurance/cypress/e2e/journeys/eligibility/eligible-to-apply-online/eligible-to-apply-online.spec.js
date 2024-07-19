@@ -71,11 +71,11 @@ context(
       });
 
       it('should render `privacy` copy and link', () => {
-        cy.checkText(eligibleToApplyOnlinePage.privacyIntro(), PRIVACY.INTRO);
+        cy.checkText(eligibleToApplyOnlinePage.privacy.intro(), PRIVACY.INTRO);
 
-        cy.checkText(eligibleToApplyOnlinePage.privacyNotice(), `${PRIVACY.PRIVACY_NOTICE.LINK.TEXT} ${PRIVACY.PRIVACY_NOTICE.TEXT}`);
+        cy.checkText(eligibleToApplyOnlinePage.privacy.notice(), `${PRIVACY.PRIVACY_NOTICE.LINK.TEXT} ${PRIVACY.PRIVACY_NOTICE.TEXT}`);
 
-        cy.checkLink(eligibleToApplyOnlinePage.privacyNoticeLink(), PRIVACY.PRIVACY_NOTICE.LINK.HREF, PRIVACY.PRIVACY_NOTICE.LINK.TEXT);
+        cy.checkLink(eligibleToApplyOnlinePage.privacy.noticeLink(), PRIVACY.PRIVACY_NOTICE.LINK.HREF, PRIVACY.PRIVACY_NOTICE.LINK.TEXT);
       });
 
       it('renders `continue submit` text', () => {

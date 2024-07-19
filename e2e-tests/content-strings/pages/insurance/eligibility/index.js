@@ -1,4 +1,4 @@
-import { UKEF_CONTACT_DETAILS, GBP_CURRENCY_CODE, TOTAL_CONTRACT_VALUE } from '../../../../constants';
+import { UKEF_CONTACT_DETAILS, GBP_CURRENCY_CODE, TOTAL_CONTRACT_VALUE, APPLICATION } from '../../../../constants';
 import formatCurrency from '../../../../helpers/format-currency';
 import { ACTIONS } from '../../../actions';
 import { LINKS } from '../../../links';
@@ -135,12 +135,12 @@ export const ELIGIBLE_TO_APPLY_ONLINE = {
     PRIVACY_NOTICE: {
       LINK: {
         TEXT: 'privacy notice',
-        HREF: LINKS.EXTERNAL.PRIVACY_NOTICE,
+        HREF: LINKS.EXTERNAL.PRIVACY,
       },
       TEXT: 'for more details.',
     },
   },
-  CONTINUE_SUBMIT: 'Once you continue your application you will have 30 days to submit it.',
+  CONTINUE_SUBMIT: `Once you continue your application you will have ${APPLICATION.SUBMISSION_DEADLINE_IN_DAYS} days to submit it.`,
   SUBMIT_BUTTON: 'Continue to application',
 };
 
