@@ -3,15 +3,16 @@ import { Context } from '.keystone/types'; // eslint-disable-line
 /**
  * create buyer test helper
  * Create a buyer with mock buyer data and any provied custom buyer data.
- * @param {Context} KeystoneJS context API, buyer data
- * @returns {Object} Created buyer
+ * @param {Context} context: KeystoneJS context API, buyer data
+ * @param {ApplicationBuyerTradingHistory} data
+ * @returns {Object} Created buyer trading history
  */
-const create = async (context: Context) => {
+const create = async (context: Context, data = {}) => {
   try {
     console.info('Creating a buyerTradingHistory (test helpers)');
 
     const buyer = await context.query.BuyerTradingHistory.createOne({
-      data: { },
+      data,
     });
 
     return buyer;

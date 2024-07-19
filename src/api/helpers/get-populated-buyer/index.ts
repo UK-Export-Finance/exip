@@ -4,9 +4,6 @@ import getCountryById from '../get-country-by-id';
 import getBuyerRelationshipById from '../get-buyer-relationship-by-id';
 import getBuyerTradingHistoryById from '../get-buyer-trading-history-by-id';
 
-// TODO
-// TODO: unit test
-// TODO: unit test
 /**
  * getPopulatedBuyer
  * Get a populated eligibility
