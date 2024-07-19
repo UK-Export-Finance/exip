@@ -166,9 +166,49 @@ describe('custom-resolvers/verify-account-email-address', () => {
     });
   });
 
-  describe(`when the verification hash has does not match the received token`, () => {
+  describe(`when the verification hash does not match the received token`, () => {
     test('it should return success=false and invalid=true', async () => {
       variables.token = 'invalid';
+      variables.accountId = account.id;
+
+      result = await verifyAccountEmailAddress({}, variables, context);
+
+      const expected = { success: false, invalid: true };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when the verification hash is valid but account id is invalid`, () => {
+    test('it should return success=false and invalid=true', async () => {
+      variables.token = account[VERIFICATION_HASH];
+      variables.accountId = 'invalid';
+
+      result = await verifyAccountEmailAddress({}, variables, context);
+
+      const expected = { success: false, invalid: true };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when the verification hash is valid but account id is not provided`, () => {
+    test('it should return success=false and invalid=true', async () => {
+      variables.token = account[VERIFICATION_HASH];
+      variables.accountId = null;
+
+      result = await verifyAccountEmailAddress({}, variables, context);
+
+      const expected = { success: false, invalid: true };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when the verification hash is not provided but account id is valid`, () => {
+    test('it should return success=false and invalid=true', async () => {
+      variables.token = null;
+      variables.accountId = account.id;
 
       result = await verifyAccountEmailAddress({}, variables, context);
 

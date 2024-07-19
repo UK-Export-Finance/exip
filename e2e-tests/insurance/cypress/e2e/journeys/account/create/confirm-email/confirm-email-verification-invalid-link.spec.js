@@ -12,6 +12,8 @@ const {
   },
 } = INSURANCE_ROUTES;
 
+const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+
 context(
   'Insurance - Account - Create - Confirm email page - invalid link - As an Exporter I want to verify my email address for account creation, So that I can activate my email address and use it to create a digital service account with UKEF',
   () => {
@@ -19,6 +21,9 @@ context(
     const verifyEmailUrl = `${baseUrl}${VERIFY_EMAIL}`;
     const verifyEmailLinkInvalidUrl = `${baseUrl}${VERIFY_EMAIL_INVALID_LINK}`;
     const signInUrl = `${baseUrl}${SIGN_IN_ROOT}`;
+    let accountId;
+    let hash;
+    const invalid = 'invalid';
 
     before(() => {
       cy.deleteAccount();
@@ -27,6 +32,15 @@ context(
 
       cy.submitEligibilityAndStartAccountCreation();
       cy.completeAndSubmitCreateAccountForm();
+
+      cy.getAccountByEmail(accountEmail).then((responseData) => {
+        const [firstAccount] = responseData;
+
+        const { id, verificationHash } = firstAccount;
+
+        accountId = id;
+        hash = verificationHash;
+      });
     });
 
     beforeEach(() => {
@@ -58,6 +72,46 @@ context(
         invalidLinkPage.returnToSignInButton().click();
 
         cy.assertUrl(signInUrl);
+      });
+    });
+
+    describe(`when navigating to ${VERIFY_EMAIL} with an invalid token in the url but a valid accountId`, () => {
+      it(`should redirect to ${VERIFY_EMAIL_INVALID_LINK}`, () => {
+        const url = `${baseUrl}${VERIFY_EMAIL}?token=${invalid}&id=${accountId}`;
+
+        cy.navigateToUrl(url);
+
+        cy.assertUrl(verifyEmailLinkInvalidUrl);
+      });
+    });
+
+    describe(`when navigating to ${VERIFY_EMAIL} with valid token but invalid account id`, () => {
+      it(`should redirect to ${VERIFY_EMAIL_INVALID_LINK}`, () => {
+        const url = `${baseUrl}${VERIFY_EMAIL}?token=${hash}&id=${invalid}`;
+
+        cy.navigateToUrl(url);
+
+        cy.assertUrl(verifyEmailLinkInvalidUrl);
+      });
+    });
+
+    describe(`when navigating to ${VERIFY_EMAIL} with valid token but no account id`, () => {
+      it(`should redirect to ${VERIFY_EMAIL_INVALID_LINK}`, () => {
+        const url = `${baseUrl}${VERIFY_EMAIL}?token=${hash}&id=`;
+
+        cy.navigateToUrl(url);
+
+        cy.assertUrl(verifyEmailLinkInvalidUrl);
+      });
+    });
+
+    describe(`when navigating to ${VERIFY_EMAIL} with no token but a valid account id`, () => {
+      it(`should redirect to ${VERIFY_EMAIL_INVALID_LINK}`, () => {
+        const url = `${baseUrl}${VERIFY_EMAIL}?token=&id=${accountId}`;
+
+        cy.navigateToUrl(url);
+
+        cy.assertUrl(verifyEmailLinkInvalidUrl);
       });
     });
   },
