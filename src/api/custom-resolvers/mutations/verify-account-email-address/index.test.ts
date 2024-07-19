@@ -139,6 +139,8 @@ describe('custom-resolvers/verify-account-email-address', () => {
     test('it should return success=true', async () => {
       account = await accounts.create({ context, data: mockAccountUpdate });
       await accountStatusHelper.update(context, account.status.id, { [IS_VERIFIED]: true });
+      variables.token = account[VERIFICATION_HASH];
+
       // get updated account
       account = await accounts.get(context, account.id);
 
