@@ -18,12 +18,9 @@ describe('Keystone - Application timestamp updates', () => {
     application = (await applications.create({ context })) as Application;
 
     // create buyer and associate with the application.
-    const buyer = await buyerHelper.create({
-      context,
-      data: {
-        application: {
-          connect: { id: application.id },
-        },
+    const buyer = await buyerHelper.create(context, {
+      application: {
+        connect: { id: application.id },
       },
     });
 
@@ -31,15 +28,12 @@ describe('Keystone - Application timestamp updates', () => {
      * Create buyer trading history,
      * Associate with the buyer and application
      */
-    const buyerTradingHistory = await buyerTradingHistoryHelper.create({
-      context,
-      data: {
-        buyer: {
-          connect: { id: buyer.id },
-        },
-        application: {
-          connect: { id: application.id },
-        },
+    const buyerTradingHistory = await buyerTradingHistoryHelper.create(context, {
+      buyer: {
+        connect: { id: buyer.id },
+      },
+      application: {
+        connect: { id: application.id },
       },
     });
 

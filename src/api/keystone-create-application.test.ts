@@ -23,12 +23,9 @@ describe('Keystone - Create an Application', () => {
      * Create buyer trading history,
      * Associate with the application.
      */
-    const buyer = (await buyerHelper.create({
-      context,
-      data: {
-        application: {
-          connect: { id: application.id },
-        },
+    const buyer = (await buyerHelper.create(context, {
+      application: {
+        connect: { id: application.id },
       },
     })) as ApplicationBuyer;
 
@@ -36,12 +33,9 @@ describe('Keystone - Create an Application', () => {
      * Create buyer trading history,
      * Associate with the buyer.
      */
-    const buyerTradingHistory = await buyerTradingHistoryHelper.create({
-      context,
-      data: {
-        buyer: {
-          connect: { id: buyer.id },
-        },
+    const buyerTradingHistory = await buyerTradingHistoryHelper.create(context, {
+      buyer: {
+        connect: { id: buyer.id },
       },
     });
 
@@ -196,8 +190,9 @@ describe('Keystone - Create an Application', () => {
     beforeAll(async () => {
       business = await getBusinessById(context, application.business.id);
     });
+
     test('it should add the application ID to the business entry', async () => {
-      expect(business.application.id).toEqual(application.id);
+      expect(business.applicationId).toEqual(application.id);
     });
 
     test('it should have a default business.turnoverCurrencyCode', async () => {
@@ -208,12 +203,12 @@ describe('Keystone - Create an Application', () => {
   test('it should add the application ID to the broker entry', async () => {
     const broker = await getBrokerById(context, application.broker.id);
 
-    expect(broker.application.id).toEqual(application.id);
+    expect(broker.applicationId).toEqual(application.id);
   });
 
   test('it should add the application ID to the declaration entry', async () => {
     const declaration = await getDeclarationById(context, application.declaration.id);
 
-    expect(declaration.application.id).toEqual(application.id);
+    expect(declaration.applicationId).toEqual(application.id);
   });
 });
