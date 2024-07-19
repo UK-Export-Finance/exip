@@ -164,6 +164,18 @@ describe('custom-resolvers/verify-account-email-address', () => {
     });
   });
 
+  describe(`when the verification hash has does not match the received token`, () => {
+    test('it should return success=false and invalid=true', async () => {
+      variables.token = 'invalid';
+
+      result = await verifyAccountEmailAddress({}, variables, context);
+
+      const expected = { success: false, invalid: true };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('when no account is found', () => {
     test('it should return success=false and invalid=true', async () => {
       // ensure we have the valid token that was previously created
