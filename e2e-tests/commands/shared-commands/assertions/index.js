@@ -21,6 +21,7 @@ Cypress.Commands.add('assertLength', require('./assert-length'));
 Cypress.Commands.add('assertErrorSummaryListLength', require('./assert-error-summary-list-length'));
 Cypress.Commands.add('assertErrorSummaryListDoesNotExist', require('./assert-error-summary-list-does-not-exist'));
 Cypress.Commands.add('assertCurrencyFormFieldsAreEmpty', require('./assert-currency-form-fields-are-empty'));
+Cypress.Commands.add('assertNameEmailAndPositionFields', require('./assert-name-email-and-position-fields'));
 
 Cypress.Commands.add('assertCopyWithCurrencyName', require('./assert-copy-with-currency-name'));
 Cypress.Commands.add('assertPrefix', require('./assert-prefix'));
@@ -36,6 +37,7 @@ Cypress.Commands.add('checkEmailFieldRendering', require('./check-email-field-re
 Cypress.Commands.add('checkIntroText', require('./check-intro-text'));
 Cypress.Commands.add('checkLink', require('./check-link'));
 Cypress.Commands.add('checkText', require('./check-text'));
+Cypress.Commands.add('checkTextAndValue', require('./check-text-and-value'));
 Cypress.Commands.add('checkTextareaValue', require('./check-textarea-value'));
 Cypress.Commands.add('checkTypeAttribute', require('./check-type-attribute'));
 Cypress.Commands.add('checkValue', require('./check-value'));

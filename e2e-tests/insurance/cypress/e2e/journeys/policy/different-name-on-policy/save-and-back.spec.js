@@ -7,20 +7,14 @@ const { POLICY_CONTACT } = application;
 
 const {
   ROOT: INSURANCE_ROOT,
-  POLICY: {
-    DIFFERENT_NAME_ON_POLICY,
-  },
+  POLICY: { DIFFERENT_NAME_ON_POLICY },
 } = INSURANCE_ROUTES;
 
 const {
   POLICY: {
-    DIFFERENT_NAME_ON_POLICY: {
-      POSITION,
-    },
+    DIFFERENT_NAME_ON_POLICY: { POSITION },
   },
-  ACCOUNT: {
-    FIRST_NAME, LAST_NAME, EMAIL,
-  },
+  ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
 } = INSURANCE_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -71,10 +65,12 @@ context('Insurance - Policy - Different name on policy - Save and go back', () =
     it('should have the all inputs as empty when going back to the page after submission', () => {
       cy.navigateToUrl(url);
 
-      cy.checkValue(field(FIRST_NAME), '');
-      cy.checkValue(field(LAST_NAME), '');
-      cy.checkValue(field(EMAIL), '');
-      cy.checkValue(field(POSITION), '');
+      cy.assertNameEmailAndPositionFields({
+        expectedFirstName: '',
+        expectedLastName: '',
+        expectedEmail: '',
+        expectedPosition: '',
+      });
     });
   });
 
@@ -99,10 +95,12 @@ context('Insurance - Policy - Different name on policy - Save and go back', () =
     it('should have the originally submitted answers populated when going back to the page after submission', () => {
       cy.navigateToUrl(url);
 
-      cy.checkValue(field(FIRST_NAME), POLICY_CONTACT[FIRST_NAME]);
-      cy.checkValue(field(LAST_NAME), POLICY_CONTACT[LAST_NAME]);
-      cy.checkValue(field(EMAIL), '');
-      cy.checkValue(field(POSITION), '');
+      cy.assertNameEmailAndPositionFields({
+        expectedFirstName: POLICY_CONTACT[FIRST_NAME],
+        expectedLastName: POLICY_CONTACT[LAST_NAME],
+        expectedEmail: '',
+        expectedPosition: '',
+      });
     });
   });
 
@@ -125,10 +123,12 @@ context('Insurance - Policy - Different name on policy - Save and go back', () =
     it('should have the originally submitted answers populated when going back to the page after submission', () => {
       cy.navigateToUrl(url);
 
-      cy.checkValue(field(FIRST_NAME), POLICY_CONTACT[FIRST_NAME]);
-      cy.checkValue(field(LAST_NAME), POLICY_CONTACT[LAST_NAME]);
-      cy.checkValue(field(EMAIL), POLICY_CONTACT[EMAIL]);
-      cy.checkValue(field(POSITION), POLICY_CONTACT[POSITION]);
+      cy.assertNameEmailAndPositionFields({
+        expectedFirstName: POLICY_CONTACT[FIRST_NAME],
+        expectedLastName: POLICY_CONTACT[LAST_NAME],
+        expectedEmail: POLICY_CONTACT[EMAIL],
+        expectedPosition: POLICY_CONTACT[POSITION],
+      });
     });
 
     it('should have the originally submitted answers populated when going back to the page through policy and exports flow', () => {
@@ -137,10 +137,12 @@ context('Insurance - Policy - Different name on policy - Save and go back', () =
       // go through 4 policy forms.
       cy.clickSubmitButtonMultipleTimes({ count: 4 });
 
-      cy.checkValue(field(FIRST_NAME), POLICY_CONTACT[FIRST_NAME]);
-      cy.checkValue(field(LAST_NAME), POLICY_CONTACT[LAST_NAME]);
-      cy.checkValue(field(EMAIL), POLICY_CONTACT[EMAIL]);
-      cy.checkValue(field(POSITION), POLICY_CONTACT[POSITION]);
+      cy.assertNameEmailAndPositionFields({
+        expectedFirstName: POLICY_CONTACT[FIRST_NAME],
+        expectedLastName: POLICY_CONTACT[LAST_NAME],
+        expectedEmail: POLICY_CONTACT[EMAIL],
+        expectedPosition: POLICY_CONTACT[POSITION],
+      });
     });
   });
 });

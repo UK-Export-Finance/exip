@@ -1,13 +1,6 @@
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { field as fieldSelector, radios, autoCompleteField } from '../../pages/shared';
-import {
-  EUR,
-  GBP,
-  JPY,
-  USD,
-  NON_STANDARD_CURRENCY_CODE,
-  NON_STANDARD_CURRENCY_NAME,
-} from '../../fixtures/currencies';
+import { EUR, GBP, JPY, USD, NON_STANDARD_CURRENCY_CODE, NON_STANDARD_CURRENCY_NAME } from '../../fixtures/currencies';
 import { checkAutocompleteInput } from '../../shared-test-assertions';
 import { DZA } from '../../fixtures/countries';
 import partials from '../../partials';
@@ -76,8 +69,7 @@ const assertCurrencyFormFields = ({
     cy.checkCurrencyOption(option4, JPY);
 
     // Alternative currency
-    cy.checkText(option5.label(), alternativeCurrencyText);
-    cy.checkValue(option5, alternativeCurrencyFieldId);
+    cy.checkTextAndValue(option5.label(), alternativeCurrencyText, option5, alternativeCurrencyFieldId);
   },
   assertGbpCurrencyCheckedByDefault: () => {
     const option = currencyRadio({ fieldId, currency: GBP.isoCode });
