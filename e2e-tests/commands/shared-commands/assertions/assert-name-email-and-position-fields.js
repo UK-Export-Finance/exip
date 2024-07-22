@@ -16,7 +16,9 @@ const {
  * @param {String} expectedEmail: Email address
  * @param {String} expectedPosition: Position
  */
-const assertNameEmailAndPositionFields = ({ expectedFirstName, expectedLastName, expectedEmail, expectedPosition }) => {
+const assertNameEmailAndPositionFields = ({
+  expectedFirstName, expectedLastName, expectedEmail, expectedPosition,
+}) => {
   cy.checkValue(field(FIRST_NAME), expectedFirstName);
   cy.checkValue(field(LAST_NAME), expectedLastName);
   cy.checkValue(field(EMAIL), expectedEmail);

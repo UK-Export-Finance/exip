@@ -6,7 +6,9 @@
  * @param {String} expectedEmail: Email
  * @param {String} expectedPosition: Position
  */
-const assertDifferentNameOnPolicyFieldValues = ({ expectedFirstName = '', expectedLastName = '', expectedEmail = '', expectedPosition = '' }) =>
+const assertDifferentNameOnPolicyFieldValues = ({
+  expectedFirstName = '', expectedLastName = '', expectedEmail = '', expectedPosition = '',
+}) =>
   cy.assertNameEmailAndPositionFields({
     expectedFirstName,
     expectedLastName,
