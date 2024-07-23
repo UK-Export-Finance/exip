@@ -59,7 +59,12 @@ context(
 
       const expectedValue = NEW_COUNTRY_INPUT;
 
-      cy.checkTextAndValue(autoCompleteField(FIELD_ID).results(), expectedValue, autoCompleteField(FIELD_ID), expectedValue);
+      cy.checkTextAndValue({
+        textSelector: autoCompleteField(FIELD_ID).results(),
+        expectedText: expectedValue,
+        valueSelector: autoCompleteField(FIELD_ID),
+        expectedValue,
+      });
     });
   },
 );
