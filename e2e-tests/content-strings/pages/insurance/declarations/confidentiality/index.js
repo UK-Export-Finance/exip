@@ -5,7 +5,7 @@ export const CONFIDENTIALITY = {
   PAGE_TITLE: 'Confidentiality',
   VERSIONS: [
     {
-      VERSION: 2,
+      VERSION: 1,
       LABEL: `${CONFIRM_READ_AND_AGREE} the confidentiality declaration`,
       OPTION: {
         TEXT: `${HAVE_READ_AND_AGREED} the confidentiality declaration`,

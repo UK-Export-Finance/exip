@@ -7,7 +7,7 @@ export const ANTI_BRIBERY_CODE_OF_CONDUCT = {
     'Do you have in place a code of conduct and written procedures of the type contemplated by Section(2) of the Bribery Act to discourage and prevent corrupt activity?',
   VERSIONS: [
     {
-      VERSION: 2,
+      VERSION: 1,
       HINT: {
         INTRO: 'If no, your attention is drawn to',
         LINK: {

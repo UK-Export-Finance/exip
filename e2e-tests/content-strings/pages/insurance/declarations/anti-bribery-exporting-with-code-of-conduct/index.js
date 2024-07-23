@@ -5,7 +5,7 @@ export const ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT = {
   PAGE_TITLE: 'Will you use your anti-bribery code of conduct to win or carry out the exports you want to insure?',
   VERSIONS: [
     {
-      VERSION: 2,
+      VERSION: 1,
     },
   ],
 };
