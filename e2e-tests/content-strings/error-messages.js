@@ -1,11 +1,4 @@
-import {
-  APPLICATION,
-  ELIGIBILITY,
-  FIELD_IDS,
-  MINIMUM_CHARACTERS,
-  MAXIMUM_CHARACTERS,
-  TOTAL_CONTRACT_VALUE,
-} from '../constants';
+import { APPLICATION, ELIGIBILITY, FIELD_IDS, MINIMUM_CHARACTERS, MAXIMUM_CHARACTERS, TOTAL_CONTRACT_VALUE } from '../constants';
 import formatCurrency from '../helpers/format-currency';
 
 const {
@@ -527,9 +520,6 @@ export const ERROR_MESSAGES = {
       },
       [FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIRMATION_ACKNOWLEDGEMENTS]: {
         IS_EMPTY: 'Confirm that you have read and accept the confirmation and acknowledgements',
-      },
-      [FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_HOW_YOUR_DATA_WILL_BE_USED]: {
-        IS_EMPTY: 'Confirm that you have read and accept how your data will be used',
       },
     },
   },

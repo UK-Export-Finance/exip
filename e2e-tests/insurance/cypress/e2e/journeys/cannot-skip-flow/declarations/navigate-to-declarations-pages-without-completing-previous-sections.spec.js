@@ -5,13 +5,8 @@ const {
   COMPLETE_OTHER_SECTIONS,
   DECLARATIONS: {
     CONFIDENTIALITY,
-    ANTI_BRIBERY: {
-      ROOT: ANTI_BRIBERY_ROOT,
-      CODE_OF_CONDUCT,
-      EXPORTING_WITH_CODE_OF_CONDUCT,
-    },
+    ANTI_BRIBERY: { ROOT: ANTI_BRIBERY_ROOT, CODE_OF_CONDUCT, EXPORTING_WITH_CODE_OF_CONDUCT },
     CONFIRMATION_AND_ACKNOWLEDGEMENTS,
-    HOW_YOUR_DATA_WILL_BE_USED,
   },
 } = INSURANCE_ROUTES;
 
@@ -72,14 +67,6 @@ context('Insurance - Declaration - cannot skip to any Declarations page without 
 
   it(`should redirect to ${COMPLETE_OTHER_SECTIONS} when navigating to the Declarations - Confirmation and acknowledgements page directly`, () => {
     const url = `${insuranceRoute}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
-
-    cy.navigateToUrl(url);
-
-    cy.assertUrl(completeOtherSectionsUrl);
-  });
-
-  it(`should redirect to ${COMPLETE_OTHER_SECTIONS} when navigating to the Declarations - How your data will be used page directly`, () => {
-    const url = `${insuranceRoute}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`;
 
     cy.navigateToUrl(url);
 

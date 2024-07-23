@@ -15,7 +15,8 @@ import { mockReq, mockRes, mockApplication, mockDeclarations, mockSpyPromise, re
 
 const {
   INSURANCE_ROOT,
-  DECLARATIONS: { CONFIRMATION_AND_ACKNOWLEDGEMENTS_SAVE_AND_BACK, HOW_YOUR_DATA_WILL_BE_USED },
+  APPLICATION_SUBMITTED,
+  DECLARATIONS: { CONFIRMATION_AND_ACKNOWLEDGEMENTS_SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
@@ -145,10 +146,10 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
         expect(save.declaration).toHaveBeenCalledWith(mockApplication, payload);
       });
 
-      it(`should redirect to ${HOW_YOUR_DATA_WILL_BE_USED}`, async () => {
+      it(`should redirect to ${APPLICATION_SUBMITTED}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
