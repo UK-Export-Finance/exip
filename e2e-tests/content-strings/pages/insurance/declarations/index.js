@@ -59,7 +59,7 @@ const ANTI_BRIBERY = {
       BODY: [
         {
           TERM: 'Consortium Party or Agent',
-          DEFINITION: ['Is a consortium party or Agent named in this Application.'],
+          DEFINITION: ['Is a consortium party or agent name in this application'],
         },
         {
           TERM: 'Controlled',
@@ -97,14 +97,14 @@ const ANTI_BRIBERY = {
         {
           TERM: 'Involved Group Company',
           DEFINITION: [
-            'Means a Group Company which (a) having made the reasonable enquiries referred to in paragraph 8(ii) of section 14 of this Proposal, has had, or is intended to have, at the date of this Proposal, any material part in the negotiation or obtaining of the export contract;',
+            'Means a group company which (a) having made the reasonable enquires referred to in paragraph 8(ii) of the anti-bribery and corruption declaration, has had, or is intended to have, at the date of this proposal, any material part in the negotiation or obtaining of the export contract;',
             '(b) employs personnel providing head office, legal, compliance, audit and/ or similar functions.',
           ],
         },
         {
           TERM: 'Potential Corrupt Activity',
           DEFINITION: [
-            'Means activity which could, subject to the occurrence of subsequent events referred to in (a), (c) and (d) of the definition of “Corrupt Activity” in this section 14, amount to Corrupt Activity;',
+            'Means activity which could, subject to the occurrence of subsequent events referred to in (a), (c) and (d) of the definition of “Corrupt Activity” in this anti-bribery and corruption declaration.',
           ],
         },
         {
