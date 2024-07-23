@@ -59,7 +59,6 @@ jobs:
     name: Database 💾
     needs: setup
     environment: ${{ needs.setup.outputs.environment }}
-    if: ${{ '1' == vars.DATABASE }}
     env:
       ENVIRONMENT: ${{ needs.setup.outputs.environment }}
     runs-on: [self-hosted, EXIP, deployment]
@@ -81,12 +80,14 @@ jobs:
             az configure --defaults group=rg-${{ env.PRODUCT }}-${{ github.ref_name }}-${{ vars.VERSION }}
 
       - name: Extension ➕
+        if: ${{ '1' == vars.DATABASE }}
         uses: azure/cli@v2
         with:
           inlineScript: |
             az config set extension.use_dynamic_install=yes_without_prompt
 
       - name: Import ⬇
+        if: ${{ '1' == vars.DATABASE }}
         uses: azure/cli@v2
         with:
           inlineScript: |
