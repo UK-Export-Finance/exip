@@ -11,10 +11,7 @@ const attemptsToMake = [...Array(ACCOUNT.MAX_AUTH_RETRIES)];
  * - clickBackLinkOnLastAttempt
  * - password
  */
-const completeAndSubmitSignInAccountFormMaximumInvalidRetries = ({
-  clickBackLinkOnLastAttempt = true,
-  password,
-}) => {
+const completeAndSubmitSignInAccountFormMaximumInvalidRetries = ({ clickBackLinkOnLastAttempt = true, password }) => {
   attemptsToMake.forEach((item, index) => {
     completeAndSubmitSignInAccountForm({ assertRedirectUrl: false, password });
 

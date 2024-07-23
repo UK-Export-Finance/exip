@@ -4,10 +4,4 @@ import checkYourAnswersPage from './checkYourAnswers';
 import yourQuotePage from './yourQuote';
 import getAQuoteByEmailPage from './getAQuoteByEmail';
 
-export {
-  policyTypePage,
-  tellUsAboutYourPolicyPage,
-  checkYourAnswersPage,
-  yourQuotePage,
-  getAQuoteByEmailPage,
-};
+export { policyTypePage, tellUsAboutYourPolicyPage, checkYourAnswersPage, yourQuotePage, getAQuoteByEmailPage };

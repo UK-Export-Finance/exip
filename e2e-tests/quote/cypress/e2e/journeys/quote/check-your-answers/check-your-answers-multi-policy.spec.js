@@ -1,24 +1,12 @@
 import { summaryList } from '../../../../../../pages/shared';
 import { checkYourAnswersPage } from '../../../../../../pages/quote';
-import {
-  FIELDS,
-  LINKS,
-  PAGES,
-  SUMMARY_ANSWERS,
-} from '../../../../../../content-strings';
+import { FIELDS, LINKS, PAGES, SUMMARY_ANSWERS } from '../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CHECK_YOUR_ANSWERS;
 
 const {
-  ELIGIBILITY: {
-    BUYER_COUNTRY,
-    CREDIT_PERIOD,
-    HAS_MINIMUM_UK_GOODS_OR_SERVICES,
-    PERCENTAGE_OF_COVER,
-    VALID_EXPORTER_LOCATION,
-    MAX_AMOUNT_OWED,
-  },
+  ELIGIBILITY: { BUYER_COUNTRY, CREDIT_PERIOD, HAS_MINIMUM_UK_GOODS_OR_SERVICES, PERCENTAGE_OF_COVER, VALID_EXPORTER_LOCATION, MAX_AMOUNT_OWED },
   POLICY_LENGTH,
   POLICY_TYPE,
 } = FIELD_IDS;
@@ -81,11 +69,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
       const expectedHref = `${BUYER_COUNTRY_CHANGE}#heading`;
       const expectedText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
-      cy.checkLink(
-        row.changeLink(),
-        expectedHref,
-        expectedText,
-      );
+      cy.checkLink(row.changeLink(), expectedHref, expectedText);
     });
 
     it('renders `Company` key, value and change link', () => {
@@ -99,11 +83,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
       const expectedHref = `${EXPORTER_LOCATION_CHANGE}#heading`;
       const expectedText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
-      cy.checkLink(
-        row.changeLink(),
-        expectedHref,
-        expectedText,
-      );
+      cy.checkLink(row.changeLink(), expectedHref, expectedText);
     });
 
     it('renders `UK goods` key, value and change link', () => {
@@ -117,11 +97,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
       const expectedHref = `${UK_GOODS_OR_SERVICES_CHANGE}#heading`;
       const expectedText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
-      cy.checkLink(
-        row.changeLink(),
-        expectedHref,
-        expectedText,
-      );
+      cy.checkLink(row.changeLink(), expectedHref, expectedText);
     });
   });
 
@@ -147,11 +123,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
       const expectedChangeHref = `${POLICY_TYPE_CHANGE}#heading`;
       const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
-      cy.checkLink(
-        row.changeLink(),
-        expectedChangeHref,
-        expectedChangeText,
-      );
+      cy.checkLink(row.changeLink(), expectedChangeHref, expectedChangeText);
     });
 
     it('renders `Policy length` key and value (no change link)', () => {
@@ -178,11 +150,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
       const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`;
       const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
-      cy.checkLink(
-        row.changeLink(),
-        expectedChangeHref,
-        expectedChangeText,
-      );
+      cy.checkLink(row.changeLink(), expectedChangeHref, expectedChangeText);
     });
 
     it('renders `Credit period` key, value and change link', () => {
@@ -197,11 +165,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
       const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}-label`;
       const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
-      cy.checkLink(
-        row.changeLink(),
-        expectedChangeHref,
-        expectedChangeText,
-      );
+      cy.checkLink(row.changeLink(), expectedChangeHref, expectedChangeText);
     });
 
     it('renders `Percentage of cover` key, value and change link', () => {
@@ -216,11 +180,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
       const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
       const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
-      cy.checkLink(
-        row.changeLink(),
-        expectedChangeHref,
-        expectedChangeText,
-      );
+      cy.checkLink(row.changeLink(), expectedChangeHref, expectedChangeText);
     });
   });
 

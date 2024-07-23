@@ -1,10 +1,7 @@
 import { field } from '../../../pages/shared';
 import { YOUR_BUYER as FIELD_IDS } from '../../../constants/field-ids/insurance/your-buyer';
 
-const {
-  TOTAL_AMOUNT_OVERDUE,
-  TOTAL_OUTSTANDING_PAYMENTS,
-} = FIELD_IDS;
+const { TOTAL_AMOUNT_OVERDUE, TOTAL_OUTSTANDING_PAYMENTS } = FIELD_IDS;
 
 /**
  * assertEmptyTradingHistoryFieldValues

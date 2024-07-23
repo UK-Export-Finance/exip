@@ -3,13 +3,9 @@ import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 
 const {
   POLICY: {
-    DIFFERENT_NAME_ON_POLICY: {
-      POSITION,
-    },
+    DIFFERENT_NAME_ON_POLICY: { POSITION },
   },
-  ACCOUNT: {
-    FIRST_NAME, LAST_NAME, EMAIL,
-  },
+  ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
 } = INSURANCE_FIELD_IDS;
 
 /**
@@ -20,12 +16,7 @@ const {
  * @param {String} expectedEmail: Email
  * @param {String} expectedPosition: Position
  */
-const assertDifferentNameOnPolicyFieldValues = ({
-  expectedFirstName = '',
-  expectedLastName = '',
-  expectedEmail = '',
-  expectedPosition = '',
-}) => {
+const assertDifferentNameOnPolicyFieldValues = ({ expectedFirstName = '', expectedLastName = '', expectedEmail = '', expectedPosition = '' }) => {
   cy.checkValue(fieldSelector(FIRST_NAME), expectedFirstName);
   cy.checkValue(fieldSelector(LAST_NAME), expectedLastName);
   cy.checkValue(fieldSelector(EMAIL), expectedEmail);

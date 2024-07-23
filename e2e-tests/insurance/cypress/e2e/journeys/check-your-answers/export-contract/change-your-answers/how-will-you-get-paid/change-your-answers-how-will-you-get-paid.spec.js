@@ -5,18 +5,12 @@ import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insur
 
 const {
   ROOT,
-  CHECK_YOUR_ANSWERS: {
-    EXPORT_CONTRACT,
-  },
-  EXPORT_CONTRACT: {
-    HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE,
-  },
+  CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT },
+  EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {
-  HOW_WILL_YOU_GET_PAID: {
-    PAYMENT_TERMS_DESCRIPTION: FIELD_ID,
-  },
+  HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION: FIELD_ID },
 } = FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;

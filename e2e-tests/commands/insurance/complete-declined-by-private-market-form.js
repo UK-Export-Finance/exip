@@ -13,9 +13,7 @@ const {
  * Complete the "Why were you declined by the private market" form
  * @param {String} declinedDescription: Description value
  */
-const completeDeclinedByPrivateMarketForm = ({
-  declinedDescription = application.EXPORT_CONTRACT.PRIVATE_MARKET[FIELD_ID],
-}) => {
+const completeDeclinedByPrivateMarketForm = ({ declinedDescription = application.EXPORT_CONTRACT.PRIVATE_MARKET[FIELD_ID] }) => {
   cy.keyboardInput(field(FIELD_ID).textarea(), declinedDescription);
 };
 

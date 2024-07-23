@@ -5,11 +5,7 @@
  * @param {String} fullAddress: Agent's address
  * @param {String} countryCode: Agent's country code
  */
-const completeAndSubmitAgentDetailsForm = ({
-  name,
-  fullAddress,
-  countryCode,
-}) => {
+const completeAndSubmitAgentDetailsForm = ({ name, fullAddress, countryCode }) => {
   cy.completeAgentDetailsForm({
     name,
     fullAddress,

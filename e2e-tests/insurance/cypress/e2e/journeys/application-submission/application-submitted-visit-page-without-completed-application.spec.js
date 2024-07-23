@@ -1,9 +1,6 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
-const {
-  ROOT: INSURANCE_ROOT,
-  APPLICATION_SUBMITTED,
-} = INSURANCE_ROUTES;
+const { ROOT: INSURANCE_ROOT, APPLICATION_SUBMITTED } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 

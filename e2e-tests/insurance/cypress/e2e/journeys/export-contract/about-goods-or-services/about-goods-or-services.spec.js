@@ -1,9 +1,4 @@
-import {
-  headingCaption,
-  yesRadio,
-  noRadio,
-  autoCompleteField,
-} from '../../../../../../pages/shared';
+import { headingCaption, yesRadio, noRadio, autoCompleteField } from '../../../../../../pages/shared';
 import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/export-contract';
 import { PAGES } from '../../../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/export-contract';

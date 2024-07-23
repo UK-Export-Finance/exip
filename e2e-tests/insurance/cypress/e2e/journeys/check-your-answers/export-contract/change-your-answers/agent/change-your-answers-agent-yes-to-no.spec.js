@@ -7,21 +7,13 @@ import checkSummaryList from '../../../../../../../../commands/insurance/check-e
 const {
   ROOT,
   CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT },
-  EXPORT_CONTRACT: {
-    AGENT_CHECK_AND_CHANGE,
-    AGENT_DETAILS,
-    AGENT_SERVICE,
-    AGENT_CHARGES,
-  },
+  EXPORT_CONTRACT: { AGENT_CHECK_AND_CHANGE, AGENT_DETAILS, AGENT_SERVICE, AGENT_CHARGES },
 } = INSURANCE_ROUTES;
 
 const {
   USING_AGENT: FIELD_ID,
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
-  AGENT_SERVICE: {
-    IS_CHARGING,
-    SERVICE_DESCRIPTION,
-  },
+  AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
 } = FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;

@@ -1,9 +1,6 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
-import {
-  MULTI_LINE_STRING,
-  EXPECTED_MULTI_LINE_STRING,
-} from '../../../../../constants';
+import { MULTI_LINE_STRING, EXPECTED_MULTI_LINE_STRING } from '../../../../../constants';
 
 const {
   ROOT,

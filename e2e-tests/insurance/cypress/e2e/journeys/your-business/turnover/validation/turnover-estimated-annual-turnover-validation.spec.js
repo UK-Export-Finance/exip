@@ -4,9 +4,7 @@ import { ROUTES } from '../../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/business';
 
 const {
-  TURNOVER: {
-    ESTIMATED_ANNUAL_TURNOVER: FIELD_ID,
-  },
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: FIELD_ID },
 } = FIELD_IDS;
 
 const TURNOVER_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;

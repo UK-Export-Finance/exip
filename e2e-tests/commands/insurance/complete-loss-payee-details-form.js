@@ -4,9 +4,7 @@ import field from '../../pages/shared/field';
 import { radios } from '../../pages/shared';
 
 const {
-  LOSS_PAYEE_DETAILS: {
-    NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY,
-  },
+  LOSS_PAYEE_DETAILS: { NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY },
 } = POLICY_FIELD_IDS;
 
 const { POLICY } = application;
@@ -17,10 +15,7 @@ const { POLICY } = application;
  * @param {Boolean} name: loss payee name
  * @param {Boolean} locatedInUK: if located in UK radio should be selected
  */
-const completeLossPayeeDetailsForm = ({
-  name = POLICY[NAME],
-  locatedInUK = true,
-}) => {
+const completeLossPayeeDetailsForm = ({ name = POLICY[NAME], locatedInUK = true }) => {
   cy.keyboardInput(field(NAME).input(), name);
 
   if (locatedInUK) {

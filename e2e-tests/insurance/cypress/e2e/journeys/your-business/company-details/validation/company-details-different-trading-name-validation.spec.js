@@ -4,9 +4,7 @@ import { FIELD_IDS, ROUTES, MAXIMUM_CHARACTERS } from '../../../../../../../cons
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: {
-      DIFFERENT_TRADING_NAME: FIELD_ID,
-    },
+    YOUR_COMPANY: { DIFFERENT_TRADING_NAME: FIELD_ID },
   },
 } = FIELD_IDS.INSURANCE;
 

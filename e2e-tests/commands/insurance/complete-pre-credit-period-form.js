@@ -9,10 +9,7 @@ const { CREDIT_PERIOD_WITH_BUYER } = POLICY_FIELD_IDS;
  * @param {Boolean} needPreCreditPeriod: If a pre-credit period is required - default false
  * @param {String} description: Custom "credit period with buyer" description value
  */
-const completePreCreditPeriodForm = ({
-  needPreCreditPeriod = false,
-  description = mockApplication.POLICY[CREDIT_PERIOD_WITH_BUYER],
-}) => {
+const completePreCreditPeriodForm = ({ needPreCreditPeriod = false, description = mockApplication.POLICY[CREDIT_PERIOD_WITH_BUYER] }) => {
   if (needPreCreditPeriod) {
     cy.clickYesRadioInput();
 

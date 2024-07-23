@@ -1,7 +1,10 @@
 import { INSURANCE_ROUTES as ROUTES } from '../../../constants/routes/insurance';
 
 const {
-  ACCOUNT: { CREATE: { VERIFY_EMAIL }, SIGN_IN },
+  ACCOUNT: {
+    CREATE: { VERIFY_EMAIL },
+    SIGN_IN,
+  },
 } = ROUTES;
 
 const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');

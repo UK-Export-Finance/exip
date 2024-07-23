@@ -5,13 +5,13 @@ import mockAccount from '../../../fixtures/account';
 
 const {
   ACCOUNT: {
-    SUSPENDED: {
-      EMAIL_SENT,
-    },
+    SUSPENDED: { EMAIL_SENT },
   },
 } = ROUTES;
 
-const { ACCOUNT: { PASSWORD } } = INSURANCE_FIELD_IDS;
+const {
+  ACCOUNT: { PASSWORD },
+} = INSURANCE_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 

@@ -1,17 +1,14 @@
 import { backLink, summaryList } from '../../../../../../pages/shared';
-import {
-  tellUsAboutYourPolicyPage,
-} from '../../../../../../pages/quote';
+import { tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import { LINKS } from '../../../../../../content-strings';
 
-const { ELIGIBILITY: { CREDIT_PERIOD } } = FIELD_IDS;
+const {
+  ELIGIBILITY: { CREDIT_PERIOD },
+} = FIELD_IDS;
 
 const {
-  QUOTE: {
-    CHECK_YOUR_ANSWERS,
-    TELL_US_ABOUT_YOUR_POLICY_CHANGE,
-  },
+  QUOTE: { CHECK_YOUR_ANSWERS, TELL_US_ABOUT_YOUR_POLICY_CHANGE },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -43,11 +40,7 @@ context('Change your answers (policy credit period field) - as an exporter, I wa
   it('renders a back link with correct url', () => {
     const expectedHref = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
-    cy.checkLink(
-      backLink(),
-      expectedHref,
-      LINKS.BACK,
-    );
+    cy.checkLink(backLink(), expectedHref, LINKS.BACK);
   });
 
   it('has originally submitted answer', () => {

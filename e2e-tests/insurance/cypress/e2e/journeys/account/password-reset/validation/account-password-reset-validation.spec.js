@@ -17,9 +17,7 @@ const {
 const {
   INSURANCE: {
     ACCOUNT: {
-      PASSWORD_RESET: {
-        [FIELD_ID]: ERROR_MESSAGES_OBJECT,
-      },
+      PASSWORD_RESET: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
     },
   },
 } = ERROR_MESSAGES;

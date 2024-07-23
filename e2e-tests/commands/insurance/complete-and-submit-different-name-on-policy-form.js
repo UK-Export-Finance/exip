@@ -6,12 +6,7 @@
  * @param {String} email: Email
  * @param {String} position: Position
  */
-const completeAndSubmitDifferentNameOnPolicyForm = ({
-  firstName,
-  lastName,
-  email,
-  position,
-}) => {
+const completeAndSubmitDifferentNameOnPolicyForm = ({ firstName, lastName, email, position }) => {
   cy.completeDifferentNameOnPolicyForm({
     firstName,
     lastName,

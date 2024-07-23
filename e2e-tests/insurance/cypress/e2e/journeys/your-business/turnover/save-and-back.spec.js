@@ -3,17 +3,12 @@ import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import application from '../../../../../../fixtures/application';
 
 const {
-  TURNOVER: {
-    ESTIMATED_ANNUAL_TURNOVER,
-    PERCENTAGE_TURNOVER,
-  },
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: {
-    TURNOVER_ROOT,
-  },
+  EXPORTER_BUSINESS: { TURNOVER_ROOT },
 } = ROUTES.INSURANCE;
 
 const baseUrl = Cypress.config('baseUrl');

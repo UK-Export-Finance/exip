@@ -26,22 +26,14 @@ context('404 Page not found', () => {
 
   describe('header', () => {
     it('renders a GOV home link', () => {
-      cy.checkLink(
-        header.govHomeLink(),
-        'https://www.gov.uk',
-        'GOV.UK',
-      );
+      cy.checkLink(header.govHomeLink(), 'https://www.gov.uk', 'GOV.UK');
     });
 
     it('renders service name link', () => {
       const expectedHref = '/';
       const expectedText = PRODUCT.DESCRIPTION.GENERIC;
 
-      cy.checkLink(
-        header.serviceName(),
-        expectedHref,
-        expectedText,
-      );
+      cy.checkLink(header.serviceName(), expectedHref, expectedText);
     });
   });
 

@@ -7,12 +7,8 @@ import account from '../../../../../../../../fixtures/account';
 
 const {
   ROOT: INSURANCE_ROOT,
-  POLICY: {
-    NAME_ON_POLICY_CHECK_AND_CHANGE,
-  },
-  CHECK_YOUR_ANSWERS: {
-    TYPE_OF_POLICY,
-  },
+  POLICY: { NAME_ON_POLICY_CHECK_AND_CHANGE },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
 } = INSURANCE_ROUTES;
 
 const {

@@ -1,11 +1,4 @@
-import {
-  field as fieldSelector,
-  headingCaption,
-  yesRadio,
-  yesNoRadioHint,
-  noRadio,
-  noRadioInput,
-} from '../../../../../../pages/shared';
+import { field as fieldSelector, headingCaption, yesRadio, yesNoRadioHint, noRadio, noRadioInput } from '../../../../../../pages/shared';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -16,27 +9,18 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.ANOTHER_COMPANY;
 
 const {
   ROOT,
-  POLICY: {
-    ANOTHER_COMPANY,
-    PRE_CREDIT_PERIOD,
-    BROKER_ROOT,
-    OTHER_COMPANY_DETAILS,
-  },
+  POLICY: { ANOTHER_COMPANY, PRE_CREDIT_PERIOD, BROKER_ROOT, OTHER_COMPANY_DETAILS },
 } = INSURANCE_ROUTES;
 
 const {
-  REQUESTED_JOINTLY_INSURED_PARTY: {
-    REQUESTED: FIELD_ID,
-  },
+  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED: FIELD_ID },
 } = POLICY_FIELD_IDS;
 
 const {
   INSURANCE: {
     POLICY: {
       REQUESTED_JOINTLY_INSURED_PARTY: {
-        [FIELD_ID]: {
-          IS_EMPTY: EXPECTED_ERROR_MESSAGE,
-        },
+        [FIELD_ID]: { IS_EMPTY: EXPECTED_ERROR_MESSAGE },
       },
     },
   },
@@ -44,7 +28,8 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-const story = 'As an exporter, I want to inform UKEF of any other company I would like to include on my policy, So that cover is available for all appropriate parties';
+const story =
+  'As an exporter, I want to inform UKEF of any other company I would like to include on my policy, So that cover is available for all appropriate parties';
 
 context(`Insurance - Policy - Another company page - ${story}`, () => {
   let referenceNumber;

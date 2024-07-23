@@ -13,12 +13,7 @@ const {
 
 const {
   POLICY: {
-    NAME_ON_POLICY: {
-      NAME,
-      POSITION,
-      SAME_NAME,
-      OTHER_NAME,
-    },
+    NAME_ON_POLICY: { NAME, POSITION, SAME_NAME, OTHER_NAME },
   },
   ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
 } = INSURANCE_FIELD_IDS;
