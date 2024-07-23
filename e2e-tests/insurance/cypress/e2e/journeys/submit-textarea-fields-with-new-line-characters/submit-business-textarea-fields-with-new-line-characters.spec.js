@@ -1,21 +1,14 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { EXPORTER_BUSINESS as EXPORTER_BUSINESS_FIELD_IDS } from '../../../../../constants/field-ids/insurance/business';
-import {
-  MULTI_LINE_STRING,
-  EXPECTED_MULTI_LINE_STRING,
-} from '../../../../../constants';
+import { MULTI_LINE_STRING, EXPECTED_MULTI_LINE_STRING } from '../../../../../constants';
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: {
-    ALTERNATIVE_TRADING_ADDRESS_ROOT,
-  },
+  EXPORTER_BUSINESS: { ALTERNATIVE_TRADING_ADDRESS_ROOT },
 } = INSURANCE_ROUTES;
 
 const {
-  ALTERNATIVE_TRADING_ADDRESS: {
-    FULL_ADDRESS,
-  },
+  ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
 } = EXPORTER_BUSINESS_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');

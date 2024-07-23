@@ -6,15 +6,11 @@ import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insuranc
 
 const {
   ROOT,
-  CHECK_YOUR_ANSWERS: {
-    YOUR_BUSINESS,
-  },
+  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS },
   EXPORTER_BUSINESS: { CREDIT_CONTROL_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 
-const {
-  HAS_CREDIT_CONTROL: FIELD_ID,
-} = FIELD_IDS;
+const { HAS_CREDIT_CONTROL: FIELD_ID } = FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
 
@@ -34,68 +30,71 @@ const getFieldVariables = (fieldId, referenceNumber, route = CREDIT_CONTROL_CHEC
 let fieldVariables;
 let referenceNumber;
 
-context('Insurance - Check your answers - Company details - Credit control - Yes to no - As an exporter, I want to change my answers to the credit control section', () => {
-  let url;
+context(
+  'Insurance - Check your answers - Company details - Credit control - Yes to no - As an exporter, I want to change my answers to the credit control section',
+  () => {
+    let url;
 
-  before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({
-        referenceNumber,
-        hasCreditControlProcess: true,
+        cy.completePrepareApplicationSinglePolicyType({
+          referenceNumber,
+          hasCreditControlProcess: true,
+        });
+
+        task.link().click();
+
+        url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
+
+        cy.assertUrl(url);
+
+        fieldVariables = getFieldVariables(FIELD_ID, referenceNumber);
+      });
+    });
+
+    beforeEach(() => {
+      cy.saveSession();
+
+      cy.navigateToUrl(url);
+    });
+
+    after(() => {
+      cy.deleteApplication(referenceNumber);
+    });
+
+    describe('when clicking the `change` link', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
       });
 
-      task.link().click();
+      it(`should redirect to ${CREDIT_CONTROL_CHECK_AND_CHANGE}`, () => {
+        cy.navigateToUrl(url);
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
-
-      cy.assertUrl(url);
-
-      fieldVariables = getFieldVariables(FIELD_ID, referenceNumber);
-    });
-  });
-
-  beforeEach(() => {
-    cy.saveSession();
-
-    cy.navigateToUrl(url);
-  });
-
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
-
-  describe('when clicking the `change` link', () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CREDIT_CONTROL_CHECK_AND_CHANGE, fieldId: FIELD_ID });
+      });
     });
 
-    it(`should redirect to ${CREDIT_CONTROL_CHECK_AND_CHANGE}`, () => {
-      cy.navigateToUrl(url);
+    describe('form submission with a new answer', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
-      cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
-      cy.assertChangeAnswersPageUrl({ referenceNumber, route: CREDIT_CONTROL_CHECK_AND_CHANGE, fieldId: FIELD_ID });
+        summaryList.field(FIELD_ID).changeLink().click();
+
+        cy.completeAndSubmitCreditControlForm({ hasCreditControlProcess: false });
+      });
+
+      it(`should redirect to ${YOUR_BUSINESS}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId: FIELD_ID });
+      });
+
+      it('should render the new answer and retain a `completed` status tag', () => {
+        cy.assertSummaryListRowValue(summaryList, FIELD_ID, FIELD_VALUES.NO);
+
+        cy.checkTaskStatusCompleted(status);
+      });
     });
-  });
-
-  describe('form submission with a new answer', () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
-
-      summaryList.field(FIELD_ID).changeLink().click();
-
-      cy.completeAndSubmitCreditControlForm({ hasCreditControlProcess: false });
-    });
-
-    it(`should redirect to ${YOUR_BUSINESS}`, () => {
-      cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId: FIELD_ID });
-    });
-
-    it('should render the new answer and retain a `completed` status tag', () => {
-      cy.assertSummaryListRowValue(summaryList, FIELD_ID, FIELD_VALUES.NO);
-
-      cy.checkTaskStatusCompleted(status);
-    });
-  });
-});
+  },
+);

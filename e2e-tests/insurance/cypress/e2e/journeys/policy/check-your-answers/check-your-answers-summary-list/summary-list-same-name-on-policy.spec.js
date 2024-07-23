@@ -3,10 +3,7 @@ import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
-const {
-  ROOT: INSURANCE_ROOT,
-  POLICY,
-} = INSURANCE_ROUTES;
+const { ROOT: INSURANCE_ROOT, POLICY } = INSURANCE_ROUTES;
 
 const {
   NEED_PRE_CREDIT_PERIOD,
@@ -16,7 +13,9 @@ const {
   LOSS_PAYEE: { IS_APPOINTED: LOSS_PAYEE_IS_APPOINTED },
 } = POLICY_FIELD_IDS;
 
-const { ACCOUNT: { EMAIL } } = INSURANCE_FIELD_IDS;
+const {
+  ACCOUNT: { EMAIL },
+} = INSURANCE_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 

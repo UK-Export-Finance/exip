@@ -7,9 +7,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  AGENT_CHARGES: {
-    METHOD, FIXED_SUM,
-  },
+  AGENT_CHARGES: { METHOD, FIXED_SUM },
 } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');

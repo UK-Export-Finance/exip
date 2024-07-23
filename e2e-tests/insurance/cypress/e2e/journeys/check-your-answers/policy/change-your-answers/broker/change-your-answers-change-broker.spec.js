@@ -1,8 +1,4 @@
-import {
-  field,
-  status,
-  summaryList,
-} from '../../../../../../../../pages/shared';
+import { field, status, summaryList } from '../../../../../../../../pages/shared';
 import partials from '../../../../../../../../partials';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../../../content-strings/fields/insurance/policy';
 import { FIELD_VALUES } from '../../../../../../../../constants';
@@ -12,22 +8,13 @@ import { mockAddress1 } from '../../../../../../../../fixtures/addresses';
 
 const {
   ROOT,
-  CHECK_YOUR_ANSWERS: {
-    TYPE_OF_POLICY,
-  },
-  POLICY: {
-    BROKER_CHECK_AND_CHANGE,
-    BROKER_DETAILS_CHECK_AND_CHANGE,
-  },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
+  POLICY: { BROKER_CHECK_AND_CHANGE, BROKER_DETAILS_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {
   USING_BROKER,
-  BROKER_DETAILS: {
-    NAME,
-    EMAIL,
-    FULL_ADDRESS,
-  },
+  BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
 } = INSURANCE_FIELD_IDS.POLICY;
 
 const { taskList } = partials.insurancePartials;
@@ -154,10 +141,7 @@ context('Insurance - Change your answers - Policy - Broker - As an exporter, I w
 
         const row = summaryList.field(fieldId);
 
-        cy.checkText(
-          row.key(),
-          expectedKey,
-        );
+        cy.checkText(row.key(), expectedKey);
 
         row.value().contains(mockNewAddress);
 

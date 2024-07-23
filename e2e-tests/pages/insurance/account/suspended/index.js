@@ -1,5 +1,3 @@
 import emailSentPage from './emailSent';
 
-export {
-  emailSentPage,
-};
+export { emailSentPage };

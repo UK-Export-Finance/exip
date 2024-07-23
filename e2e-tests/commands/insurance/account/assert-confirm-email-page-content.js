@@ -26,11 +26,7 @@ const havingProblemsSection = {
   requestNewLink: (accountId) => {
     cy.checkText(confirmEmailPage.havingProblems.requestNew.youCan(), YOU_CAN);
 
-    cy.checkLink(
-      confirmEmailPage.havingProblems.requestNew.link(),
-      `${LINK.HREF}?id=${accountId}`,
-      LINK.TEXT,
-    );
+    cy.checkLink(confirmEmailPage.havingProblems.requestNew.link(), `${LINK.HREF}?id=${accountId}`, LINK.TEXT);
 
     cy.checkText(confirmEmailPage.havingProblems.requestNew.ifNotReceived(), IF_NOT_RECEIVED);
   },
@@ -38,11 +34,7 @@ const havingProblemsSection = {
     cy.checkText(confirmEmailPage.havingProblems.wrongEmail.enteredIncorrectly(), ENTERED_INCORRECTLY);
   },
   createAccountLink: () => {
-    cy.checkLink(
-      wrongEmail.createAccountAgainLink(),
-      ROUTES.ACCOUNT.CREATE.YOUR_DETAILS,
-      CREATE_ACCOUNT_AGAIN.TEXT,
-    );
+    cy.checkLink(wrongEmail.createAccountAgainLink(), ROUTES.ACCOUNT.CREATE.YOUR_DETAILS, CREATE_ACCOUNT_AGAIN.TEXT);
   },
 };
 

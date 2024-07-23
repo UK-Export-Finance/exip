@@ -17,12 +17,7 @@ import partials from '../../partials';
  * @param {String} field: Cypress field selector
  * @param {Object} errorMessages: Error messages
  */
-const checkValidation = ({
-  errorSummaryLength,
-  errorIndex = 0,
-  field,
-  errorMessages,
-}) => {
+const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, errorMessages }) => {
   const assertFieldErrorsParams = {
     field,
     errorIndex,
@@ -307,12 +302,7 @@ const checkValidation = ({
      * Validations for when there are 2 date fields.
      * E.g, start and end date fields.
      */
-    withTwoDateFields: ({
-      fieldA,
-      fieldB,
-      expectedErrorSummaryLength,
-      fieldBErrorIndex,
-    }) => ({
+    withTwoDateFields: ({ fieldA, fieldB, expectedErrorSummaryLength, fieldBErrorIndex }) => ({
       /**
        * Enter the same date into both date fields.
        * Check validation errors.

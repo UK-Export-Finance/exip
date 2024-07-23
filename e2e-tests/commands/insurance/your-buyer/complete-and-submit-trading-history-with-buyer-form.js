@@ -14,10 +14,16 @@ const { BUYER } = application;
  * @param {String} totalOutstanding: enter the total outstanding - default to application value
  */
 const completeAndSubmitTradingHistoryWithBuyerForm = ({
-  outstandingPayments = false, failedToPay = false, amountOverDue = BUYER[TOTAL_AMOUNT_OVERDUE], totalOutstanding = BUYER[TOTAL_OUTSTANDING_PAYMENTS],
+  outstandingPayments = false,
+  failedToPay = false,
+  amountOverDue = BUYER[TOTAL_AMOUNT_OVERDUE],
+  totalOutstanding = BUYER[TOTAL_OUTSTANDING_PAYMENTS],
 }) => {
   cy.completeTradingHistoryWithBuyerForm({
-    outstandingPayments, failedToPay, amountOverDue, totalOutstanding,
+    outstandingPayments,
+    failedToPay,
+    amountOverDue,
+    totalOutstanding,
   });
 
   cy.clickSubmitButton();

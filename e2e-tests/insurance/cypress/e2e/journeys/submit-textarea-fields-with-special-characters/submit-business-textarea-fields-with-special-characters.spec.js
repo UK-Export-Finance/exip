@@ -4,15 +4,11 @@ import mockStringWithSpecialCharacters from '../../../../../fixtures/string-with
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: {
-    ALTERNATIVE_TRADING_ADDRESS_ROOT,
-  },
+  EXPORTER_BUSINESS: { ALTERNATIVE_TRADING_ADDRESS_ROOT },
 } = INSURANCE_ROUTES;
 
 const {
-  ALTERNATIVE_TRADING_ADDRESS: {
-    FULL_ADDRESS,
-  },
+  ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
 } = EXPORTER_BUSINESS_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');

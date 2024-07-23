@@ -71,7 +71,7 @@ context('Insurance - Your buyer - Buyer financial information - Save and back', 
       });
 
       it('should retain all inputs on the page', () => {
-      // get to form
+        // get to form
         cy.navigateToUrl(url);
 
         cy.assertNoRadioOptionIsChecked();

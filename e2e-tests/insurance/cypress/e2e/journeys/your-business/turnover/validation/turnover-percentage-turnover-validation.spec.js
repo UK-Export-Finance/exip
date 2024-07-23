@@ -4,14 +4,10 @@ import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/f
 import { percentageFieldValidation } from '../../../../../../../shared-test-assertions';
 
 const {
-  TURNOVER: {
-    PERCENTAGE_TURNOVER: FIELD_ID,
-  },
+  TURNOVER: { PERCENTAGE_TURNOVER: FIELD_ID },
 } = FIELD_IDS;
 
-const {
-  [FIELD_ID]: ERROR_MESSAGES_OBJECT,
-} = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
+const { [FIELD_ID]: ERROR_MESSAGES_OBJECT } = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
 const baseUrl = Cypress.config('baseUrl');
 

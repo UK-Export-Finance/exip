@@ -4,10 +4,7 @@ import invalidLinkPage from '../../../../../../../pages/insurance/account/invali
 const {
   ACCOUNT: {
     SIGN_IN: { ROOT: SIGN_IN_ROOT },
-    SUSPENDED: {
-      VERIFY_EMAIL,
-      VERIFY_EMAIL_INVALID_LINK,
-    },
+    SUSPENDED: { VERIFY_EMAIL, VERIFY_EMAIL_INVALID_LINK },
   },
 } = ROUTES;
 

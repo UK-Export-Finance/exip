@@ -9,9 +9,7 @@ const {
 
 const {
   ROOT,
-  POLICY: {
-    BROKER_DETAILS_ROOT,
-  },
+  POLICY: { BROKER_DETAILS_ROOT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');

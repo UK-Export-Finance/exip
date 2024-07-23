@@ -4,17 +4,10 @@ import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field
 import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../../../../../../constants/routes/insurance';
 
 const {
-  POLICY: {
-    CHECK_YOUR_ANSWERS,
-    PRE_CREDIT_PERIOD,
-    PRE_CREDIT_PERIOD_CHANGE,
-  },
+  POLICY: { CHECK_YOUR_ANSWERS, PRE_CREDIT_PERIOD, PRE_CREDIT_PERIOD_CHANGE },
 } = INSURANCE_ROUTES;
 
-const {
-  NEED_PRE_CREDIT_PERIOD,
-  CREDIT_PERIOD_WITH_BUYER,
-} = POLICY_FIELD_IDS;
+const { NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER } = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 

@@ -15,21 +15,13 @@ context('Get a quote - header', () => {
     const expectedHref = 'https://www.gov.uk';
     const expectedText = 'GOV.UK';
 
-    cy.checkLink(
-      header.govHomeLink(),
-      expectedHref,
-      expectedText,
-    );
+    cy.checkLink(header.govHomeLink(), expectedHref, expectedText);
   });
 
   it('renders service name link', () => {
     const expectedHref = '/';
     const expectedText = PRODUCT.DESCRIPTION.QUOTE;
 
-    cy.checkLink(
-      header.serviceName(),
-      expectedHref,
-      expectedText,
-    );
+    cy.checkLink(header.serviceName(), expectedHref, expectedText);
   });
 });

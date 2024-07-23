@@ -1,9 +1,4 @@
-import {
-  autoCompleteField,
-  field as fieldSelector,
-  headingCaption,
-  intro,
-} from '../../../../../../pages/shared';
+import { autoCompleteField, field as fieldSelector, headingCaption, intro } from '../../../../../../pages/shared';
 import { companyOrOrganisationPage } from '../../../../../../pages/insurance/your-buyer';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -14,13 +9,7 @@ import application, { country } from '../../../../../../fixtures/application';
 const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION;
 
 const {
-  COMPANY_OR_ORGANISATION: {
-    NAME,
-    ADDRESS,
-    COUNTRY,
-    REGISTRATION_NUMBER,
-    WEBSITE,
-  },
+  COMPANY_OR_ORGANISATION: { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE },
 } = YOUR_BUYER_FIELD_IDS;
 
 const {

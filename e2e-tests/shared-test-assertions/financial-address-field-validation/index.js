@@ -3,9 +3,7 @@ import { POLICY as POLICY_FIELD_IDS } from '../../constants/field-ids/insurance/
 import { MAXIMUM_CHARACTERS } from '../../constants';
 import { ERROR_MESSAGES } from '../../content-strings';
 
-const {
-  FINANCIAL_ADDRESS: FIELD_ID,
-} = POLICY_FIELD_IDS;
+const { FINANCIAL_ADDRESS: FIELD_ID } = POLICY_FIELD_IDS;
 
 const errorMessages = ERROR_MESSAGES.INSURANCE.POLICY[FIELD_ID];
 
@@ -16,10 +14,7 @@ const errorMessages = ERROR_MESSAGES.INSURANCE.POLICY[FIELD_ID];
  * @param {Number} expectedErrorsCount: Expected total amount of errors in the errors summary. Defaults to 3.
  * @returns {Function} Mocha describe block with assertions.
  */
-export const financialAddressFieldValidation = ({
-  errorIndex = 2,
-  expectedErrorsCount = 3,
-}) => {
+export const financialAddressFieldValidation = ({ errorIndex = 2, expectedErrorsCount = 3 }) => {
   const field = fieldSelector(FIELD_ID);
 
   const textareaField = {

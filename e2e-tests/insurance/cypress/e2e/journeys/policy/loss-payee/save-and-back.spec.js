@@ -7,9 +7,7 @@ const {
 
 const {
   ROOT,
-  POLICY: {
-    LOSS_PAYEE_ROOT,
-  },
+  POLICY: { LOSS_PAYEE_ROOT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');

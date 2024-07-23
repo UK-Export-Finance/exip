@@ -4,10 +4,7 @@ import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export
 
 const {
   ROOT,
-  EXPORT_CONTRACT: {
-    CHECK_YOUR_ANSWERS,
-    PRIVATE_MARKET_CHANGE,
-  },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, PRIVATE_MARKET_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {

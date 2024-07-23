@@ -1,6 +1,4 @@
-import {
-  headingCaption, yesRadio, noRadio,
-} from '../../../../../../pages/shared';
+import { headingCaption, yesRadio, noRadio } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
@@ -9,17 +7,13 @@ import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/i
 const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.TRADED_WITH_BUYER;
 
 const {
-  YOUR_BUYER: {
-    CONNECTION_WITH_BUYER, TRADED_WITH_BUYER, TRADING_HISTORY, BUYER_FINANCIAL_INFORMATION,
-  },
+  YOUR_BUYER: { CONNECTION_WITH_BUYER, TRADED_WITH_BUYER, TRADING_HISTORY, BUYER_FINANCIAL_INFORMATION },
 } = ROUTES.INSURANCE;
 
 const { TRADED_WITH_BUYER: FIELD_ID } = FIELD_IDS;
 
 const {
-  INSURANCE: {
-    YOUR_BUYER: ERRORS,
-  },
+  INSURANCE: { YOUR_BUYER: ERRORS },
 } = ERROR_MESSAGES;
 
 const ERROR_MESSAGE = ERRORS[FIELD_ID];

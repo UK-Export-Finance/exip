@@ -1,9 +1,7 @@
 import footer from '../../../partials/footer';
 import { FOOTER } from '../../../content-strings';
 
-const {
-  PRIVACY, REPORT_VULNERABILITY, ACCESSIBILITY_STATEMENT, COOKIES, CONTACT,
-} = FOOTER;
+const { PRIVACY, REPORT_VULNERABILITY, ACCESSIBILITY_STATEMENT, COOKIES, CONTACT } = FOOTER;
 
 /**
  * checks footer links based on isInsuranceRoute is true or false

@@ -2,10 +2,7 @@ import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insuranc
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
 
-const {
-  ROOT: INSURANCE_ROOT,
-  POLICY,
-} = INSURANCE_ROUTES;
+const { ROOT: INSURANCE_ROOT, POLICY } = INSURANCE_ROUTES;
 
 const {
   NEED_PRE_CREDIT_PERIOD,

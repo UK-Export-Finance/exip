@@ -2,10 +2,7 @@ import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/route
 
 const {
   ACCOUNT: {
-    SUSPENDED: {
-      VERIFY_EMAIL,
-      ROOT: SUSPENDED_ROOT,
-    },
+    SUSPENDED: { VERIFY_EMAIL, ROOT: SUSPENDED_ROOT },
   },
 } = ROUTES;
 context('Insurance - Account - Suspended - verify email - Visit without a token query param', () => {

@@ -1,16 +1,10 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { EXPORT_CONTRACT as EXPORT_CONTRACT_FIELD_IDS } from '../../../../../constants/field-ids/insurance/export-contract';
-import {
-  MULTI_LINE_STRING,
-  EXPECTED_MULTI_LINE_STRING,
-} from '../../../../../constants';
+import { MULTI_LINE_STRING, EXPECTED_MULTI_LINE_STRING } from '../../../../../constants';
 
 const {
   ROOT,
-  EXPORT_CONTRACT: {
-    ABOUT_GOODS_OR_SERVICES,
-    DECLINED_BY_PRIVATE_MARKET,
-  },
+  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES, DECLINED_BY_PRIVATE_MARKET },
 } = INSURANCE_ROUTES;
 
 const {

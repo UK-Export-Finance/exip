@@ -2,7 +2,9 @@ import { ATTRIBUTES } from '../../../../constants';
 import { TASKS } from '../../../../content-strings';
 
 const { CLASSES } = ATTRIBUTES;
-const { STATUS: { IN_PROGRESS } } = TASKS;
+const {
+  STATUS: { IN_PROGRESS },
+} = TASKS;
 
 /**
  * checkInProgressTaskStatus
@@ -12,10 +14,7 @@ const { STATUS: { IN_PROGRESS } } = TASKS;
 const checkInProgressTaskStatus = (selector) => {
   cy.checkText(selector(), IN_PROGRESS);
 
-  cy.checkClassName(
-    selector(),
-    `${CLASSES.TAGS.ROOT} ${CLASSES.TAGS.BLUE}`,
-  );
+  cy.checkClassName(selector(), `${CLASSES.TAGS.ROOT} ${CLASSES.TAGS.BLUE}`);
 };
 
 export default checkInProgressTaskStatus;

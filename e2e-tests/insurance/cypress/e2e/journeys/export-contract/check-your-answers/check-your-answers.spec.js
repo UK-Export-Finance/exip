@@ -1,8 +1,5 @@
 import { headingCaption } from '../../../../../../pages/shared';
-import {
-  BUTTONS,
-  PAGES,
-} from '../../../../../../content-strings';
+import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {

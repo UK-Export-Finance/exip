@@ -6,9 +6,7 @@ import application from '../../../../../../../fixtures/application';
 
 const {
   ROOT,
-  POLICY: {
-    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
-  },
+  POLICY: { SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE },
 } = INSURANCE_ROUTES;
 
 const {

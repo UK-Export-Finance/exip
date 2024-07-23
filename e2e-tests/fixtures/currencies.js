@@ -34,11 +34,6 @@ export const SYMBOLS = {
   USD: '$',
 };
 
-const mockCurrencies = [
-  EUR,
-  GBP,
-  JPY,
-  USD,
-];
+const mockCurrencies = [EUR, GBP, JPY, USD];
 
 export default mockCurrencies;

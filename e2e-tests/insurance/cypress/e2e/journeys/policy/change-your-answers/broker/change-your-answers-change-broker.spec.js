@@ -7,20 +7,12 @@ import { mockAddress1 } from '../../../../../../../fixtures/addresses';
 
 const {
   USING_BROKER,
-  BROKER_DETAILS: {
-    NAME,
-    EMAIL,
-    FULL_ADDRESS,
-  },
+  BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 const {
   ROOT,
-  POLICY: {
-    BROKER_CHANGE,
-    BROKER_DETAILS_CHANGE,
-    CHECK_YOUR_ANSWERS,
-  },
+  POLICY: { BROKER_CHANGE, BROKER_DETAILS_CHANGE, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -118,10 +110,7 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
 
         const row = summaryList.field(fieldId);
 
-        cy.checkText(
-          row.key(),
-          expectedKey,
-        );
+        cy.checkText(row.key(), expectedKey);
 
         row.value().contains(mockNewAddress);
       });
