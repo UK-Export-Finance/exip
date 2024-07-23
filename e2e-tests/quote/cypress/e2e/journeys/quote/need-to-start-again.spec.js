@@ -7,11 +7,7 @@ import { completeAndSubmitBuyerBodyForm } from '../../../../../commands/quote/fo
 const CONTENT_STRINGS = PAGES.NEED_TO_START_AGAIN_PAGE;
 
 const {
-  QUOTE: {
-    TELL_US_ABOUT_YOUR_POLICY,
-    NEED_TO_START_AGAIN,
-    BUYER_COUNTRY,
-  },
+  QUOTE: { TELL_US_ABOUT_YOUR_POLICY, NEED_TO_START_AGAIN, BUYER_COUNTRY },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');

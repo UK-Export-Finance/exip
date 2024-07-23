@@ -15,7 +15,10 @@ const [LATEST_VERSION] = CONTENT_STRINGS.VERSIONS;
 const {
   ROOT: INSURANCE_ROOT,
   ALL_SECTIONS,
-  DECLARATIONS: { CONFIDENTIALITY, ANTI_BRIBERY: { ROOT: ANTI_BRIBERY_ROOT } },
+  DECLARATIONS: {
+    CONFIDENTIALITY,
+    ANTI_BRIBERY: { ROOT: ANTI_BRIBERY_ROOT },
+  },
 } = INSURANCE_ROUTES;
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIDENTIALITY;
@@ -24,142 +27,140 @@ const baseUrl = Cypress.config('baseUrl');
 
 const field = singleInputField(FIELD_ID);
 
-context('Insurance - Declarations - Confidentiality page - As an Exporter, I want to make confidentiality declaration for my credit insurance application, So that UKEF can be assured of my agreement with regards to confidentiality while processing my credit insurance application', () => {
-  let referenceNumber;
-  let url;
+context(
+  'Insurance - Declarations - Confidentiality page - As an Exporter, I want to make confidentiality declaration for my credit insurance application, So that UKEF can be assured of my agreement with regards to confidentiality while processing my credit insurance application',
+  () => {
+    let referenceNumber;
+    let url;
 
-  before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+        cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-      // go to the page we want to test.
-      taskList.submitApplication.tasks.declarationsAndSubmit.link().click();
+        // go to the page we want to test.
+        taskList.submitApplication.tasks.declarationsAndSubmit.link().click();
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`;
+        url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`;
 
-      cy.assertUrl(url);
+        cy.assertUrl(url);
+      });
     });
-  });
 
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
-
-  it('renders core page elements', () => {
-    cy.corePageChecks({
-      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
-      lightHouseThresholds: {
-        accessibility: 98,
-      },
-    });
-  });
-
-  describe('page tests', () => {
     beforeEach(() => {
-      cy.navigateToUrl(url);
+      cy.saveSession();
     });
 
-    it('renders a heading caption', () => {
-      cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    after(() => {
+      cy.deleteApplication(referenceNumber);
     });
 
-    describe('latest confidentiality content', () => {
-      const listContent = LATEST_VERSION.LIST;
-
-      const {
-        intro,
-        level1,
-        level2,
-        level3,
-      } = confidentialityPage.listItems;
-
-      it('renders an intro paragraph', () => {
-        cy.checkText(intro(), LATEST_VERSION.INTRO);
-      });
-
-      it('renders level 1 list items', () => {
-        const level1Content = listContent;
-
-        cy.checkText(level1.item1(), level1Content[0].text);
-        cy.checkText(level1.item2(), level1Content[1].text);
-        cy.checkText(level1.item3(), level1Content[2].text);
-      });
-
-      it('renders level 2 list items', () => {
-        const level2Content = listContent[0].children;
-
-        cy.checkText(level2.item1(), level2Content[0].text);
-        cy.checkText(level2.item2(), level2Content[1].text);
-        cy.checkText(level2.item3(), level2Content[2].text);
-        cy.checkText(level2.item4(), level2Content[3].text);
-      });
-
-      it('renders level 3 list items', () => {
-        const level3Content = listContent[0].children[3].children;
-
-        cy.checkText(level3.item1(), level3Content[0].text);
-        cy.checkText(level3.item2(), level3Content[1].text);
+    it('renders core page elements', () => {
+      cy.corePageChecks({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currentHref: `${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`,
+        backLink: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
+        lightHouseThresholds: {
+          accessibility: 98,
+        },
       });
     });
 
-    it('renders a `confirm` legend and input', () => {
-      cy.checkText(field.legend(), FIELDS[FIELD_ID].LABEL);
-
-      field.input().should('exist');
-    });
-
-    it('renders a submit button and `save and back` button', () => {
-      cy.assertSubmitAndSaveButtons();
-    });
-  });
-
-  describe('form submission', () => {
-    describe('when submitting an empty form', () => {
+    describe('page tests', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
       });
 
-      it('should render a validation error', () => {
-        const expectedErrorsCount = 1;
+      it('renders a heading caption', () => {
+        cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+      });
 
-        cy.submitAndAssertRadioErrors({
-          field,
-          expectedErrorsCount,
-          expectedErrorMessage: ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
+      describe('latest confidentiality content', () => {
+        const listContent = LATEST_VERSION.LIST;
+
+        const { intro, level1, level2, level3 } = confidentialityPage.listItems;
+
+        it('renders an intro paragraph', () => {
+          cy.checkText(intro(), LATEST_VERSION.INTRO);
         });
+
+        it('renders level 1 list items', () => {
+          const level1Content = listContent;
+
+          cy.checkText(level1.item1(), level1Content[0].text);
+          cy.checkText(level1.item2(), level1Content[1].text);
+          cy.checkText(level1.item3(), level1Content[2].text);
+        });
+
+        it('renders level 2 list items', () => {
+          const level2Content = listContent[0].children;
+
+          cy.checkText(level2.item1(), level2Content[0].text);
+          cy.checkText(level2.item2(), level2Content[1].text);
+          cy.checkText(level2.item3(), level2Content[2].text);
+          cy.checkText(level2.item4(), level2Content[3].text);
+        });
+
+        it('renders level 3 list items', () => {
+          const level3Content = listContent[0].children[3].children;
+
+          cy.checkText(level3.item1(), level3Content[0].text);
+          cy.checkText(level3.item2(), level3Content[1].text);
+        });
+      });
+
+      it('renders a `confirm` legend and input', () => {
+        cy.checkText(field.legend(), FIELDS[FIELD_ID].LABEL);
+
+        field.input().should('exist');
+      });
+
+      it('renders a submit button and `save and back` button', () => {
+        cy.assertSubmitAndSaveButtons();
       });
     });
 
-    describe('when submitting a fully completed form', () => {
-      it(`should redirect to ${ANTI_BRIBERY_ROOT}`, () => {
-        cy.navigateToUrl(url);
+    describe('form submission', () => {
+      describe('when submitting an empty form', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+        });
 
-        cy.completeAndSubmitDeclarationConfidentiality();
+        it('should render a validation error', () => {
+          const expectedErrorsCount = 1;
 
-        const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
-
-        cy.assertUrl(expectedUrl);
+          cy.submitAndAssertRadioErrors({
+            field,
+            expectedErrorsCount,
+            expectedErrorMessage: ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
+          });
+        });
       });
 
-      describe('when going back to the page', () => {
-        it('should have the submitted value', () => {
+      describe('when submitting a fully completed form', () => {
+        it(`should redirect to ${ANTI_BRIBERY_ROOT}`, () => {
           cy.navigateToUrl(url);
 
           cy.completeAndSubmitDeclarationConfidentiality();
 
-          cy.navigateToUrl(url);
+          const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
 
-          cy.assertRadioOptionIsChecked(field.input());
+          cy.assertUrl(expectedUrl);
+        });
+
+        describe('when going back to the page', () => {
+          it('should have the submitted value', () => {
+            cy.navigateToUrl(url);
+
+            cy.completeAndSubmitDeclarationConfidentiality();
+
+            cy.navigateToUrl(url);
+
+            cy.assertRadioOptionIsChecked(field.input());
+          });
         });
       });
     });
-  });
-});
+  },
+);

@@ -6,10 +6,7 @@ import application from '../../fixtures/application';
 const {
   POLICY: {
     EXPORT_VALUE: {
-      MULTIPLE: {
-        TOTAL_SALES_TO_BUYER,
-        MAXIMUM_BUYER_WILL_OWE,
-      },
+      MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
     },
   },
 } = INSURANCE_FIELD_IDS;

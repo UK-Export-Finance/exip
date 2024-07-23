@@ -13,10 +13,7 @@ const assertActivePaginationLink = ({ index, pageNumber, totalPages }) => {
 
   const expectedLabel = `Current page (Page ${pageNumber} of ${totalPages})`;
 
-  checkAriaLabel(
-    link,
-    expectedLabel,
-  );
+  checkAriaLabel(link, expectedLabel);
 };
 
 export default assertActivePaginationLink;

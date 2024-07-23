@@ -9,21 +9,12 @@ import partials from '../../../partials';
  * @param {String} errorMessage: Expected error message
  * @param {Boolean} fieldShouldGainFocus: Input should gain focus after clicking the summary list error. Defaults to true
  */
-const assertFieldErrors = ({
-  field,
-  errorIndex,
-  errorSummaryLength,
-  errorMessage,
-  fieldShouldGainFocus = true,
-}) => {
+const assertFieldErrors = ({ field, errorIndex, errorSummaryLength, errorMessage, fieldShouldGainFocus = true }) => {
   cy.checkErrorSummaryListHeading();
 
   cy.assertErrorSummaryListLength(errorSummaryLength);
 
-  cy.checkText(
-    partials.errorSummaryListItems().eq(errorIndex),
-    errorMessage,
-  );
+  cy.checkText(partials.errorSummaryListItems().eq(errorIndex), errorMessage);
 
   if (fieldShouldGainFocus) {
     partials.errorSummaryListItemLinks().eq(errorIndex).click();

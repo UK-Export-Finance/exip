@@ -4,9 +4,7 @@ import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insur
 import checkSummaryList from '../../../../../../../../commands/insurance/check-policy-summary-list';
 
 const {
-  LOSS_PAYEE: {
-    IS_APPOINTED: FIELD_ID,
-  },
+  LOSS_PAYEE: { IS_APPOINTED: FIELD_ID },
   LOSS_PAYEE_DETAILS: { NAME },
   LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
   FINANCIAL_ADDRESS,
@@ -14,11 +12,7 @@ const {
 
 const {
   ROOT,
-  POLICY: {
-    LOSS_PAYEE_CHECK_AND_CHANGE,
-    LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE,
-    LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE,
-  },
+  POLICY: { LOSS_PAYEE_CHECK_AND_CHANGE, LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE, LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
 } = INSURANCE_ROUTES;
 

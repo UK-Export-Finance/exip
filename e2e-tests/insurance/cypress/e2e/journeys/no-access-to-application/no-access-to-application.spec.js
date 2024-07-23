@@ -5,11 +5,7 @@ import { COOKIE } from '../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.NO_ACCESS_TO_APPLICATION_PAGE;
 
-const {
-  ROOT,
-  ALL_SECTIONS,
-  NO_ACCESS_TO_APPLICATION,
-} = INSURANCE_ROUTES;
+const { ROOT, ALL_SECTIONS, NO_ACCESS_TO_APPLICATION } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 

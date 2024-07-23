@@ -1,9 +1,7 @@
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
-  ELIGIBILITY: {
-    BUYER_COUNTRY, NEED_TO_START_AGAIN,
-  },
+  ELIGIBILITY: { BUYER_COUNTRY, NEED_TO_START_AGAIN },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');

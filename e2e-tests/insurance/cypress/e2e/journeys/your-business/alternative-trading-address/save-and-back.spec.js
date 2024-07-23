@@ -11,9 +11,7 @@ const {
 
 const {
   EXPORTER_BUSINESS: {
-    ALTERNATIVE_TRADING_ADDRESS: {
-      FULL_ADDRESS,
-    },
+    ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -70,7 +68,9 @@ context('Insurance - Your business - Alternative trading address - Save and go b
     it('should redirect to `all sections`', () => {
       cy.navigateToUrl(url);
 
-      field(FULL_ADDRESS).textarea().type('a'.repeat(MAXIMUM_CHARACTERS.FULL_ADDRESS + 1));
+      field(FULL_ADDRESS)
+        .textarea()
+        .type('a'.repeat(MAXIMUM_CHARACTERS.FULL_ADDRESS + 1));
 
       cy.clickSaveAndBackButton();
 

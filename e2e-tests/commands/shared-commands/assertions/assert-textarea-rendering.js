@@ -8,12 +8,7 @@ import { field as fieldSelector } from '../../../pages/shared';
  * @param {String} expectedHint: Expected label hint (optional)
  * @param {Integer} maximumCharacters: Maximum characters allowed
  */
-const assertTextareaRendering = ({
-  fieldId,
-  expectedLabel,
-  expectedHint,
-  maximumCharacters,
-}) => {
+const assertTextareaRendering = ({ fieldId, expectedLabel, expectedHint, maximumCharacters }) => {
   const field = fieldSelector(fieldId);
 
   if (expectedLabel) {

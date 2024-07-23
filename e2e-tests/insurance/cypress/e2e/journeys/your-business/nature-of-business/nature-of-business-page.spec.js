@@ -10,122 +10,117 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINES
 
 const {
   EXPORTER_BUSINESS: {
-    NATURE_OF_YOUR_BUSINESS: {
-      GOODS_OR_SERVICES,
-      YEARS_EXPORTING,
-      EMPLOYEES_UK,
-    },
+    NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
   },
 } = INSURANCE_FIELD_IDS;
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: {
-    TURNOVER_ROOT,
-    NATURE_OF_BUSINESS_ROOT,
-    COMPANY_DETAILS,
-  },
+  EXPORTER_BUSINESS: { TURNOVER_ROOT, NATURE_OF_BUSINESS_ROOT, COMPANY_DETAILS },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your business - Nature of your business page - As an Exporter I want to enter the nature of my business So that UKEF can have clarity on the type of business that I do while processing my Export Insurance Application', () => {
-  let referenceNumber;
-  let turnoverUrl;
-  let natureOfBusinessUrl;
+context(
+  'Insurance - Your business - Nature of your business page - As an Exporter I want to enter the nature of my business So that UKEF can have clarity on the type of business that I do while processing my Export Insurance Application',
+  () => {
+    let referenceNumber;
+    let turnoverUrl;
+    let natureOfBusinessUrl;
 
-  before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-      cy.startYourBusinessSection({});
+        cy.startYourBusinessSection({});
 
-      cy.completeAndSubmitCompanyDetails({});
+        cy.completeAndSubmitCompanyDetails({});
 
-      natureOfBusinessUrl = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
+        natureOfBusinessUrl = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
 
-      turnoverUrl = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
+        turnoverUrl = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
 
-      cy.assertUrl(natureOfBusinessUrl);
+        cy.assertUrl(natureOfBusinessUrl);
+      });
     });
-  });
 
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
-
-  it('renders core page elements', () => {
-    cy.corePageChecks({
-      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`,
-      backLink: `${ROOT}/${referenceNumber}${COMPANY_DETAILS}`,
-    });
-  });
-
-  describe('page tests', () => {
     beforeEach(() => {
-      cy.navigateToUrl(natureOfBusinessUrl);
+      cy.saveSession();
     });
 
-    it('renders a heading caption', () => {
-      cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    after(() => {
+      cy.deleteApplication(referenceNumber);
     });
 
-    it(`should display ${GOODS_OR_SERVICES} label, input and hint`, () => {
-      const fieldId = GOODS_OR_SERVICES;
-      const field = fieldSelector(fieldId);
-
-      field.textarea().should('exist');
-      cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
-
-      field.hint().contains(FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HINT);
+    it('renders core page elements', () => {
+      cy.corePageChecks({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currentHref: `${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`,
+        backLink: `${ROOT}/${referenceNumber}${COMPANY_DETAILS}`,
+      });
     });
 
-    it(`should display ${YEARS_EXPORTING} label, input and hint`, () => {
-      const fieldId = YEARS_EXPORTING;
-      const field = fieldSelector(fieldId);
+    describe('page tests', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(natureOfBusinessUrl);
+      });
 
-      field.input().should('exist');
-      cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
+      it('renders a heading caption', () => {
+        cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+      });
 
-      field.hint().contains(FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HINT);
-      cy.assertSuffix({ fieldId, value: FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].SUFFIX });
+      it(`should display ${GOODS_OR_SERVICES} label, input and hint`, () => {
+        const fieldId = GOODS_OR_SERVICES;
+        const field = fieldSelector(fieldId);
+
+        field.textarea().should('exist');
+        cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
+
+        field.hint().contains(FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HINT);
+      });
+
+      it(`should display ${YEARS_EXPORTING} label, input and hint`, () => {
+        const fieldId = YEARS_EXPORTING;
+        const field = fieldSelector(fieldId);
+
+        field.input().should('exist');
+        cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
+
+        field.hint().contains(FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HINT);
+        cy.assertSuffix({ fieldId, value: FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].SUFFIX });
+      });
+
+      it(`should display ${EMPLOYEES_UK} label and input`, () => {
+        const fieldId = EMPLOYEES_UK;
+        const field = fieldSelector(fieldId);
+
+        cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LEGEND);
+        field.input().should('exist');
+      });
+
+      it('renders a `save and back` button', () => {
+        cy.assertSaveAndBackButton();
+      });
     });
 
-    it(`should display ${EMPLOYEES_UK} label and input`, () => {
-      const fieldId = EMPLOYEES_UK;
-      const field = fieldSelector(fieldId);
+    describe('form submission', () => {
+      it(`should redirect to ${TURNOVER_ROOT}`, () => {
+        cy.navigateToUrl(natureOfBusinessUrl);
 
-      cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LEGEND);
-      field.input().should('exist');
+        cy.completeAndSubmitNatureOfYourBusiness();
+
+        cy.assertUrl(turnoverUrl);
+      });
     });
 
-    it('renders a `save and back` button', () => {
-      cy.assertSaveAndBackButton();
+    describe('when going back to the page', () => {
+      it('should have the submitted values', () => {
+        cy.navigateToUrl(natureOfBusinessUrl);
+
+        fieldSelector(GOODS_OR_SERVICES).textarea().should('have.value', application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
+        fieldSelector(YEARS_EXPORTING).input().should('have.value', application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
+        fieldSelector(EMPLOYEES_UK).input().should('have.value', application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
+      });
     });
-  });
-
-  describe('form submission', () => {
-    it(`should redirect to ${TURNOVER_ROOT}`, () => {
-      cy.navigateToUrl(natureOfBusinessUrl);
-
-      cy.completeAndSubmitNatureOfYourBusiness();
-
-      cy.assertUrl(turnoverUrl);
-    });
-  });
-
-  describe('when going back to the page', () => {
-    it('should have the submitted values', () => {
-      cy.navigateToUrl(natureOfBusinessUrl);
-
-      fieldSelector(GOODS_OR_SERVICES).textarea().should('have.value', application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
-      fieldSelector(YEARS_EXPORTING).input().should('have.value', application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
-      fieldSelector(EMPLOYEES_UK).input().should('have.value', application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
-    });
-  });
-});
+  },
+);

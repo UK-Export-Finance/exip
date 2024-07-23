@@ -3,15 +3,11 @@ import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-id
 
 const {
   ROOT,
-  POLICY: {
-    ANOTHER_COMPANY,
-  },
+  POLICY: { ANOTHER_COMPANY },
 } = INSURANCE_ROUTES;
 
 const {
-  REQUESTED_JOINTLY_INSURED_PARTY: {
-    REQUESTED: FIELD_ID,
-  },
+  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED: FIELD_ID },
 } = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');

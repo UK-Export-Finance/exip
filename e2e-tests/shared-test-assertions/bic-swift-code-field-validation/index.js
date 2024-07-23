@@ -7,9 +7,7 @@ import SPECIAL_CHARACTERS from '../../fixtures/special-characters';
 import { mockBicSwiftCodeLowerCase } from '../../fixtures/bic-swift-codes';
 
 const {
-  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: {
-    BIC_SWIFT_CODE: FIELD_ID,
-  },
+  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE: FIELD_ID },
 } = POLICY_FIELD_IDS;
 
 const errorMessages = ERROR_MESSAGES.INSURANCE.POLICY[FIELD_ID];

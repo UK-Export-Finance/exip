@@ -20,9 +20,7 @@ const {
 
 const {
   INSURANCE: {
-    POLICY: {
-      CONTRACT_POLICY: CONTRACT_ERROR_MESSAGES,
-    },
+    POLICY: { CONTRACT_POLICY: CONTRACT_ERROR_MESSAGES },
   },
 } = ERROR_MESSAGES;
 
@@ -63,19 +61,10 @@ context('Insurance - Policy - Single contract policy page - form validation', ()
     const TOTAL_REQUIRED_FIELDS = 3;
     cy.assertErrorSummaryListLength(TOTAL_REQUIRED_FIELDS);
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(0),
-      CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].INCORRECT_FORMAT,
-    );
+    cy.checkText(partials.errorSummaryListItems().eq(0), CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].INCORRECT_FORMAT);
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(1),
-      CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].INCORRECT_FORMAT,
-    );
+    cy.checkText(partials.errorSummaryListItems().eq(1), CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].INCORRECT_FORMAT);
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(2),
-      CONTRACT_ERROR_MESSAGES[CURRENCY_CODE].IS_EMPTY,
-    );
+    cy.checkText(partials.errorSummaryListItems().eq(2), CONTRACT_ERROR_MESSAGES[CURRENCY_CODE].IS_EMPTY);
   });
 });

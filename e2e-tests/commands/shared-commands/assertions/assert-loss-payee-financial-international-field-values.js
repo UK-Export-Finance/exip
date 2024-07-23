@@ -6,9 +6,7 @@ import mockApplication from '../../../fixtures/application';
 const { LOSS_PAYEE_FINANCIAL_INTERNATIONAL } = mockApplication.POLICY;
 
 const {
-  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: {
-    BIC_SWIFT_CODE, IBAN,
-  },
+  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
   FINANCIAL_ADDRESS,
 } = POLICY_FIELD_IDS;
 

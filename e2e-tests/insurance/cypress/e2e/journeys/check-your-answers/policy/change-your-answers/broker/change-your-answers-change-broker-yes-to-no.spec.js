@@ -1,8 +1,4 @@
-import {
-  field,
-  status,
-  summaryList,
-} from '../../../../../../../../pages/shared';
+import { field, status, summaryList } from '../../../../../../../../pages/shared';
 import partials from '../../../../../../../../partials';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
@@ -10,22 +6,13 @@ import { FIELD_VALUES } from '../../../../../../../../constants';
 
 const {
   ROOT,
-  CHECK_YOUR_ANSWERS: {
-    TYPE_OF_POLICY,
-  },
-  POLICY: {
-    BROKER_CHECK_AND_CHANGE,
-    BROKER_DETAILS_ROOT,
-  },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
+  POLICY: { BROKER_CHECK_AND_CHANGE, BROKER_DETAILS_ROOT },
 } = INSURANCE_ROUTES;
 
 const {
   USING_BROKER: FIELD_ID,
-  BROKER_DETAILS: {
-    NAME,
-    EMAIL,
-    FULL_ADDRESS,
-  },
+  BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;

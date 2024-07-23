@@ -8,9 +8,7 @@ import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insuranc
 const NATURE_OF_BUSINESS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
 const {
-  NATURE_OF_YOUR_BUSINESS: {
-    GOODS_OR_SERVICES: FIELD_ID,
-  },
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: FIELD_ID },
 } = FIELD_IDS;
 
 const {

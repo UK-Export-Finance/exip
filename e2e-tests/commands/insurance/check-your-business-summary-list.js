@@ -8,30 +8,15 @@ import application from '../../fixtures/application';
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: {
-      HAS_DIFFERENT_TRADING_NAME,
-      DIFFERENT_TRADING_NAME,
-      TRADING_ADDRESS,
-      WEBSITE,
-      PHONE_NUMBER,
-    },
-    ALTERNATIVE_TRADING_ADDRESS: {
-      FULL_ADDRESS,
-    },
-    NATURE_OF_YOUR_BUSINESS: {
-      YEARS_EXPORTING,
-      GOODS_OR_SERVICES,
-      EMPLOYEES_UK,
-    },
-    TURNOVER: {
-      ESTIMATED_ANNUAL_TURNOVER,
-      PERCENTAGE_TURNOVER,
-    },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
+    ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
+    NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING, GOODS_OR_SERVICES, EMPLOYEES_UK },
+    TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
     HAS_CREDIT_CONTROL,
   },
 } = INSURANCE_FIELD_IDS;
 
-const checkYourBusinessSummaryList = ({
+const checkYourBusinessSummaryList = {
   [HAS_DIFFERENT_TRADING_NAME]: ({ differentTradingName = false }) => {
     const fieldId = HAS_DIFFERENT_TRADING_NAME;
 
@@ -122,6 +107,6 @@ const checkYourBusinessSummaryList = ({
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
-});
+};
 
 export default checkYourBusinessSummaryList;

@@ -1,11 +1,7 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { COOKIE } from '../../../../../constants';
 
-const {
-  ROOT,
-  ALL_SECTIONS,
-  NO_ACCESS_TO_APPLICATION,
-} = INSURANCE_ROUTES;
+const { ROOT, ALL_SECTIONS, NO_ACCESS_TO_APPLICATION } = INSURANCE_ROUTES;
 
 const firstAccountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 const secondAccountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_2');

@@ -1,7 +1,9 @@
 import { ATTRIBUTES, APPLICATION } from '../../../../constants';
 
 const { CLASSES } = ATTRIBUTES;
-const { STATUS: { SUBMITTED } } = APPLICATION;
+const {
+  STATUS: { SUBMITTED },
+} = APPLICATION;
 
 /**
  * checkSubmittedTaskStatus
@@ -11,10 +13,7 @@ const { STATUS: { SUBMITTED } } = APPLICATION;
 const checkSubmittedTaskStatus = (selector) => {
   cy.checkText(selector(), SUBMITTED);
 
-  cy.checkClassName(
-    selector(),
-    `${CLASSES.TAGS.ROOT} ${CLASSES.TAGS.GREEN}`,
-  );
+  cy.checkClassName(selector(), `${CLASSES.TAGS.ROOT} ${CLASSES.TAGS.GREEN}`);
 };
 
 export default checkSubmittedTaskStatus;

@@ -44,11 +44,7 @@ context('Cookies consent - reject', () => {
       const expected = `${REJECTED.COPY_1} ${COOKIES_CONSENT.COOKIES_LINK} ${REJECTED.COPY_2}`;
       cy.checkText(partials.cookieBanner.rejected.copy(), expected);
 
-      cy.checkLink(
-        partials.cookieBanner.cookiesLink(),
-        ROUTES.COOKIES,
-        COOKIES_CONSENT.COOKIES_LINK,
-      );
+      cy.checkLink(partials.cookieBanner.cookiesLink(), ROUTES.COOKIES, COOKIES_CONSENT.COOKIES_LINK);
 
       partials.cookieBanner.hideButton().should('exist');
       cy.checkText(partials.cookieBanner.hideButton(), COOKIES_CONSENT.HIDE_BUTTON);

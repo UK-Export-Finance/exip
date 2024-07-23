@@ -52,10 +52,6 @@ context('Cookies saved page - Quote', () => {
   it('renders a `return to service` button link', () => {
     const expectedUrl = buyerCountryUrl;
 
-    cy.checkLink(
-      cookiesSavedPage.returnToServiceLinkButton(),
-      expectedUrl,
-      BUTTONS.RETURN_TO_SERVICE,
-    );
+    cy.checkLink(cookiesSavedPage.returnToServiceLinkButton(), expectedUrl, BUTTONS.RETURN_TO_SERVICE);
   });
 });

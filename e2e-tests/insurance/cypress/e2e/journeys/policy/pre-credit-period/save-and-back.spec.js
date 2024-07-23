@@ -6,9 +6,7 @@ import mockApplication from '../../../../../../fixtures/application';
 
 const {
   ROOT,
-  POLICY: {
-    PRE_CREDIT_PERIOD,
-  },
+  POLICY: { PRE_CREDIT_PERIOD },
 } = INSURANCE_ROUTES;
 
 const { CREDIT_PERIOD_WITH_BUYER } = POLICY_FIELD_IDS;

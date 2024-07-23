@@ -45,11 +45,7 @@ context('Cookies consent - accept', () => {
 
       cy.checkText(partials.cookieBanner.accepted.copy(), expected);
 
-      cy.checkLink(
-        partials.cookieBanner.cookiesLink(),
-        ROUTES.COOKIES,
-        COOKIES_CONSENT.COOKIES_LINK,
-      );
+      cy.checkLink(partials.cookieBanner.cookiesLink(), ROUTES.COOKIES, COOKIES_CONSENT.COOKIES_LINK);
 
       cy.checkText(partials.cookieBanner.hideButton(), COOKIES_CONSENT.HIDE_BUTTON);
     });

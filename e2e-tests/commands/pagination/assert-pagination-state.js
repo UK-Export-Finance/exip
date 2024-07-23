@@ -9,7 +9,9 @@ import { PAGES, ORGANISATION } from '../../content-strings';
 const { DASHBOARD_PAGE } = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: { DASHBOARD: { PAGE_TITLE } },
+  INSURANCE: {
+    DASHBOARD: { PAGE_TITLE },
+  },
 } = PAGES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -30,14 +32,7 @@ const defaultDashboardUrl = `${baseUrl}${DASHBOARD_PAGE}`;
  * @param {Boolean} Next link should exist (defaults to true)
  * @param {Boolean} Previous link should exist (defaults to true)
  */
-const assertPaginationState = ({
-  expectedUrl,
-  totalPages,
-  index,
-  expectedPageNumber,
-  nextLinkShouldExist = true,
-  previousLinkShouldExist = true,
-}) => {
+const assertPaginationState = ({ expectedUrl, totalPages, index, expectedPageNumber, nextLinkShouldExist = true, previousLinkShouldExist = true }) => {
   if (expectedUrl) {
     assertUrl(expectedUrl);
   } else {

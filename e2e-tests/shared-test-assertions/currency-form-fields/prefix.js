@@ -1,6 +1,4 @@
-import {
-  SYMBOLS, USD_CURRENCY_CODE, JPY_CURRENCY_CODE, EUR_CURRENCY_CODE,
-} from '../../fixtures/currencies';
+import { SYMBOLS, USD_CURRENCY_CODE, JPY_CURRENCY_CODE, EUR_CURRENCY_CODE } from '../../fixtures/currencies';
 
 /**
  * prefixAssertions

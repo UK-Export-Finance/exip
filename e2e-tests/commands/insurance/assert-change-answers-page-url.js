@@ -12,9 +12,7 @@ const baseUrl = Cypress.config('baseUrl');
  * @param {String} Optional fragment suffix for the URL. E.g 'heading', 'label'. Defaults to label.
  * @param {Boolean} isInsuranceEligibility if check answers page is insurance eligibility or not - defaults to false
  */
-const assertChangeAnswersPageUrl = ({
-  referenceNumber, route, fieldId, fragmentSuffix, isInsuranceEligibility = false,
-}) => {
+const assertChangeAnswersPageUrl = ({ referenceNumber, route, fieldId, fragmentSuffix, isInsuranceEligibility = false }) => {
   let expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${route}`;
 
   /**

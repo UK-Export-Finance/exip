@@ -7,17 +7,9 @@ import application from '../../fixtures/application';
 import formatCurrency from '../../helpers/format-currency';
 
 const {
-  CURRENCY: {
-    CURRENCY_CODE,
-  },
+  CURRENCY: { CURRENCY_CODE },
   YOUR_BUYER: {
-    COMPANY_OR_ORGANISATION: {
-      NAME,
-      ADDRESS,
-      COUNTRY,
-      REGISTRATION_NUMBER,
-      WEBSITE,
-    },
+    COMPANY_OR_ORGANISATION: { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE },
     CONNECTION_WITH_BUYER,
     CONNECTION_WITH_BUYER_DESCRIPTION,
     TRADED_WITH_BUYER,
@@ -32,7 +24,7 @@ const {
   ELIGIBILITY: { BUYER_COUNTRY },
 } = INSURANCE_FIELD_IDS;
 
-const checkYourBusinessSummaryList = ({
+const checkYourBusinessSummaryList = {
   [NAME]: () => {
     const fieldId = NAME;
 
@@ -47,10 +39,7 @@ const checkYourBusinessSummaryList = ({
 
     const row = summaryList.field(fieldId);
 
-    cy.checkText(
-      row.key(),
-      expectedKey,
-    );
+    cy.checkText(row.key(), expectedKey);
 
     // as html, cannot use checkText so checking contains following fields
     row.value().contains(application.BUYER[fieldId]);
@@ -231,6 +220,6 @@ const checkYourBusinessSummaryList = ({
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
-});
+};
 
 export default checkYourBusinessSummaryList;
