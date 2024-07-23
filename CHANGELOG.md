@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.15.0](https://github.com/UK-Export-Finance/exip/compare/v2.14.0...v2.15.0) (2024-07-23)
+
+
+### Features
+
+* **EMS-3535:** changes to anti-bribery and corruption definitions ([#2778](https://github.com/UK-Export-Finance/exip/issues/2778)) ([9ec9d20](https://github.com/UK-Export-Finance/exip/commit/9ec9d201026e62c8eb7262a3785419d55f3c2fc1))
+
 ## [2.14.0](https://github.com/UK-Export-Finance/exip/compare/v2.13.0...v2.14.0) (2024-07-22)
 
 
