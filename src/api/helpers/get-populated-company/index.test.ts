@@ -1,4 +1,5 @@
 import getPopulatedCompany from '.';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import company from '../../test-helpers/company';
 import { Context, ApplicationCompany, ApplicationCompanyAddress, ApplicationCompanySicCode, ApplicationCompanyDifferentTradingAddress } from '../../types';
@@ -58,12 +59,10 @@ describe('helpers/get-populated-company', () => {
 
   describe('when a company is not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       try {
-        await getPopulatedCompany(context, invalidId);
+        await getPopulatedCompany(context, mockInvalidId);
       } catch (err) {
-        const expected = `Getting populated company ${invalidId}`;
+        const expected = `Getting populated company ${mockInvalidId}`;
 
         expect(String(err).includes(expected)).toEqual(true);
       }
@@ -72,12 +71,10 @@ describe('helpers/get-populated-company', () => {
 
   describe('when an address not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       const companyObject = {
         registeredOfficeAddress: {
           connect: {
-            id: invalidId,
+            id: mockInvalidId,
           },
         },
         differentTradingAddress: differentTradingAddressConnectObject,
@@ -97,13 +94,11 @@ describe('helpers/get-populated-company', () => {
 
   describe('when a different trading address not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       const companyObject = {
         registeredOfficeAddress: companyAddressConnectObject,
         differentTradingAddress: {
           connect: {
-            id: invalidId,
+            id: mockInvalidId,
           },
         },
       };

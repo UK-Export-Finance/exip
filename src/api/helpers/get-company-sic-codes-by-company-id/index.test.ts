@@ -1,4 +1,5 @@
 import getCompanySicCodesByCompanyId from '.';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import company from '../../test-helpers/company';
 import { Context, ApplicationCompany, ApplicationCompanySicCode } from '../../types';
@@ -25,18 +26,18 @@ describe('helpers/get-company-sic-codes-by-company-id', () => {
   });
 
   beforeEach(async () => {
-    createdCompany = await company.createCompany(context) as ApplicationCompany;
+    createdCompany = (await company.createCompany(context)) as ApplicationCompany;
 
     companyId = createdCompany.id;
 
     createdSicCodes = [
-      await company.createCompanySicCode(context, companyId) as ApplicationCompanySicCode,
-      await company.createCompanySicCode(context, companyId) as ApplicationCompanySicCode,
+      (await company.createCompanySicCode(context, companyId)) as ApplicationCompanySicCode,
+      (await company.createCompanySicCode(context, companyId)) as ApplicationCompanySicCode,
     ];
   });
 
   it('should return all company SIC codes by company ID', async () => {
-    const result = (await getCompanySicCodesByCompanyId(context, createdSicCodes.id));
+    const result = await getCompanySicCodesByCompanyId(context, createdSicCodes.id);
 
     const [sicCode0, sicCode1] = await company.getCompanySicCodes(context, companyId);
 
@@ -60,12 +61,10 @@ describe('helpers/get-company-sic-codes-by-company-id', () => {
 
   describe('when company SIC codes are not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       try {
-        await getCompanySicCodesByCompanyId(context, invalidId);
+        await getCompanySicCodesByCompanyId(context, mockInvalidId);
       } catch (err) {
-        const errorMessage = `Getting company SIC codes by company ID ${invalidId}`;
+        const errorMessage = `Getting company SIC codes by company ID ${mockInvalidId}`;
 
         const newError = new Error(errorMessage);
 

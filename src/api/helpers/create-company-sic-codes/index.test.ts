@@ -1,13 +1,11 @@
 import createCompanySicCodes from '.';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import companyHelpers from '../../test-helpers/company';
-import { mockCompanySicCode } from '../../test-mocks';
+import { mockCompanySicCode, mockInvalidId } from '../../test-mocks';
 import { Context } from '../../types';
 
 const mockSicCodes = [mockCompanySicCode.sicCode, mockCompanySicCode.sicCode];
 const mocIndustrySectorNames = [mockCompanySicCode.industrySectorName];
-
-const invalidId = 'invalid-id';
 
 const assertError = (err) => {
   const errorString = String(err);
@@ -58,7 +56,7 @@ describe('helpers/create-company-sic-codes', () => {
   describe('when an invalid company ID is passed', () => {
     it('should throw an error', async () => {
       try {
-        await createCompanySicCodes(context, invalidId, mockSicCodes, mocIndustrySectorNames);
+        await createCompanySicCodes(context, mockInvalidId, mockSicCodes, mocIndustrySectorNames);
       } catch (err) {
         assertError(err);
       }
@@ -69,7 +67,7 @@ describe('helpers/create-company-sic-codes', () => {
     test('it should throw an error', async () => {
       try {
         // pass empty context object to force an error
-        await createCompanySicCodes({}, invalidId, mockSicCodes, mocIndustrySectorNames);
+        await createCompanySicCodes({}, mockInvalidId, mockSicCodes, mocIndustrySectorNames);
       } catch (err) {
         assertError(err);
       }

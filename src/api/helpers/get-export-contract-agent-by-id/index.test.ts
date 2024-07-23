@@ -1,4 +1,5 @@
 import getExportContractAgentById from '.';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import exportContractAgent from '../../test-helpers/export-contract-agent';
 import { Context, ApplicationExportContractAgent } from '../../types';
@@ -12,23 +13,21 @@ describe('helpers/get-export-contract-agent-by-id', () => {
   });
 
   beforeEach(async () => {
-    createdExportContractAgent = await exportContractAgent.create(context) as ApplicationExportContractAgent;
+    createdExportContractAgent = (await exportContractAgent.create(context)) as ApplicationExportContractAgent;
   });
 
   it('should return an export contract agent by ID', async () => {
-    const result = (await getExportContractAgentById(context, createdExportContractAgent.id));
+    const result = await getExportContractAgentById(context, createdExportContractAgent.id);
 
     expect(result.id).toEqual(createdExportContractAgent.id);
   });
 
   describe('when an export contract agent is not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       try {
-        await getExportContractAgentById(context, invalidId);
+        await getExportContractAgentById(context, mockInvalidId);
       } catch (err) {
-        const errorMessage = `Getting exportContractAgent by ID ${invalidId}`;
+        const errorMessage = `Getting exportContractAgent by ID ${mockInvalidId}`;
 
         const newError = new Error(errorMessage);
 

@@ -1,5 +1,6 @@
 import { Application as KeystoneApplication } from '.keystone/types'; // eslint-disable-line
 import getPopulatedApplication from '.';
+import { mockInvalidId } from '../../test-mocks';
 import { createFullApplication, getKeystoneContext } from '../../test-helpers';
 import { Application, Context } from '../../types';
 
@@ -36,9 +37,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when buyer does not exist', async () => {
-    const invalidId = application.id;
-
-    const mockApplication = { ...application, buyerId: invalidId };
+    const mockApplication = { ...application, buyerId: mockInvalidId };
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
@@ -48,9 +47,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when buyerRelationship does not exist', async () => {
-    const invalidId = application.id;
-
-    const mockApplication = { ...application, buyerRelationship: invalidId };
+    const mockApplication = { ...application, buyerRelationship: mockInvalidId };
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
@@ -60,9 +57,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when buyerTradingHistory does not exist', async () => {
-    const invalidId = application.id;
-
-    const mockApplication = { ...application, buyerTradingHistory: invalidId };
+    const mockApplication = { ...application, buyerTradingHistory: mockInvalidId };
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
@@ -72,11 +67,9 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when buyerCountry does not exist', async () => {
-    const invalidId = application.id;
-
     const mockApplication = {
       ...application,
-      buyer: { countryId: invalidId },
+      buyer: { countryId: mockInvalidId },
     };
 
     try {
@@ -87,10 +80,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when eligibility does not exist', async () => {
-    const invalidId = application.policyId;
-
     try {
-      const mockApplication = { ...application, eligibilityId: invalidId };
+      const mockApplication = { ...application, eligibilityId: mockInvalidId };
 
       await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
@@ -99,10 +90,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when coverPeriod does not exist', async () => {
-    const invalidId = application.policyId;
-
     try {
-      const mockApplication = { ...application, coverPeriodId: invalidId };
+      const mockApplication = { ...application, coverPeriodId: mockInvalidId };
 
       await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
@@ -111,10 +100,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when totalContractValue does not exist', async () => {
-    const invalidId = application.policyId;
-
     try {
-      const mockApplication = { ...application, totalContractValueId: invalidId };
+      const mockApplication = { ...application, totalContractValueId: mockInvalidId };
 
       await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
@@ -123,10 +110,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when account does not exist', async () => {
-    const invalidId = application.policyId;
-
     try {
-      const mockApplication = { ...application, accountId: invalidId };
+      const mockApplication = { ...application, accountId: mockInvalidId };
 
       await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
@@ -135,9 +120,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when policy does not exist', async () => {
-    const invalidId = application.id;
-
-    const mockApplication = { ...application, policyId: invalidId };
+    const mockApplication = { ...application, policyId: mockInvalidId };
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
@@ -147,9 +130,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when policyContact does not exist', async () => {
-    const invalidId = application.id;
-
-    const mockApplication = { ...application, policyContactId: invalidId };
+    const mockApplication = { ...application, policyContactId: mockInvalidId };
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
@@ -159,9 +140,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when nominatedLossPayee does not exist', async () => {
-    const invalidId = application.id;
-
-    const mockApplication = { ...application, nominatedLossPayeeId: invalidId };
+    const mockApplication = { ...application, nominatedLossPayeeId: mockInvalidId };
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
@@ -171,9 +150,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when exportContract does not exist', async () => {
-    const invalidId = application.id;
-
-    const mockApplication = { ...application, exportContractId: invalidId };
+    const mockApplication = { ...application, exportContractId: mockInvalidId };
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
@@ -183,9 +160,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when exportContractAgent does not exist', async () => {
-    const invalidId = application.id;
-
-    const mockApplication = { ...application, exportContractAgentId: invalidId };
+    const mockApplication = { ...application, exportContractAgentId: mockInvalidId };
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
@@ -195,9 +170,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when exportContractAgentService does not exist', async () => {
-    const invalidId = application.id;
-
-    const mockApplication = { ...application, exportContractAgentServiceId: invalidId };
+    const mockApplication = { ...application, exportContractAgentServiceId: mockInvalidId };
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
@@ -207,9 +180,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when exportContractAgentServiceCharge does not exist', async () => {
-    const invalidId = application.id;
-
-    const mockApplication = { ...application, exportContractAgentServiceChargeId: invalidId };
+    const mockApplication = { ...application, exportContractAgentServiceChargeId: mockInvalidId };
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
@@ -219,13 +190,11 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when exportContract.privateMarketId does not exist', async () => {
-    const invalidId = application.id;
-
     const mockApplication = {
       ...application,
       exportContract: {
         ...application.exportContract,
-        privateMarketId: invalidId,
+        privateMarketId: mockInvalidId,
       },
     };
 
@@ -237,13 +206,11 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when exportContract.finalDestinationCountryCode does not exist', async () => {
-    const invalidId = application.id;
-
     const mockApplication = {
       ...application,
       exportContract: {
         ...application.exportContract,
-        finalDestinationCountryCode: invalidId,
+        finalDestinationCountryCode: mockInvalidId,
       },
     };
 
@@ -255,9 +222,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when companyAddress does not exist', async () => {
-    const invalidId = application.id;
-
-    const mockApplication = { ...application, companyAddressId: invalidId };
+    const mockApplication = { ...application, companyAddressId: mockInvalidId };
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
@@ -267,9 +232,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when company does not exist', async () => {
-    const invalidId = application.id;
-
-    const mockApplication = { ...application, companyId: invalidId };
+    const mockApplication = { ...application, companyId: mockInvalidId };
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
@@ -279,13 +242,11 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when differentTradingAddress does not exist', async () => {
-    const invalidId = application.id;
-
     const mockApplication = {
       ...application,
       company: {
         ...application.company,
-        differentTradingAddressId: invalidId,
+        differentTradingAddressId: mockInvalidId,
       },
     };
 
@@ -307,9 +268,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when business does not exist', async () => {
-    const invalidId = application.id;
-
-    const mockApplication = { ...application, businessId: invalidId };
+    const mockApplication = { ...application, businessId: mockInvalidId };
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
@@ -319,9 +278,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when broker does not exist', async () => {
-    const invalidId = application.id;
-
-    const mockApplication = { ...application, brokerId: invalidId };
+    const mockApplication = { ...application, brokerId: mockInvalidId };
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
@@ -331,9 +288,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when declaration does not exist', async () => {
-    const invalidId = application.id;
-
-    const mockApplication = { ...application, declarationId: invalidId };
+    const mockApplication = { ...application, declarationId: mockInvalidId };
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
@@ -343,9 +298,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
   });
 
   it('should throw an error when sectionReview does not exist', async () => {
-    const invalidId = application.id;
-
-    const mockApplication = { ...application, sectionReviewId: invalidId };
+    const mockApplication = { ...application, sectionReviewId: mockInvalidId };
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });

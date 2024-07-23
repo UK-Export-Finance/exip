@@ -1,4 +1,5 @@
 import getEligibilityById from '.';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import eligibility from '../../test-helpers/eligibility';
 import { ApplicationEligibility, Context } from '../../types';
@@ -12,23 +13,21 @@ describe('helpers/get-eligibility-by-id', () => {
   });
 
   beforeEach(async () => {
-    createdEligibility = await eligibility.create(context) as ApplicationEligibility;
+    createdEligibility = (await eligibility.create(context)) as ApplicationEligibility;
   });
 
   it('should return an eligibility by ID', async () => {
-    const result = (await getEligibilityById(context, createdEligibility.id));
+    const result = await getEligibilityById(context, createdEligibility.id);
 
     expect(result.id).toEqual(createdEligibility.id);
   });
 
   describe('when an eligibility is not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       try {
-        await getEligibilityById(context, invalidId);
+        await getEligibilityById(context, mockInvalidId);
       } catch (err) {
-        const errorMessage = `Getting eligibility by ID ${invalidId}`;
+        const errorMessage = `Getting eligibility by ID ${mockInvalidId}`;
 
         const newError = new Error(errorMessage);
 

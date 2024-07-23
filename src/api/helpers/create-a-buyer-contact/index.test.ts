@@ -1,10 +1,9 @@
 import createABuyerContact from '.';
 import { Context, Application, ApplicationBuyer } from '../../types';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applicationHelpers from '../../test-helpers/applications';
 import buyerHelpers from '../../test-helpers/buyer';
-
-const invalidId = 'invalid-id';
 
 const assertError = (err) => {
   const errorString = String(err);
@@ -48,7 +47,7 @@ describe('helpers/create-a-buyer-contact', () => {
   describe('when an invalid buyer ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createABuyerContact(context, invalidId, applicationId);
+        await createABuyerContact(context, mockInvalidId, applicationId);
       } catch (err) {
         assertError(err);
       }
@@ -58,7 +57,7 @@ describe('helpers/create-a-buyer-contact', () => {
   describe('when an invalid application ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createABuyerContact(context, buyer.id, invalidId);
+        await createABuyerContact(context, buyer.id, mockInvalidId);
       } catch (err) {
         assertError(err);
       }

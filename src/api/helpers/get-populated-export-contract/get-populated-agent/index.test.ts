@@ -1,4 +1,5 @@
 import getPopulatedAgent from '.';
+import { mockInvalidId } from '../../../test-mocks';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 import agent from '../../../test-helpers/export-contract-agent';
 import service from '../../../test-helpers/export-contract-agent-service';
@@ -50,12 +51,10 @@ describe('helpers/get-populated-export-contract/get-populated-agent', () => {
 
   describe('when an agent is not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       try {
-        await getPopulatedAgent(context, invalidId);
+        await getPopulatedAgent(context, mockInvalidId);
       } catch (err) {
-        const expected = `Getting populated exportContract agent ${invalidId}`;
+        const expected = `Getting populated exportContract agent ${mockInvalidId}`;
 
         expect(String(err).includes(expected)).toEqual(true);
       }
@@ -64,12 +63,10 @@ describe('helpers/get-populated-export-contract/get-populated-agent', () => {
 
   describe('when an agentService is not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       const agentObject = {
         service: {
           connect: {
-            id: invalidId,
+            id: mockInvalidId,
           },
         },
       };
@@ -88,14 +85,12 @@ describe('helpers/get-populated-export-contract/get-populated-agent', () => {
 
   describe('when an agentServiceCharge is not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       const agentObject = {
         service: {
           ...serviceConnectObject,
           charge: {
             connect: {
-              id: invalidId,
+              id: mockInvalidId,
             },
           },
         },

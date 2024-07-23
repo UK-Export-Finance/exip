@@ -1,10 +1,8 @@
 import createACompany from '.';
-import { mockCompany } from '../../test-mocks';
+import { mockCompany, mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
 import { Application, Context } from '../../types';
-
-const invalidId = 'invalid-id';
 
 const assertError = (err) => {
   const errorString = String(err);
@@ -45,7 +43,7 @@ describe('helpers/create-a-company', () => {
   describe('when an invalid application ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createACompany(context, invalidId, mockCompany);
+        await createACompany(context, mockInvalidId, mockCompany);
       } catch (err) {
         assertError(err);
       }

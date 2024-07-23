@@ -1,10 +1,9 @@
 import createAnExportContract from '.';
 import { APPLICATION } from '../../constants';
 import { Application, Context } from '../../types';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
-
-const invalidId = 'invalid-id';
 
 const assertError = (err) => {
   const errorString = String(err);
@@ -54,7 +53,7 @@ describe('helpers/create-an-export-contract', () => {
   describe('when an invalid policy ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createAnExportContract(context, invalidId);
+        await createAnExportContract(context, mockInvalidId);
       } catch (err) {
         assertError(err);
       }

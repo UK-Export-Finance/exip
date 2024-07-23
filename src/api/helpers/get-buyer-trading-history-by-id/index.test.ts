@@ -1,4 +1,5 @@
 import getBuyerTradingHistoryById from '.';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import buyerTradingHistory from '../../test-helpers/buyer-trading-history';
 import { Context, ApplicationBuyerTradingHistory } from '../../types';
@@ -12,23 +13,21 @@ describe('helpers/get-buyer-trading-history-by-id', () => {
   });
 
   beforeEach(async () => {
-    createdRelationship = await buyerTradingHistory.create(context) as ApplicationBuyerTradingHistory;
+    createdRelationship = (await buyerTradingHistory.create(context)) as ApplicationBuyerTradingHistory;
   });
 
   it('should return a buyer trading history by ID', async () => {
-    const result = (await getBuyerTradingHistoryById(context, createdRelationship.id));
+    const result = await getBuyerTradingHistoryById(context, createdRelationship.id);
 
     expect(result.id).toEqual(createdRelationship.id);
   });
 
   describe('when a buyer trading history is not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       try {
-        await getBuyerTradingHistoryById(context, invalidId);
+        await getBuyerTradingHistoryById(context, mockInvalidId);
       } catch (err) {
-        const errorMessage = `Getting buyer trading history by ID ${invalidId}`;
+        const errorMessage = `Getting buyer trading history by ID ${mockInvalidId}`;
 
         const newError = new Error(errorMessage);
 

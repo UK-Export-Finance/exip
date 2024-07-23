@@ -1,9 +1,8 @@
 import createACompanyDifferentTradingAddress from '.';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import companyHelpers from '../../test-helpers/company';
 import { Context } from '../../types';
-
-const invalidId = 'invalid-id';
 
 const assertError = (err) => {
   const errorString = String(err);
@@ -31,7 +30,7 @@ describe('helpers/create-a-company-different-trading-address', () => {
   describe('when an invalid company ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createACompanyDifferentTradingAddress(context, invalidId);
+        await createACompanyDifferentTradingAddress(context, mockInvalidId);
       } catch (err) {
         assertError(err);
       }

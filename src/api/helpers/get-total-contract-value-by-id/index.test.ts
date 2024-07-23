@@ -1,4 +1,5 @@
 import getTotalContractValuedById from '.';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import totalContractValue from '../../test-helpers/total-contract-value';
 import { Context, TotalContractValue } from '../../types';
@@ -12,23 +13,21 @@ describe('helpers/get-total-contract-value-by-id', () => {
   });
 
   beforeEach(async () => {
-    createdTotalContractValue = await totalContractValue.create(context) as TotalContractValue;
+    createdTotalContractValue = (await totalContractValue.create(context)) as TotalContractValue;
   });
 
   it('should return a total contract value by ID', async () => {
-    const result = (await getTotalContractValuedById(context, createdTotalContractValue.id));
+    const result = await getTotalContractValuedById(context, createdTotalContractValue.id);
 
     expect(result.id).toEqual(createdTotalContractValue.id);
   });
 
   describe('when a total contract value is not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       try {
-        await getTotalContractValuedById(context, invalidId);
+        await getTotalContractValuedById(context, mockInvalidId);
       } catch (err) {
-        const errorMessage = `Getting totalContractValue by ID ${invalidId}`;
+        const errorMessage = `Getting totalContractValue by ID ${mockInvalidId}`;
 
         const newError = new Error(errorMessage);
 

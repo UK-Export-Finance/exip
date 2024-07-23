@@ -1,4 +1,5 @@
 import getPopulatedEligibility from '.';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import country from '../../test-helpers/country';
 import coverPeriod from '../../test-helpers/cover-period';
@@ -59,12 +60,10 @@ describe('helpers/get-populated-company', () => {
 
   describe('when an eligibility is not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       try {
-        await getPopulatedEligibility(context, invalidId, createdCountry);
+        await getPopulatedEligibility(context, mockInvalidId, createdCountry);
       } catch (err) {
-        const expected = `Getting populated eligibility ${invalidId}`;
+        const expected = `Getting populated eligibility ${mockInvalidId}`;
 
         expect(String(err).includes(expected)).toEqual(true);
       }
@@ -73,12 +72,10 @@ describe('helpers/get-populated-company', () => {
 
   describe('when a coverPeriod is not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       const eligibilityObject = {
         coverPeriod: {
           connect: {
-            id: invalidId,
+            id: mockInvalidId,
           },
         },
         totalContractValue: totalContractValueConnectObject,
@@ -98,13 +95,11 @@ describe('helpers/get-populated-company', () => {
 
   describe('when a totalContractValue is not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       const eligibilityObject = {
         coverPeriod: coverPeriodConnectObject,
         totalContractValue: {
           connect: {
-            id: invalidId,
+            id: mockInvalidId,
           },
         },
       };

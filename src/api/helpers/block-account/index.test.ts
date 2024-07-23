@@ -2,7 +2,7 @@ import blockAccount from '.';
 import accounts from '../../test-helpers/accounts';
 import accountStatusHelper from '../../test-helpers/account-status';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
-import { mockAccount } from '../../test-mocks';
+import { mockAccount, mockInvalidId } from '../../test-mocks';
 import { Account, Context } from '../../types';
 
 const { status, ...mockAccountUpdate } = mockAccount;
@@ -35,10 +35,8 @@ describe('helpers/block-account', () => {
 
   describe('when an account is NOT updated - invalid ID', () => {
     test('it should throw an error', async () => {
-      const invalidId = 'invalidId';
-
       try {
-        await blockAccount(context, invalidId);
+        await blockAccount(context, mockInvalidId);
       } catch (err) {
         const errorString = String(err);
 

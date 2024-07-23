@@ -1,4 +1,5 @@
 import getCountryById from '.';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import country from '../../test-helpers/country';
 import { Context, Country } from '../../types';
@@ -12,7 +13,7 @@ describe('helpers/get-country-by-id', () => {
   });
 
   beforeEach(async () => {
-    createdCountry = await country.create(context) as Country;
+    createdCountry = (await country.create(context)) as Country;
   });
 
   it('should return a country by ID', async () => {
@@ -23,12 +24,10 @@ describe('helpers/get-country-by-id', () => {
 
   describe('when a country is not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       try {
-        await getCountryById(context, invalidId);
+        await getCountryById(context, mockInvalidId);
       } catch (err) {
-        const errorMessage = `Getting country by ID ${invalidId}`;
+        const errorMessage = `Getting country by ID ${mockInvalidId}`;
 
         const newError = new Error(errorMessage);
 

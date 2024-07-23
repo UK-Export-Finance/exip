@@ -1,4 +1,5 @@
 import getExportContractById from '.';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import exportContract from '../../test-helpers/export-contract';
 import { Context, ApplicationExportContract } from '../../types';
@@ -12,23 +13,21 @@ describe('helpers/get-export-contract-by-id', () => {
   });
 
   beforeEach(async () => {
-    createdExportContract = await exportContract.create(context) as ApplicationExportContract;
+    createdExportContract = (await exportContract.create(context)) as ApplicationExportContract;
   });
 
   it('should return an export contract by ID', async () => {
-    const result = (await getExportContractById(context, createdExportContract.id));
+    const result = await getExportContractById(context, createdExportContract.id);
 
     expect(result.id).toEqual(createdExportContract.id);
   });
 
   describe('when an export contract is not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       try {
-        await getExportContractById(context, invalidId);
+        await getExportContractById(context, mockInvalidId);
       } catch (err) {
-        const errorMessage = `Getting exportContract by ID ${invalidId}`;
+        const errorMessage = `Getting exportContract by ID ${mockInvalidId}`;
 
         const newError = new Error(errorMessage);
 

@@ -1,4 +1,5 @@
 import getPopulatedBuyer from '.';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import country from '../../test-helpers/country';
 import buyer from '../../test-helpers/buyer';
@@ -63,12 +64,10 @@ describe('helpers/get-populated-buyer', () => {
 
   describe('when a buyer is not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       try {
-        await getPopulatedBuyer(context, invalidId);
+        await getPopulatedBuyer(context, mockInvalidId);
       } catch (err) {
-        const expected = `Getting populated buyer ${invalidId}`;
+        const expected = `Getting populated buyer ${mockInvalidId}`;
 
         expect(String(err).includes(expected)).toEqual(true);
       }
@@ -91,13 +90,11 @@ describe('helpers/get-populated-buyer', () => {
 
   describe('when a relationship is not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       const buyerObject = {
         country: buyerCountryConnectObject,
         relationship: {
           connect: {
-            id: invalidId,
+            id: mockInvalidId,
           },
         },
       };
@@ -116,14 +113,12 @@ describe('helpers/get-populated-buyer', () => {
 
   describe('when a tradingHistory is not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       const buyerObject = {
         country: buyerCountryConnectObject,
         relationship: buyerRelationshipConnectObject,
         buyerTradingHistory: {
           connect: {
-            id: invalidId,
+            id: mockInvalidId,
           },
         },
       };

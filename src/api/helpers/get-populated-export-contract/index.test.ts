@@ -1,5 +1,6 @@
 import getPopulatedExportContract from '.';
 import getCountryByField from '../get-country-by-field';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import country from '../../test-helpers/country';
 import privateMarket from '../../test-helpers/private-market';
@@ -98,12 +99,10 @@ describe('helpers/get-populated-export-contract/get-populated-agent', () => {
 
   describe('when an exportContract is not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       try {
-        await getPopulatedExportContract(context, invalidId);
+        await getPopulatedExportContract(context, mockInvalidId);
       } catch (err) {
-        const expected = `Getting populated exportContract ${invalidId}`;
+        const expected = `Getting populated exportContract ${mockInvalidId}`;
 
         expect(String(err).includes(expected)).toEqual(true);
       }
@@ -112,15 +111,13 @@ describe('helpers/get-populated-export-contract/get-populated-agent', () => {
 
   describe('when an exportContractAgent is not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       const exportContractObject = {
         privateMarket: privateMarketConnectObject,
         finalDestinationCountryCountryCode: createdCountry.isoCode,
         agent: {
           service: serviceConnectObject,
           connect: {
-            id: invalidId,
+            id: mockInvalidId,
           },
         },
       };
@@ -139,15 +136,13 @@ describe('helpers/get-populated-export-contract/get-populated-agent', () => {
 
   describe('when a privateMarket is not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       const exportContractObject = {
         privateMarket: privateMarketConnectObject,
         finalDestinationCountryCountryCode: createdCountry.isoCode,
         agent: {
           service: serviceConnectObject,
           connect: {
-            id: invalidId,
+            id: mockInvalidId,
           },
         },
       };
@@ -166,11 +161,9 @@ describe('helpers/get-populated-export-contract/get-populated-agent', () => {
 
   describe('when a finalDestinationCountry is not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       const exportContractObject = {
         privateMarket: privateMarketConnectObject,
-        finalDestinationCountryCountryCode: invalidId,
+        finalDestinationCountryCountryCode: mockInvalidId,
         agent: agentConnectObject,
       };
 

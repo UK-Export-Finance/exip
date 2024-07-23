@@ -1,4 +1,5 @@
 import getDeclarationById from '.';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import declaration from '../../test-helpers/declaration';
 import { Context, ApplicationDeclaration } from '../../types';
@@ -12,23 +13,21 @@ describe('helpers/get-declaration-by-id', () => {
   });
 
   beforeEach(async () => {
-    createdDeclaration = await declaration.create(context) as ApplicationDeclaration;
+    createdDeclaration = (await declaration.create(context)) as ApplicationDeclaration;
   });
 
   it('should return a declaration by ID', async () => {
-    const result = (await getDeclarationById(context, createdDeclaration.id));
+    const result = await getDeclarationById(context, createdDeclaration.id);
 
     expect(result.id).toEqual(createdDeclaration.id);
   });
 
   describe('when a declaration is not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       try {
-        await getDeclarationById(context, invalidId);
+        await getDeclarationById(context, mockInvalidId);
       } catch (err) {
-        const errorMessage = `Getting declaration by ID ${invalidId}`;
+        const errorMessage = `Getting declaration by ID ${mockInvalidId}`;
 
         const newError = new Error(errorMessage);
 

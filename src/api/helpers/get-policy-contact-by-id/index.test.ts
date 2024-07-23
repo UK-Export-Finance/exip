@@ -1,4 +1,5 @@
 import getPolicyContactById from '.';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import policyContact from '../../test-helpers/policy-contact';
 import { Context, ApplicationPolicyContact } from '../../types';
@@ -12,23 +13,21 @@ describe('helpers/get-policy-contact-by-id', () => {
   });
 
   beforeEach(async () => {
-    createdPolicyContact = await policyContact.create(context) as ApplicationPolicyContact;
+    createdPolicyContact = (await policyContact.create(context)) as ApplicationPolicyContact;
   });
 
   it('should return a policy contact by ID', async () => {
-    const result = (await getPolicyContactById(context, createdPolicyContact.id));
+    const result = await getPolicyContactById(context, createdPolicyContact.id);
 
     expect(result.id).toEqual(createdPolicyContact.id);
   });
 
   describe('when a policy contact is not found', () => {
     it('should throw an error', async () => {
-      const invalidId = 'invalid-id';
-
       try {
-        await getPolicyContactById(context, invalidId);
+        await getPolicyContactById(context, mockInvalidId);
       } catch (err) {
-        const errorMessage = `Getting policyContact by ID ${invalidId}`;
+        const errorMessage = `Getting policyContact by ID ${mockInvalidId}`;
 
         const newError = new Error(errorMessage);
 
