@@ -5,7 +5,7 @@ import mapAndUpdateInactiveApplications from '../map-and-update-inactive-applica
 
 /**
  * updateInactiveApplications
- * Gets inactive applications which have not been updated for 30 days
+ * Gets inactive applications which have not been updated for SUBMISSION_DEADLINE_IN_DAYS
  * Sets their status to Abandoned
  * returns success flag
  * @param {Context} KeystoneJS context API
