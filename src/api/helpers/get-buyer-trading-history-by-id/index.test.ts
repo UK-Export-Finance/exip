@@ -21,7 +21,7 @@ describe('helpers/get-buyer-trading-history-by-id', () => {
     expect(result.id).toEqual(createdRelationship.id);
   });
 
-  describe('when a buyer is not found', () => {
+  describe('when a buyer trading history is not found', () => {
     it('should throw an error', async () => {
       const invalidId = 'invalid-id';
 

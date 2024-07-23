@@ -15,7 +15,7 @@ describe('helpers/get-policy-contact-by-id', () => {
     createdPolicyContact = await policyContact.create(context) as ApplicationPolicyContact;
   });
 
-  it('should return a total contract value by ID', async () => {
+  it('should return a policy contact by ID', async () => {
     const result = (await getPolicyContactById(context, createdPolicyContact.id));
 
     expect(result.id).toEqual(createdPolicyContact.id);

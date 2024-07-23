@@ -25,7 +25,7 @@ const create = async (context: Context) => {
  * Get an declaration by ID
  * @param {Context} context: KeystoneJS context API
  * @param {String} declarationId: Declaration ID
- * @returns {Promise<ApplicationExportContract>} Declaration
+ * @returns {Promise<ApplicationDeclaration>} Declaration
  */
 const get = async (context: Context, declarationId: string) => {
   try {
