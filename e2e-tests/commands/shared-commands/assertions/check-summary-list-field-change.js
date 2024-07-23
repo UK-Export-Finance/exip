@@ -17,9 +17,7 @@ export const checkChangeLinkUrl = (fieldVariables, referenceNumber) => {
  * @param {Number} index eg index of identical summary list rows
  */
 export const checkChangeAnswerRendered = ({ fieldVariables, index }) => {
-  const {
-    newValue, fieldId, summaryList,
-  } = fieldVariables;
+  const { newValue, fieldId, summaryList } = fieldVariables;
 
   let selector = summaryList.field(fieldId).value();
 
@@ -27,8 +25,5 @@ export const checkChangeAnswerRendered = ({ fieldVariables, index }) => {
     selector = selector.eq(index);
   }
 
-  cy.checkText(
-    selector,
-    newValue,
-  );
+  cy.checkText(selector, newValue);
 };

@@ -10,7 +10,9 @@ const {
   },
 } = ROUTES;
 
-const { ACCOUNT: { PASSWORD } } = INSURANCE_FIELD_IDS;
+const {
+  ACCOUNT: { PASSWORD },
+} = INSURANCE_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 

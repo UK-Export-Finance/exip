@@ -8,10 +8,7 @@ import application from '../../../../../../../../fixtures/application';
 
 const {
   ROOT,
-  POLICY: {
-    TYPE_OF_POLICY_CHECK_AND_CHANGE,
-    MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE,
-  },
+  POLICY: { TYPE_OF_POLICY_CHECK_AND_CHANGE, MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE },
   CHECK_YOUR_ANSWERS,
 } = INSURANCE_ROUTES;
 
@@ -19,15 +16,10 @@ const {
   POLICY: {
     TYPE_OF_POLICY: { POLICY_TYPE },
     CONTRACT_POLICY: {
-      MULTIPLE: {
-        TOTAL_MONTHS_OF_COVER,
-      },
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER },
     },
     EXPORT_VALUE: {
-      MULTIPLE: {
-        TOTAL_SALES_TO_BUYER,
-        MAXIMUM_BUYER_WILL_OWE,
-      },
+      MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -142,7 +134,10 @@ context('Insurance - Change your answers - Policy - Change single to multiple po
       summaryList.field(MAXIMUM_BUYER_WILL_OWE).changeLink().click();
 
       cy.assertChangeAnswersPageUrl({
-        referenceNumber, route: MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE, fieldId: MAXIMUM_BUYER_WILL_OWE, fragmentSuffix: 'label',
+        referenceNumber,
+        route: MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE,
+        fieldId: MAXIMUM_BUYER_WILL_OWE,
+        fragmentSuffix: 'label',
       });
     });
   });

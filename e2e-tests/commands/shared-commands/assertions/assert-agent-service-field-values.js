@@ -11,10 +11,7 @@ const {
  * @param {String} expectedDescription: Expected service description
  * @param {String} agentIsCharging: Agent is charging
  */
-const assertAgentServiceFieldValues = ({
-  expectedDescription = EXPECTED_MULTI_LINE_STRING,
-  agentIsCharging = false,
-}) => {
+const assertAgentServiceFieldValues = ({ expectedDescription = EXPECTED_MULTI_LINE_STRING, agentIsCharging = false }) => {
   cy.checkTextareaValue({
     fieldId: SERVICE_DESCRIPTION,
     expectedValue: expectedDescription,

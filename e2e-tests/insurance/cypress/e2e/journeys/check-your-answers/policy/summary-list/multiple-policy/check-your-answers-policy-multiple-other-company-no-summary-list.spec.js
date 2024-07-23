@@ -5,18 +5,11 @@ import checkSummaryList from '../../../../../../../../commands/insurance/check-p
 
 const {
   ROOT: INSURANCE_ROOT,
-  CHECK_YOUR_ANSWERS: {
-    TYPE_OF_POLICY,
-  },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
 } = INSURANCE_ROUTES;
 
 const {
-  REQUESTED_JOINTLY_INSURED_PARTY: {
-    REQUESTED,
-    COMPANY_NAME,
-    COMPANY_NUMBER,
-    COUNTRY_CODE,
-  },
+  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
 } = POLICY_FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;

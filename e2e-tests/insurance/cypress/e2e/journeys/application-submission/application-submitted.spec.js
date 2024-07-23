@@ -12,12 +12,7 @@ const {
   FEEDBACK,
 } = INSURANCE_ROUTES;
 
-const {
-  panel,
-  whatHappensNext,
-  decisionFromUs,
-  helpUsImprove,
-} = applicationSubmittedPage;
+const { panel, whatHappensNext, decisionFromUs, helpUsImprove } = applicationSubmittedPage;
 
 const baseUrl = Cypress.config('baseUrl');
 

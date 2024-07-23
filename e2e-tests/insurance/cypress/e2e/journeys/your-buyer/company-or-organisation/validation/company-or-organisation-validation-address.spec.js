@@ -5,16 +5,12 @@ import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-id
 import { MAXIMUM_CHARACTERS } from '../../../../../../../constants/validation';
 
 const {
-  COMPANY_OR_ORGANISATION: {
-    ADDRESS,
-  },
+  COMPANY_OR_ORGANISATION: { ADDRESS },
 } = FIELD_IDS;
 
 const {
   INSURANCE: {
-    YOUR_BUYER: {
-      COMPANY_OR_ORGANISATION: COMPANY_OR_ORG_ERROR_MESSAGES,
-    },
+    YOUR_BUYER: { COMPANY_OR_ORGANISATION: COMPANY_OR_ORG_ERROR_MESSAGES },
   },
 } = ERROR_MESSAGES;
 

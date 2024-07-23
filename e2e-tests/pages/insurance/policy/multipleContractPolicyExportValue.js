@@ -4,9 +4,7 @@ import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 const {
   POLICY: {
     EXPORT_VALUE: {
-      MULTIPLE: {
-        MAXIMUM_BUYER_WILL_OWE,
-      },
+      MULTIPLE: { MAXIMUM_BUYER_WILL_OWE },
     },
   },
 } = INSURANCE_FIELD_IDS;

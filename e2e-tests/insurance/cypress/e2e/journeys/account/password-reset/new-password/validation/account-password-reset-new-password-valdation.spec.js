@@ -8,11 +8,7 @@ import mockAccount from '../../../../../../../../fixtures/account';
 
 const {
   ACCOUNT: {
-    PASSWORD_RESET: {
-      ROOT: PASSWORD_RESET_ROOT,
-      LINK_SENT,
-      NEW_PASSWORD,
-    },
+    PASSWORD_RESET: { ROOT: PASSWORD_RESET_ROOT, LINK_SENT, NEW_PASSWORD },
   },
 } = ROUTES;
 

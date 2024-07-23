@@ -6,10 +6,7 @@
  * @param {String} Expected value
  */
 const assertSummaryListRowKey = (summaryList, fieldId, expected) => {
-  cy.checkText(
-    summaryList.field(fieldId).key(),
-    expected,
-  );
+  cy.checkText(summaryList.field(fieldId).key(), expected);
 };
 
 export default assertSummaryListRowKey;

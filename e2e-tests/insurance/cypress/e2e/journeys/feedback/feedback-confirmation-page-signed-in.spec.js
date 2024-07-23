@@ -4,9 +4,7 @@ import { ROUTES } from '../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.FEEDBACK_SENT_PAGE;
 
-const {
-  FEEDBACK_SENT,
-} = ROUTES.INSURANCE;
+const { FEEDBACK_SENT } = ROUTES.INSURANCE;
 
 context('Insurance - Feedback confirmation page - Signed in', () => {
   const url = FEEDBACK_SENT;

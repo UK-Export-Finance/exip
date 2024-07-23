@@ -1,9 +1,4 @@
-import {
-  autoCompleteField,
-  field,
-  status,
-  summaryList,
-} from '../../../../../../../../pages/shared';
+import { autoCompleteField, field, status, summaryList } from '../../../../../../../../pages/shared';
 import { agentChargesPage } from '../../../../../../../../pages/insurance/export-contract';
 import partials from '../../../../../../../../partials';
 import FIELD_IDS from '../../../../../../../../constants/field-ids/insurance/export-contract';
@@ -12,20 +7,13 @@ import checkSummaryList from '../../../../../../../../commands/insurance/check-e
 
 const {
   ROOT,
-  CHECK_YOUR_ANSWERS: {
-    EXPORT_CONTRACT,
-  },
-  EXPORT_CONTRACT: {
-    AGENT_CHARGES,
-    AGENT_SERVICE_CHECK_AND_CHANGE,
-  },
+  CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT },
+  EXPORT_CONTRACT: { AGENT_CHARGES, AGENT_SERVICE_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {
   AGENT_SERVICE: { IS_CHARGING: FIELD_ID },
-  AGENT_CHARGES: {
-    FIXED_SUM, FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, METHOD, PAYABLE_COUNTRY_CODE, PERCENTAGE,
-  },
+  AGENT_CHARGES: { FIXED_SUM, FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, METHOD, PAYABLE_COUNTRY_CODE, PERCENTAGE },
 } = FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;

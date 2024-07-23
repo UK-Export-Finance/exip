@@ -6,19 +6,13 @@ import checkSummaryList from '../../../../../../../../commands/insurance/check-p
 
 const {
   ROOT,
-  CHECK_YOUR_ANSWERS: {
-    TYPE_OF_POLICY,
-  },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
   POLICY: { BROKER_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {
   USING_BROKER: FIELD_ID,
-  BROKER_DETAILS: {
-    NAME,
-    EMAIL,
-    FULL_ADDRESS,
-  },
+  BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;

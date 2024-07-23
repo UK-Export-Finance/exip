@@ -1,6 +1,4 @@
-import {
-  EUR_CURRENCY_CODE, GBP_CURRENCY_CODE, USD_CURRENCY_CODE, JPY_CURRENCY_CODE,
-} from '../../fixtures/currencies';
+import { EUR_CURRENCY_CODE, GBP_CURRENCY_CODE, USD_CURRENCY_CODE, JPY_CURRENCY_CODE } from '../../fixtures/currencies';
 
 /**
  * formSubmissionAssertions

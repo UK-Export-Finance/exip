@@ -13,153 +13,150 @@ const {
 
 const {
   ROOT,
-  POLICY: {
-    LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE,
-    CHECK_YOUR_ANSWERS,
-  },
+  POLICY: { LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Change your answers - Loss payee details - Financial details - International - As an exporter, I want to change my answers to the loss payee section', () => {
-  let referenceNumber;
-  let url;
+context(
+  'Insurance - Policy - Change your answers - Loss payee details - Financial details - International - As an exporter, I want to change my answers to the loss payee section',
+  () => {
+    let referenceNumber;
+    let url;
 
-  before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-      cy.completePolicySection({
-        isAppointingLossPayee: true,
-        lossPayeeIsLocatedInUK: false,
-      });
+        cy.completePolicySection({
+          isAppointingLossPayee: true,
+          lossPayeeIsLocatedInUK: false,
+        });
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-    });
-  });
-
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
-
-  describe(BIC_SWIFT_CODE, () => {
-    const fieldId = BIC_SWIFT_CODE;
-
-    describe('when clicking the `change` link', () => {
-      it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE}`, () => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE, fieldId });
+        url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       });
     });
 
-    describe('form submission with a new answer', () => {
-      const newAnswer = mockBicSwiftCode1;
-
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.keyboardInput(field(fieldId).input(), newAnswer);
-
-        cy.clickSubmitButton();
-      });
-
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
-      });
-
-      it('should render the new answer', () => {
-        cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
-      });
-    });
-  });
-
-  describe(IBAN, () => {
-    const fieldId = IBAN;
-
-    describe('when clicking the `change` link', () => {
-      it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE}`, () => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE, fieldId });
-      });
+    beforeEach(() => {
+      cy.saveSession();
     });
 
-    describe('form submission with a new answer', () => {
-      const newAnswer = mockIban1;
-
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.keyboardInput(field(fieldId).input(), newAnswer);
-
-        cy.clickSubmitButton();
-      });
-
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
-      });
-
-      it('should render the new answer', () => {
-        cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
-      });
+    after(() => {
+      cy.deleteApplication(referenceNumber);
     });
-  });
 
-  describe(FINANCIAL_ADDRESS, () => {
-    const fieldId = FINANCIAL_ADDRESS;
+    describe(BIC_SWIFT_CODE, () => {
+      const fieldId = BIC_SWIFT_CODE;
 
-    describe('when clicking the `change` link', () => {
-      it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE}`, () => {
-        cy.navigateToUrl(url);
+      describe('when clicking the `change` link', () => {
+        it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE}`, () => {
+          cy.navigateToUrl(url);
 
-        summaryList.field(fieldId).changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE, fieldId });
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE, fieldId });
+        });
+      });
+
+      describe('form submission with a new answer', () => {
+        const newAnswer = mockBicSwiftCode1;
+
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+
+          summaryList.field(fieldId).changeLink().click();
+
+          cy.keyboardInput(field(fieldId).input(), newAnswer);
+
+          cy.clickSubmitButton();
+        });
+
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+        });
+
+        it('should render the new answer', () => {
+          cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
+        });
       });
     });
 
-    describe('form submission with a new answer', () => {
-      const mockNewAddress = mockAddress1;
+    describe(IBAN, () => {
+      const fieldId = IBAN;
 
-      beforeEach(() => {
-        cy.navigateToUrl(url);
+      describe('when clicking the `change` link', () => {
+        it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE}`, () => {
+          cy.navigateToUrl(url);
 
-        summaryList.field(fieldId).changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(field(fieldId).textarea(), mockNewAddress);
-
-        cy.clickSubmitButton();
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE, fieldId });
+        });
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
-      });
+      describe('form submission with a new answer', () => {
+        const newAnswer = mockIban1;
 
-      it('should render the new answer', () => {
-        const expectedKey = FIELDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[fieldId].SUMMARY.TITLE;
+        beforeEach(() => {
+          cy.navigateToUrl(url);
 
-        const row = summaryList.field(fieldId);
+          summaryList.field(fieldId).changeLink().click();
 
-        cy.checkText(
-          row.key(),
-          expectedKey,
-        );
+          cy.keyboardInput(field(fieldId).input(), newAnswer);
 
-        row.value().contains(mockNewAddress);
+          cy.clickSubmitButton();
+        });
+
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+        });
+
+        it('should render the new answer', () => {
+          cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
+        });
       });
     });
-  });
-});
+
+    describe(FINANCIAL_ADDRESS, () => {
+      const fieldId = FINANCIAL_ADDRESS;
+
+      describe('when clicking the `change` link', () => {
+        it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE}`, () => {
+          cy.navigateToUrl(url);
+
+          summaryList.field(fieldId).changeLink().click();
+
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE, fieldId });
+        });
+      });
+
+      describe('form submission with a new answer', () => {
+        const mockNewAddress = mockAddress1;
+
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+
+          summaryList.field(fieldId).changeLink().click();
+
+          cy.keyboardInput(field(fieldId).textarea(), mockNewAddress);
+
+          cy.clickSubmitButton();
+        });
+
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+        });
+
+        it('should render the new answer', () => {
+          const expectedKey = FIELDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[fieldId].SUMMARY.TITLE;
+
+          const row = summaryList.field(fieldId);
+
+          cy.checkText(row.key(), expectedKey);
+
+          row.value().contains(mockNewAddress);
+        });
+      });
+    });
+  },
+);

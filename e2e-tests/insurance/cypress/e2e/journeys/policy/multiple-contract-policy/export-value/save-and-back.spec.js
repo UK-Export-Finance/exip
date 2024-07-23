@@ -6,18 +6,13 @@ import application from '../../../../../../../fixtures/application';
 
 const {
   ROOT,
-  POLICY: {
-    MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
-  },
+  POLICY: { MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE },
 } = INSURANCE_ROUTES;
 
 const {
   POLICY: {
     EXPORT_VALUE: {
-      MULTIPLE: {
-        TOTAL_SALES_TO_BUYER,
-        MAXIMUM_BUYER_WILL_OWE,
-      },
+      MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
     },
   },
 } = INSURANCE_FIELD_IDS;

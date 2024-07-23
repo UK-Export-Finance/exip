@@ -12,136 +12,131 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.DIFFERENT_NAME_ON_POLICY;
 
 const {
   ROOT: INSURANCE_ROOT,
-  POLICY: {
-    PRE_CREDIT_PERIOD,
-    NAME_ON_POLICY,
-    DIFFERENT_NAME_ON_POLICY,
-  },
+  POLICY: { PRE_CREDIT_PERIOD, NAME_ON_POLICY, DIFFERENT_NAME_ON_POLICY },
 } = INSURANCE_ROUTES;
 
 const {
   POLICY: {
-    DIFFERENT_NAME_ON_POLICY: {
-      POSITION, POLICY_CONTACT_DETAIL,
-    },
+    DIFFERENT_NAME_ON_POLICY: { POSITION, POLICY_CONTACT_DETAIL },
   },
-  ACCOUNT: {
-    FIRST_NAME, LAST_NAME, EMAIL,
-  },
+  ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
 } = INSURANCE_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Different name on Policy page - I want to enter the details of my export application contact, So that UKEF will have clarity on who to contact while processing my Export Insurance Application', () => {
-  let referenceNumber;
-  let url;
+context(
+  'Insurance - Policy - Different name on Policy page - I want to enter the details of my export application contact, So that UKEF will have clarity on who to contact while processing my Export Insurance Application',
+  () => {
+    let referenceNumber;
+    let url;
 
-  before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-      // go to the page we want to test.
-      cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm({});
-      cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitTotalContractValueForm({});
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
+        // go to the page we want to test.
+        cy.startInsurancePolicySection({});
+        cy.completeAndSubmitPolicyTypeForm({});
+        cy.completeAndSubmitSingleContractPolicyForm({});
+        cy.completeAndSubmitTotalContractValueForm({});
+        cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
+        url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
 
-      cy.assertUrl(url);
-    });
-  });
-
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
-
-  it('renders core page elements', () => {
-    cy.corePageChecks({
-      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`,
-    });
-  });
-
-  describe('page tests', () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
-    });
-
-    it('renders a heading caption', () => {
-      cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
-    });
-
-    it('renders a hint', () => {
-      cy.checkText(fieldSelector(POLICY_CONTACT_DETAIL).hint(), CONTENT_STRINGS.HINT);
-    });
-
-    it(`should display ${FIRST_NAME} field and be prepopulated`, () => {
-      const fieldId = FIRST_NAME;
-      const field = fieldSelector(fieldId);
-
-      field.input().should('exist');
-
-      cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
-    });
-
-    it(`should display ${LAST_NAME} field and be prepopulated`, () => {
-      const fieldId = LAST_NAME;
-      const field = fieldSelector(fieldId);
-
-      field.input().should('exist');
-
-      cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
-    });
-
-    it(`should display ${EMAIL} field and be prepopulated`, () => {
-      const fieldId = EMAIL;
-      const field = fieldSelector(fieldId);
-
-      field.input().should('exist');
-
-      cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
-    });
-
-    it(`should display ${POSITION} field and should not be prepopulated`, () => {
-      const fieldId = POSITION;
-      const field = fieldSelector(fieldId);
-
-      field.input().should('exist');
-
-      cy.checkText(field.label(), FIELDS.DIFFERENT_NAME_ON_POLICY[fieldId].LABEL);
-    });
-
-    it('renders a `save and back` button', () => {
-      cy.assertSaveAndBackButton();
-    });
-  });
-
-  describe('form submission', () => {
-    it(`should redirect to ${PRE_CREDIT_PERIOD}`, () => {
-      cy.navigateToUrl(url);
-
-      cy.completeAndSubmitDifferentNameOnPolicyForm({});
-
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`;
-      cy.assertUrl(expectedUrl);
-    });
-
-    it('should should have submitted values when navigating back to page', () => {
-      cy.navigateToUrl(url);
-
-      cy.assertDifferentNameOnPolicyFieldValues({
-        expectedFirstName: POLICY_CONTACT[FIRST_NAME],
-        expectedLastName: POLICY_CONTACT[LAST_NAME],
-        expectedEmail: POLICY_CONTACT[EMAIL],
-        expectedPosition: POLICY_CONTACT[POSITION],
+        cy.assertUrl(url);
       });
     });
-  });
-});
+
+    beforeEach(() => {
+      cy.saveSession();
+    });
+
+    after(() => {
+      cy.deleteApplication(referenceNumber);
+    });
+
+    it('renders core page elements', () => {
+      cy.corePageChecks({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currentHref: `${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`,
+        backLink: `${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`,
+      });
+    });
+
+    describe('page tests', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
+      it('renders a heading caption', () => {
+        cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+      });
+
+      it('renders a hint', () => {
+        cy.checkText(fieldSelector(POLICY_CONTACT_DETAIL).hint(), CONTENT_STRINGS.HINT);
+      });
+
+      it(`should display ${FIRST_NAME} field and be prepopulated`, () => {
+        const fieldId = FIRST_NAME;
+        const field = fieldSelector(fieldId);
+
+        field.input().should('exist');
+
+        cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
+      });
+
+      it(`should display ${LAST_NAME} field and be prepopulated`, () => {
+        const fieldId = LAST_NAME;
+        const field = fieldSelector(fieldId);
+
+        field.input().should('exist');
+
+        cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
+      });
+
+      it(`should display ${EMAIL} field and be prepopulated`, () => {
+        const fieldId = EMAIL;
+        const field = fieldSelector(fieldId);
+
+        field.input().should('exist');
+
+        cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
+      });
+
+      it(`should display ${POSITION} field and should not be prepopulated`, () => {
+        const fieldId = POSITION;
+        const field = fieldSelector(fieldId);
+
+        field.input().should('exist');
+
+        cy.checkText(field.label(), FIELDS.DIFFERENT_NAME_ON_POLICY[fieldId].LABEL);
+      });
+
+      it('renders a `save and back` button', () => {
+        cy.assertSaveAndBackButton();
+      });
+    });
+
+    describe('form submission', () => {
+      it(`should redirect to ${PRE_CREDIT_PERIOD}`, () => {
+        cy.navigateToUrl(url);
+
+        cy.completeAndSubmitDifferentNameOnPolicyForm({});
+
+        const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`;
+        cy.assertUrl(expectedUrl);
+      });
+
+      it('should should have submitted values when navigating back to page', () => {
+        cy.navigateToUrl(url);
+
+        cy.assertDifferentNameOnPolicyFieldValues({
+          expectedFirstName: POLICY_CONTACT[FIRST_NAME],
+          expectedLastName: POLICY_CONTACT[LAST_NAME],
+          expectedEmail: POLICY_CONTACT[EMAIL],
+          expectedPosition: POLICY_CONTACT[POSITION],
+        });
+      });
+    });
+  },
+);

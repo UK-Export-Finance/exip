@@ -1,11 +1,4 @@
-import {
-  listIntro,
-  listItem,
-  listOutro,
-  outro,
-  startNowLink,
-  allSectionsLink,
-} from '../../../pages/shared';
+import { listIntro, listItem, listOutro, outro, startNowLink, allSectionsLink } from '../../../pages/shared';
 import { BUTTONS } from '../../../content-strings';
 
 /**
@@ -27,11 +20,7 @@ const assertSectionStartContent = {
 
   startNow: {
     link: ({ expectedUrl }) => {
-      cy.checkLink(
-        startNowLink(),
-        expectedUrl,
-        BUTTONS.START_NOW,
-      );
+      cy.checkLink(startNowLink(), expectedUrl, BUTTONS.START_NOW);
     },
     linkRedirection: ({ currentUrl, expectedUrl }) => {
       cy.navigateToUrl(currentUrl);
@@ -43,11 +32,7 @@ const assertSectionStartContent = {
   },
   allSections: {
     link: ({ expectedUrl }) => {
-      cy.checkLink(
-        allSectionsLink(),
-        expectedUrl,
-        BUTTONS.START_DIFFERENT_SECTION,
-      );
+      cy.checkLink(allSectionsLink(), expectedUrl, BUTTONS.START_DIFFERENT_SECTION);
     },
     linkRedirection: ({ currentUrl, expectedUrl }) => {
       cy.navigateToUrl(currentUrl);

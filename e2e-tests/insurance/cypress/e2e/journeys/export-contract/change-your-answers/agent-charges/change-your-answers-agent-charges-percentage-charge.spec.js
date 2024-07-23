@@ -5,10 +5,7 @@ import application from '../../../../../../../fixtures/application';
 
 const {
   ROOT,
-  EXPORT_CONTRACT: {
-    CHECK_YOUR_ANSWERS,
-    AGENT_CHARGES_CHANGE,
-  },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_CHARGES_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {
@@ -19,61 +16,64 @@ const fieldId = PERCENTAGE_CHARGE;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(`Insurance - Export contract - Change your answers - Agent charges - ${PERCENTAGE_CHARGE} - As an Exporter, I want to be able to review my input regarding the amount an agent is charging for helping me win my export contract, So that I can be assured I am providing UKEF with the right information`, () => {
-  let referenceNumber;
-  let checkYourAnswersUrl;
+context(
+  `Insurance - Export contract - Change your answers - Agent charges - ${PERCENTAGE_CHARGE} - As an Exporter, I want to be able to review my input regarding the amount an agent is charging for helping me win my export contract, So that I can be assured I am providing UKEF with the right information`,
+  () => {
+    let referenceNumber;
+    let checkYourAnswersUrl;
 
-  before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-      cy.completeExportContractSection({
-        isUsingAgent: true,
-        agentIsCharging: true,
-        agentChargeMethodPercentage: true,
+        cy.completeExportContractSection({
+          isUsingAgent: true,
+          agentIsCharging: true,
+          agentChargeMethodPercentage: true,
+        });
+
+        checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+        cy.assertUrl(checkYourAnswersUrl);
       });
-
-      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-
-      cy.assertUrl(checkYourAnswersUrl);
     });
-  });
-
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
-
-  describe('when clicking the `change` link', () => {
-    it(`should redirect to ${AGENT_CHARGES_CHANGE}`, () => {
-      cy.navigateToUrl(checkYourAnswersUrl);
-
-      summaryList.field(fieldId).changeLink().click();
-
-      cy.assertChangeAnswersPageUrl({ referenceNumber, route: AGENT_CHARGES_CHANGE, fieldId });
-    });
-  });
-
-  describe('form submission with a new answer', () => {
-    const newValueInput = application.EXPORT_CONTRACT.AGENT_CHARGES[PERCENTAGE_CHARGE] - 1;
 
     beforeEach(() => {
-      cy.navigateToUrl(checkYourAnswersUrl);
-
-      summaryList.field(fieldId).changeLink().click();
-
-      cy.changeAnswerField({ newValueInput }, field(fieldId).input());
+      cy.saveSession();
     });
 
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-      cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+    after(() => {
+      cy.deleteApplication(referenceNumber);
     });
 
-    it('should render the new answer', () => {
-      cy.assertSummaryListRowValue(summaryList, fieldId, `${newValueInput}%`);
+    describe('when clicking the `change` link', () => {
+      it(`should redirect to ${AGENT_CHARGES_CHANGE}`, () => {
+        cy.navigateToUrl(checkYourAnswersUrl);
+
+        summaryList.field(fieldId).changeLink().click();
+
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: AGENT_CHARGES_CHANGE, fieldId });
+      });
     });
-  });
-});
+
+    describe('form submission with a new answer', () => {
+      const newValueInput = application.EXPORT_CONTRACT.AGENT_CHARGES[PERCENTAGE_CHARGE] - 1;
+
+      beforeEach(() => {
+        cy.navigateToUrl(checkYourAnswersUrl);
+
+        summaryList.field(fieldId).changeLink().click();
+
+        cy.changeAnswerField({ newValueInput }, field(fieldId).input());
+      });
+
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+      });
+
+      it('should render the new answer', () => {
+        cy.assertSummaryListRowValue(summaryList, fieldId, `${newValueInput}%`);
+      });
+    });
+  },
+);

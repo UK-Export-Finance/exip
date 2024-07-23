@@ -1,29 +1,19 @@
 import { companyDetails } from '../../../../../../pages/your-business';
 import { field as fieldSelector } from '../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import {
-  INVALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, VALID_PHONE_NUMBERS,
-} from '../../../../../../constants';
+import { INVALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, VALID_PHONE_NUMBERS } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: {
-      HAS_DIFFERENT_TRADING_NAME,
-      TRADING_ADDRESS,
-      WEBSITE,
-      PHONE_NUMBER,
-    },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
   },
 } = INSURANCE_FIELD_IDS;
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: {
-    COMPANY_DETAILS,
-    NATURE_OF_BUSINESS_ROOT,
-  },
+  EXPORTER_BUSINESS: { COMPANY_DETAILS, NATURE_OF_BUSINESS_ROOT },
 } = INSURANCE_ROUTES;
 
 const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;

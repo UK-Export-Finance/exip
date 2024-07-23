@@ -7,9 +7,7 @@ import { completeAndSubmitBuyerCountryForm } from '../../../../commands/forms';
 const {
   INSURANCE: {
     COMPANIES_HOUSE: { COMPANY_NUMBER },
-    ELIGIBILITY: {
-      BUYER_COUNTRY,
-    },
+    ELIGIBILITY: { BUYER_COUNTRY },
   },
 } = FIELD_IDS;
 

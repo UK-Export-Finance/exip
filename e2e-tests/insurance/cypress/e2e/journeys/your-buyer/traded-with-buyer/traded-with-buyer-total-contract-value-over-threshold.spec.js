@@ -2,9 +2,7 @@ import { ROUTES } from '../../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 
 const {
-  YOUR_BUYER: {
-    TRADED_WITH_BUYER, TRADING_HISTORY, CREDIT_INSURANCE_COVER,
-  },
+  YOUR_BUYER: { TRADED_WITH_BUYER, TRADING_HISTORY, CREDIT_INSURANCE_COVER },
 } = ROUTES.INSURANCE;
 
 const baseUrl = Cypress.config('baseUrl');

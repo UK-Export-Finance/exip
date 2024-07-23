@@ -7,14 +7,7 @@ const path = require('path');
 // Read from root `./.env` directory
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
-const {
-  UI_PORT,
-  API_PORT,
-  API_KEY,
-  GOV_NOTIFY_EMAIL_RECIPIENT_1,
-  GOV_NOTIFY_EMAIL_RECIPIENT_2,
-  MOCK_ACCOUNT_PASSWORD,
-} = process.env;
+const { UI_PORT, API_PORT, API_KEY, GOV_NOTIFY_EMAIL_RECIPIENT_1, GOV_NOTIFY_EMAIL_RECIPIENT_2, MOCK_ACCOUNT_PASSWORD } = process.env;
 
 /**
  * Cypress configuration

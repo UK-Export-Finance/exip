@@ -13,10 +13,7 @@ const assertDynamicCharacterCount = ({ field, maximum }) => {
 
   field.characterCount('text').should('have.text', CHARACTER_COUNT(expectedMaximum));
 
-  cy.keyboardInput(
-    field.textarea(),
-    'a',
-  );
+  cy.keyboardInput(field.textarea(), 'a');
 
   const expectedMaximumAfterEdit = Number(maximum - 1).toLocaleString();
 

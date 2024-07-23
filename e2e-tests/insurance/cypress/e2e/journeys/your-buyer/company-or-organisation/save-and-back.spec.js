@@ -5,18 +5,11 @@ import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
 
 const {
-  COMPANY_OR_ORGANISATION: {
-    NAME,
-    ADDRESS,
-    REGISTRATION_NUMBER,
-    WEBSITE,
-  },
+  COMPANY_OR_ORGANISATION: { NAME, ADDRESS, REGISTRATION_NUMBER, WEBSITE },
 } = FIELD_IDS;
 
 const {
-  YOUR_BUYER: {
-    COMPANY_OR_ORGANISATION,
-  },
+  YOUR_BUYER: { COMPANY_OR_ORGANISATION },
 } = ROUTES.INSURANCE;
 
 const { BUYER } = application;

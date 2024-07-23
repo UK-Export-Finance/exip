@@ -9,9 +9,7 @@ import application from '../../../../../../fixtures/application';
 
 const {
   EXPORTER_BUSINESS: {
-    TURNOVER: {
-      FINANCIAL_YEAR_END_DATE,
-    },
+    TURNOVER: { FINANCIAL_YEAR_END_DATE },
   },
 } = INSURANCE_FIELD_IDS;
 

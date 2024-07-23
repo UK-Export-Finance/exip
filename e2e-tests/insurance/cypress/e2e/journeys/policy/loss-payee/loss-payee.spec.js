@@ -1,10 +1,5 @@
 import partials from '../../../../../../partials';
-import {
-  field as fieldSelector,
-  noRadio,
-  noRadioInput,
-  yesRadio,
-} from '../../../../../../pages/shared';
+import { field as fieldSelector, noRadio, noRadioInput, yesRadio } from '../../../../../../pages/shared';
 import { lossPayeePage } from '../../../../../../pages/insurance/policy';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
@@ -20,12 +15,7 @@ const {
 
 const {
   ROOT,
-  POLICY: {
-    BROKER_ROOT,
-    LOSS_PAYEE_ROOT,
-    LOSS_PAYEE_DETAILS_ROOT,
-    CHECK_YOUR_ANSWERS,
-  },
+  POLICY: { BROKER_ROOT, LOSS_PAYEE_ROOT, LOSS_PAYEE_DETAILS_ROOT, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const { LOSS_PAYEE: FIELD_STRINGS } = FIELDS;
@@ -34,143 +24,146 @@ const ERROR_MESSAGE = ERROR_MESSAGES.INSURANCE.POLICY[FIELD_ID].IS_EMPTY;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Loss payee page - As an exporter, I want to inform UKEF about whether I have a loss payee, So that the appropriate parties can be paid in the event of an insurance claim', () => {
-  let referenceNumber;
-  let url;
-  let checkYourAnswersUrl;
-  let lossPayeeDetailsUrl;
+context(
+  'Insurance - Policy - Loss payee page - As an exporter, I want to inform UKEF about whether I have a loss payee, So that the appropriate parties can be paid in the event of an insurance claim',
+  () => {
+    let referenceNumber;
+    let url;
+    let checkYourAnswersUrl;
+    let lossPayeeDetailsUrl;
 
-  before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-      // go to the page we want to test.
-      cy.startInsurancePolicySection({});
+        // go to the page we want to test.
+        cy.startInsurancePolicySection({});
 
-      cy.completeAndSubmitPolicyTypeForm({});
-      cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitTotalContractValueForm({});
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
-      cy.completeAndSubmitPreCreditPeriodForm({});
-      cy.completeAndSubmitAnotherCompanyForm({});
-      cy.completeAndSubmitBrokerForm({ usingBroker: false });
+        cy.completeAndSubmitPolicyTypeForm({});
+        cy.completeAndSubmitSingleContractPolicyForm({});
+        cy.completeAndSubmitTotalContractValueForm({});
+        cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
+        cy.completeAndSubmitPreCreditPeriodForm({});
+        cy.completeAndSubmitAnotherCompanyForm({});
+        cy.completeAndSubmitBrokerForm({ usingBroker: false });
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
-      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      lossPayeeDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`;
+        url = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
+        checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        lossPayeeDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`;
 
-      cy.assertUrl(url);
+        cy.assertUrl(url);
+      });
     });
-  });
 
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
-
-  it('renders core page elements', () => {
-    cy.corePageChecks({
-      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`,
-      backLink: `${ROOT}/${referenceNumber}${BROKER_ROOT}`,
-    });
-  });
-
-  describe('page tests', () => {
     beforeEach(() => {
-      cy.navigateToUrl(url);
+      cy.saveSession();
     });
 
-    it('renders a heading caption', () => {
-      cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    after(() => {
+      cy.deleteApplication(referenceNumber);
     });
 
-    it('renders a hint', () => {
-      const {
-        [FIELD_ID]: {
-          HINT: { INTRO, OUTRO },
-        },
-      } = FIELD_STRINGS;
-
-      cy.checkText(lossPayeePage.radioHint(FIELD_ID).intro(), INTRO);
-      cy.checkText(lossPayeePage.radioHint(FIELD_ID).outro(), OUTRO);
+    it('renders core page elements', () => {
+      cy.corePageChecks({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currentHref: `${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`,
+        backLink: `${ROOT}/${referenceNumber}${BROKER_ROOT}`,
+      });
     });
 
-    it('renders a `no` radio button', () => {
-      cy.checkText(noRadio().label(), FIELD_VALUES.NO);
+    describe('page tests', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
 
-      cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
+      it('renders a heading caption', () => {
+        cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+      });
+
+      it('renders a hint', () => {
+        const {
+          [FIELD_ID]: {
+            HINT: { INTRO, OUTRO },
+          },
+        } = FIELD_STRINGS;
+
+        cy.checkText(lossPayeePage.radioHint(FIELD_ID).intro(), INTRO);
+        cy.checkText(lossPayeePage.radioHint(FIELD_ID).outro(), OUTRO);
+      });
+
+      it('renders a `no` radio button', () => {
+        cy.checkText(noRadio().label(), FIELD_VALUES.NO);
+
+        cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
+      });
+
+      it('renders a `yes` radio button', () => {
+        yesRadio().input().should('exist');
+
+        cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
+
+        cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
+      });
+
+      it('renders `yes` and `no` radio buttons in the correct order', () => {
+        cy.assertYesNoRadiosOrder({ noRadioFirst: true });
+      });
+
+      it('renders a `save and back` button', () => {
+        cy.assertSaveAndBackButton();
+      });
     });
 
-    it('renders a `yes` radio button', () => {
-      yesRadio().input().should('exist');
+    describe('form submission', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
 
-      cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
+      describe('when submitting an empty form', () => {
+        it(`should display validation errors if ${FIELD_ID} radio is not selected`, () => {
+          const radioField = {
+            ...fieldSelector(FIELD_ID),
+            input: noRadioInput,
+          };
 
-      cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
-    });
+          cy.submitAndAssertRadioErrors({
+            field: radioField,
+            expectedErrorMessage: ERROR_MESSAGE,
+          });
+        });
+      });
 
-    it('renders `yes` and `no` radio buttons in the correct order', () => {
-      cy.assertYesNoRadiosOrder({ noRadioFirst: true });
-    });
+      describe(`when selecting no for ${FIELD_ID}`, () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
+          cy.completeAndSubmitLossPayeeForm({ isAppointingLossPayee: false });
 
-    it('renders a `save and back` button', () => {
-      cy.assertSaveAndBackButton();
-    });
-  });
+          cy.assertUrl(checkYourAnswersUrl);
+        });
 
-  describe('form submission', () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
-    });
+        describe('when going back to the page', () => {
+          it('should have the submitted value', () => {
+            cy.navigateToUrl(url);
 
-    describe('when submitting an empty form', () => {
-      it(`should display validation errors if ${FIELD_ID} radio is not selected`, () => {
-        const radioField = {
-          ...fieldSelector(FIELD_ID),
-          input: noRadioInput,
-        };
+            cy.assertNoRadioOptionIsChecked();
+          });
+        });
+      });
 
-        cy.submitAndAssertRadioErrors({
-          field: radioField,
-          expectedErrorMessage: ERROR_MESSAGE,
+      describe(`when selecting yes for ${FIELD_ID}`, () => {
+        it(`should redirect to ${LOSS_PAYEE_DETAILS_ROOT} page`, () => {
+          cy.completeAndSubmitLossPayeeForm({ isAppointingLossPayee: true });
+
+          cy.assertUrl(lossPayeeDetailsUrl);
+        });
+
+        describe('when going back to the page', () => {
+          it('should have the submitted value', () => {
+            cy.navigateToUrl(url);
+
+            cy.assertYesRadioOptionIsChecked();
+          });
         });
       });
     });
-
-    describe(`when selecting no for ${FIELD_ID}`, () => {
-      it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
-        cy.completeAndSubmitLossPayeeForm({ isAppointingLossPayee: false });
-
-        cy.assertUrl(checkYourAnswersUrl);
-      });
-
-      describe('when going back to the page', () => {
-        it('should have the submitted value', () => {
-          cy.navigateToUrl(url);
-
-          cy.assertNoRadioOptionIsChecked();
-        });
-      });
-    });
-
-    describe(`when selecting yes for ${FIELD_ID}`, () => {
-      it(`should redirect to ${LOSS_PAYEE_DETAILS_ROOT} page`, () => {
-        cy.completeAndSubmitLossPayeeForm({ isAppointingLossPayee: true });
-
-        cy.assertUrl(lossPayeeDetailsUrl);
-      });
-
-      describe('when going back to the page', () => {
-        it('should have the submitted value', () => {
-          cy.navigateToUrl(url);
-
-          cy.assertYesRadioOptionIsChecked();
-        });
-      });
-    });
-  });
-});
+  },
+);

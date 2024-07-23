@@ -2,11 +2,7 @@ import { FIELD_IDS } from '../../../constants/field-ids';
 import { yesRadioInput, noRadioInput } from '../../shared';
 
 const {
-  YOUR_COMPANY: {
-    HAS_DIFFERENT_TRADING_NAME,
-    TRADING_ADDRESS,
-    YOUR_BUSINESS,
-  },
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, YOUR_BUSINESS },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const companyDetails = {

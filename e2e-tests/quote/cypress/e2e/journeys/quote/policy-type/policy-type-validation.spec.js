@@ -8,9 +8,7 @@ import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm, 
 const { POLICY_TYPE } = FIELD_IDS;
 
 const {
-  QUOTE: {
-    POLICY_TYPE: POLICY_TYPE_ROUTE,
-  },
+  QUOTE: { POLICY_TYPE: POLICY_TYPE_ROUTE },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -44,10 +42,7 @@ context('Policy type page - policy type & length validation - single policy type
 
       const expectedErrorMessage = ERROR_MESSAGES.ELIGIBILITY[POLICY_TYPE];
 
-      cy.checkText(
-        partials.errorSummaryListItems().first(),
-        expectedErrorMessage,
-      );
+      cy.checkText(partials.errorSummaryListItems().first(), expectedErrorMessage);
 
       partials.errorSummaryListItemLinks().first().click();
 

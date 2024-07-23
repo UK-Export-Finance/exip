@@ -4,9 +4,7 @@ import { assertCurrencyFormFields } from '../../../../../../shared-test-assertio
 
 const {
   ROOT,
-  EXPORT_CONTRACT: {
-    AGENT_CHARGES,
-  },
+  EXPORT_CONTRACT: { AGENT_CHARGES },
 } = INSURANCE_ROUTES;
 
 const {

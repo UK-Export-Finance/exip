@@ -7,23 +7,14 @@ import account from '../../../../../../../fixtures/account';
 
 const {
   ROOT: INSURANCE_ROOT,
-  POLICY: {
-    DIFFERENT_NAME_ON_POLICY,
-    NAME_ON_POLICY,
-  },
+  POLICY: { DIFFERENT_NAME_ON_POLICY, NAME_ON_POLICY },
 } = INSURANCE_ROUTES;
 
 const {
   POLICY: {
-    NAME_ON_POLICY: {
-      NAME, POSITION, SAME_NAME, OTHER_NAME,
-    },
+    NAME_ON_POLICY: { NAME, POSITION, SAME_NAME, OTHER_NAME },
   },
-  ACCOUNT: {
-    FIRST_NAME,
-    LAST_NAME,
-    EMAIL,
-  },
+  ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
 } = INSURANCE_FIELD_IDS;
 
 const {

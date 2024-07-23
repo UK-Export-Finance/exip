@@ -1,7 +1,4 @@
-import {
-  COMPANIES_HOUSE_NUMBER as VALID_COMPANIES_HOUSE_NUMBER,
-  COMPANIES_HOUSE_NUMBER_NOT_FOUND,
-} from '../../constants/examples';
+import { COMPANIES_HOUSE_NUMBER as VALID_COMPANIES_HOUSE_NUMBER, COMPANIES_HOUSE_NUMBER_NOT_FOUND } from '../../constants/examples';
 import { INSURANCE_ROUTES } from '../../constants/routes/insurance';
 
 const {

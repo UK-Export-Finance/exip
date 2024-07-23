@@ -1,11 +1,7 @@
 import { ROUTES } from '../../../../../../constants';
 
 const {
-  QUOTE: {
-    EXPORTER_LOCATION,
-    EXPORTER_LOCATION_CHANGE,
-    NEED_TO_START_AGAIN,
-  },
+  QUOTE: { EXPORTER_LOCATION, EXPORTER_LOCATION_CHANGE, NEED_TO_START_AGAIN },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');

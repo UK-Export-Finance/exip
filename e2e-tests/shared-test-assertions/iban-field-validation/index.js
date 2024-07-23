@@ -4,9 +4,7 @@ import { MINIMUM_CHARACTERS, MAXIMUM_CHARACTERS } from '../../constants';
 import { ERROR_MESSAGES } from '../../content-strings';
 
 const {
-  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: {
-    IBAN: FIELD_ID,
-  },
+  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { IBAN: FIELD_ID },
 } = POLICY_FIELD_IDS;
 
 const errorMessages = ERROR_MESSAGES.INSURANCE.POLICY[FIELD_ID];
