@@ -80,7 +80,9 @@ context(
       describe('latest confidentiality content', () => {
         let content;
 
-        const { intro, level1, firstLevel2, secondLevel2 } = antiBriberyPage.listItems;
+        const {
+          intro, level1, firstLevel2, secondLevel2,
+        } = antiBriberyPage.listItems;
 
         before(() => {
           api.declarations.getLatestAntiBribery().then((data) => {
