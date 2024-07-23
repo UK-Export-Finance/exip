@@ -6,7 +6,9 @@
  * @param {Function} selector: Cypress selector for value
  * @param {String} expectedValue: Expected value
  */
-const checkTextAndValue = ({ textSelector, expectedText, valueSelector, expectedValue }) => {
+const checkTextAndValue = ({
+  textSelector, expectedText, valueSelector, expectedValue,
+}) => {
   cy.checkText(textSelector, expectedText);
   cy.checkValue(valueSelector, expectedValue);
 };
