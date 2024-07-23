@@ -9,6 +9,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import keystoneDocumentRendererConfig from '../../../../helpers/keystone-document-renderer-config';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from '../save-data';
+import canSubmitApplication from '../../../../helpers/can-submit-application';
 import { Request, Response } from '../../../../../types';
 
 export const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIRMATION_ACKNOWLEDGEMENTS;
@@ -121,7 +122,30 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`);
+    /**
+     * Combine the latest application with the saved declaration answer.
+     * Otherwise, we need to make another API call to get the latest full application.
+     */
+    const latestApplication = {
+      ...application,
+      declaration: {
+        ...application.declaration,
+        ...saveResponse,
+      },
+    };
+
+    const canSubmit = canSubmitApplication(latestApplication);
+
+    if (canSubmit) {
+      // submit the application
+      const submissionResponse = await api.keystone.application.submit(application.id);
+
+      if (submissionResponse.success) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`);
+      }
+    }
+
+    return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (err) {
     console.error('Error updating application - declarations - confirmation and acknowledgements %O', err);
 

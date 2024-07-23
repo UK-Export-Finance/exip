@@ -1,6 +1,6 @@
 import { FIELD_ID, pageVariables, TEMPLATE, get, post } from '.';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
-import { FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
+import { APPLICATION, FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
 import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
@@ -31,6 +31,8 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
   let res: Response;
 
   let getLatestConfirmationAndAcknowledgementSpy = jest.fn(() => Promise.resolve(mockDeclarations.confirmationAndAcknowledgement));
+
+  let submitApplicationSpy = jest.fn(() => Promise.resolve({ success: true }));
 
   beforeEach(() => {
     req = mockReq();
@@ -130,6 +132,8 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
       getLatestConfirmationAndAcknowledgementSpy = jest.fn(() => Promise.resolve(mockDeclarations.confirmationAndAcknowledgement));
 
       api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement = getLatestConfirmationAndAcknowledgementSpy;
+
+      api.keystone.application.submit = submitApplicationSpy;
     });
 
     describe('when there are no validation errors', () => {
@@ -146,12 +150,32 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
         expect(save.declaration).toHaveBeenCalledWith(mockApplication, payload);
       });
 
+      it('should call api.keystone.application.submit with the application ID', async () => {
+        await post(req, res);
+
+        expect(api.keystone.application.submit).toHaveBeenCalledTimes(1);
+        expect(api.keystone.application.submit).toHaveBeenCalledWith(mockApplication.id);
+      });
+
       it(`should redirect to ${APPLICATION_SUBMITTED}`, async () => {
         await post(req, res);
 
         const expected = `${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+
+      describe('when an application cannot be submitted (e.g, is already submitted)', () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          res.locals.application = {
+            ...mockApplication,
+            status: APPLICATION.STATUS.SUBMITTED,
+          };
+
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
       });
     });
 
@@ -231,6 +255,38 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
           beforeEach(() => {
             mockSaveDeclaration = jest.fn(() => Promise.reject(new Error('mock')));
             save.declaration = mockSaveDeclaration;
+
+            req.body = validBody;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+      });
+
+      describe('submit application call', () => {
+        describe('when the submit application API call returns false', () => {
+          beforeEach(() => {
+            submitApplicationSpy = jest.fn(() => Promise.resolve({ success: false }));
+            api.keystone.application.submit = submitApplicationSpy;
+
+            req.body = validBody;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when the submit application API call fails', () => {
+          beforeEach(() => {
+            submitApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+            api.keystone.application.submit = submitApplicationSpy;
 
             req.body = validBody;
           });
