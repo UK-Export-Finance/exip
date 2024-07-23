@@ -8,7 +8,6 @@ const updateApplicationDeclarationMutation = gql`
       hasAntiBriberyCodeOfConduct
       willExportWithAntiBriberyCodeOfConduct
       agreeToConfirmationAndAcknowledgements
-      agreeHowDataWillBeUsed
     }
   }
 `;
