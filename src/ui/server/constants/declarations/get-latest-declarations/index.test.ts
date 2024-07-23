@@ -1,5 +1,6 @@
 import getLatestDeclarationVersion, { findLatestVersion } from '.';
 import LATEST_VERSION_NUMBER from '../versions/latest';
+import VERSIONS from '../versions';
 import DECLARATIONS from '../../../content-strings/pages/insurance/declarations';
 
 const {
@@ -14,7 +15,7 @@ const {
 describe('server/constants/declarations/get-latest-declaration', () => {
   describe('findLatestVersion', () => {
     it('should find content strings by version', () => {
-      const result = findLatestVersion(CONFIDENTIALITY, 'CONFIDENTIALITY');
+      const result = findLatestVersion(CONFIDENTIALITY, VERSIONS[1].CONFIDENTIALITY);
 
       const [expected] = CONFIDENTIALITY.VERSIONS;
 

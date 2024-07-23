@@ -1,4 +1,4 @@
-import LATEST_VERSION_NUMBER from '.';
+import LATEST_VERSION_NUMBER from './latest';
 
 describe('server/constants/declarations/versions/latest', () => {
   it('should return the latest version number', () => {

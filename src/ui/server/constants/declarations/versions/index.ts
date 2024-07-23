@@ -6,8 +6,7 @@ import { ApplicationDeclarationVersion } from '../../../../types';
  * This should be manually updated each time a phase of EXIP is started. For example:
  * - Version number 1: MVP, no support for applications over 500k.
  * - Version number 2: Support for applications over 500k.
- * - Version number 3: Payments integration
- * @returns {Array<ApplicationVersion>} All declaration versions
+ * @returns {Array<ApplicationDeclarationVersion>} All declaration versions
  */
 const VERSIONS = [
   {
