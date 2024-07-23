@@ -16,7 +16,7 @@ const {
 
 const { expandable } = antiBriberyPage;
 
-const { INTRO, TABLE } = CONTENT_STRINGS.EXPANDABLE;
+const { INTRO, TABLE } = CONTENT_STRINGS.VERSIONS[0].EXPANDABLE;
 
 const baseUrl = Cypress.config('baseUrl');
 
