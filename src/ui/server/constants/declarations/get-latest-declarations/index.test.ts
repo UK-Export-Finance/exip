@@ -1,0 +1,41 @@
+import getLatestDeclarationVersion, { findLatestVersion } from '.';
+import LATEST_VERSION_NUMBER from '../versions/latest';
+import DECLARATIONS from '../../../content-strings/pages/insurance/declarations';
+
+const {
+  CONFIDENTIALITY,
+  ANTI_BRIBERY,
+  ANTI_BRIBERY_CODE_OF_CONDUCT,
+  ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT,
+  CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+  HOW_YOUR_DATA_WILL_BE_USED,
+} = DECLARATIONS;
+
+describe('server/constants/declarations/get-latest-declaration', () => {
+  describe('findLatestVersion', () => {
+    it('should find content strings by version', () => {
+      const result = findLatestVersion(CONFIDENTIALITY, 'CONFIDENTIALITY');
+
+      const [expected] = CONFIDENTIALITY.VERSIONS;
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('getLatestDeclarationVersion', () => {
+    it('should return the latest declaration versions', () => {
+      const result = getLatestDeclarationVersion(LATEST_VERSION_NUMBER);
+
+      const expected = {
+        CONFIDENTIALITY: CONFIDENTIALITY.VERSIONS[0],
+        ANTI_BRIBERY: ANTI_BRIBERY.VERSIONS[0],
+        ANTI_BRIBERY_CODE_OF_CONDUCT: ANTI_BRIBERY_CODE_OF_CONDUCT.VERSIONS[0],
+        ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT.VERSIONS[0],
+        CONFIRMATION_AND_ACKNOWLEDGEMENTS: CONFIRMATION_AND_ACKNOWLEDGEMENTS.VERSIONS[0],
+        HOW_YOUR_DATA_WILL_BE_USED: HOW_YOUR_DATA_WILL_BE_USED.VERSIONS[0],
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+});

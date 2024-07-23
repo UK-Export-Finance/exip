@@ -25,6 +25,7 @@ import {
   ApplicationPolicyContact,
   ApplicationPrivateMarket,
   ApplicationVersion,
+  ApplicationDeclarationVersion,
   ApplicationOwner,
 } from './application';
 import { ApplicationByReferenceNumberVariables } from './application-by-reference-number-variables';
@@ -84,6 +85,7 @@ import {
 } from './page-variables';
 import { InsuranceFeedbackVariables } from './feedback';
 import { SanitiseValueObjParams } from './sanitise-value';
+import { ObjectType } from './object';
 
 export {
   Account,
@@ -113,6 +115,7 @@ export {
   ApplicationPolicyContact,
   ApplicationPrivateMarket,
   ApplicationVersion,
+  ApplicationDeclarationVersion,
   ApplicationByReferenceNumberVariables,
   ApolloResponse,
   ApplicationOwner,
@@ -137,6 +140,7 @@ export {
   InsuranceFeedbackVariables,
   Next,
   Object,
+  ObjectType,
   PageContentStrings,
   PageVariablesContentStrings,
   PricingGrid,

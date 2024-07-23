@@ -1,0 +1,28 @@
+import VERSIONS from '.';
+
+describe('server/constants/declarations/versions', () => {
+  it('should return an array of versions', () => {
+    const expected = [
+      {
+        VERSION_NUMBER: '1',
+        CONFIDENTIALITY: 1,
+        ANTI_BRIBERY: 1,
+        ANTI_BRIBERY_CODE_OF_CONDUCT: 1,
+        ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: 1,
+        CONFIRMATION_AND_ACKNOWLEDGEMENTS: 1,
+        HOW_YOUR_DATA_WILL_BE_USED: 1,
+      },
+      {
+        VERSION_NUMBER: '2',
+        CONFIDENTIALITY: 1,
+        ANTI_BRIBERY: 1,
+        ANTI_BRIBERY_CODE_OF_CONDUCT: 1,
+        ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: 1,
+        CONFIRMATION_AND_ACKNOWLEDGEMENTS: 1,
+        HOW_YOUR_DATA_WILL_BE_USED: 1,
+      },
+    ];
+
+    expect(VERSIONS).toEqual(expected);
+  });
+});
