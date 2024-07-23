@@ -5,7 +5,7 @@ import applicationColumns from './update-application-columns';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import accounts from '../../test-helpers/accounts';
 import applications from '../../test-helpers/applications';
-import { mockAccount, mockCountries } from '../../test-mocks';
+import { mockAccount, mockCountries, mockInvalidId } from '../../test-mocks';
 import mockCompany from '../../test-mocks/mock-company';
 import { APPLICATION } from '../../constants';
 import { Context, Account, Application } from '../../types';
@@ -134,7 +134,7 @@ describe('helpers/create-an-application', () => {
 
   describe('when there is no account for the provided accountId', () => {
     test('it should return null', async () => {
-      variables.accountId = 'invalid-id';
+      variables.accountId = mockInvalidId;
 
       const result = await createAnApplication({}, variables, context);
 

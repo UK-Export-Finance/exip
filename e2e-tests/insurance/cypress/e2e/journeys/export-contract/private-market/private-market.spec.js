@@ -1,5 +1,9 @@
 import {
-  field as fieldSelector, headingCaption, noRadio, noRadioInput, yesRadio,
+  field as fieldSelector,
+  headingCaption,
+  noRadio,
+  noRadioInput,
+  yesRadio,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../constants';
@@ -14,7 +18,10 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.PRIVATE_MARKET;
 const {
   ROOT,
   EXPORT_CONTRACT: {
-    PRIVATE_MARKET, HOW_WILL_YOU_GET_PAID, DECLINED_BY_PRIVATE_MARKET, AGENT,
+    PRIVATE_MARKET,
+    HOW_WILL_YOU_GET_PAID,
+    DECLINED_BY_PRIVATE_MARKET,
+    AGENT,
   },
 } = INSURANCE_ROUTES;
 

@@ -1,10 +1,9 @@
 import createAPolicy from '.';
 import { APPLICATION } from '../../constants';
 import { Application, Context } from '../../types';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
-
-const invalidId = 'invalid-id';
 
 const assertError = (err) => {
   const errorString = String(err);
@@ -58,7 +57,7 @@ describe('helpers/create-a-policy', () => {
   describe('when an invalid application ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createAPolicy(context, invalidId);
+        await createAPolicy(context, mockInvalidId);
       } catch (err) {
         assertError(err);
       }

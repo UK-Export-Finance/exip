@@ -1,9 +1,8 @@
 import createASectionReview from '.';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
 import { Application, Context, SectionReview } from '../../types';
-
-const invalidId = 'invalid-id';
 
 const assertError = (err) => {
   const errorString = String(err);
@@ -55,7 +54,7 @@ describe('helpers/create-a-section-review', () => {
   describe('when an invalid application ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createASectionReview(context, invalidId, {} as SectionReview);
+        await createASectionReview(context, mockInvalidId, {} as SectionReview);
       } catch (err) {
         assertError(err);
       }

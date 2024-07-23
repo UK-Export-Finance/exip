@@ -1,5 +1,8 @@
 import {
-  headingCaption, yesRadio, noRadio, field as fieldSelector,
+  headingCaption,
+  yesRadio,
+  noRadio,
+  field as fieldSelector,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { PAGES, CREDIT_PERIOD_WITH_BUYER as CREDIT_PERIOD_WITH_BUYER_STRINGS } from '../../../../../../content-strings';

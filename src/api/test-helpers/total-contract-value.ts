@@ -1,5 +1,6 @@
+import { Context } from '.keystone/types'; // eslint-disable-line
 import { TOTAL_CONTRACT_VALUE } from '../constants';
-import { TotalContractValue, TestHelperCreate } from '../types';
+import { TotalContractValue } from '../types';
 
 const totalContractValueQuery = 'id value valueId';
 
@@ -9,7 +10,7 @@ const totalContractValueQuery = 'id value valueId';
  * @param {Context} KeystoneJS context API
  * @returns {Object} Created totalContractValue
  */
-const create = async ({ context }: TestHelperCreate) => {
+const create = async (context: Context) => {
   try {
     console.info('Creating an totalContractValue (test helpers)');
 

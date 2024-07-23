@@ -59,10 +59,10 @@ export const createFullApplication = async (context: Context, policyType?: strin
   })) as Application;
 
   // create a coverPeriod DB entry.
-  const createdCoverPeriod = await coverPeriodTestHelper.create({ context });
+  const createdCoverPeriod = await coverPeriodTestHelper.create(context);
 
   // create a totalContractValue DB entry.
-  const createdTotalContractValue = await totalContractValueTestHelper.create({ context });
+  const createdTotalContractValue = await totalContractValueTestHelper.create(context);
 
   // create eligibility and associate with the application.
   const eligibility = await createAnEligibility(
@@ -92,7 +92,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
   // create a nominatedLossPayee and associate with the application.
   const nominatedLossPayee = await createANominatedLossPayee(context, application.id);
 
-  const sectionReview = await sectionReviewCreate.create({ context });
+  const sectionReview = await sectionReviewCreate.create(context);
 
   /**
    * update the application with:

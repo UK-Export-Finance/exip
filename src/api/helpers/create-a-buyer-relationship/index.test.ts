@@ -1,10 +1,9 @@
 import createABuyerRelationship from '.';
 import { Context, Application, ApplicationBuyer } from '../../types';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applicationHelpers from '../../test-helpers/applications';
-import buyerHelpers from '../../test-helpers/buyers';
-
-const invalidId = 'invalid-id';
+import buyerHelpers from '../../test-helpers/buyer';
 
 const assertError = (err) => {
   const errorString = String(err);
@@ -24,7 +23,7 @@ describe('helpers/create-a-buyer-relationship', () => {
 
     applicationId = application.id;
 
-    buyer = (await buyerHelpers.create({ context, data: {} })) as ApplicationBuyer;
+    buyer = (await buyerHelpers.create(context)) as ApplicationBuyer;
   });
 
   test('it should return a buyer relationship with respective IDs', async () => {
@@ -48,7 +47,7 @@ describe('helpers/create-a-buyer-relationship', () => {
   describe('when an invalid buyer ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createABuyerRelationship(context, invalidId, applicationId);
+        await createABuyerRelationship(context, mockInvalidId, applicationId);
       } catch (err) {
         assertError(err);
       }
@@ -58,7 +57,7 @@ describe('helpers/create-a-buyer-relationship', () => {
   describe('when an invalid application ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createABuyerRelationship(context, buyer.id, invalidId);
+        await createABuyerRelationship(context, buyer.id, mockInvalidId);
       } catch (err) {
         assertError(err);
       }
