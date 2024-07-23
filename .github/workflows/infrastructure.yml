@@ -468,7 +468,7 @@ jobs:
             --private-link-location ${{ vars.REGION }} \
             --private-link-resource $(az webapp show --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv) \
             --private-link-request-message '${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }}' \
-            --private-link-sub-resource-type $(az network private-link-resource list --id $(az webapp show --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv) --query [].name -o tsv) \
+            --private-link-sub-resource-type $(az network private-link-resource list --id $(az webapp show --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv) --query '[]'.name -o tsv) \
             --origin-group-name ui \
             --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --enabled-state Enabled
@@ -518,8 +518,8 @@ jobs:
             # Associate FD
             az afd security-policy create \
             --security-policy-name security-policy-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --waf-policy $(az network front-door waf-policy list --query [].id -o tsv) \
-            --domains $(az afd endpoint list --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query [].id -o tsv) \
+            --waf-policy $(az network front-door waf-policy list --query '[]'.id -o tsv) \
+            --domains $(az afd endpoint list --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query '[]'.id -o tsv) \
             --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
             # Custom rule - RL
@@ -676,11 +676,11 @@ jobs:
             COMPANIES_HOUSE_API_KEY='${{ secrets.COMPANIES_HOUSE_API_KEY }}' \
             JWT_SIGNING_KEY='${{ secrets.JWT_SIGNING_KEY }}' \
             UNDERWRITING_TEAM_EMAIL='${{ secrets.UNDERWRITING_TEAM_EMAIL }}' \
-            FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}'
-            CRON_SCHEDULE_UNVERIFIED_ACCOUNT='${{ secrets.CRON_SCHEDULE_UNVERIFIED_ACCOUNT }}'
-            CRON_SCHEDULE_INACTIVE_APPLICATION='${{ secrets.CRON_SCHEDULE_INACTIVE_APPLICATION }}'
-            CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL='${{ secrets.CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL }}'
-            APPLICATION_URL='${{ secrets.APPLICATION_URL }}'
+            FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}' \
+            CRON_SCHEDULE_UNVERIFIED_ACCOUNT='${{ secrets.CRON_SCHEDULE_UNVERIFIED_ACCOUNT }}' \
+            CRON_SCHEDULE_INACTIVE_APPLICATION='${{ secrets.CRON_SCHEDULE_INACTIVE_APPLICATION }}' \
+            CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL='${{ secrets.CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL }}' \
+            APPLICATION_URL='${{ vars.APPLICATION_URL }}'
 
       - name: Extension ➕
         uses: azure/cli@v2
@@ -697,7 +697,7 @@ jobs:
           inlineScript: |
             az webapp connection create mysql-flexible \
             --source-id $(az webapp show --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv) \
-            --target-id $(az mysql flexible-server list --query [].id -o tsv)/databases/${{ env.PRODUCT }} \
+            --target-id $(az mysql flexible-server list --query '[]'.id -o tsv)/databases/${{ env.PRODUCT }} \
             --connection webapp_api_mysqlflexible_${{ env.PRODUCT }}_${{ env.TARGET }}_${{ vars.VERSION }} \
             --secret name=${{ secrets.MYSQL_USER }} secret=${{ secrets.MYSQL_PASSWORD }} \
             --client-type nodejs
@@ -892,8 +892,8 @@ jobs:
           inlineScript: |
             az monitor diagnostic-settings create \
             --name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --resource $(az monitor log-analytics workspace list --query [].id -o tsv) \
-            --workspace $(az monitor log-analytics workspace list --query [].id -o tsv) \
+            --resource $(az monitor log-analytics workspace list --query '[]'.id -o tsv) \
+            --workspace $(az monitor log-analytics workspace list --query '[]'.id -o tsv) \
             --logs "[{categoryGroup:allLogs,enabled:true}]" \
             --metrics "[{category:allMetrics,enabled:true}]"
 
@@ -941,8 +941,19 @@ jobs:
           inlineScript: |
             az monitor diagnostic-settings create \
             --name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --resource $(az afd profile list --query [].id -o tsv) \
-            --workspace $(az monitor log-analytics workspace list --query [].id -o tsv) \
+            --resource $(az afd profile list --query '[]'.id -o tsv) \
+            --workspace $(az monitor log-analytics workspace list --query '[]'.id -o tsv) \
+            --logs "[{categoryGroup:allLogs,enabled:true}]" \
+            --metrics "[{category:allMetrics,enabled:true}]"
+
+      - name: Key Vault 🔑
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            az monitor diagnostic-settings create \
+            --name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --resource $(az keyvault show --name kv-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv) \
+            --workspace $(az monitor log-analytics workspace list --query '[]'.id -o tsv) \
             --logs "[{categoryGroup:allLogs,enabled:true}]" \
             --metrics "[{category:allMetrics,enabled:true}]"
 
@@ -952,16 +963,23 @@ jobs:
           inlineScript: |
             # UI
             az monitor diagnostic-settings create \
-            --name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --resource $(az network nic list --query ['?contains(name, `ui`)'].id -o tsv) \
-            --workspace $(az monitor log-analytics workspace list --query [].id -o tsv) \
+            --name webapp-ui-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --resource $(az network nic list --query '[?contains(name, `ui`)]'.id -o tsv) \
+            --workspace $(az monitor log-analytics workspace list --query '[]'.id -o tsv) \
             --metrics "[{category:allMetrics,enabled:true}]"
 
             # API
             az monitor diagnostic-settings create \
-            --name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --resource $(az network nic list --query ['?contains(name, `api`)'].id -o tsv) \
-            --workspace $(az monitor log-analytics workspace list --query [].id -o tsv) \
+            --name webapp-api-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --resource $(az network nic list --query '[?contains(name, `api`)]'.id -o tsv) \
+            --workspace $(az monitor log-analytics workspace list --query '[]'.id -o tsv) \
+            --metrics "[{category:allMetrics,enabled:true}]"
+
+            # KV
+            az monitor diagnostic-settings create \
+            --name kv-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --resource $(az network nic list --query '[?contains(name, `key`)]'.id -o tsv) \
+            --workspace $(az monitor log-analytics workspace list --query '[]'.id -o tsv) \
             --metrics "[{category:allMetrics,enabled:true}]"
 
   # 7. Various alerts
@@ -1035,8 +1053,8 @@ jobs:
             --name alert-healthcheck-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --description "1 minute health check" \
             --condition  "avg 'OriginHealthPercentage' <= 99.0 where OriginGroup includes ui" \
-            --scope $(az afd profile list --query [].id -o tsv) \
-            --action $(az monitor action-group list --query [].id -o tsv) \
+            --scope $(az afd profile list --query '[]'.id -o tsv) \
+            --action $(az monitor action-group list --query '[]'.id -o tsv) \
             --auto-mitigate true \
             --severity 0 \
             --tags ${{ env.TAGS }}

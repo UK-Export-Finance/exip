@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.14.0](https://github.com/UK-Export-Finance/exip/compare/v2.13.0...v2.14.0) (2024-07-22)
+
+
+### Features
+
+* **EMS-3610:** changed wording for export contract agent question ([4dd6ed9](https://github.com/UK-Export-Finance/exip/commit/4dd6ed9b7566d515d36338fec15aa56416c609c7))
+
+## [2.13.0](https://github.com/UK-Export-Finance/exip/compare/v2.12.2...v2.13.0) (2024-07-19)
+
+
+### Features
+
+* **EMS-3606:** added missing environment variables ([5b1fccd](https://github.com/UK-Export-Finance/exip/commit/5b1fccdaf24693c4756d638d0003b521e5815899))
+
+## [2.12.2](https://github.com/UK-Export-Finance/exip/compare/v2.12.1...v2.12.2) (2024-07-18)
+
+
+### Bug Fixes
+
+* **EMS-3604:** no PDF - Anti-bribery code of conduct - Incorrect link ([#2768](https://github.com/UK-Export-Finance/exip/issues/2768)) ([331cc7b](https://github.com/UK-Export-Finance/exip/commit/331cc7bfe59741d669079d68e1f595401d76fe80))
+
 ## [2.12.1](https://github.com/UK-Export-Finance/exip/compare/v2.12.0...v2.12.1) (2024-07-17)
 
 
