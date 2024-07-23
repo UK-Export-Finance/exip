@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.14.0](https://github.com/UK-Export-Finance/exip/compare/v2.13.0...v2.14.0) (2024-07-22)
+
+
+### Features
+
+* **EMS-3610:** changed wording for export contract agent question ([4dd6ed9](https://github.com/UK-Export-Finance/exip/commit/4dd6ed9b7566d515d36338fec15aa56416c609c7))
+
 ## [2.13.0](https://github.com/UK-Export-Finance/exip/compare/v2.12.2...v2.13.0) (2024-07-19)
 
 
