@@ -125,7 +125,7 @@ context(
         const { expandable } = antiBriberyPage;
 
         it('should render summary text with collapsed conditional `details` content', () => {
-          cy.checkText(expandable.summary(), CONTENT_STRINGS.EXPANDABLE.INTRO);
+          cy.checkText(expandable.summary(), CONTENT_STRINGS.VERSIONS[0].EXPANDABLE.INTRO);
 
           expandable.details().should('not.have.attr', 'open');
         });
