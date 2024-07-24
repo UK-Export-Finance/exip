@@ -1,9 +1,9 @@
+import createADeclarationVersion from '../create-a-declaration-version';
 import { Context } from '../../types';
 
 /**
  * createADeclaration
- * TODO update documentation
- * Create a declaration with appropriate relationships.
+ * Create a declaration with application and declaration version relationships.
  * @param {Context} context: KeystoneJS context API
  * @param {String} applicationId: Application ID
  * @returns {Promise<ApplicationDeclaration>}  Created declaration
@@ -20,7 +20,12 @@ const createADeclaration = async (context: Context, applicationId: string) => {
       },
     });
 
-    return declaration;
+    const declarationVersion = await createADeclarationVersion(context, declaration.id);
+
+    return {
+      ...declaration,
+      declarationVersion,
+    };
   } catch (err) {
     console.error('Error creating an application declaration %O', err);
 

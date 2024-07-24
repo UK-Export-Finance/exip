@@ -1,4 +1,4 @@
-import { ApplicationDeclarationVersion } from '../../../../types';
+import { ApplicationDeclarationVersion } from '../../types';
 
 /**
  * DECLARATION_VERSIONS

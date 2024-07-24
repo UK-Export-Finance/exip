@@ -652,7 +652,7 @@ var getApplicationDefinition = (versionNumber) => {
 var get_application_definition_default = getApplicationDefinition;
 
 // constants/application/versions/latest.ts
-var LATEST_VERSION_NUMBER = "2";
+var LATEST_VERSION_NUMBER = versions_default[versions_default.length - 1].VERSION_NUMBER;
 var latest_default = LATEST_VERSION_NUMBER;
 
 // constants/application/index.ts
@@ -2459,43 +2459,6 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  // DeclarationAntiBribery: list({
-  //   fields: {
-  //     version: text({
-  //       label: 'Version',
-  //       validation: { isRequired: true },
-  //     }),
-  //     content: document({
-  //       formatting: true,
-  //     }),
-  //   },
-  //   access: allowAll,
-  // }),
-  // DeclarationConfirmationAndAcknowledgement: list({
-  //   fields: {
-  //     version: text({
-  //       label: 'Version',
-  //       validation: { isRequired: true },
-  //     }),
-  //     content: document({
-  //       formatting: true,
-  //     }),
-  //   },
-  //   access: allowAll,
-  // }),
-  // DeclarationHowDataWillBeUsed: list({
-  //   fields: {
-  //     version: text({
-  //       label: 'Version',
-  //       validation: { isRequired: true },
-  //     }),
-  //     content: document({
-  //       formatting: true,
-  //       links: true,
-  //     }),
-  //   },
-  //   access: allowAll,
-  // }),
   Page: (0, import_core2.list)({
     fields: {
       heading: (0, import_fields.text)({

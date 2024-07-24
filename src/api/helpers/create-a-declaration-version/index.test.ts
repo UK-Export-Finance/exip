@@ -1,7 +1,11 @@
 import createADeclarationVersion from '.';
+import LATEST_DECLARATION_VERSION_NUMBERS from '../../constants/declarations/latest';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import declarations from '../../test-helpers/declarations';
 import { ApplicationDeclaration, Context } from '../../types';
+
+const { CONFIDENTIALITY, ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT, CONFIRMATION_AND_ACKNOWLEDGEMENTS } =
+  LATEST_DECLARATION_VERSION_NUMBERS;
 
 const invalidId = 'invalid-id';
 
@@ -29,17 +33,21 @@ describe('helpers/create-a-declaration-version', () => {
     expect(result.id.length).toBeGreaterThan(0);
   });
 
-  test('it should return a declaration ID and empty declaration version fields', async () => {
+  test('it should return a declaration ID', async () => {
     const result = await createADeclarationVersion(context, declaration.id);
 
     expect(result.declarationId).toEqual(declaration.id);
+  });
 
-    expect(result.agreeToConfidentiality).toEqual('');
-    expect(result.agreeToAntiBribery).toEqual('');
-    expect(result.hasAntiBriberyCodeOfConduct).toEqual('');
-    expect(result.willExportWithAntiBriberyCodeOfConduct).toEqual('');
-    expect(result.agreeToConfirmationAndAcknowledgements).toEqual('');
+  test('it should return declaration version fields with the latest versions', async () => {
+    const result = await createADeclarationVersion(context, declaration.id);
+
     expect(result.agreeHowDataWillBeUsed).toEqual('');
+    expect(result.agreeToAntiBribery).toEqual(ANTI_BRIBERY);
+    expect(result.agreeToConfirmationAndAcknowledgements).toEqual(CONFIRMATION_AND_ACKNOWLEDGEMENTS);
+    expect(result.agreeToConfidentiality).toEqual(CONFIDENTIALITY);
+    expect(result.hasAntiBriberyCodeOfConduct).toEqual(ANTI_BRIBERY_CODE_OF_CONDUCT);
+    expect(result.willExportWithAntiBriberyCodeOfConduct).toEqual(ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT);
   });
 
   describe('when an invalid declaration ID is passed', () => {
