@@ -11,3 +11,5 @@ export const DECLARATIONS = {
   VERSIONS,
   LATEST_DECLARATIONS: getLatestDeclarationVersion(),
 };
+
+export default DECLARATIONS;

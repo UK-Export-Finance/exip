@@ -1,5 +1,5 @@
 import LATEST_DECLARATION_VERSION_NUMBERS from './latest';
-import DECLARATION_VERSIONS from '.';
+import DECLARATION_VERSIONS from './versions';
 
 describe('api/constants/declarations/versions/latest', () => {
   it('should return the latest declaration version numbers', () => {

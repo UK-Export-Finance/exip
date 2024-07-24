@@ -1,4 +1,4 @@
-import VERSIONS from '.';
+import VERSIONS from './versions';
 
 /**
  * LATEST_DECLARATION_VERSION_NUMBERS

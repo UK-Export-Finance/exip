@@ -1,27 +1,14 @@
-import { ApplicationDeclarationVersions } from '../../types';
+import DECLARATION_VERSIONS from './versions';
 
 /**
- * DECLARATION_VERSIONS
- * All possible declaration versions.
- * This should be manually updated each time declarations are updated
- * @returns {Array<ApplicationDeclarationVersions>} All declaration versions
+ * DECLARATIONS
+ * DECLARATION constants - declarations need to be versioned so we have a record of which version a user accepted.
+ * These constants are used to populate the declarations and to keep a record of the version submitted.
+ * @returns {Object} Declaration constants
  */
-const DECLARATION_VERSIONS = [
-  {
-    ANTI_BRIBERY: '1',
-    ANTI_BRIBERY_CODE_OF_CONDUCT: '1',
-    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: '1',
-    CONFIDENTIALITY: '1',
-    CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
-    HOW_YOUR_DATA_WILL_BE_USED: '1',
-  },
-  {
-    ANTI_BRIBERY: '1',
-    ANTI_BRIBERY_CODE_OF_CONDUCT: '1',
-    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: '1',
-    CONFIDENTIALITY: '1',
-    CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
-  },
-] as Array<ApplicationDeclarationVersions>;
+export const DECLARATIONS = {
+  VERSIONS: DECLARATION_VERSIONS,
+  LATEST_DECLARATIONS: DECLARATION_VERSIONS[DECLARATION_VERSIONS.length - 1],
+};
 
-export default DECLARATION_VERSIONS;
+export default DECLARATIONS;

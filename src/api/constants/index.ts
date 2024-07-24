@@ -8,6 +8,7 @@ export * from './application';
 export * from './cover-period';
 export * from './cron';
 export * from './date-format';
+export * from './declarations';
 export * from './eligibility';
 export * from './external-apis';
 export * from './field-values';

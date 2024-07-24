@@ -1,25 +1,13 @@
-import DECLARATION_VERSIONS from '.';
+import DECLARATIONS from '.';
+import DECLARATION_VERSIONS from './versions';
 
-describe('api/constants/declarations/versions', () => {
-  it('should return an array of application versions', () => {
-    const expected = [
-      {
-        ANTI_BRIBERY: '1',
-        ANTI_BRIBERY_CODE_OF_CONDUCT: '1',
-        ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: '1',
-        CONFIDENTIALITY: '1',
-        CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
-        HOW_YOUR_DATA_WILL_BE_USED: '1',
-      },
-      {
-        ANTI_BRIBERY: '1',
-        ANTI_BRIBERY_CODE_OF_CONDUCT: '1',
-        ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: '1',
-        CONFIDENTIALITY: '1',
-        CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
-      },
-    ];
+describe('api/constants/declarations', () => {
+  it('should return an object', () => {
+    const expected = {
+      VERSIONS: DECLARATION_VERSIONS,
+      LATEST_DECLARATIONS: DECLARATION_VERSIONS[DECLARATION_VERSIONS.length - 1],
+    };
 
-    expect(DECLARATION_VERSIONS).toEqual(expected);
+    expect(DECLARATIONS).toEqual(expected);
   });
 });

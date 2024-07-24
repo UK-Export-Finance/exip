@@ -740,6 +740,32 @@ var DATE_FORMAT = {
   XLSX: "dd-MMM-yy"
 };
 
+// constants/declarations/versions/index.ts
+var DECLARATION_VERSIONS = [
+  {
+    ANTI_BRIBERY: "1",
+    ANTI_BRIBERY_CODE_OF_CONDUCT: "1",
+    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: "1",
+    CONFIDENTIALITY: "1",
+    CONFIRMATION_AND_ACKNOWLEDGEMENTS: "1",
+    HOW_YOUR_DATA_WILL_BE_USED: "1"
+  },
+  {
+    ANTI_BRIBERY: "1",
+    ANTI_BRIBERY_CODE_OF_CONDUCT: "1",
+    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: "1",
+    CONFIDENTIALITY: "1",
+    CONFIRMATION_AND_ACKNOWLEDGEMENTS: "1"
+  }
+];
+var versions_default2 = DECLARATION_VERSIONS;
+
+// constants/declarations/index.ts
+var DECLARATIONS2 = {
+  VERSIONS: versions_default2,
+  LATEST_DECLARATIONS: versions_default2[versions_default2.length - 1]
+};
+
 // constants/eligibility.ts
 var ELIGIBILITY = {
   MAX_COVER_AMOUNT_IN_GBP: 5e5,
@@ -4279,28 +4305,8 @@ var createAnEligibility = async (context, countryId, applicationId, coverPeriodI
 };
 var create_an_eligibility_default = createAnEligibility;
 
-// constants/declarations/index.ts
-var DECLARATION_VERSIONS = [
-  {
-    ANTI_BRIBERY: "1",
-    ANTI_BRIBERY_CODE_OF_CONDUCT: "1",
-    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: "1",
-    CONFIDENTIALITY: "1",
-    CONFIRMATION_AND_ACKNOWLEDGEMENTS: "1",
-    HOW_YOUR_DATA_WILL_BE_USED: "1"
-  },
-  {
-    ANTI_BRIBERY: "1",
-    ANTI_BRIBERY_CODE_OF_CONDUCT: "1",
-    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: "1",
-    CONFIDENTIALITY: "1",
-    CONFIRMATION_AND_ACKNOWLEDGEMENTS: "1"
-  }
-];
-var declarations_default2 = DECLARATION_VERSIONS;
-
 // constants/declarations/latest.ts
-var LATEST_DECLARATION_VERSION_NUMBERS = declarations_default2[declarations_default2.length - 1];
+var LATEST_DECLARATION_VERSION_NUMBERS = versions_default2[versions_default2.length - 1];
 var latest_default2 = LATEST_DECLARATION_VERSION_NUMBERS;
 
 // helpers/create-a-declaration-version/index.ts
@@ -7406,7 +7412,7 @@ var {
   POLICY: POLICY4,
   BUYER,
   EXPORT_CONTRACT: EXPORT_CONTRACT2,
-  DECLARATIONS: DECLARATIONS2
+  DECLARATIONS: DECLARATIONS3
 } = SECTION_NAMES_default;
 var mapApplicationToXLSX = (application2, countries) => {
   try {
@@ -7421,7 +7427,7 @@ var mapApplicationToXLSX = (application2, countries) => {
       [POLICY4]: map_policy_default2(application2, countries),
       [BUYER]: map_buyer_default(application2),
       [EXPORT_CONTRACT2]: map_export_contract_default(application2, countries),
-      [DECLARATIONS2]: map_declarations_default(application2)
+      [DECLARATIONS3]: map_declarations_default(application2)
     };
     return mapped;
   } catch (err) {
