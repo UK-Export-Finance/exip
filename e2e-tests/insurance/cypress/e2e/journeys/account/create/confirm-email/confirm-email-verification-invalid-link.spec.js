@@ -21,6 +21,7 @@ context(
     const verifyEmailUrl = `${baseUrl}${VERIFY_EMAIL}`;
     const verifyEmailLinkInvalidUrl = `${baseUrl}${VERIFY_EMAIL_INVALID_LINK}`;
     const signInUrl = `${baseUrl}${SIGN_IN_ROOT}`;
+
     let accountId;
     let hash;
     const invalid = 'invalid';
