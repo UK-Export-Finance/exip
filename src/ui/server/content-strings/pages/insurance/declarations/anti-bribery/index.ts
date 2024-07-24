@@ -1,8 +1,6 @@
 import { SHARED, CONFIRM_READ_AND_AGREE, HAVE_READ_AND_AGREED } from '../shared';
 
 export const ANTI_BRIBERY = {
-  ...SHARED,
-  PAGE_TITLE: 'Anti-bribery and corruption',
   VERSIONS: [
     {
       VERSION: '1',

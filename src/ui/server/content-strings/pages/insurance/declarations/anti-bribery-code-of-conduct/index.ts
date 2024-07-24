@@ -2,9 +2,6 @@ import { SHARED } from '../shared';
 import { LINKS } from '../../../../links';
 
 export const ANTI_BRIBERY_CODE_OF_CONDUCT = {
-  ...SHARED,
-  PAGE_TITLE:
-    'Do you have in place a code of conduct and written procedures of the type contemplated by Section(2) of the Bribery Act to discourage and prevent corrupt activity?',
   VERSIONS: [
     {
       VERSION: '1',
