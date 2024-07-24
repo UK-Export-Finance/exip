@@ -53,16 +53,8 @@ context('Get a quote via email exit page', () => {
 
     cy.checkText(getAQuoteByEmailPage.action.text(), expectedText);
 
-    cy.checkLink(
-      getAQuoteByEmailPage.action.link1(),
-      CONTENT_STRINGS.ACTION[0][0].href,
-      CONTENT_STRINGS.ACTION[0][0].text,
-    );
+    cy.checkLink(getAQuoteByEmailPage.action.link1(), CONTENT_STRINGS.ACTION[0][0].href, CONTENT_STRINGS.ACTION[0][0].text);
 
-    cy.checkLink(
-      getAQuoteByEmailPage.action.link2(),
-      CONTENT_STRINGS.ACTION[0][3].href,
-      CONTENT_STRINGS.ACTION[0][3].text,
-    );
+    cy.checkLink(getAQuoteByEmailPage.action.link2(), CONTENT_STRINGS.ACTION[0][3].href, CONTENT_STRINGS.ACTION[0][3].text);
   });
 });

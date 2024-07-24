@@ -2,12 +2,7 @@ import completeOtherSectionsPage from '../../../../pages/insurance/complete-othe
 import { PAGES } from '../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 
-const {
-  ROOT: INSURANCE_ROOT,
-  ALL_SECTIONS,
-  COMPLETE_OTHER_SECTIONS,
-  CHECK_YOUR_ANSWERS,
-} = INSURANCE_ROUTES;
+const { ROOT: INSURANCE_ROOT, ALL_SECTIONS, COMPLETE_OTHER_SECTIONS, CHECK_YOUR_ANSWERS } = INSURANCE_ROUTES;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.COMPLETE_OTHER_SECTIONS;
 

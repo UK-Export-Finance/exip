@@ -4,16 +4,12 @@ import application from '../../../../../../fixtures/application';
 import { field } from '../../../../../../pages/shared';
 
 const {
-  LOSS_PAYEE_DETAILS: {
-    NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY,
-  },
+  LOSS_PAYEE_DETAILS: { NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY },
 } = POLICY_FIELD_IDS;
 
 const {
   ROOT,
-  POLICY: {
-    LOSS_PAYEE_DETAILS_ROOT,
-  },
+  POLICY: { LOSS_PAYEE_DETAILS_ROOT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');

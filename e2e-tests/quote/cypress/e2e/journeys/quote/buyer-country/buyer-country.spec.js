@@ -59,11 +59,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
       it('renders a back link with correct url', () => {
         const expectedHref = `${baseUrl}${BUYER_COUNTRY}`;
 
-        cy.checkLink(
-          backLink(),
-          expectedHref,
-          LINKS.BACK,
-        );
+        cy.checkLink(backLink(), expectedHref, LINKS.BACK);
       });
 
       it('should focus on input when clicking summary error message', () => {

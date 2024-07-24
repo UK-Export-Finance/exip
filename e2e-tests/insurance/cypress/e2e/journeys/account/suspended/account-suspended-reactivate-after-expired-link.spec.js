@@ -5,10 +5,7 @@ import api from '../../../../../../commands/api';
 
 const {
   ACCOUNT: {
-    SUSPENDED: {
-      VERIFY_EMAIL,
-      EMAIL_SENT,
-    },
+    SUSPENDED: { VERIFY_EMAIL, EMAIL_SENT },
     REACTIVATED_ROOT,
   },
 } = INSURANCE_ROUTES;

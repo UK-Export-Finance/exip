@@ -4,11 +4,7 @@ import application from '../../fixtures/application';
 
 const {
   POLICY: {
-    NAME_ON_POLICY: {
-      POSITION,
-      SAME_NAME,
-      OTHER_NAME,
-    },
+    NAME_ON_POLICY: { POSITION, SAME_NAME, OTHER_NAME },
   },
 } = INSURANCE_FIELD_IDS;
 

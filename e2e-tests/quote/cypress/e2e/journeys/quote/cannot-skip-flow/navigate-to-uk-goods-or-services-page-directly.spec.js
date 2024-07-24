@@ -1,11 +1,7 @@
 import { ROUTES } from '../../../../../../constants';
 
 const {
-  QUOTE: {
-    UK_GOODS_OR_SERVICES,
-    UK_GOODS_OR_SERVICES_CHANGE,
-    NEED_TO_START_AGAIN,
-  },
+  QUOTE: { UK_GOODS_OR_SERVICES, UK_GOODS_OR_SERVICES_CHANGE, NEED_TO_START_AGAIN },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');

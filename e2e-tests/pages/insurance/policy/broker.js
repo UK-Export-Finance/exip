@@ -1,8 +1,6 @@
 import { POLICY as POLICY_FIELD_IDS } from '../../../constants/field-ids/insurance/policy';
 
-const {
-  USING_BROKER,
-} = POLICY_FIELD_IDS;
+const { USING_BROKER } = POLICY_FIELD_IDS;
 
 const brokerPage = {
   summary: () => cy.get(`[data-cy="${USING_BROKER}-details"] summary`),

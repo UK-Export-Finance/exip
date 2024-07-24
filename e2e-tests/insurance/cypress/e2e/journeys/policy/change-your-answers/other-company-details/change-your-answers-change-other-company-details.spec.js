@@ -5,153 +5,149 @@ import application from '../../../../../../../fixtures/application';
 import { BRA } from '../../../../../../../fixtures/countries';
 
 const {
-  REQUESTED_JOINTLY_INSURED_PARTY: {
-    COMPANY_NAME,
-    COMPANY_NUMBER,
-    COUNTRY_CODE,
-  },
+  REQUESTED_JOINTLY_INSURED_PARTY: { COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
 } = POLICY_FIELD_IDS;
 
 const {
   ROOT,
-  POLICY: {
-    OTHER_COMPANY_DETAILS_CHANGE,
-    CHECK_YOUR_ANSWERS,
-  },
+  POLICY: { OTHER_COMPANY_DETAILS_CHANGE, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Change your answers - Other company details - As an exporter, I want to change my answers to the other company details section', () => {
-  let referenceNumber;
-  let checkYourAnswersUrl;
-  let otherCompanyDetailsUrl;
+context(
+  'Insurance - Policy - Change your answers - Other company details - As an exporter, I want to change my answers to the other company details section',
+  () => {
+    let referenceNumber;
+    let checkYourAnswersUrl;
+    let otherCompanyDetailsUrl;
 
-  before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-      cy.completePolicySection({ otherCompanyInvolved: true });
+        cy.completePolicySection({ otherCompanyInvolved: true });
 
-      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      otherCompanyDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS_CHANGE}`;
-    });
-  });
-
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
-
-  describe(COMPANY_NAME, () => {
-    const fieldId = COMPANY_NAME;
-
-    describe('when clicking the `change` link', () => {
-      it(`should redirect to ${OTHER_COMPANY_DETAILS_CHANGE}`, () => {
-        cy.navigateToUrl(checkYourAnswersUrl);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: OTHER_COMPANY_DETAILS_CHANGE, fieldId });
+        checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        otherCompanyDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS_CHANGE}`;
       });
     });
 
-    describe('form submission with a new answer', () => {
-      const newValueInput = `${application.REQUESTED_JOINTLY_INSURED_PARTY[fieldId]} additional text`;
-
-      beforeEach(() => {
-        cy.navigateToUrl(checkYourAnswersUrl);
-      });
-
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.assertUrl(`${otherCompanyDetailsUrl}#${fieldId}-label`);
-
-        cy.changeAnswerField({ newValueInput }, field(fieldId).input());
-
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
-      });
-
-      it('should render the new answer', () => {
-        cy.assertSummaryListRowValue(summaryList, fieldId, newValueInput);
-      });
-    });
-  });
-
-  describe(COMPANY_NUMBER, () => {
-    const fieldId = COMPANY_NUMBER;
-
-    describe('when clicking the `change` link', () => {
-      it(`should redirect to ${OTHER_COMPANY_DETAILS_CHANGE}`, () => {
-        cy.navigateToUrl(checkYourAnswersUrl);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: OTHER_COMPANY_DETAILS_CHANGE, fieldId });
-      });
+    beforeEach(() => {
+      cy.saveSession();
     });
 
-    describe('form submission with a new answer', () => {
-      const newValueInput = `${application.REQUESTED_JOINTLY_INSURED_PARTY[fieldId]}100`;
-
-      beforeEach(() => {
-        cy.navigateToUrl(checkYourAnswersUrl);
-      });
-
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.assertUrl(`${otherCompanyDetailsUrl}#${fieldId}-label`);
-
-        cy.changeAnswerField({ newValueInput }, field(fieldId).input());
-
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
-      });
-
-      it('should render the new answer', () => {
-        cy.assertSummaryListRowValue(summaryList, fieldId, newValueInput);
-      });
+    after(() => {
+      cy.deleteApplication(referenceNumber);
     });
-  });
 
-  describe(COUNTRY_CODE, () => {
-    const fieldId = COUNTRY_CODE;
+    describe(COMPANY_NAME, () => {
+      const fieldId = COMPANY_NAME;
 
-    describe('when clicking the `change` link', () => {
-      it(`should redirect to ${OTHER_COMPANY_DETAILS_CHANGE}`, () => {
-        cy.navigateToUrl(checkYourAnswersUrl);
+      describe('when clicking the `change` link', () => {
+        it(`should redirect to ${OTHER_COMPANY_DETAILS_CHANGE}`, () => {
+          cy.navigateToUrl(checkYourAnswersUrl);
 
-        summaryList.field(fieldId).changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: OTHER_COMPANY_DETAILS_CHANGE, fieldId });
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: OTHER_COMPANY_DETAILS_CHANGE, fieldId });
+        });
+      });
+
+      describe('form submission with a new answer', () => {
+        const newValueInput = `${application.REQUESTED_JOINTLY_INSURED_PARTY[fieldId]} additional text`;
+
+        beforeEach(() => {
+          cy.navigateToUrl(checkYourAnswersUrl);
+        });
+
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+          summaryList.field(fieldId).changeLink().click();
+
+          cy.assertUrl(`${otherCompanyDetailsUrl}#${fieldId}-label`);
+
+          cy.changeAnswerField({ newValueInput }, field(fieldId).input());
+
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+        });
+
+        it('should render the new answer', () => {
+          cy.assertSummaryListRowValue(summaryList, fieldId, newValueInput);
+        });
       });
     });
 
-    describe('form submission with a new answer', () => {
-      const newValueInput = BRA.NAME;
+    describe(COMPANY_NUMBER, () => {
+      const fieldId = COMPANY_NUMBER;
 
-      beforeEach(() => {
-        cy.navigateToUrl(checkYourAnswersUrl);
+      describe('when clicking the `change` link', () => {
+        it(`should redirect to ${OTHER_COMPANY_DETAILS_CHANGE}`, () => {
+          cy.navigateToUrl(checkYourAnswersUrl);
+
+          summaryList.field(fieldId).changeLink().click();
+
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: OTHER_COMPANY_DETAILS_CHANGE, fieldId });
+        });
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        summaryList.field(fieldId).changeLink().click();
+      describe('form submission with a new answer', () => {
+        const newValueInput = `${application.REQUESTED_JOINTLY_INSURED_PARTY[fieldId]}100`;
 
-        cy.assertUrl(`${otherCompanyDetailsUrl}#${fieldId}-label`);
+        beforeEach(() => {
+          cy.navigateToUrl(checkYourAnswersUrl);
+        });
 
-        cy.keyboardInput(autoCompleteField(fieldId).input(), newValueInput);
-        cy.clickSubmitButton();
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+          summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
-      });
+          cy.assertUrl(`${otherCompanyDetailsUrl}#${fieldId}-label`);
 
-      it('should render the new answer', () => {
-        cy.assertSummaryListRowValue(summaryList, fieldId, newValueInput);
+          cy.changeAnswerField({ newValueInput }, field(fieldId).input());
+
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+        });
+
+        it('should render the new answer', () => {
+          cy.assertSummaryListRowValue(summaryList, fieldId, newValueInput);
+        });
       });
     });
-  });
-});
+
+    describe(COUNTRY_CODE, () => {
+      const fieldId = COUNTRY_CODE;
+
+      describe('when clicking the `change` link', () => {
+        it(`should redirect to ${OTHER_COMPANY_DETAILS_CHANGE}`, () => {
+          cy.navigateToUrl(checkYourAnswersUrl);
+
+          summaryList.field(fieldId).changeLink().click();
+
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: OTHER_COMPANY_DETAILS_CHANGE, fieldId });
+        });
+      });
+
+      describe('form submission with a new answer', () => {
+        const newValueInput = BRA.NAME;
+
+        beforeEach(() => {
+          cy.navigateToUrl(checkYourAnswersUrl);
+        });
+
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+          summaryList.field(fieldId).changeLink().click();
+
+          cy.assertUrl(`${otherCompanyDetailsUrl}#${fieldId}-label`);
+
+          cy.keyboardInput(autoCompleteField(fieldId).input(), newValueInput);
+          cy.clickSubmitButton();
+
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+        });
+
+        it('should render the new answer', () => {
+          cy.assertSummaryListRowValue(summaryList, fieldId, newValueInput);
+        });
+      });
+    });
+  },
+);

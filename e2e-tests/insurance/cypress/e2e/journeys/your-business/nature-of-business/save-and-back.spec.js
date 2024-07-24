@@ -3,18 +3,12 @@ import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import application from '../../../../../../fixtures/application';
 
 const {
-  NATURE_OF_YOUR_BUSINESS: {
-    GOODS_OR_SERVICES,
-    YEARS_EXPORTING,
-    EMPLOYEES_UK,
-  },
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: {
-    NATURE_OF_BUSINESS_ROOT,
-  },
+  EXPORTER_BUSINESS: { NATURE_OF_BUSINESS_ROOT },
 } = ROUTES.INSURANCE;
 
 const baseUrl = Cypress.config('baseUrl');

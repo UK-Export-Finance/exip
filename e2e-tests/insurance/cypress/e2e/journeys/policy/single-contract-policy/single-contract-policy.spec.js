@@ -1,8 +1,4 @@
-import {
-  radios,
-  field as fieldSelector,
-  headingCaption,
-} from '../../../../../../pages/shared';
+import { radios, field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -15,11 +11,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY;
 const {
   ROOT: INSURANCE_ROOT,
   ALL_SECTIONS,
-  POLICY: {
-    TYPE_OF_POLICY,
-    SINGLE_CONTRACT_POLICY,
-    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
-  },
+  POLICY: { TYPE_OF_POLICY, SINGLE_CONTRACT_POLICY, SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE },
 } = INSURANCE_ROUTES;
 
 const { CONTRACT_POLICY } = FIELDS;
@@ -30,18 +22,14 @@ const {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
       POLICY_CURRENCY_CODE,
-      SINGLE: {
-        CONTRACT_COMPLETION_DATE,
-      },
+      SINGLE: { CONTRACT_COMPLETION_DATE },
     },
   },
 } = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
-    POLICY: {
-      CONTRACT_POLICY: CONTRACT_ERROR_MESSAGES,
-    },
+    POLICY: { CONTRACT_POLICY: CONTRACT_ERROR_MESSAGES },
   },
 } = ERROR_MESSAGES;
 

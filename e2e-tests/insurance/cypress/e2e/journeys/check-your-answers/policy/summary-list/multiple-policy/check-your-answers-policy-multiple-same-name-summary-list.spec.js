@@ -6,9 +6,7 @@ import checkSummaryList from '../../../../../../../../commands/insurance/check-p
 
 const {
   ROOT: INSURANCE_ROOT,
-  CHECK_YOUR_ANSWERS: {
-    TYPE_OF_POLICY,
-  },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
 } = INSURANCE_ROUTES;
 
 const {
@@ -17,7 +15,9 @@ const {
   NAME_ON_POLICY: { NAME },
 } = POLICY_FIELD_IDS;
 
-const { ACCOUNT: { EMAIL } } = INSURANCE_FIELD_IDS;
+const {
+  ACCOUNT: { EMAIL },
+} = INSURANCE_FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
 

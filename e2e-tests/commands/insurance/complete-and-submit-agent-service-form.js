@@ -4,10 +4,7 @@
  * @param {String} description: Expected service description
  * @param {Boolean} agentIsCharging: Agent is charging
  */
-const completeAndSubmitAgentServiceForm = ({
-  serviceDescription,
-  agentIsCharging,
-}) => {
+const completeAndSubmitAgentServiceForm = ({ serviceDescription, agentIsCharging }) => {
   cy.completeAgentServiceForm({
     serviceDescription,
     agentIsCharging,

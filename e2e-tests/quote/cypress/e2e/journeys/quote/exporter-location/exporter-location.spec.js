@@ -1,8 +1,4 @@
-import {
-  yesRadio,
-  yesNoRadioHint,
-  noRadio,
-} from '../../../../../../pages/shared';
+import { yesRadio, yesNoRadioHint, noRadio } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELDS } from '../../../../../../content-strings/fields';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
@@ -12,11 +8,7 @@ import { completeAndSubmitBuyerBodyForm } from '../../../../../../commands/quote
 const CONTENT_STRINGS = PAGES.EXPORTER_LOCATION;
 
 const {
-  QUOTE: {
-    EXPORTER_LOCATION,
-    BUYER_BODY,
-    UK_GOODS_OR_SERVICES,
-  },
+  QUOTE: { EXPORTER_LOCATION, BUYER_BODY, UK_GOODS_OR_SERVICES },
 } = ROUTES;
 
 const {

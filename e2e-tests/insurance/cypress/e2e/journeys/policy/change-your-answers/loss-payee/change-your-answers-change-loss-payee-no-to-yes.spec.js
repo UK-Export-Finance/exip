@@ -4,9 +4,7 @@ import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insuranc
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
 
 const {
-  LOSS_PAYEE: {
-    IS_APPOINTED: FIELD_ID,
-  },
+  LOSS_PAYEE: { IS_APPOINTED: FIELD_ID },
   LOSS_PAYEE_DETAILS: { NAME },
   LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
   FINANCIAL_ADDRESS,
@@ -14,12 +12,7 @@ const {
 
 const {
   ROOT,
-  POLICY: {
-    LOSS_PAYEE_CHANGE,
-    LOSS_PAYEE_DETAILS_CHANGE,
-    LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
-    CHECK_YOUR_ANSWERS,
-  },
+  POLICY: { LOSS_PAYEE_CHANGE, LOSS_PAYEE_DETAILS_CHANGE, LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');

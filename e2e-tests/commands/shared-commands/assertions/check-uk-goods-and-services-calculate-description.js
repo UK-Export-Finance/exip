@@ -32,8 +32,4 @@ const checkCalculateDescriptionDescriptionContent = () => {
   checkDescriptionContentListItems();
 };
 
-export {
-  checkCalculateDescriptionSummaryText,
-  checkCalculateDescriptionSummaryClickRevealsContent,
-  checkCalculateDescriptionDescriptionContent,
-};
+export { checkCalculateDescriptionSummaryText, checkCalculateDescriptionSummaryClickRevealsContent, checkCalculateDescriptionDescriptionContent };

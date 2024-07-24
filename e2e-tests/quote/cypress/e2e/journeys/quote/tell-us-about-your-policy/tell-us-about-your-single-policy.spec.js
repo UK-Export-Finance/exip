@@ -9,32 +9,17 @@ import { field as fieldSelector } from '../../../../../../pages/shared';
 import { tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
 import { FIELDS, PAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
-import {
-  EUR,
-  GBP,
-  JPY,
-  USD,
-} from '../../../../../../fixtures/currencies';
+import { EUR, GBP, JPY, USD } from '../../../../../../fixtures/currencies';
 
 const CONTENT_STRINGS = PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 
 const {
-  ELIGIBILITY: {
-    CURRENCY,
-    CONTRACT_VALUE,
-    PERCENTAGE_OF_COVER,
-    CREDIT_PERIOD,
-    AMOUNT_CURRENCY,
-  },
+  ELIGIBILITY: { CURRENCY, CONTRACT_VALUE, PERCENTAGE_OF_COVER, CREDIT_PERIOD, AMOUNT_CURRENCY },
   POLICY_LENGTH,
 } = FIELD_IDS;
 
 const {
-  QUOTE: {
-    TELL_US_ABOUT_YOUR_POLICY,
-    POLICY_TYPE,
-    CHECK_YOUR_ANSWERS,
-  },
+  QUOTE: { TELL_US_ABOUT_YOUR_POLICY, POLICY_TYPE, CHECK_YOUR_ANSWERS },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');

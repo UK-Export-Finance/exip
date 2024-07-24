@@ -12,17 +12,13 @@ const {
 
 const {
   POLICY: {
-    CONTRACT_POLICY: {
-      REQUESTED_START_DATE,
-    },
+    CONTRACT_POLICY: { REQUESTED_START_DATE },
   },
 } = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
-    POLICY: {
-      CONTRACT_POLICY: CONTRACT_ERROR_MESSAGES,
-    },
+    POLICY: { CONTRACT_POLICY: CONTRACT_ERROR_MESSAGES },
   },
 } = ERROR_MESSAGES;
 
@@ -34,14 +30,7 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
 
   const field = fieldSelector(REQUESTED_START_DATE);
 
-  const {
-    day,
-    month,
-    year,
-    notInTheFuture,
-    invalidFormat,
-    isToday,
-  } = dateField.checkValidation({
+  const { day, month, year, notInTheFuture, invalidFormat, isToday } = dateField.checkValidation({
     errorSummaryLength: 3,
     errorIndex: 0,
     field,

@@ -2,10 +2,7 @@ import checkSummaryList from '../../../../../../../commands/insurance/check-poli
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
-const {
-  ROOT: INSURANCE_ROOT,
-  POLICY,
-} = INSURANCE_ROUTES;
+const { ROOT: INSURANCE_ROOT, POLICY } = INSURANCE_ROUTES;
 
 const {
   POLICY: {

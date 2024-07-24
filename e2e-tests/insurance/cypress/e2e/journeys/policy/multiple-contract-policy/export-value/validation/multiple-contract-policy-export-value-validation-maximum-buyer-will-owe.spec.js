@@ -7,10 +7,7 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids
 
 const {
   ROOT: INSURANCE_ROOT,
-  POLICY: {
-    MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
-    NAME_ON_POLICY,
-  },
+  POLICY: { MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE, NAME_ON_POLICY },
 } = INSURANCE_ROUTES;
 
 const {
@@ -24,9 +21,7 @@ const {
 const {
   INSURANCE: {
     POLICY: {
-      EXPORT_VALUE: {
-        MULTIPLE: EXPORT_VALUE_ERROR_MESSAGES,
-      },
+      EXPORT_VALUE: { MULTIPLE: EXPORT_VALUE_ERROR_MESSAGES },
     },
   },
 } = ERROR_MESSAGES;
@@ -68,75 +63,45 @@ context('Insurance - Policy - Multiple contract policy - Export value page - for
   it('should render a validation error when maximum buyer will owe is not provided', () => {
     cy.clickSubmitButton();
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(1),
-      EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
-    );
+    cy.checkText(partials.errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT);
 
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
-    );
+    cy.checkText(field.errorMessage(), `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`);
   });
 
   it('should render a validation error when maximum buyer will owe is not a number', () => {
     cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), 'ten!');
     cy.clickSubmitButton();
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(1),
-      EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
-    );
+    cy.checkText(partials.errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT);
 
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
-    );
+    cy.checkText(field.errorMessage(), `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`);
   });
 
   it('should render a validation error when maximum buyer will owe contains a decimal', () => {
     cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), '1.2');
     cy.clickSubmitButton();
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(1),
-      EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
-    );
+    cy.checkText(partials.errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT);
 
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
-    );
+    cy.checkText(field.errorMessage(), `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`);
   });
 
   it('should render a validation error when maximum buyer will owe contains a comma and decimal', () => {
     cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), '1,234.56');
     cy.clickSubmitButton();
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(1),
-      EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
-    );
+    cy.checkText(partials.errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT);
 
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
-    );
+    cy.checkText(field.errorMessage(), `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`);
   });
 
   it('should render a validation error when maximum buyer will owe is below the minimum', () => {
     cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), '0');
     cy.clickSubmitButton();
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(1),
-      EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].BELOW_MINIMUM,
-    );
+    cy.checkText(partials.errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].BELOW_MINIMUM);
 
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].BELOW_MINIMUM}`,
-    );
+    cy.checkText(field.errorMessage(), `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].BELOW_MINIMUM}`);
   });
 
   it('should redirect to the next page when maximum buyer will owe is valid and contains a comma as all fields are valid', () => {
