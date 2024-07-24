@@ -4286,6 +4286,55 @@ var createAnEligibility = async (context, countryId, applicationId, coverPeriodI
 };
 var create_an_eligibility_default = createAnEligibility;
 
+// constants/declarations/index.ts
+var DECLARATION_VERSIONS = [
+  {
+    ANTI_BRIBERY: "1",
+    ANTI_BRIBERY_CODE_OF_CONDUCT: "1",
+    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: "1",
+    CONFIDENTIALITY: "1",
+    CONFIRMATION_AND_ACKNOWLEDGEMENTS: "1",
+    HOW_YOUR_DATA_WILL_BE_USED: "1"
+  },
+  {
+    ANTI_BRIBERY: "1",
+    ANTI_BRIBERY_CODE_OF_CONDUCT: "1",
+    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: "1",
+    CONFIDENTIALITY: "1",
+    CONFIRMATION_AND_ACKNOWLEDGEMENTS: "1"
+  }
+];
+var declarations_default2 = DECLARATION_VERSIONS;
+
+// constants/declarations/latest.ts
+var LATEST_DECLARATION_VERSION_NUMBERS = declarations_default2[declarations_default2.length - 1];
+var latest_default2 = LATEST_DECLARATION_VERSION_NUMBERS;
+
+// helpers/create-a-declaration-version/index.ts
+var { ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT, CONFIDENTIALITY, CONFIRMATION_AND_ACKNOWLEDGEMENTS } = latest_default2;
+var createADeclarationVersion = async (context, declarationId) => {
+  console.info("Creating an application declaration version for ", declarationId);
+  try {
+    const declaration = await context.db.DeclarationVersion.createOne({
+      data: {
+        declaration: {
+          connect: { id: declarationId }
+        },
+        agreeToAntiBribery: ANTI_BRIBERY,
+        agreeToConfidentiality: CONFIDENTIALITY,
+        agreeToConfirmationAndAcknowledgements: CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+        hasAntiBriberyCodeOfConduct: ANTI_BRIBERY_CODE_OF_CONDUCT,
+        willExportWithAntiBriberyCodeOfConduct: ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT
+      }
+    });
+    return declaration;
+  } catch (err) {
+    console.error("Error creating an application declaration version %O", err);
+    throw new Error(`Creating an application declaration version ${err}`);
+  }
+};
+var create_a_declaration_version_default = createADeclarationVersion;
+
 // helpers/create-a-declaration/index.ts
 var createADeclaration = async (context, applicationId) => {
   console.info("Creating a application declaration for ", applicationId);
@@ -4297,7 +4346,11 @@ var createADeclaration = async (context, applicationId) => {
         }
       }
     });
-    return declaration;
+    const declarationVersion = await create_a_declaration_version_default(context, declaration.id);
+    return {
+      ...declaration,
+      declarationVersion
+    };
   } catch (err) {
     console.error("Error creating an application declaration %O", err);
     throw new Error(`Creating an application declaration ${err}`);

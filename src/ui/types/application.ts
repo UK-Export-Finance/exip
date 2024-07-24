@@ -194,8 +194,7 @@ interface ApplicationDeclaration {
   agreeToConfirmationAndAcknowledgements?: boolean;
 }
 
-// TODO: rename to VersionS
-interface ApplicationDeclarationVersion {
+interface ApplicationDeclarationVersions {
   ANTI_BRIBERY: string;
   ANTI_BRIBERY_CODE_OF_CONDUCT: string;
   ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: string;
@@ -305,7 +304,7 @@ export {
   ApplicationCompany,
   ApplicationCompanyDifferentTradingAddress,
   ApplicationDeclaration,
-  ApplicationDeclarationVersion,
+  ApplicationDeclarationVersions,
   ApplicationExportContract,
   ApplicationExportContractAgent,
   ApplicationExportContractAgentService,

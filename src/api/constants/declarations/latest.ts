@@ -3,7 +3,7 @@ import VERSIONS from '.';
 /**
  * LATEST_DECLARATION_VERSION_NUMBERS
  * Latest declaration version numbers.
- * @returns {ApplicationDeclarationVersion} Latest declaration versions
+ * @returns {ApplicationDeclarationVersions} Latest declaration versions
  */
 const LATEST_DECLARATION_VERSION_NUMBERS = VERSIONS[VERSIONS.length - 1];
 

@@ -24,7 +24,7 @@ import {
   ApplicationPolicy,
   ApplicationPolicyContact,
   ApplicationPrivateMarket,
-  ApplicationDeclarationVersion,
+  ApplicationDeclarationVersions,
   ApplicationVersion,
   ApplicationOwner,
 } from './application';
@@ -114,7 +114,7 @@ export {
   ApplicationPolicy,
   ApplicationPolicyContact,
   ApplicationPrivateMarket,
-  ApplicationDeclarationVersion,
+  ApplicationDeclarationVersions,
   ApplicationVersion,
   ApplicationByReferenceNumberVariables,
   ApolloResponse,

@@ -113,8 +113,7 @@ export interface ApplicationDeclaration extends Relationship {
   agreeToConfirmationAndAcknowledgements?: boolean;
 }
 
-// TODO: rename to VersionS
-export interface ApplicationDeclarationVersion {
+export interface ApplicationDeclarationVersions {
   ANTI_BRIBERY: string;
   ANTI_BRIBERY_CODE_OF_CONDUCT: string;
   ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: string;

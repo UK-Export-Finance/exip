@@ -1,10 +1,10 @@
-import { ApplicationDeclarationVersion } from '../../types';
+import { ApplicationDeclarationVersions } from '../../types';
 
 /**
  * DECLARATION_VERSIONS
  * All possible declaration versions.
  * This should be manually updated each time declarations are updated
- * @returns {Array<ApplicationDeclarationVersion>} All declaration versions
+ * @returns {Array<ApplicationDeclarationVersions>} All declaration versions
  */
 const DECLARATION_VERSIONS = [
   {
@@ -22,6 +22,6 @@ const DECLARATION_VERSIONS = [
     CONFIDENTIALITY: '1',
     CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
   },
-] as Array<ApplicationDeclarationVersion>;
+] as Array<ApplicationDeclarationVersions>;
 
 export default DECLARATION_VERSIONS;
