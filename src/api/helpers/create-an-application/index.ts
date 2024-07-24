@@ -129,7 +129,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
         company: {
           connect: { id: company.id },
         },
-        declarations: {
+        declaration: {
           connect: { id: declarations.id },
         },
         eligibility: {

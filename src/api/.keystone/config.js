@@ -4877,7 +4877,7 @@ var createAnApplication = async (root, variables, context) => {
         company: {
           connect: { id: company.id }
         },
-        declarations: {
+        declaration: {
           connect: { id: declarations.id }
         },
         eligibility: {
