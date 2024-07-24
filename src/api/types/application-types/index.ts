@@ -111,7 +111,6 @@ export interface ApplicationDeclaration extends Relationship {
   hasAntiBriberyCodeOfConduct?: boolean | null;
   willExportWithAntiBriberyCodeOfConduct?: boolean;
   agreeToConfirmationAndAcknowledgements?: boolean;
-  agreeHowDataWillBeUsed?: boolean;
 }
 
 export interface ApplicationLossPayeeFinancialInternationalVector extends Relationship {

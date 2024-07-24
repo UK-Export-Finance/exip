@@ -9,7 +9,6 @@ const {
     CONFIDENTIALITY,
     ANTI_BRIBERY: { ROOT: ANTI_BRIBERY_ROOT, CODE_OF_CONDUCT, EXPORTING_WITH_CODE_OF_CONDUCT },
     CONFIRMATION_AND_ACKNOWLEDGEMENTS,
-    HOW_YOUR_DATA_WILL_BE_USED,
   },
 } = INSURANCE_ROUTES;
 
@@ -25,7 +24,6 @@ describe('middleware/insurance/application-status/is-submit-your-application-rou
         CODE_OF_CONDUCT,
         EXPORTING_WITH_CODE_OF_CONDUCT,
         CONFIRMATION_AND_ACKNOWLEDGEMENTS,
-        HOW_YOUR_DATA_WILL_BE_USED,
       });
 
       const expected = routes.map((route) => `${INSURANCE_ROOT}/${referenceNumber}${route}`);

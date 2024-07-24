@@ -185,16 +185,6 @@ interface ApplicationSectionReview {
   buyer?: boolean;
 }
 
-interface ApplicationDeclarationVersion {
-  id: string;
-  agreeToConfidentiality?: string;
-  agreeToAntiBribery?: string;
-  hasAntiBriberyCodeOfConduct?: string;
-  willExportWithAntiBriberyCodeOfConduct?: string;
-  agreeToConfirmationAndAcknowledgements?: string;
-  agreeHowDataWillBeUsed?: string;
-}
-
 interface ApplicationDeclaration {
   id: string;
   agreeToConfidentiality?: boolean;
@@ -202,8 +192,6 @@ interface ApplicationDeclaration {
   hasAntiBriberyCodeOfConduct?: boolean;
   willExportWithAntiBriberyCodeOfConduct?: boolean;
   agreeToConfirmationAndAcknowledgements?: boolean;
-  agreeHowDataWillBeUsed?: boolean;
-  version: ApplicationDeclarationVersion;
 }
 
 interface ApplicationPolicyContact {
@@ -293,6 +281,15 @@ interface ApplicationVersion {
   TOTAL_VALUE_OF_CONTRACT: number;
   DEFAULT_FINAL_DESTINATION_KNOWN: boolean;
   DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: boolean;
+}
+
+interface ApplicationDeclarationVersion {
+  CONFIDENTIALITY: string;
+  ANTI_BRIBERY: string;
+  ANTI_BRIBERY_CODE_OF_CONDUCT: string;
+  ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: string;
+  CONFIRMATION_AND_ACKNOWLEDGEMENTS: string;
+  HOW_YOUR_DATA_WILL_BE_USED?: string;
 }
 
 export {
