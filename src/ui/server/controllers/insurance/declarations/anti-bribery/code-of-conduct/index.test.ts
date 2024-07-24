@@ -1,7 +1,6 @@
 import { FIELD_ID, pageVariables, HTML_FLAGS, TEMPLATE, get, post } from '.';
-import { PAGES, ERROR_MESSAGES } from '../../../../../content-strings';
-import { DECLARATIONS_FIELDS } from '../../../../../content-strings/fields/insurance/declarations';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
+import { ERROR_MESSAGES } from '../../../../../content-strings';
+import { FIELD_IDS, ROUTES, TEMPLATES, DECLARATIONS } from '../../../../../constants';
 import singleInputPageVariables from '../../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../../helpers/construct-payload';
@@ -27,7 +26,7 @@ const {
   },
 } = TEMPLATES;
 
-const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_CODE_OF_CONDUCT;
+const { ANTI_BRIBERY_CODE_OF_CONDUCT } = DECLARATIONS.LATEST_DECLARATIONS;
 
 describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () => {
   jest.mock('../../save-data');
@@ -59,7 +58,7 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
       const expected = {
         FIELDS: {
           ID: FIELD_ID,
-          ...DECLARATIONS_FIELDS[FIELD_ID],
+          ...ANTI_BRIBERY_CODE_OF_CONDUCT,
         },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT_SAVE_AND_BACK}`,
       };
@@ -91,7 +90,7 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
       await get(req, res);
 
       const expectedVariables = {
-        ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
+        ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS: ANTI_BRIBERY_CODE_OF_CONDUCT, BACK_LINK: req.headers.referer, HTML_FLAGS }),
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(res.locals.application),
@@ -169,7 +168,7 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
         const payload = constructPayload(req.body, [FIELD_ID]);
 
         const expectedVariables = {
-          ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
+          ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS: ANTI_BRIBERY_CODE_OF_CONDUCT, BACK_LINK: req.headers.referer, HTML_FLAGS }),
           ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           validationErrors: generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),
