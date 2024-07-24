@@ -1,5 +1,4 @@
 import getLatestDeclarationVersion, { findLatestVersion } from '.';
-import LATEST_VERSION_NUMBER from '../versions/latest';
 import VERSIONS from '../versions';
 import DECLARATIONS from '../../../content-strings/pages/insurance/declarations';
 
@@ -12,7 +11,7 @@ const {
   HOW_YOUR_DATA_WILL_BE_USED,
 } = DECLARATIONS;
 
-describe('server/constants/declarations/get-latest-declaration', () => {
+describe('server/constants/declarations/get-latest-declarations', () => {
   describe('findLatestVersion', () => {
     it('should find content strings by version', () => {
       const result = findLatestVersion(CONFIDENTIALITY, VERSIONS[1].CONFIDENTIALITY);
@@ -25,7 +24,7 @@ describe('server/constants/declarations/get-latest-declaration', () => {
 
   describe('getLatestDeclarationVersion', () => {
     it('should return the latest declaration versions', () => {
-      const result = getLatestDeclarationVersion(LATEST_VERSION_NUMBER);
+      const result = getLatestDeclarationVersion();
 
       const expected = {
         CONFIDENTIALITY: CONFIDENTIALITY.VERSIONS[0],

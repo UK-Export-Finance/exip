@@ -285,13 +285,12 @@ interface ApplicationVersion {
 }
 
 interface ApplicationDeclarationVersion {
-  VERSION_NUMBER: string;
-  CONFIDENTIALITY: number;
-  ANTI_BRIBERY: number;
-  ANTI_BRIBERY_CODE_OF_CONDUCT: number;
-  ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: number;
-  CONFIRMATION_AND_ACKNOWLEDGEMENTS: number;
-  HOW_YOUR_DATA_WILL_BE_USED: number;
+  CONFIDENTIALITY: string;
+  ANTI_BRIBERY: string;
+  ANTI_BRIBERY_CODE_OF_CONDUCT: string;
+  ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: string;
+  CONFIRMATION_AND_ACKNOWLEDGEMENTS: string;
+  HOW_YOUR_DATA_WILL_BE_USED: string;
 }
 
 export {
@@ -320,7 +319,7 @@ export {
   ApplicationPolicyContact,
   ApplicationSectionReview,
   ApplicationDeclaration,
-  ApplicationVersion,
   ApplicationDeclarationVersion,
+  ApplicationVersion,
   ApplicationOwner,
 };

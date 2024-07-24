@@ -15,39 +15,33 @@ const {
  * findLatestVersion
  * Finds the latest content strings for a specified declaration section
  * @param {ObjectType} declarationContentStrings: Content strings for specified declaration
- * @param {number} sectionLatestVersion: latest version for specified section
+ * @param {string} latestVersionNumber: latest version for specified section
  * @returns {Object} contentStrings: Content strings for specified version of declaration
  */
-export const findLatestVersion = (declarationContentStrings: ObjectType, sectionLatestVersion: number) =>
-  declarationContentStrings.VERSIONS.find((contentStrings: ObjectType) => contentStrings.VERSION === sectionLatestVersion);
+export const findLatestVersion = (declarationContentStrings: ObjectType, latestVersionNumber: string) =>
+  declarationContentStrings.VERSIONS.find((contentStrings: ObjectType) => contentStrings.VERSION === latestVersionNumber);
 
 /**
- * getLatestDeclarationVersion
+ * getLatestDeclarationsVersion
  * gets the latest declaration versions for each declaration section
  * populates an object with the content strings for that version
- * @param {String} versionNumber: latest version for declarations
  * @returns {Object} contentStrings for the latest version of declarations
  */
-const getLatestDeclarationVersion = (versionNumber: string) => {
-  const latestDeclarationVersion = VERSIONS.find((VERSION) => VERSION.VERSION_NUMBER === versionNumber);
+const getLatestDeclarationsVersion = () => {
+  // get latest declaration versions
+  const latestDeclarationVersions = VERSIONS[VERSIONS.length - 1];
 
-  if (latestDeclarationVersion) {
-    return {
-      CONFIDENTIALITY: findLatestVersion(CONFIDENTIALITY, latestDeclarationVersion.CONFIDENTIALITY),
-      ANTI_BRIBERY: findLatestVersion(ANTI_BRIBERY, latestDeclarationVersion.ANTI_BRIBERY),
-      ANTI_BRIBERY_CODE_OF_CONDUCT: findLatestVersion(ANTI_BRIBERY_CODE_OF_CONDUCT, latestDeclarationVersion.ANTI_BRIBERY_CODE_OF_CONDUCT),
-      ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: findLatestVersion(
-        ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT,
-        latestDeclarationVersion.ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT,
-      ),
-      CONFIRMATION_AND_ACKNOWLEDGEMENTS: findLatestVersion(CONFIRMATION_AND_ACKNOWLEDGEMENTS, latestDeclarationVersion.CONFIRMATION_AND_ACKNOWLEDGEMENTS),
-      HOW_YOUR_DATA_WILL_BE_USED: findLatestVersion(HOW_YOUR_DATA_WILL_BE_USED, latestDeclarationVersion.HOW_YOUR_DATA_WILL_BE_USED),
-    };
-  }
-
-  console.error('Unable to find latest declaration version');
-
-  throw new Error('Unable to find latest declaration version');
+  return {
+    CONFIDENTIALITY: findLatestVersion(CONFIDENTIALITY, latestDeclarationVersions.CONFIDENTIALITY),
+    ANTI_BRIBERY: findLatestVersion(ANTI_BRIBERY, latestDeclarationVersions.ANTI_BRIBERY),
+    ANTI_BRIBERY_CODE_OF_CONDUCT: findLatestVersion(ANTI_BRIBERY_CODE_OF_CONDUCT, latestDeclarationVersions.ANTI_BRIBERY_CODE_OF_CONDUCT),
+    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: findLatestVersion(
+      ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT,
+      latestDeclarationVersions.ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT,
+    ),
+    CONFIRMATION_AND_ACKNOWLEDGEMENTS: findLatestVersion(CONFIRMATION_AND_ACKNOWLEDGEMENTS, latestDeclarationVersions.CONFIRMATION_AND_ACKNOWLEDGEMENTS),
+    HOW_YOUR_DATA_WILL_BE_USED: findLatestVersion(HOW_YOUR_DATA_WILL_BE_USED, latestDeclarationVersions.HOW_YOUR_DATA_WILL_BE_USED),
+  };
 };
 
-export default getLatestDeclarationVersion;
+export default getLatestDeclarationsVersion;

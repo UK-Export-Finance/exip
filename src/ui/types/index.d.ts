@@ -24,8 +24,8 @@ import {
   ApplicationPolicy,
   ApplicationPolicyContact,
   ApplicationPrivateMarket,
-  ApplicationVersion,
   ApplicationDeclarationVersion,
+  ApplicationVersion,
   ApplicationOwner,
 } from './application';
 import { ApplicationByReferenceNumberVariables } from './application-by-reference-number-variables';
@@ -114,8 +114,8 @@ export {
   ApplicationPolicy,
   ApplicationPolicyContact,
   ApplicationPrivateMarket,
-  ApplicationVersion,
   ApplicationDeclarationVersion,
+  ApplicationVersion,
   ApplicationByReferenceNumberVariables,
   ApolloResponse,
   ApplicationOwner,
