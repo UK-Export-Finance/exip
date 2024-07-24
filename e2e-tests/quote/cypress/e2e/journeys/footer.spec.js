@@ -34,11 +34,14 @@ context('Footer', () => {
     });
 
     it(`renders a ${FOOTER.OGL_LICENCE.LICENCE} link with the correct URL`, () => {
-      footer.supportLinks.license().invoke('text').then((text) => {
-        expect(text.trim()).includes(FOOTER.OGL_LICENCE.INTRO);
-        expect(text.trim()).includes(FOOTER.OGL_LICENCE.LICENCE);
-        expect(text.trim()).includes(FOOTER.OGL_LICENCE.DISCLAIMER);
-      });
+      footer.supportLinks
+        .license()
+        .invoke('text')
+        .then((text) => {
+          expect(text.trim()).includes(FOOTER.OGL_LICENCE.INTRO);
+          expect(text.trim()).includes(FOOTER.OGL_LICENCE.LICENCE);
+          expect(text.trim()).includes(FOOTER.OGL_LICENCE.DISCLAIMER);
+        });
 
       cy.checkLink(footer.supportLinks.licenseLink(), FOOTER.OGL_LICENCE.HREF, FOOTER.OGL_LICENCE.LICENCE);
     });

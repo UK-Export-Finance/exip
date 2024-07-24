@@ -4,14 +4,7 @@ import { SYMBOLS } from '../../../constants';
 import { checkAutocompleteInput } from '../../../shared-test-assertions';
 
 const {
-  AGENT_CHARGES: {
-    METHOD,
-    FIXED_SUM,
-    FIXED_SUM_AMOUNT,
-    PERCENTAGE,
-    PERCENTAGE_CHARGE,
-    COUNTRY_CODE,
-  },
+  AGENT_CHARGES: { METHOD, FIXED_SUM, FIXED_SUM_AMOUNT, PERCENTAGE, PERCENTAGE_CHARGE, COUNTRY_CODE },
 } = FIELD_IDS;
 
 /**

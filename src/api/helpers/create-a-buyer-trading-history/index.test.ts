@@ -1,11 +1,10 @@
 import createABuyerTradingHistory from '.';
 import { Context, Application, ApplicationBuyer } from '../../types';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applicationHelpers from '../../test-helpers/applications';
-import buyerHelpers from '../../test-helpers/buyers';
+import buyerHelpers from '../../test-helpers/buyer';
 import { GBP } from '../../constants';
-
-const invalidId = 'invalid-id';
 
 const assertError = (err) => {
   const errorString = String(err);
@@ -25,7 +24,7 @@ describe('helpers/create-a-buyer-trading-history', () => {
 
     applicationId = application.id;
 
-    buyer = (await buyerHelpers.create({ context, data: {} })) as ApplicationBuyer;
+    buyer = (await buyerHelpers.create(context)) as ApplicationBuyer;
   });
 
   test('it should return a buyer trading history with respective IDs', async () => {
@@ -48,7 +47,7 @@ describe('helpers/create-a-buyer-trading-history', () => {
   describe('when an invalid buyer ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createABuyerTradingHistory(context, invalidId, applicationId);
+        await createABuyerTradingHistory(context, mockInvalidId, applicationId);
       } catch (err) {
         assertError(err);
       }
@@ -58,7 +57,7 @@ describe('helpers/create-a-buyer-trading-history', () => {
   describe('when an invalid application ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createABuyerTradingHistory(context, buyer.id, invalidId);
+        await createABuyerTradingHistory(context, buyer.id, mockInvalidId);
       } catch (err) {
         assertError(err);
       }

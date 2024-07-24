@@ -18,7 +18,7 @@ const createAnAbandonedApplication = (accountId) => {
       /**
        * Create initial company object from mockCompany/fixtures.
        */
-      const { financialYearEndDate, ...companyFields } = mockCompany;
+      const { _financialYearEndDate, ...companyFields } = mockCompany;
       const company = companyFields;
 
       /**

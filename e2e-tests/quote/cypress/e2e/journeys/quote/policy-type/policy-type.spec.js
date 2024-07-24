@@ -1,9 +1,5 @@
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import {
-  completeAndSubmitBuyerBodyForm,
-  completeAndSubmitExporterLocationForm,
-  completeAndSubmitUkContentForm,
-} from '../../../../../../commands/quote/forms';
+import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm, completeAndSubmitUkContentForm } from '../../../../../../commands/quote/forms';
 
 import { policyTypePage } from '../../../../../../pages/quote';
 import { FIELDS, PAGES } from '../../../../../../content-strings';
@@ -14,11 +10,7 @@ const CONTENT_STRINGS = PAGES.QUOTE.POLICY_TYPE;
 const { POLICY_TYPE: FIELD_ID } = FIELD_IDS;
 
 const {
-  QUOTE: {
-    POLICY_TYPE: POLICY_TYPE_ROUTE,
-    UK_GOODS_OR_SERVICES,
-    TELL_US_ABOUT_YOUR_POLICY,
-  },
+  QUOTE: { POLICY_TYPE: POLICY_TYPE_ROUTE, UK_GOODS_OR_SERVICES, TELL_US_ABOUT_YOUR_POLICY },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');

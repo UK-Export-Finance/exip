@@ -2,7 +2,10 @@ import application from '../../fixtures/application';
 import { POLICY as POLICY_FIELD_IDS } from '../../constants/field-ids/insurance/policy';
 import field from '../../pages/shared/field';
 
-const { LOSS_PAYEE_FINANCIAL_UK: { ACCOUNT_NUMBER, SORT_CODE }, FINANCIAL_ADDRESS } = POLICY_FIELD_IDS;
+const {
+  LOSS_PAYEE_FINANCIAL_UK: { ACCOUNT_NUMBER, SORT_CODE },
+  FINANCIAL_ADDRESS,
+} = POLICY_FIELD_IDS;
 
 const { POLICY } = application;
 

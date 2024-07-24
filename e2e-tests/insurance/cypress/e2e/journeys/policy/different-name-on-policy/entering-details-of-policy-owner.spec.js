@@ -1,7 +1,4 @@
-import {
-  summaryList,
-  field as fieldSelector,
-} from '../../../../../../pages/shared';
+import { summaryList, field as fieldSelector } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import mockApplication from '../../../../../../fixtures/application';
@@ -11,22 +8,15 @@ const { POLICY_CONTACT } = mockApplication;
 
 const {
   ROOT: INSURANCE_ROOT,
-  POLICY: {
-    DIFFERENT_NAME_ON_POLICY,
-    CHECK_YOUR_ANSWERS,
-  },
+  POLICY: { DIFFERENT_NAME_ON_POLICY, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const {
   POLICY: {
     NAME_ON_POLICY: { NAME, SAME_NAME },
-    DIFFERENT_NAME_ON_POLICY: {
-      POSITION,
-    },
+    DIFFERENT_NAME_ON_POLICY: { POSITION },
   },
-  ACCOUNT: {
-    FIRST_NAME, LAST_NAME, EMAIL,
-  },
+  ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
 } = INSURANCE_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');

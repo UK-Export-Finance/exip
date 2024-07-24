@@ -4,15 +4,10 @@ import { MAXIMUM_CHARACTERS } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
 
-const {
-  HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
-  PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
-} = FIELD_IDS;
+const { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = FIELD_IDS;
 
 const {
-  INSURANCE: {
-    YOUR_BUYER: ERRORS,
-  },
+  INSURANCE: { YOUR_BUYER: ERRORS },
 } = ERROR_MESSAGES;
 
 const {

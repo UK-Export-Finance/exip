@@ -10,9 +10,7 @@ const { NAME: ALGERIA } = DZA;
  * Assert a country autocomplete field
  * @param {String} fieldId: Country field ID
  */
-export const assertCountryAutocompleteInput = ({
-  fieldId,
-}) => {
+export const assertCountryAutocompleteInput = ({ fieldId }) => {
   const field = autoCompleteField(fieldId);
 
   it('has working client side JS', () => {

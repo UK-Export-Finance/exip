@@ -15,11 +15,7 @@ context('Insurance - Cookies consent - initial/default', () => {
   });
 
   it('should render a link to cookies', () => {
-    cy.checkLink(
-      partials.cookieBanner.cookiesLink(),
-      COOKIES,
-      COOKIES_CONSENT.QUESTION.VIEW_COOKIES,
-    );
+    cy.checkLink(partials.cookieBanner.cookiesLink(), COOKIES, COOKIES_CONSENT.QUESTION.VIEW_COOKIES);
   });
 
   it(`should redirect to ${COOKIES} when clicking cookies link`, () => {
@@ -39,11 +35,7 @@ context('Insurance - Cookies consent - initial/default', () => {
     });
 
     it(`should render 'accepted' banner with link to ${COOKIES}`, () => {
-      cy.checkLink(
-        partials.cookieBanner.cookiesLink(),
-        COOKIES,
-        COOKIES_CONSENT.COOKIES_LINK,
-      );
+      cy.checkLink(partials.cookieBanner.cookiesLink(), COOKIES, COOKIES_CONSENT.COOKIES_LINK);
     });
 
     it(`should redirect to ${COOKIES} when clicking cookies link`, () => {
@@ -64,11 +56,7 @@ context('Insurance - Cookies consent - initial/default', () => {
     });
 
     it(`should render 'rejected' banner with link to ${COOKIES}`, () => {
-      cy.checkLink(
-        partials.cookieBanner.cookiesLink(),
-        COOKIES,
-        COOKIES_CONSENT.COOKIES_LINK,
-      );
+      cy.checkLink(partials.cookieBanner.cookiesLink(), COOKIES, COOKIES_CONSENT.COOKIES_LINK);
     });
 
     it(`should redirect to ${COOKIES} when clicking cookies link`, () => {

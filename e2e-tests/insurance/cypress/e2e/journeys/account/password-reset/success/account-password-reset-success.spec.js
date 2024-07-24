@@ -20,59 +20,58 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Account - Password reset - success page - I want to reset my password, So that I can securely access my digital service account with UKEF', () => {
-  const successUrl = `${baseUrl}${SUCCESS}`;
-  let newPasswordUrl;
+context(
+  'Insurance - Account - Password reset - success page - I want to reset my password, So that I can securely access my digital service account with UKEF',
+  () => {
+    const successUrl = `${baseUrl}${SUCCESS}`;
+    let newPasswordUrl;
 
-  before(() => {
-    cy.deleteAccount();
+    before(() => {
+      cy.deleteAccount();
 
-    cy.completeAndSubmitCreateAccountForm({ navigateToAccountCreationPage: true });
+      cy.completeAndSubmitCreateAccountForm({ navigateToAccountCreationPage: true });
 
-    // navigate to password reset page
-    cy.navigateToUrl(PASSWORD_RESET_ROOT);
+      // navigate to password reset page
+      cy.navigateToUrl(PASSWORD_RESET_ROOT);
 
-    cy.completeAndSubmitPasswordResetForm({});
-  });
-
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  describe(`when visiting ${NEW_PASSWORD} with a token query param`, () => {
-    beforeEach(async () => {
-      // Get an account's password reset token
-      const resetPasswordToken = await api.getAccountPasswordResetToken();
-
-      newPasswordUrl = `${baseUrl}${NEW_PASSWORD}?token=${resetPasswordToken}`;
+      cy.completeAndSubmitPasswordResetForm({});
     });
 
-    describe('when progressing to the password reset success page', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(newPasswordUrl);
+    beforeEach(() => {
+      cy.saveSession();
+    });
 
-        const newPassword = `${account[PASSWORD]}-modified`;
+    describe(`when visiting ${NEW_PASSWORD} with a token query param`, () => {
+      beforeEach(async () => {
+        // Get an account's password reset token
+        const resetPasswordToken = await api.getAccountPasswordResetToken();
 
-        cy.completeAndSubmitNewPasswordAccountForm({ password: newPassword });
-
-        cy.assertUrl(successUrl);
+        newPasswordUrl = `${baseUrl}${NEW_PASSWORD}?token=${resetPasswordToken}`;
       });
 
-      it('renders core page elements and a link button to sign in', () => {
-        cy.corePageChecks({
-          pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-          currentHref: successUrl,
-          assertBackLink: false,
-          assertAuthenticatedHeader: false,
-          hasAForm: false,
+      describe('when progressing to the password reset success page', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(newPasswordUrl);
+
+          const newPassword = `${account[PASSWORD]}-modified`;
+
+          cy.completeAndSubmitNewPasswordAccountForm({ password: newPassword });
+
+          cy.assertUrl(successUrl);
         });
 
-        cy.checkLink(
-          successPage.continueToSignInLinkButton(),
-          SIGN_IN_ROOT,
-          BUTTONS.CONTINUE_TO_SIGN_IN,
-        );
+        it('renders core page elements and a link button to sign in', () => {
+          cy.corePageChecks({
+            pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+            currentHref: successUrl,
+            assertBackLink: false,
+            assertAuthenticatedHeader: false,
+            hasAForm: false,
+          });
+
+          cy.checkLink(successPage.continueToSignInLinkButton(), SIGN_IN_ROOT, BUTTONS.CONTINUE_TO_SIGN_IN);
+        });
       });
     });
-  });
-});
+  },
+);

@@ -4,15 +4,9 @@ import mockApplication from '../../fixtures/application';
 
 const {
   POLICY: {
-    DIFFERENT_NAME_ON_POLICY: {
-      POSITION,
-    },
+    DIFFERENT_NAME_ON_POLICY: { POSITION },
   },
-  ACCOUNT: {
-    FIRST_NAME,
-    LAST_NAME,
-    EMAIL,
-  },
+  ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
 } = INSURANCE_FIELD_IDS;
 
 const { POLICY_CONTACT } = mockApplication;

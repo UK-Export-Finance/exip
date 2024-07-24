@@ -664,6 +664,7 @@ var APPLICATION = {
   DEAL_TYPE: "EXIP",
   SUBMISSION_COUNT_DEFAULT: 0,
   SUBMISSION_DEADLINE_IN_MONTHS: 1,
+  SUBMISSION_DEADLINE_IN_DAYS: 30,
   ALL_SECTIONS_ROUTE: "/all-sections",
   SUBMISSION_DEADLINE_EMAIL: {
     REMINDER_DAYS: 2,
@@ -730,7 +731,7 @@ var COVER_PERIOD = {
 
 // constants/cron/index.ts
 var CRON_DESCRIPTION_ACCOUNT_UPDATE_UNVERIFIED = "Update unverified accounts (over 24hrs) to isInactive";
-var CRON_DESCRIPTION_APPLICATION_UPDATE_INACTIVE = "Update inactive applications (over 30 days) to Abandoned";
+var CRON_DESCRIPTION_APPLICATION_UPDATE_INACTIVE = `Update inactive applications (over ${APPLICATION.SUBMISSION_DEADLINE_IN_DAYS}) to Abandoned`;
 var CRON_DESCRIPTION_APPLICATION_SUBMISSION_DEADLINE_EMAIL = "Email application submission deadline reminder";
 
 // constants/date-format.ts
@@ -5069,17 +5070,102 @@ var delete_application_by_reference_number_default = deleteApplicationByReferenc
 // custom-resolvers/mutations/submit-application/index.ts
 var import_date_fns6 = require("date-fns");
 
-// helpers/get-populated-application/map-policy/index.ts
-var mapPolicy = (policy) => {
-  const { requestedStartDate, contractCompletionDate } = policy;
-  const mappedPolicy = {
-    ...policy,
-    requestedStartDate: requestedStartDate ? new Date(requestedStartDate) : null,
-    contractCompletionDate: contractCompletionDate ? new Date(contractCompletionDate) : null
-  };
-  return mappedPolicy;
+// helpers/get-eligibility-by-id/index.ts
+var getEligibilityById = async (context, id) => {
+  try {
+    console.info(`Getting eligibility by ID ${id}`);
+    const eligibility = await context.db.Eligibility.findOne({
+      where: { id }
+    });
+    return eligibility;
+  } catch (err) {
+    console.error(`Getting eligibility by ID ${id} %O`, err);
+    throw new Error(`Error Getting eligibility by ID ${id} ${err}`);
+  }
 };
-var map_policy_default = mapPolicy;
+var get_eligibility_by_id_default = getEligibilityById;
+
+// helpers/get-cover-period-by-id/index.ts
+var getCoverPeriodById = async (context, id) => {
+  try {
+    console.info(`Getting coverPeriod by ID ${id}`);
+    const coverPeriod = await context.db.CoverPeriod.findOne({
+      where: { id }
+    });
+    return coverPeriod;
+  } catch (err) {
+    console.error(`Getting coverPeriod by ID ${id} %O`, err);
+    throw new Error(`Error Getting coverPeriod by ID ${id} ${err}`);
+  }
+};
+var get_cover_period_by_id_default = getCoverPeriodById;
+
+// helpers/get-total-contract-value-by-id/index.ts
+var getTotalContractValueById = async (context, id) => {
+  try {
+    console.info(`Getting totalContractValue by ID ${id}`);
+    const totalContractValue = await context.db.TotalContractValue.findOne({
+      where: { id }
+    });
+    return totalContractValue;
+  } catch (err) {
+    console.error(`Getting totalContractValue by ID ${id} %O`, err);
+    throw new Error(`Error Getting totalContractValue by ID ${id} ${err}`);
+  }
+};
+var get_total_contract_value_by_id_default = getTotalContractValueById;
+
+// helpers/get-populated-eligibility/index.ts
+var getPopulatedEligibility = async (context, id, buyerCountry) => {
+  try {
+    console.info(`Getting populated eligibility ${id}`);
+    const eligibility = await get_eligibility_by_id_default(context, id);
+    const coverPeriod = await get_cover_period_by_id_default(context, eligibility.coverPeriodId);
+    const totalContractValue = await get_total_contract_value_by_id_default(context, eligibility.totalContractValueId);
+    const populatedEligibility = {
+      ...eligibility,
+      buyerCountry,
+      coverPeriod,
+      totalContractValue
+    };
+    return populatedEligibility;
+  } catch (err) {
+    console.error(`Getting populated eligibility ${id} %O`, err);
+    throw new Error(`Error Getting populated eligibility ${id} ${err}`);
+  }
+};
+var get_populated_eligibility_default = getPopulatedEligibility;
+
+// helpers/get-policy-by-id/index.ts
+var getPolicyById = async (context, id) => {
+  try {
+    console.info(`Getting policy by ID ${id}`);
+    const policy = await context.query.Policy.findOne({
+      where: { id },
+      query: "id policyType requestedStartDate contractCompletionDate totalValueOfContract creditPeriodWithBuyer policyCurrencyCode totalMonthsOfCover totalSalesToBuyer maximumBuyerWillOwe needPreCreditPeriodCover jointlyInsuredParty { id companyName companyNumber countryCode requested }"
+    });
+    return policy;
+  } catch (err) {
+    console.error(`Getting policy by ID ${id} %O`, err);
+    throw new Error(`Error Getting policy by ID ${id} ${err}`);
+  }
+};
+var get_policy_by_id_default = getPolicyById;
+
+// helpers/get-policy-contact-by-id/index.ts
+var getPolicyContactById = async (context, id) => {
+  try {
+    console.info(`Getting policyContact by ID ${id}`);
+    const policyContact = await context.db.PolicyContact.findOne({
+      where: { id }
+    });
+    return policyContact;
+  } catch (err) {
+    console.error(`Getting policyContact by ID ${id} %O`, err);
+    throw new Error(`Error Getting policyContact by ID ${id} ${err}`);
+  }
+};
+var get_policy_contact_by_id_default = getPolicyContactById;
 
 // helpers/encrypt/generate-key/index.ts
 var import_crypto9 = __toESM(require("crypto"));
@@ -5238,225 +5324,427 @@ var getNominatedLossPayee = async (context, lossPayeeId, decryptFinancialUk2, de
 };
 var nominated_loss_payee_default = getNominatedLossPayee;
 
+// helpers/get-export-contract-by-id/index.ts
+var getExportContractById = async (context, id) => {
+  try {
+    console.info(`Getting exportContract by ID ${id}`);
+    const exportContract = await context.db.ExportContract.findOne({
+      where: { id }
+    });
+    return exportContract;
+  } catch (err) {
+    console.error(`Getting exportContract by ID ${id} %O`, err);
+    throw new Error(`Error Getting exportContract by ID ${id} ${err}`);
+  }
+};
+var get_export_contract_by_id_default = getExportContractById;
+
+// helpers/get-export-contract-agent-by-id/index.ts
+var getExportContractAgentById = async (context, id) => {
+  try {
+    console.info(`Getting exportContractAgent by ID ${id}`);
+    const exportContractAgent = await context.db.ExportContractAgent.findOne({
+      where: { id }
+    });
+    return exportContractAgent;
+  } catch (err) {
+    console.error(`Getting exportContractAgent by ID ${id} %O`, err);
+    throw new Error(`Error Getting exportContractAgent by ID ${id} ${err}`);
+  }
+};
+var get_export_contract_agent_by_id_default = getExportContractAgentById;
+
+// helpers/get-export-contract-agent-service-by-id/index.ts
+var getExportContractAgentServiceById = async (context, id) => {
+  try {
+    console.info(`Getting exportContractAgentService by ID ${id}`);
+    const exportContractAgentService = await context.db.ExportContractAgentService.findOne({
+      where: { id }
+    });
+    return exportContractAgentService;
+  } catch (err) {
+    console.error(`Getting exportContractAgentService by ID ${id} %O`, err);
+    throw new Error(`Error Getting exportContractAgentService by ID ${id} ${err}`);
+  }
+};
+var get_export_contract_agent_service_by_id_default = getExportContractAgentServiceById;
+
+// helpers/get-export-contract-agent-service-charge-by-id/index.ts
+var getExportContractAgentServiceChargeById = async (context, id) => {
+  try {
+    console.info(`Getting exportContractAgentServiceCharge by ID ${id}`);
+    const exportContractAgentServiceCharge = await context.db.ExportContractAgentServiceCharge.findOne({
+      where: { id }
+    });
+    return exportContractAgentServiceCharge;
+  } catch (err) {
+    console.error(`Getting exportContractAgentServiceCharge by ID ${id} %O`, err);
+    throw new Error(`Error Getting exportContractAgentServiceCharge by ID ${id} ${err}`);
+  }
+};
+var get_export_contract_agent_service_charge_by_id_default = getExportContractAgentServiceChargeById;
+
+// helpers/get-populated-export-contract/get-populated-agent/index.ts
+var getPopulatedAgent = async (context, id) => {
+  try {
+    console.info(`Getting populated exportContract agent ${id}`);
+    const exportContractAgent = await get_export_contract_agent_by_id_default(context, id);
+    const exportContractAgentService = await get_export_contract_agent_service_by_id_default(context, exportContractAgent.serviceId);
+    const exportContractAgentServiceCharge = await get_export_contract_agent_service_charge_by_id_default(context, exportContractAgentService.chargeId);
+    const populatedAgent = {
+      ...exportContractAgent,
+      service: {
+        ...exportContractAgentService,
+        charge: exportContractAgentServiceCharge
+      }
+    };
+    return populatedAgent;
+  } catch (err) {
+    console.error(`Getting populated exportContract agent ${id} %O`, err);
+    throw new Error(`Error Getting populated exportContract agent ${id} ${err}`);
+  }
+};
+var get_populated_agent_default = getPopulatedAgent;
+
+// helpers/get-private-market-by-id/index.ts
+var getPrivateMarketById = async (context, id) => {
+  try {
+    console.info(`Getting privateMarket by ID ${id}`);
+    const privateMarket = await context.db.PrivateMarket.findOne({
+      where: { id }
+    });
+    return privateMarket;
+  } catch (err) {
+    console.error(`Getting privateMarket by ID ${id} %O`, err);
+    throw new Error(`Error Getting privateMarket by ID ${id} ${err}`);
+  }
+};
+var get_private_market_by_id_default = getPrivateMarketById;
+
+// helpers/get-populated-export-contract/index.ts
+var getPopulatedExportContract = async (context, id) => {
+  try {
+    console.info(`Getting populated exportContract ${id}`);
+    const exportContract = await get_export_contract_by_id_default(context, id);
+    const exportContractAgent = await get_populated_agent_default(context, exportContract.agentId);
+    const privateMarket = await get_private_market_by_id_default(context, exportContract.privateMarketId);
+    const finalDestinationCountry = await get_country_by_field_default(context, "isoCode", exportContract.finalDestinationCountryCode);
+    const populatedExportContract = {
+      ...exportContract,
+      agent: exportContractAgent,
+      finalDestinationCountry,
+      privateMarket
+    };
+    return populatedExportContract;
+  } catch (err) {
+    console.error(`Getting populated exportContract ${id} %O`, err);
+    throw new Error(`Error Getting populated exportContract ${id} ${err}`);
+  }
+};
+var get_populated_export_contract_default = getPopulatedExportContract;
+
+// helpers/get-company-by-id/index.ts
+var getCompanyById = async (context, id) => {
+  try {
+    console.info(`Getting company by ID ${id}`);
+    const company = await context.db.Company.findOne({
+      where: { id }
+    });
+    return company;
+  } catch (err) {
+    console.error(`Getting company by ID ${id} %O`, err);
+    throw new Error(`Error Getting company by ID ${id} ${err}`);
+  }
+};
+var get_company_by_id_default = getCompanyById;
+
+// helpers/get-company-address-by-id/index.ts
+var getCompanyAddressById = async (context, id) => {
+  try {
+    console.info(`Getting company address by ID ${id}`);
+    const companyAddress = await context.db.CompanyAddress.findOne({
+      where: { id }
+    });
+    return companyAddress;
+  } catch (err) {
+    console.error(`Getting company address by ID ${id} %O`, err);
+    throw new Error(`Error Getting company address by ID ${id} ${err}`);
+  }
+};
+var get_company_address_by_id_default = getCompanyAddressById;
+
+// helpers/get-company-sic-codes-by-company-id/index.ts
+var getCompanySicCodesByCompanyId = async (context, id) => {
+  try {
+    console.info(`Getting company SIC codes by company ID ${id}`);
+    const companySicCodes = await context.db.CompanySicCode.findMany({
+      where: {
+        company: {
+          id: { equals: id }
+        }
+      }
+    });
+    return companySicCodes;
+  } catch (err) {
+    console.error(`Getting company SIC codes by company ID ${id} %O`, err);
+    throw new Error(`Error Getting company SIC codes by company ID ${id} ${err}`);
+  }
+};
+var get_company_sic_codes_by_company_id_default = getCompanySicCodesByCompanyId;
+
+// helpers/get-company-different-trading-address-by-id/index.ts
+var getCompanyDifferentTradingAddressById = async (context, id) => {
+  try {
+    console.info(`Getting company different trading address by ID ${id}`);
+    const differentTradingAddress = await context.db.CompanyDifferentTradingAddress.findOne({
+      where: { id }
+    });
+    return differentTradingAddress;
+  } catch (err) {
+    console.error(`Getting company different trading address by ID ${id} %O`, err);
+    throw new Error(`Error Getting company different trading address by ID ${id} ${err}`);
+  }
+};
+var get_company_different_trading_address_by_id_default = getCompanyDifferentTradingAddressById;
+
+// helpers/get-populated-company/index.ts
+var getPopulatedCompany = async (context, id) => {
+  try {
+    console.info(`Getting populated company ${id}`);
+    const company = await get_company_by_id_default(context, id);
+    const companyAddress = await get_company_address_by_id_default(context, company.registeredOfficeAddressId);
+    const companySicCodes = await get_company_sic_codes_by_company_id_default(context, company.id);
+    const differentTradingAddress = await get_company_different_trading_address_by_id_default(context, company.differentTradingAddressId);
+    const populatedCompany = {
+      ...company,
+      companySicCodes,
+      registeredOfficeAddress: companyAddress,
+      differentTradingAddress
+    };
+    return populatedCompany;
+  } catch (err) {
+    console.error(`Getting populated company ${id} %O`, err);
+    throw new Error(`Error Getting populated company ${id} ${err}`);
+  }
+};
+var get_populated_company_default = getPopulatedCompany;
+
+// helpers/get-business-by-id/index.ts
+var getBusinessById = async (context, id) => {
+  try {
+    console.info(`Getting business by ID ${id}`);
+    const business = await context.db.Business.findOne({
+      where: { id }
+    });
+    return business;
+  } catch (err) {
+    console.error(`Getting business by ID ${id} %O`, err);
+    throw new Error(`Error Getting business by ID ${id} ${err}`);
+  }
+};
+var get_business_by_id_default = getBusinessById;
+
+// helpers/get-broker-by-id/index.ts
+var getBrokerById = async (context, id) => {
+  try {
+    console.info(`Getting broker by ID ${id}`);
+    const broker = await context.db.Broker.findOne({
+      where: { id }
+    });
+    return broker;
+  } catch (err) {
+    console.error(`Getting broker by ID ${id} %O`, err);
+    throw new Error(`Error Getting broker by ID ${id} ${err}`);
+  }
+};
+var get_broker_by_id_default = getBrokerById;
+
+// helpers/get-buyer-by-id/index.ts
+var getBuyerById = async (context, id) => {
+  try {
+    console.info(`Getting buyer by ID ${id}`);
+    const buyer = await context.db.Buyer.findOne({
+      where: { id }
+    });
+    return buyer;
+  } catch (err) {
+    console.error(`Getting buyer by ID ${id} %O`, err);
+    throw new Error(`Error Getting buyer by ID ${id} ${err}`);
+  }
+};
+var get_buyer_by_id_default = getBuyerById;
+
+// helpers/get-country-by-id/index.ts
+var getCountryById = async (context, id) => {
+  try {
+    console.info(`Getting country by ID ${id}`);
+    const country = await context.db.Country.findOne({
+      where: { id }
+    });
+    return country;
+  } catch (err) {
+    console.error(`Getting country by ID ${id} %O`, err);
+    throw new Error(`Error Getting country by ID ${id} ${err}`);
+  }
+};
+var get_country_by_id_default = getCountryById;
+
+// helpers/get-buyer-relationship-by-id/index.ts
+var getBuyerRelationshipById = async (context, id) => {
+  try {
+    console.info(`Getting buyer relationship by ID ${id}`);
+    const buyerRelationship = await context.db.BuyerRelationship.findOne({
+      where: { id }
+    });
+    return buyerRelationship;
+  } catch (err) {
+    console.error(`Getting buyer relationship by ID ${id} %O`, err);
+    throw new Error(`Error Getting buyer relationship by ID ${id} ${err}`);
+  }
+};
+var get_buyer_relationship_by_id_default = getBuyerRelationshipById;
+
+// helpers/get-buyer-trading-history-by-id/index.ts
+var getBuyerTradingHistoryById = async (context, id) => {
+  try {
+    console.info(`Getting buyer trading history by ID ${id}`);
+    const buyerTradingHistory = await context.db.BuyerTradingHistory.findOne({
+      where: { id }
+    });
+    return buyerTradingHistory;
+  } catch (err) {
+    console.error(`Getting buyer trading history by ID ${id} %O`, err);
+    throw new Error(`Error Getting buyer trading history by ID ${id} ${err}`);
+  }
+};
+var get_buyer_trading_history_by_id_default = getBuyerTradingHistoryById;
+
+// helpers/get-populated-buyer/index.ts
+var getPopulatedBuyer = async (context, id) => {
+  try {
+    console.info(`Getting populated buyer ${id}`);
+    const buyer = await get_buyer_by_id_default(context, id);
+    const buyerCountry = await get_country_by_id_default(context, buyer.countryId);
+    const buyerRelationship = await get_buyer_relationship_by_id_default(context, buyer.relationshipId);
+    const buyerTradingHistory = await get_buyer_trading_history_by_id_default(context, buyer.buyerTradingHistoryId);
+    const populatedBuyer = {
+      ...buyer,
+      country: buyerCountry,
+      relationship: buyerRelationship,
+      buyerTradingHistory
+    };
+    return populatedBuyer;
+  } catch (err) {
+    console.error(`Getting populated buyer ${id} %O`, err);
+    throw new Error(`Error Getting populated buyer ${id} ${err}`);
+  }
+};
+var get_populated_buyer_default = getPopulatedBuyer;
+
+// helpers/get-declaration-by-id/index.ts
+var getDeclarationById = async (context, id) => {
+  try {
+    console.info(`Getting declaration by ID ${id}`);
+    const declaration = await context.db.Declaration.findOne({
+      where: { id }
+    });
+    return declaration;
+  } catch (err) {
+    console.error(`Getting declaration by ID ${id} %O`, err);
+    throw new Error(`Error Getting declaration by ID ${id} ${err}`);
+  }
+};
+var get_declaration_by_id_default = getDeclarationById;
+
+// helpers/get-section-review-by-id/index.ts
+var getSectionReviewById = async (context, id) => {
+  try {
+    console.info(`Getting sectionReview by ID ${id}`);
+    const sectionReview = await context.db.SectionReview.findOne({
+      where: { id }
+    });
+    return sectionReview;
+  } catch (err) {
+    console.error(`Getting sectionReview by ID ${id} %O`, err);
+    throw new Error(`Error Getting sectionReview by ID ${id} ${err}`);
+  }
+};
+var get_section_review_by_id_default = getSectionReviewById;
+
 // helpers/map-total-contract-value-over-threshold/index.ts
 var mapTotalContractValueOverThreshold = (eligibility) => eligibility.totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
 var map_total_contract_value_over_threshold_default = mapTotalContractValueOverThreshold;
 
+// helpers/get-populated-application/map-policy/index.ts
+var mapPolicy = (policy) => {
+  const { requestedStartDate, contractCompletionDate } = policy;
+  const mappedPolicy = {
+    ...policy,
+    requestedStartDate: requestedStartDate ? new Date(requestedStartDate) : null,
+    contractCompletionDate: contractCompletionDate ? new Date(contractCompletionDate) : null
+  };
+  return mappedPolicy;
+};
+var map_policy_default = mapPolicy;
+
 // helpers/get-populated-application/index.ts
-var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
 var getPopulatedApplication = async ({
   context,
   application: application2,
   decryptFinancialUk: decryptFinancialUk2 = false,
   decryptFinancialInternational: decryptFinancialInternational2 = false
 }) => {
-  console.info(`Getting populated application (helper) ${application2.id}`);
-  const {
-    eligibilityId,
-    ownerId,
-    policyId,
-    policyContactId,
-    exportContractId,
-    companyId,
-    businessId,
-    brokerId,
-    buyerId,
-    declarationId,
-    nominatedLossPayeeId,
-    sectionReviewId
-  } = application2;
-  const eligibility = await context.db.Eligibility.findOne({
-    where: { id: eligibilityId }
-  });
-  if (!eligibility) {
-    throw new Error(generateErrorMessage("eligibility", application2.id));
+  try {
+    console.info(`Getting populated application (helper) ${application2.id}`);
+    const {
+      eligibilityId,
+      ownerId,
+      policyId,
+      policyContactId,
+      exportContractId,
+      companyId,
+      businessId,
+      brokerId,
+      buyerId,
+      declarationId,
+      nominatedLossPayeeId,
+      sectionReviewId
+    } = application2;
+    const populatedBuyer = await get_populated_buyer_default(context, buyerId);
+    const populatedEligibility = await get_populated_eligibility_default(context, eligibilityId, populatedBuyer.country);
+    const account2 = await get_account_by_id_default(context, ownerId);
+    const policy = await get_policy_by_id_default(context, policyId);
+    const policyContact = await get_policy_contact_by_id_default(context, policyContactId);
+    const nominatedLossPayee = await nominated_loss_payee_default(context, nominatedLossPayeeId, decryptFinancialUk2, decryptFinancialInternational2);
+    const populatedExportContract = await get_populated_export_contract_default(context, exportContractId);
+    const { companySicCodes, ...populatedCompany } = await get_populated_company_default(context, companyId);
+    const business = await get_business_by_id_default(context, businessId);
+    const broker = await get_broker_by_id_default(context, brokerId);
+    const declaration = await get_declaration_by_id_default(context, declarationId);
+    const sectionReview = await get_section_review_by_id_default(context, sectionReviewId);
+    const totalContractValueOverThreshold = map_total_contract_value_over_threshold_default(populatedEligibility);
+    const populatedApplication2 = {
+      ...application2,
+      eligibility: populatedEligibility,
+      broker,
+      business,
+      buyer: populatedBuyer,
+      company: populatedCompany,
+      companySicCodes,
+      declaration,
+      exportContract: populatedExportContract,
+      owner: account2,
+      policy: map_policy_default(policy),
+      policyContact,
+      nominatedLossPayee,
+      sectionReview,
+      totalContractValueOverThreshold
+    };
+    return populatedApplication2;
+  } catch (err) {
+    console.error(`Getting populated application (helper) ${application2.id} %O`, err);
+    throw new Error(`Error Getting populated application (helper) ${application2.id} ${err}`);
   }
-  const coverPeriod = await context.db.CoverPeriod.findOne({
-    where: { id: eligibility.coverPeriodId }
-  });
-  if (!coverPeriod) {
-    throw new Error(generateErrorMessage("coverPeriod", application2.id));
-  }
-  const totalContractValue = await context.db.TotalContractValue.findOne({
-    where: { id: eligibility.totalContractValueId }
-  });
-  if (!totalContractValue) {
-    throw new Error(generateErrorMessage("totalContractValue", application2.id));
-  }
-  const account2 = await get_account_by_id_default(context, ownerId);
-  if (!account2) {
-    throw new Error(generateErrorMessage("account", application2.id));
-  }
-  const policy = await context.query.Policy.findOne({
-    where: { id: policyId },
-    query: "id policyType requestedStartDate contractCompletionDate totalValueOfContract creditPeriodWithBuyer policyCurrencyCode totalMonthsOfCover totalSalesToBuyer maximumBuyerWillOwe needPreCreditPeriodCover jointlyInsuredParty { id companyName companyNumber countryCode requested }"
-  });
-  if (!policy) {
-    throw new Error(generateErrorMessage("policy", application2.id));
-  }
-  const policyContact = await context.db.PolicyContact.findOne({
-    where: { id: policyContactId }
-  });
-  if (!policyContact) {
-    throw new Error(generateErrorMessage("policyContact", application2.id));
-  }
-  const nominatedLossPayee = await nominated_loss_payee_default(context, nominatedLossPayeeId, decryptFinancialUk2, decryptFinancialInternational2);
-  const populatedPolicy = map_policy_default(policy);
-  const exportContract = await context.db.ExportContract.findOne({
-    where: { id: exportContractId }
-  });
-  if (!exportContract) {
-    throw new Error(generateErrorMessage("exportContract", application2.id));
-  }
-  const exportContractAgent = await context.db.ExportContractAgent.findOne({
-    where: { id: exportContract.agentId }
-  });
-  if (!exportContractAgent) {
-    throw new Error(generateErrorMessage("exportContractAgent", application2.id));
-  }
-  const exportContractAgentService = await context.db.ExportContractAgentService.findOne({
-    where: { id: exportContractAgent.serviceId }
-  });
-  if (!exportContractAgentService) {
-    throw new Error(generateErrorMessage("exportContractAgentService", application2.id));
-  }
-  const exportContractAgentServiceCharge = await context.db.ExportContractAgentServiceCharge.findOne({
-    where: { id: exportContractAgentService.chargeId }
-  });
-  if (!exportContractAgentServiceCharge) {
-    throw new Error(generateErrorMessage("exportContractAgentServiceCharge", application2.id));
-  }
-  const privateMarket = await context.db.PrivateMarket.findOne({
-    where: { id: exportContract.privateMarketId }
-  });
-  if (!privateMarket) {
-    throw new Error(generateErrorMessage("privateMarket", application2.id));
-  }
-  const finalDestinationCountry = await get_country_by_field_default(context, "isoCode", exportContract.finalDestinationCountryCode);
-  const populatedExportContract = {
-    ...exportContract,
-    agent: {
-      ...exportContractAgent,
-      service: {
-        ...exportContractAgentService,
-        charge: exportContractAgentServiceCharge
-      }
-    },
-    finalDestinationCountry,
-    privateMarket
-  };
-  const company = await context.db.Company.findOne({
-    where: { id: companyId }
-  });
-  if (!company) {
-    throw new Error(generateErrorMessage("company", application2.id));
-  }
-  const companySicCodes = await context.db.CompanySicCode.findMany({
-    where: {
-      company: {
-        id: { equals: company.id }
-      }
-    }
-  });
-  if (!company) {
-    throw new Error(generateErrorMessage("companySicCode", application2.id));
-  }
-  const companyAddress = await context.db.CompanyAddress.findOne({
-    where: { id: company.registeredOfficeAddressId }
-  });
-  if (!companyAddress) {
-    throw new Error(generateErrorMessage("companyAddress", application2.id));
-  }
-  const differentTradingAddress = await context.db.CompanyDifferentTradingAddress.findOne({
-    where: { id: company.differentTradingAddressId }
-  });
-  if (!differentTradingAddress) {
-    throw new Error(generateErrorMessage("differentTradingAddress", application2.id));
-  }
-  const populatedCompany = {
-    ...company,
-    registeredOfficeAddress: companyAddress,
-    differentTradingAddress
-  };
-  const business = await context.db.Business.findOne({
-    where: { id: businessId }
-  });
-  if (!business) {
-    throw new Error(generateErrorMessage("business", application2.id));
-  }
-  const broker = await context.db.Broker.findOne({
-    where: { id: brokerId }
-  });
-  if (!broker) {
-    throw new Error(generateErrorMessage("broker", application2.id));
-  }
-  const buyer = await context.db.Buyer.findOne({
-    where: { id: buyerId }
-  });
-  if (!buyer) {
-    throw new Error(generateErrorMessage("buyer", application2.id));
-  }
-  const buyerRelationship = await context.db.BuyerRelationship.findOne({
-    where: { id: buyer.relationshipId }
-  });
-  if (!buyerRelationship) {
-    throw new Error(generateErrorMessage("buyerRelationship", application2.id));
-  }
-  const buyerTradingHistory = await context.db.BuyerTradingHistory.findOne({
-    where: { id: buyer.buyerTradingHistoryId }
-  });
-  if (!buyerTradingHistory) {
-    throw new Error(generateErrorMessage("buyerTradingHistory", application2.id));
-  }
-  const buyerCountry = await context.db.Country.findOne({
-    where: { id: buyer.countryId }
-  });
-  if (!buyerCountry) {
-    throw new Error(generateErrorMessage("populated buyer", application2.id));
-  }
-  const populatedEligibility = {
-    ...eligibility,
-    buyerCountry,
-    coverPeriod,
-    totalContractValue
-  };
-  const populatedBuyer = {
-    ...buyer,
-    country: buyerCountry,
-    relationship: buyerRelationship,
-    buyerTradingHistory
-  };
-  const declaration = await context.db.Declaration.findOne({
-    where: { id: declarationId }
-  });
-  if (!declaration) {
-    throw new Error(generateErrorMessage("declaration", application2.id));
-  }
-  const sectionReview = await context.db.SectionReview.findOne({
-    where: { id: sectionReviewId }
-  });
-  if (!sectionReview) {
-    throw new Error(generateErrorMessage("sectionReview", application2.id));
-  }
-  const totalContractValueOverThreshold = map_total_contract_value_over_threshold_default(populatedEligibility);
-  const populatedApplication2 = {
-    ...application2,
-    eligibility: populatedEligibility,
-    broker,
-    business,
-    buyer: populatedBuyer,
-    company: populatedCompany,
-    companySicCodes,
-    declaration,
-    exportContract: populatedExportContract,
-    owner: account2,
-    policy: populatedPolicy,
-    policyContact,
-    nominatedLossPayee,
-    sectionReview,
-    totalContractValueOverThreshold
-  };
-  return populatedApplication2;
 };
 var populatedApplication = {
   get: getPopulatedApplication

@@ -1,10 +1,6 @@
 import { TASKS } from '../../content-strings';
 
-const {
-  INITIAL_CHECKS,
-  PREPARE_APPLICATION,
-  SUBMIT_APPLICATION,
-} = TASKS.LIST;
+const { INITIAL_CHECKS, PREPARE_APPLICATION, SUBMIT_APPLICATION } = TASKS.LIST;
 
 const taskList = {
   initialChecks: {

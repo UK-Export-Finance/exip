@@ -30,7 +30,7 @@ describe('custom-resolvers/update-company-post-data-migration', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    company = await companyHelpers.createCompany({ context });
+    company = await companyHelpers.createCompany(context);
 
     companyAddress = await context.db.CompanyAddress.createOne({
       data: {
@@ -64,11 +64,7 @@ describe('custom-resolvers/update-company-post-data-migration', () => {
   });
 
   it('should successfully update company data', async () => {
-    const updatedCompany = await context.db.Company.findOne({
-      where: {
-        id: company.id,
-      },
-    });
+    const updatedCompany = await companyHelpers.getCompany(context, company.id);
 
     expect(updatedCompany.companyName).toEqual(mockCompany.companyName);
     expect(updatedCompany.companyNumber).toEqual(mockCompany.companyNumber);

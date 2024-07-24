@@ -2,9 +2,7 @@ import { field } from '../../../pages/shared';
 import { YOUR_BUYER as FIELD_IDS } from '../../../constants/field-ids/insurance/your-buyer';
 import application from '../../../fixtures/application';
 
-const {
-  CONNECTION_WITH_BUYER_DESCRIPTION,
-} = FIELD_IDS;
+const { CONNECTION_WITH_BUYER_DESCRIPTION } = FIELD_IDS;
 
 /**
  * assertConnectionWithBuyerFieldValues

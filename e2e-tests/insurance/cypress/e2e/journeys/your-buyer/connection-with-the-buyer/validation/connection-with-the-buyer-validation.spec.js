@@ -4,15 +4,10 @@ import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
 
-const {
-  CONNECTION_WITH_BUYER,
-  CONNECTION_WITH_BUYER_DESCRIPTION,
-} = FIELD_IDS;
+const { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION } = FIELD_IDS;
 
 const {
-  INSURANCE: {
-    YOUR_BUYER: ERRORS,
-  },
+  INSURANCE: { YOUR_BUYER: ERRORS },
 } = ERROR_MESSAGES;
 
 const {

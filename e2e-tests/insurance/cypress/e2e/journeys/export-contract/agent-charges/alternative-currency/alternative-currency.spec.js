@@ -12,83 +12,86 @@ const {
   EXPORT_CONTRACT: { AGENT_CHARGES_ALTERNATIVE_CURRENCY, AGENT_CHARGES },
 } = INSURANCE_ROUTES;
 
-const { CURRENCY: { CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
+const {
+  CURRENCY: { CURRENCY_CODE },
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
-    EXPORT_CONTRACT: {
-      AGENT_CHARGES_ALTERNATIVE_CURRENCY: CURRENCY_ERROR_MESSAGES,
-    },
+    EXPORT_CONTRACT: { AGENT_CHARGES_ALTERNATIVE_CURRENCY: CURRENCY_ERROR_MESSAGES },
   },
 } = ERROR_MESSAGES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context("Insurance - Export contract - Agent charges - Alternative currency page - As an Exporter, I want to be able to choose another currency to report my agent's fees in, So that I can provide accurate information regarding any fees I have incurred in winning my export contract", () => {
-  let referenceNumber;
-  let url;
+context(
+  "Insurance - Export contract - Agent charges - Alternative currency page - As an Exporter, I want to be able to choose another currency to report my agent's fees in, So that I can provide accurate information regarding any fees I have incurred in winning my export contract",
+  () => {
+    let referenceNumber;
+    let url;
 
-  before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-      // go to the page we want to test.
-      cy.startInsuranceExportContractSection({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm({});
-      cy.completeAndSubmitHowYouWillGetPaidForm({});
-      cy.completeAndSubmitAgentForm({ isUsingAgent: true });
-      cy.completeAndSubmitAgentDetailsForm({});
-      cy.completeAndSubmitAgentServiceForm({ agentIsCharging: true });
-      cy.completeAgentChargesForm({ fixedSumMethod: true });
+        // go to the page we want to test.
+        cy.startInsuranceExportContractSection({});
+        cy.completeAndSubmitAboutGoodsOrServicesForm({});
+        cy.completeAndSubmitHowYouWillGetPaidForm({});
+        cy.completeAndSubmitAgentForm({ isUsingAgent: true });
+        cy.completeAndSubmitAgentDetailsForm({});
+        cy.completeAndSubmitAgentServiceForm({ agentIsCharging: true });
+        cy.completeAgentChargesForm({ fixedSumMethod: true });
 
-      cy.clickProvideAlternativeCurrencyLink();
+        cy.clickProvideAlternativeCurrencyLink();
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`;
+        url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`;
+      });
     });
-  });
 
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
-
-  it('renders core page elements', () => {
-    cy.corePageChecks({
-      pageTitle: FIELDS.AGENT_CHARGES[CURRENCY_CODE].LEGEND,
-      currentHref: `${ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`,
-      backLink: `${ROOT}/${referenceNumber}${AGENT_CHARGES}`,
-      submitButtonCopy: BUTTONS.CONFIRM,
-    });
-  });
-
-  describe('page tests', () => {
     beforeEach(() => {
-      cy.navigateToUrl(url);
+      cy.saveSession();
     });
 
-    it('renders a heading caption', () => {
-      cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
-    });
-  });
-
-  describe('currency form fields', () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
+    after(() => {
+      cy.deleteApplication(referenceNumber);
     });
 
-    const { rendering, formSubmission } = assertCurrencyFormFields({
-      gbpCurrencyCheckedByDefault: true,
-      errors: CURRENCY_ERROR_MESSAGES,
+    it('renders core page elements', () => {
+      cy.corePageChecks({
+        pageTitle: FIELDS.AGENT_CHARGES[CURRENCY_CODE].LEGEND,
+        currentHref: `${ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`,
+        backLink: `${ROOT}/${referenceNumber}${AGENT_CHARGES}`,
+        submitButtonCopy: BUTTONS.CONFIRM,
+      });
     });
 
-    rendering();
+    describe('page tests', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
 
-    formSubmission().selectAltRadioButNoAltCurrency({});
+      it('renders a heading caption', () => {
+        cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+      });
+    });
 
-    formSubmission().submitASupportedCurrency({ url: AGENT_CHARGES });
-    formSubmission().submitAlternativeCurrency({ url: AGENT_CHARGES });
-  });
-});
+    describe('currency form fields', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
+      const { rendering, formSubmission } = assertCurrencyFormFields({
+        gbpCurrencyCheckedByDefault: true,
+        errors: CURRENCY_ERROR_MESSAGES,
+      });
+
+      rendering();
+
+      formSubmission().selectAltRadioButNoAltCurrency({});
+
+      formSubmission().submitASupportedCurrency({ url: AGENT_CHARGES });
+      formSubmission().submitAlternativeCurrency({ url: AGENT_CHARGES });
+    });
+  },
+);

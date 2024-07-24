@@ -8,7 +8,7 @@ const { ROOT, ALL_SECTIONS, NO_ACCESS_TO_APPLICATION } = INSURANCE_ROUTES;
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  'Insurance - no access to application page - Abandoned application - to ensure that the system should automatically marks applications as abandoned where the application has not been submitted 30 days after it was started',
+  `Insurance - no access to application page - Abandoned application - to ensure that the system should automatically marks applications as abandoned where the application has not been submitted ${APPLICATION.SUBMISSION_DEADLINE_IN_DAYS} days after it was started`,
   () => {
     let refNumber;
     let allSectionsUrl;

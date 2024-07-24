@@ -7,10 +7,7 @@ import api from '../../../../../../../commands/api';
 
 const {
   ACCOUNT: {
-    SUSPENDED: {
-      VERIFY_EMAIL,
-      VERIFY_EMAIL_EXPIRED_LINK,
-    },
+    SUSPENDED: { VERIFY_EMAIL, VERIFY_EMAIL_EXPIRED_LINK },
   },
 } = INSURANCE_ROUTES;
 
@@ -76,10 +73,7 @@ context('Insurance - Account - Suspended - Verify email - Visit with an expired 
         submitButtonCopy: BUTTONS.REACTIVATE_ACCOUNT,
       });
 
-      cy.checkText(
-        body(),
-        CONTENT_STRINGS.BODY,
-      );
+      cy.checkText(body(), CONTENT_STRINGS.BODY);
     });
   });
 });

@@ -1,8 +1,4 @@
-import {
-  radios,
-  field as fieldSelector,
-  headingCaption,
-} from '../../../../../../pages/shared';
+import { radios, field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { APPLICATION } from '../../../../../../constants';
@@ -16,11 +12,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY;
 const {
   ROOT: INSURANCE_ROOT,
   ALL_SECTIONS,
-  POLICY: {
-    TYPE_OF_POLICY,
-    MULTIPLE_CONTRACT_POLICY,
-    MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
-  },
+  POLICY: { TYPE_OF_POLICY, MULTIPLE_CONTRACT_POLICY, MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE },
 } = INSURANCE_ROUTES;
 
 const { CONTRACT_POLICY } = FIELDS;
@@ -38,9 +30,7 @@ const {
 
 const {
   INSURANCE: {
-    POLICY: {
-      CONTRACT_POLICY: CONTRACT_ERROR_MESSAGES,
-    },
+    POLICY: { CONTRACT_POLICY: CONTRACT_ERROR_MESSAGES },
   },
 } = ERROR_MESSAGES;
 

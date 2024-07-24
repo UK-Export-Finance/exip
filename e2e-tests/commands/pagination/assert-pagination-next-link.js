@@ -11,11 +11,7 @@ const { DASHBOARD_PAGE } = INSURANCE_ROUTES;
  * @param {Integer} Expected page number
  */
 const assertPaginationNextLink = (pageNumber) => {
-  checkLink(
-    pagination.nextLink(),
-    `${DASHBOARD_PAGE}/${pageNumber}`,
-    BUTTONS.NEXT,
-  );
+  checkLink(pagination.nextLink(), `${DASHBOARD_PAGE}/${pageNumber}`, BUTTONS.NEXT);
 };
 
 export default assertPaginationNextLink;

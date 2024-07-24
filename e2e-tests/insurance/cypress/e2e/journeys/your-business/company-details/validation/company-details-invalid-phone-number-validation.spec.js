@@ -6,10 +6,7 @@ import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insuranc
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: {
-      PHONE_NUMBER,
-      WEBSITE,
-    },
+    YOUR_COMPANY: { PHONE_NUMBER, WEBSITE },
   },
 } = INSURANCE_FIELD_IDS;
 

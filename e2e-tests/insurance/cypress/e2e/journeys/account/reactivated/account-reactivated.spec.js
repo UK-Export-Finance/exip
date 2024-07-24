@@ -8,9 +8,7 @@ const {
   ACCOUNT: {
     SUSPENDED: { VERIFY_EMAIL },
     REACTIVATED_ROOT,
-    SIGN_IN: {
-      ROOT: SIGN_IN_ROOT,
-    },
+    SIGN_IN: { ROOT: SIGN_IN_ROOT },
   },
 } = ROUTES;
 
@@ -57,16 +55,9 @@ context('Insurance - Account - Reactivated page', () => {
         hasAForm: false,
       });
 
-      cy.checkText(
-        reactivatedPage.thankYou(),
-        CONTENT_STRINGS.THANK_YOU,
-      );
+      cy.checkText(reactivatedPage.thankYou(), CONTENT_STRINGS.THANK_YOU);
 
-      cy.checkLink(
-        reactivatedPage.continue(),
-        SIGN_IN_ROOT,
-        BUTTONS.CONTINUE,
-      );
+      cy.checkLink(reactivatedPage.continue(), SIGN_IN_ROOT, BUTTONS.CONTINUE);
     });
   });
 });

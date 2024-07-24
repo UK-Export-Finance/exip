@@ -7,10 +7,7 @@ import pagination from '../../partials/pagination';
  * @param {Integer} Pagination item index
  */
 const assertPaginationItemEllipsis = ({ index }) => {
-  checkText(
-    pagination.listItem(index),
-    '…',
-  );
+  checkText(pagination.listItem(index), '…');
 };
 
 export default assertPaginationItemEllipsis;

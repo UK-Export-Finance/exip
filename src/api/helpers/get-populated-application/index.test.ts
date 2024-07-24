@@ -1,13 +1,12 @@
 import { Application as KeystoneApplication } from '.keystone/types'; // eslint-disable-line
 import getPopulatedApplication from '.';
 import { createFullApplication, getKeystoneContext } from '../../test-helpers';
-import getCountryByField from '../get-country-by-field';
+import getPopulatedExportContract from '../get-populated-export-contract';
 import mapPolicy from './map-policy';
 import getNominatedLossPayee from './nominated-loss-payee';
 import mockCountries from '../../test-mocks/mock-countries';
 import mapTotalContractValueOverThreshold from '../map-total-contract-value-over-threshold';
 import { Application, Context } from '../../types';
-import mockApplication from '../../test-mocks/mock-application';
 
 describe('api/helpers/get-populated-application', () => {
   let context: Context;
@@ -106,18 +105,14 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.policy).toEqual(expected);
   });
 
-  it('should return an application with populated answers and finalDestinationCountry object in exportContract', async () => {
+  it('should return an application with populated exportContract', async () => {
     const result = await getPopulatedApplication.get({ context, application });
 
-    const { exportContract } = mockApplication;
+    const { exportContract } = result;
 
-    const countryCode = String(exportContract.finalDestinationCountryCode);
+    const expected = await getPopulatedExportContract(context, exportContract.id);
 
-    const expectedCountry = await getCountryByField(context, 'isoCode', countryCode);
-
-    expect(result.exportContract.finalDestinationCountry).toEqual(expectedCountry);
-    expect(result.exportContract.finalDestinationCountryCode).toEqual(exportContract.finalDestinationCountryCode);
-    expect(result.exportContract.goodsOrServicesDescription).toEqual(exportContract.goodsOrServicesDescription);
+    expect(result.exportContract).toEqual(expected);
   });
 
   it('should return an application with populated sectionReview', async () => {

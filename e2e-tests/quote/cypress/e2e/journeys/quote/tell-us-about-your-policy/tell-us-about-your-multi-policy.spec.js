@@ -7,37 +7,18 @@ import {
 } from '../../../../../../commands/quote/forms';
 import { field as fieldSelector } from '../../../../../../pages/shared';
 import { tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
-import {
-  LINKS,
-  FIELDS,
-  PAGES,
-} from '../../../../../../content-strings';
+import { LINKS, FIELDS, PAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
-import {
-  EUR,
-  GBP,
-  JPY,
-  USD,
-} from '../../../../../../fixtures/currencies';
+import { EUR, GBP, JPY, USD } from '../../../../../../fixtures/currencies';
 
 const CONTENT_STRINGS = PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 
 const {
-  ELIGIBILITY: {
-    AMOUNT_CURRENCY,
-    CURRENCY,
-    MAX_AMOUNT_OWED,
-    PERCENTAGE_OF_COVER,
-    CREDIT_PERIOD,
-  },
+  ELIGIBILITY: { AMOUNT_CURRENCY, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, CREDIT_PERIOD },
 } = FIELD_IDS;
 
 const {
-  QUOTE: {
-    TELL_US_ABOUT_YOUR_POLICY,
-    POLICY_TYPE,
-    CHECK_YOUR_ANSWERS,
-  },
+  QUOTE: { TELL_US_ABOUT_YOUR_POLICY, POLICY_TYPE, CHECK_YOUR_ANSWERS },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -168,11 +149,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
       const expectedHintLinkHref = LINKS.EXTERNAL.NBI_FORM;
       const expectedHintLinkText = HINT[1].text;
 
-      cy.checkLink(
-        field.hintLink(),
-        expectedHintLinkHref,
-        expectedHintLinkText,
-      );
+      cy.checkLink(field.hintLink(), expectedHintLinkHref, expectedHintLinkText);
 
       field.input().should('exist');
 

@@ -24,7 +24,7 @@ describe('helpers/get-total-contract-value-by-field', () => {
     }
 
     // create a new totalContractValue
-    totalContractValue = await totalContractValueTestHelper.create({ context });
+    totalContractValue = await totalContractValueTestHelper.create(context);
   });
 
   it('should return a totalContractValue by ID', async () => {

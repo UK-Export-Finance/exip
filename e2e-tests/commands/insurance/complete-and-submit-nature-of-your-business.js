@@ -3,11 +3,7 @@ import { field } from '../../pages/shared';
 import application from '../../fixtures/application';
 
 const {
-  NATURE_OF_YOUR_BUSINESS: {
-    GOODS_OR_SERVICES,
-    YEARS_EXPORTING,
-    EMPLOYEES_UK,
-  },
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 export default () => {

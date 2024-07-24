@@ -22,9 +22,7 @@ const {
 const {
   INSURANCE: {
     POLICY: {
-      CONTRACT_POLICY: {
-        SINGLE: CONTRACT_ERROR_MESSAGES,
-      },
+      CONTRACT_POLICY: { SINGLE: CONTRACT_ERROR_MESSAGES },
     },
   },
 } = ERROR_MESSAGES;
@@ -37,15 +35,7 @@ context('Insurance - Policy - Single contract policy page - form validation - co
 
   const field = fieldSelector(CONTRACT_COMPLETION_DATE);
 
-  const {
-    day,
-    month,
-    year,
-    notInTheFuture,
-    invalidFormat,
-    isToday,
-    withTwoDateFields,
-  } = dateField.checkValidation({
+  const { day, month, year, notInTheFuture, invalidFormat, isToday, withTwoDateFields } = dateField.checkValidation({
     errorSummaryLength: 3,
     errorIndex: 1,
     field,

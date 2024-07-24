@@ -12,16 +12,12 @@ const {
 const { TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE } = FIELD_IDS;
 
 const {
-  INSURANCE: {
-    YOUR_BUYER: ERRORS,
-  },
+  INSURANCE: { YOUR_BUYER: ERRORS },
 } = ERROR_MESSAGES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-const submitAndAssertBothFields = ({
-  value = null, errorTotalOutstanding, errorAmountOverdue, expectedValue, assertExpectedValue,
-}) => {
+const submitAndAssertBothFields = ({ value = null, errorTotalOutstanding, errorAmountOverdue, expectedValue, assertExpectedValue }) => {
   const expectedErrorsCount = 2;
 
   cy.submitAndAssertFieldErrors({

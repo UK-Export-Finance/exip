@@ -3,7 +3,10 @@ import { signInPage } from '../../../../../../../pages/insurance/account/sign-in
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
-  ACCOUNT: { CREATE: { YOUR_DETAILS }, VERIFY_EMAIL },
+  ACCOUNT: {
+    CREATE: { YOUR_DETAILS },
+    VERIFY_EMAIL,
+  },
 } = INSURANCE_ROUTES;
 
 context('Insurance - Account - Create - Resend confirm email page - Request a new `confirm email` link once and sign in', () => {

@@ -2,10 +2,7 @@ import { FIELD_IDS } from '../../../constants';
 import mockApplication from '../../../fixtures/application';
 
 const {
-  COMPANY_OR_ORGANISATION: {
-    NAME,
-    ADDRESS,
-  },
+  COMPANY_OR_ORGANISATION: { NAME, ADDRESS },
 } = FIELD_IDS.INSURANCE.YOUR_BUYER;
 
 const { BUYER } = mockApplication;
@@ -16,10 +13,7 @@ const { BUYER } = mockApplication;
  * @param {String} buyerName: Buyer name
  * @param {String} buyerAddress: Buyer address
  */
-const completeAndSubmitCompanyOrOrganisationForm = ({
-  buyerName = BUYER[NAME],
-  buyerAddress = BUYER[ADDRESS],
-}) => {
+const completeAndSubmitCompanyOrOrganisationForm = ({ buyerName = BUYER[NAME], buyerAddress = BUYER[ADDRESS] }) => {
   cy.completeCompanyOrOrganisationForm({ buyerName, buyerAddress });
 
   cy.clickSubmitButton();

@@ -1,8 +1,4 @@
-import {
-  checkBuyerCountryInputHint,
-  checkBuyerCountryValidationErrors,
-  checkBuyerCountryFocusAfterSummaryErrorClick,
-} from './check-buyer-country-form';
+import { checkBuyerCountryInputHint, checkBuyerCountryValidationErrors, checkBuyerCountryFocusAfterSummaryErrorClick } from './check-buyer-country-form';
 
 Cypress.Commands.add('checkBuyerCountryInputHint', checkBuyerCountryInputHint);
 Cypress.Commands.add('checkBuyerCountryValidationErrors', checkBuyerCountryValidationErrors);

@@ -1,8 +1,4 @@
-import {
-  field,
-  status,
-  summaryList,
-} from '../../../../../../../../pages/shared';
+import { field, status, summaryList } from '../../../../../../../../pages/shared';
 import partials from '../../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
@@ -10,20 +6,11 @@ import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insur
 
 const {
   ROOT,
-  CHECK_YOUR_ANSWERS: {
-    TYPE_OF_POLICY,
-  },
-  POLICY: {
-    BROKER_CHECK_AND_CHANGE,
-    PRE_CREDIT_PERIOD,
-    PRE_CREDIT_PERIOD_CHECK_AND_CHANGE,
-  },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
+  POLICY: { BROKER_CHECK_AND_CHANGE, PRE_CREDIT_PERIOD, PRE_CREDIT_PERIOD_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 
-const {
-  NEED_PRE_CREDIT_PERIOD,
-  CREDIT_PERIOD_WITH_BUYER,
-} = POLICY_FIELD_IDS;
+const { NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER } = POLICY_FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
 

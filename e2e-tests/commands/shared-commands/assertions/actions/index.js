@@ -8,16 +8,9 @@ const { ELIGIBILITY, CONTACT_APPROVED_BROKER, CONTACT_EFM } = ACTIONS;
  * Check "read about eligibility" action content.
  */
 export const checkActionReadAboutEligibility = () => {
-  cy.checkText(
-    actionSelectors.eligibility(),
-    `${ELIGIBILITY.TEXT} ${ELIGIBILITY.LINK.TEXT}`,
-  );
+  cy.checkText(actionSelectors.eligibility(), `${ELIGIBILITY.TEXT} ${ELIGIBILITY.LINK.TEXT}`);
 
-  cy.checkLink(
-    actionSelectors.eligibilityLink(),
-    ELIGIBILITY.LINK.HREF,
-    ELIGIBILITY.LINK.TEXT,
-  );
+  cy.checkLink(actionSelectors.eligibilityLink(), ELIGIBILITY.LINK.HREF, ELIGIBILITY.LINK.TEXT);
 };
 
 /**
@@ -35,16 +28,9 @@ export const checkActionReadAboutEligibilityLinkRedirect = () => {
  * Check "contact approved broker" action content.
  */
 export const checkActionContactApprovedBroker = () => {
-  cy.checkText(
-    actionSelectors.approvedBroker(),
-    `${CONTACT_APPROVED_BROKER.LINK.TEXT} ${CONTACT_APPROVED_BROKER.TEXT}`,
-  );
+  cy.checkText(actionSelectors.approvedBroker(), `${CONTACT_APPROVED_BROKER.LINK.TEXT} ${CONTACT_APPROVED_BROKER.TEXT}`);
 
-  cy.checkLink(
-    actionSelectors.approvedBrokerLink(),
-    CONTACT_APPROVED_BROKER.LINK.HREF,
-    CONTACT_APPROVED_BROKER.LINK.TEXT,
-  );
+  cy.checkLink(actionSelectors.approvedBrokerLink(), CONTACT_APPROVED_BROKER.LINK.HREF, CONTACT_APPROVED_BROKER.LINK.TEXT);
 };
 
 /**
@@ -53,15 +39,8 @@ export const checkActionContactApprovedBroker = () => {
  * @param {String} Expected link href
  * @param {String} Expected link text
  */
-export const checkActionTalkToYourNearestEFMLink = ({
-  expectedHref,
-  expectedText,
-}) => {
-  cy.checkLink(
-    actionSelectors.contactEFMLink(),
-    expectedHref || CONTACT_EFM.LINK.HREF,
-    expectedText || CONTACT_EFM.LINK.TEXT,
-  );
+export const checkActionTalkToYourNearestEFMLink = ({ expectedHref, expectedText }) => {
+  cy.checkLink(actionSelectors.contactEFMLink(), expectedHref || CONTACT_EFM.LINK.HREF, expectedText || CONTACT_EFM.LINK.TEXT);
 };
 
 /**
@@ -71,17 +50,10 @@ export const checkActionTalkToYourNearestEFMLink = ({
  * @param {String} Expected link href
  * @param {String} Expected link text
  */
-export const checkActionTalkToYourNearestEFM = ({
-  expectedText,
-  expectedLinkHref,
-  expectedLinkText,
-}) => {
+export const checkActionTalkToYourNearestEFM = ({ expectedText, expectedLinkHref, expectedLinkText }) => {
   const textAssertion = expectedText || `${CONTACT_EFM.LINK.TEXT} ${CONTACT_EFM.TEXT}`;
 
-  cy.checkText(
-    actionSelectors.contactEFM(),
-    textAssertion,
-  );
+  cy.checkText(actionSelectors.contactEFM(), textAssertion);
 
   checkActionTalkToYourNearestEFMLink({
     expectedHref: expectedLinkHref,
@@ -96,21 +68,10 @@ export const checkActionTalkToYourNearestEFM = ({
  * @param {String} Expected link href
  * @param {String} Expected link text
  */
-export const checkActionApplyThroughPDF = ({
-  expectedText,
-  expectedLinkHref,
-  expectedLinkText,
-}) => {
-  cy.checkText(
-    actionSelectors.pdfForm(),
-    expectedText,
-  );
+export const checkActionApplyThroughPDF = ({ expectedText, expectedLinkHref, expectedLinkText }) => {
+  cy.checkText(actionSelectors.pdfForm(), expectedText);
 
-  cy.checkLink(
-    actionSelectors.pdfFormLink(),
-    expectedLinkHref,
-    expectedLinkText,
-  );
+  cy.checkLink(actionSelectors.pdfFormLink(), expectedLinkHref, expectedLinkText);
 };
 
 /**
@@ -118,13 +79,8 @@ export const checkActionApplyThroughPDF = ({
  * Check "contact UKEF team" action content.
  * @param {String} Expected text
  */
-export const checkActionContactUKEFTeam = ({
-  expectedText,
-}) => {
-  cy.checkText(
-    actionSelectors.contactUKEFTeam(),
-    expectedText,
-  );
+export const checkActionContactUKEFTeam = ({ expectedText }) => {
+  cy.checkText(actionSelectors.contactUKEFTeam(), expectedText);
 };
 
 Cypress.Commands.add('checkActionReadAboutEligibility', checkActionReadAboutEligibility);

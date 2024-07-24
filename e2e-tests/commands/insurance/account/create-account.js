@@ -4,15 +4,12 @@ import { INSURANCE_ROUTES as ROUTES } from '../../../constants/routes/insurance'
 import account from '../../../fixtures/account';
 
 const {
-  ACCOUNT: { CREATE: { VERIFY_EMAIL } },
+  ACCOUNT: {
+    CREATE: { VERIFY_EMAIL },
+  },
 } = ROUTES;
 
-const {
-  firstName,
-  lastName,
-  email,
-  password,
-} = account;
+const { firstName, lastName, email, password } = account;
 
 const urlOrigin = Cypress.config('baseUrl');
 
@@ -25,20 +22,18 @@ const urlOrigin = Cypress.config('baseUrl');
  * @param {String}: Password
  * @returns {String} URL to verify the account verification URL
  */
-const createAccount = ({
-  nameFirst = firstName,
-  nameLast = lastName,
-  emailAddress = email,
-  accountPassword = password,
-}) =>
+const createAccount = ({ nameFirst = firstName, nameLast = lastName, emailAddress = email, accountPassword = password }) =>
   deleteAccount(emailAddress).then(() =>
-    api.createAnAccount(urlOrigin, nameFirst, nameLast, emailAddress, accountPassword).then((createdAccount) => createdAccount)
+    api
+      .createAnAccount(urlOrigin, nameFirst, nameLast, emailAddress, accountPassword)
+      .then((createdAccount) => createdAccount)
       .then((createdAccount) => {
         const { id: accountId, verificationHash } = createdAccount;
 
         const verifyAccountUrl = `${urlOrigin}${VERIFY_EMAIL}?token=${verificationHash}&id=${accountId}`;
 
         return { accountId, verifyAccountUrl };
-      }));
+      }),
+  );
 
 export default createAccount;

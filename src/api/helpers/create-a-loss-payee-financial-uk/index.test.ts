@@ -1,10 +1,9 @@
 import createALossPayeeFinancialUk from '.';
 import createANominatedLossPayee from '../create-a-nominated-loss-payee';
 import { Application, ApplicationNominatedLossPayee, Context } from '../../types';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
-
-const invalidId = 'invalid-id';
 
 const assertError = (err) => {
   const errorString = String(err);
@@ -75,7 +74,7 @@ describe('helpers/create-a-loss-payee-financial-uk', () => {
   describe('when an invalid nominated loss payee ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createALossPayeeFinancialUk(context, invalidId);
+        await createALossPayeeFinancialUk(context, mockInvalidId);
       } catch (err) {
         assertError(err);
       }

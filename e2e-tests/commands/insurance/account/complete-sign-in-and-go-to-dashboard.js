@@ -15,24 +15,28 @@ const baseUrl = Cypress.config('baseUrl');
  * 5) Complete and submit the "enter access code" form
  * 6) Check we are on the dashbooard
  */
-const completeSignInAndGoToDashboard = () => cy.createAccount({}).then(({ accountId, verifyAccountUrl }) => {
-  // verify the account by navigating to the "verify account" page
-  cy.navigateToUrl(verifyAccountUrl);
+const completeSignInAndGoToDashboard = () =>
+  cy.createAccount({}).then(({ accountId, verifyAccountUrl }) => {
+    // verify the account by navigating to the "verify account" page
+    cy.navigateToUrl(verifyAccountUrl);
 
-  // sign in to the account. Behind the scenes, an application is created at this point.
-  cy.completeAndSubmitSignInAccountForm({});
+    // sign in to the account. Behind the scenes, an application is created at this point.
+    cy.completeAndSubmitSignInAccountForm({});
 
-  // get the OTP access code
-  return cy.accountAddAndGetOTP().then((accessCode) => {
-    // submit the OTP access code
-    cy.completeAndSubmitEnterCodeAccountForm(accessCode);
+    // get the OTP access code
+    return cy
+      .accountAddAndGetOTP()
+      .then((accessCode) => {
+        // submit the OTP access code
+        cy.completeAndSubmitEnterCodeAccountForm(accessCode);
 
-    // assert we are on the dashboard
-    const expectedUrl = `${baseUrl}${DASHBOARD}`;
-    cy.assertUrl(expectedUrl);
-  }).then(() => ({
-    accountId,
-  }));
-});
+        // assert we are on the dashboard
+        const expectedUrl = `${baseUrl}${DASHBOARD}`;
+        cy.assertUrl(expectedUrl);
+      })
+      .then(() => ({
+        accountId,
+      }));
+  });
 
 export default completeSignInAndGoToDashboard;

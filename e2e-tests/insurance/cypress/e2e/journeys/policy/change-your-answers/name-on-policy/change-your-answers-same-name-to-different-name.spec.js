@@ -4,11 +4,7 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/in
 import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../../../../../../constants/routes/insurance';
 
 const {
-  POLICY: {
-    CHECK_YOUR_ANSWERS,
-    NAME_ON_POLICY_CHANGE,
-    DIFFERENT_NAME_ON_POLICY_CHANGE,
-  },
+  POLICY: { CHECK_YOUR_ANSWERS, NAME_ON_POLICY_CHANGE, DIFFERENT_NAME_ON_POLICY_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {

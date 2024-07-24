@@ -6,22 +6,14 @@ import partials from '../../../partials';
  * @param {Number} expectedErrorsCount: Expected total amount of errors in the errors summary. Defaults to 1.
  * @param {Number} expectedErrorMessage: Expected error message.
  */
-const submitAndAssertRadioErrors = ({
-  field,
-  errorIndex = 0,
-  expectedErrorsCount = 1,
-  expectedErrorMessage,
-}) => {
+const submitAndAssertRadioErrors = ({ field, errorIndex = 0, expectedErrorsCount = 1, expectedErrorMessage }) => {
   cy.clickSubmitButton();
 
   cy.checkErrorSummaryListHeading();
 
   cy.assertErrorSummaryListLength(expectedErrorsCount);
 
-  cy.checkText(
-    partials.errorSummaryListItems().eq(errorIndex),
-    expectedErrorMessage,
-  );
+  cy.checkText(partials.errorSummaryListItems().eq(errorIndex), expectedErrorMessage);
 
   partials.errorSummaryListItemLinks().eq(errorIndex).click();
 

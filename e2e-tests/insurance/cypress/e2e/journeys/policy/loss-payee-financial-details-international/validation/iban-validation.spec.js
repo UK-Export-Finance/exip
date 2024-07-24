@@ -3,9 +3,7 @@ import { ibanFieldValidation } from '../../../../../../../shared-test-assertions
 
 const {
   ROOT: INSURANCE_ROOT,
-  POLICY: {
-    LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
-  },
+  POLICY: { LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
