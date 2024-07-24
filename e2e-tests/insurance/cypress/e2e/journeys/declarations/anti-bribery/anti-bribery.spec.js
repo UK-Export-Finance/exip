@@ -2,7 +2,6 @@ import { headingCaption, singleInputField } from '../../../../../../pages/shared
 import { antiBriberyPage } from '../../../../../../pages/insurance/declarations';
 import partials from '../../../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
-import { DECLARATIONS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/declarations';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -11,7 +10,7 @@ import flattenKeystoneDocument from '../../../../../../commands/flatten-keystone
 
 const { taskList } = partials.insurancePartials;
 
-const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY;
+const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY.VERSIONS[0];
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -125,7 +124,7 @@ context(
         const { expandable } = antiBriberyPage;
 
         it('should render summary text with collapsed conditional `details` content', () => {
-          cy.checkText(expandable.summary(), CONTENT_STRINGS.VERSIONS[0].EXPANDABLE.INTRO);
+          cy.checkText(expandable.summary(), CONTENT_STRINGS.EXPANDABLE.INTRO);
 
           expandable.details().should('not.have.attr', 'open');
         });
@@ -140,7 +139,7 @@ context(
       });
 
       it("renders `I've read and agree` legend and input", () => {
-        cy.checkText(field.legend(), FIELDS[FIELD_ID].LABEL);
+        cy.checkText(field.legend(), CONTENT_STRINGS.LABEL);
 
         field.input().should('exist');
       });

@@ -1,8 +1,6 @@
 import { SHARED, CONFIRM_READ_AND_AGREE, HAVE_READ_AND_AGREED } from '../shared';
 
 export const CONFIRMATION_AND_ACKNOWLEDGEMENTS = {
-  ...SHARED,
-  PAGE_TITLE: 'Confirmation and acknowledgements',
   VERSIONS: [
     {
       VERSION: '1',

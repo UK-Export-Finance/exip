@@ -2,7 +2,6 @@ import { headingCaption, singleInputField } from '../../../../../../pages/shared
 import { confirmationAndAcknowledgementsPage } from '../../../../../../pages/insurance/declarations';
 import partials from '../../../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
-import { DECLARATIONS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/declarations';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -11,7 +10,7 @@ import flattenKeystoneDocument from '../../../../../../commands/flatten-keystone
 
 const { taskList } = partials.insurancePartials;
 
-const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS;
+const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS.VERSIONS[0];
 
 const {
   APPLICATION_SUBMITTED,
@@ -110,7 +109,7 @@ context(
       });
 
       it("renders `I've read and agree` legend and input", () => {
-        cy.checkText(field.legend(), FIELDS[FIELD_ID].LABEL);
+        cy.checkText(field.legend(), CONTENT_STRINGS.LABEL);
 
         field.input().should('exist');
       });

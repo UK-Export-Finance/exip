@@ -1,6 +1,5 @@
-import { PAGES, ERROR_MESSAGES } from '../../../../../content-strings';
-import { DECLARATIONS_FIELDS } from '../../../../../content-strings/fields/insurance/declarations';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
+import { ERROR_MESSAGES } from '../../../../../content-strings';
+import { FIELD_IDS, ROUTES, TEMPLATES, DECLARATIONS } from '../../../../../constants';
 import singleInputPageVariables from '../../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../../helpers/construct-payload';
@@ -19,7 +18,7 @@ const {
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
-const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT;
+const { ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT } = DECLARATIONS.LATEST_DECLARATIONS;
 
 /**
  * pageVariables
@@ -30,7 +29,7 @@ const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_EXPORTING
 export const pageVariables = (referenceNumber: number) => ({
   FIELD: {
     ID: FIELD_ID,
-    ...DECLARATIONS_FIELDS[FIELD_ID],
+    ...ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT,
   },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT_SAVE_AND_BACK}`,
 });
@@ -52,7 +51,7 @@ export const get = (req: Request, res: Response) => {
   }
 
   return res.render(TEMPLATE, {
-    ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
+    ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS: ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT, BACK_LINK: req.headers.referer }),
     ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
     applicationAnswer: application.declaration[FIELD_ID],
@@ -81,7 +80,7 @@ export const post = async (req: Request, res: Response) => {
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
-      ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
+      ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS: ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT, BACK_LINK: req.headers.referer }),
       ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       validationErrors,

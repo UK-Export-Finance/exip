@@ -1,6 +1,5 @@
-import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
-import { FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
-import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
+import { ERROR_MESSAGES } from '../../../../content-strings';
+import { FIELD_IDS, TEMPLATES, ROUTES, DECLARATIONS } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
@@ -10,6 +9,8 @@ import save from '../save-data';
 import { Request, Response } from '../../../../../types';
 
 export const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIDENTIALITY;
+
+const { CONFIDENTIALITY } = DECLARATIONS.LATEST_DECLARATIONS;
 
 const {
   INSURANCE_ROOT,
@@ -29,14 +30,12 @@ const {
 export const pageVariables = (referenceNumber: number) => ({
   FIELD: {
     ID: FIELD_ID,
-    ...FIELDS[FIELD_ID],
+    ...CONFIDENTIALITY,
   },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY_SAVE_AND_BACK}`,
 });
 
 export const TEMPLATE = TEMPLATES.INSURANCE.DECLARATIONS.CONFIDENTIALITY;
-
-const [CONFIDENTIALITY_CONTENT] = PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY.VERSIONS;
 
 /**
  * get
@@ -54,12 +53,12 @@ export const get = async (req: Request, res: Response) => {
 
   return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
-      PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY,
+      PAGE_CONTENT_STRINGS: CONFIDENTIALITY,
       BACK_LINK: req.headers.referer,
     }),
     ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
-    CONFIDENTIALITY_CONTENT,
+    CONFIDENTIALITY_CONTENT: CONFIDENTIALITY,
     application: mapApplicationToFormFields(res.locals.application),
   });
 };
@@ -87,12 +86,12 @@ export const post = async (req: Request, res: Response) => {
   if (validationErrors) {
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY,
+        PAGE_CONTENT_STRINGS: CONFIDENTIALITY,
         BACK_LINK: req.headers.referer,
       }),
       ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
-      CONFIDENTIALITY_CONTENT,
+      CONFIDENTIALITY_CONTENT: CONFIDENTIALITY,
       validationErrors,
     });
   }

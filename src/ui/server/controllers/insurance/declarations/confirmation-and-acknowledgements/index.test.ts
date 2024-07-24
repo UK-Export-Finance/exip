@@ -1,7 +1,6 @@
 import { FIELD_ID, pageVariables, TEMPLATE, get, post } from '.';
-import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
-import { APPLICATION, FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
-import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
+import { ERROR_MESSAGES } from '../../../../content-strings';
+import { APPLICATION, FIELD_IDS, TEMPLATES, ROUTES, DECLARATIONS } from '../../../../constants';
 import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -19,6 +18,8 @@ const {
   DECLARATIONS: { CONFIRMATION_AND_ACKNOWLEDGEMENTS_SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
+
+const { CONFIRMATION_AND_ACKNOWLEDGEMENTS } = DECLARATIONS.LATEST_DECLARATIONS;
 
 describe('controllers/insurance/declarations/confirmation-and-acknowledgements', () => {
   jest.mock('../save-data');
@@ -56,7 +57,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
       const expected = {
         FIELD: {
           ID: FIELD_ID,
-          ...FIELDS[FIELD_ID],
+          ...CONFIRMATION_AND_ACKNOWLEDGEMENTS,
         },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS_SAVE_AND_BACK}`,
       };
@@ -83,7 +84,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+          PAGE_CONTENT_STRINGS: CONFIRMATION_AND_ACKNOWLEDGEMENTS,
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(referenceNumber),
@@ -193,7 +194,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+            PAGE_CONTENT_STRINGS: CONFIRMATION_AND_ACKNOWLEDGEMENTS,
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(referenceNumber),
