@@ -5,7 +5,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const { taskList } = partials.insurancePartials;
 
-const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY;
+const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY.VERSIONS[0];
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -16,7 +16,7 @@ const {
 
 const { expandable } = antiBriberyPage;
 
-const { INTRO, TABLE } = CONTENT_STRINGS.VERSIONS[0].EXPANDABLE;
+const { INTRO, TABLE } = CONTENT_STRINGS.EXPANDABLE;
 
 const baseUrl = Cypress.config('baseUrl');
 

@@ -1,6 +1,5 @@
-import { PAGES, ERROR_MESSAGES } from '../../../../../content-strings';
-import { DECLARATIONS_FIELDS } from '../../../../../content-strings/fields/insurance/declarations';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
+import { ERROR_MESSAGES } from '../../../../../content-strings';
+import { FIELD_IDS, ROUTES, TEMPLATES, DECLARATIONS } from '../../../../../constants';
 import singleInputPageVariables from '../../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../../helpers/construct-payload';
@@ -21,7 +20,7 @@ const {
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
-const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_CODE_OF_CONDUCT;
+const { ANTI_BRIBERY_CODE_OF_CONDUCT } = DECLARATIONS.LATEST_DECLARATIONS;
 
 const {
   SHARED_PAGES,
@@ -39,7 +38,7 @@ const {
 export const pageVariables = (referenceNumber: number) => ({
   FIELDS: {
     ID: FIELD_ID,
-    ...DECLARATIONS_FIELDS[FIELD_ID],
+    ...ANTI_BRIBERY_CODE_OF_CONDUCT,
   },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT_SAVE_AND_BACK}`,
 });
@@ -71,7 +70,7 @@ export const get = (req: Request, res: Response) => {
   }
 
   return res.render(TEMPLATE, {
-    ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
+    ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS: ANTI_BRIBERY_CODE_OF_CONDUCT, BACK_LINK: req.headers.referer, HTML_FLAGS }),
     ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
     application: mapApplicationToFormFields(res.locals.application),
@@ -101,7 +100,7 @@ export const post = async (req: Request, res: Response) => {
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
-      ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
+      ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS: ANTI_BRIBERY_CODE_OF_CONDUCT, BACK_LINK: req.headers.referer, HTML_FLAGS }),
       ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       validationErrors,

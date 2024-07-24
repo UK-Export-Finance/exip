@@ -2,15 +2,12 @@ import { headingCaption, singleInputField } from '../../../../../../pages/shared
 import { confidentialityPage } from '../../../../../../pages/insurance/declarations';
 import partials from '../../../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
-import { DECLARATIONS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/declarations';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const { taskList } = partials.insurancePartials;
 
-const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY;
-
-const [LATEST_VERSION] = CONTENT_STRINGS.VERSIONS;
+const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY.VERSIONS[0];
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -77,12 +74,12 @@ context(
       });
 
       describe('latest confidentiality content', () => {
-        const listContent = LATEST_VERSION.LIST;
+        const listContent = CONTENT_STRINGS.LIST;
 
         const { intro, level1, level2, level3 } = confidentialityPage.listItems;
 
         it('renders an intro paragraph', () => {
-          cy.checkText(intro(), LATEST_VERSION.INTRO);
+          cy.checkText(intro(), CONTENT_STRINGS.INTRO);
         });
 
         it('renders level 1 list items', () => {
@@ -111,7 +108,7 @@ context(
       });
 
       it('renders a `confirm` legend and input', () => {
-        cy.checkText(field.legend(), FIELDS[FIELD_ID].LABEL);
+        cy.checkText(field.legend(), CONTENT_STRINGS.LABEL);
 
         field.input().should('exist');
       });

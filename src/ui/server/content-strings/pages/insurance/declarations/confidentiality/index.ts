@@ -1,8 +1,6 @@
 import { SHARED, CONFIRM_READ_AND_AGREE, HAVE_READ_AND_AGREED } from '../shared';
 
 export const CONFIDENTIALITY = {
-  ...SHARED,
-  PAGE_TITLE: 'Confidentiality',
   VERSIONS: [
     {
       VERSION: '1',

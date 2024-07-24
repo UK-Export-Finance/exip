@@ -1,6 +1,5 @@
-import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
-import { FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
-import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
+import { ERROR_MESSAGES } from '../../../../content-strings';
+import { FIELD_IDS, TEMPLATES, ROUTES, DECLARATIONS } from '../../../../constants';
 import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -12,6 +11,8 @@ import save from '../save-data';
 import { Request, Response } from '../../../../../types';
 
 export const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_ANTI_BRIBERY;
+
+const { ANTI_BRIBERY } = DECLARATIONS.LATEST_DECLARATIONS;
 
 const {
   INSURANCE_ROOT,
@@ -30,7 +31,7 @@ const {
 export const pageVariables = (referenceNumber: number) => ({
   FIELD: {
     ID: FIELD_ID,
-    ...FIELDS[FIELD_ID],
+    ...ANTI_BRIBERY,
   },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_SAVE_AND_BACK}`,
 });
@@ -56,7 +57,7 @@ export const get = async (req: Request, res: Response) => {
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY,
+        PAGE_CONTENT_STRINGS: ANTI_BRIBERY,
         BACK_LINK: req.headers.referer,
       }),
       ...pageVariables(application.referenceNumber),
@@ -98,7 +99,7 @@ export const post = async (req: Request, res: Response) => {
 
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY,
+          PAGE_CONTENT_STRINGS: ANTI_BRIBERY,
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(referenceNumber),
