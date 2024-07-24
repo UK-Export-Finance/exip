@@ -1,11 +1,11 @@
 import createADeclarationVersion from '.';
-import LATEST_DECLARATION_VERSION_NUMBERS from '../../constants/declarations/latest';
+import DECLARATIONS from '../../constants/declarations';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import declarations from '../../test-helpers/declarations';
 import { ApplicationDeclaration, Context } from '../../types';
 
 const { CONFIDENTIALITY, ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT, CONFIRMATION_AND_ACKNOWLEDGEMENTS } =
-  LATEST_DECLARATION_VERSION_NUMBERS;
+  DECLARATIONS.LATEST_DECLARATIONS;
 
 const invalidId = 'invalid-id';
 

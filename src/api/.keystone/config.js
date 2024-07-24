@@ -765,6 +765,7 @@ var DECLARATIONS2 = {
   VERSIONS: versions_default2,
   LATEST_DECLARATIONS: versions_default2[versions_default2.length - 1]
 };
+var declarations_default2 = DECLARATIONS2;
 
 // constants/eligibility.ts
 var ELIGIBILITY = {
@@ -4305,12 +4306,8 @@ var createAnEligibility = async (context, countryId, applicationId, coverPeriodI
 };
 var create_an_eligibility_default = createAnEligibility;
 
-// constants/declarations/latest.ts
-var LATEST_DECLARATION_VERSION_NUMBERS = versions_default2[versions_default2.length - 1];
-var latest_default2 = LATEST_DECLARATION_VERSION_NUMBERS;
-
 // helpers/create-a-declaration-version/index.ts
-var { ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT, CONFIDENTIALITY, CONFIRMATION_AND_ACKNOWLEDGEMENTS } = latest_default2;
+var { ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT, CONFIDENTIALITY, CONFIRMATION_AND_ACKNOWLEDGEMENTS } = declarations_default2.LATEST_DECLARATIONS;
 var createADeclarationVersion = async (context, declarationId) => {
   console.info("Creating an application declaration version for ", declarationId);
   try {

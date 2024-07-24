@@ -1,8 +1,8 @@
 import { Context } from '../../types';
-import LATEST_DECLARATION_VERSION_NUMBERS from '../../constants/declarations/latest';
+import DECLARATIONS from '../../constants/declarations';
 
 const { ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT, CONFIDENTIALITY, CONFIRMATION_AND_ACKNOWLEDGEMENTS } =
-  LATEST_DECLARATION_VERSION_NUMBERS;
+  DECLARATIONS.LATEST_DECLARATIONS;
 
 /**
  * createADeclarationVersion
