@@ -77,7 +77,7 @@ describe('controllers/insurance/declarations/confidentiality', () => {
         }),
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
-        CONFIDENTIALITY,
+        CONFIDENTIALITY_CONTENT: CONFIDENTIALITY,
         application: mapApplicationToFormFields(res.locals.application),
       };
 
@@ -138,7 +138,7 @@ describe('controllers/insurance/declarations/confidentiality', () => {
           }),
           ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
-          CONFIDENTIALITY,
+          CONFIDENTIALITY_CONTENT: CONFIDENTIALITY,
           validationErrors: generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),
         };
 
