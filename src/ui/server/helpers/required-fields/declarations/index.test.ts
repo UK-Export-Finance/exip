@@ -4,14 +4,8 @@ import { mockApplication } from '../../../test-mocks';
 
 const { DECLARATIONS } = FIELD_IDS;
 
-const {
-  AGREE_CONFIDENTIALITY,
-  AGREE_ANTI_BRIBERY,
-  HAS_ANTI_BRIBERY_CODE_OF_CONDUCT,
-  WILL_EXPORT_WITH_CODE_OF_CONDUCT,
-  AGREE_CONFIRMATION_ACKNOWLEDGEMENTS,
-  AGREE_HOW_YOUR_DATA_WILL_BE_USED,
-} = DECLARATIONS;
+const { AGREE_CONFIDENTIALITY, AGREE_ANTI_BRIBERY, HAS_ANTI_BRIBERY_CODE_OF_CONDUCT, WILL_EXPORT_WITH_CODE_OF_CONDUCT, AGREE_CONFIRMATION_ACKNOWLEDGEMENTS } =
+  DECLARATIONS;
 
 describe('server/helpers/required-fields/declarations', () => {
   describe('getAntiBriberyCodeOfConductTasks', () => {
@@ -64,7 +58,6 @@ describe('server/helpers/required-fields/declarations', () => {
         AGREE_CONFIDENTIALITY,
         AGREE_ANTI_BRIBERY,
         AGREE_CONFIRMATION_ACKNOWLEDGEMENTS,
-        AGREE_HOW_YOUR_DATA_WILL_BE_USED,
         ...getAntiBriberyCodeOfConductTasks(hasAntiBriberyCodeOfConduct),
       ];
 

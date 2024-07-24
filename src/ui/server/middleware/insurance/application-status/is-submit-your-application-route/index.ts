@@ -7,7 +7,6 @@ const {
     CONFIDENTIALITY,
     ANTI_BRIBERY: { ROOT: ANTI_BRIBERY_ROOT, CODE_OF_CONDUCT, EXPORTING_WITH_CODE_OF_CONDUCT },
     CONFIRMATION_AND_ACKNOWLEDGEMENTS,
-    HOW_YOUR_DATA_WILL_BE_USED,
   },
 } = INSURANCE_ROUTES;
 
@@ -26,7 +25,6 @@ export const mapSubmitYourApplicationRoutes = (referenceNumber: number) => {
     CODE_OF_CONDUCT,
     EXPORTING_WITH_CODE_OF_CONDUCT,
     CONFIRMATION_AND_ACKNOWLEDGEMENTS,
-    HOW_YOUR_DATA_WILL_BE_USED,
   });
 
   const mapped = routesArray.map((route) => `${INSURANCE_ROOT}/${referenceNumber}${route}`);

@@ -160,7 +160,6 @@ export const mockApplicationDeclaration = {
   hasAntiBriberyCodeOfConduct: true,
   willExportWithAntiBriberyCodeOfConduct: true,
   agreeToConfirmationAndAcknowledgements: true,
-  agreeHowDataWillBeUsed: true,
 };
 
 export const mockInsuranceFeedbackEmail = {

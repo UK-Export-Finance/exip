@@ -192,7 +192,6 @@ interface ApplicationDeclaration {
   hasAntiBriberyCodeOfConduct?: boolean | null;
   willExportWithAntiBriberyCodeOfConduct?: boolean;
   agreeToConfirmationAndAcknowledgements?: boolean;
-  agreeHowDataWillBeUsed?: boolean;
 }
 
 interface ApplicationPolicyContact {

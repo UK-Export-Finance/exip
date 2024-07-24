@@ -3,7 +3,6 @@ import { ANTI_BRIBERY } from './anti-bribery';
 import { ANTI_BRIBERY_CODE_OF_CONDUCT } from './anti-bribery-code-of-conduct';
 import { ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT } from './anti-bribery-exporting-with-code-of-conduct';
 import { CONFIRMATION_AND_ACKNOWLEDGEMENTS } from './confirmation-and-acknowledgements';
-import { HOW_YOUR_DATA_WILL_BE_USED } from './how-your-data-will-be-used';
 
 export default {
   CONFIDENTIALITY,
@@ -11,5 +10,4 @@ export default {
   ANTI_BRIBERY_CODE_OF_CONDUCT,
   ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT,
   CONFIRMATION_AND_ACKNOWLEDGEMENTS,
-  HOW_YOUR_DATA_WILL_BE_USED,
 };

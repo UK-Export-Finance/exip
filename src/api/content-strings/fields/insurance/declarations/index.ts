@@ -6,7 +6,6 @@ const {
     AGREE_ANTI_BRIBERY,
     HAS_ANTI_BRIBERY_CODE_OF_CONDUCT,
     AGREE_CONFIRMATION_ACKNOWLEDGEMENTS,
-    AGREE_HOW_YOUR_DATA_WILL_BE_USED,
     WILL_EXPORT_WITH_CODE_OF_CONDUCT,
   },
 } = INSURANCE_FIELD_IDS;
@@ -35,11 +34,6 @@ export const DECLARATIONS_FIELDS = {
   [AGREE_CONFIRMATION_ACKNOWLEDGEMENTS]: {
     SUMMARY: {
       TITLE: 'Confirmation and acknowledgements',
-    },
-  },
-  [AGREE_HOW_YOUR_DATA_WILL_BE_USED]: {
-    SUMMARY: {
-      TITLE: 'How your data will be used',
     },
   },
 };

@@ -7,7 +7,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.APPLICATION_SUBMITTED;
 
 const {
   ROOT: INSURANCE_ROOT,
-  DECLARATIONS: { HOW_YOUR_DATA_WILL_BE_USED },
+  DECLARATIONS: { CONFIRMATION_AND_ACKNOWLEDGEMENTS },
   APPLICATION_SUBMITTED,
   FEEDBACK,
 } = INSURANCE_ROUTES;
@@ -42,7 +42,7 @@ context('Insurance - application submitted page', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`,
       assertBackLink: false,
       hasAForm: false,
     });
