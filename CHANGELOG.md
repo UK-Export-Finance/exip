@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.16.0](https://github.com/UK-Export-Finance/exip/compare/v2.15.0...v2.16.0) (2024-07-24)
+
+
+### Features
+
+* **EMS-3536-3540:** remove 'how your data will be used' declaration ([#2789](https://github.com/UK-Export-Finance/exip/issues/2789)) ([9efa559](https://github.com/UK-Export-Finance/exip/commit/9efa5599a9b784eeee96d4f9f536f4b96231a7b1))
+
 ## [2.15.0](https://github.com/UK-Export-Finance/exip/compare/v2.14.0...v2.15.0) (2024-07-23)
 
 
