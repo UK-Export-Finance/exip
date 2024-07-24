@@ -3547,6 +3547,13 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
         invalid: true
       };
     }
+    if (account2.verificationHash !== variables.token) {
+      console.info("Unable to verify account email address - token does not match hash");
+      return {
+        success: false,
+        invalid: true
+      };
+    }
     if (account2.status.isVerified) {
       console.info("Account email address is already verified");
       return {
