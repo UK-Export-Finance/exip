@@ -5,7 +5,7 @@ export const CONFIRMATION_AND_ACKNOWLEDGEMENTS = {
   PAGE_TITLE: 'Confirmation and acknowledgements',
   VERSIONS: [
     {
-      VERSION: 1,
+      VERSION: '1',
       ...SHARED,
       PAGE_TITLE: 'Confirmation and acknowledgements',
       LABEL: `${CONFIRM_READ_AND_AGREE} the confirmation and acknowledgements`,
