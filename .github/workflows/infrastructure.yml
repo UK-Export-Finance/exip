@@ -564,6 +564,26 @@ jobs:
             --name IPAllowListRule \
             --policy-name waf${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}
 
+      - name: Identity 🪪
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            # Front Door
+            az resource update --ids $(az afd profile list --query '[].id' -o tsv) \
+            --set identity.type=SystemAssigned \
+            --api-version 2022-11-01-preview
+
+      - name: Access 🔑
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            # Key Vault
+              az keyvault set-policy \
+              --name kv-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+              --certificate-permissions ${{ vars.KEYVAULT_ACCESS_POLICY }} \
+              --application-id $(az afd profile list --query '[].identity.principalId' -o tsv) \
+              --object-id $(az afd profile list --query '[].identity.principalId' -o tsv)
+
   # 4. WebApp configuration
   webapp:
     name: Web App 🔧
@@ -1058,3 +1078,59 @@ jobs:
             --auto-mitigate true \
             --severity 0 \
             --tags ${{ env.TAGS }}
+
+  # 8. Custom domains
+  domains:
+    name: Domains 🌐
+    needs: [base, security, webapp, dns]
+    environment: ${{ needs.base.outputs.environment }}
+    runs-on: [self-hosted, EXIP, infrastructure]
+    steps:
+      - name: Pre-production 💫
+        if: contains('["dev", "feature", "staging"]', env.TARGET)
+        run: echo "TYPE=Preproduction" >> $GITHUB_ENV
+
+      - name: Production 💫
+        if: ${{ 'production' == env.TARGET }}
+        run: echo "TYPE=Production" >> $GITHUB_ENV
+
+      - name: Tags 🏷️
+        run: echo TAGS='Environment=${{ env.TYPE }}' \
+          'Product=${{ env.PRODUCT }}' \
+          'Team=development' >> $GITHUB_ENV
+
+      - name: Login 🔐
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Azure defaults ✨
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            # Basic
+            az configure --defaults location=${{ vars.REGION }}
+            az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
+
+      - name: Certificates 📇
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            # Add certificates
+            az afd secret create \
+            --name kv-certificate-quote-latest \
+            --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --use-latest-version true \
+            --secret-source $(az keyvault list --query '[].id' -o tsv)/secrets/kv-certificate-quote-latest
+
+            az afd secret create \
+            --name kv-certificate-apply-latest \
+            --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --use-latest-version true \
+            --secret-source $(az keyvault list --query '[].id' -o tsv)/secrets/kv-certificate-apply-latest
+
+      - name: Domains 🌐
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+          # Add custom domains
