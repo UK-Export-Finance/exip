@@ -30,6 +30,19 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
     }
 
     /**
+     * if the verification hash from account does not match the token from variables,
+     * return success=false, invalid=true.
+     */
+    if (account.verificationHash !== variables.token) {
+      console.info('Unable to verify account email address - token does not match hash');
+
+      return {
+        success: false,
+        invalid: true,
+      };
+    }
+
+    /**
      * Check if the account is already verified.
      * If so, return success=true.
      * Without this, if this resolver is called more than once,
