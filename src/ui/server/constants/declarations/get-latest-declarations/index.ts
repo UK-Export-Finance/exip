@@ -2,14 +2,8 @@ import VERSIONS from '../versions';
 import DECLARATIONS from '../../../content-strings/pages/insurance/declarations';
 import { ObjectType } from '../../../../types';
 
-const {
-  CONFIDENTIALITY,
-  ANTI_BRIBERY,
-  ANTI_BRIBERY_CODE_OF_CONDUCT,
-  ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT,
-  CONFIRMATION_AND_ACKNOWLEDGEMENTS,
-  HOW_YOUR_DATA_WILL_BE_USED,
-} = DECLARATIONS;
+const { CONFIDENTIALITY, ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT, CONFIRMATION_AND_ACKNOWLEDGEMENTS } =
+  DECLARATIONS;
 
 /**
  * findLatestVersion
@@ -40,7 +34,6 @@ const getLatestDeclarationsVersion = () => {
       latestDeclarationVersions.ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT,
     ),
     CONFIRMATION_AND_ACKNOWLEDGEMENTS: findLatestVersion(CONFIRMATION_AND_ACKNOWLEDGEMENTS, latestDeclarationVersions.CONFIRMATION_AND_ACKNOWLEDGEMENTS),
-    HOW_YOUR_DATA_WILL_BE_USED: findLatestVersion(HOW_YOUR_DATA_WILL_BE_USED, latestDeclarationVersions.HOW_YOUR_DATA_WILL_BE_USED),
   };
 };
 

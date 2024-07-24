@@ -17,7 +17,6 @@ describe('server/constants/declarations/versions', () => {
         ANTI_BRIBERY_CODE_OF_CONDUCT: '1',
         ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: '1',
         CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
-        HOW_YOUR_DATA_WILL_BE_USED: '1',
       },
     ];
 
