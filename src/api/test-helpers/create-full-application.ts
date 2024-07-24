@@ -5,6 +5,7 @@ import totalContractValueTestHelper from './total-contract-value';
 import createAnEligibility from '../helpers/create-an-eligibility';
 import createABroker from '../helpers/create-a-broker';
 import createABuyer from '../helpers/create-a-buyer';
+import createADeclaration from '../helpers/create-a-declaration';
 import createAPolicy from '../helpers/create-a-policy';
 import createACompany from '../helpers/create-a-company';
 import createAnExportContract from '../helpers/create-an-export-contract';
@@ -77,6 +78,8 @@ export const createFullApplication = async (context: Context, policyType?: strin
   // create a buyer and associate with the application.
   const { buyer } = await createABuyer(context, country.id, application.id);
 
+  const declaration = await createADeclaration(context, application.id);
+
   // create a policy and associate with the application.
   const { policy: createdPolicy } = await createAPolicy(context, application.id);
 
@@ -112,6 +115,9 @@ export const createFullApplication = async (context: Context, policyType?: strin
       },
       company: {
         connect: { id: company.id },
+      },
+      declaration: {
+        connect: { id: declaration.id },
       },
       eligibility: {
         connect: { id: eligibility.id },
@@ -185,9 +191,9 @@ export const createFullApplication = async (context: Context, policyType?: strin
     query: 'id',
   })) as ApplicationBusiness;
 
-  const declaration = (await context.query.Declaration.updateOne({
+  const updatedDeclaration = (await context.query.Declaration.updateOne({
     where: {
-      id: application.declaration.id,
+      id: declaration.id,
     },
     data: mockApplicationDeclaration,
     query: 'id hasAntiBriberyCodeOfConduct',
@@ -206,7 +212,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
     business,
     buyer,
     company,
-    declaration,
+    declaration: updatedDeclaration,
     exportContract,
     eligibility,
     policy,
