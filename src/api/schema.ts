@@ -836,13 +836,6 @@ export const lists = {
         db: { nativeType: 'VarChar(3)' },
       }),
     },
-    hooks: {
-      afterOperation: async ({ item, context }) => {
-        if (item?.applicationId) {
-          await updateApplication.timestamp(context, item.applicationId);
-        }
-      },
-    },
     access: allowAll,
   }),
   Page: list({

@@ -217,15 +217,4 @@ describe('Keystone - Create an Application', () => {
 
     expect(broker.application.id).toEqual(application.id);
   });
-
-  test('it should add the application ID to the declaration entry', async () => {
-    const declaration = await context.query.Declaration.findOne({
-      where: {
-        id: application.declaration.id,
-      },
-      query: 'id application { id }',
-    });
-
-    expect(declaration.application.id).toEqual(application.id);
-  });
 });

@@ -2450,13 +2450,6 @@ var lists = {
         db: { nativeType: "VarChar(3)" }
       })
     },
-    hooks: {
-      afterOperation: async ({ item, context }) => {
-        if (item?.applicationId) {
-          await update_application_default.timestamp(context, item.applicationId);
-        }
-      }
-    },
     access: import_access.allowAll
   }),
   Page: (0, import_core2.list)({
