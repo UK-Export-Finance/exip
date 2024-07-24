@@ -31,8 +31,6 @@ const completeDeclarations = ({ hasAntiBriberyCodeOfConduct = true, exportingWit
   }
 
   cy.completeAndSubmitDeclarationConfirmationAndAcknowledgements();
-
-  cy.completeAndSubmitDeclarationHowYourDataWillBeUsed();
 };
 
 export default completeDeclarations;

@@ -8,7 +8,6 @@ const {
     CONFIDENTIALITY,
     ANTI_BRIBERY: { ROOT: ANTI_BRIBERY_ROOT, CODE_OF_CONDUCT, EXPORTING_WITH_CODE_OF_CONDUCT },
     CONFIRMATION_AND_ACKNOWLEDGEMENTS,
-    HOW_YOUR_DATA_WILL_BE_USED,
   },
 } = INSURANCE_ROUTES;
 
@@ -89,14 +88,6 @@ context('Insurance - no access to application page - signed in - declarations pa
 
     it(`should redirect to ${NO_ACCESS_TO_APPLICATION} when navigating to the Declarations - Confirmation and acknowledgements page directly`, () => {
       const url = `${insuranceRoute}/${firstApplicationReferenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
-
-      cy.navigateToUrl(url);
-
-      cy.assertUrl(cannotAccessUrl);
-    });
-
-    it(`should redirect to ${NO_ACCESS_TO_APPLICATION} when navigating to the Declarations - How your data will be used page directly`, () => {
-      const url = `${insuranceRoute}/${firstApplicationReferenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`;
 
       cy.navigateToUrl(url);
 

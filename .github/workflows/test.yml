@@ -251,7 +251,6 @@ jobs:
             'declarations/anti-bribery/**/*.spec.js',
             'declarations/confidentiality/**/*.spec.js',
             'declarations/confirmation-and-acknowledgements/**/*.spec.js',
-            'declarations/how-your-data-will-be-used/**/*.spec.js',
             'eligibility/*.spec.js',
             'eligibility/buyer-country/**/*.spec.js',
             'eligibility/cannot-apply/**/*.spec.js',

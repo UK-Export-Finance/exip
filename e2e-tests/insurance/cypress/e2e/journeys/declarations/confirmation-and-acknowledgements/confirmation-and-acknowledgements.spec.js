@@ -14,12 +14,12 @@ const { taskList } = partials.insurancePartials;
 const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS;
 
 const {
-  ROOT: INSURANCE_ROOT,
+  APPLICATION_SUBMITTED,
   DECLARATIONS: {
-    HOW_YOUR_DATA_WILL_BE_USED,
     ANTI_BRIBERY: { EXPORTING_WITH_CODE_OF_CONDUCT },
     CONFIRMATION_AND_ACKNOWLEDGEMENTS,
   },
+  ROOT: INSURANCE_ROOT,
 } = INSURANCE_ROUTES;
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIRMATION_ACKNOWLEDGEMENTS;
@@ -39,6 +39,8 @@ context(
         referenceNumber = refNumber;
 
         cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+
+        cy.completeAndSubmitCheckYourAnswers();
 
         // go to the page we want to test.
         taskList.submitApplication.tasks.declarationsAndSubmit.link().click();
@@ -136,22 +138,14 @@ context(
       });
 
       describe('when submitting a fully completed form', () => {
-        it(`should redirect to ${HOW_YOUR_DATA_WILL_BE_USED}`, () => {
+        it(`should redirect to ${APPLICATION_SUBMITTED}`, () => {
           cy.navigateToUrl(url);
 
           cy.completeAndSubmitDeclarationConfirmationAndAcknowledgements();
 
-          const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`;
+          const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
 
           cy.assertUrl(expectedUrl);
-        });
-
-        describe('when going back to the page', () => {
-          it('should have the submitted value', () => {
-            cy.navigateToUrl(url);
-
-            cy.assertRadioOptionIsChecked(field.input());
-          });
         });
       });
     });

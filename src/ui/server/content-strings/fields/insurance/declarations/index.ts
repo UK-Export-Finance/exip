@@ -5,7 +5,7 @@ const { DECLARATIONS } = FIELD_IDS.INSURANCE;
 
 const { AGREE_CONFIDENTIALITY, AGREE_ANTI_BRIBERY } = DECLARATIONS;
 
-const { HAS_ANTI_BRIBERY_CODE_OF_CONDUCT, AGREE_CONFIRMATION_ACKNOWLEDGEMENTS, AGREE_HOW_YOUR_DATA_WILL_BE_USED } = DECLARATIONS;
+const { HAS_ANTI_BRIBERY_CODE_OF_CONDUCT, AGREE_CONFIRMATION_ACKNOWLEDGEMENTS } = DECLARATIONS;
 
 const CONFIRM_READ_AND_AGREE = "Confirm you've read and agree with";
 
@@ -42,20 +42,6 @@ export const DECLARATIONS_FIELDS = {
     LABEL: `${CONFIRM_READ_AND_AGREE} the confirmation and acknowledgements`,
     OPTION: {
       TEXT: `${HAVE_READ_AND_AGREED} the confirmation and acknowledgements`,
-      VALUE: true,
-    },
-  },
-  [AGREE_HOW_YOUR_DATA_WILL_BE_USED]: {
-    LABEL: `${CONFIRM_READ_AND_AGREE} how your data will be used`,
-    OPTION: {
-      TEXT: `${HAVE_READ_AND_AGREED} how my data will be used`,
-      VALUE: true,
-    },
-  },
-  [AGREE_CONFIRMATION_ACKNOWLEDGEMENTS]: {
-    LABEL: `${CONFIRM_READ_AND_AGREE} confirmation and acknowledgements`,
-    OPTION: {
-      TEXT: `${HAVE_READ_AND_AGREED} confirmation and acknowledgements`,
       VALUE: true,
     },
   },
