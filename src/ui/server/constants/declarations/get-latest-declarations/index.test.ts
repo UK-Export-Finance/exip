@@ -1,4 +1,4 @@
-import getLatestDeclarationVersion, { findLatestVersion } from '.';
+import getLatestDeclarationVersion, { getDeclarationContentStringsByVersionId } from '.';
 import VERSIONS from '../versions';
 import DECLARATIONS from '../../../content-strings/pages/insurance/declarations';
 
@@ -6,9 +6,9 @@ const { CONFIDENTIALITY, ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBER
   DECLARATIONS;
 
 describe('server/constants/declarations/get-latest-declarations', () => {
-  describe('findLatestVersion', () => {
+  describe('getDeclarationContentStringsByVersionId', () => {
     it('should find content strings by version', () => {
-      const result = findLatestVersion(CONFIDENTIALITY, VERSIONS[1].CONFIDENTIALITY);
+      const result = getDeclarationContentStringsByVersionId(CONFIDENTIALITY, VERSIONS[1].CONFIDENTIALITY);
 
       const [expected] = CONFIDENTIALITY.VERSIONS;
 

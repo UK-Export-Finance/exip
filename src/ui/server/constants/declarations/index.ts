@@ -1,8 +1,6 @@
 import VERSIONS from './versions';
 import getLatestDeclarationVersion from './get-latest-declarations';
 
-const LATEST_DECLARATIONS = getLatestDeclarationVersion();
-
 /**
  * DECLARATIONS
  * DECLARATION constants - declarations need to be versioned so we have a record of which version a user accepted.
@@ -11,5 +9,5 @@ const LATEST_DECLARATIONS = getLatestDeclarationVersion();
  */
 export const DECLARATIONS = {
   VERSIONS,
-  LATEST_DECLARATIONS,
+  LATEST_DECLARATIONS: getLatestDeclarationVersion(),
 };

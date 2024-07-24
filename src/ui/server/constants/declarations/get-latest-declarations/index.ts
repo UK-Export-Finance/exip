@@ -6,14 +6,14 @@ const { CONFIDENTIALITY, ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBER
   DECLARATIONS;
 
 /**
- * findLatestVersion
+ * getDeclarationContentStringsByVersionId
  * Finds the latest content strings for a specified declaration section
  * @param {ObjectType} declarationContentStrings: Content strings for specified declaration
  * @param {string} latestVersionNumber: latest version for specified section
  * @returns {Object} contentStrings: Content strings for specified version of declaration
  */
-export const findLatestVersion = (declarationContentStrings: ObjectType, latestVersionNumber: string) =>
-  declarationContentStrings.VERSIONS.find((contentStrings: ObjectType) => contentStrings.VERSION === latestVersionNumber);
+export const getDeclarationContentStringsByVersionId = (contentStrings: ObjectType, versionNumber: string) =>
+  contentStrings.VERSIONS.find((strings: ObjectType) => strings.VERSION === versionNumber);
 
 /**
  * getLatestDeclarationsVersion
@@ -22,18 +22,20 @@ export const findLatestVersion = (declarationContentStrings: ObjectType, latestV
  * @returns {Object} contentStrings for the latest version of declarations
  */
 const getLatestDeclarationsVersion = () => {
-  // get latest declaration versions
   const latestDeclarationVersions = VERSIONS[VERSIONS.length - 1];
 
   return {
-    CONFIDENTIALITY: findLatestVersion(CONFIDENTIALITY, latestDeclarationVersions.CONFIDENTIALITY),
-    ANTI_BRIBERY: findLatestVersion(ANTI_BRIBERY, latestDeclarationVersions.ANTI_BRIBERY),
-    ANTI_BRIBERY_CODE_OF_CONDUCT: findLatestVersion(ANTI_BRIBERY_CODE_OF_CONDUCT, latestDeclarationVersions.ANTI_BRIBERY_CODE_OF_CONDUCT),
-    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: findLatestVersion(
+    CONFIDENTIALITY: getDeclarationContentStringsByVersionId(CONFIDENTIALITY, latestDeclarationVersions.CONFIDENTIALITY),
+    ANTI_BRIBERY: getDeclarationContentStringsByVersionId(ANTI_BRIBERY, latestDeclarationVersions.ANTI_BRIBERY),
+    ANTI_BRIBERY_CODE_OF_CONDUCT: getDeclarationContentStringsByVersionId(ANTI_BRIBERY_CODE_OF_CONDUCT, latestDeclarationVersions.ANTI_BRIBERY_CODE_OF_CONDUCT),
+    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: getDeclarationContentStringsByVersionId(
       ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT,
       latestDeclarationVersions.ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT,
     ),
-    CONFIRMATION_AND_ACKNOWLEDGEMENTS: findLatestVersion(CONFIRMATION_AND_ACKNOWLEDGEMENTS, latestDeclarationVersions.CONFIRMATION_AND_ACKNOWLEDGEMENTS),
+    CONFIRMATION_AND_ACKNOWLEDGEMENTS: getDeclarationContentStringsByVersionId(
+      CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+      latestDeclarationVersions.CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+    ),
   };
 };
 
