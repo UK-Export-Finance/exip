@@ -9,7 +9,9 @@ const {
 
 const {
   INSURANCE: {
-    ACCOUNT: { SIGN_IN: { ROOT: SIGN_IN_ROOT } },
+    ACCOUNT: {
+      SIGN_IN: { ROOT: SIGN_IN_ROOT },
+    },
   },
 } = ROUTES;
 

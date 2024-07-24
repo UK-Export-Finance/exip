@@ -55,11 +55,7 @@ context('Cookies consent - initial/default', () => {
     });
 
     it('should render a link to cookies', () => {
-      cy.checkLink(
-        partials.cookieBanner.cookiesLink(),
-        COOKIES,
-        COOKIES_CONSENT.QUESTION.VIEW_COOKIES,
-      );
+      cy.checkLink(partials.cookieBanner.cookiesLink(), COOKIES, COOKIES_CONSENT.QUESTION.VIEW_COOKIES);
     });
 
     it(`should redirect to ${COOKIES} when clicking cookies link`, () => {

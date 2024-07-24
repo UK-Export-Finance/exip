@@ -1,10 +1,7 @@
 import dashboardPage from '../../../../../pages/insurance/dashboard';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
-const {
-  ROOT: INSURANCE_ROOT,
-  ALL_SECTIONS,
-} = INSURANCE_ROUTES;
+const { ROOT: INSURANCE_ROOT, ALL_SECTIONS } = INSURANCE_ROUTES;
 
 context('Insurance - Dashboard - Start new application button - As an Exporter, I want to start a new application from my dashboard', () => {
   const baseUrl = Cypress.config('baseUrl');

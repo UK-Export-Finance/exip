@@ -2,7 +2,9 @@ import application from '../../fixtures/application';
 import { POLICY as POLICY_FIELD_IDS } from '../../constants/field-ids/insurance/policy';
 import { EXPECTED_MULTI_LINE_STRING } from '../../constants';
 
-const { LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN } } = POLICY_FIELD_IDS;
+const {
+  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
+} = POLICY_FIELD_IDS;
 
 const { POLICY } = application;
 /**

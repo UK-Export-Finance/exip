@@ -9,15 +9,7 @@ const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ALL_SECTIONS;
 
-const {
-  ROOT,
-  ALL_SECTIONS,
-  ELIGIBILITY,
-  EXPORTER_BUSINESS,
-  YOUR_BUYER,
-  POLICY,
-  EXPORT_CONTRACT,
-} = INSURANCE_ROUTES;
+const { ROOT, ALL_SECTIONS, ELIGIBILITY, EXPORTER_BUSINESS, YOUR_BUYER, POLICY, EXPORT_CONTRACT } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -71,10 +63,7 @@ context('Insurance - All sections - new application', () => {
 
           const expectedText = TASKS.LIST.INITIAL_CHECKS.TASKS.ELIGIBILITY;
 
-          cy.checkText(
-            task.text(),
-            expectedText,
-          );
+          cy.checkText(task.text(), expectedText);
 
           cy.checkTaskEligibilityStatusIsComplete();
 
@@ -107,11 +96,7 @@ context('Insurance - All sections - new application', () => {
           const expectedHref = `${ROOT}/${referenceNumber}${EXPORTER_BUSINESS.ROOT}`;
           const expectedText = TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS;
 
-          cy.checkLink(
-            task.link(),
-            expectedHref,
-            expectedText,
-          );
+          cy.checkLink(task.link(), expectedHref, expectedText);
 
           cy.checkTaskBusinessStatusIsNotStartedYet();
         });
@@ -122,11 +107,7 @@ context('Insurance - All sections - new application', () => {
           const expectedText = TASKS.LIST.PREPARE_APPLICATION.TASKS.BUYER;
           const expectedHref = `${ROOT}/${referenceNumber}${YOUR_BUYER.ROOT}`;
 
-          cy.checkLink(
-            task.link(),
-            expectedHref,
-            expectedText,
-          );
+          cy.checkLink(task.link(), expectedHref, expectedText);
 
           cy.checkTaskBuyerStatusIsNotStartedYet();
         });
@@ -137,11 +118,7 @@ context('Insurance - All sections - new application', () => {
           const expectedHref = `${ROOT}/${referenceNumber}${POLICY.ROOT}`;
           const expectedText = TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY;
 
-          cy.checkLink(
-            task.link(),
-            expectedHref,
-            expectedText,
-          );
+          cy.checkLink(task.link(), expectedHref, expectedText);
 
           cy.checkTaskPolicyStatusIsNotStartedYet();
         });
@@ -152,11 +129,7 @@ context('Insurance - All sections - new application', () => {
           const expectedHref = `${ROOT}/${referenceNumber}${EXPORT_CONTRACT.ROOT}`;
           const expectedText = TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORT_CONTRACT;
 
-          cy.checkLink(
-            task.link(),
-            expectedHref,
-            expectedText,
-          );
+          cy.checkLink(task.link(), expectedHref, expectedText);
 
           cy.checkTaskExportContractStatusIsNotStartedYet();
         });

@@ -2,7 +2,9 @@ import { ATTRIBUTES } from '../../../../constants';
 import { TASKS } from '../../../../content-strings';
 
 const { CLASSES } = ATTRIBUTES;
-const { STATUS: { CANNOT_START } } = TASKS;
+const {
+  STATUS: { CANNOT_START },
+} = TASKS;
 
 /**
  * checkCannotStartTaskStatus
@@ -12,10 +14,7 @@ const { STATUS: { CANNOT_START } } = TASKS;
 const checkCannotStartTaskStatus = (selector) => {
   cy.checkText(selector(), CANNOT_START);
 
-  cy.checkClassName(
-    selector(),
-    `${CLASSES.TAGS.ROOT} ${CLASSES.TAGS.GREY}`,
-  );
+  cy.checkClassName(selector(), `${CLASSES.TAGS.ROOT} ${CLASSES.TAGS.GREY}`);
 };
 
 export default checkCannotStartTaskStatus;

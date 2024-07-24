@@ -1,26 +1,15 @@
-import {
-  backLink, autoCompleteField, field, summaryList,
-} from '../../../../../../pages/shared';
+import { backLink, autoCompleteField, field, summaryList } from '../../../../../../pages/shared';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import { LINKS } from '../../../../../../content-strings';
 import { BRA } from '../../../../../../fixtures/countries';
 
 const {
-  ELIGIBILITY: {
-    MAX_AMOUNT_OWED,
-    PERCENTAGE_OF_COVER,
-    BUYER_COUNTRY,
-  },
+  ELIGIBILITY: { MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, BUYER_COUNTRY },
   QUOTE,
 } = FIELD_IDS;
 
 const {
-  QUOTE: {
-    YOUR_QUOTE,
-    TELL_US_ABOUT_YOUR_POLICY_CHANGE,
-    CHECK_YOUR_ANSWERS,
-    BUYER_COUNTRY_CHANGE,
-  },
+  QUOTE: { YOUR_QUOTE, TELL_US_ABOUT_YOUR_POLICY_CHANGE, CHECK_YOUR_ANSWERS, BUYER_COUNTRY_CHANGE },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -59,11 +48,7 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it('renders a back link with correct url', () => {
-      cy.checkLink(
-        backLink(),
-        url,
-        LINKS.BACK,
-      );
+      cy.checkLink(backLink(), url, LINKS.BACK);
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
@@ -101,11 +86,7 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it('renders a back link with correct url', () => {
-      cy.checkLink(
-        backLink(),
-        url,
-        LINKS.BACK,
-      );
+      cy.checkLink(backLink(), url, LINKS.BACK);
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
@@ -142,11 +123,7 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it('renders a back link with correct url', () => {
-      cy.checkLink(
-        backLink(),
-        url,
-        LINKS.BACK,
-      );
+      cy.checkLink(backLink(), url, LINKS.BACK);
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {

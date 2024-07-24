@@ -2,10 +2,9 @@ import createAnExportContractAgentServiceCharge from '.';
 import { APPLICATION } from '../../constants';
 import createAnExportContract from '../create-an-export-contract';
 import { Application, ApplicationExportContractAgentService, Context } from '../../types';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
-
-const invalidId = 'invalid-id';
 
 const assertError = (err) => {
   const errorString = String(err);
@@ -48,7 +47,7 @@ describe('helpers/create-an-export-contract-agent-service-charge', () => {
   describe('when an invalid agentServiceId ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createAnExportContractAgentServiceCharge(context, invalidId);
+        await createAnExportContractAgentServiceCharge(context, mockInvalidId);
       } catch (err) {
         assertError(err);
       }
@@ -59,7 +58,7 @@ describe('helpers/create-an-export-contract-agent-service-charge', () => {
     test('it should throw an error', async () => {
       try {
         // pass empty context object to force an error
-        await createAnExportContractAgentServiceCharge({}, invalidId);
+        await createAnExportContractAgentServiceCharge({}, mockInvalidId);
       } catch (err) {
         assertError(err);
       }

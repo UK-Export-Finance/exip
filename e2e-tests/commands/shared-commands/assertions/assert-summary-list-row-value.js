@@ -9,15 +9,9 @@
  */
 const assertSummaryListRowValue = (summaryList, fieldId, expected, index) => {
   if (index) {
-    cy.checkText(
-      summaryList.field(fieldId).value().eq(index),
-      expected,
-    );
+    cy.checkText(summaryList.field(fieldId).value().eq(index), expected);
   } else {
-    cy.checkText(
-      summaryList.field(fieldId).value(),
-      expected,
-    );
+    cy.checkText(summaryList.field(fieldId).value(), expected);
   }
 };
 

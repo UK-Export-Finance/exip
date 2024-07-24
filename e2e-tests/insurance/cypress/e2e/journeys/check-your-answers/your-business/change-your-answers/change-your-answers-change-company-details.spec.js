@@ -1,39 +1,20 @@
-import {
-  field, status, summaryList,
-} from '../../../../../../../pages/shared';
+import { field, status, summaryList } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
-import {
-  VALID_PHONE_NUMBERS,
-  WEBSITE_EXAMPLES,
-} from '../../../../../../../constants';
+import { VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import application from '../../../../../../../fixtures/application';
 
 const {
   ROOT,
-  CHECK_YOUR_ANSWERS: {
-    YOUR_BUSINESS,
-  },
-  EXPORTER_BUSINESS: {
-    ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE,
-    COMPANY_DETAILS_CHECK_AND_CHANGE,
-    COMPANY_DETAILS_CHANGE,
-  },
+  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS },
+  EXPORTER_BUSINESS: { ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, COMPANY_DETAILS_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: {
-      TRADING_ADDRESS,
-      HAS_DIFFERENT_TRADING_NAME,
-      DIFFERENT_TRADING_NAME,
-      WEBSITE,
-      PHONE_NUMBER,
-    },
-    ALTERNATIVE_TRADING_ADDRESS: {
-      FULL_ADDRESS,
-    },
+    YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER },
+    ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
   },
 } = INSURANCE_FIELD_IDS;
 

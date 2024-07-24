@@ -1,8 +1,6 @@
 import { cookiesPage, cookiesSavedPage } from '../../../../../pages';
 import partials from '../../../../../partials';
-import {
-  BUTTONS, ERROR_MESSAGES, FIELDS, PAGES,
-} from '../../../../../content-strings';
+import { BUTTONS, ERROR_MESSAGES, FIELDS, PAGES } from '../../../../../content-strings';
 import { FIELD_IDS, ROUTES, COOKIE } from '../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.COOKIES_PAGE;
@@ -18,9 +16,7 @@ const {
   },
 } = ROUTES;
 
-const {
-  OPTIONAL_COOKIES: FIELD_ID,
-} = FIELD_IDS;
+const { OPTIONAL_COOKIES: FIELD_ID } = FIELD_IDS;
 
 const { accept, reject } = cookiesPage[FIELD_ID];
 
@@ -199,11 +195,7 @@ context('Cookies page - Quote', () => {
         it('should render a link button with the URL that was visited prior to submitting an answer in the cookies page', () => {
           const expectedUrl = buyerCountryUrl;
 
-          cy.checkLink(
-            cookiesSavedPage.returnToServiceLinkButton(),
-            expectedUrl,
-            BUTTONS.RETURN_TO_SERVICE,
-          );
+          cy.checkLink(cookiesSavedPage.returnToServiceLinkButton(), expectedUrl, BUTTONS.RETURN_TO_SERVICE);
         });
 
         it('should NOT render the cookie consent banner', () => {
@@ -238,11 +230,7 @@ context('Cookies page - Quote', () => {
         it('should render a link button with the URL that was visited prior to submitting an answer in the cookies page', () => {
           const expectedUrl = buyerCountryUrl;
 
-          cy.checkLink(
-            cookiesSavedPage.returnToServiceLinkButton(),
-            expectedUrl,
-            BUTTONS.RETURN_TO_SERVICE,
-          );
+          cy.checkLink(cookiesSavedPage.returnToServiceLinkButton(), expectedUrl, BUTTONS.RETURN_TO_SERVICE);
         });
 
         it('should NOT render the cookie consent banner', () => {
@@ -271,11 +259,7 @@ context('Cookies page - Quote', () => {
         it(`should render a link button with the URL to ${SIGN_IN_ROOT}`, () => {
           const expectedUrl = SIGN_IN_ROOT;
 
-          cy.checkLink(
-            cookiesSavedPage.returnToServiceLinkButton(),
-            expectedUrl,
-            BUTTONS.RETURN_TO_SERVICE,
-          );
+          cy.checkLink(cookiesSavedPage.returnToServiceLinkButton(), expectedUrl, BUTTONS.RETURN_TO_SERVICE);
         });
       });
 
@@ -292,11 +276,7 @@ context('Cookies page - Quote', () => {
         it(`should render a link button with the URL to ${SIGN_IN_ROOT}`, () => {
           const expectedUrl = SIGN_IN_ROOT;
 
-          cy.checkLink(
-            cookiesSavedPage.returnToServiceLinkButton(),
-            expectedUrl,
-            BUTTONS.RETURN_TO_SERVICE,
-          );
+          cy.checkLink(cookiesSavedPage.returnToServiceLinkButton(), expectedUrl, BUTTONS.RETURN_TO_SERVICE);
         });
       });
     });

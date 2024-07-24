@@ -3,9 +3,7 @@ import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insuranc
 import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
 import application from '../../../../../../../fixtures/application';
 
-const {
-  CONNECTION_WITH_BUYER_DESCRIPTION,
-} = YOUR_BUYER_FIELD_IDS;
+const { CONNECTION_WITH_BUYER_DESCRIPTION } = YOUR_BUYER_FIELD_IDS;
 
 const {
   YOUR_BUYER: { CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER_ROUTE },

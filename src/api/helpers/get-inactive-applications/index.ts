@@ -6,7 +6,7 @@ const { IN_PROGRESS } = APPLICATION.STATUS;
 
 /**
  * getInactiveApplications
- * gets inactive applications - not updated for 30 days
+ * gets inactive applications - not updated for SUBMISSION_DEADLINE_IN_DAYS
  * returns array of application ids and statuses
  * @param {Context} context
  * @returns {Promise<Application[]>} Array of application ids and status

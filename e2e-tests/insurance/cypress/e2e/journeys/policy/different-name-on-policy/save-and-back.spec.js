@@ -7,20 +7,14 @@ const { POLICY_CONTACT } = application;
 
 const {
   ROOT: INSURANCE_ROOT,
-  POLICY: {
-    DIFFERENT_NAME_ON_POLICY,
-  },
+  POLICY: { DIFFERENT_NAME_ON_POLICY },
 } = INSURANCE_ROUTES;
 
 const {
   POLICY: {
-    DIFFERENT_NAME_ON_POLICY: {
-      POSITION,
-    },
+    DIFFERENT_NAME_ON_POLICY: { POSITION },
   },
-  ACCOUNT: {
-    FIRST_NAME, LAST_NAME, EMAIL,
-  },
+  ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
 } = INSURANCE_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');

@@ -3,12 +3,7 @@ import { field as fieldSelector } from '../../../pages/shared';
 import mockApplication from '../../../fixtures/application';
 
 const {
-  COMPANY_OR_ORGANISATION: {
-    NAME,
-    ADDRESS,
-    REGISTRATION_NUMBER,
-    WEBSITE,
-  },
+  COMPANY_OR_ORGANISATION: { NAME, ADDRESS, REGISTRATION_NUMBER, WEBSITE },
 } = FIELD_IDS.INSURANCE.YOUR_BUYER;
 
 const { BUYER } = mockApplication;
@@ -19,10 +14,7 @@ const { BUYER } = mockApplication;
  * @param {String} buyerName: Buyer name
  * @param {String} buyerAddress: Buyer address
  */
-const completeCompanyOrOrganisationForm = ({
-  buyerName = BUYER[NAME],
-  buyerAddress = BUYER[ADDRESS],
-}) => {
+const completeCompanyOrOrganisationForm = ({ buyerName = BUYER[NAME], buyerAddress = BUYER[ADDRESS] }) => {
   cy.keyboardInput(fieldSelector(NAME).input(), buyerName);
 
   const textareaField = {

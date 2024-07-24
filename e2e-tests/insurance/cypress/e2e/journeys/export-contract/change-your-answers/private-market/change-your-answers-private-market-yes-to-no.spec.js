@@ -14,78 +14,81 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Export contract - Change your answers - Private market - Yes to no - As an exporter, I want to check my answers for the questions concerning my goods/services, So that I ensure I am sending the right details regarding the product or service I am exporting', () => {
-  let referenceNumber;
-  let checkYourAnswersUrl;
+context(
+  'Insurance - Export contract - Change your answers - Private market - Yes to no - As an exporter, I want to check my answers for the questions concerning my goods/services, So that I ensure I am sending the right details regarding the product or service I am exporting',
+  () => {
+    let referenceNumber;
+    let checkYourAnswersUrl;
 
-  before(() => {
-    cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
+    before(() => {
+      cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-      cy.completeExportContractSection({
-        totalContractValueOverThreshold: true,
-        attemptedPrivateMarketCover: true,
-      });
+        cy.completeExportContractSection({
+          totalContractValueOverThreshold: true,
+          attemptedPrivateMarketCover: true,
+        });
 
-      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
-      cy.assertUrl(checkYourAnswersUrl);
-    });
-  });
-
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
-
-  describe(FIELD_ID, () => {
-    describe('when clicking the `change` link', () => {
-      it(`should redirect to ${PRIVATE_MARKET_CHANGE}`, () => {
-        cy.navigateToUrl(checkYourAnswersUrl);
-
-        summaryList.field(FIELD_ID).changeLink().click();
-
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: PRIVATE_MARKET_CHANGE, fieldId: FIELD_ID });
+        cy.assertUrl(checkYourAnswersUrl);
       });
     });
 
-    describe('after changing the answer from yes to no', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(checkYourAnswersUrl);
+    beforeEach(() => {
+      cy.saveSession();
+    });
 
-        summaryList.field(FIELD_ID).changeLink().click();
+    after(() => {
+      cy.deleteApplication(referenceNumber);
+    });
 
-        cy.completeAndSubmitPrivateMarketForm({
-          attemptedPrivateMarketCover: false,
+    describe(FIELD_ID, () => {
+      describe('when clicking the `change` link', () => {
+        it(`should redirect to ${PRIVATE_MARKET_CHANGE}`, () => {
+          cy.navigateToUrl(checkYourAnswersUrl);
+
+          summaryList.field(FIELD_ID).changeLink().click();
+
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: PRIVATE_MARKET_CHANGE, fieldId: FIELD_ID });
         });
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId: FIELD_ID });
-      });
+      describe('after changing the answer from yes to no', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(checkYourAnswersUrl);
 
-      it(`should render the new answer with no ${DECLINED_DESCRIPTION} row`, () => {
-        checkSummaryList[FIELD_ID]({ shouldRender: true, isYes: false });
-        checkSummaryList[DECLINED_DESCRIPTION]({ shouldRender: false });
-      });
-
-      describe(`when changing the answer again from no to yes and going back to ${DECLINED_BY_PRIVATE_MARKET}`, () => {
-        it(`should have an empty ${DECLINED_DESCRIPTION} value`, () => {
           summaryList.field(FIELD_ID).changeLink().click();
 
           cy.completeAndSubmitPrivateMarketForm({
-            attemptedPrivateMarketCover: true,
+            attemptedPrivateMarketCover: false,
           });
+        });
 
-          cy.checkTextareaValue({
-            fieldId: DECLINED_DESCRIPTION,
-            expectedValue: '',
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId: FIELD_ID });
+        });
+
+        it(`should render the new answer with no ${DECLINED_DESCRIPTION} row`, () => {
+          checkSummaryList[FIELD_ID]({ shouldRender: true, isYes: false });
+          checkSummaryList[DECLINED_DESCRIPTION]({ shouldRender: false });
+        });
+
+        describe(`when changing the answer again from no to yes and going back to ${DECLINED_BY_PRIVATE_MARKET}`, () => {
+          it(`should have an empty ${DECLINED_DESCRIPTION} value`, () => {
+            summaryList.field(FIELD_ID).changeLink().click();
+
+            cy.completeAndSubmitPrivateMarketForm({
+              attemptedPrivateMarketCover: true,
+            });
+
+            cy.checkTextareaValue({
+              fieldId: DECLINED_DESCRIPTION,
+              expectedValue: '',
+            });
           });
         });
       });
     });
-  });
-});
+  },
+);

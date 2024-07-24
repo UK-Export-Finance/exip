@@ -12,9 +12,7 @@ const {
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: {
-    COMPANY_DETAILS,
-  },
+  EXPORTER_BUSINESS: { COMPANY_DETAILS },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');

@@ -2,11 +2,13 @@ import { FIELDS } from '../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import fieldAssertions from './assertions';
 
-const { CURRENCY: { ALTERNATIVE_CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
-
 import renderingAssertions from './rendering';
 import formSubmissionAssertions from './form-submission';
 import prefixAssertions from './prefix';
+
+const {
+  CURRENCY: { ALTERNATIVE_CURRENCY_CODE },
+} = INSURANCE_FIELD_IDS;
 
 /**
  * assertCurrencyFormFields
@@ -18,9 +20,7 @@ import prefixAssertions from './prefix';
  * @param {Boolean} gbpCurrencyCheckedByDefault: GBP currency should be checked by default
  * @returns {Object} Rendering and form submission assertion functions
  */
-export const assertCurrencyFormFields = ({
-  legend, hint, errors, fieldId, gbpCurrencyCheckedByDefault,
-}) => {
+export const assertCurrencyFormFields = ({ legend, hint, errors, fieldId, gbpCurrencyCheckedByDefault }) => {
   const assertions = fieldAssertions({
     legend,
     hint,

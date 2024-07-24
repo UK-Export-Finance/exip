@@ -10,10 +10,7 @@ import application from '../../../../../../../../fixtures/application';
 
 const {
   ROOT,
-  POLICY: {
-    TYPE_OF_POLICY_CHECK_AND_CHANGE,
-    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE,
-  },
+  POLICY: { TYPE_OF_POLICY_CHECK_AND_CHANGE, SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE },
   CHECK_YOUR_ANSWERS,
 } = INSURANCE_ROUTES;
 
@@ -96,7 +93,7 @@ context('Insurance - Change your answers - Policy - Change multiple to single po
       it(`should redirect to ${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, () => {
         cy.navigateToUrl(`${checkAndChangeTotalContractValueUrl}#heading`);
 
-        cy.completeAndSubmitTotalContractValueForm({ });
+        cy.completeAndSubmitTotalContractValueForm({});
 
         const expectedUrl = `${checkYourAnswersUrl}#heading`;
 
@@ -132,7 +129,10 @@ context('Insurance - Change your answers - Policy - Change multiple to single po
         // check the change link
         summaryList.field(TOTAL_CONTRACT_VALUE).changeLink().click();
         cy.assertChangeAnswersPageUrl({
-          referenceNumber, route: SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE, fieldId: TOTAL_CONTRACT_VALUE, fragmentSuffix: 'label',
+          referenceNumber,
+          route: SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE,
+          fieldId: TOTAL_CONTRACT_VALUE,
+          fragmentSuffix: 'label',
         });
       });
     });

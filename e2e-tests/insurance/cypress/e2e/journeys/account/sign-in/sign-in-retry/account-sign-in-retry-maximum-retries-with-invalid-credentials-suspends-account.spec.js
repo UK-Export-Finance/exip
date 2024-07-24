@@ -9,7 +9,9 @@ const {
   },
 } = ROUTES;
 
-const { ACCOUNT: { PASSWORD } } = INSURANCE_FIELD_IDS;
+const {
+  ACCOUNT: { PASSWORD },
+} = INSURANCE_FIELD_IDS;
 
 context('Insurance - Account - Sign in - Submitting the form with invalid credentials multiple times should suspend the account', () => {
   const baseUrl = Cypress.config('baseUrl');

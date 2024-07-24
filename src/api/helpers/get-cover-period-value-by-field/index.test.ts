@@ -24,7 +24,7 @@ describe('helpers/get-cover-period-value-by-field', () => {
     }
 
     // create a new coverPeriod
-    coverPeriod = await coverPeriodTestHelper.create({ context });
+    coverPeriod = await coverPeriodTestHelper.create(context);
   });
 
   it('should return a coverPeriod by ID', async () => {

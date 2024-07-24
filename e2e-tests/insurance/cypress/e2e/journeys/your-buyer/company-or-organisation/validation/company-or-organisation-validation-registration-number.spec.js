@@ -5,16 +5,12 @@ import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insuranc
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
 
 const {
-  COMPANY_OR_ORGANISATION: {
-    REGISTRATION_NUMBER: FIELD_ID,
-  },
+  COMPANY_OR_ORGANISATION: { REGISTRATION_NUMBER: FIELD_ID },
 } = FIELD_IDS;
 
 const {
   INSURANCE: {
-    YOUR_BUYER: {
-      COMPANY_OR_ORGANISATION: COMPANY_OR_ORG_ERROR_MESSAGES,
-    },
+    YOUR_BUYER: { COMPANY_OR_ORGANISATION: COMPANY_OR_ORG_ERROR_MESSAGES },
   },
 } = ERROR_MESSAGES;
 

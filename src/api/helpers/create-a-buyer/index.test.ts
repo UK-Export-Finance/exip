@@ -1,12 +1,10 @@
 import createABuyer from '.';
-import { mockCountries } from '../../test-mocks';
+import { mockCountries, mockInvalidId } from '../../test-mocks';
 import { Application, Context } from '../../types';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import getCountryByField from '../get-country-by-field';
 import applications from '../../test-helpers/applications';
 import { GBP } from '../../constants';
-
-const invalidId = 'invalid-id';
 
 const assertError = (err) => {
   const errorString = String(err);
@@ -84,7 +82,7 @@ describe('helpers/create-a-buyer', () => {
   describe('when an invalid country ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createABuyer(context, invalidId, application.id);
+        await createABuyer(context, mockInvalidId, application.id);
       } catch (err) {
         assertError(err);
       }
@@ -94,7 +92,7 @@ describe('helpers/create-a-buyer', () => {
   describe('when an invalid application ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createABuyer(context, country.id, invalidId);
+        await createABuyer(context, country.id, mockInvalidId);
       } catch (err) {
         assertError(err);
       }

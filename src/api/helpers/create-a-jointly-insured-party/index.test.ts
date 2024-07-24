@@ -1,10 +1,9 @@
 import createAJointlyInsuredParty from '.';
 import createAPolicy from '../create-a-policy';
 import { Application, ApplicationPolicy, Context } from '../../types';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
-
-const invalidId = 'invalid-id';
 
 const assertError = (err) => {
   const errorString = String(err);
@@ -47,7 +46,7 @@ describe('helpers/create-a-jointly-insured-party', () => {
   describe('when an invalid policy ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createAJointlyInsuredParty(context, invalidId);
+        await createAJointlyInsuredParty(context, mockInvalidId);
       } catch (err) {
         assertError(err);
       }

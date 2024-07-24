@@ -25,9 +25,7 @@ const {
 const {
   INSURANCE: {
     POLICY: {
-      CONTRACT_POLICY: {
-        MULTIPLE: CONTRACT_ERROR_MESSAGES,
-      },
+      CONTRACT_POLICY: { MULTIPLE: CONTRACT_ERROR_MESSAGES },
     },
   },
 } = ERROR_MESSAGES;

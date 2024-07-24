@@ -7,7 +7,7 @@ const ROOT = {
   PAGE_TITLE: 'Tell us about your export contract',
   LIST: {
     INTRO: "We'll ask you questions about:",
-    ITEMS: ['what goods and services you want to export', "how you'll get paid", 'your agent (if you have one)', 'your end buyer (if you have one)'],
+    ITEMS: ['what goods and services you want to export', "how you'll get paid", 'your agent (if you have one)'],
   },
   OUTRO:
     "We may also ask you if you've tried to get credit insurance through the private market. This is because we're not in competition with the private insurance market but are here to help when they cannot.",
@@ -35,8 +35,9 @@ const DECLINED_BY_PRIVATE_MARKET = {
 
 const AGENT = {
   ...SHARED,
-  PAGE_TITLE: 'Did anyone help you win your export contract?',
-  HINT: 'This is usually an agent who helped with tendering, connecting you to the buyer or setting up the contract.',
+  PAGE_TITLE:
+    'Is there an Agent who has been, or will be, directly or indirectly involved in the process of tendering for, or seeking the award of, the export contract(s) or any related agreement?',
+  HINT: 'An "Agent" is any agent, intermediary, consultant or other person who has been, or will be, instructed by you or on your behalf',
 };
 
 const AGENT_DETAILS = {

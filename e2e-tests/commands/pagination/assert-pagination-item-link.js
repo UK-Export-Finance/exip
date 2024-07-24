@@ -17,11 +17,7 @@ const assertPaginationItemLink = ({ index, pageNumber }) => {
     expectedPageNumber = index + 1;
   }
 
-  checkLink(
-    pagination.listItemLink(index),
-    `${DASHBOARD_PAGE}/${expectedPageNumber}`,
-    String(expectedPageNumber),
-  );
+  checkLink(pagination.listItemLink(index), `${DASHBOARD_PAGE}/${expectedPageNumber}`, String(expectedPageNumber));
 };
 
 export default assertPaginationItemLink;

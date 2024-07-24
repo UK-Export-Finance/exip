@@ -1,10 +1,5 @@
 import { BUTTONS, LINKS, ORGANISATION } from '../content-strings';
-import {
-  backLink as backLinkSelector,
-  form,
-  heading,
-  submitButton,
-} from '../pages/shared';
+import { backLink as backLinkSelector, form, heading, submitButton } from '../pages/shared';
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -96,7 +91,7 @@ const corePageChecks = ({
   }
 
   if (assertCookies) {
-  // check analytics cookie banner
+    // check analytics cookie banner
     cy.checkAnalyticsCookiesConsentAndAccept({ isInsurancePage });
     cy.rejectAnalyticsCookies();
   }

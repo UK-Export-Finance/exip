@@ -13,12 +13,7 @@ import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import { GBP_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
 
 const {
-  ELIGIBILITY: {
-    CURRENCY,
-    MAX_AMOUNT_OWED,
-    PERCENTAGE_OF_COVER,
-    CREDIT_PERIOD,
-  },
+  ELIGIBILITY: { CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, CREDIT_PERIOD },
 } = FIELD_IDS;
 
 context('Tell us about the multiple policy you need - form validation', () => {
@@ -52,48 +47,24 @@ context('Tell us about the multiple policy you need - form validation', () => {
       cy.assertErrorSummaryListLength(TOTAL_REQUIRED_FIELDS);
 
       // currency
-      cy.checkText(
-        partials.errorSummaryListItems().eq(0),
-        ERROR_MESSAGES.ELIGIBILITY[CURRENCY].IS_EMPTY,
-      );
+      cy.checkText(partials.errorSummaryListItems().eq(0), ERROR_MESSAGES.ELIGIBILITY[CURRENCY].IS_EMPTY);
 
-      cy.checkText(
-        fieldSelector(CURRENCY).errorMessage(),
-        `Error: ${ERROR_MESSAGES.ELIGIBILITY[CURRENCY].IS_EMPTY}`,
-      );
+      cy.checkText(fieldSelector(CURRENCY).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[CURRENCY].IS_EMPTY}`);
 
       // max amount owed
-      cy.checkText(
-        partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].IS_EMPTY,
-      );
+      cy.checkText(partials.errorSummaryListItems().eq(1), ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].IS_EMPTY);
 
-      cy.checkText(
-        fieldSelector(MAX_AMOUNT_OWED).errorMessage(),
-        `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].IS_EMPTY}`,
-      );
+      cy.checkText(fieldSelector(MAX_AMOUNT_OWED).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].IS_EMPTY}`);
 
       // percentage of cover
-      cy.checkText(
-        partials.errorSummaryListItems().eq(2),
-        ERROR_MESSAGES.ELIGIBILITY[PERCENTAGE_OF_COVER].IS_EMPTY,
-      );
+      cy.checkText(partials.errorSummaryListItems().eq(2), ERROR_MESSAGES.ELIGIBILITY[PERCENTAGE_OF_COVER].IS_EMPTY);
 
-      cy.checkText(
-        fieldSelector(PERCENTAGE_OF_COVER).errorMessage(),
-        `Error: ${ERROR_MESSAGES.ELIGIBILITY[PERCENTAGE_OF_COVER].IS_EMPTY}`,
-      );
+      cy.checkText(fieldSelector(PERCENTAGE_OF_COVER).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[PERCENTAGE_OF_COVER].IS_EMPTY}`);
 
       // credit period
-      cy.checkText(
-        partials.errorSummaryListItems().eq(3),
-        ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY,
-      );
+      cy.checkText(partials.errorSummaryListItems().eq(3), ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY);
 
-      cy.checkText(
-        tellUsAboutYourPolicyPage[CREDIT_PERIOD].errorMessage(),
-        `Error: ${ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY}`,
-      );
+      cy.checkText(tellUsAboutYourPolicyPage[CREDIT_PERIOD].errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY}`);
     });
 
     it('should focus on inputs when clicking summary error message', () => {
@@ -122,15 +93,9 @@ context('Tell us about the multiple policy you need - form validation', () => {
       cy.keyboardInput(fieldSelector(MAX_AMOUNT_OWED).input(), 'a');
       cy.clickSubmitButton();
 
-      cy.checkText(
-        partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_NUMBER,
-      );
+      cy.checkText(partials.errorSummaryListItems().eq(1), ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_NUMBER);
 
-      cy.checkText(
-        fieldSelector(MAX_AMOUNT_OWED).errorMessage(),
-        `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_NUMBER}`,
-      );
+      cy.checkText(fieldSelector(MAX_AMOUNT_OWED).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_NUMBER}`);
     });
   });
 
@@ -141,15 +106,9 @@ context('Tell us about the multiple policy you need - form validation', () => {
       cy.keyboardInput(fieldSelector(MAX_AMOUNT_OWED).input(), '1234.56');
       cy.clickSubmitButton();
 
-      cy.checkText(
-        partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_WHOLE_NUMBER,
-      );
+      cy.checkText(partials.errorSummaryListItems().eq(1), ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_WHOLE_NUMBER);
 
-      cy.checkText(
-        fieldSelector(MAX_AMOUNT_OWED).errorMessage(),
-        `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_WHOLE_NUMBER}`,
-      );
+      cy.checkText(fieldSelector(MAX_AMOUNT_OWED).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_WHOLE_NUMBER}`);
     });
   });
 
@@ -160,15 +119,9 @@ context('Tell us about the multiple policy you need - form validation', () => {
       cy.keyboardInput(fieldSelector(MAX_AMOUNT_OWED).input(), '0');
       cy.clickSubmitButton();
 
-      cy.checkText(
-        partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].BELOW_MINIMUM,
-      );
+      cy.checkText(partials.errorSummaryListItems().eq(1), ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].BELOW_MINIMUM);
 
-      cy.checkText(
-        fieldSelector(MAX_AMOUNT_OWED).errorMessage(),
-        `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].BELOW_MINIMUM}`,
-      );
+      cy.checkText(fieldSelector(MAX_AMOUNT_OWED).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].BELOW_MINIMUM}`);
     });
   });
 
@@ -178,15 +131,9 @@ context('Tell us about the multiple policy you need - form validation', () => {
 
       cy.clickSubmitButton();
 
-      cy.checkText(
-        partials.errorSummaryListItems().eq(3),
-        ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY,
-      );
+      cy.checkText(partials.errorSummaryListItems().eq(3), ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY);
 
-      cy.checkText(
-        tellUsAboutYourPolicyPage[CREDIT_PERIOD].errorMessage(),
-        `Error: ${ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY}`,
-      );
+      cy.checkText(tellUsAboutYourPolicyPage[CREDIT_PERIOD].errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY}`);
     });
   });
 

@@ -11,76 +11,77 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    EXPORTER_BUSINESS: ERRORS,
-  },
+  INSURANCE: { EXPORTER_BUSINESS: ERRORS },
 } = ERROR_MESSAGES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your business - Turnover - Alternative currency page - As an Exporter I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application', () => {
-  let referenceNumber;
-  let url;
+context(
+  'Insurance - Your business - Turnover - Alternative currency page - As an Exporter I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application',
+  () => {
+    let referenceNumber;
+    let url;
 
-  before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-      cy.startYourBusinessSection({});
+        cy.startYourBusinessSection({});
 
-      cy.completeAndSubmitCompanyDetails({});
-      cy.completeAndSubmitNatureOfYourBusiness();
+        cy.completeAndSubmitCompanyDetails({});
+        cy.completeAndSubmitNatureOfYourBusiness();
 
-      cy.clickProvideAlternativeCurrencyLink();
+        cy.clickProvideAlternativeCurrencyLink();
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY}`;
+        url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY}`;
 
-      cy.assertUrl(url);
+        cy.assertUrl(url);
+      });
     });
-  });
 
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
-
-  it('renders core page elements', () => {
-    cy.corePageChecks({
-      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY}`,
-      backLink: `${ROOT}/${referenceNumber}${TURNOVER_ROOT}`,
-      submitButtonCopy: BUTTONS.CONFIRM,
-      assertSaveAndBackButtonDoesNotExist: true,
-    });
-  });
-
-  describe('page tests', () => {
     beforeEach(() => {
-      cy.navigateToUrl(url);
+      cy.saveSession();
     });
 
-    it('renders a heading caption', () => {
-      cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
-    });
-  });
-
-  describe('currency form fields', () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
+    after(() => {
+      cy.deleteApplication(referenceNumber);
     });
 
-    const { rendering, formSubmission } = assertCurrencyFormFields({
-      errors: ERRORS,
+    it('renders core page elements', () => {
+      cy.corePageChecks({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currentHref: `${ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY}`,
+        backLink: `${ROOT}/${referenceNumber}${TURNOVER_ROOT}`,
+        submitButtonCopy: BUTTONS.CONFIRM,
+        assertSaveAndBackButtonDoesNotExist: true,
+      });
     });
 
-    rendering();
+    describe('page tests', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
 
-    formSubmission().selectAltRadioButNoAltCurrency({});
+      it('renders a heading caption', () => {
+        cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+      });
+    });
 
-    formSubmission().submitASupportedCurrency({ url: TURNOVER_ROOT });
-    formSubmission().submitAlternativeCurrency({ url: TURNOVER_ROOT });
-  });
-});
+    describe('currency form fields', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
+      const { rendering, formSubmission } = assertCurrencyFormFields({
+        errors: ERRORS,
+      });
+
+      rendering();
+
+      formSubmission().selectAltRadioButNoAltCurrency({});
+
+      formSubmission().submitASupportedCurrency({ url: TURNOVER_ROOT });
+      formSubmission().submitAlternativeCurrency({ url: TURNOVER_ROOT });
+    });
+  },
+);

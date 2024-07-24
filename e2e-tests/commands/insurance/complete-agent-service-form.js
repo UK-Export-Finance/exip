@@ -12,10 +12,7 @@ const {
  * @param {String} description: Expected service description
  * @param {Boolean} agentIsCharging: Agent is charging
  */
-const completeAgentServiceForm = ({
-  serviceDescription = application.EXPORT_CONTRACT.AGENT_SERVICE[SERVICE_DESCRIPTION],
-  agentIsCharging = false,
-}) => {
+const completeAgentServiceForm = ({ serviceDescription = application.EXPORT_CONTRACT.AGENT_SERVICE[SERVICE_DESCRIPTION], agentIsCharging = false }) => {
   if (serviceDescription) {
     cy.keyboardInput(field(SERVICE_DESCRIPTION).textarea(), serviceDescription);
   }
