@@ -5,7 +5,9 @@ export const ANTI_BRIBERY = {
   PAGE_TITLE: 'Anti-bribery and corruption',
   VERSIONS: [
     {
-      VERSION: 2,
+      VERSION: '1',
+      ...SHARED,
+      PAGE_TITLE: 'Anti-bribery and corruption',
       LABEL: `${CONFIRM_READ_AND_AGREE} the anti-bribery and corruption declaration`,
       OPTION: {
         TEXT: `${HAVE_READ_AND_AGREED} the anti-bribery and corruption declaration`,
