@@ -3,6 +3,7 @@ import getCountryByField from '../get-country-by-field';
 import getCreditPeriodValueByField from '../get-cover-period-value-by-field';
 import getTotalContractValueByField from '../get-total-contract-value-by-field';
 import createAnEligibility from '../create-an-eligibility';
+import createADeclaration from '../create-a-declaration';
 import createABuyer from '../create-a-buyer';
 import createAPolicy from '../create-a-policy';
 import createANominatedLossPayee from '../create-a-nominated-loss-payee';
@@ -76,16 +77,19 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
 
     /**
      * 1) Create a new buyer with country and application relationship.
-     * 2) Get a totalContractValue DB entry, for linking a relationship to eligibility.
-     * 3) Create a cover period value from the DB.
-     * 4) Create a new eligibility with country and application relationship.
-     * 5) Create a new export contract with application relationship.
-     * 6) Create a new policy with application relationship.
-     * 7) Create a new nominated loss payee with application relationship.
-     * 8) Create a new company with application relationship.
-     * 9) Create a new sectionReview with application relationship
+     * 2) Create a new declaration with application relationship.
+     * 3) Get a totalContractValue DB entry, for linking a relationship to eligibility.
+     * 4) Create a cover period value from the DB.
+     * 5) Create a new eligibility with country and application relationship.
+     * 6) Create a new export contract with application relationship.
+     * 7) Create a new policy with application relationship.
+     * 8) Create a new nominated loss payee with application relationship.
+     * 9) Create a new company with application relationship.
+     * 10) Create a new sectionReview with application relationship
      */
     const { buyer } = await createABuyer(context, country.id, applicationId);
+
+    const declarations = await createADeclaration(context, applicationId);
 
     const totalContractValue = await getTotalContractValueByField(context, 'valueId', totalContractValueId);
 
@@ -107,11 +111,12 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
      * Update the application with relationships for:
      * 1) Buyer
      * 2) Company
-     * 3) Eligibility
-     * 4) Export contract
-     * 5) Nominated loss payee
-     * 6) Policy
-     * 7) Section review
+     * 3) Declaration
+     * 4) Eligibility
+     * 5) Export contract
+     * 6) Nominated loss payee
+     * 7) Policy
+     * 8) Section review
      */
     const updatedApplication = await context.db.Application.updateOne({
       where: {
@@ -123,6 +128,9 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
         },
         company: {
           connect: { id: company.id },
+        },
+        declarations: {
+          connect: { id: declarations.id },
         },
         eligibility: {
           connect: { id: eligibility.id },

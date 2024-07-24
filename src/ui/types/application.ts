@@ -185,14 +185,25 @@ interface ApplicationSectionReview {
   buyer?: boolean;
 }
 
+interface ApplicationDeclarationVersion {
+  id: string;
+  agreeToConfidentiality?: string;
+  agreeToAntiBribery?: string;
+  hasAntiBriberyCodeOfConduct?: string;
+  willExportWithAntiBriberyCodeOfConduct?: string;
+  agreeToConfirmationAndAcknowledgements?: string;
+  agreeHowDataWillBeUsed?: string;
+}
+
 interface ApplicationDeclaration {
   id: string;
   agreeToConfidentiality?: boolean;
   agreeToAntiBribery?: boolean;
-  hasAntiBriberyCodeOfConduct?: boolean | null;
+  hasAntiBriberyCodeOfConduct?: boolean;
   willExportWithAntiBriberyCodeOfConduct?: boolean;
   agreeToConfirmationAndAcknowledgements?: boolean;
   agreeHowDataWillBeUsed?: boolean;
+  version: ApplicationDeclarationVersion;
 }
 
 interface ApplicationPolicyContact {
@@ -310,6 +321,7 @@ export {
   ApplicationPolicyContact,
   ApplicationSectionReview,
   ApplicationDeclaration,
+  ApplicationDeclarationVersion,
   ApplicationVersion,
   ApplicationOwner,
 };

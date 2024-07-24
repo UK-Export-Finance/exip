@@ -511,48 +511,37 @@ model SectionReview {
 }
 
 model Declaration {
-  id                                     String                                     @id @default(cuid())
-  application                            Application?                               @relation("Declaration_application", fields: [applicationId], references: [id])
-  applicationId                          String?                                    @map("application")
-  antiBribery                            DeclarationAntiBribery?                    @relation("Declaration_antiBribery", fields: [antiBriberyId], references: [id])
-  antiBriberyId                          String?                                    @map("antiBribery")
-  confirmationAndAcknowledgements        DeclarationConfirmationAndAcknowledgement? @relation("Declaration_confirmationAndAcknowledgements", fields: [confirmationAndAcknowledgementsId], references: [id])
-  confirmationAndAcknowledgementsId      String?                                    @map("confirmationAndAcknowledgements")
-  howDataWillBeUsed                      DeclarationHowDataWillBeUsed?              @relation("Declaration_howDataWillBeUsed", fields: [howDataWillBeUsedId], references: [id])
-  howDataWillBeUsedId                    String?                                    @map("howDataWillBeUsed")
+  id                                     String               @id @default(cuid())
+  application                            Application?         @relation("Declaration_application", fields: [applicationId], references: [id])
+  applicationId                          String?              @map("application")
+  version                                DeclarationVersion?  @relation("Declaration_version", fields: [versionId], references: [id])
+  versionId                              String?              @map("version")
   agreeToConfidentiality                 Boolean?
   agreeToAntiBribery                     Boolean?
   hasAntiBriberyCodeOfConduct            Boolean?
   willExportWithAntiBriberyCodeOfConduct Boolean?
   agreeToConfirmationAndAcknowledgements Boolean?
   agreeHowDataWillBeUsed                 Boolean?
-  from_Application_declaration           Application[]                              @relation("Application_declaration")
+  from_Application_declaration           Application[]        @relation("Application_declaration")
+  from_DeclarationVersion_declaration    DeclarationVersion[] @relation("DeclarationVersion_declaration")
 
   @@index([applicationId])
-  @@index([antiBriberyId])
-  @@index([confirmationAndAcknowledgementsId])
-  @@index([howDataWillBeUsedId])
+  @@index([versionId])
 }
 
-model DeclarationAntiBribery {
-  id                           String        @id @default(cuid())
-  version                      String        @default("")
-  content                      Json          @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  from_Declaration_antiBribery Declaration[] @relation("Declaration_antiBribery")
-}
+model DeclarationVersion {
+  id                                     String        @id @default(cuid())
+  declaration                            Declaration?  @relation("DeclarationVersion_declaration", fields: [declarationId], references: [id])
+  declarationId                          String?       @map("declaration")
+  agreeToConfidentiality                 String        @default("") @mysql.VarChar(3)
+  agreeToAntiBribery                     String        @default("") @mysql.VarChar(3)
+  hasAntiBriberyCodeOfConduct            String        @default("") @mysql.VarChar(3)
+  willExportWithAntiBriberyCodeOfConduct String        @default("") @mysql.VarChar(3)
+  agreeToConfirmationAndAcknowledgements String        @default("") @mysql.VarChar(3)
+  agreeHowDataWillBeUsed                 String        @default("") @mysql.VarChar(3)
+  from_Declaration_version               Declaration[] @relation("Declaration_version")
 
-model DeclarationConfirmationAndAcknowledgement {
-  id                                               String        @id @default(cuid())
-  version                                          String        @default("")
-  content                                          Json          @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  from_Declaration_confirmationAndAcknowledgements Declaration[] @relation("Declaration_confirmationAndAcknowledgements")
-}
-
-model DeclarationHowDataWillBeUsed {
-  id                                 String        @id @default(cuid())
-  version                            String        @default("")
-  content                            Json          @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  from_Declaration_howDataWillBeUsed Declaration[] @relation("Declaration_howDataWillBeUsed")
+  @@index([declarationId])
 }
 
 model Page {

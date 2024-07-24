@@ -1762,14 +1762,6 @@ var lists = {
                 id: brokerId
               }
             };
-            const { id: declarationId } = await context.db.Declaration.createOne({
-              data: {}
-            });
-            modifiedData.declaration = {
-              connect: {
-                id: declarationId
-              }
-            };
             const now2 = /* @__PURE__ */ new Date();
             modifiedData.createdAt = now2;
             modifiedData.updatedAt = now2;
@@ -1790,7 +1782,7 @@ var lists = {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
             const { referenceNumber } = item;
-            const { policyContactId, businessId, brokerId, declarationId } = item;
+            const { policyContactId, businessId, brokerId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -1823,16 +1815,6 @@ var lists = {
             });
             await context.db.Broker.updateOne({
               where: { id: brokerId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                }
-              }
-            });
-            await context.db.Declaration.updateOne({
-              where: { id: declarationId },
               data: {
                 application: {
                   connect: {
@@ -2430,9 +2412,7 @@ var lists = {
   Declaration: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
-      antiBribery: (0, import_fields.relationship)({ ref: "DeclarationAntiBribery" }),
-      confirmationAndAcknowledgements: (0, import_fields.relationship)({ ref: "DeclarationConfirmationAndAcknowledgement" }),
-      howDataWillBeUsed: (0, import_fields.relationship)({ ref: "DeclarationHowDataWillBeUsed" }),
+      version: (0, import_fields.relationship)({ ref: "DeclarationVersion" }),
       agreeToConfidentiality: nullable_checkbox_default(),
       agreeToAntiBribery: nullable_checkbox_default(),
       hasAntiBriberyCodeOfConduct: nullable_checkbox_default(),
@@ -2449,43 +2429,74 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  DeclarationAntiBribery: (0, import_core2.list)({
+  DeclarationVersion: (0, import_core2.list)({
     fields: {
-      version: (0, import_fields.text)({
-        label: "Version",
-        validation: { isRequired: true }
+      declaration: (0, import_fields.relationship)({ ref: "Declaration" }),
+      agreeToConfidentiality: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
       }),
-      content: (0, import_fields_document.document)({
-        formatting: true
+      agreeToAntiBribery: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
+      }),
+      hasAntiBriberyCodeOfConduct: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
+      }),
+      willExportWithAntiBriberyCodeOfConduct: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
+      }),
+      agreeToConfirmationAndAcknowledgements: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
+      }),
+      agreeHowDataWillBeUsed: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
       })
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      }
     },
     access: import_access.allowAll
   }),
-  DeclarationConfirmationAndAcknowledgement: (0, import_core2.list)({
-    fields: {
-      version: (0, import_fields.text)({
-        label: "Version",
-        validation: { isRequired: true }
-      }),
-      content: (0, import_fields_document.document)({
-        formatting: true
-      })
-    },
-    access: import_access.allowAll
-  }),
-  DeclarationHowDataWillBeUsed: (0, import_core2.list)({
-    fields: {
-      version: (0, import_fields.text)({
-        label: "Version",
-        validation: { isRequired: true }
-      }),
-      content: (0, import_fields_document.document)({
-        formatting: true,
-        links: true
-      })
-    },
-    access: import_access.allowAll
-  }),
+  // DeclarationAntiBribery: list({
+  //   fields: {
+  //     version: text({
+  //       label: 'Version',
+  //       validation: { isRequired: true },
+  //     }),
+  //     content: document({
+  //       formatting: true,
+  //     }),
+  //   },
+  //   access: allowAll,
+  // }),
+  // DeclarationConfirmationAndAcknowledgement: list({
+  //   fields: {
+  //     version: text({
+  //       label: 'Version',
+  //       validation: { isRequired: true },
+  //     }),
+  //     content: document({
+  //       formatting: true,
+  //     }),
+  //   },
+  //   access: allowAll,
+  // }),
+  // DeclarationHowDataWillBeUsed: list({
+  //   fields: {
+  //     version: text({
+  //       label: 'Version',
+  //       validation: { isRequired: true },
+  //     }),
+  //     content: document({
+  //       formatting: true,
+  //       links: true,
+  //     }),
+  //   },
+  //   access: allowAll,
+  // }),
   Page: (0, import_core2.list)({
     fields: {
       heading: (0, import_fields.text)({
@@ -4313,6 +4324,25 @@ var createAnEligibility = async (context, countryId, applicationId, coverPeriodI
 };
 var create_an_eligibility_default = createAnEligibility;
 
+// helpers/create-a-declaration/index.ts
+var createADeclaration = async (context, applicationId) => {
+  console.info("Creating a application declaration for ", applicationId);
+  try {
+    const declaration = await context.db.Declaration.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId }
+        }
+      }
+    });
+    return declaration;
+  } catch (err) {
+    console.error("Error creating an application declaration %O", err);
+    throw new Error(`Creating an application declaration ${err}`);
+  }
+};
+var create_a_declaration_default = createADeclaration;
+
 // helpers/create-a-buyer-trading-history/index.ts
 var createABuyerTradingHistory = async (context, buyerId, applicationId) => {
   console.info("Creating a buyer trading history for ", buyerId);
@@ -4816,6 +4846,7 @@ var createAnApplication = async (root, variables, context) => {
     });
     const { id: applicationId } = application2;
     const { buyer } = await create_a_buyer_default(context, country.id, applicationId);
+    const declarations = await create_a_declaration_default(context, applicationId);
     const totalContractValue = await get_total_contract_value_by_field_default(context, "valueId", totalContractValueId);
     const coverPeriod = await get_cover_period_value_by_field_default(context, "valueId", coverPeriodId);
     const eligibility = await create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers);
@@ -4834,6 +4865,9 @@ var createAnApplication = async (root, variables, context) => {
         },
         company: {
           connect: { id: company.id }
+        },
+        declarations: {
+          connect: { id: declarations.id }
         },
         eligibility: {
           connect: { id: eligibility.id }
