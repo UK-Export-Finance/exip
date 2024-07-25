@@ -58,7 +58,7 @@ jobs:
   # 1. Setup test infrastructure
   setup:
     name: Infrastructure setup 🔧
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     outputs:
       environment: ${{ env.environment }}
       timezone: ${{ env.timezone }}
@@ -75,7 +75,7 @@ jobs:
     needs: [setup]
     environment:
       name: ${{ needs.setup.outputs.environment }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     concurrency:
       group: unit-tests-${{ github.workflow }}-${{ github.workflow_ref }}
@@ -123,7 +123,7 @@ jobs:
     needs: [setup]
     environment:
       name: ${{ needs.setup.outputs.environment }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     concurrency:
       group: api-tests-${{ github.workflow }}-${{ github.workflow_ref }}
@@ -192,7 +192,7 @@ jobs:
     needs: [setup]
     environment:
       name: ${{ needs.setup.outputs.environment }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     strategy:
       # Do not cancel in-progress jobs upon failure
@@ -386,7 +386,7 @@ jobs:
     needs: [setup]
     environment:
       name: ${{ needs.setup.outputs.environment }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     strategy:
       # Do not cancel in-progress jobs upon failure
@@ -454,7 +454,7 @@ jobs:
     needs: [setup]
     environment:
       name: ${{ needs.setup.outputs.environment }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     strategy:
       # Do not cancel in-progress jobs upon failure

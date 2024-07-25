@@ -20,7 +20,7 @@ jobs:
   # 1. Setup test infrastructure
   setup:
     name: Infrastructure setup 🔧
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     outputs:
       environment: ${{ env.environment }}
       timezone: ${{ env.timezone }}
@@ -37,7 +37,7 @@ jobs:
     needs: setup
     environment:
       name: ${{ needs.setup.outputs.environment }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     permissions:
       pull-requests: write
 
