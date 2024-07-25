@@ -15,9 +15,9 @@ const getAllDeclarationVersions = async (connection: Connection) => {
   try {
     const query = 'SELECT * FROM DeclarationVersion';
 
-    const [exportContracts] = await executeSqlQuery({ connection, query, loggingMessage });
+    const [declarationVersions] = await executeSqlQuery({ connection, query, loggingMessage });
 
-    return exportContracts;
+    return declarationVersions;
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 

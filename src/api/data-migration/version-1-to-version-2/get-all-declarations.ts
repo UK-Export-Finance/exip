@@ -15,9 +15,9 @@ const getAllDeclarations = async (connection: Connection) => {
   try {
     const query = 'SELECT * FROM Declaration';
 
-    const [exportContracts] = await executeSqlQuery({ connection, query, loggingMessage });
+    const [declarations] = await executeSqlQuery({ connection, query, loggingMessage });
 
-    return exportContracts;
+    return declarations;
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 
