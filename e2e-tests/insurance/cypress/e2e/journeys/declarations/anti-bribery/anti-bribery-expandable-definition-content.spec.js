@@ -5,7 +5,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const { taskList } = partials.insurancePartials;
 
-const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY.VERSIONS[0];
+const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY.VERSIONS[1];
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -218,7 +218,6 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
 
       it('renders `definition` column list items', () => {
         cy.checkText(row.definitionListItem(1), content.DEFINITION[0]);
-        cy.checkText(row.definitionListItem(2), content.DEFINITION[1]);
       });
     });
 
