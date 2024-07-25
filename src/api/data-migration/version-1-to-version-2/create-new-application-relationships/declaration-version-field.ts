@@ -4,7 +4,7 @@ import getAllDeclarationVersions from '../get-all-declaration-versions';
 import executeSqlQuery from '../execute-sql-query';
 
 /**
- * createDeclarationVersionRelationship
+ * updateDeclarationVersionField
  * Update "version" columns in "declaration" entries
  * 1) Map over each "declaration".
  * 2) Generate "version" values (version ID relationship)
@@ -12,7 +12,7 @@ import executeSqlQuery from '../execute-sql-query';
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<ApplicationPrivateMarket>>} Updated declarations
  */
-const createDeclarationVersionRelationship = async (connection: Connection) => {
+const updateDeclarationVersionField = async (connection: Connection) => {
   const loggingMessage = 'Creating declarationVersion entries with declaration relationships';
 
   console.info(`✅ ${loggingMessage}`);
@@ -45,4 +45,4 @@ const createDeclarationVersionRelationship = async (connection: Connection) => {
   }
 };
 
-export default createDeclarationVersionRelationship;
+export default updateDeclarationVersionField;

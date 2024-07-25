@@ -1,6 +1,12 @@
 import { Connection } from 'mysql2/promise';
 import executeSqlQuery from './execute-sql-query';
 
+/**
+ * removeDeclarationKeys
+ * Remove old declaration keys from the declaration table.
+ * @param {Connection} connection: SQL database connection
+ * @returns {Promise<Array<object>>} executeSqlQuery responses
+ */
 const removeDeclarationKeys = async (connection: Connection) => {
   const loggingMessage = 'Removing KEYS declarations';
 
@@ -35,6 +41,12 @@ const removeDeclarationKeys = async (connection: Connection) => {
   }
 };
 
+/**
+ * removeDeclarationConstraints
+ * Remove old declaration constraints from the declaration table.
+ * @param {Connection} connection: SQL database connection
+ * @returns {Promise<Array<object>>} executeSqlQuery responses
+ */
 const removeDeclarationConstraints = async (connection: Connection) => {
   const loggingMessage = 'Removing CONSTRAINTS declarations';
 

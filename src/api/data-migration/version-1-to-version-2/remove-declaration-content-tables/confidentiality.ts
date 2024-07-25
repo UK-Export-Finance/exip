@@ -2,12 +2,12 @@ import { Connection } from 'mysql2/promise';
 import executeSqlQuery from '../execute-sql-query';
 
 /**
- * removeAntiBriberyTable
+ * removeConfidentialityTable
  * Remove the "confidentiality" declaration table
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<object>>} executeSqlQuery response
  */
-const removeAntiBriberyTable = (connection: Connection) => {
+const removeConfidentialityTable = (connection: Connection) => {
   const loggingMessage = 'Removing TABLE DeclarationConfidentiality';
 
   const query = `DROP TABLE DeclarationConfidentiality`;
@@ -15,4 +15,4 @@ const removeAntiBriberyTable = (connection: Connection) => {
   return executeSqlQuery({ connection, query, loggingMessage });
 };
 
-export default removeAntiBriberyTable;
+export default removeConfidentialityTable;

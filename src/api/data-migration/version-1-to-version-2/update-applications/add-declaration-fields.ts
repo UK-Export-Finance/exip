@@ -34,7 +34,6 @@ const declarationConstraints = (connection: Connection) =>
  * @returns {Promise<Array<object>>} executeSqlQuery response
  */
 const addDeclarationFields = async (connection: Connection) => {
-  // TODO: try/catch
   const queries = await Promise.all([
     executeSqlQuery({
       connection,
