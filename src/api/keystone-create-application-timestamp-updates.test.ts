@@ -3,6 +3,7 @@ import getKeystoneContext from './test-helpers/get-keystone-context';
 import applications from './test-helpers/applications';
 import buyers from './test-helpers/buyers';
 import buyerTradingHistoryHelper from './test-helpers/buyer-trading-history';
+import declarations from './test-helpers/declarations';
 import policies from './test-helpers/policies';
 import { Application, Context } from './types';
 
@@ -17,7 +18,10 @@ describe('Keystone - Application timestamp updates', () => {
 
     application = (await applications.create({ context, data: {} })) as Application;
 
-    // create buyer and associate with the application.
+    /**
+     * Create buyer,
+     * associate with the application.
+     */
     const buyer = await buyers.create({
       context,
       data: {
@@ -49,6 +53,16 @@ describe('Keystone - Application timestamp updates', () => {
         application: {
           connect: { id: application.id },
         },
+      },
+    });
+
+    /**
+     * Create declaration,
+     * associate with the application.
+     */
+    const declaration = await declarations.create(context, {
+      application: {
+        connect: { id: application.id },
       },
     });
 
@@ -88,6 +102,9 @@ describe('Keystone - Application timestamp updates', () => {
       },
       company: {
         id: company.id,
+      },
+      declaration: {
+        id: declaration.id,
       },
       exportContract: {
         id: exportContract.id,

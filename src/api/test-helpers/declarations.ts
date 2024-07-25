@@ -6,12 +6,12 @@ import { Context } from '../types';
  * @param {Context} KeystoneJS context API, application data
  * @returns {ApplicationDeclaration} Created declaration
  */
-const create = async (context: Context) => {
+const create = async (context: Context, data = {}) => {
   try {
     console.info('Creating a declaration (test helpers)');
 
     const declaration = await context.query.Declaration.createOne({
-      data: {},
+      data,
       query: 'id',
     });
 
