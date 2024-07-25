@@ -2,13 +2,15 @@ import { Connection } from 'mysql2/promise';
 import getAllApplications from '../get-all-applications';
 import createLossPayee from './loss-payee';
 import createJointlyInsuredParty from './jointly-insured-party';
-import updateLossPayeeFinancialUkVector from './loss-payee/update-loss-payee-financial-uk-vector';
-import updateLossPayeeFinancialInternationalVector from './loss-payee/update-loss-payee-financial-international-vector';
 import createExportContractAgent from './export-contract-agent';
 import createPrivateMarket from './private-market';
 import updateExportContractPrivateMarket from './export-contract-private-market';
 import createCompanyDifferentTradingAddress from './create-company-different-trading-address';
 import updateCompanyDifferentTradingAddress from './update-company-different-trading-address';
+import createDeclarationVersionRelationship from './declaration-version-relationship';
+import updateDeclarationVersionField from './declaration-version-field';
+import updateLossPayeeFinancialUkVector from './loss-payee/update-loss-payee-financial-uk-vector';
+import updateLossPayeeFinancialInternationalVector from './loss-payee/update-loss-payee-financial-international-vector';
 
 /**
  * createNewApplicationRelationships
@@ -34,6 +36,8 @@ const createNewApplicationRelationships = async (connection: Connection) => {
       updateExportContractPrivateMarket(connection),
       createCompanyDifferentTradingAddress(connection, applications),
       updateCompanyDifferentTradingAddress(connection),
+      createDeclarationVersionRelationship(connection, applications),
+      updateDeclarationVersionField(connection, applications),
     ]);
 
     await updateLossPayeeFinancialUkVector(connection);

@@ -820,15 +820,13 @@ export const lists = {
   Declaration: list({
     fields: {
       application: relationship({ ref: 'Application' }),
-      antiBribery: relationship({ ref: 'DeclarationAntiBribery' }),
-      confirmationAndAcknowledgements: relationship({ ref: 'DeclarationConfirmationAndAcknowledgement' }),
-      howDataWillBeUsed: relationship({ ref: 'DeclarationHowDataWillBeUsed' }),
-      agreeToConfidentiality: nullableCheckbox(),
+      version: relationship({ ref: 'DeclarationVersion' }),
+      agreeHowDataWillBeUsed: nullableCheckbox(),
       agreeToAntiBribery: nullableCheckbox(),
+      agreeToConfidentiality: nullableCheckbox(),
+      agreeToConfirmationAndAcknowledgements: nullableCheckbox(),
       hasAntiBriberyCodeOfConduct: nullableCheckbox(),
       willExportWithAntiBriberyCodeOfConduct: nullableCheckbox(),
-      agreeToConfirmationAndAcknowledgements: nullableCheckbox(),
-      agreeHowDataWillBeUsed: nullableCheckbox(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -836,43 +834,6 @@ export const lists = {
           await updateApplication.timestamp(context, item.applicationId);
         }
       },
-    },
-    access: allowAll,
-  }),
-  DeclarationAntiBribery: list({
-    fields: {
-      version: text({
-        label: 'Version',
-        validation: { isRequired: true },
-      }),
-      content: document({
-        formatting: true,
-      }),
-    },
-    access: allowAll,
-  }),
-  DeclarationConfirmationAndAcknowledgement: list({
-    fields: {
-      version: text({
-        label: 'Version',
-        validation: { isRequired: true },
-      }),
-      content: document({
-        formatting: true,
-      }),
-    },
-    access: allowAll,
-  }),
-  DeclarationHowDataWillBeUsed: list({
-    fields: {
-      version: text({
-        label: 'Version',
-        validation: { isRequired: true },
-      }),
-      content: document({
-        formatting: true,
-        links: true,
-      }),
     },
     access: allowAll,
   }),
