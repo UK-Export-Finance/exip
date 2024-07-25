@@ -3,7 +3,7 @@
 # Version 2
 #
 # Database: exip
-# Generation Time: 2024-07-24 14:03:29 +0000
+# Generation Time: 2024-07-25 15:31:00 +0000
 # ************************************************************
 
 CREATE DATABASE IF NOT EXISTS `exip`;
@@ -589,13 +589,13 @@ DROP TABLE IF EXISTS `Declaration`;
 
 CREATE TABLE `Declaration` (
   `id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `agreeToConfidentiality` tinyint(1) DEFAULT NULL,
-  `agreeToAntiBribery` tinyint(1) DEFAULT NULL,
-  `agreeToConfirmationAndAcknowledgements` tinyint(1) DEFAULT NULL,
-  `willExportWithAntiBriberyCodeOfConduct` tinyint(1) DEFAULT NULL,
-  `hasAntiBriberyCodeOfConduct` tinyint(1) DEFAULT NULL,
   `agreeHowDataWillBeUsed` tinyint(1) DEFAULT NULL,
+  `agreeToAntiBribery` tinyint(1) DEFAULT NULL,
+  `agreeToConfidentiality` tinyint(1) DEFAULT NULL,
+  `agreeToConfirmationAndAcknowledgements` tinyint(1) DEFAULT NULL,
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hasAntiBriberyCodeOfConduct` tinyint(1) DEFAULT NULL,
+  `willExportWithAntiBriberyCodeOfConduct` tinyint(1) DEFAULT NULL,
   `version` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Declaration_application_idx` (`application`),

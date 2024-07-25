@@ -516,12 +516,12 @@ model Declaration {
   applicationId                          String?              @map("application")
   version                                DeclarationVersion?  @relation("Declaration_version", fields: [versionId], references: [id])
   versionId                              String?              @map("version")
-  agreeToConfidentiality                 Boolean?
+  agreeHowDataWillBeUsed                 Boolean?
   agreeToAntiBribery                     Boolean?
+  agreeToConfidentiality                 Boolean?
+  agreeToConfirmationAndAcknowledgements Boolean?
   hasAntiBriberyCodeOfConduct            Boolean?
   willExportWithAntiBriberyCodeOfConduct Boolean?
-  agreeToConfirmationAndAcknowledgements Boolean?
-  agreeHowDataWillBeUsed                 Boolean?
   from_Application_declaration           Application[]        @relation("Application_declaration")
   from_DeclarationVersion_declaration    DeclarationVersion[] @relation("DeclarationVersion_declaration")
 

@@ -15,9 +15,9 @@ const removeAccountStatusFields = async (connection: Connection) => {
   console.info(`✅ ${loggingMessage}`);
 
   try {
-    const tables = await Promise.all([removeIsVerifiedField(connection), removeIsBlockedField(connection)]);
+    const queries = await Promise.all([removeIsVerifiedField(connection), removeIsBlockedField(connection)]);
 
-    return tables;
+    return queries;
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 

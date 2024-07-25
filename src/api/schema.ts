@@ -1,9 +1,9 @@
+import { Lists } from '.keystone/types'; // eslint-disable-line
 import { list } from '@keystone-6/core';
 import { allowAll } from '@keystone-6/core/access';
 import { checkbox, integer, relationship, select, text, timestamp, password, decimal } from '@keystone-6/core/fields';
 import { document } from '@keystone-6/fields-document';
 import { addMonths } from 'date-fns';
-import { Lists } from '.keystone/types'; // eslint-disable-line
 import { APPLICATION, FEEDBACK } from './constants';
 import updateApplication from './helpers/update-application';
 import nullableCheckbox from './nullable-checkbox';
@@ -798,12 +798,12 @@ export const lists = {
     fields: {
       application: relationship({ ref: 'Application' }),
       version: relationship({ ref: 'DeclarationVersion' }),
-      agreeToConfidentiality: nullableCheckbox(),
+      agreeHowDataWillBeUsed: nullableCheckbox(),
       agreeToAntiBribery: nullableCheckbox(),
+      agreeToConfidentiality: nullableCheckbox(),
+      agreeToConfirmationAndAcknowledgements: nullableCheckbox(),
       hasAntiBriberyCodeOfConduct: nullableCheckbox(),
       willExportWithAntiBriberyCodeOfConduct: nullableCheckbox(),
-      agreeToConfirmationAndAcknowledgements: nullableCheckbox(),
-      agreeHowDataWillBeUsed: nullableCheckbox(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {

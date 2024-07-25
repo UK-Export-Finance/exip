@@ -7,7 +7,8 @@ import addCompanyFields from './add-company-fields';
 import addBusinessFields from './add-business-fields';
 import addBrokerFullAddressField from './add-broker-full-address-field';
 import addEligibilityHasEndBuyerField from './add-eligibility-has-end-buyer-field';
-import addDeclarationsExportContractField from './add-declarations-export-contract-field';
+import addDeclarationFields from './add-declaration-fields';
+import updateDeclarationFields from './update-declaration-fields';
 import addSectionReviewExportContractField from './add-section-review-export-contract-field';
 import updateExportContractFinalDestinationCountryCodeVarChar from './update-export-contract-final-destination-country-code-var-char';
 import updatePolicyCurrencyCodeVarChar from './update-policy-currency-code-var-char';
@@ -31,17 +32,23 @@ const updateApplications = async (connection: Connection) => {
       addApplicationMigratedField(connection),
       addNominatedLossPayeeField(connection),
       addNominatedLossPayeeConstraint(connection),
+
       addExportContractFields(connection),
       addBuyerFields(connection),
       addCompanyFields(connection),
       addBusinessFields(connection),
       addBrokerFullAddressField(connection),
       addEligibilityHasEndBuyerField(connection),
-      addDeclarationsExportContractField(connection),
+
+      addDeclarationFields(connection),
+      updateDeclarationFields(connection),
+
       addSectionReviewExportContractField(connection),
       updateExportContractFinalDestinationCountryCodeVarChar(connection),
+
       updatePolicyCurrencyCodeVarChar(connection),
       updatePolicyContactPositionCodeVarChar(connection),
+
       updateApplicationVersion(connection),
       updateApplicationMigrated(connection),
     ]);
