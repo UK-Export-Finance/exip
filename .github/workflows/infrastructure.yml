@@ -1116,7 +1116,6 @@ jobs:
         uses: azure/cli@v2
         with:
           inlineScript: |
-            # Add certificates
             az afd secret create \
             --name kv-certificate-quote-latest \
             --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
@@ -1133,4 +1132,30 @@ jobs:
         uses: azure/cli@v2
         with:
           inlineScript: |
-          # Add custom domains
+            az afd custom-domain create \
+            --custom-domain-name fd-custom-domain-quote \
+            --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --host-name ${{ vars.DOMAIN_QUOTE }} \
+            --minimum-tls-version TLS12 \
+            --certificate-type CustomerCertificate \
+            --azure-dns-zone $(az network dns zone list --query '[?contains(name, `${{ vars.DOMAIN_QUOTE }}`)]'.id -o tsv) \
+            --secret kv-certificate-quote-latest
+
+            az afd custom-domain create \
+            --custom-domain-name fd-custom-domain-apply \
+            --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --host-name ${{ vars.DOMAIN_INSURANCE }} \
+            --minimum-tls-version TLS12 \
+            --certificate-type CustomerCertificate \
+            --azure-dns-zone $(az network dns zone list --query '[?contains(name, `${{ vars.DOMAIN_INSURANCE }}`)]'.id -o tsv) \
+            --secret kv-certificate-apply-latest
+
+      - name: Associate 🔗
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            az afd route update \
+            --route-name default \
+            --endpoint-name ${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --custom-domains $(az afd custom-domain list --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query '[?contains(hostName, `${{ vars.DOMAIN_QUOTE }}`)]'.name -o tsv) $(az afd custom-domain list --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query '[?contains(hostName, `${{ vars.DOMAIN_INSURANCE }}`)]'.name -o tsv)
