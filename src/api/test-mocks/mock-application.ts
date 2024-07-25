@@ -171,7 +171,7 @@ export const mockApplicationDeclaration = {
   hasAntiBriberyCodeOfConduct: true,
   willExportWithAntiBriberyCodeOfConduct: true,
   agreeToConfirmationAndAcknowledgements: true,
-  agreeHowDataWillBeUsed: true,
+  agreeHowDataWillBeUsed: null,
 };
 
 export const mockLossPayeeFinancialDetailsUkVector = {

@@ -1,5 +1,4 @@
-import VERSIONS from './versions';
-import getLatestDeclarationVersion from './get-latest-declarations';
+import DECLARATION_VERSIONS from './versions';
 
 /**
  * DECLARATIONS
@@ -8,8 +7,8 @@ import getLatestDeclarationVersion from './get-latest-declarations';
  * @returns {Object} Declaration constants
  */
 export const DECLARATIONS = {
-  VERSIONS,
-  LATEST_DECLARATIONS: getLatestDeclarationVersion(),
+  VERSIONS: DECLARATION_VERSIONS,
+  LATEST_DECLARATIONS: DECLARATION_VERSIONS[DECLARATION_VERSIONS.length - 1],
 };
 
 export default DECLARATIONS;

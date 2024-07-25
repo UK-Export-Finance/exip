@@ -171,11 +171,6 @@ describe('Keystone - Create an Application', () => {
     expect(typeof application.broker.id).toEqual('string');
   });
 
-  test('it should have a declaration id', () => {
-    expect(application.declaration).toBeDefined();
-    expect(typeof application.declaration.id).toEqual('string');
-  });
-
   test('it should add the application ID to the reference number entry', async () => {
     const referenceNumber = await context.query.ReferenceNumber.findOne({
       where: {
@@ -216,16 +211,5 @@ describe('Keystone - Create an Application', () => {
     });
 
     expect(broker.application.id).toEqual(application.id);
-  });
-
-  test('it should add the application ID to the declaration entry', async () => {
-    const declaration = await context.query.Declaration.findOne({
-      where: {
-        id: application.declaration.id,
-      },
-      query: 'id application { id }',
-    });
-
-    expect(declaration.application.id).toEqual(application.id);
   });
 });

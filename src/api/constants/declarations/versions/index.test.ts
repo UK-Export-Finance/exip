@@ -1,7 +1,7 @@
-import VERSIONS from '.';
+import DECLARATION_VERSIONS from '.';
 
-describe('server/constants/declarations/versions', () => {
-  it('should return an array of versions', () => {
+describe('api/constants/declarations/versions', () => {
+  it('should return an array of application versions', () => {
     const expected = [
       {
         ANTI_BRIBERY: '1',
@@ -20,6 +20,6 @@ describe('server/constants/declarations/versions', () => {
       },
     ];
 
-    expect(VERSIONS).toEqual(expected);
+    expect(DECLARATION_VERSIONS).toEqual(expected);
   });
 });
