@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.20.0](https://github.com/UK-Export-Finance/exip/compare/v2.19.0...v2.20.0) (2024-07-25)
+
+
+### Features
+
+* **EMS-3612:** declarations - Anti-bribery definitions update ([#2820](https://github.com/UK-Export-Finance/exip/issues/2820)) ([09c460e](https://github.com/UK-Export-Finance/exip/commit/09c460ebbd1b95e6e23d7ae3da2ad55c37ae863b))
+
 ## [2.19.0](https://github.com/UK-Export-Finance/exip/compare/v2.18.0...v2.19.0) (2024-07-25)
 
 
