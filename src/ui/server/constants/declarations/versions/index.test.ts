@@ -12,7 +12,7 @@ describe('server/constants/declarations/versions', () => {
         HOW_YOUR_DATA_WILL_BE_USED: '1',
       },
       {
-        ANTI_BRIBERY: '1',
+        ANTI_BRIBERY: '2',
         ANTI_BRIBERY_CODE_OF_CONDUCT: '1',
         ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: '1',
         CONFIDENTIALITY: '1',

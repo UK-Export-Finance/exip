@@ -141,6 +141,10 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
         cy.checkText(row.definitionListItem(2), content.DEFINITION[1]);
         cy.checkText(row.definitionListItem(3), content.DEFINITION[2]);
         cy.checkText(row.definitionListItem(4), content.DEFINITION[3]);
+        cy.checkText(row.definitionListItem(5), content.DEFINITION[4]);
+        cy.checkText(row.definitionListItem(6), content.DEFINITION[5]);
+        cy.checkText(row.definitionListItem(7), content.DEFINITION[6]);
+        cy.checkText(row.definitionListItem(8), content.DEFINITION[7]);
       });
     });
 
@@ -180,6 +184,8 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
       it('renders `definition` column list items', () => {
         cy.checkText(row.definitionListItem(1), content.DEFINITION[0]);
         cy.checkText(row.definitionListItem(2), content.DEFINITION[1]);
+        cy.checkText(row.definitionListItem(3), content.DEFINITION[2]);
+        cy.checkText(row.definitionListItem(4), content.DEFINITION[3]);
       });
     });
 
