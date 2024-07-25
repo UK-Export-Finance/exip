@@ -100,6 +100,12 @@ const removeDeclarationFields = async (connection: Connection) => {
 
       executeSqlQuery({
         connection,
+        query: `ALTER TABLE Declaration DROP COLUMN antiBribery`,
+        loggingMessage: 'Removing FIELD antiBribery from declaration table',
+      }),
+
+      executeSqlQuery({
+        connection,
         query: `ALTER TABLE Declaration DROP COLUMN confirmationAndAcknowledgements`,
         loggingMessage: 'Removing FIELD confirmationAndAcknowledgements from declaration table',
       }),
