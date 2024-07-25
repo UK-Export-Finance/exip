@@ -1,9 +1,9 @@
 # ************************************************************
 # UKEF EXIPS SQL Database
-# Version 0.3
+# Version 2
 #
 # Database: exip
-# Generation Time: 2024-05-09 09:59:30 +0000
+# Generation Time: 2024-07-25 15:31:00 +0000
 # ************************************************************
 
 CREATE DATABASE IF NOT EXISTS `exip`;
@@ -599,18 +599,41 @@ CREATE TABLE `Declaration` (
   `version` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Declaration_application_idx` (`application`),
-  KEY `Declaration_antiBribery_idx` (`antiBribery`),
-  KEY `Declaration_confirmationAndAcknowledgements_idx` (`confirmationAndAcknowledgements`),
-  KEY `Declaration_howDataWillBeUsed_idx` (`howDataWillBeUsed`),
-  CONSTRAINT `Declaration_antiBribery_fkey` FOREIGN KEY (`antiBribery`) REFERENCES `DeclarationAntiBribery` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Declaration_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Declaration_confirmationAndAcknowledgements_fkey` FOREIGN KEY (`confirmationAndAcknowledgements`) REFERENCES `DeclarationConfirmationAndAcknowledgement` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Declaration_howDataWillBeUsed_fkey` FOREIGN KEY (`howDataWillBeUsed`) REFERENCES `DeclarationHowDataWillBeUsed` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  KEY `Declaration_version_idx` (`version`),
+  CONSTRAINT `Declaration_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE,
+    CONSTRAINT `Declaration_version_fkey` FOREIGN KEY (`version`) REFERENCES `DeclarationVersion` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 /*!40000 ALTER TABLE `Declaration` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+# Dump of table DeclarationVersion
+# ------------------------------------------------------------
+DROP TABLE IF EXISTS `DeclarationVersion`;
+
+CREATE TABLE `DeclarationVersion` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `agreeToConfidentiality` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `agreeToAntiBribery` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `hasAntiBriberyCodeOfConduct` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `willExportWithAntiBriberyCodeOfConduct` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `agreeToConfirmationAndAcknowledgements` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `agreeHowDataWillBeUsed` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `declaration` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `DeclarationVersion_declaration_idx` (`declaration`),
+  CONSTRAINT `DeclarationVersion_declaration_fkey` FOREIGN KEY (`declaration`) REFERENCES `Declaration` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+/*!40000 ALTER TABLE `DeclarationVersion` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table CompanyDifferentTradingAddress

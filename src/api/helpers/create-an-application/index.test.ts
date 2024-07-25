@@ -63,6 +63,7 @@ describe('helpers/create-an-application', () => {
     const expected = {
       buyerId: application.buyer.id,
       companyId: application.company.id,
+      declarationId: application.declaration.id,
       eligibilityId: application.eligibility.id,
       exportContractId: application.exportContract.id,
       nominatedLossPayeeId: application.nominatedLossPayee.id,
@@ -72,6 +73,7 @@ describe('helpers/create-an-application', () => {
 
     expect(result.buyerId).toEqual(expected.buyerId);
     expect(result.companyId).toEqual(expected.companyId);
+    expect(result.declarationId).toEqual(expected.declarationId);
     expect(result.eligibilityId).toEqual(expected.eligibilityId);
     expect(result.exportContractId).toEqual(expected.exportContractId);
     expect(result.nominatedLossPayeeId).toEqual(expected.nominatedLossPayeeId);

@@ -127,17 +127,6 @@ export const lists = {
               },
             };
 
-            // generate and attach a new 'declaration' relationship
-            const { id: declarationId } = await context.db.Declaration.createOne({
-              data: {},
-            });
-
-            modifiedData.declaration = {
-              connect: {
-                id: declarationId,
-              },
-            };
-
             // add dates
             const now = new Date();
             modifiedData.createdAt = now;
@@ -169,7 +158,7 @@ export const lists = {
 
             const { referenceNumber } = item;
 
-            const { policyContactId, businessId, brokerId, declarationId } = item;
+            const { policyContactId, businessId, brokerId } = item;
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
@@ -210,18 +199,6 @@ export const lists = {
             // add the application ID to the broker entry.
             await context.db.Broker.updateOne({
               where: { id: brokerId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId,
-                  },
-                },
-              },
-            });
-
-            // add the application ID to the declaration entry.
-            await context.db.Declaration.updateOne({
-              where: { id: declarationId },
               data: {
                 application: {
                   connect: {
@@ -834,6 +811,30 @@ export const lists = {
           await updateApplication.timestamp(context, item.applicationId);
         }
       },
+    },
+    access: allowAll,
+  }),
+  DeclarationVersion: list({
+    fields: {
+      declaration: relationship({ ref: 'Declaration' }),
+      agreeToConfidentiality: text({
+        db: { nativeType: 'VarChar(3)' },
+      }),
+      agreeToAntiBribery: text({
+        db: { nativeType: 'VarChar(3)' },
+      }),
+      hasAntiBriberyCodeOfConduct: text({
+        db: { nativeType: 'VarChar(3)' },
+      }),
+      willExportWithAntiBriberyCodeOfConduct: text({
+        db: { nativeType: 'VarChar(3)' },
+      }),
+      agreeToConfirmationAndAcknowledgements: text({
+        db: { nativeType: 'VarChar(3)' },
+      }),
+      agreeHowDataWillBeUsed: text({
+        db: { nativeType: 'VarChar(3)' },
+      }),
     },
     access: allowAll,
   }),

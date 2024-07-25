@@ -227,7 +227,6 @@ const applicationByReferenceNumberQuery = gql`
           hasAntiBriberyCodeOfConduct
           willExportWithAntiBriberyCodeOfConduct
           agreeToConfirmationAndAcknowledgements
-          agreeHowDataWillBeUsed
         }
       }
     }

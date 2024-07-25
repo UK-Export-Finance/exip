@@ -652,7 +652,7 @@ var getApplicationDefinition = (versionNumber) => {
 var get_application_definition_default = getApplicationDefinition;
 
 // constants/application/versions/latest.ts
-var LATEST_VERSION_NUMBER = "2";
+var LATEST_VERSION_NUMBER = versions_default[versions_default.length - 1].VERSION_NUMBER;
 var latest_default = LATEST_VERSION_NUMBER;
 
 // constants/application/index.ts
@@ -710,7 +710,7 @@ var APPLICATION = {
       }
     }
   },
-  GET_QUERY: "id eligibility { id } buyer { id companyOrOrganisationName } company { id } exportContract { id } nominatedLossPayee { id } policy { id } sectionReview { id } owner { id email firstName lastName } referenceNumber submissionDeadline status ",
+  GET_QUERY: "id eligibility { id } buyer { id companyOrOrganisationName } company { id } declaration { id } exportContract { id } nominatedLossPayee { id } policy { id } sectionReview { id } owner { id email firstName lastName } referenceNumber submissionDeadline status ",
   VERSIONS: versions_default
 };
 var application_default = APPLICATION;
@@ -739,6 +739,34 @@ var DATE_FORMAT = {
   SHORT_MONTH: "d MMM yyyy",
   XLSX: "dd-MMM-yy"
 };
+
+// constants/declarations/versions/index.ts
+var DECLARATION_VERSIONS = [
+  {
+    ANTI_BRIBERY: "1",
+    ANTI_BRIBERY_CODE_OF_CONDUCT: "1",
+    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: "1",
+    CONFIDENTIALITY: "1",
+    CONFIRMATION_AND_ACKNOWLEDGEMENTS: "1",
+    HOW_YOUR_DATA_WILL_BE_USED: "1"
+  },
+  {
+    ANTI_BRIBERY: "1",
+    ANTI_BRIBERY_CODE_OF_CONDUCT: "1",
+    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: "1",
+    CONFIDENTIALITY: "1",
+    CONFIRMATION_AND_ACKNOWLEDGEMENTS: "1"
+  }
+];
+var versions_default2 = DECLARATION_VERSIONS;
+
+// constants/declarations/index.ts
+var DECLARATIONS2 = {
+  VERSIONS: versions_default2,
+  V1_DECLARATIONS: versions_default2[0],
+  LATEST_DECLARATIONS: versions_default2[versions_default2.length - 1]
+};
+var declarations_default2 = DECLARATIONS2;
 
 // constants/eligibility.ts
 var ELIGIBILITY = {
@@ -1761,14 +1789,6 @@ var lists = {
                 id: brokerId
               }
             };
-            const { id: declarationId } = await context.db.Declaration.createOne({
-              data: {}
-            });
-            modifiedData.declaration = {
-              connect: {
-                id: declarationId
-              }
-            };
             const now2 = /* @__PURE__ */ new Date();
             modifiedData.createdAt = now2;
             modifiedData.updatedAt = now2;
@@ -1789,7 +1809,7 @@ var lists = {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
             const { referenceNumber } = item;
-            const { policyContactId, businessId, brokerId, declarationId } = item;
+            const { policyContactId, businessId, brokerId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -1822,16 +1842,6 @@ var lists = {
             });
             await context.db.Broker.updateOne({
               where: { id: brokerId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                }
-              }
-            });
-            await context.db.Declaration.updateOne({
-              where: { id: declarationId },
               data: {
                 application: {
                   connect: {
@@ -2429,15 +2439,13 @@ var lists = {
   Declaration: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
-      antiBribery: (0, import_fields.relationship)({ ref: "DeclarationAntiBribery" }),
-      confirmationAndAcknowledgements: (0, import_fields.relationship)({ ref: "DeclarationConfirmationAndAcknowledgement" }),
-      howDataWillBeUsed: (0, import_fields.relationship)({ ref: "DeclarationHowDataWillBeUsed" }),
-      agreeToConfidentiality: nullable_checkbox_default(),
+      version: (0, import_fields.relationship)({ ref: "DeclarationVersion" }),
+      agreeHowDataWillBeUsed: nullable_checkbox_default(),
       agreeToAntiBribery: nullable_checkbox_default(),
-      hasAntiBriberyCodeOfConduct: nullable_checkbox_default(),
-      willExportWithAntiBriberyCodeOfConduct: nullable_checkbox_default(),
+      agreeToConfidentiality: nullable_checkbox_default(),
       agreeToConfirmationAndAcknowledgements: nullable_checkbox_default(),
-      agreeHowDataWillBeUsed: nullable_checkbox_default()
+      hasAntiBriberyCodeOfConduct: nullable_checkbox_default(),
+      willExportWithAntiBriberyCodeOfConduct: nullable_checkbox_default()
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -2448,39 +2456,26 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  DeclarationAntiBribery: (0, import_core2.list)({
+  DeclarationVersion: (0, import_core2.list)({
     fields: {
-      version: (0, import_fields.text)({
-        label: "Version",
-        validation: { isRequired: true }
+      declaration: (0, import_fields.relationship)({ ref: "Declaration" }),
+      agreeToConfidentiality: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
       }),
-      content: (0, import_fields_document.document)({
-        formatting: true
-      })
-    },
-    access: import_access.allowAll
-  }),
-  DeclarationConfirmationAndAcknowledgement: (0, import_core2.list)({
-    fields: {
-      version: (0, import_fields.text)({
-        label: "Version",
-        validation: { isRequired: true }
+      agreeToAntiBribery: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
       }),
-      content: (0, import_fields_document.document)({
-        formatting: true
-      })
-    },
-    access: import_access.allowAll
-  }),
-  DeclarationHowDataWillBeUsed: (0, import_core2.list)({
-    fields: {
-      version: (0, import_fields.text)({
-        label: "Version",
-        validation: { isRequired: true }
+      hasAntiBriberyCodeOfConduct: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
       }),
-      content: (0, import_fields_document.document)({
-        formatting: true,
-        links: true
+      willExportWithAntiBriberyCodeOfConduct: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
+      }),
+      agreeToConfirmationAndAcknowledgements: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
+      }),
+      agreeHowDataWillBeUsed: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
       })
     },
     access: import_access.allowAll
@@ -4312,6 +4307,54 @@ var createAnEligibility = async (context, countryId, applicationId, coverPeriodI
 };
 var create_an_eligibility_default = createAnEligibility;
 
+// helpers/create-a-declaration-version/index.ts
+var { ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT, CONFIDENTIALITY, CONFIRMATION_AND_ACKNOWLEDGEMENTS } = declarations_default2.LATEST_DECLARATIONS;
+var createADeclarationVersion = async (context, declarationId) => {
+  console.info("Creating an application declaration version for ", declarationId);
+  try {
+    const declaration = await context.db.DeclarationVersion.createOne({
+      data: {
+        declaration: {
+          connect: { id: declarationId }
+        },
+        agreeToAntiBribery: ANTI_BRIBERY,
+        agreeToConfidentiality: CONFIDENTIALITY,
+        agreeToConfirmationAndAcknowledgements: CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+        hasAntiBriberyCodeOfConduct: ANTI_BRIBERY_CODE_OF_CONDUCT,
+        willExportWithAntiBriberyCodeOfConduct: ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT
+      }
+    });
+    return declaration;
+  } catch (err) {
+    console.error("Error creating an application declaration version %O", err);
+    throw new Error(`Creating an application declaration version ${err}`);
+  }
+};
+var create_a_declaration_version_default = createADeclarationVersion;
+
+// helpers/create-a-declaration/index.ts
+var createADeclaration = async (context, applicationId) => {
+  console.info("Creating a application declaration for ", applicationId);
+  try {
+    const declaration = await context.db.Declaration.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId }
+        }
+      }
+    });
+    const declarationVersion = await create_a_declaration_version_default(context, declaration.id);
+    return {
+      ...declaration,
+      declarationVersion
+    };
+  } catch (err) {
+    console.error("Error creating an application declaration %O", err);
+    throw new Error(`Creating an application declaration ${err}`);
+  }
+};
+var create_a_declaration_default = createADeclaration;
+
 // helpers/create-a-buyer-trading-history/index.ts
 var createABuyerTradingHistory = async (context, buyerId, applicationId) => {
   console.info("Creating a buyer trading history for ", buyerId);
@@ -4815,6 +4858,7 @@ var createAnApplication = async (root, variables, context) => {
     });
     const { id: applicationId } = application2;
     const { buyer } = await create_a_buyer_default(context, country.id, applicationId);
+    const declarations = await create_a_declaration_default(context, applicationId);
     const totalContractValue = await get_total_contract_value_by_field_default(context, "valueId", totalContractValueId);
     const coverPeriod = await get_cover_period_value_by_field_default(context, "valueId", coverPeriodId);
     const eligibility = await create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers);
@@ -4833,6 +4877,9 @@ var createAnApplication = async (root, variables, context) => {
         },
         company: {
           connect: { id: company.id }
+        },
+        declaration: {
+          connect: { id: declarations.id }
         },
         eligibility: {
           connect: { id: eligibility.id }
@@ -7363,7 +7410,7 @@ var {
   POLICY: POLICY4,
   BUYER,
   EXPORT_CONTRACT: EXPORT_CONTRACT2,
-  DECLARATIONS: DECLARATIONS2
+  DECLARATIONS: DECLARATIONS3
 } = SECTION_NAMES_default;
 var mapApplicationToXLSX = (application2, countries) => {
   try {
@@ -7378,7 +7425,7 @@ var mapApplicationToXLSX = (application2, countries) => {
       [POLICY4]: map_policy_default2(application2, countries),
       [BUYER]: map_buyer_default(application2),
       [EXPORT_CONTRACT2]: map_export_contract_default(application2, countries),
-      [DECLARATIONS2]: map_declarations_default(application2)
+      [DECLARATIONS3]: map_declarations_default(application2)
     };
     return mapped;
   } catch (err) {
