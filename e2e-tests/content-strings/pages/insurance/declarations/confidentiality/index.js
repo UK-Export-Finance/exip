@@ -11,7 +11,7 @@ export const CONFIDENTIALITY = {
         TEXT: `${HAVE_READ_AND_AGREED} the confidentiality declaration`,
         VALUE: true,
       },
-      INTRO: "By submitting this application (also known as a 'proposal') you agree that:",
+      INTRO: "By submitting this application (also known as a 'Proposal') you agree that:",
       LIST: [
         {
           text: '(unless otherwise agreed) this Proposal, its attachments and all discussions and correspondence relating to it are confidential and will not be disclosed to any third party except:',
