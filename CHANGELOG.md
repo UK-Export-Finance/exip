@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.17.0](https://github.com/UK-Export-Finance/exip/compare/v2.16.0...v2.17.0) (2024-07-25)
+
+### Features
+
+- **EMS-3631:** declarations - replace api/keystone rendering with content-strings ([#2813](https://github.com/UK-Export-Finance/exip/issues/2813)) ([0b30342](https://github.com/UK-Export-Finance/exip/commit/0b30342e8e36222640997280cd922d59dca34206))
+
 ## [2.16.0](https://github.com/UK-Export-Finance/exip/compare/v2.15.0...v2.16.0) (2024-07-24)
 
 ### Features
