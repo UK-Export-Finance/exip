@@ -1,0 +1,54 @@
+{% macro render(params) %}
+
+  {% set CONTENT_STRINGS = params.CONTENT_STRINGS %}
+  {% set DATA_CY = params.DATA_CY %}
+
+  <p class="govuk-body" data-cy="{{ DATA_CY.INTRO }}">{{ CONTENT_STRINGS.INTRO }}</p>
+
+  <ol class="counter-list counter-list--bold">
+
+    {% for level1Item in CONTENT_STRINGS.LIST %}
+
+      <li class="govuk-!-margin-bottom-7 counter-list-item">
+        <span class="govuk-!-margin-bottom-7" data-cy="list-level-1-item-{{ loop.index }}">{{ level1Item.text }}</span>
+
+        {% if level1Item.children %}
+
+          <ol class="lower-alpha-counter-list">
+
+            {% for level2Item in level1Item.children %}
+
+            <li class="govuk-!-margin-bottom-7 counter-list-item">
+              <span class="govuk-!-margin-bottom-7" data-cy="list-level-2-item-{{ loop.index }}">{{ level2Item.text }}</span>
+
+              {% if level2Item.children %}
+
+                <ol class="lower-roman-counter-list">
+
+                  {% for level3Item in level2Item.children %}
+
+                  <li class="govuk-!-margin-bottom-7 counter-list-item">
+                    <span data-cy="list-level-3-item-{{ loop.index }}">{{ level3Item.text }}</span>
+                  </li>
+
+                  {% endfor %}
+
+                </ol>
+
+              {% endif %}
+
+            </li>
+
+            {% endfor %}
+
+          </ol>
+
+        {% endif %}
+
+      </li>
+
+    {% endfor %}
+
+  </ol>
+
+{% endmacro %}

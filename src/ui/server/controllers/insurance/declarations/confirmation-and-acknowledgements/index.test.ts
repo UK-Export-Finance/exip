@@ -6,11 +6,10 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import keystoneDocumentRendererConfig from '../../../../helpers/keystone-document-renderer-config';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockDeclarations, mockSpyPromise, referenceNumber } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromise, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -31,15 +30,11 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
   let req: Request;
   let res: Response;
 
-  let getLatestConfirmationAndAcknowledgementSpy = jest.fn(() => Promise.resolve(mockDeclarations.confirmationAndAcknowledgement));
-
   let submitApplicationSpy = jest.fn(() => Promise.resolve({ success: true }));
 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement = getLatestConfirmationAndAcknowledgementSpy;
   });
 
   describe('FIELD_ID', () => {
@@ -73,12 +68,6 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
   });
 
   describe('get', () => {
-    it('should call api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement', async () => {
-      await get(req, res);
-
-      expect(getLatestConfirmationAndAcknowledgementSpy).toHaveBeenCalledTimes(1);
-    });
-
     it('should render template', async () => {
       await get(req, res);
 
@@ -89,8 +78,6 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
         }),
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
-        documentContent: mockDeclarations.confirmationAndAcknowledgement.content.document,
-        documentConfig: keystoneDocumentRendererConfig(),
         application: mapApplicationToFormFields(res.locals.application),
       };
 
@@ -108,20 +95,6 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
-
-    describe('when there is an error calling the API', () => {
-      beforeAll(() => {
-        getLatestConfirmationAndAcknowledgementSpy = jest.fn(() => Promise.reject(new Error('mock')));
-
-        api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement = getLatestConfirmationAndAcknowledgementSpy;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
-    });
   });
 
   describe('post', () => {
@@ -130,10 +103,6 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
     };
 
     beforeEach(() => {
-      getLatestConfirmationAndAcknowledgementSpy = jest.fn(() => Promise.resolve(mockDeclarations.confirmationAndAcknowledgement));
-
-      api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement = getLatestConfirmationAndAcknowledgementSpy;
-
       api.keystone.application.submit = submitApplicationSpy;
     });
 
@@ -181,12 +150,6 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
     });
 
     describe('when there are validation errors', () => {
-      it('should call api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement', async () => {
-        await post(req, res);
-
-        expect(getLatestConfirmationAndAcknowledgementSpy).toHaveBeenCalledTimes(1);
-      });
-
       it('should render template with validation errors from constructPayload function', async () => {
         await post(req, res);
 
@@ -199,8 +162,6 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
           }),
           ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
-          documentContent: mockDeclarations.confirmationAndAcknowledgement.content.document,
-          documentConfig: keystoneDocumentRendererConfig(),
           validationErrors: generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),
         };
 
@@ -221,21 +182,6 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
     });
 
     describe('api error handling', () => {
-      describe('get latest confirmation and acknowledgements call', () => {
-        describe('when the get latest confirmation and acknowledgements API call fails', () => {
-          beforeEach(() => {
-            getLatestConfirmationAndAcknowledgementSpy = jest.fn(() => Promise.reject(new Error('mock')));
-            api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement = getLatestConfirmationAndAcknowledgementSpy;
-          });
-
-          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-            await post(req, res);
-
-            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-          });
-        });
-      });
-
       describe('save data call', () => {
         describe('when the save data API call does not return anything', () => {
           beforeEach(() => {
