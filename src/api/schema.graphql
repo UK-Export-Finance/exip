@@ -2593,12 +2593,12 @@ type Declaration {
   id: ID!
   application: Application
   version: DeclarationVersion
-  agreeToConfidentiality: Boolean
+  agreeHowDataWillBeUsed: Boolean
   agreeToAntiBribery: Boolean
+  agreeToConfidentiality: Boolean
+  agreeToConfirmationAndAcknowledgements: Boolean
   hasAntiBriberyCodeOfConduct: Boolean
   willExportWithAntiBriberyCodeOfConduct: Boolean
-  agreeToConfirmationAndAcknowledgements: Boolean
-  agreeHowDataWillBeUsed: Boolean
 }
 
 input DeclarationWhereUniqueInput {
@@ -2621,12 +2621,12 @@ input DeclarationOrderByInput {
 input DeclarationUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   version: DeclarationVersionRelateToOneForUpdateInput
-  agreeToConfidentiality: Boolean
+  agreeHowDataWillBeUsed: Boolean
   agreeToAntiBribery: Boolean
+  agreeToConfidentiality: Boolean
+  agreeToConfirmationAndAcknowledgements: Boolean
   hasAntiBriberyCodeOfConduct: Boolean
   willExportWithAntiBriberyCodeOfConduct: Boolean
-  agreeToConfirmationAndAcknowledgements: Boolean
-  agreeHowDataWillBeUsed: Boolean
 }
 
 input DeclarationVersionRelateToOneForUpdateInput {
@@ -2643,12 +2643,12 @@ input DeclarationUpdateArgs {
 input DeclarationCreateInput {
   application: ApplicationRelateToOneForCreateInput
   version: DeclarationVersionRelateToOneForCreateInput
-  agreeToConfidentiality: Boolean
+  agreeHowDataWillBeUsed: Boolean
   agreeToAntiBribery: Boolean
+  agreeToConfidentiality: Boolean
+  agreeToConfirmationAndAcknowledgements: Boolean
   hasAntiBriberyCodeOfConduct: Boolean
   willExportWithAntiBriberyCodeOfConduct: Boolean
-  agreeToConfirmationAndAcknowledgements: Boolean
-  agreeHowDataWillBeUsed: Boolean
 }
 
 input DeclarationVersionRelateToOneForCreateInput {

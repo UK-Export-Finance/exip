@@ -710,7 +710,7 @@ var APPLICATION = {
       }
     }
   },
-  GET_QUERY: "id eligibility { id } buyer { id companyOrOrganisationName } company { id } exportContract { id } nominatedLossPayee { id } policy { id } sectionReview { id } owner { id email firstName lastName } referenceNumber submissionDeadline status ",
+  GET_QUERY: "id eligibility { id } buyer { id companyOrOrganisationName } company { id } declaration { id } exportContract { id } nominatedLossPayee { id } policy { id } sectionReview { id } owner { id email firstName lastName } referenceNumber submissionDeadline status ",
   VERSIONS: versions_default
 };
 var application_default = APPLICATION;
@@ -763,6 +763,7 @@ var versions_default2 = DECLARATION_VERSIONS;
 // constants/declarations/index.ts
 var DECLARATIONS2 = {
   VERSIONS: versions_default2,
+  V1_DECLARATIONS: versions_default2[0],
   LATEST_DECLARATIONS: versions_default2[versions_default2.length - 1]
 };
 var declarations_default2 = DECLARATIONS2;
@@ -2439,12 +2440,12 @@ var lists = {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       version: (0, import_fields.relationship)({ ref: "DeclarationVersion" }),
-      agreeToConfidentiality: nullable_checkbox_default(),
+      agreeHowDataWillBeUsed: nullable_checkbox_default(),
       agreeToAntiBribery: nullable_checkbox_default(),
-      hasAntiBriberyCodeOfConduct: nullable_checkbox_default(),
-      willExportWithAntiBriberyCodeOfConduct: nullable_checkbox_default(),
+      agreeToConfidentiality: nullable_checkbox_default(),
       agreeToConfirmationAndAcknowledgements: nullable_checkbox_default(),
-      agreeHowDataWillBeUsed: nullable_checkbox_default()
+      hasAntiBriberyCodeOfConduct: nullable_checkbox_default(),
+      willExportWithAntiBriberyCodeOfConduct: nullable_checkbox_default()
     },
     hooks: {
       afterOperation: async ({ item, context }) => {

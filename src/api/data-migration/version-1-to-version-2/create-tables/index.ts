@@ -1,5 +1,6 @@
 import { Connection } from 'mysql2/promise';
 import createAccountStatusTable from './create-account-status-table';
+import createDeclarationVersionTable from './create-declaration-version-table';
 import createJointlyInsuredPartyTable from './create-jointly-insured-party-table';
 import createExportContractAgentServiceChargeTable from './create-export-contract-agent-service-charge-table';
 import createExportContractAgentServiceTable from './create-export-contract-agent-service-table';
@@ -29,6 +30,7 @@ const createTables = async (connection: Connection) => {
 
     const tables = await Promise.all([
       createAccountStatusTable(connection),
+      createDeclarationVersionTable(connection),
       createJointlyInsuredPartyTable(connection),
 
       createExportContractAgentServiceChargeTable(connection),

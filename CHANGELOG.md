@@ -2,10 +2,9 @@
 
 ## [2.18.0](https://github.com/UK-Export-Finance/exip/compare/v2.17.0...v2.18.0) (2024-07-25)
 
-
 ### Features
 
-* **EMS-3631:** declaration versions - database restructure, application creation ([#2805](https://github.com/UK-Export-Finance/exip/issues/2805)) ([2353b5f](https://github.com/UK-Export-Finance/exip/commit/2353b5f853ecb0c827662d7bd960dbd18a37eb62))
+- **EMS-3631:** declaration versions - database restructure, application creation ([#2805](https://github.com/UK-Export-Finance/exip/issues/2805)) ([2353b5f](https://github.com/UK-Export-Finance/exip/commit/2353b5f853ecb0c827662d7bd960dbd18a37eb62))
 
 ## [2.17.0](https://github.com/UK-Export-Finance/exip/compare/v2.16.0...v2.17.0) (2024-07-25)
 
