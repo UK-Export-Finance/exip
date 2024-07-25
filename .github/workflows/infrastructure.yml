@@ -564,7 +564,7 @@ jobs:
             --name IPAllowListRule \
             --policy-name waf${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}
 
-      - name: Identity 🪪
+      - name: Identity 🔐
         uses: azure/cli@v2
         with:
           inlineScript: |
@@ -1128,7 +1128,7 @@ jobs:
             --use-latest-version true \
             --secret-source $(az keyvault list --query '[].id' -o tsv)/secrets/kv-certificate-apply-latest
 
-      - name: Domains 🌐
+      - name: Add ➕
         uses: azure/cli@v2
         with:
           inlineScript: |
