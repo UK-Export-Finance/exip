@@ -86,6 +86,58 @@ export const ANTI_BRIBERY = {
           ],
         },
       },
+      INTRO: "By submitting this application (also known as a 'proposal') you agree that:",
+      LIST: [
+        {
+          text: 'neither you nor any of your current Senior Officers appear on a debarment list published by the World Bank Group, the African Development Bank, the Asian Development Bank, the European Bank for Reconstruction and Development or the Inter-American Development Bank (or any successor organisations of the foregoing), of contractors or individuals who are ineligible to tender for, or participate in, any project they fund;',
+        },
+        {
+          text: 'you have no reason to believe, after having made reasonable enquiries, that any Involved Group Company, Consortium Party or Agent, or any of their current Senior Officers, appear on any such list;',
+        },
+        {
+          text: 'during the last 5 years neither you nor any of your current Senior Officers or any Group Company have:',
+          children: [
+            {
+              text: 'been found guilty by any court or competent authority of a Relevant Offence or any offence relating to bribery or corruption under the law of any jurisdiction outside the UK;',
+            },
+            {
+              text: 'been subject to any administrative sanction (for example, a deferred prosecution agreement or civil forfeiture order) or other similar administrative measure anywhere in the world for contravening any laws which prohibit bribery, including bribery of foreign public officials; or',
+            },
+            {
+              text: 'admitted to having engaged in any offence or activity as referred to in paragraph (3)(a) above or has admitted to engaging in any other activity which is prohibited under applicable laws relating to bribery or corrupt activity;',
+            },
+          ],
+        },
+        {
+          text: 'neither you nor any of your current Senior Officers or any Group Company are currently under charge in any court or before any competent authority, or to the best of your knowledge, subject to a formal investigation by public prosecutors on the grounds that you or they have committed an offence of the type listed in paragraph 3(a) above;',
+        },
+        {
+          text: 'neither you nor any Group Company has: engaged in, any Potential Corrupt Activity or Corrupt Activity in relation to the export contract(s) or any related agreement (which includes any unilateral undertaking as well as any consent or authorisation needed to obtain or perform the export contract(s) but not any subcontract);',
+        },
+        {
+          text: 'neither you nor any Involved Group Company has any knowledge of any person engaging in any Potential Corrupt Activity or Corrupt Activity in relation to the export contract(s) or any related agreement;',
+        },
+        {
+          text: 'you have no reason to believe and you do not believe, after having made reasonable enquiries, that:',
+          children: [
+            {
+              text: 'any Consortium Party or Agent, any of their current Senior Officers has at any time during the last five years engaged in or been subject to any of the events referred to in paragraph (3) above;',
+            },
+            {
+              text: 'any Consortium Party or Agent or any of their current Senior Officers has at any time during the last five years been subject to any of the events referred to in paragraph (4) above; or',
+            },
+            {
+              text: 'any Consortium Party or Agent has engaged in any Potential Corrupt Activity or Corrupt Activity in relation to the export contract(s) or any related agreement;',
+            },
+          ],
+        },
+        {
+          text: 'you have made reasonable enquiries regarding (i) any Consortium Party or Agent and its conduct in relation to the export contract and any related agreement; and (ii) whether any Group Companies, at the date of this Proposal, have had, or are intended to have any material part in the negotiation or supply of the export contract;',
+        },
+        {
+          text: 'the export contract(s) referred to in this Proposal , and all arrangements connected with its/their financing or procurement, have not been, and will not be, used for the purposes of money laundering (as defined in Part 7 of the Proceeds of Crime Act 2002) or in any other manner that would constitute a Relevant Offence.',
+        },
+      ],
     },
   ],
 };
