@@ -23,10 +23,9 @@ const {
  * 2) Create new database values with a CUID and version numbers
  * 3) Add entries to the DeclarationVersion table
  * @param {Connection} connection: SQL database connection
- * @param {Array<Application>} applications: Applications
  * @returns {Promise<Array<DeclarationVersion>>} Declaration version entries
  */
-const createDeclarationVersionRelationshipSubmittedApplications = async (connection: Connection, applications: Array<Application>) => {
+const createDeclarationVersionRelationshipSubmittedApplications = async (connection: Connection) => {
   const loggingMessage = 'Creating declarationVersion entries with declaration relationships for submitted applications';
 
   console.info(`✅ ${loggingMessage}`);
