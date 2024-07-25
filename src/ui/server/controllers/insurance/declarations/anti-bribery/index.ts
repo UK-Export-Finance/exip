@@ -1,11 +1,9 @@
 import { ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, TEMPLATES, ROUTES, DECLARATIONS } from '../../../../constants';
-import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import keystoneDocumentRendererConfig from '../../../../helpers/keystone-document-renderer-config';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
@@ -51,26 +49,16 @@ export const get = async (req: Request, res: Response) => {
   if (!application) {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
-
-  try {
-    const antiBriberyContent = await api.keystone.application.declarations.getLatestAntiBribery();
-
-    return res.render(TEMPLATE, {
-      ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS: ANTI_BRIBERY,
-        BACK_LINK: req.headers.referer,
-      }),
-      ...pageVariables(application.referenceNumber),
-      userName: getUserNameFromSession(req.session.user),
-      documentContent: antiBriberyContent.content.document,
-      documentConfig: keystoneDocumentRendererConfig(),
-      application: mapApplicationToFormFields(res.locals.application),
-    });
-  } catch (err) {
-    console.error("Error getting declarations - anti-bribery and rendering 'anti-bribery' page %O", err);
-
-    return res.redirect(PROBLEM_WITH_SERVICE);
-  }
+  return res.render(TEMPLATE, {
+    ...insuranceCorePageVariables({
+      PAGE_CONTENT_STRINGS: ANTI_BRIBERY,
+      BACK_LINK: req.headers.referer,
+    }),
+    ...pageVariables(application.referenceNumber),
+    userName: getUserNameFromSession(req.session.user),
+    application: mapApplicationToFormFields(res.locals.application),
+    CONTENT: ANTI_BRIBERY,
+  });
 };
 
 /**
@@ -94,25 +82,16 @@ export const post = async (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY);
 
   if (validationErrors) {
-    try {
-      const antiBriberyContent = await api.keystone.application.declarations.getLatestAntiBribery();
-
-      return res.render(TEMPLATE, {
-        ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: ANTI_BRIBERY,
-          BACK_LINK: req.headers.referer,
-        }),
-        ...pageVariables(referenceNumber),
-        userName: getUserNameFromSession(req.session.user),
-        documentContent: antiBriberyContent.content.document,
-        documentConfig: keystoneDocumentRendererConfig(),
-        validationErrors,
-      });
-    } catch (err) {
-      console.error("Error getting declarations - confidentiality and rendering 'confidentiality' page %O", err);
-
-      return res.redirect(PROBLEM_WITH_SERVICE);
-    }
+    return res.render(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS: ANTI_BRIBERY,
+        BACK_LINK: req.headers.referer,
+      }),
+      ...pageVariables(referenceNumber),
+      userName: getUserNameFromSession(req.session.user),
+      CONTENT: ANTI_BRIBERY,
+      validationErrors,
+    });
   }
 
   try {

@@ -1,12 +1,8 @@
-import { headingCaption, singleInputField } from '../../../../../../pages/shared';
-import { confirmationAndAcknowledgementsPage } from '../../../../../../pages/insurance/declarations';
+import { headingCaption, singleInputField, listPage } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-
-import api from '../../../../../../commands/api';
-import flattenKeystoneDocument from '../../../../../../commands/flatten-keystone-document';
 
 const { taskList } = partials.insurancePartials;
 
@@ -81,30 +77,28 @@ context(
         cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
-      describe('latest confidentiality content', () => {
-        let content;
+      describe('latest confirmation-and-acknowledgements content', () => {
+        const listContent = CONTENT_STRINGS.LIST;
 
-        const { intro, level1, level2 } = confirmationAndAcknowledgementsPage.listItems;
-
-        before(() => {
-          api.declarations.getLatestConfirmationAndAcknowledgements().then((data) => {
-            content = flattenKeystoneDocument(data.content.document);
-          });
-        });
+        const { intro, level1, level2 } = listPage.listItems;
 
         it('renders an intro paragraph', () => {
-          cy.checkText(intro(), content[0].text);
+          cy.checkText(intro(), CONTENT_STRINGS.INTRO);
         });
 
         it('renders level 1 list items', () => {
-          cy.checkText(level1.item(1), content[1].text);
-          cy.checkText(level1.item(2), content[2].text);
+          const level1Content = listContent;
+
+          cy.checkText(level1.item(1), level1Content[0].text);
+          cy.checkText(level1.item(2), level1Content[1].text);
         });
 
         it('renders level 2 list items', () => {
-          cy.checkText(level2.item(1), content[3].text);
-          cy.checkText(level2.item(2), content[4].text);
-          cy.checkText(level2.item(3), content[5].text);
+          const level2Content = listContent[1].children;
+
+          cy.checkText(level2.item(1), level2Content[0].text);
+          cy.checkText(level2.item(2), level2Content[1].text);
+          cy.checkText(level2.item(3), level2Content[2].text);
         });
       });
 
