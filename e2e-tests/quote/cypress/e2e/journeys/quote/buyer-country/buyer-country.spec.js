@@ -88,9 +88,12 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
       it('should prepopulate the field when going back to the page via back link', () => {
         cy.clickBackLink();
 
-        cy.checkValue(field, supportedCountryName);
-
-        cy.checkText(field.results(), supportedCountryName);
+        cy.checkTextAndValue({
+          textSelector: field.results(),
+          expectedText: supportedCountryName,
+          valueSelector: field,
+          expectedValue: supportedCountryName,
+        });
       });
     });
   });

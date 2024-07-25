@@ -71,8 +71,12 @@ const assertCurrencyFormFields = ({
     cy.checkCurrencyOption(option4, JPY);
 
     // Alternative currency
-    cy.checkText(option5.label(), alternativeCurrencyText);
-    cy.checkValue(option5, alternativeCurrencyFieldId);
+    cy.checkTextAndValue({
+      textSelector: option5.label(),
+      expectedText: alternativeCurrencyText,
+      valueSelector: option5,
+      expectedValue: alternativeCurrencyFieldId,
+    });
   },
   gbpCurrencyCheckedByDefault,
   assertGbpCurrencyCheckedByDefault: () => {
