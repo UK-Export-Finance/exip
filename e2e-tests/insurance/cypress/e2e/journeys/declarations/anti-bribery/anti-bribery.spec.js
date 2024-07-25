@@ -1,4 +1,4 @@
-import { headingCaption, singleInputField, listPage } from '../../../../../../pages/shared';
+import { headingCaption, singleInputField, declarationPage } from '../../../../../../pages/shared';
 import { antiBriberyPage } from '../../../../../../pages/insurance/declarations';
 import partials from '../../../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
@@ -76,7 +76,7 @@ context(
       describe('latest anti-bribery content', () => {
         const listContent = CONTENT_STRINGS.LIST;
 
-        const { intro, level1, level2 } = listPage.listItems;
+        const { intro, level1, level2 } = declarationPage.listItems;
 
         it('renders an intro paragraph', () => {
           cy.checkText(intro(), CONTENT_STRINGS.INTRO);

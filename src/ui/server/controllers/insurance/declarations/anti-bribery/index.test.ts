@@ -77,7 +77,6 @@ describe('controllers/insurance/declarations/anti-bribery', () => {
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(res.locals.application),
-        CONTENT: ANTI_BRIBERY,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -138,7 +137,6 @@ describe('controllers/insurance/declarations/anti-bribery', () => {
           ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           validationErrors: generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),
-          CONTENT: ANTI_BRIBERY,
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

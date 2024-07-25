@@ -58,7 +58,6 @@ export const get = async (req: Request, res: Response) => {
     }),
     ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
-    CONTENT: CONFIDENTIALITY,
     application: mapApplicationToFormFields(res.locals.application),
   });
 };
@@ -91,7 +90,6 @@ export const post = async (req: Request, res: Response) => {
       }),
       ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
-      CONTENT: CONFIDENTIALITY,
       validationErrors,
     });
   }

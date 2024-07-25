@@ -7,7 +7,7 @@ import needToStartAgainPage from './needToStartAgain';
 import summaryList from './summaryList';
 import ukGoodsOrServicesPage from './ukGoodsOrServices';
 import field from './field';
-import listPage from './listPage';
+import declarationPage from './declarationPage';
 
 const allSectionsLink = () => cy.get('[data-cy="all-sections-link"]');
 const backLink = () => cy.get('[data-cy="back-link"]');
@@ -71,7 +71,7 @@ export {
   listIntro,
   listItem,
   listOutro,
-  listPage,
+  declarationPage,
   yesNoRadioHint,
   yesRadio,
   yesRadioInput,

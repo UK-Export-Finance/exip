@@ -78,7 +78,6 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
         }),
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
-        CONTENT: CONFIRMATION_AND_ACKNOWLEDGEMENTS,
         application: mapApplicationToFormFields(res.locals.application),
       };
 
@@ -163,7 +162,6 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
           }),
           ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
-          CONTENT: CONFIRMATION_AND_ACKNOWLEDGEMENTS,
           validationErrors: generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),
         };
 

@@ -1,4 +1,4 @@
-const listPage = {
+const declarationPage = {
   listItems: {
     intro: () => cy.get("[data-cy='intro']"),
     level1: {
@@ -14,4 +14,4 @@ const listPage = {
   },
 };
 
-export default listPage;
+export default declarationPage;

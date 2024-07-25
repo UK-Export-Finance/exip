@@ -1,4 +1,4 @@
-import { headingCaption, singleInputField, listPage } from '../../../../../../pages/shared';
+import { headingCaption, singleInputField, declarationPage } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
@@ -75,7 +75,7 @@ context(
       describe('latest confidentiality content', () => {
         const listContent = CONTENT_STRINGS.LIST;
 
-        const { intro, level1, level2, level3 } = listPage.listItems;
+        const { intro, level1, level2, level3 } = declarationPage.listItems;
 
         it('renders an intro paragraph', () => {
           cy.checkText(intro(), CONTENT_STRINGS.INTRO);
