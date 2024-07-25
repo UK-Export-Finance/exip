@@ -7,6 +7,7 @@ export * from './cover-period';
 export * from './currencies';
 export * from './date-format';
 export * from './dates';
+export * from './declarations';
 export * from './eligibility';
 export * from './environments';
 export * from './external-apis';

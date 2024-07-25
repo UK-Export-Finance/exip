@@ -1,17 +1,13 @@
-import { headingCaption, singleInputField } from '../../../../../../pages/shared';
+import { headingCaption, singleInputField, declarationPage } from '../../../../../../pages/shared';
 import { antiBriberyPage } from '../../../../../../pages/insurance/declarations';
 import partials from '../../../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
-import { DECLARATIONS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/declarations';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
-import api from '../../../../../../commands/api';
-import flattenKeystoneDocument from '../../../../../../commands/flatten-keystone-document';
-
 const { taskList } = partials.insurancePartials;
 
-const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY;
+const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY.VERSIONS[0];
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -77,43 +73,41 @@ context(
         cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
-      describe('latest confidentiality content', () => {
-        let content;
+      describe('latest anti-bribery content', () => {
+        const listContent = CONTENT_STRINGS.LIST;
 
-        const { intro, level1, firstLevel2, secondLevel2 } = antiBriberyPage.listItems;
-
-        before(() => {
-          api.declarations.getLatestAntiBribery().then((data) => {
-            content = flattenKeystoneDocument(data.content.document);
-          });
-        });
+        const { intro, level1, level2 } = declarationPage.listItems;
 
         it('renders an intro paragraph', () => {
-          cy.checkText(intro(), content[0].text);
+          cy.checkText(intro(), CONTENT_STRINGS.INTRO);
         });
 
         it('renders level 1 list items', () => {
-          cy.checkText(level1.item(1), content[1].text);
-          cy.checkText(level1.item(2), content[2].text);
-          cy.checkText(level1.item(3), content[3].text);
+          const level1Content = listContent;
 
-          cy.checkText(level1.item(4), content[7].text);
-          cy.checkText(level1.item(5), content[8].text);
-          cy.checkText(level1.item(6), content[9].text);
-          cy.checkText(level1.item(7), content[10].text);
-
-          cy.checkText(level1.item(8), content[14].text);
-          cy.checkText(level1.item(9), content[15].text);
+          cy.checkText(level1.item(1), level1Content[0].text);
+          cy.checkText(level1.item(2), level1Content[1].text);
+          cy.checkText(level1.item(3), level1Content[2].text);
+          cy.checkText(level1.item(4), level1Content[3].text);
+          cy.checkText(level1.item(5), level1Content[4].text);
+          cy.checkText(level1.item(6), level1Content[5].text);
+          cy.checkText(level1.item(7), level1Content[6].text);
+          cy.checkText(level1.item(8), level1Content[7].text);
+          cy.checkText(level1.item(9), level1Content[8].text);
         });
 
         it('renders level 2 list items', () => {
-          cy.checkText(firstLevel2.item(1), content[4].text);
-          cy.checkText(firstLevel2.item(2), content[5].text);
-          cy.checkText(firstLevel2.item(3), content[6].text);
+          const level2Content0 = listContent[2].children;
 
-          cy.checkText(secondLevel2.item(1), content[11].text);
-          cy.checkText(secondLevel2.item(2), content[12].text);
-          cy.checkText(secondLevel2.item(3), content[13].text);
+          cy.checkText(level2.itemLevel(1, 0), level2Content0[0].text);
+          cy.checkText(level2.itemLevel(2, 0), level2Content0[1].text);
+          cy.checkText(level2.itemLevel(3, 0), level2Content0[2].text);
+
+          const level2Content1 = listContent[6].children;
+
+          cy.checkText(level2.itemLevel(1, 1), level2Content1[0].text);
+          cy.checkText(level2.itemLevel(2, 1), level2Content1[1].text);
+          cy.checkText(level2.itemLevel(3, 1), level2Content1[2].text);
         });
       });
 
@@ -140,7 +134,7 @@ context(
       });
 
       it("renders `I've read and agree` legend and input", () => {
-        cy.checkText(field.legend(), FIELDS[FIELD_ID].LABEL);
+        cy.checkText(field.legend(), CONTENT_STRINGS.LABEL);
 
         field.input().should('exist');
       });

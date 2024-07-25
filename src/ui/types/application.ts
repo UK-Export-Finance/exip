@@ -192,7 +192,6 @@ interface ApplicationDeclaration {
   hasAntiBriberyCodeOfConduct?: boolean | null;
   willExportWithAntiBriberyCodeOfConduct?: boolean;
   agreeToConfirmationAndAcknowledgements?: boolean;
-  agreeHowDataWillBeUsed?: boolean;
 }
 
 interface ApplicationPolicyContact {
@@ -284,6 +283,15 @@ interface ApplicationVersion {
   DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: boolean;
 }
 
+interface ApplicationDeclarationVersion {
+  CONFIDENTIALITY: string;
+  ANTI_BRIBERY: string;
+  ANTI_BRIBERY_CODE_OF_CONDUCT: string;
+  ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: string;
+  CONFIRMATION_AND_ACKNOWLEDGEMENTS: string;
+  HOW_YOUR_DATA_WILL_BE_USED?: string;
+}
+
 export {
   Application,
   ApplicationBusiness,
@@ -310,6 +318,7 @@ export {
   ApplicationPolicyContact,
   ApplicationSectionReview,
   ApplicationDeclaration,
+  ApplicationDeclarationVersion,
   ApplicationVersion,
   ApplicationOwner,
 };

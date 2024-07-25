@@ -154,52 +154,6 @@ const queryStrings = {
       }
     }
   `,
-  declarations: {
-    getLatestConfidentiality: () => gql`
-      query declarationConfidentialities {
-        declarationConfidentialities(orderBy: { version: desc }, take: 1) {
-          id
-          version
-          content {
-            document
-          }
-        }
-      }
-    `,
-    getLatestAntiBribery: () => gql`
-      query declarationAntiBriberies {
-        declarationAntiBriberies(orderBy: { version: desc }, take: 1) {
-          id
-          version
-          content {
-            document
-          }
-        }
-      }
-    `,
-    getLatestConfirmationAndAcknowledgements: () => gql`
-      query declarationConfirmationAndAcknowledgements {
-        declarationConfirmationAndAcknowledgements(orderBy: { version: desc }, take: 1) {
-          id
-          version
-          content {
-            document
-          }
-        }
-      }
-    `,
-    getLatestHowDataWillBeUsed: () => gql`
-      query declarationHowDataWillBeUseds {
-        declarationHowDataWillBeUseds(orderBy: { version: desc }, take: 1) {
-          id
-          version
-          content {
-            document
-          }
-        }
-      }
-    `,
-  },
 };
 
 /**
@@ -582,93 +536,6 @@ const getACountry = async () => {
   }
 };
 
-const declarations = {
-  /**
-   * getLatestConfidentiality
-   * Get the latest Confidentiality declaration content
-   * @returns {Object} Confidentiality declaration
-   */
-  getLatestConfidentiality: async () => {
-    try {
-      const responseBody = await apollo
-        .query({
-          query: queryStrings.declarations.getLatestConfidentiality(),
-          context: APOLLO_CONTEXT,
-        })
-        .then((response) => response.data.declarationConfidentialities[0]);
-
-      return responseBody;
-    } catch (err) {
-      console.error(err);
-
-      throw new Error('Getting latest declaration - confidentiality ', { err });
-    }
-  },
-  /**
-   * getLatestAntiBribery
-   * Get the latest Anti-bribery declaration content
-   * @returns {Object} Anti-bribery declaration
-   */
-  getLatestAntiBribery: async () => {
-    try {
-      const responseBody = await apollo
-        .query({
-          query: queryStrings.declarations.getLatestAntiBribery(),
-          context: APOLLO_CONTEXT,
-        })
-        .then((response) => response.data.declarationAntiBriberies[0]);
-
-      return responseBody;
-    } catch (err) {
-      console.error(err);
-
-      throw new Error('Getting latest declaration - anti-bribery ', { err });
-    }
-  },
-  /**
-   * getLatestConfirmationAndAcknowledgements
-   * Get the latest Confirmation and acknowledgements declaration content
-   * @returns {Object} Confirmation and acknowledgements declaration
-   */
-  getLatestConfirmationAndAcknowledgements: async () => {
-    try {
-      const responseBody = await apollo
-        .query({
-          query: queryStrings.declarations.getLatestConfirmationAndAcknowledgements(),
-          context: APOLLO_CONTEXT,
-        })
-        .then((response) => response.data.declarationConfirmationAndAcknowledgements[0]);
-
-      return responseBody;
-    } catch (err) {
-      console.error(err);
-
-      throw new Error('Getting latest declaration - confirmation and acknowledgements ', { err });
-    }
-  },
-  /**
-   * getLatestHowDataWillBeUsed
-   * Get the latest How data will be used declaration content
-   * @returns {Object} Confirmation and acknowledgements declaration
-   */
-  getLatestHowDataWillBeUsed: async () => {
-    try {
-      const responseBody = await apollo
-        .query({
-          query: queryStrings.declarations.getLatestHowDataWillBeUsed(),
-          context: APOLLO_CONTEXT,
-        })
-        .then((response) => response.data.declarationHowDataWillBeUseds[0]);
-
-      return responseBody;
-    } catch (err) {
-      console.error(err);
-
-      throw new Error('Getting latest declaration - how data will be used ', { err });
-    }
-  },
-};
-
 const api = {
   createAnAccount,
   createBuyer,
@@ -685,7 +552,6 @@ const api = {
   deleteApplicationByReferenceNumber,
   deleteApplications,
   getACountry,
-  declarations,
 };
 
 export default api;

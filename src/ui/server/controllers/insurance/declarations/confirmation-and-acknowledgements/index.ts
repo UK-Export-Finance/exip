@@ -1,21 +1,23 @@
-import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
-import { FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
-import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
+import { ERROR_MESSAGES } from '../../../../content-strings';
+import { FIELD_IDS, TEMPLATES, ROUTES, DECLARATIONS } from '../../../../constants';
 import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import keystoneDocumentRendererConfig from '../../../../helpers/keystone-document-renderer-config';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from '../save-data';
+import canSubmitApplication from '../../../../helpers/can-submit-application';
 import { Request, Response } from '../../../../../types';
 
 export const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIRMATION_ACKNOWLEDGEMENTS;
 
+const { CONFIRMATION_AND_ACKNOWLEDGEMENTS } = DECLARATIONS.LATEST_DECLARATIONS;
+
 const {
   INSURANCE_ROOT,
-  DECLARATIONS: { CONFIRMATION_AND_ACKNOWLEDGEMENTS_SAVE_AND_BACK, HOW_YOUR_DATA_WILL_BE_USED },
+  APPLICATION_SUBMITTED,
+  DECLARATIONS: { CONFIRMATION_AND_ACKNOWLEDGEMENTS_SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
@@ -28,7 +30,7 @@ const {
 export const pageVariables = (referenceNumber: number) => ({
   FIELD: {
     ID: FIELD_ID,
-    ...FIELDS[FIELD_ID],
+    ...CONFIRMATION_AND_ACKNOWLEDGEMENTS,
   },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS_SAVE_AND_BACK}`,
 });
@@ -49,25 +51,15 @@ export const get = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  try {
-    const declarationContent = await api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement();
-
-    return res.render(TEMPLATE, {
-      ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS,
-        BACK_LINK: req.headers.referer,
-      }),
-      ...pageVariables(application.referenceNumber),
-      userName: getUserNameFromSession(req.session.user),
-      documentContent: declarationContent.content.document,
-      documentConfig: keystoneDocumentRendererConfig(),
-      application: mapApplicationToFormFields(res.locals.application),
-    });
-  } catch (err) {
-    console.error("Error getting declarations - confirmation and acknowledgements and rendering 'confirmation and acknowledgements' page %O", err);
-
-    return res.redirect(PROBLEM_WITH_SERVICE);
-  }
+  return res.render(TEMPLATE, {
+    ...insuranceCorePageVariables({
+      PAGE_CONTENT_STRINGS: CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+      BACK_LINK: req.headers.referer,
+    }),
+    ...pageVariables(application.referenceNumber),
+    userName: getUserNameFromSession(req.session.user),
+    application: mapApplicationToFormFields(res.locals.application),
+  });
 };
 
 /**
@@ -91,25 +83,15 @@ export const post = async (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY);
 
   if (validationErrors) {
-    try {
-      const declarationContent = await api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement();
-
-      return res.render(TEMPLATE, {
-        ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS,
-          BACK_LINK: req.headers.referer,
-        }),
-        ...pageVariables(referenceNumber),
-        userName: getUserNameFromSession(req.session.user),
-        documentContent: declarationContent.content.document,
-        documentConfig: keystoneDocumentRendererConfig(),
-        validationErrors,
-      });
-    } catch (err) {
-      console.error("Error getting declarations - confirmation and acknowledgements and rendering 'confirmation and acknowledgements' page %O", err);
-
-      return res.redirect(PROBLEM_WITH_SERVICE);
-    }
+    return res.render(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS: CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+        BACK_LINK: req.headers.referer,
+      }),
+      ...pageVariables(referenceNumber),
+      userName: getUserNameFromSession(req.session.user),
+      validationErrors,
+    });
   }
 
   try {
@@ -120,7 +102,30 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`);
+    /**
+     * Combine the latest application with the saved declaration answer.
+     * Otherwise, we need to make another API call to get the latest full application.
+     */
+    const latestApplication = {
+      ...application,
+      declaration: {
+        ...application.declaration,
+        ...saveResponse,
+      },
+    };
+
+    const canSubmit = canSubmitApplication(latestApplication);
+
+    if (canSubmit) {
+      // submit the application
+      const submissionResponse = await api.keystone.application.submit(application.id);
+
+      if (submissionResponse.success) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`);
+      }
+    }
+
+    return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (err) {
     console.error('Error updating application - declarations - confirmation and acknowledgements %O', err);
 

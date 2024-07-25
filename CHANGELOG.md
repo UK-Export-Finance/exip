@@ -1,42 +1,50 @@
 # Changelog
 
-## [2.15.0](https://github.com/UK-Export-Finance/exip/compare/v2.14.0...v2.15.0) (2024-07-23)
+## [2.17.0](https://github.com/UK-Export-Finance/exip/compare/v2.16.0...v2.17.0) (2024-07-25)
 
 
 ### Features
 
-* **EMS-3535:** changes to anti-bribery and corruption definitions ([#2778](https://github.com/UK-Export-Finance/exip/issues/2778)) ([9ec9d20](https://github.com/UK-Export-Finance/exip/commit/9ec9d201026e62c8eb7262a3785419d55f3c2fc1))
+* **EMS-3631:** declarations - replace api/keystone rendering with content-strings ([#2813](https://github.com/UK-Export-Finance/exip/issues/2813)) ([0b30342](https://github.com/UK-Export-Finance/exip/commit/0b30342e8e36222640997280cd922d59dca34206))
+
+## [2.16.0](https://github.com/UK-Export-Finance/exip/compare/v2.15.0...v2.16.0) (2024-07-24)
+
+### Features
+
+- **EMS-3536-3540:** remove 'how your data will be used' declaration ([#2789](https://github.com/UK-Export-Finance/exip/issues/2789)) ([9efa559](https://github.com/UK-Export-Finance/exip/commit/9efa5599a9b784eeee96d4f9f536f4b96231a7b1))
+
+## [2.15.0](https://github.com/UK-Export-Finance/exip/compare/v2.14.0...v2.15.0) (2024-07-23)
+
+### Features
+
+- **EMS-3535:** changes to anti-bribery and corruption definitions ([#2778](https://github.com/UK-Export-Finance/exip/issues/2778)) ([9ec9d20](https://github.com/UK-Export-Finance/exip/commit/9ec9d201026e62c8eb7262a3785419d55f3c2fc1))
 
 ## [2.14.0](https://github.com/UK-Export-Finance/exip/compare/v2.13.0...v2.14.0) (2024-07-22)
 
-
 ### Features
 
-* **EMS-3610:** changed wording for export contract agent question ([4dd6ed9](https://github.com/UK-Export-Finance/exip/commit/4dd6ed9b7566d515d36338fec15aa56416c609c7))
+- **EMS-3610:** changed wording for export contract agent question ([4dd6ed9](https://github.com/UK-Export-Finance/exip/commit/4dd6ed9b7566d515d36338fec15aa56416c609c7))
 
 ## [2.13.0](https://github.com/UK-Export-Finance/exip/compare/v2.12.2...v2.13.0) (2024-07-19)
 
-
 ### Features
 
-* **EMS-3606:** added missing environment variables ([5b1fccd](https://github.com/UK-Export-Finance/exip/commit/5b1fccdaf24693c4756d638d0003b521e5815899))
+- **EMS-3606:** added missing environment variables ([5b1fccd](https://github.com/UK-Export-Finance/exip/commit/5b1fccdaf24693c4756d638d0003b521e5815899))
 
 ## [2.12.2](https://github.com/UK-Export-Finance/exip/compare/v2.12.1...v2.12.2) (2024-07-18)
 
-
 ### Bug Fixes
 
-* **EMS-3604:** no PDF - Anti-bribery code of conduct - Incorrect link ([#2768](https://github.com/UK-Export-Finance/exip/issues/2768)) ([331cc7b](https://github.com/UK-Export-Finance/exip/commit/331cc7bfe59741d669079d68e1f595401d76fe80))
+- **EMS-3604:** no PDF - Anti-bribery code of conduct - Incorrect link ([#2768](https://github.com/UK-Export-Finance/exip/issues/2768)) ([331cc7b](https://github.com/UK-Export-Finance/exip/commit/331cc7bfe59741d669079d68e1f595401d76fe80))
 
 ## [2.12.1](https://github.com/UK-Export-Finance/exip/compare/v2.12.0...v2.12.1) (2024-07-17)
 
-
 ### Bug Fixes
 
-* **DTFS2-7284:** fixed private endpoint ([f23e285](https://github.com/UK-Export-Finance/exip/commit/f23e285be2b2a25a50c02d02f141907fe2f33454))
-* **EM-2186:** fixed conditional deployment ([41d5d4c](https://github.com/UK-Export-Finance/exip/commit/41d5d4cb9615d8afd7b3aec22a41fc8f1bc43d4e))
-* **EMS-2186:** removed * from flag ([8f7721f](https://github.com/UK-Export-Finance/exip/commit/8f7721f29bb450e2684fb8403d0a4f5b9e14fce4))
-* **EMS-2186:** removed purge protection ([ac65a2e](https://github.com/UK-Export-Finance/exip/commit/ac65a2e023ced9a73f12bf78142b307a5a0fc725))
+- **DTFS2-7284:** fixed private endpoint ([f23e285](https://github.com/UK-Export-Finance/exip/commit/f23e285be2b2a25a50c02d02f141907fe2f33454))
+- **EM-2186:** fixed conditional deployment ([41d5d4c](https://github.com/UK-Export-Finance/exip/commit/41d5d4cb9615d8afd7b3aec22a41fc8f1bc43d4e))
+- **EMS-2186:** removed \* from flag ([8f7721f](https://github.com/UK-Export-Finance/exip/commit/8f7721f29bb450e2684fb8403d0a4f5b9e14fce4))
+- **EMS-2186:** removed purge protection ([ac65a2e](https://github.com/UK-Export-Finance/exip/commit/ac65a2e023ced9a73f12bf78142b307a5a0fc725))
 
 ## [2.12.0](https://github.com/UK-Export-Finance/exip/compare/v2.11.2...v2.12.0) (2024-07-16)
 
