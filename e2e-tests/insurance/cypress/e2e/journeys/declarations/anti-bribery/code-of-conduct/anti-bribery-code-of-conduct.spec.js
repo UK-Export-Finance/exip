@@ -7,7 +7,7 @@ import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insuranc
 
 const { taskList } = partials.insurancePartials;
 
-const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_CODE_OF_CONDUCT.VERSIONS[0];
+const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_CODE_OF_CONDUCT.VERSIONS[1];
 
 const {
   ROOT: INSURANCE_ROOT,
