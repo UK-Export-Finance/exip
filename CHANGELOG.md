@@ -1,18 +1,22 @@
 # Changelog
 
-## [2.20.0](https://github.com/UK-Export-Finance/exip/compare/v2.19.0...v2.20.0) (2024-07-25)
-
+## [2.21.0](https://github.com/UK-Export-Finance/exip/compare/v2.20.0...v2.21.0) (2024-07-26)
 
 ### Features
 
-* **EMS-3612:** declarations - Anti-bribery definitions update ([#2820](https://github.com/UK-Export-Finance/exip/issues/2820)) ([09c460e](https://github.com/UK-Export-Finance/exip/commit/09c460ebbd1b95e6e23d7ae3da2ad55c37ae863b))
+- **EMS-3611:** declaration - Anti-bribery code of conduct version update ([#2824](https://github.com/UK-Export-Finance/exip/issues/2824)) ([7637316](https://github.com/UK-Export-Finance/exip/commit/76373166d266a37537b6fbfad685d68d574522f2))
+
+## [2.20.0](https://github.com/UK-Export-Finance/exip/compare/v2.19.0...v2.20.0) (2024-07-25)
+
+### Features
+
+- **EMS-3612:** declarations - Anti-bribery definitions update ([#2820](https://github.com/UK-Export-Finance/exip/issues/2820)) ([09c460e](https://github.com/UK-Export-Finance/exip/commit/09c460ebbd1b95e6e23d7ae3da2ad55c37ae863b))
 
 ## [2.19.0](https://github.com/UK-Export-Finance/exip/compare/v2.18.0...v2.19.0) (2024-07-25)
 
-
 ### Features
 
-* **EMS-3633:** data migration - declarations ([#2819](https://github.com/UK-Export-Finance/exip/issues/2819)) ([39da207](https://github.com/UK-Export-Finance/exip/commit/39da207d6ca86253d2037738b42a993bad808711))
+- **EMS-3633:** data migration - declarations ([#2819](https://github.com/UK-Export-Finance/exip/issues/2819)) ([39da207](https://github.com/UK-Export-Finance/exip/commit/39da207d6ca86253d2037738b42a993bad808711))
 
 ## [2.18.0](https://github.com/UK-Export-Finance/exip/compare/v2.17.0...v2.18.0) (2024-07-25)
 
