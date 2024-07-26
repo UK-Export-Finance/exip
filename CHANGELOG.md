@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.21.0](https://github.com/UK-Export-Finance/exip/compare/v2.20.0...v2.21.0) (2024-07-26)
+
+
+### Features
+
+* **EMS-3611:** declaration - Anti-bribery code of conduct version update ([#2824](https://github.com/UK-Export-Finance/exip/issues/2824)) ([7637316](https://github.com/UK-Export-Finance/exip/commit/76373166d266a37537b6fbfad685d68d574522f2))
+
 ## [2.20.0](https://github.com/UK-Export-Finance/exip/compare/v2.19.0...v2.20.0) (2024-07-25)
 
 
