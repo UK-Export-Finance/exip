@@ -48,7 +48,7 @@ const EXPANDABLE = {
       {
         TERM: 'Involved Group Company',
         DEFINITION: [
-          'Means a group company which (a) having made the reasonable enquires referred to in paragraph 8(ii) of the anti-bribery and corruption declaration, has had, or is intended to have, at the date of this proposal, any material part in the negotiation or obtaining of the export contract;',
+          'Means a group company which (a) having made the reasonable enquires referred to in paragraph 8(ii) of the anti-bribery and corruption declaration, has had, or is intended to have, at the date of this Proposal, any material part in the negotiation or obtaining of the export contract;',
           '(b) employs personnel providing head office, legal, compliance, audit and/ or similar functions.',
         ],
       },
@@ -76,7 +76,7 @@ const EXPANDABLE = {
   },
 };
 
-const INTRO = "By submitting this application (also known as a 'proposal') you agree that:";
+const INTRO = "By submitting this application (also known as a 'Proposal') you agree that:";
 
 const LIST = [
   {

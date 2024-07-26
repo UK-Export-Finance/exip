@@ -11,7 +11,7 @@ export const CONFIRMATION_AND_ACKNOWLEDGEMENTS = {
         TEXT: `${HAVE_READ_AND_AGREED} the confirmation and acknowledgements`,
         VALUE: true,
       },
-      INTRO: "By submitting this application (also known as a 'proposal') you agree that:",
+      INTRO: "By submitting this application (also known as a 'Proposal') you agree that:",
       LIST: [
         {
           text: 'you confirm that the information contained in this Proposal and any related discussions or correspondence constitutes a fair presentation of the risk to include all material facts and circumstances; and',

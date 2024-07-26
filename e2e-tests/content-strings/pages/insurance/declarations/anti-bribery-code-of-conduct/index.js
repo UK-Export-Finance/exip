@@ -10,7 +10,7 @@ const HINT = {
 };
 
 const ANSWER_YES_REVEAL = {
-  TEXT: "We will email you after you submit your application (also known as a 'proposal')  to request your anti-bribery code of conduct.",
+  TEXT: "We will email you after you submit your application (also known as a 'Proposal')  to request your anti-bribery code of conduct.",
 };
 
 export const ANTI_BRIBERY_CODE_OF_CONDUCT = {
