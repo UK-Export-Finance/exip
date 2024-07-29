@@ -1,28 +1,26 @@
-import { yesNoRadioHint, yesRadio, noRadio } from '../../../../../../pages/shared';
-import { endBuyerPage } from '../../../../../../pages/insurance/eligibility';
-import { PAGES, END_BUYERS_DESCRIPTION, ERROR_MESSAGES } from '../../../../../../content-strings';
-import { FIELDS_ELIGIBILITY } from '../../../../../../content-strings/fields/insurance/eligibility';
+import { yesRadio, noRadio } from '../../../../../../pages/shared';
+import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.END_BUYER;
+const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM;
 
 const {
-  ELIGIBILITY: { HAS_END_BUYER: FIELD_ID },
+  ELIGIBILITY: { PARTY_TO_CONSORTIUM: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
 const {
-  ELIGIBILITY: { END_BUYER, UK_GOODS_OR_SERVICES, PARTY_TO_CONSORTIUM, CANNOT_APPLY_MULTIPLE_RISKS },
+  ELIGIBILITY: { END_BUYER, PARTY_TO_CONSORTIUM, LONG_TERM_COVER, MEMBER_OF_A_GROUP },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  'Insurance - End buyer page - as an exporter, I want to confirm if payment by the buyer of my export depends on payment from an end buyer, So that UKEF can have clarity of my export transaction',
+  'Insurance - Party to a consortium page - As a Legal adviser, I want to know whether an Exporter used or will use a consortium as part of their export contract, So that I know whether other parties are involved in the execution of the export contract',
   () => {
-    const url = `${baseUrl}${END_BUYER}`;
+    const url = `${baseUrl}${PARTY_TO_CONSORTIUM}`;
 
     before(() => {
       cy.navigateToCheckIfEligibleUrl();
@@ -35,6 +33,7 @@ context(
       cy.completeAndSubmitTotalValueInsuredForm({});
       cy.completeCoverPeriodForm({});
       cy.completeUkGoodsAndServicesForm();
+      cy.completeEndBuyerForm();
 
       cy.assertUrl(url);
     });
@@ -46,8 +45,8 @@ context(
     it('renders core page elements', () => {
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-        currentHref: END_BUYER,
-        backLink: UK_GOODS_OR_SERVICES,
+        currentHref: PARTY_TO_CONSORTIUM,
+        backLink: END_BUYER,
         assertAuthenticatedHeader: false,
       });
     });
@@ -62,8 +61,6 @@ context(
 
         cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
 
-        cy.checkText(yesNoRadioHint(), FIELDS_ELIGIBILITY[FIELD_ID].HINT);
-
         cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
       });
 
@@ -71,32 +68,6 @@ context(
         cy.checkText(noRadio().label(), FIELD_VALUES.NO);
 
         cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
-      });
-
-      describe('expandable details - why do we need to know about end buyers', () => {
-        it('renders summary text', () => {
-          cy.checkText(endBuyerPage.summary(), END_BUYERS_DESCRIPTION.INTRO);
-
-          endBuyerPage.details().should('not.have.attr', 'open');
-        });
-
-        describe('when clicking the summary text', () => {
-          it('should expand the collapsed `details` content', () => {
-            endBuyerPage.summary().click();
-            endBuyerPage.details().should('have.attr', 'open');
-
-            cy.checkText(endBuyerPage.list.intro(), END_BUYERS_DESCRIPTION.LIST_INTRO);
-            cy.checkText(endBuyerPage.list.item(1), END_BUYERS_DESCRIPTION.LIST[0]);
-            cy.checkText(endBuyerPage.list.item(2), END_BUYERS_DESCRIPTION.LIST[1]);
-
-            cy.checkText(endBuyerPage.outro.singleRiskOnly(), END_BUYERS_DESCRIPTION.OUTRO.SINGLE_RISK_ONLY);
-            cy.checkText(endBuyerPage.outro.tryingMultipleRisk(), END_BUYERS_DESCRIPTION.OUTRO.IF_TRYING_MULTIPLE_RISKS);
-
-            cy.checkActionTalkToYourNearestEFMLink({});
-
-            cy.checkText(endBuyerPage.outro.toFindOutMore(), END_BUYERS_DESCRIPTION.OUTRO.TO_FIND_OUT_MORE);
-          });
-        });
       });
     });
 
@@ -124,8 +95,8 @@ context(
         cy.clickSubmitButton();
       });
 
-      it(`should redirect to ${PARTY_TO_CONSORTIUM}`, () => {
-        const expectedUrl = `${baseUrl}${PARTY_TO_CONSORTIUM}`;
+      it(`should redirect to ${MEMBER_OF_A_GROUP}`, () => {
+        const expectedUrl = `${baseUrl}${MEMBER_OF_A_GROUP}`;
 
         cy.assertUrl(expectedUrl);
       });
@@ -147,8 +118,8 @@ context(
         cy.clickSubmitButton();
       });
 
-      it(`should redirect to ${CANNOT_APPLY_MULTIPLE_RISKS}`, () => {
-        const expectedUrl = `${baseUrl}${CANNOT_APPLY_MULTIPLE_RISKS}`;
+      it(`should redirect to ${LONG_TERM_COVER}`, () => {
+        const expectedUrl = `${baseUrl}${LONG_TERM_COVER}`;
 
         cy.assertUrl(expectedUrl);
       });

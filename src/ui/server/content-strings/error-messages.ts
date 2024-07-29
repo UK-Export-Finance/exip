@@ -81,6 +81,12 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT]: {
         IS_EMPTY: 'Select if you have a UK Export Finance account',
       },
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM]: {
+        IS_EMPTY: 'Select if you have a UK Export Finance account',
+      },
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP]: {
+        IS_EMPTY: 'Select if you are a member of a group that was involved with the negotiating or obtaining the export contract',
+      },
     },
     EXPORTER_BUSINESS: {
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.HAS_DIFFERENT_TRADING_NAME]: {

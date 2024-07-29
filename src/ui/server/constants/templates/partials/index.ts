@@ -28,6 +28,9 @@ export const PARTIALS = {
     END_BUYER: {
       CUSTOM_CONTENT_HTML: 'partials/insurance/end-buyer-details.njk',
     },
+    MEMBER_OF_A_GROUP: {
+      CUSTOM_CONTENT_HTML: 'partials/insurance/member-of-a-group-details.njk',
+    },
     POLICY: {
       PRE_CREDIT_PERIOD: {
         CUSTOM_CONTENT_HTML: 'partials/insurance/pre-credit-period-conditional-yes-html.njk',

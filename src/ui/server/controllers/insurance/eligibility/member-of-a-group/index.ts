@@ -1,5 +1,4 @@
-import { PAGES, END_BUYERS_DESCRIPTION, ERROR_MESSAGES } from '../../../../content-strings';
-import { FIELDS_ELIGIBILITY } from '../../../../content-strings/fields/insurance/eligibility';
+import { PAGES, ERROR_MESSAGES, MEMBER_OF_A_GROUP_DESCRIPTION } from '../../../../content-strings';
 import { FIELD_IDS, TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
@@ -7,48 +6,45 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
-import isChangeRoute from '../../../../helpers/is-change-route';
 import { Request, Response } from '../../../../../types';
 
-const { CANNOT_APPLY_MULTIPLE_RISKS, CHECK_YOUR_ANSWERS, PARTY_TO_CONSORTIUM } = INSURANCE_ROUTES.ELIGIBILITY;
+const {
+  ELIGIBILITY: { LONG_TERM_COVER, CHECK_YOUR_ANSWERS },
+} = INSURANCE_ROUTES;
 
 const {
   SHARED_PAGES,
   PARTIALS: {
-    INSURANCE: { END_BUYER },
+    INSURANCE: { MEMBER_OF_A_GROUP },
   },
 } = TEMPLATES;
 
-export const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_END_BUYER;
+export const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP;
 
 export const PAGE_VARIABLES = {
   FIELD_ID,
   PAGE_CONTENT_STRINGS: {
-    ...PAGES.INSURANCE.ELIGIBILITY.END_BUYER,
-    END_BUYERS_DESCRIPTION,
-  },
-  FIELD: {
-    ID: FIELD_ID,
-    ...FIELDS_ELIGIBILITY[FIELD_ID],
+    ...PAGES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP,
+    MEMBER_OF_A_GROUP_DESCRIPTION,
   },
 };
+
+export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
 
 /**
  * HTML_FLAGS
  * Conditional flags for the nunjucks template to match design
  */
 export const HTML_FLAGS = {
-  CUSTOM_CONTENT_HTML: END_BUYER.CUSTOM_CONTENT_HTML,
+  CUSTOM_CONTENT_HTML: MEMBER_OF_A_GROUP.CUSTOM_CONTENT_HTML,
 };
-
-export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
 
 /**
  * get
- * Render the "End buyer" page
+ * Render the "Member of a group" page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} End buyer page
+ * @returns {Express.Response.render} Member of a group page
  */
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {
@@ -59,7 +55,7 @@ export const get = (req: Request, res: Response) =>
 
 /**
  * post
- * Check "End buyer" validation errors and if successful, redirect to the next part of the flow.
+ * Check "Member of a group" validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
@@ -84,7 +80,7 @@ export const post = (req: Request, res: Response) => {
   const answer = payload[FIELD_ID];
 
   if (answer === 'true') {
-    return res.redirect(CANNOT_APPLY_MULTIPLE_RISKS);
+    return res.redirect(LONG_TERM_COVER);
   }
 
   req.session.submittedData = {
@@ -92,9 +88,5 @@ export const post = (req: Request, res: Response) => {
     insuranceEligibility: updateSubmittedData({ [FIELD_ID]: answer }, req.session.submittedData.insuranceEligibility),
   };
 
-  if (isChangeRoute(req.originalUrl)) {
-    return res.redirect(CHECK_YOUR_ANSWERS);
-  }
-
-  return res.redirect(PARTY_TO_CONSORTIUM);
+  return res.redirect(CHECK_YOUR_ANSWERS);
 };

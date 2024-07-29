@@ -151,3 +151,12 @@ export const CONTRACT_TOO_SHORT = {
     TEXT: `to learn more about your options. If you have any questions, get in touch with our team at ${UKEF_CONTACT_DETAILS.EMAIL.UNDERWRITING}.`,
   },
 };
+
+export const PARTY_TO_CONSORTIUM = {
+  PAGE_TITLE: 'Are you, or will you be a party to any consortium in connection with the performance or financing of any part of the export contract(s)?',
+};
+
+export const MEMBER_OF_A_GROUP = {
+  PAGE_TITLE:
+    'Are you are a member of a group of which another member has, or is intended to have, a material part in negotiating or obtaining the export contract(s)?',
+};
