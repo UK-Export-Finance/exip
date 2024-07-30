@@ -13,7 +13,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES;
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { ROOT: EXPORT_CONTRACT_ROOT, ABOUT_GOODS_OR_SERVICES, HOW_WILL_YOU_GET_PAID },
+  EXPORT_CONTRACT: { HOW_WAS_THE_CONTRACT_AWARDED, ABOUT_GOODS_OR_SERVICES, HOW_WILL_YOU_GET_PAID },
 } = INSURANCE_ROUTES;
 
 const {
@@ -35,6 +35,7 @@ context(
         referenceNumber = refNumber;
 
         cy.startInsuranceExportContractSection({});
+        cy.completeAndSubmitHowWasTheContractAwardedForm();
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
 
@@ -54,7 +55,7 @@ context(
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: `${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`,
-        backLink: `${ROOT}/${referenceNumber}${EXPORT_CONTRACT_ROOT}`,
+        backLink: `${ROOT}/${referenceNumber}${HOW_WAS_THE_CONTRACT_AWARDED}`,
       });
     });
 

@@ -8,7 +8,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.ROOT;
 const {
   ROOT,
   ALL_SECTIONS,
-  EXPORT_CONTRACT: { ROOT: EXPORT_CONTRACT_ROOT, ABOUT_GOODS_OR_SERVICES },
+  EXPORT_CONTRACT: { ROOT: EXPORT_CONTRACT_ROOT, HOW_WAS_THE_CONTRACT_AWARDED },
 } = INSURANCE_ROUTES;
 
 const { taskList } = partials.insurancePartials;
@@ -73,7 +73,7 @@ context(
 
       it('renders a `start now` link', () => {
         assertSectionStartContent.startNow.link({
-          expectedUrl: `${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`,
+          expectedUrl: `${ROOT}/${referenceNumber}${HOW_WAS_THE_CONTRACT_AWARDED}`,
         });
       });
 
@@ -88,7 +88,7 @@ context(
       it(`should redirect to ${EXPORT_CONTRACT_ROOT}`, () => {
         assertSectionStartContent.startNow.linkRedirection({
           currentUrl: exportContractRootUrl,
-          expectedUrl: `${baseUrl}${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`,
+          expectedUrl: `${baseUrl}${ROOT}/${referenceNumber}${HOW_WAS_THE_CONTRACT_AWARDED}`,
         });
       });
     });

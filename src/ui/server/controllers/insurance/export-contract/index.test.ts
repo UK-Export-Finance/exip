@@ -8,7 +8,7 @@ import { Request, Response } from '../../../../types';
 import { referenceNumber, mockReq, mockRes } from '../../../test-mocks';
 
 const {
-  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES },
+  EXPORT_CONTRACT: { HOW_WAS_THE_CONTRACT_AWARDED },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -38,7 +38,7 @@ describe('controllers/insurance/export-contract/index', () => {
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...sectionStartPageVariables({
           REFERENCE_NUMBER: referenceNumber,
-          START_NOW_ROUTE: ABOUT_GOODS_OR_SERVICES,
+          START_NOW_ROUTE: HOW_WAS_THE_CONTRACT_AWARDED,
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORT_CONTRACT.ROOT,
           BACK_LINK: req.headers.referer,
         }),
