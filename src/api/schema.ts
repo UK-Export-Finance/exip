@@ -773,6 +773,8 @@ export const lists = {
       paidByLetterOfCredit: checkbox(),
       totalContractValue: relationship({ ref: 'TotalContractValue' }),
       validExporterLocation: checkbox(),
+      isPartyToConsortium: checkbox(),
+      isMemberOfAGroup: checkbox(),
     },
     access: allowAll,
   }),

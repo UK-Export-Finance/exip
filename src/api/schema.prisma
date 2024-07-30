@@ -488,6 +488,8 @@ model Eligibility {
   totalContractValue           TotalContractValue? @relation("Eligibility_totalContractValue", fields: [totalContractValueId], references: [id])
   totalContractValueId         String?             @map("totalContractValue")
   validExporterLocation        Boolean             @default(false)
+  isPartyToConsortium          Boolean             @default(false)
+  isMemberOfAGroup             Boolean             @default(false)
   from_Application_eligibility Application[]       @relation("Application_eligibility")
 
   @@index([applicationId])

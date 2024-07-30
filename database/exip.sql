@@ -666,6 +666,8 @@ CREATE TABLE IF NOT EXISTS `Eligibility` (
   `paidByLetterOfCredit` tinyint(1) NOT NULL DEFAULT '0',
   `totalContractValue` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `validExporterLocation` tinyint(1) NOT NULL DEFAULT '0',
+  `isPartyToConsortium` tinyint(1) NOT NULL DEFAULT '0',
+  `isMemberOfAGroup` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `Eligibility_application_idx` (`application`),
   KEY `Eligibility_buyerCountry_idx` (`buyerCountry`),

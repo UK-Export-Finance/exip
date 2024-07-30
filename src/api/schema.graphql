@@ -2454,6 +2454,8 @@ type Eligibility {
   paidByLetterOfCredit: Boolean
   totalContractValue: TotalContractValue
   validExporterLocation: Boolean
+  isPartyToConsortium: Boolean
+  isMemberOfAGroup: Boolean
 }
 
 input EligibilityWhereUniqueInput {
@@ -2475,6 +2477,8 @@ input EligibilityWhereInput {
   paidByLetterOfCredit: BooleanFilter
   totalContractValue: TotalContractValueWhereInput
   validExporterLocation: BooleanFilter
+  isPartyToConsortium: BooleanFilter
+  isMemberOfAGroup: BooleanFilter
 }
 
 input EligibilityOrderByInput {
@@ -2485,6 +2489,8 @@ input EligibilityOrderByInput {
   otherPartiesInvolved: OrderDirection
   paidByLetterOfCredit: OrderDirection
   validExporterLocation: OrderDirection
+  isPartyToConsortium: OrderDirection
+  isMemberOfAGroup: OrderDirection
 }
 
 input EligibilityUpdateInput {
@@ -2498,6 +2504,8 @@ input EligibilityUpdateInput {
   paidByLetterOfCredit: Boolean
   totalContractValue: TotalContractValueRelateToOneForUpdateInput
   validExporterLocation: Boolean
+  isPartyToConsortium: Boolean
+  isMemberOfAGroup: Boolean
 }
 
 input CoverPeriodRelateToOneForUpdateInput {
@@ -2528,6 +2536,8 @@ input EligibilityCreateInput {
   paidByLetterOfCredit: Boolean
   totalContractValue: TotalContractValueRelateToOneForCreateInput
   validExporterLocation: Boolean
+  isPartyToConsortium: Boolean
+  isMemberOfAGroup: Boolean
 }
 
 input CoverPeriodRelateToOneForCreateInput {
@@ -3633,6 +3643,8 @@ input ApplicationEligibility {
   hasMinimumUkGoodsOrServices: Boolean!
   totalContractValueId: Int!
   validExporterLocation: Boolean!
+  isPartyToConsortium: Boolean!
+  isMemberOfAGroup: Boolean!
 }
 
 type CreateAnApplicationResponse {
