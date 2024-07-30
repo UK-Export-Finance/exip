@@ -85,9 +85,13 @@ insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.END_BUYER_CHANGE, e
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM, partyToConsortiumGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM, partyToConsortiumPost);
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM_CHANGE, partyToConsortiumGet);
+insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM_CHANGE, partyToConsortiumPost);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP, memberOfAGroupGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP, memberOfAGroupPost);
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP_CHANGE, memberOfAGroupGet);
+insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP_CHANGE, memberOfAGroupPost);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY_MULTIPLE_RISKS, cannotApplyMultipleRisksGet);
 

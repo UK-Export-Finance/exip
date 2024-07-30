@@ -13,6 +13,8 @@ const {
   TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID,
   HAS_END_BUYER,
   HAS_COMPANIES_HOUSE_NUMBER,
+  IS_PARTY_TO_CONSORTIUM,
+  IS_MEMBER_OF_A_GROUP,
 } = FIELD_IDS.INSURANCE.ELIGIBILITY;
 
 const { COMPANY_NAME } = FIELD_IDS.INSURANCE.COMPANIES_HOUSE;
@@ -90,6 +92,16 @@ export const FIELDS_ELIGIBILITY = {
       TITLE: 'Total value to insure',
       ABOVE: `Above ${THRESHOLD}`,
       BELOW: `Below ${THRESHOLD}`,
+    },
+  },
+  [IS_PARTY_TO_CONSORTIUM]: {
+    SUMMARY: {
+      TITLE: 'Is a consortium involved?',
+    },
+  },
+  [IS_MEMBER_OF_A_GROUP]: {
+    SUMMARY: {
+      TITLE: 'Are you a member of a group?',
     },
   },
 };
