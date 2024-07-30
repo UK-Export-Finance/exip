@@ -75,8 +75,8 @@ context('Insurance - Export contract - Agent - Save and go back', () => {
 
         cy.startInsuranceExportContractSection({});
 
-        // go through 2 export contract forms.
-        cy.clickSubmitButtonMultipleTimes({ count: 2 });
+        // go through 3 export contract forms.
+        cy.clickSubmitButtonMultipleTimes({ count: 3 });
 
         cy.assertNoRadioOptionIsChecked();
       });
@@ -105,8 +105,8 @@ context('Insurance - Export contract - Agent - Save and go back', () => {
 
         cy.startInsuranceExportContractSection({});
 
-        // go through 2 export contract forms.
-        cy.clickSubmitButtonMultipleTimes({ count: 2 });
+        // go through 3 export contract forms.
+        cy.clickSubmitButtonMultipleTimes({ count: 3 });
 
         cy.assertYesRadioOptionIsChecked();
       });

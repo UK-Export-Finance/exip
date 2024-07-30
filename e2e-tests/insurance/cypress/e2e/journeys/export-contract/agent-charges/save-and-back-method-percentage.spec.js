@@ -92,8 +92,8 @@ context(`Insurance - Export contract - Agent charges - Save and go back - ${METH
 
         cy.startInsuranceExportContractSection({});
 
-        // go through 5 export contract forms.
-        cy.clickSubmitButtonMultipleTimes({ count: 5 });
+        // go through 6 export contract forms.
+        cy.clickSubmitButtonMultipleTimes({ count: 6 });
 
         cy.assertAgentChargesFieldValues({ percentageMethod: true });
       });

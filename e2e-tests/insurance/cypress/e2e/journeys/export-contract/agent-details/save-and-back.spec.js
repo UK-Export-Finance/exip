@@ -95,8 +95,8 @@ context('Insurance - Export contract - Agent details - Save and go back', () => 
 
         cy.startInsuranceExportContractSection({});
 
-        // go through 3 export contract forms.
-        cy.clickSubmitButtonMultipleTimes({ count: 3 });
+        // go through 4 export contract forms.
+        cy.clickSubmitButtonMultipleTimes({ count: 4 });
 
         cy.assertAgentDetailsFieldValues({});
       });

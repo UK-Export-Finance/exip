@@ -84,6 +84,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
 
       // go back to the page via the task list
       cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitHowWasTheContractAwardedForm();
 
       cy.checkTextareaValue({
         fieldId: FIELD_ID,
