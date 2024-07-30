@@ -118,6 +118,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
 
     it(`should have no value in '${FIELD_ID}' when going back to the page`, () => {
       cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitHowWasTheContractAwardedForm();
 
       cy.checkTextareaValue({
         fieldId: FIELD_ID,
