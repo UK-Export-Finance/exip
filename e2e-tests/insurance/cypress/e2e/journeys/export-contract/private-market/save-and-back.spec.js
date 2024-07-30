@@ -22,6 +22,7 @@ context('Insurance - Export contract - Private market - Save and go back', () =>
 
       // go to the page we want to test.
       cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitHowWasTheContractAwardedForm();
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
       cy.completeAndSubmitHowYouWillGetPaidForm({});
 

@@ -34,6 +34,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
+        // go to the page we want to test.
         cy.startInsuranceExportContractSection({});
         cy.completeAndSubmitHowWasTheContractAwardedForm();
 

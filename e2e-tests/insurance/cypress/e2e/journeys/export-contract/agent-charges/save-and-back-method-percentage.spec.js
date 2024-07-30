@@ -22,6 +22,7 @@ context(`Insurance - Export contract - Agent charges - Save and go back - ${METH
 
       // go to the page we want to test.
       cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitHowWasTheContractAwardedForm();
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
       cy.completeAndSubmitHowYouWillGetPaidForm({});
       cy.completeAndSubmitAgentForm({ isUsingAgent: true });
