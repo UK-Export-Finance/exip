@@ -11,6 +11,7 @@ export * from './fields';
 export * from './form-titles';
 export * from './header';
 export * from './links';
+export * from './member-of-a-group-description';
 export * from './pages';
 export * from './phase-banner';
 export * from './private-market-why-description';

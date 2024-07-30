@@ -1,28 +1,29 @@
-import { yesNoRadioHint, yesRadio, noRadio } from '../../../../../../pages/shared';
-import { endBuyerPage } from '../../../../../../pages/insurance/eligibility';
-import { PAGES, END_BUYERS_DESCRIPTION, ERROR_MESSAGES } from '../../../../../../content-strings';
-import { FIELDS_ELIGIBILITY } from '../../../../../../content-strings/fields/insurance/eligibility';
+import { yesRadio, noRadio } from '../../../../../../pages/shared';
+import partials from '../../../../../../partials/insurance';
+import { PAGES, MEMBER_OF_A_GROUP_DESCRIPTION, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.END_BUYER;
+const { memberOfAGroup } = partials;
+
+const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP;
 
 const {
-  ELIGIBILITY: { HAS_END_BUYER: FIELD_ID },
+  ELIGIBILITY: { IS_MEMBER_OF_A_GROUP: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
 const {
-  ELIGIBILITY: { END_BUYER, UK_GOODS_OR_SERVICES, PARTY_TO_CONSORTIUM, CANNOT_APPLY_MULTIPLE_RISKS },
+  ELIGIBILITY: { PARTY_TO_CONSORTIUM, MEMBER_OF_A_GROUP, CHECK_YOUR_ANSWERS, LONG_TERM_COVER },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  'Insurance - End buyer page - as an exporter, I want to confirm if payment by the buyer of my export depends on payment from an end buyer, So that UKEF can have clarity of my export transaction',
+  'Insurance - Member of a group page - As a legal adviser, I want to know whether an Exporter was a member of a Group when they procured the export contract So that I know whether other parties are involved in the obtaining of the export contract',
   () => {
-    const url = `${baseUrl}${END_BUYER}`;
+    const url = `${baseUrl}${MEMBER_OF_A_GROUP}`;
 
     before(() => {
       cy.navigateToCheckIfEligibleUrl();
@@ -35,6 +36,8 @@ context(
       cy.completeAndSubmitTotalValueInsuredForm({});
       cy.completeCoverPeriodForm({});
       cy.completeUkGoodsAndServicesForm();
+      cy.completeEndBuyerForm();
+      cy.completePartyToConsortiumForm();
 
       cy.assertUrl(url);
     });
@@ -46,8 +49,8 @@ context(
     it('renders core page elements', () => {
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-        currentHref: END_BUYER,
-        backLink: UK_GOODS_OR_SERVICES,
+        currentHref: MEMBER_OF_A_GROUP,
+        backLink: PARTY_TO_CONSORTIUM,
         assertAuthenticatedHeader: false,
       });
     });
@@ -61,10 +64,6 @@ context(
         yesRadio().input().should('exist');
 
         cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
-
-        cy.checkText(yesNoRadioHint(), FIELDS_ELIGIBILITY[FIELD_ID].HINT);
-
-        cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
       });
 
       it('renders `no` radio button', () => {
@@ -73,28 +72,19 @@ context(
         cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
       });
 
-      describe('expandable details - why do we need to know about end buyers', () => {
+      describe(`expandable details - ${MEMBER_OF_A_GROUP_DESCRIPTION.INTRO}`, () => {
         it('renders summary text', () => {
-          cy.checkText(endBuyerPage.summary(), END_BUYERS_DESCRIPTION.INTRO);
+          cy.checkText(memberOfAGroup.summary(), MEMBER_OF_A_GROUP_DESCRIPTION.INTRO);
 
-          endBuyerPage.details().should('not.have.attr', 'open');
+          memberOfAGroup.details().should('not.have.attr', 'open');
         });
 
         describe('when clicking the summary text', () => {
           it('should expand the collapsed `details` content', () => {
-            endBuyerPage.summary().click();
-            endBuyerPage.details().should('have.attr', 'open');
+            memberOfAGroup.summary().click();
+            memberOfAGroup.details().should('have.attr', 'open');
 
-            cy.checkText(endBuyerPage.list.intro(), END_BUYERS_DESCRIPTION.LIST_INTRO);
-            cy.checkText(endBuyerPage.list.item(1), END_BUYERS_DESCRIPTION.LIST[0]);
-            cy.checkText(endBuyerPage.list.item(2), END_BUYERS_DESCRIPTION.LIST[1]);
-
-            cy.checkText(endBuyerPage.outro.singleRiskOnly(), END_BUYERS_DESCRIPTION.OUTRO.SINGLE_RISK_ONLY);
-            cy.checkText(endBuyerPage.outro.tryingMultipleRisk(), END_BUYERS_DESCRIPTION.OUTRO.IF_TRYING_MULTIPLE_RISKS);
-
-            cy.checkActionTalkToYourNearestEFMLink({});
-
-            cy.checkText(endBuyerPage.outro.toFindOutMore(), END_BUYERS_DESCRIPTION.OUTRO.TO_FIND_OUT_MORE);
+            cy.checkText(memberOfAGroup.description(), MEMBER_OF_A_GROUP_DESCRIPTION.DESCRIPTION);
           });
         });
       });
@@ -124,8 +114,8 @@ context(
         cy.clickSubmitButton();
       });
 
-      it(`should redirect to ${PARTY_TO_CONSORTIUM}`, () => {
-        const expectedUrl = `${baseUrl}${PARTY_TO_CONSORTIUM}`;
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
         cy.assertUrl(expectedUrl);
       });
@@ -147,8 +137,8 @@ context(
         cy.clickSubmitButton();
       });
 
-      it(`should redirect to ${CANNOT_APPLY_MULTIPLE_RISKS}`, () => {
-        const expectedUrl = `${baseUrl}${CANNOT_APPLY_MULTIPLE_RISKS}`;
+      it(`should redirect to ${LONG_TERM_COVER}`, () => {
+        const expectedUrl = `${baseUrl}${LONG_TERM_COVER}`;
 
         cy.assertUrl(expectedUrl);
       });

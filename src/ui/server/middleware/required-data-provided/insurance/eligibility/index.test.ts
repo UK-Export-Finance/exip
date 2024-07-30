@@ -37,6 +37,10 @@ const {
   CANNOT_APPLY_MULTIPLE_RISKS,
   ELIGIBLE_TO_APPLY_ONLINE,
   CONTRACT_TOO_SHORT,
+  PARTY_TO_CONSORTIUM,
+  PARTY_TO_CONSORTIUM_CHANGE,
+  MEMBER_OF_A_GROUP,
+  MEMBER_OF_A_GROUP_CHANGE,
 } = ELIGIBILITY;
 
 const {
@@ -48,6 +52,8 @@ const {
     TOTAL_CONTRACT_VALUE,
     HAS_MINIMUM_UK_GOODS_OR_SERVICES,
     HAS_END_BUYER,
+    IS_PARTY_TO_CONSORTIUM,
+    IS_MEMBER_OF_A_GROUP,
   },
   COMPANY,
 } = INSURANCE_FIELD_IDS;
@@ -89,7 +95,13 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
       expected[END_BUYER] = [...expected[UK_GOODS_OR_SERVICES], HAS_MINIMUM_UK_GOODS_OR_SERVICES];
       expected[END_BUYER_CHANGE] = [...expected[UK_GOODS_OR_SERVICES], HAS_MINIMUM_UK_GOODS_OR_SERVICES];
 
-      expected[CHECK_YOUR_ANSWERS] = [...expected[END_BUYER], HAS_END_BUYER];
+      expected[PARTY_TO_CONSORTIUM] = [...expected[END_BUYER], HAS_END_BUYER];
+      expected[PARTY_TO_CONSORTIUM_CHANGE] = [...expected[END_BUYER], HAS_END_BUYER];
+
+      expected[MEMBER_OF_A_GROUP] = [...expected[PARTY_TO_CONSORTIUM], IS_PARTY_TO_CONSORTIUM];
+      expected[MEMBER_OF_A_GROUP_CHANGE] = [...expected[PARTY_TO_CONSORTIUM], IS_PARTY_TO_CONSORTIUM];
+
+      expected[CHECK_YOUR_ANSWERS] = [...expected[MEMBER_OF_A_GROUP], IS_MEMBER_OF_A_GROUP];
 
       expected[ELIGIBLE_TO_APPLY_ONLINE] = [...expected[CHECK_YOUR_ANSWERS]];
 

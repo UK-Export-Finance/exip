@@ -152,6 +152,15 @@ const CONTRACT_TOO_SHORT = {
   },
 };
 
+const PARTY_TO_CONSORTIUM = {
+  PAGE_TITLE: 'Are you, or will you be a party to any consortium in connection with the performance or financing of any part of the export contract(s)?',
+};
+
+const MEMBER_OF_A_GROUP = {
+  PAGE_TITLE:
+    'Are you are a member of a group of which another member has, or is intended to have, a material part in negotiating or obtaining the export contract(s)?',
+};
+
 export default {
   CHECK_IF_ELIGIBLE,
   TOTAL_VALUE_INSURED,
@@ -169,4 +178,6 @@ export default {
   ELIGIBLE_TO_APPLY_ONLINE,
   HAVE_AN_ACCOUNT,
   CONTRACT_TOO_SHORT,
+  PARTY_TO_CONSORTIUM,
+  MEMBER_OF_A_GROUP,
 };
