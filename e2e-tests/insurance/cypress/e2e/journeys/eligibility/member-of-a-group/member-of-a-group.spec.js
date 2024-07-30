@@ -6,7 +6,7 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insur
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 
-const { memberOfAGroupPartial } = partials;
+const { memberOfAGroup } = partials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP;
 
@@ -74,17 +74,17 @@ context(
 
       describe(`expandable details - ${MEMBER_OF_A_GROUP_DESCRIPTION.INTRO}`, () => {
         it('renders summary text', () => {
-          cy.checkText(memberOfAGroupPartial.summary(), MEMBER_OF_A_GROUP_DESCRIPTION.INTRO);
+          cy.checkText(memberOfAGroup.summary(), MEMBER_OF_A_GROUP_DESCRIPTION.INTRO);
 
-          memberOfAGroupPartial.details().should('not.have.attr', 'open');
+          memberOfAGroup.details().should('not.have.attr', 'open');
         });
 
         describe('when clicking the summary text', () => {
           it('should expand the collapsed `details` content', () => {
-            memberOfAGroupPartial.summary().click();
-            memberOfAGroupPartial.details().should('have.attr', 'open');
+            memberOfAGroup.summary().click();
+            memberOfAGroup.details().should('have.attr', 'open');
 
-            cy.checkText(memberOfAGroupPartial.description(), MEMBER_OF_A_GROUP_DESCRIPTION.DESCRIPTION);
+            cy.checkText(memberOfAGroup.description(), MEMBER_OF_A_GROUP_DESCRIPTION.DESCRIPTION);
           });
         });
       });

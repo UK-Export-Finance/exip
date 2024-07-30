@@ -1,11 +1,11 @@
 import passwordField from './passwordField';
 import taskList from './taskList';
-import memberOfAGroupPartial from './memberOfAGroup';
+import memberOfAGroup from './memberOfAGroup';
 
 const partials = {
   passwordField,
   taskList,
-  memberOfAGroupPartial,
+  memberOfAGroup,
 };
 
 export default partials;
