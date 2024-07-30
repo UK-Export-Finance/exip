@@ -65,7 +65,7 @@
     "@commitlint/config-conventional": "19.2.2",
     "@types/jest": "^29.5.12",
     "@types/node": "^22.0.0",
-    "@typescript-eslint/eslint-plugin": "^7.17.0",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.17.0",
     "commitlint": "^19.3.0",
     "cspell": "^8.12.1",
