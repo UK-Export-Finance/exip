@@ -8,7 +8,7 @@ import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/fo
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM;
 
 const {
-  ELIGIBILITY: { PARTY_TO_CONSORTIUM: FIELD_ID },
+  ELIGIBILITY: { IS_PARTY_TO_CONSORTIUM: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
 const {

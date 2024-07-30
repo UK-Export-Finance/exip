@@ -1,10 +1,12 @@
 import { yesRadio, noRadio } from '../../../../../../pages/shared';
-import { memberOfAGroupPage } from '../../../../../../pages/insurance/eligibility';
+import partials from '../../../../../../partials/insurance';
 import { PAGES, MEMBER_OF_A_GROUP_DESCRIPTION, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
+
+const { memberOfAGroupPartial } = partials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP;
 
@@ -70,19 +72,19 @@ context(
         cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
       });
 
-      describe(`expandable details -${MEMBER_OF_A_GROUP_DESCRIPTION.INTRO}`, () => {
+      describe(`expandable details - ${MEMBER_OF_A_GROUP_DESCRIPTION.INTRO}`, () => {
         it('renders summary text', () => {
-          cy.checkText(memberOfAGroupPage.summary(), MEMBER_OF_A_GROUP_DESCRIPTION.INTRO);
+          cy.checkText(memberOfAGroupPartial.summary(), MEMBER_OF_A_GROUP_DESCRIPTION.INTRO);
 
-          memberOfAGroupPage.details().should('not.have.attr', 'open');
+          memberOfAGroupPartial.details().should('not.have.attr', 'open');
         });
 
         describe('when clicking the summary text', () => {
           it('should expand the collapsed `details` content', () => {
-            memberOfAGroupPage.summary().click();
-            memberOfAGroupPage.details().should('have.attr', 'open');
+            memberOfAGroupPartial.summary().click();
+            memberOfAGroupPartial.details().should('have.attr', 'open');
 
-            cy.checkText(memberOfAGroupPage.description(), MEMBER_OF_A_GROUP_DESCRIPTION.DESCRIPTION);
+            cy.checkText(memberOfAGroupPartial.description(), MEMBER_OF_A_GROUP_DESCRIPTION.DESCRIPTION);
           });
         });
       });

@@ -30,7 +30,7 @@ describe('controllers/insurance/eligibility/member-of-a-group', () => {
 
   describe('FIELD_ID', () => {
     it('should have the correct ID', () => {
-      const expected = FIELD_IDS.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP;
+      const expected = FIELD_IDS.INSURANCE.ELIGIBILITY.IS_MEMBER_OF_A_GROUP;
 
       expect(FIELD_ID).toEqual(expected);
     });

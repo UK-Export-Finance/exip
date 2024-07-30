@@ -20,8 +20,8 @@ export const INSURANCE_FIELD_IDS = {
     HAS_END_BUYER: 'hasEndBuyer',
     HAVE_AN_ACCOUNT: 'haveAnAccount',
     HAS_REVIEWED_ELIGIBILITY: 'hasReviewedEligibility',
-    PARTY_TO_CONSORTIUM: 'partyToConsortium',
-    MEMBER_OF_A_GROUP: 'memberOfAGroup',
+    IS_PARTY_TO_CONSORTIUM: 'isPartyToConsortium',
+    IS_MEMBER_OF_A_GROUP: 'isMemberOfAGroup',
   },
   ...SHARED_FIELD_IDS,
   CURRENCY: {
