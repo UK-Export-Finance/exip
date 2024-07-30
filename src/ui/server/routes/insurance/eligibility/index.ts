@@ -14,6 +14,8 @@ import { get as coverPeriodGet, post as coverPeriodPost } from '../../../control
 import { get as longTermCoverGet } from '../../../controllers/insurance/eligibility/long-term-cover';
 import { get as ukGoodsOrServicesGet, post as ukGoodsOrServicesPost } from '../../../controllers/insurance/eligibility/uk-goods-or-services';
 import { get as endBuyerGet, post as endBuyerPost } from '../../../controllers/insurance/eligibility/end-buyer';
+import { get as partyToConsortiumGet, post as partyToConsortiumPost } from '../../../controllers/insurance/eligibility/party-to-consortium';
+import { get as memberOfAGroupGet, post as memberOfAGroupPost } from '../../../controllers/insurance/eligibility/member-of-a-group';
 import { get as cannotApplyMultipleRisksGet } from '../../../controllers/insurance/eligibility/cannot-apply-multiple-risks';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/eligibility/check-your-answers';
 import { get as eligibleToApplyOnlineGet, post as eligibleToApplyOnlinePost } from '../../../controllers/insurance/eligibility/eligible-to-apply-online';
@@ -80,6 +82,12 @@ insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.END_BUYER, endBuyerG
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.END_BUYER, endBuyerPost);
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.END_BUYER_CHANGE, endBuyerGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.END_BUYER_CHANGE, endBuyerPost);
+
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM, partyToConsortiumGet);
+insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM, partyToConsortiumPost);
+
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP, memberOfAGroupGet);
+insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP, memberOfAGroupPost);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY_MULTIPLE_RISKS, cannotApplyMultipleRisksGet);
 

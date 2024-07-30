@@ -37,6 +37,8 @@ interface InsuranceEligibilityCore extends SharedEligibility {
   hasEndBuyer?: boolean;
   hasReviewedEligibility?: boolean;
   sectionReview?: SectionReview;
+  isPartyToConsortium?: boolean;
+  isMemberOfAGroup?: boolean;
 }
 
 interface InsuranceEligibility extends InsuranceEligibilityCore {

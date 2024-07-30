@@ -1,6 +1,5 @@
-import { FIELD_ID, PAGE_VARIABLES, HTML_FLAGS, TEMPLATE, get, post } from '.';
-import { PAGES, END_BUYERS_DESCRIPTION, ERROR_MESSAGES } from '../../../../content-strings';
-import { FIELDS_ELIGIBILITY } from '../../../../content-strings/fields/insurance/eligibility';
+import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
+import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
@@ -11,16 +10,11 @@ import { updateSubmittedData } from '../../../../helpers/update-submitted-data/i
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
 
-const { CANNOT_APPLY_MULTIPLE_RISKS, CHECK_YOUR_ANSWERS, PARTY_TO_CONSORTIUM, END_BUYER_CHANGE } = INSURANCE_ROUTES.ELIGIBILITY;
+const { LONG_TERM_COVER, MEMBER_OF_A_GROUP, CHECK_YOUR_ANSWERS, PARTY_TO_CONSORTIUM_CHANGE } = INSURANCE_ROUTES.ELIGIBILITY;
 
-const {
-  SHARED_PAGES,
-  PARTIALS: {
-    INSURANCE: { END_BUYER },
-  },
-} = TEMPLATES;
+const { SHARED_PAGES } = TEMPLATES;
 
-describe('controllers/insurance/eligibility/end-buyer', () => {
+describe('controllers/insurance/eligibility/member-of-a-group', () => {
   let req: Request;
   let res: Response;
 
@@ -31,7 +25,7 @@ describe('controllers/insurance/eligibility/end-buyer', () => {
 
   describe('FIELD_ID', () => {
     it('should have the correct ID', () => {
-      const expected = FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_END_BUYER;
+      const expected = FIELD_IDS.INSURANCE.ELIGIBILITY.IS_PARTY_TO_CONSORTIUM;
 
       expect(FIELD_ID).toEqual(expected);
     });
@@ -41,27 +35,10 @@ describe('controllers/insurance/eligibility/end-buyer', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELD_ID,
-        PAGE_CONTENT_STRINGS: {
-          ...PAGES.INSURANCE.ELIGIBILITY.END_BUYER,
-          END_BUYERS_DESCRIPTION,
-        },
-        FIELD: {
-          ID: FIELD_ID,
-          ...FIELDS_ELIGIBILITY[FIELD_ID],
-        },
+        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
-    });
-  });
-
-  describe('HTML_FLAGS', () => {
-    it('should have correct properties', () => {
-      const expected = {
-        CUSTOM_CONTENT_HTML: END_BUYER.CUSTOM_CONTENT_HTML,
-      };
-
-      expect(HTML_FLAGS).toEqual(expected);
     });
   });
 
@@ -76,7 +53,7 @@ describe('controllers/insurance/eligibility/end-buyer', () => {
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
-        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, HTML_FLAGS }),
+        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
         userName: getUserNameFromSession(req.session.user),
         submittedValues: req.session.submittedData.insuranceEligibility,
       });
@@ -91,7 +68,7 @@ describe('controllers/insurance/eligibility/end-buyer', () => {
         const payload = constructPayload(req.body, [FIELD_ID]);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
-          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, HTML_FLAGS }),
+          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
           userName: getUserNameFromSession(req.session.user),
           validationErrors: generateValidationErrors(payload, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.INSURANCE.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID].IS_EMPTY),
         });
@@ -105,10 +82,10 @@ describe('controllers/insurance/eligibility/end-buyer', () => {
         };
       });
 
-      it(`should redirect to ${CANNOT_APPLY_MULTIPLE_RISKS}`, () => {
+      it(`should redirect to ${LONG_TERM_COVER}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(CANNOT_APPLY_MULTIPLE_RISKS);
+        expect(res.redirect).toHaveBeenCalledWith(LONG_TERM_COVER);
       });
     });
 
@@ -136,15 +113,15 @@ describe('controllers/insurance/eligibility/end-buyer', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${PARTY_TO_CONSORTIUM}`, () => {
+      it(`should redirect to ${MEMBER_OF_A_GROUP}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(PARTY_TO_CONSORTIUM);
+        expect(res.redirect).toHaveBeenCalledWith(MEMBER_OF_A_GROUP);
       });
 
       describe("when the url's last substring is `change`", () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-          req.originalUrl = END_BUYER_CHANGE;
+          req.originalUrl = PARTY_TO_CONSORTIUM_CHANGE;
 
           await post(req, res);
 

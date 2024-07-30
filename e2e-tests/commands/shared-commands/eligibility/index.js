@@ -6,6 +6,8 @@ import {
   completeCoverPeriodForm,
   completeUkGoodsAndServicesForm,
   completeEndBuyerForm,
+  completeMemberOfAGroupForm,
+  completePartyToConsortiumForm,
   submitCheckYourAnswers,
   completeEligibleToApplyOnlineForm,
   completeAccountToApplyOnlineForm,
@@ -22,6 +24,8 @@ Cypress.Commands.add('completeAndSubmitTotalValueInsuredForm', completeAndSubmit
 Cypress.Commands.add('completeCoverPeriodForm', completeCoverPeriodForm);
 Cypress.Commands.add('completeUkGoodsAndServicesForm', completeUkGoodsAndServicesForm);
 Cypress.Commands.add('completeEndBuyerForm', completeEndBuyerForm);
+Cypress.Commands.add('completePartyToConsortiumForm', completePartyToConsortiumForm);
+Cypress.Commands.add('completeMemberOfAGroupForm', completeMemberOfAGroupForm);
 Cypress.Commands.add('submitCheckYourAnswers', submitCheckYourAnswers);
 Cypress.Commands.add('completeEligibleToApplyOnlineForm', completeEligibleToApplyOnlineForm);
 Cypress.Commands.add('completeAccountToApplyOnlineForm', completeAccountToApplyOnlineForm);

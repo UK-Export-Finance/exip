@@ -7,7 +7,7 @@ import checkSummaryList from '../../../../../../commands/insurance/check-your-an
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.CHECK_YOUR_ANSWERS;
 
 const {
-  ELIGIBILITY: { END_BUYER, CHECK_YOUR_ANSWERS, ELIGIBLE_TO_APPLY_ONLINE },
+  ELIGIBILITY: { MEMBER_OF_A_GROUP, CHECK_YOUR_ANSWERS, ELIGIBLE_TO_APPLY_ONLINE },
 } = INSURANCE_ROUTES;
 
 const {
@@ -42,7 +42,7 @@ context(
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: CHECK_YOUR_ANSWERS,
-        backLink: END_BUYER,
+        backLink: MEMBER_OF_A_GROUP,
         assertAuthenticatedHeader: false,
         submitButtonCopy: BUTTONS.CONFIRM_AND_CONTINUE,
       });

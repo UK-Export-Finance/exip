@@ -86,6 +86,14 @@ export const completeEndBuyerForm = () => {
   selectRadioAndSubmit(FIELD_VALUES.NO);
 };
 
+export const completePartyToConsortiumForm = () => {
+  selectRadioAndSubmit(FIELD_VALUES.NO);
+};
+
+export const completeMemberOfAGroupForm = () => {
+  selectRadioAndSubmit(FIELD_VALUES.NO);
+};
+
 export const submitCheckYourAnswers = () => {
   cy.clickSubmitButton();
 };
