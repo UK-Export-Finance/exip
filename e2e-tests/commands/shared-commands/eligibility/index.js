@@ -14,6 +14,7 @@ import {
   completeCompanyDetailsForm,
 } from '../../insurance/eligibility/forms';
 import completeAndSubmitCompaniesHouseSearchForm from '../../insurance/complete-and-submit-companies-house-search-form';
+import { assertApplyThroughPDFCopyAndLink, assertTalkToEFMCopyAndLink, assertContactUkefTeam } from '../../insurance/eligibility/assert-pdf-exit-page';
 
 Cypress.Commands.add('completeCheckIfEligibleForm', completeCheckIfEligibleForm);
 Cypress.Commands.add('completeExporterLocationForm', completeExporterLocationForm);
@@ -29,6 +30,9 @@ Cypress.Commands.add('completeMemberOfAGroupForm', completeMemberOfAGroupForm);
 Cypress.Commands.add('submitCheckYourAnswers', submitCheckYourAnswers);
 Cypress.Commands.add('completeEligibleToApplyOnlineForm', completeEligibleToApplyOnlineForm);
 Cypress.Commands.add('completeAccountToApplyOnlineForm', completeAccountToApplyOnlineForm);
+Cypress.Commands.add('assertApplyThroughPDFCopyAndLink', assertApplyThroughPDFCopyAndLink);
+Cypress.Commands.add('assertTalkToEFMCopyAndLink', assertTalkToEFMCopyAndLink);
+Cypress.Commands.add('assertContactUkefTeam', assertContactUkefTeam);
 
 Cypress.Commands.add(
   'submitInsuranceEligibilityAnswersFromExporterLocationHappyPath',

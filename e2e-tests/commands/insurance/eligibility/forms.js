@@ -86,12 +86,20 @@ export const completeEndBuyerForm = () => {
   selectRadioAndSubmit(FIELD_VALUES.NO);
 };
 
-export const completePartyToConsortiumForm = () => {
-  selectRadioAndSubmit(FIELD_VALUES.NO);
+export const completePartyToConsortiumForm = ({ partyToConsortium = false }) => {
+  if (partyToConsortium) {
+    selectRadioAndSubmit(FIELD_VALUES.YES);
+  } else {
+    selectRadioAndSubmit(FIELD_VALUES.NO);
+  }
 };
 
-export const completeMemberOfAGroupForm = () => {
-  selectRadioAndSubmit(FIELD_VALUES.NO);
+export const completeMemberOfAGroupForm = ({ memberOfAGroup = false }) => {
+  if (memberOfAGroup) {
+    selectRadioAndSubmit(FIELD_VALUES.YES);
+  } else {
+    selectRadioAndSubmit(FIELD_VALUES.NO);
+  }
 };
 
 export const submitCheckYourAnswers = () => {
