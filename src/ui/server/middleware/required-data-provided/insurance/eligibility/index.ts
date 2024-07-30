@@ -94,7 +94,7 @@ export const generateRequiredData = (): RequiredDataStateInsuranceEligibility =>
   requiredData[END_BUYER] = [...requiredData[UK_GOODS_OR_SERVICES], HAS_MINIMUM_UK_GOODS_OR_SERVICES];
   requiredData[END_BUYER_CHANGE] = [...requiredData[UK_GOODS_OR_SERVICES], HAS_MINIMUM_UK_GOODS_OR_SERVICES];
 
-  // TODO: re-enable new pages
+  // TODO: EMS-3680 3682 - reenable once database changes are done
   // requiredData[PARTY_TO_CONSORTIUM] = [...requiredData[END_BUYER], HAS_END_BUYER];
   // requiredData[PARTY_TO_CONSORTIUM_CHANGE] = [...requiredData[END_BUYER], HAS_END_BUYER];
 
