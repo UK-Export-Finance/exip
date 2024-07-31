@@ -5,7 +5,7 @@ import { summaryList } from '../../../../../../pages/shared';
 const { IS_MEMBER_OF_A_GROUP } = INSURANCE_FIELD_IDS.ELIGIBILITY;
 
 const {
-  ELIGIBILITY: { MEMBER_OF_A_GROUP_CHANGE, CHECK_YOUR_ANSWERS, LONG_TERM_COVER },
+  ELIGIBILITY: { MEMBER_OF_A_GROUP_CHANGE, CHECK_YOUR_ANSWERS, MEMBER_OF_A_GROUP_EXIT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -69,8 +69,8 @@ context(
         cy.clickSubmitButton();
       });
 
-      it(`should redirect to ${LONG_TERM_COVER}`, () => {
-        cy.assertChangeAnswersPageUrl({ route: LONG_TERM_COVER, fieldId, isInsuranceEligibility: true });
+      it(`should redirect to ${MEMBER_OF_A_GROUP_EXIT}`, () => {
+        cy.assertChangeAnswersPageUrl({ route: MEMBER_OF_A_GROUP_EXIT, fieldId, isInsuranceEligibility: true });
       });
     });
   },
