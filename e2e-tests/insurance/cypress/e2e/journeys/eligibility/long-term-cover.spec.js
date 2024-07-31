@@ -5,10 +5,6 @@ import { completeAndSubmitBuyerCountryForm } from '../../../../../commands/forms
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.LONG_TERM_COVER;
 
 const {
-  ACTIONS: { PDF_FORM, CONTACT_EFM, CONTACT_UKEF_TEAM },
-} = CONTENT_STRINGS;
-
-const {
   ELIGIBILITY: { COVER_PERIOD, LONG_TERM_COVER },
 } = INSURANCE_ROUTES;
 
@@ -60,25 +56,15 @@ context(
       });
 
       it('should render `apply through PDF` copy and link', () => {
-        cy.checkActionApplyThroughPDF({
-          expectedText: `${PDF_FORM.INTRO} ${PDF_FORM.LINK.TEXT}.`,
-          expectedLinkHref: PDF_FORM.LINK.HREF,
-          expectedLinkText: PDF_FORM.LINK.TEXT,
-        });
+        cy.assertApplyThroughPDFCopyAndLink({});
       });
 
       it('should render `talk to your nearest EFM` copy and link', () => {
-        cy.checkActionTalkToYourNearestEFM({
-          expectedText: `${CONTACT_EFM.INTRO} ${CONTACT_EFM.LINK.TEXT}`,
-          expectedLinkHref: CONTACT_EFM.LINK.HREF,
-          expectedLinkText: CONTACT_EFM.LINK.TEXT,
-        });
+        cy.assertTalkToEFMCopyAndLink({});
       });
 
       it('should render `contact UKEF team` copy', () => {
-        cy.checkActionContactUKEFTeam({
-          expectedText: CONTACT_UKEF_TEAM,
-        });
+        cy.assertContactUkefTeam({});
       });
     });
   },

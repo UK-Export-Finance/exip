@@ -15,7 +15,7 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 const {
-  ELIGIBILITY: { PARTY_TO_CONSORTIUM, MEMBER_OF_A_GROUP, CHECK_YOUR_ANSWERS, LONG_TERM_COVER },
+  ELIGIBILITY: { PARTY_TO_CONSORTIUM, MEMBER_OF_A_GROUP, CHECK_YOUR_ANSWERS, MEMBER_OF_A_GROUP_EXIT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -37,7 +37,7 @@ context(
       cy.completeCoverPeriodForm({});
       cy.completeUkGoodsAndServicesForm();
       cy.completeEndBuyerForm();
-      cy.completePartyToConsortiumForm();
+      cy.completePartyToConsortiumForm({});
 
       cy.assertUrl(url);
     });
@@ -137,8 +137,8 @@ context(
         cy.clickSubmitButton();
       });
 
-      it(`should redirect to ${LONG_TERM_COVER}`, () => {
-        const expectedUrl = `${baseUrl}${LONG_TERM_COVER}`;
+      it(`should redirect to ${MEMBER_OF_A_GROUP_EXIT}`, () => {
+        const expectedUrl = `${baseUrl}${MEMBER_OF_A_GROUP_EXIT}`;
 
         cy.assertUrl(expectedUrl);
       });

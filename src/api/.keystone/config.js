@@ -417,6 +417,10 @@ var business_default = EXPORTER_BUSINESS;
 // constants/field-ids/insurance/export-contract/index.ts
 var EXPORT_CONTRACT = {
   ...shared_default,
+  HOW_WAS_THE_CONTRACT_AWARDED: {
+    AWARD_METHOD: "awardMethod",
+    OTHER_AWARD_METHOD: "otherAwardMethod"
+  },
   ABOUT_GOODS_OR_SERVICES: {
     DESCRIPTION: "goodsOrServicesDescription",
     FINAL_DESTINATION_KNOWN: "finalDestinationKnown",
@@ -773,6 +777,30 @@ var ELIGIBILITY = {
   MAX_COVER_AMOUNT_IN_GBP: 5e5,
   MAX_COVER_PERIOD_MONTHS: 24,
   MAX_COVER_PERIOD_YEARS: 2
+};
+
+// constants/export-contract-award-method/index.ts
+var EXPORT_CONTRACT_AWARD_METHOD = {
+  OPEN_TENDER: {
+    DB_ID: "eg9qxlqw4edxa8b5mwbybsrfp",
+    VALUE: "Open tender"
+  },
+  NEGOTIATED_CONTRACT: {
+    DB_ID: "mzwp337piamg1mei7fqh1o73s",
+    VALUE: "Negotiated contract"
+  },
+  DIRECT_AWARD: {
+    DB_ID: "qnqrle4xwsj5go8pchj31sat4",
+    VALUE: "Direct award"
+  },
+  COMPETITIVE_BIDDING: {
+    DB_ID: "qw2hp8khykctdic2z58z70ru8",
+    VALUE: "Competitive bidding"
+  },
+  OTHER: {
+    DB_ID: "tn8k8lot1bvirmztmmgq2u8hn",
+    VALUE: "Other"
+  }
 };
 
 // constants/external-apis.ts
@@ -2009,6 +2037,10 @@ var lists = {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       agent: (0, import_fields.relationship)({ ref: "ExportContractAgent.exportContract" }),
       privateMarket: (0, import_fields.relationship)({ ref: "PrivateMarket.exportContract" }),
+      awardMethod: (0, import_fields.relationship)({ ref: "ExportContractAwardMethod" }),
+      otherAwardMethod: (0, import_fields.text)({
+        db: { nativeType: "VarChar(200)" }
+      }),
       finalDestinationKnown: nullable_checkbox_default(),
       finalDestinationCountryCode: (0, import_fields.text)({
         db: { nativeType: "VarChar(3)" }
@@ -2078,6 +2110,14 @@ var lists = {
     },
     access: import_access.allowAll
   },
+  ExportContractAwardMethod: (0, import_core2.list)({
+    fields: {
+      value: (0, import_fields.text)({
+        db: { nativeType: "VarChar(50)" }
+      })
+    },
+    access: import_access.allowAll
+  }),
   PrivateMarket: (0, import_core2.list)({
     fields: {
       exportContract: (0, import_fields.relationship)({ ref: "ExportContract.privateMarket" }),
@@ -2414,7 +2454,9 @@ var lists = {
       otherPartiesInvolved: (0, import_fields.checkbox)(),
       paidByLetterOfCredit: (0, import_fields.checkbox)(),
       totalContractValue: (0, import_fields.relationship)({ ref: "TotalContractValue" }),
-      validExporterLocation: (0, import_fields.checkbox)()
+      validExporterLocation: (0, import_fields.checkbox)(),
+      isPartyToConsortium: (0, import_fields.checkbox)(),
+      isMemberOfAGroup: (0, import_fields.checkbox)()
     },
     access: import_access.allowAll
   }),
@@ -2812,6 +2854,8 @@ var typeDefs = `
     hasMinimumUkGoodsOrServices: Boolean!
     totalContractValueId: Int!
     validExporterLocation: Boolean!
+    isPartyToConsortium: Boolean!
+    isMemberOfAGroup: Boolean!
   }
 
   type CreateAnApplicationResponse {
@@ -5701,11 +5745,51 @@ var FIELDS_ELIGIBILITY = {
 
 // content-strings/fields/insurance/export-contract/index.ts
 var {
+  OPEN_TENDER,
+  NEGOTIATED_CONTRACT,
+  DIRECT_AWARD,
+  COMPETITIVE_BIDDING,
+  OTHER
+} = EXPORT_CONTRACT_AWARD_METHOD;
+var {
+  HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD, OTHER_AWARD_METHOD },
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
   HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
   PRIVATE_MARKET: { DECLINED_DESCRIPTION }
 } = export_contract_default;
 var EXPORT_CONTRACT_FIELDS = {
+  HOW_WAS_THE_CONTRACT_AWARDED: {
+    [AWARD_METHOD]: {
+      LEGEND: "How was the contract awarded?",
+      OPTIONS: {
+        OPEN_TENDER: {
+          ID: OPEN_TENDER.DB_ID,
+          VALUE: OPEN_TENDER.DB_ID,
+          TEXT: OPEN_TENDER.VALUE
+        },
+        NEGOTIATED_CONTRACT: {
+          ID: NEGOTIATED_CONTRACT.DB_ID,
+          VALUE: NEGOTIATED_CONTRACT.DB_ID,
+          TEXT: NEGOTIATED_CONTRACT.VALUE
+        },
+        DIRECT_AWARD: {
+          ID: DIRECT_AWARD.DB_ID,
+          VALUE: DIRECT_AWARD.DB_ID,
+          TEXT: DIRECT_AWARD.VALUE
+        },
+        COMPETITIVE_BIDDING: {
+          ID: COMPETITIVE_BIDDING.DB_ID,
+          VALUE: COMPETITIVE_BIDDING.DB_ID,
+          TEXT: COMPETITIVE_BIDDING.VALUE
+        },
+        OTHER: {
+          ID: OTHER.DB_ID,
+          VALUE: OTHER.DB_ID,
+          TEXT: OTHER.VALUE
+        }
+      }
+    }
+  },
   ABOUT_GOODS_OR_SERVICES: {
     [DESCRIPTION]: {
       LABEL: "Describe the goods or services you're exporting and explain how they'll be used by the buyer",

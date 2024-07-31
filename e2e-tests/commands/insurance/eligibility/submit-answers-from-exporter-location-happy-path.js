@@ -56,11 +56,11 @@ const submitAnswersFromExporterLocationHappyPath = ({ assertAuthenticatedHeader 
 
   checkAuthHeader(assertAuthenticatedHeader);
 
-  cy.completePartyToConsortiumForm();
+  cy.completePartyToConsortiumForm({});
 
   checkAuthHeader(assertAuthenticatedHeader);
 
-  cy.completeMemberOfAGroupForm();
+  cy.completeMemberOfAGroupForm({});
 
   checkAuthHeader(assertAuthenticatedHeader);
 

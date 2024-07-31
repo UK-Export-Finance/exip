@@ -1,0 +1,14 @@
+{% import '../../components/text-input.njk' as textInput %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters-from-desktop">
+
+    {{ textInput.render({
+      id: FIELDS.OTHER_AWARD_METHOD.ID,
+      inputClasses: "govuk-input--width-20",
+      value: submittedValues[FIELDS.OTHER_AWARD_METHOD.ID],
+      errorMessage: validationErrors.errorList[FIELDS.OTHER_AWARD_METHOD.ID]
+    }) }}
+
+  </div>
+</div>

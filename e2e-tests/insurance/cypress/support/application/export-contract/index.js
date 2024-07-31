@@ -1,5 +1,9 @@
 Cypress.Commands.add('completeAboutGoodsOrServicesForm', require('../../../../../commands/insurance/complete-about-goods-or-services-form'));
 Cypress.Commands.add(
+  'completeAndSubmitHowWasTheContractAwardedForm',
+  require('../../../../../commands/insurance/complete-and-submit-how-was-the-contract-awarded-form'),
+);
+Cypress.Commands.add(
   'completeAndSubmitAboutGoodsOrServicesForm',
   require('../../../../../commands/insurance/complete-and-submit-about-goods-or-services-form'),
 );

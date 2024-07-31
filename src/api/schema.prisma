@@ -199,20 +199,24 @@ model JointlyInsuredParty {
 }
 
 model ExportContract {
-  id                              String               @id @default(cuid())
-  application                     Application?         @relation("ExportContract_application", fields: [applicationId], references: [id])
-  applicationId                   String?              @map("application")
-  agent                           ExportContractAgent? @relation("ExportContract_agent", fields: [agentId], references: [id])
-  agentId                         String?              @unique @map("agent")
-  privateMarket                   PrivateMarket?       @relation("ExportContract_privateMarket", fields: [privateMarketId], references: [id])
-  privateMarketId                 String?              @unique @map("privateMarket")
+  id                              String                     @id @default(cuid())
+  application                     Application?               @relation("ExportContract_application", fields: [applicationId], references: [id])
+  applicationId                   String?                    @map("application")
+  agent                           ExportContractAgent?       @relation("ExportContract_agent", fields: [agentId], references: [id])
+  agentId                         String?                    @unique @map("agent")
+  privateMarket                   PrivateMarket?             @relation("ExportContract_privateMarket", fields: [privateMarketId], references: [id])
+  privateMarketId                 String?                    @unique @map("privateMarket")
+  awardMethod                     ExportContractAwardMethod? @relation("ExportContract_awardMethod", fields: [awardMethodId], references: [id])
+  awardMethodId                   String?                    @map("awardMethod")
+  otherAwardMethod                String                     @default("") @mysql.VarChar(200)
   finalDestinationKnown           Boolean?
-  finalDestinationCountryCode     String               @default("") @mysql.VarChar(3)
-  goodsOrServicesDescription      String               @default("") @mysql.VarChar(1000)
-  paymentTermsDescription         String               @default("") @mysql.VarChar(1000)
-  from_Application_exportContract Application[]        @relation("Application_exportContract")
+  finalDestinationCountryCode     String                     @default("") @mysql.VarChar(3)
+  goodsOrServicesDescription      String                     @default("") @mysql.VarChar(1000)
+  paymentTermsDescription         String                     @default("") @mysql.VarChar(1000)
+  from_Application_exportContract Application[]              @relation("Application_exportContract")
 
   @@index([applicationId])
+  @@index([awardMethodId])
 }
 
 model ExportContractAgent {
@@ -243,6 +247,12 @@ model ExportContractAgentServiceCharge {
   fixedSumCurrencyCode String                      @default("GBP") @mysql.VarChar(3)
   method               String?
   payableCountryCode   String                      @default("") @mysql.VarChar(3)
+}
+
+model ExportContractAwardMethod {
+  id                              String           @id @default(cuid())
+  value                           String           @default("") @mysql.VarChar(50)
+  from_ExportContract_awardMethod ExportContract[] @relation("ExportContract_awardMethod")
 }
 
 model PrivateMarket {
@@ -488,6 +498,8 @@ model Eligibility {
   totalContractValue           TotalContractValue? @relation("Eligibility_totalContractValue", fields: [totalContractValueId], references: [id])
   totalContractValueId         String?             @map("totalContractValue")
   validExporterLocation        Boolean             @default(false)
+  isPartyToConsortium          Boolean             @default(false)
+  isMemberOfAGroup             Boolean             @default(false)
   from_Application_eligibility Application[]       @relation("Application_eligibility")
 
   @@index([applicationId])

@@ -1,11 +1,40 @@
 # Changelog
 
-## [2.22.0](https://github.com/UK-Export-Finance/exip/compare/v2.21.0...v2.22.0) (2024-07-30)
-
+## [2.27.0](https://github.com/UK-Export-Finance/exip/compare/v2.26.0...v2.27.0) (2024-07-31)
 
 ### Features
 
-* **EMS-3668-69-73-74:** eligibility - Party to consortium and Member of a group ([#2832](https://github.com/UK-Export-Finance/exip/issues/2832)) ([b05ef07](https://github.com/UK-Export-Finance/exip/commit/b05ef0704e3b3771f697a21d4cb157732a1146fb))
+- **EMS-3680-3682:** eligibility - Data saving ([#2853](https://github.com/UK-Export-Finance/exip/issues/2853)) ([8464b3f](https://github.com/UK-Export-Finance/exip/commit/8464b3fba3657788b3292d95d9bbd79ef452f2e9))
+
+## [2.26.0](https://github.com/UK-Export-Finance/exip/compare/v2.25.0...v2.26.0) (2024-07-31)
+
+### Features
+
+- **EMS-3665:** export contract - how was contract awarded - data model ([#2856](https://github.com/UK-Export-Finance/exip/issues/2856)) ([8295356](https://github.com/UK-Export-Finance/exip/commit/82953569ccb86c167805ec5adf45fb3fea214136))
+
+## [2.25.0](https://github.com/UK-Export-Finance/exip/compare/v2.24.0...v2.25.0) (2024-07-31)
+
+### Features
+
+- **EMS-3670-72:** eligibility - Party to consortium and Member of a group exit pages ([#2851](https://github.com/UK-Export-Finance/exip/issues/2851)) ([5eabbb5](https://github.com/UK-Export-Finance/exip/commit/5eabbb56aaf7d0d64f039b3b7d1bce031f5be8f8))
+
+## [2.24.0](https://github.com/UK-Export-Finance/exip/compare/v2.23.0...v2.24.0) (2024-07-31)
+
+### Features
+
+- **EMS-3676:** eligibility - Check your answers - Member of group and party to consortium ([#2852](https://github.com/UK-Export-Finance/exip/issues/2852)) ([3a8333a](https://github.com/UK-Export-Finance/exip/commit/3a8333a56a6f26b1aac3022cffa6fce83f5afb7a))
+
+## [2.23.0](https://github.com/UK-Export-Finance/exip/compare/v2.22.0...v2.23.0) (2024-07-30)
+
+### Features
+
+- **EMS-3660:** export contract - how was contract awarded - UI setup ([#2837](https://github.com/UK-Export-Finance/exip/issues/2837)) ([5884388](https://github.com/UK-Export-Finance/exip/commit/58843888123744b0272abd9d15a53946ce5ac96f))
+
+## [2.22.0](https://github.com/UK-Export-Finance/exip/compare/v2.21.0...v2.22.0) (2024-07-30)
+
+### Features
+
+- **EMS-3668-69-73-74:** eligibility - Party to consortium and Member of a group ([#2832](https://github.com/UK-Export-Finance/exip/issues/2832)) ([b05ef07](https://github.com/UK-Export-Finance/exip/commit/b05ef0704e3b3771f697a21d4cb157732a1146fb))
 
 ## [2.21.0](https://github.com/UK-Export-Finance/exip/compare/v2.20.0...v2.21.0) (2024-07-26)
 

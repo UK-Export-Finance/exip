@@ -17,7 +17,7 @@ describe('controllers/insurance/eligibility/long-term-cover', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.LONG_TERM_COVER);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.PDF_EXIT);
     });
   });
 
