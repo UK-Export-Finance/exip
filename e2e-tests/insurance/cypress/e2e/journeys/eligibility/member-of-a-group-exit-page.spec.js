@@ -63,15 +63,25 @@ context(
       });
 
       it('should render `apply through PDF` copy and link', () => {
-        cy.assertApplyThroughPDFCopyAndLink(PDF_FORM);
+        cy.checkActionApplyThroughPDF({
+          expectedText: `${PDF_FORM.INTRO} ${PDF_FORM.LINK.TEXT}.`,
+          expectedLinkHref: PDF_FORM.LINK.HREF,
+          expectedLinkText: PDF_FORM.LINK.TEXT,
+        });
       });
 
       it('should render `talk to your nearest EFM` copy and link', () => {
-        cy.assertTalkToEFMCopyAndLink(CONTACT_EFM);
+        cy.checkActionTalkToYourNearestEFM({
+          expectedText: `${CONTACT_EFM.INTRO} ${CONTACT_EFM.LINK.TEXT}`,
+          expectedLinkHref: CONTACT_EFM.LINK.HREF,
+          expectedLinkText: CONTACT_EFM.LINK.TEXT,
+        });
       });
 
       it('should render `contact UKEF team` copy', () => {
-        cy.assertContactUkefTeam(CONTACT_UKEF_TEAM);
+        cy.checkActionContactUKEFTeam({
+          expectedText: CONTACT_UKEF_TEAM,
+        });
       });
     });
   },
