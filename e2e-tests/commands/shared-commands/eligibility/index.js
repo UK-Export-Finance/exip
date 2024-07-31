@@ -14,7 +14,7 @@ import {
   completeCompanyDetailsForm,
 } from '../../insurance/eligibility/forms';
 import completeAndSubmitCompaniesHouseSearchForm from '../../insurance/complete-and-submit-companies-house-search-form';
-import { assertApplyThroughPDFCopyAndLink, assertTalkToEFMCopyAndLink, assertContactUkefTeam } from '../../insurance/eligibility/assert-pdf-exit-page';
+import { assertApplyThroughPDFCopyAndLink, assertTalkToEFMCopyAndLink, assertContactUkefTeam } from '../../insurance/eligibility/assert-pdf-exit-page-content';
 
 Cypress.Commands.add('completeCheckIfEligibleForm', completeCheckIfEligibleForm);
 Cypress.Commands.add('completeExporterLocationForm', completeExporterLocationForm);
