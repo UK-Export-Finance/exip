@@ -79,7 +79,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
      * 1) Create a new buyer with country and application relationship.
      * 2) Create a new declaration with application relationship.
      * 3) Get a totalContractValue DB entry, for linking a relationship to eligibility.
-     * 4) Create a cover period value from the DB.
+     * 4) Get a cover period value from the DB.
      * 5) Create a new eligibility with country and application relationship.
      * 6) Create a new export contract with application relationship.
      * 7) Create a new policy with application relationship.

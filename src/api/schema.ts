@@ -367,6 +367,7 @@ export const lists = {
       application: relationship({ ref: 'Application' }),
       agent: relationship({ ref: 'ExportContractAgent.exportContract' }),
       privateMarket: relationship({ ref: 'PrivateMarket.exportContract' }),
+      awardMethod: relationship({ ref: 'ExportContractAwardMethod' }),
       finalDestinationKnown: nullableCheckbox(),
       finalDestinationCountryCode: text({
         db: { nativeType: 'VarChar(3)' },
@@ -436,6 +437,14 @@ export const lists = {
     },
     access: allowAll,
   },
+  ExportContractAwardMethod: list({
+    fields: {
+      value: text({
+        db: { nativeType: 'VarChar(50)' },
+      }),
+    },
+    access: allowAll,
+  }),
   PrivateMarket: list({
     fields: {
       exportContract: relationship({ ref: 'ExportContract.privateMarket' }),

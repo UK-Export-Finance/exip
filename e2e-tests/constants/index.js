@@ -9,6 +9,7 @@ export * from './date-format';
 export * from './dates';
 export * from './eligibility';
 export * from './examples';
+export * from './export-contract-award-method';
 export * from './field-ids';
 export * from './field-values';
 export * from './pagination';
