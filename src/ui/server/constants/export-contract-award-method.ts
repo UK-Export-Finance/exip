@@ -21,5 +21,5 @@ export const EXPORT_CONTRACT_AWARD_METHOD = {
   OTHER: {
     DB_ID: 'tn8k8lot1bvirmztmmgq2u8hn',
     VALUE: 'Other',
-  },  
+  },
 };

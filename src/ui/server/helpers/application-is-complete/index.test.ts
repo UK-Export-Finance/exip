@@ -5,7 +5,6 @@ import { mockApplication } from '../../test-mocks';
 describe('server/helpers/application-is-complete', () => {
   it('should return true', () => {
     const flatApplicationData = flattenApplicationData(mockApplication);
-
     const result = applicationIsComplete(flatApplicationData);
 
     expect(result).toEqual(true);

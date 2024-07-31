@@ -42,6 +42,8 @@ const applicationByReferenceNumberQuery = gql`
             valueId
           }
           validExporterLocation
+          isPartyToConsortium
+          isMemberOfAGroup
         }
         nominatedLossPayee {
           id

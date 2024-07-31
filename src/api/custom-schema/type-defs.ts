@@ -198,6 +198,8 @@ const typeDefs = `
     hasMinimumUkGoodsOrServices: Boolean!
     totalContractValueId: Int!
     validExporterLocation: Boolean!
+    isPartyToConsortium: Boolean!
+    isMemberOfAGroup: Boolean!
   }
 
   type CreateAnApplicationResponse {
