@@ -9,7 +9,7 @@ import { updateSubmittedData } from '../../../../helpers/update-submitted-data/i
 import { Request, Response } from '../../../../../types';
 
 const {
-  ELIGIBILITY: { LONG_TERM_COVER, CHECK_YOUR_ANSWERS },
+  ELIGIBILITY: { MEMBER_OF_A_GROUP_EXIT, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -80,7 +80,7 @@ export const post = (req: Request, res: Response) => {
   const answer = payload[FIELD_ID];
 
   if (answer === 'true') {
-    return res.redirect(LONG_TERM_COVER);
+    return res.redirect(MEMBER_OF_A_GROUP_EXIT);
   }
 
   req.session.submittedData = {

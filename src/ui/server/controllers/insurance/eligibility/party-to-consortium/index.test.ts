@@ -10,7 +10,7 @@ import { updateSubmittedData } from '../../../../helpers/update-submitted-data/i
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
 
-const { LONG_TERM_COVER, MEMBER_OF_A_GROUP, CHECK_YOUR_ANSWERS, PARTY_TO_CONSORTIUM_CHANGE } = INSURANCE_ROUTES.ELIGIBILITY;
+const { PARTY_TO_CONSORTIUM_EXIT, MEMBER_OF_A_GROUP, CHECK_YOUR_ANSWERS, PARTY_TO_CONSORTIUM_CHANGE } = INSURANCE_ROUTES.ELIGIBILITY;
 
 const { SHARED_PAGES } = TEMPLATES;
 
@@ -82,10 +82,10 @@ describe('controllers/insurance/eligibility/member-of-a-group', () => {
         };
       });
 
-      it(`should redirect to ${LONG_TERM_COVER}`, () => {
+      it(`should redirect to ${PARTY_TO_CONSORTIUM_EXIT}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(LONG_TERM_COVER);
+        expect(res.redirect).toHaveBeenCalledWith(PARTY_TO_CONSORTIUM_EXIT);
       });
     });
 

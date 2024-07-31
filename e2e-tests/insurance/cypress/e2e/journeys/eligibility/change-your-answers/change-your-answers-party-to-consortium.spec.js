@@ -5,7 +5,7 @@ import { summaryList } from '../../../../../../pages/shared';
 const { IS_PARTY_TO_CONSORTIUM } = INSURANCE_FIELD_IDS.ELIGIBILITY;
 
 const {
-  ELIGIBILITY: { PARTY_TO_CONSORTIUM_CHANGE, CHECK_YOUR_ANSWERS, LONG_TERM_COVER },
+  ELIGIBILITY: { PARTY_TO_CONSORTIUM_CHANGE, CHECK_YOUR_ANSWERS, PARTY_TO_CONSORTIUM_EXIT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -69,8 +69,8 @@ context(
         cy.clickSubmitButton();
       });
 
-      it(`should redirect to ${LONG_TERM_COVER}`, () => {
-        cy.assertChangeAnswersPageUrl({ route: LONG_TERM_COVER, fieldId, isInsuranceEligibility: true });
+      it(`should redirect to ${PARTY_TO_CONSORTIUM_EXIT}`, () => {
+        cy.assertChangeAnswersPageUrl({ route: PARTY_TO_CONSORTIUM_EXIT, fieldId, isInsuranceEligibility: true });
       });
     });
   },

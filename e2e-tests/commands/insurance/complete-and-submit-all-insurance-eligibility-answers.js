@@ -19,8 +19,8 @@ const completeAndSubmitAllInsuranceEligibilityAnswers = ({ companyNumber = COMPA
   cy.completeCoverPeriodForm({});
   cy.completeUkGoodsAndServicesForm();
   cy.completeEndBuyerForm();
-  cy.completePartyToConsortiumForm();
-  cy.completeMemberOfAGroupForm();
+  cy.completePartyToConsortiumForm({});
+  cy.completeMemberOfAGroupForm({});
 };
 
 export default completeAndSubmitAllInsuranceEligibilityAnswers;

@@ -25,9 +25,8 @@ export const COVER_PERIOD = {
   HINT: 'This should be the total length of your contract.',
 };
 
-export const LONG_TERM_COVER = {
+export const PDF_EXIT = {
   PAGE_TITLE: 'You need to apply through the PDF form instead',
-  INTRO: "Currently, this service doesn't provide credit insurance for contracts that are longer than two years.",
   ACTIONS: {
     PDF_FORM: {
       INTRO: "You can still apply, but you'll need to do so through",
@@ -45,6 +44,21 @@ export const LONG_TERM_COVER = {
     },
     CONTACT_UKEF_TEAM: `or our team at ${UKEF_CONTACT_DETAILS.EMAIL.UNDERWRITING} if you have any questions.`,
   },
+};
+
+export const LONG_TERM_COVER = {
+  INTRO: "Currently, this service doesn't provide credit insurance for contracts that are longer than two years.",
+  ...PDF_EXIT,
+};
+
+export const MEMBER_OF_A_GROUP_EXIT = {
+  INTRO: 'Currently, this service requires additional details for those who are members of a group.',
+  ...PDF_EXIT,
+};
+
+export const PARTY_TO_CONSORTIUM_EXIT = {
+  INTRO: 'Currently, this service requires additional details for those who are party to a consortium.',
+  ...PDF_EXIT,
 };
 
 export const HAS_COMPANIES_HOUSE_NUMBER = {
