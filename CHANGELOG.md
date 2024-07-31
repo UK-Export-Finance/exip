@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.26.0](https://github.com/UK-Export-Finance/exip/compare/v2.25.0...v2.26.0) (2024-07-31)
+
+
+### Features
+
+* **EMS-3665:** export contract - how was contract awarded - data model ([#2856](https://github.com/UK-Export-Finance/exip/issues/2856)) ([8295356](https://github.com/UK-Export-Finance/exip/commit/82953569ccb86c167805ec5adf45fb3fea214136))
+
 ## [2.25.0](https://github.com/UK-Export-Finance/exip/compare/v2.24.0...v2.25.0) (2024-07-31)
 
 ### Features
