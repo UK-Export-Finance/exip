@@ -25,7 +25,7 @@ export const COVER_PERIOD = {
   HINT: 'This should be the total length of your contract.',
 };
 
-const PDF_EXIT = {
+export const PDF_EXIT = {
   PAGE_TITLE: 'You need to apply through the PDF form instead',
   ACTIONS: {
     PDF_FORM: {
