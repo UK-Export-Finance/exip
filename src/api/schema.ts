@@ -368,6 +368,9 @@ export const lists = {
       agent: relationship({ ref: 'ExportContractAgent.exportContract' }),
       privateMarket: relationship({ ref: 'PrivateMarket.exportContract' }),
       awardMethod: relationship({ ref: 'ExportContractAwardMethod' }),
+      otherAwardMethod: text({
+        db: { nativeType: 'VarChar(200)' },
+      }),
       finalDestinationKnown: nullableCheckbox(),
       finalDestinationCountryCode: text({
         db: { nativeType: 'VarChar(3)' },

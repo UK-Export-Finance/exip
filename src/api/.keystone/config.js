@@ -2010,6 +2010,9 @@ var lists = {
       agent: (0, import_fields.relationship)({ ref: "ExportContractAgent.exportContract" }),
       privateMarket: (0, import_fields.relationship)({ ref: "PrivateMarket.exportContract" }),
       awardMethod: (0, import_fields.relationship)({ ref: "ExportContractAwardMethod" }),
+      otherAwardMethod: (0, import_fields.text)({
+        db: { nativeType: "VarChar(200)" }
+      }),
       finalDestinationKnown: nullable_checkbox_default(),
       finalDestinationCountryCode: (0, import_fields.text)({
         db: { nativeType: "VarChar(3)" }

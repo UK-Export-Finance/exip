@@ -693,6 +693,7 @@ CREATE TABLE `ExportContract` (
   `privateMarket` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `agent` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `awardMethod` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `otherAwardMethod` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `ExportContract_privateMarket_key` (`privateMarket`),
   UNIQUE KEY `ExportContract_agent_key` (`agent`),

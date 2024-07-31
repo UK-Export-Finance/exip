@@ -208,6 +208,7 @@ model ExportContract {
   privateMarketId                 String?                    @unique @map("privateMarket")
   awardMethod                     ExportContractAwardMethod? @relation("ExportContract_awardMethod", fields: [awardMethodId], references: [id])
   awardMethodId                   String?                    @map("awardMethod")
+  otherAwardMethod                String                     @default("") @mysql.VarChar(200)
   finalDestinationKnown           Boolean?
   finalDestinationCountryCode     String                     @default("") @mysql.VarChar(3)
   goodsOrServicesDescription      String                     @default("") @mysql.VarChar(1000)
