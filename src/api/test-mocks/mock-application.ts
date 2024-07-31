@@ -27,6 +27,8 @@ export const mockApplicationEligibility = {
   },
   totalContractValueId: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
   validExporterLocation: true,
+  isPartyToConsortium: false,
+  isMemberOfAGroup: false,
 };
 
 const mockGenericPolicy = {
