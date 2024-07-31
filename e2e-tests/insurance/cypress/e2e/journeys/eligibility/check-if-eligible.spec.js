@@ -45,6 +45,8 @@ context('Insurance Eligibility - check if eligible page', () => {
       cy.checkText(checkIfEligiblePage.willAskQuestions.listItem(1), CONTENT_STRINGS.WILL_ASK_QUESTIONS[0]);
       cy.checkText(checkIfEligiblePage.willAskQuestions.listItem(2), CONTENT_STRINGS.WILL_ASK_QUESTIONS[1]);
       cy.checkText(checkIfEligiblePage.willAskQuestions.listItem(3), CONTENT_STRINGS.WILL_ASK_QUESTIONS[2]);
+      cy.checkText(checkIfEligiblePage.willAskQuestions.listItem(4), CONTENT_STRINGS.WILL_ASK_QUESTIONS[3]);
+      cy.checkText(checkIfEligiblePage.willAskQuestions.listItem(5), CONTENT_STRINGS.WILL_ASK_QUESTIONS[4]);
     });
 
     it('should render `will need companies house number` text', () => {

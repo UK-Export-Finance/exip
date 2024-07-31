@@ -179,6 +179,8 @@ export interface ApplicationEligibility extends Relationship {
   totalContractValue: TotalContractValue;
   coverPeriodId: number;
   coverPeriod: CoverPeriod;
+  isPartyToConsortium: boolean;
+  isMemberOfAGroup: boolean;
 }
 
 export interface ApplicationExportContractAgentServiceCharge extends Relationship {
