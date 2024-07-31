@@ -2,10 +2,9 @@
 
 ## [2.23.0](https://github.com/UK-Export-Finance/exip/compare/v2.22.0...v2.23.0) (2024-07-30)
 
-
 ### Features
 
-* **EMS-3660:** export contract - how was contract awarded - UI setup ([#2837](https://github.com/UK-Export-Finance/exip/issues/2837)) ([5884388](https://github.com/UK-Export-Finance/exip/commit/58843888123744b0272abd9d15a53946ce5ac96f))
+- **EMS-3660:** export contract - how was contract awarded - UI setup ([#2837](https://github.com/UK-Export-Finance/exip/issues/2837)) ([5884388](https://github.com/UK-Export-Finance/exip/commit/58843888123744b0272abd9d15a53946ce5ac96f))
 
 ## [2.22.0](https://github.com/UK-Export-Finance/exip/compare/v2.21.0...v2.22.0) (2024-07-30)
 

@@ -16,6 +16,8 @@ const {
   VALID_EXPORTER_LOCATION,
   HAS_COMPANIES_HOUSE_NUMBER,
   HAS_END_BUYER,
+  IS_MEMBER_OF_A_GROUP,
+  IS_PARTY_TO_CONSORTIUM,
 } = FIELD_IDS.INSURANCE.ELIGIBILITY;
 
 const { COMPANY_NAME } = FIELD_IDS.INSURANCE.COMPANIES_HOUSE;
@@ -96,6 +98,22 @@ const checkYourAnswersEligibilitySummaryList = {
   },
   [HAS_END_BUYER]: () => {
     const fieldId = HAS_END_BUYER;
+
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
+    const expectedValue = FIELD_VALUES.NO;
+
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+  },
+  [IS_MEMBER_OF_A_GROUP]: () => {
+    const fieldId = IS_MEMBER_OF_A_GROUP;
+
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
+    const expectedValue = FIELD_VALUES.NO;
+
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+  },
+  [IS_PARTY_TO_CONSORTIUM]: () => {
+    const fieldId = IS_PARTY_TO_CONSORTIUM;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = FIELD_VALUES.NO;
