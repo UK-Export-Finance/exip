@@ -133,6 +133,7 @@ describe('controllers/insurance/export-contract/how-was-the-contract-awarded', (
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(),
+          CONDITIONAL_OTHER_METHOD_HTML,
           userName: getUserNameFromSession(req.session.user),
           submittedValues: sanitiseData(payload),
           validationErrors: generateValidationErrors(payload),
