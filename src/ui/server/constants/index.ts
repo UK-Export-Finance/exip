@@ -10,6 +10,7 @@ export * from './dates';
 export * from './declarations';
 export * from './eligibility';
 export * from './environments';
+export * from './export-contract-award-method';
 export * from './external-apis';
 export * from './field-ids';
 export * from './field-values';

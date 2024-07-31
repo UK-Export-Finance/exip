@@ -10,6 +10,7 @@ export * from './cron';
 export * from './date-format';
 export * from './declarations';
 export * from './eligibility';
+export * from './export-contract-award-method';
 export * from './external-apis';
 export * from './field-values';
 export * from './supported-currencies';

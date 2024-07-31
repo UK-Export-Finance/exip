@@ -2009,6 +2009,10 @@ var lists = {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       agent: (0, import_fields.relationship)({ ref: "ExportContractAgent.exportContract" }),
       privateMarket: (0, import_fields.relationship)({ ref: "PrivateMarket.exportContract" }),
+      awardMethod: (0, import_fields.relationship)({ ref: "ExportContractAwardMethod" }),
+      otherAwardMethod: (0, import_fields.text)({
+        db: { nativeType: "VarChar(200)" }
+      }),
       finalDestinationKnown: nullable_checkbox_default(),
       finalDestinationCountryCode: (0, import_fields.text)({
         db: { nativeType: "VarChar(3)" }
@@ -2078,6 +2082,14 @@ var lists = {
     },
     access: import_access.allowAll
   },
+  ExportContractAwardMethod: (0, import_core2.list)({
+    fields: {
+      value: (0, import_fields.text)({
+        db: { nativeType: "VarChar(50)" }
+      })
+    },
+    access: import_access.allowAll
+  }),
   PrivateMarket: (0, import_core2.list)({
     fields: {
       exportContract: (0, import_fields.relationship)({ ref: "ExportContract.privateMarket" }),
