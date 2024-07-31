@@ -6,6 +6,9 @@ import { PAGES } from '../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
+import generateValidationErrors from './validation';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -29,6 +32,8 @@ const {
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.HOW_WAS_THE_CONTRACT_AWARDED;
 
 export const TEMPLATE = TEMPLATES.INSURANCE.EXPORT_CONTRACT.HOW_WAS_THE_CONTRACT_AWARDED;
+
+export const FIELD_IDS = [AWARD_METHOD, OTHER_AWARD_METHOD];
 
 /**
  * pageVariables
@@ -89,6 +94,24 @@ export const post = async (req: Request, res: Response) => {
   }
 
   const { referenceNumber } = application;
+
+  const payload = constructPayload(req.body, FIELD_IDS);
+
+  const validationErrors = generateValidationErrors(payload);
+
+  if (validationErrors) {
+    return res.render(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS,
+        BACK_LINK: req.headers.referer,
+      }),
+      ...pageVariables(),
+      CONDITIONAL_OTHER_METHOD_HTML,
+      userName: getUserNameFromSession(req.session.user),
+      submittedValues: sanitiseData(payload),
+      validationErrors,
+    });
+  }
 
   return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`);
 };

@@ -1,4 +1,4 @@
-import { pageVariables, PAGE_CONTENT_STRINGS, TEMPLATE, get, post } from '.';
+import { pageVariables, PAGE_CONTENT_STRINGS, TEMPLATE, FIELD_IDS, get, post } from '.';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { EXPORT_CONTRACT as EXPORT_CONTRACT_FIELD_IDS } from '../../../../constants/field-ids/insurance/export-contract';
@@ -8,7 +8,7 @@ import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fi
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, referenceNumber } from '../../../../test-mocks';
+import { mockReq, mockRes, mockExportContract, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -50,6 +50,14 @@ describe('controllers/insurance/export-contract/how-was-the-contract-awarded', (
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
       expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.EXPORT_CONTRACT.HOW_WAS_THE_CONTRACT_AWARDED);
+    });
+  });
+
+  describe('FIELD_IDS', () => {
+    it('should have the correct FIELD_IDS', () => {
+      const expected = [AWARD_METHOD, OTHER_AWARD_METHOD];
+
+      expect(FIELD_IDS).toEqual(expected);
     });
   });
 
@@ -106,7 +114,15 @@ describe('controllers/insurance/export-contract/how-was-the-contract-awarded', (
   });
 
   describe('post', () => {
+    const validBody = {
+      [AWARD_METHOD]: mockExportContract[AWARD_METHOD].DB_ID,
+    };
+
     describe('when there are no validation errors', () => {
+      beforeEach(() => {
+        req.body = validBody;
+      });
+
       it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, async () => {
         await post(req, res);
 

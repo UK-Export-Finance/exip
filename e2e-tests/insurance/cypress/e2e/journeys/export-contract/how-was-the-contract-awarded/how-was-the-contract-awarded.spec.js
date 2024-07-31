@@ -69,38 +69,38 @@ context(
       });
 
       it(`renders an ${OPEN_TENDER.VALUE} radio`, () => {
-        const field = AWARD_METHOD_OPTIONS.OPEN_TENDER;
+        const selector = radios(AWARD_METHOD_OPTIONS.OPEN_TENDER.ID).option;
 
-        cy.checkText(radios(field.ID).option.label(), OPEN_TENDER.VALUE);
-        cy.checkValue(radios(field.ID).option, OPEN_TENDER.DB_ID);
+        cy.checkText(selector.label(), OPEN_TENDER.VALUE);
+        cy.checkValue(selector, OPEN_TENDER.DB_ID);
       });
 
       it(`renders a ${NEGOTIATED_CONTRACT.VALUE} radio`, () => {
-        const field = AWARD_METHOD_OPTIONS.NEGOTIATED_CONTRACT;
+        const selector = radios(AWARD_METHOD_OPTIONS.NEGOTIATED_CONTRACT.ID).option;
 
-        cy.checkText(radios(field.ID).option.label(), NEGOTIATED_CONTRACT.VALUE);
-        cy.checkValue(radios(field.ID).option, NEGOTIATED_CONTRACT.DB_ID);
+        cy.checkText(selector.label(), NEGOTIATED_CONTRACT.VALUE);
+        cy.checkValue(selector, NEGOTIATED_CONTRACT.DB_ID);
       });
 
       it(`renders a ${DIRECT_AWARD.VALUE} radio`, () => {
-        const field = AWARD_METHOD_OPTIONS.DIRECT_AWARD;
+        const selector = radios(AWARD_METHOD_OPTIONS.DIRECT_AWARD.ID).option;
 
-        cy.checkText(radios(field.ID).option.label(), DIRECT_AWARD.VALUE);
-        cy.checkValue(radios(field.ID).option, DIRECT_AWARD.DB_ID);
+        cy.checkText(selector.label(), DIRECT_AWARD.VALUE);
+        cy.checkValue(selector, DIRECT_AWARD.DB_ID);
       });
 
       it(`renders a ${COMPETITIVE_BIDDING.VALUE} radio`, () => {
-        const field = AWARD_METHOD_OPTIONS.COMPETITIVE_BIDDING;
+        const selector = radios(AWARD_METHOD_OPTIONS.COMPETITIVE_BIDDING.ID).option;
 
-        cy.checkText(radios(field.ID).option.label(), COMPETITIVE_BIDDING.VALUE);
-        cy.checkValue(radios(field.ID).option, COMPETITIVE_BIDDING.DB_ID);
+        cy.checkText(selector.label(), COMPETITIVE_BIDDING.VALUE);
+        cy.checkValue(selector, COMPETITIVE_BIDDING.DB_ID);
       });
 
       it(`renders an ${OTHER.VALUE} radio`, () => {
-        const field = AWARD_METHOD_OPTIONS.OTHER;
+        const selector = radios(AWARD_METHOD_OPTIONS.OTHER.ID).option;
 
-        cy.checkText(radios(field.ID).option.label(), OTHER.VALUE);
-        cy.checkValue(radios(field.ID).option, OTHER.DB_ID);
+        cy.checkText(selector.label(), OTHER.VALUE);
+        cy.checkValue(selector, OTHER.DB_ID);
       });
 
       it(`should NOT display conditional "${OTHER_AWARD_METHOD}" section without selecting the "${OTHER.VALUE}" radio`, () => {
