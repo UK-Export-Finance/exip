@@ -43,6 +43,9 @@ export const PARTIALS = {
       },
     },
     EXPORT_CONTRACT: {
+      HOW_WAS_THE_CONTRACT_AWARDED: {
+        CONDITIONAL_OTHER_METHOD_HTML: 'partials/insurance/how-was-the-contract-awarded-other-html.njk',
+      },
       ABOUT_GOODS_OR_SERVICES: {
         CONDITIONAL_YES_HTML: 'partials/insurance/about-goods-or-services-conditional-yes-html.njk',
       },

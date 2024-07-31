@@ -2,6 +2,10 @@ import SHARED from '../../shared';
 
 export const EXPORT_CONTRACT = {
   ...SHARED,
+  HOW_WAS_THE_CONTRACT_AWARDED: {
+    AWARD_METHOD: 'awardMethod',
+    OTHER_AWARD_METHOD: 'otherAwardMethod',
+  },
   ABOUT_GOODS_OR_SERVICES: {
     DESCRIPTION: 'goodsOrServicesDescription',
     FINAL_DESTINATION_KNOWN: 'finalDestinationKnown',

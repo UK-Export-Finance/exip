@@ -1,5 +1,7 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/radios/macro.njk' import govukRadios %}
+{% import '../../components/fieldset-legend.njk' as fieldsetLegend %}
 {% import '../../components/form-buttons.njk' as formButtons %}
 
 {% block pageTitle %}
@@ -16,18 +18,110 @@
     }
   }) }}
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-quarters-from-desktop">
-      <div class="govuk-grid-column-three-quarters-from-desktop govuk-!-padding-right-0 govuk-!-padding-left-0">
-        <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
-        <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
-      </div>
-    </div>
-  </div>
+  <span class="govuk-caption-xl" data-cy="heading-caption">
+    {{ CONTENT_STRINGS.HEADING_CAPTION }}
+  </span>
+
+  {% set otherMethodHtml %}
+    {% include CONDITIONAL_OTHER_METHOD_HTML %}
+  {% endset %}
 
   <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    {{ govukRadios({
+      name: FIELDS.AWARD_METHOD.ID,
+      fieldset: {
+        legend: {
+          html: fieldsetLegend.render({ id: FIELDS.AWARD_METHOD.ID, legendText: FIELDS.AWARD_METHOD.LEGEND, isPageHeading: true })
+        }
+      },
+      items: [
+        {
+          label: {
+            attributes: {
+              id: FIELDS.AWARD_METHOD.OPTIONS.OPEN_TENDER.ID  + '-label',
+              'data-cy': FIELDS.AWARD_METHOD.OPTIONS.OPEN_TENDER.ID + '-label'
+            }
+          },
+          value: FIELDS.AWARD_METHOD.OPTIONS.OPEN_TENDER.VALUE,
+          text: FIELDS.AWARD_METHOD.OPTIONS.OPEN_TENDER.TEXT,
+          attributes: {
+            "data-cy": FIELDS.AWARD_METHOD.OPTIONS.OPEN_TENDER.ID + "-input"
+          },
+          checked: submittedValues[FIELDS.AWARD_METHOD.ID] === FIELDS.AWARD_METHOD.OPTIONS.OPEN_TENDER.VALUE
+        },
+        {
+          label: {
+            attributes: {
+              id: FIELDS.AWARD_METHOD.OPTIONS.NEGOTIATED_CONTRACT.ID  + '-label',
+              'data-cy': FIELDS.AWARD_METHOD.OPTIONS.NEGOTIATED_CONTRACT.ID + '-label'
+            }
+          },
+          value: FIELDS.AWARD_METHOD.OPTIONS.NEGOTIATED_CONTRACT.VALUE,
+          text: FIELDS.AWARD_METHOD.OPTIONS.NEGOTIATED_CONTRACT.TEXT,
+          attributes: {
+            "data-cy": FIELDS.AWARD_METHOD.OPTIONS.NEGOTIATED_CONTRACT.ID + "-input"
+          },
+          checked: submittedValues[FIELDS.AWARD_METHOD.ID] === FIELDS.AWARD_METHOD.OPTIONS.NEGOTIATED_CONTRACT.VALUE
+        },
+        {
+          label: {
+            attributes: {
+              id: FIELDS.AWARD_METHOD.OPTIONS.DIRECT_AWARD.ID  + '-label',
+              'data-cy': FIELDS.AWARD_METHOD.OPTIONS.DIRECT_AWARD.ID + '-label'
+            }
+          },
+          value: FIELDS.AWARD_METHOD.OPTIONS.DIRECT_AWARD.VALUE,
+          text: FIELDS.AWARD_METHOD.OPTIONS.DIRECT_AWARD.TEXT,
+          attributes: {
+            "data-cy": FIELDS.AWARD_METHOD.OPTIONS.DIRECT_AWARD.ID + "-input"
+          },
+          checked: submittedValues[FIELDS.AWARD_METHOD.ID] === FIELDS.AWARD_METHOD.OPTIONS.DIRECT_AWARD.VALUE
+        },
+        {
+          label: {
+            attributes: {
+              id: FIELDS.AWARD_METHOD.OPTIONS.COMPETITIVE_BIDDING.ID  + '-label',
+              'data-cy': FIELDS.AWARD_METHOD.OPTIONS.COMPETITIVE_BIDDING.ID + '-label'
+            }
+          },
+          value: FIELDS.AWARD_METHOD.OPTIONS.COMPETITIVE_BIDDING.VALUE,
+          text: FIELDS.AWARD_METHOD.OPTIONS.COMPETITIVE_BIDDING.TEXT,
+          attributes: {
+            "data-cy": FIELDS.AWARD_METHOD.OPTIONS.COMPETITIVE_BIDDING.ID + "-input"
+          },
+          checked: submittedValues[FIELDS.AWARD_METHOD.ID] === FIELDS.AWARD_METHOD.OPTIONS.COMPETITIVE_BIDDING.VALUE
+        },
+        {
+          divider: 'or'
+        },
+        {
+          label: {
+            attributes: {
+              id: FIELDS.AWARD_METHOD.OPTIONS.OTHER.ID  + '-label',
+              'data-cy': FIELDS.AWARD_METHOD.OPTIONS.OTHER.ID + '-label'
+            }
+          },
+          value: FIELDS.AWARD_METHOD.OPTIONS.OTHER.VALUE,
+          text: FIELDS.AWARD_METHOD.OPTIONS.OTHER.TEXT,
+          attributes: {
+            "data-cy": FIELDS.AWARD_METHOD.OPTIONS.OTHER.ID + "-input"
+          },
+          checked: submittedValues[FIELDS.AWARD_METHOD.ID] === FIELDS.AWARD_METHOD.OPTIONS.OTHER.VALUE,
+          conditional: {
+            html: otherMethodHtml
+          }
+        }
+      ],
+      errorMessage: errors[FIELDS.AWARD_METHOD.ID].text and {
+        text: errors[FIELDS.AWARD_METHOD.ID].text,
+        attributes: {
+          "data-cy": FIELDS.AWARD_METHOD.ID + "-error-message"
+        }
+      }
+    }) }}
 
     {{ formButtons.render({
       contentStrings: CONTENT_STRINGS.BUTTONS,

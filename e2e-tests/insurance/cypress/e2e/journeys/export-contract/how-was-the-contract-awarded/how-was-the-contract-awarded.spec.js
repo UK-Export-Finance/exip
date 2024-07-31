@@ -1,6 +1,11 @@
-import { headingCaption } from '../../../../../../pages/shared';
-import { PAGES } from '../../../../../../content-strings';
+import { field as fieldSelector, headingCaption, radios } from '../../../../../../pages/shared';
+import { EXPORT_CONTRACT_AWARD_METHOD } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import { PAGES } from '../../../../../../content-strings';
+import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance';
+import { EXPORT_CONTRACT as EXPORT_CONTRACT_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/export-contract';
+
+const { OPEN_TENDER, NEGOTIATED_CONTRACT, DIRECT_AWARD, COMPETITIVE_BIDDING, OTHER } = EXPORT_CONTRACT_AWARD_METHOD;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.HOW_WAS_THE_CONTRACT_AWARDED;
 
@@ -8,6 +13,12 @@ const {
   ROOT,
   EXPORT_CONTRACT: { ROOT: EXPORT_CONTRACT_ROOT, ABOUT_GOODS_OR_SERVICES, HOW_WAS_THE_CONTRACT_AWARDED },
 } = INSURANCE_ROUTES;
+
+const {
+  HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD, OTHER_AWARD_METHOD },
+} = EXPORT_CONTRACT_FIELD_IDS;
+
+const AWARD_METHOD_OPTIONS = FIELDS.HOW_WAS_THE_CONTRACT_AWARDED[AWARD_METHOD].OPTIONS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -55,6 +66,51 @@ context(
 
       it('renders a heading caption', () => {
         cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+      });
+
+      it(`renders an ${OPEN_TENDER.VALUE} radio`, () => {
+        const field = AWARD_METHOD_OPTIONS.OPEN_TENDER;
+
+        cy.checkText(radios(field.ID).option.label(), OPEN_TENDER.VALUE);
+        cy.checkValue(radios(field.ID).option, OPEN_TENDER.DB_ID);
+      });
+
+      it(`renders a ${NEGOTIATED_CONTRACT.VALUE} radio`, () => {
+        const field = AWARD_METHOD_OPTIONS.NEGOTIATED_CONTRACT;
+
+        cy.checkText(radios(field.ID).option.label(), NEGOTIATED_CONTRACT.VALUE);
+        cy.checkValue(radios(field.ID).option, NEGOTIATED_CONTRACT.DB_ID);
+      });
+
+      it(`renders a ${DIRECT_AWARD.VALUE} radio`, () => {
+        const field = AWARD_METHOD_OPTIONS.DIRECT_AWARD;
+
+        cy.checkText(radios(field.ID).option.label(), DIRECT_AWARD.VALUE);
+        cy.checkValue(radios(field.ID).option, DIRECT_AWARD.DB_ID);
+      });
+
+      it(`renders a ${COMPETITIVE_BIDDING.VALUE} radio`, () => {
+        const field = AWARD_METHOD_OPTIONS.COMPETITIVE_BIDDING;
+
+        cy.checkText(radios(field.ID).option.label(), COMPETITIVE_BIDDING.VALUE);
+        cy.checkValue(radios(field.ID).option, COMPETITIVE_BIDDING.DB_ID);
+      });
+
+      it(`renders an ${OTHER.VALUE} radio`, () => {
+        const field = AWARD_METHOD_OPTIONS.OTHER;
+
+        cy.checkText(radios(field.ID).option.label(), OTHER.VALUE);
+        cy.checkValue(radios(field.ID).option, OTHER.DB_ID);
+      });
+
+      it(`should NOT display conditional "${OTHER_AWARD_METHOD}" section without selecting the "${OTHER.VALUE}" radio`, () => {
+        fieldSelector(OTHER_AWARD_METHOD).input().should('not.be.visible');
+      });
+
+      it(`should display conditional "${OTHER_AWARD_METHOD}" section when selecting the "${OTHER.VALUE}" radio`, () => {
+        radios(AWARD_METHOD_OPTIONS.OTHER.ID).option.label().click();
+
+        fieldSelector(OTHER_AWARD_METHOD).input().should('be.visible');
       });
 
       it('renders a `save and back` button', () => {
