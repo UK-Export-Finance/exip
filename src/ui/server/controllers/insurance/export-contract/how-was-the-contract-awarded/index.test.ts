@@ -7,6 +7,9 @@ import { PAGES } from '../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
+import generateValidationErrors from './validation';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockExportContract, referenceNumber } from '../../../../test-mocks';
 
@@ -117,6 +120,27 @@ describe('controllers/insurance/export-contract/how-was-the-contract-awarded', (
     const validBody = {
       [AWARD_METHOD]: mockExportContract[AWARD_METHOD].DB_ID,
     };
+
+    describe('when there are validation errors', () => {
+      it('should render template with validation errors', () => {
+        post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        const expectedVariables = {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...pageVariables(),
+          userName: getUserNameFromSession(req.session.user),
+          submittedValues: sanitiseData(payload),
+          validationErrors: generateValidationErrors(payload),
+        };
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+      });
+    });
 
     describe('when there are no validation errors', () => {
       beforeEach(() => {
