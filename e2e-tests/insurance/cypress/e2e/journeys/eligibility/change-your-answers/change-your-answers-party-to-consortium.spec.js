@@ -30,12 +30,18 @@ context(
     const fieldId = IS_PARTY_TO_CONSORTIUM;
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${PARTY_TO_CONSORTIUM_CHANGE}`, () => {
+      beforeEach(() => {
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
+      });
 
+      it(`should redirect to ${PARTY_TO_CONSORTIUM_CHANGE}`, () => {
         cy.assertChangeAnswersPageUrl({ route: PARTY_TO_CONSORTIUM_CHANGE, fieldId, isInsuranceEligibility: true });
+      });
+
+      it(`should have the "no" radio selected`, () => {
+        cy.assertNoRadioOptionIsChecked();
       });
     });
 

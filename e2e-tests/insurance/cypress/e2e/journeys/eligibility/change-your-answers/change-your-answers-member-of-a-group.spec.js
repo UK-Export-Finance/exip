@@ -30,12 +30,18 @@ context(
     const fieldId = IS_MEMBER_OF_A_GROUP;
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${MEMBER_OF_A_GROUP_CHANGE}`, () => {
+      beforeEach(() => {
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
+      });
 
+      it(`should redirect to ${MEMBER_OF_A_GROUP_CHANGE}`, () => {
         cy.assertChangeAnswersPageUrl({ route: MEMBER_OF_A_GROUP_CHANGE, fieldId, isInsuranceEligibility: true });
+      });
+
+      it(`should have the "no" radio selected`, () => {
+        cy.assertNoRadioOptionIsChecked();
       });
     });
 
