@@ -1,5 +1,24 @@
 # Changelog
 
+## [2.24.0](https://github.com/UK-Export-Finance/exip/compare/v2.23.0...v2.24.0) (2024-07-31)
+
+
+### Features
+
+* **EMS-3676:** eligibility - Check your answers - Member of group and party to consortium ([#2852](https://github.com/UK-Export-Finance/exip/issues/2852)) ([3a8333a](https://github.com/UK-Export-Finance/exip/commit/3a8333a56a6f26b1aac3022cffa6fce83f5afb7a))
+
+## [2.23.0](https://github.com/UK-Export-Finance/exip/compare/v2.22.0...v2.23.0) (2024-07-30)
+
+### Features
+
+- **EMS-3660:** export contract - how was contract awarded - UI setup ([#2837](https://github.com/UK-Export-Finance/exip/issues/2837)) ([5884388](https://github.com/UK-Export-Finance/exip/commit/58843888123744b0272abd9d15a53946ce5ac96f))
+
+## [2.22.0](https://github.com/UK-Export-Finance/exip/compare/v2.21.0...v2.22.0) (2024-07-30)
+
+### Features
+
+- **EMS-3668-69-73-74:** eligibility - Party to consortium and Member of a group ([#2832](https://github.com/UK-Export-Finance/exip/issues/2832)) ([b05ef07](https://github.com/UK-Export-Finance/exip/commit/b05ef0704e3b3771f697a21d4cb157732a1146fb))
+
 ## [2.21.0](https://github.com/UK-Export-Finance/exip/compare/v2.20.0...v2.21.0) (2024-07-26)
 
 ### Features

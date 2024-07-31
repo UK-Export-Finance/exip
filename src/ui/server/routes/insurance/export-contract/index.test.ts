@@ -1,6 +1,10 @@
 import { get, post } from '../../../test-mocks/mock-router';
 import { EXPORT_CONTRACT } from '../../../constants/routes/insurance/export-contract';
 import { get as exportContractRootGet } from '../../../controllers/insurance/export-contract';
+import {
+  get as howWasTheContractAwardedGet,
+  post as howWasTheContractAwardedPost,
+} from '../../../controllers/insurance/export-contract/how-was-the-contract-awarded';
 import { get as aboutGoodsOrServicesGet, post as aboutGoodsOrServicesPost } from '../../../controllers/insurance/export-contract/about-goods-or-services';
 import { post as aboutGoodsOrServicesSaveAndBackPost } from '../../../controllers/insurance/export-contract/about-goods-or-services/save-and-back';
 import { get as howWillYouGetPaidGet, post as howWillYouGetPaidPost } from '../../../controllers/insurance/export-contract/how-will-you-get-paid';
@@ -28,6 +32,7 @@ import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../
 
 const {
   ROOT,
+  HOW_WAS_THE_CONTRACT_AWARDED,
   ABOUT_GOODS_OR_SERVICES,
   ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK,
   ABOUT_GOODS_OR_SERVICES_CHANGE,
@@ -76,10 +81,13 @@ describe('routes/insurance/export-contract', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(29);
-    expect(post).toHaveBeenCalledTimes(36);
+    expect(get).toHaveBeenCalledTimes(30);
+    expect(post).toHaveBeenCalledTimes(37);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROOT}`, exportContractRootGet);
+
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${HOW_WAS_THE_CONTRACT_AWARDED}`, howWasTheContractAwardedGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${HOW_WAS_THE_CONTRACT_AWARDED}`, howWasTheContractAwardedPost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ABOUT_GOODS_OR_SERVICES}`, aboutGoodsOrServicesGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${ABOUT_GOODS_OR_SERVICES}`, aboutGoodsOrServicesPost);
