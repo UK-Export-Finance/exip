@@ -689,19 +689,25 @@ CREATE TABLE `ExportContract` (
   `id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `application` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `goodsOrServicesDescription` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `finalDestinationCountryCode` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `finalDestinationCountryCode` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `finalDestinationKnown` tinyint(1) DEFAULT NULL,
-  `paymentTermsDescription` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `privateMarket` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `agent` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `paymentTermsDescription` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `privateMarket` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `agent` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `awardMethod` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `otherAwardMethod` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `ExportContract_privateMarket_key` (`privateMarket`),
   UNIQUE KEY `ExportContract_agent_key` (`agent`),
   KEY `ExportContract_application_idx` (`application`),
+  KEY `ExportContract_awardMethod_idx` (`awardMethod`),
   CONSTRAINT `ExportContract_agent_fkey` FOREIGN KEY (`agent`) REFERENCES `ExportContractAgent` (`id`) ON DELETE
   SET
     NULL ON UPDATE CASCADE,
     CONSTRAINT `ExportContract_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE,
+    CONSTRAINT `ExportContract_awardMethod_fkey` FOREIGN KEY (`awardMethod`) REFERENCES `ExportContractAwardMethod` (`id`) ON DELETE
   SET
     NULL ON UPDATE CASCADE,
     CONSTRAINT `ExportContract_privateMarket_fkey` FOREIGN KEY (`privateMarket`) REFERENCES `PrivateMarket` (`id`) ON DELETE
@@ -765,6 +771,40 @@ CREATE TABLE `ExportContractAgentServiceCharge` (
 
 
 
+# Dump of table ExportContractAwardMethod
+# ------------------------------------------------------------
+DROP TABLE IF EXISTS `ExportContractAwardMethod`;
+
+CREATE TABLE `ExportContractAwardMethod` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+LOCK TABLES `ExportContractAwardMethod` WRITE;
+
+/*!40000 ALTER TABLE `ExportContractAwardMethod` DISABLE KEYS */
+;
+
+INSERT INTO
+  `ExportContractAwardMethod` (`id`, `value`)
+VALUES
+  ('eg9qxlqw4edxa8b5mwbybsrfp', 'Open tender'),
+  (
+    'mzwp337piamg1mei7fqh1o73s',
+    'Negotiated contract'
+  ),
+  ('qnqrle4xwsj5go8pchj31sat4', 'Direct award'),
+  (
+    'qw2hp8khykctdic2z58z70ru8',
+    'Competitive bidding'
+  ),
+  ('tn8k8lot1bvirmztmmgq2u8hn', 'Other');
+
+/*!40000 ALTER TABLE `ExportContractAwardMethod` ENABLE KEYS */
+;
+
+UNLOCK TABLES;
 # Dump of table Broker
 # ------------------------------------------------------------
 

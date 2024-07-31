@@ -993,6 +993,8 @@ type ExportContract {
   application: Application
   agent: ExportContractAgent
   privateMarket: PrivateMarket
+  awardMethod: ExportContractAwardMethod
+  otherAwardMethod: String
   finalDestinationKnown: Boolean
   finalDestinationCountryCode: String
   goodsOrServicesDescription: String
@@ -1011,6 +1013,8 @@ input ExportContractWhereInput {
   application: ApplicationWhereInput
   agent: ExportContractAgentWhereInput
   privateMarket: PrivateMarketWhereInput
+  awardMethod: ExportContractAwardMethodWhereInput
+  otherAwardMethod: StringFilter
   finalDestinationCountryCode: StringFilter
   goodsOrServicesDescription: StringFilter
   paymentTermsDescription: StringFilter
@@ -1018,6 +1022,7 @@ input ExportContractWhereInput {
 
 input ExportContractOrderByInput {
   id: OrderDirection
+  otherAwardMethod: OrderDirection
   finalDestinationCountryCode: OrderDirection
   goodsOrServicesDescription: OrderDirection
   paymentTermsDescription: OrderDirection
@@ -1027,6 +1032,8 @@ input ExportContractUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   agent: ExportContractAgentRelateToOneForUpdateInput
   privateMarket: PrivateMarketRelateToOneForUpdateInput
+  awardMethod: ExportContractAwardMethodRelateToOneForUpdateInput
+  otherAwardMethod: String
   finalDestinationKnown: Boolean
   finalDestinationCountryCode: String
   goodsOrServicesDescription: String
@@ -1045,6 +1052,12 @@ input PrivateMarketRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
+input ExportContractAwardMethodRelateToOneForUpdateInput {
+  create: ExportContractAwardMethodCreateInput
+  connect: ExportContractAwardMethodWhereUniqueInput
+  disconnect: Boolean
+}
+
 input ExportContractUpdateArgs {
   where: ExportContractWhereUniqueInput!
   data: ExportContractUpdateInput!
@@ -1054,6 +1067,8 @@ input ExportContractCreateInput {
   application: ApplicationRelateToOneForCreateInput
   agent: ExportContractAgentRelateToOneForCreateInput
   privateMarket: PrivateMarketRelateToOneForCreateInput
+  awardMethod: ExportContractAwardMethodRelateToOneForCreateInput
+  otherAwardMethod: String
   finalDestinationKnown: Boolean
   finalDestinationCountryCode: String
   goodsOrServicesDescription: String
@@ -1068,6 +1083,11 @@ input ExportContractAgentRelateToOneForCreateInput {
 input PrivateMarketRelateToOneForCreateInput {
   create: PrivateMarketCreateInput
   connect: PrivateMarketWhereUniqueInput
+}
+
+input ExportContractAwardMethodRelateToOneForCreateInput {
+  create: ExportContractAwardMethodCreateInput
+  connect: ExportContractAwardMethodWhereUniqueInput
 }
 
 type ExportContractAgent {
@@ -1264,6 +1284,41 @@ input ExportContractAgentServiceChargeCreateInput {
   fixedSumCurrencyCode: String
   method: String
   payableCountryCode: String
+}
+
+type ExportContractAwardMethod {
+  id: ID!
+  value: String
+}
+
+input ExportContractAwardMethodWhereUniqueInput {
+  id: ID
+}
+
+input ExportContractAwardMethodWhereInput {
+  AND: [ExportContractAwardMethodWhereInput!]
+  OR: [ExportContractAwardMethodWhereInput!]
+  NOT: [ExportContractAwardMethodWhereInput!]
+  id: IDFilter
+  value: StringFilter
+}
+
+input ExportContractAwardMethodOrderByInput {
+  id: OrderDirection
+  value: OrderDirection
+}
+
+input ExportContractAwardMethodUpdateInput {
+  value: String
+}
+
+input ExportContractAwardMethodUpdateArgs {
+  where: ExportContractAwardMethodWhereUniqueInput!
+  data: ExportContractAwardMethodUpdateInput!
+}
+
+input ExportContractAwardMethodCreateInput {
+  value: String
 }
 
 type PrivateMarket {
@@ -2992,6 +3047,12 @@ type Mutation {
   updateExportContractAgentServiceCharges(data: [ExportContractAgentServiceChargeUpdateArgs!]!): [ExportContractAgentServiceCharge]
   deleteExportContractAgentServiceCharge(where: ExportContractAgentServiceChargeWhereUniqueInput!): ExportContractAgentServiceCharge
   deleteExportContractAgentServiceCharges(where: [ExportContractAgentServiceChargeWhereUniqueInput!]!): [ExportContractAgentServiceCharge]
+  createExportContractAwardMethod(data: ExportContractAwardMethodCreateInput!): ExportContractAwardMethod
+  createExportContractAwardMethods(data: [ExportContractAwardMethodCreateInput!]!): [ExportContractAwardMethod]
+  updateExportContractAwardMethod(where: ExportContractAwardMethodWhereUniqueInput!, data: ExportContractAwardMethodUpdateInput!): ExportContractAwardMethod
+  updateExportContractAwardMethods(data: [ExportContractAwardMethodUpdateArgs!]!): [ExportContractAwardMethod]
+  deleteExportContractAwardMethod(where: ExportContractAwardMethodWhereUniqueInput!): ExportContractAwardMethod
+  deleteExportContractAwardMethods(where: [ExportContractAwardMethodWhereUniqueInput!]!): [ExportContractAwardMethod]
   createPrivateMarket(data: PrivateMarketCreateInput!): PrivateMarket
   createPrivateMarkets(data: [PrivateMarketCreateInput!]!): [PrivateMarket]
   updatePrivateMarket(where: PrivateMarketWhereUniqueInput!, data: PrivateMarketUpdateInput!): PrivateMarket
@@ -3261,6 +3322,9 @@ type Query {
   exportContractAgentServiceCharges(where: ExportContractAgentServiceChargeWhereInput! = {}, orderBy: [ExportContractAgentServiceChargeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractAgentServiceChargeWhereUniqueInput): [ExportContractAgentServiceCharge!]
   exportContractAgentServiceCharge(where: ExportContractAgentServiceChargeWhereUniqueInput!): ExportContractAgentServiceCharge
   exportContractAgentServiceChargesCount(where: ExportContractAgentServiceChargeWhereInput! = {}): Int
+  exportContractAwardMethods(where: ExportContractAwardMethodWhereInput! = {}, orderBy: [ExportContractAwardMethodOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractAwardMethodWhereUniqueInput): [ExportContractAwardMethod!]
+  exportContractAwardMethod(where: ExportContractAwardMethodWhereUniqueInput!): ExportContractAwardMethod
+  exportContractAwardMethodsCount(where: ExportContractAwardMethodWhereInput! = {}): Int
   privateMarkets(where: PrivateMarketWhereInput! = {}, orderBy: [PrivateMarketOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PrivateMarketWhereUniqueInput): [PrivateMarket!]
   privateMarket(where: PrivateMarketWhereUniqueInput!): PrivateMarket
   privateMarketsCount(where: PrivateMarketWhereInput! = {}): Int
