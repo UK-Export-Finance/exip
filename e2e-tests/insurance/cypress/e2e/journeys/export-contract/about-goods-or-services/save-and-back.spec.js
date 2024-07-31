@@ -24,7 +24,9 @@ context('Insurance - Export contract - About goods or services page - Save and g
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
+      // go to the page we want to test.
       cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitHowWasTheContractAwardedForm();
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
 
@@ -82,6 +84,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
 
       // go back to the page via the task list
       cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitHowWasTheContractAwardedForm();
 
       cy.checkTextareaValue({
         fieldId: FIELD_ID,
@@ -115,6 +118,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
 
     it(`should have no value in '${FIELD_ID}' when going back to the page`, () => {
       cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitHowWasTheContractAwardedForm();
 
       cy.checkTextareaValue({
         fieldId: FIELD_ID,
