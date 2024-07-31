@@ -53,6 +53,8 @@ export const INSURANCE_ROUTES = {
     PARTY_TO_CONSORTIUM_CHANGE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/party-to-any-consortium/change`,
     MEMBER_OF_A_GROUP: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/member-of-a-group`,
     MEMBER_OF_A_GROUP_CHANGE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/member-of-a-group/change`,
+    PARTY_TO_CONSORTIUM_EXIT: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/party-to-a-consortium`,
+    MEMBER_OF_A_GROUP_EXIT: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/group-member-details`,
   },
   PAGE_NOT_FOUND: `${INSURANCE_ROOT}/page-not-found`,
   NO_ACCESS_TO_APPLICATION: `${INSURANCE_ROOT}/no-access-to-application`,

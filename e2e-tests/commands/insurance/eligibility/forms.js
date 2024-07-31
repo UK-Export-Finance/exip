@@ -86,12 +86,30 @@ export const completeEndBuyerForm = () => {
   selectRadioAndSubmit(FIELD_VALUES.NO);
 };
 
-export const completePartyToConsortiumForm = () => {
-  selectRadioAndSubmit(FIELD_VALUES.NO);
+/**
+ * completePartyToConsortiumForm
+ * completes and submits the party to consortium form
+ * @param {Boolean} partyToConsortium if true, then selects yes radio, otherwise no
+ */
+export const completePartyToConsortiumForm = ({ partyToConsortium = false }) => {
+  if (partyToConsortium) {
+    selectRadioAndSubmit(FIELD_VALUES.YES);
+  } else {
+    selectRadioAndSubmit(FIELD_VALUES.NO);
+  }
 };
 
-export const completeMemberOfAGroupForm = () => {
-  selectRadioAndSubmit(FIELD_VALUES.NO);
+/**
+ * completeMemberOfAGroupForm
+ * completes and submits the member of a group form
+ * @param {Boolean} memberOfAGroup if true, then selects yes radio, otherwise no
+ */
+export const completeMemberOfAGroupForm = ({ memberOfAGroup = false }) => {
+  if (memberOfAGroup) {
+    selectRadioAndSubmit(FIELD_VALUES.YES);
+  } else {
+    selectRadioAndSubmit(FIELD_VALUES.NO);
+  }
 };
 
 export const submitCheckYourAnswers = () => {

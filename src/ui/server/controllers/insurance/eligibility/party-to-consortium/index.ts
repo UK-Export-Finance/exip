@@ -10,7 +10,7 @@ import { Request, Response } from '../../../../../types';
 import isChangeRoute from '../../../../helpers/is-change-route';
 
 const {
-  ELIGIBILITY: { LONG_TERM_COVER, CHECK_YOUR_ANSWERS, MEMBER_OF_A_GROUP },
+  ELIGIBILITY: { PARTY_TO_CONSORTIUM_EXIT, CHECK_YOUR_ANSWERS, MEMBER_OF_A_GROUP },
 } = INSURANCE_ROUTES;
 
 export const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.IS_PARTY_TO_CONSORTIUM;
@@ -62,7 +62,7 @@ export const post = (req: Request, res: Response) => {
   const answer = payload[FIELD_ID];
 
   if (answer === 'true') {
-    return res.redirect(LONG_TERM_COVER);
+    return res.redirect(PARTY_TO_CONSORTIUM_EXIT);
   }
 
   req.session.submittedData = {

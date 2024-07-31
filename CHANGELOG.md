@@ -1,11 +1,17 @@
 # Changelog
 
-## [2.24.0](https://github.com/UK-Export-Finance/exip/compare/v2.23.0...v2.24.0) (2024-07-31)
+## [2.25.0](https://github.com/UK-Export-Finance/exip/compare/v2.24.0...v2.25.0) (2024-07-31)
 
 
 ### Features
 
-* **EMS-3676:** eligibility - Check your answers - Member of group and party to consortium ([#2852](https://github.com/UK-Export-Finance/exip/issues/2852)) ([3a8333a](https://github.com/UK-Export-Finance/exip/commit/3a8333a56a6f26b1aac3022cffa6fce83f5afb7a))
+* **EMS-3670-72:** eligibility - Party to consortium and Member of a group exit pages ([#2851](https://github.com/UK-Export-Finance/exip/issues/2851)) ([5eabbb5](https://github.com/UK-Export-Finance/exip/commit/5eabbb56aaf7d0d64f039b3b7d1bce031f5be8f8))
+
+## [2.24.0](https://github.com/UK-Export-Finance/exip/compare/v2.23.0...v2.24.0) (2024-07-31)
+
+### Features
+
+- **EMS-3676:** eligibility - Check your answers - Member of group and party to consortium ([#2852](https://github.com/UK-Export-Finance/exip/issues/2852)) ([3a8333a](https://github.com/UK-Export-Finance/exip/commit/3a8333a56a6f26b1aac3022cffa6fce83f5afb7a))
 
 ## [2.23.0](https://github.com/UK-Export-Finance/exip/compare/v2.22.0...v2.23.0) (2024-07-30)
 
