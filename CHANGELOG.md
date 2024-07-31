@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.27.0](https://github.com/UK-Export-Finance/exip/compare/v2.26.0...v2.27.0) (2024-07-31)
+
+
+### Features
+
+* **EMS-3680-3682:** eligibility - Data saving ([#2853](https://github.com/UK-Export-Finance/exip/issues/2853)) ([8464b3f](https://github.com/UK-Export-Finance/exip/commit/8464b3fba3657788b3292d95d9bbd79ef452f2e9))
+
 ## [2.26.0](https://github.com/UK-Export-Finance/exip/compare/v2.25.0...v2.26.0) (2024-07-31)
 
 
