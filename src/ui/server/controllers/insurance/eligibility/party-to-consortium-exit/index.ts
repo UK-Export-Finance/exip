@@ -8,15 +8,15 @@ export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.PDF_EXIT;
 
 /**
  * get
- * Render the "Long term cover" exit page
+ * Render the "Party to consortium" exit page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} Long term cover exit page
+ * @returns {Express.Response.render} Party to consortium exit page
  */
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {
     ...corePageVariables({
-      PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.LONG_TERM_COVER,
+      PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM_EXIT,
       BACK_LINK: req.headers.referer,
     }),
     userName: getUserNameFromSession(req.session.user),

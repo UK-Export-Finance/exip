@@ -19,6 +19,8 @@ const {
   VALID_EXPORTER_LOCATION,
   HAS_COMPANIES_HOUSE_NUMBER,
   HAS_END_BUYER,
+  IS_PARTY_TO_CONSORTIUM,
+  IS_MEMBER_OF_A_GROUP,
 } = INSURANCE_FIELD_IDS.ELIGIBILITY;
 
 const { COMPANY_NAME } = INSURANCE_FIELD_IDS.COMPANIES_HOUSE;
@@ -90,6 +92,14 @@ context(
 
     it(`should render a ${HAS_END_BUYER} summary list row`, () => {
       checkSummaryList[HAS_END_BUYER]();
+    });
+
+    it(`should render a ${IS_PARTY_TO_CONSORTIUM} summary list row`, () => {
+      checkSummaryList[IS_PARTY_TO_CONSORTIUM]();
+    });
+
+    it(`should render a ${IS_MEMBER_OF_A_GROUP} summary list row`, () => {
+      checkSummaryList[IS_MEMBER_OF_A_GROUP]();
     });
 
     describe('form submission', () => {

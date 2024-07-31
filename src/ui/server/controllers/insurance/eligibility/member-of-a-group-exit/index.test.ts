@@ -6,7 +6,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
 
-describe('controllers/insurance/eligibility/long-term-cover', () => {
+describe('controllers/insurance/eligibility/member-of-a-group-exit', () => {
   let req: Request;
   let res: Response;
 
@@ -27,7 +27,7 @@ describe('controllers/insurance/eligibility/long-term-cover', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...corePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.LONG_TERM_COVER,
+          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP_EXIT,
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),

@@ -40,6 +40,8 @@ const {
   PARTY_TO_CONSORTIUM_CHANGE,
   MEMBER_OF_A_GROUP,
   MEMBER_OF_A_GROUP_CHANGE,
+  MEMBER_OF_A_GROUP_EXIT,
+  PARTY_TO_CONSORTIUM_EXIT,
 } = ELIGIBILITY;
 
 const {
@@ -136,6 +138,8 @@ export const requiredInsuranceEligibilityDataProvided = (req: Request, res: Resp
     ACCOUNT.CREATE.YOUR_DETAILS,
     ACCOUNT.SIGN_IN.ROOT,
     CONTRACT_TOO_SHORT,
+    MEMBER_OF_A_GROUP_EXIT,
+    PARTY_TO_CONSORTIUM_EXIT,
   ];
 
   const isIrrelevantRoute = (route: string) => irrelevantRoutes.includes(route);
