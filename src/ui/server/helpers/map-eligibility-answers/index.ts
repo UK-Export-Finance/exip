@@ -16,8 +16,7 @@ const {
  */
 const mapEligibilityAnswers = (answers: SubmittedDataInsuranceEligibility) => {
   if (answers.buyerCountry) {
-    // TODO: EMS-3680 3682 remove partyToConsortium, memberOfAGroup
-    const { buyerCountry, totalContractValue, coverPeriod, hasReviewedEligibility, isPartyToConsortium, isMemberOfAGroup, ...otherAnswers } = answers;
+    const { buyerCountry, totalContractValue, coverPeriod, hasReviewedEligibility, ...otherAnswers } = answers;
 
     const mapped = {
       ...otherAnswers,

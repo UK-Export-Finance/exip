@@ -2426,7 +2426,9 @@ var lists = {
       otherPartiesInvolved: (0, import_fields.checkbox)(),
       paidByLetterOfCredit: (0, import_fields.checkbox)(),
       totalContractValue: (0, import_fields.relationship)({ ref: "TotalContractValue" }),
-      validExporterLocation: (0, import_fields.checkbox)()
+      validExporterLocation: (0, import_fields.checkbox)(),
+      isPartyToConsortium: (0, import_fields.checkbox)(),
+      isMemberOfAGroup: (0, import_fields.checkbox)()
     },
     access: import_access.allowAll
   }),
@@ -2824,6 +2826,8 @@ var typeDefs = `
     hasMinimumUkGoodsOrServices: Boolean!
     totalContractValueId: Int!
     validExporterLocation: Boolean!
+    isPartyToConsortium: Boolean!
+    isMemberOfAGroup: Boolean!
   }
 
   type CreateAnApplicationResponse {
