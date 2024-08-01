@@ -30,6 +30,20 @@ export const REGEX = {
    */
   NUMBER_HYPHEN_SPACE: /^[- \d]+$/,
 
+  /*
+   * ALPHA_NUMBER_HYPHEN_DASH_QUESTION_EQUALS_AMPERSAND:
+   * Regex that allows only:
+   * - numbers.
+   * - letters.
+   * - a hyphen.
+   * - a question mark.
+   * - a slash.
+   * - a dash.
+   * - &.
+   * Note: \d is exactly the same as [0-9]
+   */
+  ALPHA_NUMBER_HYPHEN_DASH_QUESTION_EQUALS_AMPERSAND: /^[A-z-=&?/\d]+$/,
+
   /**
    * SPACE_AND_HYPHEN:
    * Regex that allows only:
