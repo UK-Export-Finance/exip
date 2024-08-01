@@ -95,8 +95,8 @@ context(`Insurance - Export contract - Agent charges - Save and go back - ${METH
         // TODO: EMS-3665 - increment the value in command below instead.
         cy.completeAndSubmitHowWasTheContractAwardedForm();
 
-        // go through 6 export contract forms.
-        cy.clickSubmitButtonMultipleTimes({ count: 6 });
+        // go through 5 export contract forms.
+        cy.clickSubmitButtonMultipleTimes({ count: 5 });
 
         cy.assertAgentChargesFieldValues({ fixedSumMethod: true });
       });
