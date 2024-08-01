@@ -75,6 +75,9 @@ context('Insurance - Export contract - Agent - Save and go back', () => {
 
         cy.startInsuranceExportContractSection({});
 
+        // TODO: EMS-3665 - increment the value in command below instead.
+        cy.completeAndSubmitHowWasTheContractAwardedForm();
+
         // go through 3 export contract forms.
         cy.clickSubmitButtonMultipleTimes({ count: 3 });
 
