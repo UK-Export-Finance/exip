@@ -2,24 +2,21 @@
 
 ## [2.28.2](https://github.com/UK-Export-Finance/exip/compare/v2.28.1...v2.28.2) (2024-08-01)
 
-
 ### Bug Fixes
 
-* **EMS-3703:** eligibility - Member of a group - Wording fix ([#2869](https://github.com/UK-Export-Finance/exip/issues/2869)) ([119ce21](https://github.com/UK-Export-Finance/exip/commit/119ce21f56e97ea99d9db1dcdfd611ca7cb6de05))
+- **EMS-3703:** eligibility - Member of a group - Wording fix ([#2869](https://github.com/UK-Export-Finance/exip/issues/2869)) ([119ce21](https://github.com/UK-Export-Finance/exip/commit/119ce21f56e97ea99d9db1dcdfd611ca7cb6de05))
 
 ## [2.28.1](https://github.com/UK-Export-Finance/exip/compare/v2.28.0...v2.28.1) (2024-08-01)
 
-
 ### Bug Fixes
 
-* **iac:** afd custom domains association ([9ecd958](https://github.com/UK-Export-Finance/exip/commit/9ecd9582a228e3d8266daa228fb6655150358da5))
+- **iac:** afd custom domains association ([9ecd958](https://github.com/UK-Export-Finance/exip/commit/9ecd9582a228e3d8266daa228fb6655150358da5))
 
 ## [2.28.0](https://github.com/UK-Export-Finance/exip/compare/v2.27.0...v2.28.0) (2024-07-31)
 
-
 ### Features
 
-* **EMS-3667:** eligibility - Check if eligible - Content change ([#2861](https://github.com/UK-Export-Finance/exip/issues/2861)) ([0c7557f](https://github.com/UK-Export-Finance/exip/commit/0c7557faf6fc35a49c4cb6278f58fdaa4768b863))
+- **EMS-3667:** eligibility - Check if eligible - Content change ([#2861](https://github.com/UK-Export-Finance/exip/issues/2861)) ([0c7557f](https://github.com/UK-Export-Finance/exip/commit/0c7557faf6fc35a49c4cb6278f58fdaa4768b863))
 
 ## [2.27.0](https://github.com/UK-Export-Finance/exip/compare/v2.26.0...v2.27.0) (2024-07-31)
 

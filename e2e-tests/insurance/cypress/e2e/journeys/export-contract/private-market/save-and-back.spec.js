@@ -74,8 +74,11 @@ context('Insurance - Export contract - Private market - Save and go back', () =>
 
         cy.startInsuranceExportContractSection({});
 
-        // go through 3 export contract forms.
-        cy.clickSubmitButtonMultipleTimes({ count: 3 });
+        // TODO: EMS-3665 - increment the value in command below instead.
+        cy.completeAndSubmitHowWasTheContractAwardedForm();
+
+        // go through 2 export contract forms.
+        cy.clickSubmitButtonMultipleTimes({ count: 2 });
 
         cy.assertNoRadioOptionIsChecked();
       });
@@ -104,8 +107,11 @@ context('Insurance - Export contract - Private market - Save and go back', () =>
 
         cy.startInsuranceExportContractSection({});
 
-        // go through 3 export contract forms.
-        cy.clickSubmitButtonMultipleTimes({ count: 3 });
+        // TODO: EMS-3665 - increment the value in command below instead.
+        cy.completeAndSubmitHowWasTheContractAwardedForm();
+
+        // go through 2 export contract forms.
+        cy.clickSubmitButtonMultipleTimes({ count: 2 });
 
         cy.assertYesRadioOptionIsChecked();
       });
