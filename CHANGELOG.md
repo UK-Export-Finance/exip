@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.28.2](https://github.com/UK-Export-Finance/exip/compare/v2.28.1...v2.28.2) (2024-08-01)
+
+### Bug Fixes
+
+- **EMS-3703:** eligibility - Member of a group - Wording fix ([#2869](https://github.com/UK-Export-Finance/exip/issues/2869)) ([119ce21](https://github.com/UK-Export-Finance/exip/commit/119ce21f56e97ea99d9db1dcdfd611ca7cb6de05))
+
 ## [2.28.1](https://github.com/UK-Export-Finance/exip/compare/v2.28.0...v2.28.1) (2024-08-01)
 
 ### Bug Fixes
