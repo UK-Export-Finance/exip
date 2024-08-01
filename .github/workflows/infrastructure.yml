@@ -1159,3 +1159,10 @@ jobs:
             --endpoint-name ${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
             --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --custom-domains $(az afd custom-domain list --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query '[?contains(hostName, `${{ vars.DOMAIN_QUOTE }}`)]'.name -o tsv) $(az afd custom-domain list --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query '[?contains(hostName, `${{ vars.DOMAIN_INSURANCE }}`)]'.name -o tsv)
+
+            # Associate FD
+            az afd security-policy update \
+            --security-policy-name security-policy-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --waf-policy $(az network front-door waf-policy list --query '[]'.id -o tsv) \
+            --domains $(az afd endpoint list --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query '[]'.id -o tsv) $(az afd custom-domain list --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query '[?contains(hostName, `${{ vars.DOMAIN_QUOTE }}`)]'.id -o tsv) $(az afd custom-domain list --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query '[?contains(hostName, `${{ vars.DOMAIN_INSURANCE }}`)]'.id -o tsv) \
+            --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
