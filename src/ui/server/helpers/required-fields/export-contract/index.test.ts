@@ -182,7 +182,7 @@ describe('server/helpers/required-fields/export-contract', () => {
 
     describe(`when awardMethod is NOT ${EXPORT_CONTRACT_AWARD_METHOD.OTHER.DB_ID}`, () => {
       it(`should return an array with ${AWARD_METHOD} field ID`, () => {
-        const result = awardMethodTasks(EXPORT_CONTRACT_AWARD_METHOD.COMPETITIVE_BIDDING.ID);
+        const result = awardMethodTasks(EXPORT_CONTRACT_AWARD_METHOD.COMPETITIVE_BIDDING.DB_ID);
 
         const expected = [AWARD_METHOD];
 
