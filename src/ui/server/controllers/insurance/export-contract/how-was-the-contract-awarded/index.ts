@@ -10,7 +10,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/export-contract';
-import { Request, Response } from '../../../../../types';
+import { ObjectType, Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
@@ -101,6 +101,19 @@ export const post = async (req: Request, res: Response) => {
 
   const validationErrors = generateValidationErrors(payload);
 
+  const sanitised = sanitiseData(payload) as ObjectType;
+
+  /**
+   * Map the payload into an AWARD_METHOD object structure with an id property.
+   * Otherwise, the nunjucks template needs 2x conditions.
+   */
+  const submittedValues = {
+    ...sanitised,
+    [AWARD_METHOD]: {
+      id: sanitised[AWARD_METHOD],
+    },
+  };
+
   if (validationErrors) {
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -110,7 +123,7 @@ export const post = async (req: Request, res: Response) => {
       ...pageVariables(),
       CONDITIONAL_OTHER_METHOD_HTML,
       userName: getUserNameFromSession(req.session.user),
-      submittedValues: sanitiseData(payload),
+      submittedValues,
       validationErrors,
     });
   }

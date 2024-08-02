@@ -11,7 +11,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/export-contract';
-import { Request, Response } from '../../../../../types';
+import { ObjectType, Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockExportContract, referenceNumber } from '../../../../test-mocks';
 
 const {
@@ -133,6 +133,8 @@ describe('controllers/insurance/export-contract/how-was-the-contract-awarded', (
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
+        const sanitised = sanitiseData(payload) as ObjectType;
+
         const expectedVariables = {
           ...insuranceCorePageVariables({
             PAGE_CONTENT_STRINGS,
@@ -141,7 +143,12 @@ describe('controllers/insurance/export-contract/how-was-the-contract-awarded', (
           ...pageVariables(),
           CONDITIONAL_OTHER_METHOD_HTML,
           userName: getUserNameFromSession(req.session.user),
-          submittedValues: sanitiseData(payload),
+          submittedValues: {
+            ...sanitised,
+            [AWARD_METHOD]: {
+              id: sanitised[AWARD_METHOD],
+            },
+          },
           validationErrors: generateValidationErrors(payload),
         };
 
