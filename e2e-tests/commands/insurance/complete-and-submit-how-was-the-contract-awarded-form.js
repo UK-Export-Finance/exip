@@ -13,10 +13,10 @@ const { OPEN_TENDER, NEGOTIATED_CONTRACT, DIRECT_AWARD, COMPETITIVE_BIDDING, OTH
  * completeAndSubmitHowWasTheContractAwardedForm
  * Complete and submit the "How was the contract awarded" form
  * @param {Boolean} openTender: Award method as OPEN_TENDER. Defaults to true
- * @param {Boolean} negotiatedContract: Award method as NEGOTIATED_CONTRACT
- * @param {String} directAward: Award method as DIRECT_AWARD
- * @param {String} competitiveBidding: Award method as COMPETITIVE_BIDDING
- * @param {String} otherMethod: Award method as OTHER
+ * @param {Boolean} negotiatedContract: Award method as NEGOTIATED_CONTRACT. Defaults to false
+ * @param {String} directAward: Award method as DIRECT_AWARD. Defaults to false
+ * @param {String} competitiveBidding: Award method as COMPETITIVE_BIDDING. Defaults to false
+ * @param {String} otherMethod: Award method as OTHER. Defaults to false
  */
 const completeAndSubmitHowWasTheContractAwardedForm = ({
   openTender = true,
