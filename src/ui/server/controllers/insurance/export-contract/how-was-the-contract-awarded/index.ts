@@ -101,20 +101,20 @@ export const post = async (req: Request, res: Response) => {
 
   const validationErrors = generateValidationErrors(payload);
 
-  const sanitised = sanitiseData(payload) as ObjectType;
-
-  /**
-   * Map the payload into an AWARD_METHOD object structure with an id property.
-   * Otherwise, the nunjucks template needs 2x conditions.
-   */
-  const submittedValues = {
-    ...sanitised,
-    [AWARD_METHOD]: {
-      id: sanitised[AWARD_METHOD],
-    },
-  };
-
   if (validationErrors) {
+    const sanitised = sanitiseData(payload) as ObjectType;
+
+    /**
+     * Map the payload into an AWARD_METHOD object structure with an id property.
+     * Otherwise, the nunjucks template needs 2x conditions.
+     */
+    const submittedValues = {
+      ...sanitised,
+      [AWARD_METHOD]: {
+        id: sanitised[AWARD_METHOD],
+      },
+    };
+
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS,
