@@ -75,7 +75,8 @@ jobs:
     needs: [setup]
     env:
       npm_config_maxsockets: 5  # Set maxsockets to the desired value
-      environment: ${{ needs.setup.outputs.environment }}
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
     concurrency:
@@ -124,7 +125,8 @@ jobs:
     needs: [setup]
     env:
       npm_config_maxsockets: 5  # Set maxsockets to the desired value
-      environment: ${{ needs.setup.outputs.environment }}
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
     concurrency:
@@ -194,7 +196,8 @@ jobs:
     needs: [setup]
     env:
       npm_config_maxsockets: 5  # Set maxsockets to the desired value
-      environment: ${{ needs.setup.outputs.environment }}
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -392,7 +395,8 @@ jobs:
     needs: [setup]
     env:
       npm_config_maxsockets: 5  # Set maxsockets to the desired value
-      environment: ${{ needs.setup.outputs.environment }}
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -461,7 +465,8 @@ jobs:
     needs: [setup]
     env:
       npm_config_maxsockets: 5  # Set maxsockets to the desired value
-      environment: ${{ needs.setup.outputs.environment }}
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
     strategy:
