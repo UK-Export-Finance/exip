@@ -60,6 +60,7 @@ describe('controllers/insurance/all-sections', () => {
       const { buyerTradingHistory, relationship } = buyer;
       const { exporterIsConnectedWithBuyer, exporterHasPreviousCreditInsuranceWithBuyer } = relationship;
       const { outstandingPayments, exporterHasTradedWithBuyer } = buyerTradingHistory;
+      const { awardMethod } = exportContract;
 
       const flatApplicationData = flattenApplicationData(mockApplication);
 
@@ -83,6 +84,7 @@ describe('controllers/insurance/all-sections', () => {
         isUsingAgent,
         agentIsCharging,
         agentChargeMethod,
+        awardMethod?.id,
       );
 
       const expectedTaskListData = generateTaskList(taskListStructure, flatApplicationData);

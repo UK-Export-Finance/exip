@@ -1,5 +1,5 @@
-import requiredFields, { getAboutGoodsOrServicesTasks, privateCoverTasks, agentServiceChargeTasks, agentTasks } from '.';
-import { FIELD_VALUES } from '../../../constants';
+import requiredFields, { getAboutGoodsOrServicesTasks, privateCoverTasks, agentServiceChargeTasks, agentTasks, awardMethodTasks } from '.';
+import { EXPORT_CONTRACT_AWARD_METHOD, FIELD_VALUES } from '../../../constants';
 import FIELD_IDS from '../../../constants/field-ids/insurance/export-contract';
 import { mockApplication } from '../../../test-mocks';
 
@@ -8,6 +8,7 @@ const {
 } = FIELD_VALUES;
 
 const {
+  HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD, OTHER_AWARD_METHOD },
   ABOUT_GOODS_OR_SERVICES,
   HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
   PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
@@ -23,6 +24,7 @@ describe('server/helpers/required-fields/export-contract', () => {
       finalDestinationKnown,
       privateMarket: { attempted: attemptedPrivateMarketCover },
       agent: { isUsingAgent },
+      awardMethod: { id: awardMethodId },
     },
     totalContractValueOverThreshold,
   } = mockApplication;
@@ -167,6 +169,28 @@ describe('server/helpers/required-fields/export-contract', () => {
     });
   });
 
+  describe('awardMethodTasks', () => {
+    describe(`when awardMethod is ${EXPORT_CONTRACT_AWARD_METHOD.OTHER.DB_ID}`, () => {
+      it('should return an array with required field IDs', () => {
+        const result = awardMethodTasks(EXPORT_CONTRACT_AWARD_METHOD.OTHER.DB_ID);
+
+        const expected = [AWARD_METHOD, OTHER_AWARD_METHOD];
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`when awardMethod is NOT ${EXPORT_CONTRACT_AWARD_METHOD.OTHER.DB_ID}`, () => {
+      it(`should return an array with ${AWARD_METHOD} field ID`, () => {
+        const result = awardMethodTasks(EXPORT_CONTRACT_AWARD_METHOD.COMPETITIVE_BIDDING.ID);
+
+        const expected = [AWARD_METHOD];
+
+        expect(result).toEqual(expected);
+      });
+    });
+  });
+
   describe('requiredFields', () => {
     it('should return array of required fields', () => {
       const result = requiredFields({ totalContractValueOverThreshold, finalDestinationKnown, attemptedPrivateMarketCover, isUsingAgent });
@@ -176,6 +200,7 @@ describe('server/helpers/required-fields/export-contract', () => {
         ...getAboutGoodsOrServicesTasks(finalDestinationKnown),
         ...privateCoverTasks({ totalContractValueOverThreshold, attemptedPrivateMarketCover }),
         ...agentTasks({ isUsingAgent }),
+        ...awardMethodTasks(awardMethodId),
       ];
 
       expect(result).toEqual(expected);
