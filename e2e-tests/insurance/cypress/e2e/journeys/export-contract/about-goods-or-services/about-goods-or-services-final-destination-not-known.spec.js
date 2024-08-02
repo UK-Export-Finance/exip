@@ -30,7 +30,7 @@ context(
 
         // go to the page we want to test.
         cy.startInsuranceExportContractSection({});
-        cy.completeAndSubmitHowWasTheContractAwardedForm();
+        cy.completeAndSubmitHowWasTheContractAwardedForm({});
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
       });

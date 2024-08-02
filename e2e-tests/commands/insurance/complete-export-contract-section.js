@@ -28,7 +28,7 @@ const completeExportContractSection = ({
 }) => {
   cy.startInsuranceExportContractSection({ viaTaskList });
 
-  cy.completeAndSubmitHowWasTheContractAwardedForm();
+  cy.completeAndSubmitHowWasTheContractAwardedForm({});
 
   cy.completeAndSubmitAboutGoodsOrServicesForm({ finalDestinationKnown });
   cy.completeAndSubmitHowYouWillGetPaidForm({});

@@ -9,6 +9,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
+import mapAndSave from '../map-and-save/export-contract';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -76,6 +77,7 @@ export const get = (req: Request, res: Response) => {
     ...pageVariables(),
     CONDITIONAL_OTHER_METHOD_HTML,
     userName: getUserNameFromSession(req.session.user),
+    submittedValues: application.exportContract,
   });
 };
 
@@ -113,5 +115,19 @@ export const post = async (req: Request, res: Response) => {
     });
   }
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`);
+  try {
+    // save the application
+
+    const saveResponse = await mapAndSave.exportContract(payload, application, validationErrors);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`);
+  } catch (err) {
+    console.error('Error updating application - export contract - how was the contract awarded %O', err);
+
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
 };
