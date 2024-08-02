@@ -2,10 +2,9 @@
 
 ## [2.29.0](https://github.com/UK-Export-Finance/exip/compare/v2.28.2...v2.29.0) (2024-08-01)
 
-
 ### Features
 
-* **EMS-3661:** export contract - how was contract awarded - form validation ([#2865](https://github.com/UK-Export-Finance/exip/issues/2865)) ([c495363](https://github.com/UK-Export-Finance/exip/commit/c495363928f0e9f00e7b06638aed9a0d4d475d4e))
+- **EMS-3661:** export contract - how was contract awarded - form validation ([#2865](https://github.com/UK-Export-Finance/exip/issues/2865)) ([c495363](https://github.com/UK-Export-Finance/exip/commit/c495363928f0e9f00e7b06638aed9a0d4d475d4e))
 
 ## [2.28.2](https://github.com/UK-Export-Finance/exip/compare/v2.28.1...v2.28.2) (2024-08-01)
 

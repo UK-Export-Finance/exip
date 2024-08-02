@@ -58,7 +58,7 @@
           attributes: {
             "data-cy": FIELDS.AWARD_METHOD.OPTIONS.OPEN_TENDER.ID + "-input"
           },
-          checked: submittedValues[FIELDS.AWARD_METHOD.ID] === FIELDS.AWARD_METHOD.OPTIONS.OPEN_TENDER.VALUE
+          checked: submittedValues[FIELDS.AWARD_METHOD.ID].id === FIELDS.AWARD_METHOD.OPTIONS.OPEN_TENDER.ID
         },
         {
           label: {
@@ -72,7 +72,7 @@
           attributes: {
             "data-cy": FIELDS.AWARD_METHOD.OPTIONS.NEGOTIATED_CONTRACT.ID + "-input"
           },
-          checked: submittedValues[FIELDS.AWARD_METHOD.ID] === FIELDS.AWARD_METHOD.OPTIONS.NEGOTIATED_CONTRACT.VALUE
+          checked: submittedValues[FIELDS.AWARD_METHOD.ID].id === FIELDS.AWARD_METHOD.OPTIONS.NEGOTIATED_CONTRACT.ID
         },
         {
           label: {
@@ -86,7 +86,7 @@
           attributes: {
             "data-cy": FIELDS.AWARD_METHOD.OPTIONS.DIRECT_AWARD.ID + "-input"
           },
-          checked: submittedValues[FIELDS.AWARD_METHOD.ID] === FIELDS.AWARD_METHOD.OPTIONS.DIRECT_AWARD.VALUE
+          checked: submittedValues[FIELDS.AWARD_METHOD.ID].id === FIELDS.AWARD_METHOD.OPTIONS.DIRECT_AWARD.ID
         },
         {
           label: {
@@ -100,7 +100,7 @@
           attributes: {
             "data-cy": FIELDS.AWARD_METHOD.OPTIONS.COMPETITIVE_BIDDING.ID + "-input"
           },
-          checked: submittedValues[FIELDS.AWARD_METHOD.ID] === FIELDS.AWARD_METHOD.OPTIONS.COMPETITIVE_BIDDING.VALUE
+          checked: submittedValues[FIELDS.AWARD_METHOD.ID].id === FIELDS.AWARD_METHOD.OPTIONS.COMPETITIVE_BIDDING.ID
         },
         {
           divider: 'or'
@@ -117,7 +117,7 @@
           attributes: {
             "data-cy": FIELDS.AWARD_METHOD.OPTIONS.OTHER.ID + "-input"
           },
-          checked: submittedValues[FIELDS.AWARD_METHOD.ID] === FIELDS.AWARD_METHOD.OPTIONS.OTHER.VALUE,
+          checked: submittedValues[FIELDS.AWARD_METHOD.ID].id === FIELDS.AWARD_METHOD.OPTIONS.OTHER.ID,
           conditional: {
             html: otherMethodHtml
           }

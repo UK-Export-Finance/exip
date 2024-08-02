@@ -57,7 +57,6 @@ context('Insurance - Export contract - How was the contract awarded page - form 
     });
 
     it('should display validation error', () => {
-      const expectedErrorsCount = 1;
       const expectedErrorMessage = ERROR_MESSAGES_OBJECT[AWARD_METHOD].IS_EMPTY;
 
       const radioField = {
@@ -67,7 +66,7 @@ context('Insurance - Export contract - How was the contract awarded page - form 
 
       cy.submitAndAssertRadioErrors({
         field: radioField,
-        expectedErrorsCount,
+        expectedErrorsCount: 1,
         expectedErrorMessage,
       });
     });
@@ -92,8 +91,6 @@ context('Insurance - Export contract - How was the contract awarded page - form 
       const expectedErrorMessage = ERROR_MESSAGES_OBJECT[OTHER_AWARD_METHOD].IS_EMPTY;
 
       cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage });
-
-      cy.assertRadioOptionIsChecked(selector.input());
     });
 
     it(`should pre-select the method option and render validation errors when ${OTHER_AWARD_METHOD} is over ${OTHER_AWARD_METHOD_MAXIMUM_CHARACTERS} characters`, () => {

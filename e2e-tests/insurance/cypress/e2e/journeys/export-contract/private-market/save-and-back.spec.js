@@ -22,7 +22,7 @@ context('Insurance - Export contract - Private market - Save and go back', () =>
 
       // go to the page we want to test.
       cy.startInsuranceExportContractSection({});
-      cy.completeAndSubmitHowWasTheContractAwardedForm();
+      cy.completeAndSubmitHowWasTheContractAwardedForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
       cy.completeAndSubmitHowYouWillGetPaidForm({});
 
@@ -75,7 +75,7 @@ context('Insurance - Export contract - Private market - Save and go back', () =>
         cy.startInsuranceExportContractSection({});
 
         // TODO: EMS-3665 - increment the value in command below instead.
-        cy.completeAndSubmitHowWasTheContractAwardedForm();
+        cy.completeAndSubmitHowWasTheContractAwardedForm({});
 
         // go through 2 export contract forms.
         cy.clickSubmitButtonMultipleTimes({ count: 2 });
@@ -108,7 +108,7 @@ context('Insurance - Export contract - Private market - Save and go back', () =>
         cy.startInsuranceExportContractSection({});
 
         // TODO: EMS-3665 - increment the value in command below instead.
-        cy.completeAndSubmitHowWasTheContractAwardedForm();
+        cy.completeAndSubmitHowWasTheContractAwardedForm({});
 
         // go through 2 export contract forms.
         cy.clickSubmitButtonMultipleTimes({ count: 2 });

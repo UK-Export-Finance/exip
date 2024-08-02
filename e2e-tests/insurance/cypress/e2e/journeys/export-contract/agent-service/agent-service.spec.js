@@ -32,7 +32,7 @@ context(
 
         // go to the page we want to test.
         cy.startInsuranceExportContractSection({});
-        cy.completeAndSubmitHowWasTheContractAwardedForm();
+        cy.completeAndSubmitHowWasTheContractAwardedForm({});
         cy.completeAndSubmitAboutGoodsOrServicesForm({});
         cy.completeAndSubmitHowYouWillGetPaidForm({});
         cy.completeAndSubmitAgentForm({ isUsingAgent: true });

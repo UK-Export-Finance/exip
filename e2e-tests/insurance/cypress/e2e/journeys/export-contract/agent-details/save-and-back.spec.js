@@ -17,7 +17,7 @@ context('Insurance - Export contract - Agent details - Save and go back', () => 
 
       // go to the page we want to test.
       cy.startInsuranceExportContractSection({});
-      cy.completeAndSubmitHowWasTheContractAwardedForm();
+      cy.completeAndSubmitHowWasTheContractAwardedForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
       cy.completeAndSubmitHowYouWillGetPaidForm({});
       cy.completeAndSubmitAgentForm({ isUsingAgent: true });
@@ -96,7 +96,7 @@ context('Insurance - Export contract - Agent details - Save and go back', () => 
         cy.startInsuranceExportContractSection({});
 
         // TODO: EMS-3665 - increment the value in command below instead.
-        cy.completeAndSubmitHowWasTheContractAwardedForm();
+        cy.completeAndSubmitHowWasTheContractAwardedForm({});
 
         // go through 3 export contract forms.
         cy.clickSubmitButtonMultipleTimes({ count: 3 });
