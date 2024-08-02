@@ -21,6 +21,7 @@ on:
 
 env:
   environment: 'qa'
+  npm_config_maxsockets: 5
   timezone: ${{ vars.TIMEZONE }}
   NODE_ENV: ${{ vars.NODE_ENV }}
   TLS_CERTIFICATE: '${{ secrets.TLS_CERTIFICATE }}'
