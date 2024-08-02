@@ -130,7 +130,7 @@ context(
     });
 
     describe(`when submitting with ${AWARD_METHOD} as ${OPEN_TENDER.VALUE} and going back to the page`, () => {
-      it('should have the correct radios selected', () => {
+      it('should have the correct radio selected', () => {
         cy.navigateToUrl(url);
         cy.completeAndSubmitHowWasTheContractAwardedForm({ openTender: true });
 
@@ -140,7 +140,7 @@ context(
     });
 
     describe(`when submitting with ${AWARD_METHOD} as ${NEGOTIATED_CONTRACT.VALUE} and going back to the page`, () => {
-      it('should have the correct radios selected', () => {
+      it('should have the correct radio selected', () => {
         cy.navigateToUrl(url);
         cy.completeAndSubmitHowWasTheContractAwardedForm({ negotiatedContract: true });
 
@@ -150,7 +150,7 @@ context(
     });
 
     describe(`when submitting with ${AWARD_METHOD} as ${DIRECT_AWARD.VALUE} and going back to the page`, () => {
-      it('should have the correct radios selected', () => {
+      it('should have the correct radio selected', () => {
         cy.navigateToUrl(url);
         cy.completeAndSubmitHowWasTheContractAwardedForm({ directAward: true });
 
@@ -160,7 +160,7 @@ context(
     });
 
     describe(`when submitting with ${AWARD_METHOD} as ${COMPETITIVE_BIDDING.VALUE} and going back to the page`, () => {
-      it('should have the correct radios selected', () => {
+      it('should have the correct radio selected', () => {
         cy.navigateToUrl(url);
         cy.completeAndSubmitHowWasTheContractAwardedForm({ competitiveBidding: true });
 
@@ -170,7 +170,7 @@ context(
     });
 
     describe(`when submitting with ${AWARD_METHOD} as ${OTHER.VALUE} and going back to the page`, () => {
-      it('should have the correct radios selected', () => {
+      it('should have the correct radio selected', () => {
         cy.navigateToUrl(url);
         cy.completeAndSubmitHowWasTheContractAwardedForm({ otherMethod: true });
 
