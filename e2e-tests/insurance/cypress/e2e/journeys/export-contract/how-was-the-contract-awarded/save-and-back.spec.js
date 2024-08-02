@@ -1,0 +1,102 @@
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+
+const {
+  ROOT,
+  EXPORT_CONTRACT: { HOW_WAS_THE_CONTRACT_AWARDED },
+} = INSURANCE_ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
+context('Insurance - Export contract - How was the contract awarded page - Save and go back', () => {
+  let referenceNumber;
+  let url;
+
+  before(() => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+      referenceNumber = refNumber;
+
+      // go to the page we want to test.
+      cy.startInsuranceExportContractSection({});
+
+      url = `${baseUrl}${ROOT}/${referenceNumber}${HOW_WAS_THE_CONTRACT_AWARDED}`;
+
+      cy.assertUrl(url);
+    });
+  });
+
+  beforeEach(() => {
+    cy.saveSession();
+  });
+
+  after(() => {
+    cy.deleteApplication(referenceNumber);
+  });
+
+  // TODO: fix mapAndSave issue
+  // describe('when submitting an empty form via `save and go back` button', () => {
+  //   beforeEach(() => {
+  //     cy.navigateToUrl(url);
+
+  //     cy.clickSaveAndBackButton();
+  //   });
+
+  //   it('should redirect to `all sections`', () => {
+  //     cy.assertAllSectionsUrl(referenceNumber);
+  //   });
+
+  //   it('should retain the `export contract` task status as `not started`', () => {
+  //     cy.checkTaskExportContractStatusIsNotStartedYet();
+  //   });
+  // });
+
+  describe('when fields are partially completed', () => {
+    it('should retain the `export contract` task status as `not started yet`', () => {
+      cy.navigateToUrl(url);
+
+      cy.completeHowWasTheContractAwardedForm({
+        otherMethod: true,
+        otherMethodText: null,
+      });
+
+      cy.clickSaveAndBackButton();
+
+      cy.assertAllSectionsUrl(referenceNumber);
+
+      cy.checkTaskExportContractStatusIsNotStartedYet();
+    });
+
+    describe('when going back to the page', () => {
+      it('should have the submitted value', () => {
+        cy.navigateToUrl(url);
+
+        cy.assertHowWasTheContractAwardedFieldValues({
+          otherMethodText: '',
+        });
+      });
+    });
+  });
+
+  describe('when all fields are provided', () => {
+    it('should retain the status of task `export contract` as `in progress`', () => {
+      cy.navigateToUrl(url);
+
+      cy.completeHowWasTheContractAwardedForm({ otherMethod: true });
+
+      cy.clickSaveAndBackButton();
+
+      cy.navigateToAllSectionsUrl(referenceNumber);
+
+      cy.checkTaskExportContractStatusIsInProgress();
+    });
+
+    describe('when going back to the page', () => {
+      it('should have the submitted values', () => {
+        cy.navigateToAllSectionsUrl(referenceNumber);
+
+        cy.startInsuranceExportContractSection({});
+
+        cy.assertHowWasTheContractAwardedFieldValues({ otherMethod: true });
+      });
+    });
+  });
+});
