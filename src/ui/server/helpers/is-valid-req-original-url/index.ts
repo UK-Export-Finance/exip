@@ -16,11 +16,7 @@ const isValidReqOriginalUrl = (originalUrl: string) => {
 
   const validation = schema().validate(originalUrl);
 
-  if (validation.error) {
-    return false;
-  }
-
-  return true;
+  return !validation.error;
 };
 
 export default isValidReqOriginalUrl;

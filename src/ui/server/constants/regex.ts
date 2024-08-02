@@ -42,7 +42,7 @@ export const REGEX = {
    * - &.
    * Note: \d is exactly the same as [0-9]
    */
-  ALPHA_NUMBER_HYPHEN_DASH_QUESTION_EQUALS_AMPERSAND: /^[A-z-=&?/\d]+$/,
+  ALPHA_NUMBER_HYPHEN_DASH_QUESTION_EQUALS_AMPERSAND: /^[A-Za-z-=&?/\d]+$/,
 
   /**
    * SPACE_AND_HYPHEN:
