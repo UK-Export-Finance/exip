@@ -73,9 +73,9 @@ jobs:
   unit-tests:
     name: Unit 👷
     needs: [setup]
-    environment:
-      name: ${{ needs.setup.outputs.environment }}
-      npm_config_maxsockets: 5
+    env:
+      npm_config_maxsockets: 5  # Set maxsockets to the desired value
+      environment: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
     concurrency:
@@ -122,9 +122,9 @@ jobs:
   api-tests:
     name: API 👷
     needs: [setup]
-    environment:
-      name: ${{ needs.setup.outputs.environment }}
-      npm_config_maxsockets: 5
+    env:
+      npm_config_maxsockets: 5  # Set maxsockets to the desired value
+      environment: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
     concurrency:
@@ -195,9 +195,9 @@ jobs:
   e2e-tests-insurance:
     name: E2E Insurance 👷
     needs: [setup]
-    environment:
-      name: ${{ needs.setup.outputs.environment }}
-      npm_config_maxsockets: 5
+    env:
+      npm_config_maxsockets: 5  # Set maxsockets to the desired value
+      environment: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -416,9 +416,9 @@ jobs:
   e2e-tests-quote:
     name: E2E Quote 👷
     needs: [setup]
-    environment:
-      name: ${{ needs.setup.outputs.environment }}
-      npm_config_maxsockets: 5
+    env:
+      npm_config_maxsockets: 5  # Set maxsockets to the desired value
+      environment: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -508,9 +508,9 @@ jobs:
   e2e-tests-switch:
     name: E2E Switch 👷
     needs: [setup]
-    environment:
-      name: ${{ needs.setup.outputs.environment }}
-      npm_config_maxsockets: 5
+    env:
+      npm_config_maxsockets: 5  # Set maxsockets to the desired value
+      environment: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
     strategy:
