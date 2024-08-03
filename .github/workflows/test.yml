@@ -374,9 +374,7 @@ jobs:
 
 
       - name: Docker
-        run: |
-          docker-compose down --remove-orphans
-          docker-compose up --build -d
+        run: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -450,9 +448,7 @@ jobs:
         run: npm run ci:all
 
       - name: Docker
-        run: |
-          docker-compose down --remove-orphans
-          docker-compose up --build -d
+        run: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -511,9 +507,7 @@ jobs:
         run: npm run ci:all
 
       - name: Docker
-        run: |
-          docker-compose down --remove-orphans
-          docker-compose up --build -d
+        run: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
