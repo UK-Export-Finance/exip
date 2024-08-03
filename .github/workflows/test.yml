@@ -368,26 +368,9 @@ jobs:
       - name: Print npm config for debugging
         run: npm config list
 
-      - name: Install Dependencies
-        run: |
-          function retry {
-            local n=1
-            local max=5
-            local delay=10
-            while true; do
-              "$@" && break || {
-                if [[ $n -lt $max ]]; then
-                  ((n++))
-                  echo "Command failed. Attempt $n/$max:"
-                  sleep $delay
-                else
-                  echo "The command has failed after $n attempts."
-                  return 1
-                }
-              }
-            done
-          }
-          retry npm ci
+      - name: Dependencies
+        working-directory: ./
+        run: npm run ci:all
 
 
       - name: Docker
@@ -462,26 +445,9 @@ jobs:
       - name: Print npm config for debugging
         run: npm config list
 
-      - name: Install Dependencies
-        run: |
-          function retry {
-            local n=1
-            local max=5
-            local delay=10
-            while true; do
-              "$@" && break || {
-                if [[ $n -lt $max ]]; then
-                  ((n++))
-                  echo "Command failed. Attempt $n/$max:"
-                  sleep $delay
-                else
-                  echo "The command has failed after $n attempts."
-                  return 1
-                }
-              }
-            done
-          }
-          retry npm ci
+      - name: Dependencies
+        working-directory: ./
+        run: npm run ci:all
 
       - name: Docker
         run: |
@@ -540,26 +506,9 @@ jobs:
       - name: Print npm config for debugging
         run: npm config list
 
-      - name: Install Dependencies
-        run: |
-          function retry {
-            local n=1
-            local max=5
-            local delay=10
-            while true; do
-              "$@" && break || {
-                if [[ $n -lt $max ]]; then
-                  ((n++))
-                  echo "Command failed. Attempt $n/$max:"
-                  sleep $delay
-                else
-                  echo "The command has failed after $n attempts."
-                  return 1
-                }
-              }
-            done
-          }
-          retry npm ci
+      - name: Dependencies
+        working-directory: ./
+        run: npm run ci:all
 
       - name: Docker
         run: |
