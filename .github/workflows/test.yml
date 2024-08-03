@@ -368,9 +368,27 @@ jobs:
       - name: Print npm config for debugging
         run: npm config list
 
-      - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
+      - name: Install Dependencies
+        run: |
+          retry() {
+            local n=1
+            local max=5
+            local delay=10
+            while true; do
+              "$@" && break || {
+                if [[ $n -lt $max ]]; then
+                  ((n++))
+                  echo "Command failed. Attempt $n/$max:"
+                  sleep $delay;
+                else
+                  echo "The command has failed after $n attempts."
+                  return 1
+                }
+              }
+            done
+          }
+          retry npm ci
+
 
       - name: Docker
         run: docker compose up --build -d
@@ -442,9 +460,27 @@ jobs:
       - name: Print npm config for debugging
         run: npm config list
 
-      - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
+      - name: Install Dependencies
+        run: |
+          retry() {
+            local n=1
+            local max=5
+            local delay=10
+            while true; do
+              "$@" && break || {
+                if [[ $n -lt $max ]]; then
+                  ((n++))
+                  echo "Command failed. Attempt $n/$max:"
+                  sleep $delay;
+                else
+                  echo "The command has failed after $n attempts."
+                  return 1
+                }
+              }
+            done
+          }
+          retry npm ci
+
 
       - name: Docker
         run: docker compose up --build -d
@@ -501,9 +537,27 @@ jobs:
       - name: Print npm config for debugging
         run: npm config list
 
-      - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
+      - name: Install Dependencies
+        run: |
+          retry() {
+            local n=1
+            local max=5
+            local delay=10
+            while true; do
+              "$@" && break || {
+                if [[ $n -lt $max ]]; then
+                  ((n++))
+                  echo "Command failed. Attempt $n/$max:"
+                  sleep $delay;
+                else
+                  echo "The command has failed after $n attempts."
+                  return 1
+                }
+              }
+            done
+          }
+          retry npm ci
+
 
       - name: Docker
         run: docker compose up --build -d
