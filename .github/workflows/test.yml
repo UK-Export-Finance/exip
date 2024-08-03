@@ -374,7 +374,7 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
       
-            - name: Print npm config for debugging
+      - name: Print npm config for debugging
         run: npm config list
 
       - name: Dependencies
