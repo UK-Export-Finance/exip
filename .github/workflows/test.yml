@@ -77,9 +77,6 @@ jobs:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
-    env:
-      npm_config_maxsockets: 5 
-
     concurrency:
       group: unit-tests-${{ github.workflow }}-${{ github.workflow_ref }}
       cancel-in-progress: true
@@ -128,9 +125,6 @@ jobs:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
-    env:
-      npm_config_maxsockets: 5 
-
     concurrency:
       group: api-tests-${{ github.workflow }}-${{ github.workflow_ref }}
       cancel-in-progress: true
@@ -148,9 +142,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ vars.NODE_VERSION }}
-
-      - name: Print npm config for debugging
-        run: npm config list
 
       - name: API
         working-directory: ./
@@ -204,7 +195,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      npm_config_maxsockets: 5 
+      npm_config_maxsockets: 5  # Increased maxsockets value
 
     strategy:
       # Do not cancel in-progress jobs upon failure
@@ -373,36 +364,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ vars.NODE_VERSION }}
-      
-      - name: Print npm config for debugging
-        run: npm config list
 
       - name: Dependencies
         working-directory: ./
-        run: |
-          retry() {
-            local n=1
-            local max=5
-            local delay=10
-            while true; do
-              "$@" && break || {
-                if [[ $n -lt $max ]]; then
-                  ((n++))
-                  echo "Command failed. Attempt $n/$max:"
-                  sleep $delay;
-                else
-                  echo "The command has failed after $n attempts."
-                  return 1
-                }
-              }
-            done
-          }
-          retry npm run ci:all
+        run: npm run ci:all
 
-    - name: Docker
-      run: |
-        docker compose down --remove-orphans
-        docker compose up --build -d
+      - name: Docker
+        run: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -422,11 +390,12 @@ jobs:
   e2e-tests-quote:
     name: E2E Quote 👷
     needs: [setup]
-    env:
-      npm_config_maxsockets: 5  # Set maxsockets to the desired value
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
+
+    env:
+      npm_config_maxsockets: 5  # Increased maxsockets value
 
     strategy:
       # Do not cancel in-progress jobs upon failure
@@ -467,35 +436,12 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
-      - name: Print npm config for debugging
-        run: npm config list
-
       - name: Dependencies
         working-directory: ./
-        run: |
-          retry() {
-            local n=1
-            local max=5
-            local delay=10
-            while true; do
-              "$@" && break || {
-                if [[ $n -lt $max ]]; then
-                  ((n++))
-                  echo "Command failed. Attempt $n/$max:"
-                  sleep $delay;
-                else
-                  echo "The command has failed after $n attempts."
-                  return 1
-                }
-              }
-            done
-          }
-          retry npm run ci:all
+        run: npm run ci:all
 
-    - name: Docker
-      run: |
-        docker compose down --remove-orphans
-        docker compose up --build -d
+      - name: Docker
+        run: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -520,7 +466,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      npm_config_maxsockets: 5 
+      npm_config_maxsockets: 5  # Increased maxsockets value
 
     strategy:
       # Do not cancel in-progress jobs upon failure
@@ -546,35 +492,12 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
-      - name: Print npm config for debugging
-        run: npm config list
-
       - name: Dependencies
         working-directory: ./
-        run: |
-          retry() {
-            local n=1
-            local max=5
-            local delay=10
-            while true; do
-              "$@" && break || {
-                if [[ $n -lt $max ]]; then
-                  ((n++))
-                  echo "Command failed. Attempt $n/$max:"
-                  sleep $delay;
-                else
-                  echo "The command has failed after $n attempts."
-                  return 1
-                }
-              }
-            done
-          }
-          retry npm run ci:all
+        run: npm run ci:all
 
-    - name: Docker
-      run: |
-        docker compose down --remove-orphans
-        docker compose up --build -d
+      - name: Docker
+        run: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
