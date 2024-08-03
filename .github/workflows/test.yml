@@ -382,8 +382,7 @@ jobs:
                   sleep $delay;
                 else
                   echo "The command has failed after $n attempts."
-                  return 1
-                }
+                  return 1;
               }
             done
           }
@@ -474,8 +473,7 @@ jobs:
                   sleep $delay;
                 else
                   echo "The command has failed after $n attempts."
-                  return 1
-                }
+                  return 1;
               }
             done
           }
@@ -551,8 +549,7 @@ jobs:
                   sleep $delay;
                 else
                   echo "The command has failed after $n attempts."
-                  return 1
-                }
+                  return 1;
               }
             done
           }
