@@ -365,13 +365,9 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
-      - name: Print npm config for debugging
-        run: npm config list
-
       - name: Dependencies
         working-directory: ./
         run: npm run ci:all
-
 
       - name: Docker
         run: docker compose up --build -d
@@ -440,9 +436,6 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
-      - name: Print npm config for debugging
-        run: npm config list
-
       - name: Dependencies
         working-directory: ./
         run: npm run ci:all
@@ -498,9 +491,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ vars.NODE_VERSION }}
-      
-      - name: Print npm config for debugging
-        run: npm config list
 
       - name: Dependencies
         working-directory: ./
