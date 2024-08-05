@@ -57,7 +57,7 @@ const exportContractConstraints = async (connection: Connection) => {
 
 /**
  * addExportContractFields
- * Add new export contract fields to the exportContract table.
+ * Add new fields to the exportContract table.
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<object>>} executeSqlQuery response
  */
