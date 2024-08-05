@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.31.0](https://github.com/UK-Export-Finance/exip/compare/v2.30.0...v2.31.0) (2024-08-05)
+
+
+### Features
+
+* **EMS-3685:** added xlsx for 2 new eligibility fields ([#2884](https://github.com/UK-Export-Finance/exip/issues/2884)) ([3878733](https://github.com/UK-Export-Finance/exip/commit/3878733d3235e38fc20e02e5f0b8d43492990974))
+
 ## [2.30.0](https://github.com/UK-Export-Finance/exip/compare/v2.29.0...v2.30.0) (2024-08-02)
 
 ### Features
