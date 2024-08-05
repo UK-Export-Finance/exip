@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.32.0](https://github.com/UK-Export-Finance/exip/compare/v2.31.0...v2.32.0) (2024-08-05)
+
+
+### Features
+
+* **EMS-3662:** export contract - how was contract awarded - save and back ([#2892](https://github.com/UK-Export-Finance/exip/issues/2892)) ([8003b9d](https://github.com/UK-Export-Finance/exip/commit/8003b9d66fda8fb75d26877c9fccb9e9c3e753c1))
+
 ## [2.31.0](https://github.com/UK-Export-Finance/exip/compare/v2.30.0...v2.31.0) (2024-08-05)
 
 
