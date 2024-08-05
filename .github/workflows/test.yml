@@ -351,6 +351,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: 126
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
@@ -366,15 +369,15 @@ jobs:
         working-directory: ./
         run: npm run ci:all
 
-      - name: Install Specific Version of Chrome
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget gnupg
-          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-          sudo apt-get update
-          apt-cache policy google-chrome-stable
-          sudo apt-get install -y google-chrome-stable=127.0.6533.72-1
+      # - name: Install Specific Version of Chrome
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y wget gnupg
+      #     wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+      #     sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+      #     sudo apt-get update
+      #     apt-cache policy google-chrome-stable
+      #     sudo apt-get install -y google-chrome-stable=127.0.6533.72-1
 
       - name: Docker
         run: docker compose up --build -d
@@ -429,6 +432,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: 126
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
@@ -444,15 +450,15 @@ jobs:
         working-directory: ./
         run: npm run ci:all
 
-      - name: Install Specific Version of Chrome
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget gnupg
-          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-          sudo apt-get update
-          apt-cache policy google-chrome-stable
-          sudo apt-get install -y google-chrome-stable=127.0.6533.72-1
+      # - name: Install Specific Version of Chrome
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y wget gnupg
+      #     wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+      #     sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+      #     sudo apt-get update
+      #     apt-cache policy google-chrome-stable
+      #     sudo apt-get install -y google-chrome-stable=127.0.6533.72-1
 
       - name: Docker
         run: docker compose up --build -d
@@ -492,6 +498,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: 126
 
       - name: Timezone
         uses: szenius/set-timezone@v2.0
@@ -507,15 +516,15 @@ jobs:
         working-directory: ./
         run: npm run ci:all
 
-      - name: Install Specific Version of Chrome
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget gnupg
-          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-          sudo apt-get update
-          apt-cache policy google-chrome-stable
-          sudo apt-get install -y google-chrome-stable=127.0.6533.72-1
+      # - name: Install Specific Version of Chrome
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y wget gnupg
+      #     wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+      #     sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+      #     sudo apt-get update
+      #     apt-cache policy google-chrome-stable
+      #     sudo apt-get install -y google-chrome-stable=127.0.6533.72-1
 
       - name: Docker
         run: docker compose up --build -d
