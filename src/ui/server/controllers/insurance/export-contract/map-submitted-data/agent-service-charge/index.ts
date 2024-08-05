@@ -71,6 +71,10 @@ const mapSubmittedData = (formBody: RequestBody): object => {
     delete populatedData[ALTERNATIVE_CURRENCY_CODE];
   }
 
+  /**
+   * If METHOD is an empty string,
+   * nullify the field.
+   */
   if (isEmptyString(populatedData[METHOD])) {
     populatedData[METHOD] = null;
   }
