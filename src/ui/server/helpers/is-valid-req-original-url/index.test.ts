@@ -1,7 +1,7 @@
 import isValidReqOriginalUrl from '.';
 
 describe('helpers/is-valid-req-original-url', () => {
-  describe('when provided url is not value', () => {
+  describe('when provided url has invalid special characters', () => {
     it('should return false', () => {
       const mockUrl = 'abc!';
 

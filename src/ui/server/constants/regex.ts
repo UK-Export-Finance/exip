@@ -31,7 +31,7 @@ export const REGEX = {
   NUMBER_HYPHEN_SPACE: /^[- \d]+$/,
 
   /*
-   * ALPHA_NUMBER_HYPHEN_DASH_QUESTION_EQUALS_AMPERSAND:
+   * VALID_REQUEST_ORIGINAL_URL:
    * Regex that allows only:
    * - numbers.
    * - letters.
@@ -42,7 +42,7 @@ export const REGEX = {
    * - &.
    * Note: \d is exactly the same as [0-9]
    */
-  ALPHA_NUMBER_HYPHEN_DASH_QUESTION_EQUALS_AMPERSAND: /^[A-Za-z-=&?/\d]+$/,
+  VALID_REQUEST_ORIGINAL_URL: /^[A-Za-z-=&?/\d]+$/,
 
   /**
    * SPACE_AND_HYPHEN:
