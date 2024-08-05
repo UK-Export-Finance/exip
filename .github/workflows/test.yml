@@ -194,9 +194,6 @@ jobs:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
-    env:
-      npm_config_maxsockets: 5  # Increased maxsockets value
-
     strategy:
       # Do not cancel in-progress jobs upon failure
       fail-fast: false
@@ -394,9 +391,6 @@ jobs:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
-    env:
-      npm_config_maxsockets: 5  # Increased maxsockets value
-
     strategy:
       # Do not cancel in-progress jobs upon failure
       fail-fast: false
@@ -464,9 +458,6 @@ jobs:
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
-
-    env:
-      npm_config_maxsockets: 5  # Increased maxsockets value
 
     strategy:
       # Do not cancel in-progress jobs upon failure
