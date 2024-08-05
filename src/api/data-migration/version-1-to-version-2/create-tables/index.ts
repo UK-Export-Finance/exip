@@ -5,6 +5,7 @@ import createJointlyInsuredPartyTable from './create-jointly-insured-party-table
 import createExportContractAgentServiceChargeTable from './create-export-contract-agent-service-charge-table';
 import createExportContractAgentServiceTable from './create-export-contract-agent-service-table';
 import createExportContractAgentTable from './create-export-contract-agent-table';
+import createExportContractAwardMethodTable from './create-export-contract-award-method-table';
 import createPrivateMarketTable from './create-private-market-table';
 import createCompanyDifferentTradingAddressTable from './create-company-different-trading-address-table';
 import createBuyerContactTable from './create-buyer-contact-table';
@@ -36,6 +37,7 @@ const createTables = async (connection: Connection) => {
       createExportContractAgentServiceChargeTable(connection),
       createExportContractAgentServiceTable(connection),
       createExportContractAgentTable(connection),
+      createExportContractAwardMethodTable(connection),
 
       createPrivateMarketTable(connection),
       createCompanyDifferentTradingAddressTable(connection),

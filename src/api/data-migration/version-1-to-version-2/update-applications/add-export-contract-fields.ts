@@ -41,6 +41,12 @@ const exportContractConstraints = async (connection: Connection) => {
 
     executeSqlQuery({
       connection,
+      query: `ALTER TABLE ExportContract ADD CONSTRAINT ExportContract_awardMethod_fkey FOREIGN KEY (awardMethod) REFERENCES ExportContractAwardMethod (id) ON DELETE SET NULL ON UPDATE CASCADE`,
+      loggingMessage: 'Adding CONSTRAINT awardMethod to exportContract table',
+    }),
+
+    executeSqlQuery({
+      connection,
       query: `ALTER TABLE ExportContract ADD CONSTRAINT ExportContract_privateMarket_fkey FOREIGN KEY (privateMarket) REFERENCES PrivateMarket (id) ON DELETE SET NULL ON UPDATE CASCADE`,
       loggingMessage: 'Adding CONSTRAINT privateMarket to exportContract table',
     }),
@@ -59,6 +65,24 @@ const addExportContractFields = async (connection: Connection) => {
   const queries = await Promise.all([
     executeSqlQuery({
       connection,
+      query: `ALTER TABLE ExportContract ADD agent varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL`,
+      loggingMessage: 'Adding FIELD agent to exportContract table',
+    }),
+
+    executeSqlQuery({
+      connection,
+      query: `ALTER TABLE ExportContract ADD awardMethod varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL`,
+      loggingMessage: 'Adding FIELD awardMethod to exportContract table',
+    }),
+
+    executeSqlQuery({
+      connection,
+      query: `ALTER TABLE ExportContract ADD otherAwardMethod varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''`,
+      loggingMessage: 'Adding FIELD otherAwardMethod to exportContract table',
+    }),
+
+    executeSqlQuery({
+      connection,
       query: `ALTER TABLE ExportContract ADD paymentTermsDescription varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''`,
       loggingMessage: 'Adding FIELD paymentTermsDescription to exportContract table',
     }),
@@ -67,12 +91,6 @@ const addExportContractFields = async (connection: Connection) => {
       connection,
       query: `ALTER TABLE ExportContract ADD privateMarket varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL`,
       loggingMessage: 'Adding FIELD privateMarket to exportContract table',
-    }),
-
-    executeSqlQuery({
-      connection,
-      query: `ALTER TABLE ExportContract ADD agent varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL`,
-      loggingMessage: 'Adding FIELD agent to exportContract table',
     }),
 
     exportContractUniqueKeys(connection),
