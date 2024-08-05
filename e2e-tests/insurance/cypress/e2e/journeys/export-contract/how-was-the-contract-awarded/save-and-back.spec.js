@@ -49,9 +49,11 @@ context('Insurance - Export contract - How was the contract awarded page - Save 
   });
 
   describe('when fields are partially completed', () => {
-    it('should update the status of task `export contract` to `in progress`', () => {
+    beforeEach(() => {
       cy.navigateToUrl(url);
+    });
 
+    it('should update the status of task `export contract` to `in progress`', () => {
       cy.completeHowWasTheContractAwardedForm({
         otherMethod: true,
         otherMethodText: null,
@@ -66,8 +68,6 @@ context('Insurance - Export contract - How was the contract awarded page - Save 
 
     describe('when going back to the page', () => {
       it('should have the submitted value', () => {
-        cy.navigateToUrl(url);
-
         cy.assertHowWasTheContractAwardedFieldValues({
           otherMethodText: '',
         });
