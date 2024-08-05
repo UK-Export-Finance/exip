@@ -60,6 +60,7 @@ export const get = async (req: Request, res: Response) => {
           charge: { method: agentChargeMethod },
         },
       },
+      awardMethod,
     } = exportContract;
 
     const checkAndChange = true;
@@ -75,6 +76,7 @@ export const get = async (req: Request, res: Response) => {
       isUsingAgent,
       agentIsCharging,
       agentChargeMethod,
+      awardMethodId: awardMethod?.id,
     });
 
     const status = sectionStatus(exportContractFields, application);

@@ -72,6 +72,7 @@ interface ApplicationExportContract {
   finalDestinationKnown?: boolean;
   finalDestinationCountryCode?: string;
   goodsOrServicesDescription?: string;
+  otherAwardMethod?: string;
   paymentTermsDescription?: string;
   privateMarket: ApplicationPrivateMarket;
 }

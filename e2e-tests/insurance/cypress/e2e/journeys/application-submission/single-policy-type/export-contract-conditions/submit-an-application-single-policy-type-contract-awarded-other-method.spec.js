@@ -1,16 +1,8 @@
-context('Insurance - submit an application - Single policy type, fully populated export contract', () => {
+context('Insurance - submit an application - Single policy type, contract awarded with `other` method', () => {
   let referenceNumber;
 
   before(() => {
-    cy.completeSignInAndSubmitAnApplication({
-      agentIsCharging: true,
-      agentChargeMethodFixedSum: true,
-      attemptedPrivateMarketCover: true,
-      contractAwardedOtherMethod: true,
-      isUsingAgent: true,
-      finalDestinationKnown: true,
-      totalContractValueOverThreshold: true,
-    }).then((refNumber) => {
+    cy.completeSignInAndSubmitAnApplication({ contractAwardedOtherMethod: true }).then((refNumber) => {
       referenceNumber = refNumber;
     });
   });
