@@ -1,8 +1,8 @@
-import { status, summaryList } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
-import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import checkSummaryList from '../../../../../../../commands/insurance/check-your-buyer-summary-list';
+import { status, summaryList } from '../../../../../../../../pages/shared';
+import partials from '../../../../../../../../partials';
+import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/your-buyer';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import checkSummaryList from '../../../../../../../../commands/insurance/check-your-buyer-summary-list';
 
 const { TRADED_WITH_BUYER, OUTSTANDING_PAYMENTS, FAILED_PAYMENTS, HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } =
   FIELD_IDS;

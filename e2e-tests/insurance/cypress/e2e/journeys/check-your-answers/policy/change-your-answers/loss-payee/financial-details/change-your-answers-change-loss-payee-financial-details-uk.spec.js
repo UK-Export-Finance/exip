@@ -1,12 +1,12 @@
-import partials from '../../../../../../../../partials';
-import { field, summaryList } from '../../../../../../../../pages/shared';
-import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
-import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
-import { POLICY_FIELDS as FIELDS } from '../../../../../../../../content-strings/fields/insurance/policy';
-import formatSortCode from '../../../../../../../../helpers/format-sort-code';
-import { mockAccountNumber1 } from '../../../../../../../../fixtures/account-numbers';
-import { mockAddress1 } from '../../../../../../../../fixtures/addresses';
-import { mockSortCode0 } from '../../../../../../../../fixtures/sort-codes';
+import partials from '../../../../../../../../../partials';
+import { field, summaryList } from '../../../../../../../../../pages/shared';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../../constants/field-ids/insurance/policy';
+import { INSURANCE_ROUTES } from '../../../../../../../../../constants/routes/insurance';
+import { POLICY_FIELDS as FIELDS } from '../../../../../../../../../content-strings/fields/insurance/policy';
+import formatSortCode from '../../../../../../../../../helpers/format-sort-code';
+import { mockAccountNumber1 } from '../../../../../../../../../fixtures/account-numbers';
+import { mockAddress1 } from '../../../../../../../../../fixtures/addresses';
+import { mockSortCode0 } from '../../../../../../../../../fixtures/sort-codes';
 
 const {
   LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },

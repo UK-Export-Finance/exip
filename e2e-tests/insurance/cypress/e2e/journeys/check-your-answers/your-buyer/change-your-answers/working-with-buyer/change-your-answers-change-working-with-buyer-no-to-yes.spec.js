@@ -1,13 +1,14 @@
-import { status, summaryList } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
-import { FIELD_VALUES } from '../../../../../../../constants';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
+import { status, summaryList } from '../../../../../../../../pages/shared';
+import partials from '../../../../../../../../partials';
+import { FIELD_VALUES } from '../../../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/your-buyer';
+import application from '../../../../../../../../fixtures/application';
 
 const {
   ROOT,
   CHECK_YOUR_ANSWERS: { YOUR_BUYER },
-  YOUR_BUYER: { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_CHECK_AND_CHANGE },
+  YOUR_BUYER: { CONNECTION_WITH_BUYER_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 
 const { CONNECTION_WITH_BUYER: FIELD_ID, CONNECTION_WITH_BUYER_DESCRIPTION } = FIELD_IDS;
@@ -15,6 +16,8 @@ const { CONNECTION_WITH_BUYER: FIELD_ID, CONNECTION_WITH_BUYER_DESCRIPTION } = F
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
+
+const { BUYER } = application;
 
 const getFieldVariables = (fieldId, referenceNumber, route) => ({
   route,
@@ -29,21 +32,17 @@ const getFieldVariables = (fieldId, referenceNumber, route) => ({
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  `Insurance - Check your answers - Your buyer - Working with buyer - ${CONNECTION_WITH_BUYER} - Yes to no - As an exporter, I want to change my answers to the working with buyer section`,
+  `Insurance - Check your answers - Your buyer - Working with buyer - ${FIELD_ID} - No to yes - As an exporter, I want to change my answers to the working with buyer section`,
   () => {
     let referenceNumber;
     let url;
-    let connectionWithBuyerUrl;
     let fieldVariables;
 
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completePrepareApplicationSinglePolicyType({
-          referenceNumber,
-          hasConnectionToBuyer: true,
-        });
+        cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
         task.link().click();
 
@@ -51,7 +50,6 @@ context(
         cy.completeAndSubmitMultipleCheckYourAnswers({ count: 1 });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUYER}`;
-        connectionWithBuyerUrl = `${baseUrl}${ROOT}/${referenceNumber}${CONNECTION_WITH_BUYER}`;
 
         cy.assertUrl(url);
       });
@@ -79,32 +77,26 @@ context(
       it(`should redirect to ${YOUR_BUYER}`, () => {
         summaryList.field(FIELD_ID).changeLink().click();
 
-        cy.completeAndSubmitConnectionWithTheBuyerForm({ hasConnectionToBuyer: false });
+        cy.completeAndSubmitConnectionWithTheBuyerForm({ hasConnectionToBuyer: true });
 
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUYER, fieldId: FIELD_ID });
       });
 
-      it(`should render the new answer for ${CONNECTION_WITH_BUYER} and retain a "completed" status tag`, () => {
-        fieldVariables.newValue = FIELD_VALUES.NO;
+      it(`should render the new answer for ${FIELD_ID}`, () => {
+        fieldVariables.newValue = FIELD_VALUES.YES;
 
         cy.checkChangeAnswerRendered({ fieldVariables });
-
-        cy.checkTaskStatusCompleted(status);
       });
 
-      describe(`when going back to ${CONNECTION_WITH_BUYER}`, () => {
-        it(`should have the submitted answer and an empty ${CONNECTION_WITH_BUYER_DESCRIPTION}`, () => {
-          cy.navigateToUrl(connectionWithBuyerUrl);
+      it(`should render the new answer for ${CONNECTION_WITH_BUYER_DESCRIPTION}`, () => {
+        fieldVariables = getFieldVariables(CONNECTION_WITH_BUYER_DESCRIPTION, referenceNumber, CONNECTION_WITH_BUYER_CHECK_AND_CHANGE);
+        fieldVariables.newValue = BUYER[CONNECTION_WITH_BUYER_DESCRIPTION];
 
-          cy.assertNoRadioOptionIsChecked();
+        cy.checkChangeAnswerRendered({ fieldVariables });
+      });
 
-          cy.clickYesRadioInput();
-
-          cy.checkTextareaValue({
-            fieldId: CONNECTION_WITH_BUYER_DESCRIPTION,
-            expectedValue: '',
-          });
-        });
+      it('should retain a "completed" status tag', () => {
+        cy.checkTaskStatusCompleted(status);
       });
     });
   },
