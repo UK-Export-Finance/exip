@@ -22,8 +22,21 @@ describe('controllers/insurance/export-contract/map-submitted-data/export-contra
     };
   });
 
+  describe(`when ${AWARD_METHOD} field is an empty string`, () => {
+    it(`should return the form body without ${AWARD_METHOD}`, () => {
+      const mockBodyWithAwardMethod = {
+        ...mockFormBody,
+        [AWARD_METHOD]: '',
+      };
+
+      const result = mapSubmittedData(mockBodyWithAwardMethod);
+
+      expect(result[AWARD_METHOD]).toBeUndefined();
+    });
+  });
+
   describe(`when ${AWARD_METHOD} field is provided`, () => {
-    it(`should return the form body with ${FINAL_DESTINATION} as a country ISO code`, () => {
+    it(`should return the form body with ${AWARD_METHOD} as a connect object`, () => {
       const mockBodyWithAwardMethod = {
         ...mockFormBody,
         [AWARD_METHOD]: mockAwardMethodId,

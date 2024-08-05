@@ -16,7 +16,7 @@ import { ObjectType, Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES, CHECK_YOUR_ANSWERS, HOW_WAS_THE_CONTRACT_AWARDED_SAVE_AND_BACK: SAVE_AND_BACK },
   CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT: CHECK_AND_CHANGE_ROUTE },
 
   PROBLEM_WITH_SERVICE,
@@ -43,9 +43,10 @@ export const FIELD_IDS = [AWARD_METHOD, OTHER_AWARD_METHOD];
 /**
  * pageVariables
  * Page fields and "save and go back" URL
+ * @param {Number} Application reference number
  * @returns {Object} Page variables
  */
-export const pageVariables = () => ({
+export const pageVariables = (referenceNumber: number) => ({
   FIELDS: {
     AWARD_METHOD: {
       ID: AWARD_METHOD,
@@ -56,7 +57,7 @@ export const pageVariables = () => ({
       ...FIELDS.HOW_WAS_THE_CONTRACT_AWARDED[OTHER_AWARD_METHOD],
     },
   },
-  SAVE_AND_BACK_URL: '#',
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
 });
 
 /**
@@ -73,12 +74,14 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
+  const { referenceNumber } = application;
+
   return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS,
       BACK_LINK: req.headers.referer,
     }),
-    ...pageVariables(),
+    ...pageVariables(referenceNumber),
     CONDITIONAL_OTHER_METHOD_HTML,
     userName: getUserNameFromSession(req.session.user),
     submittedValues: application.exportContract,
@@ -124,7 +127,7 @@ export const post = async (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
       }),
-      ...pageVariables(),
+      ...pageVariables(referenceNumber),
       CONDITIONAL_OTHER_METHOD_HTML,
       userName: getUserNameFromSession(req.session.user),
       submittedValues,

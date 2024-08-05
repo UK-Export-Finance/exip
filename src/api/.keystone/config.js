@@ -513,7 +513,9 @@ var INSURANCE_FIELD_IDS = {
     COVER_PERIOD_ID: "coverPeriodId",
     HAS_END_BUYER: "hasEndBuyer",
     HAVE_AN_ACCOUNT: "haveAnAccount",
-    HAS_REVIEWED_ELIGIBILITY: "hasReviewedEligibility"
+    HAS_REVIEWED_ELIGIBILITY: "hasReviewedEligibility",
+    IS_PARTY_TO_CONSORTIUM: "isPartyToConsortium",
+    IS_MEMBER_OF_A_GROUP: "isMemberOfAGroup"
   },
   ...shared_default2,
   CURRENCY: {
@@ -6475,7 +6477,15 @@ var { AMOUNT_250K, MORE_THAN_250K } = TOTAL_CONTRACT_VALUE;
 var {
   ACCOUNT: { FIRST_NAME, LAST_NAME },
   DECLARATIONS: { HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2, WILL_EXPORT_WITH_CODE_OF_CONDUCT: WILL_EXPORT_WITH_CODE_OF_CONDUCT2 },
-  ELIGIBILITY: { BUYER_COUNTRY: BUYER_COUNTRY2, COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2, COVER_PERIOD: COVER_PERIOD2, HAS_END_BUYER: HAS_END_BUYER2, HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2 },
+  ELIGIBILITY: {
+    BUYER_COUNTRY: BUYER_COUNTRY2,
+    COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2,
+    COVER_PERIOD: COVER_PERIOD2,
+    HAS_END_BUYER: HAS_END_BUYER2,
+    HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2,
+    IS_MEMBER_OF_A_GROUP,
+    IS_PARTY_TO_CONSORTIUM
+  },
   EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION: DESCRIPTION2, FINAL_DESTINATION_KNOWN: FINAL_DESTINATION_KNOWN2 },
     AGENT_CHARGES: { PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE },
@@ -6628,7 +6638,9 @@ var XLSX = {
     [USING_BROKER2]: "Using a broker for this insurance?",
     [WEBSITE2]: "Exporter Company website (optional)",
     [WILL_EXPORT_WITH_CODE_OF_CONDUCT2]: "Will the exporter export using their code of conduct?",
-    [YEARS_EXPORTING2]: "How long the business has been exporting for"
+    [YEARS_EXPORTING2]: "How long the business has been exporting for",
+    [IS_PARTY_TO_CONSORTIUM]: "Party to any consortium in connection with the export contract(s)?",
+    [IS_MEMBER_OF_A_GROUP]: "Member of a group which may have a part in negotiating the contract(s)?"
   }
 };
 
@@ -6718,7 +6730,9 @@ var {
     COVER_PERIOD: COVER_PERIOD3,
     HAS_COMPANIES_HOUSE_NUMBER: HAS_COMPANIES_HOUSE_NUMBER2,
     COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER3,
-    HAS_END_BUYER: HAS_END_BUYER3
+    HAS_END_BUYER: HAS_END_BUYER3,
+    IS_PARTY_TO_CONSORTIUM: IS_PARTY_TO_CONSORTIUM2,
+    IS_MEMBER_OF_A_GROUP: IS_MEMBER_OF_A_GROUP2
   }
 } = insurance_default;
 var mapEligibility = (application2) => {
@@ -6731,7 +6745,9 @@ var mapEligibility = (application2) => {
     xlsx_row_default(String(FIELDS4[MORE_THAN_250K2.VALUE]), map_yes_no_field_default({ answer: eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID })),
     xlsx_row_default(String(FIELDS4[COVER_PERIOD3]), eligibility[COVER_PERIOD_ELIGIBILITY].value),
     xlsx_row_default(String(FIELDS4[HAS_MINIMUM_UK_GOODS_OR_SERVICES3]), map_yes_no_field_default({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES3] })),
-    xlsx_row_default(String(FIELDS4[HAS_END_BUYER3]), map_yes_no_field_default({ answer: eligibility[HAS_END_BUYER3] }))
+    xlsx_row_default(String(FIELDS4[HAS_END_BUYER3]), map_yes_no_field_default({ answer: eligibility[HAS_END_BUYER3] })),
+    xlsx_row_default(String(FIELDS4[IS_PARTY_TO_CONSORTIUM2]), map_yes_no_field_default({ answer: eligibility[IS_PARTY_TO_CONSORTIUM2] })),
+    xlsx_row_default(String(FIELDS4[IS_MEMBER_OF_A_GROUP2]), map_yes_no_field_default({ answer: eligibility[IS_MEMBER_OF_A_GROUP2] }))
   ];
   return mapped;
 };

@@ -5,6 +5,7 @@ import {
   get as howWasTheContractAwardedGet,
   post as howWasTheContractAwardedPost,
 } from '../../../controllers/insurance/export-contract/how-was-the-contract-awarded';
+import { post as howWasTheContractAwardedSaveAndBackPost } from '../../../controllers/insurance/export-contract/how-was-the-contract-awarded/save-and-back';
 import { get as aboutGoodsOrServicesGet, post as aboutGoodsOrServicesPost } from '../../../controllers/insurance/export-contract/about-goods-or-services';
 import { post as aboutGoodsOrServicesSaveAndBackPost } from '../../../controllers/insurance/export-contract/about-goods-or-services/save-and-back';
 import { get as howWillYouGetPaidGet, post as howWillYouGetPaidPost } from '../../../controllers/insurance/export-contract/how-will-you-get-paid';
@@ -35,6 +36,7 @@ const {
   HOW_WAS_THE_CONTRACT_AWARDED,
   HOW_WAS_THE_CONTRACT_AWARDED_CHANGE,
   HOW_WAS_THE_CONTRACT_AWARDED_CHECK_AND_CHANGE,
+  HOW_WAS_THE_CONTRACT_AWARDED_SAVE_AND_BACK,
   ABOUT_GOODS_OR_SERVICES,
   ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK,
   ABOUT_GOODS_OR_SERVICES_CHANGE,
@@ -84,6 +86,8 @@ exportContractRoute.get(`/:referenceNumber${HOW_WAS_THE_CONTRACT_AWARDED_CHANGE}
 exportContractRoute.post(`/:referenceNumber${HOW_WAS_THE_CONTRACT_AWARDED_CHANGE}`, howWasTheContractAwardedPost);
 exportContractRoute.get(`/:referenceNumber${HOW_WAS_THE_CONTRACT_AWARDED_CHECK_AND_CHANGE}`, howWasTheContractAwardedGet);
 exportContractRoute.post(`/:referenceNumber${HOW_WAS_THE_CONTRACT_AWARDED_CHECK_AND_CHANGE}`, howWasTheContractAwardedPost);
+
+exportContractRoute.post(`/:referenceNumber${HOW_WAS_THE_CONTRACT_AWARDED_SAVE_AND_BACK}`, howWasTheContractAwardedSaveAndBackPost);
 
 exportContractRoute.get(`/:referenceNumber${ABOUT_GOODS_OR_SERVICES}`, aboutGoodsOrServicesGet);
 exportContractRoute.post(`/:referenceNumber${ABOUT_GOODS_OR_SERVICES}`, aboutGoodsOrServicesPost);
