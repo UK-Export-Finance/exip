@@ -17,11 +17,11 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * @param {Boolean} attemptedPrivateMarketCover: Should submit "yes" to "attempted to insure through the private market" form.
  * @param {Boolean} buyerOutstandingPayments: Exporter has outstanding payments with the buyer.
  * @param {Boolean} buyerFailedToPayOnTime: Buyer has failed to pay the exporter on the time.
- * @param {Boolean} contractAwardedOpenTender: "How was the contract awarded" method as "open tender"
- * @param {Boolean} contractAwardedNegotiatedContract: "How was the contract awarded" method as "negotiated contract"
- * @param {Boolean} contractAwardedDirectAward: "How was the contract awarded" method as "direct award"
- * @param {Boolean} contractAwardedCompetitiveBidding: "How was the contract awarded" method as "competitive bidding"
- * @param {Boolean} contractAwardedOtherMethod: "How was the contract awarded" method as "other"
+ * @param {Boolean} contractAwardedCompetitiveBidding: "How was the contract awarded" method as COMPETITIVE_BIDDING
+ * @param {Boolean} contractAwardedDirectAward: "How was the contract awarded" method as DIRECT_AWARD
+ * @param {Boolean} contractAwardedNegotiatedContract: "How was the contract awarded" method as NEGOTIATED_CONTRACT
+ * @param {Boolean} contractAwardedOpenTender: "How was the contract awarded" method as OPEN_TENDER
+ * @param {Boolean} contractAwardedOtherMethod: "How was the contract awarded" method as OTHER
  * @param {Boolean} differentPolicyContact: Should submit an application with a different policy contact to the owner.
  * @param {Boolean} differentTradingName: Should submit "yes" to "have a different trading name" in the "company details" form.
  * @param {Boolean} differentTradingAddress: Should submit "yes" to "trade from a different address" in the "company details" form.
@@ -54,10 +54,10 @@ const completePrepareApplicationSinglePolicyType = ({
   attemptedPrivateMarketCover = false,
   buyerOutstandingPayments = false,
   buyerFailedToPayOnTime = false,
-  contractAwardedOpenTender = true,
-  contractAwardedNegotiatedContract = false,
-  contractAwardedDirectAward = false,
   contractAwardedCompetitiveBidding = false,
+  contractAwardedDirectAward = false,
+  contractAwardedNegotiatedContract = false,
+  contractAwardedOpenTender = true,
   contractAwardedOtherMethod = false,
   differentPolicyContact = false,
   differentTradingName = false,

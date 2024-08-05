@@ -5,7 +5,7 @@ import { mockCountries, mockExportContract } from '../../../../../test-mocks';
 import { RequestBody } from '../../../../../../types';
 
 const {
-  HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD },
+  HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD, OTHER_AWARD_METHOD },
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
 } = FIELD_IDS;
 
@@ -89,6 +89,30 @@ describe('controllers/insurance/export-contract/map-submitted-data/export-contra
         ...mockFormBody,
         [FINAL_DESTINATION]: '',
         [FINAL_DESTINATION_KNOWN]: 'false',
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when ${AWARD_METHOD} is not equal to ${OTHER_AWARD_METHOD}`, () => {
+    it(`should return the form body with an empty ${OTHER_AWARD_METHOD}`, () => {
+      const mockBodyWithoutCountry = {
+        ...mockFormBody,
+        [AWARD_METHOD]: mockAwardMethodId,
+        [OTHER_AWARD_METHOD]: 'test',
+      };
+
+      const result = mapSubmittedData(mockBodyWithoutCountry, mockCountries);
+
+      const expected = {
+        ...mockFormBody,
+        [AWARD_METHOD]: {
+          connect: {
+            id: mockAwardMethodId,
+          },
+        },
+        [OTHER_AWARD_METHOD]: '',
       };
 
       expect(result).toEqual(expected);

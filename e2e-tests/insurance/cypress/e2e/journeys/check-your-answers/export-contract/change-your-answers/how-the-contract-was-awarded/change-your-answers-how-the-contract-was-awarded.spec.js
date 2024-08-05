@@ -16,7 +16,7 @@ const {
   HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD: FIELD_ID, OTHER_AWARD_METHOD },
 } = FIELD_IDS;
 
-const { DIRECT_AWARD, NEGOTIATED_CONTRACT, COMPETITIVE_BIDDING } = FIELDS.HOW_WAS_THE_CONTRACT_AWARDED[FIELD_ID].OPTIONS;
+const { DIRECT_AWARD, NEGOTIATED_CONTRACT, COMPETITIVE_BIDDING, OPEN_TENDER, OTHER } = FIELDS.HOW_WAS_THE_CONTRACT_AWARDED[FIELD_ID].OPTIONS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -31,12 +31,11 @@ context(
     let url;
 
     before(() => {
-      cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
         cy.completePrepareApplicationSinglePolicyType({
           referenceNumber,
-          totalContractValueOverThreshold: true,
         });
 
         task.link().click();
@@ -69,7 +68,7 @@ context(
         });
       });
 
-      describe('after changing the answer from open tender to negotiated contract', () => {
+      describe(`after changing the answer from ${OPEN_TENDER.TEXT} to ${NEGOTIATED_CONTRACT.TEXT}`, () => {
         beforeEach(() => {
           cy.navigateToUrl(url);
         });
@@ -87,7 +86,7 @@ context(
         });
       });
 
-      describe('after changing the answer from negotiated contract to direct award', () => {
+      describe(`after changing the answer from ${NEGOTIATED_CONTRACT.TEXT} to ${DIRECT_AWARD.TEXT}`, () => {
         beforeEach(() => {
           cy.navigateToUrl(url);
         });
@@ -105,7 +104,7 @@ context(
         });
       });
 
-      describe('after changing the answer from direct award to competitive bidding', () => {
+      describe(`after changing the answer from ${DIRECT_AWARD.TEXT} to ${COMPETITIVE_BIDDING.TEXT}`, () => {
         beforeEach(() => {
           cy.navigateToUrl(url);
         });
@@ -123,7 +122,7 @@ context(
         });
       });
 
-      describe('after changing the answer from competitive bidding to other', () => {
+      describe(`after changing the answer from ${COMPETITIVE_BIDDING.TEXT} to ${OTHER.TEXT}`, () => {
         beforeEach(() => {
           cy.navigateToUrl(url);
         });

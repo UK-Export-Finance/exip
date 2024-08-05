@@ -5,7 +5,7 @@ import { isEmptyString } from '../../../../../helpers/string';
 import { Country, RequestBody } from '../../../../../../types';
 
 const {
-  HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD },
+  HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD, OTHER_AWARD_METHOD },
   ABOUT_GOODS_OR_SERVICES: { FINAL_DESTINATION, FINAL_DESTINATION_KNOWN },
 } = FIELD_IDS;
 
@@ -58,6 +58,14 @@ const mapSubmittedData = (formBody: RequestBody, countries?: Array<Country>): ob
 
   if (formBody[FINAL_DESTINATION_KNOWN] === 'false') {
     populatedData[FINAL_DESTINATION] = '';
+  }
+
+  /**
+   * if AWARD_METHOD is not OTHER_AWARD_METHOD and OTHER_AWARD_METHOD is populated,
+   * then set data for OTHER_AWARD_METHOD to an empty string.
+   */
+  if (formBody[AWARD_METHOD] !== OTHER_AWARD_METHOD && objectHasProperty(populatedData, OTHER_AWARD_METHOD)) {
+    populatedData[OTHER_AWARD_METHOD] = '';
   }
 
   return populatedData;
