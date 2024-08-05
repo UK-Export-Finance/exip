@@ -7,6 +7,10 @@
  * @param {Boolean} agentChargeMethodPercentage: Agent charge method is "percentage"
  * @param {Boolean} alternativeCurrency: Should submit an "alternative currency". Defaults to false.
  * @param {Boolean} attemptedPrivateMarketCover: Has attempted to insure through the private market
+ * @param {Boolean} contractAwardedOpenTender: "How was the contract awarded" method as "open tender"
+ * @param {Boolean} contractAwardedNegotiatedContract: "How was the contract awarded" method as "negotiated contract"
+ * @param {Boolean} contractAwardedDirectAward: "How was the contract awarded" method as "direct award"
+ * @param {Boolean} contractAwardedCompetitiveBidding: "How was the contract awarded" method as "competitive bidding"
  * @param {Boolean} contractAwardedOtherMethod: "How was the contract awarded" method as "other"
  * @param {Boolean} finalDestinationKnown: "Final destination known"
  * @param {Boolean} isUsingAgent: Exporter is using an agent
@@ -21,6 +25,10 @@ const completeExportContractSection = ({
   agentChargeMethodPercentage = false,
   alternativeCurrency = false,
   attemptedPrivateMarketCover = false,
+  contractAwardedOpenTender = true,
+  contractAwardedNegotiatedContract = false,
+  contractAwardedDirectAward = false,
+  contractAwardedCompetitiveBidding = false,
   contractAwardedOtherMethod = false,
   finalDestinationKnown,
   isUsingAgent = false,
@@ -30,7 +38,13 @@ const completeExportContractSection = ({
 }) => {
   cy.startInsuranceExportContractSection({ viaTaskList });
 
-  cy.completeAndSubmitHowWasTheContractAwardedForm({ otherMethod: contractAwardedOtherMethod });
+  cy.completeAndSubmitHowWasTheContractAwardedForm({
+    openTender: contractAwardedOpenTender,
+    negotiatedContract: contractAwardedNegotiatedContract,
+    directAward: contractAwardedDirectAward,
+    competitiveBidding: contractAwardedCompetitiveBidding,
+    otherMethod: contractAwardedOtherMethod,
+  });
 
   cy.completeAndSubmitAboutGoodsOrServicesForm({ finalDestinationKnown });
   cy.completeAndSubmitHowYouWillGetPaidForm({});

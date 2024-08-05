@@ -17,6 +17,10 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * @param {Boolean} attemptedPrivateMarketCover: Should submit "yes" to "attempted to insure through the private market" form.
  * @param {Boolean} buyerOutstandingPayments: Exporter has outstanding payments with the buyer.
  * @param {Boolean} buyerFailedToPayOnTime: Buyer has failed to pay the exporter on the time.
+ * @param {Boolean} contractAwardedOpenTender: "How was the contract awarded" method as "open tender"
+ * @param {Boolean} contractAwardedNegotiatedContract: "How was the contract awarded" method as "negotiated contract"
+ * @param {Boolean} contractAwardedDirectAward: "How was the contract awarded" method as "direct award"
+ * @param {Boolean} contractAwardedCompetitiveBidding: "How was the contract awarded" method as "competitive bidding"
  * @param {Boolean} contractAwardedOtherMethod: "How was the contract awarded" method as "other"
  * @param {Boolean} differentPolicyContact: Should submit an application with a different policy contact to the owner.
  * @param {Boolean} differentTradingName: Should submit "yes" to "have a different trading name" in the "company details" form.
@@ -50,6 +54,10 @@ const completePrepareApplicationSinglePolicyType = ({
   attemptedPrivateMarketCover = false,
   buyerOutstandingPayments = false,
   buyerFailedToPayOnTime = false,
+  contractAwardedOpenTender = true,
+  contractAwardedNegotiatedContract = false,
+  contractAwardedDirectAward = false,
+  contractAwardedCompetitiveBidding = false,
   contractAwardedOtherMethod = false,
   differentPolicyContact = false,
   differentTradingName = false,
@@ -112,6 +120,10 @@ const completePrepareApplicationSinglePolicyType = ({
     agentChargeMethodPercentage,
     alternativeCurrency: alternativeCurrencyExportContract,
     attemptedPrivateMarketCover,
+    contractAwardedOpenTender,
+    contractAwardedCompetitiveBidding,
+    contractAwardedDirectAward,
+    contractAwardedNegotiatedContract,
     contractAwardedOtherMethod,
     finalDestinationKnown,
     isUsingAgent,

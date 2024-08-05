@@ -8,6 +8,7 @@ import application from '../../fixtures/application';
 import COUNTRIES from '../../fixtures/countries';
 
 const {
+  HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD },
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
   HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
   PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
@@ -17,11 +18,20 @@ const {
   AGENT_CHARGES: { FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
+const { OPEN_TENDER } = FIELDS.HOW_WAS_THE_CONTRACT_AWARDED[AWARD_METHOD].OPTIONS;
+
 /**
  * checkExportContractSummaryList
  * "export contract" summary list assertions.
  */
 const checkExportContractSummaryList = {
+  [AWARD_METHOD]: ({ expectedValue = OPEN_TENDER.TEXT }) => {
+    const fieldId = AWARD_METHOD;
+
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.HOW_WAS_THE_CONTRACT_AWARDED);
+
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+  },
   [DESCRIPTION]: () => {
     const fieldId = DESCRIPTION;
 

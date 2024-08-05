@@ -33,6 +33,8 @@ import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../
 const {
   ROOT,
   HOW_WAS_THE_CONTRACT_AWARDED,
+  HOW_WAS_THE_CONTRACT_AWARDED_CHANGE,
+  HOW_WAS_THE_CONTRACT_AWARDED_CHECK_AND_CHANGE,
   ABOUT_GOODS_OR_SERVICES,
   ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK,
   ABOUT_GOODS_OR_SERVICES_CHANGE,
@@ -78,6 +80,10 @@ exportContractRoute.get(`/:referenceNumber${ROOT}`, exportContractRootGet);
 
 exportContractRoute.get(`/:referenceNumber${HOW_WAS_THE_CONTRACT_AWARDED}`, howWasTheContractAwardedGet);
 exportContractRoute.post(`/:referenceNumber${HOW_WAS_THE_CONTRACT_AWARDED}`, howWasTheContractAwardedPost);
+exportContractRoute.get(`/:referenceNumber${HOW_WAS_THE_CONTRACT_AWARDED_CHANGE}`, howWasTheContractAwardedGet);
+exportContractRoute.post(`/:referenceNumber${HOW_WAS_THE_CONTRACT_AWARDED_CHANGE}`, howWasTheContractAwardedPost);
+exportContractRoute.get(`/:referenceNumber${HOW_WAS_THE_CONTRACT_AWARDED_CHECK_AND_CHANGE}`, howWasTheContractAwardedGet);
+exportContractRoute.post(`/:referenceNumber${HOW_WAS_THE_CONTRACT_AWARDED_CHECK_AND_CHANGE}`, howWasTheContractAwardedPost);
 
 exportContractRoute.get(`/:referenceNumber${ABOUT_GOODS_OR_SERVICES}`, aboutGoodsOrServicesGet);
 exportContractRoute.post(`/:referenceNumber${ABOUT_GOODS_OR_SERVICES}`, aboutGoodsOrServicesPost);
