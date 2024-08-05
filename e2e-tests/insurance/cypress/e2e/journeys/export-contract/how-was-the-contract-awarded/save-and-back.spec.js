@@ -43,13 +43,13 @@ context('Insurance - Export contract - How was the contract awarded page - Save 
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the `export contract` task status as `not started`', () => {
+    it('should retain the `export contract` task status as `not started yet`', () => {
       cy.checkTaskExportContractStatusIsNotStartedYet();
     });
   });
 
   describe('when fields are partially completed', () => {
-    it('should retain the `export contract` task status as `not started yet`', () => {
+    it('should update the status of task `export contract` to `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.completeHowWasTheContractAwardedForm({
@@ -61,7 +61,7 @@ context('Insurance - Export contract - How was the contract awarded page - Save 
 
       cy.assertAllSectionsUrl(referenceNumber);
 
-      cy.checkTaskExportContractStatusIsNotStartedYet();
+      cy.checkTaskExportContractStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {
