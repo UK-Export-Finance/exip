@@ -17,6 +17,7 @@ const { OPEN_TENDER, NEGOTIATED_CONTRACT, DIRECT_AWARD, COMPETITIVE_BIDDING, OTH
  * @param {String} directAward: Award method as DIRECT_AWARD
  * @param {String} competitiveBidding: Award method as COMPETITIVE_BIDDING
  * @param {String} otherMethod: Award method as OTHER
+ * @param {String} otherMethodText: OTHER award method text
  */
 const assertHowWasTheContractAwardedFieldValues = ({
   openTender = false,
@@ -24,6 +25,7 @@ const assertHowWasTheContractAwardedFieldValues = ({
   directAward = false,
   competitiveBidding = false,
   otherMethod = false,
+  otherMethodText = application.EXPORT_CONTRACT[OTHER_AWARD_METHOD],
 }) => {
   const selectors = {
     openTender: radios(OPEN_TENDER.ID).option.input(),
@@ -73,7 +75,9 @@ const assertHowWasTheContractAwardedFieldValues = ({
   if (otherMethod) {
     cy.assertRadioOptionIsChecked(selectors.otherMethod);
 
-    cy.checkValue(selectors.otherMethodTextInput, application.EXPORT_CONTRACT[OTHER_AWARD_METHOD]);
+    if (otherMethodText) {
+      cy.checkValue(selectors.otherMethodTextInput, otherMethodText);
+    }
 
     cy.assertRadioOptionIsNotChecked(selectors.openTender);
     cy.assertRadioOptionIsNotChecked(selectors.negotiatedContract);
