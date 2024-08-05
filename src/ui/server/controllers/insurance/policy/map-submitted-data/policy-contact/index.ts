@@ -65,7 +65,7 @@ const mapSubmittedData = (formBody: RequestBody, application: Application): obje
 
   /**
    * If NAME is an empty string,
-   * Delete the field.
+   * delete the field.
    */
   if (isEmptyString(populatedData[NAME])) {
     delete populatedData[NAME];
