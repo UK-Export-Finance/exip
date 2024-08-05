@@ -8,7 +8,15 @@ const { AMOUNT_250K, MORE_THAN_250K } = TOTAL_CONTRACT_VALUE;
 const {
   ACCOUNT: { FIRST_NAME, LAST_NAME },
   DECLARATIONS: { HAS_ANTI_BRIBERY_CODE_OF_CONDUCT, WILL_EXPORT_WITH_CODE_OF_CONDUCT },
-  ELIGIBILITY: { BUYER_COUNTRY, COMPANIES_HOUSE_NUMBER, COVER_PERIOD, HAS_END_BUYER, HAS_MINIMUM_UK_GOODS_OR_SERVICES },
+  ELIGIBILITY: {
+    BUYER_COUNTRY,
+    COMPANIES_HOUSE_NUMBER,
+    COVER_PERIOD,
+    HAS_END_BUYER,
+    HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+    IS_MEMBER_OF_A_GROUP,
+    IS_PARTY_TO_CONSORTIUM,
+  },
   EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN },
     AGENT_CHARGES: { PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE },
@@ -170,6 +178,8 @@ export const XLSX = {
     [WEBSITE]: 'Exporter Company website (optional)',
     [WILL_EXPORT_WITH_CODE_OF_CONDUCT]: 'Will the exporter export using their code of conduct?',
     [YEARS_EXPORTING]: 'How long the business has been exporting for',
+    [IS_PARTY_TO_CONSORTIUM]: 'Party to any consortium in connection with the export contract(s)?',
+    [IS_MEMBER_OF_A_GROUP]: 'Member of a group which may have a part in negotiating the contract(s)?',
   },
 };
 

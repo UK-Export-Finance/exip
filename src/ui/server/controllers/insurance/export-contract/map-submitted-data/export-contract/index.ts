@@ -1,6 +1,7 @@
 import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
 import getCountryByIsoCode from '../../../../../helpers/get-country-by-iso-code';
 import { objectHasProperty } from '../../../../../helpers/object';
+import { isEmptyString } from '../../../../../helpers/string';
 import { Country, RequestBody } from '../../../../../../types';
 
 const {
@@ -13,9 +14,10 @@ const {
  * Map "export contract" related data for the following forms:
  * - "How was the contract awarded"
  * - "About goods or services"
- * 1) if AWARD_METHOD is provided, map as a KeystoneJS connect object with ID relationship.
- * 2) if FINAL_DESTINATION is provided, map as the country ISO code.
- * 3) if FINAL_DESTINATION_KNOWN is false, delete FINAL_DESTINATION.
+ * 1) if AWARD_METHOD is an empty string, delete the field.
+ * 2) if AWARD_METHOD is provided, map as a KeystoneJS connect object with ID relationship.
+ * 3) if FINAL_DESTINATION is provided, map as the country ISO code.
+ * 4) if FINAL_DESTINATION_KNOWN is false, delete FINAL_DESTINATION.
  * @param {RequestBody} formBody
  * @param {Array<Country>} countries
  * @returns {Object} populatedData
@@ -23,7 +25,15 @@ const {
 const mapSubmittedData = (formBody: RequestBody, countries?: Array<Country>): object => {
   const populatedData = formBody;
 
-  if (objectHasProperty(formBody, AWARD_METHOD)) {
+  /**
+   * If AWARD_METHOD is an empty string,
+   * delete the field.
+   */
+  if (isEmptyString(formBody[AWARD_METHOD])) {
+    delete populatedData[AWARD_METHOD];
+  }
+
+  if (objectHasProperty(populatedData, AWARD_METHOD)) {
     populatedData[AWARD_METHOD] = {
       connect: {
         id: formBody[AWARD_METHOD],
