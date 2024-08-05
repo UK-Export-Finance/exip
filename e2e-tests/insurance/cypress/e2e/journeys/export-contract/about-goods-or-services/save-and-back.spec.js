@@ -53,8 +53,8 @@ context('Insurance - Export contract - About goods or services page - Save and g
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the `export contract` task status as `not started`', () => {
-      cy.checkTaskExportContractStatusIsNotStartedYet();
+    it('should retain the `export contract` task status as `in progress`', () => {
+      cy.checkTaskExportContractStatusIsInProgress();
     });
   });
 
@@ -71,7 +71,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should update the `export contract` task status to `in progress`', () => {
+    it('should retain the `export contract` task status as `in progress`', () => {
       cy.checkTaskExportContractStatusIsInProgress();
     });
 
@@ -112,8 +112,8 @@ context('Insurance - Export contract - About goods or services page - Save and g
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should update the `export contract` task status to `not started`', () => {
-      cy.checkTaskExportContractStatusIsNotStartedYet();
+    it('should retain the `export contract` task status as `in progress`', () => {
+      cy.checkTaskExportContractStatusIsInProgress();
     });
 
     it(`should have no value in '${FIELD_ID}' when going back to the page`, () => {

@@ -30,7 +30,8 @@ const { PREPARE_APPLICATION } = TASKS.LIST;
  * @param {Boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
  * @param {Boolean} isUsingAgent: "Is using an agent to help win the export contract" flag
  * @param {Boolean} agentIsCharging: "Is the agent charging for their support in the export contract?" flag
- * @param {Boolean} agentChargeMethod: Agent charge method
+ * @param {String} agentChargeMethod: Agent charge method
+ * @param {String} awardMethodId: Export contract award method ID
  * @returns {Array} Prepare application tasks
  */
 const createPrepareApplicationTasks = ({
@@ -53,6 +54,7 @@ const createPrepareApplicationTasks = ({
   isUsingAgent,
   agentIsCharging,
   agentChargeMethod,
+  awardMethodId,
 }: CreatePrepareApplicationTasksParams): Array<TaskListDataTask> => {
   const initialChecksGroup = getGroupById(otherGroups, GROUP_IDS.INITIAL_CHECKS);
 
@@ -108,6 +110,7 @@ const createPrepareApplicationTasks = ({
       isUsingAgent,
       agentIsCharging,
       agentChargeMethod,
+      awardMethodId,
     }),
     dependencies,
   };
