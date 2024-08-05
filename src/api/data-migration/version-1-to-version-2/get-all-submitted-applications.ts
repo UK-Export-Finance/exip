@@ -1,6 +1,7 @@
 import { Connection } from 'mysql2/promise';
 import { APPLICATION } from '../../constants';
 import executeSqlQuery from './execute-sql-query';
+import { Application } from '../../types';
 
 const { STATUS } = APPLICATION;
 
@@ -18,7 +19,7 @@ const getAllSubmittedApplications = async (connection: Connection) => {
 
     const [applications] = await executeSqlQuery({ connection, query, loggingMessage });
 
-    return applications;
+    return applications as Array<Application>;
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 
