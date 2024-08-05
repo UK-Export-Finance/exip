@@ -247,9 +247,14 @@ jobs:
             'check-your-answers/policy/summary-list/single-policy/*.spec.js',
             'check-your-answers/your-business/**/*.spec.js',
             'check-your-answers/your-buyer/*.spec.js',
-            'check-your-answers/your-buyer/connection-with-buyer/*.spec.js',
-            'check-your-answers/your-buyer/trading-history/*.spec.js',
-            'check-your-answers/your-buyer/working-with-buyer/*.spec.js',
+
+
+            # TODO are we missing other /summary-list directories?
+            'check-your-answers/your-buyer/*.spec.js',
+            'check-your-answers/your-buyer/summary-list/*.spec.js',
+            'check-your-answers/your-buyer/change-your-answers/connection-with-buyer/*.spec.js',
+            'check-your-answers/your-buyer/change-your-answers/trading-history/*.spec.js',
+            'check-your-answers/your-buyer/change-your-answers/working-with-buyer/*.spec.js',
             'cookies-consent/**/*.spec.js',
             'dashboard/**/*.spec.js',
             'declarations/anti-bribery/**/*.spec.js',
