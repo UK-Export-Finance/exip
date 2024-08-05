@@ -39,6 +39,7 @@ describe('server/helpers/task-list/prepare-application', () => {
           charge: { method: agentChargeMethod },
         },
       },
+      awardMethod: { id: awardMethodId },
     },
     nominatedLossPayee: {
       isAppointed: isAppointingLossPayee,
@@ -79,6 +80,10 @@ describe('server/helpers/task-list/prepare-application', () => {
         hasPreviousCreditInsuranceWithBuyer: exporterHasPreviousCreditInsuranceWithBuyer,
         totalContractValueOverThreshold,
         attemptedPrivateMarketCover,
+        isUsingAgent,
+        agentIsCharging,
+        agentChargeMethod,
+        awardMethodId,
       });
 
       const expectedDependencies = getAllTasksFieldsInAGroup(otherGroups[0]);
@@ -131,6 +136,7 @@ describe('server/helpers/task-list/prepare-application', () => {
           isUsingAgent,
           agentIsCharging,
           agentChargeMethod,
+          awardMethodId,
         }),
         dependencies: expectedDependencies,
       };

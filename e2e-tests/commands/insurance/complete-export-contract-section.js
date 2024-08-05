@@ -7,6 +7,7 @@
  * @param {Boolean} agentChargeMethodPercentage: Agent charge method is "percentage"
  * @param {Boolean} alternativeCurrency: Should submit an "alternative currency". Defaults to false.
  * @param {Boolean} attemptedPrivateMarketCover: Has attempted to insure through the private market
+ * @param {Boolean} contractAwardedOtherMethod: "How was the contract awarded" method as "other"
  * @param {Boolean} finalDestinationKnown: "Final destination known"
  * @param {Boolean} isUsingAgent: Exporter is using an agent
  * @param {Boolean} submitCheckYourAnswers: Click export contract "check your answers" submit button
@@ -20,6 +21,7 @@ const completeExportContractSection = ({
   agentChargeMethodPercentage = false,
   alternativeCurrency = false,
   attemptedPrivateMarketCover = false,
+  contractAwardedOtherMethod = false,
   finalDestinationKnown,
   isUsingAgent = false,
   submitCheckYourAnswers = false,
@@ -28,7 +30,7 @@ const completeExportContractSection = ({
 }) => {
   cy.startInsuranceExportContractSection({ viaTaskList });
 
-  cy.completeAndSubmitHowWasTheContractAwardedForm();
+  cy.completeAndSubmitHowWasTheContractAwardedForm({ otherMethod: contractAwardedOtherMethod });
 
   cy.completeAndSubmitAboutGoodsOrServicesForm({ finalDestinationKnown });
   cy.completeAndSubmitHowYouWillGetPaidForm({});

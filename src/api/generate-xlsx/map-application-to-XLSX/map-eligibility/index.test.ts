@@ -22,6 +22,8 @@ const {
     HAS_COMPANIES_HOUSE_NUMBER,
     COMPANIES_HOUSE_NUMBER,
     HAS_END_BUYER,
+    IS_PARTY_TO_CONSORTIUM,
+    IS_MEMBER_OF_A_GROUP,
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -45,6 +47,9 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-eligibility', () => {
 
       xlsxRow(String(FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES]), mapYesNoField({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES] })),
       xlsxRow(String(FIELDS[HAS_END_BUYER]), mapYesNoField({ answer: eligibility[HAS_END_BUYER] })),
+
+      xlsxRow(String(FIELDS[IS_PARTY_TO_CONSORTIUM]), mapYesNoField({ answer: eligibility[IS_PARTY_TO_CONSORTIUM] })),
+      xlsxRow(String(FIELDS[IS_MEMBER_OF_A_GROUP]), mapYesNoField({ answer: eligibility[IS_MEMBER_OF_A_GROUP] })),
     ];
 
     expect(result).toEqual(expected);

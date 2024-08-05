@@ -17,7 +17,7 @@ context('Insurance - Export contract - Agent service - Save and go back', () => 
 
       // go to the page we want to test.
       cy.startInsuranceExportContractSection({});
-      cy.completeAndSubmitHowWasTheContractAwardedForm();
+      cy.completeAndSubmitHowWasTheContractAwardedForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
       cy.completeAndSubmitHowYouWillGetPaidForm({});
       cy.completeAndSubmitAgentForm({ isUsingAgent: true });
@@ -94,11 +94,8 @@ context('Insurance - Export contract - Agent service - Save and go back', () => 
 
         cy.startInsuranceExportContractSection({});
 
-        // TODO: EMS-3665 - increment the value in command below instead.
-        cy.completeAndSubmitHowWasTheContractAwardedForm();
-
-        // go through 4 export contract forms.
-        cy.clickSubmitButtonMultipleTimes({ count: 4 });
+        // go through 5 export contract forms.
+        cy.clickSubmitButtonMultipleTimes({ count: 5 });
 
         cy.assertAgentServiceFieldValues({});
       });
@@ -124,11 +121,8 @@ context('Insurance - Export contract - Agent service - Save and go back', () => 
 
         cy.startInsuranceExportContractSection({});
 
-        // TODO: EMS-3665 - increment the value in command below instead.
-        cy.completeAndSubmitHowWasTheContractAwardedForm();
-
-        // go through 4 export contract forms.
-        cy.clickSubmitButtonMultipleTimes({ count: 4 });
+        // go through 5 export contract forms.
+        cy.clickSubmitButtonMultipleTimes({ count: 5 });
 
         cy.assertAgentServiceFieldValues({ agentIsCharging: true });
       });

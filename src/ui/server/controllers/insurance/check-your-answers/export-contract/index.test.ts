@@ -32,6 +32,7 @@ const {
       charge: { method: agentChargeMethod },
     },
   },
+  awardMethod,
 } = exportContract;
 
 describe('controllers/insurance/check-your-answers/export-contract', () => {
@@ -102,6 +103,7 @@ describe('controllers/insurance/check-your-answers/export-contract', () => {
         isUsingAgent,
         agentIsCharging,
         agentChargeMethod,
+        awardMethodId: awardMethod?.id,
       });
 
       const status = sectionStatus(exportContractFields, mockApplication);

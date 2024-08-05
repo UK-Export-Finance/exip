@@ -90,6 +90,11 @@ const applicationQuery = gql`
         }
         exportContract {
           id
+          awardMethod {
+            id
+            value
+          }
+          otherAwardMethod
           goodsOrServicesDescription
           finalDestinationKnown
           finalDestinationCountryCode

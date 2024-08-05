@@ -1,15 +1,12 @@
-context('Insurance - submit an application - Single policy type, fully populated export contract', () => {
+import { APPLICATION } from '../../../../../../../constants';
+
+context('Insurance - submit an application - Multiple policy type, contract awarded with `other` method', () => {
   let referenceNumber;
 
   before(() => {
     cy.completeSignInAndSubmitAnApplication({
-      agentIsCharging: true,
-      agentChargeMethodFixedSum: true,
-      attemptedPrivateMarketCover: true,
       contractAwardedOtherMethod: true,
-      isUsingAgent: true,
-      finalDestinationKnown: true,
-      totalContractValueOverThreshold: true,
+      policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });

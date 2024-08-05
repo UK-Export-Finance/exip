@@ -10,12 +10,13 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
-import { Request, Response } from '../../../../../types';
+import mapAndSave from '../map-and-save/export-contract';
+import { ObjectType, Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockExportContract, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES },
+  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES, HOW_WAS_THE_CONTRACT_AWARDED_SAVE_AND_BACK: SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -34,6 +35,10 @@ const {
 describe('controllers/insurance/export-contract/how-was-the-contract-awarded', () => {
   let req: Request;
   let res: Response;
+
+  jest.mock('../map-and-save/export-contract');
+
+  mapAndSave.exportContract = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
@@ -66,7 +71,7 @@ describe('controllers/insurance/export-contract/how-was-the-contract-awarded', (
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables();
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELDS: {
@@ -79,7 +84,7 @@ describe('controllers/insurance/export-contract/how-was-the-contract-awarded', (
             ...FIELDS.HOW_WAS_THE_CONTRACT_AWARDED[OTHER_AWARD_METHOD],
           },
         },
-        SAVE_AND_BACK_URL: '#',
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -95,9 +100,10 @@ describe('controllers/insurance/export-contract/how-was-the-contract-awarded', (
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(),
+        ...pageVariables(referenceNumber),
         CONDITIONAL_OTHER_METHOD_HTML,
         userName: getUserNameFromSession(req.session.user),
+        submittedValues: mockExportContract,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -127,15 +133,22 @@ describe('controllers/insurance/export-contract/how-was-the-contract-awarded', (
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
+        const sanitised = sanitiseData(payload) as ObjectType;
+
         const expectedVariables = {
           ...insuranceCorePageVariables({
             PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables(),
+          ...pageVariables(referenceNumber),
           CONDITIONAL_OTHER_METHOD_HTML,
           userName: getUserNameFromSession(req.session.user),
-          submittedValues: sanitiseData(payload),
+          submittedValues: {
+            ...sanitised,
+            [AWARD_METHOD]: {
+              id: sanitised[AWARD_METHOD],
+            },
+          },
           validationErrors: generateValidationErrors(payload),
         };
 
@@ -146,6 +159,18 @@ describe('controllers/insurance/export-contract/how-was-the-contract-awarded', (
     describe('when there are no validation errors', () => {
       beforeEach(() => {
         req.body = validBody;
+      });
+
+      it('should call mapAndSave.exportContract with data from constructPayload function and application', async () => {
+        await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        expect(mapAndSave.exportContract).toHaveBeenCalledTimes(1);
+
+        const expectedValidationErrors = false;
+
+        expect(mapAndSave.exportContract).toHaveBeenCalledWith(payload, res.locals.application, expectedValidationErrors);
       });
 
       it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, async () => {
@@ -160,6 +185,36 @@ describe('controllers/insurance/export-contract/how-was-the-contract-awarded', (
     describe('when there is no application', () => {
       beforeEach(() => {
         delete res.locals.application;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('when mapAndSave.exportContract does not return a true boolean', () => {
+      beforeEach(() => {
+        req.body = validBody;
+        const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
+
+        mapAndSave.exportContract = mapAndSaveSpy;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('when mapAndSave.exportContract returns an error', () => {
+      beforeEach(() => {
+        req.body = validBody;
+        const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+
+        mapAndSave.exportContract = mapAndSaveSpy;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

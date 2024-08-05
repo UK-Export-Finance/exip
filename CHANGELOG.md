@@ -1,5 +1,31 @@
 # Changelog
 
+## [2.32.0](https://github.com/UK-Export-Finance/exip/compare/v2.31.0...v2.32.0) (2024-08-05)
+
+
+### Features
+
+* **EMS-3662:** export contract - how was contract awarded - save and back ([#2892](https://github.com/UK-Export-Finance/exip/issues/2892)) ([8003b9d](https://github.com/UK-Export-Finance/exip/commit/8003b9d66fda8fb75d26877c9fccb9e9c3e753c1))
+
+## [2.31.0](https://github.com/UK-Export-Finance/exip/compare/v2.30.0...v2.31.0) (2024-08-05)
+
+
+### Features
+
+* **EMS-3685:** added xlsx for 2 new eligibility fields ([#2884](https://github.com/UK-Export-Finance/exip/issues/2884)) ([3878733](https://github.com/UK-Export-Finance/exip/commit/3878733d3235e38fc20e02e5f0b8d43492990974))
+
+## [2.30.0](https://github.com/UK-Export-Finance/exip/compare/v2.29.0...v2.30.0) (2024-08-02)
+
+### Features
+
+- **EMS-3665:** export contract - how was contract awarded - data saving ([#2883](https://github.com/UK-Export-Finance/exip/issues/2883)) ([d91a5d9](https://github.com/UK-Export-Finance/exip/commit/d91a5d9b186209cc07311b6ed0eb53c3f8464287))
+
+## [2.29.0](https://github.com/UK-Export-Finance/exip/compare/v2.28.2...v2.29.0) (2024-08-01)
+
+### Features
+
+- **EMS-3661:** export contract - how was contract awarded - form validation ([#2865](https://github.com/UK-Export-Finance/exip/issues/2865)) ([c495363](https://github.com/UK-Export-Finance/exip/commit/c495363928f0e9f00e7b06638aed9a0d4d475d4e))
+
 ## [2.28.2](https://github.com/UK-Export-Finance/exip/compare/v2.28.1...v2.28.2) (2024-08-01)
 
 ### Bug Fixes
