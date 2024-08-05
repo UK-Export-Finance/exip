@@ -35,6 +35,11 @@ interface ApplicationPrivateMarket {
   declinedDescription?: string;
 }
 
+interface ApplicationExportContractAwardMethod {
+  id: string;
+  value?: string;
+}
+
 interface ApplicationExportContractAgentServiceCharge {
   id: string;
   fixedSumAmount?: string;
@@ -62,10 +67,12 @@ interface ApplicationExportContractAgent {
 
 interface ApplicationExportContract {
   agent: ApplicationExportContractAgent;
+  awardMethod: ApplicationExportContractAwardMethod;
   id: string;
   finalDestinationKnown?: boolean;
   finalDestinationCountryCode?: string;
   goodsOrServicesDescription?: string;
+  otherAwardMethod?: string;
   paymentTermsDescription?: string;
   privateMarket: ApplicationPrivateMarket;
 }

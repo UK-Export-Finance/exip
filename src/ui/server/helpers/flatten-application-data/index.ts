@@ -137,6 +137,7 @@ const flattenApplicationData = (application: Application): ApplicationFlat => {
       ...company,
       ...contact,
       ...exportContract,
+      ...exportContract.awardMethod,
       ...getTrueAndFalseAnswers(exportContract),
       ...exportContract.privateMarket,
       ...getTrueAndFalseAnswers(exportContract.privateMarket),

@@ -178,7 +178,7 @@ const PARTY_TO_CONSORTIUM = {
 
 const MEMBER_OF_A_GROUP = {
   PAGE_TITLE:
-    'Are you are a member of a group of which another member has, or is intended to have, a material part in negotiating or obtaining the export contract(s)?',
+    'Are you a member of a group of which another member has, or is intended to have, a material part in negotiating or obtaining the export contract(s)?',
 };
 
 export default {

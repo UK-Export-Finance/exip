@@ -8,6 +8,7 @@ context('Insurance - submit an application - Multiple policy type, fully populat
       agentIsCharging: true,
       agentChargeMethodFixedSum: true,
       attemptedPrivateMarketCover: true,
+      contractAwardedOtherMethod: true,
       isUsingAgent: true,
       finalDestinationKnown: true,
       policyType: APPLICATION.POLICY_TYPE.MULTIPLE,

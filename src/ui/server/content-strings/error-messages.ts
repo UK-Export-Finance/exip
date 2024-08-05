@@ -144,6 +144,15 @@ export const ERROR_MESSAGES = {
       },
     },
     EXPORT_CONTRACT: {
+      HOW_WAS_THE_CONTRACT_AWARDED: {
+        [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.HOW_WAS_THE_CONTRACT_AWARDED.AWARD_METHOD]: {
+          IS_EMPTY: 'Select how the contract was awarded',
+        },
+        [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.HOW_WAS_THE_CONTRACT_AWARDED.OTHER_AWARD_METHOD]: {
+          IS_EMPTY: 'Enter how the contract was awarded',
+          ABOVE_MAXIMUM: `The method of how your contract was awarded cannot be more than ${MAXIMUM_CHARACTERS.EXPORT_CONTRACT.OTHER_AWARD_METHOD} characters`,
+        },
+      },
       ABOUT_GOODS_OR_SERVICES: {
         [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES.DESCRIPTION]: {
           IS_EMPTY: 'Enter the goods or services you will supply to the buyer',

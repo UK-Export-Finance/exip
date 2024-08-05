@@ -4,20 +4,32 @@ import { objectHasProperty } from '../../../../../helpers/object';
 import { Country, RequestBody } from '../../../../../../types';
 
 const {
+  HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD },
   ABOUT_GOODS_OR_SERVICES: { FINAL_DESTINATION, FINAL_DESTINATION_KNOWN },
 } = FIELD_IDS;
 
 /**
  * mapSubmittedData
- * Map About goods or services fields
- * if FINAL_DESTINATION is provided, map as the country ISO code.
- * if FINAL_DESTINATION_KNOWN is false, delete FINAL_DESTINATIN
+ * Map "export contract" related data for the following forms:
+ * - "How was the contract awarded"
+ * - "About goods or services"
+ * 1) if AWARD_METHOD is provided, map as a KeystoneJS connect object with ID relationship.
+ * 2) if FINAL_DESTINATION is provided, map as the country ISO code.
+ * 3) if FINAL_DESTINATION_KNOWN is false, delete FINAL_DESTINATION.
  * @param {RequestBody} formBody
  * @param {Array<Country>} countries
  * @returns {Object} populatedData
  */
 const mapSubmittedData = (formBody: RequestBody, countries?: Array<Country>): object => {
   const populatedData = formBody;
+
+  if (objectHasProperty(formBody, AWARD_METHOD)) {
+    populatedData[AWARD_METHOD] = {
+      connect: {
+        id: formBody[AWARD_METHOD],
+      },
+    };
+  }
 
   const hasFinalDestination = objectHasProperty(formBody, FINAL_DESTINATION);
 
