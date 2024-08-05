@@ -32,22 +32,21 @@ context('Insurance - Export contract - How was the contract awarded page - Save 
     cy.deleteApplication(referenceNumber);
   });
 
-  // TODO: fix mapAndSave issue
-  // describe('when submitting an empty form via `save and go back` button', () => {
-  //   beforeEach(() => {
-  //     cy.navigateToUrl(url);
+  describe('when submitting an empty form via `save and go back` button', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
 
-  //     cy.clickSaveAndBackButton();
-  //   });
+      cy.clickSaveAndBackButton();
+    });
 
-  //   it('should redirect to `all sections`', () => {
-  //     cy.assertAllSectionsUrl(referenceNumber);
-  //   });
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
+    });
 
-  //   it('should retain the `export contract` task status as `not started`', () => {
-  //     cy.checkTaskExportContractStatusIsNotStartedYet();
-  //   });
-  // });
+    it('should retain the `export contract` task status as `not started`', () => {
+      cy.checkTaskExportContractStatusIsNotStartedYet();
+    });
+  });
 
   describe('when fields are partially completed', () => {
     it('should retain the `export contract` task status as `not started yet`', () => {
