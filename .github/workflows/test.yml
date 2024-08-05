@@ -374,7 +374,7 @@ jobs:
 
       - name: Execute
         working-directory: ./e2e-tests/insurance
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
 
       - name: Coverage
         uses: codecov/codecov-action@v4
@@ -442,7 +442,7 @@ jobs:
 
       - name: Execute
         working-directory: ./e2e-tests/quote
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
 
       - name: Coverage
         uses: codecov/codecov-action@v4
@@ -495,7 +495,7 @@ jobs:
 
       - name: Execute
         working-directory: ./e2e-tests/switch-between-services
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
 
       - name: Coverage
         uses: codecov/codecov-action@v4
