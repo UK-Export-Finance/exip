@@ -15,7 +15,7 @@ describe('controllers/redirects', () => {
     res = mockRes();
   });
 
-  describe('when the req.original is valid', () => {
+  describe('when the req.originalUrl is valid', () => {
     beforeEach(() => {
       req = mockReq();
     });
@@ -32,9 +32,7 @@ describe('controllers/redirects', () => {
 
   describe('when the req.original is invalid', () => {
     beforeEach(() => {
-      const invalid = { forgery: true };
-      // @ts-ignore
-      req.originalUrl = invalid;
+      req.originalUrl = '';
     });
 
     it(`should redirect to a ${PROBLEM_WITH_SERVICE}`, () => {
