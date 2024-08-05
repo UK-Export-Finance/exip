@@ -21,7 +21,7 @@ describe('server/helpers/required-fields/check-your-answers', () => {
 
     const expected = [
       ...requiredBusinessFields(),
-      ...requiredEligibilityFields(),
+      ...requiredEligibilityFields(mockApplication.migratedV1toV2),
       ...requiredExportContractFields(flatApplicationData),
       ...requiredPolicyFields(flatApplicationData[POLICY_TYPE]),
       ...requiredSectionReviewFields(flatApplicationData),

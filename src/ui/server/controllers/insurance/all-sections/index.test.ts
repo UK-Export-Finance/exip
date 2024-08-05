@@ -31,8 +31,18 @@ describe('controllers/insurance/all-sections', () => {
     it('should render template', () => {
       get(req, res);
 
-      const { broker, buyer, company, declaration, exportContract } = mockApplication;
-      const { nominatedLossPayee, policy, referenceNumber, totalContractValueOverThreshold } = mockApplication;
+      const {
+        broker,
+        buyer,
+        company,
+        declaration,
+        exportContract,
+        migratedV1toV2,
+        nominatedLossPayee,
+        policy,
+        referenceNumber,
+        totalContractValueOverThreshold,
+      } = mockApplication;
 
       const { policyType, jointlyInsuredParty } = policy;
 
@@ -85,6 +95,7 @@ describe('controllers/insurance/all-sections', () => {
         agentIsCharging,
         agentChargeMethod,
         awardMethod?.id,
+        migratedV1toV2,
       );
 
       const expectedTaskListData = generateTaskList(taskListStructure, flatApplicationData);
