@@ -229,6 +229,7 @@ jobs:
   #           'check-your-answers/export-contract/change-your-answers/about-goods-or-services/*.spec.js',
   #           'check-your-answers/export-contract/change-your-answers/agent/*.spec.js',
   #           'check-your-answers/export-contract/change-your-answers/agent-charges/*.spec.js',
+  #           'check-your-answers/export-contract/change-your-answers/how-the-contract-was-awarded/*.spec.js',
   #           'check-your-answers/export-contract/change-your-answers/agent-service/*.spec.js',
   #           'check-your-answers/export-contract/change-your-answers/how-will-you-get-paid/*.spec.js',
   #           'check-your-answers/export-contract/change-your-answers/private-market/*.spec.js',
@@ -285,6 +286,7 @@ jobs:
   #           'export-contract/change-your-answers/agent/*.spec.js',
   #           'export-contract/change-your-answers/agent-charges/*.spec.js',
   #           'export-contract/change-your-answers/agent-service/*.spec.js',
+  #           'export-contract/change-your-answers/how-the-contract-was-awarded/*.spec.js',
   #           'export-contract/change-your-answers/how-will-you-get-paid/*.spec.js',
   #           'export-contract/change-your-answers/private-market/*.spec.js',
   #           'export-contract/check-your-answers/**/*.spec.js',
@@ -497,13 +499,13 @@ jobs:
         working-directory: ./e2e-tests/switch-between-services
         run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
 
-      - name: Generate Coverage Report
-        run: npx nyc report --reporter=lcov
+      - name: Execute
+        working-directory: ./e2e-tests/switch-between-services
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
 
       - name: Coverage
         uses: codecov/codecov-action@v4
         with:
-          files: ./coverage/lcov.info
+          token: ${{ secrets.CODECOV_TOKEN }}
           flags: e2e-test
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true

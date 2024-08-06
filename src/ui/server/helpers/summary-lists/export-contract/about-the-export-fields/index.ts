@@ -14,10 +14,12 @@ const {
 } = FORM_TITLES;
 
 const {
+  HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD, OTHER_AWARD_METHOD },
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
   HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
 } = FIELD_IDS;
 
+const { HOW_WAS_THE_CONTRACT_AWARDED_CHANGE, HOW_WAS_THE_CONTRACT_AWARDED_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
 const { ABOUT_GOODS_OR_SERVICES_CHANGE, ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
 const { HOW_WILL_YOU_GET_PAID_CHANGE, HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
 
@@ -32,6 +34,21 @@ const { HOW_WILL_YOU_GET_PAID_CHANGE, HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE } =
  */
 const generateAboutTheExportFields = (answers: ApplicationExportContract, referenceNumber: number, countries: Array<Country>, checkAndChange: boolean) => {
   const fields = [
+    fieldGroupItem(
+      {
+        field: getFieldById(FIELDS.HOW_WAS_THE_CONTRACT_AWARDED, AWARD_METHOD),
+        data: answers,
+        href: generateChangeLink(
+          HOW_WAS_THE_CONTRACT_AWARDED_CHANGE,
+          HOW_WAS_THE_CONTRACT_AWARDED_CHECK_AND_CHANGE,
+          `#${AWARD_METHOD}-label`,
+          referenceNumber,
+          checkAndChange,
+        ),
+        renderChangeLink: true,
+      },
+      answers[OTHER_AWARD_METHOD] ? answers[OTHER_AWARD_METHOD] : answers[AWARD_METHOD]?.value,
+    ),
     fieldGroupItem({
       field: getFieldById(FIELDS.ABOUT_GOODS_OR_SERVICES, DESCRIPTION),
       data: answers,
