@@ -102,6 +102,11 @@ export const mockExportContract = {
   agent: mockExportContractAgent,
 };
 
+export const mockOtherAwardMethod = {
+  awardMethod: EXPORT_CONTRACT_AWARD_METHOD.OTHER.DB_ID,
+  otherAwardMethod: 'test',
+};
+
 export const mockOwner = {
   id: mockAccount.id,
 };

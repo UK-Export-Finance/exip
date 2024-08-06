@@ -13,32 +13,29 @@ const { DIRECT_AWARD } = FIELDS.HOW_WAS_THE_CONTRACT_AWARDED[AWARD_METHOD].OPTIO
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(
-  'Insurance - Export contract - Check your answers - Summary list - application under total contract value threshold, no private insurance attempt, not using an agent, contracted awarded direct award',
-  () => {
-    let referenceNumber;
-    let url;
+context(`Insurance - Export contract - Check your answers - Summary list - contract awarded with ${DIRECT_AWARD.TEXT}`, () => {
+  let referenceNumber;
+  let url;
 
-    before(() => {
-      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-        referenceNumber = refNumber;
+  before(() => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+      referenceNumber = refNumber;
 
-        cy.completeExportContractSection({ contractAwardedDirectAward: true });
+      cy.completeExportContractSection({ contractAwardedDirectAward: true });
 
-        url = `${baseUrl}${ROOT}/${referenceNumber}${EXPORT_CONTRACT.CHECK_YOUR_ANSWERS}`;
-      });
+      url = `${baseUrl}${ROOT}/${referenceNumber}${EXPORT_CONTRACT.CHECK_YOUR_ANSWERS}`;
     });
+  });
 
-    beforeEach(() => {
-      cy.saveSession();
+  beforeEach(() => {
+    cy.saveSession();
 
-      cy.navigateToUrl(url);
-    });
+    cy.navigateToUrl(url);
+  });
 
-    after(() => {
-      cy.deleteApplication(referenceNumber);
-    });
+  after(() => {
+    cy.deleteApplication(referenceNumber);
+  });
 
-    assertMinimalExportContractSummaryListRows({ awardMethodValue: DIRECT_AWARD.TEXT });
-  },
-);
+  assertMinimalExportContractSummaryListRows({ awardMethodValue: DIRECT_AWARD.TEXT });
+});

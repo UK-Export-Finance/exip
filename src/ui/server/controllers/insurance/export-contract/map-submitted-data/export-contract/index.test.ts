@@ -2,7 +2,7 @@ import mapSubmittedData from '.';
 import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
 import getCountryByIsoCode from '../../../../../helpers/get-country-by-iso-code';
 import { EXPORT_CONTRACT_AWARD_METHOD } from '../../../../../constants';
-import { mockCountries, mockExportContract } from '../../../../../test-mocks';
+import { mockCountries, mockExportContract, mockOtherAwardMethod } from '../../../../../test-mocks';
 import { RequestBody } from '../../../../../../types';
 
 const {
@@ -126,8 +126,7 @@ describe('controllers/insurance/export-contract/map-submitted-data/export-contra
     it(`should return the form body with ${OTHER_AWARD_METHOD} populated`, () => {
       const mockBody = {
         ...mockFormBody,
-        [AWARD_METHOD]: OTHER_DB_ID,
-        [OTHER_AWARD_METHOD]: 'test',
+        ...mockOtherAwardMethod,
       };
 
       const result = mapSubmittedData(mockBody, mockCountries);

@@ -13,7 +13,7 @@ const {
  * These rows should always be present in any "export contract" scenario
  */
 const assertGenericExportContractSummaryListRows = ({ awardMethodValue }) => {
-  it(`should render a ${AWARD_METHOD} summary list row`, () => {
+  it(`should render an ${AWARD_METHOD} summary list row`, () => {
     checkSummaryList[AWARD_METHOD]({ expectedValue: awardMethodValue });
   });
 

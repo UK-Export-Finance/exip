@@ -27,6 +27,7 @@ import mockApplication, {
   mockExportContractAgentService,
   mockExportContractAgentServiceCharge,
   mockNominatedLossPayee,
+  mockOtherAwardMethod,
   referenceNumber,
 } from './mock-application';
 import mockApplications from './mock-applications';
@@ -168,6 +169,7 @@ export {
   mockLossPayeeFinancialDetailsInternational,
   mockLossPayeeFinancialDetailsUk,
   mockNominatedLossPayee,
+  mockOtherAwardMethod,
   mockUrlOrigin,
   mockSession,
   mockSicCodes,

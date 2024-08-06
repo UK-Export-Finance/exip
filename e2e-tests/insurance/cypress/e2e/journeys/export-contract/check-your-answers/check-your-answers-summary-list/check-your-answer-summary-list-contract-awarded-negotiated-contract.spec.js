@@ -13,32 +13,29 @@ const { NEGOTIATED_CONTRACT } = FIELDS.HOW_WAS_THE_CONTRACT_AWARDED[AWARD_METHOD
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(
-  'Insurance - Export contract - Check your answers - Summary list - application under total contract value threshold, no private insurance attempt, not using an agent, contracted awarded negotiated contract',
-  () => {
-    let referenceNumber;
-    let url;
+context(`Insurance - Export contract - Check your answers - Summary list - contract awarded with ${NEGOTIATED_CONTRACT.TEXT}`, () => {
+  let referenceNumber;
+  let url;
 
-    before(() => {
-      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-        referenceNumber = refNumber;
+  before(() => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+      referenceNumber = refNumber;
 
-        cy.completeExportContractSection({ contractAwardedNegotiatedContract: true });
+      cy.completeExportContractSection({ contractAwardedNegotiatedContract: true });
 
-        url = `${baseUrl}${ROOT}/${referenceNumber}${EXPORT_CONTRACT.CHECK_YOUR_ANSWERS}`;
-      });
+      url = `${baseUrl}${ROOT}/${referenceNumber}${EXPORT_CONTRACT.CHECK_YOUR_ANSWERS}`;
     });
+  });
 
-    beforeEach(() => {
-      cy.saveSession();
+  beforeEach(() => {
+    cy.saveSession();
 
-      cy.navigateToUrl(url);
-    });
+    cy.navigateToUrl(url);
+  });
 
-    after(() => {
-      cy.deleteApplication(referenceNumber);
-    });
+  after(() => {
+    cy.deleteApplication(referenceNumber);
+  });
 
-    assertMinimalExportContractSummaryListRows({ awardMethodValue: NEGOTIATED_CONTRACT.TEXT });
-  },
-);
+  assertMinimalExportContractSummaryListRows({ awardMethodValue: NEGOTIATED_CONTRACT.TEXT });
+});
