@@ -29,17 +29,17 @@ const createNewApplicationRelationships = async (connection: Connection) => {
     const applications = await getAllApplications(connection);
 
     const newRelationships = await Promise.all([
-      await createLossPayee(connection, applications),
-      await createJointlyInsuredParty(connection, applications),
-      await createExportContractAgent(connection, applications),
-      await createPrivateMarket(connection, applications),
-      await updateExportContractPrivateMarket(connection),
-      await createCompanyDifferentTradingAddress(connection, applications),
-      await updateCompanyDifferentTradingAddress(connection),
-      await createDeclarationVersionRelationship(connection),
-      await updateDeclarationVersionField(connection, applications),
-      await updateLossPayeeFinancialUkVector(connection),
-      await updateLossPayeeFinancialInternationalVector(connection),
+      createLossPayee(connection, applications),
+      createJointlyInsuredParty(connection, applications),
+      createExportContractAgent(connection, applications),
+      createPrivateMarket(connection, applications),
+      updateExportContractPrivateMarket(connection),
+      createCompanyDifferentTradingAddress(connection, applications),
+      updateCompanyDifferentTradingAddress(connection),
+      createDeclarationVersionRelationship(connection),
+      updateDeclarationVersionField(connection, applications),
+      updateLossPayeeFinancialUkVector(connection),
+      updateLossPayeeFinancialInternationalVector(connection),
     ]);
 
     return newRelationships;
