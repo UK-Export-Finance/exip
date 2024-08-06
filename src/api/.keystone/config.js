@@ -5786,6 +5786,9 @@ var EXPORT_CONTRACT_FIELDS = {
           VALUE: OTHER.DB_ID,
           TEXT: OTHER.VALUE
         }
+      },
+      SUMMARY: {
+        TITLE: "How was the contract awarded"
       }
     }
   },
