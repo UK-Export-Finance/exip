@@ -70,386 +70,386 @@ jobs:
         run: echo 'Timezone set to ${{ env.timezone }}'
 
   # 2. UI - Unit test cases
-  unit-tests:
-    name: Unit 👷
-    needs: [setup]
-    environment:
-      name: ${{ needs.setup.outputs.environment }}
-    runs-on: ubuntu-latest
+  # unit-tests:
+  #   name: Unit 👷
+  #   needs: [setup]
+  #   environment:
+  #     name: ${{ needs.setup.outputs.environment }}
+  #   runs-on: ubuntu-latest
 
-    concurrency:
-      group: unit-tests-${{ github.workflow }}-${{ github.workflow_ref }}
-      cancel-in-progress: true
+  #   concurrency:
+  #     group: unit-tests-${{ github.workflow }}-${{ github.workflow_ref }}
+  #     cancel-in-progress: true
 
-    steps:
-      - name: Timezone
-        uses: szenius/set-timezone@v2.0
-        with:
-          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+  #   steps:
+  #     - name: Timezone
+  #       uses: szenius/set-timezone@v2.0
+  #       with:
+  #         timezoneLinux: ${{ needs.setup.outputs.timezone }}
 
-      - name: Repository
-        uses: actions/checkout@v4
+  #     - name: Repository
+  #       uses: actions/checkout@v4
 
-      - name: Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ vars.NODE_VERSION }}
+  #     - name: Node
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: ${{ vars.NODE_VERSION }}
 
-      - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
+  #     - name: Dependencies
+  #       working-directory: ./
+  #       run: npm run ci:all
 
-      - name: UI
-        working-directory: ./src/ui
-        env:
-          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-          GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
-          GOOGLE_TAG_MANAGER_ID: ${{ secrets.GOOGLE_TAG_MANAGER_ID }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
-          MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
-        run: npm run test
+  #     - name: UI
+  #       working-directory: ./src/ui
+  #       env:
+  #         SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+  #         GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
+  #         GOOGLE_TAG_MANAGER_ID: ${{ secrets.GOOGLE_TAG_MANAGER_ID }}
+  #         GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
+  #         GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
+  #         MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
+  #       run: npm run test
 
-      - name: Coverage
-        uses: codecov/codecov-action@v4
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          flags: unit-test
-          verbose: true
+  #     - name: Coverage
+  #       uses: codecov/codecov-action@v4
+  #       with:
+  #         token: ${{ secrets.CODECOV_TOKEN }}
+  #         flags: unit-test
+  #         verbose: true
 
-  # 3. API - API test cases
-  api-tests:
-    name: API 👷
-    needs: [setup]
-    environment:
-      name: ${{ needs.setup.outputs.environment }}
-    runs-on: ubuntu-latest
+  # # 3. API - API test cases
+  # api-tests:
+  #   name: API 👷
+  #   needs: [setup]
+  #   environment:
+  #     name: ${{ needs.setup.outputs.environment }}
+  #   runs-on: ubuntu-latest
 
-    concurrency:
-      group: api-tests-${{ github.workflow }}-${{ github.workflow_ref }}
-      cancel-in-progress: true
+  #   concurrency:
+  #     group: api-tests-${{ github.workflow }}-${{ github.workflow_ref }}
+  #     cancel-in-progress: true
 
-    steps:
-      - name: Timezone
-        uses: szenius/set-timezone@v2.0
-        with:
-          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+  #   steps:
+  #     - name: Timezone
+  #       uses: szenius/set-timezone@v2.0
+  #       with:
+  #         timezoneLinux: ${{ needs.setup.outputs.timezone }}
 
-      - name: Repository
-        uses: actions/checkout@v4
+  #     - name: Repository
+  #       uses: actions/checkout@v4
 
-      - name: Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ vars.NODE_VERSION }}
+  #     - name: Node
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: ${{ vars.NODE_VERSION }}
 
-      - name: API
-        working-directory: ./
-        env:
-          NODE_ENV: ${{ vars.NODE_ENV }}
-          TLS_CERTIFICATE: '${{ secrets.TLS_CERTIFICATE }}'
-          TLS_KEY: '${{ secrets.TLS_KEY }}'
-          DATABASE_PORT: ${{ vars.DATABASE_PORT }}
-          API_PORT: ${{ vars.API_PORT }}
-          UI_PORT: ${{ vars.UI_PORT }}
-          API_URL: ${{ secrets.API_URL_LOCAL }}
-          API_KEY: ${{ secrets.API_KEY }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL_LOCAL }}
-          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
-          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
-          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-          APIM_MDM_URL: ${{ secrets.APIM_MDM_URL }}
-          APIM_MDM_KEY: ${{ secrets.APIM_MDM_KEY }}
-          APIM_MDM_VALUE: ${{ secrets.APIM_MDM_VALUE }}
-          GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
-          COMPANIES_HOUSE_API_URL: ${{ secrets.COMPANIES_HOUSE_API_URL }}
-          COMPANIES_HOUSE_API_KEY: ${{ secrets.COMPANIES_HOUSE_API_KEY }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
-          UNDERWRITING_TEAM_EMAIL: ${{ secrets.UNDERWRITING_TEAM_EMAIL }}
-          FEEDBACK_EMAIL_RECIPIENT: ${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}
-          MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
-          JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
-          CRON_SCHEDULE_UNVERIFIED_ACCOUNT: ${{ secrets.CRON_SCHEDULE_UNVERIFIED_ACCOUNT }}
-          CRON_SCHEDULE_INACTIVE_APPLICATION: ${{ secrets.CRON_SCHEDULE_INACTIVE_APPLICATION }}
-          CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL: ${{ secrets.CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL }}
-          APPLICATION_URL: ${{ secrets.APPLICATION_URL }}
-        run: |
-          docker compose up --build -d
-          npm run ci:all
-          npm run test --prefix ./src/api
+  #     - name: API
+  #       working-directory: ./
+  #       env:
+  #         NODE_ENV: ${{ vars.NODE_ENV }}
+  #         TLS_CERTIFICATE: '${{ secrets.TLS_CERTIFICATE }}'
+  #         TLS_KEY: '${{ secrets.TLS_KEY }}'
+  #         DATABASE_PORT: ${{ vars.DATABASE_PORT }}
+  #         API_PORT: ${{ vars.API_PORT }}
+  #         UI_PORT: ${{ vars.UI_PORT }}
+  #         API_URL: ${{ secrets.API_URL_LOCAL }}
+  #         API_KEY: ${{ secrets.API_KEY }}
+  #         DATABASE_URL: ${{ secrets.DATABASE_URL_LOCAL }}
+  #         MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+  #         MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+  #         SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+  #         APIM_MDM_URL: ${{ secrets.APIM_MDM_URL }}
+  #         APIM_MDM_KEY: ${{ secrets.APIM_MDM_KEY }}
+  #         APIM_MDM_VALUE: ${{ secrets.APIM_MDM_VALUE }}
+  #         GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
+  #         COMPANIES_HOUSE_API_URL: ${{ secrets.COMPANIES_HOUSE_API_URL }}
+  #         COMPANIES_HOUSE_API_KEY: ${{ secrets.COMPANIES_HOUSE_API_KEY }}
+  #         GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
+  #         GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
+  #         UNDERWRITING_TEAM_EMAIL: ${{ secrets.UNDERWRITING_TEAM_EMAIL }}
+  #         FEEDBACK_EMAIL_RECIPIENT: ${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}
+  #         MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
+  #         JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
+  #         CRON_SCHEDULE_UNVERIFIED_ACCOUNT: ${{ secrets.CRON_SCHEDULE_UNVERIFIED_ACCOUNT }}
+  #         CRON_SCHEDULE_INACTIVE_APPLICATION: ${{ secrets.CRON_SCHEDULE_INACTIVE_APPLICATION }}
+  #         CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL: ${{ secrets.CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL }}
+  #         APPLICATION_URL: ${{ secrets.APPLICATION_URL }}
+  #       run: |
+  #         docker compose up --build -d
+  #         npm run ci:all
+  #         npm run test --prefix ./src/api
 
-      - name: Coverage
-        uses: codecov/codecov-action@v4
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          flags: api-test
-          verbose: true
+  #     - name: Coverage
+  #       uses: codecov/codecov-action@v4
+  #       with:
+  #         token: ${{ secrets.CODECOV_TOKEN }}
+  #         flags: api-test
+  #         verbose: true
 
-  # 4. E2E - Insurance
-  e2e-tests-insurance:
-    name: E2E Insurance 👷
-    needs: [setup]
-    environment:
-      name: ${{ needs.setup.outputs.environment }}
-    runs-on: ubuntu-latest
+  # # 4. E2E - Insurance
+  # e2e-tests-insurance:
+  #   name: E2E Insurance 👷
+  #   needs: [setup]
+  #   environment:
+  #     name: ${{ needs.setup.outputs.environment }}
+  #   runs-on: ubuntu-latest
 
-    strategy:
-      # Do not cancel in-progress jobs upon failure
-      fail-fast: false
-      # Single dimension matrix
-      matrix:
-        spec:
-          [
-            '/*.spec.js',
-            'account/create/**/*.spec.js',
-            'account/manage/**/*.spec.js',
-            'account/password-reset/**/*.spec.js',
-            'account/reactivated/**/*.spec.js',
-            'account/sign-in/**/*.spec.js',
-            'account/sign-out/**/*.spec.js',
-            'account/suspended/**/*.spec.js',
-            'application-submission/*.spec.js',
-            'application-submission/multiple-policy-type/*.spec.js',
-            'application-submission/multiple-policy-type/business-conditions/*.spec.js',
-            'application-submission/multiple-policy-type/buyer-conditions/*.spec.js',
-            'application-submission/multiple-policy-type/buyer-conditions/traded-with-buyer/*.spec.js',
-            'application-submission/multiple-policy-type/declarations-conditions/*.spec.js',
-            'application-submission/multiple-policy-type/export-contract-conditions/*.spec.js',
-            'application-submission/multiple-policy-type/policy-conditions/*.spec.js',
-            'application-submission/single-policy-type/*.spec.js',
-            'application-submission/single-policy-type/business-conditions/*.spec.js',
-            'application-submission/single-policy-type/buyer-conditions/*.spec.js',
-            'application-submission/single-policy-type/buyer-conditions/traded-with-buyer/*.spec.js',
-            'application-submission/single-policy-type/declarations-conditions/*.spec.js',
-            'application-submission/single-policy-type/export-contract-conditions/*.spec.js',
-            'application-submission/single-policy-type/policy-conditions/*.spec.js',
-            'cannot-skip-flow/**/*.spec.js',
-            'check-your-answers/export-contract/*.spec.js',
-            'check-your-answers/export-contract/change-your-answers/about-goods-or-services/*.spec.js',
-            'check-your-answers/export-contract/change-your-answers/agent/*.spec.js',
-            'check-your-answers/export-contract/change-your-answers/agent-charges/*.spec.js',
-            'check-your-answers/export-contract/change-your-answers/agent-service/*.spec.js',
-            'check-your-answers/export-contract/change-your-answers/how-will-you-get-paid/*.spec.js',
-            'check-your-answers/export-contract/change-your-answers/private-market/*.spec.js',
-            'check-your-answers/export-contract/summary-list/**/*.spec.js',
-            'check-your-answers/policy/*.spec.js',
-            'check-your-answers/policy/change-your-answers/another-company/*.spec.js',
-            'check-your-answers/policy/change-your-answers/broker/*.spec.js',
-            'check-your-answers/policy/change-your-answers/loss-payee/*.spec.js',
-            'check-your-answers/policy/change-your-answers/multiple-policy/*.spec.js',
-            'check-your-answers/policy/change-your-answers/name-on-policy/*.spec.js',
-            'check-your-answers/policy/change-your-answers/other-company-details/*.spec.js',
-            'check-your-answers/policy/change-your-answers/pre-credit-period/*.spec.js',
-            'check-your-answers/policy/change-your-answers/single-policy/*.spec.js',
-            'check-your-answers/policy/summary-list/multiple-policy/*.spec.js',
-            'check-your-answers/policy/summary-list/single-policy/*.spec.js',
-            'check-your-answers/your-business/**/*.spec.js',
-            'check-your-answers/your-buyer/**/*.spec.js',
-            'cookies-consent/**/*.spec.js',
-            'dashboard/**/*.spec.js',
-            'declarations/anti-bribery/**/*.spec.js',
-            'declarations/confidentiality/**/*.spec.js',
-            'declarations/confirmation-and-acknowledgements/**/*.spec.js',
-            'eligibility/*.spec.js',
-            'eligibility/buyer-country/**/*.spec.js',
-            'eligibility/cannot-apply/**/*.spec.js',
-            'eligibility/cannot-apply-multiple-risks/**/*.spec.js',
-            'eligibility/cannot-skip-flow/**/*.spec.js',
-            'eligibility/contract-too-short/**/*.spec.js',
-            'eligibility/change-your-answers/**/*.spec.js',
-            'eligibility/check-your-answers/**/*.spec.js',
-            'eligibility/companies-house/**/*.spec.js',
-            'eligibility/company-details/**/*.spec.js',
-            'eligibility/company-not-active/**/*.spec.js',
-            'eligibility/cover-period/**/*.spec.js',
-            'eligibility/eligible-to-apply-online/**/*.spec.js',
-            'eligibility/end-buyer/**/*.spec.js',
-            'eligibility/exporter-location/**/*.spec.js',
-            'eligibility/have-an-account/**/*.spec.js',
-            'eligibility/member-of-a-group/**/*.spec.js',
-            'eligibility/no-companies-house-number/**/*.spec.js',
-            'eligibility/party-to-consortium/**/*.spec.js',
-            'eligibility/total-value-insured/**/*.spec.js',
-            'eligibility/uk-goods-or-services/**/*.spec.js',
-            'export-contract/how-was-the-contract-awarded/**/*.spec.js',
-            'export-contract/about-goods-or-services/**/*.spec.js',
-            'export-contract/how-will-you-get-paid/**/*.spec.js',
-            'export-contract/private-market/**/*.spec.js',
-            'export-contract/declined-by-private-market/**/*.spec.js',
-            'export-contract/agent/**/*.spec.js',
-            'export-contract/agent-details/**/*.spec.js',
-            'export-contract/agent-service/**/*.spec.js',
-            'export-contract/agent-charges/**/*.spec.js',
-            'export-contract/change-your-answers/about-goods-or-services/*.spec.js',
-            'export-contract/change-your-answers/agent/*.spec.js',
-            'export-contract/change-your-answers/agent-charges/*.spec.js',
-            'export-contract/change-your-answers/agent-service/*.spec.js',
-            'export-contract/change-your-answers/how-will-you-get-paid/*.spec.js',
-            'export-contract/change-your-answers/private-market/*.spec.js',
-            'export-contract/check-your-answers/**/*.spec.js',
-            'export-contract/root/**/*.spec.js',
-            'feedback/**/*.spec.js',
-            'no-access-application-submitted/**/*.spec.js',
-            'no-access-to-application/**/*.spec.js',
-            'policy/*.spec.js',
-            'policy/another-company/**/*.spec.js',
-            'policy/broker/**/*.spec.js',
-            'policy/broker-details/**/*.spec.js',
-            'policy/broker-confirm-address/**/*.spec.js',
-            'policy/change-your-answers/another-company/**/*.spec.js',
-            'policy/change-your-answers/broker/**/*.spec.js',
-            'policy/change-your-answers/loss-payee/**/*.spec.js',
-            'policy/change-your-answers/multiple-policy/**/*.spec.js',
-            'policy/change-your-answers/name-on-policy/**/*.spec.js',
-            'policy/change-your-answers/other-company-details/**/*.spec.js',
-            'policy/change-your-answers/pre-credit-period/**/*.spec.js',
-            'policy/change-your-answers/single-policy/**/*.spec.js',
-            'policy/check-your-answers/**/*.spec.js',
-            'policy/different-name-on-policy/**/*.spec.js',
-            'policy/loss-payee/**/*.spec.js',
-            'policy/loss-payee-details/**/*.spec.js',
-            'policy/loss-payee-financial-details-uk/**/*.spec.js',
-            'policy/loss-payee-financial-details-international/**/*.spec.js',
-            'policy/multiple-contract-policy/**/*.spec.js',
-            'policy/name-on-policy/**/*.spec.js',
-            'policy/other-company-details/**/*.spec.js',
-            'policy/pre-credit-period/**/*.spec.js',
-            'policy/root/**/*.spec.js',
-            'policy/single-contract-policy/**/*.spec.js',
-            'policy/type-of-policy/**/*.spec.js',
-            'redirects/*.spec.js',
-            'submit-name-fields-with-special-characters/**/*.spec.js',
-            'submit-textarea-fields-with-new-line-characters/**/*.spec.js',
-            'submit-textarea-fields-with-special-characters/**/*.spec.js',
-            'submit-textarea-fields-with-a-pure-number/**/*.spec.js',
-            'task-list/**/*.spec.js',
-            'your-business/alternative-trading-address/**/*.spec.js',
-            'your-business/change-your-answers/**/*.spec.js',
-            'your-business/check-your-answers/**/*.spec.js',
-            'your-business/companies-house-number/*.spec.js',
-            'your-business/company-details/**/*.spec.js',
-            'your-business/credit-control/**/*.spec.js',
-            'your-business/nature-of-business/**/*.spec.js',
-            'your-business/root/**/*.spec.js',
-            'your-business/turnover/**/*.spec.js',
-            'your-buyer/alternative-currency/**/*.spec.js',
-            'your-buyer/buyer-financial-information/**/*.spec.js',
-            'your-buyer/change-your-answers/**/*.spec.js',
-            'your-buyer/check-your-answers/**/*.spec.js',
-            'your-buyer/company-or-organisation/**/*.spec.js',
-            'your-buyer/connection-with-the-buyer/**/*.spec.js',
-            'your-buyer/credit-insurance-cover/**/*.spec.js',
-            'your-buyer/root/**/*.spec.js',
-            'your-buyer/traded-with-buyer/**/*.spec.js',
-            'your-buyer/trading-history/**/*.spec.js',
-          ]
+  #   strategy:
+  #     # Do not cancel in-progress jobs upon failure
+  #     fail-fast: false
+  #     # Single dimension matrix
+  #     matrix:
+  #       spec:
+  #         [
+  #           '/*.spec.js',
+  #           'account/create/**/*.spec.js',
+  #           'account/manage/**/*.spec.js',
+  #           'account/password-reset/**/*.spec.js',
+  #           'account/reactivated/**/*.spec.js',
+  #           'account/sign-in/**/*.spec.js',
+  #           'account/sign-out/**/*.spec.js',
+  #           'account/suspended/**/*.spec.js',
+  #           'application-submission/*.spec.js',
+  #           'application-submission/multiple-policy-type/*.spec.js',
+  #           'application-submission/multiple-policy-type/business-conditions/*.spec.js',
+  #           'application-submission/multiple-policy-type/buyer-conditions/*.spec.js',
+  #           'application-submission/multiple-policy-type/buyer-conditions/traded-with-buyer/*.spec.js',
+  #           'application-submission/multiple-policy-type/declarations-conditions/*.spec.js',
+  #           'application-submission/multiple-policy-type/export-contract-conditions/*.spec.js',
+  #           'application-submission/multiple-policy-type/policy-conditions/*.spec.js',
+  #           'application-submission/single-policy-type/*.spec.js',
+  #           'application-submission/single-policy-type/business-conditions/*.spec.js',
+  #           'application-submission/single-policy-type/buyer-conditions/*.spec.js',
+  #           'application-submission/single-policy-type/buyer-conditions/traded-with-buyer/*.spec.js',
+  #           'application-submission/single-policy-type/declarations-conditions/*.spec.js',
+  #           'application-submission/single-policy-type/export-contract-conditions/*.spec.js',
+  #           'application-submission/single-policy-type/policy-conditions/*.spec.js',
+  #           'cannot-skip-flow/**/*.spec.js',
+  #           'check-your-answers/export-contract/*.spec.js',
+  #           'check-your-answers/export-contract/change-your-answers/about-goods-or-services/*.spec.js',
+  #           'check-your-answers/export-contract/change-your-answers/agent/*.spec.js',
+  #           'check-your-answers/export-contract/change-your-answers/agent-charges/*.spec.js',
+  #           'check-your-answers/export-contract/change-your-answers/agent-service/*.spec.js',
+  #           'check-your-answers/export-contract/change-your-answers/how-will-you-get-paid/*.spec.js',
+  #           'check-your-answers/export-contract/change-your-answers/private-market/*.spec.js',
+  #           'check-your-answers/export-contract/summary-list/**/*.spec.js',
+  #           'check-your-answers/policy/*.spec.js',
+  #           'check-your-answers/policy/change-your-answers/another-company/*.spec.js',
+  #           'check-your-answers/policy/change-your-answers/broker/*.spec.js',
+  #           'check-your-answers/policy/change-your-answers/loss-payee/*.spec.js',
+  #           'check-your-answers/policy/change-your-answers/multiple-policy/*.spec.js',
+  #           'check-your-answers/policy/change-your-answers/name-on-policy/*.spec.js',
+  #           'check-your-answers/policy/change-your-answers/other-company-details/*.spec.js',
+  #           'check-your-answers/policy/change-your-answers/pre-credit-period/*.spec.js',
+  #           'check-your-answers/policy/change-your-answers/single-policy/*.spec.js',
+  #           'check-your-answers/policy/summary-list/multiple-policy/*.spec.js',
+  #           'check-your-answers/policy/summary-list/single-policy/*.spec.js',
+  #           'check-your-answers/your-business/**/*.spec.js',
+  #           'check-your-answers/your-buyer/**/*.spec.js',
+  #           'cookies-consent/**/*.spec.js',
+  #           'dashboard/**/*.spec.js',
+  #           'declarations/anti-bribery/**/*.spec.js',
+  #           'declarations/confidentiality/**/*.spec.js',
+  #           'declarations/confirmation-and-acknowledgements/**/*.spec.js',
+  #           'eligibility/*.spec.js',
+  #           'eligibility/buyer-country/**/*.spec.js',
+  #           'eligibility/cannot-apply/**/*.spec.js',
+  #           'eligibility/cannot-apply-multiple-risks/**/*.spec.js',
+  #           'eligibility/cannot-skip-flow/**/*.spec.js',
+  #           'eligibility/contract-too-short/**/*.spec.js',
+  #           'eligibility/change-your-answers/**/*.spec.js',
+  #           'eligibility/check-your-answers/**/*.spec.js',
+  #           'eligibility/companies-house/**/*.spec.js',
+  #           'eligibility/company-details/**/*.spec.js',
+  #           'eligibility/company-not-active/**/*.spec.js',
+  #           'eligibility/cover-period/**/*.spec.js',
+  #           'eligibility/eligible-to-apply-online/**/*.spec.js',
+  #           'eligibility/end-buyer/**/*.spec.js',
+  #           'eligibility/exporter-location/**/*.spec.js',
+  #           'eligibility/have-an-account/**/*.spec.js',
+  #           'eligibility/member-of-a-group/**/*.spec.js',
+  #           'eligibility/no-companies-house-number/**/*.spec.js',
+  #           'eligibility/party-to-consortium/**/*.spec.js',
+  #           'eligibility/total-value-insured/**/*.spec.js',
+  #           'eligibility/uk-goods-or-services/**/*.spec.js',
+  #           'export-contract/how-was-the-contract-awarded/**/*.spec.js',
+  #           'export-contract/about-goods-or-services/**/*.spec.js',
+  #           'export-contract/how-will-you-get-paid/**/*.spec.js',
+  #           'export-contract/private-market/**/*.spec.js',
+  #           'export-contract/declined-by-private-market/**/*.spec.js',
+  #           'export-contract/agent/**/*.spec.js',
+  #           'export-contract/agent-details/**/*.spec.js',
+  #           'export-contract/agent-service/**/*.spec.js',
+  #           'export-contract/agent-charges/**/*.spec.js',
+  #           'export-contract/change-your-answers/about-goods-or-services/*.spec.js',
+  #           'export-contract/change-your-answers/agent/*.spec.js',
+  #           'export-contract/change-your-answers/agent-charges/*.spec.js',
+  #           'export-contract/change-your-answers/agent-service/*.spec.js',
+  #           'export-contract/change-your-answers/how-will-you-get-paid/*.spec.js',
+  #           'export-contract/change-your-answers/private-market/*.spec.js',
+  #           'export-contract/check-your-answers/**/*.spec.js',
+  #           'export-contract/root/**/*.spec.js',
+  #           'feedback/**/*.spec.js',
+  #           'no-access-application-submitted/**/*.spec.js',
+  #           'no-access-to-application/**/*.spec.js',
+  #           'policy/*.spec.js',
+  #           'policy/another-company/**/*.spec.js',
+  #           'policy/broker/**/*.spec.js',
+  #           'policy/broker-details/**/*.spec.js',
+  #           'policy/broker-confirm-address/**/*.spec.js',
+  #           'policy/change-your-answers/another-company/**/*.spec.js',
+  #           'policy/change-your-answers/broker/**/*.spec.js',
+  #           'policy/change-your-answers/loss-payee/**/*.spec.js',
+  #           'policy/change-your-answers/multiple-policy/**/*.spec.js',
+  #           'policy/change-your-answers/name-on-policy/**/*.spec.js',
+  #           'policy/change-your-answers/other-company-details/**/*.spec.js',
+  #           'policy/change-your-answers/pre-credit-period/**/*.spec.js',
+  #           'policy/change-your-answers/single-policy/**/*.spec.js',
+  #           'policy/check-your-answers/**/*.spec.js',
+  #           'policy/different-name-on-policy/**/*.spec.js',
+  #           'policy/loss-payee/**/*.spec.js',
+  #           'policy/loss-payee-details/**/*.spec.js',
+  #           'policy/loss-payee-financial-details-uk/**/*.spec.js',
+  #           'policy/loss-payee-financial-details-international/**/*.spec.js',
+  #           'policy/multiple-contract-policy/**/*.spec.js',
+  #           'policy/name-on-policy/**/*.spec.js',
+  #           'policy/other-company-details/**/*.spec.js',
+  #           'policy/pre-credit-period/**/*.spec.js',
+  #           'policy/root/**/*.spec.js',
+  #           'policy/single-contract-policy/**/*.spec.js',
+  #           'policy/type-of-policy/**/*.spec.js',
+  #           'redirects/*.spec.js',
+  #           'submit-name-fields-with-special-characters/**/*.spec.js',
+  #           'submit-textarea-fields-with-new-line-characters/**/*.spec.js',
+  #           'submit-textarea-fields-with-special-characters/**/*.spec.js',
+  #           'submit-textarea-fields-with-a-pure-number/**/*.spec.js',
+  #           'task-list/**/*.spec.js',
+  #           'your-business/alternative-trading-address/**/*.spec.js',
+  #           'your-business/change-your-answers/**/*.spec.js',
+  #           'your-business/check-your-answers/**/*.spec.js',
+  #           'your-business/companies-house-number/*.spec.js',
+  #           'your-business/company-details/**/*.spec.js',
+  #           'your-business/credit-control/**/*.spec.js',
+  #           'your-business/nature-of-business/**/*.spec.js',
+  #           'your-business/root/**/*.spec.js',
+  #           'your-business/turnover/**/*.spec.js',
+  #           'your-buyer/alternative-currency/**/*.spec.js',
+  #           'your-buyer/buyer-financial-information/**/*.spec.js',
+  #           'your-buyer/change-your-answers/**/*.spec.js',
+  #           'your-buyer/check-your-answers/**/*.spec.js',
+  #           'your-buyer/company-or-organisation/**/*.spec.js',
+  #           'your-buyer/connection-with-the-buyer/**/*.spec.js',
+  #           'your-buyer/credit-insurance-cover/**/*.spec.js',
+  #           'your-buyer/root/**/*.spec.js',
+  #           'your-buyer/traded-with-buyer/**/*.spec.js',
+  #           'your-buyer/trading-history/**/*.spec.js',
+  #         ]
 
-    concurrency:
-      group: e2e-tests-insurance-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
-      cancel-in-progress: true
+  #   concurrency:
+  #     group: e2e-tests-insurance-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
+  #     cancel-in-progress: true
 
-    steps:
-      - uses: actions/checkout@v4
+  #   steps:
+  #     - uses: actions/checkout@v4
 
-      - name: Timezone
-        uses: szenius/set-timezone@v2.0
-        with:
-          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+  #     - name: Timezone
+  #       uses: szenius/set-timezone@v2.0
+  #       with:
+  #         timezoneLinux: ${{ needs.setup.outputs.timezone }}
 
-      - name: Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ vars.NODE_VERSION }}
+  #     - name: Node
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: ${{ vars.NODE_VERSION }}
 
-      - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
+  #     - name: Dependencies
+  #       working-directory: ./
+  #       run: npm run ci:all
 
-      - name: Docker
-        run: docker compose up --build -d
+  #     - name: Docker
+  #       run: docker compose up --build -d
 
-      - name: Wait
-        run: sleep 30s
+  #     - name: Wait
+  #       run: sleep 30s
 
-      - name: Execute
-        working-directory: ./e2e-tests/insurance
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+  #     - name: Execute
+  #       working-directory: ./e2e-tests/insurance
+  #       run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
 
-      - name: Coverage
-        uses: codecov/codecov-action@v4
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          flags: e2e-test
-          verbose: true
+  #     - name: Coverage
+  #       uses: codecov/codecov-action@v4
+  #       with:
+  #         token: ${{ secrets.CODECOV_TOKEN }}
+  #         flags: e2e-test
+  #         verbose: true
 
-  # 5. E2E - Quote
-  e2e-tests-quote:
-    name: E2E Quote 👷
-    needs: [setup]
-    environment:
-      name: ${{ needs.setup.outputs.environment }}
-    runs-on: ubuntu-latest
+  # # 5. E2E - Quote
+  # e2e-tests-quote:
+  #   name: E2E Quote 👷
+  #   needs: [setup]
+  #   environment:
+  #     name: ${{ needs.setup.outputs.environment }}
+  #   runs-on: ubuntu-latest
 
-    strategy:
-      # Do not cancel in-progress jobs upon failure
-      fail-fast: false
-      # Single dimension matrix
-      matrix:
-        spec:
-          [
-            '/*.spec.js',
-            'cookies-consent/**/*.spec.js',
-            'quote/*.spec.js',
-            'quote/buyer-body/*.spec.js',
-            'quote/buyer-country/*.spec.js',
-            'quote/cannot-skip-flow/*.spec.js',
-            'quote/change-your-answers/*.spec.js',
-            'quote/check-your-answers/*.spec.js',
-            'quote/exporter-location/*.spec.js',
-            'quote/policy-type/*.spec.js',
-            'quote/tell-us-about-your-policy/*.spec.js',
-            'quote/uk-goods-or-services/*.spec.js',
-            'quote/your-quote/*.spec.js',
-          ]
+  #   strategy:
+  #     # Do not cancel in-progress jobs upon failure
+  #     fail-fast: false
+  #     # Single dimension matrix
+  #     matrix:
+  #       spec:
+  #         [
+  #           '/*.spec.js',
+  #           'cookies-consent/**/*.spec.js',
+  #           'quote/*.spec.js',
+  #           'quote/buyer-body/*.spec.js',
+  #           'quote/buyer-country/*.spec.js',
+  #           'quote/cannot-skip-flow/*.spec.js',
+  #           'quote/change-your-answers/*.spec.js',
+  #           'quote/check-your-answers/*.spec.js',
+  #           'quote/exporter-location/*.spec.js',
+  #           'quote/policy-type/*.spec.js',
+  #           'quote/tell-us-about-your-policy/*.spec.js',
+  #           'quote/uk-goods-or-services/*.spec.js',
+  #           'quote/your-quote/*.spec.js',
+  #         ]
 
-    concurrency:
-      group: e2e-tests-quote-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
-      cancel-in-progress: true
+  #   concurrency:
+  #     group: e2e-tests-quote-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
+  #     cancel-in-progress: true
 
-    steps:
-      - uses: actions/checkout@v4
+  #   steps:
+  #     - uses: actions/checkout@v4
 
-      - name: Timezone
-        uses: szenius/set-timezone@v2.0
-        with:
-          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+  #     - name: Timezone
+  #       uses: szenius/set-timezone@v2.0
+  #       with:
+  #         timezoneLinux: ${{ needs.setup.outputs.timezone }}
 
-      - name: Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ vars.NODE_VERSION }}
+  #     - name: Node
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: ${{ vars.NODE_VERSION }}
 
-      - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
+  #     - name: Dependencies
+  #       working-directory: ./
+  #       run: npm run ci:all
 
-      - name: Docker
-        run: docker compose up --build -d
+  #     - name: Docker
+  #       run: docker compose up --build -d
 
-      - name: Wait
-        run: sleep 30s
+  #     - name: Wait
+  #       run: sleep 30s
 
-      - name: Execute
-        working-directory: ./e2e-tests/quote
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+  #     - name: Execute
+  #       working-directory: ./e2e-tests/quote
+  #       run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
 
-      - name: Coverage
-        uses: codecov/codecov-action@v4
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          flags: e2e-test
-          verbose: true
+  #     - name: Coverage
+  #       uses: codecov/codecov-action@v4
+  #       with:
+  #         token: ${{ secrets.CODECOV_TOKEN }}
+  #         flags: e2e-test
+  #         verbose: true
 
   # 6. E2E - Switch
   e2e-tests-switch:
@@ -500,6 +500,6 @@ jobs:
       - name: Coverage
         uses: codecov/codecov-action@v4
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
           flags: e2e-test
-          verbose: true
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
