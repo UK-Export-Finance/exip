@@ -11,6 +11,7 @@ const { ELIGIBILITY, EXPORTER_BUSINESS, BUYER, POLICY, EXPORT_CONTRACT } = FIELD
  * This is because:
  * - In V1, there is no ability to check the ELIGIBILITY answers.
  * - In V2, there is the ability to check the ELIGIBILITY answers.
+ * @param {ApplicationFlat} application
  * @returns {Array<string>} Required field IDs
  */
 const requiredFields = (application: ApplicationFlat) => {

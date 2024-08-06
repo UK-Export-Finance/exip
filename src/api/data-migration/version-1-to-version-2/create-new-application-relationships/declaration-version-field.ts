@@ -31,7 +31,7 @@ const updateDeclarationVersionField = async (connection: Connection) => {
       const updated = await executeSqlQuery({
         connection,
         query,
-        loggingMessage: `Updating version column in declartion table for declaration ${declaration.id}`,
+        loggingMessage: `Updating version column in declaration table for declaration ${declaration.id}`,
       });
 
       return updated;

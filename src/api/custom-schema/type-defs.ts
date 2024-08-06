@@ -196,10 +196,10 @@ const typeDefs = `
     hasCompaniesHouseNumber: Boolean!
     hasEndBuyer: Boolean!
     hasMinimumUkGoodsOrServices: Boolean!
+    isMemberOfAGroup: Boolean!
+    isPartyToConsortium: Boolean!
     totalContractValueId: Int!
     validExporterLocation: Boolean!
-    isPartyToConsortium: Boolean!
-    isMemberOfAGroup: Boolean!
   }
 
   type CreateAnApplicationResponse {
