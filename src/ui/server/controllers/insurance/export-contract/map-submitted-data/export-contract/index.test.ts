@@ -1,6 +1,7 @@
 import mapSubmittedData from '.';
 import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
 import getCountryByIsoCode from '../../../../../helpers/get-country-by-iso-code';
+import { EXPORT_CONTRACT_AWARD_METHOD } from '../../../../../constants';
 import { mockCountries, mockExportContract } from '../../../../../test-mocks';
 import { RequestBody } from '../../../../../../types';
 
@@ -11,6 +12,8 @@ const {
 
 const mockCountryIsoCode = mockCountries[0].isoCode;
 const mockAwardMethodId = mockExportContract.awardMethod.id;
+
+const { DB_ID: OTHER_DB_ID } = EXPORT_CONTRACT_AWARD_METHOD.OTHER;
 
 describe('controllers/insurance/export-contract/map-submitted-data/export-contract', () => {
   let mockFormBody: RequestBody;
@@ -95,15 +98,15 @@ describe('controllers/insurance/export-contract/map-submitted-data/export-contra
     });
   });
 
-  describe(`when ${AWARD_METHOD} is not equal to ${OTHER_AWARD_METHOD}`, () => {
+  describe(`when ${AWARD_METHOD} is not equal to ${OTHER_DB_ID}`, () => {
     it(`should return the form body with an empty ${OTHER_AWARD_METHOD}`, () => {
-      const mockBodyWithoutCountry = {
+      const mockBody = {
         ...mockFormBody,
         [AWARD_METHOD]: mockAwardMethodId,
         [OTHER_AWARD_METHOD]: 'test',
       };
 
-      const result = mapSubmittedData(mockBodyWithoutCountry, mockCountries);
+      const result = mapSubmittedData(mockBody, mockCountries);
 
       const expected = {
         ...mockFormBody,
@@ -113,6 +116,30 @@ describe('controllers/insurance/export-contract/map-submitted-data/export-contra
           },
         },
         [OTHER_AWARD_METHOD]: '',
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when ${AWARD_METHOD} is equal to ${OTHER_DB_ID}`, () => {
+    it(`should return the form body with ${OTHER_AWARD_METHOD} populated`, () => {
+      const mockBody = {
+        ...mockFormBody,
+        [AWARD_METHOD]: OTHER_DB_ID,
+        [OTHER_AWARD_METHOD]: 'test',
+      };
+
+      const result = mapSubmittedData(mockBody, mockCountries);
+
+      const expected = {
+        ...mockFormBody,
+        [AWARD_METHOD]: {
+          connect: {
+            id: OTHER_DB_ID,
+          },
+        },
+        [OTHER_AWARD_METHOD]: mockBody[OTHER_AWARD_METHOD],
       };
 
       expect(result).toEqual(expected);
