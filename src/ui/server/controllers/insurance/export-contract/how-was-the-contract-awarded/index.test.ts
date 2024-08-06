@@ -16,7 +16,7 @@ import { mockReq, mockRes, mockExportContract, referenceNumber } from '../../../
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES },
+  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES, HOW_WAS_THE_CONTRACT_AWARDED_SAVE_AND_BACK: SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -71,7 +71,7 @@ describe('controllers/insurance/export-contract/how-was-the-contract-awarded', (
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables();
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELDS: {
@@ -84,7 +84,7 @@ describe('controllers/insurance/export-contract/how-was-the-contract-awarded', (
             ...FIELDS.HOW_WAS_THE_CONTRACT_AWARDED[OTHER_AWARD_METHOD],
           },
         },
-        SAVE_AND_BACK_URL: '#',
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -100,7 +100,7 @@ describe('controllers/insurance/export-contract/how-was-the-contract-awarded', (
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(),
+        ...pageVariables(referenceNumber),
         CONDITIONAL_OTHER_METHOD_HTML,
         userName: getUserNameFromSession(req.session.user),
         submittedValues: mockExportContract,
@@ -140,7 +140,7 @@ describe('controllers/insurance/export-contract/how-was-the-contract-awarded', (
             PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables(),
+          ...pageVariables(referenceNumber),
           CONDITIONAL_OTHER_METHOD_HTML,
           userName: getUserNameFromSession(req.session.user),
           submittedValues: {

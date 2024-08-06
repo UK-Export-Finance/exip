@@ -1,11 +1,24 @@
 # Changelog
 
-## [2.30.0](https://github.com/UK-Export-Finance/exip/compare/v2.29.0...v2.30.0) (2024-08-02)
+## [2.32.0](https://github.com/UK-Export-Finance/exip/compare/v2.31.0...v2.32.0) (2024-08-05)
 
 
 ### Features
 
-* **EMS-3665:** export contract - how was contract awarded - data saving ([#2883](https://github.com/UK-Export-Finance/exip/issues/2883)) ([d91a5d9](https://github.com/UK-Export-Finance/exip/commit/d91a5d9b186209cc07311b6ed0eb53c3f8464287))
+* **EMS-3662:** export contract - how was contract awarded - save and back ([#2892](https://github.com/UK-Export-Finance/exip/issues/2892)) ([8003b9d](https://github.com/UK-Export-Finance/exip/commit/8003b9d66fda8fb75d26877c9fccb9e9c3e753c1))
+
+## [2.31.0](https://github.com/UK-Export-Finance/exip/compare/v2.30.0...v2.31.0) (2024-08-05)
+
+
+### Features
+
+* **EMS-3685:** added xlsx for 2 new eligibility fields ([#2884](https://github.com/UK-Export-Finance/exip/issues/2884)) ([3878733](https://github.com/UK-Export-Finance/exip/commit/3878733d3235e38fc20e02e5f0b8d43492990974))
+
+## [2.30.0](https://github.com/UK-Export-Finance/exip/compare/v2.29.0...v2.30.0) (2024-08-02)
+
+### Features
+
+- **EMS-3665:** export contract - how was contract awarded - data saving ([#2883](https://github.com/UK-Export-Finance/exip/issues/2883)) ([d91a5d9](https://github.com/UK-Export-Finance/exip/commit/d91a5d9b186209cc07311b6ed0eb53c3f8464287))
 
 ## [2.29.0](https://github.com/UK-Export-Finance/exip/compare/v2.28.2...v2.29.0) (2024-08-01)
 
