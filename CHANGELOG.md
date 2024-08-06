@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.33.0](https://github.com/UK-Export-Finance/exip/compare/v2.32.0...v2.33.0) (2024-08-06)
+
+### Features
+
+- **EMS-3709-3710:** export contract - how the contract was awarded - check your answers ([#2895](https://github.com/UK-Export-Finance/exip/issues/2895)) ([4648efc](https://github.com/UK-Export-Finance/exip/commit/4648efc28376536127975d4954b1615135a083bc))
+
 ## [2.32.0](https://github.com/UK-Export-Finance/exip/compare/v2.31.0...v2.32.0) (2024-08-05)
 
 ### Features

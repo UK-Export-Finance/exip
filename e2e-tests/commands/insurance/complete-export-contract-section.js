@@ -7,7 +7,11 @@
  * @param {Boolean} agentChargeMethodPercentage: Agent charge method is "percentage"
  * @param {Boolean} alternativeCurrency: Should submit an "alternative currency". Defaults to false.
  * @param {Boolean} attemptedPrivateMarketCover: Has attempted to insure through the private market
- * @param {Boolean} contractAwardedOtherMethod: "How was the contract awarded" method as "other"
+ * @param {Boolean} contractAwardedCompetitiveBidding: "How was the contract awarded" method as COMPETITIVE_BIDDING
+ * @param {Boolean} contractAwardedDirectAward: "How was the contract awarded" method as DIRECT_AWARD
+ * @param {Boolean} contractAwardedNegotiatedContract: "How was the contract awarded" method as NEGOTIATED_CONTRACT
+ * @param {Boolean} contractAwardedOpenTender: "How was the contract awarded" method as OPEN_TENDER
+ * @param {Boolean} contractAwardedOtherMethod: "How was the contract awarded" method as OTHER
  * @param {Boolean} finalDestinationKnown: "Final destination known"
  * @param {Boolean} isUsingAgent: Exporter is using an agent
  * @param {Boolean} submitCheckYourAnswers: Click export contract "check your answers" submit button
@@ -21,6 +25,10 @@ const completeExportContractSection = ({
   agentChargeMethodPercentage = false,
   alternativeCurrency = false,
   attemptedPrivateMarketCover = false,
+  contractAwardedCompetitiveBidding = false,
+  contractAwardedDirectAward = false,
+  contractAwardedNegotiatedContract = false,
+  contractAwardedOpenTender = true,
   contractAwardedOtherMethod = false,
   finalDestinationKnown,
   isUsingAgent = false,
@@ -30,7 +38,13 @@ const completeExportContractSection = ({
 }) => {
   cy.startInsuranceExportContractSection({ viaTaskList });
 
-  cy.completeAndSubmitHowWasTheContractAwardedForm({ otherMethod: contractAwardedOtherMethod });
+  cy.completeAndSubmitHowWasTheContractAwardedForm({
+    openTender: contractAwardedOpenTender,
+    negotiatedContract: contractAwardedNegotiatedContract,
+    directAward: contractAwardedDirectAward,
+    competitiveBidding: contractAwardedCompetitiveBidding,
+    otherMethod: contractAwardedOtherMethod,
+  });
 
   cy.completeAndSubmitAboutGoodsOrServicesForm({ finalDestinationKnown });
   cy.completeAndSubmitHowYouWillGetPaidForm({});
