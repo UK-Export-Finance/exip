@@ -117,7 +117,7 @@ jobs:
   #         flags: unit-test
   #         verbose: true
 
-  # 3. API - API test cases
+  # # 3. API - API test cases
   # api-tests:
   #   name: API 👷
   #   needs: [setup]
@@ -186,7 +186,7 @@ jobs:
   #         flags: api-test
   #         verbose: true
 
-  # 4. E2E - Insurance
+  # # 4. E2E - Insurance
   # e2e-tests-insurance:
   #   name: E2E Insurance 👷
   #   needs: [setup]
@@ -229,6 +229,7 @@ jobs:
   #           'check-your-answers/export-contract/change-your-answers/about-goods-or-services/*.spec.js',
   #           'check-your-answers/export-contract/change-your-answers/agent/*.spec.js',
   #           'check-your-answers/export-contract/change-your-answers/agent-charges/*.spec.js',
+  #           'check-your-answers/export-contract/change-your-answers/how-the-contract-was-awarded/*.spec.js',
   #           'check-your-answers/export-contract/change-your-answers/agent-service/*.spec.js',
   #           'check-your-answers/export-contract/change-your-answers/how-will-you-get-paid/*.spec.js',
   #           'check-your-answers/export-contract/change-your-answers/private-market/*.spec.js',
@@ -285,6 +286,7 @@ jobs:
   #           'export-contract/change-your-answers/agent/*.spec.js',
   #           'export-contract/change-your-answers/agent-charges/*.spec.js',
   #           'export-contract/change-your-answers/agent-service/*.spec.js',
+  #           'export-contract/change-your-answers/how-the-contract-was-awarded/*.spec.js',
   #           'export-contract/change-your-answers/how-will-you-get-paid/*.spec.js',
   #           'export-contract/change-your-answers/private-market/*.spec.js',
   #           'export-contract/check-your-answers/**/*.spec.js',
@@ -487,23 +489,15 @@ jobs:
         working-directory: ./
         run: npm run ci:all
 
-      # - name: Docker
-      #   run: docker compose up --build -d
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          tags: ${{ steps.dockermeta.outputs.tags }}
-          labels: ${{ steps.dockermeta.outputs.labels }}
-          push: true
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+      - name: Docker
+        run: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
+
+      - name: Execute
+        working-directory: ./e2e-tests/switch-between-services
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
 
       - name: Execute
         working-directory: ./e2e-tests/switch-between-services
