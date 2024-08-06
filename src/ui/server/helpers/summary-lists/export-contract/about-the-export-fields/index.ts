@@ -47,7 +47,7 @@ const generateAboutTheExportFields = (answers: ApplicationExportContract, refere
         ),
         renderChangeLink: true,
       },
-      answers[OTHER_AWARD_METHOD] ? answers[OTHER_AWARD_METHOD] : answers[AWARD_METHOD].value,
+      answers[OTHER_AWARD_METHOD] ? answers[OTHER_AWARD_METHOD] : answers[AWARD_METHOD]?.value,
     ),
     fieldGroupItem({
       field: getFieldById(FIELDS.ABOUT_GOODS_OR_SERVICES, DESCRIPTION),
