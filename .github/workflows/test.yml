@@ -497,9 +497,13 @@ jobs:
         working-directory: ./e2e-tests/switch-between-services
         run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
 
+      - name: Generate Coverage Report
+        run: npx nyc report --reporter=lcov
+
       - name: Coverage
         uses: codecov/codecov-action@v4
         with:
+          files: ./coverage/lcov.info
           flags: e2e-test
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
