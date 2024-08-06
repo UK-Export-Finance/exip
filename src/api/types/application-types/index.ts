@@ -216,6 +216,7 @@ export interface ApplicationPrivateMarket extends Relationship {
 
 export interface ApplicationExportContract extends Relationship {
   agent: ApplicationExportContractAgent;
+  awardMethodId: string;
   id: string;
   finalDestinationKnown?: boolean;
   finalDestinationCountryCode?: string;

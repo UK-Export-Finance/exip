@@ -2,7 +2,6 @@
 
 ## [2.34.0](https://github.com/UK-Export-Finance/exip/compare/v2.33.0...v2.34.0) (2024-08-06)
 
-
 ### Features
 
 * **EMS-3722-3723:** data migration - eligibility, export contract ([#2901](https://github.com/UK-Export-Finance/exip/issues/2901)) ([0c16bc1](https://github.com/UK-Export-Finance/exip/commit/0c16bc18b52bf1a6a0737a124d693203a8eba96a))

@@ -41,6 +41,9 @@ export const EXPORT_CONTRACT_FIELDS = {
           TEXT: OTHER.VALUE,
         },
       },
+      SUMMARY: {
+        TITLE: 'How was the contract awarded',
+      },
     },
   },
   ABOUT_GOODS_OR_SERVICES: {
