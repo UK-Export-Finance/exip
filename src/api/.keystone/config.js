@@ -7344,8 +7344,31 @@ var mapBuyer = (application2) => {
 };
 var map_buyer_default = mapBuyer;
 
+// generate-xlsx/map-application-to-XLSX/map-export-contract/map-how-was-the-contract-awarded/index.ts
+var { OTHER: OTHER2 } = EXPORT_CONTRACT_AWARD_METHOD;
+var CONTENT_STRINGS8 = EXPORT_CONTRACT_FIELDS.HOW_WAS_THE_CONTRACT_AWARDED;
+var {
+  HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD: AWARD_METHOD2, OTHER_AWARD_METHOD }
+} = export_contract_default;
+var mapHowWasTheContractAwarded = (exportContract) => {
+  const submittedMethodId = exportContract.awardMethodId;
+  let answer;
+  if (submittedMethodId === OTHER2.DB_ID) {
+    answer = exportContract[OTHER_AWARD_METHOD];
+  } else {
+    const allMethods = Object.values(EXPORT_CONTRACT_AWARD_METHOD);
+    const method = allMethods.find((methodObj) => methodObj.DB_ID === submittedMethodId);
+    if (method) {
+      answer = method.VALUE;
+    }
+  }
+  const title = `${String(CONTENT_STRINGS8[AWARD_METHOD2].SUMMARY?.TITLE)}?`;
+  return xlsx_row_default(title, answer);
+};
+var map_how_was_the_contract_awarded_default = mapHowWasTheContractAwarded;
+
 // generate-xlsx/map-application-to-XLSX/map-export-contract/map-final-destination/index.ts
-var CONTENT_STRINGS8 = EXPORT_CONTRACT_FIELDS.ABOUT_GOODS_OR_SERVICES;
+var CONTENT_STRINGS9 = EXPORT_CONTRACT_FIELDS.ABOUT_GOODS_OR_SERVICES;
 var { FIELDS: FIELDS25 } = XLSX;
 var {
   ABOUT_GOODS_OR_SERVICES: { FINAL_DESTINATION: FINAL_DESTINATION2, FINAL_DESTINATION_KNOWN: FINAL_DESTINATION_KNOWN3 }
@@ -7355,7 +7378,7 @@ var mapFinalDestination = (exportContract, countries) => {
   const mapped = [xlsx_row_default(String(FIELDS25.EXPORT_CONTRACT[FINAL_DESTINATION_KNOWN3]), map_yes_no_field_default({ answer: finalDestinationKnownAnswer }))];
   if (finalDestinationKnownAnswer) {
     const country = get_country_by_iso_code_default(countries, exportContract[FINAL_DESTINATION2]);
-    mapped.push(xlsx_row_default(String(CONTENT_STRINGS8[FINAL_DESTINATION2].SUMMARY?.TITLE), country.name));
+    mapped.push(xlsx_row_default(String(CONTENT_STRINGS9[FINAL_DESTINATION2].SUMMARY?.TITLE), country.name));
   }
   return mapped;
 };
@@ -7457,6 +7480,7 @@ var mapExportContract = (application2, countries) => {
   const { agent, privateMarket } = exportContract;
   const mapped = [
     xlsx_row_default(String(FIELDS30.EXPORT_CONTRACT[DESCRIPTION3]), exportContract[DESCRIPTION3]),
+    map_how_was_the_contract_awarded_default(exportContract),
     ...map_final_destination_default(exportContract, countries),
     xlsx_row_default(String(FIELDS30.EXPORT_CONTRACT[PAYMENT_TERMS_DESCRIPTION3]), exportContract[PAYMENT_TERMS_DESCRIPTION3]),
     ...map_private_market_default(privateMarket, totalContractValue),
