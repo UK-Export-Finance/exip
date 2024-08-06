@@ -19,7 +19,7 @@ const get = (req: Request, res: Response) => {
   const validUrl = isValidReqOriginalUrl(originalUrl);
 
   if (!validUrl) {
-    console.error('Invalid original URL in /redirects: %s', originalUrl);
+    console.error('Invalid original URL detected in "redirects" controller: %s', originalUrl);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
