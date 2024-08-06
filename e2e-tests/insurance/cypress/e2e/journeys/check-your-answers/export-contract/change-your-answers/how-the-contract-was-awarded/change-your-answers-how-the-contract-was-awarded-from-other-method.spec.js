@@ -60,11 +60,11 @@ context(
         beforeEach(() => {
           cy.navigateToUrl(url);
 
-          // change to DIRECT_AWARD
+          // select DIRECT_AWARD
           summaryList.field(FIELD_ID).changeLink().click();
           cy.completeAndSubmitHowWasTheContractAwardedForm({ directAward: true });
 
-          // change back to OTHER
+          // select OTHER
           summaryList.field(FIELD_ID).changeLink().click();
           const selector = radios(OTHER.ID).option;
           selector.label().click();
