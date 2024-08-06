@@ -28,7 +28,7 @@ const {
  * @returns {Array} Required field IDs
  */
 const requiredFields = (application: ApplicationFlat): Array<string> => [
-  ...requiredEligibilityFields(),
+  ...requiredEligibilityFields(application.migratedV1toV2),
   ...requiredPolicyFields({
     policyType: application[POLICY_TYPE],
     isUsingBroker: application[USING_BROKER],

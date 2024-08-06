@@ -24,8 +24,8 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(ROUTES.INSURANCE.PROBLEM_WITH_SERVICE);
   }
 
-  const { broker, buyer, company, declaration, exportContract } = application;
-  const { nominatedLossPayee, policy, referenceNumber, totalContractValueOverThreshold } = application;
+  const { broker, buyer, company, declaration, exportContract, migratedV1toV2, nominatedLossPayee, policy, referenceNumber, totalContractValueOverThreshold } =
+    application;
 
   const { policyType, jointlyInsuredParty } = policy;
 
@@ -78,6 +78,7 @@ export const get = (req: Request, res: Response) => {
     agentIsCharging,
     agentChargeMethod,
     awardMethod?.id,
+    migratedV1toV2,
   );
 
   const taskListData = generateTaskList(taskListStructure, flatApplicationData);

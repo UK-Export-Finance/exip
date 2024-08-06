@@ -106,11 +106,11 @@ export interface ApplicationCompanySicCode {
 }
 
 export interface ApplicationDeclaration extends Relationship {
-  agreeToConfidentiality?: boolean;
   agreeToAntiBribery?: boolean;
+  agreeToConfidentiality?: boolean;
+  agreeToConfirmationAndAcknowledgements?: boolean;
   hasAntiBriberyCodeOfConduct?: boolean | null;
   willExportWithAntiBriberyCodeOfConduct?: boolean;
-  agreeToConfirmationAndAcknowledgements?: boolean;
 }
 
 export interface ApplicationDeclarationVersions {

@@ -3,7 +3,7 @@
 # Version 2
 #
 # Database: exip
-# Generation Time: 2024-07-25 15:31:00 +0000
+# Generation Time: 2024-08-05 16:34:00 +0000
 # ************************************************************
 
 CREATE DATABASE IF NOT EXISTS `exip`;
@@ -662,12 +662,12 @@ CREATE TABLE IF NOT EXISTS `Eligibility` (
   `hasCompaniesHouseNumber` tinyint(1) NOT NULL DEFAULT '0',
   `hasEndBuyer` tinyint(1) NOT NULL DEFAULT '0',
   `hasMinimumUkGoodsOrServices` tinyint(1) NOT NULL DEFAULT '0',
+  `isMemberOfAGroup` tinyint(1) NOT NULL DEFAULT '0',
+  `isPartyToConsortium` tinyint(1) NOT NULL DEFAULT '0',
   `otherPartiesInvolved` tinyint(1) NOT NULL DEFAULT '0',
   `paidByLetterOfCredit` tinyint(1) NOT NULL DEFAULT '0',
   `totalContractValue` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `validExporterLocation` tinyint(1) NOT NULL DEFAULT '0',
-  `isPartyToConsortium` tinyint(1) NOT NULL DEFAULT '0',
-  `isMemberOfAGroup` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `Eligibility_application_idx` (`application`),
   KEY `Eligibility_buyerCountry_idx` (`buyerCountry`),
