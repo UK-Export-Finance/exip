@@ -65,8 +65,7 @@ context(
           cy.completeAndSubmitHowWasTheContractAwardedForm({ directAward: true });
 
           // change back to OTHER
-          task.link().click();
-          cy.completeAndSubmitMultipleCheckYourAnswers({ count: 3 });
+          summaryList.field(FIELD_ID).changeLink().click();
           const selector = radios(OTHER.ID).option;
           selector.label().click();
         });
