@@ -379,6 +379,7 @@ jobs:
             --name kv-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --default-action Deny \
             --public-network-access Disabled \
+            --enable-rbac-authorization false \
             --network-acls-ips ${{ secrets.WAF_ALLOWED_IP }} \
             --network-acls-vnets $(az network vnet subnet list --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query '[?contains(name, `keyvault`)].id' -o tsv)
 
