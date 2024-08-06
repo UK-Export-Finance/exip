@@ -29,7 +29,7 @@ const companyConstraints = (connection: Connection) =>
 
 /**
  * addCompanyFields
- * Add new company fields to the company table.
+ * Add new fields to the company table.
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<object>>} executeSqlQuery response
  */

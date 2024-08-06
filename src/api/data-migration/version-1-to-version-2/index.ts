@@ -46,13 +46,13 @@ const dataMigration = async () => {
 
     console.info('✅ Buyers successfully updated.');
 
+    await createNewApplicationRelationships(connection);
+
     await removeDeclarationFields(connection);
 
     await removeDeclarationContentTables(connection);
 
     console.info('✅ Declarations successfully updated.');
-
-    await createNewApplicationRelationships(connection);
 
     console.info('✅ Application relationships successfully updated.');
 

@@ -51,6 +51,10 @@ export const EXPORT_CONTRACT_FIELDS = {
           TEXT: OTHER.VALUE,
         },
       },
+      SUMMARY: {
+        TITLE: 'How was the contract awarded',
+        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.ABOUT_THE_EXPORT,
+      },
     },
     [OTHER_AWARD_METHOD]: {
       MAXIMUM: MAXIMUM_CHARACTERS.EXPORT_CONTRACT.OTHER_AWARD_METHOD,

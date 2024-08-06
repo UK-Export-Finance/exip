@@ -31,6 +31,6 @@ context(
       cy.deleteApplication(referenceNumber);
     });
 
-    assertMinimalExportContractSummaryListRows();
+    assertMinimalExportContractSummaryListRows({});
   },
 );

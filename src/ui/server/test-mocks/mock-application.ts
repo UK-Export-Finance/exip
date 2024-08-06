@@ -94,6 +94,7 @@ export const mockExportContract = {
     ...EXPORT_CONTRACT_AWARD_METHOD.COMPETITIVE_BIDDING,
     id: 'clldfm6pt000noqa6fs6cj5xo',
   },
+  otherAwardMethod: 'Mock other award method',
   goodsOrServicesDescription: 'Mock description',
   finalDestinationKnown: false,
   finalDestinationCountryCode: mockCountries[0].isoCode,

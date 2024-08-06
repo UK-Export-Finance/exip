@@ -30,6 +30,20 @@ export const REGEX = {
    */
   NUMBER_HYPHEN_SPACE: /^[- \d]+$/,
 
+  /*
+   * VALID_REQUEST_ORIGINAL_URL:
+   * Regex that allows only:
+   * - numbers.
+   * - letters.
+   * - a hyphen.
+   * - a question mark.
+   * - a slash.
+   * - a dash.
+   * - &.
+   * Note: \d is exactly the same as [0-9]
+   */
+  VALID_REQUEST_ORIGINAL_URL: /^[A-Za-z-=&?/\d]+$/,
+
   /**
    * SPACE_AND_HYPHEN:
    * Regex that allows only:

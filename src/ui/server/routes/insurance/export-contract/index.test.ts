@@ -33,6 +33,8 @@ import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../
 const {
   ROOT,
   HOW_WAS_THE_CONTRACT_AWARDED,
+  HOW_WAS_THE_CONTRACT_AWARDED_CHANGE,
+  HOW_WAS_THE_CONTRACT_AWARDED_CHECK_AND_CHANGE,
   ABOUT_GOODS_OR_SERVICES,
   ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK,
   ABOUT_GOODS_OR_SERVICES_CHANGE,
@@ -81,13 +83,17 @@ describe('routes/insurance/export-contract', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(30);
-    expect(post).toHaveBeenCalledTimes(38);
+    expect(get).toHaveBeenCalledTimes(32);
+    expect(post).toHaveBeenCalledTimes(40);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROOT}`, exportContractRootGet);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${HOW_WAS_THE_CONTRACT_AWARDED}`, howWasTheContractAwardedGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${HOW_WAS_THE_CONTRACT_AWARDED}`, howWasTheContractAwardedPost);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${HOW_WAS_THE_CONTRACT_AWARDED_CHANGE}`, howWasTheContractAwardedGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${HOW_WAS_THE_CONTRACT_AWARDED_CHANGE}`, howWasTheContractAwardedPost);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${HOW_WAS_THE_CONTRACT_AWARDED_CHECK_AND_CHANGE}`, howWasTheContractAwardedGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${HOW_WAS_THE_CONTRACT_AWARDED_CHECK_AND_CHANGE}`, howWasTheContractAwardedPost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ABOUT_GOODS_OR_SERVICES}`, aboutGoodsOrServicesGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${ABOUT_GOODS_OR_SERVICES}`, aboutGoodsOrServicesPost);
