@@ -1,8 +1,10 @@
 import assertGenericExportContractSummaryListRows from './generic';
 import FIELD_IDS from '../../../constants/field-ids/insurance/export-contract';
 import checkSummaryList from '../../../commands/insurance/check-export-contract-summary-list';
+import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../content-strings/fields/insurance/export-contract';
 
 const {
+  HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD },
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
   HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
   PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
@@ -12,13 +14,15 @@ const {
   AGENT_CHARGES: { FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
+const { OPEN_TENDER } = FIELDS.HOW_WAS_THE_CONTRACT_AWARDED[AWARD_METHOD].OPTIONS;
+
 /**
  * assertMinimalExportContractSummaryListRows
  * Assert minimal "export contract" summary list rows.
  * These rows should either not render or have an answer of "no".
  */
-const assertMinimalExportContractSummaryListRows = () => {
-  assertGenericExportContractSummaryListRows();
+const assertMinimalExportContractSummaryListRows = ({ awardMethodValue = OPEN_TENDER.TEXT }) => {
+  assertGenericExportContractSummaryListRows({ awardMethodValue });
 
   it(`should render a ${DESCRIPTION} summary list row`, () => {
     checkSummaryList[DESCRIPTION]();
