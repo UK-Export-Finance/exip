@@ -21,37 +21,34 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(
-  `Insurance - Check your answers - Export contract - Summary list - Contract awarded ${NEGOTIATED_CONTRACT.TEXT} - As an exporter, I want to be able to review my input for the export contract again, So that I can do a final review of the information I previously input before submitting my application`,
-  () => {
-    let referenceNumber;
-    let url;
+context(`Insurance - Check your answers - Export contract - Summary list - Contract awarded with ${NEGOTIATED_CONTRACT.TEXT}`, () => {
+  let referenceNumber;
+  let url;
 
-    before(() => {
-      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-        referenceNumber = refNumber;
+  before(() => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+      referenceNumber = refNumber;
 
-        cy.completePrepareApplicationSinglePolicyType({ referenceNumber, contractAwardedNegotiatedContract: true });
+      cy.completePrepareApplicationSinglePolicyType({ referenceNumber, contractAwardedNegotiatedContract: true });
 
-        task.link().click();
+      task.link().click();
 
-        // To get past previous "Check your answers" pages
-        cy.completeAndSubmitMultipleCheckYourAnswers({ count: 3 });
+      // To get past previous "Check your answers" pages
+      cy.completeAndSubmitMultipleCheckYourAnswers({ count: 3 });
 
-        url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT}`;
-      });
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT}`;
     });
+  });
 
-    beforeEach(() => {
-      cy.saveSession();
+  beforeEach(() => {
+    cy.saveSession();
 
-      cy.navigateToUrl(url);
-    });
+    cy.navigateToUrl(url);
+  });
 
-    after(() => {
-      cy.deleteApplication(referenceNumber);
-    });
+  after(() => {
+    cy.deleteApplication(referenceNumber);
+  });
 
-    assertMinimalExportContractSummaryListRows({ awardMethodValue: NEGOTIATED_CONTRACT.TEXT });
-  },
-);
+  assertMinimalExportContractSummaryListRows({ awardMethodValue: NEGOTIATED_CONTRACT.TEXT });
+});
