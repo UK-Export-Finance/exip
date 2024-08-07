@@ -4,7 +4,7 @@ import { ApplicationNominatedLossPayee, ApplicationLossPayeeFinancialUk, Applica
 
 /**
  * create a nominated loss payee financial uk helper
- * Creates a empty ApplicationLossPayeeFinancialUk.
+ * Create an empty ApplicationLossPayeeFinancialUk.
  * @param {Context} context: KeystoneJS context API
  * @returns {Object} Created ApplicationNominatedLossPayee
  */

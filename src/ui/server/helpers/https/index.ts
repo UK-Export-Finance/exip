@@ -7,7 +7,7 @@ dotenv.config();
 const { PORT } = process.env;
 
 /**
- * Creates an HTTPS server using the `https` module.
+ * Create ann HTTPS server using the `https` module.
  * Reads the key and certificate files from the specified location.
  * Starts the server on the specified port.
  *

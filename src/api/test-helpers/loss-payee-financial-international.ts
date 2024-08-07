@@ -4,7 +4,7 @@ import { ApplicationLossPayeeFinancialInternational, TestHelperCreate } from '..
 /**
  * createLossPayeeFinancialDetailsInternational
  * create a nominated loss payee financial international helper
- * Creates a empty ApplicationLossPayeeFinancialInternational.
+ * Create an empty ApplicationLossPayeeFinancialInternational.
  * @param {Context} context: KeystoneJS context API
  * @returns {ApplicationLossPayeeFinancialInternational} Created ApplicationLossPayeeFinancialInternational
  */
