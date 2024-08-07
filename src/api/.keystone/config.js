@@ -773,6 +773,7 @@ var DECLARATIONS2 = {
   V1_DECLARATIONS: versions_default2[0],
   LATEST_DECLARATIONS: versions_default2[versions_default2.length - 1]
 };
+var declarations_default2 = DECLARATIONS2;
 
 // constants/eligibility.ts
 var ELIGIBILITY = {
@@ -4495,6 +4496,54 @@ var createABuyer = async (context, countryId, applicationId) => {
 };
 var create_a_buyer_default = createABuyer;
 
+// helpers/create-a-declaration-version/index.ts
+var { ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT, CONFIDENTIALITY, CONFIRMATION_AND_ACKNOWLEDGEMENTS } = declarations_default2.LATEST_DECLARATIONS;
+var createADeclarationVersion = async (context, declarationId) => {
+  console.info("Creating an application declaration version for ", declarationId);
+  try {
+    const declaration = await context.db.DeclarationVersion.createOne({
+      data: {
+        declaration: {
+          connect: { id: declarationId }
+        },
+        agreeToAntiBribery: ANTI_BRIBERY,
+        agreeToConfidentiality: CONFIDENTIALITY,
+        agreeToConfirmationAndAcknowledgements: CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+        hasAntiBriberyCodeOfConduct: ANTI_BRIBERY_CODE_OF_CONDUCT,
+        willExportWithAntiBriberyCodeOfConduct: ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT
+      }
+    });
+    return declaration;
+  } catch (err) {
+    console.error("Error creating an application declaration version %O", err);
+    throw new Error(`Creating an application declaration version ${err}`);
+  }
+};
+var create_a_declaration_version_default = createADeclarationVersion;
+
+// helpers/create-a-declaration/index.ts
+var createADeclaration = async (context, applicationId) => {
+  console.info("Creating a application declaration for ", applicationId);
+  try {
+    const declaration = await context.db.Declaration.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId }
+        }
+      }
+    });
+    const declarationVersion = await create_a_declaration_version_default(context, declaration.id);
+    return {
+      ...declaration,
+      declarationVersion
+    };
+  } catch (err) {
+    console.error("Error creating an application declaration %O", err);
+    throw new Error(`Creating an application declaration ${err}`);
+  }
+};
+var create_a_declaration_default = createADeclaration;
+
 // helpers/create-a-jointly-insured-party/index.ts
 var createAJointlyInsuredParty = async (context, policyId) => {
   console.info("Creating a jointly insured party for ", policyId);
@@ -4887,6 +4936,7 @@ var createApplicationRelationships = async ({
     const totalContractValue = await get_total_contract_value_by_field_default(context, "valueId", totalContractValueId);
     const relationships = await Promise.all([
       await create_a_buyer_default(context, country.id, applicationId),
+      await create_a_declaration_default(context, applicationId),
       await create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
       await create_an_export_contract_default(context, applicationId),
       await create_a_policy_default(context, applicationId),
@@ -4894,9 +4944,10 @@ var createApplicationRelationships = async ({
       await create_a_company_default(context, applicationId, companyData),
       await create_a_section_review_default(context, applicationId, sectionReviewData)
     ]);
-    const [buyer, eligibility, exportContract, policy, nominatedLossPayee, company, sectionReview] = relationships;
+    const [buyer, declaration, eligibility, exportContract, policy, nominatedLossPayee, company, sectionReview] = relationships;
     const relationshipIds = {
       buyerId: buyer.id,
+      declarationId: declaration.id,
       companyId: company.id,
       eligibilityId: eligibility.id,
       exportContractId: exportContract.id,
@@ -4921,6 +4972,7 @@ var updateApplicationColumns = async ({
   applicationId,
   buyerId,
   companyId,
+  declarationId,
   eligibilityId,
   exportContractId,
   nominatedLossPayeeId,
@@ -4939,6 +4991,9 @@ var updateApplicationColumns = async ({
         },
         company: {
           connect: { id: companyId }
+        },
+        declaration: {
+          connect: { id: declarationId }
         },
         eligibility: {
           connect: { id: eligibilityId }
@@ -4984,7 +5039,7 @@ var createAnApplication = async (root, variables, context) => {
       status
     });
     const { id: applicationId } = application2;
-    const { buyerId, companyId, eligibilityId, exportContractId, nominatedLossPayeeId, policyId, sectionReviewId } = await create_application_relationships_default.create({
+    const { buyerId, declarationId, companyId, eligibilityId, exportContractId, nominatedLossPayeeId, policyId, sectionReviewId } = await create_application_relationships_default.create({
       context,
       applicationId,
       companyData,
@@ -4996,6 +5051,7 @@ var createAnApplication = async (root, variables, context) => {
       applicationId,
       buyerId,
       companyId,
+      declarationId,
       eligibilityId,
       exportContractId,
       nominatedLossPayeeId,
@@ -9051,8 +9107,8 @@ var getApplicationByReferenceNumberQuery = async (root, variables, context) => {
       success: false
     };
   } catch (err) {
-    console.error("Error getting application by reference number (GetApplicationByReferenceNumber mutation) %O", err);
-    throw new Error(`Get application by reference number (GetApplicationByReferenceNumber mutation) ${err}`);
+    console.error("Error getting application by reference number (GetApplicationByReferenceNumber query) %O", err);
+    throw new Error(`Get application by reference number (GetApplicationByReferenceNumber query) ${err}`);
   }
 };
 var get_application_by_reference_number_default2 = getApplicationByReferenceNumberQuery;

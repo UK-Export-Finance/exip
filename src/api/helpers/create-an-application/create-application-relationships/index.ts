@@ -3,6 +3,7 @@ import getCreditPeriodValueByField from '../../get-cover-period-value-by-field';
 import getTotalContractValueByField from '../../get-total-contract-value-by-field';
 import createAnEligibility from '../../create-an-eligibility';
 import createABuyer from '../../create-a-buyer';
+import createADeclaration from '../../create-a-declaration';
 import createAPolicy from '../../create-a-policy';
 import createANominatedLossPayee from '../../create-a-nominated-loss-payee';
 import createACompany from '../../create-a-company';
@@ -65,6 +66,7 @@ const createApplicationRelationships = async ({
 
     const relationships = await Promise.all([
       await createABuyer(context, country.id, applicationId),
+      await createADeclaration(context, applicationId),
       await createAnEligibility(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
       await createAnExportContract(context, applicationId),
       await createAPolicy(context, applicationId),
@@ -73,10 +75,11 @@ const createApplicationRelationships = async ({
       await createASectionReview(context, applicationId, sectionReviewData),
     ]);
 
-    const [buyer, eligibility, exportContract, policy, nominatedLossPayee, company, sectionReview] = relationships;
+    const [buyer, declaration, eligibility, exportContract, policy, nominatedLossPayee, company, sectionReview] = relationships;
 
     const relationshipIds = {
       buyerId: buyer.id,
+      declarationId: declaration.id,
       companyId: company.id,
       eligibilityId: eligibility.id,
       exportContractId: exportContract.id,

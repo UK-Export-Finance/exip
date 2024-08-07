@@ -400,6 +400,7 @@ export interface UpdateApplicationRelationshipParams {
   applicationId: string;
   buyerId: string;
   companyId: string;
+  declarationId: string;
   eligibilityId: string;
   exportContractId: string;
   nominatedLossPayeeId: string;
