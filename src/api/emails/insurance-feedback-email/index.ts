@@ -22,7 +22,7 @@ export const insuranceFeedbackEmail = async (variables: InsuranceFeedbackVariabl
     const emailAddress = process.env.FEEDBACK_EMAIL_RECIPIENT as string;
 
     const emailVariables = variables;
-    // blank variables for date and time (used if createdAt is not populated)
+    // empty variables for date and time (used if createdAt is not populated)
     emailVariables.time = '';
     emailVariables.date = '';
 

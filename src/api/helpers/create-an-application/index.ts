@@ -11,9 +11,9 @@ import { CreateAnApplicationVariables, Context } from '../../types';
  * 2) Create the initial application.
  * 3) Create application relationships.
  * 4) Update the application's relationship columns.
- * @param {Object} GraphQL root variables
- * @param {CreateAnApplicationVariables} GraphQL variables for the CreateAnApplication
- * @param {Context} KeystoneJS context API
+ * @param {Object} root: GraphQL root variables
+ * @param {CreateAnApplicationVariables} variables: GraphQL variables for the CreateAnApplication
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Application>} Created application
  */
 const createAnApplication = async (root: any, variables: CreateAnApplicationVariables, context: Context) => {

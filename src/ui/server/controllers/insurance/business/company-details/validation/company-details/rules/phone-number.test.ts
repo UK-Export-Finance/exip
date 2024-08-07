@@ -61,7 +61,7 @@ describe('controllers/insurance/business/company-details/validation/company-deta
     });
   });
 
-  describe(`${PHONE_NUMBER} is blank`, () => {
+  describe(`${PHONE_NUMBER} is empty`, () => {
     it('should not return a validation error', () => {
       mockBody[PHONE_NUMBER] = '';
 

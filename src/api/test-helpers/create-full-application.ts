@@ -24,7 +24,7 @@ const { POLICY_TYPE } = FIELD_VALUES;
 /**
  * createFullApplication
  * Create a full application for unit testing
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} Policy type flag - different data is created if multiple is passed. Defaults to single.
  * @returns {Object} Application
  */

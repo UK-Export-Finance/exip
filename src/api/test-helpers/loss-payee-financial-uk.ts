@@ -3,8 +3,8 @@ import { ApplicationLossPayeeFinancialUk, TestHelperCreate } from '../types';
 
 /**
  * create a nominated loss payee financial uk helper
- * Creates a blank ApplicationLossPayeeFinancialUk.
- * @param {Context} KeystoneJS context API
+ * Creates a empty ApplicationLossPayeeFinancialUk.
+ * @param {Context} context: KeystoneJS context API
  * @returns {Object} Created ApplicationLossPayeeFinancialUk
  */
 const createLossPayeeFinancialDetailsUk = async ({ context }: TestHelperCreate) => {

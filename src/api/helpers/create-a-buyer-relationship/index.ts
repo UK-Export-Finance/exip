@@ -3,7 +3,7 @@ import { Context } from '../../types';
 /**
  * createABuyerRelationship
  * Create a buyer relationship row with buyer relationships.
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} buyerId: Buyer ID
  * @param {String} applicationId: Application ID
  * @returns {Promise<Object>} Created buyer relationship

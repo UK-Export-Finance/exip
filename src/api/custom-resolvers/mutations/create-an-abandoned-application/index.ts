@@ -11,9 +11,9 @@ const { STATUS } = APPLICATION;
  * 2) Create a new application with createAnApplicationHelper.
  * 3) Updates application with abandoned status.
  * 4) Returns application and success flag
- * @param {Object} GraphQL root variables
+ * @param {Object} root: GraphQL root variables
  * @param {CreateAnApplicationVariables} GraphQL variables for the CreateAnAbandonedApplication mutation
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag and application
  */
 const createAnAbandonedApplication = async (root: any, variables: CreateAnApplicationVariables, context: Context) => {

@@ -3,7 +3,7 @@ import { Context } from '../../types';
 /**
  * createAuthenticationEntry
  * Create an entry in the Authentication table
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} Account ID
  * @returns {Promise<Boolean>}
  */

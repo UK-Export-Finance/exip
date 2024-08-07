@@ -9,9 +9,9 @@ import removeWhiteSpace from '../../../helpers/remove-white-space';
  * Checks postcode is valid
  * Calls Ordnance Survey API with postcode
  * Finds address by house name/number
- * @param {Object} GraphQL root variables
+ * @param {Object} root: GraphQL root variables
  * @param {Object} GraphQL variables for the getOrdnanceSurveyAddress mutation - postcode and houseNameOrNumber
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag and addresses in an array
  */
 const getOrdnanceSurveyAddress = async (root: any, variables: OrdnanceSurveyVariables) => {
@@ -33,7 +33,7 @@ const getOrdnanceSurveyAddress = async (root: any, variables: OrdnanceSurveyVari
 
     const response = await ordnanceSurvey.get(postcode);
 
-    // if no data in response or status is not 200 then return blank object
+    // if no data in response or status is not 200 then return empty object
     if (!response.success || !response.data) {
       return {
         success: false,

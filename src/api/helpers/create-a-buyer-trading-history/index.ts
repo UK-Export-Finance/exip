@@ -4,7 +4,7 @@ import { APPLICATION } from '../../constants';
 /**
  * createABuyerTradingHistory
  * Create a buyer trading history with buyer relationships.
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} buyerId: Buyer ID
  * @param {String} applicationId: Application ID
  * @returns {Promise<Object>} Created buyer trading history

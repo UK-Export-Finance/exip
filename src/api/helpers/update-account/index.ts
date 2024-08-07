@@ -3,7 +3,7 @@ import { AccountStatusCore, Context } from '../../types';
 /**
  * account
  * Update an account
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} Account ID
  * @param {Account} Account update data
  * @returns {Promise<Object>} Updated account

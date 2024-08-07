@@ -3,7 +3,7 @@ import { Context } from '../../types';
 /**
  * createAuthenticationRetryEntry
  * Create a new entry in the AuthenticationRetry table
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} Account ID
  * @returns {Promise<Object>} Object with success flag
  */

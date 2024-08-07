@@ -2,9 +2,9 @@ import { Context } from '../../types';
 
 /**
  * createABusiness
- * Create a business with application relationship // TODO: make sure other helpers have the same documentation
+ * Create a business with an application relationship
  * @param {Context} KeystoneJS context API
- * @param {String} Application ID
+ * @param {String} applicationId: Application ID
  * @returns {Promise<Object>} Created business
  */
 const createABusiness = async (context: Context, applicationId: string) => {

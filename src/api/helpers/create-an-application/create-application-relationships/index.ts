@@ -23,11 +23,11 @@ import { CreateApplicationRelationshipParams } from '../../../types';
  * 3) Get a totalContractValue DB entry, for linking a relationship to eligibility.
  * 4) Create a new buyer with country and application relationship.
  * 5) Create a new eligibility with country and application relationship.
- * 6) Create a new export contract with application relationship.
- * 7) Create a new policy with application relationship.
- * 8) Create a new nominated loss payee with application relationship.
- * 9) Create a new company with application relationship.
- * 10) Create a new sectionReview with application relationship
+ * 6) Create a new export contract with an application relationship.
+ * 7) Create a new policy with an application relationship.
+ * 8) Create a new nominated loss payee with an application relationship.
+ * 9) Create a new company with an application relationship.
+ * 10) Create a new sectionReview with an application relationship
  * @param {Context} context: KeystoneJS context API
  * @param {String} applicationId: Application ID
  * @param {ApplicationCompanyCore} companyData: Company data
@@ -84,7 +84,8 @@ const createApplicationRelationships = async ({
       await createASectionReview(context, applicationId, sectionReviewData),
     ]);
 
-    const [broker, business, buyer, declaration, eligibility, exportContract, policy, policyContact, nominatedLossPayee, company, sectionReview] = relationships;
+    const [broker, business, buyer, declaration, eligibility, exportContract, policy, policyContact, nominatedLossPayee, company, sectionReview] =
+      relationships;
 
     const relationshipIds = {
       brokerId: broker.id,

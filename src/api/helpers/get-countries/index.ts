@@ -4,7 +4,7 @@ import { Country } from '../../types';
 /**
  * getCountries
  * Get countries
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Array<Country>}
  */
 const getCountries = async (context: Context) => {

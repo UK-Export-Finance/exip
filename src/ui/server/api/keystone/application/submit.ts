@@ -5,7 +5,7 @@ import { ApolloResponse } from '../../../../types';
 /**
  * submitApplication
  * Submit an application
- * @param {String} Application ID
+ * @param {String} applicationId: Application ID
  * @returns {Object} Submitted application
  */
 const submitApplication = async (applicationId: string) => {

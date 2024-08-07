@@ -8,7 +8,7 @@ import mapAndUpdateUnverifiedAccounts from '../map-and-update-unverified-account
  * Gets accounts which have not been verified within 24hours
  * Sets inactive flag to true and updates updatedAta
  * returns success flag
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<SuccessResponse>} success flag
  */
 const updateUnverifiedAccounts = async (context: Context): Promise<SuccessResponse> => {

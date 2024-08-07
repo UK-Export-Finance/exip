@@ -5,7 +5,7 @@ import { ApplicationNominatedLossPayee } from '../../../types';
 /**
  * getNominatedLossPayee
  * Get an application's nominated loss payee by ID
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} lossPayeeId: Loss payee ID
  * @param {Boolean} decryptFinancialUk: should financialUk data be decrypted
  * @param {Boolean} decryptFinancialInternational: should financialInternational data be decrypted

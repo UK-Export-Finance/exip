@@ -20,7 +20,7 @@ describe('helpers/create-a-policy-contact', () => {
     application = (await applications.create({ context })) as Application;
   });
 
-  test('it should return a policy contact with application relationship', async () => {
+  test('it should return a policy contact with an application relationship', async () => {
     const result = await createAPolicyContact(context, application.id);
 
     expect(typeof result.id).toEqual('string');

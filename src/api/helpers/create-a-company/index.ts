@@ -6,9 +6,9 @@ import { Context, ApplicationCompanyCore } from '../../types';
 /**
  * createACompany
  * Create a company, address and SIC codes with appropriate relationships.
- * @param {Context} KeystoneJS context API
- * @param {String} Application ID
- * @param {Object} Company data to create
+ * @param {Context} context: KeystoneJS context API
+ * @param {String} applicationId: Application ID
+ * @param {Object} companyData: Company data to create
  * @returns {Promise<Object>} Created company, address and SIC codes
  */
 const createACompany = async (context: Context, applicationId: string, companyData: ApplicationCompanyCore) => {

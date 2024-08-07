@@ -8,7 +8,7 @@ import mapAndUpdateInactiveApplications from '../map-and-update-inactive-applica
  * Gets inactive applications which have not been updated for SUBMISSION_DEADLINE_IN_DAYS
  * Sets their status to Abandoned
  * returns success flag
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<SuccessResponse>} success flag
  */
 const updateInactiveApplications = async (context: Context): Promise<SuccessResponse> => {

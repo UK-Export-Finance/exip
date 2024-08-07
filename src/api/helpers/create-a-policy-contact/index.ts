@@ -2,9 +2,9 @@ import { Context } from '../../types';
 
 /**
  * createAPolicyContact
- * Create a policy contact with application relationship // TODO: make sure other helpers have the same documentation
+ * Create a policy contact with an application relationship
  * @param {Context} KeystoneJS context API
- * @param {String} Application ID
+ * @param {String} applicationId: Application ID
  * @returns {Promise<Object>} Created policy contact
  */
 const createAPolicyContact = async (context: Context, applicationId: string) => {

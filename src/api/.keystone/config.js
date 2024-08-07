@@ -4381,7 +4381,7 @@ var createADeclaration = async (context, applicationId) => {
 var create_a_declaration_default = createADeclaration;
 
 // helpers/create-an-eligibility/index.ts
-var createAnEligibility = async (context, countryId, applicationId, coverPeriodId, totalContractValueId, data) => {
+var createAnEligibility = async (context, countryId, applicationId, coverPeriodId, totalContractValueId, eligibilityData) => {
   console.info("Creating an eligibility for ", applicationId);
   try {
     const eligibility = await context.db.Eligibility.createOne({
@@ -4398,7 +4398,7 @@ var createAnEligibility = async (context, countryId, applicationId, coverPeriodI
         totalContractValue: {
           connect: { id: totalContractValueId }
         },
-        ...data
+        ...eligibilityData
       }
     });
     return eligibility;

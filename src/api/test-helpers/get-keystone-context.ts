@@ -10,7 +10,7 @@ const DB_URL = String(process.env.DATABASE_URL);
 /**
  * getKeystoneContext test helper
  * Get KeystoneJS context API
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Context} KeystoneJS context API
  */
 export const getKeystoneContext = () => {

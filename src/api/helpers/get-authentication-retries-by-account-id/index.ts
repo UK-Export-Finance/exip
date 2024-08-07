@@ -3,7 +3,7 @@ import { Context } from '../../types';
 /**
  * getAuthenticationRetriesByAccountId
  * Get Authentication retry table entries by account ID
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} Account ID
  * @returns {Promise<Boolean>}
  */

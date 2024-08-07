@@ -8,9 +8,9 @@ import { Account, AddOtpToAccountVariables, AddAndGetOtpResponse, Context } from
  * - Generate and add a OTP to an account and return in the response.
  * - NOTE: this is used for E2E testing purposes only.
  * - The alternative approach is to have email inbox testing capabilities which can be risky/flaky.
- * @param {Object} GraphQL root variables
+ * @param {Object} root: GraphQL root variables
  * @param {Object} GraphQL variables for the AddOtpToAccount mutation
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag and OTP
  */
 const addAndGetOTP = async (root: any, variables: AddOtpToAccountVariables, context: Context): Promise<AddAndGetOtpResponse> => {

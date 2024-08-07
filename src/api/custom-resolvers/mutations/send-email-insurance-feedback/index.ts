@@ -4,7 +4,7 @@ import { InsuranceFeedbackVariables, SuccessResponse } from '../../../types';
 /**
  * sendEmailInsuranceFeedback
  * - Sends email with feedback from insurance tool
- * @param {Object} GraphQL root variables
+ * @param {Object} root: GraphQL root variables
  * @param {Object} GraphQL variables for the insurance feedback
  * @returns {Promise<Object>} Object with success flag
  */

@@ -2,9 +2,9 @@ import { Context } from '../../types';
 
 /**
  * createADeclaration
- * Create a declaration with application relationship
+ * Create a declaration with an application relationship
  * @param {Context} KeystoneJS context API
- * @param {String} Application ID
+ * @param {String} applicationId: Application ID
  * @returns {Promise<Object>} Created declaration
  */
 const createADeclaration = async (context: Context, applicationId: string) => {

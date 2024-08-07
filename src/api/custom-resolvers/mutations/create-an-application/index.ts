@@ -10,9 +10,9 @@ const { STATUS } = APPLICATION;
  * 1) Set status to In progress
  * 2) Create a new application with createAnApplicationHelper.
  * 3) Returns success flag and application
- * @param {Object} GraphQL root variables
+ * @param {Object} root: GraphQL root variables
  * @param {CreateAnApplicationVariables} GraphQL variables for the createAnApplication mutation
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag and application
  */
 const createAnApplication = async (root: any, variables: CreateAnApplicationVariables, context: Context) => {

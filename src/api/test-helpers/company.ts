@@ -26,7 +26,7 @@ const createCompany = async (context: Context, data = {}) => {
 /**
  * delete company test helper
  * deletes a company by companyId.
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Object} Delete response
  */
 const deleteCompany = async (context: Context, companyId: string) => {
@@ -49,7 +49,7 @@ const deleteCompany = async (context: Context, companyId: string) => {
 /**
  * delete company address test helper
  * deletes a company address by companyAddressId.
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Object} Delete response
  */
 const deleteCompanyAddress = async (context: Context, companyAddressId: string) => {
@@ -70,9 +70,15 @@ const deleteCompanyAddress = async (context: Context, companyAddressId: string) 
 };
 
 /**
+<<<<<<< Updated upstream
  * delete company SIC code test helper
  * deletes a company SIC code by companyId.
  * @param {Context} KeystoneJS context API
+=======
+ * delete company sic code test helper
+ * deletes a company sic code by companyId.
+ * @param {Context} context: KeystoneJS context API
+>>>>>>> Stashed changes
  * @returns {Array} Delete response
  */
 const deleteCompanySicCode = async (context: Context, companySicId: string) => {
@@ -92,9 +98,14 @@ const deleteCompanySicCode = async (context: Context, companySicId: string) => {
 
 /**
  * create company address test helper
+<<<<<<< Updated upstream
  * Creates a empty company address.
  * @param {Context} context: KeystoneJS context API
  * @param {ApplicationCompanyAddress} data
+=======
+ * Creates a empty company address.
+ * @param {Context} context: KeystoneJS context API
+>>>>>>> Stashed changes
  * @returns {Object} Created company address id
  */
 const createCompanyAddress = async (context: Context, data = {}) => {
@@ -174,7 +185,7 @@ const createCompanyDifferentTradingAddress = async (context: Context, companyId:
 /**
  * get company test helper
  * Get a company by ID
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} companyId
  * @returns {Object} company
  */
@@ -197,7 +208,7 @@ const getCompany = async (context: Context, companyId: string) => {
 /**
  * get company address test helper
  * Get a company address by ID
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} companyAddressId
  * @returns {Object} company address
  */
@@ -218,9 +229,15 @@ const getCompanyAddress = async (context: Context, companyAddressId: string) => 
 };
 
 /**
+<<<<<<< Updated upstream
  * get company SIC code test helper
  * Get a company SIC codes by companyId
  * @param {Context} KeystoneJS context API
+=======
+ * get company sic code test helper
+ * Get a company sic code address by companyId
+ * @param {Context} context: KeystoneJS context API
+>>>>>>> Stashed changes
  * @param {String} companyId
  * @returns {Array} company SIC codes
  */
