@@ -33,7 +33,7 @@ describe('server/helpers/required-fields/section-review', () => {
     const result = requiredFields(flatApplicationData);
 
     const expected = [
-      ...requiredEligibilityFields(),
+      ...requiredEligibilityFields(mockApplication.migratedV1toV2),
       ...requiredPolicyFields({
         policyType: flatApplicationData[POLICY_TYPE],
         isUsingBroker: flatApplicationData[USING_BROKER],

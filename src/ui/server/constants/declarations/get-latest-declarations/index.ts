@@ -9,7 +9,7 @@ const { CONFIDENTIALITY, ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBER
  * getDeclarationContentStringsByVersionId
  * Finds the latest content strings for a specified declaration section
  * @param {ObjectType} declarationContentStrings: Content strings for specified declaration
- * @param {string} latestVersionNumber: latest version for specified section
+ * @param {String} latestVersionNumber: latest version for specified section
  * @returns {Object} contentStrings: Content strings for specified version of declaration
  */
 export const getDeclarationContentStringsByVersionId = (contentStrings: ObjectType, versionNumber: string) =>

@@ -36,12 +36,11 @@ const createNewApplicationRelationships = async (connection: Connection) => {
       updateExportContractPrivateMarket(connection),
       createCompanyDifferentTradingAddress(connection, applications),
       updateCompanyDifferentTradingAddress(connection),
-      createDeclarationVersionRelationship(connection, applications),
+      createDeclarationVersionRelationship(connection),
       updateDeclarationVersionField(connection, applications),
+      updateLossPayeeFinancialUkVector(connection),
+      updateLossPayeeFinancialInternationalVector(connection),
     ]);
-
-    await updateLossPayeeFinancialUkVector(connection);
-    await updateLossPayeeFinancialInternationalVector(connection);
 
     return newRelationships;
   } catch (err) {

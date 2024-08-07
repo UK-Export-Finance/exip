@@ -47,7 +47,7 @@ context(
         beforeEach(() => {
           cy.navigateToUrl(checkYourAnswersUrl);
 
-          // select DIRECT_AWARD
+          // change to DIRECT_AWARD
           summaryList.field(FIELD_ID).changeLink().click();
           cy.completeAndSubmitHowWasTheContractAwardedForm({ directAward: true });
 

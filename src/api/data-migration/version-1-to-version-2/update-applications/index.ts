@@ -6,7 +6,7 @@ import addBuyerFields from './add-buyer-fields';
 import addCompanyFields from './add-company-fields';
 import addBusinessFields from './add-business-fields';
 import addBrokerFullAddressField from './add-broker-full-address-field';
-import addEligibilityHasEndBuyerField from './add-eligibility-has-end-buyer-field';
+import addEligibilityFields from './add-eligibility-fields';
 import addDeclarationFields from './add-declaration-fields';
 import updateDeclarationFields from './update-declaration-fields';
 import addSectionReviewExportContractField from './add-section-review-export-contract-field';
@@ -38,7 +38,7 @@ const updateApplications = async (connection: Connection) => {
       addCompanyFields(connection),
       addBusinessFields(connection),
       addBrokerFullAddressField(connection),
-      addEligibilityHasEndBuyerField(connection),
+      addEligibilityFields(connection),
 
       addDeclarationFields(connection),
       updateDeclarationFields(connection),

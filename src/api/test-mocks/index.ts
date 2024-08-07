@@ -20,6 +20,8 @@ const {
 
 const now = new Date();
 
+export const invalidId = 'invalid-id';
+
 export const mockAccount = {
   firstName: 'first',
   lastName: 'last',

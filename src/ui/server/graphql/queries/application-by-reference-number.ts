@@ -31,9 +31,11 @@ const applicationByReferenceNumberQuery = gql`
             value
             valueId
           }
+          hasCompaniesHouseNumber
           hasMinimumUkGoodsOrServices
           hasEndBuyer
-          hasCompaniesHouseNumber
+          isMemberOfAGroup
+          isPartyToConsortium
           otherPartiesInvolved
           paidByLetterOfCredit
           totalContractValue {
@@ -42,8 +44,6 @@ const applicationByReferenceNumberQuery = gql`
             valueId
           }
           validExporterLocation
-          isPartyToConsortium
-          isMemberOfAGroup
         }
         nominatedLossPayee {
           id
