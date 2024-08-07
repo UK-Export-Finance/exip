@@ -16,7 +16,7 @@ const {
  * Check if an account can be reactivated.
  * If so, update the account.
  * @param {Object} root: GraphQL root variables
- * @param {Object} GraphQL variables for the VerifyAccountReactivationToken mutation
+ * @param {Object} variables: GraphQL variables for the VerifyAccountReactivationToken mutation
  * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success or expired flag.
  */

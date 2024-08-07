@@ -176,7 +176,7 @@ context(
 
     describe('form submission', () => {
       describe('when submitting a fully filled form', () => {
-        describe(`${OUTSTANDING_PAYMENTS} as "no"`, () => {
+        describe(`when ${OUTSTANDING_PAYMENTS} is "no"`, () => {
           it(`should redirect to ${BUYER_FINANCIAL_INFORMATION} page`, () => {
             cy.navigateToUrl(url);
 
@@ -195,7 +195,7 @@ context(
           });
         });
 
-        describe(`${OUTSTANDING_PAYMENTS} as "yes"`, () => {
+        describe(`when ${OUTSTANDING_PAYMENTS} is "yes"`, () => {
           it(`should redirect to ${BUYER_FINANCIAL_INFORMATION} page`, () => {
             cy.navigateToUrl(url);
 

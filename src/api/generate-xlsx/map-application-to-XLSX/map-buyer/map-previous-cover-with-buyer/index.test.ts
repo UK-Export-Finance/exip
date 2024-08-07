@@ -17,7 +17,7 @@ const application = mockApplicationSinglePolicyTotalContractValueOverThreshold;
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-buyer/map-previous-cover-with-buyer', () => {
   describe('when the total contract value is over the threshold', () => {
-    describe(`${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} is true`, () => {
+    describe(`when ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} is true`, () => {
       it(`should return an array of mapped fields with ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER}`, () => {
         const mockRelationship = {
           ...relationship,
@@ -42,7 +42,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-buyer/map-previous-cover
       });
     });
 
-    describe(`${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} is false`, () => {
+    describe(`when ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} is false`, () => {
       it(`should return an array of mapped fields without ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER}`, () => {
         const mockRelationship = {
           ...relationship,

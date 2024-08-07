@@ -10,7 +10,7 @@ import { Account, AccountDeletionVariables, AuthenticationRetry, Context } from 
  * 2) Delete authentication retry entries.
  * 3) Delete the account.
  * @param {Object} root: GraphQL root variables
- * @param {Object} GraphQL variables for the DeleteAnAccount mutation
+ * @param {Object} variables: GraphQL variables for the DeleteAnAccount mutation
  * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag
  */

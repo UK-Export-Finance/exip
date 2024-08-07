@@ -23,7 +23,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
   let referenceNumber;
   let url;
 
-  describe(`${TRADING_ADDRESS} as no`, () => {
+  describe(`when ${TRADING_ADDRESS} is 'no'`, () => {
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
@@ -90,7 +90,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
     });
   });
 
-  describe(`${TRADING_ADDRESS} as yes`, () => {
+  describe(`when ${TRADING_ADDRESS} is 'yes'`, () => {
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
@@ -122,7 +122,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
     });
   });
 
-  describe(`${HAS_DIFFERENT_TRADING_NAME} as yes`, () => {
+  describe(`when ${HAS_DIFFERENT_TRADING_NAME} is 'yes'`, () => {
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;

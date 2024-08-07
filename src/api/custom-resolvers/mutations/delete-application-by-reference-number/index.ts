@@ -8,7 +8,7 @@ import { DeleteApplicationByReferenceNumberVariables, SuccessResponse } from '..
  * 1) Check if the application exists.
  * 2) Delete the application.
  * @param {Object} root: GraphQL root variables
- * @param {Object} GraphQL variables for the DeleteApplicationByReferenceNumber mutation
+ * @param {Object} variables: GraphQL variables for the DeleteApplicationByReferenceNumber mutation
  * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag
  */

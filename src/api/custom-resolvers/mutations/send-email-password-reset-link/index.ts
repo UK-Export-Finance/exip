@@ -27,7 +27,7 @@ const {
  * Otherwise, block the account
  * Or return success=false if the account is not found.
  * @param {Object} root: GraphQL root variables
- * @param {Object} GraphQL variables for the SendEmailPasswordResetLink mutation
+ * @param {Object} variables: GraphQL variables for the SendEmailPasswordResetLink mutation
  * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag
  */

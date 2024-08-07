@@ -8,7 +8,7 @@ import { GetApplicationByReferenceNumberResponse, GetApplicationByReferenceNumbe
  * Get an application by reference number,
  * call getPopulatedApplication
  * @param {Object} root: GraphQL root variables
- * @param {Object} GraphQL variables for the getApplicationByReferenceNumberVariables query
+ * @param {Object} variables: GraphQL variables for the getApplicationByReferenceNumberVariables query
  * @param {Context} context: KeystoneJS context API
  * @returns {Promise<GetApplicationByReferenceNumberResponse>} Application with success flag
  */

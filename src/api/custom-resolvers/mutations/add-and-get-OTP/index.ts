@@ -9,7 +9,7 @@ import { Account, AddOtpToAccountVariables, AddAndGetOtpResponse, Context } from
  * - NOTE: this is used for E2E testing purposes only.
  * - The alternative approach is to have email inbox testing capabilities which can be risky/flaky.
  * @param {Object} root: GraphQL root variables
- * @param {Object} GraphQL variables for the AddOtpToAccount mutation
+ * @param {Object} variables: GraphQL variables for the AddOtpToAccount mutation
  * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag and OTP
  */

@@ -10,7 +10,7 @@ import removeWhiteSpace from '../../../helpers/remove-white-space';
  * Calls Ordnance Survey API with postcode
  * Finds address by house name/number
  * @param {Object} root: GraphQL root variables
- * @param {Object} GraphQL variables for the getOrdnanceSurveyAddress mutation - postcode and houseNameOrNumber
+ * @param {Object} variables: GraphQL variables for the getOrdnanceSurveyAddress mutation - postcode and houseNameOrNumber
  * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag and addresses in an array
  */

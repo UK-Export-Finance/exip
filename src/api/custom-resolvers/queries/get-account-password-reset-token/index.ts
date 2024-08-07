@@ -8,7 +8,7 @@ import { Account, AccountPasswordResetTokenResponse, Context, GetAccountPassword
  * - NOTE: this is used for E2E testing purposes only.
  * - The alternative approach is to have email inbox testing capabilities which can be risky/flaky.
  * @param {Object} root: GraphQL root variables
- * @param {Object} GraphQL variables for the GetAccountPasswordResetToken mutation
+ * @param {Object} variables: GraphQL variables for the GetAccountPasswordResetToken mutation
  * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag and Password reset token
  */

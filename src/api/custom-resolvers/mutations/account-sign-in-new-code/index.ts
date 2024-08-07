@@ -9,7 +9,7 @@ import { AccountSignInSendNewCodeVariables, AccountSignInResponse, Context } fro
  * - Generate a new OTP, save in the database
  * - Send the user an email with security code
  * @param {Object} root: GraphQL root variables
- * @param {Object} GraphQL variables for the AccountSignInNewCode mutation
+ * @param {Object} variables: GraphQL variables for the AccountSignInNewCode mutation
  * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag
  */
