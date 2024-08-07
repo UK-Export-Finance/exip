@@ -539,8 +539,11 @@ jobs:
       - name: List coverage directory contents
         run: ls -R ./coverage
 
-      - name: Display lcov.info
-        run: cat ./coverage/lcov.info
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: ./coverage
 
       - name: Coverage
         uses: codecov/codecov-action@v4
