@@ -14,6 +14,7 @@ import { UpdateApplicationRelationshipParams } from '../../../types';
  * @param {String} applicationId: Application ID
  * @param {String} buyerId: Buyer ID
  * @param {String} companyId: Company ID
+ * @param {String} declarationId: Declaration ID
  * @param {String} eligibilityId: Eligibility ID
  * @param {String} exportContractId: Export contract ID
  * @param {String} nominatedLossPayeeId: Nominated loss payee ID
@@ -25,6 +26,7 @@ const updateApplicationColumns = async ({
   applicationId,
   buyerId,
   companyId,
+  declarationId,
   eligibilityId,
   exportContractId,
   nominatedLossPayeeId,
@@ -44,6 +46,9 @@ const updateApplicationColumns = async ({
         },
         company: {
           connect: { id: companyId },
+        },
+        declaration: {
+          connect: { id: declarationId },
         },
         eligibility: {
           connect: { id: eligibilityId },

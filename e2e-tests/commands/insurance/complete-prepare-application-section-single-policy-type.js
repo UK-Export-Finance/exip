@@ -17,6 +17,11 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * @param {Boolean} attemptedPrivateMarketCover: Should submit "yes" to "attempted to insure through the private market" form.
  * @param {Boolean} buyerOutstandingPayments: Exporter has outstanding payments with the buyer.
  * @param {Boolean} buyerFailedToPayOnTime: Buyer has failed to pay the exporter on the time.
+ * @param {Boolean} contractAwardedCompetitiveBidding: "How was the contract awarded" method as COMPETITIVE_BIDDING
+ * @param {Boolean} contractAwardedDirectAward: "How was the contract awarded" method as DIRECT_AWARD
+ * @param {Boolean} contractAwardedNegotiatedContract: "How was the contract awarded" method as NEGOTIATED_CONTRACT
+ * @param {Boolean} contractAwardedOpenTender: "How was the contract awarded" method as OPEN_TENDER
+ * @param {Boolean} contractAwardedOtherMethod: "How was the contract awarded" method as OTHER
  * @param {Boolean} differentPolicyContact: Should submit an application with a different policy contact to the owner.
  * @param {Boolean} differentTradingName: Should submit "yes" to "have a different trading name" in the "company details" form.
  * @param {Boolean} differentTradingAddress: Should submit "yes" to "trade from a different address" in the "company details" form.
@@ -38,36 +43,41 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker".
  */
 const completePrepareApplicationSinglePolicyType = ({
+  agentChargeMethodFixedSum = false,
+  agentChargeFixedSumAmount,
+  agentChargeMethodPercentage = false,
+  agentIsCharging = false,
   alternativeCurrencyBuyer = false,
   alternativeCurrencyExportContract = false,
   alternativeCurrencyTurnover = false,
   alternativeCurrencyPolicy = false,
-  differentTradingName = false,
-  differentTradingAddress = false,
-  hasCreditControlProcess = false,
-  hasConnectionToBuyer = false,
-  exporterHasTradedWithBuyer = false,
+  attemptedPrivateMarketCover = false,
   buyerOutstandingPayments = false,
   buyerFailedToPayOnTime = false,
-  fullyPopulatedBuyerTradingHistory = false,
-  hasHadCreditInsuranceCoverWithBuyer = false,
-  exporterHasBuyerFinancialAccounts = false,
-  finalDestinationKnown = false,
-  usingBroker = false,
-  otherCompanyInvolved = false,
-  isAppointingLossPayee = false,
-  lossPayeeIsLocatedInUK = false,
-  policyValueOverMvpMaximum = false,
+  contractAwardedCompetitiveBidding = false,
+  contractAwardedDirectAward = false,
+  contractAwardedNegotiatedContract = false,
+  contractAwardedOpenTender = true,
+  contractAwardedOtherMethod = false,
   differentPolicyContact = false,
-  needPreCreditPeriod = false,
-  totalContractValueOverThreshold = false,
-  attemptedPrivateMarketCover = false,
+  differentTradingName = false,
+  differentTradingAddress = false,
+  exporterHasBuyerFinancialAccounts = false,
+  exporterHasTradedWithBuyer = false,
+  finalDestinationKnown = false,
+  fullyPopulatedBuyerTradingHistory = false,
+  hasCreditControlProcess = false,
+  hasConnectionToBuyer = false,
+  hasHadCreditInsuranceCoverWithBuyer = false,
+  isAppointingLossPayee = false,
   isUsingAgent = false,
-  agentIsCharging = false,
-  agentChargeMethodFixedSum = false,
-  agentChargeFixedSumAmount,
-  agentChargeMethodPercentage = false,
+  lossPayeeIsLocatedInUK = false,
+  needPreCreditPeriod = false,
+  otherCompanyInvolved = false,
+  policyValueOverMvpMaximum = false,
+  totalContractValueOverThreshold = false,
   submitCheckYourAnswers = true,
+  usingBroker = false,
 }) => {
   cy.completeBusinessSection({
     differentTradingName,
@@ -110,6 +120,11 @@ const completePrepareApplicationSinglePolicyType = ({
     agentChargeMethodPercentage,
     alternativeCurrency: alternativeCurrencyExportContract,
     attemptedPrivateMarketCover,
+    contractAwardedOpenTender,
+    contractAwardedCompetitiveBidding,
+    contractAwardedDirectAward,
+    contractAwardedNegotiatedContract,
+    contractAwardedOtherMethod,
     finalDestinationKnown,
     isUsingAgent,
     submitCheckYourAnswers,

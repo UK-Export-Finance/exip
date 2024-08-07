@@ -42,6 +42,7 @@ context(
 
         // go to the page we want to test.
         cy.startInsuranceExportContractSection({});
+        cy.completeAndSubmitHowWasTheContractAwardedForm({});
         cy.completeAndSubmitAboutGoodsOrServicesForm({});
         cy.completeAndSubmitHowYouWillGetPaidForm({});
         cy.completeAndSubmitPrivateMarketForm({ attemptedPrivateMarketCover: true });

@@ -14,6 +14,8 @@ import { get as coverPeriodGet, post as coverPeriodPost } from '../../../control
 import { get as longTermCoverGet } from '../../../controllers/insurance/eligibility/long-term-cover';
 import { get as ukGoodsOrServicesGet, post as ukGoodsOrServicesPost } from '../../../controllers/insurance/eligibility/uk-goods-or-services';
 import { get as endBuyerGet, post as endBuyerPost } from '../../../controllers/insurance/eligibility/end-buyer';
+import { get as partyToConsortiumGet, post as partyToConsortiumPost } from '../../../controllers/insurance/eligibility/party-to-consortium';
+import { get as memberOfAGroupGet, post as memberOfAGroupPost } from '../../../controllers/insurance/eligibility/member-of-a-group';
 import { get as cannotApplyMultipleRisksGet } from '../../../controllers/insurance/eligibility/cannot-apply-multiple-risks';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/eligibility/check-your-answers';
 import { get as eligibleToApplyOnlineGet, post as eligibleToApplyOnlinePost } from '../../../controllers/insurance/eligibility/eligible-to-apply-online';
@@ -21,6 +23,8 @@ import { get as haveAnAccountGet, post as haveAnAccountPost } from '../../../con
 import { get as cannotApplyGet } from '../../../controllers/insurance/eligibility/cannot-apply';
 import { get as needToStartAgainGet, post as needToStartAgainPost } from '../../../controllers/insurance/eligibility/need-to-start-again';
 import { get as talkToEfmTooShortGet } from '../../../controllers/insurance/eligibility/contract-too-short';
+import { get as partyToConsortiumExitGet } from '../../../controllers/insurance/eligibility/party-to-consortium-exit';
+import { get as memberOfAGroupExitGet } from '../../../controllers/insurance/eligibility/member-of-a-group-exit';
 
 // @ts-ignore
 const insuranceEligibilityRouter = express.Router();
@@ -81,6 +85,16 @@ insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.END_BUYER, endBuyer
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.END_BUYER_CHANGE, endBuyerGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.END_BUYER_CHANGE, endBuyerPost);
 
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM, partyToConsortiumGet);
+insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM, partyToConsortiumPost);
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM_CHANGE, partyToConsortiumGet);
+insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM_CHANGE, partyToConsortiumPost);
+
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP, memberOfAGroupGet);
+insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP, memberOfAGroupPost);
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP_CHANGE, memberOfAGroupGet);
+insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP_CHANGE, memberOfAGroupPost);
+
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY_MULTIPLE_RISKS, cannotApplyMultipleRisksGet);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.CHECK_YOUR_ANSWERS, checkYourAnswersGet);
@@ -98,5 +112,9 @@ insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN,
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN, needToStartAgainPost);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.CONTRACT_TOO_SHORT, talkToEfmTooShortGet);
+
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM_EXIT, partyToConsortiumExitGet);
+
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP_EXIT, memberOfAGroupExitGet);
 
 export default insuranceEligibilityRouter;

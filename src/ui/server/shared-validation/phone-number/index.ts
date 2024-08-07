@@ -11,14 +11,14 @@ const pattern = '^[0-9-)(+— ]*$';
 
 /**
  * validates phone number is valid and returns a boolean
- * @param {string} phoneNumber
+ * @param {String} phoneNumber
  * @returns {Boolean}
  */
 const isPhoneNumberValid = (phoneNumber: string) => phoneUtil.isValidNumberForRegion(phoneUtil.parse(phoneNumber, DEFAULT_COUNTRY_UK), DEFAULT_COUNTRY_UK);
 
 /**
  * joi phone using regex to ensure only numbers and specified special characters are in the string
- * @param {string} phoneNumber
+ * @param {String} phoneNumber
  * @returns {Boolean}
  */
 const phoneNumberPatternValidation = (phoneNumber: string) => {
@@ -32,9 +32,9 @@ const phoneNumberPatternValidation = (phoneNumber: string) => {
 /**
  * validates phone number is only from the UK and is a valid phone number
  * returns validation error if incorrect format
- * @param {string} phoneNumber
- * @param {string} fieldId
- * @param {string} errorMessage
+ * @param {String} phoneNumber
+ * @param {String} fieldId
+ * @param {String} errorMessage
  * @param {Object} errors: Other validation errors for the same form
  * @returns {Object} updatedErrors
  */

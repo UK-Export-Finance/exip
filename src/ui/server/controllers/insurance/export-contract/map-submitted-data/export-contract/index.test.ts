@@ -1,14 +1,19 @@
 import mapSubmittedData from '.';
 import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
 import getCountryByIsoCode from '../../../../../helpers/get-country-by-iso-code';
-import { mockCountries } from '../../../../../test-mocks';
+import { EXPORT_CONTRACT_AWARD_METHOD } from '../../../../../constants';
+import { mockCountries, mockExportContract } from '../../../../../test-mocks';
 import { RequestBody } from '../../../../../../types';
 
 const {
+  HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD, OTHER_AWARD_METHOD },
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
 } = FIELD_IDS;
 
 const mockCountryIsoCode = mockCountries[0].isoCode;
+const mockAwardMethodId = mockExportContract.awardMethod.id;
+
+const { DB_ID: OTHER_DB_ID } = EXPORT_CONTRACT_AWARD_METHOD.OTHER;
 
 describe('controllers/insurance/export-contract/map-submitted-data/export-contract', () => {
   let mockFormBody: RequestBody;
@@ -18,6 +23,41 @@ describe('controllers/insurance/export-contract/map-submitted-data/export-contra
       [DESCRIPTION]: 'Mock description about my services',
       [FINAL_DESTINATION_KNOWN]: 'true',
     };
+  });
+
+  describe(`when ${AWARD_METHOD} field is an empty string`, () => {
+    it(`should return the form body without ${AWARD_METHOD}`, () => {
+      const mockBodyWithAwardMethod = {
+        ...mockFormBody,
+        [AWARD_METHOD]: '',
+      };
+
+      const result = mapSubmittedData(mockBodyWithAwardMethod);
+
+      expect(result[AWARD_METHOD]).toBeUndefined();
+    });
+  });
+
+  describe(`when ${AWARD_METHOD} field is provided`, () => {
+    it(`should return the form body with ${AWARD_METHOD} as a connect object`, () => {
+      const mockBodyWithAwardMethod = {
+        ...mockFormBody,
+        [AWARD_METHOD]: mockAwardMethodId,
+      };
+
+      const result = mapSubmittedData(mockBodyWithAwardMethod);
+
+      const expected = {
+        ...mockFormBody,
+        [AWARD_METHOD]: {
+          connect: {
+            id: mockAwardMethodId,
+          },
+        },
+      };
+
+      expect(result).toEqual(expected);
+    });
   });
 
   describe(`when ${FINAL_DESTINATION} field is provided`, () => {
@@ -52,6 +92,54 @@ describe('controllers/insurance/export-contract/map-submitted-data/export-contra
         ...mockFormBody,
         [FINAL_DESTINATION]: '',
         [FINAL_DESTINATION_KNOWN]: 'false',
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when ${AWARD_METHOD} is not equal to ${OTHER_DB_ID}`, () => {
+    it(`should return the form body with an empty ${OTHER_AWARD_METHOD}`, () => {
+      const mockBody = {
+        ...mockFormBody,
+        [AWARD_METHOD]: mockAwardMethodId,
+        [OTHER_AWARD_METHOD]: 'test',
+      };
+
+      const result = mapSubmittedData(mockBody, mockCountries);
+
+      const expected = {
+        ...mockFormBody,
+        [AWARD_METHOD]: {
+          connect: {
+            id: mockAwardMethodId,
+          },
+        },
+        [OTHER_AWARD_METHOD]: '',
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when ${AWARD_METHOD} is equal to ${OTHER_DB_ID}`, () => {
+    it(`should return the form body with ${OTHER_AWARD_METHOD} populated`, () => {
+      const mockBody = {
+        ...mockFormBody,
+        [AWARD_METHOD]: OTHER_DB_ID,
+        [OTHER_AWARD_METHOD]: mockExportContract.otherAwardMethod,
+      };
+
+      const result = mapSubmittedData(mockBody, mockCountries);
+
+      const expected = {
+        ...mockFormBody,
+        [AWARD_METHOD]: {
+          connect: {
+            id: OTHER_DB_ID,
+          },
+        },
+        [OTHER_AWARD_METHOD]: mockBody[OTHER_AWARD_METHOD],
       };
 
       expect(result).toEqual(expected);

@@ -53,6 +53,8 @@ describe('helpers/create-an-eligibility', () => {
     expect(result.hasCompaniesHouseNumber).toEqual(false);
     expect(result.otherPartiesInvolved).toEqual(false);
     expect(result.paidByLetterOfCredit).toEqual(false);
+    expect(result.isPartyToConsortium).toEqual(false);
+    expect(result.isMemberOfAGroup).toEqual(false);
   });
 
   describe('when an invalid country ID is passed', () => {

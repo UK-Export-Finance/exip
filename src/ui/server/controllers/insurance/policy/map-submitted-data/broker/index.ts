@@ -25,7 +25,7 @@ const mapSubmittedData = (formBody: RequestBody): object => {
 
   /**
    * If USING_BROKER is an empty string,
-   * Delete the field.
+   * delete the field.
    */
   if (isEmptyString(formBody[USING_BROKER])) {
     delete populatedData[USING_BROKER];

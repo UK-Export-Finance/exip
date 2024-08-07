@@ -31,19 +31,13 @@ describe('helpers/create-an-application/create-application-relationships', () =>
   });
 
   test('it should return relationship IDs', () => {
-    expect(result.buyerId).toBeDefined();
     expect(typeof result.buyerId).toEqual('string');
-    expect(result.companyId).toBeDefined();
     expect(typeof result.companyId).toEqual('string');
-    expect(result.eligibilityId).toBeDefined();
+    expect(typeof result.declarationId).toEqual('string');
     expect(typeof result.eligibilityId).toEqual('string');
-    expect(result.exportContractId).toBeDefined();
     expect(typeof result.exportContractId).toEqual('string');
-    expect(result.nominatedLossPayeeId).toBeDefined();
     expect(typeof result.nominatedLossPayeeId).toEqual('string');
-    expect(result.policyId).toBeDefined();
     expect(typeof result.policyId).toEqual('string');
-    expect(result.sectionReviewId).toBeDefined();
     expect(typeof result.sectionReviewId).toEqual('string');
   });
 

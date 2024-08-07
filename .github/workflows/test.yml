@@ -229,6 +229,7 @@ jobs:
             'check-your-answers/export-contract/change-your-answers/about-goods-or-services/*.spec.js',
             'check-your-answers/export-contract/change-your-answers/agent/*.spec.js',
             'check-your-answers/export-contract/change-your-answers/agent-charges/*.spec.js',
+            'check-your-answers/export-contract/change-your-answers/how-the-contract-was-awarded/*.spec.js',
             'check-your-answers/export-contract/change-your-answers/agent-service/*.spec.js',
             'check-your-answers/export-contract/change-your-answers/how-will-you-get-paid/*.spec.js',
             'check-your-answers/export-contract/change-your-answers/private-market/*.spec.js',
@@ -251,7 +252,6 @@ jobs:
             'declarations/anti-bribery/**/*.spec.js',
             'declarations/confidentiality/**/*.spec.js',
             'declarations/confirmation-and-acknowledgements/**/*.spec.js',
-            'declarations/how-your-data-will-be-used/**/*.spec.js',
             'eligibility/*.spec.js',
             'eligibility/buyer-country/**/*.spec.js',
             'eligibility/cannot-apply/**/*.spec.js',
@@ -268,9 +268,12 @@ jobs:
             'eligibility/end-buyer/**/*.spec.js',
             'eligibility/exporter-location/**/*.spec.js',
             'eligibility/have-an-account/**/*.spec.js',
+            'eligibility/member-of-a-group/**/*.spec.js',
             'eligibility/no-companies-house-number/**/*.spec.js',
+            'eligibility/party-to-consortium/**/*.spec.js',
             'eligibility/total-value-insured/**/*.spec.js',
             'eligibility/uk-goods-or-services/**/*.spec.js',
+            'export-contract/how-was-the-contract-awarded/**/*.spec.js',
             'export-contract/about-goods-or-services/**/*.spec.js',
             'export-contract/how-will-you-get-paid/**/*.spec.js',
             'export-contract/private-market/**/*.spec.js',
@@ -283,6 +286,7 @@ jobs:
             'export-contract/change-your-answers/agent/*.spec.js',
             'export-contract/change-your-answers/agent-charges/*.spec.js',
             'export-contract/change-your-answers/agent-service/*.spec.js',
+            'export-contract/change-your-answers/how-the-contract-was-awarded/*.spec.js',
             'export-contract/change-your-answers/how-will-you-get-paid/*.spec.js',
             'export-contract/change-your-answers/private-market/*.spec.js',
             'export-contract/check-your-answers/**/*.spec.js',
@@ -372,7 +376,7 @@ jobs:
 
       - name: Execute
         working-directory: ./e2e-tests/insurance
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
 
       - name: Coverage
         uses: codecov/codecov-action@v4
@@ -440,7 +444,7 @@ jobs:
 
       - name: Execute
         working-directory: ./e2e-tests/quote
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
 
       - name: Coverage
         uses: codecov/codecov-action@v4
@@ -493,7 +497,7 @@ jobs:
 
       - name: Execute
         working-directory: ./e2e-tests/switch-between-services
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
 
       - name: Coverage
         uses: codecov/codecov-action@v4

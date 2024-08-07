@@ -3,6 +3,7 @@ import getCreditPeriodValueByField from '../../get-cover-period-value-by-field';
 import getTotalContractValueByField from '../../get-total-contract-value-by-field';
 import createAnEligibility from '../../create-an-eligibility';
 import createABuyer from '../../create-a-buyer';
+import createADeclaration from '../../create-a-declaration';
 import createAPolicy from '../../create-a-policy';
 import createANominatedLossPayee from '../../create-a-nominated-loss-payee';
 import createACompany from '../../create-a-company';
@@ -64,19 +65,21 @@ const createApplicationRelationships = async ({
     const totalContractValue = await getTotalContractValueByField(context, 'valueId', totalContractValueId);
 
     const relationships = await Promise.all([
-      await createABuyer(context, country.id, applicationId),
-      await createAnEligibility(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
-      await createAnExportContract(context, applicationId),
-      await createAPolicy(context, applicationId),
-      await createANominatedLossPayee(context, applicationId),
-      await createACompany(context, applicationId, companyData),
-      await createASectionReview(context, applicationId, sectionReviewData),
+      createABuyer(context, country.id, applicationId),
+      createADeclaration(context, applicationId),
+      createAnEligibility(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
+      createAnExportContract(context, applicationId),
+      createAPolicy(context, applicationId),
+      createANominatedLossPayee(context, applicationId),
+      createACompany(context, applicationId, companyData),
+      createASectionReview(context, applicationId, sectionReviewData),
     ]);
 
-    const [buyer, eligibility, exportContract, policy, nominatedLossPayee, company, sectionReview] = relationships;
+    const [buyer, declaration, eligibility, exportContract, policy, nominatedLossPayee, company, sectionReview] = relationships;
 
     const relationshipIds = {
       buyerId: buyer.id,
+      declarationId: declaration.id,
       companyId: company.id,
       eligibilityId: eligibility.id,
       exportContractId: exportContract.id,

@@ -20,6 +20,7 @@ context(
         lossPayeeIsLocatedInUK: true,
         totalContractValueOverThreshold: true,
         attemptedPrivateMarketCover: true,
+        contractAwardedOtherMethod: true,
         isUsingAgent: true,
         agentIsCharging: true,
         agentChargeMethodFixedSum: true,

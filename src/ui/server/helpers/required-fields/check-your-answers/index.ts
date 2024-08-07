@@ -17,7 +17,7 @@ const {
  */
 const requiredFields = (application: ApplicationFlat): Array<string> => [
   ...requiredBusinessFields(),
-  ...requiredEligibilityFields(),
+  ...requiredEligibilityFields(application.migratedV1toV2),
   ...requiredExportContractFields(application),
   ...requiredPolicyFields(application[POLICY_TYPE]),
   ...requiredSectionReviewFields(application),

@@ -15,6 +15,12 @@ This directory contains source code for migrating version 1 of EXIP data into th
 - `Buyer` table - 3x new relationships - `buyerTradingHistory`, `contact`, `relationship`.
 - `Company` table - 1x new relationship - `differentTradingAddress`.
 - `Company` table - 1x new field - `differentTradingName`.
+- `Declaration` table - 2x new fields - `version`, `exportContract`.
+- `Declaration` table - 3x removed fields - `antiBribery`, `confirmationAndAcknowledgements`, `howDataWillBeUsed.
+- `DeclarationAntiBribery` table - removed.
+- `DeclarationConfidentiality` table - removed.
+- `DeclarationConfirmationAndAcknowledgement` table - removed.
+- `DeclarationHowDataWillBeUsed` table - removed.
 - `Eligibility` table - 1x new field - `hasEndBuyer`.
 - `ExportContract` table - 2x new relationships - `agent`, `privateMarket`.
 - `ExportContract` table - 1x new field - `paymentTermsDescription`.
@@ -29,6 +35,7 @@ This directory contains source code for migrating version 1 of EXIP data into th
 - BuyerRelationship
 - BuyerTradingHistory
 - CompanyDifferentTradingAddress
+- DeclarationVersion
 - ExportContractAgent
 - ExportContractAgentService
 - ExportContractAgentServiceCharge
@@ -74,8 +81,10 @@ The migration should successfully do the following:
 6. Create new account status relationships.
 7. Remove old account status fields.
 8. Update buyers.
-9. Create new application relationships.
-10. Exit the process.
+9. Remove old declaration fields.
+10. Remove old declaration content tables.
+11. Create new application relationships.
+12. Exit the process.
 
 ## How to ensure that data migration was successful
 

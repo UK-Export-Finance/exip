@@ -6,6 +6,7 @@ context('Insurance - submit an application - Single policy type, fully populated
       agentIsCharging: true,
       agentChargeMethodFixedSum: true,
       attemptedPrivateMarketCover: true,
+      contractAwardedOtherMethod: true,
       isUsingAgent: true,
       finalDestinationKnown: true,
       totalContractValueOverThreshold: true,

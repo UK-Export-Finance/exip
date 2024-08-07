@@ -22,6 +22,7 @@ context(`Insurance - Export contract - Agent charges - Save and go back - empty 
 
       // go to the page we want to test.
       cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitHowWasTheContractAwardedForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
       cy.completeAndSubmitHowYouWillGetPaidForm({});
       cy.completeAndSubmitAgentForm({ isUsingAgent: true });
@@ -43,7 +44,7 @@ context(`Insurance - Export contract - Agent charges - Save and go back - empty 
   });
 
   // TODO: partially submitted - country, no method.
-  // . should be populated when going back to the page.
+  // should be populated when going back to the page.
 
   describe('when submitting an empty form via `save and go back` button', () => {
     beforeEach(() => {

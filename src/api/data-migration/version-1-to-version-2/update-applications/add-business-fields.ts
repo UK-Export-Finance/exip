@@ -3,7 +3,7 @@ import executeSqlQuery from '../execute-sql-query';
 
 /**
  * addBusinessFields
- * Add new business fields to the business table.
+ * Add new fields to the business table.
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<object>>} executeSqlQuery response
  */

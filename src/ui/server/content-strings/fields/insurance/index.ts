@@ -4,7 +4,6 @@ export * from './export-contract';
 export * from './policy';
 export * from './your-business';
 export * from './your-buyer';
-export * from './declarations';
 
 export const REFERENCE_NUMBER = {
   SUMMARY: {

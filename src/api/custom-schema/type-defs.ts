@@ -196,6 +196,8 @@ const typeDefs = `
     hasCompaniesHouseNumber: Boolean!
     hasEndBuyer: Boolean!
     hasMinimumUkGoodsOrServices: Boolean!
+    isMemberOfAGroup: Boolean!
+    isPartyToConsortium: Boolean!
     totalContractValueId: Int!
     validExporterLocation: Boolean!
   }

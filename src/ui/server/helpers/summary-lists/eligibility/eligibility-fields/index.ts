@@ -19,6 +19,8 @@ const {
   VALID_EXPORTER_LOCATION,
   TOTAL_CONTRACT_VALUE,
   HAS_END_BUYER,
+  IS_PARTY_TO_CONSORTIUM,
+  IS_MEMBER_OF_A_GROUP,
 } = FIELD_IDS;
 
 const { COMPANY_NUMBER, COMPANY_NAME } = COMPANIES_HOUSE;
@@ -33,6 +35,8 @@ const {
     COVER_PERIOD_CHANGE,
     UK_GOODS_OR_SERVICES_CHANGE,
     END_BUYER_CHANGE,
+    PARTY_TO_CONSORTIUM_CHANGE,
+    MEMBER_OF_A_GROUP_CHANGE,
   },
 } = INSURANCE_ROUTES;
 
@@ -176,6 +180,38 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
         renderChangeLink: true,
       },
       mapYesNoField(answers[HAS_END_BUYER]),
+    ),
+    fieldGroupItem(
+      {
+        field: getFieldById(FIELDS_ELIGIBILITY, IS_PARTY_TO_CONSORTIUM),
+        data: answers,
+        href: generateChangeLink(
+          PARTY_TO_CONSORTIUM_CHANGE,
+          checkAndChangeLink,
+          `#${IS_PARTY_TO_CONSORTIUM}-label`,
+          referenceNumber,
+          isCheckAndChange,
+          isInsuranceEligibility,
+        ),
+        renderChangeLink: true,
+      },
+      mapYesNoField(answers[IS_PARTY_TO_CONSORTIUM]),
+    ),
+    fieldGroupItem(
+      {
+        field: getFieldById(FIELDS_ELIGIBILITY, IS_MEMBER_OF_A_GROUP),
+        data: answers,
+        href: generateChangeLink(
+          MEMBER_OF_A_GROUP_CHANGE,
+          checkAndChangeLink,
+          `#${IS_MEMBER_OF_A_GROUP}-label`,
+          referenceNumber,
+          isCheckAndChange,
+          isInsuranceEligibility,
+        ),
+        renderChangeLink: true,
+      },
+      mapYesNoField(answers[IS_MEMBER_OF_A_GROUP]),
     ),
   ] as Array<SummaryListItemData>;
 

@@ -1,0 +1,19 @@
+{% set contentStrings = CONTENT_STRINGS.MEMBER_OF_A_GROUP_DESCRIPTION %}
+
+{% set memberOfAGroupDescriptionHtml %}
+  <p class="govuk-body" data-cy="{{ fieldId }}-description-details">{{ contentStrings.DESCRIPTION }}</p>
+{% endset %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters-from-desktop">
+
+    {{ govukDetails({
+      summaryText: contentStrings.INTRO,
+      html: memberOfAGroupDescriptionHtml,
+      attributes: {
+        "data-cy": fieldId + "-description"
+      }
+    }) }}
+
+  </div>
+</div>

@@ -47,13 +47,14 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
     const { id: applicationId } = application;
 
     // create application relationships
-    const { buyerId, companyId, eligibilityId, exportContractId, nominatedLossPayeeId, policyId, sectionReviewId } = await applicationRelationships.create({
-      context,
-      applicationId,
-      companyData,
-      eligibilityAnswers,
-      sectionReviewData,
-    });
+    const { buyerId, declarationId, companyId, eligibilityId, exportContractId, nominatedLossPayeeId, policyId, sectionReviewId } =
+      await applicationRelationships.create({
+        context,
+        applicationId,
+        companyData,
+        eligibilityAnswers,
+        sectionReviewData,
+      });
 
     // update the application's relationship column values
     const updatedApplication = await applicationColumns.update({
@@ -61,6 +62,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
       applicationId,
       buyerId,
       companyId,
+      declarationId,
       eligibilityId,
       exportContractId,
       nominatedLossPayeeId,

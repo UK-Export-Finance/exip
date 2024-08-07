@@ -1,16 +1,12 @@
-import { headingCaption, singleInputField } from '../../../../../../pages/shared';
-import { confidentialityPage } from '../../../../../../pages/insurance/declarations';
+import { headingCaption, singleInputField, declarationPage } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
-import { DECLARATIONS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/declarations';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const { taskList } = partials.insurancePartials;
 
-const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY;
-
-const [LATEST_VERSION] = CONTENT_STRINGS.VERSIONS;
+const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY.VERSIONS[0];
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -77,41 +73,41 @@ context(
       });
 
       describe('latest confidentiality content', () => {
-        const listContent = LATEST_VERSION.LIST;
+        const listContent = CONTENT_STRINGS.LIST;
 
-        const { intro, level1, level2, level3 } = confidentialityPage.listItems;
+        const { intro, level1, level2, level3 } = declarationPage.listItems;
 
         it('renders an intro paragraph', () => {
-          cy.checkText(intro(), LATEST_VERSION.INTRO);
+          cy.checkText(intro(), CONTENT_STRINGS.INTRO);
         });
 
         it('renders level 1 list items', () => {
           const level1Content = listContent;
 
-          cy.checkText(level1.item1(), level1Content[0].text);
-          cy.checkText(level1.item2(), level1Content[1].text);
-          cy.checkText(level1.item3(), level1Content[2].text);
+          cy.checkText(level1.item(1), level1Content[0].text);
+          cy.checkText(level1.item(2), level1Content[1].text);
+          cy.checkText(level1.item(3), level1Content[2].text);
         });
 
         it('renders level 2 list items', () => {
           const level2Content = listContent[0].children;
 
-          cy.checkText(level2.item1(), level2Content[0].text);
-          cy.checkText(level2.item2(), level2Content[1].text);
-          cy.checkText(level2.item3(), level2Content[2].text);
-          cy.checkText(level2.item4(), level2Content[3].text);
+          cy.checkText(level2.item(1), level2Content[0].text);
+          cy.checkText(level2.item(2), level2Content[1].text);
+          cy.checkText(level2.item(3), level2Content[2].text);
+          cy.checkText(level2.item(4), level2Content[3].text);
         });
 
         it('renders level 3 list items', () => {
           const level3Content = listContent[0].children[3].children;
 
-          cy.checkText(level3.item1(), level3Content[0].text);
-          cy.checkText(level3.item2(), level3Content[1].text);
+          cy.checkText(level3.item(1), level3Content[0].text);
+          cy.checkText(level3.item(2), level3Content[1].text);
         });
       });
 
       it('renders a `confirm` legend and input', () => {
-        cy.checkText(field.legend(), FIELDS[FIELD_ID].LABEL);
+        cy.checkText(field.legend(), CONTENT_STRINGS.LABEL);
 
         field.input().should('exist');
       });

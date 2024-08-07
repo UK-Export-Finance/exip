@@ -3,6 +3,7 @@ import getKeystoneContext from './test-helpers/get-keystone-context';
 import applications from './test-helpers/applications';
 import buyerHelper from './test-helpers/buyer';
 import buyerTradingHistoryHelper from './test-helpers/buyer-trading-history';
+import declarations from './test-helpers/declarations';
 import policies from './test-helpers/policies';
 import { Application, Context } from './types';
 
@@ -46,6 +47,16 @@ describe('Keystone - Application timestamp updates', () => {
       },
     });
 
+    /**
+     * Create declaration,
+     * associate with the application.
+     */
+    const declaration = await declarations.create(context, {
+      application: {
+        connect: { id: application.id },
+      },
+    });
+
     // create policy and associate with the application.
     const policy = await policies.create({
       context,
@@ -82,6 +93,9 @@ describe('Keystone - Application timestamp updates', () => {
       },
       company: {
         id: company.id,
+      },
+      declaration: {
+        id: declaration.id,
       },
       exportContract: {
         id: exportContract.id,

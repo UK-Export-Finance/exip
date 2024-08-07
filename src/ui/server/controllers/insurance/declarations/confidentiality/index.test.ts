@@ -1,7 +1,6 @@
 import { FIELD_ID, pageVariables, TEMPLATE, get, post } from '.';
-import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
-import { FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
-import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
+import { ERROR_MESSAGES } from '../../../../content-strings';
+import { FIELD_IDS, TEMPLATES, ROUTES, DECLARATIONS } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
@@ -20,7 +19,7 @@ const {
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
-const [CONFIDENTIALITY_CONTENT] = PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY.VERSIONS;
+const { CONFIDENTIALITY } = DECLARATIONS.LATEST_DECLARATIONS;
 
 describe('controllers/insurance/declarations/confidentiality', () => {
   jest.mock('../save-data');
@@ -52,7 +51,7 @@ describe('controllers/insurance/declarations/confidentiality', () => {
       const expected = {
         FIELD: {
           ID: FIELD_ID,
-          ...FIELDS[FIELD_ID],
+          ...CONFIDENTIALITY,
         },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY_SAVE_AND_BACK}`,
       };
@@ -73,12 +72,11 @@ describe('controllers/insurance/declarations/confidentiality', () => {
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY,
+          PAGE_CONTENT_STRINGS: CONFIDENTIALITY,
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
-        CONFIDENTIALITY_CONTENT,
         application: mapApplicationToFormFields(res.locals.application),
       };
 
@@ -134,12 +132,11 @@ describe('controllers/insurance/declarations/confidentiality', () => {
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY,
+            PAGE_CONTENT_STRINGS: CONFIDENTIALITY,
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
-          CONFIDENTIALITY_CONTENT,
           validationErrors: generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),
         };
 
