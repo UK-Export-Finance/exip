@@ -364,6 +364,9 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
+      - name: Clear npm cache
+        run: npm cache clean --force
+
       - name: Dependencies
         working-directory: ./
         run: npm run ci:all
@@ -440,6 +443,9 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
+      - name: Clear npm cache
+        run: npm cache clean --force
+
       - name: Dependencies
         working-directory: ./
         run: npm run ci:all
@@ -500,6 +506,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Clear npm cache
+        run: npm cache clean --force
 
       - name: Dependencies
         working-directory: ./
