@@ -65,14 +65,14 @@ const createApplicationRelationships = async ({
     const totalContractValue = await getTotalContractValueByField(context, 'valueId', totalContractValueId);
 
     const relationships = await Promise.all([
-      await createABuyer(context, country.id, applicationId),
-      await createADeclaration(context, applicationId),
-      await createAnEligibility(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
-      await createAnExportContract(context, applicationId),
-      await createAPolicy(context, applicationId),
-      await createANominatedLossPayee(context, applicationId),
-      await createACompany(context, applicationId, companyData),
-      await createASectionReview(context, applicationId, sectionReviewData),
+      createABuyer(context, country.id, applicationId),
+      createADeclaration(context, applicationId),
+      createAnEligibility(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
+      createAnExportContract(context, applicationId),
+      createAPolicy(context, applicationId),
+      createANominatedLossPayee(context, applicationId),
+      createACompany(context, applicationId, companyData),
+      createASectionReview(context, applicationId, sectionReviewData),
     ]);
 
     const [buyer, declaration, eligibility, exportContract, policy, nominatedLossPayee, company, sectionReview] = relationships;

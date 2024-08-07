@@ -2,7 +2,6 @@ import { addMonths } from 'date-fns';
 import { APPLICATION } from './constants';
 import getBusinessById from './helpers/get-business-by-id';
 import getBrokerById from './helpers/get-broker-by-id';
-import getDeclarationById from './helpers/get-declaration-by-id';
 import getKeystoneContext from './test-helpers/get-keystone-context';
 import applications from './test-helpers/applications';
 import buyerHelper from './test-helpers/buyer';
@@ -199,11 +198,5 @@ describe('Keystone - Create an Application', () => {
     const broker = await getBrokerById(context, application.broker.id);
 
     expect(broker.applicationId).toEqual(application.id);
-  });
-
-  test('it should add the application ID to the declaration entry', async () => {
-    const declaration = await getDeclarationById(context, application.declaration.id);
-
-    expect(declaration.applicationId).toEqual(application.id);
   });
 });

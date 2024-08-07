@@ -4935,14 +4935,14 @@ var createApplicationRelationships = async ({
     const coverPeriod = await get_cover_period_value_by_field_default(context, "valueId", coverPeriodId);
     const totalContractValue = await get_total_contract_value_by_field_default(context, "valueId", totalContractValueId);
     const relationships = await Promise.all([
-      await create_a_buyer_default(context, country.id, applicationId),
-      await create_a_declaration_default(context, applicationId),
-      await create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
-      await create_an_export_contract_default(context, applicationId),
-      await create_a_policy_default(context, applicationId),
-      await create_a_nominated_loss_payee_default(context, applicationId),
-      await create_a_company_default(context, applicationId, companyData),
-      await create_a_section_review_default(context, applicationId, sectionReviewData)
+      create_a_buyer_default(context, country.id, applicationId),
+      create_a_declaration_default(context, applicationId),
+      create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
+      create_an_export_contract_default(context, applicationId),
+      create_a_policy_default(context, applicationId),
+      create_a_nominated_loss_payee_default(context, applicationId),
+      create_a_company_default(context, applicationId, companyData),
+      create_a_section_review_default(context, applicationId, sectionReviewData)
     ]);
     const [buyer, declaration, eligibility, exportContract, policy, nominatedLossPayee, company, sectionReview] = relationships;
     const relationshipIds = {

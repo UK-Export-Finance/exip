@@ -35,6 +35,7 @@ describe('helpers/create-an-application/update-application-columns', () => {
       applicationId: application.id,
       buyerId: createdRelationships.buyerId,
       companyId: createdRelationships.companyId,
+      declarationId: createdRelationships.declarationId,
       eligibilityId: createdRelationships.eligibilityId,
       exportContractId: createdRelationships.exportContractId,
       nominatedLossPayeeId: createdRelationships.nominatedLossPayeeId,
@@ -46,6 +47,7 @@ describe('helpers/create-an-application/update-application-columns', () => {
   test('it should return an application', () => {
     expect(result.buyerId).toEqual(createdRelationships.buyerId);
     expect(result.companyId).toEqual(createdRelationships.companyId);
+    expect(result.declarationId).toEqual(createdRelationships.declarationId);
     expect(result.eligibilityId).toEqual(createdRelationships.eligibilityId);
     expect(result.exportContractId).toEqual(createdRelationships.exportContractId);
     expect(result.nominatedLossPayeeId).toEqual(createdRelationships.nominatedLossPayeeId);
