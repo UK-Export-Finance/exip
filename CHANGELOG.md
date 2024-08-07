@@ -2,16 +2,15 @@
 
 ## [2.35.0](https://github.com/UK-Export-Finance/exip/compare/v2.34.0...v2.35.0) (2024-08-06)
 
-
 ### Features
 
-* **EMS-3687:** application submission - xlsx - how was contract awarded ([#2907](https://github.com/UK-Export-Finance/exip/issues/2907)) ([40ea2f4](https://github.com/UK-Export-Finance/exip/commit/40ea2f4a100567b21c321674904c80757fb11cb1))
+- **EMS-3687:** application submission - xlsx - how was contract awarded ([#2907](https://github.com/UK-Export-Finance/exip/issues/2907)) ([40ea2f4](https://github.com/UK-Export-Finance/exip/commit/40ea2f4a100567b21c321674904c80757fb11cb1))
 
 ## [2.34.0](https://github.com/UK-Export-Finance/exip/compare/v2.33.0...v2.34.0) (2024-08-06)
 
 ### Features
 
-* **EMS-3722-3723:** data migration - eligibility, export contract ([#2901](https://github.com/UK-Export-Finance/exip/issues/2901)) ([0c16bc1](https://github.com/UK-Export-Finance/exip/commit/0c16bc18b52bf1a6a0737a124d693203a8eba96a))
+- **EMS-3722-3723:** data migration - eligibility, export contract ([#2901](https://github.com/UK-Export-Finance/exip/issues/2901)) ([0c16bc1](https://github.com/UK-Export-Finance/exip/commit/0c16bc18b52bf1a6a0737a124d693203a8eba96a))
 
 ## [2.33.0](https://github.com/UK-Export-Finance/exip/compare/v2.32.0...v2.33.0) (2024-08-06)
 
