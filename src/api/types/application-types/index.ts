@@ -398,6 +398,6 @@ export interface UpdateApplicationRelationshipParams {
   nominatedLossPayeeId: string;
   policyId: string;
   policyContactId: string;
-  referenceNumberId: string;
+  referenceNumber: string;
   sectionReviewId: string;
 }

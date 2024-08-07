@@ -12,13 +12,16 @@ const createAReferenceNumber = async (context: Context, applicationId: string) =
 
   try {
     const created = await context.db.ReferenceNumber.createOne({
-      data: { applicationId },
+      data: {
+        application: {
+          connect: {
+            id: applicationId,
+          },
+        },
+      },
     });
 
-    return {
-      ...created,
-      referenceNumber: created.id,
-    };
+    return created.referenceNumber;
   } catch (err) {
     console.error('Error creating a reference number %O', err);
 

@@ -4201,12 +4201,15 @@ var createAReferenceNumber = async (context, applicationId) => {
   console.info("Creating a reference number for %s", applicationId);
   try {
     const created = await context.db.ReferenceNumber.createOne({
-      data: { applicationId }
+      data: {
+        application: {
+          connect: {
+            id: applicationId
+          }
+        }
+      }
     });
-    return {
-      ...created,
-      referenceNumber: created.id
-    };
+    return created.referenceNumber;
   } catch (err) {
     console.error("Error creating a reference number %O", err);
     throw new Error(`Creating a reference number ${err}`);
@@ -4818,12 +4821,12 @@ var createApplicationRelationships = async ({
     }
     const coverPeriod = await get_cover_period_value_by_field_default(context, "valueId", coverPeriodId);
     const totalContractValue = await get_total_contract_value_by_field_default(context, "valueId", totalContractValueId);
-    const referenceNumberObject = await create_a_reference_number_default(context, applicationId);
-    const relationships = await Promise.all([
+    const referenceNumber = await create_a_reference_number_default(context, applicationId);
+    const createdRelationships = await Promise.all([
       await create_a_broker_default(context, applicationId),
       await create_a_business_default(context, applicationId),
       await create_a_buyer_default(context, country.id, applicationId),
-      await create_a_declaration_default(context, country.id, applicationId),
+      await create_a_declaration_default(context, applicationId),
       await create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
       await create_an_export_contract_default(context, applicationId),
       await create_a_policy_default(context, applicationId),
@@ -4832,8 +4835,8 @@ var createApplicationRelationships = async ({
       await create_a_company_default(context, applicationId, companyData),
       await create_a_section_review_default(context, applicationId, sectionReviewData)
     ]);
-    const [broker, business, buyer, declaration, eligibility, exportContract, policy, policyContact, nominatedLossPayee, company, sectionReview] = relationships;
-    const relationshipIds = {
+    const [broker, business, buyer, declaration, eligibility, exportContract, policy, policyContact, nominatedLossPayee, company, sectionReview] = createdRelationships;
+    const relationships = {
       brokerId: broker.id,
       businessId: business.id,
       buyerId: buyer.id,
@@ -4844,10 +4847,10 @@ var createApplicationRelationships = async ({
       nominatedLossPayeeId: nominatedLossPayee.id,
       policyId: policy.id,
       policyContactId: policyContact.id,
-      referenceNumberId: referenceNumberObject.id,
+      referenceNumber,
       sectionReviewId: sectionReview.id
     };
-    return relationshipIds;
+    return relationships;
   } catch (err) {
     console.error(`Error creating application relationships (createApplicationRelationships helper) for application ${applicationId} %O`, err);
     throw new Error(`Creating application relationships (createApplicationRelationships helper) for application ${applicationId} ${err}`);
@@ -4872,7 +4875,7 @@ var updateApplicationColumns = async ({
   nominatedLossPayeeId,
   policyId,
   policyContactId,
-  referenceNumberId,
+  referenceNumber,
   sectionReviewId
 }) => {
   try {
@@ -4912,9 +4915,7 @@ var updateApplicationColumns = async ({
         policyContact: {
           connect: { id: policyContactId }
         },
-        referenceNumber: {
-          connect: { id: referenceNumberId }
-        },
+        referenceNumber,
         sectionReview: {
           connect: { id: sectionReviewId }
         }
@@ -4932,7 +4933,7 @@ var applicationColumns = {
 var update_application_columns_default = applicationColumns;
 
 // helpers/create-an-application/index.ts
-var createAnApplication = async (root, variables, context) => {
+var createAnApplication = async (variables, context) => {
   console.info("Creating an application (createAnApplication helper) for user %s", variables.accountId);
   try {
     const { accountId, eligibilityAnswers, company: companyData, sectionReview: sectionReviewData, status } = variables;
@@ -4958,7 +4959,7 @@ var createAnApplication = async (root, variables, context) => {
       nominatedLossPayeeId,
       policyId,
       policyContactId,
-      referenceNumberId,
+      referenceNumber,
       sectionReviewId
     } = await create_application_relationships_default.create({
       context,
@@ -4980,7 +4981,7 @@ var createAnApplication = async (root, variables, context) => {
       nominatedLossPayeeId,
       policyId,
       policyContactId,
-      referenceNumberId,
+      referenceNumber,
       sectionReviewId
     });
     return updatedApplication;
@@ -4992,13 +4993,10 @@ var createAnApplication = async (root, variables, context) => {
 var create_an_application_default = createAnApplication;
 
 // custom-resolvers/mutations/create-an-application/index.ts
-var { STATUS: STATUS2 } = APPLICATION;
 var createAnApplication2 = async (root, variables, context) => {
   console.info("Creating application for user ", variables.accountId);
-  const updatedVariables = variables;
-  updatedVariables.status = STATUS2.IN_PROGRESS;
   try {
-    const updatedApplication = await create_an_application_default(root, updatedVariables, context);
+    const updatedApplication = await create_an_application_default(variables, context);
     if (updatedApplication) {
       return {
         ...updatedApplication,
@@ -5016,11 +5014,11 @@ var createAnApplication2 = async (root, variables, context) => {
 var create_an_application_default2 = createAnApplication2;
 
 // custom-resolvers/mutations/create-an-abandoned-application/index.ts
-var { STATUS: STATUS3 } = APPLICATION;
+var { STATUS: STATUS2 } = APPLICATION;
 var createAnAbandonedApplication = async (root, variables, context) => {
   console.info("Creating an abandoned application for %s", variables.accountId);
   const abandonedApplicationVariables = variables;
-  abandonedApplicationVariables.status = STATUS3.ABANDONED;
+  abandonedApplicationVariables.status = STATUS2.ABANDONED;
   try {
     const createdApplication = await create_an_application_default(root, abandonedApplicationVariables, context);
     if (createdApplication) {

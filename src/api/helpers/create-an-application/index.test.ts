@@ -1,4 +1,4 @@
-import createAnApplication from '.';
+import createAnApplicationHelper from '.';
 import initialApplication from './create-initial-application';
 import applicationRelationships from './create-application-relationships';
 import applicationColumns from './update-application-columns';
@@ -86,7 +86,7 @@ describe('helpers/create-an-application', () => {
   });
 
   it('should call initialApplication.create', async () => {
-    await createAnApplication({}, variables, context);
+    await createAnApplicationHelper(variables, context);
 
     expect(initialApplicationCreateSpy).toHaveBeenCalledTimes(1);
     expect(initialApplicationCreateSpy).toHaveBeenCalledWith({
@@ -97,7 +97,7 @@ describe('helpers/create-an-application', () => {
   });
 
   it('should call applicationRelationships.create', async () => {
-    await createAnApplication({}, variables, context);
+    await createAnApplicationHelper(variables, context);
 
     expect(applicationRelationshipsCreateSpy).toHaveBeenCalledTimes(1);
     expect(applicationRelationshipsCreateSpy).toHaveBeenCalledWith({
@@ -110,7 +110,7 @@ describe('helpers/create-an-application', () => {
   });
 
   it('should call applicationColumns.update', async () => {
-    await createAnApplication({}, variables, context);
+    await createAnApplicationHelper(variables, context);
 
     expect(applicationColumnsUpdateSpy).toHaveBeenCalledTimes(1);
 
@@ -148,7 +148,7 @@ describe('helpers/create-an-application', () => {
   });
 
   test('it should return the result of applicationColumns.update', async () => {
-    const result = await createAnApplication({}, variables, context);
+    const result = await createAnApplicationHelper(variables, context);
 
     const createdApplication = await applications.get({ context, applicationId: result.id });
 
@@ -159,7 +159,7 @@ describe('helpers/create-an-application', () => {
     test('it should return null', async () => {
       variables.accountId = mockInvalidId;
 
-      const result = await createAnApplication({}, variables, context);
+      const result = await createAnApplicationHelper(variables, context);
 
       expect(result).toBeNull();
     });

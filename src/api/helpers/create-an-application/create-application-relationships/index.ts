@@ -68,13 +68,13 @@ const createApplicationRelationships = async ({
     const coverPeriod = await getCreditPeriodValueByField(context, 'valueId', coverPeriodId);
     const totalContractValue = await getTotalContractValueByField(context, 'valueId', totalContractValueId);
 
-    const referenceNumberObject = await createAReferenceNumber(context, applicationId);
+    const referenceNumber = await createAReferenceNumber(context, applicationId);
 
-    const relationships = await Promise.all([
+    const createdRelationships = await Promise.all([
       await createABroker(context, applicationId),
       await createABusiness(context, applicationId),
       await createABuyer(context, country.id, applicationId),
-      await createADeclaration(context, country.id, applicationId),
+      await createADeclaration(context, applicationId),
       await createAnEligibility(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
       await createAnExportContract(context, applicationId),
       await createAPolicy(context, applicationId),
@@ -85,9 +85,9 @@ const createApplicationRelationships = async ({
     ]);
 
     const [broker, business, buyer, declaration, eligibility, exportContract, policy, policyContact, nominatedLossPayee, company, sectionReview] =
-      relationships;
+      createdRelationships;
 
-    const relationshipIds = {
+    const relationships = {
       brokerId: broker.id,
       businessId: business.id,
       buyerId: buyer.id,
@@ -98,11 +98,11 @@ const createApplicationRelationships = async ({
       nominatedLossPayeeId: nominatedLossPayee.id,
       policyId: policy.id,
       policyContactId: policyContact.id,
-      referenceNumberId: referenceNumberObject.id,
+      referenceNumber,
       sectionReviewId: sectionReview.id,
     };
 
-    return relationshipIds;
+    return relationships;
   } catch (err) {
     console.error(`Error creating application relationships (createApplicationRelationships helper) for application ${applicationId} %O`, err);
 

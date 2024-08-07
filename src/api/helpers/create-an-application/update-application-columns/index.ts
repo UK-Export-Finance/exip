@@ -13,7 +13,7 @@ import { UpdateApplicationRelationshipParams } from '../../../types';
  * 8) Nominated loss payee
  * 9) Policy
  * 10) Policy contact
- * 11) Refernece number
+ * 11) Reference number
  * 12) Section review
  * @param {Context} context: KeystoneJS context API
  * @param {String} applicationId: Application ID
@@ -43,7 +43,7 @@ const updateApplicationColumns = async ({
   nominatedLossPayeeId,
   policyId,
   policyContactId,
-  referenceNumberId,
+  referenceNumber,
   sectionReviewId,
 }: UpdateApplicationRelationshipParams) => {
   try {
@@ -84,9 +84,7 @@ const updateApplicationColumns = async ({
         policyContact: {
           connect: { id: policyContactId },
         },
-        referenceNumber: {
-          connect: { id: referenceNumberId },
-        },
+        referenceNumber,
         sectionReview: {
           connect: { id: sectionReviewId },
         },

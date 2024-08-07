@@ -1,4 +1,4 @@
-import createAnApplication from '.';
+import createAnApplicationHelper from '.';
 import initialApplication from './create-initial-application';
 import applicationRelationships from './create-application-relationships';
 import applicationColumns from './update-application-columns';
@@ -82,7 +82,7 @@ describe('helpers/create-an-application - error handling', () => {
     it('should throw an error', async () => {
       const expectedMessage = `Creating an application (createAnApplication helper) for user ${account.id} Error: ${mockError}`;
 
-      await expect(createAnApplication({}, variables, context)).rejects.toThrow(expectedMessage);
+      await expect(createAnApplicationHelper({}, variables, context)).rejects.toThrow(expectedMessage);
     });
   });
 
@@ -94,7 +94,7 @@ describe('helpers/create-an-application - error handling', () => {
     it('should throw an error', async () => {
       const expectedMessage = `Creating an application (createAnApplication helper) for user ${account.id} Error: ${mockError}`;
 
-      await expect(createAnApplication({}, variables, context)).rejects.toThrow(expectedMessage);
+      await expect(createAnApplicationHelper({}, variables, context)).rejects.toThrow(expectedMessage);
     });
   });
 
@@ -106,7 +106,7 @@ describe('helpers/create-an-application - error handling', () => {
     it('should throw an error', async () => {
       const expectedMessage = `Creating an application (createAnApplication helper) for user ${account.id} Error: ${mockError}`;
 
-      await expect(createAnApplication({}, variables, context)).rejects.toThrow(expectedMessage);
+      await expect(createAnApplicationHelper({}, variables, context)).rejects.toThrow(expectedMessage);
     });
   });
 
@@ -114,7 +114,7 @@ describe('helpers/create-an-application - error handling', () => {
     test('it should throw an error', async () => {
       try {
         // pass empty context object to force an error
-        await createAnApplication({}, variables, {});
+        await createAnApplicationHelper({}, variables, {});
       } catch (err) {
         const errorString = String(err);
 

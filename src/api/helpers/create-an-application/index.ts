@@ -11,12 +11,11 @@ import { CreateAnApplicationVariables, Context } from '../../types';
  * 2) Create the initial application.
  * 3) Create application relationships.
  * 4) Update the application's relationship columns.
- * @param {Object} root: GraphQL root variables
  * @param {CreateAnApplicationVariables} variables: GraphQL variables for the CreateAnApplication
  * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Application>} Created application
  */
-const createAnApplication = async (root: any, variables: CreateAnApplicationVariables, context: Context) => {
+const createAnApplication = async (variables: CreateAnApplicationVariables, context: Context) => {
   console.info('Creating an application (createAnApplication helper) for user %s', variables.accountId);
 
   try {
@@ -58,7 +57,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
       nominatedLossPayeeId,
       policyId,
       policyContactId,
-      referenceNumberId,
+      referenceNumber,
       sectionReviewId,
     } = await applicationRelationships.create({
       context,
@@ -82,7 +81,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
       nominatedLossPayeeId,
       policyId,
       policyContactId,
-      referenceNumberId,
+      referenceNumber,
       sectionReviewId,
     });
 
