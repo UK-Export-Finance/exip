@@ -5024,16 +5024,8 @@ var createAnAbandonedApplication = async (root, variables, context) => {
   try {
     const createdApplication = await create_an_application_default(root, abandonedApplicationVariables, context);
     if (createdApplication) {
-      const updatedApplication = await context.db.Application.updateOne({
-        where: {
-          id: createdApplication.id
-        },
-        data: {
-          status: STATUS3.ABANDONED
-        }
-      });
       return {
-        ...updatedApplication,
+        ...createdApplication,
         success: true
       };
     }
