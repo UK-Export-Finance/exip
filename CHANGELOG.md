@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.35.1](https://github.com/UK-Export-Finance/exip/compare/v2.35.0...v2.35.1) (2024-08-07)
+
+
+### Bug Fixes
+
+* **iac:** explicity RBAC authorisation to false for Azure KV ([#2910](https://github.com/UK-Export-Finance/exip/issues/2910)) ([d8370f7](https://github.com/UK-Export-Finance/exip/commit/d8370f79c9dd5f92cb355e79ce53ece463380702))
+
 ## [2.35.0](https://github.com/UK-Export-Finance/exip/compare/v2.34.0...v2.35.0) (2024-08-06)
 
 ### Features
