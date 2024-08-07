@@ -96,7 +96,7 @@ context(
       });
 
       describe('expandable details - private market - why description', () => {
-        const { INTRO, WE_OFFER, HERE_TO_HELP, SHARING_INFORMATION } = PRIVATE_MARKET_WHY_DESCRIPTION;
+        const { INTRO, HERE_TO_HELP, SHARING_INFORMATION } = PRIVATE_MARKET_WHY_DESCRIPTION;
 
         it('renders summary text', () => {
           cy.checkText(privateMarketWhyDescription.summary(), INTRO);
@@ -106,7 +106,6 @@ context(
 
         describe('when clicking the summary text', () => {
           it('should expand the collapsed `description` content', () => {
-            cy.checkText(privateMarketWhyDescription.weOffer(), WE_OFFER);
             cy.checkText(privateMarketWhyDescription.hereToHelp(), HERE_TO_HELP);
             cy.checkText(privateMarketWhyDescription.sharingInformation(), SHARING_INFORMATION);
           });
