@@ -387,6 +387,12 @@ jobs:
       - name: Generate Coverage Report
         run: npx nyc report --reporter=lcov
 
+      - name: List coverage directory contents
+        run: ls -R ./coverage
+
+      - name: Display lcov.info
+        run: cat ./coverage/lcov.info
+
       - name: Coverage
         uses: codecov/codecov-action@v4
         with:
