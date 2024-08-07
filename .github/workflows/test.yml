@@ -382,7 +382,7 @@ jobs:
 
       - name: Execute
         working-directory: ./e2e-tests/insurance
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+        run: npx nyc --reporter=lcov --report-dir=./coverage npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
 
       - name: Generate Coverage Report
         run: npx nyc report --reporter=lcov
