@@ -489,6 +489,9 @@ jobs:
         working-directory: ./
         run: npm run ci:all
 
+      - name: Create .nyc_output directory
+        run: mkdir -p .nyc_output
+
       - name: Docker
         run: docker compose up --build -d
 
@@ -505,6 +508,8 @@ jobs:
       - name: Coverage
         uses: codecov/codecov-action@v4
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/lcov.info
           flags: e2e-test
           verbose: true
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
