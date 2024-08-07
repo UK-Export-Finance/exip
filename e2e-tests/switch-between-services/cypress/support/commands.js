@@ -7,5 +7,6 @@
 // ***********************************************
 
 import '@cypress-audit/lighthouse/commands';
+import '@cypress/code-coverage/support';
 
 Cypress.Commands.add('submitInsuranceEligibilityAndStartApplication', require('../../../commands/insurance/submit-eligibility-and-start-an-application'));
