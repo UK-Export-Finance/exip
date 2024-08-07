@@ -1,9 +1,14 @@
 import getCountryByField from '../../get-country-by-field';
 import getCreditPeriodValueByField from '../../get-cover-period-value-by-field';
 import getTotalContractValueByField from '../../get-total-contract-value-by-field';
-import createAnEligibility from '../../create-an-eligibility';
+import createAReferenceNumber from '../../create-a-reference-number';
+import createABroker from '../../create-a-broker';
+import createABusiness from '../../create-a-business';
 import createABuyer from '../../create-a-buyer';
+import createADeclaration from '../../create-a-declaration';
+import createAnEligibility from '../../create-an-eligibility';
 import createAPolicy from '../../create-a-policy';
+import createAPolicyContact from '../../create-a-policy-contact';
 import createANominatedLossPayee from '../../create-a-nominated-loss-payee';
 import createACompany from '../../create-a-company';
 import createAnExportContract from '../../create-an-export-contract';
@@ -63,25 +68,35 @@ const createApplicationRelationships = async ({
     const coverPeriod = await getCreditPeriodValueByField(context, 'valueId', coverPeriodId);
     const totalContractValue = await getTotalContractValueByField(context, 'valueId', totalContractValueId);
 
+    const { referenceNumber } = await createAReferenceNumber(context, applicationId);
+
     const relationships = await Promise.all([
+      await createABroker(context, applicationId),
+      await createABusiness(context, applicationId),
       await createABuyer(context, country.id, applicationId),
+      await createADeclaration(context, country.id, applicationId),
       await createAnEligibility(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
       await createAnExportContract(context, applicationId),
       await createAPolicy(context, applicationId),
+      await createAPolicyContact(context, applicationId),
       await createANominatedLossPayee(context, applicationId),
       await createACompany(context, applicationId, companyData),
       await createASectionReview(context, applicationId, sectionReviewData),
     ]);
 
-    const [buyer, eligibility, exportContract, policy, nominatedLossPayee, company, sectionReview] = relationships;
+    const [broker, business, buyer, declaration, eligibility, exportContract, policy, policyContact, nominatedLossPayee, company, sectionReview] = relationships;
 
     const relationshipIds = {
+      brokerId: broker.id,
+      businessId: business.id,
       buyerId: buyer.id,
       companyId: company.id,
+      declarationId: declaration.id,
       eligibilityId: eligibility.id,
       exportContractId: exportContract.id,
       nominatedLossPayeeId: nominatedLossPayee.id,
       policyId: policy.id,
+      policyContactId: policyContact.id,
       sectionReviewId: sectionReview.id,
     };
 

@@ -55,6 +55,14 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
       sectionReviewData,
     });
 
+    // TODO: need to update with
+    // referenceNumber
+    // business ID
+    // broker
+    // business
+    // policy contact
+    // decalaration
+
     // update the application's relationship column values
     const updatedApplication = await applicationColumns.update({
       context,

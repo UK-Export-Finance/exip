@@ -1,0 +1,30 @@
+import { Context } from '../../types';
+
+/**
+ * createADeclaration
+ * Create a declaration with application relationship
+ * @param {Context} KeystoneJS context API
+ * @param {String} Application ID
+ * @returns {Promise<Object>} Created declaration
+ */
+const createADeclaration = async (context: Context, applicationId: string) => {
+  console.info('Creating a declaration for ', applicationId);
+
+  try {
+    const declaration = await context.db.Declaration.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId },
+        },
+      },
+    });
+
+    return declaration;
+  } catch (err) {
+    console.error('Error creating a declaration %O', err);
+
+    throw new Error(`Creating a declaration ${err}`);
+  }
+};
+
+export default createADeclaration;

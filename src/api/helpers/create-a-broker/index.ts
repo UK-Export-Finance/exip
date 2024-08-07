@@ -2,7 +2,7 @@ import { Context } from '../../types';
 
 /**
  * createABroker
- * Create a broker.
+ * Create a broker with application relationship
  * @param {Context} KeystoneJS context API
  * @param {String} Application ID
  * @returns {Promise<Object>} Created broker
