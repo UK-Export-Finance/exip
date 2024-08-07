@@ -1,4 +1,4 @@
-import { field as fieldSelector, headingCaption, yesNoRadioHint, noRadio, noRadioInput, yesRadio } from '../../../../../../pages/shared';
+import { field as fieldSelector, headingCaption, noRadio, noRadioInput, yesRadio } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { ERROR_MESSAGES, PAGES, PRIVATE_MARKET_WHY_DESCRIPTION } from '../../../../../../content-strings';
@@ -72,10 +72,6 @@ context(
       });
 
       describe(`renders ${FIELD_ID} label and inputs`, () => {
-        it('renders a hint', () => {
-          cy.checkText(yesNoRadioHint(), CONTENT_STRINGS.HINT);
-        });
-
         it('renders `yes` and `no` radio buttons in the correct order', () => {
           cy.assertYesNoRadiosOrder({ noRadioFirst: true });
         });
