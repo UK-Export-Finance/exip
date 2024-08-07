@@ -86,10 +86,6 @@ describe('helpers/create-an-application/create-initial-application', () => {
 
   describe('timestamp fields', () => {
     const now = new Date();
-    const expectedDay = new Date().getDate();
-    const expectedMonth = new Date().getMonth();
-    const expectedYear = new Date().getFullYear();
-
 
     test('it should have a submission deadline date', () => {
       const submissionDeadlineDay = new Date(result.submissionDeadline).getDate();
@@ -98,13 +94,9 @@ describe('helpers/create-an-application/create-initial-application', () => {
 
       const expectedDate = addMonths(new Date(now), SUBMISSION_DEADLINE_IN_MONTHS);
 
-      const expectedDay = new Date(expectedDate).getDate();
-      const expectedMonth = new Date(expectedDate).getMonth();
-      const expectedYear = new Date(expectedDate).getFullYear();
-
-      expect(submissionDeadlineDay).toEqual(expectedDay);
-      expect(submissionDeadlineMonth).toEqual(expectedMonth);
-      expect(submissionDeadlineYear).toEqual(expectedYear);
+      expect(submissionDeadlineDay).toEqual(new Date(expectedDate).getDate());
+      expect(submissionDeadlineMonth).toEqual(new Date(expectedDate).getMonth());
+      expect(submissionDeadlineYear).toEqual(new Date(expectedDate).getFullYear());
     });
 
     test('it should have a createdAt date', () => {
@@ -112,13 +104,9 @@ describe('helpers/create-an-application/create-initial-application', () => {
       const createdAtMonth = new Date(result.createdAt).getMonth();
       const createdAtYear = new Date(result.createdAt).getFullYear();
 
-      const expectedDay = new Date().getDate();
-      const expectedMonth = new Date().getMonth();
-      const expectedYear = new Date().getFullYear();
-
-      expect(createdAtDay).toEqual(expectedDay);
-      expect(createdAtMonth).toEqual(expectedMonth);
-      expect(createdAtYear).toEqual(expectedYear);
+      expect(createdAtDay).toEqual(new Date().getDate());
+      expect(createdAtMonth).toEqual(new Date().getMonth());
+      expect(createdAtYear).toEqual(new Date().getFullYear());
     });
 
     test('it should have updatedAt date', () => {
@@ -126,9 +114,9 @@ describe('helpers/create-an-application/create-initial-application', () => {
       const updatedAtMonth = new Date(result.updatedAt).getMonth();
       const updatedAtYear = new Date(result.updatedAt).getFullYear();
 
-      expect(updatedAtDay).toEqual(expectedDay);
-      expect(updatedAtMonth).toEqual(expectedMonth);
-      expect(updatedAtYear).toEqual(expectedYear);
+      expect(createdAtDay).toEqual(new Date().getDate());
+      expect(createdAtMonth).toEqual(new Date().getMonth());
+      expect(createdAtYear).toEqual(new Date().getFullYear());
     });
   });
 

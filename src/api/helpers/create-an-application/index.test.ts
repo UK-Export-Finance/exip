@@ -114,7 +114,20 @@ describe('helpers/create-an-application', () => {
 
     expect(applicationColumnsUpdateSpy).toHaveBeenCalledTimes(1);
 
-    const { buyerId, companyId, eligibilityId, exportContractId, nominatedLossPayeeId, policyId, sectionReviewId } = mockApplicationRelationshipsCreateResponse;
+    const {
+      brokerId,
+      businessId,
+      buyerId,
+      companyId,
+      declarationId,
+      eligibilityId,
+      exportContractId,
+      nominatedLossPayeeId,
+      policyId,
+      policyContactId,
+      referenceNumberId,
+      sectionReviewId,
+    } = mockApplicationRelationshipsCreateResponse;
 
     expect(applicationColumnsUpdateSpy).toHaveBeenCalledWith({
       context,
