@@ -1576,7 +1576,6 @@ var import_core2 = require("@keystone-6/core");
 var import_access = require("@keystone-6/core/access");
 var import_fields = require("@keystone-6/core/fields");
 var import_fields_document = require("@keystone-6/fields-document");
-var import_date_fns3 = require("date-fns");
 
 // helpers/update-application/index.ts
 var timestamp = async (context, applicationId) => {
@@ -1660,15 +1659,11 @@ var nullable_checkbox_default = nullableCheckbox;
 
 // schema.ts
 var {
-  DEAL_TYPE,
   DEFAULT_CURRENCY,
   DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER,
   EXPORT_CONTRACT: { AGENT_SERVICE_CHARGE },
-  LATEST_VERSION: LATEST_VERSION2,
   POLICY: POLICY3,
   POLICY_TYPE: POLICY_TYPE2,
-  SUBMISSION_COUNT_DEFAULT,
-  SUBMISSION_DEADLINE_IN_MONTHS,
   SUBMISSION_TYPE
 } = APPLICATION;
 var lists = {
@@ -1690,14 +1685,12 @@ var lists = {
         isIndexed: true
       }),
       submissionCount: (0, import_fields.integer)({
-        defaultValue: SUBMISSION_COUNT_DEFAULT,
         validation: { isRequired: true }
       }),
       submissionDate: (0, import_fields.timestamp)(),
       submissionDeadline: (0, import_fields.timestamp)(),
       submissionType: (0, import_fields.select)({
-        options: [{ label: SUBMISSION_TYPE.MIA, value: SUBMISSION_TYPE.MIA }],
-        defaultValue: SUBMISSION_TYPE.MIA
+        options: [{ label: SUBMISSION_TYPE.MIA, value: SUBMISSION_TYPE.MIA }]
       }),
       status: (0, import_fields.text)({
         validation: { isRequired: true }
@@ -1718,133 +1711,13 @@ var lists = {
       policyContact: (0, import_fields.relationship)({ ref: "PolicyContact" }),
       sectionReview: (0, import_fields.relationship)({ ref: "SectionReview" }),
       version: (0, import_fields.text)({
-        defaultValue: LATEST_VERSION2.VERSION_NUMBER,
         validation: { isRequired: true }
       }),
       dealType: (0, import_fields.text)({
-        defaultValue: DEAL_TYPE,
         validation: { isRequired: true },
         db: { nativeType: "VarChar(4)" }
       }),
       migratedV1toV2: nullable_checkbox_default()
-    },
-    hooks: {
-      resolveInput: async ({ operation, resolvedData, context }) => {
-        if (operation === "create") {
-          try {
-            console.info("Creating new application - adding default data to a new application");
-            const modifiedData = resolvedData;
-            const { id: newReferenceNumber } = await context.db.ReferenceNumber.createOne({
-              data: {}
-            });
-            modifiedData.referenceNumber = newReferenceNumber;
-            const { id: businessId } = await context.db.Business.createOne({
-              data: {}
-            });
-            modifiedData.business = {
-              connect: {
-                id: businessId
-              }
-            };
-            const { id: policyContactId } = await context.db.PolicyContact.createOne({
-              data: {}
-            });
-            modifiedData.policyContact = {
-              connect: {
-                id: policyContactId
-              }
-            };
-            const { id: brokerId } = await context.db.Broker.createOne({
-              data: {}
-            });
-            modifiedData.broker = {
-              connect: {
-                id: brokerId
-              }
-            };
-            const { id: declarationId } = await context.db.Declaration.createOne({
-              data: {}
-            });
-            modifiedData.declaration = {
-              connect: {
-                id: declarationId
-              }
-            };
-            const now2 = /* @__PURE__ */ new Date();
-            modifiedData.createdAt = now2;
-            modifiedData.updatedAt = now2;
-            modifiedData.submissionDeadline = (0, import_date_fns3.addMonths)(new Date(now2), SUBMISSION_DEADLINE_IN_MONTHS);
-            return modifiedData;
-          } catch (err) {
-            console.error("Error adding default data to a new application. %O", err);
-            return false;
-          }
-        }
-        return resolvedData;
-      },
-      afterOperation: async ({ operation, item, context }) => {
-        if (operation === "create") {
-          try {
-            console.info("Adding application ID to relationships");
-            const applicationId = item.id;
-            const { referenceNumber } = item;
-            const { policyContactId, businessId, brokerId, declarationId } = item;
-            await context.db.ReferenceNumber.updateOne({
-              where: { id: String(referenceNumber) },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                }
-              }
-            });
-            await context.db.PolicyContact.updateOne({
-              where: { id: policyContactId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                }
-              }
-            });
-            await context.db.Business.updateOne({
-              where: { id: businessId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                }
-              }
-            });
-            await context.db.Broker.updateOne({
-              where: { id: brokerId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                }
-              }
-            });
-            await context.db.Declaration.updateOne({
-              where: { id: declarationId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                }
-              }
-            });
-          } catch (err) {
-            console.error("Error adding an application ID to relationships %O", err);
-            return false;
-          }
-        }
-      }
     },
     access: import_access.allowAll
   },
@@ -3534,7 +3407,7 @@ var deleteAnAccount = async (root, variables, context) => {
 var delete_an_account_default = deleteAnAccount;
 
 // custom-resolvers/mutations/verify-account-email-address/index.ts
-var import_date_fns4 = require("date-fns");
+var import_date_fns3 = require("date-fns");
 var { ID, EMAIL: EMAIL2, VERIFICATION_EXPIRY } = account_default;
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
@@ -3563,7 +3436,7 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
     const { id } = account2;
     const { id: statusId } = account2.status;
     const now2 = /* @__PURE__ */ new Date();
-    const canActivateAccount = (0, import_date_fns4.isBefore)(now2, account2[VERIFICATION_EXPIRY]);
+    const canActivateAccount = (0, import_date_fns3.isBefore)(now2, account2[VERIFICATION_EXPIRY]);
     if (!canActivateAccount) {
       console.info("Unable to verify account email address - verification period has expired");
       return {
@@ -3641,7 +3514,7 @@ var createAuthenticationRetryEntry = async (context, accountId) => {
 var create_authentication_retry_entry_default = createAuthenticationRetryEntry;
 
 // helpers/should-block-account/index.ts
-var import_date_fns5 = require("date-fns");
+var import_date_fns4 = require("date-fns");
 var { MAX_AUTH_RETRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT2;
 var shouldBlockAccount = async (context, accountId) => {
   console.info("Checking account authentication retries %s", accountId);
@@ -3651,7 +3524,7 @@ var shouldBlockAccount = async (context, accountId) => {
     const retriesInTimeframe = [];
     retries.forEach((retry) => {
       const retryDate = retry.createdAt;
-      const isWithinLast24Hours = (0, import_date_fns5.isAfter)(retryDate, MAX_AUTH_RETRIES_TIMEFRAME) && (0, import_date_fns5.isBefore)(retryDate, now2);
+      const isWithinLast24Hours = (0, import_date_fns4.isAfter)(retryDate, MAX_AUTH_RETRIES_TIMEFRAME) && (0, import_date_fns4.isBefore)(retryDate, now2);
       if (isWithinLast24Hours) {
         retriesInTimeframe.push(retry.id);
       }
@@ -4222,17 +4095,25 @@ var sendEmailReactivateAccountLink = async (root, variables, context) => {
 var send_email_reactivate_account_link_default2 = sendEmailReactivateAccountLink;
 
 // helpers/create-an-application/create-initial-application/index.ts
-var { STATUS, SUBMISSION_TYPE: SUBMISSION_TYPE2 } = APPLICATION;
+var import_date_fns5 = require("date-fns");
+var { DEAL_TYPE, LATEST_VERSION_NUMBER: LATEST_VERSION_NUMBER2, STATUS, SUBMISSION_COUNT_DEFAULT, SUBMISSION_DEADLINE_IN_MONTHS, SUBMISSION_TYPE: SUBMISSION_TYPE2 } = APPLICATION;
 var createInitialApplication = async ({ context, accountId, status = STATUS.IN_PROGRESS }) => {
   try {
     console.info("Creating initial application (createInitialApplication helper) for user %s", accountId);
+    const now2 = /* @__PURE__ */ new Date();
     const application2 = await context.db.Application.createOne({
       data: {
         owner: {
           connect: { id: accountId }
         },
+        createdAt: now2,
+        dealType: DEAL_TYPE,
         status,
-        submissionType: SUBMISSION_TYPE2.MIA
+        submissionCount: SUBMISSION_COUNT_DEFAULT,
+        submissionDeadline: (0, import_date_fns5.addMonths)(new Date(now2), SUBMISSION_DEADLINE_IN_MONTHS),
+        submissionType: SUBMISSION_TYPE2.MIA,
+        updatedAt: now2,
+        version: LATEST_VERSION_NUMBER2
       }
     });
     return application2;
@@ -4315,34 +4196,61 @@ var getTotalContractValueByField = async (context, field, value) => {
 };
 var get_total_contract_value_by_field_default = getTotalContractValueByField;
 
-// helpers/create-an-eligibility/index.ts
-var createAnEligibility = async (context, countryId, applicationId, coverPeriodId, totalContractValueId, data) => {
-  console.info("Creating an eligibility for ", applicationId);
+// helpers/create-a-reference-number/index.ts
+var createAReferenceNumber = async (context, applicationId) => {
+  console.info("Creating a reference number for ", applicationId);
   try {
-    const eligibility = await context.db.Eligibility.createOne({
-      data: {
-        buyerCountry: {
-          connect: { id: countryId }
-        },
-        application: {
-          connect: { id: applicationId }
-        },
-        coverPeriod: {
-          connect: { id: coverPeriodId }
-        },
-        totalContractValue: {
-          connect: { id: totalContractValueId }
-        },
-        ...data
-      }
+    const created = await context.db.ReferenceNumber.createOne({
+      data: { applicationId }
     });
-    return eligibility;
+    return {
+      ...created,
+      referenceNumber: created.id
+    };
   } catch (err) {
-    console.error("Error creating an eligibility %O", err);
-    throw new Error(`Creating an eligibility ${err}`);
+    console.error("Error creating a reference number %O", err);
+    throw new Error(`Creating a reference number ${err}`);
   }
 };
-var create_an_eligibility_default = createAnEligibility;
+var create_a_reference_number_default = createAReferenceNumber;
+
+// helpers/create-a-broker/index.ts
+var createABroker = async (context, applicationId) => {
+  console.info("Creating a broker for ", applicationId);
+  try {
+    const broker = await context.db.Broker.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId }
+        }
+      }
+    });
+    return broker;
+  } catch (err) {
+    console.error("Error creating a broker %O", err);
+    throw new Error(`Creating a broker ${err}`);
+  }
+};
+var create_a_broker_default = createABroker;
+
+// helpers/create-a-business/index.ts
+var createABusiness = async (context, applicationId) => {
+  console.info("Creating a business for ", applicationId);
+  try {
+    const business = await context.db.Business.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId }
+        }
+      }
+    });
+    return business;
+  } catch (err) {
+    console.error("Error creating a business %O", err);
+    throw new Error(`Creating a business ${err}`);
+  }
+};
+var create_a_business_default = createABusiness;
 
 // helpers/create-a-buyer-trading-history/index.ts
 var createABuyerTradingHistory = async (context, buyerId, applicationId) => {
@@ -4453,6 +4361,54 @@ var createABuyer = async (context, countryId, applicationId) => {
 };
 var create_a_buyer_default = createABuyer;
 
+// helpers/create-a-declaration/index.ts
+var createADeclaration = async (context, applicationId) => {
+  console.info("Creating a declaration for ", applicationId);
+  try {
+    const declaration = await context.db.Declaration.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId }
+        }
+      }
+    });
+    return declaration;
+  } catch (err) {
+    console.error("Error creating a declaration %O", err);
+    throw new Error(`Creating a declaration ${err}`);
+  }
+};
+var create_a_declaration_default = createADeclaration;
+
+// helpers/create-an-eligibility/index.ts
+var createAnEligibility = async (context, countryId, applicationId, coverPeriodId, totalContractValueId, data) => {
+  console.info("Creating an eligibility for ", applicationId);
+  try {
+    const eligibility = await context.db.Eligibility.createOne({
+      data: {
+        buyerCountry: {
+          connect: { id: countryId }
+        },
+        application: {
+          connect: { id: applicationId }
+        },
+        coverPeriod: {
+          connect: { id: coverPeriodId }
+        },
+        totalContractValue: {
+          connect: { id: totalContractValueId }
+        },
+        ...data
+      }
+    });
+    return eligibility;
+  } catch (err) {
+    console.error("Error creating an eligibility %O", err);
+    throw new Error(`Creating an eligibility ${err}`);
+  }
+};
+var create_an_eligibility_default = createAnEligibility;
+
 // helpers/create-a-jointly-insured-party/index.ts
 var createAJointlyInsuredParty = async (context, policyId) => {
   console.info("Creating a jointly insured party for ", policyId);
@@ -4495,6 +4451,25 @@ var createAPolicy = async (context, applicationId) => {
   }
 };
 var create_a_policy_default = createAPolicy;
+
+// helpers/create-a-policy-contact/index.ts
+var createAPolicyContact = async (context, applicationId) => {
+  console.info("Creating a policy contact for ", applicationId);
+  try {
+    const policyContact = await context.db.PolicyContact.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId }
+        }
+      }
+    });
+    return policyContact;
+  } catch (err) {
+    console.error("Error creating a policy contact %O", err);
+    throw new Error(`Creating a policy contact ${err}`);
+  }
+};
+var create_a_policy_contact_default = createAPolicyContact;
 
 // helpers/create-a-loss-payee-financial-international/index.ts
 var createALossPayeeFinancialInternational = async (context, lossPayeeId) => {
@@ -4843,23 +4818,33 @@ var createApplicationRelationships = async ({
     }
     const coverPeriod = await get_cover_period_value_by_field_default(context, "valueId", coverPeriodId);
     const totalContractValue = await get_total_contract_value_by_field_default(context, "valueId", totalContractValueId);
+    const referenceNumberObject = await create_a_reference_number_default(context, applicationId);
     const relationships = await Promise.all([
+      await create_a_broker_default(context, applicationId),
+      await create_a_business_default(context, applicationId),
       await create_a_buyer_default(context, country.id, applicationId),
+      await create_a_declaration_default(context, country.id, applicationId),
       await create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
       await create_an_export_contract_default(context, applicationId),
       await create_a_policy_default(context, applicationId),
+      await create_a_policy_contact_default(context, applicationId),
       await create_a_nominated_loss_payee_default(context, applicationId),
       await create_a_company_default(context, applicationId, companyData),
       await create_a_section_review_default(context, applicationId, sectionReviewData)
     ]);
-    const [buyer, eligibility, exportContract, policy, nominatedLossPayee, company, sectionReview] = relationships;
+    const [broker, business, buyer, declaration, eligibility, exportContract, policy, policyContact, nominatedLossPayee, company, sectionReview] = relationships;
     const relationshipIds = {
+      brokerId: broker.id,
+      businessId: business.id,
       buyerId: buyer.id,
       companyId: company.id,
+      declarationId: declaration.id,
       eligibilityId: eligibility.id,
       exportContractId: exportContract.id,
       nominatedLossPayeeId: nominatedLossPayee.id,
       policyId: policy.id,
+      policyContactId: policyContact.id,
+      referenceNumberId: referenceNumberObject.id,
       sectionReviewId: sectionReview.id
     };
     return relationshipIds;
@@ -4877,12 +4862,17 @@ var create_application_relationships_default = applicationRelationships;
 var updateApplicationColumns = async ({
   context,
   applicationId,
+  brokerId,
+  businessId,
   buyerId,
   companyId,
+  declarationId,
   eligibilityId,
   exportContractId,
   nominatedLossPayeeId,
   policyId,
+  policyContactId,
+  referenceNumberId,
   sectionReviewId
 }) => {
   try {
@@ -4892,11 +4882,20 @@ var updateApplicationColumns = async ({
         id: applicationId
       },
       data: {
+        broker: {
+          connect: { id: brokerId }
+        },
+        business: {
+          connect: { id: businessId }
+        },
         buyer: {
           connect: { id: buyerId }
         },
         company: {
           connect: { id: companyId }
+        },
+        declaration: {
+          connect: { id: declarationId }
         },
         eligibility: {
           connect: { id: eligibilityId }
@@ -4909,6 +4908,12 @@ var updateApplicationColumns = async ({
         },
         policy: {
           connect: { id: policyId }
+        },
+        policyContact: {
+          connect: { id: policyContactId }
+        },
+        referenceNumber: {
+          connect: { id: referenceNumberId }
         },
         sectionReview: {
           connect: { id: sectionReviewId }
@@ -4942,7 +4947,20 @@ var createAnApplication = async (root, variables, context) => {
       status
     });
     const { id: applicationId } = application2;
-    const { buyerId, companyId, eligibilityId, exportContractId, nominatedLossPayeeId, policyId, sectionReviewId } = await create_application_relationships_default.create({
+    const {
+      brokerId,
+      businessId,
+      buyerId,
+      companyId,
+      declarationId,
+      eligibilityId,
+      exportContractId,
+      nominatedLossPayeeId,
+      policyId,
+      policyContactId,
+      referenceNumberId,
+      sectionReviewId
+    } = await create_application_relationships_default.create({
       context,
       applicationId,
       companyData,
@@ -4952,12 +4970,17 @@ var createAnApplication = async (root, variables, context) => {
     const updatedApplication = await update_application_columns_default.update({
       context,
       applicationId,
+      brokerId,
+      businessId,
       buyerId,
       companyId,
+      declarationId,
       eligibilityId,
       exportContractId,
       nominatedLossPayeeId,
       policyId,
+      policyContactId,
+      referenceNumberId,
       sectionReviewId
     });
     return updatedApplication;

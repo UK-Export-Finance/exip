@@ -3,32 +3,47 @@ import { UpdateApplicationRelationshipParams } from '../../../types';
 /**
  * updateApplicationColumns
  * Update the application with relationships for:
- * 1) Buyer
- * 2) Company
- * 3) Eligibility
- * 4) Export contract
- * 5) Nominated loss payee
- * 6) Policy
- * 7) Section review
+ * 1) Broker
+ * 2) Business
+ * 3) Buyer
+ * 4) Company
+ * 5) Decalaration
+ * 6) Eligibility
+ * 7) Export contract
+ * 8) Nominated loss payee
+ * 9) Policy
+ * 10) Policy contact
+ * 11) Refernece number
+ * 12) Section review
  * @param {Context} context: KeystoneJS context API
  * @param {String} applicationId: Application ID
+ * @param {String} brokerId: Broker ID
+ * @param {String} businessId: Business ID
  * @param {String} buyerId: Buyer ID
  * @param {String} companyId: Company ID
+ * @param {String} declarationId: Declaration ID
  * @param {String} eligibilityId: Eligibility ID
  * @param {String} exportContractId: Export contract ID
  * @param {String} nominatedLossPayeeId: Nominated loss payee ID
  * @param {String} policyId: Policy ID
+ * @param {String} policyContactId: Policy contact ID
+ * @param {String} referenceNumberId: Reference number ID
  * @param {String} sectionReviewId: Section review ID
  */
 const updateApplicationColumns = async ({
   context,
   applicationId,
+  brokerId,
+  businessId,
   buyerId,
   companyId,
+  declarationId,
   eligibilityId,
   exportContractId,
   nominatedLossPayeeId,
   policyId,
+  policyContactId,
+  referenceNumberId,
   sectionReviewId,
 }: UpdateApplicationRelationshipParams) => {
   try {
@@ -39,11 +54,20 @@ const updateApplicationColumns = async ({
         id: applicationId,
       },
       data: {
+        broker: {
+          connect: { id: brokerId },
+        },
+        business: {
+          connect: { id: businessId },
+        },
         buyer: {
           connect: { id: buyerId },
         },
         company: {
           connect: { id: companyId },
+        },
+        declaration: {
+          connect: { id: declarationId },
         },
         eligibility: {
           connect: { id: eligibilityId },
@@ -56,6 +80,12 @@ const updateApplicationColumns = async ({
         },
         policy: {
           connect: { id: policyId },
+        },
+        policyContact: {
+          connect: { id: policyContactId },
+        },
+        referenceNumber: {
+          connect: { id: referenceNumberId },
         },
         sectionReview: {
           connect: { id: sectionReviewId },

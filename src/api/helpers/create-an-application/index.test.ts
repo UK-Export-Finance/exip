@@ -44,13 +44,18 @@ describe('helpers/create-an-application', () => {
   let validSpys = {};
 
   const mockApplicationRelationshipsCreateResponse = {
-    buyerId: '1',
-    companyId: '2',
-    eligibilityId: '3',
-    exportContractId: '4',
-    nominatedLossPayeeId: '5',
-    policyId: '6',
-    sectionReviewId: '7',
+    brokerId: '1',
+    businessId: '2',
+    buyerId: '3',
+    companyId: '4',
+    declarationId: '5',
+    eligibilityId: '6',
+    exportContractId: '7',
+    nominatedLossPayeeId: '8',
+    policyId: '9',
+    policyContactId: '10',
+    referenceNumberId: '11',
+    sectionReviewId: '12',
   };
 
   const mockApplicationColumnsUpdateResponse = {};
@@ -114,12 +119,17 @@ describe('helpers/create-an-application', () => {
     expect(applicationColumnsUpdateSpy).toHaveBeenCalledWith({
       context,
       applicationId: application.id,
+      brokerId,
+      businessId,
       buyerId,
       companyId,
+      declarationId,
       eligibilityId,
       exportContractId,
       nominatedLossPayeeId,
       policyId,
+      policyContactId,
+      referenceNumberId,
       sectionReviewId,
     });
   });

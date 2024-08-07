@@ -68,7 +68,7 @@ const createApplicationRelationships = async ({
     const coverPeriod = await getCreditPeriodValueByField(context, 'valueId', coverPeriodId);
     const totalContractValue = await getTotalContractValueByField(context, 'valueId', totalContractValueId);
 
-    const { referenceNumber } = await createAReferenceNumber(context, applicationId);
+    const referenceNumberObject = await createAReferenceNumber(context, applicationId);
 
     const relationships = await Promise.all([
       await createABroker(context, applicationId),
@@ -97,6 +97,7 @@ const createApplicationRelationships = async ({
       nominatedLossPayeeId: nominatedLossPayee.id,
       policyId: policy.id,
       policyContactId: policyContact.id,
+      referenceNumberId: referenceNumberObject.id,
       sectionReviewId: sectionReview.id,
     };
 
