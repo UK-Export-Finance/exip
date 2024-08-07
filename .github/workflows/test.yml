@@ -364,6 +364,9 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
+      - name: Clear npm cache
+        run: npm cache clean --force
+
       - name: Dependencies
         working-directory: ./
         run: npm run ci:all
@@ -377,13 +380,6 @@ jobs:
       - name: Execute
         working-directory: ./e2e-tests/insurance
         run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
-
-      - name: Coverage
-        uses: codecov/codecov-action@v4
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          flags: e2e-test
-          verbose: true
 
   # 5. E2E - Quote
   e2e-tests-quote:
@@ -432,6 +428,9 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
+      - name: Clear npm cache
+        run: npm cache clean --force
+
       - name: Dependencies
         working-directory: ./
         run: npm run ci:all
@@ -445,13 +444,6 @@ jobs:
       - name: Execute
         working-directory: ./e2e-tests/quote
         run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
-
-      - name: Coverage
-        uses: codecov/codecov-action@v4
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          flags: e2e-test
-          verbose: true
 
   # 6. E2E - Switch
   e2e-tests-switch:
@@ -485,6 +477,9 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
+      - name: Clear npm cache
+        run: npm cache clean --force
+
       - name: Dependencies
         working-directory: ./
         run: npm run ci:all
@@ -499,9 +494,3 @@ jobs:
         working-directory: ./e2e-tests/switch-between-services
         run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
 
-      - name: Coverage
-        uses: codecov/codecov-action@v4
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          flags: e2e-test
-          verbose: true
