@@ -5,7 +5,7 @@ import applicationColumns from './update-application-columns';
 import { CreateAnApplicationVariables, Context } from '../../types';
 
 /**
- * createAnApplication
+ * createAnApplicationHelper
  * Create an application helper.
  * 1) Get an account by ID.
  * 2) Create the initial application.
@@ -15,7 +15,7 @@ import { CreateAnApplicationVariables, Context } from '../../types';
  * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Application>} Created application
  */
-const createAnApplication = async (variables: CreateAnApplicationVariables, context: Context) => {
+const createAnApplicationHelper = async (variables: CreateAnApplicationVariables, context: Context) => {
   console.info('Creating an application (createAnApplication helper) for user %s', variables.accountId);
 
   try {
@@ -93,4 +93,4 @@ const createAnApplication = async (variables: CreateAnApplicationVariables, cont
   }
 };
 
-export default createAnApplication;
+export default createAnApplicationHelper;

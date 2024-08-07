@@ -1,10 +1,9 @@
 import { APPLICATION } from '../constants';
-import { Application, TestHelperApplicationCreate, TestHelperApplicationGet, TestHelperApplicationUpdate, Context } from '../types';
+import createAnApplicationHelper from '../helpers/create-an-application';
+import accounts from './accounts';
+import { Account, Application, TestHelperApplicationCreate, TestHelperApplicationGet, TestHelperApplicationUpdate, Context } from '../types';
 
-const { GET_QUERY, STATUS } = APPLICATION;
-
-const applicationQuery =
-  'id createdAt updatedAt referenceNumber dealType submissionCount submissionDeadline submissionType status previousStatus version eligibility { id } exportContract { id } owner { id } company { id } business { id } broker { id } buyer { id buyerTradingHistory { id } } sectionReview { id } declaration { id } policyContact { id }';
+const { GET_QUERY } = APPLICATION;
 
 /**
  * create application test helper
@@ -12,17 +11,28 @@ const applicationQuery =
  * @param {Context} context: KeystoneJS context API, application data
  * @returns {Object} Created application
  */
-const create = async ({ context, data = {} }: TestHelperApplicationCreate) => {
+const create = async ({ context }: TestHelperApplicationCreate) => {
   try {
     console.info('Creating an application (test helpers)');
 
-    const application = (await context.query.Application.createOne({
-      data: {
-        status: STATUS.IN_PROGRESS,
-        ...data,
+    // const application = (await context.query.Application.createOne({
+    //   data: {
+    //     status: STATUS.IN_PROGRESS,
+    //     ...data,
+    //   },
+    //   query: applicationQuery,
+    // })) as Application;
+
+    const account = (await accounts.create({ context })) as Account;
+
+    const application = await createAnApplicationHelper(
+      {
+        accountId: account.id,
+        eligibilityAnswers: {},
+        company: {},
       },
-      query: applicationQuery,
-    })) as Application;
+      context,
+    );
 
     return application;
   } catch (err) {
