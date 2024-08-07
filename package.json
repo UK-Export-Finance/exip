@@ -64,6 +64,7 @@
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "19.2.2",
     "@cypress/code-coverage": "^3.12.44",
+    "@istanbuljs/nyc-config-babel": "^3.0.0",
     "@types/jest": "^29.5.12",
     "@types/node": "^22.0.0",
     "@typescript-eslint/eslint-plugin": "^7.18.0",

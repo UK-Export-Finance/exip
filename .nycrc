@@ -1,7 +1,7 @@
 {
   "extends": "@istanbuljs/nyc-config-babel",
   "include": [
-    "src/**/*.js"
+    "e2e-tests/**/*.js"
   ],
   "reporter": [
     "html",
