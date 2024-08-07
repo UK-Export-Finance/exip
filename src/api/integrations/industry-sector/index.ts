@@ -33,7 +33,7 @@ const industrySectorNames = {
         },
       });
 
-      // if no data in response or status is not 200 then return empty object
+      // if no data in response or status is not 200 then return an empty object
       if (!response.data || response.status !== 200) {
         return {
           success: false,

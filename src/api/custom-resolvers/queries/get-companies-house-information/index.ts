@@ -22,7 +22,7 @@ const getCompaniesHouseInformation = async (root: any, variables: GetCompaniesHo
 
     const response = await companiesHouse.get(sanitisedNumber);
 
-    // if no data in response or status is not 200 then return empty object
+    // if no data in response or status is not 200 then return an empty object
     if (!response.success || !response.data) {
       return {
         success: false,

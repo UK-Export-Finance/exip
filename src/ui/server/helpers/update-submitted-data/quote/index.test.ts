@@ -207,7 +207,7 @@ describe('server/helpers/update-submitted-data/quote', () => {
     });
 
     describe('when there is no existing or provided data', () => {
-      it('should return empty object', () => {
+      it('should return an empty object', () => {
         const mockFormData = {
           _csrf: '123',
         } as RequestBody;
