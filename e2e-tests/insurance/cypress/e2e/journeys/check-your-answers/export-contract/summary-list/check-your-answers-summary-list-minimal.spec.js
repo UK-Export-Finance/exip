@@ -14,7 +14,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  'Insurance - Change your answers - Export contract - Summary list - As an exporter, I want to be able to review my input for the export contract again, So that I can do a final review of the information I previously input before submitting my application',
+  'Insurance - Check your answers - Export contract - Summary list - As an exporter, I want to be able to review my input for the export contract again, So that I can do a final review of the information I previously input before submitting my application',
   () => {
     let referenceNumber;
     let url;
@@ -44,6 +44,6 @@ context(
       cy.deleteApplication(referenceNumber);
     });
 
-    assertMinimalExportContractSummaryListRows();
+    assertMinimalExportContractSummaryListRows({});
   },
 );

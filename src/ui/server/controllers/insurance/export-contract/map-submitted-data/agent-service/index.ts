@@ -17,6 +17,10 @@ const {
 const mapSubmittedData = (formBody: RequestBody): object => {
   const populatedData = formBody;
 
+  /**
+   * If IS_CHARGING is an empty string,
+   * nullify the field.
+   */
   if (isEmptyString(formBody[IS_CHARGING])) {
     populatedData[IS_CHARGING] = null;
   }

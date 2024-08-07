@@ -10,6 +10,7 @@ import { mockApplication } from '../../../test-mocks';
 
 const {
   EXPORT_CONTRACT: {
+    HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD },
     ABOUT_GOODS_OR_SERVICES: { FINAL_DESTINATION_KNOWN },
     PRIVATE_MARKET: { ATTEMPTED },
     USING_AGENT,
@@ -32,7 +33,7 @@ describe('server/helpers/required-fields/section-review', () => {
     const result = requiredFields(flatApplicationData);
 
     const expected = [
-      ...requiredEligibilityFields(),
+      ...requiredEligibilityFields(mockApplication.migratedV1toV2),
       ...requiredPolicyFields({
         policyType: flatApplicationData[POLICY_TYPE],
         isUsingBroker: flatApplicationData[USING_BROKER],
@@ -42,6 +43,7 @@ describe('server/helpers/required-fields/section-review', () => {
         totalContractValueOverThreshold,
         attemptedPrivateMarketCover: flatApplicationData[ATTEMPTED],
         isUsingAgent: flatApplicationData[USING_AGENT],
+        awardMethodId: flatApplicationData[AWARD_METHOD]?.id,
       }),
       ...requiredBusinessFields(flatApplicationData[HAS_DIFFERENT_TRADING_NAME]),
       ...requiredYourBuyerFields({

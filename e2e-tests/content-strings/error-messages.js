@@ -77,6 +77,12 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT]: {
         IS_EMPTY: 'Select if you have a UK Export Finance account',
       },
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.IS_PARTY_TO_CONSORTIUM]: {
+        IS_EMPTY: 'Select if you are or will be party to any consortium in connection to the export contract',
+      },
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.IS_MEMBER_OF_A_GROUP]: {
+        IS_EMPTY: 'Select if you are a member of a group that was involved with the negotiating or obtaining the export contract',
+      },
     },
     EXPORTER_BUSINESS: {
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.HAS_DIFFERENT_TRADING_NAME]: {
@@ -134,6 +140,15 @@ export const ERROR_MESSAGES = {
       },
     },
     EXPORT_CONTRACT: {
+      HOW_WAS_THE_CONTRACT_AWARDED: {
+        [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.HOW_WAS_THE_CONTRACT_AWARDED.AWARD_METHOD]: {
+          IS_EMPTY: 'Select how the contract was awarded',
+        },
+        [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.HOW_WAS_THE_CONTRACT_AWARDED.OTHER_AWARD_METHOD]: {
+          IS_EMPTY: 'Enter how the contract was awarded',
+          ABOVE_MAXIMUM: `The method of how your contract was awarded cannot be more than ${MAXIMUM_CHARACTERS.EXPORT_CONTRACT.OTHER_AWARD_METHOD} characters`,
+        },
+      },
       ABOUT_GOODS_OR_SERVICES: {
         [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES.DESCRIPTION]: {
           IS_EMPTY: 'Enter the goods or services you will supply to the buyer',
@@ -525,9 +540,6 @@ export const ERROR_MESSAGES = {
       },
       [FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIRMATION_ACKNOWLEDGEMENTS]: {
         IS_EMPTY: 'Confirm that you have read and accept the confirmation and acknowledgements',
-      },
-      [FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_HOW_YOUR_DATA_WILL_BE_USED]: {
-        IS_EMPTY: 'Confirm that you have read and accept how your data will be used',
       },
     },
   },

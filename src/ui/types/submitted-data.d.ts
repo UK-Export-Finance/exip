@@ -46,6 +46,8 @@ interface InsuranceEligibilityCore extends SharedEligibility {
   hasCompaniesHouseNumber?: boolean;
   hasEndBuyer?: boolean;
   hasReviewedEligibility?: boolean;
+  isPartyToConsortium?: boolean;
+  isMemberOfAGroup?: boolean;
   sectionReview?: SectionReview;
   totalContractValue?: TotalContractValue;
 }

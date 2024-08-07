@@ -3,10 +3,14 @@ import { ApplicationVersion } from '../../../../types';
 /**
  * VERSIONS
  * All possible application versions.
- * This should be manually updated each time a phase of EXIP is started. For example:
+ * During each phase of EXIP that contains major feature/data changes or additions,
+ * the application version number should be changed.
+ * For example:
  * - Version number 1: MVP, no support for applications over 500k.
  * - Version number 2: Support for applications over 500k.
- * - Version number 3: Payments integration
+ * - Version number 3: File uploads
+ * - Version number 4: Address lookup
+ * - Version number 5: Payments integration
  * @returns {Array<ApplicationVersion>} All application versions
  */
 const VERSIONS = [

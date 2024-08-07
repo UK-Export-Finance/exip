@@ -11,6 +11,7 @@ import replaceNewLineWithLineBreak from '../../../replace-new-line-with-line-bre
 import { mockApplication, mockCountries, referenceNumber } from '../../../../test-mocks';
 
 const {
+  HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD, OTHER_AWARD_METHOD },
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
   HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
 } = FIELD_IDS;
@@ -19,6 +20,7 @@ const {
   EXPORT_CONTRACT: { ABOUT_THE_EXPORT: FORM_TITLE },
 } = FORM_TITLES;
 
+const { HOW_WAS_THE_CONTRACT_AWARDED_CHANGE, HOW_WAS_THE_CONTRACT_AWARDED_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
 const { ABOUT_GOODS_OR_SERVICES_CHANGE, ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
 const { HOW_WILL_YOU_GET_PAID_CHANGE, HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
 
@@ -32,6 +34,21 @@ describe('server/helpers/summary-lists/export-contract/about-goods-or-services-f
     const expected = {
       title: FORM_TITLE,
       fields: [
+        fieldGroupItem(
+          {
+            field: getFieldById(FIELDS.HOW_WAS_THE_CONTRACT_AWARDED, AWARD_METHOD),
+            data: mockAnswers,
+            href: generateChangeLink(
+              HOW_WAS_THE_CONTRACT_AWARDED_CHANGE,
+              HOW_WAS_THE_CONTRACT_AWARDED_CHECK_AND_CHANGE,
+              `#${AWARD_METHOD}-label`,
+              referenceNumber,
+              checkAndChange,
+            ),
+            renderChangeLink: true,
+          },
+          mockAnswers[OTHER_AWARD_METHOD] ? mockAnswers[OTHER_AWARD_METHOD] : mockAnswers[AWARD_METHOD].value,
+        ),
         fieldGroupItem({
           field: getFieldById(FIELDS.ABOUT_GOODS_OR_SERVICES, DESCRIPTION),
           data: mockAnswers,

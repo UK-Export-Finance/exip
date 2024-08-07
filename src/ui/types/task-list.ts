@@ -50,6 +50,7 @@ interface CreatePrepareApplicationTasksParams {
   isUsingAgent?: boolean;
   agentIsCharging?: boolean;
   agentChargeMethod?: string;
+  awardMethodId?: string;
 }
 
 export { CreatePrepareApplicationTasksParams, TaskListData, TaskListDataTask, TaskListDataGroup, TaskListGroup, TaskListTask, TaskList };

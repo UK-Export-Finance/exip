@@ -1,9 +1,9 @@
 # ************************************************************
 # UKEF EXIPS SQL Database
-# Version 0.3
+# Version 2
 #
 # Database: exip
-# Generation Time: 2024-05-09 09:59:30 +0000
+# Generation Time: 2024-08-05 16:34:00 +0000
 # ************************************************************
 
 CREATE DATABASE IF NOT EXISTS `exip`;
@@ -589,124 +589,52 @@ DROP TABLE IF EXISTS `Declaration`;
 
 CREATE TABLE `Declaration` (
   `id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `application` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `agreeToConfidentiality` tinyint(1) DEFAULT NULL,
-  `antiBribery` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `agreeToAntiBribery` tinyint(1) DEFAULT NULL,
-  `agreeToConfirmationAndAcknowledgements` tinyint(1) DEFAULT NULL,
-  `willExportWithAntiBriberyCodeOfConduct` tinyint(1) DEFAULT NULL,
-  `hasAntiBriberyCodeOfConduct` tinyint(1) DEFAULT NULL,
   `agreeHowDataWillBeUsed` tinyint(1) DEFAULT NULL,
-  `confirmationAndAcknowledgements` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `howDataWillBeUsed` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `agreeToAntiBribery` tinyint(1) DEFAULT NULL,
+  `agreeToConfidentiality` tinyint(1) DEFAULT NULL,
+  `agreeToConfirmationAndAcknowledgements` tinyint(1) DEFAULT NULL,
+  `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hasAntiBriberyCodeOfConduct` tinyint(1) DEFAULT NULL,
+  `willExportWithAntiBriberyCodeOfConduct` tinyint(1) DEFAULT NULL,
+  `version` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Declaration_application_idx` (`application`),
-  KEY `Declaration_antiBribery_idx` (`antiBribery`),
-  KEY `Declaration_confirmationAndAcknowledgements_idx` (`confirmationAndAcknowledgements`),
-  KEY `Declaration_howDataWillBeUsed_idx` (`howDataWillBeUsed`),
-  CONSTRAINT `Declaration_antiBribery_fkey` FOREIGN KEY (`antiBribery`) REFERENCES `DeclarationAntiBribery` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Declaration_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Declaration_confirmationAndAcknowledgements_fkey` FOREIGN KEY (`confirmationAndAcknowledgements`) REFERENCES `DeclarationConfirmationAndAcknowledgement` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Declaration_howDataWillBeUsed_fkey` FOREIGN KEY (`howDataWillBeUsed`) REFERENCES `DeclarationHowDataWillBeUsed` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  KEY `Declaration_version_idx` (`version`),
+  CONSTRAINT `Declaration_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE,
+    CONSTRAINT `Declaration_version_fkey` FOREIGN KEY (`version`) REFERENCES `DeclarationVersion` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 /*!40000 ALTER TABLE `Declaration` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-# Dump of table DeclarationAntiBribery
+# Dump of table DeclarationVersion
 # ------------------------------------------------------------
+DROP TABLE IF EXISTS `DeclarationVersion`;
 
-DROP TABLE IF EXISTS `DeclarationAntiBribery`;
-
-CREATE TABLE `DeclarationAntiBribery` (
+CREATE TABLE `DeclarationVersion` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `version` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `content` json NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `agreeToConfidentiality` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `agreeToAntiBribery` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `hasAntiBriberyCodeOfConduct` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `willExportWithAntiBriberyCodeOfConduct` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `agreeToConfirmationAndAcknowledgements` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `agreeHowDataWillBeUsed` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `declaration` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `DeclarationVersion_declaration_idx` (`declaration`),
+  CONSTRAINT `DeclarationVersion_declaration_fkey` FOREIGN KEY (`declaration`) REFERENCES `Declaration` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
-LOCK TABLES `DeclarationAntiBribery` WRITE;
-/*!40000 ALTER TABLE `DeclarationAntiBribery` DISABLE KEYS */;
-
-INSERT INTO `DeclarationAntiBribery` (`id`, `version`, `content`)
-VALUES
-	('clfb5krcn0850b6oqpvcut5z8','2','[{\"type\": \"paragraph\", \"children\": [{\"text\": \"By submitting this application (also known as a `proposal`), you declare that except for any matters you have told us about in writing:\"}]}, {\"type\": \"ordered-list\", \"children\": [{\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"neither you nor any of your current Senior Officers appear on a debarment list published by the World Bank Group, the African Development Bank, the Asian Development Bank, the European Bank for Reconstruction and Development or the Inter-American Development Bank (or any successor organisations of the foregoing), of contractors or individuals who are ineligible to tender for, or participate in, any project they fund;\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"you have no reason to believe, after having made reasonable enquiries, that any Involved Group Company, Consortium Party or Agent, or any of their current Senior Officers, appear on any such list;\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"during the last 5 years neither you nor any of your current Senior Officers or any Group Company have:\"}]}, {\"type\": \"ordered-list\", \"children\": [{\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"been found guilty by any court or competent authority of a Relevant Offence or any offence relating to bribery or corruption under the law of any jurisdiction outside the UK;\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"been subject to any administrative sanction (for example, a deferred prosecution agreement or civil forfeiture order) or other similar administrative measure anywhere in the world for contravening any laws which prohibit bribery, including bribery of foreign public officials; or\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"admitted to having engaged in any offence or activity as referred to in paragraph (3)(a) above or has admitted to engaging in any other activity which is prohibited under applicable laws relating to bribery or corrupt activity;\"}]}]}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"neither you nor any of your current Senior Officers or any Group Company are currently under charge in any court or before any competent authority, or to the best of your knowledge, subject to a formal investigation by public prosecutors on the grounds that you or they have committed an offence of the type listed in paragraph 3(a) above;\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"neither you nor any Group Company has: engaged in, any Potential Corrupt Activity or Corrupt Activity in relation to the export contract(s) or any related agreement (which includes any unilateral undertaking as well as any consent or authorisation needed to obtain or perform the export contract(s) but not any subcontract);\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"neither you nor any Involved Group Company has any knowledge of any person engaging in any Potential Corrupt Activity or Corrupt Activity in relation to the export contract(s) or any related agreement;\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"you have no reason to believe and you do not believe, after having made reasonable enquiries, that:\"}]}, {\"type\": \"ordered-list\", \"children\": [{\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"any Consortium Party or Agent, any of their current Senior Officers has at any time during the last five years engaged in or been subject to any of the events referred to in paragraph (3) above;\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"any Consortium Party or Agent or any of their current Senior Officers has at any time during the last five years been subject to any of the events referred to in paragraph (4) above; or\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"any Consortium Party or Agent has engaged in any Potential Corrupt Activity or Corrupt Activity in relation to the export contract(s) or any related agreement;\"}]}]}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"you have made reasonable enquiries regarding (i) any Consortium Party or Agent and its conduct in relation to the export contract and any related agreement; and (ii) whether any Group Companies, at the date of this Proposal, have had, or are intended to have any material part in the negotiation or supply of the export contract:\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"the export contract(s) referred to in this Proposal , and all arrangements connected with its/their financing or procurement, have not been, and will not be, used for the purposes of money laundering (as defined in Part 7 of the Proceeds of Crime Act 2002) or in any other manner that would constitute a Relevant Offence.\"}]}]}]}, {\"type\": \"paragraph\", \"children\": [{\"text\": \"\"}]}]');
-
-/*!40000 ALTER TABLE `DeclarationAntiBribery` ENABLE KEYS */;
+/*!40000 ALTER TABLE `DeclarationVersion` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
-
-# Dump of table DeclarationConfidentiality
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `DeclarationConfidentiality`;
-
-CREATE TABLE `DeclarationConfidentiality` (
-  `id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content` json NOT NULL,
-  `version` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-LOCK TABLES `DeclarationConfidentiality` WRITE;
-/*!40000 ALTER TABLE `DeclarationConfidentiality` DISABLE KEYS */;
-
-INSERT INTO `DeclarationConfidentiality` (`id`, `content`, `version`)
-VALUES
-	('clf3te7vx1432cfoqp9rbop73','2','[{\"type\": \"paragraph\", \"children\": [{\"text\": \"By submitting this application (also known as a `proposal`) you agree that:\"}]}, {\"type\": \"ordered-list\", \"children\": [{\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"(unless otherwise agreed) this Proposal, its attachments and all discussions and correspondence relating to it are confidential and will not be disclosed to any third party except:\"}]}, {\"type\": \"ordered-list\", \"children\": [{\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"by you, on a confidential basis to your bank, broker, lawyers, other professional advisers, or auditors, in each case for the purpose for which each of them has been engaged by you;\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"by us in accordance with applicable law (including the provisions of the Export and Investment Guarantees Act 1991) or our obligations to Parliament as a Government Department;\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"by us if we decide that we are required to disclose it in accordance under the Freedom of Information Act2000 or the Environmental Information Regulations 2004; or\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"by us:\"}]}, {\"type\": \"ordered-list\", \"children\": [{\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"to our lawyers and other professional advisers, auditors, other Government Departments and reinsurers (including other export credit agencies) on a confidential basis in connection with our consideration of this application or the issue or reinsurance of any policy; and\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"to third party service providers (such as IT contractors) in order to enable them to provide services to us and on the basis that the information must be held securely and in confidence;\"}]}]}]}]}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"(unless otherwise agreed) information we hold about you (but not including details of any contract that we enter into with you or for your benefit or information about any of your export contracts, other than the export market involved) may be shared on a confidential basis between any Government Departments and/or other public sector bodies that are involved in supporting trade and investment to assist them in discharging their functions; and\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"if we ask you to agree to our disclosing information to anyone not mentioned in paragraph (1)(b) to (d) above, you will not unreasonably delay or withhold your agreement to this.\"}]}]}]}, {\"type\": \"paragraph\", \"children\": [{\"text\": \"\"}]}]');
-
-/*!40000 ALTER TABLE `DeclarationConfidentiality` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-
-# Dump of table DeclarationConfirmationAndAcknowledgement
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `DeclarationConfirmationAndAcknowledgement`;
-
-CREATE TABLE `DeclarationConfirmationAndAcknowledgement` (
-  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `version` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `content` json NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-LOCK TABLES `DeclarationConfirmationAndAcknowledgement` WRITE;
-/*!40000 ALTER TABLE `DeclarationConfirmationAndAcknowledgement` DISABLE KEYS */;
-
-INSERT INTO `DeclarationConfirmationAndAcknowledgement` (`id`, `version`, `content`)
-VALUES
-	('clfdt2h8k0087cdoq8mc361ug','2','[{\"type\": \"paragraph\", \"children\": [{\"text\": \"By submitting this application (also known as a `proposal`):\"}]}, {\"type\": \"ordered-list\", \"children\": [{\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"you confirm that the information contained in this Proposal (application) and any related discussions or correspondence constitutes a fair presentation of the risk to include all material facts and circumstances; and\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"you acknowledge that:\"}]}, {\"type\": \"ordered-list\", \"children\": [{\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"you should contact us or your broker (if applicable) if you are in any doubt as to what constitutes a material fact;\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"we will rely on the information, statements and declarations in this Proposal when deciding whether, and on what terms, to issue any policy; and\"}]}]}, {\"type\": \"list-item\", \"children\": [{\"type\": \"list-item-content\", \"children\": [{\"text\": \"you must continue to disclose material facts to us and any changes to material facts after the date of signature of this Proposal (application) until the date cover commences under any policy unless this would, or might reasonably be considered to, constitute the offence of \\"tipping off\\" under s.333A of the Proceeds of Crime Act 2002.\"}]}]}]}]}]}, {\"type\": \"paragraph\", \"children\": [{\"text\": \"\"}]}]');
-
-/*!40000 ALTER TABLE `DeclarationConfirmationAndAcknowledgement` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-
-# Dump of table DeclarationHowDataWillBeUsed
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `DeclarationHowDataWillBeUsed`;
-
-CREATE TABLE `DeclarationHowDataWillBeUsed` (
-  `id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `version` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `content` json NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-LOCK TABLES `DeclarationHowDataWillBeUsed` WRITE;
-/*!40000 ALTER TABLE `DeclarationHowDataWillBeUsed` DISABLE KEYS */;
-
-INSERT INTO `DeclarationHowDataWillBeUsed` (`id`, `version`, `content`)
-VALUES
-	('clfh2o74i0086saoqgo9dhqgq','2','[{\"type\": \"paragraph\", \"children\": [{\"text\": \"We will process contact details and other personal information you give us in this Proposal in accordance with applicable data protection law.\"}]}, {\"type\": \"paragraph\", \"children\": [{\"text\": \"We may record personal data provided to us in this Proposal in our customer relationship database. Please contact information.access@ukexportfinance.gov.uk if you would like to access, rectify or erase your personal data or to withdraw your consent.\"}]}, {\"type\": \"paragraph\", \"children\": [{\"text\": \"If after contacting us you are still unhappy with the way we handle your personal data, you have a right to lodge a complaint with the Information Commissioner`s Office (\"}, {\"href\": \"https://ico.org.uk/make-a-complaint\", \"type\": \"link\", \"children\": [{\"text\": \"Make a complaint | ICO)\"}]}, {\"text\": \"\"}]}]');
-
-/*!40000 ALTER TABLE `DeclarationHowDataWillBeUsed` ENABLE KEYS */;
-UNLOCK TABLES;
 
 # Dump of table CompanyDifferentTradingAddress
 # ------------------------------------------------------------
@@ -734,6 +662,8 @@ CREATE TABLE IF NOT EXISTS `Eligibility` (
   `hasCompaniesHouseNumber` tinyint(1) NOT NULL DEFAULT '0',
   `hasEndBuyer` tinyint(1) NOT NULL DEFAULT '0',
   `hasMinimumUkGoodsOrServices` tinyint(1) NOT NULL DEFAULT '0',
+  `isMemberOfAGroup` tinyint(1) NOT NULL DEFAULT '0',
+  `isPartyToConsortium` tinyint(1) NOT NULL DEFAULT '0',
   `otherPartiesInvolved` tinyint(1) NOT NULL DEFAULT '0',
   `paidByLetterOfCredit` tinyint(1) NOT NULL DEFAULT '0',
   `totalContractValue` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -759,19 +689,25 @@ CREATE TABLE `ExportContract` (
   `id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `application` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `goodsOrServicesDescription` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `finalDestinationCountryCode` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `finalDestinationCountryCode` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `finalDestinationKnown` tinyint(1) DEFAULT NULL,
-  `paymentTermsDescription` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `privateMarket` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `agent` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `paymentTermsDescription` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `privateMarket` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `agent` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `awardMethod` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `otherAwardMethod` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `ExportContract_privateMarket_key` (`privateMarket`),
   UNIQUE KEY `ExportContract_agent_key` (`agent`),
   KEY `ExportContract_application_idx` (`application`),
+  KEY `ExportContract_awardMethod_idx` (`awardMethod`),
   CONSTRAINT `ExportContract_agent_fkey` FOREIGN KEY (`agent`) REFERENCES `ExportContractAgent` (`id`) ON DELETE
   SET
     NULL ON UPDATE CASCADE,
     CONSTRAINT `ExportContract_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE,
+    CONSTRAINT `ExportContract_awardMethod_fkey` FOREIGN KEY (`awardMethod`) REFERENCES `ExportContractAwardMethod` (`id`) ON DELETE
   SET
     NULL ON UPDATE CASCADE,
     CONSTRAINT `ExportContract_privateMarket_fkey` FOREIGN KEY (`privateMarket`) REFERENCES `PrivateMarket` (`id`) ON DELETE
@@ -835,6 +771,40 @@ CREATE TABLE `ExportContractAgentServiceCharge` (
 
 
 
+# Dump of table ExportContractAwardMethod
+# ------------------------------------------------------------
+DROP TABLE IF EXISTS `ExportContractAwardMethod`;
+
+CREATE TABLE `ExportContractAwardMethod` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+LOCK TABLES `ExportContractAwardMethod` WRITE;
+
+/*!40000 ALTER TABLE `ExportContractAwardMethod` DISABLE KEYS */
+;
+
+INSERT INTO
+  `ExportContractAwardMethod` (`id`, `value`)
+VALUES
+  ('eg9qxlqw4edxa8b5mwbybsrfp', 'Open tender'),
+  (
+    'mzwp337piamg1mei7fqh1o73s',
+    'Negotiated contract'
+  ),
+  ('qnqrle4xwsj5go8pchj31sat4', 'Direct award'),
+  (
+    'qw2hp8khykctdic2z58z70ru8',
+    'Competitive bidding'
+  ),
+  ('tn8k8lot1bvirmztmmgq2u8hn', 'Other');
+
+/*!40000 ALTER TABLE `ExportContractAwardMethod` ENABLE KEYS */
+;
+
+UNLOCK TABLES;
 # Dump of table Broker
 # ------------------------------------------------------------
 

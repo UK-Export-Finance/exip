@@ -2,13 +2,12 @@ import { headingCaption, yesRadio, noRadio } from '../../../../../../../pages/sh
 import { codeOfConductPage } from '../../../../../../../pages/insurance/declarations';
 import partials from '../../../../../../../partials';
 import { PAGES, LINKS, ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { DECLARATIONS_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/declarations';
 import { FIELD_IDS, FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const { taskList } = partials.insurancePartials;
 
-const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_CODE_OF_CONDUCT;
+const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_CODE_OF_CONDUCT.VERSIONS[1];
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -71,9 +70,9 @@ context(
       });
 
       it('renders a hint', () => {
-        cy.checkText(codeOfConductPage.hint.intro(), FIELDS[FIELD_ID].HINT.INTRO);
+        cy.checkText(codeOfConductPage.hint.intro(), CONTENT_STRINGS.HINT.INTRO);
 
-        cy.checkLink(codeOfConductPage.hint.link(), LINKS.EXTERNAL.BRIBERY_ACT_2010_GUIDANCE, FIELDS[FIELD_ID].HINT.LINK.TEXT);
+        cy.checkLink(codeOfConductPage.hint.link(), LINKS.EXTERNAL.BRIBERY_ACT_2010_GUIDANCE, CONTENT_STRINGS.HINT.LINK.TEXT);
       });
 
       it('renders `yes` radio button', () => {
@@ -105,7 +104,7 @@ context(
 
         codeOfConductPage.revealText().should('be.visible');
 
-        cy.checkText(codeOfConductPage.revealText(), FIELDS[FIELD_ID].ANSWER_YES_REVEAL.TEXT);
+        cy.checkText(codeOfConductPage.revealText(), CONTENT_STRINGS.ANSWER_YES_REVEAL.TEXT);
       });
     });
 

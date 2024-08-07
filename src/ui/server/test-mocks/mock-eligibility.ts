@@ -19,6 +19,8 @@ const mockEligibility = {
   totalContractValue: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
   company,
   hasReviewedEligibility: true,
+  isPartyToConsortium: false,
+  isMemberOfAGroup: false,
 } as InsuranceEligibility;
 
 export default mockEligibility;

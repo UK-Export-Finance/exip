@@ -14,7 +14,7 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 const {
-  ELIGIBILITY: { END_BUYER, UK_GOODS_OR_SERVICES, CHECK_YOUR_ANSWERS, CANNOT_APPLY_MULTIPLE_RISKS },
+  ELIGIBILITY: { END_BUYER, UK_GOODS_OR_SERVICES, PARTY_TO_CONSORTIUM, CANNOT_APPLY_MULTIPLE_RISKS },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -124,8 +124,8 @@ context(
         cy.clickSubmitButton();
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
+      it(`should redirect to ${PARTY_TO_CONSORTIUM}`, () => {
+        const expectedUrl = `${baseUrl}${PARTY_TO_CONSORTIUM}`;
 
         cy.assertUrl(expectedUrl);
       });

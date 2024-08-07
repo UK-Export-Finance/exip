@@ -993,6 +993,8 @@ type ExportContract {
   application: Application
   agent: ExportContractAgent
   privateMarket: PrivateMarket
+  awardMethod: ExportContractAwardMethod
+  otherAwardMethod: String
   finalDestinationKnown: Boolean
   finalDestinationCountryCode: String
   goodsOrServicesDescription: String
@@ -1011,6 +1013,8 @@ input ExportContractWhereInput {
   application: ApplicationWhereInput
   agent: ExportContractAgentWhereInput
   privateMarket: PrivateMarketWhereInput
+  awardMethod: ExportContractAwardMethodWhereInput
+  otherAwardMethod: StringFilter
   finalDestinationCountryCode: StringFilter
   goodsOrServicesDescription: StringFilter
   paymentTermsDescription: StringFilter
@@ -1018,6 +1022,7 @@ input ExportContractWhereInput {
 
 input ExportContractOrderByInput {
   id: OrderDirection
+  otherAwardMethod: OrderDirection
   finalDestinationCountryCode: OrderDirection
   goodsOrServicesDescription: OrderDirection
   paymentTermsDescription: OrderDirection
@@ -1027,6 +1032,8 @@ input ExportContractUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   agent: ExportContractAgentRelateToOneForUpdateInput
   privateMarket: PrivateMarketRelateToOneForUpdateInput
+  awardMethod: ExportContractAwardMethodRelateToOneForUpdateInput
+  otherAwardMethod: String
   finalDestinationKnown: Boolean
   finalDestinationCountryCode: String
   goodsOrServicesDescription: String
@@ -1045,6 +1052,12 @@ input PrivateMarketRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
+input ExportContractAwardMethodRelateToOneForUpdateInput {
+  create: ExportContractAwardMethodCreateInput
+  connect: ExportContractAwardMethodWhereUniqueInput
+  disconnect: Boolean
+}
+
 input ExportContractUpdateArgs {
   where: ExportContractWhereUniqueInput!
   data: ExportContractUpdateInput!
@@ -1054,6 +1067,8 @@ input ExportContractCreateInput {
   application: ApplicationRelateToOneForCreateInput
   agent: ExportContractAgentRelateToOneForCreateInput
   privateMarket: PrivateMarketRelateToOneForCreateInput
+  awardMethod: ExportContractAwardMethodRelateToOneForCreateInput
+  otherAwardMethod: String
   finalDestinationKnown: Boolean
   finalDestinationCountryCode: String
   goodsOrServicesDescription: String
@@ -1068,6 +1083,11 @@ input ExportContractAgentRelateToOneForCreateInput {
 input PrivateMarketRelateToOneForCreateInput {
   create: PrivateMarketCreateInput
   connect: PrivateMarketWhereUniqueInput
+}
+
+input ExportContractAwardMethodRelateToOneForCreateInput {
+  create: ExportContractAwardMethodCreateInput
+  connect: ExportContractAwardMethodWhereUniqueInput
 }
 
 type ExportContractAgent {
@@ -1264,6 +1284,41 @@ input ExportContractAgentServiceChargeCreateInput {
   fixedSumCurrencyCode: String
   method: String
   payableCountryCode: String
+}
+
+type ExportContractAwardMethod {
+  id: ID!
+  value: String
+}
+
+input ExportContractAwardMethodWhereUniqueInput {
+  id: ID
+}
+
+input ExportContractAwardMethodWhereInput {
+  AND: [ExportContractAwardMethodWhereInput!]
+  OR: [ExportContractAwardMethodWhereInput!]
+  NOT: [ExportContractAwardMethodWhereInput!]
+  id: IDFilter
+  value: StringFilter
+}
+
+input ExportContractAwardMethodOrderByInput {
+  id: OrderDirection
+  value: OrderDirection
+}
+
+input ExportContractAwardMethodUpdateInput {
+  value: String
+}
+
+input ExportContractAwardMethodUpdateArgs {
+  where: ExportContractAwardMethodWhereUniqueInput!
+  data: ExportContractAwardMethodUpdateInput!
+}
+
+input ExportContractAwardMethodCreateInput {
+  value: String
 }
 
 type PrivateMarket {
@@ -2454,6 +2509,8 @@ type Eligibility {
   paidByLetterOfCredit: Boolean
   totalContractValue: TotalContractValue
   validExporterLocation: Boolean
+  isPartyToConsortium: Boolean
+  isMemberOfAGroup: Boolean
 }
 
 input EligibilityWhereUniqueInput {
@@ -2475,6 +2532,8 @@ input EligibilityWhereInput {
   paidByLetterOfCredit: BooleanFilter
   totalContractValue: TotalContractValueWhereInput
   validExporterLocation: BooleanFilter
+  isPartyToConsortium: BooleanFilter
+  isMemberOfAGroup: BooleanFilter
 }
 
 input EligibilityOrderByInput {
@@ -2485,6 +2544,8 @@ input EligibilityOrderByInput {
   otherPartiesInvolved: OrderDirection
   paidByLetterOfCredit: OrderDirection
   validExporterLocation: OrderDirection
+  isPartyToConsortium: OrderDirection
+  isMemberOfAGroup: OrderDirection
 }
 
 input EligibilityUpdateInput {
@@ -2498,6 +2559,8 @@ input EligibilityUpdateInput {
   paidByLetterOfCredit: Boolean
   totalContractValue: TotalContractValueRelateToOneForUpdateInput
   validExporterLocation: Boolean
+  isPartyToConsortium: Boolean
+  isMemberOfAGroup: Boolean
 }
 
 input CoverPeriodRelateToOneForUpdateInput {
@@ -2528,6 +2591,8 @@ input EligibilityCreateInput {
   paidByLetterOfCredit: Boolean
   totalContractValue: TotalContractValueRelateToOneForCreateInput
   validExporterLocation: Boolean
+  isPartyToConsortium: Boolean
+  isMemberOfAGroup: Boolean
 }
 
 input CoverPeriodRelateToOneForCreateInput {
@@ -2592,15 +2657,13 @@ input SectionReviewCreateInput {
 type Declaration {
   id: ID!
   application: Application
-  antiBribery: DeclarationAntiBribery
-  confirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgement
-  howDataWillBeUsed: DeclarationHowDataWillBeUsed
-  agreeToConfidentiality: Boolean
+  version: DeclarationVersion
+  agreeHowDataWillBeUsed: Boolean
   agreeToAntiBribery: Boolean
+  agreeToConfidentiality: Boolean
+  agreeToConfirmationAndAcknowledgements: Boolean
   hasAntiBriberyCodeOfConduct: Boolean
   willExportWithAntiBriberyCodeOfConduct: Boolean
-  agreeToConfirmationAndAcknowledgements: Boolean
-  agreeHowDataWillBeUsed: Boolean
 }
 
 input DeclarationWhereUniqueInput {
@@ -2613,9 +2676,7 @@ input DeclarationWhereInput {
   NOT: [DeclarationWhereInput!]
   id: IDFilter
   application: ApplicationWhereInput
-  antiBribery: DeclarationAntiBriberyWhereInput
-  confirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgementWhereInput
-  howDataWillBeUsed: DeclarationHowDataWillBeUsedWhereInput
+  version: DeclarationVersionWhereInput
 }
 
 input DeclarationOrderByInput {
@@ -2624,32 +2685,18 @@ input DeclarationOrderByInput {
 
 input DeclarationUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
-  antiBribery: DeclarationAntiBriberyRelateToOneForUpdateInput
-  confirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgementRelateToOneForUpdateInput
-  howDataWillBeUsed: DeclarationHowDataWillBeUsedRelateToOneForUpdateInput
-  agreeToConfidentiality: Boolean
+  version: DeclarationVersionRelateToOneForUpdateInput
+  agreeHowDataWillBeUsed: Boolean
   agreeToAntiBribery: Boolean
+  agreeToConfidentiality: Boolean
+  agreeToConfirmationAndAcknowledgements: Boolean
   hasAntiBriberyCodeOfConduct: Boolean
   willExportWithAntiBriberyCodeOfConduct: Boolean
-  agreeToConfirmationAndAcknowledgements: Boolean
-  agreeHowDataWillBeUsed: Boolean
 }
 
-input DeclarationAntiBriberyRelateToOneForUpdateInput {
-  create: DeclarationAntiBriberyCreateInput
-  connect: DeclarationAntiBriberyWhereUniqueInput
-  disconnect: Boolean
-}
-
-input DeclarationConfirmationAndAcknowledgementRelateToOneForUpdateInput {
-  create: DeclarationConfirmationAndAcknowledgementCreateInput
-  connect: DeclarationConfirmationAndAcknowledgementWhereUniqueInput
-  disconnect: Boolean
-}
-
-input DeclarationHowDataWillBeUsedRelateToOneForUpdateInput {
-  create: DeclarationHowDataWillBeUsedCreateInput
-  connect: DeclarationHowDataWillBeUsedWhereUniqueInput
+input DeclarationVersionRelateToOneForUpdateInput {
+  create: DeclarationVersionCreateInput
+  connect: DeclarationVersionWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -2660,156 +2707,82 @@ input DeclarationUpdateArgs {
 
 input DeclarationCreateInput {
   application: ApplicationRelateToOneForCreateInput
-  antiBribery: DeclarationAntiBriberyRelateToOneForCreateInput
-  confirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgementRelateToOneForCreateInput
-  howDataWillBeUsed: DeclarationHowDataWillBeUsedRelateToOneForCreateInput
-  agreeToConfidentiality: Boolean
+  version: DeclarationVersionRelateToOneForCreateInput
+  agreeHowDataWillBeUsed: Boolean
   agreeToAntiBribery: Boolean
+  agreeToConfidentiality: Boolean
+  agreeToConfirmationAndAcknowledgements: Boolean
   hasAntiBriberyCodeOfConduct: Boolean
   willExportWithAntiBriberyCodeOfConduct: Boolean
-  agreeToConfirmationAndAcknowledgements: Boolean
-  agreeHowDataWillBeUsed: Boolean
 }
 
-input DeclarationAntiBriberyRelateToOneForCreateInput {
-  create: DeclarationAntiBriberyCreateInput
-  connect: DeclarationAntiBriberyWhereUniqueInput
+input DeclarationVersionRelateToOneForCreateInput {
+  create: DeclarationVersionCreateInput
+  connect: DeclarationVersionWhereUniqueInput
 }
 
-input DeclarationConfirmationAndAcknowledgementRelateToOneForCreateInput {
-  create: DeclarationConfirmationAndAcknowledgementCreateInput
-  connect: DeclarationConfirmationAndAcknowledgementWhereUniqueInput
-}
-
-input DeclarationHowDataWillBeUsedRelateToOneForCreateInput {
-  create: DeclarationHowDataWillBeUsedCreateInput
-  connect: DeclarationHowDataWillBeUsedWhereUniqueInput
-}
-
-type DeclarationAntiBribery {
+type DeclarationVersion {
   id: ID!
-  version: String
-  content: DeclarationAntiBribery_content_Document
+  declaration: Declaration
+  agreeToConfidentiality: String
+  agreeToAntiBribery: String
+  hasAntiBriberyCodeOfConduct: String
+  willExportWithAntiBriberyCodeOfConduct: String
+  agreeToConfirmationAndAcknowledgements: String
+  agreeHowDataWillBeUsed: String
 }
 
-type DeclarationAntiBribery_content_Document {
-  document(hydrateRelationships: Boolean! = false): JSON!
-}
-
-input DeclarationAntiBriberyWhereUniqueInput {
+input DeclarationVersionWhereUniqueInput {
   id: ID
 }
 
-input DeclarationAntiBriberyWhereInput {
-  AND: [DeclarationAntiBriberyWhereInput!]
-  OR: [DeclarationAntiBriberyWhereInput!]
-  NOT: [DeclarationAntiBriberyWhereInput!]
+input DeclarationVersionWhereInput {
+  AND: [DeclarationVersionWhereInput!]
+  OR: [DeclarationVersionWhereInput!]
+  NOT: [DeclarationVersionWhereInput!]
   id: IDFilter
-  version: StringFilter
+  declaration: DeclarationWhereInput
+  agreeToConfidentiality: StringFilter
+  agreeToAntiBribery: StringFilter
+  hasAntiBriberyCodeOfConduct: StringFilter
+  willExportWithAntiBriberyCodeOfConduct: StringFilter
+  agreeToConfirmationAndAcknowledgements: StringFilter
+  agreeHowDataWillBeUsed: StringFilter
 }
 
-input DeclarationAntiBriberyOrderByInput {
+input DeclarationVersionOrderByInput {
   id: OrderDirection
-  version: OrderDirection
+  agreeToConfidentiality: OrderDirection
+  agreeToAntiBribery: OrderDirection
+  hasAntiBriberyCodeOfConduct: OrderDirection
+  willExportWithAntiBriberyCodeOfConduct: OrderDirection
+  agreeToConfirmationAndAcknowledgements: OrderDirection
+  agreeHowDataWillBeUsed: OrderDirection
 }
 
-input DeclarationAntiBriberyUpdateInput {
-  version: String
-  content: JSON
+input DeclarationVersionUpdateInput {
+  declaration: DeclarationRelateToOneForUpdateInput
+  agreeToConfidentiality: String
+  agreeToAntiBribery: String
+  hasAntiBriberyCodeOfConduct: String
+  willExportWithAntiBriberyCodeOfConduct: String
+  agreeToConfirmationAndAcknowledgements: String
+  agreeHowDataWillBeUsed: String
 }
 
-input DeclarationAntiBriberyUpdateArgs {
-  where: DeclarationAntiBriberyWhereUniqueInput!
-  data: DeclarationAntiBriberyUpdateInput!
+input DeclarationVersionUpdateArgs {
+  where: DeclarationVersionWhereUniqueInput!
+  data: DeclarationVersionUpdateInput!
 }
 
-input DeclarationAntiBriberyCreateInput {
-  version: String
-  content: JSON
-}
-
-type DeclarationConfirmationAndAcknowledgement {
-  id: ID!
-  version: String
-  content: DeclarationConfirmationAndAcknowledgement_content_Document
-}
-
-type DeclarationConfirmationAndAcknowledgement_content_Document {
-  document(hydrateRelationships: Boolean! = false): JSON!
-}
-
-input DeclarationConfirmationAndAcknowledgementWhereUniqueInput {
-  id: ID
-}
-
-input DeclarationConfirmationAndAcknowledgementWhereInput {
-  AND: [DeclarationConfirmationAndAcknowledgementWhereInput!]
-  OR: [DeclarationConfirmationAndAcknowledgementWhereInput!]
-  NOT: [DeclarationConfirmationAndAcknowledgementWhereInput!]
-  id: IDFilter
-  version: StringFilter
-}
-
-input DeclarationConfirmationAndAcknowledgementOrderByInput {
-  id: OrderDirection
-  version: OrderDirection
-}
-
-input DeclarationConfirmationAndAcknowledgementUpdateInput {
-  version: String
-  content: JSON
-}
-
-input DeclarationConfirmationAndAcknowledgementUpdateArgs {
-  where: DeclarationConfirmationAndAcknowledgementWhereUniqueInput!
-  data: DeclarationConfirmationAndAcknowledgementUpdateInput!
-}
-
-input DeclarationConfirmationAndAcknowledgementCreateInput {
-  version: String
-  content: JSON
-}
-
-type DeclarationHowDataWillBeUsed {
-  id: ID!
-  version: String
-  content: DeclarationHowDataWillBeUsed_content_Document
-}
-
-type DeclarationHowDataWillBeUsed_content_Document {
-  document(hydrateRelationships: Boolean! = false): JSON!
-}
-
-input DeclarationHowDataWillBeUsedWhereUniqueInput {
-  id: ID
-}
-
-input DeclarationHowDataWillBeUsedWhereInput {
-  AND: [DeclarationHowDataWillBeUsedWhereInput!]
-  OR: [DeclarationHowDataWillBeUsedWhereInput!]
-  NOT: [DeclarationHowDataWillBeUsedWhereInput!]
-  id: IDFilter
-  version: StringFilter
-}
-
-input DeclarationHowDataWillBeUsedOrderByInput {
-  id: OrderDirection
-  version: OrderDirection
-}
-
-input DeclarationHowDataWillBeUsedUpdateInput {
-  version: String
-  content: JSON
-}
-
-input DeclarationHowDataWillBeUsedUpdateArgs {
-  where: DeclarationHowDataWillBeUsedWhereUniqueInput!
-  data: DeclarationHowDataWillBeUsedUpdateInput!
-}
-
-input DeclarationHowDataWillBeUsedCreateInput {
-  version: String
-  content: JSON
+input DeclarationVersionCreateInput {
+  declaration: DeclarationRelateToOneForCreateInput
+  agreeToConfidentiality: String
+  agreeToAntiBribery: String
+  hasAntiBriberyCodeOfConduct: String
+  willExportWithAntiBriberyCodeOfConduct: String
+  agreeToConfirmationAndAcknowledgements: String
+  agreeHowDataWillBeUsed: String
 }
 
 type Page {
@@ -3074,6 +3047,12 @@ type Mutation {
   updateExportContractAgentServiceCharges(data: [ExportContractAgentServiceChargeUpdateArgs!]!): [ExportContractAgentServiceCharge]
   deleteExportContractAgentServiceCharge(where: ExportContractAgentServiceChargeWhereUniqueInput!): ExportContractAgentServiceCharge
   deleteExportContractAgentServiceCharges(where: [ExportContractAgentServiceChargeWhereUniqueInput!]!): [ExportContractAgentServiceCharge]
+  createExportContractAwardMethod(data: ExportContractAwardMethodCreateInput!): ExportContractAwardMethod
+  createExportContractAwardMethods(data: [ExportContractAwardMethodCreateInput!]!): [ExportContractAwardMethod]
+  updateExportContractAwardMethod(where: ExportContractAwardMethodWhereUniqueInput!, data: ExportContractAwardMethodUpdateInput!): ExportContractAwardMethod
+  updateExportContractAwardMethods(data: [ExportContractAwardMethodUpdateArgs!]!): [ExportContractAwardMethod]
+  deleteExportContractAwardMethod(where: ExportContractAwardMethodWhereUniqueInput!): ExportContractAwardMethod
+  deleteExportContractAwardMethods(where: [ExportContractAwardMethodWhereUniqueInput!]!): [ExportContractAwardMethod]
   createPrivateMarket(data: PrivateMarketCreateInput!): PrivateMarket
   createPrivateMarkets(data: [PrivateMarketCreateInput!]!): [PrivateMarket]
   updatePrivateMarket(where: PrivateMarketWhereUniqueInput!, data: PrivateMarketUpdateInput!): PrivateMarket
@@ -3188,24 +3167,12 @@ type Mutation {
   updateDeclarations(data: [DeclarationUpdateArgs!]!): [Declaration]
   deleteDeclaration(where: DeclarationWhereUniqueInput!): Declaration
   deleteDeclarations(where: [DeclarationWhereUniqueInput!]!): [Declaration]
-  createDeclarationAntiBribery(data: DeclarationAntiBriberyCreateInput!): DeclarationAntiBribery
-  createDeclarationAntiBriberies(data: [DeclarationAntiBriberyCreateInput!]!): [DeclarationAntiBribery]
-  updateDeclarationAntiBribery(where: DeclarationAntiBriberyWhereUniqueInput!, data: DeclarationAntiBriberyUpdateInput!): DeclarationAntiBribery
-  updateDeclarationAntiBriberies(data: [DeclarationAntiBriberyUpdateArgs!]!): [DeclarationAntiBribery]
-  deleteDeclarationAntiBribery(where: DeclarationAntiBriberyWhereUniqueInput!): DeclarationAntiBribery
-  deleteDeclarationAntiBriberies(where: [DeclarationAntiBriberyWhereUniqueInput!]!): [DeclarationAntiBribery]
-  createDeclarationConfirmationAndAcknowledgement(data: DeclarationConfirmationAndAcknowledgementCreateInput!): DeclarationConfirmationAndAcknowledgement
-  createDeclarationConfirmationAndAcknowledgements(data: [DeclarationConfirmationAndAcknowledgementCreateInput!]!): [DeclarationConfirmationAndAcknowledgement]
-  updateDeclarationConfirmationAndAcknowledgement(where: DeclarationConfirmationAndAcknowledgementWhereUniqueInput!, data: DeclarationConfirmationAndAcknowledgementUpdateInput!): DeclarationConfirmationAndAcknowledgement
-  updateDeclarationConfirmationAndAcknowledgements(data: [DeclarationConfirmationAndAcknowledgementUpdateArgs!]!): [DeclarationConfirmationAndAcknowledgement]
-  deleteDeclarationConfirmationAndAcknowledgement(where: DeclarationConfirmationAndAcknowledgementWhereUniqueInput!): DeclarationConfirmationAndAcknowledgement
-  deleteDeclarationConfirmationAndAcknowledgements(where: [DeclarationConfirmationAndAcknowledgementWhereUniqueInput!]!): [DeclarationConfirmationAndAcknowledgement]
-  createDeclarationHowDataWillBeUsed(data: DeclarationHowDataWillBeUsedCreateInput!): DeclarationHowDataWillBeUsed
-  createDeclarationHowDataWillBeUseds(data: [DeclarationHowDataWillBeUsedCreateInput!]!): [DeclarationHowDataWillBeUsed]
-  updateDeclarationHowDataWillBeUsed(where: DeclarationHowDataWillBeUsedWhereUniqueInput!, data: DeclarationHowDataWillBeUsedUpdateInput!): DeclarationHowDataWillBeUsed
-  updateDeclarationHowDataWillBeUseds(data: [DeclarationHowDataWillBeUsedUpdateArgs!]!): [DeclarationHowDataWillBeUsed]
-  deleteDeclarationHowDataWillBeUsed(where: DeclarationHowDataWillBeUsedWhereUniqueInput!): DeclarationHowDataWillBeUsed
-  deleteDeclarationHowDataWillBeUseds(where: [DeclarationHowDataWillBeUsedWhereUniqueInput!]!): [DeclarationHowDataWillBeUsed]
+  createDeclarationVersion(data: DeclarationVersionCreateInput!): DeclarationVersion
+  createDeclarationVersions(data: [DeclarationVersionCreateInput!]!): [DeclarationVersion]
+  updateDeclarationVersion(where: DeclarationVersionWhereUniqueInput!, data: DeclarationVersionUpdateInput!): DeclarationVersion
+  updateDeclarationVersions(data: [DeclarationVersionUpdateArgs!]!): [DeclarationVersion]
+  deleteDeclarationVersion(where: DeclarationVersionWhereUniqueInput!): DeclarationVersion
+  deleteDeclarationVersions(where: [DeclarationVersionWhereUniqueInput!]!): [DeclarationVersion]
   createPage(data: PageCreateInput!): Page
   createPages(data: [PageCreateInput!]!): [Page]
   updatePage(where: PageWhereUniqueInput!, data: PageUpdateInput!): Page
@@ -3355,6 +3322,9 @@ type Query {
   exportContractAgentServiceCharges(where: ExportContractAgentServiceChargeWhereInput! = {}, orderBy: [ExportContractAgentServiceChargeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractAgentServiceChargeWhereUniqueInput): [ExportContractAgentServiceCharge!]
   exportContractAgentServiceCharge(where: ExportContractAgentServiceChargeWhereUniqueInput!): ExportContractAgentServiceCharge
   exportContractAgentServiceChargesCount(where: ExportContractAgentServiceChargeWhereInput! = {}): Int
+  exportContractAwardMethods(where: ExportContractAwardMethodWhereInput! = {}, orderBy: [ExportContractAwardMethodOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractAwardMethodWhereUniqueInput): [ExportContractAwardMethod!]
+  exportContractAwardMethod(where: ExportContractAwardMethodWhereUniqueInput!): ExportContractAwardMethod
+  exportContractAwardMethodsCount(where: ExportContractAwardMethodWhereInput! = {}): Int
   privateMarkets(where: PrivateMarketWhereInput! = {}, orderBy: [PrivateMarketOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PrivateMarketWhereUniqueInput): [PrivateMarket!]
   privateMarket(where: PrivateMarketWhereUniqueInput!): PrivateMarket
   privateMarketsCount(where: PrivateMarketWhereInput! = {}): Int
@@ -3412,15 +3382,9 @@ type Query {
   declarations(where: DeclarationWhereInput! = {}, orderBy: [DeclarationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationWhereUniqueInput): [Declaration!]
   declaration(where: DeclarationWhereUniqueInput!): Declaration
   declarationsCount(where: DeclarationWhereInput! = {}): Int
-  declarationAntiBriberies(where: DeclarationAntiBriberyWhereInput! = {}, orderBy: [DeclarationAntiBriberyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationAntiBriberyWhereUniqueInput): [DeclarationAntiBribery!]
-  declarationAntiBribery(where: DeclarationAntiBriberyWhereUniqueInput!): DeclarationAntiBribery
-  declarationAntiBriberiesCount(where: DeclarationAntiBriberyWhereInput! = {}): Int
-  declarationConfirmationAndAcknowledgements(where: DeclarationConfirmationAndAcknowledgementWhereInput! = {}, orderBy: [DeclarationConfirmationAndAcknowledgementOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationConfirmationAndAcknowledgementWhereUniqueInput): [DeclarationConfirmationAndAcknowledgement!]
-  declarationConfirmationAndAcknowledgement(where: DeclarationConfirmationAndAcknowledgementWhereUniqueInput!): DeclarationConfirmationAndAcknowledgement
-  declarationConfirmationAndAcknowledgementsCount(where: DeclarationConfirmationAndAcknowledgementWhereInput! = {}): Int
-  declarationHowDataWillBeUseds(where: DeclarationHowDataWillBeUsedWhereInput! = {}, orderBy: [DeclarationHowDataWillBeUsedOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationHowDataWillBeUsedWhereUniqueInput): [DeclarationHowDataWillBeUsed!]
-  declarationHowDataWillBeUsed(where: DeclarationHowDataWillBeUsedWhereUniqueInput!): DeclarationHowDataWillBeUsed
-  declarationHowDataWillBeUsedsCount(where: DeclarationHowDataWillBeUsedWhereInput! = {}): Int
+  declarationVersions(where: DeclarationVersionWhereInput! = {}, orderBy: [DeclarationVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DeclarationVersionWhereUniqueInput): [DeclarationVersion!]
+  declarationVersion(where: DeclarationVersionWhereUniqueInput!): DeclarationVersion
+  declarationVersionsCount(where: DeclarationVersionWhereInput! = {}): Int
   pages(where: PageWhereInput! = {}, orderBy: [PageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PageWhereUniqueInput): [Page!]
   page(where: PageWhereUniqueInput!): Page
   pagesCount(where: PageWhereInput! = {}): Int
@@ -3741,6 +3705,8 @@ input ApplicationEligibility {
   hasCompaniesHouseNumber: Boolean!
   hasEndBuyer: Boolean!
   hasMinimumUkGoodsOrServices: Boolean!
+  isMemberOfAGroup: Boolean!
+  isPartyToConsortium: Boolean!
   totalContractValueId: Int!
   validExporterLocation: Boolean!
 }

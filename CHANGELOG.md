@@ -1,5 +1,131 @@
 # Changelog
 
+## [2.34.0](https://github.com/UK-Export-Finance/exip/compare/v2.33.0...v2.34.0) (2024-08-06)
+
+### Features
+
+- **EMS-3722-3723:** data migration - eligibility, export contract ([#2901](https://github.com/UK-Export-Finance/exip/issues/2901)) ([0c16bc1](https://github.com/UK-Export-Finance/exip/commit/0c16bc18b52bf1a6a0737a124d693203a8eba96a))
+
+## [2.33.0](https://github.com/UK-Export-Finance/exip/compare/v2.32.0...v2.33.0) (2024-08-06)
+
+### Features
+
+- **EMS-3709-3710:** export contract - how the contract was awarded - check your answers ([#2895](https://github.com/UK-Export-Finance/exip/issues/2895)) ([4648efc](https://github.com/UK-Export-Finance/exip/commit/4648efc28376536127975d4954b1615135a083bc))
+
+## [2.32.0](https://github.com/UK-Export-Finance/exip/compare/v2.31.0...v2.32.0) (2024-08-05)
+
+### Features
+
+- **EMS-3662:** export contract - how was contract awarded - save and back ([#2892](https://github.com/UK-Export-Finance/exip/issues/2892)) ([8003b9d](https://github.com/UK-Export-Finance/exip/commit/8003b9d66fda8fb75d26877c9fccb9e9c3e753c1))
+
+## [2.31.0](https://github.com/UK-Export-Finance/exip/compare/v2.30.0...v2.31.0) (2024-08-05)
+
+### Features
+
+- **EMS-3685:** added xlsx for 2 new eligibility fields ([#2884](https://github.com/UK-Export-Finance/exip/issues/2884)) ([3878733](https://github.com/UK-Export-Finance/exip/commit/3878733d3235e38fc20e02e5f0b8d43492990974))
+
+## [2.30.0](https://github.com/UK-Export-Finance/exip/compare/v2.29.0...v2.30.0) (2024-08-02)
+
+### Features
+
+- **EMS-3665:** export contract - how was contract awarded - data saving ([#2883](https://github.com/UK-Export-Finance/exip/issues/2883)) ([d91a5d9](https://github.com/UK-Export-Finance/exip/commit/d91a5d9b186209cc07311b6ed0eb53c3f8464287))
+
+## [2.29.0](https://github.com/UK-Export-Finance/exip/compare/v2.28.2...v2.29.0) (2024-08-01)
+
+### Features
+
+- **EMS-3661:** export contract - how was contract awarded - form validation ([#2865](https://github.com/UK-Export-Finance/exip/issues/2865)) ([c495363](https://github.com/UK-Export-Finance/exip/commit/c495363928f0e9f00e7b06638aed9a0d4d475d4e))
+
+## [2.28.2](https://github.com/UK-Export-Finance/exip/compare/v2.28.1...v2.28.2) (2024-08-01)
+
+### Bug Fixes
+
+- **EMS-3703:** eligibility - Member of a group - Wording fix ([#2869](https://github.com/UK-Export-Finance/exip/issues/2869)) ([119ce21](https://github.com/UK-Export-Finance/exip/commit/119ce21f56e97ea99d9db1dcdfd611ca7cb6de05))
+
+## [2.28.1](https://github.com/UK-Export-Finance/exip/compare/v2.28.0...v2.28.1) (2024-08-01)
+
+### Bug Fixes
+
+- **iac:** afd custom domains association ([9ecd958](https://github.com/UK-Export-Finance/exip/commit/9ecd9582a228e3d8266daa228fb6655150358da5))
+
+## [2.28.0](https://github.com/UK-Export-Finance/exip/compare/v2.27.0...v2.28.0) (2024-07-31)
+
+### Features
+
+- **EMS-3667:** eligibility - Check if eligible - Content change ([#2861](https://github.com/UK-Export-Finance/exip/issues/2861)) ([0c7557f](https://github.com/UK-Export-Finance/exip/commit/0c7557faf6fc35a49c4cb6278f58fdaa4768b863))
+
+## [2.27.0](https://github.com/UK-Export-Finance/exip/compare/v2.26.0...v2.27.0) (2024-07-31)
+
+### Features
+
+- **EMS-3680-3682:** eligibility - Data saving ([#2853](https://github.com/UK-Export-Finance/exip/issues/2853)) ([8464b3f](https://github.com/UK-Export-Finance/exip/commit/8464b3fba3657788b3292d95d9bbd79ef452f2e9))
+
+## [2.26.0](https://github.com/UK-Export-Finance/exip/compare/v2.25.0...v2.26.0) (2024-07-31)
+
+### Features
+
+- **EMS-3665:** export contract - how was contract awarded - data model ([#2856](https://github.com/UK-Export-Finance/exip/issues/2856)) ([8295356](https://github.com/UK-Export-Finance/exip/commit/82953569ccb86c167805ec5adf45fb3fea214136))
+
+## [2.25.0](https://github.com/UK-Export-Finance/exip/compare/v2.24.0...v2.25.0) (2024-07-31)
+
+### Features
+
+- **EMS-3670-72:** eligibility - Party to consortium and Member of a group exit pages ([#2851](https://github.com/UK-Export-Finance/exip/issues/2851)) ([5eabbb5](https://github.com/UK-Export-Finance/exip/commit/5eabbb56aaf7d0d64f039b3b7d1bce031f5be8f8))
+
+## [2.24.0](https://github.com/UK-Export-Finance/exip/compare/v2.23.0...v2.24.0) (2024-07-31)
+
+### Features
+
+- **EMS-3676:** eligibility - Check your answers - Member of group and party to consortium ([#2852](https://github.com/UK-Export-Finance/exip/issues/2852)) ([3a8333a](https://github.com/UK-Export-Finance/exip/commit/3a8333a56a6f26b1aac3022cffa6fce83f5afb7a))
+
+## [2.23.0](https://github.com/UK-Export-Finance/exip/compare/v2.22.0...v2.23.0) (2024-07-30)
+
+### Features
+
+- **EMS-3660:** export contract - how was contract awarded - UI setup ([#2837](https://github.com/UK-Export-Finance/exip/issues/2837)) ([5884388](https://github.com/UK-Export-Finance/exip/commit/58843888123744b0272abd9d15a53946ce5ac96f))
+
+## [2.22.0](https://github.com/UK-Export-Finance/exip/compare/v2.21.0...v2.22.0) (2024-07-30)
+
+### Features
+
+- **EMS-3668-69-73-74:** eligibility - Party to consortium and Member of a group ([#2832](https://github.com/UK-Export-Finance/exip/issues/2832)) ([b05ef07](https://github.com/UK-Export-Finance/exip/commit/b05ef0704e3b3771f697a21d4cb157732a1146fb))
+
+## [2.21.0](https://github.com/UK-Export-Finance/exip/compare/v2.20.0...v2.21.0) (2024-07-26)
+
+### Features
+
+- **EMS-3611:** declaration - Anti-bribery code of conduct version update ([#2824](https://github.com/UK-Export-Finance/exip/issues/2824)) ([7637316](https://github.com/UK-Export-Finance/exip/commit/76373166d266a37537b6fbfad685d68d574522f2))
+
+## [2.20.0](https://github.com/UK-Export-Finance/exip/compare/v2.19.0...v2.20.0) (2024-07-25)
+
+### Features
+
+- **EMS-3612:** declarations - Anti-bribery definitions update ([#2820](https://github.com/UK-Export-Finance/exip/issues/2820)) ([09c460e](https://github.com/UK-Export-Finance/exip/commit/09c460ebbd1b95e6e23d7ae3da2ad55c37ae863b))
+
+## [2.19.0](https://github.com/UK-Export-Finance/exip/compare/v2.18.0...v2.19.0) (2024-07-25)
+
+### Features
+
+- **EMS-3633:** data migration - declarations ([#2819](https://github.com/UK-Export-Finance/exip/issues/2819)) ([39da207](https://github.com/UK-Export-Finance/exip/commit/39da207d6ca86253d2037738b42a993bad808711))
+
+## [2.18.0](https://github.com/UK-Export-Finance/exip/compare/v2.17.0...v2.18.0) (2024-07-25)
+
+### Features
+
+- **EMS-3631:** declaration versions - database restructure, application creation ([#2805](https://github.com/UK-Export-Finance/exip/issues/2805)) ([2353b5f](https://github.com/UK-Export-Finance/exip/commit/2353b5f853ecb0c827662d7bd960dbd18a37eb62))
+
+## [2.17.0](https://github.com/UK-Export-Finance/exip/compare/v2.16.0...v2.17.0) (2024-07-25)
+
+### Features
+
+- **EMS-3631:** declarations - replace api/keystone rendering with content-strings ([#2813](https://github.com/UK-Export-Finance/exip/issues/2813)) ([0b30342](https://github.com/UK-Export-Finance/exip/commit/0b30342e8e36222640997280cd922d59dca34206))
+
+## [2.16.0](https://github.com/UK-Export-Finance/exip/compare/v2.15.0...v2.16.0) (2024-07-24)
+
+### Features
+
+- **EMS-3536-3540:** remove 'how your data will be used' declaration ([#2789](https://github.com/UK-Export-Finance/exip/issues/2789)) ([9efa559](https://github.com/UK-Export-Finance/exip/commit/9efa5599a9b784eeee96d4f9f536f4b96231a7b1))
+
 ## [2.15.0](https://github.com/UK-Export-Finance/exip/compare/v2.14.0...v2.15.0) (2024-07-23)
 
 ### Features
