@@ -4,7 +4,7 @@ import { mockCountries } from '../test-mocks';
 /**
  * create country test helper
  * Create a country
- * @param {Context} KeystoneJS context API, country data
+ * @param {Context} context: KeystoneJS context API, country data
  * @returns {Object} Created country
  */
 const create = async (context: Context) => {

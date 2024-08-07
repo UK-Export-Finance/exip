@@ -73,7 +73,7 @@ const deleteCompanyAddress = async (context: Context, companyAddressId: string) 
 <<<<<<< Updated upstream
  * delete company SIC code test helper
  * deletes a company SIC code by companyId.
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
 =======
  * delete company sic code test helper
  * deletes a company sic code by companyId.
@@ -127,7 +127,7 @@ const createCompanyAddress = async (context: Context, data = {}) => {
 /**
  * create company SIC code test helper
  * Creates an empty company SIC code.
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} companyId
  * @returns {Object} Created SIC code id
  */
@@ -155,7 +155,7 @@ const createCompanySicCode = async (context: Context, companyId: string) => {
 /**
  * create company different trading address test helper
  * Creates an empty company different trading address.
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} companyId
  * @returns {Promise<ApplicationCompanyDifferentTradingAddress>} Created SIC code id
  */
@@ -232,7 +232,7 @@ const getCompanyAddress = async (context: Context, companyAddressId: string) => 
 <<<<<<< Updated upstream
  * get company SIC code test helper
  * Get a company SIC codes by companyId
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
 =======
  * get company sic code test helper
  * Get a company sic code address by companyId

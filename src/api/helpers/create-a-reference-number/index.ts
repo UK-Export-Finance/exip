@@ -3,7 +3,7 @@ import { Context } from '../../types';
 /**
  * createAReferenceNumber
  * Create a reference number with an application relationship
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} applicationId: Application ID
  * @returns {Promise<Object>} Created reference number
  */

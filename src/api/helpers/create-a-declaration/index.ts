@@ -3,7 +3,7 @@ import { Context } from '../../types';
 /**
  * createADeclaration
  * Create a declaration with an application relationship
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} applicationId: Application ID
  * @returns {Promise<Object>} Created declaration
  */
