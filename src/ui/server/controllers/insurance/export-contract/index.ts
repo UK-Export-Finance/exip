@@ -6,7 +6,7 @@ import getUserNameFromSession from '../../../helpers/get-user-name-from-session'
 import { Request, Response } from '../../../../types';
 
 const {
-  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES },
+  EXPORT_CONTRACT: { HOW_WAS_THE_CONTRACT_AWARDED },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -32,7 +32,7 @@ export const get = (req: Request, res: Response) => {
     return res.render(TEMPLATE, {
       ...sectionStartPageVariables({
         REFERENCE_NUMBER: referenceNumber,
-        START_NOW_ROUTE: ABOUT_GOODS_OR_SERVICES,
+        START_NOW_ROUTE: HOW_WAS_THE_CONTRACT_AWARDED,
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORT_CONTRACT.ROOT,
         BACK_LINK: req.headers.referer,
       }),

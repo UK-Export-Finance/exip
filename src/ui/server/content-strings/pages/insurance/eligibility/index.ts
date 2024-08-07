@@ -8,7 +8,13 @@ const THRESHOLD = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_
 const CHECK_IF_ELIGIBLE = {
   PAGE_TITLE: 'Check you can apply for credit insurance for your export',
   INTRO: "Before you start your application, we need to make sure you're eligible. We'll ask you questions about:",
-  WILL_ASK_QUESTIONS: ["your buyer's location", 'how long you want your contract to last', 'the value of your contract'],
+  WILL_ASK_QUESTIONS: [
+    "your buyer's location",
+    'how long you want your contract to last',
+    'the value of your contract',
+    'whether you are, or will be, a party to any consortium',
+    'relevant group members',
+  ],
   WILL_NEED_COMPANIES_HOUSE_NUMBER: "You'll need to provide your Companies House registration number.",
   IF_ELIGIBLE: "If you're eligible, we'll ask you to create an account. Once you've created an account, your progress will be saved automatically.",
   GET_IMMEDIATE_ANSWER:
@@ -25,9 +31,8 @@ const COVER_PERIOD = {
   HINT: 'This should be the total length of your contract.',
 };
 
-const LONG_TERM_COVER = {
+const PDF_EXIT = {
   PAGE_TITLE: 'You need to apply through the PDF form instead',
-  INTRO: "Currently, this service doesn't provide credit insurance for contracts that are longer than two years.",
   ACTIONS: {
     PDF_FORM: {
       INTRO: "You can still apply, but you'll need to do so through",
@@ -45,6 +50,21 @@ const LONG_TERM_COVER = {
     },
     CONTACT_UKEF_TEAM: `or our team at ${UKEF_CONTACT_DETAILS.EMAIL.UNDERWRITING} if you have any questions.`,
   },
+};
+
+const LONG_TERM_COVER = {
+  INTRO: "Currently, this service doesn't provide credit insurance for contracts that are longer than two years.",
+  ...PDF_EXIT,
+};
+
+const MEMBER_OF_A_GROUP_EXIT = {
+  INTRO: 'Currently, this service requires additional details for those who are members of a group.',
+  ...PDF_EXIT,
+};
+
+const PARTY_TO_CONSORTIUM_EXIT = {
+  INTRO: 'Currently, this service requires additional details for those who are party to a consortium.',
+  ...PDF_EXIT,
 };
 
 const HAS_COMPANIES_HOUSE_NUMBER = {
@@ -163,6 +183,15 @@ const CONTRACT_TOO_SHORT = {
   },
 };
 
+const PARTY_TO_CONSORTIUM = {
+  PAGE_TITLE: 'Are you, or will you be a party to any consortium in connection with the performance or financing of any part of the export contract(s)?',
+};
+
+const MEMBER_OF_A_GROUP = {
+  PAGE_TITLE:
+    'Are you a member of a group of which another member has, or is intended to have, a material part in negotiating or obtaining the export contract(s)?',
+};
+
 export default {
   CHECK_IF_ELIGIBLE,
   TOTAL_VALUE_INSURED,
@@ -180,4 +209,8 @@ export default {
   ELIGIBLE_TO_APPLY_ONLINE,
   HAVE_AN_ACCOUNT,
   CONTRACT_TOO_SHORT,
+  PARTY_TO_CONSORTIUM,
+  MEMBER_OF_A_GROUP,
+  MEMBER_OF_A_GROUP_EXIT,
+  PARTY_TO_CONSORTIUM_EXIT,
 };

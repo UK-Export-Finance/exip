@@ -27,6 +27,7 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
 
       // go to the page we want to test.
       cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitHowWasTheContractAwardedForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
@@ -84,9 +85,11 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
       /**
        * go back to the page via the task list by:
        * - clicking the task list item
-       * - submitting the first form.
+       * - submitting the first 2x forms.
        */
       cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitHowWasTheContractAwardedForm({});
+
       cy.clickSubmitButton();
 
       cy.checkTextareaValue({
@@ -121,6 +124,7 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
 
     it(`should have no value in '${FIELD_ID}' when going back to the page`, () => {
       cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitHowWasTheContractAwardedForm({});
       cy.clickSubmitButton();
 
       cy.checkTextareaValue({

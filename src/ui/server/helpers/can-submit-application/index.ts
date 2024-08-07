@@ -4,13 +4,15 @@ import applicationIsComplete from '../application-is-complete';
 import { APPLICATION } from '../../constants';
 import { Application } from '../../../types';
 
+const { IN_PROGRESS } = APPLICATION.STATUS;
+
 /**
  * canSubmitApplication
  * Check if the application is:
- * - Complete
- * - Has a draft status
- * - Is submitting before the submission deadline
- * - Has not been submitted before
+ * - Is completed.
+ * - Has an IN_PROGRESS status.
+ * - Has a valid submission deadline.
+ * - Has a submissionCount of 0.
  * @param {Application}
  * @returns {Boolean}
  */
@@ -24,25 +26,38 @@ const canSubmitApplication = (application: Application): boolean => {
 
   const isComplete = applicationIsComplete(flatApplicationData);
 
-  // check the application status is in progress
-  const isInProgress = status === APPLICATION.STATUS.IN_PROGRESS;
+  if (!isComplete) {
+    console.info('Unable to submit application - application is not complete (canSubmitApplication helper)');
+
+    return false;
+  }
+
+  if (status !== IN_PROGRESS) {
+    console.info(`Unable to submit application - application does not have a ${IN_PROGRESS} status (canSubmitApplication helper)`);
+
+    return false;
+  }
 
   // check that the current date is before the submission deadline
   const now = new Date();
-  const validSubmissionDate = isAfter(new Date(submissionDeadline), now);
 
-  // check that it has not been submitted before
-  const isFirstSubmission = submissionCount === 0;
+  const validSubmissionDeadline = isAfter(new Date(submissionDeadline), now);
 
-  if (isComplete && isInProgress && validSubmissionDate && isFirstSubmission) {
-    console.info('Checking if an application can be submitted - application is valid (canSubmitApplication helper)');
+  if (!validSubmissionDeadline) {
+    console.info('Unable to submit application - invalid submission deadline  (canSubmitApplication helper)');
 
-    return true;
+    return false;
   }
 
-  console.info('Checking if an application can be submitted - application is invalid (canSubmitApplication helper)');
+  if (submissionCount !== 0) {
+    console.info('Unable to submit application - application has already been submitted  (canSubmitApplication helper)');
 
-  return false;
+    return false;
+  }
+
+  console.info('Able to submit application - application is valid (canSubmitApplication helper)');
+
+  return true;
 };
 
 export default canSubmitApplication;

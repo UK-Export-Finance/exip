@@ -35,6 +35,11 @@ interface ApplicationPrivateMarket {
   declinedDescription?: string;
 }
 
+interface ApplicationExportContractAwardMethod {
+  id: string;
+  value?: string;
+}
+
 interface ApplicationExportContractAgentServiceCharge {
   id: string;
   fixedSumAmount?: string;
@@ -62,10 +67,12 @@ interface ApplicationExportContractAgent {
 
 interface ApplicationExportContract {
   agent: ApplicationExportContractAgent;
+  awardMethod: ApplicationExportContractAwardMethod;
   id: string;
   finalDestinationKnown?: boolean;
   finalDestinationCountryCode?: string;
   goodsOrServicesDescription?: string;
+  otherAwardMethod?: string;
   paymentTermsDescription?: string;
   privateMarket: ApplicationPrivateMarket;
 }
@@ -189,10 +196,18 @@ interface ApplicationDeclaration {
   id: string;
   agreeToConfidentiality?: boolean;
   agreeToAntiBribery?: boolean;
-  hasAntiBriberyCodeOfConduct?: boolean | null;
+  hasAntiBriberyCodeOfConduct?: boolean;
   willExportWithAntiBriberyCodeOfConduct?: boolean;
   agreeToConfirmationAndAcknowledgements?: boolean;
-  agreeHowDataWillBeUsed?: boolean;
+}
+
+interface ApplicationDeclarationVersions {
+  ANTI_BRIBERY: string;
+  ANTI_BRIBERY_CODE_OF_CONDUCT: string;
+  ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: string;
+  CONFIDENTIALITY: string;
+  CONFIRMATION_AND_ACKNOWLEDGEMENTS: string;
+  HOW_YOUR_DATA_WILL_BE_USED?: string;
 }
 
 interface ApplicationPolicyContact {
@@ -295,6 +310,8 @@ export {
   ApplicationBuyerApiInput,
   ApplicationCompany,
   ApplicationCompanyDifferentTradingAddress,
+  ApplicationDeclaration,
+  ApplicationDeclarationVersions,
   ApplicationExportContract,
   ApplicationExportContractAgent,
   ApplicationExportContractAgentService,
@@ -309,7 +326,6 @@ export {
   ApplicationPolicy,
   ApplicationPolicyContact,
   ApplicationSectionReview,
-  ApplicationDeclaration,
-  ApplicationVersion,
   ApplicationOwner,
+  ApplicationVersion,
 };

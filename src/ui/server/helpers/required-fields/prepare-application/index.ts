@@ -8,6 +8,7 @@ import { ApplicationFlat } from '../../../../types';
 
 const {
   EXPORT_CONTRACT: {
+    HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD },
     ABOUT_GOODS_OR_SERVICES: { FINAL_DESTINATION_KNOWN },
     PRIVATE_MARKET: { ATTEMPTED },
     USING_AGENT,
@@ -27,7 +28,7 @@ const {
  * @returns {Array} Required field IDs
  */
 const requiredFields = (application: ApplicationFlat): Array<string> => [
-  ...requiredEligibilityFields(),
+  ...requiredEligibilityFields(application.migratedV1toV2),
   ...requiredPolicyFields({
     policyType: application[POLICY_TYPE],
     isUsingBroker: application[USING_BROKER],
@@ -37,6 +38,7 @@ const requiredFields = (application: ApplicationFlat): Array<string> => [
     totalContractValueOverThreshold: application.totalContractValueOverThreshold,
     attemptedPrivateMarketCover: application[ATTEMPTED],
     isUsingAgent: application[USING_AGENT],
+    awardMethodId: application[AWARD_METHOD]?.id,
   }),
   ...requiredBusinessFields(application[HAS_DIFFERENT_TRADING_NAME]),
   ...requiredYourBuyerFields({

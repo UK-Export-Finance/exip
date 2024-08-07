@@ -1,3 +1,4 @@
+import { Lists } from '.keystone/types'; // eslint-disable-line
 import { list } from '@keystone-6/core';
 import { allowAll } from '@keystone-6/core/access';
 import { checkbox, integer, relationship, select, text, timestamp, password, decimal } from '@keystone-6/core/fields';
@@ -221,6 +222,10 @@ export const lists = {
       application: relationship({ ref: 'Application' }),
       agent: relationship({ ref: 'ExportContractAgent.exportContract' }),
       privateMarket: relationship({ ref: 'PrivateMarket.exportContract' }),
+      awardMethod: relationship({ ref: 'ExportContractAwardMethod' }),
+      otherAwardMethod: text({
+        db: { nativeType: 'VarChar(200)' },
+      }),
       finalDestinationKnown: nullableCheckbox(),
       finalDestinationCountryCode: text({
         db: { nativeType: 'VarChar(3)' },
@@ -290,6 +295,14 @@ export const lists = {
     },
     access: allowAll,
   },
+  ExportContractAwardMethod: list({
+    fields: {
+      value: text({
+        db: { nativeType: 'VarChar(50)' },
+      }),
+    },
+    access: allowAll,
+  }),
   PrivateMarket: list({
     fields: {
       exportContract: relationship({ ref: 'ExportContract.privateMarket' }),
@@ -627,6 +640,8 @@ export const lists = {
       paidByLetterOfCredit: checkbox(),
       totalContractValue: relationship({ ref: 'TotalContractValue' }),
       validExporterLocation: checkbox(),
+      isPartyToConsortium: checkbox(),
+      isMemberOfAGroup: checkbox(),
     },
     access: allowAll,
   }),
@@ -651,15 +666,13 @@ export const lists = {
   Declaration: list({
     fields: {
       application: relationship({ ref: 'Application' }),
-      antiBribery: relationship({ ref: 'DeclarationAntiBribery' }),
-      confirmationAndAcknowledgements: relationship({ ref: 'DeclarationConfirmationAndAcknowledgement' }),
-      howDataWillBeUsed: relationship({ ref: 'DeclarationHowDataWillBeUsed' }),
-      agreeToConfidentiality: nullableCheckbox(),
+      version: relationship({ ref: 'DeclarationVersion' }),
+      agreeHowDataWillBeUsed: nullableCheckbox(),
       agreeToAntiBribery: nullableCheckbox(),
+      agreeToConfidentiality: nullableCheckbox(),
+      agreeToConfirmationAndAcknowledgements: nullableCheckbox(),
       hasAntiBriberyCodeOfConduct: nullableCheckbox(),
       willExportWithAntiBriberyCodeOfConduct: nullableCheckbox(),
-      agreeToConfirmationAndAcknowledgements: nullableCheckbox(),
-      agreeHowDataWillBeUsed: nullableCheckbox(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -670,39 +683,26 @@ export const lists = {
     },
     access: allowAll,
   }),
-  DeclarationAntiBribery: list({
+  DeclarationVersion: list({
     fields: {
-      version: text({
-        label: 'Version',
-        validation: { isRequired: true },
+      declaration: relationship({ ref: 'Declaration' }),
+      agreeToConfidentiality: text({
+        db: { nativeType: 'VarChar(3)' },
       }),
-      content: document({
-        formatting: true,
+      agreeToAntiBribery: text({
+        db: { nativeType: 'VarChar(3)' },
       }),
-    },
-    access: allowAll,
-  }),
-  DeclarationConfirmationAndAcknowledgement: list({
-    fields: {
-      version: text({
-        label: 'Version',
-        validation: { isRequired: true },
+      hasAntiBriberyCodeOfConduct: text({
+        db: { nativeType: 'VarChar(3)' },
       }),
-      content: document({
-        formatting: true,
+      willExportWithAntiBriberyCodeOfConduct: text({
+        db: { nativeType: 'VarChar(3)' },
       }),
-    },
-    access: allowAll,
-  }),
-  DeclarationHowDataWillBeUsed: list({
-    fields: {
-      version: text({
-        label: 'Version',
-        validation: { isRequired: true },
+      agreeToConfirmationAndAcknowledgements: text({
+        db: { nativeType: 'VarChar(3)' },
       }),
-      content: document({
-        formatting: true,
-        links: true,
+      agreeHowDataWillBeUsed: text({
+        db: { nativeType: 'VarChar(3)' },
       }),
     },
     access: allowAll,

@@ -417,6 +417,10 @@ var business_default = EXPORTER_BUSINESS;
 // constants/field-ids/insurance/export-contract/index.ts
 var EXPORT_CONTRACT = {
   ...shared_default,
+  HOW_WAS_THE_CONTRACT_AWARDED: {
+    AWARD_METHOD: "awardMethod",
+    OTHER_AWARD_METHOD: "otherAwardMethod"
+  },
   ABOUT_GOODS_OR_SERVICES: {
     DESCRIPTION: "goodsOrServicesDescription",
     FINAL_DESTINATION_KNOWN: "finalDestinationKnown",
@@ -482,8 +486,7 @@ var DECLARATIONS = {
   AGREE_ANTI_BRIBERY: "agreeToAntiBribery",
   HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: "hasAntiBriberyCodeOfConduct",
   WILL_EXPORT_WITH_CODE_OF_CONDUCT: "willExportWithAntiBriberyCodeOfConduct",
-  AGREE_CONFIRMATION_ACKNOWLEDGEMENTS: "agreeToConfirmationAndAcknowledgements",
-  AGREE_HOW_YOUR_DATA_WILL_BE_USED: "agreeHowDataWillBeUsed"
+  AGREE_CONFIRMATION_ACKNOWLEDGEMENTS: "agreeToConfirmationAndAcknowledgements"
 };
 var declarations_default = DECLARATIONS;
 
@@ -510,7 +513,9 @@ var INSURANCE_FIELD_IDS = {
     COVER_PERIOD_ID: "coverPeriodId",
     HAS_END_BUYER: "hasEndBuyer",
     HAVE_AN_ACCOUNT: "haveAnAccount",
-    HAS_REVIEWED_ELIGIBILITY: "hasReviewedEligibility"
+    HAS_REVIEWED_ELIGIBILITY: "hasReviewedEligibility",
+    IS_PARTY_TO_CONSORTIUM: "isPartyToConsortium",
+    IS_MEMBER_OF_A_GROUP: "isMemberOfAGroup"
   },
   ...shared_default2,
   CURRENCY: {
@@ -653,7 +658,7 @@ var getApplicationDefinition = (versionNumber) => {
 var get_application_definition_default = getApplicationDefinition;
 
 // constants/application/versions/latest.ts
-var LATEST_VERSION_NUMBER = "2";
+var LATEST_VERSION_NUMBER = versions_default[versions_default.length - 1].VERSION_NUMBER;
 var latest_default = LATEST_VERSION_NUMBER;
 
 // constants/application/index.ts
@@ -712,7 +717,7 @@ var APPLICATION = {
       }
     }
   },
-  GET_QUERY: "id eligibility { id } buyer { id companyOrOrganisationName } company { id } exportContract { id } nominatedLossPayee { id } policy { id } sectionReview { id } owner { id email firstName lastName } referenceNumber submissionDeadline status ",
+  GET_QUERY: "id eligibility { id } buyer { id companyOrOrganisationName } company { id } declaration { id } exportContract { id } nominatedLossPayee { id } policy { id } sectionReview { id } owner { id email firstName lastName } referenceNumber submissionDeadline status ",
   VERSIONS: versions_default
 };
 var application_default = APPLICATION;
@@ -742,11 +747,63 @@ var DATE_FORMAT = {
   XLSX: "dd-MMM-yy"
 };
 
+// constants/declarations/versions/index.ts
+var DECLARATION_VERSIONS = [
+  {
+    ANTI_BRIBERY: "1",
+    ANTI_BRIBERY_CODE_OF_CONDUCT: "1",
+    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: "1",
+    CONFIDENTIALITY: "1",
+    CONFIRMATION_AND_ACKNOWLEDGEMENTS: "1",
+    HOW_YOUR_DATA_WILL_BE_USED: "1"
+  },
+  {
+    ANTI_BRIBERY: "2",
+    ANTI_BRIBERY_CODE_OF_CONDUCT: "2",
+    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: "1",
+    CONFIDENTIALITY: "1",
+    CONFIRMATION_AND_ACKNOWLEDGEMENTS: "1"
+  }
+];
+var versions_default2 = DECLARATION_VERSIONS;
+
+// constants/declarations/index.ts
+var DECLARATIONS2 = {
+  VERSIONS: versions_default2,
+  V1_DECLARATIONS: versions_default2[0],
+  LATEST_DECLARATIONS: versions_default2[versions_default2.length - 1]
+};
+var declarations_default2 = DECLARATIONS2;
+
 // constants/eligibility.ts
 var ELIGIBILITY = {
   MAX_COVER_AMOUNT_IN_GBP: 5e5,
   MAX_COVER_PERIOD_MONTHS: 24,
   MAX_COVER_PERIOD_YEARS: 2
+};
+
+// constants/export-contract-award-method/index.ts
+var EXPORT_CONTRACT_AWARD_METHOD = {
+  OPEN_TENDER: {
+    DB_ID: "eg9qxlqw4edxa8b5mwbybsrfp",
+    VALUE: "Open tender"
+  },
+  NEGOTIATED_CONTRACT: {
+    DB_ID: "mzwp337piamg1mei7fqh1o73s",
+    VALUE: "Negotiated contract"
+  },
+  DIRECT_AWARD: {
+    DB_ID: "qnqrle4xwsj5go8pchj31sat4",
+    VALUE: "Direct award"
+  },
+  COMPETITIVE_BIDDING: {
+    DB_ID: "qw2hp8khykctdic2z58z70ru8",
+    VALUE: "Competitive bidding"
+  },
+  OTHER: {
+    DB_ID: "tn8k8lot1bvirmztmmgq2u8hn",
+    VALUE: "Other"
+  }
 };
 
 // constants/external-apis.ts
@@ -872,6 +929,9 @@ var MAXIMUM_CHARACTERS = {
   CREDIT_PERIOD_WITH_BUYER: 1e3,
   DECLINED_BY_PRIVATE_MARKET_DESCRIPTION: 1e3,
   EMAIL: 300,
+  EXPORT_CONTRACT: {
+    OTHER_AWARD_METHOD: 200
+  },
   FEEDBACK: {
     IMPROVEMENT: 1200,
     OTHER_COMMENTS: 1200
@@ -1871,6 +1931,10 @@ var lists = {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       agent: (0, import_fields.relationship)({ ref: "ExportContractAgent.exportContract" }),
       privateMarket: (0, import_fields.relationship)({ ref: "PrivateMarket.exportContract" }),
+      awardMethod: (0, import_fields.relationship)({ ref: "ExportContractAwardMethod" }),
+      otherAwardMethod: (0, import_fields.text)({
+        db: { nativeType: "VarChar(200)" }
+      }),
       finalDestinationKnown: nullable_checkbox_default(),
       finalDestinationCountryCode: (0, import_fields.text)({
         db: { nativeType: "VarChar(3)" }
@@ -1940,6 +2004,14 @@ var lists = {
     },
     access: import_access.allowAll
   },
+  ExportContractAwardMethod: (0, import_core2.list)({
+    fields: {
+      value: (0, import_fields.text)({
+        db: { nativeType: "VarChar(50)" }
+      })
+    },
+    access: import_access.allowAll
+  }),
   PrivateMarket: (0, import_core2.list)({
     fields: {
       exportContract: (0, import_fields.relationship)({ ref: "ExportContract.privateMarket" }),
@@ -2276,7 +2348,9 @@ var lists = {
       otherPartiesInvolved: (0, import_fields.checkbox)(),
       paidByLetterOfCredit: (0, import_fields.checkbox)(),
       totalContractValue: (0, import_fields.relationship)({ ref: "TotalContractValue" }),
-      validExporterLocation: (0, import_fields.checkbox)()
+      validExporterLocation: (0, import_fields.checkbox)(),
+      isPartyToConsortium: (0, import_fields.checkbox)(),
+      isMemberOfAGroup: (0, import_fields.checkbox)()
     },
     access: import_access.allowAll
   }),
@@ -2301,15 +2375,13 @@ var lists = {
   Declaration: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
-      antiBribery: (0, import_fields.relationship)({ ref: "DeclarationAntiBribery" }),
-      confirmationAndAcknowledgements: (0, import_fields.relationship)({ ref: "DeclarationConfirmationAndAcknowledgement" }),
-      howDataWillBeUsed: (0, import_fields.relationship)({ ref: "DeclarationHowDataWillBeUsed" }),
-      agreeToConfidentiality: nullable_checkbox_default(),
+      version: (0, import_fields.relationship)({ ref: "DeclarationVersion" }),
+      agreeHowDataWillBeUsed: nullable_checkbox_default(),
       agreeToAntiBribery: nullable_checkbox_default(),
-      hasAntiBriberyCodeOfConduct: nullable_checkbox_default(),
-      willExportWithAntiBriberyCodeOfConduct: nullable_checkbox_default(),
+      agreeToConfidentiality: nullable_checkbox_default(),
       agreeToConfirmationAndAcknowledgements: nullable_checkbox_default(),
-      agreeHowDataWillBeUsed: nullable_checkbox_default()
+      hasAntiBriberyCodeOfConduct: nullable_checkbox_default(),
+      willExportWithAntiBriberyCodeOfConduct: nullable_checkbox_default()
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -2320,39 +2392,26 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  DeclarationAntiBribery: (0, import_core2.list)({
+  DeclarationVersion: (0, import_core2.list)({
     fields: {
-      version: (0, import_fields.text)({
-        label: "Version",
-        validation: { isRequired: true }
+      declaration: (0, import_fields.relationship)({ ref: "Declaration" }),
+      agreeToConfidentiality: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
       }),
-      content: (0, import_fields_document.document)({
-        formatting: true
-      })
-    },
-    access: import_access.allowAll
-  }),
-  DeclarationConfirmationAndAcknowledgement: (0, import_core2.list)({
-    fields: {
-      version: (0, import_fields.text)({
-        label: "Version",
-        validation: { isRequired: true }
+      agreeToAntiBribery: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
       }),
-      content: (0, import_fields_document.document)({
-        formatting: true
-      })
-    },
-    access: import_access.allowAll
-  }),
-  DeclarationHowDataWillBeUsed: (0, import_core2.list)({
-    fields: {
-      version: (0, import_fields.text)({
-        label: "Version",
-        validation: { isRequired: true }
+      hasAntiBriberyCodeOfConduct: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
       }),
-      content: (0, import_fields_document.document)({
-        formatting: true,
-        links: true
+      willExportWithAntiBriberyCodeOfConduct: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
+      }),
+      agreeToConfirmationAndAcknowledgements: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
+      }),
+      agreeHowDataWillBeUsed: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
       })
     },
     access: import_access.allowAll
@@ -2687,6 +2746,8 @@ var typeDefs = `
     hasCompaniesHouseNumber: Boolean!
     hasEndBuyer: Boolean!
     hasMinimumUkGoodsOrServices: Boolean!
+    isMemberOfAGroup: Boolean!
+    isPartyToConsortium: Boolean!
     totalContractValueId: Int!
     validExporterLocation: Boolean!
   }
@@ -4364,9 +4425,34 @@ var createABuyer = async (context, countryId, applicationId) => {
 };
 var create_a_buyer_default = createABuyer;
 
+// helpers/create-a-declaration-version/index.ts
+var { ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT, CONFIDENTIALITY, CONFIRMATION_AND_ACKNOWLEDGEMENTS } = declarations_default2.LATEST_DECLARATIONS;
+var createADeclarationVersion = async (context, declarationId) => {
+  console.info("Creating an application declaration version for ", declarationId);
+  try {
+    const declaration = await context.db.DeclarationVersion.createOne({
+      data: {
+        declaration: {
+          connect: { id: declarationId }
+        },
+        agreeToAntiBribery: ANTI_BRIBERY,
+        agreeToConfidentiality: CONFIDENTIALITY,
+        agreeToConfirmationAndAcknowledgements: CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+        hasAntiBriberyCodeOfConduct: ANTI_BRIBERY_CODE_OF_CONDUCT,
+        willExportWithAntiBriberyCodeOfConduct: ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT
+      }
+    });
+    return declaration;
+  } catch (err) {
+    console.error("Error creating an application declaration version %O", err);
+    throw new Error(`Creating an application declaration version ${err}`);
+  }
+};
+var create_a_declaration_version_default = createADeclarationVersion;
+
 // helpers/create-a-declaration/index.ts
 var createADeclaration = async (context, applicationId) => {
-  console.info("Creating a declaration for %s", applicationId);
+  console.info("Creating a application declaration for %s", applicationId);
   try {
     const declaration = await context.db.Declaration.createOne({
       data: {
@@ -4375,10 +4461,14 @@ var createADeclaration = async (context, applicationId) => {
         }
       }
     });
-    return declaration;
+    const declarationVersion = await create_a_declaration_version_default(context, declaration.id);
+    return {
+      ...declaration,
+      declarationVersion
+    };
   } catch (err) {
-    console.error("Error creating a declaration %O", err);
-    throw new Error(`Creating a declaration ${err}`);
+    console.error("Error creating an application declaration %O", err);
+    throw new Error(`Creating an application declaration ${err}`);
   }
 };
 var create_a_declaration_default = createADeclaration;
@@ -4823,17 +4913,17 @@ var createApplicationRelationships = async ({
     const totalContractValue = await get_total_contract_value_by_field_default(context, "valueId", totalContractValueId);
     const referenceNumber = await create_a_reference_number_default(context, applicationId);
     const createdRelationships = await Promise.all([
-      await create_a_broker_default(context, applicationId),
-      await create_a_business_default(context, applicationId),
-      await create_a_buyer_default(context, country.id, applicationId),
-      await create_a_declaration_default(context, applicationId),
-      await create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
-      await create_an_export_contract_default(context, applicationId),
-      await create_a_policy_default(context, applicationId),
-      await create_a_policy_contact_default(context, applicationId),
-      await create_a_nominated_loss_payee_default(context, applicationId),
-      await create_a_company_default(context, applicationId, companyData),
-      await create_a_section_review_default(context, applicationId, sectionReviewData)
+      create_a_broker_default(context, applicationId),
+      create_a_business_default(context, applicationId),
+      create_a_buyer_default(context, country.id, applicationId),
+      create_a_declaration_default(context, applicationId),
+      create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
+      create_an_export_contract_default(context, applicationId),
+      create_a_policy_default(context, applicationId),
+      create_a_policy_contact_default(context, applicationId),
+      create_a_nominated_loss_payee_default(context, applicationId),
+      create_a_company_default(context, applicationId, companyData),
+      create_a_section_review_default(context, applicationId, sectionReviewData)
     ]);
     const [broker, business, buyer, declaration, eligibility, exportContract, policy, policyContact, nominatedLossPayee, company, sectionReview] = createdRelationships;
     const relationships = {
@@ -5915,7 +6005,6 @@ var {
     AGREE_ANTI_BRIBERY,
     HAS_ANTI_BRIBERY_CODE_OF_CONDUCT,
     AGREE_CONFIRMATION_ACKNOWLEDGEMENTS,
-    AGREE_HOW_YOUR_DATA_WILL_BE_USED,
     WILL_EXPORT_WITH_CODE_OF_CONDUCT
   }
 } = insurance_default;
@@ -5943,11 +6032,6 @@ var DECLARATIONS_FIELDS = {
   [AGREE_CONFIRMATION_ACKNOWLEDGEMENTS]: {
     SUMMARY: {
       TITLE: "Confirmation and acknowledgements"
-    }
-  },
-  [AGREE_HOW_YOUR_DATA_WILL_BE_USED]: {
-    SUMMARY: {
-      TITLE: "How your data will be used"
     }
   }
 };
@@ -6074,12 +6158,49 @@ var FIELDS_ELIGIBILITY = {
 };
 
 // content-strings/fields/insurance/export-contract/index.ts
+var { OPEN_TENDER, NEGOTIATED_CONTRACT, DIRECT_AWARD, COMPETITIVE_BIDDING, OTHER } = EXPORT_CONTRACT_AWARD_METHOD;
 var {
+  HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD },
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
   HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
   PRIVATE_MARKET: { DECLINED_DESCRIPTION }
 } = export_contract_default;
 var EXPORT_CONTRACT_FIELDS = {
+  HOW_WAS_THE_CONTRACT_AWARDED: {
+    [AWARD_METHOD]: {
+      LEGEND: "How was the contract awarded?",
+      OPTIONS: {
+        OPEN_TENDER: {
+          ID: OPEN_TENDER.DB_ID,
+          VALUE: OPEN_TENDER.DB_ID,
+          TEXT: OPEN_TENDER.VALUE
+        },
+        NEGOTIATED_CONTRACT: {
+          ID: NEGOTIATED_CONTRACT.DB_ID,
+          VALUE: NEGOTIATED_CONTRACT.DB_ID,
+          TEXT: NEGOTIATED_CONTRACT.VALUE
+        },
+        DIRECT_AWARD: {
+          ID: DIRECT_AWARD.DB_ID,
+          VALUE: DIRECT_AWARD.DB_ID,
+          TEXT: DIRECT_AWARD.VALUE
+        },
+        COMPETITIVE_BIDDING: {
+          ID: COMPETITIVE_BIDDING.DB_ID,
+          VALUE: COMPETITIVE_BIDDING.DB_ID,
+          TEXT: COMPETITIVE_BIDDING.VALUE
+        },
+        OTHER: {
+          ID: OTHER.DB_ID,
+          VALUE: OTHER.DB_ID,
+          TEXT: OTHER.VALUE
+        }
+      },
+      SUMMARY: {
+        TITLE: "How was the contract awarded"
+      }
+    }
+  },
   ABOUT_GOODS_OR_SERVICES: {
     [DESCRIPTION]: {
       LABEL: "Describe the goods or services you're exporting and explain how they'll be used by the buyer",
@@ -6767,8 +6888,16 @@ var DEFAULT = {
 var { AMOUNT_250K, MORE_THAN_250K } = TOTAL_CONTRACT_VALUE;
 var {
   ACCOUNT: { FIRST_NAME, LAST_NAME },
-  DECLARATIONS: { AGREE_HOW_YOUR_DATA_WILL_BE_USED: AGREE_HOW_YOUR_DATA_WILL_BE_USED2, HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2, WILL_EXPORT_WITH_CODE_OF_CONDUCT: WILL_EXPORT_WITH_CODE_OF_CONDUCT2 },
-  ELIGIBILITY: { BUYER_COUNTRY: BUYER_COUNTRY2, COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2, COVER_PERIOD: COVER_PERIOD2, HAS_END_BUYER: HAS_END_BUYER2, HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2 },
+  DECLARATIONS: { HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2, WILL_EXPORT_WITH_CODE_OF_CONDUCT: WILL_EXPORT_WITH_CODE_OF_CONDUCT2 },
+  ELIGIBILITY: {
+    BUYER_COUNTRY: BUYER_COUNTRY2,
+    COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2,
+    COVER_PERIOD: COVER_PERIOD2,
+    HAS_END_BUYER: HAS_END_BUYER2,
+    HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2,
+    IS_MEMBER_OF_A_GROUP,
+    IS_PARTY_TO_CONSORTIUM
+  },
   EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION: DESCRIPTION2, FINAL_DESTINATION_KNOWN: FINAL_DESTINATION_KNOWN2 },
     AGENT_CHARGES: { PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE },
@@ -6838,7 +6967,6 @@ var XLSX = {
       [IS_CHARGING]: "Is the agent charging for their support in the export contract?",
       [SERVICE_DESCRIPTION]: "Service the agent is providing"
     },
-    [AGREE_HOW_YOUR_DATA_WILL_BE_USED2]: "How the data will be used",
     APPLICANT_EMAIL_ADDRESS: "Applicant email address",
     [BIC_SWIFT_CODE2]: "Loss payee BIC or SWIFT code",
     [BROKER_NAME]: "Name of broker or company",
@@ -6922,7 +7050,9 @@ var XLSX = {
     [USING_BROKER2]: "Using a broker for this insurance?",
     [WEBSITE2]: "Exporter Company website (optional)",
     [WILL_EXPORT_WITH_CODE_OF_CONDUCT2]: "Will the exporter export using their code of conduct?",
-    [YEARS_EXPORTING2]: "How long the business has been exporting for"
+    [YEARS_EXPORTING2]: "How long the business has been exporting for",
+    [IS_PARTY_TO_CONSORTIUM]: "Party to any consortium in connection with the export contract(s)?",
+    [IS_MEMBER_OF_A_GROUP]: "Member of a group which may have a part in negotiating the contract(s)?"
   }
 };
 
@@ -7012,7 +7142,9 @@ var {
     COVER_PERIOD: COVER_PERIOD3,
     HAS_COMPANIES_HOUSE_NUMBER: HAS_COMPANIES_HOUSE_NUMBER2,
     COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER3,
-    HAS_END_BUYER: HAS_END_BUYER3
+    HAS_END_BUYER: HAS_END_BUYER3,
+    IS_PARTY_TO_CONSORTIUM: IS_PARTY_TO_CONSORTIUM2,
+    IS_MEMBER_OF_A_GROUP: IS_MEMBER_OF_A_GROUP2
   }
 } = insurance_default;
 var mapEligibility = (application2) => {
@@ -7025,7 +7157,9 @@ var mapEligibility = (application2) => {
     xlsx_row_default(String(FIELDS4[MORE_THAN_250K2.VALUE]), map_yes_no_field_default({ answer: eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID })),
     xlsx_row_default(String(FIELDS4[COVER_PERIOD3]), eligibility[COVER_PERIOD_ELIGIBILITY].value),
     xlsx_row_default(String(FIELDS4[HAS_MINIMUM_UK_GOODS_OR_SERVICES3]), map_yes_no_field_default({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES3] })),
-    xlsx_row_default(String(FIELDS4[HAS_END_BUYER3]), map_yes_no_field_default({ answer: eligibility[HAS_END_BUYER3] }))
+    xlsx_row_default(String(FIELDS4[HAS_END_BUYER3]), map_yes_no_field_default({ answer: eligibility[HAS_END_BUYER3] })),
+    xlsx_row_default(String(FIELDS4[IS_PARTY_TO_CONSORTIUM2]), map_yes_no_field_default({ answer: eligibility[IS_PARTY_TO_CONSORTIUM2] })),
+    xlsx_row_default(String(FIELDS4[IS_MEMBER_OF_A_GROUP2]), map_yes_no_field_default({ answer: eligibility[IS_MEMBER_OF_A_GROUP2] }))
   ];
   return mapped;
 };
@@ -7625,8 +7759,31 @@ var mapBuyer = (application2) => {
 };
 var map_buyer_default = mapBuyer;
 
+// generate-xlsx/map-application-to-XLSX/map-export-contract/map-how-was-the-contract-awarded/index.ts
+var { OTHER: OTHER2 } = EXPORT_CONTRACT_AWARD_METHOD;
+var CONTENT_STRINGS8 = EXPORT_CONTRACT_FIELDS.HOW_WAS_THE_CONTRACT_AWARDED;
+var {
+  HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD: AWARD_METHOD2, OTHER_AWARD_METHOD }
+} = export_contract_default;
+var mapHowWasTheContractAwarded = (exportContract) => {
+  const submittedMethodId = exportContract.awardMethodId;
+  let answer;
+  if (submittedMethodId === OTHER2.DB_ID) {
+    answer = exportContract[OTHER_AWARD_METHOD];
+  } else {
+    const allMethods = Object.values(EXPORT_CONTRACT_AWARD_METHOD);
+    const method = allMethods.find((methodObj) => methodObj.DB_ID === submittedMethodId);
+    if (method) {
+      answer = method.VALUE;
+    }
+  }
+  const title = `${String(CONTENT_STRINGS8[AWARD_METHOD2].SUMMARY?.TITLE)}?`;
+  return xlsx_row_default(title, answer);
+};
+var map_how_was_the_contract_awarded_default = mapHowWasTheContractAwarded;
+
 // generate-xlsx/map-application-to-XLSX/map-export-contract/map-final-destination/index.ts
-var CONTENT_STRINGS8 = EXPORT_CONTRACT_FIELDS.ABOUT_GOODS_OR_SERVICES;
+var CONTENT_STRINGS9 = EXPORT_CONTRACT_FIELDS.ABOUT_GOODS_OR_SERVICES;
 var { FIELDS: FIELDS25 } = XLSX;
 var {
   ABOUT_GOODS_OR_SERVICES: { FINAL_DESTINATION: FINAL_DESTINATION2, FINAL_DESTINATION_KNOWN: FINAL_DESTINATION_KNOWN3 }
@@ -7636,7 +7793,7 @@ var mapFinalDestination = (exportContract, countries) => {
   const mapped = [xlsx_row_default(String(FIELDS25.EXPORT_CONTRACT[FINAL_DESTINATION_KNOWN3]), map_yes_no_field_default({ answer: finalDestinationKnownAnswer }))];
   if (finalDestinationKnownAnswer) {
     const country = get_country_by_iso_code_default(countries, exportContract[FINAL_DESTINATION2]);
-    mapped.push(xlsx_row_default(String(CONTENT_STRINGS8[FINAL_DESTINATION2].SUMMARY?.TITLE), country.name));
+    mapped.push(xlsx_row_default(String(CONTENT_STRINGS9[FINAL_DESTINATION2].SUMMARY?.TITLE), country.name));
   }
   return mapped;
 };
@@ -7738,6 +7895,7 @@ var mapExportContract = (application2, countries) => {
   const { agent } = exportContract;
   const mapped = [
     xlsx_row_default(String(FIELDS30.EXPORT_CONTRACT[DESCRIPTION3]), exportContract[DESCRIPTION3]),
+    map_how_was_the_contract_awarded_default(exportContract),
     ...map_final_destination_default(exportContract, countries),
     xlsx_row_default(String(FIELDS30.EXPORT_CONTRACT[PAYMENT_TERMS_DESCRIPTION3]), exportContract[PAYMENT_TERMS_DESCRIPTION3]),
     ...map_private_market_default(application2),
@@ -7764,7 +7922,6 @@ var {
     AGREE_ANTI_BRIBERY: AGREE_ANTI_BRIBERY2,
     HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3,
     WILL_EXPORT_WITH_CODE_OF_CONDUCT: WILL_EXPORT_WITH_CODE_OF_CONDUCT3,
-    AGREE_HOW_YOUR_DATA_WILL_BE_USED: AGREE_HOW_YOUR_DATA_WILL_BE_USED3,
     AGREE_CONFIRMATION_ACKNOWLEDGEMENTS: AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2
   }
 } = insurance_default;
@@ -7775,7 +7932,6 @@ var mapDeclarations = (application2) => {
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_ANTI_BRIBERY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_ANTI_BRIBERY2])),
     xlsx_row_default(String(FIELDS31[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3] })),
     xlsx_row_default(String(FIELDS31[WILL_EXPORT_WITH_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT3] })),
-    xlsx_row_default(String(FIELDS31[AGREE_HOW_YOUR_DATA_WILL_BE_USED3]), map_agreed_field_default(declaration[AGREE_HOW_YOUR_DATA_WILL_BE_USED3])),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2]))
   ];
   return mapped;
@@ -7790,7 +7946,7 @@ var {
   POLICY: POLICY4,
   BUYER,
   EXPORT_CONTRACT: EXPORT_CONTRACT2,
-  DECLARATIONS: DECLARATIONS2
+  DECLARATIONS: DECLARATIONS3
 } = SECTION_NAMES_default;
 var mapApplicationToXLSX = (application2, countries) => {
   try {
@@ -7805,7 +7961,7 @@ var mapApplicationToXLSX = (application2, countries) => {
       [POLICY4]: map_policy_default2(application2, countries),
       [BUYER]: map_buyer_default(application2),
       [EXPORT_CONTRACT2]: map_export_contract_default(application2, countries),
-      [DECLARATIONS2]: map_declarations_default(application2)
+      [DECLARATIONS3]: map_declarations_default(application2)
     };
     return mapped;
   } catch (err) {
@@ -8956,8 +9112,8 @@ var getApplicationByReferenceNumberQuery = async (root, variables, context) => {
       success: false
     };
   } catch (err) {
-    console.error("Error getting application by reference number (GetApplicationByReferenceNumber mutation) %O", err);
-    throw new Error(`Get application by reference number (GetApplicationByReferenceNumber mutation) ${err}`);
+    console.error("Error getting application by reference number (GetApplicationByReferenceNumber query) %O", err);
+    throw new Error(`Get application by reference number (GetApplicationByReferenceNumber query) ${err}`);
   }
 };
 var get_application_by_reference_number_default2 = getApplicationByReferenceNumberQuery;

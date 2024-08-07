@@ -27,7 +27,9 @@ describe('server/helpers/task-list/generate-groups-and-tasks', () => {
           charge: { method: agentChargeMethod },
         },
       },
+      awardMethod: { id: awardMethodId },
     },
+    migratedV1toV2,
     nominatedLossPayee: {
       isAppointed: isAppointingLossPayee,
       isLocatedInUk: lossPayeeIsLocatedInUk,
@@ -56,6 +58,11 @@ describe('server/helpers/task-list/generate-groups-and-tasks', () => {
       exporterHasPreviousCreditInsuranceWithBuyer,
       totalContractValueOverThreshold,
       attemptedPrivateMarketCover,
+      isUsingAgent,
+      agentIsCharging,
+      agentChargeMethod,
+      awardMethodId,
+      migratedV1toV2,
     );
 
     const initialChecks = {
@@ -87,6 +94,7 @@ describe('server/helpers/task-list/generate-groups-and-tasks', () => {
         isUsingAgent,
         agentIsCharging,
         agentChargeMethod,
+        awardMethodId,
       }),
     };
 

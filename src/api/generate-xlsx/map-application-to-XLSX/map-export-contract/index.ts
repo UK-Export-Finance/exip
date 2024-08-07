@@ -1,6 +1,7 @@
 import FIELD_IDS from '../../../constants/field-ids/insurance/export-contract';
 import { XLSX } from '../../../content-strings';
 import xlsxRow from '../helpers/xlsx-row';
+import mapHowWasTheContractAwarded from './map-how-was-the-contract-awarded';
 import mapFinalDestination from './map-final-destination';
 import mapPrivateMarket from './map-private-market';
 import mapAgent from './map-agent';
@@ -27,6 +28,8 @@ const mapExportContract = (application: Application, countries: Array<Country>) 
 
   const mapped = [
     xlsxRow(String(FIELDS.EXPORT_CONTRACT[DESCRIPTION]), exportContract[DESCRIPTION]),
+
+    mapHowWasTheContractAwarded(exportContract),
 
     ...mapFinalDestination(exportContract, countries),
 

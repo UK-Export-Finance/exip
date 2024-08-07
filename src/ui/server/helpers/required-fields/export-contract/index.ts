@@ -1,4 +1,4 @@
-import { FIELD_VALUES } from '../../../constants';
+import { EXPORT_CONTRACT_AWARD_METHOD, FIELD_VALUES } from '../../../constants';
 import FIELD_IDS from '../../../constants/field-ids/insurance/export-contract';
 
 const {
@@ -6,6 +6,7 @@ const {
 } = FIELD_VALUES;
 
 const {
+  HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD, OTHER_AWARD_METHOD },
   ABOUT_GOODS_OR_SERVICES,
   HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
   PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
@@ -35,6 +36,7 @@ interface RequiredFields {
   isUsingAgent?: boolean;
   agentIsCharging?: boolean;
   agentChargeMethod?: string;
+  awardMethodId?: string;
 }
 
 /**
@@ -104,6 +106,19 @@ export const agentTasks = ({ isUsingAgent, agentIsCharging, agentChargeMethod }:
 };
 
 /**
+ * awardMethodTasks
+ * @param {String} awardMethodId: Export contract award method ID
+ * @returns {Array} Array of tasks
+ */
+export const awardMethodTasks = (awardMethodId?: string): Array<string> => {
+  if (awardMethodId === EXPORT_CONTRACT_AWARD_METHOD.OTHER.DB_ID) {
+    return [AWARD_METHOD, OTHER_AWARD_METHOD];
+  }
+
+  return [AWARD_METHOD];
+};
+
+/**
  * Required fields for the insurance - export contract section
  * * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * @param {Boolean} finalDestinationKnown: "Final destination known"
@@ -111,6 +126,7 @@ export const agentTasks = ({ isUsingAgent, agentIsCharging, agentChargeMethod }:
  * @param {Boolean} isUsingAgent: "Is using an agent to help win the export contract" flag
  * @param {Boolean} agentIsCharging: "Is the agent charging for their support in the export contract?" flag
  * @param {Boolean} agentChargeMethod: Agent charge method
+ * @param {String} awardMethodId: Export contract award method ID
  * @returns {Array} Required field IDs
  */
 const requiredFields = ({
@@ -120,11 +136,13 @@ const requiredFields = ({
   isUsingAgent,
   agentIsCharging,
   agentChargeMethod,
+  awardMethodId,
 }: RequiredFields): Array<string> => [
   PAYMENT_TERMS_DESCRIPTION,
   ...getAboutGoodsOrServicesTasks(finalDestinationKnown),
   ...privateCoverTasks({ totalContractValueOverThreshold, attemptedPrivateMarketCover }),
   ...agentTasks({ isUsingAgent, agentIsCharging, agentChargeMethod }),
+  ...awardMethodTasks(awardMethodId),
 ];
 
 export default requiredFields;

@@ -13,6 +13,11 @@ const ROOT = {
     "We may also ask you if you've tried to get credit insurance through the private market. This is because we're not in competition with the private insurance market but are here to help when they cannot.",
 };
 
+const HOW_WAS_THE_CONTRACT_AWARDED = {
+  ...SHARED,
+  PAGE_TITLE: 'How was the contract awarded?',
+};
+
 const ABOUT_GOODS_OR_SERVICES = {
   ...SHARED,
   PAGE_TITLE: 'About the goods or services',
@@ -68,6 +73,7 @@ const CHECK_YOUR_ANSWERS = {
 
 export default {
   ROOT,
+  HOW_WAS_THE_CONTRACT_AWARDED,
   ABOUT_GOODS_OR_SERVICES,
   HOW_WILL_YOU_GET_PAID,
   PRIVATE_MARKET,

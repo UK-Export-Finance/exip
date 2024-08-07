@@ -20,6 +20,8 @@ const {
 
 const now = new Date();
 
+export const invalidId = 'invalid-id';
+
 export const mockAccount = {
   firstName: 'first',
   lastName: 'last',
@@ -162,7 +164,6 @@ export const mockApplicationDeclaration = {
   hasAntiBriberyCodeOfConduct: true,
   willExportWithAntiBriberyCodeOfConduct: true,
   agreeToConfirmationAndAcknowledgements: true,
-  agreeHowDataWillBeUsed: true,
 };
 
 export const mockInsuranceFeedbackEmail = {

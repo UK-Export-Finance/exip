@@ -11,7 +11,7 @@ import { updateSubmittedData } from '../../../../helpers/update-submitted-data/i
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
 
-const { CANNOT_APPLY_MULTIPLE_RISKS, CHECK_YOUR_ANSWERS } = INSURANCE_ROUTES.ELIGIBILITY;
+const { CANNOT_APPLY_MULTIPLE_RISKS, CHECK_YOUR_ANSWERS, PARTY_TO_CONSORTIUM, END_BUYER_CHANGE } = INSURANCE_ROUTES.ELIGIBILITY;
 
 const {
   SHARED_PAGES,
@@ -136,10 +136,21 @@ describe('controllers/insurance/eligibility/end-buyer', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+      it(`should redirect to ${PARTY_TO_CONSORTIUM}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(CHECK_YOUR_ANSWERS);
+        expect(res.redirect).toHaveBeenCalledWith(PARTY_TO_CONSORTIUM);
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.originalUrl = END_BUYER_CHANGE;
+
+          await post(req, res);
+
+          const expected = CHECK_YOUR_ANSWERS;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
   });

@@ -121,12 +121,20 @@ export interface ApplicationCompanySicCode {
 }
 
 export interface ApplicationDeclaration extends Relationship {
-  agreeToConfidentiality?: boolean;
   agreeToAntiBribery?: boolean;
+  agreeToConfidentiality?: boolean;
+  agreeToConfirmationAndAcknowledgements?: boolean;
   hasAntiBriberyCodeOfConduct?: boolean | null;
   willExportWithAntiBriberyCodeOfConduct?: boolean;
-  agreeToConfirmationAndAcknowledgements?: boolean;
-  agreeHowDataWillBeUsed?: boolean;
+}
+
+export interface ApplicationDeclarationVersions {
+  ANTI_BRIBERY: string;
+  ANTI_BRIBERY_CODE_OF_CONDUCT: string;
+  ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: string;
+  CONFIDENTIALITY: string;
+  CONFIRMATION_AND_ACKNOWLEDGEMENTS: string;
+  HOW_YOUR_DATA_WILL_BE_USED?: string;
 }
 
 export interface ApplicationLossPayeeFinancialInternationalVector extends Relationship {
@@ -186,6 +194,8 @@ export interface ApplicationEligibility extends Relationship {
   totalContractValue: TotalContractValue;
   coverPeriodId: number;
   coverPeriod: CoverPeriod;
+  isPartyToConsortium: boolean;
+  isMemberOfAGroup: boolean;
 }
 
 export interface ApplicationExportContractAgentServiceCharge extends Relationship {
@@ -221,6 +231,7 @@ export interface ApplicationPrivateMarket extends Relationship {
 
 export interface ApplicationExportContract extends Relationship {
   agent: ApplicationExportContractAgent;
+  awardMethodId: string;
   id: string;
   finalDestinationKnown?: boolean;
   finalDestinationCountryCode?: string;

@@ -24,7 +24,9 @@ context('Insurance - Export contract - About goods or services page - Save and g
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
+      // go to the page we want to test.
       cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitHowWasTheContractAwardedForm({});
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
 
@@ -51,8 +53,8 @@ context('Insurance - Export contract - About goods or services page - Save and g
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the `export contract` task status as `not started`', () => {
-      cy.checkTaskExportContractStatusIsNotStartedYet();
+    it('should retain the `export contract` task status as `in progress`', () => {
+      cy.checkTaskExportContractStatusIsInProgress();
     });
   });
 
@@ -69,7 +71,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should update the `export contract` task status to `in progress`', () => {
+    it('should retain the `export contract` task status as `in progress`', () => {
       cy.checkTaskExportContractStatusIsInProgress();
     });
 
@@ -82,6 +84,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
 
       // go back to the page via the task list
       cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitHowWasTheContractAwardedForm({});
 
       cy.checkTextareaValue({
         fieldId: FIELD_ID,
@@ -109,12 +112,13 @@ context('Insurance - Export contract - About goods or services page - Save and g
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should update the `export contract` task status to `not started`', () => {
-      cy.checkTaskExportContractStatusIsNotStartedYet();
+    it('should retain the `export contract` task status as `in progress`', () => {
+      cy.checkTaskExportContractStatusIsInProgress();
     });
 
     it(`should have no value in '${FIELD_ID}' when going back to the page`, () => {
       cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitHowWasTheContractAwardedForm({});
 
       cy.checkTextareaValue({
         fieldId: FIELD_ID,

@@ -27,6 +27,8 @@ export const mockApplicationEligibility = {
   },
   totalContractValueId: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
   validExporterLocation: true,
+  isPartyToConsortium: false,
+  isMemberOfAGroup: false,
 };
 
 const mockGenericPolicy = {
@@ -172,7 +174,7 @@ export const mockApplicationDeclaration = {
   hasAntiBriberyCodeOfConduct: true,
   willExportWithAntiBriberyCodeOfConduct: true,
   agreeToConfirmationAndAcknowledgements: true,
-  agreeHowDataWillBeUsed: true,
+  agreeHowDataWillBeUsed: null,
 };
 
 export const mockLossPayeeFinancialDetailsUkVector = {

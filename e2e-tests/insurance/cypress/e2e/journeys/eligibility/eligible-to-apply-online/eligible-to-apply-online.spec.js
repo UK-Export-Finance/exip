@@ -2,7 +2,6 @@ import { body } from '../../../../../../pages/shared';
 import { insurance } from '../../../../../../pages';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE;
 
@@ -22,18 +21,8 @@ context(
     let url;
 
     before(() => {
-      cy.navigateToCheckIfEligibleUrl();
-      cy.completeCheckIfEligibleForm();
+      cy.completeAndSubmitAllInsuranceEligibilityAnswers({});
 
-      cy.completeExporterLocationForm();
-      cy.completeCompaniesHouseNumberForm();
-      cy.completeAndSubmitCompaniesHouseSearchForm({});
-      cy.completeEligibilityCompanyDetailsForm();
-      completeAndSubmitBuyerCountryForm({});
-      cy.completeAndSubmitTotalValueInsuredForm({});
-      cy.completeCoverPeriodForm({});
-      cy.completeUkGoodsAndServicesForm();
-      cy.completeEndBuyerForm();
       cy.submitCheckYourAnswers();
 
       url = `${baseUrl}${ELIGIBLE_TO_APPLY_ONLINE}`;

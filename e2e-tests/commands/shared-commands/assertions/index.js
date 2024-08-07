@@ -78,6 +78,7 @@ Cypress.Commands.add('assertEmptyLossPayeeFinancialUkFieldValues', require('./as
 Cypress.Commands.add('assertLossPayeeFinancialInternationalFieldValues', require('./assert-loss-payee-financial-international-field-values'));
 Cypress.Commands.add('assertEmptyLossPayeeFinancialInternationalFieldValues', require('./assert-empty-loss-payee-financial-international-field-values'));
 
+Cypress.Commands.add('assertHowWasTheContractAwardedFieldValues', require('./assert-how-was-the-contract-awarded-field-values'));
 Cypress.Commands.add('assertAgentDetailsFieldValues', require('./assert-agent-details-field-values'));
 Cypress.Commands.add('assertEmptyAgentDetailsFieldValues', require('./assert-empty-agent-details-field-values'));
 

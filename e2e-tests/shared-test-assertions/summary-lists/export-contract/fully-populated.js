@@ -21,7 +21,7 @@ const {
  * @param {Boolean} agentChargeMethodPercentage: Agent charge method is "percentage"
  */
 const assertFullyPopulatedExportContractSummaryListRows = ({ agentChargeMethodFixedSum, agentChargeMethodPercentage, agentChargeFixedSumAmount }) => {
-  assertGenericExportContractSummaryListRows();
+  assertGenericExportContractSummaryListRows({});
 
   it(`should render a ${DESCRIPTION} summary list row`, () => {
     checkSummaryList[DESCRIPTION]();

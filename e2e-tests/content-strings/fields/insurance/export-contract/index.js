@@ -1,10 +1,13 @@
-import { FIELD_VALUES, MAXIMUM_CHARACTERS } from '../../../../constants';
+import { EXPORT_CONTRACT_AWARD_METHOD, FIELD_VALUES, MAXIMUM_CHARACTERS } from '../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../constants/field-ids/insurance';
 import { FORM_TITLES } from '../../../form-titles';
+
+const { OPEN_TENDER, NEGOTIATED_CONTRACT, DIRECT_AWARD, COMPETITIVE_BIDDING, OTHER } = EXPORT_CONTRACT_AWARD_METHOD;
 
 const {
   CURRENCY: { CURRENCY_CODE },
   EXPORT_CONTRACT: {
+    HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD, OTHER_AWARD_METHOD },
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
     HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
     PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
@@ -18,6 +21,45 @@ const {
 const { EXPORT_CONTRACT: EXPORT_CONTRACT_FORM_TITLES } = FORM_TITLES;
 
 export const EXPORT_CONTRACT_FIELDS = {
+  HOW_WAS_THE_CONTRACT_AWARDED: {
+    [AWARD_METHOD]: {
+      LEGEND: 'How was the contract awarded?',
+      OPTIONS: {
+        OPEN_TENDER: {
+          ID: OPEN_TENDER.DB_ID,
+          VALUE: OPEN_TENDER.DB_ID,
+          TEXT: OPEN_TENDER.VALUE,
+        },
+        NEGOTIATED_CONTRACT: {
+          ID: NEGOTIATED_CONTRACT.DB_ID,
+          VALUE: NEGOTIATED_CONTRACT.DB_ID,
+          TEXT: NEGOTIATED_CONTRACT.VALUE,
+        },
+        DIRECT_AWARD: {
+          ID: DIRECT_AWARD.DB_ID,
+          VALUE: DIRECT_AWARD.DB_ID,
+          TEXT: DIRECT_AWARD.VALUE,
+        },
+        COMPETITIVE_BIDDING: {
+          ID: COMPETITIVE_BIDDING.DB_ID,
+          VALUE: COMPETITIVE_BIDDING.DB_ID,
+          TEXT: COMPETITIVE_BIDDING.VALUE,
+        },
+        OTHER: {
+          ID: OTHER.DB_ID,
+          VALUE: OTHER.DB_ID,
+          TEXT: OTHER.VALUE,
+        },
+      },
+      SUMMARY: {
+        TITLE: 'How was the contract awarded',
+        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.ABOUT_THE_EXPORT,
+      },
+    },
+    [OTHER_AWARD_METHOD]: {
+      MAXIMUM: MAXIMUM_CHARACTERS.EXPORT_CONTRACT.OTHER_AWARD_METHOD,
+    },
+  },
   ABOUT_GOODS_OR_SERVICES: {
     [DESCRIPTION]: {
       LABEL: "Describe the goods or services you're exporting and explain how they'll be used by the buyer",

@@ -4,7 +4,7 @@ import corePageVariables from '../../../../helpers/page-variables/core/insurance
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../types';
 
-export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.LONG_TERM_COVER;
+export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.PDF_EXIT;
 
 /**
  * get

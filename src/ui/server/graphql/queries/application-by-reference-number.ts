@@ -32,9 +32,11 @@ const applicationByReferenceNumberQuery = gql`
             value
             valueId
           }
+          hasCompaniesHouseNumber
           hasMinimumUkGoodsOrServices
           hasEndBuyer
-          hasCompaniesHouseNumber
+          isMemberOfAGroup
+          isPartyToConsortium
           otherPartiesInvolved
           paidByLetterOfCredit
           totalContractValue {
@@ -93,6 +95,11 @@ const applicationByReferenceNumberQuery = gql`
         }
         exportContract {
           id
+          awardMethod {
+            id
+            value
+          }
+          otherAwardMethod
           goodsOrServicesDescription
           finalDestinationKnown
           finalDestinationCountryCode
@@ -229,7 +236,6 @@ const applicationByReferenceNumberQuery = gql`
           hasAntiBriberyCodeOfConduct
           willExportWithAntiBriberyCodeOfConduct
           agreeToConfirmationAndAcknowledgements
-          agreeHowDataWillBeUsed
         }
       }
     }

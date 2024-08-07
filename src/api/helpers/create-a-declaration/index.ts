@@ -1,3 +1,4 @@
+import createADeclarationVersion from '../create-a-declaration-version';
 import { Context } from '../../types';
 
 /**
@@ -8,7 +9,7 @@ import { Context } from '../../types';
  * @returns {Promise<Object>} Created declaration
  */
 const createADeclaration = async (context: Context, applicationId: string) => {
-  console.info('Creating a declaration for %s', applicationId);
+  console.info('Creating a application declaration for %s', applicationId);
 
   try {
     const declaration = await context.db.Declaration.createOne({
@@ -19,11 +20,16 @@ const createADeclaration = async (context: Context, applicationId: string) => {
       },
     });
 
-    return declaration;
-  } catch (err) {
-    console.error('Error creating a declaration %O', err);
+    const declarationVersion = await createADeclarationVersion(context, declaration.id);
 
-    throw new Error(`Creating a declaration ${err}`);
+    return {
+      ...declaration,
+      declarationVersion,
+    };
+  } catch (err) {
+    console.error('Error creating an application declaration %O', err);
+
+    throw new Error(`Creating an application declaration ${err}`);
   }
 };
 

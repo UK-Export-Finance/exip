@@ -24,8 +24,8 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(ROUTES.INSURANCE.PROBLEM_WITH_SERVICE);
   }
 
-  const { broker, buyer, company, declaration, exportContract } = application;
-  const { nominatedLossPayee, policy, referenceNumber, totalContractValueOverThreshold } = application;
+  const { broker, buyer, company, declaration, exportContract, migratedV1toV2, nominatedLossPayee, policy, referenceNumber, totalContractValueOverThreshold } =
+    application;
 
   const { policyType, jointlyInsuredParty } = policy;
 
@@ -53,6 +53,7 @@ export const get = (req: Request, res: Response) => {
   const { buyerTradingHistory, relationship } = buyer;
   const { exporterIsConnectedWithBuyer, exporterHasPreviousCreditInsuranceWithBuyer } = relationship;
   const { outstandingPayments, exporterHasTradedWithBuyer } = buyerTradingHistory;
+  const { awardMethod } = exportContract;
 
   const flatApplicationData = flattenApplicationData(application);
 
@@ -76,6 +77,8 @@ export const get = (req: Request, res: Response) => {
     isUsingAgent,
     agentIsCharging,
     agentChargeMethod,
+    awardMethod?.id,
+    migratedV1toV2,
   );
 
   const taskListData = generateTaskList(taskListStructure, flatApplicationData);

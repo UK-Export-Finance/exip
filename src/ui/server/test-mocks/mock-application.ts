@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import { add, addMonths } from 'date-fns';
-import { APPLICATION } from '../constants';
+import { APPLICATION, EXPORT_CONTRACT_AWARD_METHOD } from '../constants';
 import mockEligibility from './mock-eligibility';
 import mockAccount from './mock-account';
 import mockCountries from './mock-countries';
@@ -90,6 +90,11 @@ export const mockExportContractAgentIsNotUsing = {
 
 export const mockExportContract = {
   id: 'clldfm6pt000noqa6fs6cj5xn',
+  awardMethod: {
+    ...EXPORT_CONTRACT_AWARD_METHOD.COMPETITIVE_BIDDING,
+    id: 'clldfm6pt000noqa6fs6cj5xo',
+  },
+  otherAwardMethod: 'Mock other award method',
   goodsOrServicesDescription: 'Mock description',
   finalDestinationKnown: false,
   finalDestinationCountryCode: mockCountries[0].isoCode,
@@ -177,7 +182,7 @@ export const mockApplicationDeclaration = {
   hasAntiBriberyCodeOfConduct: true,
   willExportWithAntiBriberyCodeOfConduct: true,
   agreeToConfirmationAndAcknowledgements: true,
-  agreeHowDataWillBeUsed: true,
+  agreeHowDataWillBeUsed: null,
 };
 
 const mockApplication = {

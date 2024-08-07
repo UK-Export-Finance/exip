@@ -69,12 +69,12 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
       // enter an invalid date
       const now = new Date();
       const day = now.getDate();
-      const month = now.getMonth() + 1;
 
       const yesterday = new Date(now.setDate(day - 1));
+      const yesterdayMonth = yesterday.getMonth() + 1;
 
       cy.keyboardInput(field.dayInput(), yesterday.getDate());
-      cy.keyboardInput(field.monthInput(), month);
+      cy.keyboardInput(field.monthInput(), yesterdayMonth);
       cy.keyboardInput(field.yearInput(), yesterday.getFullYear());
 
       cy.clickSaveAndBackButton();

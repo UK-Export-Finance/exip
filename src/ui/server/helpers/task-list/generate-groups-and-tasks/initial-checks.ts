@@ -7,13 +7,14 @@ const { INITIAL_CHECKS } = TASKS.LIST;
 
 /**
  * createInitialChecksTasks
+ * @param {Boolean} migratedV1toV2: Application has been migrated from V1 to V2
  * @returns {Array} Initial checks tasks
  */
-const createInitialChecksTasks = (): Array<TaskListDataTask> => [
+const createInitialChecksTasks = (migratedV1toV2?: boolean): Array<TaskListDataTask> => [
   {
     title: INITIAL_CHECKS.TASKS.ELIGIBILITY,
     id: TASK_IDS.INITIAL_CHECKS.ELIGIBILITY,
-    fields: requiredFields(),
+    fields: requiredFields(migratedV1toV2),
     dependencies: [],
   } as TaskListDataTask,
 ];

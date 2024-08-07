@@ -23,6 +23,7 @@ context('Insurance - Export contract - Declined by private market - Save and go 
 
       // go to the page we want to test.
       cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitHowWasTheContractAwardedForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
       cy.completeAndSubmitHowYouWillGetPaidForm({});
       cy.completeAndSubmitPrivateMarketForm({ attemptedPrivateMarketCover: true });
@@ -75,8 +76,8 @@ context('Insurance - Export contract - Declined by private market - Save and go 
 
         cy.startInsuranceExportContractSection({});
 
-        // go through 3 export contract forms.
-        cy.clickSubmitButtonMultipleTimes({ count: 3 });
+        // go through 4 export contract forms.
+        cy.clickSubmitButtonMultipleTimes({ count: 4 });
 
         cy.checkTextareaValue({
           fieldId: FIELD_ID,

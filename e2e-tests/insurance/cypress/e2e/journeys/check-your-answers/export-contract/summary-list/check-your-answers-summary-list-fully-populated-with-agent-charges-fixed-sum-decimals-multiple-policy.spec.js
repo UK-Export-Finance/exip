@@ -14,7 +14,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  'Insurance - Change your answers - Export contract - Summary list - total contract value threshold, private insurance attempt, using an agent, agent is charging - fixed sum method with decimal places - multiple policy',
+  'Insurance - Check your answers - Export contract - Summary list - total contract value threshold, private insurance attempt, using an agent, agent is charging - fixed sum method with decimal places - multiple policy',
   () => {
     let referenceNumber;
     let url;

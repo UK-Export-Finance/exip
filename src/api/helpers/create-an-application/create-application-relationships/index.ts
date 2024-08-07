@@ -71,17 +71,17 @@ const createApplicationRelationships = async ({
     const referenceNumber = await createAReferenceNumber(context, applicationId);
 
     const createdRelationships = await Promise.all([
-      await createABroker(context, applicationId),
-      await createABusiness(context, applicationId),
-      await createABuyer(context, country.id, applicationId),
-      await createADeclaration(context, applicationId),
-      await createAnEligibility(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
-      await createAnExportContract(context, applicationId),
-      await createAPolicy(context, applicationId),
-      await createAPolicyContact(context, applicationId),
-      await createANominatedLossPayee(context, applicationId),
-      await createACompany(context, applicationId, companyData),
-      await createASectionReview(context, applicationId, sectionReviewData),
+      createABroker(context, applicationId),
+      createABusiness(context, applicationId),
+      createABuyer(context, country.id, applicationId),
+      createADeclaration(context, applicationId),
+      createAnEligibility(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
+      createAnExportContract(context, applicationId),
+      createAPolicy(context, applicationId),
+      createAPolicyContact(context, applicationId),
+      createANominatedLossPayee(context, applicationId),
+      createACompany(context, applicationId, companyData),
+      createASectionReview(context, applicationId, sectionReviewData),
     ]);
 
     const [broker, business, buyer, declaration, eligibility, exportContract, policy, policyContact, nominatedLossPayee, company, sectionReview] =
