@@ -114,9 +114,9 @@ describe('helpers/create-an-application/create-initial-application', () => {
       const updatedAtMonth = new Date(result.updatedAt).getMonth();
       const updatedAtYear = new Date(result.updatedAt).getFullYear();
 
-      expect(createdAtDay).toEqual(new Date().getDate());
-      expect(createdAtMonth).toEqual(new Date().getMonth());
-      expect(createdAtYear).toEqual(new Date().getFullYear());
+      expect(updatedAtDay).toEqual(new Date().getDate());
+      expect(updatedAtMonth).toEqual(new Date().getMonth());
+      expect(updatedAtYear).toEqual(new Date().getFullYear());
     });
   });
 
