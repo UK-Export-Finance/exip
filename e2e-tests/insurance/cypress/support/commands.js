@@ -7,6 +7,7 @@
 // ***********************************************
 
 import '@cypress-audit/lighthouse/commands';
+import '@cypress/code-coverage/support';
 import './account';
 import './application';
 import './assertions';

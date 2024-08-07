@@ -7,5 +7,6 @@
 // ***********************************************
 
 import '@cypress-audit/lighthouse/commands';
+import '@cypress/code-coverage/support';
 
 Cypress.Commands.add('submitQuoteAnswersHappyPathMultiplePolicy', require('../../../commands/quote/submit-answers-happy-path-multiple-policy'));
