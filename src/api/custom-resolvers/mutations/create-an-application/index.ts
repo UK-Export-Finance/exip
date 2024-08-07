@@ -15,11 +15,11 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
   console.info('Creating application for user ', variables.accountId);
 
   try {
-    const updatedApplication = await createAnApplicationHelper(variables, context);
+    const application = await createAnApplicationHelper(variables, context);
 
-    if (updatedApplication) {
+    if (application) {
       return {
-        ...updatedApplication,
+        ...application,
         success: true,
       };
     }

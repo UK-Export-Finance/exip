@@ -21,7 +21,7 @@ const createAReferenceNumber = async (context: Context, applicationId: string) =
       },
     });
 
-    return created.referenceNumber;
+    return created.id;
   } catch (err) {
     console.error('Error creating a reference number %O', err);
 

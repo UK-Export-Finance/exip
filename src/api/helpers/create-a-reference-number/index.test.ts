@@ -23,10 +23,8 @@ describe('helpers/create-a-reference-number', () => {
   test('it should return a reference number and with a respective ID', async () => {
     const result = await createAReferenceNumber(context, application.id);
 
-    expect(typeof result.referenceNumber).toEqual('number');
-    expect(String(result.referenceNumber).length).toEqual(5);
-
-    expect(result.applicationId).toBeNull();
+    expect(typeof result).toEqual('number');
+    expect(String(result).length).toEqual(5);
   });
 
   describe('when an invalid application ID is passed', () => {

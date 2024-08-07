@@ -4270,7 +4270,7 @@ var createAReferenceNumber = async (context, applicationId) => {
         }
       }
     });
-    return created.referenceNumber;
+    return created.id;
   } catch (err) {
     console.error("Error creating a reference number %O", err);
     throw new Error(`Creating a reference number ${err}`);
@@ -5086,10 +5086,10 @@ var create_an_application_default = createAnApplication;
 var createAnApplication2 = async (root, variables, context) => {
   console.info("Creating application for user ", variables.accountId);
   try {
-    const updatedApplication = await create_an_application_default(variables, context);
-    if (updatedApplication) {
+    const application2 = await create_an_application_default(variables, context);
+    if (application2) {
       return {
-        ...updatedApplication,
+        ...application2,
         success: true
       };
     }
