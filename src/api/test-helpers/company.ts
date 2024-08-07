@@ -70,15 +70,9 @@ const deleteCompanyAddress = async (context: Context, companyAddressId: string) 
 };
 
 /**
-<<<<<<< Updated upstream
  * delete company SIC code test helper
  * deletes a company SIC code by companyId.
  * @param {Context} context: KeystoneJS context API
-=======
- * delete company sic code test helper
- * deletes a company sic code by companyId.
- * @param {Context} context: KeystoneJS context API
->>>>>>> Stashed changes
  * @returns {Array} Delete response
  */
 const deleteCompanySicCode = async (context: Context, companySicId: string) => {
@@ -98,14 +92,9 @@ const deleteCompanySicCode = async (context: Context, companySicId: string) => {
 
 /**
  * create company address test helper
-<<<<<<< Updated upstream
  * Creates a empty company address.
  * @param {Context} context: KeystoneJS context API
  * @param {ApplicationCompanyAddress} data
-=======
- * Creates a empty company address.
- * @param {Context} context: KeystoneJS context API
->>>>>>> Stashed changes
  * @returns {Object} Created company address id
  */
 const createCompanyAddress = async (context: Context, data = {}) => {
@@ -229,15 +218,9 @@ const getCompanyAddress = async (context: Context, companyAddressId: string) => 
 };
 
 /**
-<<<<<<< Updated upstream
  * get company SIC code test helper
  * Get a company SIC codes by companyId
  * @param {Context} context: KeystoneJS context API
-=======
- * get company sic code test helper
- * Get a company sic code address by companyId
- * @param {Context} context: KeystoneJS context API
->>>>>>> Stashed changes
  * @param {String} companyId
  * @returns {Array} company SIC codes
  */
