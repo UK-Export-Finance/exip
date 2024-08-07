@@ -8,7 +8,7 @@ import { Context, ApplicationJointlyInsuredParty } from '../../types';
  * @returns {Promise<Object>} Created policy
  */
 const createAJointlyInsuredParty = async (context: Context, policyId: string): Promise<ApplicationJointlyInsuredParty> => {
-  console.info('Creating a jointly insured party for ', policyId);
+  console.info('Creating a jointly insured party for %s', policyId);
 
   try {
     const jointlyInsuredParty = await context.db.JointlyInsuredParty.createOne({

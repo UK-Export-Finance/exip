@@ -8,7 +8,7 @@ import { Context } from '../../types';
  * @returns {Promise<Object>} Created broker
  */
 const createABroker = async (context: Context, applicationId: string) => {
-  console.info('Creating a broker for ', applicationId);
+  console.info('Creating a broker for %s', applicationId);
 
   try {
     const broker = await context.db.Broker.createOne({

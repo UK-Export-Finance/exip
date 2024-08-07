@@ -22,7 +22,7 @@ const createAnEligibility = async (
   totalContractValueId: string,
   eligibilityData?: object,
 ) => {
-  console.info('Creating an eligibility for ', applicationId);
+  console.info('Creating an eligibility for %s', applicationId);
 
   try {
     const eligibility = await context.db.Eligibility.createOne({

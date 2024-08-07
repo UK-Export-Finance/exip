@@ -9,7 +9,7 @@ import { Context } from '../../types';
  * @returns {Promise<Object>} Created buyer relationship
  */
 const createABuyerRelationship = async (context: Context, buyerId: string, applicationId: string) => {
-  console.info('Creating a buyer relationship for ', buyerId);
+  console.info('Creating a buyer relationship for %s', buyerId);
 
   try {
     const buyerRelationship = await context.db.BuyerRelationship.createOne({

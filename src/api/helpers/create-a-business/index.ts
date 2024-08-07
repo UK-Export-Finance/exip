@@ -8,7 +8,7 @@ import { Context } from '../../types';
  * @returns {Promise<Object>} Created business
  */
 const createABusiness = async (context: Context, applicationId: string) => {
-  console.info('Creating a business for ', applicationId);
+  console.info('Creating a business for %s', applicationId);
 
   try {
     const business = await context.db.Business.createOne({

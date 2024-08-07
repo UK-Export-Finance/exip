@@ -10,7 +10,7 @@ import { Context, CreatePolicyResponse } from '../../types';
  * @returns {Promise<Object>} Created policy
  */
 const createAPolicy = async (context: Context, applicationId: string): Promise<CreatePolicyResponse> => {
-  console.info('Creating a policy for ', applicationId);
+  console.info('Creating a policy for %s', applicationId);
 
   try {
     const policy = await context.db.Policy.createOne({

@@ -10,7 +10,7 @@ import { APPLICATION } from '../../constants';
  * @returns {Promise<Object>} Created buyer trading history
  */
 const createABuyerTradingHistory = async (context: Context, buyerId: string, applicationId: string) => {
-  console.info('Creating a buyer trading history for ', buyerId);
+  console.info('Creating a buyer trading history for %s', buyerId);
 
   try {
     const buyerTradingHistory = await context.db.BuyerTradingHistory.createOne({

@@ -8,7 +8,7 @@ import { Context } from '../../types';
  * @returns {Promise<Object>} Created company different trading address
  */
 const createACompanyDifferentTradingAddress = async (context: Context, companyId: string) => {
-  console.info('Creating a different trading address for ', companyId);
+  console.info('Creating a different trading address for %s', companyId);
 
   try {
     const differentTradingAddress = await context.db.CompanyDifferentTradingAddress.createOne({

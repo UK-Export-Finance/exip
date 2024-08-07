@@ -15,7 +15,7 @@ import { Context } from '../../types';
  * @returns {Promise<Object>} Created buyer
  */
 const createABuyer = async (context: Context, countryId: string, applicationId: string) => {
-  console.info('Creating a buyer for ', applicationId);
+  console.info('Creating a buyer for %s', applicationId);
 
   try {
     const buyer = await context.db.Buyer.createOne({

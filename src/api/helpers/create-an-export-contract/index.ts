@@ -11,7 +11,7 @@ import { Context, CreateExportContractResponse } from '../../types';
  * @returns {Promise<Object>} Created export contract
  */
 const createAnExportContract = async (context: Context, applicationId: string): Promise<CreateExportContractResponse> => {
-  console.info('Creating an export contract for ', applicationId);
+  console.info('Creating an export contract for %s', applicationId);
 
   try {
     const exportContract = await context.db.ExportContract.createOne({

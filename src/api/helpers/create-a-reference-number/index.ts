@@ -8,7 +8,7 @@ import { Context } from '../../types';
  * @returns {Promise<Object>} Created reference number
  */
 const createAReferenceNumber = async (context: Context, applicationId: string) => {
-  console.info('Creating a reference number for ', applicationId);
+  console.info('Creating a reference number for %s', applicationId);
 
   try {
     const created = await context.db.ReferenceNumber.createOne({

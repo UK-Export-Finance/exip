@@ -4198,7 +4198,7 @@ var get_total_contract_value_by_field_default = getTotalContractValueByField;
 
 // helpers/create-a-reference-number/index.ts
 var createAReferenceNumber = async (context, applicationId) => {
-  console.info("Creating a reference number for ", applicationId);
+  console.info("Creating a reference number for %s", applicationId);
   try {
     const created = await context.db.ReferenceNumber.createOne({
       data: { applicationId }
@@ -4216,7 +4216,7 @@ var create_a_reference_number_default = createAReferenceNumber;
 
 // helpers/create-a-broker/index.ts
 var createABroker = async (context, applicationId) => {
-  console.info("Creating a broker for ", applicationId);
+  console.info("Creating a broker for %s", applicationId);
   try {
     const broker = await context.db.Broker.createOne({
       data: {
@@ -4235,7 +4235,7 @@ var create_a_broker_default = createABroker;
 
 // helpers/create-a-business/index.ts
 var createABusiness = async (context, applicationId) => {
-  console.info("Creating a business for ", applicationId);
+  console.info("Creating a business for %s", applicationId);
   try {
     const business = await context.db.Business.createOne({
       data: {
@@ -4254,7 +4254,7 @@ var create_a_business_default = createABusiness;
 
 // helpers/create-a-buyer-trading-history/index.ts
 var createABuyerTradingHistory = async (context, buyerId, applicationId) => {
-  console.info("Creating a buyer trading history for ", buyerId);
+  console.info("Creating a buyer trading history for %s", buyerId);
   try {
     const buyerTradingHistory = await context.db.BuyerTradingHistory.createOne({
       data: {
@@ -4281,7 +4281,7 @@ var create_a_buyer_trading_history_default = createABuyerTradingHistory;
 
 // helpers/create-a-buyer-contact/index.ts
 var createABuyerContact = async (context, buyerId, applicationId) => {
-  console.info("Creating a buyer contact for ", buyerId);
+  console.info("Creating a buyer contact for %s", buyerId);
   try {
     const buyerContact = await context.db.BuyerContact.createOne({
       data: {
@@ -4307,7 +4307,7 @@ var create_a_buyer_contact_default = createABuyerContact;
 
 // helpers/create-a-buyer-relationship/index.ts
 var createABuyerRelationship = async (context, buyerId, applicationId) => {
-  console.info("Creating a buyer relationship for ", buyerId);
+  console.info("Creating a buyer relationship for %s", buyerId);
   try {
     const buyerRelationship = await context.db.BuyerRelationship.createOne({
       data: {
@@ -4333,7 +4333,7 @@ var create_a_buyer_relationship_default = createABuyerRelationship;
 
 // helpers/create-a-buyer/index.ts
 var createABuyer = async (context, countryId, applicationId) => {
-  console.info("Creating a buyer for ", applicationId);
+  console.info("Creating a buyer for %s", applicationId);
   try {
     const buyer = await context.db.Buyer.createOne({
       data: {
@@ -4363,7 +4363,7 @@ var create_a_buyer_default = createABuyer;
 
 // helpers/create-a-declaration/index.ts
 var createADeclaration = async (context, applicationId) => {
-  console.info("Creating a declaration for ", applicationId);
+  console.info("Creating a declaration for %s", applicationId);
   try {
     const declaration = await context.db.Declaration.createOne({
       data: {
@@ -4382,7 +4382,7 @@ var create_a_declaration_default = createADeclaration;
 
 // helpers/create-an-eligibility/index.ts
 var createAnEligibility = async (context, countryId, applicationId, coverPeriodId, totalContractValueId, eligibilityData) => {
-  console.info("Creating an eligibility for ", applicationId);
+  console.info("Creating an eligibility for %s", applicationId);
   try {
     const eligibility = await context.db.Eligibility.createOne({
       data: {
@@ -4411,7 +4411,7 @@ var create_an_eligibility_default = createAnEligibility;
 
 // helpers/create-a-jointly-insured-party/index.ts
 var createAJointlyInsuredParty = async (context, policyId) => {
-  console.info("Creating a jointly insured party for ", policyId);
+  console.info("Creating a jointly insured party for %s", policyId);
   try {
     const jointlyInsuredParty = await context.db.JointlyInsuredParty.createOne({
       data: {
@@ -4430,7 +4430,7 @@ var create_a_jointly_insured_party_default = createAJointlyInsuredParty;
 
 // helpers/create-a-policy/index.ts
 var createAPolicy = async (context, applicationId) => {
-  console.info("Creating a policy for ", applicationId);
+  console.info("Creating a policy for %s", applicationId);
   try {
     const policy = await context.db.Policy.createOne({
       data: {
@@ -4454,7 +4454,7 @@ var create_a_policy_default = createAPolicy;
 
 // helpers/create-a-policy-contact/index.ts
 var createAPolicyContact = async (context, applicationId) => {
-  console.info("Creating a policy contact for ", applicationId);
+  console.info("Creating a policy contact for %s", applicationId);
   try {
     const policyContact = await context.db.PolicyContact.createOne({
       data: {
@@ -4473,7 +4473,7 @@ var create_a_policy_contact_default = createAPolicyContact;
 
 // helpers/create-a-loss-payee-financial-international/index.ts
 var createALossPayeeFinancialInternational = async (context, lossPayeeId) => {
-  console.info("Creating a loss payee financial (international) for ", lossPayeeId);
+  console.info("Creating a loss payee financial (international) for %s", lossPayeeId);
   try {
     const lossPayeeFinancialInternational = await context.db.LossPayeeFinancialInternational.createOne({
       data: {
@@ -4502,7 +4502,7 @@ var create_a_loss_payee_financial_international_default = createALossPayeeFinanc
 
 // helpers/create-a-loss-payee-financial-uk/index.ts
 var createALossPayeeFinancialUk = async (context, lossPayeeId) => {
-  console.info("Creating a loss payee financial (UK) for ", lossPayeeId);
+  console.info("Creating a loss payee financial (UK) for %s", lossPayeeId);
   try {
     const lossPayeeFinancialUk = await context.db.LossPayeeFinancialUk.createOne({
       data: {
@@ -4531,7 +4531,7 @@ var create_a_loss_payee_financial_uk_default = createALossPayeeFinancialUk;
 
 // helpers/create-a-nominated-loss-payee/index.ts
 var createANominatedLossPayee = async (context, applicationId) => {
-  console.info("Creating a nominated loss payee for ", applicationId);
+  console.info("Creating a nominated loss payee for %s", applicationId);
   try {
     const nominatedLossPayee = await context.db.NominatedLossPayee.createOne({
       data: {
@@ -4552,7 +4552,7 @@ var create_a_nominated_loss_payee_default = createANominatedLossPayee;
 
 // helpers/create-a-company-address/index.ts
 var createACompanyAddress = async (context, addressData, companyId) => {
-  console.info("Creating a company address for ", companyId);
+  console.info("Creating a company address for %s", companyId);
   try {
     const companyAddress = await context.db.CompanyAddress.createOne({
       data: {
@@ -4619,7 +4619,7 @@ var create_company_sic_codes_default = createCompanySicCodes;
 
 // helpers/create-a-company-different-trading-address/index.ts
 var createACompanyDifferentTradingAddress = async (context, companyId) => {
-  console.info("Creating a different trading address for ", companyId);
+  console.info("Creating a different trading address for %s", companyId);
   try {
     const differentTradingAddress = await context.db.CompanyDifferentTradingAddress.createOne({
       data: {
@@ -4640,7 +4640,7 @@ var create_a_company_different_trading_address_default = createACompanyDifferent
 
 // helpers/create-a-company/index.ts
 var createACompany = async (context, applicationId, companyData) => {
-  console.info("Creating a company, address and SIC codes for ", applicationId);
+  console.info("Creating a company, address and SIC codes for %s", applicationId);
   try {
     const { registeredOfficeAddress, sicCodes, industrySectorNames: industrySectorNames2, ...companyFields } = companyData;
     const company = await context.db.Company.createOne({
@@ -4669,7 +4669,7 @@ var create_a_company_default = createACompany;
 
 // helpers/create-a-private-market/index.ts
 var createAPrivateMarket = async (context, exportContractId) => {
-  console.info("Creating a private market for ", exportContractId);
+  console.info("Creating a private market for %s", exportContractId);
   try {
     const privateMarket = await context.db.PrivateMarket.createOne({
       data: {
@@ -4688,7 +4688,7 @@ var create_a_private_market_default = createAPrivateMarket;
 
 // helpers/create-an-export-contract-agent-service/index.ts
 var createAnExportContractAgentService = async (context, agentId) => {
-  console.info("Creating an export contract agent service for ", agentId);
+  console.info("Creating an export contract agent service for %s", agentId);
   try {
     const agentService = await context.db.ExportContractAgentService.createOne({
       data: {
@@ -4707,7 +4707,7 @@ var create_an_export_contract_agent_service_default = createAnExportContractAgen
 
 // helpers/create-an-export-contract-agent-service-charge/index.ts
 var createAnExportContractAgentServiceCharge = async (context, agentServiceId) => {
-  console.info("Creating an export contract agent service charge for ", agentServiceId);
+  console.info("Creating an export contract agent service charge for %s", agentServiceId);
   try {
     const agentService = await context.db.ExportContractAgentServiceCharge.createOne({
       data: {
@@ -4726,7 +4726,7 @@ var create_an_export_contract_agent_service_charge_default = createAnExportContr
 
 // helpers/create-an-export-contract-agent/index.ts
 var createAnExportContractAgent = async (context, exportContractId) => {
-  console.info("Creating an export contract agent for ", exportContractId);
+  console.info("Creating an export contract agent for %s", exportContractId);
   try {
     const agent = await context.db.ExportContractAgent.createOne({
       data: {
@@ -4751,7 +4751,7 @@ var create_an_export_contract_agent_default = createAnExportContractAgent;
 
 // helpers/create-an-export-contract/index.ts
 var createAnExportContract = async (context, applicationId) => {
-  console.info("Creating an export contract for ", applicationId);
+  console.info("Creating an export contract for %s", applicationId);
   try {
     const exportContract = await context.db.ExportContract.createOne({
       data: {
@@ -4778,7 +4778,7 @@ var create_an_export_contract_default = createAnExportContract;
 
 // helpers/create-a-section-review/index.ts
 var createASectionReview = async (context, applicationId, sectionReviewData) => {
-  console.info("Creating a section review for ", applicationId);
+  console.info("Creating a section review for %s", applicationId);
   try {
     const sectionReview = await context.db.SectionReview.createOne({
       data: {
@@ -5018,7 +5018,7 @@ var create_an_application_default2 = createAnApplication2;
 // custom-resolvers/mutations/create-an-abandoned-application/index.ts
 var { STATUS: STATUS3 } = APPLICATION;
 var createAnAbandonedApplication = async (root, variables, context) => {
-  console.info("Creating an abandoned application for ", variables.accountId);
+  console.info("Creating an abandoned application for %s", variables.accountId);
   const abandonedApplicationVariables = variables;
   abandonedApplicationVariables.status = STATUS3.ABANDONED;
   try {

@@ -12,7 +12,7 @@ import { Context, ApplicationCompanyCore } from '../../types';
  * @returns {Promise<Object>} Created company, address and SIC codes
  */
 const createACompany = async (context: Context, applicationId: string, companyData: ApplicationCompanyCore) => {
-  console.info('Creating a company, address and SIC codes for ', applicationId);
+  console.info('Creating a company, address and SIC codes for %s', applicationId);
 
   try {
     const { registeredOfficeAddress, sicCodes, industrySectorNames, ...companyFields } = companyData;

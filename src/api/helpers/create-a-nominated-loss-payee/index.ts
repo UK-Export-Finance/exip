@@ -12,7 +12,7 @@ import { ApplicationNominatedLossPayee, Context } from '../../types';
  * @returns {Promise<Object>} Created Nominated loss payee
  */
 const createANominatedLossPayee = async (context: Context, applicationId: string): Promise<ApplicationNominatedLossPayee> => {
-  console.info('Creating a nominated loss payee for ', applicationId);
+  console.info('Creating a nominated loss payee for %s', applicationId);
 
   try {
     const nominatedLossPayee = await context.db.NominatedLossPayee.createOne({

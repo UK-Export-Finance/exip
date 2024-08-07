@@ -8,7 +8,7 @@ import { Context } from '../../types';
  * @returns {Promise<Object>} Created policy contact
  */
 const createAPolicyContact = async (context: Context, applicationId: string) => {
-  console.info('Creating a policy contact for ', applicationId);
+  console.info('Creating a policy contact for %s', applicationId);
 
   try {
     const policyContact = await context.db.PolicyContact.createOne({

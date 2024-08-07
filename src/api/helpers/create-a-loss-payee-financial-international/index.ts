@@ -8,7 +8,7 @@ import { ApplicationLossPayeeFinancialInternational, Context } from '../../types
  * @returns {Promise<Object>} Created loss payee financial international
  */
 const createALossPayeeFinancialInternational = async (context: Context, lossPayeeId: string): Promise<ApplicationLossPayeeFinancialInternational> => {
-  console.info('Creating a loss payee financial (international) for ', lossPayeeId);
+  console.info('Creating a loss payee financial (international) for %s', lossPayeeId);
 
   try {
     const lossPayeeFinancialInternational = await context.db.LossPayeeFinancialInternational.createOne({

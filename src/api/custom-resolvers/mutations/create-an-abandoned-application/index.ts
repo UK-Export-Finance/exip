@@ -17,7 +17,7 @@ const { STATUS } = APPLICATION;
  * @returns {Promise<Object>} Object with success flag and application
  */
 const createAnAbandonedApplication = async (root: any, variables: CreateAnApplicationVariables, context: Context) => {
-  console.info('Creating an abandoned application for ', variables.accountId);
+  console.info('Creating an abandoned application for %s', variables.accountId);
 
   const abandonedApplicationVariables = variables;
 
