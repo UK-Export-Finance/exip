@@ -81,13 +81,13 @@ describe('helpers/create-a-declaration', () => {
 
   describe('when an invalid application ID is passed', () => {
     test('it should throw an error', async () => {
-      await expect(createADeclaration(context, mockInvalidId)).rejects.toThrow('Creating a application declaration');
+      await expect(createADeclaration(context, mockInvalidId)).rejects.toThrow('Creating an application declaration');
     });
   });
 
   describe('when creation is not successful', () => {
     test('it should throw an error', async () => {
-      await expect(createADeclaration({}, application.id)).rejects.toThrow('Creating a application declaration');
+      await expect(createADeclaration({}, application.id)).rejects.toThrow('Creating an application declaration');
       try {
         await createADeclaration(context, mockInvalidId);
       } catch (err) {
