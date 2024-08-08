@@ -3,18 +3,16 @@ import initialApplication from './create-initial-application';
 import applicationRelationships from './create-application-relationships';
 import applicationColumns from './update-application-columns';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
-import accounts from '../../test-helpers/accounts';
 import applications from '../../test-helpers/applications';
-import { mockAccount, mockCountries } from '../../test-mocks';
+import { mockCountries } from '../../test-mocks';
 import mockCompany from '../../test-mocks/mock-company';
 import { APPLICATION } from '../../constants';
-import { Context, Account, Application } from '../../types';
+import { Context, Application } from '../../types';
 
 const { STATUS, SUBMISSION_TYPE } = APPLICATION;
 
 describe('helpers/create-an-application - error handling', () => {
   let context: Context;
-  let account: Account;
   let application: Application;
 
   const mockError = 'Mock error';
@@ -22,8 +20,6 @@ describe('helpers/create-an-application - error handling', () => {
   jest.mock('./create-initial-application');
   jest.mock('./create-application-relationships');
   jest.mock('./update-application-columns');
-
-  const { status, ...mockAccountUpdate } = mockAccount;
 
   const variables = {
     accountId: '',
@@ -53,13 +49,14 @@ describe('helpers/create-an-application - error handling', () => {
 
   const mockApplicationColumnsUpdateResponse = {};
 
-  beforeAll(async () => {
+  beforeAll(() => {
     context = getKeystoneContext();
+  });
 
-    account = await accounts.create({ context, data: mockAccountUpdate });
+  beforeAll(async () => {
     application = await applications.create({ context });
 
-    variables.accountId = account.id;
+    variables.accountId = application.ownerId;
 
     mockApplicationColumnsUpdateResponse.id = application.id;
 
@@ -80,9 +77,9 @@ describe('helpers/create-an-application - error handling', () => {
     });
 
     it('should throw an error', async () => {
-      const expectedMessage = `Creating an application (createAnApplication helper) for user ${account.id} Error: ${mockError}`;
+      const expectedMessage = `Creating an application (createAnApplication helper) for user ${application.ownerId} Error: ${mockError}`;
 
-      await expect(createAnApplicationHelper({}, variables, context)).rejects.toThrow(expectedMessage);
+      await expect(createAnApplicationHelper(variables, context)).rejects.toThrow(expectedMessage);
     });
   });
 
@@ -92,9 +89,9 @@ describe('helpers/create-an-application - error handling', () => {
     });
 
     it('should throw an error', async () => {
-      const expectedMessage = `Creating an application (createAnApplication helper) for user ${account.id} Error: ${mockError}`;
+      const expectedMessage = `Creating an application (createAnApplication helper) for user ${application.ownerId} Error: ${mockError}`;
 
-      await expect(createAnApplicationHelper({}, variables, context)).rejects.toThrow(expectedMessage);
+      await expect(createAnApplicationHelper(variables, context)).rejects.toThrow(expectedMessage);
     });
   });
 
@@ -104,9 +101,9 @@ describe('helpers/create-an-application - error handling', () => {
     });
 
     it('should throw an error', async () => {
-      const expectedMessage = `Creating an application (createAnApplication helper) for user ${account.id} Error: ${mockError}`;
+      const expectedMessage = `Creating an application (createAnApplication helper) for user ${application.ownerId} Error: ${mockError}`;
 
-      await expect(createAnApplicationHelper({}, variables, context)).rejects.toThrow(expectedMessage);
+      await expect(createAnApplicationHelper(variables, context)).rejects.toThrow(expectedMessage);
     });
   });
 

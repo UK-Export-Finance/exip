@@ -7,7 +7,7 @@ import xlsxRow from '../../helpers/xlsx-row';
 import formatDate from '../../../../helpers/format-date';
 import formatCurrency from '../../helpers/format-currency';
 import getPopulatedApplication from '../../../../helpers/get-populated-application';
-import { createFullApplication, getKeystoneContext, mapApplicationIds } from '../../../../test-helpers';
+import { getKeystoneContext, generateSubmittedApplication } from '../../../../test-helpers';
 import { Application, Context } from '../../../../types';
 
 const { FIELDS } = XLSX;
@@ -31,18 +31,14 @@ const {
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-single-contract-policy', () => {
   let populatedApplication: Application;
-  let fullApplication: Application;
-  let application: object;
   let context: Context;
 
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    fullApplication = await createFullApplication(context);
+    const submittedApplication = await generateSubmittedApplication();
 
-    application = mapApplicationIds(fullApplication);
-
-    populatedApplication = await getPopulatedApplication.get({ context, application });
+    populatedApplication = await getPopulatedApplication.get({ context, application: submittedApplication });
   });
 
   it('should return an array of mapped fields', () => {

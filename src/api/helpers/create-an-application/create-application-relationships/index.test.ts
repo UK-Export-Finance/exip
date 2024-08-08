@@ -30,7 +30,7 @@ describe('helpers/create-an-application/create-application-relationships', () =>
     });
   });
 
-  test('it should return relationship IDs', () => {
+  test('it should return relationship IDs and a reference number', () => {
     expect(typeof result.brokerId).toEqual('string');
     expect(typeof result.businessId).toEqual('string');
     expect(typeof result.buyerId).toEqual('string');
@@ -41,7 +41,7 @@ describe('helpers/create-an-application/create-application-relationships', () =>
     expect(typeof result.nominatedLossPayeeId).toEqual('string');
     expect(typeof result.policyId).toEqual('string');
     expect(typeof result.policyContactId).toEqual('string');
-    expect(typeof result.referenceNumberId).toEqual('string');
+    expect(typeof result.referenceNumber).toEqual('number');
     expect(typeof result.sectionReviewId).toEqual('string');
   });
 

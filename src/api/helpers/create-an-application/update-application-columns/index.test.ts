@@ -33,6 +33,8 @@ describe('helpers/create-an-application/update-application-columns', () => {
     result = await applicationColumns.update({
       context,
       applicationId: application.id,
+      brokerId: createdRelationships.brokerId,
+      businessId: createdRelationships.businessId,
       buyerId: createdRelationships.buyerId,
       companyId: createdRelationships.companyId,
       declarationId: createdRelationships.declarationId,
@@ -40,6 +42,7 @@ describe('helpers/create-an-application/update-application-columns', () => {
       exportContractId: createdRelationships.exportContractId,
       nominatedLossPayeeId: createdRelationships.nominatedLossPayeeId,
       policyId: createdRelationships.policyId,
+      policyContactId: createdRelationships.policyContactId,
       sectionReviewId: createdRelationships.sectionReviewId,
     });
   });
@@ -62,12 +65,16 @@ describe('helpers/create-an-application/update-application-columns', () => {
         await applicationColumns.update({
           context: {},
           applicationId: application.id,
+          brokerId: createdRelationships.brokerId,
+          businessId: createdRelationships.businessId,
           buyerId: createdRelationships.buyerId,
           companyId: createdRelationships.companyId,
+          declarationId: createdRelationships.declarationId,
           eligibilityId: createdRelationships.eligibilityId,
           exportContractId: createdRelationships.exportContractId,
           nominatedLossPayeeId: createdRelationships.nominatedLossPayeeId,
           policyId: createdRelationships.policyId,
+          policyContactId: createdRelationships.policyContactId,
           sectionReviewId: createdRelationships.sectionReviewId,
         });
       } catch (err) {

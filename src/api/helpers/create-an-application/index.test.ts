@@ -3,25 +3,21 @@ import initialApplication from './create-initial-application';
 import applicationRelationships from './create-application-relationships';
 import applicationColumns from './update-application-columns';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
-import accounts from '../../test-helpers/accounts';
 import applications from '../../test-helpers/applications';
-import { mockAccount, mockCountries, mockInvalidId } from '../../test-mocks';
+import { mockCountries, mockInvalidId } from '../../test-mocks';
 import mockCompany from '../../test-mocks/mock-company';
 import { APPLICATION } from '../../constants';
-import { Context, Account, Application } from '../../types';
+import { Context, Application } from '../../types';
 
 const { STATUS, SUBMISSION_TYPE } = APPLICATION;
 
 describe('helpers/create-an-application', () => {
   let context: Context;
-  let account: Account;
   let application: Application;
 
   jest.mock('./create-initial-application');
   jest.mock('./create-application-relationships');
   jest.mock('./update-application-columns');
-
-  const { status, ...mockAccountUpdate } = mockAccount;
 
   const variables = {
     accountId: '',
@@ -54,7 +50,7 @@ describe('helpers/create-an-application', () => {
     nominatedLossPayeeId: '8',
     policyId: '9',
     policyContactId: '10',
-    referenceNumberId: '11',
+    referenceNumber: '11',
     sectionReviewId: '12',
   };
 
@@ -63,10 +59,9 @@ describe('helpers/create-an-application', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    account = await accounts.create({ context, data: mockAccountUpdate });
     application = await applications.create({ context });
 
-    variables.accountId = account.id;
+    variables.accountId = application.ownerId;
 
     mockApplicationColumnsUpdateResponse.id = application.id;
 
@@ -125,7 +120,7 @@ describe('helpers/create-an-application', () => {
       nominatedLossPayeeId,
       policyId,
       policyContactId,
-      referenceNumberId,
+      referenceNumber,
       sectionReviewId,
     } = mockApplicationRelationshipsCreateResponse;
 
@@ -142,7 +137,7 @@ describe('helpers/create-an-application', () => {
       nominatedLossPayeeId,
       policyId,
       policyContactId,
-      referenceNumberId,
+      referenceNumber,
       sectionReviewId,
     });
   });

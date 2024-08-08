@@ -26,7 +26,7 @@ const createAnAbandonedApplication = async (root: any, variables: CreateAnApplic
 
   try {
     // creates and returns application
-    const createdApplication = await createAnApplicationHelper(root, abandonedApplicationVariables, context);
+    const createdApplication = await createAnApplicationHelper(abandonedApplicationVariables, context);
 
     if (createdApplication) {
       return {
