@@ -5,8 +5,8 @@ import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
 import { Application, Context } from '../../types';
 
-const assertError = (err) => {
-  const errorString = String(err);
+const assertError = (error) => {
+  const errorString = String(error);
 
   expect(errorString.includes('Creating a business')).toEqual(true);
 };
@@ -43,8 +43,8 @@ describe('helpers/create-a-business', () => {
     test('it should throw an error', async () => {
       try {
         await createABusiness(context, mockInvalidId);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -54,8 +54,8 @@ describe('helpers/create-a-business', () => {
       try {
         // pass empty context object to force an error
         await createABusiness({}, application.id);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

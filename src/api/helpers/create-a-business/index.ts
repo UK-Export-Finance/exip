@@ -20,10 +20,10 @@ const createABusiness = async (context: Context, applicationId: string) => {
     });
 
     return business;
-  } catch (err) {
-    console.error('Error creating a business %O', err);
+  } catch (error) {
+    console.error('Error creating a business %O', error);
 
-    throw new Error(`Creating a business ${err}`);
+    throw new Error(`Creating a business ${error}`);
   }
 };
 
