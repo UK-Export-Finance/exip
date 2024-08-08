@@ -18,7 +18,10 @@ describe('Keystone - Application timestamp updates', () => {
 
     application = (await applications.create({ context })) as Application;
 
-    // create buyer and associate with the application.
+    /**
+     * Create buyer,
+     * associate with the application.
+     */
     const buyer = await buyerHelper.create(context, {
       application: {
         connect: { id: application.id },
