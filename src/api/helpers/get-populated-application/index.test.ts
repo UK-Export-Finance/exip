@@ -45,7 +45,7 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.broker.id).toEqual(application.brokerId);
     expect(result.declaration.id).toEqual(application.declarationId);
     expect(result.eligibility.id).toEqual(application.eligibilityId);
-    expect(result.eligibility.coverPeriod.id).toEqual(application.eligibility.coverPeriodId);
+    expect(result.eligibility.coverPeriod.id).toEqual(fullApplication.eligibility.coverPeriodId);
     expect(result.eligibility.totalContractValue.id).toEqual(application.eligibility.totalContractValueId);
     expect(result.exportContract.id).toEqual(application.exportContractId);
     expect(result.owner.id).toEqual(application.ownerId);
@@ -77,7 +77,7 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.companySicCodes[0].companyId).toEqual(application.company.id);
 
     expect(result.company.id).toEqual(application.company.id);
-    expect(result.company.registeredOfficeAddress).toEqual(application.company.registeredOfficeAddress);
+    expect(result.company.registeredOfficeAddress).toEqual(fullApplication.company.registeredOfficeAddress);
 
     expect(result.company.differentTradingAddress.id).toEqual(application.company.differentTradingAddress.id);
     expect(result.company.differentTradingAddress.fullAddress).toEqual('');

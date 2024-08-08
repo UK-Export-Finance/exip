@@ -6,6 +6,8 @@ import getBrokerById from '../helpers/get-broker-by-id';
 import getBuyerById from '../helpers/get-buyer-by-id';
 import getBuyerTradingHistoryById from '../helpers/get-buyer-trading-history-by-id';
 import getCompanyById from '../helpers/get-company-by-id';
+import getCompanyAddressById from '../helpers/get-company-address-by-id';
+import getCompanyDifferentTradingAddressById from '../helpers/get-company-different-trading-address-by-id';
 import getEligibilityById from '../helpers/get-eligibility-by-id';
 import getExportContractById from '../helpers/get-export-contract-by-id';
 import { mockExportContract, mockBusiness, mockPolicyContact } from '../test-mocks/mock-application';
@@ -57,7 +59,11 @@ export const createFullApplication = async (context: Context, policyType?: strin
 
   const company = await getCompanyById(context, companyId);
 
-  const eligibility = getEligibilityById(context, eligibilityId);
+  const companyAddress = await getCompanyAddressById(context, company.registeredOfficeAddressId);
+
+  const companyDifferentTradingAddress = await getCompanyDifferentTradingAddressById(context, company.differentTradingAddressId);
+
+  const eligibility = await getEligibilityById(context, eligibilityId);
 
   const exportContract = await getExportContractById(context, exportContractId);
 
@@ -138,7 +144,11 @@ export const createFullApplication = async (context: Context, policyType?: strin
       ...buyer,
       buyerTradingHistory,
     },
-    company,
+    company: {
+      ...company,
+      registeredOfficeAddress: companyAddress,
+      differentTradingAddress: companyDifferentTradingAddress,
+    },
     declaration: updatedDeclaration,
     exportContract,
     eligibility,
