@@ -74,9 +74,9 @@ describe('controllers/insurance/your-buyer/save-data/buyer-relationship', () => 
     it('should throw an error', async () => {
       try {
         await save.buyerRelationship(mockApplication, mockBuyerRelationship);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error('Updating buyer relationship');
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

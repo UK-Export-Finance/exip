@@ -141,14 +141,14 @@ describe('custom-resolvers/account-sign-in/account-sign-in-checks', () => {
     test('should throw an error', async () => {
       try {
         await accountSignInChecks(context, account, mockUrlOrigin);
-      } catch (err) {
+      } catch (error) {
         expect(accessCodeEmailSpy).toHaveBeenCalledTimes(1);
 
         const expected = new Error(
           `Validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) ${new Error(mockErrorMessage)}`,
         );
 
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

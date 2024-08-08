@@ -9,8 +9,8 @@ const { CONFIDENTIALITY, ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBER
 
 const invalidId = 'invalid-id';
 
-const assertError = (err) => {
-  const errorString = String(err);
+const assertError = (error) => {
+  const errorString = String(error);
 
   expect(errorString.includes('Creating an application declaration version')).toEqual(true);
 };
@@ -54,8 +54,8 @@ describe('helpers/create-a-declaration-version', () => {
     test('it should throw an error', async () => {
       try {
         await createADeclarationVersion(context, invalidId);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

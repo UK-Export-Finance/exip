@@ -13,9 +13,10 @@ const { ENCRYPTION_METHOD } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
 const generateDecipher = (key: string, iv: string) => {
   try {
     return crypto.createDecipheriv(ENCRYPTION_METHOD, key, iv);
-  } catch (err) {
-    console.error('Error generating decipher %O', err);
-    throw new Error(`Error generating decipher ${err}`);
+  } catch (error) {
+    console.error('Error generating decipher %O', error);
+
+    throw new Error(`Error generating decipher ${error}`);
   }
 };
 export default generateDecipher;

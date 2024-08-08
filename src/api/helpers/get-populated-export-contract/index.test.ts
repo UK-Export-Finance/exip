@@ -101,10 +101,10 @@ describe('helpers/get-populated-export-contract/get-populated-agent', () => {
     it('should throw an error', async () => {
       try {
         await getPopulatedExportContract(context, mockInvalidId);
-      } catch (err) {
+      } catch (error) {
         const expected = `Getting populated exportContract ${mockInvalidId}`;
 
-        expect(String(err).includes(expected)).toEqual(true);
+        expect(String(error).includes(expected)).toEqual(true);
       }
     });
   });
@@ -126,10 +126,10 @@ describe('helpers/get-populated-export-contract/get-populated-agent', () => {
 
       try {
         await getPopulatedExportContract(context, exportContractNoAgent.id);
-      } catch (err) {
+      } catch (error) {
         const expected = `Getting populated exportContract ${exportContractNoAgent.id}`;
 
-        expect(String(err).includes(expected)).toEqual(true);
+        expect(String(error).includes(expected)).toEqual(true);
       }
     });
   });
@@ -151,10 +151,10 @@ describe('helpers/get-populated-export-contract/get-populated-agent', () => {
 
       try {
         await getPopulatedExportContract(context, exportContractNoAgent.id);
-      } catch (err) {
+      } catch (error) {
         const expected = `Getting populated exportContract ${exportContractNoAgent.id}`;
 
-        expect(String(err).includes(expected)).toEqual(true);
+        expect(String(error).includes(expected)).toEqual(true);
       }
     });
   });
@@ -171,10 +171,10 @@ describe('helpers/get-populated-export-contract/get-populated-agent', () => {
 
       try {
         await getPopulatedExportContract(context, exportContractNoAgent.id);
-      } catch (err) {
+      } catch (error) {
         const expected = `Getting populated exportContract ${exportContractNoAgent.id}`;
 
-        expect(String(err).includes(expected)).toEqual(true);
+        expect(String(error).includes(expected)).toEqual(true);
       }
     });
   });

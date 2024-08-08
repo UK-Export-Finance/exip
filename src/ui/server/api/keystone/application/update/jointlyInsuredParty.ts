@@ -33,9 +33,11 @@ const updateJointlyInsuredParty = async (id: string, update: object) => {
     }
 
     console.error('Error with GraphQL updateApplicationJointlyInsuredPartyMutation %O', response);
+
     throw new Error('Updating application jointly insured party');
-  } catch (err) {
-    console.error('Error updating application jointly insured party %O', err);
+  } catch (error) {
+    console.error('Error updating application jointly insured party %O', error);
+
     throw new Error('Updating application jointly insured party');
   }
 };

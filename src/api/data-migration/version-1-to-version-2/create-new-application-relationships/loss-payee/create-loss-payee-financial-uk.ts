@@ -12,7 +12,7 @@ import executeSqlQuery from '../../execute-sql-query';
 const lossPayeeFinancialInternational = async (connection: Connection) => {
   const loggingMessage = 'Creating nominatedLossPayees - financial UK';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const lossPayees = await getAllLossPayees(connection);
@@ -34,10 +34,10 @@ const lossPayeeFinancialInternational = async (connection: Connection) => {
     });
 
     return Promise.all(financialUkPromises);
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 error %s %O', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

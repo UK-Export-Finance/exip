@@ -24,10 +24,10 @@ const getApplicationByReferenceNumber = async (referenceNumber: number, context:
     }
 
     return null;
-  } catch (err) {
-    console.error('Error getting application by reference number %O', err);
+  } catch (error) {
+    console.error('Error getting application by reference number %O', error);
 
-    throw new Error(`Error getting application by reference number ${err}`);
+    throw new Error(`Error getting application by reference number ${error}`);
   }
 };
 

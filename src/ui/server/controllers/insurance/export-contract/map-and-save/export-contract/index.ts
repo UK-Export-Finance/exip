@@ -32,8 +32,8 @@ const exportContract = async (formBody: RequestBody, application: Application, v
     }
 
     return true;
-  } catch (err) {
-    console.error('Error mapping and saving application %O', err);
+  } catch (error) {
+    console.error('Error mapping and saving application %O', error);
 
     return false;
   }

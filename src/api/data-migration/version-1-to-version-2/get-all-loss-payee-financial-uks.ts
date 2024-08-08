@@ -10,7 +10,7 @@ import executeSqlQuery from './execute-sql-query';
 const getAllLossPayeeFinancialUk = async (connection: Connection) => {
   const loggingMessage = 'Getting all loss payee - financial UK entries';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const query = 'SELECT * FROM LossPayeeFinancialUk';
@@ -18,10 +18,10 @@ const getAllLossPayeeFinancialUk = async (connection: Connection) => {
     const [financials] = await executeSqlQuery({ connection, query, loggingMessage });
 
     return financials;
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 error %s %O', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

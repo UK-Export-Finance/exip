@@ -33,9 +33,11 @@ const updateSectionReview = async (id: string, update: object) => {
     }
 
     console.error('Error with GraphQL updateApplicationSectionReviewMutation %O', response);
+
     throw new Error('Updating application section review');
-  } catch (err) {
-    console.error('Error updating application section review %O', err);
+  } catch (error) {
+    console.error('Error updating application section review %O', error);
+
     throw new Error('Updating application section review');
   }
 };

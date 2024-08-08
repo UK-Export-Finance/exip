@@ -15,9 +15,10 @@ const create = async (context: Context, data = {}) => {
     const agentService = (await context.query.ExportContractAgentService.createOne({ data })) as ApplicationExportContractAgentService;
 
     return agentService;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+
+    return error;
   }
 };
 
@@ -37,9 +38,10 @@ const get = async (context: Context, serviceId: string) => {
     });
 
     return agentService;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Getting an exportContractAgentService by ID (test helpers) ${err}`);
+  } catch (error) {
+    console.error(error);
+
+    throw new Error(`Getting an exportContractAgentService by ID (test helpers) ${error}`);
   }
 };
 

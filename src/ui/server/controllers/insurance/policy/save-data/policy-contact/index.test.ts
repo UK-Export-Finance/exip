@@ -73,9 +73,9 @@ describe('controllers/insurance/policy/save-data/policy-contact', () => {
     it('should throw an error', async () => {
       try {
         await save.policyContact(mockApplication, mockFormBody.valid);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error("Updating application's policy contact");
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

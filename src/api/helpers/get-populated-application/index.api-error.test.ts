@@ -41,8 +41,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -51,8 +51,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -61,8 +61,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -74,8 +74,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -84,8 +84,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
       const mockApplication = { ...application, eligibilityId: mockInvalidId };
 
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -94,8 +94,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
       const mockApplication = { ...application, coverPeriodId: mockInvalidId };
 
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -104,8 +104,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
       const mockApplication = { ...application, totalContractValueId: mockInvalidId };
 
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -114,8 +114,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
       const mockApplication = { ...application, accountId: mockInvalidId };
 
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -124,8 +124,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -134,8 +134,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -144,8 +144,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -154,8 +154,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -164,8 +164,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -174,8 +174,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -184,8 +184,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -200,8 +200,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -216,8 +216,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -226,8 +226,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -236,8 +236,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -252,8 +252,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -262,8 +262,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -272,8 +272,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -282,8 +282,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -292,8 +292,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 
@@ -302,8 +302,8 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     try {
       await getPopulatedApplication.get({ context, application: mockApplication });
-    } catch (err) {
-      expect(String(err).includes(expectedErrorMessage)).toEqual(true);
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
     }
   });
 });

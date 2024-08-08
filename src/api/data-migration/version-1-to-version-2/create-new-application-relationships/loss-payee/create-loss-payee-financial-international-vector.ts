@@ -12,7 +12,7 @@ import { Application } from '../../../../types';
 const lossPayeeFinancialInternationalVector = async (connection: Connection, applications: Array<Application>) => {
   const loggingMessage = 'Creating nominatedLossPayees - financial international vector';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const vectorPromises = applications.map(async (application: Application) => {
@@ -32,10 +32,10 @@ const lossPayeeFinancialInternationalVector = async (connection: Connection, app
     });
 
     return Promise.all(vectorPromises);
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 error %s %O', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

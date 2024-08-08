@@ -13,7 +13,7 @@ import getBuyerTradingHistoryById from '../get-buyer-trading-history-by-id';
  */
 const getPopulatedBuyer = async (context: Context, id: string) => {
   try {
-    console.info(`Getting populated buyer ${id}`);
+    console.info('Getting populated buyer %s', id);
 
     const buyer = await getBuyerById(context, id);
 
@@ -31,10 +31,10 @@ const getPopulatedBuyer = async (context: Context, id: string) => {
     };
 
     return populatedBuyer;
-  } catch (err) {
-    console.error(`Getting populated buyer ${id} %O`, err);
+  } catch (error) {
+    console.error('Getting populated buyer %s %O', id, error);
 
-    throw new Error(`Error Getting populated buyer ${id} ${err}`);
+    throw new Error(`Error Getting populated buyer ${id} ${error}`);
   }
 };
 

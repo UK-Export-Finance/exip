@@ -24,8 +24,9 @@ const declaration = async (application: Application, formBody: RequestBody) => {
     const saveResponse = await api.keystone.application.update.declarations(declarationId, sanitisedData);
 
     return saveResponse;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error("Error updating application's declarations %O", error);
+
     throw new Error("Updating application's declarations");
   }
 };

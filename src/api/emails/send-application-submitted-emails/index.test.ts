@@ -237,10 +237,10 @@ describe('emails/send-email-application-submitted', () => {
       test('should throw an error', async () => {
         try {
           await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
-        } catch (err) {
+        } catch (error) {
           const expected = new Error('Sending application submitted emails Error: Sending application submitted email to owner/account');
 
-          expect(err).toEqual(expected);
+          expect(error).toEqual(expected);
         }
       });
     });
@@ -258,10 +258,10 @@ describe('emails/send-email-application-submitted', () => {
       test('should throw an error', async () => {
         try {
           await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
-        } catch (err) {
+        } catch (error) {
           const expected = new Error('Sending application submitted emails Error: Sending application submitted email to underwriting team');
 
-          expect(err).toEqual(expected);
+          expect(error).toEqual(expected);
         }
       });
     });
@@ -279,10 +279,10 @@ describe('emails/send-email-application-submitted', () => {
       test('should throw an error', async () => {
         try {
           await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
-        } catch (err) {
+        } catch (error) {
           const expected = new Error(`Sending application submitted emails Error: Sending application documents emails ${mockSendEmailResponse}`);
 
-          expect(err).toEqual(expected);
+          expect(error).toEqual(expected);
         }
       });
     });
@@ -295,10 +295,10 @@ describe('emails/send-email-application-submitted', () => {
       test('should throw an error', async () => {
         try {
           await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
-        } catch (err) {
+        } catch (error) {
           const expected = new Error(`Sending application submitted emails ${new Error(mockErrorMessage)}`);
 
-          expect(err).toEqual(expected);
+          expect(error).toEqual(expected);
         }
       });
     });

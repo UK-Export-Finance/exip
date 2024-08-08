@@ -14,9 +14,10 @@ const create = async (context: Context) => {
     const declaration = (await context.query.Declaration.createOne({ data: {} })) as ApplicationDeclaration;
 
     return declaration;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+
+    return error;
   }
 };
 
@@ -36,9 +37,10 @@ const get = async (context: Context, declarationId: string) => {
     });
 
     return declaration;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Getting an declaration by ID (test helpers) ${err}`);
+  } catch (error) {
+    console.error(error);
+
+    throw new Error(`Getting an declaration by ID (test helpers) ${error}`);
   }
 };
 

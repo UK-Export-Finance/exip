@@ -31,10 +31,10 @@ const createALossPayeeFinancialInternational = async (context: Context, lossPaye
       ...lossPayeeFinancialInternational,
       vector,
     };
-  } catch (err) {
-    console.error('Error creating a loss payee financial (international) for %O', err);
+  } catch (error) {
+    console.error('Error creating a loss payee financial (international) for %O', error);
 
-    throw new Error(`Creating a loss payee financial (international) for ${err}`);
+    throw new Error(`Creating a loss payee financial (international) for ${error}`);
   }
 };
 

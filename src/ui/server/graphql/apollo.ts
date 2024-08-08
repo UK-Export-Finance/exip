@@ -44,8 +44,8 @@ const doQuery = async (query: DocumentNode, variables: OperationVariables) => {
         },
       },
     });
-  } catch (err) {
-    return err;
+  } catch (error) {
+    return error;
   }
 };
 
@@ -60,8 +60,8 @@ const doMutate = async (mutation: DocumentNode, variables: OperationVariables) =
         },
       },
     });
-  } catch (err) {
-    return err;
+  } catch (error) {
+    return error;
   }
 };
 

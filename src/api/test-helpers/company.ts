@@ -17,9 +17,10 @@ const createCompany = async (context: Context, data = {}) => {
     })) as ApplicationCompany;
 
     return company;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+
+    return error;
   }
 };
 
@@ -40,9 +41,10 @@ const deleteCompany = async (context: Context, companyId: string) => {
     });
 
     return response;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Deleting company (test helpers) ${err}`);
+  } catch (error) {
+    console.error(error);
+
+    throw new Error(`Deleting company (test helpers) ${error}`);
   }
 };
 
@@ -63,9 +65,10 @@ const deleteCompanyAddress = async (context: Context, companyAddressId: string) 
     });
 
     return response;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Deleting company address (test helpers) ${err}`);
+  } catch (error) {
+    console.error(error);
+
+    throw new Error(`Deleting company address (test helpers) ${error}`);
   }
 };
 
@@ -84,9 +87,10 @@ const deleteCompanySicCode = async (context: Context, companySicId: string) => {
     });
 
     return response;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Deleting company SIC code (test helpers) ${err}`);
+  } catch (error) {
+    console.error(error);
+
+    throw new Error(`Deleting company SIC code (test helpers) ${error}`);
   }
 };
 
@@ -107,9 +111,10 @@ const createCompanyAddress = async (context: Context, data = {}) => {
     })) as ApplicationCompanyAddress;
 
     return company;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+
+    return error;
   }
 };
 
@@ -135,9 +140,10 @@ const createCompanySicCode = async (context: Context, companyId: string) => {
     })) as ApplicationCompanySicCode;
 
     return companySicCode;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+
+    return error;
   }
 };
 
@@ -164,10 +170,10 @@ const createCompanyDifferentTradingAddress = async (context: Context, companyId:
     });
 
     return differentTradingAddress;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
-    throw new Error(`Creating a company different trading address (test helpers) ${err}`);
+    throw new Error(`Creating a company different trading address (test helpers) ${error}`);
   }
 };
 
@@ -188,9 +194,10 @@ const getCompany = async (context: Context, companyId: string) => {
     })) as ApplicationCompany;
 
     return company;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Getting a company by ID (test helpers) ${err}`);
+  } catch (error) {
+    console.error(error);
+
+    throw new Error(`Getting a company by ID (test helpers) ${error}`);
   }
 };
 
@@ -211,9 +218,10 @@ const getCompanyAddress = async (context: Context, companyAddressId: string) => 
     })) as ApplicationCompanyAddress;
 
     return companyAddress;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Getting a company address by ID (test helpers) ${err}`);
+  } catch (error) {
+    console.error(error);
+
+    throw new Error(`Getting a company address by ID (test helpers) ${error}`);
   }
 };
 
@@ -238,9 +246,10 @@ const getCompanySicCodes = async (context: Context, companyId: string) => {
     });
 
     return companySic;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Getting company SIC code by company ID (test helpers) ${err}`);
+  } catch (error) {
+    console.error(error);
+
+    throw new Error(`Getting company SIC code by company ID (test helpers) ${error}`);
   }
 };
 

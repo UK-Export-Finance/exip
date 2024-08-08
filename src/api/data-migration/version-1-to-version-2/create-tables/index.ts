@@ -27,7 +27,7 @@ const createTables = async (connection: Connection) => {
   const loggingMessage = 'Creating new tables';
 
   try {
-    console.info(`✅ ${loggingMessage}`);
+    console.info('✅ %s', loggingMessage);
 
     const tables = await Promise.all([
       createAccountStatusTable(connection),
@@ -54,10 +54,10 @@ const createTables = async (connection: Connection) => {
     ]);
 
     return tables;
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 error %s %O', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

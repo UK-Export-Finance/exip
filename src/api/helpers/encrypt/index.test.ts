@@ -33,8 +33,8 @@ describe('api/helpers/encrypt', () => {
     it('should throw an error', async () => {
       try {
         encrypt();
-      } catch (err) {
-        const errorString = String(err);
+      } catch (error) {
+        const errorString = String(error);
 
         expect(errorString.includes('Error encrypting data')).toEqual(true);
       }

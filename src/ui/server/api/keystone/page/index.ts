@@ -26,9 +26,11 @@ const page = {
       }
 
       console.error('Error with GraphQL pageQuery %O', response);
+
       throw new Error('Getting page data');
-    } catch (err) {
-      console.error('Error getting page data %O', err);
+    } catch (error) {
+      console.error('Error getting page data %O', error);
+
       throw new Error('Getting page data');
     }
   },

@@ -17,8 +17,8 @@ const getApplicationByReferenceNumber = async (variables: ApplicationByReference
     }
 
     return application;
-  } catch (err) {
-    throw new Error(`Getting application by reference number ${err}`);
+  } catch (error) {
+    throw new Error(`Getting application by reference number ${error}`);
   }
 };
 

@@ -61,10 +61,10 @@ describe('helpers/get-populated-company', () => {
     it('should throw an error', async () => {
       try {
         await getPopulatedCompany(context, mockInvalidId);
-      } catch (err) {
+      } catch (error) {
         const expected = `Getting populated company ${mockInvalidId}`;
 
-        expect(String(err).includes(expected)).toEqual(true);
+        expect(String(error).includes(expected)).toEqual(true);
       }
     });
   });
@@ -84,10 +84,10 @@ describe('helpers/get-populated-company', () => {
 
       try {
         await getPopulatedCompany(context, companyNoAddress.id);
-      } catch (err) {
+      } catch (error) {
         const expected = `Getting populated company ${companyNoAddress.id}`;
 
-        expect(String(err).includes(expected)).toEqual(true);
+        expect(String(error).includes(expected)).toEqual(true);
       }
     });
   });
@@ -107,10 +107,10 @@ describe('helpers/get-populated-company', () => {
 
       try {
         await getPopulatedCompany(context, companyNoDifferentTradingAddress.id);
-      } catch (err) {
+      } catch (error) {
         const expected = `Getting populated company ${companyNoDifferentTradingAddress.id}`;
 
-        expect(String(err).includes(expected)).toEqual(true);
+        expect(String(error).includes(expected)).toEqual(true);
       }
     });
   });

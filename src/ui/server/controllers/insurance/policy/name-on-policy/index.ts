@@ -168,8 +168,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(redirectRoute);
-  } catch (err) {
-    console.error('Error updating application - policy - name on policy %O', err);
+  } catch (error) {
+    console.error('Error updating application - policy - name on policy %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

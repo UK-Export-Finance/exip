@@ -76,9 +76,9 @@ describe('controllers/insurance/policy/save-data/policy', () => {
     it('should throw an error', async () => {
       try {
         await save.policy(mockApplication, mockFormBody.valid);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error("Updating application's policy");
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

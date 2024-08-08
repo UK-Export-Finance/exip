@@ -155,10 +155,10 @@ const flattenApplicationData = (application: Application): ApplicationFlat => {
     };
 
     return flattened;
-  } catch (err) {
-    console.error('Error flattening application data %O', err);
+  } catch (error) {
+    console.error('Error flattening application data %O', error);
 
-    throw new Error(`Error flattening application data ${err}`);
+    throw new Error(`Error flattening application data ${error}`);
   }
 };
 

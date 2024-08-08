@@ -78,8 +78,8 @@ const getApplicationByReferenceNumberMiddleware = async (req: Request, res: Resp
       }
 
       return res.redirect(PAGE_NOT_FOUND);
-    } catch (err) {
-      console.error('Error getting application by reference number %O', err);
+    } catch (error) {
+      console.error('Error getting application by reference number %O', error);
 
       return res.redirect(PAGE_NOT_FOUND);
     }

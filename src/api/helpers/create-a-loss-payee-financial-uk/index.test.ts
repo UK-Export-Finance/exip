@@ -5,8 +5,8 @@ import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
 
-const assertError = (err) => {
-  const errorString = String(err);
+const assertError = (error) => {
+  const errorString = String(error);
 
   expect(errorString.includes('Creating a loss payee financial (UK)')).toEqual(true);
 };
@@ -75,8 +75,8 @@ describe('helpers/create-a-loss-payee-financial-uk', () => {
     test('it should throw an error', async () => {
       try {
         await createALossPayeeFinancialUk(context, mockInvalidId);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -86,8 +86,8 @@ describe('helpers/create-a-loss-payee-financial-uk', () => {
       try {
         // pass empty context object to force an error
         await createALossPayeeFinancialUk({}, application.id);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

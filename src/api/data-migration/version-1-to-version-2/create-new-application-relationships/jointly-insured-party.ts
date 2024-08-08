@@ -16,7 +16,7 @@ import { Application } from '../../../types';
 const createJointlyInsuredParty = async (connection: Connection, applications: Array<Application>) => {
   const loggingMessage = 'Creating jointlyInsuredParty entries with policy relationships';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const jointlyInsuredPartyPromises = applications.map(async (application: Application) => {
@@ -36,10 +36,10 @@ const createJointlyInsuredParty = async (connection: Connection, applications: A
     });
 
     return Promise.all(jointlyInsuredPartyPromises);
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 error %s %O', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

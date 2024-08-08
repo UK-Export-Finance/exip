@@ -185,8 +185,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
-  } catch (err) {
-    console.error('Error updating application - policy - another company %O', err);
+  } catch (error) {
+    console.error('Error updating application - policy - another company %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

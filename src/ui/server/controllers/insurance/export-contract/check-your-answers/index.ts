@@ -47,8 +47,8 @@ export const get = async (req: Request, res: Response) => {
       application: mapApplicationToFormFields(res.locals.application),
       SUMMARY_LISTS: summaryLists,
     });
-  } catch (err) {
-    console.error('Error getting countries %O', err);
+  } catch (error) {
+    console.error('Error getting countries %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

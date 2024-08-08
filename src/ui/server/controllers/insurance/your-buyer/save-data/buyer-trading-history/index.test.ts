@@ -79,9 +79,9 @@ describe('controllers/insurance/your-buyer/save-data/buyer-trading-history', () 
     it('should throw an error', async () => {
       try {
         await save.buyerTradingHistory(mockApplication, mockBuyerTradingHistory);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error('Updating buyer trading history');
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

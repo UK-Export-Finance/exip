@@ -57,10 +57,10 @@ const createAnApplication = (accountId, companyNumber, totalContractValueOverThr
       }
 
       return api.createAnApplication(accountId, mockEligibilityAnswers, company, sectionReview).then((application) => application);
-    } catch (err) {
-      console.error('Creating an application', err);
+    } catch (error) {
+      console.error('Creating an application', error);
 
-      return err;
+      return error;
     }
   }
 

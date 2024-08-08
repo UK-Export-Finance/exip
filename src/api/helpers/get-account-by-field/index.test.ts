@@ -47,13 +47,13 @@ describe('helpers/get-account-by-field', () => {
     it('should throw an error', async () => {
       try {
         await getAccountByField(context, field, value);
-      } catch (err) {
+      } catch (error) {
         const errorMessage = 'Getting account by field/value';
 
         const newError = new Error(errorMessage);
 
         const expected = new Error(`${errorMessage} ${newError}`);
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

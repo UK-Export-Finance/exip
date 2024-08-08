@@ -25,9 +25,10 @@ const create = async ({ context, data = {} }: TestHelperApplicationCreate) => {
     })) as Application;
 
     return application;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+
+    return error;
   }
 };
 
@@ -48,9 +49,10 @@ const get = async ({ context, applicationId }: TestHelperApplicationGet): Promis
     })) as Application;
 
     return application;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+
+    return error;
   }
 };
 
@@ -71,9 +73,10 @@ const update = async ({ context, applicationId, data }: TestHelperApplicationUpd
     })) as Application;
 
     return application;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+
+    return error;
   }
 };
 
@@ -98,9 +101,10 @@ const deleteAll = async (context: Context) => {
     }
 
     return [];
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Getting and deleting applications (test helpers) ${err}`);
+  } catch (error) {
+    console.error(error);
+
+    throw new Error(`Getting and deleting applications (test helpers) ${error}`);
   }
 };
 

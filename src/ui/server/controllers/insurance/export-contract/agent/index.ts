@@ -152,8 +152,9 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
-  } catch (err) {
-    console.error('Error updating application - export contract - agent %O', err);
+  } catch (error) {
+    console.error('Error updating application - export contract - agent %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

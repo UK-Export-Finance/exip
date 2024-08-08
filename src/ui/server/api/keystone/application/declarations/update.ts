@@ -33,9 +33,11 @@ const updateDeclaration = async (id: string, update: object) => {
     }
 
     console.error('Error with GraphQL updateApplicationDeclarationMutation %O', response);
+
     throw new Error('Updating application declaration');
-  } catch (err) {
-    console.error('Error updating application declaration %O', err);
+  } catch (error) {
+    console.error('Error updating application declaration %O', error);
+
     throw new Error('Updating application declaration');
   }
 };

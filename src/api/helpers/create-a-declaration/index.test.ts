@@ -6,8 +6,8 @@ import { Application, Context } from '../../types';
 
 const invalidId = 'invalid-id';
 
-const assertError = (err) => {
-  const errorString = String(err);
+const assertError = (error) => {
+  const errorString = String(error);
 
   expect(errorString.includes('Creating an application declaration')).toEqual(true);
 };
@@ -84,8 +84,8 @@ describe('helpers/create-a-declaration', () => {
     test('it should throw an error', async () => {
       try {
         await createADeclaration(context, invalidId);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

@@ -26,13 +26,13 @@ describe('helpers/get-export-contract-agent-service-by-id', () => {
     it('should throw an error', async () => {
       try {
         await getExportContractAgentServiceById(context, mockInvalidId);
-      } catch (err) {
+      } catch (error) {
         const errorMessage = `Getting exportContractAgentService by ID ${mockInvalidId}`;
 
         const newError = new Error(errorMessage);
 
         const expected = new Error(`${errorMessage} ${newError}`);
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

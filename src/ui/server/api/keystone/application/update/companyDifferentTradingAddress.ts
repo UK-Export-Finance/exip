@@ -33,9 +33,11 @@ const updateCompanyDifferentTradingAddress = async (id: string, update: object) 
     }
 
     console.error('Error with GraphQL updateCompanyDifferentTradingAddressMutation %O', response);
+
     throw new Error('Updating company companyDifferentTradingAddress');
-  } catch (err) {
-    console.error('Error updating companyDifferentTradingAddress %O', err);
+  } catch (error) {
+    console.error('Error updating companyDifferentTradingAddress %O', error);
+
     throw new Error('Updating companyDifferentTradingAddress');
   }
 };

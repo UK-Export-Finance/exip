@@ -72,8 +72,9 @@ export const get = async (req: Request, res: Response) => {
       SUMMARY_LISTS: summaryList,
       ...pageVariables(referenceNumber),
     });
-  } catch (err) {
-    console.error('Error getting Check your answers - Your business %O', err);
+  } catch (error) {
+    console.error('Error getting Check your answers - Your business %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -105,8 +106,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER}`);
-  } catch (err) {
-    console.error('Error updating Check your answers - Your business %O', err);
+  } catch (error) {
+    console.error('Error updating Check your answers - Your business %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

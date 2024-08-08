@@ -48,9 +48,10 @@ const accountSignInSendNewCode = async (root: any, variables: AccountSignInSendN
     return {
       success: false,
     };
-  } catch (err) {
-    console.error('Error generating and sending new sign in code for account (accountSignInSendNewCode mutation) %O', err);
-    throw new Error(`Generating and sending new sign in code for account (accountSignInSendNewCode mutation) ${err}`);
+  } catch (error) {
+    console.error('Error generating and sending new sign in code for account (accountSignInSendNewCode mutation) %O', error);
+
+    throw new Error(`Generating and sending new sign in code for account (accountSignInSendNewCode mutation) ${error}`);
   }
 };
 

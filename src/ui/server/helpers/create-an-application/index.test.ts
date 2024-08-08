@@ -33,8 +33,8 @@ describe('helpers/create-an-application', () => {
     it('should throw an error', async () => {
       try {
         await application.create(mockEligibility, mockAccount.id);
-      } catch (err) {
-        const errorString = String(err);
+      } catch (error) {
+        const errorString = String(error);
 
         expect(errorString.includes('Error creating an application for user')).toBeTruthy();
         expect(errorString.includes(mockAccount.id)).toBeTruthy();

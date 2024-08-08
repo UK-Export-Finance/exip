@@ -39,9 +39,10 @@ const createNominatedLossPayee = async ({ context }: TestHelperCreate) => {
     };
 
     return created;
-  } catch (err) {
-    console.error('Error creating a nominated loss payee (test helpers) %O', err);
-    return err;
+  } catch (error) {
+    console.error('Error creating a nominated loss payee (test helpers) %O', error);
+
+    return error;
   }
 };
 

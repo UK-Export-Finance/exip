@@ -153,6 +153,7 @@ export const post = async (req: Request, res: Response) => {
 
         if (!createdApplication.success) {
           console.error('Error creating application');
+
           return res.redirect(PROBLEM_WITH_SERVICE);
         }
 
@@ -195,8 +196,9 @@ export const post = async (req: Request, res: Response) => {
       submittedValues: req.body,
       validationErrors,
     });
-  } catch (err) {
-    console.error('Error verifying account sign in code %O', err);
+  } catch (error) {
+    console.error('Error verifying account sign in code %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

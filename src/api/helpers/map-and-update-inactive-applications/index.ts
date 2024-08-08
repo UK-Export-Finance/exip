@@ -22,9 +22,10 @@ const mapAndUpdateInactiveApplications = async (applications: Array<Application>
     await context.db.Application.updateMany({
       data: updateData,
     });
-  } catch (err) {
-    console.error('Error mapping and updating inactive applications %O', err);
-    throw new Error(`Error mapping and updating inactive applications ${err}`);
+  } catch (error) {
+    console.error('Error mapping and updating inactive applications %O', error);
+
+    throw new Error(`Error mapping and updating inactive applications ${error}`);
   }
 };
 

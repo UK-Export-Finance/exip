@@ -11,7 +11,7 @@ import { ApplicationDeclaration } from '../../types';
 const getAllDeclarations = async (connection: Connection) => {
   const loggingMessage = 'Getting all declarations';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const query = 'SELECT * FROM Declaration';
@@ -19,10 +19,10 @@ const getAllDeclarations = async (connection: Connection) => {
     const [declarations] = await executeSqlQuery({ connection, query, loggingMessage });
 
     return declarations as Array<ApplicationDeclaration>;
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 error %s %O', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

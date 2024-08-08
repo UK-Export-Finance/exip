@@ -33,9 +33,11 @@ const updateBuyerRelationship = async (id: string, update: object) => {
     }
 
     console.error('Error with GraphQL updateBuyerRelationshipMutation %O', response);
+
     throw new Error('Updating buyer relationship');
-  } catch (err) {
-    console.error('Error updating application buyer relationship %O', err);
+  } catch (error) {
+    console.error('Error updating application buyer relationship %O', error);
+
     throw new Error('Updating buyer relationship');
   }
 };

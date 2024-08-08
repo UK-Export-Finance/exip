@@ -16,7 +16,7 @@ import { ApplicationBuyerMvp } from '../../../types';
 const updateBuyers = async (connection: Connection, buyers: Array<ApplicationBuyerMvp>) => {
   const loggingMessage = 'Updating buyers';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     await Promise.all([
@@ -32,10 +32,10 @@ const updateBuyers = async (connection: Connection, buyers: Array<ApplicationBuy
     await removeBuyerFields(connection);
 
     return updated;
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 error %s %O', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

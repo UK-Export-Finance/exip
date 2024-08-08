@@ -36,7 +36,7 @@ const exportContractAgentServiceCharge = async (application: Application, formBo
     const saveResponse = await api.keystone.application.update.exportContractAgentServiceCharge(exportContractAgentServiceChargeId, sanitisedData);
 
     return saveResponse;
-  } catch (err) {
+  } catch (error) {
     throw new Error("Updating application's exportContractAgentServiceCharge");
   }
 };

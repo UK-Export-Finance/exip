@@ -75,9 +75,9 @@ describe('controllers/insurance/export-contract/save-data/private-market', () =>
     it('should throw an error', async () => {
       try {
         await save.privateMarket(mockApplication, mockFormBody.valid);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error("Updating application's privateMarket");
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

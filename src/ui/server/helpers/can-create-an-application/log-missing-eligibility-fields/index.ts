@@ -19,15 +19,15 @@ const logMissingEligibilityFields = ({
   console.info('Checking eligibility session has all required data to create an application');
 
   if (!hasBuyerCountry) {
-    console.error(`${CORE_LOG_MESSAGE} 'has buyer country' flag`);
+    console.error("%s 'has buyer country' flag", CORE_LOG_MESSAGE);
   }
 
   if (!hasCompanyNumber) {
-    console.error(`${CORE_LOG_MESSAGE} 'has company number' flag`);
+    console.error("%s 'has company number' flag", CORE_LOG_MESSAGE);
   }
 
   if (!hasCoverPeriod) {
-    console.error(`${CORE_LOG_MESSAGE} 'has cover period' flag`);
+    console.error("%s 'has cover period' flag", CORE_LOG_MESSAGE);
   }
 
   /**
@@ -41,15 +41,15 @@ const logMissingEligibilityFields = ({
   }
 
   if (!hasMinimumUkGoodsOrServices) {
-    console.error(`${CORE_LOG_MESSAGE} 'has minimum UK goods or services' flag`);
+    console.error("%s 'has minimum UK goods or services' flag", CORE_LOG_MESSAGE);
   }
 
   if (!hasReviewedEligibility) {
-    console.error(`${CORE_LOG_MESSAGE} 'has reviewed eligibility' flag`);
+    console.error("%s 'has reviewed eligibility' flag", CORE_LOG_MESSAGE);
   }
 
   if (!hasTotalContractValue) {
-    console.error(`${CORE_LOG_MESSAGE} 'has total contract value' flag`);
+    console.error("%s 'has total contract value' flag", CORE_LOG_MESSAGE);
   }
 };
 

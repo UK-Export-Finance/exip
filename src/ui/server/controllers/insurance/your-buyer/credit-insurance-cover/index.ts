@@ -152,8 +152,9 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`);
-  } catch (err) {
-    console.error('Error posting alternative currency %O', err);
+  } catch (error) {
+    console.error('Error posting alternative currency %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

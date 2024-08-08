@@ -59,10 +59,10 @@ const createApplications = (accountId, count) => {
           return api.createApplications(applicationsData).then((applications) => applications);
         }),
       );
-    } catch (err) {
-      console.error('Creating applications', err);
+    } catch (error) {
+      console.error('Creating applications', error);
 
-      return err;
+      return error;
     }
   }
 

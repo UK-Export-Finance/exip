@@ -13,9 +13,9 @@ describe('controllers/insurance/policy/save-data/jointly-insured-policy - API er
   it('should throw an error', async () => {
     try {
       await save.jointlyInsuredParty(mockApplication, mockFormBody);
-    } catch (err) {
+    } catch (error) {
       const expected = new Error("Updating application's jointly insured party");
-      expect(err).toEqual(expected);
+      expect(error).toEqual(expected);
     }
   });
 });

@@ -54,9 +54,9 @@ describe('controllers/insurance/declarations/save-data', () => {
     it('should throw an error', async () => {
       try {
         await save.declaration(mockApplication, mockFormBody);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error("Updating application's declarations");
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

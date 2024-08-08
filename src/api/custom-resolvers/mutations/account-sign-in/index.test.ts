@@ -203,11 +203,11 @@ describe('custom-resolvers/account-sign-in', () => {
     test('should throw an error', async () => {
       try {
         await accountSignIn({}, variables, context);
-      } catch (err) {
+      } catch (error) {
         expect(accessCodeEmailSpy).toHaveBeenCalledTimes(1);
 
         const expected = new Error(`Validating password or sending email for account sign in (accountSignIn mutation) ${new Error(mockErrorMessage)}`);
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

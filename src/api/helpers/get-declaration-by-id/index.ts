@@ -9,17 +9,17 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  */
 const getDeclarationById = async (context: Context, id: string) => {
   try {
-    console.info(`Getting declaration by ID ${id}`);
+    console.info('Getting declaration by ID %s', id);
 
     const declaration = await context.db.Declaration.findOne({
       where: { id },
     });
 
     return declaration;
-  } catch (err) {
-    console.error(`Getting declaration by ID ${id} %O`, err);
+  } catch (error) {
+    console.error('Getting declaration by ID %s %O', id, error);
 
-    throw new Error(`Error Getting declaration by ID ${id} ${err}`);
+    throw new Error(`Error Getting declaration by ID ${id} ${error}`);
   }
 };
 

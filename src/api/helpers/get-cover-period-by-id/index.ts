@@ -9,17 +9,17 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  */
 const getCoverPeriodById = async (context: Context, id: string) => {
   try {
-    console.info(`Getting coverPeriod by ID ${id}`);
+    console.info('Getting coverPeriod by ID %s', id);
 
     const coverPeriod = await context.db.CoverPeriod.findOne({
       where: { id },
     });
 
     return coverPeriod;
-  } catch (err) {
-    console.error(`Getting coverPeriod by ID ${id} %O`, err);
+  } catch (error) {
+    console.error('Getting coverPeriod by ID %s %O', id, error);
 
-    throw new Error(`Error Getting coverPeriod by ID ${id} ${err}`);
+    throw new Error(`Error Getting coverPeriod by ID ${id} ${error}`);
   }
 };
 

@@ -25,10 +25,10 @@ const getApimCurrencies = async () => {
     }
 
     return { success: false };
-  } catch (err) {
-    console.error('Error Getting and mapping currencies from APIM %O', err);
+  } catch (error) {
+    console.error('Error Getting and mapping currencies from APIM %O', error);
 
-    throw new Error(`Getting and mapping currencies from APIM ${err}`);
+    throw new Error(`Getting and mapping currencies from APIM ${error}`);
   }
 };
 

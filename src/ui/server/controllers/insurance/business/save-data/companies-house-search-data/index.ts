@@ -18,7 +18,7 @@ const companyDetailsPostMigration = async (application: Application, formBody: R
     // send the form data to the API for database update.
     const saveResponse = await api.keystone.application.update.companyPostDataMigration(companyId, sanitisedData);
     return saveResponse;
-  } catch (err) {
+  } catch (error) {
     throw new Error("Updating application's company (post data migration)");
   }
 };

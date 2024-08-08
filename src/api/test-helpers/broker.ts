@@ -14,9 +14,10 @@ const create = async (context: Context) => {
     const broker = (await context.query.Broker.createOne({ data: {} })) as ApplicationBroker;
 
     return broker;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+
+    return error;
   }
 };
 
@@ -36,9 +37,10 @@ const get = async (context: Context, brokerId: string) => {
     });
 
     return broker;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Getting an broker by ID (test helpers) ${err}`);
+  } catch (error) {
+    console.error(error);
+
+    throw new Error(`Getting an broker by ID (test helpers) ${error}`);
   }
 };
 

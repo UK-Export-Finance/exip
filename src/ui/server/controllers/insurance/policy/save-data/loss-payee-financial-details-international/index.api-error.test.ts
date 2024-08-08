@@ -20,9 +20,9 @@ describe('controllers/insurance/policy/save-data/loss-payee-financial-details-in
     it('should throw an error', async () => {
       try {
         await save.lossPayeeFinancialDetailsInternational(mockApplication, mockFormBody);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error("Updating application's loss payee financial details international");
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

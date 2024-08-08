@@ -69,10 +69,10 @@ const updateApplicationColumns = async ({
     });
 
     return updatedApplication;
-  } catch (err) {
-    console.error(`Error updating application relationship columns (updateApplicationColumns helper) for application ${applicationId} %O`, err);
+  } catch (error) {
+    console.error('Error updating application relationship columns (updateApplicationColumns helper) for application %s %O', applicationId, error);
 
-    throw new Error(`Updating application relationship columns (updateApplicationColumns helper) for application ${applicationId} ${err}`);
+    throw new Error(`Updating application relationship columns (updateApplicationColumns helper) for application ${applicationId} ${error}`);
   }
 };
 

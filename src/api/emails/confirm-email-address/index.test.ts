@@ -43,10 +43,10 @@ describe('emails/confirm-email-address', () => {
     test('should throw an error', async () => {
       try {
         await confirmEmailAddress(email, mockUrlOrigin, fullName, verificationHash, id);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error(`Sending confirm email address email Error: Sending email ${new Error(mockErrorMessage)}`);
 
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

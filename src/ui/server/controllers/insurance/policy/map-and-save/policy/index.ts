@@ -32,8 +32,8 @@ const policy = async (formBody: RequestBody, application: Application, validatio
     }
 
     return true;
-  } catch (err) {
-    console.error('Error mapping and saving application - policy %O', err);
+  } catch (error) {
+    console.error('Error mapping and saving application - policy %O', error);
 
     return false;
   }

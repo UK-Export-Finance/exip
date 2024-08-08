@@ -82,8 +82,8 @@ export const get = async (req: Request, res: Response) => {
       submittedValues: req.session.submittedData?.quoteEligibility,
       isChangeRoute: isChangeRoute(req.originalUrl),
     });
-  } catch (err) {
-    console.error('Error getting CIS countries %O', err);
+  } catch (error) {
+    console.error('Error getting CIS countries %O', error);
 
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
@@ -165,8 +165,8 @@ export const post = async (req: Request, res: Response) => {
 
       return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
     }
-  } catch (err) {
-    console.error('Error getting CIS countries %O', err);
+  } catch (error) {
+    console.error('Error getting CIS countries %O', error);
 
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }

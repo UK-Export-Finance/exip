@@ -15,7 +15,7 @@ import executeSqlQuery from '../execute-sql-query';
 const updateExportContractPrivateMarket = async (connection: Connection) => {
   const loggingMessage = 'Updating exportContract privateMarket columns';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const exportContracts = await getAllExportContracts(connection);
@@ -38,10 +38,10 @@ const updateExportContractPrivateMarket = async (connection: Connection) => {
     });
 
     return Promise.all(accountPromises);
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 error %s %O', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

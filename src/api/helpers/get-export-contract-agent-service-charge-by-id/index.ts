@@ -9,17 +9,17 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  */
 const getExportContractAgentServiceChargeById = async (context: Context, id: string) => {
   try {
-    console.info(`Getting exportContractAgentServiceCharge by ID ${id}`);
+    console.info('Getting exportContractAgentServiceCharge by ID %s', id);
 
     const exportContractAgentServiceCharge = await context.db.ExportContractAgentServiceCharge.findOne({
       where: { id },
     });
 
     return exportContractAgentServiceCharge;
-  } catch (err) {
-    console.error(`Getting exportContractAgentServiceCharge by ID ${id} %O`, err);
+  } catch (error) {
+    console.error('Getting exportContractAgentServiceCharge by ID %s %O', id, error);
 
-    throw new Error(`Error Getting exportContractAgentServiceCharge by ID ${id} ${err}`);
+    throw new Error(`Error Getting exportContractAgentServiceCharge by ID ${id} ${error}`);
   }
 };
 

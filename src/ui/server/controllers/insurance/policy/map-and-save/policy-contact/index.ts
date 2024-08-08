@@ -32,8 +32,8 @@ const policyContact = async (formBody: RequestBody, application: Application, va
     }
 
     return true;
-  } catch (err) {
-    console.error('Error mapping and saving application - policy - contact %O', err);
+  } catch (error) {
+    console.error('Error mapping and saving application - policy - contact %O', error);
 
     return false;
   }

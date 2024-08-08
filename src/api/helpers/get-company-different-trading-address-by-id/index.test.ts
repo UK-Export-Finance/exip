@@ -28,13 +28,13 @@ describe('helpers/get-company-different-trading-address-by-id', () => {
     it('should throw an error', async () => {
       try {
         await getCompanyDifferentTradingAddressById(context, mockInvalidId);
-      } catch (err) {
+      } catch (error) {
         const errorMessage = `Getting company different trading address by ID ${mockInvalidId}`;
 
         const newError = new Error(errorMessage);
 
         const expected = new Error(`${errorMessage} ${newError}`);
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

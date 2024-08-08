@@ -33,9 +33,11 @@ const updatePrivateMarket = async (id: string, update: object) => {
     }
 
     console.error('Error with GraphQL updateApplicationPrivateMarketMutation %O', response);
+
     throw new Error('Updating application private market');
-  } catch (err) {
-    console.error('Error updating application private market %O', err);
+  } catch (error) {
+    console.error('Error updating application private market %O', error);
+
     throw new Error('Updating application private market');
   }
 };

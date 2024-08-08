@@ -26,9 +26,10 @@ const createLossPayeeFinancialDetailsInternational = async ({ context }: TestHel
     })) as ApplicationLossPayeeFinancialInternational;
 
     return lossPayeeFinancialDetailsInternational;
-  } catch (err) {
-    console.error('Error creating a loss payee financial international (test helpers) %O', err);
-    return err;
+  } catch (error) {
+    console.error('Error creating a loss payee financial international (test helpers) %O', error);
+
+    return error;
   }
 };
 

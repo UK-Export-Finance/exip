@@ -34,9 +34,9 @@ describe('helpers/get-account-by-id', () => {
     it('should throw an error', async () => {
       try {
         await getAccountById(context, account.id);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error('Getting account by ID');
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

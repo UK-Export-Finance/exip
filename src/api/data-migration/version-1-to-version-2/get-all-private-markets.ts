@@ -10,7 +10,7 @@ import executeSqlQuery from './execute-sql-query';
 const getAllPrivateMarkets = async (connection: Connection) => {
   const loggingMessage = 'Getting all private markets';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const query = 'SELECT * FROM PrivateMarket';
@@ -18,10 +18,10 @@ const getAllPrivateMarkets = async (connection: Connection) => {
     const [privateMarkets] = await executeSqlQuery({ connection, query, loggingMessage });
 
     return privateMarkets;
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 error %s %O', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

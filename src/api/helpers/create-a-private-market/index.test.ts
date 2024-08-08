@@ -5,8 +5,8 @@ import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
 
-const assertError = (err) => {
-  const errorString = String(err);
+const assertError = (error) => {
+  const errorString = String(error);
 
   expect(errorString.includes('Creating a private market')).toEqual(true);
 };
@@ -45,8 +45,8 @@ describe('helpers/create-a-private-market', () => {
     test('it should throw an error', async () => {
       try {
         await createAPrivateMarket(context, mockInvalidId);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -56,8 +56,8 @@ describe('helpers/create-a-private-market', () => {
       try {
         // pass empty context object to force an error
         await createAPrivateMarket({}, applicationExportContract.id);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

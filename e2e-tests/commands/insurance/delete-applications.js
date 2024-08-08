@@ -10,8 +10,8 @@ const deleteApplications = (applications) => {
     const applicationIds = applications.map((application) => ({ id: application.id }));
 
     return api.deleteApplications(applicationIds).then((response) => response);
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
     throw new Error('Deleting applications');
   }

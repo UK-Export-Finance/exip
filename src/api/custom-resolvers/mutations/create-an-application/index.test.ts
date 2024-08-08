@@ -62,8 +62,8 @@ describe('custom-resolvers/create-an-application', () => {
       try {
         // pass empty context object to force an error
         await createAnApplication({}, variables, {});
-      } catch (err) {
-        const errorString = String(err);
+      } catch (error) {
+        const errorString = String(error);
 
         expect(errorString.includes('Creating application')).toEqual(true);
       }

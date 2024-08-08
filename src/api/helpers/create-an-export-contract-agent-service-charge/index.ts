@@ -20,10 +20,10 @@ const createAnExportContractAgentServiceCharge = async (context: Context, agentS
     });
 
     return agentService;
-  } catch (err) {
-    console.error('Error creating an export contract agent service charge %O', err);
+  } catch (error) {
+    console.error('Error creating an export contract agent service charge %O', error);
 
-    throw new Error(`Creating an export contract agent service charge ${err}`);
+    throw new Error(`Creating an export contract agent service charge ${error}`);
   }
 };
 

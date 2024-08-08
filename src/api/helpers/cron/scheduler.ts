@@ -31,6 +31,7 @@ export const taskWithErrorLogging =
         await task(context, now);
       } catch (error) {
         console.error("An error occurred running job '%s' %o", description, error);
+
         throw error;
       }
     };
