@@ -31,8 +31,8 @@ const business = async (formBody: RequestBody, application: Application, validat
     }
 
     return true;
-  } catch (err) {
-    console.error('Error mapping and saving business section of application %O', err);
+  } catch (error) {
+    console.error('Error mapping and saving business section of application %O', error);
     return false;
   }
 };

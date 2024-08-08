@@ -40,8 +40,8 @@ const account = {
 
       console.error('Error with GraphQL createAccountMutation query %O', response);
       throw new Error('Creating an account');
-    } catch (err) {
-      console.error('Error creating an account %O', err);
+    } catch (error) {
+      console.error('Error creating an account %O', error);
       throw new Error('Creating an account');
     }
   },
@@ -67,8 +67,8 @@ const account = {
 
       console.error('Error with GraphQL getAccountQuery %O', response);
       throw new Error('Getting an account');
-    } catch (err) {
-      console.error('Error getting an account %O', err);
+    } catch (error) {
+      console.error('Error getting an account %O', error);
       throw new Error('Getting an account');
     }
   },
@@ -94,8 +94,8 @@ const account = {
 
       console.error('Error with GraphQL verifyAccountEmailAddressMutation %O', response);
       throw new Error('Verifying account email address');
-    } catch (err) {
-      console.error('Error verifying account email address %O', err);
+    } catch (error) {
+      console.error('Error verifying account email address %O', error);
       throw new Error('Verifying account email address');
     }
   },
@@ -121,8 +121,8 @@ const account = {
 
       console.error('Error with GraphQL sendEmailConfirmEmailAddressMutation %O', response);
       throw new Error('Sending email verification for account creation');
-    } catch (err) {
-      console.error('Error sending email verification for account creation %O', err);
+    } catch (error) {
+      console.error('Error sending email verification for account creation %O', error);
       throw new Error('Sending email verification for account creation');
     }
   },
@@ -148,8 +148,8 @@ const account = {
 
       console.error('Error with GraphQL accountSignInMutation %O', response);
       throw new Error('Signing in account');
-    } catch (err) {
-      console.error('Error signing into account %O', err);
+    } catch (error) {
+      console.error('Error signing into account %O', error);
       throw new Error('Signing in account');
     }
   },
@@ -175,8 +175,8 @@ const account = {
 
       console.error('Error with GraphQL accountSignInSendNewCodeMutation %O', response);
       throw new Error('Sending new sign in code for account');
-    } catch (err) {
-      console.error('Error sending new sign in code for account %O', err);
+    } catch (error) {
+      console.error('Error sending new sign in code for account %O', error);
       throw new Error('Sending new sign in code for account');
     }
   },
@@ -202,8 +202,8 @@ const account = {
 
       console.error('Error with GraphQL verifyAccountSignInCodeMutation %O', response);
       throw new Error('Verifying account sign in code');
-    } catch (err) {
-      console.error('Error verifying account sign in code %O', err);
+    } catch (error) {
+      console.error('Error verifying account sign in code %O', error);
       throw new Error('Verifying account sign in code');
     }
   },
@@ -229,8 +229,8 @@ const account = {
 
       console.error('Error with GraphQL verifyAccountSessionMutation %O', response);
       throw new Error('Verifying account session');
-    } catch (err) {
-      console.error('Error verifying account session %O', err);
+    } catch (error) {
+      console.error('Error verifying account session %O', error);
       throw new Error('Verifying account session');
     }
   },
@@ -256,8 +256,8 @@ const account = {
 
       console.error('Error with GraphQL sendEmailPasswordResetLinkMutation %O', response);
       throw new Error('Sending email for account password reset');
-    } catch (err) {
-      console.error('Error sending email for account password reset %O', err);
+    } catch (error) {
+      console.error('Error sending email for account password reset %O', error);
       throw new Error('Sending email for account password reset');
     }
   },
@@ -283,8 +283,8 @@ const account = {
 
       console.error('Error with GraphQL sendEmailReactivateAccountLinkMutation %O', response);
       throw new Error('Sending email for account reactivation');
-    } catch (err) {
-      console.error('Error sending email for account reactivation %O', err);
+    } catch (error) {
+      console.error('Error sending email for account reactivation %O', error);
       throw new Error('Sending email for account reactivation');
     }
   },
@@ -310,8 +310,8 @@ const account = {
 
       console.error('Error with GraphQL verifyAccountReactivationTokenMutation %O', response);
       throw new Error('Verifying account reactivation token');
-    } catch (err) {
-      console.error('Error verifying account reactivation token %O', err);
+    } catch (error) {
+      console.error('Error verifying account reactivation token %O', error);
       throw new Error('Verifying account reactivation token');
     }
   },
@@ -337,8 +337,8 @@ const account = {
 
       console.error('Error with GraphQL verifyAccountPasswordResetTokenQuery %O', response);
       throw new Error('Verifying account password reset token');
-    } catch (err) {
-      console.error('Error verifying account password reset token %O', err);
+    } catch (error) {
+      console.error('Error verifying account password reset token %O', error);
       throw new Error('Verifying account password reset token');
     }
   },
@@ -364,8 +364,8 @@ const account = {
 
       console.error('Error with GraphQL accountPasswordResetMutation %O', response);
       throw new Error('Resetting account password');
-    } catch (err) {
-      console.error('Error resetting account password %O', err);
+    } catch (error) {
+      console.error('Error resetting account password %O', error);
       throw new Error('Resetting account password');
     }
   },

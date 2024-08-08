@@ -16,10 +16,10 @@ const getBuyerTradingHistoryById = async (context: Context, id: string) => {
     });
 
     return buyerTradingHistory;
-  } catch (err) {
-    console.error(`Getting buyer trading history by ID ${id} %O`, err);
+  } catch (error) {
+    console.error(`Getting buyer trading history by ID ${id} %O`, error);
 
-    throw new Error(`Error Getting buyer trading history by ID ${id} ${err}`);
+    throw new Error(`Error Getting buyer trading history by ID ${id} ${error}`);
   }
 };
 

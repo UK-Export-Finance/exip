@@ -16,9 +16,9 @@ const create = async (context: Context, data = {}) => {
     });
 
     return declaration;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+    return error;
   }
 };
 

@@ -22,8 +22,8 @@ const APIM = {
 
       console.error('Error with GraphQL APIM - CIS countries API %O', response);
       throw new Error('Getting APIM - CIS countries API');
-    } catch (err) {
-      console.error('Error getting APIM - CIS countries API %O', err);
+    } catch (error) {
+      console.error('Error getting APIM - CIS countries API %O', error);
       throw new Error('Getting APIM - CIS countries API');
     }
   },
@@ -45,8 +45,8 @@ const APIM = {
 
       console.error('Error with GraphQL APIM - currencies API %O', response);
       throw new Error('Getting APIM - currencies API');
-    } catch (err) {
-      console.error('Error getting APIM - currencies API %O', err);
+    } catch (error) {
+      console.error('Error getting APIM - currencies API %O', error);
       throw new Error('Getting APIM - currencies API');
     }
   },

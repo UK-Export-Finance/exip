@@ -26,13 +26,13 @@ describe('helpers/get-export-contract-agent-service-charge-by-id', () => {
     it('should throw an error', async () => {
       try {
         await getExportContractAgentServiceChargeById(context, mockInvalidId);
-      } catch (err) {
+      } catch (error) {
         const errorMessage = `Getting exportContractAgentServiceCharge by ID ${mockInvalidId}`;
 
         const newError = new Error(errorMessage);
 
         const expected = new Error(`${errorMessage} ${newError}`);
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

@@ -36,8 +36,8 @@ const lossPayeeFinancialDetailsUk = async (application: Application, formBody: R
     const saveResponse = await api.keystone.application.update.lossPayeeFinancialDetailsUk(lossPayeeFinancialDetailsUkId, sanitisedData);
 
     return saveResponse;
-  } catch (err) {
-    console.error("Error updating application's loss payee financial details uk %O", err);
+  } catch (error) {
+    console.error("Error updating application's loss payee financial details uk %O", error);
     throw new Error("Updating application's loss payee financial details uk");
   }
 };

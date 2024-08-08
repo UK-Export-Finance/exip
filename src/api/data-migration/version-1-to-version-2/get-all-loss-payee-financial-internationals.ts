@@ -18,10 +18,10 @@ const getAllLossPayeeFinancialInternational = async (connection: Connection) => 
     const [financials] = await executeSqlQuery({ connection, query, loggingMessage });
 
     return financials;
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error(`🚨 error ${loggingMessage} %O`, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

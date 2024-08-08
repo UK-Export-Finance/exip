@@ -4,8 +4,8 @@ import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import companyHelpers from '../../test-helpers/company';
 import { Context } from '../../types';
 
-const assertError = (err) => {
-  const errorString = String(err);
+const assertError = (error) => {
+  const errorString = String(error);
 
   expect(errorString.includes('Creating a company different trading address')).toEqual(true);
 };
@@ -31,8 +31,8 @@ describe('helpers/create-a-company-different-trading-address', () => {
     test('it should throw an error', async () => {
       try {
         await createACompanyDifferentTradingAddress(context, mockInvalidId);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -42,8 +42,8 @@ describe('helpers/create-a-company-different-trading-address', () => {
       try {
         // pass empty context object to force an error
         await createACompanyDifferentTradingAddress({}, company.id);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

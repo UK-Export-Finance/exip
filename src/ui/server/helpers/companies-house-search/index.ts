@@ -18,8 +18,8 @@ const search = async (companyNumber: string): Promise<CompaniesHouseResponse> =>
     response = await api.keystone.getCompaniesHouseInformation(companyNumber);
 
     return response;
-  } catch (err) {
-    console.error('Error posting to companies house API %O', err);
+  } catch (error) {
+    console.error('Error posting to companies house API %O', error);
     return {
       ...response,
       apiError: true,

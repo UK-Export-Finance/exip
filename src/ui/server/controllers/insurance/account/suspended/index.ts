@@ -59,8 +59,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(PROBLEM_WITH_SERVICE);
-  } catch (err) {
-    console.error('Error posting account suspended form %O', err);
+  } catch (error) {
+    console.error('Error posting account suspended form %O', error);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

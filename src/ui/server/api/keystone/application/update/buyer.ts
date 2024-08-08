@@ -47,8 +47,8 @@ const updateBuyer = async (id: string, update: ApplicationBuyerUiInput) => {
 
     console.error('Error with GraphQL updateBuyerMutation %O', response);
     throw new Error('Updating application buyer');
-  } catch (err) {
-    console.error('Error updating application buyer %O', err);
+  } catch (error) {
+    console.error('Error updating application buyer %O', error);
     throw new Error('Updating application buyer');
   }
 };

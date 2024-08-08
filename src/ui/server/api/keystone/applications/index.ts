@@ -45,8 +45,8 @@ const applications = {
 
       console.error('Error with GraphQL getApplicationsQuery %O', response);
       throw new Error('Getting applications');
-    } catch (err) {
-      console.error('Error getting applications %O', err);
+    } catch (error) {
+      console.error('Error getting applications %O', error);
       throw new Error('Getting applications');
     }
   },

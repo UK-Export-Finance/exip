@@ -34,8 +34,8 @@ const updateBroker = async (id: string, update: object) => {
 
     console.error('Error with GraphQL updateBrokerMutation %O', response);
     throw new Error('Updating application broker');
-  } catch (err) {
-    console.error('Error updating application broker %O', err);
+  } catch (error) {
+    console.error('Error updating application broker %O', error);
     throw new Error('Updating application broker');
   }
 };

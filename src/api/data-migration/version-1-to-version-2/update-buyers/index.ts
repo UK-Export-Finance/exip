@@ -32,10 +32,10 @@ const updateBuyers = async (connection: Connection, buyers: Array<ApplicationBuy
     await removeBuyerFields(connection);
 
     return updated;
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error(`🚨 error ${loggingMessage} %O`, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

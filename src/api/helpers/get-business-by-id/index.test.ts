@@ -26,13 +26,13 @@ describe('helpers/get-business-by-id', () => {
     it('should throw an error', async () => {
       try {
         await getBusinessById(context, mockInvalidId);
-      } catch (err) {
+      } catch (error) {
         const errorMessage = `Getting business by ID ${mockInvalidId}`;
 
         const newError = new Error(errorMessage);
 
         const expected = new Error(`${errorMessage} ${newError}`);
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

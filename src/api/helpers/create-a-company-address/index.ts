@@ -24,10 +24,10 @@ const createACompanyAddress = async (context: Context, addressData: ApplicationC
     });
 
     return companyAddress;
-  } catch (err) {
-    console.error('Error creating a company address %O', err);
+  } catch (error) {
+    console.error('Error creating a company address %O', error);
 
-    throw new Error(`Creating a company address ${err}`);
+    throw new Error(`Creating a company address ${error}`);
   }
 };
 

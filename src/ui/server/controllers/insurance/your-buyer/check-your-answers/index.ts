@@ -43,8 +43,8 @@ const get = (req: Request, res: Response) => {
       application: mapApplicationToFormFields(application),
       SUMMARY_LISTS: summaryLists,
     });
-  } catch (err) {
-    console.error('Error getting check your answers %O', err);
+  } catch (error) {
+    console.error('Error getting check your answers %O', error);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

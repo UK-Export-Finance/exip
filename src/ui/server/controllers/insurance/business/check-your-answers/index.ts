@@ -42,8 +42,8 @@ const get = (req: Request, res: Response) => {
       SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
       SUMMARY_LISTS: summaryLists,
     });
-  } catch (err) {
-    console.error('Error getting check your answers %O', err);
+  } catch (error) {
+    console.error('Error getting check your answers %O', error);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

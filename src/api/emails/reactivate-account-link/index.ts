@@ -21,9 +21,9 @@ export const reactivateAccountLink = async (urlOrigin: string, emailAddress: str
     const response = await callNotify(templateId, emailAddress, variables);
 
     return response;
-  } catch (err) {
-    console.error('Error sending email for account reactivation %O', err);
+  } catch (error) {
+    console.error('Error sending email for account reactivation %O', error);
 
-    throw new Error(`Sending email for account reactivation ${err}`);
+    throw new Error(`Sending email for account reactivation ${error}`);
   }
 };

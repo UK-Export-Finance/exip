@@ -99,8 +99,8 @@ export const get = async (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
     });
-  } catch (err) {
-    console.error('Error getting currencies %O', err);
+  } catch (error) {
+    console.error('Error getting currencies %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -155,8 +155,8 @@ export const post = async (req: Request, res: Response) => {
         submittedValues: payload,
         validationErrors,
       });
-    } catch (err) {
-      console.error('Error getting currencies %O', err);
+    } catch (error) {
+      console.error('Error getting currencies %O', error);
 
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
@@ -179,8 +179,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`);
-  } catch (err) {
-    console.error('Error updating application - policy - single contract policy - total contract value %O', err);
+  } catch (error) {
+    console.error('Error updating application - policy - single contract policy - total contract value %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

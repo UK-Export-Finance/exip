@@ -15,9 +15,9 @@ const create = async (context: Context) => {
     });
 
     return sectionReview;
-  } catch (err) {
-    console.error('Error creating section review (test helpers) %O', err);
-    return err;
+  } catch (error) {
+    console.error('Error creating section review (test helpers) %O', error);
+    return error;
   }
 };
 

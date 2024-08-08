@@ -16,10 +16,10 @@ const getPrivateMarketById = async (context: Context, id: string) => {
     });
 
     return privateMarket;
-  } catch (err) {
-    console.error(`Getting privateMarket by ID ${id} %O`, err);
+  } catch (error) {
+    console.error(`Getting privateMarket by ID ${id} %O`, error);
 
-    throw new Error(`Error Getting privateMarket by ID ${id} ${err}`);
+    throw new Error(`Error Getting privateMarket by ID ${id} ${error}`);
   }
 };
 

@@ -27,7 +27,7 @@ const emailValidation = (fieldId: string, email: string, errorMessages: ErrorMes
     }
 
     return maxLengthValidation(email, fieldId, errorMessages.ABOVE_MAXIMUM, errors, MAXIMUM_CHARACTERS.EMAIL);
-  } catch (err) {
+  } catch (error) {
     return errors;
   }
 };

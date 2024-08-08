@@ -26,13 +26,13 @@ describe('helpers/get-section-review-by-id', () => {
     it('should throw an error', async () => {
       try {
         await getSectionReviewById(context, mockInvalidId);
-      } catch (err) {
+      } catch (error) {
         const errorMessage = `Getting sectionReview by ID ${mockInvalidId}`;
 
         const newError = new Error(errorMessage);
 
         const expected = new Error(`${errorMessage} ${newError}`);
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

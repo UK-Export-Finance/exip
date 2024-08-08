@@ -24,7 +24,7 @@ const policyContact = async (application: Application, formBody: RequestBody, er
     const saveResponse = await api.keystone.application.update.policyContact(policyContactId, sanitisedData);
 
     return saveResponse;
-  } catch (err) {
+  } catch (error) {
     throw new Error("Updating application's policy contact");
   }
 };

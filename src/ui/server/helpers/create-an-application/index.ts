@@ -29,7 +29,7 @@ const createAnApplication = async (eligibilitySessionData: SubmittedDataInsuranc
     const application = await api.keystone.application.create(eligibilityAnswers, userId);
 
     return application;
-  } catch (err) {
+  } catch (error) {
     console.error('Error creating an application for user %s', userId);
     throw new Error(`Error creating an application for user %s ${userId}`);
   }

@@ -16,10 +16,10 @@ const getTotalContractValueById = async (context: Context, id: string) => {
     });
 
     return totalContractValue;
-  } catch (err) {
-    console.error(`Getting totalContractValue by ID ${id} %O`, err);
+  } catch (error) {
+    console.error(`Getting totalContractValue by ID ${id} %O`, error);
 
-    throw new Error(`Error Getting totalContractValue by ID ${id} ${err}`);
+    throw new Error(`Error Getting totalContractValue by ID ${id} ${error}`);
   }
 };
 

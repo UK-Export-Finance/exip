@@ -16,10 +16,10 @@ const getDeclarationById = async (context: Context, id: string) => {
     });
 
     return declaration;
-  } catch (err) {
-    console.error(`Getting declaration by ID ${id} %O`, err);
+  } catch (error) {
+    console.error(`Getting declaration by ID ${id} %O`, error);
 
-    throw new Error(`Error Getting declaration by ID ${id} ${err}`);
+    throw new Error(`Error Getting declaration by ID ${id} ${error}`);
   }
 };
 

@@ -47,8 +47,8 @@ const getCompaniesHouseInformation = async (root: any, variables: GetCompaniesHo
       ...mappedResponse,
       success: true,
     };
-  } catch (err) {
-    console.error('Error getting companies house information %O', err);
+  } catch (error) {
+    console.error('Error getting companies house information %O', error);
     return {
       apiError: true,
       success: false,

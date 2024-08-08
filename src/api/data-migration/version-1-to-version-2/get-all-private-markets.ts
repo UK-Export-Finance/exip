@@ -18,10 +18,10 @@ const getAllPrivateMarkets = async (connection: Connection) => {
     const [privateMarkets] = await executeSqlQuery({ connection, query, loggingMessage });
 
     return privateMarkets;
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error(`🚨 error ${loggingMessage} %O`, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

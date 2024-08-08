@@ -79,8 +79,8 @@ const lossPayee = async (formBody: RequestBody, application: Application, valida
     }
 
     return true;
-  } catch (err) {
-    console.error('Error mapping and saving application - policy - loss payee %O', err);
+  } catch (error) {
+    console.error('Error mapping and saving application - policy - loss payee %O', error);
 
     return false;
   }

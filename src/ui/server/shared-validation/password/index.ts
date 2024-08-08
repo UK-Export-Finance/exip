@@ -45,7 +45,7 @@ const passwordValidation = (fieldId: string, password: string, errorMessage: str
     if (validation.error) {
       return generateValidationErrors(fieldId, errorMessage, errors);
     }
-  } catch (err) {
+  } catch (error) {
     return errors;
   }
 

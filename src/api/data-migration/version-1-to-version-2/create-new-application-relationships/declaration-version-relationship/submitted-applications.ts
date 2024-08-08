@@ -58,10 +58,10 @@ const createDeclarationVersionRelationshipSubmittedApplications = async (connect
     });
 
     return Promise.all(declarationPromises);
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error(`🚨 error ${loggingMessage} %O`, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

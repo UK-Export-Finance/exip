@@ -89,9 +89,9 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
     return {
       success: false,
     };
-  } catch (err) {
-    console.error('Error submitting application %O', err);
-    throw new Error(`Submitting application ${err}`);
+  } catch (error) {
+    console.error('Error submitting application %O', error);
+    throw new Error(`Submitting application ${error}`);
   }
 };
 

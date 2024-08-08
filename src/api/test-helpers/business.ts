@@ -14,9 +14,9 @@ const create = async (context: Context) => {
     const business = (await context.query.Business.createOne({ data: {} })) as ApplicationBusiness;
 
     return business;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+    return error;
   }
 };
 
@@ -36,9 +36,9 @@ const get = async (context: Context, businessId: string) => {
     });
 
     return business;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Getting an business by ID (test helpers) ${err}`);
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Getting an business by ID (test helpers) ${error}`);
   }
 };
 

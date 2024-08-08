@@ -70,12 +70,12 @@ describe('integrations/ordnance-survey', () => {
 
       try {
         await ordnanceSurvey.get(postcode);
-      } catch (err) {
+      } catch (error) {
         const expectedError = 'Calling Ordnance Survey API. Unable to search for address Error: Request failed with status code 500';
 
         const expected = new Error(expectedError);
 
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

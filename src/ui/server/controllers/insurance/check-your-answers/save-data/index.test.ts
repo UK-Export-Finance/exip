@@ -50,9 +50,9 @@ describe('controllers/insurance/check-your-answers/save-data', () => {
     it('should throw an error', async () => {
       try {
         await save.sectionReview(mockApplication, mockFormBody);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error("Updating application's section review");
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

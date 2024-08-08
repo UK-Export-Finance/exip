@@ -16,10 +16,10 @@ const getBrokerById = async (context: Context, id: string) => {
     });
 
     return broker;
-  } catch (err) {
-    console.error(`Getting broker by ID ${id} %O`, err);
+  } catch (error) {
+    console.error(`Getting broker by ID ${id} %O`, error);
 
-    throw new Error(`Error Getting broker by ID ${id} ${err}`);
+    throw new Error(`Error Getting broker by ID ${id} ${error}`);
   }
 };
 

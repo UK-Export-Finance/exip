@@ -10,10 +10,10 @@ describe('apollo/plugins/index', () => {
 
       try {
         requestDidStart().didResolveOperation({ request: mockRequest });
-      } catch (err) {
+      } catch (error) {
         const expected = new Error('Operation not permitted');
 
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });
@@ -38,10 +38,10 @@ describe('apollo/plugins/index', () => {
 
       try {
         requestDidStart().didResolveOperation({ request: mockRequest });
-      } catch (err) {
+      } catch (error) {
         const expected = new Error('Operation not permitted');
 
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });
@@ -52,10 +52,10 @@ describe('apollo/plugins/index', () => {
 
       try {
         requestDidStart().didResolveOperation({ request: mockRequest });
-      } catch (err) {
+      } catch (error) {
         const expected = new Error('Operation not permitted');
 
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

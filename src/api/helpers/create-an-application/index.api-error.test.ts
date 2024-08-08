@@ -115,8 +115,8 @@ describe('helpers/create-an-application - error handling', () => {
       try {
         // pass empty context object to force an error
         await createAnApplication({}, variables, {});
-      } catch (err) {
-        const errorString = String(err);
+      } catch (error) {
+        const errorString = String(error);
 
         expect(errorString.includes('Creating an application (createAnApplication helper)')).toEqual(true);
       }

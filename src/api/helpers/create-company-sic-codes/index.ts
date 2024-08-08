@@ -30,10 +30,10 @@ const createCompanySicCodes = async (
     }
 
     return [];
-  } catch (err) {
-    console.error(`Error creating company SIC codes for ${companyId} %O`, err);
+  } catch (error) {
+    console.error(`Error creating company SIC codes for ${companyId} %O`, error);
 
-    throw new Error(`Creating company SIC codes for ${companyId} ${err}`);
+    throw new Error(`Creating company SIC codes for ${companyId} ${error}`);
   }
 };
 

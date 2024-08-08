@@ -139,8 +139,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(COMPANY_DETAILS);
-  } catch (err) {
-    console.error('Error calling companies house %O', err);
+  } catch (error) {
+    console.error('Error calling companies house %O', error);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

@@ -35,9 +35,9 @@ const createFeedback = async (root: any, variables: InsuranceFeedbackVariables, 
     }
 
     return { success: false };
-  } catch (err) {
-    console.error('Error creating feedback %O', err);
-    throw new Error(`Creating feedback: ${err}`);
+  } catch (error) {
+    console.error('Error creating feedback %O', error);
+    throw new Error(`Creating feedback: ${error}`);
   }
 };
 

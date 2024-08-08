@@ -64,12 +64,12 @@ describe('emails/application', () => {
       test('should throw an error', async () => {
         try {
           await application.submittedEmail(variables);
-        } catch (err) {
+        } catch (error) {
           const expected = new Error(
             `Sending application submitted email to to application owner or provided business contact Error: Sending email ${new Error(mockErrorMessage)}`,
           );
 
-          expect(err).toEqual(expected);
+          expect(error).toEqual(expected);
         }
       });
     });
@@ -112,10 +112,10 @@ describe('emails/application', () => {
       test('should throw an error', async () => {
         try {
           await application.underwritingTeam(variables, mockFilePath, templateId);
-        } catch (err) {
+        } catch (error) {
           const expected = new Error(`Sending application submitted email to underwriting team Error: Sending email ${new Error(mockErrorMessage)}`);
 
-          expect(err).toEqual(expected);
+          expect(error).toEqual(expected);
         }
       });
     });

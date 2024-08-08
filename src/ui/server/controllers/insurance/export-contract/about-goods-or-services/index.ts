@@ -113,8 +113,8 @@ export const get = async (req: Request, res: Response) => {
       application: mapApplicationToFormFields(application),
       countries: mappedCountries,
     });
-  } catch (err) {
-    console.error('Error getting countries %O', err);
+  } catch (error) {
+    console.error('Error getting countries %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -168,8 +168,8 @@ export const post = async (req: Request, res: Response) => {
         validationErrors,
       });
     }
-  } catch (err) {
-    console.error('Error getting countries %O', err);
+  } catch (error) {
+    console.error('Error getting countries %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -192,8 +192,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`);
-  } catch (err) {
-    console.error('Error updating application - export contract - about goods or services %O', err);
+  } catch (error) {
+    console.error('Error updating application - export contract - about goods or services %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

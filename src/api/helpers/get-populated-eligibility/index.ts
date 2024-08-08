@@ -30,10 +30,10 @@ const getPopulatedEligibility = async (context: Context, id: string, buyerCountr
     };
 
     return populatedEligibility;
-  } catch (err) {
-    console.error(`Getting populated eligibility ${id} %O`, err);
+  } catch (error) {
+    console.error(`Getting populated eligibility ${id} %O`, error);
 
-    throw new Error(`Error Getting populated eligibility ${id} ${err}`);
+    throw new Error(`Error Getting populated eligibility ${id} ${error}`);
   }
 };
 

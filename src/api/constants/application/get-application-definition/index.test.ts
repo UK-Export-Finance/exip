@@ -16,10 +16,10 @@ describe('api/constants/application/get-application-definition', () => {
     it('should throw an error', () => {
       try {
         getApplicationDefinition('123456');
-      } catch (err) {
+      } catch (error) {
         const expected = new Error('Unable to find latest application version');
 
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

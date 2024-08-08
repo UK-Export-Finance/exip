@@ -26,13 +26,13 @@ describe('helpers/get-buyer-trading-history-by-id', () => {
     it('should throw an error', async () => {
       try {
         await getBuyerTradingHistoryById(context, mockInvalidId);
-      } catch (err) {
+      } catch (error) {
         const errorMessage = `Getting buyer trading history by ID ${mockInvalidId}`;
 
         const newError = new Error(errorMessage);
 
         const expected = new Error(`${errorMessage} ${newError}`);
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

@@ -82,9 +82,9 @@ describe('custom-resolvers/create-feedback', () => {
     test('should throw an error', async () => {
       try {
         feedbackResponse = (await createInsuranceFeedbackAndEmail({}, variables, context)) as Feedback;
-      } catch (err) {
+      } catch (error) {
         const expected = new Error(`Creating feedback: ${new Error(mockErrorMessage)}`);
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

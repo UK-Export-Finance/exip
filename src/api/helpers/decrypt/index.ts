@@ -36,9 +36,9 @@ const decryptData = (dataToDecrypt: EncryptedData) => {
     const decipherFinal = decipher.final(OUTPUT_ENCODING);
 
     return decipherUpdate.concat(decipherFinal);
-  } catch (err) {
-    console.error('Error decrypting data %O', err);
-    throw new Error(`Error decrypting data ${err}`);
+  } catch (error) {
+    console.error('Error decrypting data %O', error);
+    throw new Error(`Error decrypting data ${error}`);
   }
 };
 

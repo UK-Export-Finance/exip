@@ -51,10 +51,10 @@ const readFile = async (filePath: string): Promise<Buffer> => {
     }
 
     throw new Error('Reading file - does not exist or is unaccepted file type');
-  } catch (err) {
-    console.error('Error reading file %O', err);
+  } catch (error) {
+    console.error('Error reading file %O', error);
 
-    throw new Error(`Reading file ${err}`);
+    throw new Error(`Reading file ${error}`);
   }
 };
 
@@ -75,10 +75,10 @@ const unlink = async (filePath: string) => {
     }
 
     return false;
-  } catch (err) {
-    console.error('Error deleting file %O', err);
+  } catch (error) {
+    console.error('Error deleting file %O', error);
 
-    throw new Error(`Deleting file ${err}`);
+    throw new Error(`Deleting file ${error}`);
   }
 };
 

@@ -16,10 +16,10 @@ const getCompanyAddressById = async (context: Context, id: string) => {
     });
 
     return companyAddress;
-  } catch (err) {
-    console.error(`Getting company address by ID ${id} %O`, err);
+  } catch (error) {
+    console.error(`Getting company address by ID ${id} %O`, error);
 
-    throw new Error(`Error Getting company address by ID ${id} ${err}`);
+    throw new Error(`Error Getting company address by ID ${id} ${error}`);
   }
 };
 

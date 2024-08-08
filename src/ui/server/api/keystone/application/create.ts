@@ -41,8 +41,8 @@ const createApplication = async (eligibilityAnswers: SubmittedDataInsuranceEligi
 
     console.error(`Error with GraphQL createApplicationMutation for user ${accountId} %O`, response);
     throw new Error(`Creating application for user ${accountId}`);
-  } catch (err) {
-    console.error(`Error creating application for user ${accountId} %O`, err);
+  } catch (error) {
+    console.error(`Error creating application for user ${accountId} %O`, error);
     throw new Error(`Creating application for user ${accountId}`);
   }
 };

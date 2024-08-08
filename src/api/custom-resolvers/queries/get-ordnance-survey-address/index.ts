@@ -55,8 +55,8 @@ const getOrdnanceSurveyAddress = async (root: any, variables: OrdnanceSurveyVari
       addresses: mappedAddresses,
       success: true,
     };
-  } catch (err) {
-    console.error('Error getting Ordnance Survey address results %O', err);
+  } catch (error) {
+    console.error('Error getting Ordnance Survey address results %O', error);
     return {
       apiError: true,
       success: false,

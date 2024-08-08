@@ -28,9 +28,9 @@ const getCountryByField = async (context: Context, field: string, value: string)
     const country = countriesArray[0] as Country;
 
     return country;
-  } catch (err) {
-    console.error('Error getting country by field/value %O', err);
-    throw new Error(`Getting country by field/value ${err}`);
+  } catch (error) {
+    console.error('Error getting country by field/value %O', error);
+    throw new Error(`Getting country by field/value ${error}`);
   }
 };
 

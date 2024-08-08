@@ -14,9 +14,9 @@ const create = async (context: Context) => {
     const agent = (await context.query.PrivateMarket.createOne({ data: {} })) as ApplicationPrivateMarket;
 
     return agent;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+    return error;
   }
 };
 
@@ -36,9 +36,9 @@ const get = async (context: Context, agentId: string) => {
     });
 
     return agent;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Getting an privateMarket by ID (test helpers) ${err}`);
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Getting an privateMarket by ID (test helpers) ${error}`);
   }
 };
 

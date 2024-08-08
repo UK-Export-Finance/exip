@@ -33,10 +33,10 @@ const createInitialLossPayees = async (connection: Connection, applications: Arr
     });
 
     return Promise.all(initialAgentsPromises);
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error(`🚨 error ${loggingMessage} %O`, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

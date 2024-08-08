@@ -133,8 +133,8 @@ export const lists = {
             modifiedData.submissionDeadline = addMonths(new Date(now), SUBMISSION_DEADLINE_IN_MONTHS);
 
             return modifiedData;
-          } catch (err) {
-            console.error('Error adding default data to a new application. %O', err);
+          } catch (error) {
+            console.error('Error adding default data to a new application. %O', error);
 
             return false;
           }
@@ -200,8 +200,8 @@ export const lists = {
                 },
               },
             });
-          } catch (err) {
-            console.error('Error adding an application ID to relationships %O', err);
+          } catch (error) {
+            console.error('Error adding an application ID to relationships %O', error);
 
             return false;
           }

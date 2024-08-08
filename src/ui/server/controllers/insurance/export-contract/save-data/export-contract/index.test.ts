@@ -75,9 +75,9 @@ describe('controllers/insurance/export-contract/save-data/export-contract', () =
     it('should throw an error', async () => {
       try {
         await save.exportContract(mockApplication, mockFormBody.valid);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error("Updating application's exportContract");
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

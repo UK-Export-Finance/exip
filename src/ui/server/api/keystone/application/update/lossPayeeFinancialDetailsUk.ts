@@ -33,8 +33,8 @@ const updateLossPayeeFinancialDetailsUk = async (id: string, update: object) => 
 
     console.error('Error with GraphQL updateLossPayeeFinancialDetailsUkMutation %O', response);
     throw new Error('Updating application loss payee financial details uk');
-  } catch (err) {
-    console.error('Error updating application loss payee financial details uk %O', err);
+  } catch (error) {
+    console.error('Error updating application loss payee financial details uk %O', error);
     throw new Error('Updating application loss payee financial details uk');
   }
 };

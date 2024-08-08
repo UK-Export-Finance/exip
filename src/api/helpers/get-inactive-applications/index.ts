@@ -28,10 +28,10 @@ const getInactiveApplications = async (context: Context): Promise<Application[]>
     })) as Array<Application>;
 
     return applications;
-  } catch (err) {
-    console.error('Error getting inactive applications (getInactiveApplications helper) %O', err);
+  } catch (error) {
+    console.error('Error getting inactive applications (getInactiveApplications helper) %O', error);
 
-    throw new Error(`Error getting inactive applications (getInactiveApplications helper) ${err}`);
+    throw new Error(`Error getting inactive applications (getInactiveApplications helper) ${error}`);
   }
 };
 

@@ -39,9 +39,9 @@ describe('controllers/account/create/your-details/save-data', () => {
       it('should throw an error', async () => {
         try {
           await save.account(mockUrlOrigin, mockFormBody);
-        } catch (err) {
+        } catch (error) {
           const expected = new Error('Creating account');
-          expect(err).toEqual(expected);
+          expect(error).toEqual(expected);
         }
       });
     });

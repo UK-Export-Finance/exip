@@ -16,10 +16,10 @@ const getPolicyContactById = async (context: Context, id: string) => {
     });
 
     return policyContact;
-  } catch (err) {
-    console.error(`Getting policyContact by ID ${id} %O`, err);
+  } catch (error) {
+    console.error(`Getting policyContact by ID ${id} %O`, error);
 
-    throw new Error(`Error Getting policyContact by ID ${id} ${err}`);
+    throw new Error(`Error Getting policyContact by ID ${id} ${error}`);
   }
 };
 

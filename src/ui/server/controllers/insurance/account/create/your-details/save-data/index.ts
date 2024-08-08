@@ -15,7 +15,7 @@ const account = async (urlOrigin: string, formBody: RequestBody) => {
     const saveResponse = await api.keystone.account.create(urlOrigin, sanitisedData);
 
     return saveResponse;
-  } catch (err) {
+  } catch (error) {
     throw new Error('Creating account');
   }
 };

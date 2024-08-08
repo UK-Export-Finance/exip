@@ -5,8 +5,8 @@ import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
 
-const assertError = (err) => {
-  const errorString = String(err);
+const assertError = (error) => {
+  const errorString = String(error);
 
   expect(errorString.includes('Creating an export contract agent service')).toEqual(true);
 };
@@ -44,8 +44,8 @@ describe('helpers/create-an-export-contract-agent-service', () => {
     test('it should throw an error', async () => {
       try {
         await createAnExportContractAgentService(context, mockInvalidId);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -55,8 +55,8 @@ describe('helpers/create-an-export-contract-agent-service', () => {
       try {
         // pass empty context object to force an error
         await createAnExportContractAgentService({}, mockInvalidId);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

@@ -79,8 +79,8 @@ const get = (req: Request, res: Response) => {
       application: mapApplicationToFormFields(application),
       ...pageVariables(application.referenceNumber),
     });
-  } catch (err) {
-    console.error('Error getting nature of business %O', err);
+  } catch (error) {
+    console.error('Error getting nature of business %O', error);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -141,8 +141,8 @@ const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ROOT}`);
-  } catch (err) {
-    console.error('Error updating application - your business - nature of business %O', err);
+  } catch (error) {
+    console.error('Error updating application - your business - nature of business %O', error);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

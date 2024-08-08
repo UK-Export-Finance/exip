@@ -31,10 +31,10 @@ const getPopulatedExportContract = async (context: Context, id: string) => {
     };
 
     return populatedExportContract;
-  } catch (err) {
-    console.error(`Getting populated exportContract ${id} %O`, err);
+  } catch (error) {
+    console.error(`Getting populated exportContract ${id} %O`, error);
 
-    throw new Error(`Error Getting populated exportContract ${id} ${err}`);
+    throw new Error(`Error Getting populated exportContract ${id} ${error}`);
   }
 };
 

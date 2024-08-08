@@ -29,10 +29,10 @@ const createNewAccountStatusRelationships = async (connection: Connection): Prom
     await updateAccountStatusColumns(connection, statusRows, accountStatuses);
 
     return true;
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error(`🚨 error ${loggingMessage} %O`, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

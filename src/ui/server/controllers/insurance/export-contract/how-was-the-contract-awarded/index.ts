@@ -161,8 +161,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`);
-  } catch (err) {
-    console.error('Error updating application - export contract - how was the contract awarded %O', err);
+  } catch (error) {
+    console.error('Error updating application - export contract - how was the contract awarded %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

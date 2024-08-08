@@ -9,8 +9,8 @@ import api from '../../api';
 const getAccountByEmail = (email) => {
   try {
     return api.getAccountByEmail(email);
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
     throw new Error('Getting account by email');
   }

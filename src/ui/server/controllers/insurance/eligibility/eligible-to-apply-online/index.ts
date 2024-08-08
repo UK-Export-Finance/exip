@@ -77,8 +77,8 @@ export const post = async (req: Request, res: Response) => {
      * Therefore, redirect to account creation/sign in flow.
      */
     return res.redirect(HAVE_AN_ACCOUNT);
-  } catch (err) {
-    console.error('Error creating application %O', err);
+  } catch (error) {
+    console.error('Error creating application %O', error);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

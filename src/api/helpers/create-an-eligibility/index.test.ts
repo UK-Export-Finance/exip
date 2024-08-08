@@ -7,8 +7,8 @@ import totalContractValueTestHelper from '../../test-helpers/total-contract-valu
 import applications from '../../test-helpers/applications';
 import { Application, Context, CoverPeriod, TotalContractValue } from '../../types';
 
-const assertError = (err) => {
-  const errorString = String(err);
+const assertError = (error) => {
+  const errorString = String(error);
 
   expect(errorString.includes('Creating an eligibility')).toEqual(true);
 };
@@ -61,8 +61,8 @@ describe('helpers/create-an-eligibility', () => {
     test('it should throw an error', async () => {
       try {
         await creatAnEligibility(context, mockInvalidId, application.id, coverPeriod.id, totalContractValue.id);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -71,8 +71,8 @@ describe('helpers/create-an-eligibility', () => {
     test('it should throw an error', async () => {
       try {
         await creatAnEligibility(context, country.id, mockInvalidId, coverPeriod.id, totalContractValue.id);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -81,8 +81,8 @@ describe('helpers/create-an-eligibility', () => {
     test('it should throw an error', async () => {
       try {
         await creatAnEligibility(context, country.id, application.id, mockInvalidId, totalContractValue.id);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -91,8 +91,8 @@ describe('helpers/create-an-eligibility', () => {
     test('it should throw an error', async () => {
       try {
         await creatAnEligibility(context, country.id, application.id, coverPeriod.id, mockInvalidId);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -102,8 +102,8 @@ describe('helpers/create-an-eligibility', () => {
       try {
         // pass empty context object to force an error
         await creatAnEligibility({}, country.id, application.id, coverPeriod.id, totalContractValue.id);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

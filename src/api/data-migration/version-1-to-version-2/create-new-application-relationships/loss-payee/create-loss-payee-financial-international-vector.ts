@@ -32,10 +32,10 @@ const lossPayeeFinancialInternationalVector = async (connection: Connection, app
     });
 
     return Promise.all(vectorPromises);
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error(`🚨 error ${loggingMessage} %O`, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

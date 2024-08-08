@@ -30,8 +30,8 @@ const getApplicationByReferenceNumber = async (variables: ApplicationByReference
 
     console.error('Error with GraphQL applicationByReferenceNumberQuery %O', response);
     throw new Error('Getting application by referenceNumber');
-  } catch (err) {
-    console.error('Error getting application by referenceNumber %O', err);
+  } catch (error) {
+    console.error('Error getting application by referenceNumber %O', error);
     throw new Error('Getting application by referenceNumber');
   }
 };

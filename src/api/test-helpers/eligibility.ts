@@ -18,9 +18,9 @@ const create = async (context: Context, data = {}) => {
     })) as ApplicationEligibility;
 
     return eligibility;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+    return error;
   }
 };
 
@@ -41,9 +41,9 @@ const get = async (context: Context, eligibilityId: string): Promise<Application
     })) as ApplicationEligibility;
 
     return eligibility;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Getting an eligibility by ID (test helpers) ${err}`);
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Getting an eligibility by ID (test helpers) ${error}`);
   }
 };
 

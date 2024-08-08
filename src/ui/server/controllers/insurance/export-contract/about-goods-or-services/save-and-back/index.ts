@@ -59,8 +59,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-  } catch (err) {
-    console.error('Error updating application - export contract - about goods or services (save and back) %O', err);
+  } catch (error) {
+    console.error('Error updating application - export contract - about goods or services (save and back) %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

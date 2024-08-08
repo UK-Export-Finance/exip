@@ -30,10 +30,10 @@ const createAnAbandonedApplication = (accountId) => {
       };
 
       return api.createAnAbandonedApplication(accountId, mockEligibilityAnswers, company, sectionReview).then((application) => application);
-    } catch (err) {
-      console.error('Creating an abandoned application', err);
+    } catch (error) {
+      console.error('Creating an abandoned application', error);
 
-      return err;
+      return error;
     }
   }
 

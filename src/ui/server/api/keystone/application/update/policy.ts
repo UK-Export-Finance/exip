@@ -34,8 +34,8 @@ const updatePolicy = async (id: string, update: object) => {
 
     console.error('Error with GraphQL updateApplicationPolicyMutation %O', response);
     throw new Error('Updating application policy');
-  } catch (err) {
-    console.error('Error updating application policy %O', err);
+  } catch (error) {
+    console.error('Error updating application policy %O', error);
     throw new Error('Updating application policy');
   }
 };

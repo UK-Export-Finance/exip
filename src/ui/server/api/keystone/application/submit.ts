@@ -30,8 +30,8 @@ const submitApplication = async (applicationId: string) => {
 
     console.error('Error with GraphQL submitApplicationMutation %O', response);
     throw new Error(`Submitting application ${applicationId}`);
-  } catch (err) {
-    console.error('Error submitting application %O', err);
+  } catch (error) {
+    console.error('Error submitting application %O', error);
     throw new Error(`Submitting application ${applicationId}`);
   }
 };

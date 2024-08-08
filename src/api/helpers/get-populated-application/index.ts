@@ -100,10 +100,10 @@ const getPopulatedApplication = async ({
     };
 
     return populatedApplication;
-  } catch (err) {
-    console.error(`Getting populated application (helper) ${application.id} %O`, err);
+  } catch (error) {
+    console.error(`Getting populated application (helper) ${application.id} %O`, error);
 
-    throw new Error(`Error Getting populated application (helper) ${application.id} ${err}`);
+    throw new Error(`Error Getting populated application (helper) ${application.id} ${error}`);
   }
 };
 

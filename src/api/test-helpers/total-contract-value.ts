@@ -23,9 +23,9 @@ const create = async (context: Context) => {
     })) as TotalContractValue;
 
     return totalContractValue;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+    return error;
   }
 };
 

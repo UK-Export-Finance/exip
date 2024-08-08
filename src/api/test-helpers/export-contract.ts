@@ -15,9 +15,9 @@ const create = async (context: Context, data = {}) => {
     const exportContract = (await context.query.ExportContract.createOne({ data })) as ApplicationExportContract;
 
     return exportContract;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+    return error;
   }
 };
 
@@ -37,9 +37,9 @@ const get = async (context: Context, exportContractId: string) => {
     });
 
     return exportContract;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Getting an exportContract by ID (test helpers) ${err}`);
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Getting an exportContract by ID (test helpers) ${error}`);
   }
 };
 

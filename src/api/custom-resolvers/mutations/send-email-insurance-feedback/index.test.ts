@@ -44,10 +44,10 @@ describe('custom-resolvers/send-email-insurance-feedback', () => {
     test('should throw an error', async () => {
       try {
         await sendEmailInsuranceFeedback({}, variables);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error(`Generating and sending email for insurance feedback ${new Error(mockErrorMessage)}`);
 
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

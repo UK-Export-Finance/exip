@@ -28,9 +28,9 @@ const getTotalContractValueByField = async (context: Context, field: string, val
     const [totalContractValue] = totalContractValuesArray;
 
     return totalContractValue;
-  } catch (err) {
-    console.error('Error getting totalContractValue by field/value %O', err);
-    throw new Error(`Getting totalContractValue by field/value ${err}`);
+  } catch (error) {
+    console.error('Error getting totalContractValue by field/value %O', error);
+    throw new Error(`Getting totalContractValue by field/value ${error}`);
   }
 };
 

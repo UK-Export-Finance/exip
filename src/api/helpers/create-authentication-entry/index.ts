@@ -19,10 +19,10 @@ const createAuthenticationEntry = async (context: Context, entry: object) => {
     });
 
     return result;
-  } catch (err) {
-    console.error('Error creating authentication entry %O', err);
+  } catch (error) {
+    console.error('Error creating authentication entry %O', error);
 
-    throw new Error(`Creating authentication entry ${err}`);
+    throw new Error(`Creating authentication entry ${error}`);
   }
 };
 

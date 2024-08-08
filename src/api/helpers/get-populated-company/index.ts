@@ -31,10 +31,10 @@ const getPopulatedCompany = async (context: Context, id: string) => {
     };
 
     return populatedCompany;
-  } catch (err) {
-    console.error(`Getting populated company ${id} %O`, err);
+  } catch (error) {
+    console.error(`Getting populated company ${id} %O`, error);
 
-    throw new Error(`Error Getting populated company ${id} ${err}`);
+    throw new Error(`Error Getting populated company ${id} ${error}`);
   }
 };
 

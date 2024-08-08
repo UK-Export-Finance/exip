@@ -79,10 +79,10 @@ describe('emails/insurance-feedback-email', () => {
     test('should throw an error', async () => {
       try {
         await insuranceFeedbackEmail(mockInsuranceFeedback);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error(`Sending insurance feedback email Error: Sending email ${new Error(mockErrorMessage)}`);
 
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

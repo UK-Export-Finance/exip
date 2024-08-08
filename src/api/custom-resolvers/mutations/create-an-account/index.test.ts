@@ -151,11 +151,11 @@ describe('custom-resolvers/create-an-account', () => {
       test('should throw an error', async () => {
         try {
           await createAnAccount({}, variables, context);
-        } catch (err) {
+        } catch (error) {
           const expected = new Error(
             `Account creation - creating account Error: Account creation - sending email verification for account creation ${emailFailureResponse}`,
           );
-          expect(err).toEqual(expected);
+          expect(error).toEqual(expected);
         }
       });
     });
@@ -170,11 +170,11 @@ describe('custom-resolvers/create-an-account', () => {
       test('should throw an error', async () => {
         try {
           await createAnAccount({}, variables, context);
-        } catch (err) {
+        } catch (error) {
           const expected = new Error(
             `Account creation - creating account Error: Account creation - sending email verification for account creation ${emailFailureResponse}`,
           );
-          expect(err).toEqual(expected);
+          expect(error).toEqual(expected);
         }
       });
     });

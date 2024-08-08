@@ -44,10 +44,10 @@ const companiesHouse = {
         success: true,
         data: response.data,
       };
-    } catch (err) {
-      console.error('Error calling Companies House API %O', err);
+    } catch (error) {
+      console.error('Error calling Companies House API %O', error);
 
-      throw new Error(`Calling Companies House API. Unable to search for company ${err}`);
+      throw new Error(`Calling Companies House API. Unable to search for company ${error}`);
     }
   },
 };

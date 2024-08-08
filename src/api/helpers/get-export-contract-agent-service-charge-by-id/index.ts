@@ -16,10 +16,10 @@ const getExportContractAgentServiceChargeById = async (context: Context, id: str
     });
 
     return exportContractAgentServiceCharge;
-  } catch (err) {
-    console.error(`Getting exportContractAgentServiceCharge by ID ${id} %O`, err);
+  } catch (error) {
+    console.error(`Getting exportContractAgentServiceCharge by ID ${id} %O`, error);
 
-    throw new Error(`Error Getting exportContractAgentServiceCharge by ID ${id} ${err}`);
+    throw new Error(`Error Getting exportContractAgentServiceCharge by ID ${id} ${error}`);
   }
 };
 

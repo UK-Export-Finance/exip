@@ -141,8 +141,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`);
-  } catch (err) {
-    console.error('Error updating application - policy - Different name on policy %O', err);
+  } catch (error) {
+    console.error('Error updating application - policy - Different name on policy %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

@@ -33,8 +33,8 @@ const updateLossPayeeFinancialDetailsInternational = async (id: string, update: 
 
     console.error('Error with GraphQL updateLossPayeeFinancialDetailsInternational %O', response);
     throw new Error('Updating application loss payee financial details international');
-  } catch (err) {
-    console.error('Error updating application loss payee financial details international %O', err);
+  } catch (error) {
+    console.error('Error updating application loss payee financial details international %O', error);
     throw new Error('Updating application loss payee financial details international');
   }
 };

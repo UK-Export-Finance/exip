@@ -31,10 +31,10 @@ const executeSqlQuery = async ({ connection, query, loggingMessage }: ExecuteSql
     const response = await connection.query(query);
 
     return response;
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error(`🚨 error ${loggingMessage} %O`, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

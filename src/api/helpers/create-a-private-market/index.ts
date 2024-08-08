@@ -20,10 +20,10 @@ const createAPrivateMarket = async (context: Context, exportContractId: string):
     });
 
     return privateMarket;
-  } catch (err) {
-    console.error('Error creating a private market %O', err);
+  } catch (error) {
+    console.error('Error creating a private market %O', error);
 
-    throw new Error(`Creating a private market ${err}`);
+    throw new Error(`Creating a private market ${error}`);
   }
 };
 

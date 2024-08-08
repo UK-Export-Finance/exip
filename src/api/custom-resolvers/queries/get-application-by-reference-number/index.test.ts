@@ -130,8 +130,8 @@ describe('custom-resolvers/get-application-by-reference-number', () => {
     it('should throw an error', async () => {
       try {
         await getApplicationByReferenceNumberQuery({}, { referenceNumber: 0 }, context);
-      } catch (err) {
-        const errorString = String(err);
+      } catch (error) {
+        const errorString = String(error);
 
         expect(errorString.includes('Error generating buffer')).toEqual(true);
       }

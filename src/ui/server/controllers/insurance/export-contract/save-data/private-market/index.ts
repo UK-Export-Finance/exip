@@ -24,7 +24,7 @@ const privateMarket = async (application: Application, formBody: RequestBody, er
     const saveResponse = await api.keystone.application.update.privateMarket(privateMarketId, sanitisedData);
 
     return saveResponse;
-  } catch (err) {
+  } catch (error) {
     throw new Error("Updating application's privateMarket");
   }
 };

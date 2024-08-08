@@ -37,8 +37,8 @@ describe('helpers/block-account', () => {
     test('it should throw an error', async () => {
       try {
         await blockAccount(context, mockInvalidId);
-      } catch (err) {
-        const errorString = String(err);
+      } catch (error) {
+        const errorString = String(error);
 
         expect(errorString.includes('Blocking account')).toEqual(true);
         expect(errorString.includes('cannot update that Account')).toEqual(true);
@@ -52,8 +52,8 @@ describe('helpers/block-account', () => {
 
       try {
         await blockAccount(context, account.id);
-      } catch (err) {
-        const errorString = String(err);
+      } catch (error) {
+        const errorString = String(error);
 
         expect(errorString.includes('Blocking account')).toEqual(true);
         expect(errorString.includes('cannot update that Account')).toEqual(true);

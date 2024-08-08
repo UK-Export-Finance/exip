@@ -42,9 +42,9 @@ const applicationSubmissionDeadlineEmail = async (context: Context): Promise<Suc
     return {
       success: true,
     };
-  } catch (err) {
-    console.error('Error sending application submission deadline email (emailApplicationSubmissionDeadlineEmail helper) %O', err);
-    throw new Error(`Sending application submission deadline email (emailApplicationSubmissionDeadlineEmail helper) ${err}`);
+  } catch (error) {
+    console.error('Error sending application submission deadline email (emailApplicationSubmissionDeadlineEmail helper) %O', error);
+    throw new Error(`Sending application submission deadline email (emailApplicationSubmissionDeadlineEmail helper) ${error}`);
   }
 };
 

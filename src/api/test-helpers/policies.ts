@@ -18,9 +18,9 @@ const update = async ({ context, data, policyId }: TestHelperPolicyUpdate) => {
     })) as ApplicationPolicy;
 
     return policy;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+    return error;
   }
 };
 
@@ -38,9 +38,9 @@ const create = async ({ context, data = {} }: TestHelperPolicyCreate) => {
     const policy = (await context.db.Policy.createOne({ data })) as ApplicationPolicy;
 
     return policy;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+    return error;
   }
 };
 

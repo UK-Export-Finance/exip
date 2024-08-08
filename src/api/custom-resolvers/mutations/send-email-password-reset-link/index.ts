@@ -83,8 +83,8 @@ const sendEmailPasswordResetLink = async (
             accountId,
           };
         }
-      } catch (err) {
-        console.error('Error blocking account $O', err);
+      } catch (error) {
+        console.error('Error blocking account $O', error);
         return { success: false };
       }
     }
@@ -117,10 +117,10 @@ const sendEmailPasswordResetLink = async (
     }
 
     return { success: false };
-  } catch (err) {
-    console.error('Error checking account and sending password reset email (sendEmailPasswordResetLink mutation) $O', err);
+  } catch (error) {
+    console.error('Error checking account and sending password reset email (sendEmailPasswordResetLink mutation) $O', error);
 
-    throw new Error(`Checking account and sending password reset email (sendEmailPasswordResetLink mutation) ${err}`);
+    throw new Error(`Checking account and sending password reset email (sendEmailPasswordResetLink mutation) ${error}`);
   }
 };
 

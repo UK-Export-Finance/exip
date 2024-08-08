@@ -24,7 +24,7 @@ const jointlyInsuredParty = async (application: Application, formBody: RequestBo
     const saveResponse = await api.keystone.application.update.jointlyInsuredParty(jointlyInsuredPartyId, sanitisedData);
 
     return saveResponse;
-  } catch (err) {
+  } catch (error) {
     throw new Error("Updating application's jointly insured party");
   }
 };

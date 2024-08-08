@@ -16,10 +16,10 @@ const getBuyerById = async (context: Context, id: string) => {
     });
 
     return buyer;
-  } catch (err) {
-    console.error(`Getting buyer by ID ${id} %O`, err);
+  } catch (error) {
+    console.error(`Getting buyer by ID ${id} %O`, error);
 
-    throw new Error(`Error Getting buyer by ID ${id} ${err}`);
+    throw new Error(`Error Getting buyer by ID ${id} ${error}`);
   }
 };
 

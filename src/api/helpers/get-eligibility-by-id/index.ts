@@ -16,10 +16,10 @@ const getEligibilityById = async (context: Context, id: string) => {
     });
 
     return eligibility;
-  } catch (err) {
-    console.error(`Getting eligibility by ID ${id} %O`, err);
+  } catch (error) {
+    console.error(`Getting eligibility by ID ${id} %O`, error);
 
-    throw new Error(`Error Getting eligibility by ID ${id} ${err}`);
+    throw new Error(`Error Getting eligibility by ID ${id} ${error}`);
   }
 };
 

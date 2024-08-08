@@ -20,10 +20,10 @@ const getCompanySicCodesByCompanyId = async (context: Context, id: string) => {
     });
 
     return companySicCodes;
-  } catch (err) {
-    console.error(`Getting company SIC codes by company ID ${id} %O`, err);
+  } catch (error) {
+    console.error(`Getting company SIC codes by company ID ${id} %O`, error);
 
-    throw new Error(`Error Getting company SIC codes by company ID ${id} ${err}`);
+    throw new Error(`Error Getting company SIC codes by company ID ${id} ${error}`);
   }
 };
 

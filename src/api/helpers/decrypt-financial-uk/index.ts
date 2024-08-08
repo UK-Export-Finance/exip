@@ -43,9 +43,9 @@ const decryptFinancialUk = (applicationFinancialUk: ApplicationLossPayeeFinancia
     mapped.sortCode = decryptedSortCode;
 
     return mapped;
-  } catch (err) {
-    console.error('Error decrypting financial uk %O', err);
-    throw new Error(`Error decrypting financial uk ${err}`);
+  } catch (error) {
+    console.error('Error decrypting financial uk %O', error);
+    throw new Error(`Error decrypting financial uk ${error}`);
   }
 };
 

@@ -20,10 +20,10 @@ const getAllSubmittedApplications = async (connection: Connection) => {
     const [applications] = await executeSqlQuery({ connection, query, loggingMessage });
 
     return applications as Array<Application>;
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error(`🚨 error ${loggingMessage} %O`, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

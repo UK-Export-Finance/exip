@@ -60,8 +60,8 @@ export const applicationStatusMiddleware = async (req: Request, res: Response, n
     }
 
     return next();
-  } catch (err) {
-    console.error('Error with application status middleware %O', err);
+  } catch (error) {
+    console.error('Error with application status middleware %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

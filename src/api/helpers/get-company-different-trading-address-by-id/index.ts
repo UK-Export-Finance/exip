@@ -16,10 +16,10 @@ const getCompanyDifferentTradingAddressById = async (context: Context, id: strin
     });
 
     return differentTradingAddress;
-  } catch (err) {
-    console.error(`Getting company different trading address by ID ${id} %O`, err);
+  } catch (error) {
+    console.error(`Getting company different trading address by ID ${id} %O`, error);
 
-    throw new Error(`Error Getting company different trading address by ID ${id} ${err}`);
+    throw new Error(`Error Getting company different trading address by ID ${id} ${error}`);
   }
 };
 

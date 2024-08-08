@@ -49,9 +49,9 @@ const updateCompanyPostDataMigration = async (root: any, variables: UpdateCompan
     return {
       success: true,
     };
-  } catch (err) {
-    console.error('Error updating company (post data migration) %O', err);
-    throw new Error(`Updating company (post data migration) ${err}`);
+  } catch (error) {
+    console.error('Error updating company (post data migration) %O', error);
+    throw new Error(`Updating company (post data migration) ${error}`);
   }
 };
 

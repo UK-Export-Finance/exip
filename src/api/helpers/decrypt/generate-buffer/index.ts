@@ -11,9 +11,9 @@ const { STRING_ENCODING, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER
 const generateBufferInStringFormat = (value: string) => {
   try {
     return Buffer.from(value, STRING_ENCODING).toString(OUTPUT_ENCODING);
-  } catch (err) {
-    console.error('Error generating buffer %O', err);
-    throw new Error(`Error generating buffer ${err}`);
+  } catch (error) {
+    console.error('Error generating buffer %O', error);
+    throw new Error(`Error generating buffer ${error}`);
   }
 };
 

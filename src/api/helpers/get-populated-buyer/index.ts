@@ -31,10 +31,10 @@ const getPopulatedBuyer = async (context: Context, id: string) => {
     };
 
     return populatedBuyer;
-  } catch (err) {
-    console.error(`Getting populated buyer ${id} %O`, err);
+  } catch (error) {
+    console.error(`Getting populated buyer ${id} %O`, error);
 
-    throw new Error(`Error Getting populated buyer ${id} ${err}`);
+    throw new Error(`Error Getting populated buyer ${id} ${error}`);
   }
 };
 

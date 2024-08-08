@@ -27,10 +27,10 @@ const createANominatedLossPayee = async (context: Context, applicationId: string
     await createALossPayeeFinancialUk(context, nominatedLossPayee.id);
 
     return nominatedLossPayee;
-  } catch (err) {
-    console.error('Error creating a nominated loss payee for %O', err);
+  } catch (error) {
+    console.error('Error creating a nominated loss payee for %O', error);
 
-    throw new Error(`Creating a nominated loss payee for ${err}`);
+    throw new Error(`Creating a nominated loss payee for ${error}`);
   }
 };
 
