@@ -18,16 +18,14 @@ export * from './integrity';
 export * from './pagination';
 export * from './percentages-of-cover';
 export * from './phone-number-countries';
+export * from './quote';
 export * from './regex';
 export * from './routes';
 export * from './supported-currencies';
+export * from './service-name';
 export * from './task-ids';
 export * from './templates';
 export * from './tls';
 export * from './total-contract-value';
 export * from './ukef-contact-details';
 export * from './validation';
-
-// TODO: Refactor below constants
-export const SERVICE_NAME = 'EXIP';
-export const QUOTE = 'Quote';
