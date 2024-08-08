@@ -66,6 +66,7 @@ const get = (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error('Error getting insurance feedback page %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -127,6 +128,7 @@ const post = async (req: Request, res: Response) => {
     return res.redirect(FEEDBACK_SENT);
   } catch (error) {
     console.error('Error posting insurance feedback page %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

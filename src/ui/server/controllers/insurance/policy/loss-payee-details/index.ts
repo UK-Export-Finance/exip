@@ -182,6 +182,7 @@ export const post = async (req: Request, res: Response) => {
     }
   } catch (error) {
     console.error('Error updating application - policy - loss payee details %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

@@ -23,7 +23,7 @@ import updateLossPayeeFinancialInternationalVector from './loss-payee/update-los
 const createNewApplicationRelationships = async (connection: Connection) => {
   const loggingMessage = 'Creating new relationships for all applications';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const applications = await getAllApplications(connection);
@@ -44,7 +44,7 @@ const createNewApplicationRelationships = async (connection: Connection) => {
 
     return newRelationships;
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error('🚨 error %s %O', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

@@ -12,11 +12,11 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  */
 export const asyncTaskToSyncTask =
   (task: CronSchedulerJobTask, context: Context): CronScheduleFunc =>
-    (now) => {
-      (async () => {
-        await task(context, now);
-      })();
-    };
+  (now) => {
+    (async () => {
+      await task(context, now);
+    })();
+  };
 
 /**
  * taskWithErrorLogging
@@ -26,11 +26,12 @@ export const asyncTaskToSyncTask =
  */
 export const taskWithErrorLogging =
   (description: string, task: CronSchedulerJobTask, context: Context): CronSchedulerJobTask =>
-    async (_commonContext, now) => {
-      try {
-        await task(context, now);
-      } catch (error) {
-        console.error("An error occurred running job '%s' %o", description, error);
-        throw error;
-      }
-    };
+  async (_commonContext, now) => {
+    try {
+      await task(context, now);
+    } catch (error) {
+      console.error("An error occurred running job '%s' %o", description, error);
+
+      throw error;
+    }
+  };

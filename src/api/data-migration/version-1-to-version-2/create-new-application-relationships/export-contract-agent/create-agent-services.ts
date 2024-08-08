@@ -16,7 +16,7 @@ import { Application } from '../../../../types';
 const createAgentServices = async (connection: Connection, applications: Array<Application>) => {
   const loggingMessage = 'Creating exportContract agent services';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const servicesPromises = applications.map(async (application: Application) => {
@@ -37,7 +37,7 @@ const createAgentServices = async (connection: Connection, applications: Array<A
 
     return Promise.all(servicesPromises);
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error('🚨 error %s %O', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

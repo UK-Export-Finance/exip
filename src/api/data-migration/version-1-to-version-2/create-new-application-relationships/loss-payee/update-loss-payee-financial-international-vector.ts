@@ -12,7 +12,7 @@ import executeSqlQuery from '../../execute-sql-query';
 const updateLossPayeeFinancialInternationalVector = async (connection: Connection) => {
   const loggingMessage = 'Updating vector columns in LossPayeeFinancialInternational entries';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const financialInternationals = await getAllLossPayeeFinancialInternational(connection);
@@ -36,7 +36,7 @@ const updateLossPayeeFinancialInternationalVector = async (connection: Connectio
 
     return Promise.all(promises);
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error('🚨 error %s %O', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

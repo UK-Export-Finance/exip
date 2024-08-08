@@ -16,6 +16,7 @@ const create = async (context: Context) => {
     return declaration;
   } catch (error) {
     console.error(error);
+
     return error;
   }
 };
@@ -38,6 +39,7 @@ const get = async (context: Context, declarationId: string) => {
     return declaration;
   } catch (error) {
     console.error(error);
+
     throw new Error(`Getting an declaration by ID (test helpers) ${error}`);
   }
 };

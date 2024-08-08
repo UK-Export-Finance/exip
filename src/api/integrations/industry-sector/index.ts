@@ -46,6 +46,7 @@ const industrySectorNames = {
       };
     } catch (error) {
       console.error('Error calling industry sector API %O', error);
+
       return {
         success: false,
         apiError: true,

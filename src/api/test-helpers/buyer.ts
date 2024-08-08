@@ -18,6 +18,7 @@ const create = async (context: Context, data = {}) => {
     return buyer;
   } catch (error) {
     console.error(error);
+
     return error;
   }
 };

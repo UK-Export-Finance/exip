@@ -20,6 +20,7 @@ const update = async ({ context, data, policyId }: TestHelperPolicyUpdate) => {
     return policy;
   } catch (error) {
     console.error(error);
+
     return error;
   }
 };
@@ -40,6 +41,7 @@ const create = async ({ context, data = {} }: TestHelperPolicyCreate) => {
     return policy;
   } catch (error) {
     console.error(error);
+
     return error;
   }
 };

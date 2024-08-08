@@ -182,6 +182,7 @@ export const get = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error('Error getting trading history with the buyer %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -287,6 +288,7 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`);
   } catch (error) {
     console.error('Error posting trading history with the buyer %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

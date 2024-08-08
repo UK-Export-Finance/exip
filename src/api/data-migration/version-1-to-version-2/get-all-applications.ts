@@ -17,7 +17,7 @@ const getAllApplications = async (connection: Connection) => {
 
     return applications;
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error('🚨 error %s %O', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

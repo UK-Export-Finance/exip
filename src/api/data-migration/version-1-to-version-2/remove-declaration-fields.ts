@@ -10,7 +10,7 @@ import executeSqlQuery from './execute-sql-query';
 const removeDeclarationKeys = async (connection: Connection) => {
   const loggingMessage = 'Removing KEYS declarations';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const queries = await Promise.all([
@@ -35,7 +35,7 @@ const removeDeclarationKeys = async (connection: Connection) => {
 
     return queries;
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error('🚨 error %s %O', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
@@ -50,7 +50,7 @@ const removeDeclarationKeys = async (connection: Connection) => {
 const removeDeclarationConstraints = async (connection: Connection) => {
   const loggingMessage = 'Removing CONSTRAINTS declarations';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const queries = await Promise.all([
@@ -75,7 +75,7 @@ const removeDeclarationConstraints = async (connection: Connection) => {
 
     return queries;
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error('🚨 error %s %O', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
@@ -90,7 +90,7 @@ const removeDeclarationConstraints = async (connection: Connection) => {
 const removeDeclarationFields = async (connection: Connection) => {
   const loggingMessage = 'Removing FIELDS declarations';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const queries = await Promise.all([
@@ -119,7 +119,7 @@ const removeDeclarationFields = async (connection: Connection) => {
 
     return queries;
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error('🚨 error %s %O', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

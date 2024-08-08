@@ -15,7 +15,7 @@ interface ExecuteSqlQueryParams {
  */
 const executeSqlQuery = async ({ connection, query, loggingMessage }: ExecuteSqlQueryParams) => {
   try {
-    console.info(`✅ ${loggingMessage}`);
+    console.info('✅ %s', loggingMessage);
 
     /**
      * Check that the connection is a valid database connection.
@@ -23,7 +23,7 @@ const executeSqlQuery = async ({ connection, query, loggingMessage }: ExecuteSql
      * Otherwise, a generic "cannot query" style error is logged.
      */
     if (!connection.query || typeof connection.query !== 'function') {
-      console.error(`🚨 Invalid connection passed to executeSqlQuery (${loggingMessage})`);
+      console.error('🚨 Invalid connection passed to executeSqlQuery (%s)', loggingMessage);
 
       throw new Error(`🚨 Invalid connection passed to executeSqlQuery (${loggingMessage})`);
     }
@@ -32,7 +32,7 @@ const executeSqlQuery = async ({ connection, query, loggingMessage }: ExecuteSql
 
     return response;
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error('🚨 error %s %O', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

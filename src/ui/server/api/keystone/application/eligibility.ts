@@ -29,9 +29,11 @@ const eligibility = {
       }
 
       console.error('Error with GraphQL updateEligibilityMutation %O', response);
+
       throw new Error('Updating eligibility');
     } catch (error) {
       console.error('Error updating eligibility %O', error);
+
       throw new Error('Updating eligibility');
     }
   },

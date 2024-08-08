@@ -152,6 +152,7 @@ const get = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error('Error getting turnover %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -249,6 +250,7 @@ const post = async (req: Request, res: Response) => {
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CREDIT_CONTROL}`);
   } catch (error) {
     console.error('Error updating application - your business - turnover %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

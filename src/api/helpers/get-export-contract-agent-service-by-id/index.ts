@@ -9,7 +9,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  */
 const getExportContractAgentServiceById = async (context: Context, id: string) => {
   try {
-    console.info(`Getting exportContractAgentService by ID ${id}`);
+    console.info('Getting exportContractAgentService by ID %s', id);
 
     const exportContractAgentService = await context.db.ExportContractAgentService.findOne({
       where: { id },
@@ -17,7 +17,7 @@ const getExportContractAgentServiceById = async (context: Context, id: string) =
 
     return exportContractAgentService;
   } catch (error) {
-    console.error(`Getting exportContractAgentService by ID ${id} %O`, error);
+    console.error('Getting exportContractAgentService by ID %s %O', id, error);
 
     throw new Error(`Error Getting exportContractAgentService by ID ${id} ${error}`);
   }

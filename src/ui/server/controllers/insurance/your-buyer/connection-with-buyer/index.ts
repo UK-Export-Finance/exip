@@ -160,6 +160,7 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`);
   } catch (error) {
     console.error('Error posting connection to the buyer %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

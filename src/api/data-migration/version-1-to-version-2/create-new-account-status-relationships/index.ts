@@ -17,7 +17,7 @@ import getAllAccounts from '../get-all-accounts';
 const createNewAccountStatusRelationships = async (connection: Connection): Promise<boolean> => {
   const loggingMessage = 'Creating new status relationships for all accounts';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const accounts = await getAllAccounts(connection);
@@ -30,7 +30,7 @@ const createNewAccountStatusRelationships = async (connection: Connection): Prom
 
     return true;
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error('🚨 error %s %O', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

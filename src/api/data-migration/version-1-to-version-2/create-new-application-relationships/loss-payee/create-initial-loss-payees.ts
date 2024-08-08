@@ -13,7 +13,7 @@ import { Application } from '../../../../types';
 const createInitialLossPayees = async (connection: Connection, applications: Array<Application>) => {
   const loggingMessage = 'Creating initial lossPayees';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const initialAgentsPromises = applications.map(async (application: Application) => {
@@ -34,7 +34,7 @@ const createInitialLossPayees = async (connection: Connection, applications: Arr
 
     return Promise.all(initialAgentsPromises);
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error('🚨 error %s %O', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

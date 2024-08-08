@@ -21,7 +21,7 @@ const getAllNonSubmittedApplications = async (connection: Connection) => {
 
     return applications as Array<Application>;
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error('🚨 error %s %O', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

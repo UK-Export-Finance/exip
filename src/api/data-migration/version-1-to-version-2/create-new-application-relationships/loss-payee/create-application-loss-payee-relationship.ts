@@ -11,7 +11,7 @@ import executeSqlQuery from '../../execute-sql-query';
 const createApplicationLossPayeeRelationship = async (connection: Connection) => {
   const loggingMessage = 'Updating applications to have loss payee relationships';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const lossPayees = await getAllLossPayees(connection);
@@ -32,7 +32,7 @@ const createApplicationLossPayeeRelationship = async (connection: Connection) =>
 
     return Promise.all(promises);
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error('🚨 error %s %O', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

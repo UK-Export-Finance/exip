@@ -25,7 +25,7 @@ import updateApplicationMigrated from './update-application-migrated';
 const updateApplications = async (connection: Connection) => {
   const loggingMessage = 'Updating applications';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const tables = await Promise.all([
@@ -55,7 +55,7 @@ const updateApplications = async (connection: Connection) => {
 
     return tables;
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error('🚨 error %s %O', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

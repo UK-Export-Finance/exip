@@ -16,6 +16,7 @@ const create = async (context: Context) => {
     return agent;
   } catch (error) {
     console.error(error);
+
     return error;
   }
 };
@@ -38,6 +39,7 @@ const get = async (context: Context, agentId: string) => {
     return agent;
   } catch (error) {
     console.error(error);
+
     throw new Error(`Getting an privateMarket by ID (test helpers) ${error}`);
   }
 };

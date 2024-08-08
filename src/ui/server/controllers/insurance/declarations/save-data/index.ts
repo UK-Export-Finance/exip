@@ -25,7 +25,8 @@ const declaration = async (application: Application, formBody: RequestBody) => {
 
     return saveResponse;
   } catch (error) {
-    console.error(error);
+    console.error("Error updating application's declarations %O", error);
+
     throw new Error("Updating application's declarations");
   }
 };

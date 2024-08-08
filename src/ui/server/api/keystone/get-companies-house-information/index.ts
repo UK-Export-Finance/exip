@@ -23,9 +23,11 @@ const getCompaniesHouseInformation = async (companiesHouseNumber: string) => {
     }
 
     console.error('Error with GraphQL getCompaniesHouseInformation %O', response);
+
     throw new Error('Getting Companies house information');
   } catch (error) {
     console.error('Error getting companies house information %O', error);
+
     throw new Error('Getting Companies house information');
   }
 };

@@ -79,6 +79,7 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(HAVE_AN_ACCOUNT);
   } catch (error) {
     console.error('Error creating application %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

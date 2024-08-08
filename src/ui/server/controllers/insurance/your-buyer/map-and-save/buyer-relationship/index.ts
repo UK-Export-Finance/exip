@@ -34,6 +34,7 @@ const buyerRelationship = async (formBody: RequestBody, application: Application
     return true;
   } catch (error) {
     console.error('Error mapping and saving buyer relationship section of application %O', error);
+
     return false;
   }
 };

@@ -21,6 +21,7 @@ const create = async (context: Context) => {
     return country;
   } catch (error) {
     console.error(error);
+
     return error;
   }
 };

@@ -9,7 +9,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  */
 const getCompanySicCodesByCompanyId = async (context: Context, id: string) => {
   try {
-    console.info(`Getting company SIC codes by company ID ${id}`);
+    console.info('Getting company SIC codes by company ID %s', id);
 
     const companySicCodes = await context.db.CompanySicCode.findMany({
       where: {
@@ -21,7 +21,7 @@ const getCompanySicCodesByCompanyId = async (context: Context, id: string) => {
 
     return companySicCodes;
   } catch (error) {
-    console.error(`Getting company SIC codes by company ID ${id} %O`, error);
+    console.error('Getting company SIC codes by company ID %s %O', id, error);
 
     throw new Error(`Error Getting company SIC codes by company ID ${id} ${error}`);
   }

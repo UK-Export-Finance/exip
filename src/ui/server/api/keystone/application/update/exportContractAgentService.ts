@@ -33,9 +33,11 @@ const updateExportContractAgentService = async (id: string, update: object) => {
     }
 
     console.error('Error with GraphQL updateApplicationExportContractMutation %O', response);
+
     throw new Error('Updating application export contract agent service');
   } catch (error) {
     console.error('Error updating application export contract agent service %O', error);
+
     throw new Error('Updating application export contract agent service');
   }
 };

@@ -16,6 +16,7 @@ const create = async (context: Context) => {
     return business;
   } catch (error) {
     console.error(error);
+
     return error;
   }
 };
@@ -38,6 +39,7 @@ const get = async (context: Context, businessId: string) => {
     return business;
   } catch (error) {
     console.error(error);
+
     throw new Error(`Getting an business by ID (test helpers) ${error}`);
   }
 };

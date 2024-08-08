@@ -25,6 +25,7 @@ const create = async (context: Context) => {
     return totalContractValue;
   } catch (error) {
     console.error(error);
+
     return error;
   }
 };

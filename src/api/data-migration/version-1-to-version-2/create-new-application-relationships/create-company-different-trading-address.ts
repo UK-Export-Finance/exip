@@ -16,7 +16,7 @@ import { Application } from '../../../types';
 const createCompanyDifferentTradingAddress = async (connection: Connection, applications: Array<Application>) => {
   const loggingMessage = 'Creating companyDifferentTradingAddresses entries with company relationships';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const promises = applications.map(async (application: Application) => {
@@ -37,7 +37,7 @@ const createCompanyDifferentTradingAddress = async (connection: Connection, appl
 
     return Promise.all(promises);
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error('🚨 error %s %O', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

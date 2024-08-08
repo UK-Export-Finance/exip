@@ -63,6 +63,7 @@ const companyDetails = async (formBody: RequestBody, application: Application, v
     return true;
   } catch (error) {
     console.error('Error mapping and saving business - company details section of application %O', error);
+
     return false;
   }
 };

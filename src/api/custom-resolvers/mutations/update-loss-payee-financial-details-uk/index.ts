@@ -44,6 +44,7 @@ const updateLossPayeeFinancialDetailsUk = async (root: any, variables: Applicati
     };
   } catch (error) {
     console.error('Error updating loss payee financial UK %O', error);
+
     throw new Error(`Updating loss payee financial UK ${error}`);
   }
 };

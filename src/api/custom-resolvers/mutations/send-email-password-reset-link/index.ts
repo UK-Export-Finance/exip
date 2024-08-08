@@ -85,6 +85,7 @@ const sendEmailPasswordResetLink = async (
         }
       } catch (error) {
         console.error('Error blocking account $O', error);
+
         return { success: false };
       }
     }

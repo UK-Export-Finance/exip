@@ -10,7 +10,7 @@ import executeSqlQuery from '../execute-sql-query';
 const createExportContractAwardMethodTable = async (connection: Connection) => {
   const loggingMessage = 'Creating TABLE - export contract award method';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const query = `
@@ -57,7 +57,7 @@ const createExportContractAwardMethodTable = async (connection: Connection) => {
 
     return Promise.all(awardMethodPromises);
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error('🚨 error %s %O', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

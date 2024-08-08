@@ -9,7 +9,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  */
 const getBuyerById = async (context: Context, id: string) => {
   try {
-    console.info(`Getting buyer by ID ${id}`);
+    console.info('Getting buyer by ID %s', id);
 
     const buyer = await context.db.Buyer.findOne({
       where: { id },
@@ -17,7 +17,7 @@ const getBuyerById = async (context: Context, id: string) => {
 
     return buyer;
   } catch (error) {
-    console.error(`Getting buyer by ID ${id} %O`, error);
+    console.error('Getting buyer by ID %s %O', id, error);
 
     throw new Error(`Error Getting buyer by ID ${id} ${error}`);
   }

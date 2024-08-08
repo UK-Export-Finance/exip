@@ -31,6 +31,7 @@ const createAnApplication = async (eligibilitySessionData: SubmittedDataInsuranc
     return application;
   } catch (error) {
     console.error('Error creating an application for user %s', userId);
+
     throw new Error(`Error creating an application for user %s ${userId}`);
   }
 };

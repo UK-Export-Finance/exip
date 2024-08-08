@@ -33,6 +33,7 @@ const companyDifferentTradingAddress = async (formBody: RequestBody, application
     return true;
   } catch (error) {
     console.error('Error mapping and saving companyDifferentTradingAddress section of application %O', error);
+
     return false;
   }
 };

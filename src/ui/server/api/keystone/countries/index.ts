@@ -23,9 +23,11 @@ const countries = {
       }
 
       console.error('Error with GraphQL getCountries %O', response);
+
       throw new Error('Getting countries');
     } catch (error) {
       console.error('Error getting countries %O', error);
+
       throw new Error('Getting countries');
     }
   },
@@ -50,9 +52,11 @@ const countries = {
       }
 
       console.error('Error with GraphQL getCountriesByIsoCodeQuery %O', response);
+
       throw new Error('Getting country');
     } catch (error) {
       console.error('Error getting country %O', error);
+
       throw new Error('Getting country');
     }
   },

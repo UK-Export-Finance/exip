@@ -17,6 +17,7 @@ const create = async (context: Context, data = {}) => {
     return serviceCharge;
   } catch (error) {
     console.error(error);
+
     return error;
   }
 };
@@ -39,6 +40,7 @@ const get = async (context: Context, chargeId: string) => {
     return serviceCharge;
   } catch (error) {
     console.error(error);
+
     throw new Error(`Getting an exportContractAgentServiceCharge by ID (test helpers) ${error}`);
   }
 };

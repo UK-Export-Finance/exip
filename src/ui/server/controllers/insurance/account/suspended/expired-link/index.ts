@@ -59,6 +59,7 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (error) {
     console.error('Error posting reactivate account - expired link form %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

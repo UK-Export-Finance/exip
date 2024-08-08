@@ -28,7 +28,7 @@ const {
 const createDeclarationVersionRelationshipSubmittedApplications = async (connection: Connection) => {
   const loggingMessage = 'Creating declarationVersion entries with declaration relationships for submitted applications';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   const submittedApplications = await getAllSubmittedApplications(connection);
 
@@ -59,7 +59,7 @@ const createDeclarationVersionRelationshipSubmittedApplications = async (connect
 
     return Promise.all(declarationPromises);
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error('🚨 error %s %O', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

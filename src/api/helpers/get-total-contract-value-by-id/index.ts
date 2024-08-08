@@ -9,7 +9,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  */
 const getTotalContractValueById = async (context: Context, id: string) => {
   try {
-    console.info(`Getting totalContractValue by ID ${id}`);
+    console.info('Getting totalContractValue by ID %s', id);
 
     const totalContractValue = await context.db.TotalContractValue.findOne({
       where: { id },
@@ -17,7 +17,7 @@ const getTotalContractValueById = async (context: Context, id: string) => {
 
     return totalContractValue;
   } catch (error) {
-    console.error(`Getting totalContractValue by ID ${id} %O`, error);
+    console.error('Getting totalContractValue by ID %s %O', id, error);
 
     throw new Error(`Error Getting totalContractValue by ID ${id} ${error}`);
   }

@@ -38,7 +38,7 @@ const getPopulatedApplication = async ({
   decryptFinancialInternational = false,
 }: GetPopulatedApplicationParams): Promise<Application> => {
   try {
-    console.info(`Getting populated application (helper) ${application.id}`);
+    console.info('Getting populated application (helper) %s', application.id);
 
     const {
       eligibilityId,
@@ -101,7 +101,7 @@ const getPopulatedApplication = async ({
 
     return populatedApplication;
   } catch (error) {
-    console.error(`Getting populated application (helper) ${application.id} %O`, error);
+    console.error('Getting populated application (helper) %s %O', application.id, error);
 
     throw new Error(`Error Getting populated application (helper) ${application.id} ${error}`);
   }

@@ -16,7 +16,7 @@ import { Application } from '../../../types';
 const createPrivateMarket = async (connection: Connection, applications: Array<Application>) => {
   const loggingMessage = 'Creating privateMarket entries with exportContract relationships';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const privateMarketPromises = applications.map(async (application: Application) => {
@@ -37,7 +37,7 @@ const createPrivateMarket = async (connection: Connection, applications: Array<A
 
     return Promise.all(privateMarketPromises);
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error('🚨 error %s %O', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

@@ -33,9 +33,11 @@ const updateNominatedLossPayee = async (id: string, update: object) => {
     }
 
     console.error('Error with GraphQL updateApplicationNominatedLossPayeeMutation %O', response);
+
     throw new Error('Updating application nominated loss payee');
   } catch (error) {
     console.error('Error updating application nominated loss payee %O', error);
+
     throw new Error('Updating application nominated loss payee');
   }
 };

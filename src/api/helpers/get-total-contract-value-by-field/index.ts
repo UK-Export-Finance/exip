@@ -2,7 +2,7 @@ import { Context } from '../../types';
 
 const getTotalContractValueByField = async (context: Context, field: string, value: number): Promise<object | boolean> => {
   try {
-    console.info('Getting totalContractValue by field/value $s', `${field}, ${value}`);
+    console.info('Getting totalContractValue by field/value $s %s, %s', field, value);
 
     /**
      * Get a totalContractValue by a particular field and value.
@@ -30,6 +30,7 @@ const getTotalContractValueByField = async (context: Context, field: string, val
     return totalContractValue;
   } catch (error) {
     console.error('Error getting totalContractValue by field/value %O', error);
+
     throw new Error(`Getting totalContractValue by field/value ${error}`);
   }
 };

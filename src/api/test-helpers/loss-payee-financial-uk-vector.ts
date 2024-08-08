@@ -11,6 +11,7 @@ import { ApplicationLossPayeeFinancialUkVector, TestHelperLossPayeeFinancialUkVe
 const createLossPayeeFinancialDetailsUkVector = async ({ context, data = {} }: TestHelperLossPayeeFinancialUkVectorCreate) => {
   try {
     console.info('Creating a loss payee financial uk vector (test helpers)');
+
     const lossPayeeFinancialDetailsUk = (await context.query.LossPayeeFinancialUkVector.createOne({
       data,
       query: 'id',
@@ -19,6 +20,7 @@ const createLossPayeeFinancialDetailsUkVector = async ({ context, data = {} }: T
     return lossPayeeFinancialDetailsUk;
   } catch (error) {
     console.error('Error creating a loss payee financial uk vector (test helpers) %O', error);
+
     return error;
   }
 };

@@ -37,6 +37,7 @@ const addAndGetOTP = async (root: any, variables: AddOtpToAccountVariables, cont
     };
   } catch (error) {
     console.error('Error adding OTP to an account (addAndGetOTP mutation) %O', error);
+
     throw new Error(`Adding OTP to an account (addAndGetOTP mutation) ${error}`);
   }
 };

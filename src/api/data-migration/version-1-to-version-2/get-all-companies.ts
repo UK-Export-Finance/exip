@@ -10,7 +10,7 @@ import executeSqlQuery from './execute-sql-query';
 const getAllCompanies = async (connection: Connection) => {
   const loggingMessage = 'Getting all companies';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const query = 'SELECT * FROM Company';
@@ -19,7 +19,7 @@ const getAllCompanies = async (connection: Connection) => {
 
     return companies;
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error('🚨 error %s %O', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

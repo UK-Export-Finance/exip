@@ -10,7 +10,7 @@ import executeSqlQuery from './execute-sql-query';
 const getAllLossPayeeFinancialUkVectors = async (connection: Connection) => {
   const loggingMessage = 'Getting all loss payee - financial UK vector entries';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const query = 'SELECT * FROM LossPayeeFinancialUkVector';
@@ -19,7 +19,7 @@ const getAllLossPayeeFinancialUkVectors = async (connection: Connection) => {
 
     return vectors;
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error('🚨 error %s %O', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

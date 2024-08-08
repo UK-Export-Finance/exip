@@ -24,6 +24,7 @@ const create = async (context: Context) => {
     return coverPeriod;
   } catch (error) {
     console.error(error);
+
     return error;
   }
 };

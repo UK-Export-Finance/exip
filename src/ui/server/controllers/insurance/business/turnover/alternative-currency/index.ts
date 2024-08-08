@@ -77,6 +77,7 @@ export const get = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error('Error getting Business - Turnover - Alternative currency %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -150,6 +151,7 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ROOT}`);
   } catch (error) {
     console.error('Error posting Business - Turnover - Alternative currency %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

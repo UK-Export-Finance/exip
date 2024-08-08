@@ -37,6 +37,7 @@ const updateCompany = async (id: string, update: object) => {
     throw new Error('Updating application company');
   } catch (error) {
     console.error('Error updating application company %O', error);
+
     throw new Error('Updating application company');
   }
 };

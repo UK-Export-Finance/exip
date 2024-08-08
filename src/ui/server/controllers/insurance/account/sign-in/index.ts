@@ -161,6 +161,7 @@ export const post = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error('Error signing in account %O', error);
+
     return res.redirect(ROUTES.INSURANCE.PROBLEM_WITH_SERVICE);
   }
 };

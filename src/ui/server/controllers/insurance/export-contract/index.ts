@@ -40,6 +40,7 @@ export const get = (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error('Error getting credit control %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

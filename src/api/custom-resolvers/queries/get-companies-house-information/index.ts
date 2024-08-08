@@ -49,6 +49,7 @@ const getCompaniesHouseInformation = async (root: any, variables: GetCompaniesHo
     };
   } catch (error) {
     console.error('Error getting companies house information %O', error);
+
     return {
       apiError: true,
       success: false,

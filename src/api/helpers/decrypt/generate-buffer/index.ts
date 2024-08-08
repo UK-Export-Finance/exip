@@ -13,6 +13,7 @@ const generateBufferInStringFormat = (value: string) => {
     return Buffer.from(value, STRING_ENCODING).toString(OUTPUT_ENCODING);
   } catch (error) {
     console.error('Error generating buffer %O', error);
+
     throw new Error(`Error generating buffer ${error}`);
   }
 };

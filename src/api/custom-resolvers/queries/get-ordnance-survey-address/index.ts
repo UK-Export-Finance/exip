@@ -25,6 +25,7 @@ const getOrdnanceSurveyAddress = async (root: any, variables: OrdnanceSurveyVari
     // if not valid postcode then returns success false and additional flag
     if (!isValidPostcode(noWhitespacePostcode)) {
       console.error('Invalid postcode: %s', postcode);
+
       return {
         success: false,
         invalidPostcode: true,
@@ -57,6 +58,7 @@ const getOrdnanceSurveyAddress = async (root: any, variables: OrdnanceSurveyVari
     };
   } catch (error) {
     console.error('Error getting Ordnance Survey address results %O', error);
+
     return {
       apiError: true,
       success: false,

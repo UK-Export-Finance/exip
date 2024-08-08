@@ -24,6 +24,7 @@ const mapAndUpdateInactiveApplications = async (applications: Array<Application>
     });
   } catch (error) {
     console.error('Error mapping and updating inactive applications %O', error);
+
     throw new Error(`Error mapping and updating inactive applications ${error}`);
   }
 };

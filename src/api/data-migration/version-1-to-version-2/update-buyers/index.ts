@@ -16,7 +16,7 @@ import { ApplicationBuyerMvp } from '../../../types';
 const updateBuyers = async (connection: Connection, buyers: Array<ApplicationBuyerMvp>) => {
   const loggingMessage = 'Updating buyers';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     await Promise.all([
@@ -33,7 +33,7 @@ const updateBuyers = async (connection: Connection, buyers: Array<ApplicationBuy
 
     return updated;
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error('🚨 error %s %O', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

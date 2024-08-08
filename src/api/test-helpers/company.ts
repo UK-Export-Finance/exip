@@ -19,6 +19,7 @@ const createCompany = async (context: Context, data = {}) => {
     return company;
   } catch (error) {
     console.error(error);
+
     return error;
   }
 };
@@ -42,6 +43,7 @@ const deleteCompany = async (context: Context, companyId: string) => {
     return response;
   } catch (error) {
     console.error(error);
+
     throw new Error(`Deleting company (test helpers) ${error}`);
   }
 };
@@ -65,6 +67,7 @@ const deleteCompanyAddress = async (context: Context, companyAddressId: string) 
     return response;
   } catch (error) {
     console.error(error);
+
     throw new Error(`Deleting company address (test helpers) ${error}`);
   }
 };
@@ -86,6 +89,7 @@ const deleteCompanySicCode = async (context: Context, companySicId: string) => {
     return response;
   } catch (error) {
     console.error(error);
+
     throw new Error(`Deleting company SIC code (test helpers) ${error}`);
   }
 };
@@ -109,6 +113,7 @@ const createCompanyAddress = async (context: Context, data = {}) => {
     return company;
   } catch (error) {
     console.error(error);
+
     return error;
   }
 };
@@ -137,6 +142,7 @@ const createCompanySicCode = async (context: Context, companyId: string) => {
     return companySicCode;
   } catch (error) {
     console.error(error);
+
     return error;
   }
 };
@@ -190,6 +196,7 @@ const getCompany = async (context: Context, companyId: string) => {
     return company;
   } catch (error) {
     console.error(error);
+
     throw new Error(`Getting a company by ID (test helpers) ${error}`);
   }
 };
@@ -213,6 +220,7 @@ const getCompanyAddress = async (context: Context, companyAddressId: string) => 
     return companyAddress;
   } catch (error) {
     console.error(error);
+
     throw new Error(`Getting a company address by ID (test helpers) ${error}`);
   }
 };
@@ -240,6 +248,7 @@ const getCompanySicCodes = async (context: Context, companyId: string) => {
     return companySic;
   } catch (error) {
     console.error(error);
+
     throw new Error(`Getting company SIC code by company ID (test helpers) ${error}`);
   }
 };

@@ -9,7 +9,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  */
 const getCountryById = async (context: Context, id: string) => {
   try {
-    console.info(`Getting country by ID ${id}`);
+    console.info('Getting country by ID %s', id);
 
     const country = await context.db.Country.findOne({
       where: { id },
@@ -17,7 +17,7 @@ const getCountryById = async (context: Context, id: string) => {
 
     return country;
   } catch (error) {
-    console.error(`Getting country by ID ${id} %O`, error);
+    console.error('Getting country by ID %s %O', id, error);
 
     throw new Error(`Error Getting country by ID ${id} ${error}`);
   }

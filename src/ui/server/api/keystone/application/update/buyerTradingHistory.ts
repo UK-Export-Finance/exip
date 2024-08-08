@@ -33,9 +33,11 @@ const updateBuyerTradingHistory = async (id: string, update: object) => {
     }
 
     console.error('Error with GraphQL updateBuyerMutation %O', response);
+
     throw new Error('Updating buyer trading history');
   } catch (error) {
     console.error('Error updating application buyer %O', error);
+
     throw new Error('Updating buyer trading history');
   }
 };

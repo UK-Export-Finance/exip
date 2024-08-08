@@ -22,6 +22,7 @@ const sectionReview = async (application: Application, formBody: RequestBody) =>
     return saveResponse;
   } catch (error) {
     console.error("Error updating application's section review %O", error);
+
     throw new Error("Updating application's section review");
   }
 };

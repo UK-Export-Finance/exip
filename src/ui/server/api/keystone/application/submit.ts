@@ -10,7 +10,7 @@ import { ApolloResponse } from '../../../../types';
  */
 const submitApplication = async (applicationId: string) => {
   try {
-    console.info(`Submitting application ${applicationId}`);
+    console.info('Submitting application %s', applicationId);
 
     const variables = { applicationId };
 
@@ -29,9 +29,11 @@ const submitApplication = async (applicationId: string) => {
     }
 
     console.error('Error with GraphQL submitApplicationMutation %O', response);
+
     throw new Error(`Submitting application ${applicationId}`);
   } catch (error) {
     console.error('Error submitting application %O', error);
+
     throw new Error(`Submitting application ${applicationId}`);
   }
 };

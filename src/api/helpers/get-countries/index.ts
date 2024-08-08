@@ -16,6 +16,7 @@ const getCountries = async (context: Context) => {
     return countries;
   } catch (error) {
     console.error('Error getting countries %O', error);
+
     throw new Error(`Getting countries ${error}`);
   }
 };

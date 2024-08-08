@@ -11,7 +11,7 @@ import { ApplicationDeclaration } from '../../types';
 const getAllDeclarations = async (connection: Connection) => {
   const loggingMessage = 'Getting all declarations';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const query = 'SELECT * FROM Declaration';
@@ -20,7 +20,7 @@ const getAllDeclarations = async (connection: Connection) => {
 
     return declarations as Array<ApplicationDeclaration>;
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error('🚨 error %s %O', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

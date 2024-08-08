@@ -14,5 +14,6 @@ const { PORT } = process.env;
 // @ts-ignore
 export const http = (server: express) => {
   server.on('error', (error: any) => console.error('❌ HTTP %s UI failed to start on :%d %s', SERVICE_NAME, PORT, error));
+
   server.listen(PORT, () => console.info('🌐 HTTP %s UI serving on :%d', SERVICE_NAME, PORT));
 };

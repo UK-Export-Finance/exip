@@ -95,6 +95,7 @@ export const get = (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error('Error getting buyer financial information page %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -152,6 +153,7 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
   } catch (error) {
     console.error('Error posting buyer financial information %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

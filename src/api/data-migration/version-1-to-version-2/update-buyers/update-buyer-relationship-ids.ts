@@ -36,7 +36,7 @@ const updateBuyerRelationshipIds = async ({ connection, buyers }: CreateBuyerRel
   const loggingMessage = 'Updating buyers to have trading history, contact and relationship IDs';
 
   try {
-    console.info(`✅ ${loggingMessage}`);
+    console.info('✅ %s', loggingMessage);
 
     const [buyerContacts, buyerRelationships, buyerTradingHistories] = await Promise.all([
       await getAllBuyerContacts(connection),
@@ -68,7 +68,7 @@ const updateBuyerRelationshipIds = async ({ connection, buyers }: CreateBuyerRel
 
     return Promise.all(buyerPromises);
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error('🚨 error %s %O', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

@@ -2,7 +2,7 @@ import { Context } from '../../types';
 
 const getCoverPeriodValueByField = async (context: Context, field: string, value: number): Promise<object | boolean> => {
   try {
-    console.info('Getting coverPeriod by field/value $s', `${field}, ${value}`);
+    console.info('Getting coverPeriod by field/value $s %s %d', field, value);
 
     /**
      * Get a coverPeriod by a particular field and value.
@@ -30,6 +30,7 @@ const getCoverPeriodValueByField = async (context: Context, field: string, value
     return coverPeriod;
   } catch (error) {
     console.error('Error getting coverPeriod by field/value %O', error);
+
     throw new Error(`Getting coverPeriod by field/value ${error}`);
   }
 };

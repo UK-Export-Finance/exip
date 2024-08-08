@@ -45,6 +45,7 @@ const decryptFinancialInternational = (applicationFinancialInternational: Applic
     return mapped;
   } catch (error) {
     console.error('Error decrypting international uk %O', error);
+
     throw new Error(`Error decrypting international uk ${error}`);
   }
 };

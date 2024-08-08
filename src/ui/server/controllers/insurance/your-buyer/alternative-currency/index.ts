@@ -77,6 +77,7 @@ export const get = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error('Error getting alternative currency %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -146,6 +147,7 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY}`);
   } catch (error) {
     console.error('Error posting alternative currency %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

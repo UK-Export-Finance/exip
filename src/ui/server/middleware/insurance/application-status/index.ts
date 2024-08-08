@@ -53,7 +53,7 @@ export const applicationStatusMiddleware = async (req: Request, res: Response, n
        * do not allow the user to view/access these routes and redirect to COMPLETE_OTHER_SECTIONS.
        */
       if (isSubmitYourApplicationRoute(url, referenceNumber) && !canAccessSubmitYourApplicationRoutes(application)) {
-        console.info(`'Submit application' route and incomplete section detected - redirecting to ${COMPLETE_OTHER_SECTIONS}`);
+        console.info("'Submit application' route and incomplete section detected - redirecting to %s", COMPLETE_OTHER_SECTIONS);
 
         return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${COMPLETE_OTHER_SECTIONS}`);
       }

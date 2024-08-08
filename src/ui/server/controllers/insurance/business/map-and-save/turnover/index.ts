@@ -33,6 +33,7 @@ const turnover = async (formBody: RequestBody, application: Application, validat
     return true;
   } catch (error) {
     console.error('Error mapping and saving business section of application %O', error);
+
     return false;
   }
 };

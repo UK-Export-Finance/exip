@@ -86,6 +86,7 @@ const get = (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error('Error getting alternative trading address %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -154,6 +155,7 @@ const post = async (req: Request, res: Response) => {
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`);
   } catch (error) {
     console.error('Error posting alternative trading address %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

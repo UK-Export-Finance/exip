@@ -11,14 +11,14 @@ import nonSubmittedApplications from './non-submitted-applications';
 const createDeclarationVersionRelationship = async (connection: Connection) => {
   const loggingMessage = 'Creating declarationVersion entries with declaration relationships for non-submitted applications';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const promises = Promise.all([await submittedApplications(connection), await nonSubmittedApplications(connection)]);
 
     return promises;
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error('🚨 error %s %O', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

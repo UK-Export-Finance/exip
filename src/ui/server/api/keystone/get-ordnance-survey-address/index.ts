@@ -32,9 +32,11 @@ const getOrdnanceSurveyAddress = async (postcode: string, houseNameOrNumber: str
     }
 
     console.error('Error with GraphQL getOrdnanceSurveyAddress %O', response);
+
     throw new Error('Getting Ordnance Survey address');
   } catch (error) {
     console.error('Error getting Ordnance Survey address %O', error);
+
     throw new Error('Getting Ordnance Survey address');
   }
 };

@@ -80,6 +80,7 @@ export const get = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error('Error getting Check your answers - Your buyer %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

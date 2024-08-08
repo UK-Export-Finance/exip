@@ -9,7 +9,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  */
 const getPolicyContactById = async (context: Context, id: string) => {
   try {
-    console.info(`Getting policyContact by ID ${id}`);
+    console.info('Getting policyContact by ID %s', id);
 
     const policyContact = await context.db.PolicyContact.findOne({
       where: { id },
@@ -17,7 +17,7 @@ const getPolicyContactById = async (context: Context, id: string) => {
 
     return policyContact;
   } catch (error) {
-    console.error(`Getting policyContact by ID ${id} %O`, error);
+    console.error('Getting policyContact by ID %s %O', id, error);
 
     throw new Error(`Error Getting policyContact by ID ${id} ${error}`);
   }

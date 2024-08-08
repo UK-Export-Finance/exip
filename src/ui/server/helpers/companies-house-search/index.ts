@@ -20,6 +20,7 @@ const search = async (companyNumber: string): Promise<CompaniesHouseResponse> =>
     return response;
   } catch (error) {
     console.error('Error posting to companies house API %O', error);
+
     return {
       ...response,
       apiError: true,

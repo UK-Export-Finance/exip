@@ -53,7 +53,8 @@ const createApplicationRelationships = async ({
 
     if (!country) {
       console.error(
-        `Unable to create application relationships - buyer country not found (createApplicationRelationships helper) for application ${applicationId}`,
+        'Unable to create application relationships - buyer country not found (createApplicationRelationships helper) for application %s',
+        applicationId,
       );
 
       throw new Error(
@@ -90,7 +91,7 @@ const createApplicationRelationships = async ({
 
     return relationshipIds;
   } catch (error) {
-    console.error(`Error creating application relationships (createApplicationRelationships helper) for application ${applicationId} %O`, error);
+    console.error('Error creating application relationships (createApplicationRelationships helper) for application %s %O', applicationId, error);
 
     throw new Error(`Creating application relationships (createApplicationRelationships helper) for application ${applicationId} ${error}`);
   }

@@ -24,6 +24,7 @@ const send = async (applications: Array<Application>) => {
     return promises;
   } catch (error) {
     console.error('Error sending application submission deadline email (send helper) %O', error);
+
     throw new Error(`Sending application submission deadline email (send helper) ${error}`);
   }
 };

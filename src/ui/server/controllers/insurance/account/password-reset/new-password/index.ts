@@ -72,6 +72,7 @@ export const get = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error('Error verifying account password reset token %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -134,6 +135,7 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (error) {
     console.error('Error verifying account sign in code %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

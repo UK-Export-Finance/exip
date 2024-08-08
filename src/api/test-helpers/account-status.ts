@@ -24,6 +24,7 @@ const deleteAll = async (context: Context) => {
     return [];
   } catch (error) {
     console.error(error);
+
     throw new Error(`Getting and deleting account status (test helpers) ${error}`);
   }
 };
@@ -68,6 +69,7 @@ const create = async ({ context, data, accountId, deleteAccountStatus = true }: 
     return accountStatus;
   } catch (error) {
     console.error('Error creating account status %O', error);
+
     return error;
   }
 };
@@ -91,6 +93,7 @@ const get = async (context: Context, accountStatusId: string) => {
     return accountStatus;
   } catch (error) {
     console.error(error);
+
     throw new Error(`Getting an account status by ID (test helpers) ${error}`);
   }
 };
@@ -115,6 +118,7 @@ const update = async (context: Context, accountStatusId: string, data: AccountSt
     return accountStatus;
   } catch (error) {
     console.error(error);
+
     throw new Error(`Updating an account status by ID (test helpers) ${error}`);
   }
 };
