@@ -32,8 +32,8 @@ const jointlyInsuredParty = async (formBody: RequestBody, application: Applicati
     }
 
     return true;
-  } catch (err) {
-    console.error('Error mapping and saving application - policy - jointly insured party %O', err);
+  } catch (error) {
+    console.error('Error mapping and saving application - policy - jointly insured party %O', error);
 
     return false;
   }

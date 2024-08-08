@@ -13,9 +13,9 @@ describe('controllers/insurance/policy/save-data/nominated-loss-payee - API erro
   it('should throw an error', async () => {
     try {
       await save.nominatedLossPayee(mockApplication, mockFormBody);
-    } catch (err) {
+    } catch (error) {
       const expected = new Error("Updating application's nominated loss payee");
-      expect(err).toEqual(expected);
+      expect(error).toEqual(expected);
     }
   });
 });

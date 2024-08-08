@@ -132,8 +132,8 @@ describe('api/helpers/decrypt-nominated-loss-payee', () => {
 
       try {
         decryptNominatedLossPayee(mockNominatedLossPayeeError, true);
-      } catch (err) {
-        const errorString = String(err);
+      } catch (error) {
+        const errorString = String(error);
 
         expect(errorString.includes('Error decrypting nominated loss payee')).toEqual(true);
       }

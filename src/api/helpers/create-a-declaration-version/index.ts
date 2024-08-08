@@ -29,10 +29,10 @@ const createADeclarationVersion = async (context: Context, declarationId: string
     });
 
     return declaration;
-  } catch (err) {
-    console.error('Error creating an application declaration version %O', err);
+  } catch (error) {
+    console.error('Error creating an application declaration version %O', error);
 
-    throw new Error(`Creating an application declaration version ${err}`);
+    throw new Error(`Creating an application declaration version ${error}`);
   }
 };
 

@@ -50,8 +50,8 @@ const exportContractAgent = async (formBody: RequestBody, application: Applicati
     }
 
     return true;
-  } catch (err) {
-    console.error('Error mapping and saving application %O', err);
+  } catch (error) {
+    console.error('Error mapping and saving application %O', error);
 
     return false;
   }

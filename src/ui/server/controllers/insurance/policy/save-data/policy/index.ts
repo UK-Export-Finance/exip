@@ -23,7 +23,7 @@ const policy = async (application: Application, formBody: RequestBody, errorList
     const saveResponse = await api.keystone.application.update.policy(policyId, sanitisedData);
 
     return saveResponse;
-  } catch (err) {
+  } catch (error) {
     throw new Error("Updating application's policy");
   }
 };

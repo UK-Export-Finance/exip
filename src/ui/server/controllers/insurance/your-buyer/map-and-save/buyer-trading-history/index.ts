@@ -32,8 +32,9 @@ const buyerTradingHistory = async (formBody: RequestBody, application: Applicati
     }
 
     return true;
-  } catch (err) {
-    console.error('Error mapping and saving buyer section of application %O', err);
+  } catch (error) {
+    console.error('Error mapping and saving buyer section of application %O', error);
+
     return false;
   }
 };

@@ -6,8 +6,8 @@ import applicationHelpers from '../../test-helpers/applications';
 import buyerHelpers from '../../test-helpers/buyer';
 import { GBP } from '../../constants';
 
-const assertError = (err) => {
-  const errorString = String(err);
+const assertError = (error) => {
+  const errorString = String(error);
 
   expect(errorString.includes('Creating a buyer trading history')).toEqual(true);
 };
@@ -48,8 +48,8 @@ describe('helpers/create-a-buyer-trading-history', () => {
     test('it should throw an error', async () => {
       try {
         await createABuyerTradingHistory(context, mockInvalidId, applicationId);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -58,8 +58,8 @@ describe('helpers/create-a-buyer-trading-history', () => {
     test('it should throw an error', async () => {
       try {
         await createABuyerTradingHistory(context, buyer.id, mockInvalidId);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -69,8 +69,8 @@ describe('helpers/create-a-buyer-trading-history', () => {
       try {
         // pass empty context object to force an error
         await createABuyerTradingHistory({}, buyer.id, applicationId);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

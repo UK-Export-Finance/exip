@@ -42,12 +42,12 @@ describe('helpers/update-application', () => {
     it('should throw an error', async () => {
       try {
         await updateApplication.timestamp(context, application.id);
-      } catch (err) {
+      } catch (error) {
         const expectedKeystoneError = 'Access denied: You cannot update that Application - it may not exist';
 
         const expected = new Error(`Updating application updatedAt timestamp ${expectedKeystoneError}`);
 
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

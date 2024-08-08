@@ -13,7 +13,7 @@ import getCountryByField from '../get-country-by-field';
  */
 const getPopulatedExportContract = async (context: Context, id: string) => {
   try {
-    console.info(`Getting populated exportContract ${id}`);
+    console.info('Getting populated exportContract %s', id);
 
     const exportContract = await getExportContractById(context, id);
 
@@ -31,10 +31,10 @@ const getPopulatedExportContract = async (context: Context, id: string) => {
     };
 
     return populatedExportContract;
-  } catch (err) {
-    console.error(`Getting populated exportContract ${id} %O`, err);
+  } catch (error) {
+    console.error('Getting populated exportContract %s %O', id, error);
 
-    throw new Error(`Error Getting populated exportContract ${id} ${err}`);
+    throw new Error(`Error Getting populated exportContract ${id} ${error}`);
   }
 };
 

@@ -12,16 +12,16 @@ import removeIsBlockedField from './remove-is-blocked-field';
 const removeAccountStatusFields = async (connection: Connection) => {
   const loggingMessage = 'Removing FIELDS account statuses';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const queries = await Promise.all([removeIsVerifiedField(connection), removeIsBlockedField(connection)]);
 
     return queries;
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 error %s %O', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

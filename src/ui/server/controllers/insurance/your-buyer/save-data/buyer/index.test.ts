@@ -69,9 +69,9 @@ describe('controllers/insurance/your-buyer/save-data/buyer', () => {
     it('should throw an error', async () => {
       try {
         await save.buyer(mockApplication, mockBuyer);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error("Updating application's buyer");
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

@@ -23,7 +23,7 @@ import { Application } from '../../../../types';
 const createExportContractAgent = async (connection: Connection, applications: Array<Application>) => {
   const loggingMessage = 'Creating exportContractAgent with service and charge relationships';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const promises = await Promise.all([
@@ -36,10 +36,10 @@ const createExportContractAgent = async (connection: Connection, applications: A
     ]);
 
     return promises;
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 error %s %O', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

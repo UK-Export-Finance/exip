@@ -10,7 +10,7 @@ import executeSqlQuery from './execute-sql-query';
 const getAllExportContracts = async (connection: Connection) => {
   const loggingMessage = 'Getting all export contracts';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const query = 'SELECT * FROM ExportContract';
@@ -18,10 +18,10 @@ const getAllExportContracts = async (connection: Connection) => {
     const [exportContracts] = await executeSqlQuery({ connection, query, loggingMessage });
 
     return exportContracts;
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 error %s %O', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

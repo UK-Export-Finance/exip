@@ -22,7 +22,7 @@ const broker = async (application: Application, formBody: RequestBody, errorList
     // send the form data to the API for database update.
     const saveResponse = await api.keystone.application.update.broker(brokerId, sanitisedData);
     return saveResponse;
-  } catch (err) {
+  } catch (error) {
     throw new Error("Updating application's broker");
   }
 };

@@ -17,9 +17,9 @@ export const documentsEmail = async (variables: ApplicationSubmissionEmailVariab
     const response = await callNotify(templateId, emailAddress, variables);
 
     return response;
-  } catch (err) {
-    console.error('Error sending documents email %O', err);
+  } catch (error) {
+    console.error('Error sending documents email %O', error);
 
-    throw new Error(`Sending documents email ${err}`);
+    throw new Error(`Sending documents email ${error}`);
   }
 };

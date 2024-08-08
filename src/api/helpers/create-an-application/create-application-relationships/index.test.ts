@@ -59,8 +59,8 @@ describe('helpers/create-an-application/create-application-relationships', () =>
           },
           sectionReviewData: {},
         });
-      } catch (err) {
-        const errorString = String(err);
+      } catch (error) {
+        const errorString = String(error);
 
         expect(
           errorString.includes(
@@ -82,8 +82,8 @@ describe('helpers/create-an-application/create-application-relationships', () =>
           eligibilityAnswers: {},
           sectionReviewData: {},
         });
-      } catch (err) {
-        const errorString = String(err);
+      } catch (error) {
+        const errorString = String(error);
 
         expect(errorString.includes(`Creating application relationships (createApplicationRelationships helper) for application ${application.id}`)).toEqual(
           true,

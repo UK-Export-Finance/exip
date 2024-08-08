@@ -13,9 +13,9 @@ describe('controllers/insurance/policy/save-data/broker - API error', () => {
   it('should throw an error', async () => {
     try {
       await save.broker(mockApplication, mockFormBody);
-    } catch (err) {
+    } catch (error) {
       const expected = new Error("Updating application's broker");
-      expect(err).toEqual(expected);
+      expect(error).toEqual(expected);
     }
   });
 });

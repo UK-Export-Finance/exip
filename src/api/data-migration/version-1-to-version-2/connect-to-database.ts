@@ -21,10 +21,10 @@ const connectToDatabase = async () => {
     })) as Connection;
 
     return connection;
-  } catch (err) {
-    console.info('🚨 error connecting to database %O', err);
+  } catch (error) {
+    console.info('🚨 error connecting to database %O', error);
 
-    throw new Error(`🚨 error connecting to database ${err}`);
+    throw new Error(`🚨 error connecting to database ${error}`);
   }
 };
 

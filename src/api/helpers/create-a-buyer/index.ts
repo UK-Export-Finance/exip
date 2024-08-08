@@ -44,10 +44,10 @@ const createABuyer = async (context: Context, countryId: string, applicationId: 
       relationship: buyerRelationship,
       buyerContact,
     };
-  } catch (err) {
-    console.error('Error creating a buyer %O', err);
+  } catch (error) {
+    console.error('Error creating a buyer %O', error);
 
-    throw new Error(`Creating a buyer ${err}`);
+    throw new Error(`Creating a buyer ${error}`);
   }
 };
 

@@ -180,8 +180,9 @@ export const get = async (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
     });
-  } catch (err) {
-    console.error('Error getting trading history with the buyer %O', err);
+  } catch (error) {
+    console.error('Error getting trading history with the buyer %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -285,8 +286,9 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`);
-  } catch (err) {
-    console.error('Error posting trading history with the buyer %O', err);
+  } catch (error) {
+    console.error('Error posting trading history with the buyer %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

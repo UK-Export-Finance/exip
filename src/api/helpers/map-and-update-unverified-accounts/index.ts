@@ -31,9 +31,10 @@ const mapAndUpdateUnverifiedAccounts = async (accounts: Array<Account>, context:
     await context.db.AccountStatus.updateMany({
       data: accountStatus,
     });
-  } catch (err) {
-    console.error('Error mapping and updating unverified accounts %O', err);
-    throw new Error(`Error mapping and updating unverified accounts ${err}`);
+  } catch (error) {
+    console.error('Error mapping and updating unverified accounts %O', error);
+
+    throw new Error(`Error mapping and updating unverified accounts ${error}`);
   }
 };
 

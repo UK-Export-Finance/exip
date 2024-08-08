@@ -12,7 +12,7 @@ import getExportContractAgentServiceChargeById from '../../get-export-contract-a
  */
 const getPopulatedAgent = async (context: Context, id: string) => {
   try {
-    console.info(`Getting populated exportContract agent ${id}`);
+    console.info('Getting populated exportContract agent %s', id);
 
     const exportContractAgent = await getExportContractAgentById(context, id);
 
@@ -29,10 +29,10 @@ const getPopulatedAgent = async (context: Context, id: string) => {
     };
 
     return populatedAgent;
-  } catch (err) {
-    console.error(`Getting populated exportContract agent ${id} %O`, err);
+  } catch (error) {
+    console.error('Getting populated exportContract agent %s %O', id, error);
 
-    throw new Error(`Error Getting populated exportContract agent ${id} ${err}`);
+    throw new Error(`Error Getting populated exportContract agent ${id} ${error}`);
   }
 };
 

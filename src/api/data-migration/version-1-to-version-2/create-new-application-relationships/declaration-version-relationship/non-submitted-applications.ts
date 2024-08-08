@@ -22,7 +22,7 @@ const { ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBERY_EXPORTING_WITH_
 const createDeclarationVersionRelationshipNotSubmittedApplications = async (connection: Connection) => {
   const loggingMessage = 'Creating declarationVersion entries with declaration relationships for non-submitted applications';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   const nonSubmittedApplications = await getAllNonSubmittedApplications(connection);
 
@@ -52,10 +52,10 @@ const createDeclarationVersionRelationshipNotSubmittedApplications = async (conn
     });
 
     return Promise.all(declarationPromises);
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 error %s %O', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

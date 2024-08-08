@@ -44,9 +44,10 @@ const deleteApplicationByReferenceNumber = async (
     return {
       success: false,
     };
-  } catch (err) {
-    console.error('Error deleting application by reference number (DeleteApplicationByReferenceNumber mutation) %O', err);
-    throw new Error(`Deleting application by reference number (DeleteApplicationByReferenceNumber mutation) ${err}`);
+  } catch (error) {
+    console.error('Error deleting application by reference number (DeleteApplicationByReferenceNumber mutation) %O', error);
+
+    throw new Error(`Deleting application by reference number (DeleteApplicationByReferenceNumber mutation) ${error}`);
   }
 };
 

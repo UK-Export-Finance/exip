@@ -23,7 +23,7 @@ const companyDifferentTradingAddress = async (application: Application, formBody
     // send the form data to the API for database update.
     const saveResponse = await api.keystone.application.update.companyDifferentTradingAddress(differentTradingAddressId, sanitisedData);
     return saveResponse;
-  } catch (err) {
+  } catch (error) {
     throw new Error("Updating application's companyDifferentTradingAddress");
   }
 };

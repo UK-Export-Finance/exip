@@ -159,8 +159,9 @@ export const post = async (req: Request, res: Response) => {
       submittedValues: payload,
       validationErrors,
     });
-  } catch (err) {
-    console.error('Error signing in account %O', err);
+  } catch (error) {
+    console.error('Error signing in account %O', error);
+
     return res.redirect(ROUTES.INSURANCE.PROBLEM_WITH_SERVICE);
   }
 };

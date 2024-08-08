@@ -44,10 +44,10 @@ describe('emails/access-code-email', () => {
     test('should throw an error', async () => {
       try {
         await accessCodeEmail(email, fullName, mockSecurityCode);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error(`Sending access code email for account sign in Error: Sending email ${new Error(mockErrorMessage)}`);
 
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

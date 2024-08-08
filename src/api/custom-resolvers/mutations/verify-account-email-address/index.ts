@@ -99,10 +99,10 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
       accountId: id,
       emailRecipient: account[EMAIL],
     };
-  } catch (err) {
-    console.error('Error verifying account email address %O', err);
+  } catch (error) {
+    console.error('Error verifying account email address %O', error);
 
-    throw new Error(`Verifying account email address ${err}`);
+    throw new Error(`Verifying account email address ${error}`);
   }
 };
 

@@ -136,8 +136,9 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}`);
-  } catch (err) {
-    console.error('Error updating application - your business - company house search (post data migration) %O', err);
+  } catch (error) {
+    console.error('Error updating application - your business - company house search (post data migration) %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

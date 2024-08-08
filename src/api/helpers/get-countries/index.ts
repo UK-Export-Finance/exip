@@ -14,9 +14,10 @@ const getCountries = async (context: Context) => {
     const countries = (await context.db.Country.findMany()) as Array<Country>;
 
     return countries;
-  } catch (err) {
-    console.error('Error getting countries %O', err);
-    throw new Error(`Getting countries ${err}`);
+  } catch (error) {
+    console.error('Error getting countries %O', error);
+
+    throw new Error(`Getting countries ${error}`);
   }
 };
 

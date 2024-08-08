@@ -23,9 +23,9 @@ describe('controllers/insurance/business/save-data/companies-house-search-data -
     it('should throw an error', async () => {
       try {
         await save.companyDetailsPostMigration(mockApplication, mockFormBody);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error("Updating application's company (post data migration)");
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

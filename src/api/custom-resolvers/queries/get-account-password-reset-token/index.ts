@@ -44,9 +44,10 @@ const getAccountPasswordResetToken = async (
     console.info('Unable to get account password reset token - reset hash does not exist');
 
     return { success: false };
-  } catch (err) {
-    console.error('Error getting account password reset token %O', err);
-    throw new Error(`Getting account password reset token ${err}`);
+  } catch (error) {
+    console.error('Error getting account password reset token %O', error);
+
+    throw new Error(`Getting account password reset token ${error}`);
   }
 };
 

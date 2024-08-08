@@ -20,10 +20,10 @@ const createABroker = async (context: Context, applicationId: string) => {
     });
 
     return broker;
-  } catch (err) {
-    console.error('Error creating a broker %O', err);
+  } catch (error) {
+    console.error('Error creating a broker %O', error);
 
-    throw new Error(`Creating a broker ${err}`);
+    throw new Error(`Creating a broker ${error}`);
   }
 };
 

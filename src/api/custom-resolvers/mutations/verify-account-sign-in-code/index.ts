@@ -97,9 +97,10 @@ const verifyAccountSignInCode = async (root: any, variables: VerifyAccountSignIn
     return {
       success: false,
     };
-  } catch (err) {
-    console.error('Error verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) %O', err);
-    throw new Error(`Verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) ${err}`);
+  } catch (error) {
+    console.error('Error verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) %O', error);
+
+    throw new Error(`Verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) ${error}`);
   }
 };
 

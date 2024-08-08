@@ -16,10 +16,10 @@ const getAllApplications = async (connection: Connection) => {
     const [applications] = await executeSqlQuery({ connection, query, loggingMessage });
 
     return applications;
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 error %s %O', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

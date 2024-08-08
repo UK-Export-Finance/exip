@@ -5,8 +5,8 @@ import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applicationHelpers from '../../test-helpers/applications';
 import buyerHelpers from '../../test-helpers/buyer';
 
-const assertError = (err) => {
-  const errorString = String(err);
+const assertError = (error) => {
+  const errorString = String(error);
 
   expect(errorString.includes('Creating a buyer relationship')).toEqual(true);
 };
@@ -48,8 +48,8 @@ describe('helpers/create-a-buyer-relationship', () => {
     test('it should throw an error', async () => {
       try {
         await createABuyerRelationship(context, mockInvalidId, applicationId);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -58,8 +58,8 @@ describe('helpers/create-a-buyer-relationship', () => {
     test('it should throw an error', async () => {
       try {
         await createABuyerRelationship(context, buyer.id, mockInvalidId);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -69,8 +69,8 @@ describe('helpers/create-a-buyer-relationship', () => {
       try {
         // pass empty context object to force an error
         await createABuyerRelationship({}, buyer.id, applicationId);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

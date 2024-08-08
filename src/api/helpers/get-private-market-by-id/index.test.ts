@@ -26,13 +26,13 @@ describe('helpers/get-private-market-by-id', () => {
     it('should throw an error', async () => {
       try {
         await getPrivateMarketById(context, mockInvalidId);
-      } catch (err) {
+      } catch (error) {
         const errorMessage = `Getting privateMarket by ID ${mockInvalidId}`;
 
         const newError = new Error(errorMessage);
 
         const expected = new Error(`${errorMessage} ${newError}`);
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

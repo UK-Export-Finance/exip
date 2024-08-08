@@ -21,8 +21,8 @@ describe('api/helpers/decrypt/generate-decipher', () => {
     it('should return an error', () => {
       try {
         generateDecipher('', '');
-      } catch (err) {
-        const errorString = String(err);
+      } catch (error) {
+        const errorString = String(error);
 
         expect(errorString.includes('Error generating decipher')).toEqual(true);
       }

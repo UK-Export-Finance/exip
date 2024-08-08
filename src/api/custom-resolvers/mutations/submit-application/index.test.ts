@@ -202,9 +202,9 @@ describe('custom-resolvers/submit-application', () => {
 
       try {
         await submitApplication({}, variables, context);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error(`Submitting application Input error: Only a cuid can be passed to id filters`);
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

@@ -6,8 +6,8 @@ import getCountryByField from '../get-country-by-field';
 import applications from '../../test-helpers/applications';
 import { GBP } from '../../constants';
 
-const assertError = (err) => {
-  const errorString = String(err);
+const assertError = (error) => {
+  const errorString = String(error);
 
   expect(errorString.includes('Creating a buyer')).toEqual(true);
 };
@@ -83,8 +83,8 @@ describe('helpers/create-a-buyer', () => {
     test('it should throw an error', async () => {
       try {
         await createABuyer(context, mockInvalidId, application.id);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -93,8 +93,8 @@ describe('helpers/create-a-buyer', () => {
     test('it should throw an error', async () => {
       try {
         await createABuyer(context, country.id, mockInvalidId);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -104,8 +104,8 @@ describe('helpers/create-a-buyer', () => {
       try {
         // pass empty context object to force an error
         await createABuyer({}, country.id, application.id);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

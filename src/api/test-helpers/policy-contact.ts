@@ -14,9 +14,10 @@ const create = async (context: Context) => {
     const policyContact = (await context.query.PolicyContact.createOne({ data: {} })) as ApplicationPolicyContact;
 
     return policyContact;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+
+    return error;
   }
 };
 
@@ -36,9 +37,10 @@ const get = async (context: Context, policyContactId: string): Promise<Applicati
     })) as ApplicationPolicyContact;
 
     return policyContact;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Getting an policyContact by ID (test helpers) ${err}`);
+  } catch (error) {
+    console.error(error);
+
+    throw new Error(`Getting an policyContact by ID (test helpers) ${error}`);
   }
 };
 

@@ -268,10 +268,10 @@ const createApplications = (applications) => {
       .then((response) => response.data.createApplications);
 
     return responseBody;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
-    throw new Error('Creating applications', { err });
+    throw new Error('Creating applications', { error });
   }
 };
 
@@ -298,10 +298,10 @@ const getAccountByEmail = async (email) => {
       .then((response) => response.data.accounts);
 
     return responseBody;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
-    throw new Error('Getting account by email', { err });
+    throw new Error('Getting account by email', { error });
   }
 };
 
@@ -325,10 +325,10 @@ const updateAccount = async (id, updateObj) => {
       .then((response) => response.data.updateAccount);
 
     return responseBody;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
-    throw new Error('Updating account', { err });
+    throw new Error('Updating account', { error });
   }
 };
 
@@ -352,10 +352,10 @@ const updateAccountStatus = async (id, updateObj) => {
       .then((response) => response.data.updateAccountStatus);
 
     return responseBody;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
-    throw new Error('Updating account status', { err });
+    throw new Error('Updating account status', { error });
   }
 };
 
@@ -376,10 +376,10 @@ const deleteAnAccount = async (email) => {
       .then((response) => response.data.deleteAnAccount);
 
     return responseBody.success;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
-    throw new Error('Deleting an account', { err });
+    throw new Error('Deleting an account', { error });
   }
 };
 
@@ -412,10 +412,10 @@ const addAndGetOTP = async (emailAddress) => {
       .then((response) => response.data.addAndGetOTP);
 
     return responseBody.securityCode;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
-    throw new Error('Adding and getting OTP ', { err });
+    throw new Error('Adding and getting OTP ', { error });
   }
 };
 
@@ -443,10 +443,10 @@ const getAccountPasswordResetToken = async () => {
       .then((response) => response.data.getAccountPasswordResetToken);
 
     return responseBody.token;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
-    throw new Error('Getting account password rest token ', { err });
+    throw new Error('Getting account password rest token ', { error });
   }
 };
 
@@ -466,10 +466,10 @@ const getApplicationByReferenceNumber = async (referenceNumber) => {
       .then((response) => response.data.applications[0]);
 
     return responseBody;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
-    throw new Error(`Getting application by reference number ${referenceNumber}`, { err });
+    throw new Error(`Getting application by reference number ${referenceNumber}`, { error });
   }
 };
 
@@ -490,10 +490,10 @@ const deleteApplicationByReferenceNumber = async (referenceNumber) => {
       .then((response) => response.data);
 
     return responseBody;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
-    return err;
+    return error;
   }
 };
 
@@ -516,10 +516,10 @@ const deleteApplications = async (applications) => {
       .then((response) => response.data);
 
     return responseBody;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
-    return err;
+    return error;
   }
 };
 
@@ -538,10 +538,10 @@ const getACountry = async () => {
       .then((response) => response.data.countries[0]);
 
     return responseBody;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
-    throw new Error('Getting a country ', { err });
+    throw new Error('Getting a country ', { error });
   }
 };
 

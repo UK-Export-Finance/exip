@@ -33,9 +33,11 @@ const updateBusiness = async (id: string, update: object) => {
     }
 
     console.error('Error with GraphQL updateBusinessMutation %O', response);
+
     throw new Error('Updating application business');
-  } catch (err) {
-    console.error('Error updating application business %O', err);
+  } catch (error) {
+    console.error('Error updating application business %O', error);
+
     throw new Error('Updating application business');
   }
 };

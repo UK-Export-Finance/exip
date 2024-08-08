@@ -82,8 +82,8 @@ export const get = async (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
       ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, charge[FIXED_SUM_CURRENCY_CODE]),
     });
-  } catch (err) {
-    console.error('Error getting Export contract - Agent charges - Alternative currency %O', err);
+  } catch (error) {
+    console.error('Error getting Export contract - Agent charges - Alternative currency %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -127,8 +127,8 @@ export const post = async (req: Request, res: Response) => {
         ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, payload[CURRENCY_CODE]),
         validationErrors,
       });
-    } catch (err) {
-      console.error('Error getting currencies %O', err);
+    } catch (error) {
+      console.error('Error getting currencies %O', error);
 
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
@@ -158,8 +158,9 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES}`);
-  } catch (err) {
-    console.error('Error updating application - export contract - agent charges - alternative currency %O', err);
+  } catch (error) {
+    console.error('Error updating application - export contract - agent charges - alternative currency %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

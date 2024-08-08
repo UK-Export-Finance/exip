@@ -13,7 +13,7 @@ import getCompanyDifferentTradingAddressById from '../get-company-different-trad
  */
 const getPopulatedCompany = async (context: Context, id: string) => {
   try {
-    console.info(`Getting populated company ${id}`);
+    console.info('Getting populated company %s', id);
 
     const company = await getCompanyById(context, id);
 
@@ -31,10 +31,10 @@ const getPopulatedCompany = async (context: Context, id: string) => {
     };
 
     return populatedCompany;
-  } catch (err) {
-    console.error(`Getting populated company ${id} %O`, err);
+  } catch (error) {
+    console.error('Getting populated company %s %O', id, error);
 
-    throw new Error(`Error Getting populated company ${id} ${err}`);
+    throw new Error(`Error Getting populated company ${id} ${error}`);
   }
 };
 

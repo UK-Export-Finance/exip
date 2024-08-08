@@ -9,17 +9,17 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  */
 const getBuyerTradingHistoryById = async (context: Context, id: string) => {
   try {
-    console.info(`Getting buyer trading history by ID ${id}`);
+    console.info('Getting buyer trading history by ID %s', id);
 
     const buyerTradingHistory = await context.db.BuyerTradingHistory.findOne({
       where: { id },
     });
 
     return buyerTradingHistory;
-  } catch (err) {
-    console.error(`Getting buyer trading history by ID ${id} %O`, err);
+  } catch (error) {
+    console.error('Getting buyer trading history by ID %s %O', id, error);
 
-    throw new Error(`Error Getting buyer trading history by ID ${id} ${err}`);
+    throw new Error(`Error Getting buyer trading history by ID ${id} ${error}`);
   }
 };
 

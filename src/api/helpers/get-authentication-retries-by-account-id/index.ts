@@ -22,10 +22,10 @@ const getAuthenticationRetriesByAccountId = async (context: Context, accountId: 
     });
 
     return retries;
-  } catch (err) {
-    console.error('Error getting authentication retries by account ID %O', err);
+  } catch (error) {
+    console.error('Error getting authentication retries by account ID %O', error);
 
-    throw new Error(`Getting authentication retries by account ID ${err}`);
+    throw new Error(`Getting authentication retries by account ID ${error}`);
   }
 };
 

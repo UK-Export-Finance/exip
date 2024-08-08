@@ -25,7 +25,7 @@ describe('server/helpers/can-create-an-application/log-missing-eligibility-field
       missingEligibilityFields.log({ ...baseParams, hasBuyerCountry: false });
 
       expect(consoleSpy).toHaveBeenCalledTimes(1);
-      expect(consoleSpy).toHaveBeenCalledWith(`${CORE_LOG_MESSAGE} 'has buyer country' flag`);
+      expect(consoleSpy).toHaveBeenCalledWith("%s 'has buyer country' flag", CORE_LOG_MESSAGE);
     });
   });
 
@@ -34,7 +34,7 @@ describe('server/helpers/can-create-an-application/log-missing-eligibility-field
       missingEligibilityFields.log({ ...baseParams, hasCompanyNumber: false });
 
       expect(consoleSpy).toHaveBeenCalledTimes(1);
-      expect(consoleSpy).toHaveBeenCalledWith(`${CORE_LOG_MESSAGE} 'has company number' flag`);
+      expect(consoleSpy).toHaveBeenCalledWith("%s 'has company number' flag", CORE_LOG_MESSAGE);
     });
   });
 
@@ -43,7 +43,7 @@ describe('server/helpers/can-create-an-application/log-missing-eligibility-field
       missingEligibilityFields.log({ ...baseParams, hasCoverPeriod: false });
 
       expect(consoleSpy).toHaveBeenCalledTimes(1);
-      expect(consoleSpy).toHaveBeenCalledWith(`${CORE_LOG_MESSAGE} 'has cover period' flag`);
+      expect(consoleSpy).toHaveBeenCalledWith("%s 'has cover period' flag", CORE_LOG_MESSAGE);
     });
   });
 
@@ -61,7 +61,7 @@ describe('server/helpers/can-create-an-application/log-missing-eligibility-field
       missingEligibilityFields.log({ ...baseParams, hasMinimumUkGoodsOrServices: false });
 
       expect(consoleSpy).toHaveBeenCalledTimes(1);
-      expect(consoleSpy).toHaveBeenCalledWith(`${CORE_LOG_MESSAGE} 'has minimum UK goods or services' flag`);
+      expect(consoleSpy).toHaveBeenCalledWith("%s 'has minimum UK goods or services' flag", CORE_LOG_MESSAGE);
     });
   });
 
@@ -70,7 +70,7 @@ describe('server/helpers/can-create-an-application/log-missing-eligibility-field
       missingEligibilityFields.log({ ...baseParams, hasReviewedEligibility: false });
 
       expect(consoleSpy).toHaveBeenCalledTimes(1);
-      expect(consoleSpy).toHaveBeenCalledWith(`${CORE_LOG_MESSAGE} 'has reviewed eligibility' flag`);
+      expect(consoleSpy).toHaveBeenCalledWith("%s 'has reviewed eligibility' flag", CORE_LOG_MESSAGE);
     });
   });
 
@@ -79,7 +79,7 @@ describe('server/helpers/can-create-an-application/log-missing-eligibility-field
       missingEligibilityFields.log({ ...baseParams, hasTotalContractValue: false });
 
       expect(consoleSpy).toHaveBeenCalledTimes(1);
-      expect(consoleSpy).toHaveBeenCalledWith(`${CORE_LOG_MESSAGE} 'has total contract value' flag`);
+      expect(consoleSpy).toHaveBeenCalledWith("%s 'has total contract value' flag", CORE_LOG_MESSAGE);
     });
   });
 

@@ -63,13 +63,13 @@ describe('helpers/get-company-sic-codes-by-company-id', () => {
     it('should throw an error', async () => {
       try {
         await getCompanySicCodesByCompanyId(context, mockInvalidId);
-      } catch (err) {
+      } catch (error) {
         const errorMessage = `Getting company SIC codes by company ID ${mockInvalidId}`;
 
         const newError = new Error(errorMessage);
 
         const expected = new Error(`${errorMessage} ${newError}`);
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

@@ -20,9 +20,9 @@ describe('controllers/insurance/business/save-data/company-different-trading-add
     it('should throw an error', async () => {
       try {
         await save.companyDifferentTradingAddress(mockApplication, mockFormBody);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error("Updating application's companyDifferentTradingAddress");
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

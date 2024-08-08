@@ -37,8 +37,9 @@ const updateCompanyPostDataMigration = async (id: string, update: object) => {
     console.error('Error with GraphQL updateCompanyPostDataMigration %O', response);
 
     throw new Error('Updating application company (post data migration)');
-  } catch (err) {
-    console.error('Error updating application company (post data migration) %O', err);
+  } catch (error) {
+    console.error('Error updating application company (post data migration) %O', error);
+
     throw new Error('Updating application company (post data migration)');
   }
 };

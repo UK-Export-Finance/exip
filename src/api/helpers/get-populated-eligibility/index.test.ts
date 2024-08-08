@@ -62,10 +62,10 @@ describe('helpers/get-populated-company', () => {
     it('should throw an error', async () => {
       try {
         await getPopulatedEligibility(context, mockInvalidId, createdCountry);
-      } catch (err) {
+      } catch (error) {
         const expected = `Getting populated eligibility ${mockInvalidId}`;
 
-        expect(String(err).includes(expected)).toEqual(true);
+        expect(String(error).includes(expected)).toEqual(true);
       }
     });
   });
@@ -85,10 +85,10 @@ describe('helpers/get-populated-company', () => {
 
       try {
         await getPopulatedEligibility(context, eligibilityNoCoverPeriod.id, createdCountry);
-      } catch (err) {
+      } catch (error) {
         const expected = `Getting populated eligibility ${eligibilityNoCoverPeriod.id}`;
 
-        expect(String(err).includes(expected)).toEqual(true);
+        expect(String(error).includes(expected)).toEqual(true);
       }
     });
   });
@@ -108,10 +108,10 @@ describe('helpers/get-populated-company', () => {
 
       try {
         await getPopulatedEligibility(context, eligibilityNoTotalContractValue.id, createdCountry);
-      } catch (err) {
+      } catch (error) {
         const expected = `Getting populated eligibility ${eligibilityNoTotalContractValue.id}`;
 
-        expect(String(err).includes(expected)).toEqual(true);
+        expect(String(error).includes(expected)).toEqual(true);
       }
     });
   });

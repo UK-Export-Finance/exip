@@ -43,9 +43,10 @@ const decryptFinancialInternational = (applicationFinancialInternational: Applic
     mapped.iban = decryptedIban;
 
     return mapped;
-  } catch (err) {
-    console.error('Error decrypting international uk %O', err);
-    throw new Error(`Error decrypting international uk ${err}`);
+  } catch (error) {
+    console.error('Error decrypting international uk %O', error);
+
+    throw new Error(`Error decrypting international uk ${error}`);
   }
 };
 

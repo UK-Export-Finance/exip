@@ -13,16 +13,16 @@ import addStatusKey from './add-status-key';
 const updateAccounts = async (connection: Connection) => {
   const loggingMessage = 'Updating accounts';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const tables = await Promise.all([addStatusField(connection), addStatusUniqueKey(connection), addStatusKey(connection), addStatusConstraint(connection)]);
 
     return tables;
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 error %s %O', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

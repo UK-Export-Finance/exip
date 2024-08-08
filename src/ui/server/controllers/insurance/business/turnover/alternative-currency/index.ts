@@ -75,8 +75,9 @@ export const get = async (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
       ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, application.business[TURNOVER_CURRENCY_CODE]),
     });
-  } catch (err) {
-    console.error('Error getting Business - Turnover - Alternative currency %O', err);
+  } catch (error) {
+    console.error('Error getting Business - Turnover - Alternative currency %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -148,8 +149,9 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ROOT}`);
-  } catch (err) {
-    console.error('Error posting Business - Turnover - Alternative currency %O', err);
+  } catch (error) {
+    console.error('Error posting Business - Turnover - Alternative currency %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

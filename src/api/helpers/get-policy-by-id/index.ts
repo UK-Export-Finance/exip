@@ -9,7 +9,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  */
 const getPolicyById = async (context: Context, id: string) => {
   try {
-    console.info(`Getting policy by ID ${id}`);
+    console.info('Getting policy by ID %s', id);
 
     const policy = await context.query.Policy.findOne({
       where: { id },
@@ -18,10 +18,10 @@ const getPolicyById = async (context: Context, id: string) => {
     });
 
     return policy;
-  } catch (err) {
-    console.error(`Getting policy by ID ${id} %O`, err);
+  } catch (error) {
+    console.error('Getting policy by ID %s %O', id, error);
 
-    throw new Error(`Error Getting policy by ID ${id} ${err}`);
+    throw new Error(`Error Getting policy by ID ${id} ${error}`);
   }
 };
 

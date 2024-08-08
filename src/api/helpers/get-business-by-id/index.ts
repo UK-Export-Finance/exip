@@ -9,17 +9,17 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  */
 const getBusinessById = async (context: Context, id: string) => {
   try {
-    console.info(`Getting business by ID ${id}`);
+    console.info('Getting business by ID %s', id);
 
     const business = await context.db.Business.findOne({
       where: { id },
     });
 
     return business;
-  } catch (err) {
-    console.error(`Getting business by ID ${id} %O`, err);
+  } catch (error) {
+    console.error('Getting business by ID %s %O', id, error);
 
-    throw new Error(`Error Getting business by ID ${id} ${err}`);
+    throw new Error(`Error Getting business by ID ${id} ${error}`);
   }
 };
 

@@ -66,10 +66,10 @@ describe('helpers/get-populated-buyer', () => {
     it('should throw an error', async () => {
       try {
         await getPopulatedBuyer(context, mockInvalidId);
-      } catch (err) {
+      } catch (error) {
         const expected = `Getting populated buyer ${mockInvalidId}`;
 
-        expect(String(err).includes(expected)).toEqual(true);
+        expect(String(error).includes(expected)).toEqual(true);
       }
     });
   });
@@ -80,10 +80,10 @@ describe('helpers/get-populated-buyer', () => {
 
       try {
         await getPopulatedBuyer(context, buyerNoCountry.id);
-      } catch (err) {
+      } catch (error) {
         const expected = `Getting populated buyer ${buyerNoCountry.id}`;
 
-        expect(String(err).includes(expected)).toEqual(true);
+        expect(String(error).includes(expected)).toEqual(true);
       }
     });
   });
@@ -103,10 +103,10 @@ describe('helpers/get-populated-buyer', () => {
 
       try {
         await getPopulatedBuyer(context, buyerNoRelationship.id);
-      } catch (err) {
+      } catch (error) {
         const expected = `Getting populated buyer ${buyerNoRelationship.id}`;
 
-        expect(String(err).includes(expected)).toEqual(true);
+        expect(String(error).includes(expected)).toEqual(true);
       }
     });
   });
@@ -127,10 +127,10 @@ describe('helpers/get-populated-buyer', () => {
 
       try {
         await getPopulatedBuyer(context, buyerNoRelationship.id);
-      } catch (err) {
+      } catch (error) {
         const expected = `Getting populated buyer ${buyerNoRelationship.id}`;
 
-        expect(String(err).includes(expected)).toEqual(true);
+        expect(String(error).includes(expected)).toEqual(true);
       }
     });
   });

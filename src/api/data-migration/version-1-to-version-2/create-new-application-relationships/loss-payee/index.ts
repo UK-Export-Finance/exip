@@ -23,7 +23,7 @@ import { Application } from '../../../../types';
 const createLossPayee = async (connection: Connection, applications: Array<Application>) => {
   const loggingMessage = 'Creating nominatedLossPayees with an application relationships';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const promises = await Promise.all([
@@ -36,10 +36,10 @@ const createLossPayee = async (connection: Connection, applications: Array<Appli
     ]);
 
     return promises;
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 error %s %O', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

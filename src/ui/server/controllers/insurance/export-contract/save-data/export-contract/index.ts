@@ -24,7 +24,7 @@ const exportContract = async (application: Application, formBody: RequestBody, e
     const saveResponse = await api.keystone.application.update.exportContract(exportContractId, sanitisedData);
 
     return saveResponse;
-  } catch (err) {
+  } catch (error) {
     throw new Error("Updating application's exportContract");
   }
 };

@@ -20,8 +20,9 @@ const sectionReview = async (application: Application, formBody: RequestBody) =>
     const saveResponse = await api.keystone.application.update.sectionReview(sectionReviewId, sanitisedData);
 
     return saveResponse;
-  } catch (err) {
-    console.error("Error updating application's section review %O", err);
+  } catch (error) {
+    console.error("Error updating application's section review %O", error);
+
     throw new Error("Updating application's section review");
   }
 };

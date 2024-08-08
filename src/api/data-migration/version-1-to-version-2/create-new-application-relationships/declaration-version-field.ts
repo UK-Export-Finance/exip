@@ -15,7 +15,7 @@ import executeSqlQuery from '../execute-sql-query';
 const updateDeclarationVersionField = async (connection: Connection) => {
   const loggingMessage = 'Creating declarationVersion entries with declaration relationships';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const declarations = await getAllDeclarations(connection);
@@ -38,10 +38,10 @@ const updateDeclarationVersionField = async (connection: Connection) => {
     });
 
     return Promise.all(declarationPromises);
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 error %s %O', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

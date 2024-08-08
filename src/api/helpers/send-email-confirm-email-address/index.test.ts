@@ -122,10 +122,10 @@ describe('helpers/send-email-confirm-email-address', () => {
     test('should throw an error', async () => {
       try {
         await confirmEmailAddressEmail.send(context, mockUrlOrigin, account.id);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${new Error(mockErrorMessage)}`);
 
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

@@ -89,8 +89,9 @@ export const get = async (req: Request, res: Response) => {
       SUMMARY_LISTS: summaryLists,
       ...pageVariables(referenceNumber),
     });
-  } catch (err) {
-    console.error('Error getting Check your answers - Policy %O', err);
+  } catch (error) {
+    console.error('Error getting Check your answers - Policy %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -122,8 +123,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT}`);
-  } catch (err) {
-    console.error('Error updating Check your answers - Policy %O', err);
+  } catch (error) {
+    console.error('Error updating Check your answers - Policy %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

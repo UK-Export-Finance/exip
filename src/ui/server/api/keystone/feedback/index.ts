@@ -22,9 +22,11 @@ const feedback = {
       }
 
       console.error('Error with GraphQL createInsuranceFeedbackMutation %O', response);
+
       throw new Error('Creating feedback');
-    } catch (err) {
-      console.error('Error creating feedback %O', err);
+    } catch (error) {
+      console.error('Error creating feedback %O', error);
+
       throw new Error('Creating feedback');
     }
   },

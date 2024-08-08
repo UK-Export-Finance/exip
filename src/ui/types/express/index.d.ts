@@ -5,7 +5,7 @@ import { Quote } from '../quote';
 import { Application } from '../application';
 
 interface Next {
-  (err?: any): void;
+  (error?: any): void;
 }
 
 interface RequestBody {

@@ -9,17 +9,17 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  */
 const getPolicyContactById = async (context: Context, id: string) => {
   try {
-    console.info(`Getting policyContact by ID ${id}`);
+    console.info('Getting policyContact by ID %s', id);
 
     const policyContact = await context.db.PolicyContact.findOne({
       where: { id },
     });
 
     return policyContact;
-  } catch (err) {
-    console.error(`Getting policyContact by ID ${id} %O`, err);
+  } catch (error) {
+    console.error('Getting policyContact by ID %s %O', id, error);
 
-    throw new Error(`Error Getting policyContact by ID ${id} ${err}`);
+    throw new Error(`Error Getting policyContact by ID ${id} ${error}`);
   }
 };
 

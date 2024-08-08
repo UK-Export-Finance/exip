@@ -26,13 +26,13 @@ describe('helpers/get-cover-period-by-id', () => {
     it('should throw an error', async () => {
       try {
         await getCoverPeriodById(context, mockInvalidId);
-      } catch (err) {
+      } catch (error) {
         const errorMessage = `Getting coverPeriod by ID ${mockInvalidId}`;
 
         const newError = new Error(errorMessage);
 
         const expected = new Error(`${errorMessage} ${newError}`);
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

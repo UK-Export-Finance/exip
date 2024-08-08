@@ -26,13 +26,13 @@ describe('helpers/get-eligibility-by-id', () => {
     it('should throw an error', async () => {
       try {
         await getEligibilityById(context, mockInvalidId);
-      } catch (err) {
+      } catch (error) {
         const errorMessage = `Getting eligibility by ID ${mockInvalidId}`;
 
         const newError = new Error(errorMessage);
 
         const expected = new Error(`${errorMessage} ${newError}`);
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

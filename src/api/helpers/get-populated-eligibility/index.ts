@@ -14,7 +14,7 @@ import { Country } from '../../types';
  */
 const getPopulatedEligibility = async (context: Context, id: string, buyerCountry: Country) => {
   try {
-    console.info(`Getting populated eligibility ${id}`);
+    console.info('Getting populated eligibility %s', id);
 
     const eligibility = await getEligibilityById(context, id);
 
@@ -30,10 +30,10 @@ const getPopulatedEligibility = async (context: Context, id: string, buyerCountr
     };
 
     return populatedEligibility;
-  } catch (err) {
-    console.error(`Getting populated eligibility ${id} %O`, err);
+  } catch (error) {
+    console.error('Getting populated eligibility %s %O', id, error);
 
-    throw new Error(`Error Getting populated eligibility ${id} ${err}`);
+    throw new Error(`Error Getting populated eligibility ${id} ${error}`);
   }
 };
 

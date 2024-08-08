@@ -51,12 +51,12 @@ describe('helpers/update-account', () => {
     it('should throw an error', async () => {
       try {
         await update.account(context, account.id, {});
-      } catch (err) {
+      } catch (error) {
         const expectedKeystoneError = 'Access denied: You cannot update that Account - it may not exist';
 
         const expected = new Error(`Updating account ${expectedKeystoneError}`);
 
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

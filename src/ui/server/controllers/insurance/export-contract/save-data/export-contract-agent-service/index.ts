@@ -24,7 +24,7 @@ const exportContractAgentService = async (application: Application, formBody: Re
     const saveResponse = await api.keystone.application.update.exportContractAgentService(exportContractAgentServiceId, sanitisedData);
 
     return saveResponse;
-  } catch (err) {
+  } catch (error) {
     throw new Error("Updating application's exportContractAgentService");
   }
 };

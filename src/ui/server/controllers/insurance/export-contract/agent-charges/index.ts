@@ -179,8 +179,8 @@ export const get = async (req: Request, res: Response) => {
       CONDITIONAL_FIXED_SUM_HTML,
       CONDITIONAL_PERCENTAGE_HTML,
     });
-  } catch (err) {
-    console.error('Error getting countries %O', err);
+  } catch (error) {
+    console.error('Error getting countries %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -232,8 +232,8 @@ export const post = async (req: Request, res: Response) => {
         submittedValues: sanitiseData(payload),
         validationErrors,
       });
-    } catch (err) {
-      console.error('Error getting countries or currencies %O', err);
+    } catch (error) {
+      console.error('Error getting countries or currencies %O', error);
 
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
@@ -256,8 +256,9 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
-  } catch (err) {
-    console.error('Error updating application - export contract - agent charges %O', err);
+  } catch (error) {
+    console.error('Error updating application - export contract - agent charges %O', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

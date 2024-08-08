@@ -40,9 +40,9 @@ export const insuranceFeedbackEmail = async (variables: InsuranceFeedbackVariabl
     const response = await callNotify(templateId, emailAddress, emailVariables);
 
     return response;
-  } catch (err) {
-    console.error('Error sending insurance feedback email %O', err);
+  } catch (error) {
+    console.error('Error sending insurance feedback email %O', error);
 
-    throw new Error(`Sending insurance feedback email ${err}`);
+    throw new Error(`Sending insurance feedback email ${error}`);
   }
 };

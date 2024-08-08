@@ -22,8 +22,8 @@ const callMapAndSave = async (formData: RequestBody, application: Application, v
     saveResponse = await mapAndSave.policy(formData, application);
 
     return saveResponse;
-  } catch (err) {
-    console.error('Error calling mapAndSave.policy %O', err);
+  } catch (error) {
+    console.error('Error calling mapAndSave.policy %O', error);
 
     return false;
   }

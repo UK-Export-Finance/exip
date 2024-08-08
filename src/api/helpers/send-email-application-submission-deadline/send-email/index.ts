@@ -22,9 +22,10 @@ const send = async (applications: Array<Application>) => {
     const promises = await Promise.all(mapped);
 
     return promises;
-  } catch (err) {
-    console.error('Error sending application submission deadline email (send helper) %O', err);
-    throw new Error(`Sending application submission deadline email (send helper) ${err}`);
+  } catch (error) {
+    console.error('Error sending application submission deadline email (send helper) %O', error);
+
+    throw new Error(`Sending application submission deadline email (send helper) ${error}`);
   }
 };
 

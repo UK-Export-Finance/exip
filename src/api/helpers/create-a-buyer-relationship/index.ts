@@ -28,10 +28,10 @@ const createABuyerRelationship = async (context: Context, buyerId: string, appli
     });
 
     return buyerRelationship;
-  } catch (err) {
-    console.error('Error creating a buyer relationship %O', err);
+  } catch (error) {
+    console.error('Error creating a buyer relationship %O', error);
 
-    throw new Error(`Creating a buyer relationship ${err}`);
+    throw new Error(`Creating a buyer relationship ${error}`);
   }
 };
 

@@ -15,7 +15,7 @@ import { Application } from '../../../types';
 const updateDeclarationFields = async (connection: Connection) => {
   const loggingMessage = 'Updating all declarations FIELDS';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const nonSubmittedApplications = await getAllNonSubmittedApplications(connection);
@@ -71,10 +71,10 @@ const updateDeclarationFields = async (connection: Connection) => {
     });
 
     return Promise.all(promises);
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 error %s %O', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

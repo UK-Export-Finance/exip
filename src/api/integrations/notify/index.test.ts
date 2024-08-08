@@ -40,8 +40,8 @@ describe('integrations/notify', () => {
     test('it should throw an error', async () => {
       try {
         await notify.sendEmail(mockTemplateId, mockSendToEmailAddress, mockVariables);
-      } catch (err) {
-        expect(err).toEqual('Error calling Notify API. Unable to send email');
+      } catch (error) {
+        expect(error).toEqual('Error calling Notify API. Unable to send email');
       }
     });
   });

@@ -7,8 +7,8 @@ import { Context } from '../../types';
 const mockSicCodes = [mockCompanySicCode.sicCode, mockCompanySicCode.sicCode];
 const mocIndustrySectorNames = [mockCompanySicCode.industrySectorName];
 
-const assertError = (err) => {
-  const errorString = String(err);
+const assertError = (error) => {
+  const errorString = String(error);
 
   expect(errorString.includes('Creating company SIC codes')).toEqual(true);
 };
@@ -57,8 +57,8 @@ describe('helpers/create-company-sic-codes', () => {
     it('should throw an error', async () => {
       try {
         await createCompanySicCodes(context, mockInvalidId, mockSicCodes, mocIndustrySectorNames);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -68,8 +68,8 @@ describe('helpers/create-company-sic-codes', () => {
       try {
         // pass empty context object to force an error
         await createCompanySicCodes({}, mockInvalidId, mockSicCodes, mocIndustrySectorNames);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

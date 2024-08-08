@@ -47,8 +47,8 @@ describe('api/helpers/map-loss-payee-financial-details-international', () => {
     it('should throw an error', async () => {
       try {
         mapLossPayeeFinancialDetailsInternational({ id: '1', vector: { id: '2' } });
-      } catch (err) {
-        const errorString = String(err);
+      } catch (error) {
+        const errorString = String(error);
 
         expect(errorString.includes('Error mapping loss payee financial international')).toEqual(true);
       }

@@ -61,10 +61,10 @@ describe('custom-resolvers/get-APIM-CIS-countries', () => {
     it('should throw an error', async () => {
       try {
         await getApimCisCountries();
-      } catch (err) {
+      } catch (error) {
         const expected = new Error(`Getting and mapping CIS countries from APIM ${new Error(mockErrorMessage)}`);
 
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

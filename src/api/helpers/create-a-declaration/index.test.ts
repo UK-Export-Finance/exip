@@ -5,8 +5,8 @@ import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
 import { Application, Context } from '../../types';
 
-const assertError = (err) => {
-  const errorString = String(err);
+const assertError = (error) => {
+  const errorString = String(error);
 
   expect(errorString.includes('Creating an application declaration')).toEqual(true);
 };
@@ -90,8 +90,8 @@ describe('helpers/create-a-declaration', () => {
       await expect(createADeclaration({}, application.id)).rejects.toThrow('Creating an application declaration');
       try {
         await createADeclaration(context, mockInvalidId);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

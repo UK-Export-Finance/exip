@@ -53,10 +53,10 @@ const shouldBlockAccount = async (context: Context, accountId: string): Promise<
     }
 
     return false;
-  } catch (err) {
-    console.error('Error checking account authentication retries %O', err);
+  } catch (error) {
+    console.error('Error checking account authentication retries %O', error);
 
-    throw new Error(`Checking account authentication retries  ${err}`);
+    throw new Error(`Checking account authentication retries  ${error}`);
   }
 };
 

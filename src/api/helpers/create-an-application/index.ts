@@ -86,10 +86,10 @@ const createAnApplicationHelper = async (variables: CreateAnApplicationVariables
     });
 
     return updatedApplication;
-  } catch (err) {
-    console.error(`Error creating an application (createAnApplication helper) for user ${variables.accountId} %O`, err);
+  } catch (error) {
+    console.error('Error creating an application (createAnApplication helper) for user %s %O', variables.accountId, error);
 
-    throw new Error(`Creating an application (createAnApplication helper) for user ${variables.accountId} ${err}`);
+    throw new Error(`Creating an application (createAnApplication helper) for user ${variables.accountId} ${error}`);
   }
 };
 

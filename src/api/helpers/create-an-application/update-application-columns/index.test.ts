@@ -77,8 +77,8 @@ describe('helpers/create-an-application/update-application-columns', () => {
           policyContactId: createdRelationships.policyContactId,
           sectionReviewId: createdRelationships.sectionReviewId,
         });
-      } catch (err) {
-        const errorString = String(err);
+      } catch (error) {
+        const errorString = String(error);
 
         expect(errorString.includes(`Updating application relationship columns (updateApplicationColumns helper) for application ${application.id}`)).toEqual(
           true,

@@ -13,9 +13,10 @@ const findAll = async (context: Context) => {
     const retries = await context.query.AuthenticationRetry.findMany();
 
     return retries;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Getting auth retries (test helpers) ${err}`);
+  } catch (error) {
+    console.error(error);
+
+    throw new Error(`Getting auth retries (test helpers) ${error}`);
   }
 };
 
@@ -36,9 +37,10 @@ const deleteAll = async (context: Context) => {
     });
 
     return deleted;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+
+    return error;
   }
 };
 

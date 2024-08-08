@@ -12,7 +12,7 @@ import { CreateAnApplicationVariables, Context } from '../../../types';
  * @returns {Promise<Object>} Object with success flag and application
  */
 const createAnApplication = async (root: any, variables: CreateAnApplicationVariables, context: Context) => {
-  console.info('Creating application for user ', variables.accountId);
+  console.info('Creating application for user %s', variables.accountId);
 
   try {
     const application = await createAnApplicationHelper(variables, context);
@@ -27,10 +27,10 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
     return {
       success: false,
     };
-  } catch (err) {
-    console.error(`Error creating application for user ${variables.accountId} %O`, err);
+  } catch (error) {
+    console.error('Error creating application for user %s %O', variables.accountId, error);
 
-    throw new Error(`Creating application for user ${variables.accountId} ${err}`);
+    throw new Error(`Creating application for user ${variables.accountId} ${error}`);
   }
 };
 
