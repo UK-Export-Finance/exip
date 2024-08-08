@@ -14,7 +14,7 @@ const createDeclarationVersionRelationship = async (connection: Connection) => {
   console.info(`✅ ${loggingMessage}`);
 
   try {
-    const promises = Promise.all([submittedApplications(connection), nonSubmittedApplications(connection)]);
+    const promises = await Promise.all([submittedApplications(connection), nonSubmittedApplications(connection)]);
 
     return promises;
   } catch (err) {
