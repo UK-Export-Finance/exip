@@ -1,8 +1,8 @@
-import { status, summaryList } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
-import checkSummaryList from '../../../../../../../commands/insurance/check-your-buyer-summary-list';
+import { status, summaryList } from '../../../../../../../../pages/shared';
+import partials from '../../../../../../../../partials';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/your-buyer';
+import checkSummaryList from '../../../../../../../../commands/insurance/check-your-buyer-summary-list';
 
 const {
   ROOT,

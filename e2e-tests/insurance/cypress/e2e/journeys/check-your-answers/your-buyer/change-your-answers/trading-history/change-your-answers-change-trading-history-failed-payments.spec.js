@@ -1,15 +1,10 @@
-import { status, summaryList } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
-import { FIELD_VALUES } from '../../../../../../../constants';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import application from '../../../../../../../fixtures/application';
-import formatCurrency from '../../../../../../../helpers/format-currency';
+import { status, summaryList } from '../../../../../../../../pages/shared';
+import partials from '../../../../../../../../partials';
+import { FIELD_VALUES } from '../../../../../../../../constants';
+import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/your-buyer';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 
-const {
-  CURRENCY: { CURRENCY_CODE },
-  YOUR_BUYER: { OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS },
-} = INSURANCE_FIELD_IDS;
+const { FAILED_PAYMENTS } = FIELD_IDS;
 
 const {
   ROOT,
@@ -21,13 +16,12 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
-const fieldId = OUTSTANDING_PAYMENTS;
-const currency = application.BUYER[CURRENCY_CODE];
+const fieldId = FAILED_PAYMENTS;
 
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  `Insurance - Check your answers - Your buyer - Trading history - ${OUTSTANDING_PAYMENTS} - No to yes - As an exporter, I want to change my answers to the trading history section`,
+  `Insurance - Check your answers - Your buyer - Trading history - ${FAILED_PAYMENTS} - As an exporter, I want to change my answers to the trading history section`,
   () => {
     let referenceNumber;
     let url;
@@ -39,7 +33,7 @@ context(
         cy.completePrepareApplicationSinglePolicyType({
           referenceNumber,
           exporterHasTradedWithBuyer: true,
-          fullyPopulatedBuyerTradingHistory: false,
+          fullyPopulatedBuyerTradingHistory: true,
         });
 
         task.link().click();
@@ -79,20 +73,15 @@ context(
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
+        cy.completeAndSubmitTradingHistoryWithBuyerForm({ failedToPay: true });
       });
 
       it(`should redirect to ${YOUR_BUYER}`, () => {
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUYER, fieldId });
       });
 
-      it(`should render the new answer with ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+      it(`should render the new answer for ${FAILED_PAYMENTS}`, () => {
         cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.YES);
-
-        const row = summaryList.field(TOTAL_OUTSTANDING_PAYMENTS);
-        const expected = formatCurrency(application.BUYER[TOTAL_OUTSTANDING_PAYMENTS], currency);
-
-        row.value().contains(expected);
       });
 
       it('should retain a `completed` status tag', () => {

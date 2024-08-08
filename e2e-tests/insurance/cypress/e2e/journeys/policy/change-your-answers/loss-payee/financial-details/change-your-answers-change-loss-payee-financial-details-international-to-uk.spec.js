@@ -1,7 +1,7 @@
-import { field, summaryList } from '../../../../../../../pages/shared';
-import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
+import { field, summaryList } from '../../../../../../../../pages/shared';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import checkSummaryList from '../../../../../../../../commands/insurance/check-policy-summary-list';
 
 const {
   LOSS_PAYEE_DETAILS: { NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY },

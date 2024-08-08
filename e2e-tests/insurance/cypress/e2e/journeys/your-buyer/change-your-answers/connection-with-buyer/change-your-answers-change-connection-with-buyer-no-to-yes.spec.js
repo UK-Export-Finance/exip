@@ -1,7 +1,7 @@
-import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
-import { summaryList } from '../../../../../../pages/shared';
-import checkSummaryList from '../../../../../../commands/insurance/check-your-buyer-summary-list';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
+import { summaryList } from '../../../../../../../pages/shared';
+import checkSummaryList from '../../../../../../../commands/insurance/check-your-buyer-summary-list';
 
 const {
   ROOT,
