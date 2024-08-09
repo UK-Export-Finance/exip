@@ -38,11 +38,14 @@ const createNewApplicationRelationships = async (connection: Connection) => {
       updateCompanyDifferentTradingAddress(connection),
       createDeclarationVersionRelationship(connection),
       updateDeclarationVersionField(connection, applications),
+    ]);
+
+    const financialVectorRelationships = await Promise.all([
       updateLossPayeeFinancialUkVector(connection),
       updateLossPayeeFinancialInternationalVector(connection),
     ]);
 
-    return newRelationships;
+    return [...newRelationships, ...financialVectorRelationships];
   } catch (err) {
     console.error(`🚨 error ${loggingMessage} %O`, err);
 
