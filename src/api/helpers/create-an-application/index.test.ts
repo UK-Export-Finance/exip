@@ -1,27 +1,23 @@
-import createAnApplication from '.';
+import createAnApplicationHelper from '.';
 import initialApplication from './create-initial-application';
 import applicationRelationships from './create-application-relationships';
 import applicationColumns from './update-application-columns';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
-import accounts from '../../test-helpers/accounts';
 import applications from '../../test-helpers/applications';
-import { mockAccount, mockCountries, mockInvalidId } from '../../test-mocks';
+import { mockCountries, mockInvalidId } from '../../test-mocks';
 import mockCompany from '../../test-mocks/mock-company';
 import { APPLICATION } from '../../constants';
-import { Context, Account, Application } from '../../types';
+import { Context, Application } from '../../types';
 
 const { STATUS, SUBMISSION_TYPE } = APPLICATION;
 
 describe('helpers/create-an-application', () => {
   let context: Context;
-  let account: Account;
   let application: Application;
 
   jest.mock('./create-initial-application');
   jest.mock('./create-application-relationships');
   jest.mock('./update-application-columns');
-
-  const { status, ...mockAccountUpdate } = mockAccount;
 
   const variables = {
     accountId: '',
@@ -44,14 +40,18 @@ describe('helpers/create-an-application', () => {
   let validSpys = {};
 
   const mockApplicationRelationshipsCreateResponse = {
-    buyerId: '1',
-    companyId: '2',
-    declarationId: '3',
-    eligibilityId: '4',
-    exportContractId: '5',
-    nominatedLossPayeeId: '6',
-    policyId: '7',
-    sectionReviewId: '8',
+    brokerId: '1',
+    businessId: '2',
+    buyerId: '3',
+    companyId: '4',
+    declarationId: '5',
+    eligibilityId: '6',
+    exportContractId: '7',
+    nominatedLossPayeeId: '8',
+    policyId: '9',
+    policyContactId: '10',
+    referenceNumber: '11',
+    sectionReviewId: '12',
   };
 
   const mockApplicationColumnsUpdateResponse = {};
@@ -59,10 +59,9 @@ describe('helpers/create-an-application', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    account = await accounts.create({ context, data: mockAccountUpdate });
     application = await applications.create({ context });
 
-    variables.accountId = account.id;
+    variables.accountId = application.ownerId;
 
     mockApplicationColumnsUpdateResponse.id = application.id;
 
@@ -82,7 +81,7 @@ describe('helpers/create-an-application', () => {
   });
 
   it('should call initialApplication.create', async () => {
-    await createAnApplication({}, variables, context);
+    await createAnApplicationHelper(variables, context);
 
     expect(initialApplicationCreateSpy).toHaveBeenCalledTimes(1);
     expect(initialApplicationCreateSpy).toHaveBeenCalledWith({
@@ -93,7 +92,7 @@ describe('helpers/create-an-application', () => {
   });
 
   it('should call applicationRelationships.create', async () => {
-    await createAnApplication({}, variables, context);
+    await createAnApplicationHelper(variables, context);
 
     expect(applicationRelationshipsCreateSpy).toHaveBeenCalledTimes(1);
     expect(applicationRelationshipsCreateSpy).toHaveBeenCalledWith({
@@ -106,16 +105,13 @@ describe('helpers/create-an-application', () => {
   });
 
   it('should call applicationColumns.update', async () => {
-    await createAnApplication({}, variables, context);
+    await createAnApplicationHelper(variables, context);
 
     expect(applicationColumnsUpdateSpy).toHaveBeenCalledTimes(1);
 
-    const { buyerId, companyId, declarationId, eligibilityId, exportContractId, nominatedLossPayeeId, policyId, sectionReviewId } =
-      mockApplicationRelationshipsCreateResponse;
-
-    expect(applicationColumnsUpdateSpy).toHaveBeenCalledWith({
-      context,
-      applicationId: application.id,
+    const {
+      brokerId,
+      businessId,
       buyerId,
       companyId,
       declarationId,
@@ -123,12 +119,31 @@ describe('helpers/create-an-application', () => {
       exportContractId,
       nominatedLossPayeeId,
       policyId,
+      policyContactId,
+      referenceNumber,
+      sectionReviewId,
+    } = mockApplicationRelationshipsCreateResponse;
+
+    expect(applicationColumnsUpdateSpy).toHaveBeenCalledWith({
+      context,
+      applicationId: application.id,
+      brokerId,
+      businessId,
+      buyerId,
+      companyId,
+      declarationId,
+      eligibilityId,
+      exportContractId,
+      nominatedLossPayeeId,
+      policyId,
+      policyContactId,
+      referenceNumber,
       sectionReviewId,
     });
   });
 
   test('it should return the result of applicationColumns.update', async () => {
-    const result = await createAnApplication({}, variables, context);
+    const result = await createAnApplicationHelper(variables, context);
 
     const createdApplication = await applications.get({ context, applicationId: result.id });
 
@@ -139,7 +154,7 @@ describe('helpers/create-an-application', () => {
     test('it should return null', async () => {
       variables.accountId = mockInvalidId;
 
-      const result = await createAnApplication({}, variables, context);
+      const result = await createAnApplicationHelper(variables, context);
 
       expect(result).toBeNull();
     });

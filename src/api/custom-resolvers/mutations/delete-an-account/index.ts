@@ -9,9 +9,9 @@ import { Account, AccountDeletionVariables, AuthenticationRetry, Context } from 
  * 1) Check if the account exists.
  * 2) Delete authentication retry entries.
  * 3) Delete the account.
- * @param {Object} GraphQL root variables
- * @param {Object} GraphQL variables for the DeleteAnAccount mutation
- * @param {Context} KeystoneJS context API
+ * @param {Object} root: GraphQL root variables
+ * @param {Object} variables: GraphQL variables for the DeleteAnAccount mutation
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag
  */
 const deleteAnAccount = async (root: any, variables: AccountDeletionVariables, context: Context) => {

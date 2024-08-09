@@ -29,7 +29,7 @@ context(
     let referenceNumber;
     let url;
 
-    describe(`${CONNECTION_WITH_BUYER} as no`, () => {
+    describe(`when ${CONNECTION_WITH_BUYER} is 'no'`, () => {
       before(() => {
         cy.deleteAccount();
 

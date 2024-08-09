@@ -5,18 +5,17 @@ import applicationColumns from './update-application-columns';
 import { CreateAnApplicationVariables, Context } from '../../types';
 
 /**
- * createAnApplication
+ * createAnApplicationHelper
  * Create an application helper.
  * 1) Get an account by ID.
  * 2) Create the initial application.
  * 3) Create application relationships.
  * 4) Update the application's relationship columns.
- * @param {Object} GraphQL root variables
- * @param {CreateAnApplicationVariables} GraphQL variables for the CreateAnApplication
- * @param {Context} KeystoneJS context API
+ * @param {CreateAnApplicationVariables} variables: GraphQL variables for the CreateAnApplication
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Application>} Created application
  */
-const createAnApplication = async (root: any, variables: CreateAnApplicationVariables, context: Context) => {
+const createAnApplicationHelper = async (variables: CreateAnApplicationVariables, context: Context) => {
   console.info('Creating an application (createAnApplication helper) for user %s', variables.accountId);
 
   try {
@@ -47,19 +46,9 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
     const { id: applicationId } = application;
 
     // create application relationships
-    const { buyerId, declarationId, companyId, eligibilityId, exportContractId, nominatedLossPayeeId, policyId, sectionReviewId } =
-      await applicationRelationships.create({
-        context,
-        applicationId,
-        companyData,
-        eligibilityAnswers,
-        sectionReviewData,
-      });
-
-    // update the application's relationship column values
-    const updatedApplication = await applicationColumns.update({
-      context,
-      applicationId,
+    const {
+      brokerId,
+      businessId,
       buyerId,
       companyId,
       declarationId,
@@ -67,6 +56,32 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
       exportContractId,
       nominatedLossPayeeId,
       policyId,
+      policyContactId,
+      referenceNumber,
+      sectionReviewId,
+    } = await applicationRelationships.create({
+      context,
+      applicationId,
+      companyData,
+      eligibilityAnswers,
+      sectionReviewData,
+    });
+
+    // update the application's relationship column values
+    const updatedApplication = await applicationColumns.update({
+      context,
+      applicationId,
+      brokerId,
+      businessId,
+      buyerId,
+      companyId,
+      declarationId,
+      eligibilityId,
+      exportContractId,
+      nominatedLossPayeeId,
+      policyId,
+      policyContactId,
+      referenceNumber,
       sectionReviewId,
     });
 
@@ -78,4 +93,4 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
   }
 };
 
-export default createAnApplication;
+export default createAnApplicationHelper;

@@ -71,7 +71,7 @@ context(
         });
       });
 
-      describe('when the companies house number is blank', () => {
+      describe('when the companies house number is empty', () => {
         beforeEach(() => {
           cy.navigateToUrl(url);
 

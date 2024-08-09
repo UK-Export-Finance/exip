@@ -1,24 +1,19 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import accounts from './accounts';
-import coverPeriodTestHelper from './cover-period';
-import totalContractValueTestHelper from './total-contract-value';
-import createAnEligibility from '../helpers/create-an-eligibility';
-import createABroker from '../helpers/create-a-broker';
-import createABuyer from '../helpers/create-a-buyer';
-import createADeclaration from '../helpers/create-a-declaration';
-import createAPolicy from '../helpers/create-a-policy';
-import createACompany from '../helpers/create-a-company';
-import createAnExportContract from '../helpers/create-an-export-contract';
-import createANominatedLossPayee from '../helpers/create-a-nominated-loss-payee';
-import sectionReviewCreate from './sectionReview';
-import { APPLICATION, FIELD_VALUES, GBP_CURRENCY_CODE } from '../constants';
-import { mockApplicationEligibility, mockExportContract, mockBusiness, mockPolicyContact } from '../test-mocks/mock-application';
+import { FIELD_VALUES, GBP_CURRENCY_CODE } from '../constants';
+import createAnApplicationHelper from '../helpers/create-an-application';
+import getBrokerById from '../helpers/get-broker-by-id';
+import getBuyerById from '../helpers/get-buyer-by-id';
+import getBuyerTradingHistoryById from '../helpers/get-buyer-trading-history-by-id';
+import getCompanyById from '../helpers/get-company-by-id';
+import getCompanyAddressById from '../helpers/get-company-address-by-id';
+import getCompanyDifferentTradingAddressById from '../helpers/get-company-different-trading-address-by-id';
+import getEligibilityById from '../helpers/get-eligibility-by-id';
+import getExportContractById from '../helpers/get-export-contract-by-id';
+import { mockExportContract, mockBusiness, mockPolicyContact } from '../test-mocks/mock-application';
 import { mockApplicationDeclaration } from '../test-mocks';
 import mockCompany from '../test-mocks/mock-company';
-import mockCountries from '../test-mocks/mock-countries';
 import { Application, ApplicationBusiness, ApplicationDeclaration, ApplicationExportContract, ApplicationPolicy, ApplicationPolicyContact } from '../types';
-
-const { STATUS } = APPLICATION;
 
 const { POLICY_TYPE } = FIELD_VALUES;
 
@@ -30,113 +25,47 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * @returns {Object} Application
  */
 export const createFullApplication = async (context: Context, policyType?: string): Promise<Application> => {
-  const { buyerCountry, totalContractValue, totalContractValueId, coverPeriod, coverPeriodId, ...otherEligibilityAnswers } = mockApplicationEligibility;
-
-  const countries = await context.query.Country.createMany({
-    data: mockCountries,
-    query: 'id isoCode name',
-  });
-
-  const country = countries.find((c) => c.isoCode === buyerCountry.isoCode);
-
-  if (!country) {
-    throw new Error('No country found from mock country ISO code');
-  }
-
   const account = await accounts.create({ context });
 
-  // create a new application
-  const application = (await context.query.Application.createOne({
-    query:
-      'id referenceNumber updatedAt submissionCount submissionDeadline policyContact { id } exportContract { id } owner { id } company { id } business { id } nominatedLossPayee { id } broker { id } declaration { id } sectionReview { id } buyer { id buyerTradingHistory { id } relationship { id } }',
-    data: {
-      owner: {
-        connect: {
-          id: account.id,
-        },
-      },
-      status: STATUS.IN_PROGRESS,
+  const application = await createAnApplicationHelper(
+    {
+      accountId: account.id,
+      eligibilityAnswers: {},
+      company: mockCompany,
     },
-  })) as Application;
-
-  // create a coverPeriod DB entry.
-  const createdCoverPeriod = await coverPeriodTestHelper.create(context);
-
-  // create a totalContractValue DB entry.
-  const createdTotalContractValue = await totalContractValueTestHelper.create(context);
-
-  // create eligibility and associate with the application.
-  const eligibility = await createAnEligibility(
     context,
-    country.id,
-    application.id,
-    createdCoverPeriod.id,
-    createdTotalContractValue.id,
-    otherEligibilityAnswers,
   );
 
-  // create a broker and associate with the application.
-  const broker = await createABroker(context, application.id);
+  const {
+    eligibilityId,
+    // referenceNumber,
+    policyId,
+    exportContractId,
+    businessId,
+    brokerId,
+    buyerId,
+    companyId,
+    declarationId,
+    // nominatedLossPayeeId,
+    policyContactId,
+    // sectionReviewId,
+  } = application;
 
-  // create a buyer and associate with the application.
-  const buyer = await createABuyer(context, country.id, application.id);
+  const broker = await getBrokerById(context, brokerId);
 
-  const declaration = await createADeclaration(context, application.id);
+  const buyer = await getBuyerById(context, buyerId);
 
-  // create a policy and associate with the application.
-  const createdPolicy = await createAPolicy(context, application.id);
+  const buyerTradingHistory = await getBuyerTradingHistoryById(context, buyer?.buyerTradingHistoryId);
 
-  // create a company and associate with the application.
-  const company = await createACompany(context, application.id, mockCompany);
+  const company = await getCompanyById(context, companyId);
 
-  // create an exportContract and associate with the application.
-  const exportContract = await createAnExportContract(context, application.id);
+  const companyAddress = await getCompanyAddressById(context, company.registeredOfficeAddressId);
 
-  // create a nominatedLossPayee and associate with the application.
-  const nominatedLossPayee = await createANominatedLossPayee(context, application.id);
+  const companyDifferentTradingAddress = await getCompanyDifferentTradingAddressById(context, company.differentTradingAddressId);
 
-  const sectionReview = await sectionReviewCreate.create(context);
+  const eligibility = await getEligibilityById(context, eligibilityId);
 
-  /**
-   * update the application with:
-   * 1) Buyer relationship ID
-   * 2) Company relationship ID
-   * 3) Eligibility relationship ID
-   * 4) ExportContract relationship ID
-   * 5) Policy relationship ID
-   */
-  await context.db.Application.updateOne({
-    where: { id: application.id },
-    data: {
-      broker: {
-        connect: { id: broker.id },
-      },
-      buyer: {
-        connect: { id: buyer.id },
-      },
-      company: {
-        connect: { id: company.id },
-      },
-      declaration: {
-        connect: { id: declaration.id },
-      },
-      eligibility: {
-        connect: { id: eligibility.id },
-      },
-      exportContract: {
-        connect: { id: exportContract.id },
-      },
-      policy: {
-        connect: { id: createdPolicy.id },
-      },
-      nominatedLossPayee: {
-        connect: { id: nominatedLossPayee.id },
-      },
-      sectionReview: {
-        connect: { id: sectionReview.id },
-      },
-    },
-  });
+  const exportContract = await getExportContractById(context, exportContractId);
 
   /**
    * Create minimal policy data.
@@ -157,7 +86,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
 
   const policy = (await context.query.Policy.updateOne({
     where: {
-      id: createdPolicy.id,
+      id: policyId,
     },
     data: policyData,
     query:
@@ -170,7 +99,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
    */
   (await context.query.ExportContract.updateOne({
     where: {
-      id: exportContract.id,
+      id: exportContractId,
     },
     data: mockExportContract,
     query: 'id',
@@ -178,7 +107,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
 
   const policyContact = (await context.query.PolicyContact.updateOne({
     where: {
-      id: application.policyContact.id,
+      id: policyContactId,
     },
     data: mockPolicyContact,
     query: 'id firstName lastName email isSameAsOwner',
@@ -186,7 +115,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
 
   const business = (await context.query.Business.updateOne({
     where: {
-      id: application.business.id,
+      id: businessId,
     },
     data: mockBusiness,
     query: 'id',
@@ -194,7 +123,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
 
   const updatedDeclaration = (await context.query.Declaration.updateOne({
     where: {
-      id: declaration.id,
+      id: declarationId,
     },
     data: mockApplicationDeclaration,
     query: 'id hasAntiBriberyCodeOfConduct',
@@ -211,8 +140,15 @@ export const createFullApplication = async (context: Context, policyType?: strin
     owner: account,
     broker,
     business,
-    buyer,
-    company,
+    buyer: {
+      ...buyer,
+      buyerTradingHistory,
+    },
+    company: {
+      ...company,
+      registeredOfficeAddress: companyAddress,
+      differentTradingAddress: companyDifferentTradingAddress,
+    },
     declaration: updatedDeclaration,
     exportContract,
     eligibility,

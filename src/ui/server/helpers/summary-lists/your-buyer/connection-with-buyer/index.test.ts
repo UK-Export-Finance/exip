@@ -28,7 +28,7 @@ describe('server/helpers/summary-lists/your-buyer/connection-with-buyer-fields',
   const checkAndChange = false;
 
   describe('optionalFields', () => {
-    describe(`${CONNECTION_WITH_BUYER} is true`, () => {
+    describe(`when ${CONNECTION_WITH_BUYER} is true`, () => {
       it(`should return fields and values from the submitted data/answers including ${CONNECTION_WITH_BUYER_DESCRIPTION}`, () => {
         const result = optionalFields(mockAnswers, referenceNumber, checkAndChange);
 
@@ -51,7 +51,7 @@ describe('server/helpers/summary-lists/your-buyer/connection-with-buyer-fields',
       });
     });
 
-    describe(`${CONNECTION_WITH_BUYER} is false`, () => {
+    describe(`when ${CONNECTION_WITH_BUYER} is false`, () => {
       it(`should return fields and values from the submitted data/answers, not including ${CONNECTION_WITH_BUYER_DESCRIPTION}`, () => {
         mockAnswers[CONNECTION_WITH_BUYER] = false;
         const result = optionalFields(mockAnswers, referenceNumber, checkAndChange);
