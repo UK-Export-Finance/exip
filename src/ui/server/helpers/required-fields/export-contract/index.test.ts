@@ -18,6 +18,10 @@ const {
   AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE_CHARGE },
 } = FIELD_IDS;
 
+const totalContractValueOverThresholdTrue = true;
+
+const mockMigratedV1toV2False = false;
+
 describe('server/helpers/required-fields/export-contract', () => {
   const {
     exportContract: {
@@ -26,7 +30,6 @@ describe('server/helpers/required-fields/export-contract', () => {
       agent: { isUsingAgent },
       awardMethod: { id: awardMethodId },
     },
-    totalContractValueOverThreshold,
   } = mockApplication;
 
   describe('getAboutGoodsOrServicesTasks', () => {
@@ -54,49 +57,39 @@ describe('server/helpers/required-fields/export-contract', () => {
   });
 
   describe('privateCoverTasks', () => {
-    describe('when totalContractValueOverThreshold is true', () => {
-      describe('when attemptedPrivateMarketCover is true', () => {
+    describe('when totalContractValueOverThreshold=false, migratedV1toV2=true', () => {
+      describe('when attemptedPrivateMarketCover=true', () => {
         it(`should return an array with ${DECLINED_DESCRIPTION} field ID`, () => {
-          const result = privateCoverTasks({ totalContractValueOverThreshold: true, attemptedPrivateMarketCover: true });
+          const result = privateCoverTasks({ totalContractValueOverThreshold: false, migratedV1toV2: true, attemptedPrivateMarketCover: true });
 
           expect(result).toEqual([DECLINED_DESCRIPTION]);
         });
       });
 
-      describe('when attemptedPrivateMarketCover is false', () => {
-        it(`should return an array with ${ATTEMPTED} field ID`, () => {
-          const result = privateCoverTasks({ totalContractValueOverThreshold: true, attemptedPrivateMarketCover: false });
+      describe('when attemptedPrivateMarketCover=false', () => {
+        it(`should return an array with ${DECLINED_DESCRIPTION} field ID`, () => {
+          const result = privateCoverTasks({ totalContractValueOverThreshold: false, migratedV1toV2: true, attemptedPrivateMarketCover: false });
 
-          const expected = [ATTEMPTED];
-
-          expect(result).toEqual(expected);
-        });
-      });
-
-      describe('when attemptedPrivateMarketCover is undefined', () => {
-        it(`should return an array with ${ATTEMPTED} field ID`, () => {
-          const result = privateCoverTasks({ totalContractValueOverThreshold: true });
-
-          const expected = [ATTEMPTED];
-
-          expect(result).toEqual(expected);
+          expect(result).toEqual([ATTEMPTED]);
         });
       });
     });
 
-    describe('when totalContractValueOverThreshold is false', () => {
-      it('should return an empty array', () => {
-        const result = privateCoverTasks({ totalContractValueOverThreshold: false });
+    describe('when totalContractValueOverThreshold=true, migratedV1toV2=false', () => {
+      describe('when attemptedPrivateMarketCover=true', () => {
+        it(`should return an array with ${DECLINED_DESCRIPTION} field ID`, () => {
+          const result = privateCoverTasks({ totalContractValueOverThreshold: true, migratedV1toV2: false, attemptedPrivateMarketCover: true });
 
-        expect(result).toEqual([]);
+          expect(result).toEqual([DECLINED_DESCRIPTION]);
+        });
       });
-    });
 
-    describe('when totalContractValueOverThreshold is undefined', () => {
-      it('should return an empty array', () => {
-        const result = privateCoverTasks({});
+      describe('when attemptedPrivateMarketCover=false', () => {
+        it(`should return an array with ${DECLINED_DESCRIPTION} field ID`, () => {
+          const result = privateCoverTasks({ totalContractValueOverThreshold: true, migratedV1toV2: false, attemptedPrivateMarketCover: false });
 
-        expect(result).toEqual([]);
+          expect(result).toEqual([ATTEMPTED]);
+        });
       });
     });
   });
@@ -193,12 +186,22 @@ describe('server/helpers/required-fields/export-contract', () => {
 
   describe('requiredFields', () => {
     it('should return array of required fields', () => {
-      const result = requiredFields({ totalContractValueOverThreshold, finalDestinationKnown, attemptedPrivateMarketCover, isUsingAgent });
+      const result = requiredFields({
+        totalContractValueOverThreshold: totalContractValueOverThresholdTrue,
+        finalDestinationKnown,
+        attemptedPrivateMarketCover,
+        isUsingAgent,
+        migratedV1toV2: mockMigratedV1toV2False,
+      });
 
       const expected = [
         PAYMENT_TERMS_DESCRIPTION,
         ...getAboutGoodsOrServicesTasks(finalDestinationKnown),
-        ...privateCoverTasks({ totalContractValueOverThreshold, attemptedPrivateMarketCover }),
+        ...privateCoverTasks({
+          totalContractValueOverThreshold: totalContractValueOverThresholdTrue,
+          attemptedPrivateMarketCover,
+          migratedV1toV2: mockMigratedV1toV2False,
+        }),
         ...agentTasks({ isUsingAgent }),
         ...awardMethodTasks(awardMethodId),
       ];
