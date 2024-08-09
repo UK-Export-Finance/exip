@@ -120,7 +120,7 @@ const createCompanyAddress = async (context: Context, data = {}) => {
 
 /**
  * create company SIC code test helper
- * Create ann empty company SIC code.
+ * Create an empty company SIC code.
  * @param {Context} context: KeystoneJS context API
  * @param {String} companyId
  * @returns {Object} Created SIC code id
@@ -149,7 +149,7 @@ const createCompanySicCode = async (context: Context, companyId: string) => {
 
 /**
  * create company different trading address test helper
- * Create ann empty company different trading address.
+ * Create an empty company different trading address.
  * @param {Context} context: KeystoneJS context API
  * @param {String} companyId
  * @returns {Promise<ApplicationCompanyDifferentTradingAddress>} Created SIC code id

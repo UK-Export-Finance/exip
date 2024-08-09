@@ -15,14 +15,6 @@ const create = async ({ context }: TestHelperApplicationCreate) => {
   try {
     console.info('Creating an application (test helpers)');
 
-    // const application = (await context.query.Application.createOne({
-    //   data: {
-    //     status: STATUS.IN_PROGRESS,
-    //     ...data,
-    //   },
-    //   query: applicationQuery,
-    // })) as Application;
-
     const account = (await accounts.create({ context })) as Account;
 
     const application = await createAnApplicationHelper(
