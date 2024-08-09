@@ -1,4 +1,5 @@
 # Export Insurance Policies (EXIP) :briefcase:
+
 Welcome to the Export Insurance Policies repository! This repository houses the code for the UK Export Finance (UKEF) EXIP service, a public-facing application that offers various features to exporters:
 
 - Obtain a quote for Export Insurance Policies (EXIP) from UKEF.
@@ -23,11 +24,11 @@ The repository is based on the [template-typescript-package](https://github.com/
 
 **CD** 🚀
 
-| Status | Environment |
-| -------- | ------- |
-| ![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=dev) | `dev` |
-| ![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=feature) | `feature` |
-| ![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=staging) | `staging` |
+| Status                                                                                                             | Environment  |
+| ------------------------------------------------------------------------------------------------------------------ | ------------ |
+| ![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=dev)        | `dev`        |
+| ![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=feature)    | `feature`    |
+| ![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=staging)    | `staging`    |
 | ![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=production) | `production` |
 
 ## Prerequisites :gear:
@@ -37,9 +38,7 @@ Before getting started with this repository, ensure that you meet the following 
 - Node.js version 16 or higher, along with the corresponding `npm` package manager.
 - An `.env` file with the required environment variables. Some sensitive variables may need to be provided by the team.
 - Run `npm install` in the root directory.
-- Additionally, in the `src/ui` directory, run `npm install --legacy-peer-deps`.
-
-:warning: Due to certain issues, the `--legacy-peer-deps` flag is required for the installation in the `src/ui` directory.
+- Additionally, in the `src/ui` directory, run `npm install`.
 
 ## Tech Stack :computer:
 
@@ -69,6 +68,7 @@ To run the project locally, follow these steps:
 Alternatively, you can run each microservice via npm:
 
 - In one terminal, navigate to `src/ui`:
+
   1. `cd src/ui`
   2. `npm start`
   3. For hot reloading: `npm run dev`
@@ -234,7 +234,7 @@ Each page and field has content specific to that page or field. We keep these in
 
 We have the same approach for content that is used throughout, for example buttons, links, components that are used in multiple places etc.
 
-The files can be found  here:
+The files can be found here:
 
 - [global content strings](https://github.com/UK-Export-Finance/exip/tree/main-application/src/ui/server/content-strings) (buttons, links etc)
 - [page content strings](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/content-strings/pages/index.ts)
@@ -363,7 +363,7 @@ Key points and differences:
 
 The application/insurance eligibility includes questions about whether
 
- the exporter's desired cover period and cover amount exceed certain limits ("maximums"). If an exporter's request exceeds these maximums, they cannot proceed with the online application and must apply offline or contact UKEF directly.
+the exporter's desired cover period and cover amount exceed certain limits ("maximums"). If an exporter's request exceeds these maximums, they cannot proceed with the online application and must apply offline or contact UKEF directly.
 
 These maximum definitions are dynamic and can change. They are stored and rendered dynamically in the UI. You can find these definitions in the [eligibility constants](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/constants/eligibility.ts).
 
@@ -392,6 +392,7 @@ These are the key aspects of the UK Export Finance EXIP service codebase and dev
 ---
 
 ## Sub-resource integrity [(SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
+
 Client side JavaScript files are protected by SRI security feature which allows the browser to verify the authenticity of the JavaScript files in use.
 We use `SHA512` hashing algrothim for all our JavaScript files.
 
