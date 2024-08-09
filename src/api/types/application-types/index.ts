@@ -304,6 +304,7 @@ export interface Application {
   sectionReview: Relationship;
   totalContractValueOverThreshold: boolean;
   version: number;
+  migratedV1toV2?: boolean;
 }
 
 export interface ApplicationSubmissionEmailVariables {
@@ -398,6 +399,8 @@ export interface UpdateCompanyPostDataMigrationVariables extends Relationship {
 export interface UpdateApplicationRelationshipParams {
   context: Context;
   applicationId: string;
+  brokerId: string;
+  businessId: string;
   buyerId: string;
   companyId: string;
   declarationId: string;
@@ -405,5 +408,7 @@ export interface UpdateApplicationRelationshipParams {
   exportContractId: string;
   nominatedLossPayeeId: string;
   policyId: string;
+  policyContactId: string;
+  referenceNumber: string;
   sectionReviewId: string;
 }

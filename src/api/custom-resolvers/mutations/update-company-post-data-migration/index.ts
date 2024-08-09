@@ -8,9 +8,9 @@ import { SuccessResponse, UpdateCompanyPostDataMigrationVariables } from '../../
  * 1) Update data in the Company table
  * 2) Update data in the CompanyAddress table
  * 3) Create company SIC codes.
- * @param {Object} GraphQL root variables
+ * @param {Object} root: GraphQL root variables
  * @param {ApplicationCompany} GraphQL variables
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag
  */
 const updateCompanyPostDataMigration = async (root: any, variables: UpdateCompanyPostDataMigrationVariables, context: Context): Promise<SuccessResponse> => {

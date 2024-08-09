@@ -11,13 +11,13 @@ const { STATUS } = APPLICATION;
  * 2) Create a new application with createAnApplicationHelper.
  * 3) Updates application with abandoned status.
  * 4) Returns application and success flag
- * @param {Object} GraphQL root variables
+ * @param {Object} root: GraphQL root variables
  * @param {CreateAnApplicationVariables} GraphQL variables for the CreateAnAbandonedApplication mutation
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag and application
  */
 const createAnAbandonedApplication = async (root: any, variables: CreateAnApplicationVariables, context: Context) => {
-  console.info('Creating an abandoned application for ', variables.accountId);
+  console.info('Creating an abandoned application for %s', variables.accountId);
 
   const abandonedApplicationVariables = variables;
 
@@ -26,22 +26,11 @@ const createAnAbandonedApplication = async (root: any, variables: CreateAnApplic
 
   try {
     // creates and returns application
-    const createdApplication = await createAnApplicationHelper(root, abandonedApplicationVariables, context);
+    const createdApplication = await createAnApplicationHelper(abandonedApplicationVariables, context);
 
     if (createdApplication) {
-      // TODO: EMS-3387 remove once schema hooks for status is removed
-      // updates application status to abandoned
-      const updatedApplication = await context.db.Application.updateOne({
-        where: {
-          id: createdApplication.id,
-        },
-        data: {
-          status: STATUS.ABANDONED,
-        },
-      });
-
       return {
-        ...updatedApplication,
+        ...createdApplication,
         success: true,
       };
     }

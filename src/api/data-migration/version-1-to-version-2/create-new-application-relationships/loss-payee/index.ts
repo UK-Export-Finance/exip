@@ -21,7 +21,7 @@ import { Application } from '../../../../types';
  * @returns {Promise<Array<ApplicationNominatedLossPayee>>} Loss payee entries
  */
 const createLossPayee = async (connection: Connection, applications: Array<Application>) => {
-  const loggingMessage = 'Creating nominatedLossPayees with application relationships';
+  const loggingMessage = 'Creating nominatedLossPayees with an application relationships';
 
   console.info('✅ %s', loggingMessage);
 

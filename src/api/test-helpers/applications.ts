@@ -1,28 +1,30 @@
 import { APPLICATION } from '../constants';
-import { Application, TestHelperApplicationCreate, TestHelperApplicationGet, TestHelperApplicationUpdate, Context } from '../types';
+import createAnApplicationHelper from '../helpers/create-an-application';
+import accounts from './accounts';
+import { Account, Application, TestHelperApplicationCreate, TestHelperApplicationGet, TestHelperApplicationUpdate, Context } from '../types';
 
-const { GET_QUERY, STATUS } = APPLICATION;
-
-const applicationQuery =
-  'id createdAt updatedAt referenceNumber dealType submissionCount submissionDeadline submissionType status previousStatus version eligibility { id } exportContract { id } owner { id } company { id } business { id } broker { id } buyer { id buyerTradingHistory { id } } sectionReview { id } declaration { id } policyContact { id }';
+const { GET_QUERY } = APPLICATION;
 
 /**
  * create application test helper
  * Create an application with mock application data and any provied custom application data.
- * @param {Context} KeystoneJS context API, application data
+ * @param {Context} context: KeystoneJS context API, application data
  * @returns {Object} Created application
  */
-const create = async ({ context, data = {} }: TestHelperApplicationCreate) => {
+const create = async ({ context }: TestHelperApplicationCreate) => {
   try {
     console.info('Creating an application (test helpers)');
 
-    const application = (await context.query.Application.createOne({
-      data: {
-        status: STATUS.IN_PROGRESS,
-        ...data,
+    const account = (await accounts.create({ context })) as Account;
+
+    const application = await createAnApplicationHelper(
+      {
+        accountId: account.id,
+        eligibilityAnswers: {},
+        company: {},
       },
-      query: applicationQuery,
-    })) as Application;
+      context,
+    );
 
     return application;
   } catch (error) {
@@ -35,8 +37,8 @@ const create = async ({ context, data = {} }: TestHelperApplicationCreate) => {
 /**
  * get application test helper
  * Get an application by ID.
- * @param {Context} KeystoneJS context API, application ID
- * @param {String} Application ID
+ * @param {Context} context: KeystoneJS context API, application ID
+ * @param {String} applicationId: Application ID
  * @returns {Object} Application
  */
 const get = async ({ context, applicationId }: TestHelperApplicationGet): Promise<Application> => {
@@ -59,7 +61,7 @@ const get = async ({ context, applicationId }: TestHelperApplicationGet): Promis
 /**
  * update application test helper
  * Update an application by ID.
- * @param {Context} KeystoneJS context API, application ID
+ * @param {Context} context: KeystoneJS context API, application ID
  * @returns {Object} Application
  */
 const update = async ({ context, applicationId, data }: TestHelperApplicationUpdate): Promise<Application> => {
@@ -83,7 +85,7 @@ const update = async ({ context, applicationId, data }: TestHelperApplicationUpd
 /**
  * deleteAll test helper
  * Get all accounts and delete them.
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Array} Accounts that have been deleted
  */
 const deleteAll = async (context: Context) => {

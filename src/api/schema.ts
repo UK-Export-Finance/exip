@@ -3,21 +3,16 @@ import { list } from '@keystone-6/core';
 import { allowAll } from '@keystone-6/core/access';
 import { checkbox, integer, relationship, select, text, timestamp, password, decimal } from '@keystone-6/core/fields';
 import { document } from '@keystone-6/fields-document';
-import { addMonths } from 'date-fns';
 import { APPLICATION, FEEDBACK } from './constants';
 import updateApplication from './helpers/update-application';
 import nullableCheckbox from './nullable-checkbox';
 
 const {
-  DEAL_TYPE,
   DEFAULT_CURRENCY,
   DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER,
   EXPORT_CONTRACT: { AGENT_SERVICE_CHARGE },
-  LATEST_VERSION,
   POLICY,
   POLICY_TYPE,
-  SUBMISSION_COUNT_DEFAULT,
-  SUBMISSION_DEADLINE_IN_MONTHS,
   SUBMISSION_TYPE,
 } = APPLICATION;
 
@@ -40,14 +35,12 @@ export const lists = {
         isIndexed: true,
       }),
       submissionCount: integer({
-        defaultValue: SUBMISSION_COUNT_DEFAULT,
         validation: { isRequired: true },
       }),
       submissionDate: timestamp(),
       submissionDeadline: timestamp(),
       submissionType: select({
         options: [{ label: SUBMISSION_TYPE.MIA, value: SUBMISSION_TYPE.MIA }],
-        defaultValue: SUBMISSION_TYPE.MIA,
       }),
       status: text({
         validation: { isRequired: true },
@@ -68,145 +61,13 @@ export const lists = {
       policyContact: relationship({ ref: 'PolicyContact' }),
       sectionReview: relationship({ ref: 'SectionReview' }),
       version: text({
-        defaultValue: LATEST_VERSION.VERSION_NUMBER,
         validation: { isRequired: true },
       }),
       dealType: text({
-        defaultValue: DEAL_TYPE,
         validation: { isRequired: true },
         db: { nativeType: 'VarChar(4)' },
       }),
       migratedV1toV2: nullableCheckbox(),
-    },
-    hooks: {
-      resolveInput: async ({ operation, resolvedData, context }) => {
-        if (operation === 'create') {
-          try {
-            console.info('Creating new application - adding default data to a new application');
-
-            const modifiedData = resolvedData;
-
-            // generate and attach a new unique reference number
-            const { id: newReferenceNumber } = await context.db.ReferenceNumber.createOne({
-              data: {},
-            });
-
-            modifiedData.referenceNumber = newReferenceNumber;
-
-            // generate and attach a new 'business' relationship
-            const { id: businessId } = await context.db.Business.createOne({
-              data: {},
-            });
-
-            modifiedData.business = {
-              connect: {
-                id: businessId,
-              },
-            };
-
-            // generate a new `policy contact` relationship with the policy
-            const { id: policyContactId } = await context.db.PolicyContact.createOne({
-              data: {},
-            });
-
-            modifiedData.policyContact = {
-              connect: {
-                id: policyContactId,
-              },
-            };
-
-            // generate and attach a new 'broker' relationship
-            const { id: brokerId } = await context.db.Broker.createOne({
-              data: {},
-            });
-
-            modifiedData.broker = {
-              connect: {
-                id: brokerId,
-              },
-            };
-
-            // add dates
-            const now = new Date();
-            modifiedData.createdAt = now;
-            modifiedData.updatedAt = now;
-            modifiedData.submissionDeadline = addMonths(new Date(now), SUBMISSION_DEADLINE_IN_MONTHS);
-
-            return modifiedData;
-          } catch (error) {
-            console.error('Error adding default data to a new application. %O', error);
-
-            return false;
-          }
-        }
-
-        return resolvedData;
-      },
-      afterOperation: async ({ operation, item, context }) => {
-        if (operation === 'create') {
-          try {
-            console.info('Adding application ID to relationships');
-
-            const applicationId = item.id;
-
-            const { referenceNumber } = item;
-
-            const { policyContactId, businessId, brokerId } = item;
-
-            // add the application ID to the reference number entry.
-            await context.db.ReferenceNumber.updateOne({
-              where: { id: String(referenceNumber) },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId,
-                  },
-                },
-              },
-            });
-
-            // add the application ID to the policy contact.
-            await context.db.PolicyContact.updateOne({
-              where: { id: policyContactId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId,
-                  },
-                },
-              },
-            });
-
-            // add the application ID to the business entry.
-            await context.db.Business.updateOne({
-              where: { id: businessId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId,
-                  },
-                },
-              },
-            });
-
-            // add the application ID to the broker entry.
-            await context.db.Broker.updateOne({
-              where: { id: brokerId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId,
-                  },
-                },
-              },
-            });
-          } catch (error) {
-            console.error('Error adding an application ID to relationships %O', error);
-
-            return false;
-          }
-        }
-      },
     },
     access: allowAll,
   },

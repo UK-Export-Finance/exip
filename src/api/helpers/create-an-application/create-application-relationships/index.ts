@@ -1,10 +1,14 @@
 import getCountryByField from '../../get-country-by-field';
 import getCreditPeriodValueByField from '../../get-cover-period-value-by-field';
 import getTotalContractValueByField from '../../get-total-contract-value-by-field';
-import createAnEligibility from '../../create-an-eligibility';
+import createAReferenceNumber from '../../create-a-reference-number';
+import createABroker from '../../create-a-broker';
+import createABusiness from '../../create-a-business';
 import createABuyer from '../../create-a-buyer';
 import createADeclaration from '../../create-a-declaration';
+import createAnEligibility from '../../create-an-eligibility';
 import createAPolicy from '../../create-a-policy';
+import createAPolicyContact from '../../create-a-policy-contact';
 import createANominatedLossPayee from '../../create-a-nominated-loss-payee';
 import createACompany from '../../create-a-company';
 import createAnExportContract from '../../create-an-export-contract';
@@ -19,11 +23,11 @@ import { CreateApplicationRelationshipParams } from '../../../types';
  * 3) Get a totalContractValue DB entry, for linking a relationship to eligibility.
  * 4) Create a new buyer with country and application relationship.
  * 5) Create a new eligibility with country and application relationship.
- * 6) Create a new export contract with application relationship.
- * 7) Create a new policy with application relationship.
- * 8) Create a new nominated loss payee with application relationship.
- * 9) Create a new company with application relationship.
- * 10) Create a new sectionReview with application relationship
+ * 6) Create a new export contract with an application relationship.
+ * 7) Create a new policy with an application relationship.
+ * 8) Create a new nominated loss payee with an application relationship.
+ * 9) Create a new company with an application relationship.
+ * 10) Create a new sectionReview with an application relationship
  * @param {Context} context: KeystoneJS context API
  * @param {String} applicationId: Application ID
  * @param {ApplicationCompanyCore} companyData: Company data
@@ -65,27 +69,37 @@ const createApplicationRelationships = async ({
     const coverPeriod = await getCreditPeriodValueByField(context, 'valueId', coverPeriodId);
     const totalContractValue = await getTotalContractValueByField(context, 'valueId', totalContractValueId);
 
-    const relationships = await Promise.all([
+    const referenceNumber = await createAReferenceNumber(context, applicationId);
+
+    const createdRelationships = await Promise.all([
+      createABroker(context, applicationId),
+      createABusiness(context, applicationId),
       createABuyer(context, country.id, applicationId),
       createADeclaration(context, applicationId),
       createAnEligibility(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
       createAnExportContract(context, applicationId),
       createAPolicy(context, applicationId),
+      createAPolicyContact(context, applicationId),
       createANominatedLossPayee(context, applicationId),
       createACompany(context, applicationId, companyData),
       createASectionReview(context, applicationId, sectionReviewData),
     ]);
 
-    const [buyer, declaration, eligibility, exportContract, policy, nominatedLossPayee, company, sectionReview] = relationships;
+    const [broker, business, buyer, declaration, eligibility, exportContract, policy, policyContact, nominatedLossPayee, company, sectionReview] =
+      createdRelationships;
 
     const relationshipIds = {
+      brokerId: broker.id,
+      businessId: business.id,
       buyerId: buyer.id,
-      declarationId: declaration.id,
       companyId: company.id,
+      declarationId: declaration.id,
       eligibilityId: eligibility.id,
       exportContractId: exportContract.id,
       nominatedLossPayeeId: nominatedLossPayee.id,
       policyId: policy.id,
+      policyContactId: policyContact.id,
+      referenceNumber,
       sectionReviewId: sectionReview.id,
     };
 

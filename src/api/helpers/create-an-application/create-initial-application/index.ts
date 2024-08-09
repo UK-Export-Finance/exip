@@ -1,13 +1,19 @@
+import { addMonths } from 'date-fns';
 import { APPLICATION } from '../../../constants';
 import { CreateInitialApplicationParams } from '../../../types';
 
-const { STATUS, SUBMISSION_TYPE } = APPLICATION;
+const { DEAL_TYPE, LATEST_VERSION_NUMBER, STATUS, SUBMISSION_COUNT_DEFAULT, SUBMISSION_DEADLINE_IN_MONTHS, SUBMISSION_TYPE } = APPLICATION;
 
 /**
- * Create the initial application, with default:
- * - submissionType of MIA.
+ * Create the initial application associated with a user and default:
+ * - createdAt timestamp.
+ * - dealType of DEAL_TYPE.
  * - status of IN_PROGRESS.
- * This needs to be done first so that we can use the application ID.
+ * - submissionCount of SUBMISSION_COUNT_DEFAULT.
+ * - submissionDeadline of SUBMISSION_DEADLINE_IN_MONTHS.
+ * - submissionType of MIA.
+ * - updatedAt timestamp.
+ * - version of LATEST_VERSION_NUMBER
  * @param {Context} context: KeystoneJS context API
  * @param {String} accountId: Account ID to own the application
  * @param {String} status: Application status. Defaults to IN_PROGRESS
@@ -17,13 +23,21 @@ const createInitialApplication = async ({ context, accountId, status = STATUS.IN
   try {
     console.info('Creating initial application (createInitialApplication helper) for user %s', accountId);
 
+    const now = new Date();
+
     const application = await context.db.Application.createOne({
       data: {
         owner: {
           connect: { id: accountId },
         },
+        createdAt: now,
+        dealType: DEAL_TYPE,
         status,
+        submissionCount: SUBMISSION_COUNT_DEFAULT,
+        submissionDeadline: addMonths(new Date(now), SUBMISSION_DEADLINE_IN_MONTHS),
         submissionType: SUBMISSION_TYPE.MIA,
+        updatedAt: now,
+        version: LATEST_VERSION_NUMBER,
       },
     });
 

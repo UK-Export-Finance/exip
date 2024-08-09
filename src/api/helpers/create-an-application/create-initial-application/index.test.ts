@@ -5,7 +5,14 @@ import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 import accounts from '../../../test-helpers/accounts';
 import { Context, Account, Application } from '../../../types';
 
-const { DEAL_TYPE, LATEST_VERSION, STATUS, SUBMISSION_COUNT_DEFAULT, SUBMISSION_TYPE } = APPLICATION;
+const {
+  DEAL_TYPE,
+  LATEST_VERSION_NUMBER,
+  STATUS: { ABANDONED, IN_PROGRESS },
+  SUBMISSION_COUNT_DEFAULT,
+  SUBMISSION_DEADLINE_IN_MONTHS,
+  SUBMISSION_TYPE,
+} = APPLICATION;
 
 describe('helpers/create-an-application/create-initial-application', () => {
   let context: Context;
@@ -24,64 +31,99 @@ describe('helpers/create-an-application/create-initial-application', () => {
     result = await initialApplication.create({ context, accountId });
   });
 
-  test('it should return an application with default data', () => {
-    expect(result.referenceNumber).toBeDefined();
-    expect(typeof result.referenceNumber).toEqual('number');
-
-    expect(result.submissionCount).toEqual(SUBMISSION_COUNT_DEFAULT);
-
-    expect(result.createdAt).toBeDefined();
-    expect(result.updatedAt).toBeDefined();
-    expect(result.submissionDate).toBeNull();
-    expect(result.submissionDeadline).toBeDefined();
-    expect(result.submissionType).toEqual(SUBMISSION_TYPE.MIA);
-    expect(result.status).toEqual(STATUS.IN_PROGRESS);
-    expect(result.previousStatus).toEqual('');
-
-    expect(result.version).toEqual(LATEST_VERSION.VERSION_NUMBER);
-    expect(result.dealType).toEqual(DEAL_TYPE);
-    expect(result.migratedV1toV2).toBeNull();
-  });
-
-  test('it should return empty application relationships', () => {
-    expect(result.eligibility).toBeUndefined();
-    expect(result.policy).toBeUndefined();
-    expect(result.exportContract).toBeUndefined();
-    expect(result.owner).toBeUndefined();
+  test('it should return with some empty data/ relationships', () => {
     expect(result.business).toBeUndefined();
     expect(result.broker).toBeUndefined();
     expect(result.buyer).toBeUndefined();
     expect(result.company).toBeUndefined();
     expect(result.declaration).toBeUndefined();
+    expect(result.eligibility).toBeUndefined();
+    expect(result.exportContract).toBeUndefined();
+    expect(result.migratedV1toV2).toBeNull();
     expect(result.nominatedLossPayee).toBeUndefined();
+    expect(result.owner).toBeUndefined();
+    expect(result.referenceNumber).toBeNull();
+    expect(result.policy).toBeUndefined();
     expect(result.policyContact).toBeUndefined();
     expect(result.sectionReview).toBeUndefined();
   });
 
-  test('it should have a submission deadline date', () => {
-    const submissionDeadlineDay = new Date(result.submissionDeadline).getDate();
-    const submissionDeadlineMonth = new Date(result.submissionDeadline).getMonth();
-    const submissionDeadlineYear = new Date(result.submissionDeadline).getFullYear();
+  test('it should have a default submissionType', () => {
+    expect(result.submissionType).toEqual(SUBMISSION_TYPE.MIA);
+  });
 
-    const now = new Date();
+  test('it should have a default previousStatus', () => {
+    expect(result.previousStatus).toEqual('');
+  });
 
-    const expectedDate = addMonths(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
+  test('it should have a default dealType', () => {
+    expect(result.dealType).toEqual(DEAL_TYPE);
+  });
 
-    const expectedDay = new Date(expectedDate).getDate();
-    const expectedMonth = new Date(expectedDate).getMonth();
-    const expectedYear = new Date(expectedDate).getFullYear();
+  test('it should have a default submissionCount', () => {
+    expect(result.submissionCount).toEqual(SUBMISSION_COUNT_DEFAULT);
+  });
 
-    expect(submissionDeadlineDay).toEqual(expectedDay);
-    expect(submissionDeadlineMonth).toEqual(expectedMonth);
-    expect(submissionDeadlineYear).toEqual(expectedYear);
+  test('it should have a default submissionType', () => {
+    expect(result.submissionType).toEqual(SUBMISSION_TYPE.MIA);
   });
 
   describe('when a status is provided', () => {
     test('it should return an application with the provided status', async () => {
-      const { status } = await initialApplication.create({ context, accountId, status: STATUS.ABANDONED });
+      const { status } = await initialApplication.create({ context, accountId, status: ABANDONED });
 
-      expect(status).toEqual(STATUS.ABANDONED);
+      expect(status).toEqual(ABANDONED);
     });
+  });
+
+  describe('when a status is NOT provided', () => {
+    test(`it should return an application with a ${IN_PROGRESS} status`, async () => {
+      const { status } = await initialApplication.create({ context, accountId });
+
+      expect(status).toEqual(IN_PROGRESS);
+    });
+  });
+
+  describe('timestamp fields', () => {
+    const now = new Date();
+
+    test('it should have a submission deadline date', () => {
+      const submissionDeadlineDay = new Date(result.submissionDeadline).getDate();
+      const submissionDeadlineMonth = new Date(result.submissionDeadline).getMonth();
+      const submissionDeadlineYear = new Date(result.submissionDeadline).getFullYear();
+
+      const expectedDate = addMonths(new Date(now), SUBMISSION_DEADLINE_IN_MONTHS);
+
+      expect(submissionDeadlineDay).toEqual(new Date(expectedDate).getDate());
+      expect(submissionDeadlineMonth).toEqual(new Date(expectedDate).getMonth());
+      expect(submissionDeadlineYear).toEqual(new Date(expectedDate).getFullYear());
+    });
+
+    test('it should have a createdAt date', () => {
+      const createdAtDay = new Date(result.createdAt).getDate();
+      const createdAtMonth = new Date(result.createdAt).getMonth();
+      const createdAtYear = new Date(result.createdAt).getFullYear();
+
+      expect(createdAtDay).toEqual(new Date().getDate());
+      expect(createdAtMonth).toEqual(new Date().getMonth());
+      expect(createdAtYear).toEqual(new Date().getFullYear());
+    });
+
+    test('it should have updatedAt date', () => {
+      const updatedAtDay = new Date(result.updatedAt).getDate();
+      const updatedAtMonth = new Date(result.updatedAt).getMonth();
+      const updatedAtYear = new Date(result.updatedAt).getFullYear();
+
+      expect(updatedAtDay).toEqual(new Date().getDate());
+      expect(updatedAtMonth).toEqual(new Date().getMonth());
+      expect(updatedAtYear).toEqual(new Date().getFullYear());
+    });
+  });
+
+  test('it should have a default latest version number', () => {
+    const expected = LATEST_VERSION_NUMBER;
+
+    expect(result.version).toEqual(expected);
   });
 
   describe('when creation is not successful', () => {

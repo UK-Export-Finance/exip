@@ -48,7 +48,7 @@ context('Insurance - Your buyer - Credit insurance cover - form validation', () 
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(`${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} not selected`, () => {
+  describe(`when ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} 'no' is selected`, () => {
     const FIELD_ID = HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER;
 
     it('should display validation errors', () => {
@@ -66,7 +66,7 @@ context('Insurance - Your buyer - Credit insurance cover - form validation', () 
     });
   });
 
-  describe(`${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} yes selected`, () => {
+  describe(`when ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} 'yes' is selected`, () => {
     const FIELD_ID = PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER;
 
     const field = fieldSelector(FIELD_ID);

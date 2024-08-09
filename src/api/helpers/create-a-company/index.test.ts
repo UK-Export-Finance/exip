@@ -20,11 +20,13 @@ describe('helpers/create-a-company', () => {
     application = (await applications.create({ context })) as Application;
   });
 
-  test('it should return a company with address, SIC code and different trading address relationships', async () => {
+  test('it should return a company with an application relationship, address, SIC code, different trading address relationships', async () => {
     const result = await createACompany(context, application.id, mockCompany);
 
     expect(typeof result.id).toEqual('string');
     expect(result.id.length).toBeGreaterThan(0);
+
+    expect(result.applicationId).toEqual(application.id);
 
     expect(result.companyName).toEqual(mockCompany.companyName);
     expect(result.companyNumber).toEqual(mockCompany.companyNumber);

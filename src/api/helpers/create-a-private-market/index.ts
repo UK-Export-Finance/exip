@@ -8,7 +8,7 @@ import { Context, ApplicationPrivateMarket } from '../../types';
  * @returns {Promise<Object>} Created private market
  */
 const createAPrivateMarket = async (context: Context, exportContractId: string): Promise<ApplicationPrivateMarket> => {
-  console.info('Creating a private market for ', exportContractId);
+  console.info('Creating a private market for %s', exportContractId);
 
   try {
     const privateMarket = await context.db.PrivateMarket.createOne({

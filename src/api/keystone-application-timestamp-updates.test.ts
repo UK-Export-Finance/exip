@@ -128,7 +128,7 @@ describe('Keystone - Application timestamp updates', () => {
   describe('Business', () => {
     test('it should call updateApplication.timestamp', async () => {
       await context.query.Business.updateOne({
-        where: { id: application.business.id },
+        where: { id: application.businessId },
         data: {},
         query: 'id',
       });
@@ -140,7 +140,7 @@ describe('Keystone - Application timestamp updates', () => {
   describe('Broker', () => {
     test('it should call updateApplication.timestamp', async () => {
       await context.query.Broker.updateOne({
-        where: { id: application.broker.id },
+        where: { id: application.brokerId },
         data: {},
         query: 'id',
       });
@@ -152,7 +152,7 @@ describe('Keystone - Application timestamp updates', () => {
   describe('Buyer', () => {
     test('it should call updateApplication.timestamp', async () => {
       await context.query.Buyer.updateOne({
-        where: { id: application.buyer.id },
+        where: { id: application.buyerId },
         data: {},
         query: 'id',
       });

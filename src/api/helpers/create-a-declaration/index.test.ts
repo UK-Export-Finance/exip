@@ -1,10 +1,9 @@
 import createADeclaration from '.';
+import { mockInvalidId } from '../../test-mocks';
 import createADeclarationVersion from '../create-a-declaration-version';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
 import { Application, Context } from '../../types';
-
-const invalidId = 'invalid-id';
 
 const assertError = (error) => {
   const errorString = String(error);
@@ -82,8 +81,15 @@ describe('helpers/create-a-declaration', () => {
 
   describe('when an invalid application ID is passed', () => {
     test('it should throw an error', async () => {
+      await expect(createADeclaration(context, mockInvalidId)).rejects.toThrow('Creating an application declaration');
+    });
+  });
+
+  describe('when creation is not successful', () => {
+    test('it should throw an error', async () => {
+      await expect(createADeclaration({}, application.id)).rejects.toThrow('Creating an application declaration');
       try {
-        await createADeclaration(context, invalidId);
+        await createADeclaration(context, mockInvalidId);
       } catch (error) {
         assertError(error);
       }

@@ -24,7 +24,7 @@ describe('server/helpers/summary-lists/your-buyer/credit-insurance-history-field
   const checkAndChange = false;
 
   describe('optionalFields', () => {
-    describe(`${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} is true`, () => {
+    describe(`when ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} is true`, () => {
       it(`should return fields and values from the submitted data/answers including ${PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER}`, () => {
         const result = optionalFields(mockAnswers, referenceNumber, checkAndChange);
 
@@ -47,7 +47,7 @@ describe('server/helpers/summary-lists/your-buyer/credit-insurance-history-field
       });
     });
 
-    describe(`${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} is false`, () => {
+    describe(`when ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} is false`, () => {
       it(`should return fields and values from the submitted data/answers, not including ${PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER}`, () => {
         mockAnswers[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER] = false;
         const result = optionalFields(mockAnswers, referenceNumber, checkAndChange);

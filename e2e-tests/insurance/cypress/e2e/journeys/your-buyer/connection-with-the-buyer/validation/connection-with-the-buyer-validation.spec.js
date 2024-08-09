@@ -44,7 +44,7 @@ context('Insurance - Your buyer - Connection to the buyer page - form validation
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(`${CONNECTION_WITH_BUYER} not selected`, () => {
+  describe(`when ${CONNECTION_WITH_BUYER} 'no' is selected`, () => {
     it('should display validation errors', () => {
       cy.navigateToUrl(url);
 
@@ -60,7 +60,7 @@ context('Insurance - Your buyer - Connection to the buyer page - form validation
     });
   });
 
-  describe(`${CONNECTION_WITH_BUYER} yes selected`, () => {
+  describe(`when ${CONNECTION_WITH_BUYER} 'yes' is selected`, () => {
     const fieldId = CONNECTION_WITH_BUYER_DESCRIPTION;
     const textareaField = { ...field(fieldId), input: field(fieldId).textarea };
 

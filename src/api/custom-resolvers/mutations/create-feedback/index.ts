@@ -4,9 +4,9 @@ import { Context, InsuranceFeedbackVariables } from '../../../types';
 /**
  * creates feedback in database and sends email
  * adds createdAt timestamp to feedback
- * @param {Object} GraphQL root variables
- * @param {Object} GraphQL variables for the createInsuranceFeedback mutation
- * @param {Context} KeystoneJS context API
+ * @param {Object} root: GraphQL root variables
+ * @param {Object} variables: GraphQL variables for the createInsuranceFeedback mutation
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} with success true or false and response
  */
 const createFeedback = async (root: any, variables: InsuranceFeedbackVariables, context: Context) => {

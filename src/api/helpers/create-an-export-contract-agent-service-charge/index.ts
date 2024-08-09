@@ -8,7 +8,7 @@ import { Context, ApplicationExportContractAgentServiceCharge } from '../../type
  * @returns {Promise<Object>} Created export contract agent service
  */
 const createAnExportContractAgentServiceCharge = async (context: Context, agentServiceId: string): Promise<ApplicationExportContractAgentServiceCharge> => {
-  console.info('Creating an export contract agent service charge for ', agentServiceId);
+  console.info('Creating an export contract agent service charge for %s', agentServiceId);
 
   try {
     const agentService = await context.db.ExportContractAgentServiceCharge.createOne({

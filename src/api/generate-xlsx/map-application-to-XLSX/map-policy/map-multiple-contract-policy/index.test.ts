@@ -1,5 +1,4 @@
 import mapMultipleContractPolicy from '.';
-import { FIELD_VALUES } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { XLSX } from '../../../../content-strings';
 import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance';
@@ -7,7 +6,7 @@ import xlsxRow from '../../helpers/xlsx-row';
 import mapMonthString from '../../helpers/map-month-string';
 import formatCurrency from '../../helpers/format-currency';
 import getPopulatedApplication from '../../../../helpers/get-populated-application';
-import { createFullApplication, getKeystoneContext, mapApplicationIds } from '../../../../test-helpers';
+import { getKeystoneContext, generateSubmittedApplication } from '../../../../test-helpers';
 import { Application, Context } from '../../../../types';
 
 const { FIELDS } = XLSX;
@@ -39,9 +38,9 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-multiple-cont
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    const multiplePolicyApplication = await createFullApplication(context, FIELD_VALUES.POLICY_TYPE.MULTIPLE);
+    const multiplePolicyApplication = await generateSubmittedApplication();
 
-    populatedApplicationMultiplePolicy = await getPopulatedApplication.get({ context, application: mapApplicationIds(multiplePolicyApplication) });
+    populatedApplicationMultiplePolicy = await getPopulatedApplication.get({ context, application: multiplePolicyApplication });
   });
 
   it('should return an array of mapped fields', () => {
