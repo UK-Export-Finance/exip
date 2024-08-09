@@ -2,24 +2,21 @@
 
 ## [2.35.3](https://github.com/UK-Export-Finance/exip/compare/v2.35.2...v2.35.3) (2024-08-09)
 
-
 ### Bug Fixes
 
-* **EMS-3633:** data migration - financial vector columns ([#2928](https://github.com/UK-Export-Finance/exip/issues/2928)) ([a3b1470](https://github.com/UK-Export-Finance/exip/commit/a3b1470c466314df9dbf549a91da8a152505938d))
+- **EMS-3633:** data migration - financial vector columns ([#2928](https://github.com/UK-Export-Finance/exip/issues/2928)) ([a3b1470](https://github.com/UK-Export-Finance/exip/commit/a3b1470c466314df9dbf549a91da8a152505938d))
 
 ## [2.35.2](https://github.com/UK-Export-Finance/exip/compare/v2.35.1...v2.35.2) (2024-08-08)
 
-
 ### Bug Fixes
 
-* **EMS-3633:** data migration - declaration versioning ([#2921](https://github.com/UK-Export-Finance/exip/issues/2921)) ([2e82c4f](https://github.com/UK-Export-Finance/exip/commit/2e82c4f2afc59b558d8e4faf89d573ae39dce594))
+- **EMS-3633:** data migration - declaration versioning ([#2921](https://github.com/UK-Export-Finance/exip/issues/2921)) ([2e82c4f](https://github.com/UK-Export-Finance/exip/commit/2e82c4f2afc59b558d8e4faf89d573ae39dce594))
 
 ## [2.35.1](https://github.com/UK-Export-Finance/exip/compare/v2.35.0...v2.35.1) (2024-08-07)
 
-
 ### Bug Fixes
 
-* **iac:** explicity RBAC authorisation to false for Azure KV ([#2910](https://github.com/UK-Export-Finance/exip/issues/2910)) ([d8370f7](https://github.com/UK-Export-Finance/exip/commit/d8370f79c9dd5f92cb355e79ce53ece463380702))
+- **iac:** explicity RBAC authorisation to false for Azure KV ([#2910](https://github.com/UK-Export-Finance/exip/issues/2910)) ([d8370f7](https://github.com/UK-Export-Finance/exip/commit/d8370f79c9dd5f92cb355e79ce53ece463380702))
 
 ## [2.35.0](https://github.com/UK-Export-Finance/exip/compare/v2.34.0...v2.35.0) (2024-08-06)
 
