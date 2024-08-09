@@ -39,6 +39,7 @@ export const generateFields = (
  * Create multiple groups with govukSummaryList data structure
  * @param {ApplicationExportContract} answers: export contract answers/submitted data in a simple object.text structure
  * @param {Boolean} totalContractValueOverThreshold: "Total contract value is over the threshold" flag
+ * @param {Boolean} migratedV1toV2: Application has been migrated from V1 to V2
  * @param {Number} referenceNumber: Application reference number
  * @param {Array<Country>} countries: Countries
  * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section. Defaults to false

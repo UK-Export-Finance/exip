@@ -10,6 +10,7 @@ import { SummaryListGroupData, ApplicationBuyer, InsuranceEligibility } from '..
  * optionalFields
  * optional fields for the your buyer summary list
  * if totalContractValueOverThreshold is true,
+ * or the application has been migrated from V1 to V2,
  * then pushes fields and values for credit insurance history
  * if totalContractValueOverThreshold is false,
  * then returns an empty array
@@ -85,7 +86,7 @@ const yourBuyerSummaryList = (
   migratedV1toV2: boolean,
   checkAndChange = false,
 ) => {
-  const fields = generateFields(answers, eligibilityAnswers, referenceNumber, totalContractValueOverThreshold, checkAndChange);
+  const fields = generateFields(answers, eligibilityAnswers, referenceNumber, totalContractValueOverThreshold, migratedV1toV2, checkAndChange);
 
   const summaryList = generateGroupsOfSummaryLists(fields);
 

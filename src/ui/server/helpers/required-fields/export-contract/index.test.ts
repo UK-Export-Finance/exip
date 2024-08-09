@@ -18,10 +18,6 @@ const {
   AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE_CHARGE },
 } = FIELD_IDS;
 
-const totalContractValueOverThresholdTrue = true;
-
-const mockMigratedV1toV2False = false;
-
 describe('server/helpers/required-fields/export-contract', () => {
   const {
     exportContract: {
@@ -187,20 +183,20 @@ describe('server/helpers/required-fields/export-contract', () => {
   describe('requiredFields', () => {
     it('should return array of required fields', () => {
       const result = requiredFields({
-        totalContractValueOverThreshold: totalContractValueOverThresholdTrue,
+        totalContractValueOverThreshold: true,
         finalDestinationKnown,
         attemptedPrivateMarketCover,
         isUsingAgent,
-        migratedV1toV2: mockMigratedV1toV2False,
+        migratedV1toV2: false,
       });
 
       const expected = [
         PAYMENT_TERMS_DESCRIPTION,
         ...getAboutGoodsOrServicesTasks(finalDestinationKnown),
         ...privateCoverTasks({
-          totalContractValueOverThreshold: totalContractValueOverThresholdTrue,
+          totalContractValueOverThreshold: true,
           attemptedPrivateMarketCover,
-          migratedV1toV2: mockMigratedV1toV2False,
+          migratedV1toV2: false,
         }),
         ...agentTasks({ isUsingAgent }),
         ...awardMethodTasks(awardMethodId),
