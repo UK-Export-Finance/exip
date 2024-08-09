@@ -61,6 +61,7 @@ export const get = async (req: Request, res: Response) => {
       application.eligibility,
       referenceNumber,
       application.totalContractValueOverThreshold,
+      application.migratedV1toV2,
       checkAndChange,
     );
 
