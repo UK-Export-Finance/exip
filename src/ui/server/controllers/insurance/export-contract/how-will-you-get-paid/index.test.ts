@@ -46,9 +46,6 @@ const {
   },
 } = TEMPLATES;
 
-const mockMigratedFromV1ToV2True = true;
-const mockMigratedFromV1ToV2False = false;
-
 describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
   let req: Request;
   let res: Response;
@@ -150,7 +147,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
       describe('when totalContractValueOverThreshold=true, migratedV1toV2=false, check/change routes', () => {
         beforeEach(() => {
           res.locals.application = mockApplicationTotalContractValueThresholdTrue;
-          res.locals.application.migratedV1toV2 = mockMigratedFromV1ToV2False;
+          res.locals.application.migratedV1toV2 = false;
         });
 
         describe("when the url's last substring is `change`", () => {
@@ -181,7 +178,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
       describe('when totalContractValueOverThreshold=false, migratedV1toV2=true, check/change routes', () => {
         beforeEach(() => {
           res.locals.application = mockApplicationTotalContractValueThresholdFalse;
-          res.locals.application.migratedV1toV2 = mockMigratedFromV1ToV2True;
+          res.locals.application.migratedV1toV2 = true;
         });
 
         describe("when the url's last substring is `change`", () => {
@@ -212,7 +209,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
       describe('when totalContractValueOverThreshold=false, migratedV1toV2=false, check/change routes', () => {
         beforeEach(() => {
           res.locals.application = mockApplicationTotalContractValueThresholdFalse;
-          res.locals.application.migratedV1toV2 = mockMigratedFromV1ToV2False;
+          res.locals.application.migratedV1toV2 = false;
         });
 
         describe("when the url's last substring is `change`", () => {
@@ -243,7 +240,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
       describe('when totalContractValueOverThreshold=true, migratedV1toV2=false, non-check/change routes', () => {
         it(`should redirect to ${PRIVATE_MARKET}`, async () => {
           res.locals.application = mockApplicationTotalContractValueThresholdTrue;
-          res.locals.application.migratedV1toV2 = mockMigratedFromV1ToV2False;
+          res.locals.application.migratedV1toV2 = false;
 
           await post(req, res);
 
@@ -256,7 +253,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
       describe('when totalContractValueOverThreshold=false, migratedV1toV2=true, non-check/change routes', () => {
         it(`should redirect to ${PRIVATE_MARKET}`, async () => {
           res.locals.application = mockApplicationTotalContractValueThresholdFalse;
-          res.locals.application.migratedV1toV2 = mockMigratedFromV1ToV2True;
+          res.locals.application.migratedV1toV2 = true;
 
           await post(req, res);
 
@@ -269,7 +266,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
       describe('when totalContractValueOverThreshold=false, migratedV1toV2=false, non-check/change routes', () => {
         it(`should redirect to ${AGENT}`, async () => {
           res.locals.application = mockApplicationTotalContractValueThresholdFalse;
-          res.locals.application.migratedV1toV2 = mockMigratedFromV1ToV2False;
+          res.locals.application.migratedV1toV2 = false;
 
           await post(req, res);
 
