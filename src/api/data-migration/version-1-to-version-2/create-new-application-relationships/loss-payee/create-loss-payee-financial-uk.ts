@@ -4,12 +4,12 @@ import createCuid from '../../create-cuid';
 import executeSqlQuery from '../../execute-sql-query';
 
 /**
- * lossPayeeFinancialInternational
+ * lossPayeeFinancialUk
  * Create new "nominated loss payee - financial UK" entries
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<object>>} Loss payee - nominated loss payee - financial UK entries
  */
-const lossPayeeFinancialInternational = async (connection: Connection) => {
+const lossPayeeFinancialUk = async (connection: Connection) => {
   const loggingMessage = 'Creating nominatedLossPayees - financial UK';
 
   console.info(`✅ ${loggingMessage}`);
@@ -41,4 +41,4 @@ const lossPayeeFinancialInternational = async (connection: Connection) => {
   }
 };
 
-export default lossPayeeFinancialInternational;
+export default lossPayeeFinancialUk;
