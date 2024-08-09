@@ -271,9 +271,21 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
       });
 
       describe('when application.totalContractValueOverThreshold=false, migratedV1toV2=true', () => {
-        it('should redirect to the next page', async () => {
+        it(`should redirect to ${CREDIT_INSURANCE_COVER}`, async () => {
           res.locals.application = mockApplicationTotalContractValueThresholdFalse;
           res.locals.application.migratedV1toV2 = true;
+
+          await post(req, res);
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe('when application.totalContractValueOverThreshold=false, migratedV1toV2=false', () => {
+        it(`should redirect to ${BUYER_FINANCIAL_INFORMATION}`, async () => {
+          res.locals.application = mockApplicationTotalContractValueThresholdFalse;
+          res.locals.application.migratedV1toV2 = false;
 
           await post(req, res);
           const expected = `${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
