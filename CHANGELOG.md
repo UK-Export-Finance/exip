@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.35.3](https://github.com/UK-Export-Finance/exip/compare/v2.35.2...v2.35.3) (2024-08-09)
+
+
+### Bug Fixes
+
+* **EMS-3633:** data migration - financial vector columns ([#2928](https://github.com/UK-Export-Finance/exip/issues/2928)) ([a3b1470](https://github.com/UK-Export-Finance/exip/commit/a3b1470c466314df9dbf549a91da8a152505938d))
+
 ## [2.35.2](https://github.com/UK-Export-Finance/exip/compare/v2.35.1...v2.35.2) (2024-08-08)
 
 
