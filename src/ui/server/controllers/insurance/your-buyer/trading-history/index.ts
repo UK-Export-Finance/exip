@@ -204,6 +204,8 @@ export const post = async (req: Request, res: Response) => {
     const {
       referenceNumber,
       buyer: { buyerTradingHistory },
+      migratedV1toV2,
+      totalContractValueOverThreshold,
     } = application;
 
     let isChange;
@@ -280,7 +282,7 @@ export const post = async (req: Request, res: Response) => {
      * redirect to CREDIT_INSURANCE_COVER
      * otherwise it should redirect to the BUYER_FINANCIAL_INFORMATION page
      */
-    if (application.totalContractValueOverThreshold) {
+    if (totalContractValueOverThreshold || migratedV1toV2) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`);
     }
 
