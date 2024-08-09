@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.35.4](https://github.com/UK-Export-Finance/exip/compare/v2.35.3...v2.35.4) (2024-08-09)
+
+
+### Bug Fixes
+
+* **EMS-3633:** data migration - xlsx - eligibility questions ([#2932](https://github.com/UK-Export-Finance/exip/issues/2932)) ([f80ac41](https://github.com/UK-Export-Finance/exip/commit/f80ac410e050353a055ed4d1ca462c7bc96c617c))
+
 ## [2.35.3](https://github.com/UK-Export-Finance/exip/compare/v2.35.2...v2.35.3) (2024-08-09)
 
 ### Bug Fixes
