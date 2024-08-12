@@ -61,7 +61,6 @@ const createApplications = (accountId, count) => {
       );
     } catch (error) {
       console.error('Creating applications', error);
-
       return error;
     }
   }
