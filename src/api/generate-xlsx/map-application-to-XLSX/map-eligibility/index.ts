@@ -29,8 +29,11 @@ const {
 /**
  * mapEligibility
  * Map an application's eligibility fields into an array of objects for XLSX generation
- * If an application has been migrated from V1 to V2,
- * the IS_PARTY_TO_CONSORTIUM, IS_MEMBER_OF_A_GROUP and HAS_END_BUYER fields should have NULL answers.
+ * If an application has been migrated from V1 to V2, the following fields/rows should have NULL answers:
+ * - MORE_THAN_250K
+ * - HAS_END_BUYER
+ * - IS_PARTY_TO_CONSORTIUM
+ * - IS_MEMBER_OF_A_GROUP
  * This is because, V1 eligibility does not have these fields available and so, the user has not provided an answer.
  * @param {Application}
  * @returns {Array<object>} Array of objects for XLSX generation
@@ -45,8 +48,13 @@ const mapEligibility = (application: Application) => {
     xlsxRow(String(FIELDS[COMPANIES_HOUSE_NUMBER]), company[COMPANIES_HOUSE_NUMBER]),
 
     xlsxRow(String(FIELDS[BUYER_COUNTRY]), eligibility[BUYER_COUNTRY].name),
+  ];
 
-    xlsxRow(String(FIELDS[MORE_THAN_250K.VALUE]), mapYesNoField({ answer: eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID].valueId === MORE_THAN_250K.DB_ID })),
+  const totalContractValueAnswer = migratedV1toV2 ? null : eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID].valueId === MORE_THAN_250K.DB_ID;
+
+  mapped = [
+    ...mapped,
+    xlsxRow(String(FIELDS[MORE_THAN_250K.VALUE]), mapYesNoField({ answer: totalContractValueAnswer })),
 
     xlsxRow(String(FIELDS[COVER_PERIOD]), eligibility[COVER_PERIOD_ELIGIBILITY].value),
 

@@ -6744,8 +6744,12 @@ var mapEligibility = (application2) => {
     xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default({ answer: eligibility[VALID_EXPORTER_LOCATION2] })),
     xlsx_row_default(FIELDS_ELIGIBILITY[HAS_COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE, map_yes_no_field_default({ answer: eligibility[HAS_COMPANIES_HOUSE_NUMBER2] })),
     xlsx_row_default(String(FIELDS4[COMPANIES_HOUSE_NUMBER3]), company[COMPANIES_HOUSE_NUMBER3]),
-    xlsx_row_default(String(FIELDS4[BUYER_COUNTRY3]), eligibility[BUYER_COUNTRY3].name),
-    xlsx_row_default(String(FIELDS4[MORE_THAN_250K2.VALUE]), map_yes_no_field_default({ answer: eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID })),
+    xlsx_row_default(String(FIELDS4[BUYER_COUNTRY3]), eligibility[BUYER_COUNTRY3].name)
+  ];
+  const totalContractValueAnswer = migratedV1toV2 ? null : eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID;
+  mapped = [
+    ...mapped,
+    xlsx_row_default(String(FIELDS4[MORE_THAN_250K2.VALUE]), map_yes_no_field_default({ answer: totalContractValueAnswer })),
     xlsx_row_default(String(FIELDS4[COVER_PERIOD3]), eligibility[COVER_PERIOD_ELIGIBILITY].value),
     xlsx_row_default(String(FIELDS4[HAS_MINIMUM_UK_GOODS_OR_SERVICES3]), map_yes_no_field_default({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES3] }))
   ];
@@ -7308,9 +7312,9 @@ var map_buyer_trading_history_default = mapBuyerTradingHistory;
 // generate-xlsx/map-application-to-XLSX/map-buyer/map-previous-cover-with-buyer/index.ts
 var { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3 } = your_buyer_default;
 var { FIELDS: FIELDS23 } = XLSX;
-var mapPreviousCoverWithBuyer = (eligibility, relationship2) => {
+var mapPreviousCoverWithBuyer = (eligibility, relationship2, migratedV1toV2) => {
   const totalContractValueOverThreshold = eligibility.totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
-  if (totalContractValueOverThreshold) {
+  if (totalContractValueOverThreshold || migratedV1toV2) {
     const answer = relationship2[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3];
     const mapped = [xlsx_row_default(String(FIELDS23[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), map_yes_no_field_default({ answer }))];
     if (answer === true) {
@@ -7335,7 +7339,7 @@ var {
 } = your_buyer_default;
 var { FIELDS: FIELDS24 } = XLSX;
 var mapBuyer = (application2) => {
-  const { buyer, eligibility } = application2;
+  const { buyer, eligibility, migratedV1toV2 } = application2;
   const { buyerTradingHistory, relationship: relationship2 } = buyer;
   const mapped = [
     xlsx_row_default(String(FIELDS24[NAME3]), buyer[NAME3]),
@@ -7346,7 +7350,7 @@ var mapBuyer = (application2) => {
     map_connection_with_buyer_default(relationship2),
     xlsx_row_default(String(FIELDS24[TRADED_WITH_BUYER4]), map_yes_no_field_default({ answer: buyerTradingHistory[TRADED_WITH_BUYER4] })),
     ...map_buyer_trading_history_default(buyerTradingHistory),
-    ...map_previous_cover_with_buyer_default(eligibility, relationship2),
+    ...map_previous_cover_with_buyer_default(eligibility, relationship2, migratedV1toV2),
     xlsx_row_default(String(FIELDS24[HAS_BUYER_FINANCIAL_ACCOUNTS3]), map_yes_no_field_default({ answer: relationship2[HAS_BUYER_FINANCIAL_ACCOUNTS3] }))
   ];
   return mapped;
@@ -7398,9 +7402,9 @@ var { FIELDS: FIELDS26 } = XLSX;
 var {
   PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION: DECLINED_DESCRIPTION3 }
 } = export_contract_default;
-var mapPrivateMarket = (privateMarket, totalContractValue) => {
+var mapPrivateMarket = (privateMarket, totalContractValue, migratedV1toV2) => {
   const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
-  if (totalContractValueOverThreshold) {
+  if (totalContractValueOverThreshold || migratedV1toV2) {
     const attempedPrivateMarketAnswer = privateMarket[ATTEMPTED];
     const mapped = [xlsx_row_default(String(FIELDS26.EXPORT_CONTRACT[ATTEMPTED]), map_yes_no_field_default({ answer: attempedPrivateMarketAnswer }))];
     if (attempedPrivateMarketAnswer) {
