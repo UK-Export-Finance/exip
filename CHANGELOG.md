@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.35.5](https://github.com/UK-Export-Finance/exip/compare/v2.35.4...v2.35.5) (2024-08-12)
+
+
+### Bug Fixes
+
+* **EMS-3633:** data migration - xlsx - total contract value ([#2934](https://github.com/UK-Export-Finance/exip/issues/2934)) ([f0bfdba](https://github.com/UK-Export-Finance/exip/commit/f0bfdba5d1b1300018ab67b0224c2dfeb6993e4c))
+
 ## [2.35.4](https://github.com/UK-Export-Finance/exip/compare/v2.35.3...v2.35.4) (2024-08-09)
 
 
