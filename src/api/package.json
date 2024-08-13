@@ -71,7 +71,7 @@
     "eslint-plugin-prettier": "5.2.1",
     "jest": "^29.7.0",
     "prettier": "^3.3.2",
-    "spectaql": "^3.0.1",
+    "spectaql": "^3.0.2",
     "ts-jest": "^29.2.4"
   },
   "engines": {
