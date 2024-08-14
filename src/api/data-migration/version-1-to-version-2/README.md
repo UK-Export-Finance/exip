@@ -63,7 +63,7 @@ To set up and run the API locally, you'll need the following prerequisites:
 - The local `DATABASE_USER` environment variable
 - The local `DATABASE_PASSWORD` environment variable
 - The local `CUID_FINGERPRINT` environment variable
-- `mysql2` NPM package installed as an API dependency.
+- `mysql2` and `@paralleldrive/cuid2` NPM packages installed as API dependencies.
 - `ts-node` NPM package installed locally.
 
 ## Running Locally :computer:
