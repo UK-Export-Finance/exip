@@ -5489,12 +5489,13 @@ var createManyApplications = async (root, variables, context) => {
       where: { id: referenceNumber.applicationId },
       data: { referenceNumber: referenceNumber.id }
     }));
-    const updatedApplications = await context.db.Application.updateMany({
+    await context.db.Application.updateMany({
       data: updateApplicationReferenceNumbers
     });
+    const allApplications = await context.db.Application.findMany();
     if (applications.length) {
       return {
-        applications: updatedApplications,
+        applications: allApplications,
         success: true
       };
     }
