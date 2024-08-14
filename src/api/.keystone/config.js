@@ -6321,7 +6321,7 @@ var POLICY_FIELDS = {
       MULTIPLE: {
         ID: MULTIPLE_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
-        TEXT: "Multiple contract policy (revolving credit)",
+        TEXT: "Multiple contract policy (Revolving credit)",
         HINT_LIST: [
           `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER} months`,
           "Best if you'll have an ongoing relationship with the buyer but you're not sure yet how many contracts or sales you'll have",
