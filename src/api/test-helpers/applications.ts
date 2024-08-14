@@ -59,6 +59,26 @@ const get = async ({ context, applicationId }: TestHelperApplicationGet): Promis
 };
 
 /**
+ * get all applications test helper
+ * Get all applications.
+ * @param {Context} context: KeystoneJS context API
+ * @returns {Object} Application
+ */
+const getAll = async (context: Context): Promise<Application> => {
+  try {
+    console.info('Getting an application (test helpers)');
+
+    const applications = await context.db.Application.findMany();
+
+    return applications;
+  } catch (error) {
+    console.error(error);
+
+    return error;
+  }
+};
+
+/**
  * update application test helper
  * Update an application by ID.
  * @param {Context} context: KeystoneJS context API, application ID
@@ -113,6 +133,7 @@ const deleteAll = async (context: Context) => {
 const applications = {
   create,
   get,
+  getAll,
   update,
   deleteAll,
 };

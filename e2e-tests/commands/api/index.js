@@ -52,10 +52,13 @@ const queryStrings = {
     }
   `,
   createApplications: () => gql`
-    mutation createApplications($data: [ApplicationCreateInput!]!) {
-      createApplications(data: $data) {
-        id
-        referenceNumber
+    mutation createManyApplications($accountId: String!, $count: Int!) {
+      createManyApplications(accountId: $accountId, count: $count) {
+        success
+        applications {
+          id
+          referenceNumber
+        }
       }
     }
   `,
@@ -255,21 +258,22 @@ const createAnAbandonedApplication = (accountId, eligibilityAnswers, company, se
  * @param {Array} Array of applications
  * @returns {Array} Created applications
  */
-const createApplications = (applications) => {
+const createApplications = (accountId, count) => {
   try {
     const responseBody = apollo
       .query({
         query: queryStrings.createApplications(),
         variables: {
-          data: applications,
+          accountId,
+          count,
         },
         context: APOLLO_CONTEXT,
       })
-      .then((response) => response.data.createApplications);
+      .then((response) => response.data.createManyApplications.applications);
 
     return responseBody;
   } catch (error) {
-    console.error(error);
+    console.error('Creating applications', error);
 
     throw new Error('Creating applications', { error });
   }
