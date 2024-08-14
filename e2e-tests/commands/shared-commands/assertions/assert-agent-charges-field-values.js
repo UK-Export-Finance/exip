@@ -13,14 +13,14 @@ const {
  * @param {Boolean} fixedSumMethod: Method as "Fixed sum"
  * @param {Boolean} percentageMethod: Method as "Percentage"
  * @param {String} expectedFixedSumAmount: Expected fixed sum amount
- * @param {String} expectedpercentageCharge: Expected charge percentage
+ * @param {String} expectedPercentageCharge: Expected charge percentage
  * @param {String} expectedPayableCountry: Expected payable country
  */
 const assertAgentChargesFieldValues = ({
   fixedSumMethod = false,
   percentageMethod = false,
   expectedFixedSumAmount = application.EXPORT_CONTRACT.AGENT_CHARGES[FIXED_SUM_AMOUNT],
-  expectedpercentageCharge = application.EXPORT_CONTRACT.AGENT_CHARGES[PERCENTAGE_CHARGE],
+  expectedPercentageCharge = application.EXPORT_CONTRACT.AGENT_CHARGES[PERCENTAGE_CHARGE],
   expectedPayableCountry = application.EXPORT_CONTRACT.AGENT_CHARGES[PAYABLE_COUNTRY_CODE],
 }) => {
   if (fixedSumMethod) {
@@ -34,8 +34,8 @@ const assertAgentChargesFieldValues = ({
   if (percentageMethod) {
     cy.assertRadioOptionIsChecked(agentChargesPage[METHOD][PERCENTAGE].input());
 
-    if (expectedpercentageCharge) {
-      cy.checkValue(field(PERCENTAGE_CHARGE), expectedpercentageCharge);
+    if (expectedPercentageCharge) {
+      cy.checkValue(field(PERCENTAGE_CHARGE), expectedPercentageCharge);
     }
   }
 
