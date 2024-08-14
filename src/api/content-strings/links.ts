@@ -1,7 +1,7 @@
 export const LINKS = {
   EXTERNAL: {
     GUIDANCE: 'https://www.gov.uk/guidance/credit-insurance-policy#eligibility',
-    BEFORE_YOU_START: 'https://www.gov.uk/guidance/get-a-quote-for-ukef-export-insurance',
+    BEFORE_YOU_START: 'https://www.gov.uk/guidance/get-a-quote-for-ukef-credit-insurance',
     PRIVACY: 'https://www.gov.uk/government/publications/ukef-privacy-notice/ukef-privacy-notice--2',
     FEEDBACK: 'https://forms.office.com/r/TacytrRCgJ',
     RESEARCH: 'https://forms.office.com/pages/responsepage.aspx?id=jhOEgACUnkCm2ka1KB4LCkj8OKxLpCpDmTbrMyQ3j2JUOUFHNUc0QUhUOFdLNkJXWkRUS0wyMUZFNiQlQCN0PWcu',
