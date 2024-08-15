@@ -36,7 +36,12 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const summaryLists = exportContractSummaryLists(exportContract, totalContractValueOverThreshold, referenceNumber, countries);
+    const summaryLists = exportContractSummaryLists({
+      answers: exportContract,
+      totalContractValueOverThreshold,
+      referenceNumber,
+      countries,
+    });
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({

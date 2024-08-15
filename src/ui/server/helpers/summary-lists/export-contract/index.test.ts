@@ -15,7 +15,13 @@ describe('server/helpers/summary-lists/export-contract', () => {
       const totalContractValueOverThreshold = false;
 
       it('should return some fields and values from the submitted data/answers', () => {
-        const result = generateFields(mockAnswers, totalContractValueOverThreshold, referenceNumber, mockCountries, checkAndChange);
+        const result = generateFields({
+          answers: mockAnswers,
+          totalContractValueOverThreshold,
+          referenceNumber,
+          countries: mockCountries,
+          checkAndChange,
+        });
 
         const expected = [
           generateAboutTheExportFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
@@ -30,7 +36,13 @@ describe('server/helpers/summary-lists/export-contract', () => {
       const totalContractValueOverThreshold = true;
 
       it('should return all fields and values from the submitted data/answers', () => {
-        const result = generateFields(mockAnswers, totalContractValueOverThreshold, referenceNumber, mockCountries, checkAndChange);
+        const result = generateFields({
+          answers: mockAnswers,
+          totalContractValueOverThreshold,
+          referenceNumber,
+          countries: mockCountries,
+          checkAndChange,
+        });
 
         const expected = [
           generateAboutTheExportFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
@@ -47,9 +59,21 @@ describe('server/helpers/summary-lists/export-contract', () => {
     it('should return an array of summary list rows', () => {
       const totalContractValueOverThreshold = false;
 
-      const result = exportContractSummaryLists(mockAnswers, totalContractValueOverThreshold, referenceNumber, mockCountries, checkAndChange);
+      const result = exportContractSummaryLists({
+        answers: mockAnswers,
+        totalContractValueOverThreshold,
+        referenceNumber,
+        countries: mockCountries,
+        checkAndChange,
+      });
 
-      const fields = generateFields(mockAnswers, totalContractValueOverThreshold, referenceNumber, mockCountries, checkAndChange);
+      const fields = generateFields({
+        answers: mockAnswers,
+        totalContractValueOverThreshold,
+        referenceNumber,
+        countries: mockCountries,
+        checkAndChange,
+      });
 
       const expected = generateGroupsOfSummaryLists(fields);
 

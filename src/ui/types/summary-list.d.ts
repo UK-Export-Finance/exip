@@ -1,3 +1,6 @@
+import { ApplicationExportContract } from './application';
+import { Country } from './country';
+
 interface SummaryListCardTitle {
   text: string;
 }
@@ -78,6 +81,14 @@ interface SummaryListGroup {
   rows: Array<SummaryListItem>;
 }
 
+interface SummaryListParamsExportContract {
+  answers: ApplicationExportContract;
+  totalContractValueOverThreshold: boolean;
+  referenceNumber: number;
+  countries: Array<Country>;
+  checkAndChange?: boolean;
+}
+
 export {
   SummaryListItem,
   SummaryListItemActions,
@@ -91,4 +102,5 @@ export {
   SummaryListItemValue,
   SummaryListGroup,
   SummaryListGroupData,
+  SummaryListParamsExportContract,
 };

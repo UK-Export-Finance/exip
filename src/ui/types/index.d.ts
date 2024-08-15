@@ -60,6 +60,7 @@ import {
   SummaryListItemDataFieldSummary,
   SummaryListGroup,
   SummaryListGroupData,
+  SummaryListParamsExportContract,
 } from './summary-list';
 import { CreatePrepareApplicationTasksParams, TaskList, TaskListData, TaskListDataTask, TaskListDataGroup, TaskListGroup, TaskListTask } from './task-list';
 import {
@@ -176,6 +177,7 @@ export {
   SummaryListItem,
   SummaryListGroup,
   SummaryListGroupData,
+  SummaryListParamsExportContract,
   TaskList,
   TaskListData,
   TaskListDataTask,

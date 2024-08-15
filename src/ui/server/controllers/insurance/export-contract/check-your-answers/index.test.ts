@@ -47,7 +47,12 @@ describe('controllers/insurance/export-contract/check-your-answers', () => {
     it('should render template', async () => {
       await get(req, res);
 
-      const summaryLists = exportContractSummaryLists(exportContract, totalContractValueOverThreshold, referenceNumber, mockCountries);
+      const summaryLists = exportContractSummaryLists({
+        answers: exportContract,
+        totalContractValueOverThreshold,
+        referenceNumber,
+        countries: mockCountries,
+      });
 
       const expectedVariables = {
         ...insuranceCorePageVariables({

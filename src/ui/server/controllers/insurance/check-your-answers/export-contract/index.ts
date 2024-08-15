@@ -67,7 +67,13 @@ export const get = async (req: Request, res: Response) => {
 
     const countries = await api.keystone.countries.getAll();
 
-    const summaryList = exportContractSummaryLists(exportContract, totalContractValueOverThreshold, referenceNumber, countries, checkAndChange);
+    const summaryList = exportContractSummaryLists({
+      answers: exportContract,
+      totalContractValueOverThreshold,
+      referenceNumber,
+      countries,
+      checkAndChange,
+    });
 
     const exportContractFields = requiredFields({
       totalContractValueOverThreshold,
