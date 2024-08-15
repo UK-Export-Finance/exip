@@ -39,7 +39,7 @@ const getAll = async (context: Context) => {
   } catch (error) {
     console.error(error);
 
-    throw new Error(`Gettingall buyers (test helpers) ${error}`);
+    throw new Error(`Getting all buyers (test helpers) ${error}`);
   }
 };
 

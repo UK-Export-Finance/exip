@@ -66,7 +66,7 @@ const get = async ({ context, applicationId }: TestHelperApplicationGet): Promis
  */
 const getAll = async (context: Context): Promise<Application> => {
   try {
-    console.info('Getting an application (test helpers)');
+    console.info('Getting all application (test helpers)');
 
     const applications = await context.db.Application.findMany();
 
