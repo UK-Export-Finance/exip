@@ -49,7 +49,7 @@ const createManyApplications = async (root: any, variables: CreateManyApplicatio
       ...INITIAL_APPLICATION_DATA,
     }));
 
-    const { applications, referenceNumbers } = await createManyApplicationsAndReferenceNumbers(context, mockApplicationsData);
+    const { referenceNumbers } = await createManyApplicationsAndReferenceNumbers(context, mockApplicationsData);
 
     // maps update object for updating all applications with relevant reference numbers
     const updateApplicationReferenceNumbers = referenceNumbers.map((referenceNumber: ObjectType) => ({
@@ -59,9 +59,11 @@ const createManyApplications = async (root: any, variables: CreateManyApplicatio
 
     await updateApplicationsData(context, updateApplicationReferenceNumbers);
 
-    const allApplications = await context.db.Application.findMany();
+    const allApplications = await context.query.Application.findMany({
+      query: 'id referenceNumber',
+    });
 
-    if (applications.length) {
+    if (allApplications.length) {
       return {
         applications: allApplications,
         success: true,

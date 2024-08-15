@@ -255,7 +255,7 @@ const createAnAbandonedApplication = (accountId, eligibilityAnswers, company, se
 /**
  * createApplications
  * Create multiple applications
- * @param {Array} Account id
+ * @param {String} Account id
  * @param {Number} Count of applications to create
  * @returns {Array} Created applications
  */

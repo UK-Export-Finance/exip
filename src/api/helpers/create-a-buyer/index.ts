@@ -3,7 +3,6 @@ import { Context } from '../../types';
 /**
  * createABuyer
  * Create a buyer with:
- * 1) A country relationship
  * @param {Context} context: KeystoneJS context API
  * @param {String} countryId: Country ID
  * @returns {Promise<Object>} Created buyer

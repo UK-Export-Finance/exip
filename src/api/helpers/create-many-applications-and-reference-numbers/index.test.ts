@@ -13,7 +13,6 @@ describe('helpers/create-many-applications-and-reference-numbers', () => {
   };
 
   beforeEach(() => {
-    // Set up the context object
     context = getKeystoneContext();
   });
 
