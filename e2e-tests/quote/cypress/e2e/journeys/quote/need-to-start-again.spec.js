@@ -1,8 +1,6 @@
 import { needToStartAgainPage } from '../../../../../pages/shared';
 import { LINKS, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../commands/forms';
-import { completeAndSubmitBuyerBodyForm } from '../../../../../commands/quote/forms';
 
 const CONTENT_STRINGS = PAGES.NEED_TO_START_AGAIN_PAGE;
 
@@ -15,8 +13,8 @@ const baseUrl = Cypress.config('baseUrl');
 context('Get a Quote - Need to start again exit page', () => {
   beforeEach(() => {
     cy.login();
-    completeAndSubmitBuyerCountryForm({});
-    completeAndSubmitBuyerBodyForm();
+    cy.completeAndSubmitBuyerCountryForm({});
+    cy.completeAndSubmitBuyerBodyForm();
 
     cy.navigateToUrl(TELL_US_ABOUT_YOUR_POLICY);
 

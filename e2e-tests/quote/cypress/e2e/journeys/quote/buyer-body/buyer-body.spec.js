@@ -2,7 +2,6 @@ import { yesRadio, noRadio } from '../../../../../../pages/shared';
 import buyerBodyPage from '../../../../../../pages/quote/buyerBody';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.BUYER_BODY;
 
@@ -21,7 +20,7 @@ const url = `${baseUrl}${BUYER_BODY}`;
 context('Buyer body page - as an exporter, I want to check if I can get an EXIP online quote for my buyers country', () => {
   beforeEach(() => {
     cy.login();
-    completeAndSubmitBuyerCountryForm({});
+    cy.completeAndSubmitBuyerCountryForm({});
 
     cy.assertUrl(url);
   });

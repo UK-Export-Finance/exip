@@ -1,10 +1,3 @@
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import {
-  completeAndSubmitBuyerBodyForm,
-  completeAndSubmitExporterLocationForm,
-  completeAndSubmitUkContentForm,
-  completeAndSubmitPolicyTypeMultiForm,
-} from '../../../../../../commands/quote/forms';
 import { PAGES } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 
@@ -23,11 +16,11 @@ context('Tell us about your multiple policy page - Signed in', () => {
     cy.completeSignInAndGoToApplication({ createApplicationViaApi: false });
     cy.login();
 
-    completeAndSubmitBuyerCountryForm({});
-    completeAndSubmitBuyerBodyForm();
-    completeAndSubmitExporterLocationForm();
-    completeAndSubmitUkContentForm();
-    completeAndSubmitPolicyTypeMultiForm();
+    cy.completeAndSubmitBuyerCountryForm({});
+    cy.completeAndSubmitBuyerBodyForm();
+    cy.completeAndSubmitExporterLocationForm();
+    cy.completeAndSubmitUkContentForm();
+    cy.completeAndSubmitPolicyTypeMultiForm();
 
     cy.assertUrl(url);
   });
