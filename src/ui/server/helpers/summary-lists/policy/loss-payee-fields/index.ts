@@ -48,7 +48,7 @@ const {
  * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>} optional broker fields if yes selected
  */
-export const lossPayeeLocatedInUkFields = (answers: ApplicationLossPayeeFinancialDetailsUk, referenceNumber: number, checkAndChange: boolean) => {
+export const lossPayeeLocatedInUkFields = (answers: ApplicationLossPayeeFinancialDetailsUk, referenceNumber: number, checkAndChange?: boolean) => {
   const fields = [
     fieldGroupItem(
       {
@@ -108,7 +108,7 @@ export const lossPayeeLocatedInUkFields = (answers: ApplicationLossPayeeFinancia
 export const lossPayeeLocatedInternationallyFields = (
   answers: ApplicationLossPayeeFinancialDetailsInternational,
   referenceNumber: number,
-  checkAndChange: boolean,
+  checkAndChange?: boolean,
 ) => {
   const fields = [
     fieldGroupItem(
@@ -163,7 +163,7 @@ export const lossPayeeLocatedInternationallyFields = (
  * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>} optional broker fields if yes selected
  */
-export const lossPayeeFields = (answers: ApplicationNominatedLossPayee, referenceNumber: number, checkAndChange: boolean) => {
+export const lossPayeeFields = (answers: ApplicationNominatedLossPayee, referenceNumber: number, checkAndChange?: boolean) => {
   let fields = [] as Array<SummaryListItemData>;
 
   /**
@@ -196,9 +196,11 @@ export const lossPayeeFields = (answers: ApplicationNominatedLossPayee, referenc
  * generateLossPayeeFields
  * Create all your loss payee fields and values for the Insurance - Loss payee govukSummaryList
  * @param {ApplicationNominatedLossPayee} answers
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
  * @returns {Object} All loss payee fields and values in an object structure for GOVUK summary list structure
  */
-export const generateLossPayeeFields = (answers: ApplicationNominatedLossPayee, referenceNumber: number, checkAndChange: boolean) => {
+export const generateLossPayeeFields = (answers: ApplicationNominatedLossPayee, referenceNumber: number, checkAndChange?: boolean) => {
   const fields = [
     fieldGroupItem(
       {

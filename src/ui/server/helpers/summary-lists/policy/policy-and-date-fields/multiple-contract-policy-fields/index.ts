@@ -34,7 +34,7 @@ const {
  * @param {Boolean} checkAndChange true if coming application level check your answers (/check-and-change)
  * @returns {Object} All Multiple contract policy fields and values in an object structure for GOVUK summary list structure
  */
-const generateMultipleContractPolicyFields = (answers: ApplicationPolicy, referenceNumber: number, checkAndChange: boolean) => {
+const generateMultipleContractPolicyFields = (answers: ApplicationPolicy, referenceNumber: number, checkAndChange?: boolean) => {
   const fields = [
     fieldGroupItem(
       {

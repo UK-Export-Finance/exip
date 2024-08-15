@@ -21,7 +21,7 @@ const {
  * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>}
  */
-const generatePreCreditPeriodFields = (answers: ApplicationPolicy, referenceNumber: number, checkAndChange: boolean) => {
+const generatePreCreditPeriodFields = (answers: ApplicationPolicy, referenceNumber: number, checkAndChange?: boolean) => {
   const fields = [
     fieldGroupItem(
       {

@@ -39,7 +39,7 @@ const {
  * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
  * @returns {Object} All policy fields and values in an object structure for GOVUK summary list structure
  */
-const generatePolicyAndDateFields = (answers: ApplicationPolicy, referenceNumber: number, currencies: Array<Currency>, checkAndChange: boolean) => {
+const generatePolicyAndDateFields = (answers: ApplicationPolicy, referenceNumber: number, currencies: Array<Currency>, checkAndChange?: boolean) => {
   let fields = [
     fieldGroupItem({
       field: getFieldById(FIELDS, POLICY_TYPE),

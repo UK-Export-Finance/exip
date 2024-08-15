@@ -61,6 +61,7 @@ import {
   SummaryListGroup,
   SummaryListGroupData,
   SummaryListParamsExportContract,
+  SummaryListParamsPolicy,
 } from './summary-list';
 import { CreatePrepareApplicationTasksParams, TaskList, TaskListData, TaskListDataTask, TaskListDataGroup, TaskListGroup, TaskListTask } from './task-list';
 import {
@@ -178,6 +179,7 @@ export {
   SummaryListGroup,
   SummaryListGroupData,
   SummaryListParamsExportContract,
+  SummaryListParamsPolicy,
   TaskList,
   TaskListData,
   TaskListDataTask,

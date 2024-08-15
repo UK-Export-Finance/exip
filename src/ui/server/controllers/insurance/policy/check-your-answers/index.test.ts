@@ -82,7 +82,15 @@ describe('controllers/insurance/policy/check-your-answers', () => {
         ...exportContract,
       };
 
-      const summaryLists = policySummaryLists(answers, mockContact, mockBroker, mockNominatedLossPayee, referenceNumber, mockCurrencies, mockCountries);
+      const summaryLists = policySummaryLists({
+        policy: answers,
+        policyContact: mockContact,
+        broker: mockBroker,
+        nominatedLossPayee: mockNominatedLossPayee,
+        referenceNumber,
+        currencies: mockCurrencies,
+        countries: mockCountries,
+      });
 
       const expectedVariables = {
         ...insuranceCorePageVariables({

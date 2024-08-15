@@ -1,5 +1,6 @@
-import { ApplicationExportContract } from './application';
+import { ApplicationExportContract, ApplicationPolicy, ApplicationPolicyContact, ApplicationBroker, ApplicationNominatedLossPayee } from './application';
 import { Country } from './country';
+import { Currency } from './currency';
 
 interface SummaryListCardTitle {
   text: string;
@@ -89,6 +90,17 @@ interface SummaryListParamsExportContract {
   checkAndChange?: boolean;
 }
 
+interface SummaryListParamsPolicy {
+  policy: ApplicationPolicy;
+  policyContact: ApplicationPolicyContact;
+  broker: ApplicationBroker;
+  nominatedLossPayee: ApplicationNominatedLossPayee;
+  referenceNumber: number;
+  currencies: Array<Currency>;
+  countries: Array<Country>;
+  checkAndChange?: boolean;
+}
+
 export {
   SummaryListItem,
   SummaryListItemActions,
@@ -103,4 +115,5 @@ export {
   SummaryListGroup,
   SummaryListGroupData,
   SummaryListParamsExportContract,
+  SummaryListParamsPolicy,
 };
