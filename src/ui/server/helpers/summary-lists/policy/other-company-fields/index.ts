@@ -29,7 +29,7 @@ const { REQUESTED_JOINTLY_INSURED_PARTY } = POLICY_FIELDS;
  * @param {ApplicationJointlyInsuredParty} answers: Jointly insured party answers
  * @param {Number} referenceNumber: Application reference number
  * @param {Array<Country>} countries: Countries
- * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>} optional other company fields if yes selected
  */
 export const optionalOtherCompanyFields = (
@@ -97,7 +97,7 @@ export const optionalOtherCompanyFields = (
  * @param {ApplicationJointlyInsuredParty} answers
  * @param {Number} referenceNumber: Application reference number
  * @param {Array<Country>} countries: Countries
- * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} All other company fields and values in an object structure for GOVUK summary list structure
  */
 export const generateOtherCompanyFields = (

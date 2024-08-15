@@ -19,7 +19,7 @@ const {
  * @param {String} policyType: Policy type
  * @param {Number} referenceNumber: Application reference number
  * @param {String} fieldId: Field ID
- * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} Link object
  */
 const changeLink = (policyType: string, referenceNumber: number, fieldId: string, checkAndChange?: boolean) => {

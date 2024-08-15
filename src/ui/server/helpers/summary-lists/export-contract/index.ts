@@ -39,7 +39,7 @@ export const generateFields = ({
  * @param {Boolean} totalContractValueOverThreshold: "Total contract value is over the threshold" flag
  * @param {Number} referenceNumber: Application reference number
  * @param {Array<Country>} countries: Countries
- * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section. Defaults to false
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
 export const exportContractSummaryLists = ({

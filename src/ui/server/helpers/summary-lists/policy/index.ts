@@ -16,7 +16,7 @@ import { SummaryListParamsPolicy, SummaryListGroupData } from '../../../../types
  * @param {Integer} referenceNumber: Application reference number
  * @param {Array} currencies: Currencies
  * @param {Array<Country>} countries: Countries
- * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} All policy values in an object structure for GOVUK summary list structure
  */
 const generateFields = ({
@@ -50,7 +50,7 @@ const generateFields = ({
  * @param {Number} referenceNumber: Application reference number
  * @param {Array<Currency>} currencies: Currencies
  * @param {Array<Country>} countries: Countries
- * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section. Defaults to false
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
 const policySummaryLists = ({

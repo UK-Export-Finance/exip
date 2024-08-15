@@ -31,7 +31,7 @@ const generateFields = ({ business, company, referenceNumber, checkAndChange }: 
  * @param {ApplicationBusiness} business: Application business object
  * @param {ApplicationCompany} company: Application company object
  * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section. Defaults to false
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
 const yourBusinessSummaryLists = ({ business, company, referenceNumber, checkAndChange }: SummaryListParamsBusiness) => {

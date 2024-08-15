@@ -29,7 +29,7 @@ const {
  * returns fieldGroupItem for summary list for nameOnPolicy
  * @param {ApplicationPolicyContact} answers: submitted policyContact data
  * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} fieldGroupItem for name on policy
  */
 const nameOnPolicyField = (answers: ApplicationPolicyContact, referenceNumber: number, checkAndChange?: boolean) =>
@@ -49,7 +49,7 @@ const nameOnPolicyField = (answers: ApplicationPolicyContact, referenceNumber: n
  * @param {ApplicationPolicyContact} answers: submitted policyContact data
  * @param {Number} referenceNumber: Application reference number
  * @param {Boolean} sameName: if IS_SAME_AS_OWNER is true
- * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} fieldGroupItem for position
  */
 const positionField = (answers: ApplicationPolicyContact, referenceNumber: number, sameName: boolean, checkAndChange?: boolean) => {
@@ -80,7 +80,7 @@ const positionField = (answers: ApplicationPolicyContact, referenceNumber: numbe
  * returns fieldGroupItem for summary list for email
  * @param {ApplicationPolicyContact} answers: submitted policyContact data
  * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @param {Boolean} shouldRenderChangeLink: if renders change link - provided by answer to IS_SAME_AS_OWNER - if IS_SAME_AS_OWNER - no change link
  * @returns {Object} fieldGroupItem for name on email
  */
