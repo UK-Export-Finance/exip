@@ -1,6 +1,6 @@
 import { headingCaption, singleInputField, declarationPage } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
-import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
+import { BUTTONS, PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -65,6 +65,7 @@ context(
         currentHref: `${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`,
         backLink: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`,
         assertBackLink: false,
+        submitButtonCopy: BUTTONS.SUBMIT_APPLICATION,
       });
     });
 
