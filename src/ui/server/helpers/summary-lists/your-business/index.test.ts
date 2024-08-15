@@ -11,7 +11,12 @@ describe('server/helpers/summary-lists/your-business', () => {
 
   describe('generateFields', () => {
     it('should return fields and values from the submitted data/answers', () => {
-      const result = generateFields(mockCompany, mockBusiness, referenceNumber, checkAndChange);
+      const result = generateFields({
+        company: mockCompany,
+        business: mockBusiness,
+        referenceNumber,
+        checkAndChange,
+      });
 
       const expected = [
         generateYourCompanyFields(mockCompany, referenceNumber, checkAndChange),
@@ -26,9 +31,18 @@ describe('server/helpers/summary-lists/your-business', () => {
 
   describe('yourBusinessSummaryLists', () => {
     it('should return an array of summary list rows', () => {
-      const result = yourBusinessSummaryLists(mockCompany, mockBusiness, referenceNumber);
+      const result = yourBusinessSummaryLists({
+        company: mockCompany,
+        business: mockBusiness,
+        referenceNumber,
+      });
 
-      const fields = generateFields(mockCompany, mockBusiness, referenceNumber, checkAndChange);
+      const fields = generateFields({
+        company: mockCompany,
+        business: mockBusiness,
+        referenceNumber,
+        checkAndChange,
+      });
 
       const expected = generateGroupsOfSummaryLists(fields);
 

@@ -60,6 +60,7 @@ import {
   SummaryListItemDataFieldSummary,
   SummaryListGroup,
   SummaryListGroupData,
+  SummaryListParamsBusiness,
   SummaryListParamsExportContract,
   SummaryListParamsPolicy,
 } from './summary-list';
@@ -178,6 +179,7 @@ export {
   SummaryListItem,
   SummaryListGroup,
   SummaryListGroupData,
+  SummaryListParamsBusiness,
   SummaryListParamsExportContract,
   SummaryListParamsPolicy,
   TaskList,

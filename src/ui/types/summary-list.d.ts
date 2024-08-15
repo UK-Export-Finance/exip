@@ -1,4 +1,12 @@
-import { ApplicationExportContract, ApplicationPolicy, ApplicationPolicyContact, ApplicationBroker, ApplicationNominatedLossPayee } from './application';
+import {
+  ApplicationBroker,
+  ApplicationBusiness,
+  ApplicationCompany,
+  ApplicationExportContract,
+  ApplicationNominatedLossPayee,
+  ApplicationPolicy,
+  ApplicationPolicyContact,
+} from './application';
 import { Country } from './country';
 import { Currency } from './currency';
 
@@ -87,6 +95,11 @@ interface SummaryListParamsCore {
   checkAndChange?: boolean;
 }
 
+interface SummaryListParamsBusiness extends SummaryListParamsCore {
+  company: ApplicationCompany;
+  business: ApplicationBusiness;
+}
+
 interface SummaryListParamsExportContract extends SummaryListParamsCore {
   exportContract: ApplicationExportContract;
   totalContractValueOverThreshold: boolean;
@@ -115,6 +128,7 @@ export {
   SummaryListItemValue,
   SummaryListGroup,
   SummaryListGroupData,
+  SummaryListParamsBusiness,
   SummaryListParamsExportContract,
   SummaryListParamsPolicy,
 };
