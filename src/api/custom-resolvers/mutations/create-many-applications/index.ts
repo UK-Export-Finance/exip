@@ -1,17 +1,23 @@
-import { CreateManyApplicationsVariables, Application, Context, ObjectType } from '../../../types';
 import getCountries from '../../../helpers/get-countries';
-import { mockApplicationCreationObject } from '../../../test-mocks/mock-application';
+import createABuyer from '../../../helpers/create-a-buyer';
+import createManyApplicationsAndReferenceNumbers from '../../../helpers/create-many-applications-and-reference-numbers';
+import updateApplicationsData from '../../../helpers/update-applications-data';
+import INITIAL_APPLICATION_DATA from '../../../constants/application/initial-application-data';
+import { CreateManyApplicationsVariables, Context, ObjectType } from '../../../types';
 
 /**
  * createManyApplications
  * Creates many applications.
  * This is used by E2E tests only
  * 1) Creates an empty object array with the number of elements passed in variables
- * 2) Gets all countries and creates a buyer with the first country
- * 3) Maps application creation object
- * 4) Creates many applications
- * 5) Creates reference numbers for applications and updated ReferenceNumber and Application tables
- * 6) returns applications array and success flag
+ * 2) Gets all countries
+ * 3) creates a buyer with the first country
+ * 4) Maps application creation object
+ * 5) Creates many applications
+ * 6) Creates reference numbers for applications
+ * 7) updates ReferenceNumber table with application reference numbers
+ * 8) updates application tables with relevant reference numbers
+ * 9) returns applications array and success flag
  * @param {Object} root: GraphQL root variables
  * @param {CreateManyApplicationsVariables} GraphQL variables for the createManyApplications mutation
  * @param {Context} context: KeystoneJS context API
@@ -26,17 +32,9 @@ const createManyApplications = async (root: any, variables: CreateManyApplicatio
     const countries = await getCountries(context);
 
     // creates buyer with first country from countries array
-    const buyer = await context.db.Buyer.createOne({
-      data: {
-        country: {
-          connect: {
-            id: countries[0].id,
-          },
-        },
-      },
-    });
+    const buyer = await createABuyer(context, countries[0].id);
 
-    // creates object for creation/update of applications
+    // creates array for creation/update of applications
     const mockApplicationsData = emptyArray.map(() => ({
       owner: {
         connect: {
@@ -48,25 +46,10 @@ const createManyApplications = async (root: any, variables: CreateManyApplicatio
           id: buyer.id,
         },
       },
-      ...mockApplicationCreationObject,
+      ...INITIAL_APPLICATION_DATA,
     }));
 
-    // creates many applications
-    const applications = (await context.db.Application.createMany({
-      data: mockApplicationsData,
-    })) as Array<Application>;
-
-    // generates data for creating referenceNumbers
-    const referenceNumbersData = applications.map((application) => ({
-      application: {
-        connect: {
-          id: application.id,
-        },
-      },
-    }));
-
-    // creates reference numbers
-    const referenceNumbers = await context.db.ReferenceNumber.createMany({ data: referenceNumbersData });
+    const { applications, referenceNumbers } = await createManyApplicationsAndReferenceNumbers(context, mockApplicationsData);
 
     // maps update object for updating all applications with relevant reference numbers
     const updateApplicationReferenceNumbers = referenceNumbers.map((referenceNumber: ObjectType) => ({
@@ -74,10 +57,7 @@ const createManyApplications = async (root: any, variables: CreateManyApplicatio
       data: { referenceNumber: referenceNumber.id },
     }));
 
-    // updates application's reference numbers
-    await context.db.Application.updateMany({
-      data: updateApplicationReferenceNumbers,
-    });
+    await updateApplicationsData(context, updateApplicationReferenceNumbers);
 
     const allApplications = await context.db.Application.findMany();
 

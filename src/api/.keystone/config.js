@@ -623,7 +623,6 @@ var ALLOWED_GRAPHQL_RESOLVERS = [...DEFAULT_RESOLVERS, ...CUSTOM_RESOLVERS];
 
 // constants/supported-currencies/index.ts
 var SUPPORTED_CURRENCIES = ["EUR", "GBP", "JPY", "USD"];
-var EUR = "EUR";
 var GBP = "GBP";
 
 // constants/application/versions/index.ts
@@ -1208,9 +1207,9 @@ var {
   END_TIME_LIMIT_MS,
   END_TIME_LIMIT_SECONDS
 } = APPLICATION.SUBMISSION_DEADLINE_EMAIL;
-var getStartAndEndTimeOfDate = (date2) => {
-  const startSet = date2.setHours(START_TIME_LIMIT_HOURS, START_TIME_LIMIT_MINUTES, START_TIME_LIMIT_SECONDS, START_TIME_LIMIT_MS);
-  const endSet = date2.setHours(END_TIME_LIMIT_HOURS, END_TIME_LIMIT_MINUTES, END_TIME_LIMIT_SECONDS, END_TIME_LIMIT_MS);
+var getStartAndEndTimeOfDate = (date) => {
+  const startSet = date.setHours(START_TIME_LIMIT_HOURS, START_TIME_LIMIT_MINUTES, START_TIME_LIMIT_SECONDS, START_TIME_LIMIT_MS);
+  const endSet = date.setHours(END_TIME_LIMIT_HOURS, END_TIME_LIMIT_MINUTES, END_TIME_LIMIT_SECONDS, END_TIME_LIMIT_MS);
   return {
     startTime: new Date(startSet),
     endTime: new Date(endSet)
@@ -1224,7 +1223,7 @@ var dateIsInThePast = (targetDate) => {
   const now2 = /* @__PURE__ */ new Date();
   return (0, import_date_fns.isAfter)(now2, targetDate);
 };
-var dateInTheFutureByDays = (date2, days) => new Date(date2.setDate(date2.getDate() + days));
+var dateInTheFutureByDays = (date, days) => new Date(date.setDate(date.getDate() + days));
 
 // helpers/get-expiring-applications/index.ts
 var { IN_PROGRESS: IN_PROGRESS2 } = APPLICATION.STATUS;
@@ -4175,8 +4174,20 @@ var send_email_reactivate_account_link_default2 = sendEmailReactivateAccountLink
 
 // helpers/create-an-application/create-initial-application/index.ts
 var import_date_fns5 = require("date-fns");
+
+// constants/application/initial-application-data/index.ts
+var INITIAL_APPLICATION_DATA = {
+  status: APPLICATION.STATUS.IN_PROGRESS,
+  version: APPLICATION.LATEST_VERSION_NUMBER,
+  dealType: APPLICATION.DEAL_TYPE,
+  submissionCount: APPLICATION.SUBMISSION_COUNT_DEFAULT
+};
+var initial_application_data_default = INITIAL_APPLICATION_DATA;
+
+// helpers/create-an-application/create-initial-application/index.ts
 var { DEAL_TYPE, LATEST_VERSION_NUMBER: LATEST_VERSION_NUMBER2, STATUS, SUBMISSION_COUNT_DEFAULT, SUBMISSION_DEADLINE_IN_MONTHS, SUBMISSION_TYPE: SUBMISSION_TYPE2 } = APPLICATION;
-var createInitialApplication = async ({ context, accountId, status = STATUS.IN_PROGRESS }) => {
+var { status, ...APPLICATION_FIELDS } = initial_application_data_default;
+var createInitialApplication = async ({ context, accountId, status: status2 = STATUS.IN_PROGRESS }) => {
   try {
     console.info("Creating initial application (createInitialApplication helper) for user %s", accountId);
     const now2 = /* @__PURE__ */ new Date();
@@ -4186,13 +4197,11 @@ var createInitialApplication = async ({ context, accountId, status = STATUS.IN_P
           connect: { id: accountId }
         },
         createdAt: now2,
-        dealType: DEAL_TYPE,
-        status,
-        submissionCount: SUBMISSION_COUNT_DEFAULT,
+        status: status2,
         submissionDeadline: (0, import_date_fns5.addMonths)(new Date(now2), SUBMISSION_DEADLINE_IN_MONTHS),
         submissionType: SUBMISSION_TYPE2.MIA,
         updatedAt: now2,
-        version: LATEST_VERSION_NUMBER2
+        ...APPLICATION_FIELDS
       }
     });
     return application2;
@@ -4413,8 +4422,8 @@ var createABuyerRelationship = async (context, buyerId, applicationId) => {
 };
 var create_a_buyer_relationship_default = createABuyerRelationship;
 
-// helpers/create-a-buyer/index.ts
-var createABuyer = async (context, countryId, applicationId) => {
+// helpers/create-a-populated-buyer/index.ts
+var createAPopulatedBuyer = async (context, countryId, applicationId) => {
   console.info("Creating a buyer for %s", applicationId);
   try {
     const buyer = await context.db.Buyer.createOne({
@@ -4437,11 +4446,11 @@ var createABuyer = async (context, countryId, applicationId) => {
       buyerContact
     };
   } catch (error) {
-    console.error("Error creating a buyer %O", error);
-    throw new Error(`Creating a buyer ${error}`);
+    console.error("Error creating a populated buyer %O", error);
+    throw new Error(`Creating a populated buyer ${error}`);
   }
 };
-var create_a_buyer_default = createABuyer;
+var create_a_populated_buyer_default = createAPopulatedBuyer;
 
 // helpers/create-a-declaration-version/index.ts
 var { ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT, CONFIDENTIALITY, CONFIRMATION_AND_ACKNOWLEDGEMENTS } = declarations_default2.LATEST_DECLARATIONS;
@@ -4934,7 +4943,7 @@ var createApplicationRelationships = async ({
     const createdRelationships = await Promise.all([
       create_a_broker_default(context, applicationId),
       create_a_business_default(context, applicationId),
-      create_a_buyer_default(context, country.id, applicationId),
+      create_a_populated_buyer_default(context, country.id, applicationId),
       create_a_declaration_default(context, applicationId),
       create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
       create_an_export_contract_default(context, applicationId),
@@ -5045,7 +5054,7 @@ var update_application_columns_default = applicationColumns;
 var createAnApplicationHelper = async (variables, context) => {
   console.info("Creating an application (createAnApplication helper) for user %s", variables.accountId);
   try {
-    const { accountId, eligibilityAnswers, company: companyData, sectionReview: sectionReviewData, status } = variables;
+    const { accountId, eligibilityAnswers, company: companyData, sectionReview: sectionReviewData, status: status2 } = variables;
     const account2 = await get_account_by_id_default(context, accountId);
     if (!account2) {
       console.info("Rejecting application creation - no account found (createAnApplication helper)");
@@ -5054,7 +5063,7 @@ var createAnApplicationHelper = async (variables, context) => {
     const application2 = await create_initial_application_default.create({
       context,
       accountId,
-      status
+      status: status2
     });
     const { id: applicationId } = application2;
     const {
@@ -5135,332 +5144,75 @@ var getCountries = async (context) => {
 };
 var get_countries_default = getCountries;
 
-// test-mocks/mock-application.ts
-var import_dotenv11 = __toESM(require("dotenv"));
-
-// test-mocks/mock-countries.ts
-var mockCountries = [
-  {
-    name: "Abu Dhabi",
-    isoCode: "XAD"
-  },
-  {
-    name: "Algeria",
-    isoCode: "DZA"
-  },
-  {
-    name: "Greenland",
-    isoCode: "GRL"
-  }
-];
-var mock_countries_default = mockCountries;
-
-// test-mocks/mock-broker.ts
-var import_dotenv9 = __toESM(require("dotenv"));
-import_dotenv9.default.config();
-var mockBroker = {
-  isUsingBroker: true,
-  name: "Mock broker name",
-  email: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
-  fullAddress: "Mock broker address"
-};
-var mock_broker_default = mockBroker;
-
-// test-mocks/mock-buyer.ts
-var import_dotenv10 = __toESM(require("dotenv"));
-
-// test-mocks/mock-currencies.ts
-var GBP2 = {
-  name: "UK Sterling",
-  isoCode: "GBP"
-};
-
-// test-mocks/mock-buyer.ts
-import_dotenv10.default.config();
-var mockBuyerRelationship = {
-  id: "clav8by1g0000kgoq5a2afr1b",
-  exporterIsConnectedWithBuyer: true,
-  connectionWithBuyerDescription: "Mock connection with buyer description",
-  exporterHasPreviousCreditInsuranceWithBuyer: true,
-  exporterHasBuyerFinancialAccounts: true,
-  previousCreditInsuranceWithBuyerDescription: "Mock previous credit insurance description"
-};
-var mockBuyerTradingHistory = {
-  id: "clav8by1g0000kgoq5a2afr1c",
-  currencyCode: GBP2.isoCode,
-  outstandingPayments: true,
-  failedPayments: true,
-  exporterHasTradedWithBuyer: true,
-  totalOutstandingPayments: 100,
-  totalOverduePayments: 200
-};
-var mockBuyer = {
-  address: "Test address",
-  buyerTradingHistory: mockBuyerTradingHistory,
-  companyOrOrganisationName: "Test name",
-  canContactBuyer: true,
-  contactFirstName: "Bob",
-  contactLastName: "Smith",
-  contactPosition: "CEO",
-  contactEmail: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
-  country: {
-    id: "clav8by1g0000kgoq5a2afr1a",
-    isoCode: "GBR",
-    name: "United Kingdom"
-  },
-  registrationNumber: "1234",
-  relationship: mockBuyerRelationship,
-  website: "www.gov.uk"
-};
-var mock_buyer_default = mockBuyer;
-
-// test-mocks/mock-sic-codes.ts
-var mockSicCodes = ["12345", "98765"];
-var mock_sic_codes_default = mockSicCodes;
-
-// test-mocks/mock-company-sic-code.ts
-var mockCompanySicCode = {
-  sicCode: mock_sic_codes_default[0],
-  industrySectorName: "Mock industry sector name"
-};
-var mock_company_sic_code_default = mockCompanySicCode;
-
-// test-mocks/mock-application.ts
-import_dotenv11.default.config();
-var date = /* @__PURE__ */ new Date();
-var month = date.getMonth();
-var mockApplicationEligibility = {
-  buyerCountry: mock_countries_default[0],
-  coverPeriod: {
-    valueId: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID
-  },
-  coverPeriodId: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
-  hasCompaniesHouseNumber: true,
-  hasEndBuyer: false,
-  hasMinimumUkGoodsOrServices: true,
-  otherPartiesInvolved: false,
-  paidByLetterOfCredit: false,
-  totalContractValue: {
-    valueId: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID
-  },
-  totalContractValueId: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
-  validExporterLocation: true,
-  isPartyToConsortium: false,
-  isMemberOfAGroup: false
-};
-var mockGenericPolicy = {
-  requestedStartDate: new Date(date.setMonth(month + 1)),
-  policyCurrencyCode: GBP,
-  jointlyInsuredParty: {
-    id: "clfv9uv6v00csoqz2pm7nftfx",
-    requested: false
-  }
-};
-var mockSinglePolicy = {
-  ...mockGenericPolicy,
-  policyType: APPLICATION.POLICY_TYPE.SINGLE,
-  contractCompletionDate: new Date(date.setMonth(month + 3)),
-  totalValueOfContract: 1500,
-  needPreCreditPeriodCover: false
-};
-var mockMultiplePolicy = {
-  ...mockGenericPolicy,
-  policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
-  totalMonthsOfCover: 5,
-  totalSalesToBuyer: 1500,
-  maximumBuyerWillOwe: 1e3
-};
-var mockPrivateMarket = {
-  attempted: false,
-  declinedDescription: "Mock declined description"
-};
-var mockExportContractAgentServiceCharge = {
-  percentageCharge: "10",
-  fixedSumAmount: "1500",
-  fixedSumCurrencyCode: mock_countries_default[0].isoCode,
-  payableCountryCode: mock_countries_default[0].isoCode,
-  method: APPLICATION.EXPORT_CONTRACT.AGENT_SERVICE_CHARGE.METHOD.FIXED_SUM
-};
-var mockExportContractAgentService = {
-  agentIsCharging: false,
-  serviceDescription: "Mock export contract agent service description",
-  charge: mockExportContractAgentServiceCharge
-};
-var mockExportContractAgent = {
-  service: mockExportContractAgentService
-};
-var mockExportContractAgentFullyPopulated = {
-  finalDestinationCountryCode: mock_countries_default[0].isoCode,
-  fullAddress: "Mock export contract agent address",
-  name: "Mock export contract agent name",
-  privateMarket: mockPrivateMarket,
-  service: mockExportContractAgentService,
-  agent: mockExportContractAgent
-};
-var mockExportContract = {
-  goodsOrServicesDescription: "Mock description",
-  finalDestinationKnown: false,
-  finalDestinationCountryCode: mock_countries_default[0].isoCode,
-  paymentTermsDescription: "Mock payment terms description"
-};
-var mockAccount = {
-  id: "clfv9uv6v00csoqz2pm7nftfv"
-};
-var mockCompany = {
-  id: "claydon40148m8boyar9waen",
-  companyName: "Test Name",
-  companyNumber: "0123456",
-  companyWebsite: "",
-  dateOfCreation: /* @__PURE__ */ new Date(),
-  differentTradingAddress: {},
-  financialYearEndDate: /* @__PURE__ */ new Date(),
-  hasDifferentTradingName: false,
-  hasDifferentTradingAddress: false,
-  industrySectorNames: ["64999", "64998"],
-  registeredOfficeAddress: {
-    id: "claydona0158m8noaglyy94t",
-    addressLine1: "Line 1",
-    addressLine2: "Line 2",
-    careOf: "",
-    locality: "Locality",
-    region: "Region",
-    postalCode: "Post code",
-    country: "",
-    premises: "",
-    __typename: "CompanyAddress"
-  },
-  sicCodes: [
-    {
-      id: "clcyyxldc0634m8novkr94spo",
-      sicCode: "64999"
-    }
-  ],
-  __typename: "Company"
-};
-var mockPolicyContact = {
-  firstName: "Bob",
-  lastName: "Smith",
-  email: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
-  position: "CEO",
-  isSameAsOwner: true
-};
-var mockBusiness = {
-  goodsOrServicesSupplied: "ABC",
-  totalYearsExporting: 20,
-  totalEmployeesUK: 400,
-  estimatedAnnualTurnover: 155220,
-  exportsTurnoverPercentage: 20,
-  turnoverCurrencyCode: EUR,
-  hasCreditControlProcess: true
-};
-var mockBroker2 = {
-  id: "claydona0158m8noaglyy9gg",
-  ...mock_broker_default
-};
-var mockApplicationBuyer = {
-  id: "claydona0158m8noaglyy9aa",
-  ...mock_buyer_default
-};
-var mockSectionReview = {
-  id: "clflcq9w4002moqzlnr5yhamr",
-  eligibility: true,
-  policy: true,
-  business: true,
-  buyer: true
-};
-var mockApplicationDeclaration = {
-  id: "clf3te7vx1432cfoqp9rbop73",
-  agreeToConfidentiality: true,
-  agreeToAntiBribery: true,
-  hasAntiBriberyCodeOfConduct: true,
-  willExportWithAntiBriberyCodeOfConduct: true,
-  agreeToConfirmationAndAcknowledgements: true,
-  agreeHowDataWillBeUsed: null
-};
-var mockLossPayeeFinancialDetailsUk = {
-  accountNumber: "AAaaa1A1AAaaAAa1AaAaAaaaAaAaaaAaAAAaAaAaAaA=",
-  sortCode: "BBbbb2B1BBbbBBb2BbBbBbbbBbBbbbBbBBBbBbBbBbB",
-  bankAddress: "Mock UK financial address"
-};
-var mockLossPayeeFinancialDetailsInternational = {
-  iban: "Ccccc3C3CCccCCc3CcCcCcccCcCcccCcCCCcCcCcCcC=",
-  bicSwiftCode: "DDddd4D4DDddDDd4DdDdDdddDdDdddDdDDdDdDdDdD",
-  bankAddress: "Mock international financial address"
-};
-var mockNominatedLossPayee = {
-  id: "123",
-  isAppointed: false,
-  financialUk: {
-    id: "2345",
-    ...mockLossPayeeFinancialDetailsUk
-  },
-  financialInternational: {
-    id: "2345",
-    ...mockLossPayeeFinancialDetailsInternational
-  }
-};
-var mockApplication = {
-  id: "clacdgc630000kdoqn7wcgrz1",
-  version: APPLICATION.LATEST_VERSION.VERSION_NUMBER,
-  referenceNumber: 10001,
-  createdAt: (/* @__PURE__ */ new Date()).toISOString(),
-  updatedAt: (/* @__PURE__ */ new Date()).toISOString(),
-  dealType: APPLICATION.DEAL_TYPE,
-  submissionCount: 1,
-  submissionDate: /* @__PURE__ */ new Date(),
-  submissionDeadline: new Date(date.setMonth(month + APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS)).toISOString(),
-  submissionType: "Manual Inclusion Application",
-  eligibility: {
-    id: "clav8by1g0000kgoq5a2afr1z",
-    ...mockApplicationEligibility
-  },
-  status: APPLICATION.STATUS.SUBMITTED,
-  owner: mockAccount,
-  policy: {
-    id: "clav8by1i0007kgoqies0dbfc",
-    ...mockSinglePolicy
-  },
-  exportContract: mockExportContract,
-  company: mockCompany,
-  companySicCodes: [mock_company_sic_code_default, mock_company_sic_code_default],
-  companyAddress: mockCompany.registeredOfficeAddress,
-  business: {
-    id: "claydona0158m8noaglyy9gg",
-    ...mockBusiness
-  },
-  broker: mockBroker2,
-  buyer: mockApplicationBuyer,
-  sectionReview: mockSectionReview,
-  declaration: mockApplicationDeclaration,
-  policyContact: mockPolicyContact,
-  nominatedLossPayee: mockNominatedLossPayee
-};
-var mockApplicationMultiplePolicy = {
-  ...mockApplication,
-  policy: mockMultiplePolicy
-};
-var mockApplicationCreationObject = {
-  status: APPLICATION.STATUS.IN_PROGRESS,
-  version: APPLICATION.LATEST_VERSION_NUMBER,
-  dealType: APPLICATION.DEAL_TYPE,
-  submissionCount: 0
-};
-
-// custom-resolvers/mutations/create-many-applications/index.ts
-var createManyApplications = async (root, variables, context) => {
-  console.info("Creating many applications");
+// helpers/create-a-buyer/index.ts
+var createABuyer = async (context, countryId) => {
+  console.info("Creating a buyer");
   try {
-    const emptyArray = new Array(variables.count).fill({});
-    const countries = await get_countries_default(context);
     const buyer = await context.db.Buyer.createOne({
       data: {
         country: {
           connect: {
-            id: countries[0].id
+            id: countryId
           }
         }
       }
     });
+    return buyer;
+  } catch (error) {
+    console.error("Error creating a buyer %O", error);
+    throw new Error(`Creating a buyer ${error}`);
+  }
+};
+var create_a_buyer_default = createABuyer;
+
+// helpers/create-many-applications/index.ts
+var createManyApplications = async (context, applicationData) => {
+  console.info("Creating a buyer");
+  try {
+    const applications = await context.db.Application.createMany({
+      data: applicationData
+    });
+    const referenceNumbersData = applications.map((application2) => ({
+      application: {
+        connect: {
+          id: application2.id
+        }
+      }
+    }));
+    const referenceNumbers = await context.db.ReferenceNumber.createMany({ data: referenceNumbersData });
+    return {
+      applications,
+      referenceNumbers
+    };
+  } catch (error) {
+    console.error("Error creating many applications - helper %O", error);
+    throw new Error(`Creating many applications - helper ${error}`);
+  }
+};
+var create_many_applications_default = createManyApplications;
+
+// helpers/update-applications-data/index.ts
+var updateApplicationsData = async (context, updateData) => {
+  console.info("Updating many applications");
+  try {
+    const updatedApplications = await context.db.Application.updateMany({
+      data: updateData
+    });
+    return updatedApplications;
+  } catch (error) {
+    console.error("Error updating many applications - helper %O", error);
+    throw new Error(`Updating many applications - helper ${error}`);
+  }
+};
+var update_applications_data_default = updateApplicationsData;
+
+// custom-resolvers/mutations/create-many-applications/index.ts
+var createManyApplications2 = async (root, variables, context) => {
+  console.info("Creating many applications");
+  try {
+    const emptyArray = new Array(variables.count).fill({});
+    const countries = await get_countries_default(context);
+    const buyer = await create_a_buyer_default(context, countries[0].id);
     const mockApplicationsData = emptyArray.map(() => ({
       owner: {
         connect: {
@@ -5472,26 +5224,14 @@ var createManyApplications = async (root, variables, context) => {
           id: buyer.id
         }
       },
-      ...mockApplicationCreationObject
+      ...initial_application_data_default
     }));
-    const applications = await context.db.Application.createMany({
-      data: mockApplicationsData
-    });
-    const referenceNumbersData = applications.map((application2) => ({
-      application: {
-        connect: {
-          id: application2.id
-        }
-      }
-    }));
-    const referenceNumbers = await context.db.ReferenceNumber.createMany({ data: referenceNumbersData });
+    const { applications, referenceNumbers } = await create_many_applications_default(context, mockApplicationsData);
     const updateApplicationReferenceNumbers = referenceNumbers.map((referenceNumber) => ({
       where: { id: referenceNumber.applicationId },
       data: { referenceNumber: referenceNumber.id }
     }));
-    await context.db.Application.updateMany({
-      data: updateApplicationReferenceNumbers
-    });
+    await update_applications_data_default(context, updateApplicationReferenceNumbers);
     const allApplications = await context.db.Application.findMany();
     if (applications.length) {
       return {
@@ -5507,7 +5247,7 @@ var createManyApplications = async (root, variables, context) => {
     throw new Error(`Creating many applications ${error}`);
   }
 };
-var create_many_applications_default = createManyApplications;
+var create_many_applications_default2 = createManyApplications2;
 
 // custom-resolvers/mutations/create-an-abandoned-application/index.ts
 var { STATUS: STATUS2 } = APPLICATION;
@@ -6376,7 +6116,7 @@ var applicationSubmittedEmails = {
 var send_application_submitted_emails_default = applicationSubmittedEmails;
 
 // generate-xlsx/index.ts
-var import_dotenv12 = __toESM(require("dotenv"));
+var import_dotenv9 = __toESM(require("dotenv"));
 var import_exceljs = __toESM(require("exceljs"));
 
 // constants/XLSX-CONFIG/SECTION_NAMES/index.ts
@@ -7466,7 +7206,7 @@ var xlsxRow = (fieldName, answer) => {
 var xlsx_row_default = xlsxRow;
 
 // generate-xlsx/map-application-to-XLSX/helpers/format-time-of-day/index.ts
-var formatTimeOfDay = (date2) => format_date_default(date2, DATE_FORMAT.HOURS_AND_MINUTES);
+var formatTimeOfDay = (date) => format_date_default(date, DATE_FORMAT.HOURS_AND_MINUTES);
 var format_time_of_day_default = formatTimeOfDay;
 
 // generate-xlsx/map-application-to-XLSX/map-introduction/index.ts
@@ -8570,7 +8310,7 @@ var styledColumns = (application2, worksheet, sheetName) => {
 var styled_columns_default = styledColumns;
 
 // generate-xlsx/index.ts
-import_dotenv12.default.config();
+import_dotenv9.default.config();
 var { EXCELJS_PROTECTION_PASSWORD } = process.env;
 var XLSX2 = (application2, countries) => {
   try {
@@ -8621,8 +8361,8 @@ var submitApplication = async (root, variables, context) => {
       where: { id: variables.applicationId }
     });
     if (application2) {
-      const { status, submissionDeadline, submissionCount } = application2;
-      const isInProgress = status === APPLICATION.STATUS.IN_PROGRESS;
+      const { status: status2, submissionDeadline, submissionCount } = application2;
+      const isInProgress = status2 === APPLICATION.STATUS.IN_PROGRESS;
       const now2 = /* @__PURE__ */ new Date();
       const validSubmissionDate = (0, import_date_fns6.isAfter)(new Date(submissionDeadline), now2);
       const isFirstSubmission = submissionCount === 0;
@@ -9016,8 +8756,8 @@ var get_account_password_reset_token_default = getAccountPasswordResetToken;
 
 // integrations/APIM/index.ts
 var import_axios = __toESM(require("axios"));
-var import_dotenv13 = __toESM(require("dotenv"));
-import_dotenv13.default.config();
+var import_dotenv10 = __toESM(require("dotenv"));
+import_dotenv10.default.config();
 var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
 var { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
 var APIM = {
@@ -9031,9 +8771,9 @@ var APIM = {
           "Content-Type": "application/json",
           [String(APIM_MDM_KEY)]: APIM_MDM_VALUE
         },
-        validateStatus(status) {
+        validateStatus(status2) {
           const acceptableStatus = [200];
-          return acceptableStatus.includes(status);
+          return acceptableStatus.includes(status2);
         }
       });
       if (response.data && response.status === 200) {
@@ -9060,9 +8800,9 @@ var APIM = {
           "Content-Type": "application/json",
           [String(APIM_MDM_KEY)]: APIM_MDM_VALUE
         },
-        validateStatus(status) {
+        validateStatus(status2) {
           const acceptableStatus = [200];
-          return acceptableStatus.includes(status);
+          return acceptableStatus.includes(status2);
         }
       });
       if (response.data && response.status === 200) {
@@ -9300,8 +9040,8 @@ var sanitise_companies_house_number_default = sanitiseCompaniesHouseNumber;
 
 // integrations/companies-house/index.ts
 var import_axios2 = __toESM(require("axios"));
-var import_dotenv14 = __toESM(require("dotenv"));
-import_dotenv14.default.config();
+var import_dotenv11 = __toESM(require("dotenv"));
+import_dotenv11.default.config();
 var username = String(process.env.COMPANIES_HOUSE_API_KEY);
 var companiesHouseURL = String(process.env.COMPANIES_HOUSE_API_URL);
 var companiesHouse = {
@@ -9311,9 +9051,9 @@ var companiesHouse = {
         method: "get",
         url: `${companiesHouseURL}/company/${companyNumber}`,
         auth: { username, password: "" },
-        validateStatus(status) {
+        validateStatus(status2) {
           const acceptableStatus = [200, 404];
-          return acceptableStatus.includes(status);
+          return acceptableStatus.includes(status2);
         }
       });
       if (response.status === 404) {
@@ -9341,8 +9081,8 @@ var companies_house_default = companiesHouse;
 
 // integrations/industry-sector/index.ts
 var import_axios3 = __toESM(require("axios"));
-var import_dotenv15 = __toESM(require("dotenv"));
-import_dotenv15.default.config();
+var import_dotenv12 = __toESM(require("dotenv"));
+import_dotenv12.default.config();
 var { APIM_MDM_URL: APIM_MDM_URL2, APIM_MDM_KEY: APIM_MDM_KEY2, APIM_MDM_VALUE: APIM_MDM_VALUE2 } = process.env;
 var { APIM_MDM: APIM_MDM2 } = EXTERNAL_API_ENDPOINTS;
 var headers = {
@@ -9357,9 +9097,9 @@ var industrySectorNames = {
         method: "get",
         url: `${APIM_MDM_URL2}${APIM_MDM2.INDUSTRY_SECTORS}`,
         headers,
-        validateStatus(status) {
+        validateStatus(status2) {
           const acceptableStatus = [200, 404];
-          return acceptableStatus.includes(status);
+          return acceptableStatus.includes(status2);
         }
       });
       if (!response.data || response.status !== 200) {
@@ -9383,9 +9123,9 @@ var industrySectorNames = {
 var industry_sector_default = industrySectorNames;
 
 // helpers/create-full-timestamp-from-day-month/index.ts
-var createFullTimestampFromDayAndMonth = (day, month2) => {
-  if (day && month2) {
-    return /* @__PURE__ */ new Date(`${(/* @__PURE__ */ new Date()).getFullYear()}-${month2}-${day}`);
+var createFullTimestampFromDayAndMonth = (day, month) => {
+  if (day && month) {
+    return /* @__PURE__ */ new Date(`${(/* @__PURE__ */ new Date()).getFullYear()}-${month}-${day}`);
   }
   return null;
 };
@@ -9501,8 +9241,8 @@ var get_application_by_reference_number_default2 = getApplicationByReferenceNumb
 
 // integrations/ordnance-survey/index.ts
 var import_axios4 = __toESM(require("axios"));
-var import_dotenv16 = __toESM(require("dotenv"));
-import_dotenv16.default.config();
+var import_dotenv13 = __toESM(require("dotenv"));
+import_dotenv13.default.config();
 var { ORDNANCE_SURVEY_API_KEY, ORDNANCE_SURVEY_API_URL } = process.env;
 var ordnanceSurvey = {
   get: async (postcode) => {
@@ -9510,9 +9250,9 @@ var ordnanceSurvey = {
       const response = await (0, import_axios4.default)({
         method: "get",
         url: `${ORDNANCE_SURVEY_API_URL}${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ORDNANCE_SURVEY_API_KEY}`,
-        validateStatus(status) {
+        validateStatus(status2) {
           const acceptableStatus = [200, 404];
-          return acceptableStatus.includes(status);
+          return acceptableStatus.includes(status2);
         }
       });
       if (!response?.data?.results || response.status !== 200) {
@@ -9650,7 +9390,7 @@ var customResolvers = {
     sendEmailPasswordResetLink: send_email_password_reset_link_default,
     sendEmailReactivateAccountLink: send_email_reactivate_account_link_default2,
     createAnApplication: create_an_application_default2,
-    createManyApplications: create_many_applications_default,
+    createManyApplications: create_many_applications_default2,
     createAnAbandonedApplication: create_an_abandoned_application_default,
     deleteApplicationByReferenceNumber: delete_application_by_reference_number_default,
     submitApplication: submit_application_default,

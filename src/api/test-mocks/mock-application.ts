@@ -254,11 +254,4 @@ export const mockApplicationMultiplePolicy = {
   policy: mockMultiplePolicy,
 } as Application;
 
-export const mockApplicationCreationObject = {
-  status: APPLICATION.STATUS.IN_PROGRESS,
-  version: APPLICATION.LATEST_VERSION_NUMBER,
-  dealType: APPLICATION.DEAL_TYPE,
-  submissionCount: 0,
-};
-
 export default mockApplication;
