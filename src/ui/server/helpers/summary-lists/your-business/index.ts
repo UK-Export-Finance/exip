@@ -8,23 +8,23 @@ import { ApplicationCompany, ApplicationBusiness, SummaryListGroupData } from '.
 /**
  * generateFields
  * Create all fields for the insurance - Your business govukSummaryList
- * @param {ApplicationCompany} answersCompany: Application company object
- * @param {ApplicationBusiness} answersBusiness: Application business object
+ * @param {ApplicationCompany} company: Application company object
+ * @param {ApplicationBusiness} business: Application business object
  * @param {Number} referenceNumber: Application reference number
  * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
  * @returns {Object} All your business values in an object structure for GOVUK summary list structure
  */
 const generateFields = (
-  answersCompany: ApplicationCompany,
-  answersBusiness: ApplicationBusiness,
+  company: ApplicationCompany,
+  business: ApplicationBusiness,
   referenceNumber: number,
   checkAndChange: boolean,
 ): Array<SummaryListGroupData> => {
   const fields = [
-    generateYourCompanyFields(answersCompany, referenceNumber, checkAndChange),
-    generateNatureOfYourBusinessFields(answersBusiness, referenceNumber, checkAndChange),
-    generateTurnoverFields(answersBusiness, referenceNumber, checkAndChange),
-    generateCreditControlFields(answersBusiness, referenceNumber, checkAndChange),
+    generateYourCompanyFields(company, referenceNumber, checkAndChange),
+    generateNatureOfYourBusinessFields(business, referenceNumber, checkAndChange),
+    generateTurnoverFields(business, referenceNumber, checkAndChange),
+    generateCreditControlFields(business, referenceNumber, checkAndChange),
   ] as Array<SummaryListGroupData>;
 
   return fields;
@@ -33,19 +33,14 @@ const generateFields = (
 /**
  * yourBusinessSummaryLists
  * Create multiple groups with govukSummaryList data structure
- * @param {ApplicationCompany} answersCompany: Application company object
- * @param {ApplicationBusiness} answersBusiness: Application business object
+ * @param {ApplicationCompany} company: Application company object
+ * @param {ApplicationBusiness} business: Application business object
  * @param {Number} referenceNumber: Application reference number
  * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section. Defaults to false
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
-const yourBusinessSummaryLists = (
-  answersCompany: ApplicationCompany,
-  answersBusiness: ApplicationBusiness,
-  referenceNumber: number,
-  checkAndChange = false,
-) => {
-  const fields = generateFields(answersCompany, answersBusiness, referenceNumber, checkAndChange);
+const yourBusinessSummaryLists = (company: ApplicationCompany, business: ApplicationBusiness, referenceNumber: number, checkAndChange = false) => {
+  const fields = generateFields(company, business, referenceNumber, checkAndChange);
 
   const summaryList = generateGroupsOfSummaryLists(fields);
 

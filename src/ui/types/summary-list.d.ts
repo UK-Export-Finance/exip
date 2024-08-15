@@ -82,23 +82,24 @@ interface SummaryListGroup {
   rows: Array<SummaryListItem>;
 }
 
-interface SummaryListParamsExportContract {
-  answers: ApplicationExportContract;
-  totalContractValueOverThreshold: boolean;
+interface SummaryListParamsCore {
   referenceNumber: number;
-  countries: Array<Country>;
   checkAndChange?: boolean;
 }
 
-interface SummaryListParamsPolicy {
+interface SummaryListParamsExportContract extends SummaryListParamsCore {
+  exportContract: ApplicationExportContract;
+  totalContractValueOverThreshold: boolean;
+  countries: Array<Country>;
+}
+
+interface SummaryListParamsPolicy extends SummaryListParamsCore {
   policy: ApplicationPolicy;
   policyContact: ApplicationPolicyContact;
   broker: ApplicationBroker;
   nominatedLossPayee: ApplicationNominatedLossPayee;
-  referenceNumber: number;
   currencies: Array<Currency>;
   countries: Array<Country>;
-  checkAndChange?: boolean;
 }
 
 export {

@@ -48,7 +48,7 @@ describe('controllers/insurance/export-contract/check-your-answers', () => {
       await get(req, res);
 
       const summaryLists = exportContractSummaryLists({
-        answers: exportContract,
+        exportContract,
         totalContractValueOverThreshold,
         referenceNumber,
         countries: mockCountries,

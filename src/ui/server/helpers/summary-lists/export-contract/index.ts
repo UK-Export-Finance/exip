@@ -7,21 +7,27 @@ import { SummaryListParamsExportContract, SummaryListGroupData } from '../../../
 /**
  * generateFields
  * Create all fields for the Insurance - "Export contract - about the export" govukSummaryList
- * @param {ApplicationExportContract} answers: All submitted export contract data
- * @param {Number} referenceNumber: Application reference number
+ * @param {ApplicationExportContract} exportContract: All submitted export contract data
  * @param {Boolean} totalContractValueOverThreshold: "Total contract value is over the threshold" flag
+ * @param {Number} referenceNumber: Application reference number
  * @param {Array<Country>} countries: Countries
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} Fields and values in an object structure for GOVUK summary list structure
  */
-export const generateFields = ({ answers, totalContractValueOverThreshold, referenceNumber, countries, checkAndChange }: SummaryListParamsExportContract) => {
-  const fields = [generateAboutTheExportFields(answers, referenceNumber, countries, checkAndChange)] as Array<SummaryListGroupData>;
+export const generateFields = ({
+  exportContract,
+  totalContractValueOverThreshold,
+  referenceNumber,
+  countries,
+  checkAndChange,
+}: SummaryListParamsExportContract) => {
+  const fields = [generateAboutTheExportFields(exportContract, referenceNumber, countries, checkAndChange)] as Array<SummaryListGroupData>;
 
   if (totalContractValueOverThreshold) {
-    fields.push(generatePrivateMarketFields(answers.privateMarket, referenceNumber, checkAndChange));
+    fields.push(generatePrivateMarketFields(exportContract.privateMarket, referenceNumber, checkAndChange));
   }
 
-  fields.push(generateAgentFields(answers.agent, referenceNumber, countries, checkAndChange));
+  fields.push(generateAgentFields(exportContract.agent, referenceNumber, countries, checkAndChange));
 
   return fields;
 };
@@ -29,7 +35,7 @@ export const generateFields = ({ answers, totalContractValueOverThreshold, refer
 /**
  * exportContractSummaryLists
  * Create multiple groups with govukSummaryList data structure
- * @param {ApplicationExportContract} answers: export contract answers/submitted data in a simple object.text structure
+ * @param {ApplicationExportContract} exportContract: Export contract answers/submitted data in a simple object.text structure
  * @param {Boolean} totalContractValueOverThreshold: "Total contract value is over the threshold" flag
  * @param {Number} referenceNumber: Application reference number
  * @param {Array<Country>} countries: Countries
@@ -37,13 +43,13 @@ export const generateFields = ({ answers, totalContractValueOverThreshold, refer
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
 export const exportContractSummaryLists = ({
-  answers,
+  exportContract,
   totalContractValueOverThreshold,
   referenceNumber,
   countries,
   checkAndChange,
 }: SummaryListParamsExportContract) => {
-  const fields = generateFields({ answers, totalContractValueOverThreshold, referenceNumber, countries, checkAndChange });
+  const fields = generateFields({ exportContract, totalContractValueOverThreshold, referenceNumber, countries, checkAndChange });
 
   const summaryList = generateGroupsOfSummaryLists(fields);
 

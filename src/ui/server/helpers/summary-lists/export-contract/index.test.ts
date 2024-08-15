@@ -16,7 +16,7 @@ describe('server/helpers/summary-lists/export-contract', () => {
 
       it('should return some fields and values from the submitted data/answers', () => {
         const result = generateFields({
-          answers: mockAnswers,
+          exportContract: mockAnswers,
           totalContractValueOverThreshold,
           referenceNumber,
           countries: mockCountries,
@@ -37,7 +37,7 @@ describe('server/helpers/summary-lists/export-contract', () => {
 
       it('should return all fields and values from the submitted data/answers', () => {
         const result = generateFields({
-          answers: mockAnswers,
+          exportContract: mockAnswers,
           totalContractValueOverThreshold,
           referenceNumber,
           countries: mockCountries,
@@ -60,7 +60,7 @@ describe('server/helpers/summary-lists/export-contract', () => {
       const totalContractValueOverThreshold = false;
 
       const result = exportContractSummaryLists({
-        answers: mockAnswers,
+        exportContract: mockAnswers,
         totalContractValueOverThreshold,
         referenceNumber,
         countries: mockCountries,
@@ -68,7 +68,7 @@ describe('server/helpers/summary-lists/export-contract', () => {
       });
 
       const fields = generateFields({
-        answers: mockAnswers,
+        exportContract: mockAnswers,
         totalContractValueOverThreshold,
         referenceNumber,
         countries: mockCountries,

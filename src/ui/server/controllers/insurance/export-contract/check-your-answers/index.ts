@@ -37,7 +37,7 @@ export const get = async (req: Request, res: Response) => {
     }
 
     const summaryLists = exportContractSummaryLists({
-      answers: exportContract,
+      exportContract,
       totalContractValueOverThreshold,
       referenceNumber,
       countries,
