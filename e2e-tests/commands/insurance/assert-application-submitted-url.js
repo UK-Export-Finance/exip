@@ -6,7 +6,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 /**
  * assertApplicationSubmittedUrl
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  */
 const assertApplicationSubmittedUrl = (referenceNumber) => {
   const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;

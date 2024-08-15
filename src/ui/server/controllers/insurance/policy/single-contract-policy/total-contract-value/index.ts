@@ -36,7 +36,7 @@ export const FIELD_ID = TOTAL_CONTRACT_VALUE;
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @param {Array} currencies: Currencies
  * @param {String} policyCurrencyCode: Policy currency code
  * @returns {Object} Page variables
