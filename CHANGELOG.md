@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.35.5](https://github.com/UK-Export-Finance/exip/compare/v2.35.4...v2.35.5) (2024-08-12)
+
+### Bug Fixes
+
+- **EMS-3633:** data migration - xlsx - total contract value ([#2934](https://github.com/UK-Export-Finance/exip/issues/2934)) ([f0bfdba](https://github.com/UK-Export-Finance/exip/commit/f0bfdba5d1b1300018ab67b0224c2dfeb6993e4c))
+
+## [2.35.4](https://github.com/UK-Export-Finance/exip/compare/v2.35.3...v2.35.4) (2024-08-09)
+
+### Bug Fixes
+
+- **EMS-3633:** data migration - xlsx - eligibility questions ([#2932](https://github.com/UK-Export-Finance/exip/issues/2932)) ([f80ac41](https://github.com/UK-Export-Finance/exip/commit/f80ac410e050353a055ed4d1ca462c7bc96c617c))
+
+## [2.35.3](https://github.com/UK-Export-Finance/exip/compare/v2.35.2...v2.35.3) (2024-08-09)
+
+### Bug Fixes
+
+- **EMS-3633:** data migration - financial vector columns ([#2928](https://github.com/UK-Export-Finance/exip/issues/2928)) ([a3b1470](https://github.com/UK-Export-Finance/exip/commit/a3b1470c466314df9dbf549a91da8a152505938d))
+
 ## [2.35.2](https://github.com/UK-Export-Finance/exip/compare/v2.35.1...v2.35.2) (2024-08-08)
 
 ### Bug Fixes
@@ -935,7 +953,10 @@
 - **deps:** rollbacked dependencies ([f6d98d4](https://github.com/UK-Export-Finance/exip/commit/f6d98d4ee885d1b525c4828396f0b3ad806710ec))
 - **deps:** updated deps ([195cece](https://github.com/UK-Export-Finance/exip/commit/195cece9a141c7caf3e111744e17a032e456d58d))
 - **e2e:** lint fixes ([5202001](https://github.com/UK-Export-Finance/exip/commit/520200197f0cf2ea2606b6d15dd3623003297fcf))
-- **EMS-1080:** Your business - Company Details - Change your answers - SIC codes showing as empty ([#523](https://github.com/UK-Export-Finance/exip/issues/523)) ([48b4927](https://github.com/UK-Export-Finance/exip/commit/48b49270e9b1205786acd02d1a13dc443d6a3c98))
+  <<<<<<< HEAD
+- # **EMS-1080:** Your business - Company Details - Change your answers - SIC codes showing as empty ([#523](https://github.com/UK-Export-Finance/exip/issues/523)) ([48b4927](https://github.com/UK-Export-Finance/exip/commit/48b49270e9b1205786acd02d1a13dc443d6a3c98))
+- **EMS-1080:** Your business - Company Details - Change your answers - SIC codes showing as blank ([#523](https://github.com/UK-Export-Finance/exip/issues/523)) ([48b4927](https://github.com/UK-Export-Finance/exip/commit/48b49270e9b1205786acd02d1a13dc443d6a3c98))
+  > > > > > > > main
 - **EMS-1345:** add missing form IDs ([#564](https://github.com/UK-Export-Finance/exip/issues/564)) ([d4c6526](https://github.com/UK-Export-Finance/exip/commit/d4c65264abba2f9e0b2b1931e499e467e71df876))
 - **EMS-1345:** add requestedApplicationCreation to session when creating a new application. Do not request application creation if the flag is true ([#548](https://github.com/UK-Export-Finance/exip/issues/548)) ([4dc7710](https://github.com/UK-Export-Finance/exip/commit/4dc771033dd170051f27e72ed220e1f1ba86fd84))
 - **EMS-1345:** Disable submit buttons when a form is submitting ([#557](https://github.com/UK-Export-Finance/exip/issues/557)) ([54f38a3](https://github.com/UK-Export-Finance/exip/commit/54f38a3b25828a1ec4f1a672bb9b83fb7c4f521f))

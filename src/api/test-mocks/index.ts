@@ -88,6 +88,13 @@ export const mockApplicationSinglePolicyTotalContractValueOverThreshold = {
   },
 };
 
+export const mockApplicationEligibilityTotalContractValueBelowThreshold = {
+  ...mockApplicationSinglePolicyTotalContractValueOverThreshold.eligibility,
+  [TOTAL_CONTRACT_VALUE_FIELD_ID]: {
+    value: TOTAL_CONTRACT_VALUE.LESS_THAN_250K.VALUE,
+  },
+};
+
 export const mockApplicationMultiplePolicyTotalContractValueOverThreshold = {
   ...mockApplicationMinimalBrokerBuyerAndCompany,
   totalContractValueOverThreshold: true,

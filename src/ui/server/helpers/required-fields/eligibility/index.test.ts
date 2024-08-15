@@ -34,7 +34,7 @@ describe('server/helpers/required-fields/eligibility', () => {
     it('should return an object of irrelevant fields', () => {
       const expected = {
         V1: GENERIC_IRRELEVANT_FIELD_IDS,
-        V2: [...GENERIC_IRRELEVANT_FIELD_IDS, IS_PARTY_TO_CONSORTIUM, IS_MEMBER_OF_A_GROUP],
+        V2: [...GENERIC_IRRELEVANT_FIELD_IDS, IS_PARTY_TO_CONSORTIUM, IS_MEMBER_OF_A_GROUP, HAS_END_BUYER],
       };
 
       expect(IRRELEVANT_FIELD_IDS).toEqual(expected);

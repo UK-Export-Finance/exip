@@ -33,7 +33,7 @@ const canSubmitApplication = (application: Application): boolean => {
   }
 
   if (status !== IN_PROGRESS) {
-    console.info('Unable to submit application - application does not have a %s status (canSubmitApplication helper)', IN_PROGRESS);
+    console.info(`Unable to submit application - application does not have an ${IN_PROGRESS} status (canSubmitApplication helper)`);
 
     return false;
   }
