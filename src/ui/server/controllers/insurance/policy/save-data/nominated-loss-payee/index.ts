@@ -18,8 +18,8 @@ export const NULL_OR_EMPTY_STRING_FIELDS = [NAME, IS_LOCATED_INTERNATIONALLY, IS
  * Strip invalid fields from submitted form data and update the application.
  * This is used for any save functionality in the Policy - Nominated loss payee of the application.
  * @param {Application} Application
- * @param {Express.Request.body} Form data
- * @param {Object} Field error list
+ * @param {Express.Request.body} formBody
+ * @param {Object} errorList: Field error list
  * @returns {Promise<Object>} Saved data
  */
 const nominatedLossPayee = async (application: Application, formBody: RequestBody, errorList?: object) => {

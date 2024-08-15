@@ -11,7 +11,7 @@ const { FIELDS } = XLSX;
 /**
  * mapPreviousCoverWithBuyer
  * Generate an XLSX row if an exporter has "previous cover" with the buyer.
- * @param {Application} application: Application
+ * @param {Application} application
  * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapPreviousCoverWithBuyer = (application: Application) => {

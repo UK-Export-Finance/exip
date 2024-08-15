@@ -99,7 +99,7 @@ const emailField = (answers: ApplicationPolicyContact, referenceNumber: number, 
  * Create all policy fields and values for the Insurance - policy contact govukSummaryList
  * @param {Object} answers: All submitted policyContact data
  * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} All policyContact fields and values in an object structure for GOVUK summary list structure
  */
 const generatePolicyContactFields = (answers: ApplicationPolicyContact, referenceNumber: number, checkAndChange?: boolean) => {

@@ -11,7 +11,7 @@ import { SummaryListGroupData, SummaryListParamsBusiness } from '../../../../typ
  * @param {ApplicationBusiness} business: Application business object
  * @param {ApplicationCompany} company: Application company object
  * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} All your business values in an object structure for GOVUK summary list structure
  */
 const generateFields = ({ business, company, referenceNumber, checkAndChange }: SummaryListParamsBusiness): Array<SummaryListGroupData> => {

@@ -13,7 +13,7 @@ const { IN_PROGRESS } = APPLICATION.STATUS;
  * - Has an IN_PROGRESS status.
  * - Has a valid submission deadline.
  * - Has a submissionCount of 0.
- * @param {Application}
+ * @param {Application} application
  * @returns {Boolean}
  */
 const canSubmitApplication = (application: Application): boolean => {

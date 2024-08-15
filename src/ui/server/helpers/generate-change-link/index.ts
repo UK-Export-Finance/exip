@@ -10,7 +10,7 @@ const { INSURANCE_ROOT } = ROUTES.INSURANCE;
  * @param {String} routeCheckAndChange route for if coming from check your answers section
  * @param {String} anchorTag
  * @param {String} referenceNumber
- * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @param {Boolean} isInsuranceEligibility if change link is for insurance eligibility section - defaults to false
  * @returns
  */

@@ -7,8 +7,8 @@ import { Application, RequestBody } from '../../../../../types';
  * declarations
  * Update an application's declaration
  * This is used for any save functionality in the Declarations section of an application
- * @param {Application}
- * @param {Express.Request.body} Form data
+ * @param {Application} application
+ * @param {Express.Request.body} formBody
  * @returns {Promise<Object>} Saved data
  */
 const declaration = async (application: Application, formBody: RequestBody) => {

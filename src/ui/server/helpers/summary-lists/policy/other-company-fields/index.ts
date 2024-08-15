@@ -25,12 +25,12 @@ const { REQUESTED_JOINTLY_INSURED_PARTY } = POLICY_FIELDS;
 
 /**
  * optionalOtherCompanyFields
- * if yes selected for other company requested, populates and returns optional fields in an array
+ * if yes is selected for other company requested, populates and returns optional fields in an array
  * @param {ApplicationJointlyInsuredParty} answers: Jointly insured party answers
  * @param {Number} referenceNumber: Application reference number
  * @param {Array<Country>} countries: Countries
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @returns {Array<SummaryListItemData>} optional other company fields if yes selected
+ * @returns {Array<SummaryListItemData>} Optional other company fields if yes is selected
  */
 export const optionalOtherCompanyFields = (
   answers: ApplicationJointlyInsuredParty,

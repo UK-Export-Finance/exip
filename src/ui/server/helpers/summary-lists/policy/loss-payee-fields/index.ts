@@ -46,7 +46,7 @@ const {
  * @param {ApplicationLossPayeeFinancialDetailsUk} answers: Loss payee - financial details - UK answers
  * @param {Number} referenceNumber: Application reference number
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @returns {Array<SummaryListItemData>} optional broker fields if yes selected
+ * @returns {Array<SummaryListItemData>} Optional broker fields if yes is selected
  */
 export const lossPayeeLocatedInUkFields = (answers: ApplicationLossPayeeFinancialDetailsUk, referenceNumber: number, checkAndChange?: boolean) => {
   const fields = [
@@ -103,7 +103,7 @@ export const lossPayeeLocatedInUkFields = (answers: ApplicationLossPayeeFinancia
  * @param {ApplicationLossPayeeFinancialDetailsInternational} answers: Loss payee - financial details - international answers
  * @param {Number} referenceNumber: Application reference number
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @returns {Array<SummaryListItemData>} optional broker fields if yes selected
+ * @returns {Array<SummaryListItemData>} Optional broker fields if yes is selected
  */
 export const lossPayeeLocatedInternationallyFields = (
   answers: ApplicationLossPayeeFinancialDetailsInternational,
@@ -161,7 +161,7 @@ export const lossPayeeLocatedInternationallyFields = (
  * @param {ApplicationNominatedLossPayee} answers: Loss payee answers
  * @param {Number} referenceNumber: Application reference number
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @returns {Array<SummaryListItemData>} optional broker fields if yes selected
+ * @returns {Array<SummaryListItemData>} Optional broker fields if yes is selected
  */
 export const lossPayeeFields = (answers: ApplicationNominatedLossPayee, referenceNumber: number, checkAndChange?: boolean) => {
   let fields = [] as Array<SummaryListItemData>;

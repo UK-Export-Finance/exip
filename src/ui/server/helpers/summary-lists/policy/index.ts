@@ -14,7 +14,7 @@ import { SummaryListParamsPolicy, SummaryListGroupData } from '../../../../types
  * @param {Object} broker: Submitted "broker" data
  * @param {Object} nominatedLossPayee: Submitted "Nominated loss payee" data
  * @param {Integer} referenceNumber: Application reference number
- * @param {Array} currencies: Currencies
+ * @param {Array<Currency>} currencies: Currencies
  * @param {Array<Country>} countries: Countries
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} All policy values in an object structure for GOVUK summary list structure

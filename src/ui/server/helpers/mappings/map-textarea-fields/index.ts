@@ -28,7 +28,7 @@ const {
 /**
  * mapTextareaFields
  * Replace line breaks and character codes in textarea fields
- * @param {Application}
+ * @param {Application} application
  * @returns {Object} Application with mapped textarea field characters
  */
 const mapTextareaFields = (application: Application): Application => {

@@ -5,7 +5,7 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../types
  * callMapAndSave
  * Call the "map and save" function with or without validation errors
  * @param {RequestBody} Form body
- * @param {Application}
+ * @param {Application} application
  * @param {Object} Form Validation errors
  * @returns {Boolean}
  */

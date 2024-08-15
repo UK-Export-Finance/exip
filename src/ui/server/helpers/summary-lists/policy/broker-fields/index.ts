@@ -31,7 +31,7 @@ const {
  * @param {ApplicationBroker} answers: Broker answers
  * @param {Number} referenceNumber: Application reference number
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
- * @returns {Array<SummaryListItemData>} optional broker fields if yes selected
+ * @returns {Array<SummaryListItemData>} Optional broker fields if yes is selected
  */
 export const optionalBrokerFields = (answers: ApplicationBroker, referenceNumber: number, checkAndChange?: boolean) => {
   let fields = [] as Array<SummaryListItemData>;
