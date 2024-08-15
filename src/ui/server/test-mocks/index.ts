@@ -121,7 +121,7 @@ const mockErrorMessage = 'Mock error';
 
 const mockSpyPromise = () => jest.fn().mockResolvedValue({});
 
-const mockSpyPromiseRejection = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
+const mockSpyPromiseRejection = jest.fn().mockRejectedValue(new Error(mockErrorMessage));
 
 export {
   EUR,

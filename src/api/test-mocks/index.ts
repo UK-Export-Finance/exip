@@ -205,4 +205,4 @@ export const mockInvalidId = 'invalid-id';
 
 export const mockSpyPromise = () => jest.fn().mockResolvedValue({});
 
-export const mockSpyPromiseRejection = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
+export const mockSpyPromiseRejection = jest.fn().mockRejectedValue(new Error(mockErrorMessage));
