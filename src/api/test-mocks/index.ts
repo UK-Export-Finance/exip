@@ -74,6 +74,7 @@ export const mockApplicationMinimalBrokerBuyerAndCompany = {
 };
 
 export const mockApplicationSinglePolicyTotalContractValueOverThreshold = {
+  ...mockApplication,
   ...mockApplicationMinimalBrokerBuyerAndCompany,
   totalContractValueOverThreshold: true,
   policy: {
@@ -89,6 +90,7 @@ export const mockApplicationSinglePolicyTotalContractValueOverThreshold = {
 };
 
 export const mockApplicationEligibilityTotalContractValueBelowThreshold = {
+  ...mockApplication,
   ...mockApplicationSinglePolicyTotalContractValueOverThreshold.eligibility,
   [TOTAL_CONTRACT_VALUE_FIELD_ID]: {
     value: TOTAL_CONTRACT_VALUE.LESS_THAN_250K.VALUE,

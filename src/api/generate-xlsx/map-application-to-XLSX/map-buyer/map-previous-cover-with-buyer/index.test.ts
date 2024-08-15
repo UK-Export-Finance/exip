@@ -14,7 +14,6 @@ const {
 const { FIELDS } = XLSX;
 
 const {
-  eligibility,
   buyer: { relationship },
 } = mockApplicationSinglePolicyTotalContractValueOverThreshold;
 
@@ -32,7 +31,11 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-buyer/map-previous-cover
   describe(`when the total contract value is ${TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE}`, () => {
     describe(`when ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} is true`, () => {
       it(`should return an array of mapped fields with ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER}`, () => {
-        const result = mapPreviousCoverWithBuyer(eligibility, mockRelationshipTrue, false);
+        const mockApplication = mockApplicationSinglePolicyTotalContractValueOverThreshold;
+
+        mockApplication.buyer.relationship = mockRelationshipTrue;
+
+        const result = mapPreviousCoverWithBuyer(mockApplication);
 
         const expected = [
           xlsxRow(
@@ -50,7 +53,11 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-buyer/map-previous-cover
 
     describe(`when ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} is false`, () => {
       it('should return an array with one field', () => {
-        const result = mapPreviousCoverWithBuyer(eligibility, mockRelationshipFalse, false);
+        const mockApplication = mockApplicationSinglePolicyTotalContractValueOverThreshold;
+
+        mockApplication.buyer.relationship = mockRelationshipFalse;
+
+        const result = mapPreviousCoverWithBuyer(mockApplication);
 
         const expected = [
           xlsxRow(
@@ -69,7 +76,12 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-buyer/map-previous-cover
   describe(`when ${MIGRATED_FROM_V1_TO_V2} is true`, () => {
     describe(`when ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} is true`, () => {
       it(`should return an array of mapped fields with ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER}`, () => {
-        const result = mapPreviousCoverWithBuyer(mockApplicationEligibilityTotalContractValueBelowThreshold, mockRelationshipTrue, true);
+        const mockApplication = mockApplicationEligibilityTotalContractValueBelowThreshold;
+
+        mockApplication[MIGRATED_FROM_V1_TO_V2] = true;
+        mockApplication.buyer.relationship = mockRelationshipTrue;
+
+        const result = mapPreviousCoverWithBuyer(mockApplication);
 
         const expected = [
           xlsxRow(
@@ -86,7 +98,11 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-buyer/map-previous-cover
 
       describe(`when ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} is false`, () => {
         it('should return an array with one field', () => {
-          const result = mapPreviousCoverWithBuyer(mockApplicationEligibilityTotalContractValueBelowThreshold, mockRelationshipFalse, true);
+          const mockApplication = mockApplicationEligibilityTotalContractValueBelowThreshold;
+
+          mockApplication.buyer.relationship = mockRelationshipFalse;
+
+          const result = mapPreviousCoverWithBuyer(mockApplication);
 
           const expected = [
             xlsxRow(
@@ -105,7 +121,11 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-buyer/map-previous-cover
 
   describe(`when the total contract value is NOT ${TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE} and ${MIGRATED_FROM_V1_TO_V2} is false`, () => {
     it('should return an empty array', () => {
-      const result = mapPreviousCoverWithBuyer(mockApplicationEligibilityTotalContractValueBelowThreshold, relationship, false);
+      const mockApplication = mockApplicationEligibilityTotalContractValueBelowThreshold;
+      mockApplication[MIGRATED_FROM_V1_TO_V2] = false;
+
+      // const result = mapPreviousCoverWithBuyer(mockApplicationEligibilityTotalContractValueBelowThreshold, relationship, false);
+      const result = mapPreviousCoverWithBuyer(mockApplication);
 
       expect(result).toEqual([]);
     });
