@@ -1,7 +1,7 @@
 import mapAndSave from '.';
 import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import save from '../../save-data/policy-contact';
-import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
+import { mockApplication, mockSpyPromise, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const {
   NAME_ON_POLICY: { NAME, SAME_NAME },
@@ -32,7 +32,7 @@ describe('controllers/insurance/policy/map-and-save/policy-contact', () => {
 
   describe('when save application policy call fails', () => {
     beforeEach(() => {
-      save.policyContact = jest.fn(() => Promise.reject(new Error('mock')));
+      save.policyContact = mockSpyPromiseRejection;
     });
 
     it('should return false', async () => {

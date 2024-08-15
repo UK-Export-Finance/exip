@@ -22,6 +22,7 @@ import {
   mockApplicationTotalContractValueThresholdFalse,
   mockCurrencies,
   mockCurrenciesResponse,
+  mockSpyPromiseRejection,
   referenceNumber,
 } from '../../../../test-mocks';
 
@@ -359,7 +360,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
         beforeEach(() => {
           req.body = validBody;
           res.locals = mockRes().locals;
-          mapAndSave.buyerTradingHistory = jest.fn(() => Promise.reject(new Error('mock')));
+          mapAndSave.buyerTradingHistory = mockSpyPromiseRejection;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

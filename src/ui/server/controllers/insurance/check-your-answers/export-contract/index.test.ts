@@ -12,7 +12,7 @@ import sectionStatus from '../../../../helpers/section-status';
 import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, referenceNumber, mockApplication, mockCountries, mockSpyPromise } from '../../../../test-mocks';
+import { mockReq, mockRes, referenceNumber, mockApplication, mockCountries, mockSpyPromise, mockSpyPromiseRejection } from '../../../../test-mocks';
 
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
@@ -136,7 +136,7 @@ describe('controllers/insurance/check-your-answers/export-contract', () => {
 
     describe('when the get countries API call fails', () => {
       beforeEach(() => {
-        getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        getCountriesSpy = mockSpyPromiseRejection;
         api.keystone.countries.getAll = getCountriesSpy;
       });
 
@@ -217,7 +217,7 @@ describe('controllers/insurance/check-your-answers/export-contract', () => {
 
       describe('when the save data API call fails', () => {
         beforeEach(() => {
-          mockSaveSectionReview = jest.fn(() => Promise.reject(new Error('mock')));
+          mockSaveSectionReview = mockSpyPromiseRejection;
           save.sectionReview = mockSaveSectionReview;
 
           req.body = mockBody;

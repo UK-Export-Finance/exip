@@ -119,6 +119,10 @@ const mockRes = () => {
 
 const mockSpyPromise = () => jest.fn().mockResolvedValue({});
 
+const mockErrorMessage = 'Mock error';
+
+const mockSpyPromiseRejection = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
+
 export {
   EUR,
   HKD,
@@ -159,6 +163,7 @@ export {
   mockCurrenciesEmptyResponse,
   mockCompanyDifferentTradingAddress,
   mockEligibility,
+  mockErrorMessage,
   mockErrorMessagesObject,
   mockErrors,
   mockExportContractAgentService,
@@ -178,6 +183,7 @@ export {
   mockReq,
   mockRes,
   mockSpyPromise,
+  mockSpyPromiseRejection,
   mockValidEmail,
   referenceNumber,
 };

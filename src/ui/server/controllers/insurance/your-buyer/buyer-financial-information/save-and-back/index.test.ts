@@ -6,7 +6,7 @@ import BUYER_FIELD_IDS from '../../../../../constants/field-ids/insurance/your-b
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const { HAS_BUYER_FINANCIAL_ACCOUNTS } = BUYER_FIELD_IDS;
 
@@ -114,7 +114,7 @@ describe('controllers/insurance/your-buyer/buyer-financial-information/save-and-
         req.body = validBody;
 
         res.locals = mockRes().locals;
-        updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
+        updateMapAndSave = mockSpyPromiseRejection;
         mapAndSave.buyerRelationship = updateMapAndSave;
       });
 

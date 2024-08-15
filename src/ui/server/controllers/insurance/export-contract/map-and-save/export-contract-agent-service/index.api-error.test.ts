@@ -2,7 +2,7 @@ import mapAndSave from '.';
 import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
 import saveService from '../../save-data/export-contract-agent-service';
 import saveCharge from '../../save-data/export-contract-agent-service-charge';
-import { mockApplication, mockApplicationAgentServiceChargeEmpty } from '../../../../../test-mocks';
+import { mockApplication, mockApplicationAgentServiceChargeEmpty, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const {
   AGENT_SERVICE: { IS_CHARGING },
@@ -39,7 +39,7 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
 
   describe('when saveService.exportContractAgentService call fails', () => {
     beforeEach(() => {
-      saveService.exportContractAgentService = jest.fn(() => Promise.reject(new Error('mock')));
+      saveService.exportContractAgentService = mockSpyPromiseRejection;
     });
 
     it('should return false', async () => {
@@ -64,7 +64,7 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
 
     describe('when saveCharge.exportContractAgentServiceCharge call fails', () => {
       beforeEach(() => {
-        saveCharge.exportContractAgentServiceCharge = jest.fn(() => Promise.reject(new Error('mock')));
+        saveCharge.exportContractAgentServiceCharge = mockSpyPromiseRejection;
       });
 
       it('should return false', async () => {

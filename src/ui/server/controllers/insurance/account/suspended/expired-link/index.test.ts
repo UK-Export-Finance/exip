@@ -6,7 +6,7 @@ import insuranceCorePageVariables from '../../../../../helpers/page-variables/co
 import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockAccount, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const {
   ACCOUNT: {
@@ -100,7 +100,7 @@ describe('controllers/insurance/account/suspended/expired-link', () => {
     describe('api error handling', () => {
       describe('when the send email reactivate account link API call fails', () => {
         beforeEach(() => {
-          sendEmailReactivateAccountLinkResponseSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          sendEmailReactivateAccountLinkResponseSpy = mockSpyPromiseRejection;
           api.keystone.account.sendEmailReactivateAccountLink = sendEmailReactivateAccountLinkResponseSpy;
         });
 

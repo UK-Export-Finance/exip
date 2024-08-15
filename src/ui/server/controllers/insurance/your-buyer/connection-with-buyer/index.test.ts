@@ -9,10 +9,10 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import generateValidationErrors from './validation';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockBuyer, referenceNumber } from '../../../../test-mocks';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/buyer-relationship';
+import { Request, Response } from '../../../../../types';
+import { mockReq, mockRes, mockApplication, mockBuyer, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -255,7 +255,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
         beforeEach(() => {
           req.body = validBody;
           res.locals = mockRes().locals;
-          mapAndSave.buyerRelationship = jest.fn(() => Promise.reject(new Error('mock')));
+          mapAndSave.buyerRelationship = mockSpyPromiseRejection;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

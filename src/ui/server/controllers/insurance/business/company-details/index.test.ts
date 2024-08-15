@@ -11,7 +11,7 @@ import mapAndSave from '../map-and-save/company-details';
 import { companiesHouseSummaryList } from '../../../../helpers/summary-lists/companies-house';
 import companyDetailsValidation from './validation/company-details';
 import { Application, Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockPhoneNumbers, referenceNumber } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockPhoneNumbers, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const {
   YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_NAME },
@@ -319,7 +319,7 @@ describe('controllers/insurance/business/companies-details', () => {
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           req.body = validBody;
 
-          mapAndSave.companyDetails = jest.fn(() => Promise.reject(new Error('mock')));
+          mapAndSave.companyDetails = mockSpyPromiseRejection;
 
           await post(req, res);
 

@@ -6,7 +6,7 @@ import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../../types';
 import api from '../../../../../api';
-import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockAccount, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
@@ -100,7 +100,7 @@ describe('controllers/insurance/account/create/confirm-email', () => {
 
     describe('when there is an error calling the API', () => {
       beforeAll(() => {
-        getAccountSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        getAccountSpy = mockSpyPromiseRejection;
         api.keystone.account.get = getAccountSpy;
       });
 
