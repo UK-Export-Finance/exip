@@ -7,7 +7,7 @@ import getApplicationSubmittedEmailTemplateIds from '../../helpers/get-applicati
 import formatDate from '../../helpers/format-date';
 import { createFullApplication, getKeystoneContext } from '../../test-helpers';
 import { Application, ApplicationSubmissionEmailVariables, Context } from '../../types';
-import { mockSendEmailResponse, mockErrorMessage } from '../../test-mocks';
+import { mockSendEmailResponse, mockErrorMessage, mockSpyPromiseRejection } from '../../test-mocks';
 
 dotenv.config();
 
@@ -289,7 +289,7 @@ describe('emails/send-email-application-submitted', () => {
 
     describe('when sendEmail.application.submittedEmail fails', () => {
       beforeEach(() => {
-        sendEmail.application.submittedEmail = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
+        sendEmail.application.submittedEmail = mockSpyPromiseRejection;
       });
 
       test('should throw an error', async () => {

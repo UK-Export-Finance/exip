@@ -1,6 +1,6 @@
 import sendEmailInsuranceFeedback from '.';
 import sendEmail from '../../../emails';
-import { mockInsuranceFeedbackEmail, mockSendEmailResponse, mockAccount, mockErrorMessage } from '../../../test-mocks';
+import { mockInsuranceFeedbackEmail, mockSendEmailResponse, mockAccount, mockErrorMessage, mockSpyPromiseRejection } from '../../../test-mocks';
 import { InsuranceFeedbackVariables } from '../../../types';
 
 describe('custom-resolvers/send-email-insurance-feedback', () => {
@@ -38,7 +38,7 @@ describe('custom-resolvers/send-email-insurance-feedback', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      sendEmail.insuranceFeedbackEmail = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
+      sendEmail.insuranceFeedbackEmail = mockSpyPromiseRejection;
     });
 
     test('should throw an error', async () => {

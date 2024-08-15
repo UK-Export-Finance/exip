@@ -5,6 +5,7 @@ import { createFullApplication } from '../../../test-helpers';
 import { dateInTheFutureByDays } from '../../date';
 import mapApplicationSubmissionDeadlineVariables from '../../map-application-submission-deadline-variables';
 import applications from '../../../test-helpers/applications';
+import { mockSpyPromiseRejection } from '../../../test-mocks';
 import { Application, Context } from '../../../types';
 
 describe('helpers/send-email-application-submission-deadline/send-email', () => {
@@ -58,7 +59,7 @@ describe('helpers/send-email-application-submission-deadline/send-email', () => 
   describe('error handling', () => {
     describe('sendEmail.submissionDeadlineEmail fails', () => {
       beforeEach(async () => {
-        sendEmail.submissionDeadlineEmail = jest.fn(() => Promise.reject(new Error('Mock error')));
+        sendEmail.submissionDeadlineEmail = mockSpyPromiseRejection;
       });
 
       test('should return success as false', async () => {

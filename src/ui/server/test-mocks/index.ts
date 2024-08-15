@@ -117,9 +117,9 @@ const mockRes = () => {
   return res;
 };
 
-const mockSpyPromise = () => jest.fn().mockResolvedValue({});
-
 const mockErrorMessage = 'Mock error';
+
+const mockSpyPromise = () => jest.fn().mockResolvedValue({});
 
 const mockSpyPromiseRejection = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
 

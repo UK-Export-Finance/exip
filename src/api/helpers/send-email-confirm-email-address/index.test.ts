@@ -1,10 +1,10 @@
 import confirmEmailAddressEmail from '.';
 import getFullNameString from '../get-full-name-string';
 import sendEmail from '../../emails';
+import { DATE_24_HOURS_IN_THE_PAST, DATE_24_HOURS_FROM_NOW } from '../../constants';
 import accounts from '../../test-helpers/accounts';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
-import { mockAccount, mockUrlOrigin, mockSendEmailResponse, mockErrorMessage } from '../../test-mocks';
-import { DATE_24_HOURS_IN_THE_PAST, DATE_24_HOURS_FROM_NOW } from '../../constants';
+import { mockAccount, mockUrlOrigin, mockSendEmailResponse, mockErrorMessage, mockSpyPromiseRejection } from '../../test-mocks';
 import { Account, Context } from '../../types';
 
 describe('helpers/send-email-confirm-email-address', () => {
@@ -116,7 +116,7 @@ describe('helpers/send-email-confirm-email-address', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      sendEmail.confirmEmailAddress = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
+      sendEmail.confirmEmailAddress = mockSpyPromiseRejection;
     });
 
     test('should throw an error', async () => {
