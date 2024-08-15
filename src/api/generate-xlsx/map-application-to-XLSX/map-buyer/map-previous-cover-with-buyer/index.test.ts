@@ -124,7 +124,6 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-buyer/map-previous-cover
       const mockApplication = mockApplicationEligibilityTotalContractValueBelowThreshold;
       mockApplication[MIGRATED_FROM_V1_TO_V2] = false;
 
-      // const result = mapPreviousCoverWithBuyer(mockApplicationEligibilityTotalContractValueBelowThreshold, relationship, false);
       const result = mapPreviousCoverWithBuyer(mockApplication);
 
       expect(result).toEqual([]);
