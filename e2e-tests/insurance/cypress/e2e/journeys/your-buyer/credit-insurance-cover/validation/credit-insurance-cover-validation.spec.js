@@ -27,7 +27,7 @@ context('Insurance - Your buyer - Credit insurance cover - form validation', () 
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
 
-      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'tradingHistoryWithBuyer', exporterHasTradingHistoryWithBuyer: true });
+      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'tradingHistoryWithBuyer', exporterHasTradedWithBuyer: true });
 
       cy.assertUrl(url);
     });
