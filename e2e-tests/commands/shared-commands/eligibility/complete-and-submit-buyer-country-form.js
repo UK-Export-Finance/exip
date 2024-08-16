@@ -1,6 +1,6 @@
-import { autoCompleteField } from '../pages/shared';
-import { FIELD_IDS } from '../constants';
-import { DZA } from '../fixtures/countries';
+import { autoCompleteField } from '../../../pages/shared';
+import { FIELD_IDS } from '../../../constants';
+import { DZA } from '../../../fixtures/countries';
 
 const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 

@@ -3,7 +3,6 @@ import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { TOTAL_CONTRACT_VALUE } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 import { FIELDS_ELIGIBILITY } from '../../../../../../content-strings/fields/insurance/eligibility';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.TOTAL_VALUE_INSURED;
@@ -32,7 +31,7 @@ context(
       cy.completeCompaniesHouseNumberForm();
       cy.completeAndSubmitCompaniesHouseSearchForm({});
       cy.completeEligibilityCompanyDetailsForm();
-      completeAndSubmitBuyerCountryForm({});
+      cy.completeAndSubmitBuyerCountryForm({});
 
       url = `${baseUrl}${TOTAL_VALUE_INSURED}`;
 

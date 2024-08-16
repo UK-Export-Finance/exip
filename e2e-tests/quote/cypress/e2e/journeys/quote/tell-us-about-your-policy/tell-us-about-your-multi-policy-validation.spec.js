@@ -1,10 +1,3 @@
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import {
-  completeAndSubmitBuyerBodyForm,
-  completeAndSubmitExporterLocationForm,
-  completeAndSubmitUkContentForm,
-  completeAndSubmitPolicyTypeMultiForm,
-} from '../../../../../../commands/quote/forms';
 import { field as fieldSelector } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
@@ -27,11 +20,11 @@ context('Tell us about the multiple policy you need - form validation', () => {
     before(() => {
       cy.login();
 
-      completeAndSubmitBuyerCountryForm({});
-      completeAndSubmitBuyerBodyForm();
-      completeAndSubmitExporterLocationForm();
-      completeAndSubmitUkContentForm();
-      completeAndSubmitPolicyTypeMultiForm();
+      cy.completeAndSubmitBuyerCountryForm({});
+      cy.completeAndSubmitBuyerBodyForm();
+      cy.completeAndSubmitExporterLocationForm();
+      cy.completeAndSubmitUkContentForm();
+      cy.completeAndSubmitPolicyTypeMultiForm();
     });
 
     beforeEach(() => {

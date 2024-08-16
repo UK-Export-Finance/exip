@@ -1,12 +1,5 @@
 import { policyTypePage, tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import {
-  completeAndSubmitBuyerBodyForm,
-  completeAndSubmitExporterLocationForm,
-  completeAndSubmitUkContentForm,
-  completeAndSubmitPolicyTypeSingleForm,
-} from '../../../../../../commands/quote/forms';
 
 const {
   ELIGIBILITY: { CREDIT_PERIOD },
@@ -30,11 +23,11 @@ context(
     const completePreviousForms = () => {
       cy.login();
 
-      completeAndSubmitBuyerCountryForm({});
-      completeAndSubmitBuyerBodyForm();
-      completeAndSubmitExporterLocationForm();
-      completeAndSubmitUkContentForm();
-      completeAndSubmitPolicyTypeSingleForm();
+      cy.completeAndSubmitBuyerCountryForm({});
+      cy.completeAndSubmitBuyerBodyForm();
+      cy.completeAndSubmitExporterLocationForm();
+      cy.completeAndSubmitUkContentForm();
+      cy.completeAndSubmitPolicyTypeSingleForm();
 
       cy.assertUrl(url);
 
