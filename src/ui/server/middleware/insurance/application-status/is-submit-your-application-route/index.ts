@@ -14,7 +14,7 @@ const {
  * mapSubmitYourApplicationRoutes
  * Add "insurance/{referenceNumber}" to each route in the "submit your application" group.
  * The "submit your application" group includes all routes for "check your answers" and "declarations".
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Array} Submit your application routes with insurance/{referenceNumber} prefix
  */
 export const mapSubmitYourApplicationRoutes = (referenceNumber: number) => {
@@ -36,7 +36,7 @@ export const mapSubmitYourApplicationRoutes = (referenceNumber: number) => {
  * isSubmitYourApplicationRoute
  * Check if a given URL is a route in the "submit your application" group ("check your answers" and "declarations").
  * @param {String} URL
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Boolean}
  */
 const isSubmitYourApplicationRoute = (url: string, referenceNumber: number) => {

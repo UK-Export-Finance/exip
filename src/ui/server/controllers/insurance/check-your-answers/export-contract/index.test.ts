@@ -94,14 +94,14 @@ describe('controllers/insurance/check-your-answers/export-contract', () => {
 
       const checkAndChange = true;
 
-      const summaryList = exportContractSummaryLists(
+      const summaryList = exportContractSummaryLists({
         exportContract,
         totalContractValueOverThreshold,
         migratedV1toV2,
         referenceNumber,
-        mockCountries,
+        countries: mockCountries,
         checkAndChange,
-      );
+      });
 
       const exportContractFields = requiredFields({
         totalContractValueOverThreshold,

@@ -8,7 +8,7 @@ import { Currency } from '../../../../../../types';
  * if not all currencies, then need to manually sort the currencies to meet design.
  * The currencies need to be specifically ordered - not alphabetically.
  * if all currencies, then map all currencies into required structure
- * @param {Array} currencies: Array of currency objects
+ * @param {Array<Currency>} currencies: Array of currency objects
  * @param {String} selectedValue: Selected currency
  * @param {Boolean} alternativeCurrencies: if all currencies need to be mapped
  * @returns {Array} Mapped and sorted currencies

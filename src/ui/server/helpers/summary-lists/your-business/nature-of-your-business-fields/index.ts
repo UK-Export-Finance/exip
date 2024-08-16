@@ -29,7 +29,7 @@ const {
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} All Nature of your business fields and values in an object structure for GOVUK summary list structure
  */
-const generateNatureOfYourBusinessFields = (answers: ApplicationBusiness, referenceNumber: number, checkAndChange: boolean): SummaryListGroupData => {
+const generateNatureOfYourBusinessFields = (answers: ApplicationBusiness, referenceNumber: number, checkAndChange?: boolean): SummaryListGroupData => {
   const fields = [
     fieldGroupItem({
       field: getFieldById(FIELDS.NATURE_OF_YOUR_BUSINESS, GOODS_OR_SERVICES),

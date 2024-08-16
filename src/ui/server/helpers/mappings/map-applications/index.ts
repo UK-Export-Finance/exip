@@ -8,7 +8,7 @@ import { Application } from '../../../../types';
 /**
  * mapApplication
  * Map an application for display in the dashboard
- * @param {Application}
+ * @param {Application} application
  * @returns {Object} Mapped application
  */
 export const mapApplication = (application: Application) => {

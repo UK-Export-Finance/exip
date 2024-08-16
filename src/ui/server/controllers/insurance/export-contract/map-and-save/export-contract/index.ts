@@ -7,8 +7,9 @@ import { Application, Country, RequestBody, ValidationErrors } from '../../../..
  * mapAndSave
  * Map and save any valid export contract fields
  * @param {RequestBody} formBody: Form body
- * @param {Application}
- * @param {Object} Validation errors
+ * @param {Application} application
+ * @param {Object} validationErrors: Validation errors
+ * @param {Array<Country>} countries
  * @returns {Promise<Boolean>}
  */
 const exportContract = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors, countries?: Array<Country>) => {

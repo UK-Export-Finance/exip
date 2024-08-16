@@ -33,10 +33,10 @@ const {
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} All company fields and values in an object structure for GOVUK summary list structure
  */
-const generateYourCompanyFields = (answers: ApplicationCompany, referenceNumber: number, checkAndChange: boolean): SummaryListGroupData => {
-  // generates address object for TRADING_ADDRESS row
+const generateYourCompanyFields = (answers: ApplicationCompany, referenceNumber: number, checkAndChange?: boolean): SummaryListGroupData => {
   const addressObject = generateAddressObject(answers[DIFFERENT_TRADING_ADDRESS]?.[FULL_ADDRESS]);
-  const address = generateMultipleFieldHtml(addressObject);
+
+  const addressHtmlString = generateMultipleFieldHtml(addressObject);
 
   const fields = [
     fieldGroupItem(
@@ -61,7 +61,7 @@ const generateYourCompanyFields = (answers: ApplicationCompany, referenceNumber:
         href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${TRADING_ADDRESS}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
       },
-      mapYesAlternateField(answers[TRADING_ADDRESS], address),
+      mapYesAlternateField(answers[TRADING_ADDRESS], addressHtmlString),
     ),
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_DETAILS, WEBSITE),

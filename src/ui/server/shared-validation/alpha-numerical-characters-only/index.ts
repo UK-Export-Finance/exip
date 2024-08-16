@@ -12,7 +12,7 @@ import { REGEX } from '../../constants';
  * @param {String} fieldValue: Field value to assert
  * @param {String} fieldId: Field ID
  * @param {String} errorMessage: Error message to use if invalid
- * @param {Object} Validation errors
+ * @param {Object} errors: Validation errors
  * @returns {Object | Boolean} Validation errors
  */
 const alphaNumericalCharactersOnlyValidation = (fieldValue: string, fieldId: string, errorMessage: string, errors: object) => {

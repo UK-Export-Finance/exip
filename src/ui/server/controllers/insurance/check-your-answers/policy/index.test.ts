@@ -100,16 +100,16 @@ describe('controllers/insurance/check-your-answers/policy', () => {
         ...exportContract,
       };
 
-      const summaryList = policySummaryLists(
-        answers,
-        mockContact,
-        mockBroker,
-        mockNominatedLossPayee,
+      const summaryList = policySummaryLists({
+        policy: answers,
+        policyContact: mockContact,
+        broker: mockBroker,
+        nominatedLossPayee: mockNominatedLossPayee,
         referenceNumber,
-        mockCurrencies,
-        mockCountries,
+        currencies: mockCurrencies,
+        countries: mockCountries,
         checkAndChange,
-      );
+      });
 
       const { policyType } = policy;
       const { isUsingBroker } = mockBroker;
