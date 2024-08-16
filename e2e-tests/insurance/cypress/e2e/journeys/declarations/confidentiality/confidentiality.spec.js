@@ -143,8 +143,8 @@ context(
             cy.checkTaskCheckAnswersStatusIsComplete();
           });
 
-          it('should retain the status of task `declarations and submit` as `in progress`', () => {
-            cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
+          it('should retain the status of task `declarations and submit` as `not started yet`', () => {
+            cy.checkTaskDeclarationsAndSubmitStatusIsNotStartedYet();
           });
         });
       });
@@ -169,7 +169,7 @@ context(
             cy.checkTaskCheckAnswersStatusIsComplete();
           });
 
-          it('should retain the status of task `declarations and submit` as `in progress`', () => {
+          it('should updated the status of task `declarations and submit` to`in progress`', () => {
             cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
           });
         });

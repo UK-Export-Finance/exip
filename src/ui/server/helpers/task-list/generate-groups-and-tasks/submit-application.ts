@@ -41,7 +41,7 @@ const createSubmitApplicationTasks = (
     href: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`,
     title: SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS,
     id: TASK_IDS.SUBMIT_APPLICATION.CHECK_ANSWERS,
-    fields: [BUYER, EXPORT_CONTRACT, EXPORTER_BUSINESS, POLICY],
+    fields: [BUYER, EXPORTER_BUSINESS, EXPORT_CONTRACT, POLICY],
     dependencies,
   };
 

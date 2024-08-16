@@ -24,6 +24,9 @@ context('Insurance - Check your answers - Your buyer page - Save and back', () =
 
       task.link().click();
 
+      // To get past previous "Check your answers" pages
+      cy.completeAndSubmitMultipleCheckYourAnswers({ count: 1 });
+
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER}`;
 
       cy.assertUrl(url);
