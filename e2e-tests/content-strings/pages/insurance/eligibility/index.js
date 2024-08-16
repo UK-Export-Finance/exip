@@ -12,7 +12,7 @@ export const CHECK_IF_ELIGIBLE = {
     "your buyer's location",
     'how long you want your contract to last',
     'the value of your contract',
-    'whether you are, or will be, a party to any consortium',
+    "if you're part of a consortium",
     'relevant group members',
   ],
   WILL_NEED_COMPANIES_HOUSE_NUMBER: "You'll need to provide your Companies House registration number.",
