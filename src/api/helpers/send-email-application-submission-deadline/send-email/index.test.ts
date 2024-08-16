@@ -62,7 +62,7 @@ describe('helpers/send-email-application-submission-deadline/send-email', () => 
         sendEmail.submissionDeadlineEmail = jest.fn(() => Promise.reject(mockSpyPromiseRejection));
       });
 
-      test('should return success as false', async () => {
+      test('should throw an error', async () => {
         await expect(applicationSubmissionDeadineEmail.send([application])).rejects.toThrow('Sending application submission deadline email (send helper)');
       });
     });
