@@ -1,14 +1,14 @@
 /**
  * completeAndSubmitEligibilityForms
- * completes eligibility forms up to the specified section
+ * completes eligibility forms up to the specified form to stop at
  * eg, when 'companyDetails' is passed, it will complete all forms up to and including 'companyDetails'
- * @param {String} form: the form to complete
+ * @param {String} formToStopAt: the form to stop at
  * @param {String} companyNumber: the company number to use in the companies house search form
  * @param {Boolean} coverPeriodIsUnderThreshold: whether the cover period is under the threshold
  * @param {Boolean} memberOfAGroup: whether the company is a member of a group
  * @param {Boolean} partyToConsortium: whether the company is a party to a consortium
  */
-const completeAndSubmitEligibilityForms = ({ form, companyNumber, coverPeriodIsUnderThreshold, memberOfAGroup, partyToConsortium }) => {
+const completeAndSubmitEligibilityForms = ({ formToStopAt, companyNumber, coverPeriodIsUnderThreshold, memberOfAGroup, partyToConsortium }) => {
   cy.navigateToCheckIfEligibleUrl();
 
   const steps = [
@@ -28,12 +28,12 @@ const completeAndSubmitEligibilityForms = ({ form, companyNumber, coverPeriodIsU
 
   /**
    * carries out steps in steps array
-   * if the step name matches the section, it breaks out of the loop
+   * if the step name matches the form to stop at, it breaks out of the loop
    */
   for (const step of steps) {
     step.action();
 
-    if (step.name === form) {
+    if (step.name === formToStopAt) {
       break;
     }
   }

@@ -20,7 +20,7 @@ context('Insurance - Eligibility - Company not active - I want to check if I can
 
   before(() => {
     cy.completeAndSubmitEligibilityForms({
-      form: 'companiesHouseNumberSearch',
+      formToStopAt: 'companiesHouseNumberSearch',
       companyNumber: COMPANIES_HOUSE_NUMBER_NOT_ACTIVE,
     });
 

@@ -25,7 +25,7 @@ context(
     let url;
 
     before(() => {
-      cy.completeAndSubmitEligibilityForms({ form: 'totalValueInsured' });
+      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'totalValueInsured' });
 
       url = `${baseUrl}${COVER_PERIOD_ROUTE}`;
 

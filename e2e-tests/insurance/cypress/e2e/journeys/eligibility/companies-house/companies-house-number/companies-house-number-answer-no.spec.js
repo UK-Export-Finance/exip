@@ -14,7 +14,7 @@ context(
     const url = `${baseUrl}${COMPANIES_HOUSE_NUMBER}`;
 
     before(() => {
-      cy.completeAndSubmitEligibilityForms({ form: 'exporterLocation' });
+      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'exporterLocation' });
     });
 
     beforeEach(() => {

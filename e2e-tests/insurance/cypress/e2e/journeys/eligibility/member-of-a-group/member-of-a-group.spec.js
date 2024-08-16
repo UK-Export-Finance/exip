@@ -25,7 +25,7 @@ context(
     const url = `${baseUrl}${MEMBER_OF_A_GROUP}`;
 
     before(() => {
-      cy.completeAndSubmitEligibilityForms({ form: 'partyToConsortium' });
+      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'partyToConsortium' });
 
       cy.assertUrl(url);
     });

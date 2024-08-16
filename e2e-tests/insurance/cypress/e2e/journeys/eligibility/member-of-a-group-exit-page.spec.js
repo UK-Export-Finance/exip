@@ -15,7 +15,7 @@ context(
     let url;
 
     before(() => {
-      cy.completeAndSubmitEligibilityForms({ form: 'memberOfAGroup', memberOfAGroup: true });
+      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'memberOfAGroup', memberOfAGroup: true });
 
       url = `${baseUrl}${MEMBER_OF_A_GROUP_EXIT}`;
 
