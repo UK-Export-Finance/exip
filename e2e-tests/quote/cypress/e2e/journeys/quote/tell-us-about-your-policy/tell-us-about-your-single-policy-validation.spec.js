@@ -1,10 +1,3 @@
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import {
-  completeAndSubmitBuyerBodyForm,
-  completeAndSubmitExporterLocationForm,
-  completeAndSubmitUkContentForm,
-  completeAndSubmitPolicyTypeSingleForm,
-} from '../../../../../../commands/quote/forms';
 import { field as fieldSelector } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
@@ -27,11 +20,11 @@ context('Tell us about the policy you need page - form validation', () => {
     before(() => {
       cy.login();
 
-      completeAndSubmitBuyerCountryForm({});
-      completeAndSubmitBuyerBodyForm();
-      completeAndSubmitExporterLocationForm();
-      completeAndSubmitUkContentForm();
-      completeAndSubmitPolicyTypeSingleForm();
+      cy.completeAndSubmitBuyerCountryForm({});
+      cy.completeAndSubmitBuyerBodyForm();
+      cy.completeAndSubmitExporterLocationForm();
+      cy.completeAndSubmitUkContentForm();
+      cy.completeAndSubmitPolicyTypeSingleForm();
     });
 
     beforeEach(() => {

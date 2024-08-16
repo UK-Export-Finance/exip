@@ -1,6 +1,5 @@
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 import { summaryList } from '../../../../../../pages/shared';
 import { country } from '../../../../../../fixtures/application';
 import { XAD } from '../../../../../../fixtures/countries';
@@ -68,7 +67,7 @@ context(
 
         summaryList.field(fieldId).changeLink().click();
 
-        completeAndSubmitBuyerCountryForm({ countryName: newCountry });
+        cy.completeAndSubmitBuyerCountryForm({ countryName: newCountry });
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {

@@ -1,6 +1,5 @@
 import { PAGES } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../commands/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP_EXIT;
 
@@ -22,7 +21,7 @@ context(
       cy.completeCompaniesHouseNumberForm();
       cy.completeAndSubmitCompaniesHouseSearchForm({});
       cy.completeEligibilityCompanyDetailsForm();
-      completeAndSubmitBuyerCountryForm({});
+      cy.completeAndSubmitBuyerCountryForm({});
       cy.completeAndSubmitTotalValueInsuredForm({});
       cy.completeCoverPeriodForm({});
       cy.completeUkGoodsAndServicesForm();

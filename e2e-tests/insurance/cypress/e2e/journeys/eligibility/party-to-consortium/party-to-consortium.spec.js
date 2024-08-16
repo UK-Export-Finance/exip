@@ -3,7 +3,6 @@ import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM;
 
@@ -29,7 +28,7 @@ context(
       cy.completeCompaniesHouseNumberForm();
       cy.completeAndSubmitCompaniesHouseSearchForm({});
       cy.completeEligibilityCompanyDetailsForm();
-      completeAndSubmitBuyerCountryForm({});
+      cy.completeAndSubmitBuyerCountryForm({});
       cy.completeAndSubmitTotalValueInsuredForm({});
       cy.completeCoverPeriodForm({});
       cy.completeUkGoodsAndServicesForm();

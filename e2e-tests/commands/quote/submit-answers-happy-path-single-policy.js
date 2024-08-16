@@ -1,4 +1,3 @@
-import { completeAndSubmitBuyerCountryForm } from '../forms';
 import {
   completeAndSubmitBuyerBodyForm,
   completeAndSubmitExporterLocationForm,
@@ -13,7 +12,7 @@ import {
  * @param {Integer} policyLength: Policy length
  */
 const submitQuoteAnswersHappyPathSinglePolicy = ({ policyLength }) => {
-  completeAndSubmitBuyerCountryForm({});
+  cy.completeAndSubmitBuyerCountryForm({});
   completeAndSubmitBuyerBodyForm();
   completeAndSubmitExporterLocationForm();
   completeAndSubmitUkContentForm();

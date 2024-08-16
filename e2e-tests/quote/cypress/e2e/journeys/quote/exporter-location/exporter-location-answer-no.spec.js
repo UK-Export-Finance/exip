@@ -1,8 +1,6 @@
 import { backLink, cannotApplyPage } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import { completeAndSubmitBuyerBodyForm } from '../../../../../../commands/quote/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
 
@@ -19,8 +17,8 @@ context(
 
     before(() => {
       cy.login();
-      completeAndSubmitBuyerCountryForm({});
-      completeAndSubmitBuyerBodyForm();
+      cy.completeAndSubmitBuyerCountryForm({});
+      cy.completeAndSubmitBuyerBodyForm();
 
       cy.assertUrl(url);
     });

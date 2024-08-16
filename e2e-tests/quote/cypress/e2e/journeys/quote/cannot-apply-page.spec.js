@@ -1,8 +1,6 @@
 import { actions, cannotApplyPage } from '../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../commands/forms';
-import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm } from '../../../../../commands/quote/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
 
@@ -15,9 +13,9 @@ const baseUrl = Cypress.config('baseUrl');
 context('Cannot apply exit page', () => {
   beforeEach(() => {
     cy.login();
-    completeAndSubmitBuyerCountryForm({});
-    completeAndSubmitBuyerBodyForm();
-    completeAndSubmitExporterLocationForm();
+    cy.completeAndSubmitBuyerCountryForm({});
+    cy.completeAndSubmitBuyerBodyForm();
+    cy.completeAndSubmitExporterLocationForm();
 
     let expectedUrl = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
 
