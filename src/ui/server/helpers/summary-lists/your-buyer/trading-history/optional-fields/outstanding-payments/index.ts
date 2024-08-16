@@ -20,7 +20,7 @@ const {
  * if OUTSTANDING_PAYMENTS is true, render additional rows in summary list
  * @param {ApplicationBuyerTradingHistory} answers: Buyer trading history answers
  * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>} Array including or excluding TOTAL_OUTSTANDING_PAYMENTS and TOTAL_AMOUNT_OVERDUE in correct structure
  */
 const optionalOutstandingPaymentsFields = (answers: ApplicationBuyerTradingHistory, referenceNumber: number, checkAndChange?: boolean) => {

@@ -1,4 +1,4 @@
 export interface MapYesNoFieldParams {
-  answer?: boolean;
+  answer?: boolean | null;
   defaultValue?: string;
 }

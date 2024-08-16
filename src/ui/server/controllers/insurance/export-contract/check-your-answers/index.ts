@@ -27,7 +27,7 @@ export const get = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { exportContract, referenceNumber, totalContractValueOverThreshold } = application;
+  const { exportContract, referenceNumber, migratedV1toV2, totalContractValueOverThreshold } = application;
 
   try {
     const countries = await api.keystone.countries.getAll();
@@ -36,7 +36,13 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const summaryLists = exportContractSummaryLists(exportContract, totalContractValueOverThreshold, referenceNumber, countries);
+    const summaryLists = exportContractSummaryLists({
+      exportContract,
+      totalContractValueOverThreshold,
+      migratedV1toV2,
+      referenceNumber,
+      countries,
+    });
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({

@@ -1,4 +1,4 @@
-import { ERROR_MESSAGES } from '../../../../content-strings';
+import { BUTTONS, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, TEMPLATES, ROUTES, DECLARATIONS } from '../../../../constants';
 import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
@@ -24,7 +24,7 @@ const {
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
@@ -59,6 +59,7 @@ export const get = async (req: Request, res: Response) => {
     ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
     application: mapApplicationToFormFields(res.locals.application),
+    SUBMIT_BUTTON_COPY: BUTTONS.SUBMIT_APPLICATION,
   });
 };
 
@@ -91,6 +92,7 @@ export const post = async (req: Request, res: Response) => {
       ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       validationErrors,
+      SUBMIT_BUTTON_COPY: BUTTONS.SUBMIT_APPLICATION,
     });
   }
 

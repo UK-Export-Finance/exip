@@ -20,7 +20,7 @@ const {
   INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE },
 } = ROUTES;
 
-const { exportContract, totalContractValueOverThreshold } = mockApplication;
+const { exportContract, migratedV1toV2, totalContractValueOverThreshold } = mockApplication;
 
 const {
   finalDestinationKnown,
@@ -94,7 +94,14 @@ describe('controllers/insurance/check-your-answers/export-contract', () => {
 
       const checkAndChange = true;
 
-      const summaryList = exportContractSummaryLists(exportContract, totalContractValueOverThreshold, referenceNumber, mockCountries, checkAndChange);
+      const summaryList = exportContractSummaryLists({
+        exportContract,
+        totalContractValueOverThreshold,
+        migratedV1toV2,
+        referenceNumber,
+        countries: mockCountries,
+        checkAndChange,
+      });
 
       const exportContractFields = requiredFields({
         totalContractValueOverThreshold,

@@ -7,7 +7,7 @@ const baseUrl = Cypress.config('baseUrl');
 /**
  * assertAllSectionsUrl
  * Assert that the URL is an application's "all sections" URL.
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  */
 const assertAllSectionsUrl = (referenceNumber) => {
   const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;

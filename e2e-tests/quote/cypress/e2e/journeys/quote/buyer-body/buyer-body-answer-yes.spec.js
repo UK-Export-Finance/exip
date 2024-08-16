@@ -2,7 +2,6 @@ import { backLink } from '../../../../../../pages/shared';
 import { getAQuoteByEmailPage } from '../../../../../../pages/quote';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 
 const {
   QUOTE: { BUYER_BODY, GET_A_QUOTE_BY_EMAIL },
@@ -17,7 +16,7 @@ context(
 
     before(() => {
       cy.login();
-      completeAndSubmitBuyerCountryForm({});
+      cy.completeAndSubmitBuyerCountryForm({});
 
       cy.assertUrl(url);
     });

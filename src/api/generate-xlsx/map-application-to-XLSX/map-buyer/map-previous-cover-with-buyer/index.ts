@@ -11,22 +11,23 @@ const { FIELDS } = XLSX;
 /**
  * mapPreviousCoverWithBuyer
  * Generate an XLSX row if an exporter has "previous cover" with the buyer.
- * @param {Application} application: Application
+ * @param {Application} application
  * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapPreviousCoverWithBuyer = (application: Application) => {
   const {
-    buyer: { relationship: buyerRelationship },
+    buyer: { relationship },
+    migratedV1toV2,
     totalContractValueOverThreshold,
   } = application;
 
-  if (totalContractValueOverThreshold) {
-    const answer = buyerRelationship[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER];
+  if (totalContractValueOverThreshold || migratedV1toV2) {
+    const answer = relationship[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER];
 
     const mapped = [xlsxRow(String(FIELDS[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]), mapYesNoField({ answer }))];
 
     if (answer === true) {
-      mapped.push(xlsxRow(String(FIELDS[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]), buyerRelationship[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]));
+      mapped.push(xlsxRow(String(FIELDS[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]), relationship[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]));
     }
 
     return mapped;

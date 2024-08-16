@@ -6,8 +6,8 @@ import { Application, RequestBody } from '../../../../../types';
  * sectionReview
  * Update an application's section review
  * This is used for any save functionality in the Check your answers section of an application
- * @param {Application}
- * @param {Express.Request.body} Form data
+ * @param {Application} application
+ * @param {Express.Request.body} formBody
  * @returns {Promise<Object>} Saved data
  */
 const sectionReview = async (application: Application, formBody: RequestBody) => {

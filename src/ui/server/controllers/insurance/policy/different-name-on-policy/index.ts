@@ -29,7 +29,7 @@ const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({

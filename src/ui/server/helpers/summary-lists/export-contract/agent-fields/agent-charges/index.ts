@@ -28,7 +28,7 @@ const { AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE } = EXPORT_CONTRACT
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>} Agent charges fields
  */
-const agentChargesFields = (answers: ApplicationExportContractAgentService, referenceNumber: number, countries: Array<Country>, checkAndChange: boolean) => {
+const agentChargesFields = (answers: ApplicationExportContractAgentService, referenceNumber: number, countries: Array<Country>, checkAndChange?: boolean) => {
   const fields = [
     fieldGroupItem(
       {

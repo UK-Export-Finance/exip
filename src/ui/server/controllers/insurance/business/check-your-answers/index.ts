@@ -28,9 +28,9 @@ const get = (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber } = application;
+    const { company, business, referenceNumber } = application;
 
-    const summaryLists = yourBusinessSummaryLists(application.company, application.business, referenceNumber);
+    const summaryLists = yourBusinessSummaryLists({ business, company, referenceNumber });
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({

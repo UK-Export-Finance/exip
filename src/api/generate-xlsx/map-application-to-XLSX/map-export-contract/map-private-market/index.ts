@@ -13,16 +13,17 @@ const {
 /**
  * mapPrivateMarket
  * Map an application's "export contract - private market" fields into an array of objects for XLSX generation
- * @param {Application} application: Application
+ * @param {Application} application
  * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapPrivateMarket = (application: Application) => {
   const {
     exportContract: { privateMarket },
+    migratedV1toV2,
     totalContractValueOverThreshold,
   } = application;
 
-  if (totalContractValueOverThreshold) {
+  if (totalContractValueOverThreshold || migratedV1toV2) {
     const attempedPrivateMarketAnswer = privateMarket[ATTEMPTED];
 
     const mapped = [xlsxRow(String(FIELDS.EXPORT_CONTRACT[ATTEMPTED]), mapYesNoField({ answer: attempedPrivateMarketAnswer }))];

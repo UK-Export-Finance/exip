@@ -39,7 +39,7 @@ export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({

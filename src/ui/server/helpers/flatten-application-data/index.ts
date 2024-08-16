@@ -106,8 +106,8 @@ export const mapNominatedLossPayee = (nominatedLossPayee: ApplicationNominatedLo
 /**
  * flattenApplicationData
  * Transform an application into a single level object
- * @param {Application}
- * @returns {Object} Application as a single level object
+ * @param {Application} application
+ * @returns {ApplicationFlat} Application as a single level object
  */
 const flattenApplicationData = (application: Application): ApplicationFlat => {
   try {

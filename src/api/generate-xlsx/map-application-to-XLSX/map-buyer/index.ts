@@ -26,7 +26,7 @@ const { FIELDS } = XLSX;
 /**
  * mapBuyer
  * Map an application's buyer fields into an array of objects for XLSX generation
- * @param {Application}
+ * @param {Application} application
  * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapBuyer = (application: Application) => {

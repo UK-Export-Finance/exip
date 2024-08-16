@@ -26,7 +26,7 @@ const {
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
@@ -52,11 +52,11 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber, company, business } = application;
+    const { business, company, referenceNumber } = application;
 
     const checkAndChange = true;
 
-    const summaryList = yourBusinessSummaryLists(company, business, referenceNumber, checkAndChange);
+    const summaryList = yourBusinessSummaryLists({ business, company, referenceNumber, checkAndChange });
 
     const businessFields = requiredFields(company.hasDifferentTradingName);
 

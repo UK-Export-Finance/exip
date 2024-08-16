@@ -1,7 +1,6 @@
 import dashboardPage from '../../../../pages/insurance/dashboard';
 import { autoCompleteField, field } from '../../../../pages/shared';
 import { ROUTES, FIELD_IDS } from '../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../commands/forms';
 
 const {
   INSURANCE: {
@@ -64,7 +63,7 @@ context('Insurance - Eligibility - start and complete for a second time after cr
 
     // buyer country question
     cy.checkValue(autoCompleteField(BUYER_COUNTRY), '');
-    completeAndSubmitBuyerCountryForm({});
+    cy.completeAndSubmitBuyerCountryForm({});
 
     /**
      * total value insured question

@@ -28,7 +28,7 @@ const {
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
@@ -73,7 +73,16 @@ export const get = async (req: Request, res: Response) => {
       ...exportContract,
     };
 
-    const summaryLists = policySummaryLists(answers, policyContact, broker, nominatedLossPayee, referenceNumber, allCurrencies, countries, checkAndChange);
+    const summaryLists = policySummaryLists({
+      policy: answers,
+      policyContact,
+      broker,
+      nominatedLossPayee,
+      referenceNumber,
+      currencies: allCurrencies,
+      countries,
+      checkAndChange,
+    });
 
     const fields = requiredFields({ policyType, isUsingBroker });
 

@@ -13,7 +13,8 @@ const {
 
 /**
  * Required fields for the insurance - check your answers section
- * @param {Array} Required field IDs
+ * @param {ApplicationFlat} application
+ * @param {Array<string>} Required field IDs
  */
 const requiredFields = (application: ApplicationFlat): Array<string> => [
   ...requiredBusinessFields(),

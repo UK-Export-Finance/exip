@@ -39,7 +39,7 @@ export const TEMPLATE = HOW_WILL_YOU_GET_PAID;
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
@@ -111,17 +111,18 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { totalContractValueOverThreshold } = application;
+    const { totalContractValueOverThreshold, migratedV1toV2 } = application;
 
     if (isChangeRoute(req.originalUrl)) {
       /**
-       * If the URL is a "change" route
+       * If the URL is a "change" route,
        * and totalContractValue is over the threshold,
+       * or the application has been migrated from V1 to V2,
        * redirect to PRIVATE_MARKET with /change in URL.
        * This ensures that the next page can consume /change in the URL
        * and therefore correctly redirect on submission.
        */
-      if (totalContractValueOverThreshold) {
+      if (totalContractValueOverThreshold || migratedV1toV2) {
         return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET_CHANGE}`);
       }
 
@@ -130,15 +131,16 @@ export const post = async (req: Request, res: Response) => {
 
     if (isCheckAndChangeRoute(req.originalUrl)) {
       /**
-       * If the URL is a "check and change" route
+       * If the URL is a "check and change" route,
        * and totalContractValue is over the threshold,
+       * or the application has been migrated from V1 to V2,
        * redirect to PRIVATE_MARKET with /check-and-change in URL.
        * This ensures that the next page can consume /check-and-change in the URL
        * and therefore correctly redirect on submission.
        * Otherwise, redirect to CHECK_AND_CHANGE_ROUTE.
        */
 
-      if (totalContractValueOverThreshold) {
+      if (totalContractValueOverThreshold || migratedV1toV2) {
         return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET_CHECK_AND_CHANGE}`);
       }
 
@@ -146,11 +148,12 @@ export const post = async (req: Request, res: Response) => {
     }
 
     /**
-     * if totalContractValue is over the threshold
-     * redirect to PRIVATE_MARKET
+     * if totalContractValue is over the threshold,
+     * or the application has been migrated from V1 to V2,
+     * redirect to PRIVATE_MARKET.
      * otherwise it should redirect to the AGENT page
      */
-    if (totalContractValueOverThreshold) {
+    if (totalContractValueOverThreshold || migratedV1toV2) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET}`);
     }
 
