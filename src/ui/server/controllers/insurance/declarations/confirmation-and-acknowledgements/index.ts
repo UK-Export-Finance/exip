@@ -59,7 +59,6 @@ export const get = async (req: Request, res: Response) => {
     ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
     application: mapApplicationToFormFields(res.locals.application),
-    SUBMIT_BUTTON_COPY: 'Tony testing',
   });
 };
 
