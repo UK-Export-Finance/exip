@@ -297,6 +297,7 @@ export interface Application {
   companySicCodes: Array<ApplicationCompanySicCode>;
   companyAddress: ApplicationCompanyAddress;
   declaration: ApplicationDeclaration;
+  migratedV1toV2?: boolean;
   nominatedLossPayee: ApplicationNominatedLossPayee;
   owner: ApplicationOwner;
   policy: ApplicationPolicy;
@@ -339,6 +340,11 @@ export interface CreateAnApplicationVariables {
   company: ApplicationCompanyCore;
   sectionReview: SectionReview;
   status?: string;
+}
+
+export interface CreateManyApplicationsVariables {
+  accountId: string;
+  count: number;
 }
 
 export interface CreateInitialApplicationParams {
