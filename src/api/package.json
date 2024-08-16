@@ -27,7 +27,7 @@
     "@babel/plugin-transform-runtime": "^7.24.7",
     "@babel/preset-env": "^7.25.3",
     "@babel/preset-typescript": "^7.24.7",
-    "@graphql-tools/schema": "^10.0.5",
+    "@graphql-tools/schema": "^10.0.6",
     "@keystone-6/auth": "^7.0.3",
     "@keystone-6/core": "^5.8.0",
     "@keystone-6/fields-document": "^8.0.2",
@@ -45,7 +45,7 @@
     "notifications-node-client": "^8.2.1",
     "otplib": "^12.0.1",
     "overload-protection": "^1.2.3",
-    "postcode-validator": "^3.8.21",
+    "postcode-validator": "^3.9.2",
     "typescript": "5.5.4"
   },
   "devDependencies": {
