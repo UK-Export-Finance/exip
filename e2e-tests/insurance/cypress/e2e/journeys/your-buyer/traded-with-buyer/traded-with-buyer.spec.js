@@ -30,7 +30,7 @@ context('Insurance - Your buyer - Traded with buyer page - As an exporter, I wan
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeUpToSpecifiedYourBuyerSectionAnswers({ section: 'connectionWithTheBuyer' });
+      cy.completeAndSubmitYourBuyerForms({ form: 'connectionWithTheBuyer' });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`;
       tradingHistoryUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY}`;

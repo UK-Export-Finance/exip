@@ -29,7 +29,7 @@ context('Insurance - Your buyer - Credit insurance cover - form validation', () 
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
 
-      cy.completeUpToSpecifiedYourBuyerSectionAnswers({ section: 'tradingHistoryWithBuyer', exporterHasTradingHistoryWithBuyer: true });
+      cy.completeAndSubmitYourBuyerForms({ form: 'tradingHistoryWithBuyer', exporterHasTradingHistoryWithBuyer: true });
 
       cy.assertUrl(url);
     });

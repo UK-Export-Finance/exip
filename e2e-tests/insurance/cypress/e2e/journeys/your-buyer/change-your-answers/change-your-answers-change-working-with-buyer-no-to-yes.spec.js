@@ -36,7 +36,7 @@ context(
       cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completeUpToSpecifiedYourBuyerSectionAnswers({ section: 'buyerFinancialInformation', hasConnectionToBuyer: false });
+        cy.completeAndSubmitYourBuyerForms({ form: 'buyerFinancialInformation', hasConnectionToBuyer: false });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       });

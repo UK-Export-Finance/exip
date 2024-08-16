@@ -33,7 +33,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.completeUpToSpecifiedYourBuyerSectionAnswers({ section: 'tradedWithBuyer', exporterHasTradedWithBuyer: true });
+        cy.completeAndSubmitYourBuyerForms({ form: 'tradedWithBuyer', exporterHasTradedWithBuyer: true });
 
         cy.clickYesRadioInput();
         cy.clickProvideAlternativeCurrencyLink();

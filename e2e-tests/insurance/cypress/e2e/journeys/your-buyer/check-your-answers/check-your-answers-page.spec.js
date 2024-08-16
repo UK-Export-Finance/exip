@@ -19,7 +19,7 @@ context('Insurance - Your buyer - Check your answers - As an exporter, I want to
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeUpToSpecifiedYourBuyerSectionAnswers({ section: 'buyerFinancialInformation' });
+      cy.completeAndSubmitYourBuyerForms({ form: 'buyerFinancialInformation' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 

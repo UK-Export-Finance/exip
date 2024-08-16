@@ -24,7 +24,7 @@ context('Insurance - Your buyer - Trading history - Yes outstanding payments - S
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
 
-      cy.completeUpToSpecifiedYourBuyerSectionAnswers({ section: 'tradedWithBuyer', exporterHasTradedWithBuyer: true });
+      cy.completeAndSubmitYourBuyerForms({ form: 'tradedWithBuyer', exporterHasTradedWithBuyer: true });
 
       cy.assertUrl(url);
     });

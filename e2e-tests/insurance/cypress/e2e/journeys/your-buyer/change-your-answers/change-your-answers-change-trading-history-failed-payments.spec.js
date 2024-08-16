@@ -24,7 +24,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completeUpToSpecifiedYourBuyerSectionAnswers({ section: 'buyerFinancialInformation', exporterHasTradedWithBuyer: true });
+        cy.completeAndSubmitYourBuyerForms({ form: 'buyerFinancialInformation', exporterHasTradedWithBuyer: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       });
