@@ -7,7 +7,7 @@ import getApplicationSubmittedEmailTemplateIds from '../../helpers/get-applicati
 import formatDate from '../../helpers/format-date';
 import { createFullApplication, getKeystoneContext } from '../../test-helpers';
 import { Application, ApplicationSubmissionEmailVariables, Context } from '../../types';
-import { mockSendEmailResponse, mockErrorMessage, mockSpyPromiseRejection } from '../../test-mocks';
+import { mockSendEmailResponse, mockSpyPromiseRejection } from '../../test-mocks';
 
 dotenv.config();
 
@@ -296,7 +296,7 @@ describe('emails/send-email-application-submitted', () => {
         try {
           await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
         } catch (error) {
-          const expected = new Error(`Sending application submitted emails ${new Error(mockErrorMessage)}`);
+          const expected = new Error(`Sending application submitted emails ${new Error('Sending application submitted email to owner/account')}`);
 
           expect(error).toEqual(expected);
         }

@@ -14,7 +14,7 @@ const sendEmailInsuranceFeedback = async (root: any, variables: InsuranceFeedbac
 
     const emailResponse = await sendEmail.insuranceFeedbackEmail(variables);
 
-    if (emailResponse.success) {
+    if (emailResponse?.success) {
       return {
         ...emailResponse,
       };
