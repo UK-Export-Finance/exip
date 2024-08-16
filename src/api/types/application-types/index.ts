@@ -342,6 +342,11 @@ export interface CreateAnApplicationVariables {
   status?: string;
 }
 
+export interface CreateManyApplicationsVariables {
+  accountId: string;
+  count: number;
+}
+
 export interface CreateInitialApplicationParams {
   context: Context;
   accountId: string;
