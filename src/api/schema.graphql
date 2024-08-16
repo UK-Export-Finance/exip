@@ -3201,6 +3201,9 @@ type Mutation {
   """ create an application """
   createAnApplication(accountId: String!, eligibilityAnswers: ApplicationEligibility!, company: CompanyInput!, sectionReview: SectionReviewInput!): CreateAnApplicationResponse
 
+  """ create many applications """
+  createManyApplications(accountId: String!, count: Int!): CreateManyApplicationsResponse
+
   """ create an application """
   createAnAbandonedApplication(accountId: String!, eligibilityAnswers: ApplicationEligibility!, company: CompanyInput!, sectionReview: SectionReviewInput!): CreateAnAbandonedApplicationResponse
 
@@ -3715,6 +3718,16 @@ type CreateAnApplicationResponse {
   success: Boolean!
   id: String
   referenceNumber: Int
+}
+
+type ApplicationResponse {
+  id: String
+  referenceNumber: Int
+}
+
+type CreateManyApplicationsResponse {
+  success: Boolean!
+  applications: [ApplicationResponse]
 }
 
 type CreateAnAbandonedApplicationResponse {
