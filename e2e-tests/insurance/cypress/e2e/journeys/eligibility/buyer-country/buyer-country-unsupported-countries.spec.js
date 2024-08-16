@@ -17,12 +17,7 @@ context(`Insurance - Buyer country page - ${contextString} - Unsupported countri
   beforeEach(() => {
     cy.saveSession();
 
-    cy.navigateToCheckIfEligibleUrl();
-    cy.completeCheckIfEligibleForm();
-    cy.completeExporterLocationForm();
-    cy.completeCompaniesHouseNumberForm();
-    cy.completeAndSubmitCompaniesHouseSearchForm({});
-    cy.completeEligibilityCompanyDetailsForm();
+    cy.completeAndSubmitEligibilityForms({ formToStopAt: 'companyDetails' });
   });
 
   describe(COUNTRY_NAME_1, () => {
