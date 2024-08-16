@@ -1,5 +1,5 @@
 import { FIELD_ID, pageVariables, TEMPLATE, get, post } from '.';
-import { ERROR_MESSAGES } from '../../../../content-strings';
+import { BUTTONS, ERROR_MESSAGES } from '../../../../content-strings';
 import { APPLICATION, FIELD_IDS, TEMPLATES, ROUTES, DECLARATIONS } from '../../../../constants';
 import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
@@ -79,6 +79,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(res.locals.application),
+        SUBMIT_BUTTON_COPY: BUTTONS.SUBMIT_APPLICATION,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -163,6 +164,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
           ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           validationErrors: generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),
+          SUBMIT_BUTTON_COPY: BUTTONS.SUBMIT_APPLICATION,
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

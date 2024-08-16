@@ -1,4 +1,3 @@
-import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm, completeAndSubmitUkContentForm } from '../../../../../../commands/quote/forms';
 import { autoCompleteField, field, summaryList } from '../../../../../../pages/shared';
 import { policyTypePage } from '../../../../../../pages/quote';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
@@ -26,9 +25,9 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
     results.first().click();
     cy.clickSubmitButton();
 
-    completeAndSubmitBuyerBodyForm();
-    completeAndSubmitExporterLocationForm();
-    completeAndSubmitUkContentForm();
+    cy.completeAndSubmitBuyerBodyForm();
+    cy.completeAndSubmitExporterLocationForm();
+    cy.completeAndSubmitUkContentForm();
 
     policyTypePage[POLICY_TYPE].single.label().click();
 

@@ -2,7 +2,6 @@ import { yesNoRadioHint, yesRadio, noRadio } from '../../../../../../pages/share
 import { FIELDS, PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 import {
   checkCalculateDescriptionSummaryText,
   checkCalculateDescriptionSummaryClickRevealsContent,
@@ -36,7 +35,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     cy.completeCompaniesHouseNumberForm();
     cy.completeAndSubmitCompaniesHouseSearchForm({});
     cy.completeEligibilityCompanyDetailsForm();
-    completeAndSubmitBuyerCountryForm({});
+    cy.completeAndSubmitBuyerCountryForm({});
     cy.completeAndSubmitTotalValueInsuredForm({});
     cy.completeCoverPeriodForm({});
 

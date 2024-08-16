@@ -1,7 +1,6 @@
 import { listItem } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.CANNOT_APPLY_MULTIPLE_RISKS;
 
@@ -27,7 +26,7 @@ context(
       cy.completeCompaniesHouseNumberForm();
       cy.completeAndSubmitCompaniesHouseSearchForm({});
       cy.completeEligibilityCompanyDetailsForm();
-      completeAndSubmitBuyerCountryForm({});
+      cy.completeAndSubmitBuyerCountryForm({});
       cy.completeAndSubmitTotalValueInsuredForm({});
       cy.completeCoverPeriodForm({});
       cy.completeUkGoodsAndServicesForm();

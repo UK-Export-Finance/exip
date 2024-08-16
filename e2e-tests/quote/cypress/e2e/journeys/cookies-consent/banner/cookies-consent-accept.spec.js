@@ -1,7 +1,6 @@
 import partials from '../../../../../../partials';
 import { COOKIES_CONSENT } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -90,7 +89,7 @@ context('Cookies consent - accept', () => {
 
       partials.cookieBanner.question.acceptButton().click();
       partials.cookieBanner.hideButton().click();
-      completeAndSubmitBuyerCountryForm({});
+      cy.completeAndSubmitBuyerCountryForm({});
     });
 
     it('should not render any banner elements', () => {
