@@ -1,7 +1,7 @@
 import getApplicationByReferenceNumberMiddleware, { RELEVANT_ROUTES } from '.';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import api from '../../../api';
-import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../test-mocks';
 import { Next, Request, Response } from '../../../../types';
 
 const {
@@ -110,7 +110,7 @@ describe('middleware/insurance/get-application-by-reference-number', () => {
     });
 
     describe('when the API call fails', () => {
-      const getApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+      const getApplicationSpy = mockSpyPromiseRejection;
 
       beforeEach(() => {
         api.keystone.application.getByReferenceNumber = getApplicationSpy;

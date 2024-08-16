@@ -2,7 +2,7 @@ import sendEmailReactivateAccountLink from '.';
 import sendEmailReactivateAccountLinkHelper from '../../../helpers/send-email-reactivate-account-link';
 import accounts from '../../../test-helpers/accounts';
 import accountStatus from '../../../test-helpers/account-status';
-import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../../test-mocks';
+import { mockAccount, mockUrlOrigin, mockSendEmailResponse, mockSpyPromiseRejection } from '../../../test-mocks';
 import { Account, Context, SuccessResponse, AccountSendEmailReactivateLinkVariables } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
@@ -63,7 +63,7 @@ describe('custom-resolvers/send-email-reactivate-account-link', () => {
 
   describe('when sendEmailReactivateAccountLinkHelper.send errors', () => {
     beforeEach(() => {
-      sendEmailReactivateAccountLinkHelper.send = jest.fn(() => Promise.reject(new Error('mock error')));
+      sendEmailReactivateAccountLinkHelper.send = jest.fn(() => Promise.reject(mockSpyPromiseRejection));
     });
 
     it('should throw an error', async () => {

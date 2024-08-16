@@ -2,7 +2,7 @@ import { accessCodeEmail } from '.';
 import notify from '../../integrations/notify';
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
 import getFullNameString from '../../helpers/get-full-name-string';
-import { mockAccount, mockSendEmailResponse, mockErrorMessage } from '../../test-mocks';
+import { mockAccount, mockSendEmailResponse, mockErrorMessage, mockSpyPromiseRejection } from '../../test-mocks';
 
 describe('emails/access-code-email', () => {
   const sendEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
@@ -38,7 +38,7 @@ describe('emails/access-code-email', () => {
 
   describe('error handling', () => {
     beforeAll(async () => {
-      notify.sendEmail = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
+      notify.sendEmail = mockSpyPromiseRejection;
     });
 
     test('should throw an error', async () => {

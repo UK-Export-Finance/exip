@@ -12,7 +12,7 @@ import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/export-contract-agent-service';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -325,7 +325,7 @@ describe('controllers/insurance/export-contract/agent-service', () => {
     describe('when mapAndSave.exportContractAgentService returns an error', () => {
       beforeEach(() => {
         req.body = validBody;
-        const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        const mapAndSaveSpy = mockSpyPromiseRejection;
 
         mapAndSave.exportContractAgentService = mapAndSaveSpy;
       });

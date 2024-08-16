@@ -1,7 +1,7 @@
 import save from '.';
 import api from '../../../../../../api';
 import { sanitiseData } from '../../../../../../helpers/sanitise-data';
-import { mockAccount, mockUrlOrigin } from '../../../../../../test-mocks';
+import { mockAccount, mockUrlOrigin, mockSpyPromiseRejection } from '../../../../../../test-mocks';
 
 describe('controllers/account/create/your-details/save-data', () => {
   const mockCreateAccountResponse = mockAccount;
@@ -32,7 +32,7 @@ describe('controllers/account/create/your-details/save-data', () => {
   describe('api error handling', () => {
     describe('when there is an error', () => {
       beforeEach(() => {
-        accountCreateSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        accountCreateSpy = mockSpyPromiseRejection;
         api.keystone.account.create = accountCreateSpy;
       });
 

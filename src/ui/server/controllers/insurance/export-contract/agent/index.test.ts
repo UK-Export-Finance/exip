@@ -10,7 +10,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import mapAndSave from '../map-and-save/export-contract-agent';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -288,7 +288,7 @@ describe('controllers/insurance/export-contract/agent', () => {
     describe('when mapAndSave.exportContractAgent returns an error', () => {
       beforeEach(() => {
         req.body = validBody;
-        const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        const mapAndSaveSpy = mockSpyPromiseRejection;
 
         mapAndSave.exportContractAgent = mapAndSaveSpy;
       });
