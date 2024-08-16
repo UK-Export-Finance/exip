@@ -15,10 +15,7 @@ context('Insurance - Your buyer - Buyer financial information - Save and back', 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsuranceYourBuyerSection({});
-      cy.completeAndSubmitCompanyOrOrganisationForm({});
-      cy.completeAndSubmitConnectionWithTheBuyerForm({});
-      cy.completeAndSubmitTradedWithBuyerForm({});
+      cy.completeUpToSpecifiedYourBuyerSectionAnswers({ section: 'tradedWithBuyer' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
 

@@ -31,3 +31,7 @@ Cypress.Commands.add(
   'completeBuyerFinancialInformationForm',
   require('../../../../../commands/insurance/your-buyer/complete-buyer-financial-information-form'),
 );
+Cypress.Commands.add(
+  'completeUpToSpecifiedYourBuyerSectionAnswers',
+  require('../../../../../commands/insurance/your-buyer/complete-up-to-specified-your-buy-section-answers'),
+);

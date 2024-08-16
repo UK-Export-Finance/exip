@@ -27,9 +27,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.startInsuranceYourBuyerSection({});
-
-        cy.completeAndSubmitCompanyOrOrganisationForm({});
+        cy.completeUpToSpecifiedYourBuyerSectionAnswers({ section: 'companyOrOrganisation' });
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONNECTION_WITH_BUYER_ROUTE}`;
         tradedWithBuyerUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`;

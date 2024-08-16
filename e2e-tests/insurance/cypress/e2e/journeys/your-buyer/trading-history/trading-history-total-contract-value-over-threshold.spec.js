@@ -21,9 +21,7 @@ context('Insurance - Your buyer - Trading history page - Submission with total c
       url = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
       creditInsuranceCoverUrl = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
 
-      cy.completeAndSubmitCompanyOrOrganisationForm({});
-      cy.completeAndSubmitConnectionWithTheBuyerForm({});
-      cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
+      cy.completeUpToSpecifiedYourBuyerSectionAnswers({ section: 'tradedWithBuyer', exporterHasTradedWithBuyer: true });
 
       cy.assertUrl(url);
     });

@@ -25,12 +25,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.startInsuranceYourBuyerSection({});
-
-        cy.completeAndSubmitCompanyOrOrganisationForm({});
-        cy.completeAndSubmitConnectionWithTheBuyerForm({});
-        cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: false });
-        cy.completeAndSubmitBuyerFinancialInformationForm({});
+        cy.completeUpToSpecifiedYourBuyerSectionAnswers({ section: 'buyerFinancialInformation', exporterHasTradedWithBuyer: false });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       });

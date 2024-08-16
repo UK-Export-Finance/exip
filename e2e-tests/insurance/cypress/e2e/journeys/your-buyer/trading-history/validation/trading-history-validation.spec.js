@@ -28,9 +28,7 @@ context('Insurance - Your buyer - Trading history page - Validation', () => {
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
 
-      cy.completeAndSubmitCompanyOrOrganisationForm({});
-      cy.completeAndSubmitConnectionWithTheBuyerForm({});
-      cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
+      cy.completeUpToSpecifiedYourBuyerSectionAnswers({ section: 'tradedWithBuyer', exporterHasTradedWithBuyer: true });
 
       cy.assertUrl(url);
     });

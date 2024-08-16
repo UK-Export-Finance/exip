@@ -35,10 +35,7 @@ context(
         url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
         buyerFinancialInformationUrl = `${baseUrl}${ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
 
-        cy.completeAndSubmitCompanyOrOrganisationForm({});
-        cy.completeAndSubmitConnectionWithTheBuyerForm({});
-        cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
-        cy.completeAndSubmitTradingHistoryWithBuyerForm({});
+        cy.completeUpToSpecifiedYourBuyerSectionAnswers({ section: 'tradingHistoryWithBuyer', exporterHasTradingHistoryWithBuyer: true });
 
         cy.assertUrl(url);
       });

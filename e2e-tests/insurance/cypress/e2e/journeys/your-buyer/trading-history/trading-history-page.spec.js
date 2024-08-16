@@ -38,9 +38,7 @@ context(
         buyerFinancialInformationUrl = `${baseUrl}${ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
         alternativeCurrencyUrl = `${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`;
 
-        cy.completeAndSubmitCompanyOrOrganisationForm({});
-        cy.completeAndSubmitConnectionWithTheBuyerForm({});
-        cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
+        cy.completeUpToSpecifiedYourBuyerSectionAnswers({ section: 'tradedWithBuyer', exporterHasTradedWithBuyer: true });
 
         cy.assertUrl(url);
       });
