@@ -66,7 +66,7 @@ context(`Insurance - Export contract - Agent charges - Save and go back - ${METH
 
         cy.assertAgentChargesFieldValues({
           percentageMethod: true,
-          expectedChargePercentage: '',
+          expectedPercentageCharge: '',
           expectedPayableCountry: '',
         });
       });

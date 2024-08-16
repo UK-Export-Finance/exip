@@ -9,6 +9,7 @@ import { SummaryListParamsExportContract, SummaryListGroupData } from '../../../
  * Create all fields for the Insurance - "Export contract - about the export" govukSummaryList
  * @param {ApplicationExportContract} exportContract: All submitted export contract data
  * @param {Boolean} totalContractValueOverThreshold: "Total contract value is over the threshold" flag
+ * @param {Boolean} migratedV1toV2: Application has been migrated from V1 to V2
  * @param {Number} referenceNumber: Application reference number
  * @param {Array<Country>} countries: Countries
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
@@ -17,13 +18,14 @@ import { SummaryListParamsExportContract, SummaryListGroupData } from '../../../
 export const generateFields = ({
   exportContract,
   totalContractValueOverThreshold,
+  migratedV1toV2,
   referenceNumber,
   countries,
   checkAndChange,
 }: SummaryListParamsExportContract) => {
   const fields = [generateAboutTheExportFields(exportContract, referenceNumber, countries, checkAndChange)] as Array<SummaryListGroupData>;
 
-  if (totalContractValueOverThreshold) {
+  if (totalContractValueOverThreshold || migratedV1toV2) {
     fields.push(generatePrivateMarketFields(exportContract.privateMarket, referenceNumber, checkAndChange));
   }
 
@@ -37,6 +39,7 @@ export const generateFields = ({
  * Create multiple groups with govukSummaryList data structure
  * @param {ApplicationExportContract} exportContract: Export contract answers/submitted data in a simple object.text structure
  * @param {Boolean} totalContractValueOverThreshold: "Total contract value is over the threshold" flag
+ * @param {Boolean} migratedV1toV2: Application has been migrated from V1 to V2
  * @param {Number} referenceNumber: Application reference number
  * @param {Array<Country>} countries: Countries
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
@@ -45,11 +48,12 @@ export const generateFields = ({
 export const exportContractSummaryLists = ({
   exportContract,
   totalContractValueOverThreshold,
+  migratedV1toV2,
   referenceNumber,
   countries,
   checkAndChange,
 }: SummaryListParamsExportContract) => {
-  const fields = generateFields({ exportContract, totalContractValueOverThreshold, referenceNumber, countries, checkAndChange });
+  const fields = generateFields({ exportContract, totalContractValueOverThreshold, migratedV1toV2, referenceNumber, countries, checkAndChange });
 
   const summaryList = generateGroupsOfSummaryLists(fields);
 

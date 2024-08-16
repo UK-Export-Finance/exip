@@ -45,7 +45,9 @@ const mapTextareaFields = (application: Application): Application => {
 
     buyer.relationship[CONNECTION_WITH_BUYER_DESCRIPTION] = replaceCharacterCodesWithCharacters(buyer.relationship[CONNECTION_WITH_BUYER_DESCRIPTION]);
 
-    buyer[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER] = replaceCharacterCodesWithCharacters(buyer[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]);
+    buyer.relationship[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER] = replaceCharacterCodesWithCharacters(
+      buyer.relationship[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER],
+    );
 
     company.differentTradingAddress[ALT_TRADING_FULL_ADDRESS] = replaceCharacterCodesWithCharacters(company.differentTradingAddress[ALT_TRADING_FULL_ADDRESS]);
 

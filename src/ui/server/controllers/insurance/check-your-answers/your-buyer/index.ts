@@ -52,7 +52,7 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber } = application;
+    const { migratedV1toV2, referenceNumber, totalContractValueOverThreshold } = application;
 
     const checkAndChange = true;
 
@@ -60,7 +60,8 @@ export const get = async (req: Request, res: Response) => {
       application.buyer,
       application.eligibility,
       referenceNumber,
-      application.totalContractValueOverThreshold,
+      totalContractValueOverThreshold,
+      migratedV1toV2,
       checkAndChange,
     );
 

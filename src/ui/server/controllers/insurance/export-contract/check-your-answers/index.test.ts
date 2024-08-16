@@ -12,7 +12,7 @@ import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../te
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
-const { exportContract, referenceNumber, totalContractValueOverThreshold } = mockApplication;
+const { exportContract, referenceNumber, migratedV1toV2, totalContractValueOverThreshold } = mockApplication;
 
 describe('controllers/insurance/export-contract/check-your-answers', () => {
   let req: Request;
@@ -50,6 +50,7 @@ describe('controllers/insurance/export-contract/check-your-answers', () => {
       const summaryLists = exportContractSummaryLists({
         exportContract,
         totalContractValueOverThreshold,
+        migratedV1toV2,
         referenceNumber,
         countries: mockCountries,
       });

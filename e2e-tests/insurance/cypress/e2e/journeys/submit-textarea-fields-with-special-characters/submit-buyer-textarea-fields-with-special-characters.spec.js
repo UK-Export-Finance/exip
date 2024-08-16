@@ -4,12 +4,13 @@ import mockStringWithSpecialCharacters from '../../../../../fixtures/string-with
 
 const {
   ROOT,
-  YOUR_BUYER: { CONNECTION_WITH_BUYER, COMPANY_OR_ORGANISATION },
+  YOUR_BUYER: { CONNECTION_WITH_BUYER, COMPANY_OR_ORGANISATION, CREDIT_INSURANCE_COVER },
 } = INSURANCE_ROUTES;
 
 const {
   COMPANY_OR_ORGANISATION: { ADDRESS },
   CONNECTION_WITH_BUYER_DESCRIPTION,
+  PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
 } = BUYER_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -18,6 +19,7 @@ context('Insurance - Textarea fields - `Buyer` textarea fields should render spe
   let referenceNumber;
   let companyOrganisationUrl;
   let connectionToTheBuyerUrl;
+  let creditInsuranceCoverUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -25,6 +27,8 @@ context('Insurance - Textarea fields - `Buyer` textarea fields should render spe
 
       companyOrganisationUrl = `${baseUrl}${ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`;
       connectionToTheBuyerUrl = `${baseUrl}${ROOT}/${referenceNumber}${CONNECTION_WITH_BUYER}`;
+
+      creditInsuranceCoverUrl = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
     });
   });
 
@@ -79,7 +83,27 @@ context('Insurance - Textarea fields - `Buyer` textarea fields should render spe
     });
   });
 
-  // TODO: EMS-2473
-  // describe("'buyer - credit insurance cover' page", () => {
-  // });
+  describe(PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, () => {
+    describe('when submitting the textarea field with special characters and going back to the page', () => {
+      beforeEach(() => {
+        cy.saveSession();
+
+        cy.navigateToUrl(creditInsuranceCoverUrl);
+
+        cy.completeAndSubmitCreditInsuranceCoverForm({
+          hasHadCreditInsuranceCoverWithBuyer: true,
+          creditInsuranceCoverDescription: mockStringWithSpecialCharacters,
+        });
+
+        cy.clickBackLink();
+      });
+
+      it('should render special characters exactly as they were submitted', () => {
+        cy.checkTextareaValue({
+          fieldId: PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+          expectedValue: mockStringWithSpecialCharacters,
+        });
+      });
+    });
+  });
 });
