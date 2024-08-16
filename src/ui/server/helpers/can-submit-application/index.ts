@@ -33,7 +33,7 @@ const canSubmitApplication = (application: Application): boolean => {
   }
 
   if (status !== IN_PROGRESS) {
-    console.info('Unable to submit application - application does not have a %s status (canSubmitApplication helper)', IN_PROGRESS);
+    console.info(`Unable to submit application - application does not have an '${IN_PROGRESS}' status (canSubmitApplication helper)`);
 
     return false;
   }
@@ -44,13 +44,13 @@ const canSubmitApplication = (application: Application): boolean => {
   const validSubmissionDeadline = isAfter(new Date(submissionDeadline), now);
 
   if (!validSubmissionDeadline) {
-    console.info('Unable to submit application - invalid submission deadline  (canSubmitApplication helper)');
+    console.info('Unable to submit application - invalid submission deadline (canSubmitApplication helper)');
 
     return false;
   }
 
   if (submissionCount !== 0) {
-    console.info('Unable to submit application - application has already been submitted  (canSubmitApplication helper)');
+    console.info('Unable to submit application - application has already been submitted (canSubmitApplication helper)');
 
     return false;
   }

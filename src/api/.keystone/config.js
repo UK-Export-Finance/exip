@@ -611,6 +611,7 @@ if (isDevEnvironment) {
     "addAndGetOTP",
     "createApplications",
     "createAnAbandonedApplication",
+    "createManyApplications",
     "createBuyer",
     "deleteAnAccount",
     "deleteApplications",
@@ -2758,6 +2759,16 @@ var typeDefs = `
     referenceNumber: Int
   }
 
+  type ApplicationResponse {
+    id: String
+    referenceNumber: Int
+  }
+
+  type CreateManyApplicationsResponse {
+    success: Boolean!
+    applications: [ApplicationResponse]
+  }
+
   type CreateAnAbandonedApplicationResponse {
     success: Boolean!
     id: String
@@ -2870,6 +2881,12 @@ var typeDefs = `
       company: CompanyInput!
       sectionReview: SectionReviewInput!
     ): CreateAnApplicationResponse
+
+     """ create many applications """
+    createManyApplications(
+      accountId: String!
+      count: Int!
+    ): CreateManyApplicationsResponse
 
     """ create an application """
     createAnAbandonedApplication(
@@ -4157,8 +4174,21 @@ var send_email_reactivate_account_link_default2 = sendEmailReactivateAccountLink
 
 // helpers/create-an-application/create-initial-application/index.ts
 var import_date_fns5 = require("date-fns");
-var { DEAL_TYPE, LATEST_VERSION_NUMBER: LATEST_VERSION_NUMBER2, STATUS, SUBMISSION_COUNT_DEFAULT, SUBMISSION_DEADLINE_IN_MONTHS, SUBMISSION_TYPE: SUBMISSION_TYPE2 } = APPLICATION;
-var createInitialApplication = async ({ context, accountId, status = STATUS.IN_PROGRESS }) => {
+
+// constants/application/initial-application-data/index.ts
+var { STATUS, LATEST_VERSION_NUMBER: LATEST_VERSION_NUMBER2, DEAL_TYPE, SUBMISSION_COUNT_DEFAULT } = APPLICATION;
+var INITIAL_APPLICATION_DATA = {
+  status: STATUS.IN_PROGRESS,
+  version: LATEST_VERSION_NUMBER2,
+  dealType: DEAL_TYPE,
+  submissionCount: SUBMISSION_COUNT_DEFAULT
+};
+var initial_application_data_default = INITIAL_APPLICATION_DATA;
+
+// helpers/create-an-application/create-initial-application/index.ts
+var { STATUS: STATUS2, SUBMISSION_DEADLINE_IN_MONTHS, SUBMISSION_TYPE: SUBMISSION_TYPE2 } = APPLICATION;
+var { status: inititalStatus, ...APPLICATION_FIELDS } = initial_application_data_default;
+var createInitialApplication = async ({ context, accountId, status = STATUS2.IN_PROGRESS }) => {
   try {
     console.info("Creating initial application (createInitialApplication helper) for user %s", accountId);
     const now2 = /* @__PURE__ */ new Date();
@@ -4168,13 +4198,11 @@ var createInitialApplication = async ({ context, accountId, status = STATUS.IN_P
           connect: { id: accountId }
         },
         createdAt: now2,
-        dealType: DEAL_TYPE,
         status,
-        submissionCount: SUBMISSION_COUNT_DEFAULT,
         submissionDeadline: (0, import_date_fns5.addMonths)(new Date(now2), SUBMISSION_DEADLINE_IN_MONTHS),
         submissionType: SUBMISSION_TYPE2.MIA,
         updatedAt: now2,
-        version: LATEST_VERSION_NUMBER2
+        ...APPLICATION_FIELDS
       }
     });
     return application2;
@@ -4395,8 +4423,8 @@ var createABuyerRelationship = async (context, buyerId, applicationId) => {
 };
 var create_a_buyer_relationship_default = createABuyerRelationship;
 
-// helpers/create-a-buyer/index.ts
-var createABuyer = async (context, countryId, applicationId) => {
+// helpers/create-a-populated-buyer/index.ts
+var createAPopulatedBuyer = async (context, countryId, applicationId) => {
   console.info("Creating a buyer for %s", applicationId);
   try {
     const buyer = await context.db.Buyer.createOne({
@@ -4419,11 +4447,11 @@ var createABuyer = async (context, countryId, applicationId) => {
       buyerContact
     };
   } catch (error) {
-    console.error("Error creating a buyer %O", error);
-    throw new Error(`Creating a buyer ${error}`);
+    console.error("Error creating a populated buyer %O", error);
+    throw new Error(`Creating a populated buyer ${error}`);
   }
 };
-var create_a_buyer_default = createABuyer;
+var create_a_populated_buyer_default = createAPopulatedBuyer;
 
 // helpers/create-a-declaration-version/index.ts
 var { ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT, CONFIDENTIALITY, CONFIRMATION_AND_ACKNOWLEDGEMENTS } = declarations_default2.LATEST_DECLARATIONS;
@@ -4452,7 +4480,7 @@ var create_a_declaration_version_default = createADeclarationVersion;
 
 // helpers/create-a-declaration/index.ts
 var createADeclaration = async (context, applicationId) => {
-  console.info("Creating a application declaration for %s", applicationId);
+  console.info("Creating an application declaration for ", applicationId);
   try {
     const declaration = await context.db.Declaration.createOne({
       data: {
@@ -4916,7 +4944,7 @@ var createApplicationRelationships = async ({
     const createdRelationships = await Promise.all([
       create_a_broker_default(context, applicationId),
       create_a_business_default(context, applicationId),
-      create_a_buyer_default(context, country.id, applicationId),
+      create_a_populated_buyer_default(context, country.id, applicationId),
       create_a_declaration_default(context, applicationId),
       create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
       create_an_export_contract_default(context, applicationId),
@@ -5104,12 +5132,132 @@ var createAnApplication = async (root, variables, context) => {
 };
 var create_an_application_default2 = createAnApplication;
 
+// helpers/get-countries/index.ts
+var getCountries = async (context) => {
+  console.info("Getting countries");
+  try {
+    const countries = await context.db.Country.findMany();
+    return countries;
+  } catch (error) {
+    console.error("Error getting countries %O", error);
+    throw new Error(`Getting countries ${error}`);
+  }
+};
+var get_countries_default = getCountries;
+
+// helpers/create-a-buyer/index.ts
+var createABuyer = async (context, countryId) => {
+  console.info("Creating a buyer");
+  try {
+    const buyer = await context.db.Buyer.createOne({
+      data: {
+        country: {
+          connect: {
+            id: countryId
+          }
+        }
+      }
+    });
+    return buyer;
+  } catch (error) {
+    console.error("Error creating a buyer %O", error);
+    throw new Error(`Creating a buyer ${error}`);
+  }
+};
+var create_a_buyer_default = createABuyer;
+
+// helpers/create-many-applications-and-reference-numbers/index.ts
+var createManyApplicationsAndReferenceNumbers = async (context, applicationData) => {
+  console.info("Creating many applications and reference numbers");
+  try {
+    const applications = await context.db.Application.createMany({
+      data: applicationData
+    });
+    const referenceNumbersData = applications.map((application2) => ({
+      application: {
+        connect: {
+          id: application2.id
+        }
+      }
+    }));
+    const referenceNumbers = await context.db.ReferenceNumber.createMany({ data: referenceNumbersData });
+    return {
+      applications,
+      referenceNumbers
+    };
+  } catch (error) {
+    console.error("Error creating many applications and reference numbers - helper %O", error);
+    throw new Error(`Creating many applications and reference numbers - helper ${error}`);
+  }
+};
+var create_many_applications_and_reference_numbers_default = createManyApplicationsAndReferenceNumbers;
+
+// helpers/update-applications-data/index.ts
+var updateApplicationsData = async (context, updateData) => {
+  console.info("Updating many applications");
+  try {
+    const updatedApplications = await context.db.Application.updateMany({
+      data: updateData
+    });
+    return updatedApplications;
+  } catch (error) {
+    console.error("Error updating many applications - helper %O", error);
+    throw new Error(`Updating many applications - helper ${error}`);
+  }
+};
+var update_applications_data_default = updateApplicationsData;
+
+// custom-resolvers/mutations/create-many-applications/index.ts
+var createManyApplications = async (root, variables, context) => {
+  console.info("Creating many applications");
+  try {
+    const emptyArray = new Array(variables.count).fill({});
+    const countries = await get_countries_default(context);
+    const buyer = await create_a_buyer_default(context, countries[0].id);
+    const mockApplicationsData = emptyArray.map(() => ({
+      owner: {
+        connect: {
+          id: variables.accountId
+        }
+      },
+      buyer: {
+        connect: {
+          id: buyer.id
+        }
+      },
+      ...initial_application_data_default
+    }));
+    const { referenceNumbers } = await create_many_applications_and_reference_numbers_default(context, mockApplicationsData);
+    const updateApplicationReferenceNumbers = referenceNumbers.map((referenceNumber) => ({
+      where: { id: referenceNumber.applicationId },
+      data: { referenceNumber: referenceNumber.id }
+    }));
+    await update_applications_data_default(context, updateApplicationReferenceNumbers);
+    const allApplications = await context.query.Application.findMany({
+      query: "id referenceNumber"
+    });
+    if (allApplications.length) {
+      return {
+        applications: allApplications,
+        success: true
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (error) {
+    console.error("Error creating many applications %O", error);
+    throw new Error(`Creating many applications ${error}`);
+  }
+};
+var create_many_applications_default = createManyApplications;
+
 // custom-resolvers/mutations/create-an-abandoned-application/index.ts
-var { STATUS: STATUS2 } = APPLICATION;
+var { STATUS: STATUS3 } = APPLICATION;
 var createAnAbandonedApplication = async (root, variables, context) => {
   console.info("Creating an abandoned application for %s", variables.accountId);
   const abandonedApplicationVariables = variables;
-  abandonedApplicationVariables.status = STATUS2.ABANDONED;
+  abandonedApplicationVariables.status = STATUS3.ABANDONED;
   try {
     const createdApplication = await create_an_application_default(abandonedApplicationVariables, context);
     if (createdApplication) {
@@ -5862,19 +6010,6 @@ var populatedApplication = {
 };
 var get_populated_application_default = populatedApplication;
 
-// helpers/get-countries/index.ts
-var getCountries = async (context) => {
-  console.info("Getting countries");
-  try {
-    const countries = await context.db.Country.findMany();
-    return countries;
-  } catch (error) {
-    console.error("Error getting countries %O", error);
-    throw new Error(`Getting countries ${error}`);
-  }
-};
-var get_countries_default = getCountries;
-
 // helpers/replace-character-codes-with-characters/index.ts
 var replaceCharacterCodesWithCharacters = (str) => str.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#x27;/g, "'").replace(/&#x2F;/g, "/").replace(/&#42;/g, "*").replace(/&amp;/g, "&");
 var replace_character_codes_with_characters_default = replaceCharacterCodesWithCharacters;
@@ -6040,8 +6175,8 @@ var DECLARATIONS_FIELDS = {
 // content-strings/links.ts
 var LINKS = {
   EXTERNAL: {
-    GUIDANCE: "https://www.gov.uk/guidance/export-insurance-policy#eligibility",
-    BEFORE_YOU_START: "https://www.gov.uk/guidance/get-a-quote-for-ukef-export-insurance",
+    GUIDANCE: "https://www.gov.uk/guidance/credit-insurance-policy#eligibility",
+    BEFORE_YOU_START: "https://www.gov.uk/guidance/get-a-quote-for-ukef-credit-insurance",
     PRIVACY: "https://www.gov.uk/government/publications/ukef-privacy-notice/ukef-privacy-notice--2",
     FEEDBACK: "https://forms.office.com/r/TacytrRCgJ",
     RESEARCH: "https://forms.office.com/pages/responsepage.aspx?id=jhOEgACUnkCm2ka1KB4LCkj8OKxLpCpDmTbrMyQ3j2JUOUFHNUc0QUhUOFdLNkJXWkRUS0wyMUZFNiQlQCN0PWcu",
@@ -6049,7 +6184,7 @@ var LINKS = {
     APPROVED_BROKER_LIST: "https://www.gov.uk/government/publications/uk-export-finance-insurance-list-of-approved-brokers/export-insurance-approved-brokers",
     PROPOSAL_FORM: "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1075267/10489_UKEF_Export_Insurance_Proposal_Form_20220513-fillable.pdf",
     NBI_FORM: "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1041659/export-insurance-non-binding-indication-request-form_20170609.pdf",
-    FULL_APPLICATION: "https://www.gov.uk/guidance/apply-for-ukef-export-insurance",
+    FULL_APPLICATION: "https://www.gov.uk/guidance/apply-for-ukef-credit-insurance",
     ABILITY_NET: "https://mcmw.abilityNet.org.uk",
     EQUALITY_ADVISORY_SERVICE: "https://www.equalityadvisoryservice.com",
     ACCESSIBILITY_GUIDLINES: "https://www.w3.org/TR/WCAG21",
@@ -6321,7 +6456,7 @@ var POLICY_FIELDS = {
       MULTIPLE: {
         ID: MULTIPLE_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
-        TEXT: "Multiple contract policy (revolving credit)",
+        TEXT: "Multiple contract policy (Revolving credit)",
         HINT_LIST: [
           `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER} months`,
           "Best if you'll have an ongoing relationship with the buyer but you're not sure yet how many contracts or sales you'll have",
@@ -7149,18 +7284,28 @@ var {
   }
 } = insurance_default;
 var mapEligibility = (application2) => {
-  const { company, eligibility } = application2;
-  const mapped = [
+  const { company, eligibility, migratedV1toV2 } = application2;
+  let mapped = [
     xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default({ answer: eligibility[VALID_EXPORTER_LOCATION2] })),
     xlsx_row_default(FIELDS_ELIGIBILITY[HAS_COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE, map_yes_no_field_default({ answer: eligibility[HAS_COMPANIES_HOUSE_NUMBER2] })),
     xlsx_row_default(String(FIELDS4[COMPANIES_HOUSE_NUMBER3]), company[COMPANIES_HOUSE_NUMBER3]),
-    xlsx_row_default(String(FIELDS4[BUYER_COUNTRY3]), eligibility[BUYER_COUNTRY3].name),
-    xlsx_row_default(String(FIELDS4[MORE_THAN_250K2.VALUE]), map_yes_no_field_default({ answer: eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID })),
+    xlsx_row_default(String(FIELDS4[BUYER_COUNTRY3]), eligibility[BUYER_COUNTRY3].name)
+  ];
+  const totalContractValueAnswer = migratedV1toV2 ? null : eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID;
+  mapped = [
+    ...mapped,
+    xlsx_row_default(String(FIELDS4[MORE_THAN_250K2.VALUE]), map_yes_no_field_default({ answer: totalContractValueAnswer })),
     xlsx_row_default(String(FIELDS4[COVER_PERIOD3]), eligibility[COVER_PERIOD_ELIGIBILITY].value),
-    xlsx_row_default(String(FIELDS4[HAS_MINIMUM_UK_GOODS_OR_SERVICES3]), map_yes_no_field_default({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES3] })),
-    xlsx_row_default(String(FIELDS4[HAS_END_BUYER3]), map_yes_no_field_default({ answer: eligibility[HAS_END_BUYER3] })),
-    xlsx_row_default(String(FIELDS4[IS_PARTY_TO_CONSORTIUM2]), map_yes_no_field_default({ answer: eligibility[IS_PARTY_TO_CONSORTIUM2] })),
-    xlsx_row_default(String(FIELDS4[IS_MEMBER_OF_A_GROUP2]), map_yes_no_field_default({ answer: eligibility[IS_MEMBER_OF_A_GROUP2] }))
+    xlsx_row_default(String(FIELDS4[HAS_MINIMUM_UK_GOODS_OR_SERVICES3]), map_yes_no_field_default({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES3] }))
+  ];
+  const endBuyerAnswer = migratedV1toV2 ? null : eligibility[HAS_END_BUYER3];
+  const partyToConsortiumAnswer = migratedV1toV2 ? null : eligibility[IS_PARTY_TO_CONSORTIUM2];
+  const memberOfGroupAnswer = migratedV1toV2 ? null : eligibility[IS_PARTY_TO_CONSORTIUM2];
+  mapped = [
+    ...mapped,
+    xlsx_row_default(String(FIELDS4[HAS_END_BUYER3]), map_yes_no_field_default({ answer: endBuyerAnswer })),
+    xlsx_row_default(String(FIELDS4[IS_PARTY_TO_CONSORTIUM2]), map_yes_no_field_default({ answer: partyToConsortiumAnswer })),
+    xlsx_row_default(String(FIELDS4[IS_MEMBER_OF_A_GROUP2]), map_yes_no_field_default({ answer: memberOfGroupAnswer }))
   ];
   return mapped;
 };
@@ -7714,14 +7859,15 @@ var { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: HAS_PREVIOUS_CREDIT_INSURA
 var { FIELDS: FIELDS23 } = XLSX;
 var mapPreviousCoverWithBuyer = (application2) => {
   const {
-    buyer: { relationship: buyerRelationship },
+    buyer: { relationship: relationship2 },
+    migratedV1toV2,
     totalContractValueOverThreshold
   } = application2;
-  if (totalContractValueOverThreshold) {
-    const answer = buyerRelationship[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3];
+  if (totalContractValueOverThreshold || migratedV1toV2) {
+    const answer = relationship2[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3];
     const mapped = [xlsx_row_default(String(FIELDS23[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), map_yes_no_field_default({ answer }))];
     if (answer === true) {
-      mapped.push(xlsx_row_default(String(FIELDS23[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), buyerRelationship[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]));
+      mapped.push(xlsx_row_default(String(FIELDS23[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), relationship2[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]));
     }
     return mapped;
   }
@@ -7808,9 +7954,10 @@ var {
 var mapPrivateMarket = (application2) => {
   const {
     exportContract: { privateMarket },
+    migratedV1toV2,
     totalContractValueOverThreshold
   } = application2;
-  if (totalContractValueOverThreshold) {
+  if (totalContractValueOverThreshold || migratedV1toV2) {
     const attempedPrivateMarketAnswer = privateMarket[ATTEMPTED];
     const mapped = [xlsx_row_default(String(FIELDS26.EXPORT_CONTRACT[ATTEMPTED]), map_yes_no_field_default({ answer: attempedPrivateMarketAnswer }))];
     if (attempedPrivateMarketAnswer) {
@@ -9258,6 +9405,7 @@ var customResolvers = {
     sendEmailPasswordResetLink: send_email_password_reset_link_default,
     sendEmailReactivateAccountLink: send_email_reactivate_account_link_default2,
     createAnApplication: create_an_application_default2,
+    createManyApplications: create_many_applications_default,
     createAnAbandonedApplication: create_an_abandoned_application_default,
     deleteApplicationByReferenceNumber: delete_application_by_reference_number_default,
     submitApplication: submit_application_default,

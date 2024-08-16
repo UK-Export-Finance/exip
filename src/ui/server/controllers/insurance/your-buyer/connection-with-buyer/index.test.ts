@@ -6,9 +6,9 @@ import YOUR_BUYER_FIELD_IDS from '../../../../constants/field-ids/insurance/your
 import { TEMPLATES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 import constructPayload from '../../../../helpers/construct-payload';
-import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/buyer-relationship';
 import { Request, Response } from '../../../../../types';

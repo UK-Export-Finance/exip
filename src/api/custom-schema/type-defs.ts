@@ -208,6 +208,16 @@ const typeDefs = `
     referenceNumber: Int
   }
 
+  type ApplicationResponse {
+    id: String
+    referenceNumber: Int
+  }
+
+  type CreateManyApplicationsResponse {
+    success: Boolean!
+    applications: [ApplicationResponse]
+  }
+
   type CreateAnAbandonedApplicationResponse {
     success: Boolean!
     id: String
@@ -320,6 +330,12 @@ const typeDefs = `
       company: CompanyInput!
       sectionReview: SectionReviewInput!
     ): CreateAnApplicationResponse
+
+     """ create many applications """
+    createManyApplications(
+      accountId: String!
+      count: Int!
+    ): CreateManyApplicationsResponse
 
     """ create an application """
     createAnAbandonedApplication(

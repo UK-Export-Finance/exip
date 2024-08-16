@@ -20,7 +20,7 @@ WORKDIR /app
 # NPM
 COPY --chown=node:node package.json .
 COPY --chown=node:node package-lock.json .
-RUN npm ci --legacy-peer-deps
+RUN npm ci
 
 # Copy API
 COPY --chown=node:node ./keystone.ts .
@@ -44,6 +44,7 @@ COPY --chown=node:node ./helpers ./helpers
 COPY --chown=node:node ./integrations ./integrations
 COPY --chown=node:node ./middleware ./middleware
 COPY --chown=node:node ./nullable-checkbox ./nullable-checkbox
+COPY --chown=node:node ./test-mocks ./test-mocks
 COPY --chown=node:node ./XLSX ./XLSX
 
 
@@ -53,7 +54,7 @@ RUN npm run build
 # Lean NPM - Only install `dependencies`
 # `devDependencies` will still be resolved inside `package-lock.json`,
 # however they will not be installed inside `node_modules` directory.
-RUN npm ci --legacy-peer-deps --omit=dev
+RUN npm ci --omit=dev
 
 # Non-root user
 USER node

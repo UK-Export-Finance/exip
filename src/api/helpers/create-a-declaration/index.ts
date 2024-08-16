@@ -3,13 +3,13 @@ import { Context } from '../../types';
 
 /**
  * createADeclaration
- * Create a declaration with an application relationship
+ * Create a declaration with application and declaration version relationships.
  * @param {Context} context: KeystoneJS context API
  * @param {String} applicationId: Application ID
- * @returns {Promise<Object>} Created declaration
+ * @returns {Promise<ApplicationDeclaration>}  Created declaration
  */
 const createADeclaration = async (context: Context, applicationId: string) => {
-  console.info('Creating a application declaration for %s', applicationId);
+  console.info('Creating an application declaration for ', applicationId);
 
   try {
     const declaration = await context.db.Declaration.createOne({
