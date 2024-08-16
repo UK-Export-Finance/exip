@@ -25,6 +25,7 @@ context('Insurance - Declarations - Confidentiality page - Save and go back', ()
       referenceNumber = refNumber;
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+      cy.completeAndSubmitCheckYourAnswers();
 
       // go to the page we want to test.
       task.link().click();

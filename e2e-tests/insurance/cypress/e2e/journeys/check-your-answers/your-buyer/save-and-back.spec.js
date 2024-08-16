@@ -33,6 +33,8 @@ context('Insurance - Check your answers - Your buyer page - Save and back', () =
   beforeEach(() => {
     cy.saveSession();
 
+    cy.navigateToUrl(url);
+
     cy.clickSaveAndBackButton();
   });
 
@@ -48,7 +50,7 @@ context('Insurance - Check your answers - Your buyer page - Save and back', () =
     cy.checkTaskCheckAnswersStatusIsInProgress();
   });
 
-  it('should retain the status of task `declarations and submit` as `not started yet`', () => {
+  it('should retain the status of task `declarations and submit` as `cannot start`', () => {
     cy.checkTaskDeclarationsAndSubmitStatusIsCannotStart();
   });
 });

@@ -92,7 +92,7 @@ context(
             cy.checkTaskCheckAnswersStatusIsInProgress();
           });
 
-          it('should retain the status of task `declarations and submit` as `not started yet`', () => {
+          it('should retain the status of task `declarations and submit` as `cannot start`', () => {
             cy.checkTaskDeclarationsAndSubmitStatusIsCannotStart();
           });
         });

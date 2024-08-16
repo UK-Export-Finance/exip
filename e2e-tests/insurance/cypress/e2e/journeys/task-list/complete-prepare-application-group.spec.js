@@ -28,8 +28,12 @@ context('Insurance - Task list - complete `prepare application` group', () => {
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
     });
 
-    it('should render a `declarations` task with a link and `not started` status', () => {
-      cy.checkTaskDeclarationsAndSubmitStatusIsNotStartedYet();
+    it('renders a `check your answers` task with a status of `not started yet`', () => {
+      cy.checkTaskCheckAnswersStatusIsNotStartedYet();
+    });
+
+    it('should render a `declarations and submit` task with a link and `cannot start` status', () => {
+      cy.checkTaskCheckAnswersStatusIsCannotStart();
     });
   });
 });

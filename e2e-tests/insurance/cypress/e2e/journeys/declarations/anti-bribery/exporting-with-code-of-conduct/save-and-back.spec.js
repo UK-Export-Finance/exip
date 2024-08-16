@@ -31,6 +31,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
       referenceNumber = refNumber;
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+      cy.completeAndSubmitCheckYourAnswers();
 
       // go to the page we want to test.
       task.link().click();

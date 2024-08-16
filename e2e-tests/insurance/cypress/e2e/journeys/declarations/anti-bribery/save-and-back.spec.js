@@ -30,6 +30,8 @@ context('Insurance - Declarations - Anti-bribery page - Save and go back', () =>
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
+      cy.completeAndSubmitCheckYourAnswers();
+
       // go to the page we want to test.
       task.link().click();
 
@@ -60,7 +62,7 @@ context('Insurance - Declarations - Anti-bribery page - Save and go back', () =>
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the status of task `declarations and submit` as `in progress`', () => {
+    it('should update the status of task `declarations and submit` to `in progress`', () => {
       cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
   });

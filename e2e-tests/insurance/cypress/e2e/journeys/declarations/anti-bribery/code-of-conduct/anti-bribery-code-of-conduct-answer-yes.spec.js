@@ -23,6 +23,7 @@ context(
         referenceNumber = refNumber;
 
         cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+        cy.completeAndSubmitCheckYourAnswers();
 
         // go to the page we want to test.
         taskList.submitApplication.tasks.declarationsAndSubmit.link().click();
