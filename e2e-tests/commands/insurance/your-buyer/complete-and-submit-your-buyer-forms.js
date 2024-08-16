@@ -1,8 +1,8 @@
 /**
  * completeAndSubmitYourBuyerForms
- * completes your buyer forms up to the specified section
+ * completes your buyer forms up to the specified form to stop at
  * eg, when 'connectionWithTheBuyer' is passed, it will complete all forms up to and including 'connectionWithTheBuyer'
- * @param {String} form: the form to complete
+ * @param {String} formToStopAt: the form to stop at
  * @param {Boolean} viaTaskList: whether to complete the section via the task list
  * @param {Boolean} hasConnectionToBuyer: whether the exporter has a connection with the buyer
  * @param {Boolean} exporterHasTradedWithBuyer: whether the exporter has traded with the buyer
@@ -12,7 +12,7 @@
  * @param {Boolean} exporterHasBuyerFinancialAccounts: whether the exporter has buyer financial accounts
  */
 const completeAndSubmitYourBuyerForms = ({
-  form,
+  formToStopAt,
   viaTaskList,
   hasConnectionToBuyer,
   exporterHasTradedWithBuyer,
@@ -47,11 +47,12 @@ const completeAndSubmitYourBuyerForms = ({
 
   /**
    * carries out steps in steps array
-   * if the step name matches the section, it breaks out of the loop
+   * if the step name matches the form to stop at, it breaks out of the loop
    */
   for (const step of steps) {
     step.action();
-    if (step.name === form) {
+
+    if (step.name === formToStopAt) {
       break;
     }
   }
