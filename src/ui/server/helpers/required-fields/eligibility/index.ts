@@ -26,15 +26,15 @@ export const GENERIC_IRRELEVANT_FIELD_IDS = [BUYER_COUNTRY_ISO_CODE, COVER_PERIO
 /**
  * IRRELEVANT_FIELD_IDS
  * List of field IDs that are not relevant for V1 or V2 applications.
- * If an application has been migrated from V1 to V2, the IS_PARTY_TO_CONSORTIUM and IS_MEMBER_OF_A_GROUP fields are NOT required.
+ * If an application has been migrated from V1 to V2, the IS_PARTY_TO_CONSORTIUM, IS_MEMBER_OF_A_GROUP and HAS_END_BUYER fields are NOT required.
  * Otherwise, these 2x fields are required.
  * This is because:
- * - In V1, IS_PARTY_TO_CONSORTIUM and IS_MEMBER_OF_A_GROUP fields do NOT exist.
- * - In V2, IS_PARTY_TO_CONSORTIUM and IS_MEMBER_OF_A_GROUP do exist.
+ * - In V1, IS_PARTY_TO_CONSORTIUM, IS_MEMBER_OF_A_GROUP and HAS_END_BUYER fields do NOT exist.
+ * - In V2, IS_PARTY_TO_CONSORTIUM, IS_MEMBER_OF_A_GROUP and HAS_END_BUYER do exist.
  */
 export const IRRELEVANT_FIELD_IDS = {
   V1: GENERIC_IRRELEVANT_FIELD_IDS,
-  V2: [...GENERIC_IRRELEVANT_FIELD_IDS, IS_PARTY_TO_CONSORTIUM, IS_MEMBER_OF_A_GROUP],
+  V2: [...GENERIC_IRRELEVANT_FIELD_IDS, IS_PARTY_TO_CONSORTIUM, IS_MEMBER_OF_A_GROUP, HAS_END_BUYER],
 };
 
 /**

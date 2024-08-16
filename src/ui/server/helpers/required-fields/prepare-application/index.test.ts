@@ -15,12 +15,13 @@ const {
     PRIVATE_MARKET: { ATTEMPTED },
     USING_AGENT,
   },
+  EXPORTER_BUSINESS: {
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME },
+  },
+  MIGRATED_FROM_V1_TO_V2,
   POLICY: {
     TYPE_OF_POLICY: { POLICY_TYPE },
     USING_BROKER,
-  },
-  EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME },
   },
   YOUR_BUYER: { CONNECTION_WITH_BUYER, OUTSTANDING_PAYMENTS, TRADED_WITH_BUYER, HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER },
 } = INSURANCE_FIELD_IDS;
@@ -44,6 +45,7 @@ describe('server/helpers/required-fields/section-review', () => {
         attemptedPrivateMarketCover: flatApplicationData[ATTEMPTED],
         isUsingAgent: flatApplicationData[USING_AGENT],
         awardMethodId: flatApplicationData[AWARD_METHOD]?.id,
+        migratedV1toV2: flatApplicationData[MIGRATED_FROM_V1_TO_V2],
       }),
       ...requiredBusinessFields(flatApplicationData[HAS_DIFFERENT_TRADING_NAME]),
       ...requiredYourBuyerFields({
