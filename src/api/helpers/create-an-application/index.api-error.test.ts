@@ -4,7 +4,7 @@ import applicationRelationships from './create-application-relationships';
 import applicationColumns from './update-application-columns';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
-import { mockCountries } from '../../test-mocks';
+import { mockCountries, mockSpyPromiseRejection } from '../../test-mocks';
 import mockCompany from '../../test-mocks/mock-company';
 import { APPLICATION } from '../../constants';
 import { Context, Application } from '../../types';
@@ -73,7 +73,7 @@ describe('helpers/create-an-application - error handling', () => {
 
   describe('when initialApplication.create fails', () => {
     beforeEach(() => {
-      initialApplication.create = jest.fn(() => Promise.reject(new Error(mockError)));
+      initialApplication.create = mockSpyPromiseRejection;
     });
 
     it('should throw an error', async () => {
@@ -85,7 +85,7 @@ describe('helpers/create-an-application - error handling', () => {
 
   describe('when applicationRelationships.create fails', () => {
     beforeEach(() => {
-      applicationRelationships.create = jest.fn(() => Promise.reject(new Error(mockError)));
+      applicationRelationships.create = mockSpyPromiseRejection;
     });
 
     it('should throw an error', async () => {
@@ -97,7 +97,7 @@ describe('helpers/create-an-application - error handling', () => {
 
   describe('when applicationColumns.update fails', () => {
     beforeEach(() => {
-      applicationColumns.update = jest.fn(() => Promise.reject(new Error(mockError)));
+      applicationColumns.update = mockSpyPromiseRejection;
     });
 
     it('should throw an error', async () => {

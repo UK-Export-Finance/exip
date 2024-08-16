@@ -11,7 +11,7 @@ import mapSubmittedEligibilityCountry from '../../../helpers/mappings/map-submit
 import api from '../../../api';
 import mapCountries from '../../../helpers/mappings/map-countries';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
-import { mockReq, mockRes, mockCountries } from '../../../test-mocks';
+import { mockReq, mockRes, mockCountries, mockSpyPromiseRejection } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
 describe('controllers/quote/buyer-country', () => {
@@ -171,7 +171,7 @@ describe('controllers/quote/buyer-country', () => {
     describe('api error handling', () => {
       describe('when the get CIS countries API call fails', () => {
         beforeEach(() => {
-          getCisCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          getCisCountriesSpy = mockSpyPromiseRejection;
           api.keystone.APIM.getCisCountries = getCisCountriesSpy;
         });
 
@@ -372,7 +372,7 @@ describe('controllers/quote/buyer-country', () => {
     describe('api error handling', () => {
       describe('when the get CIS countries API call fails', () => {
         beforeEach(() => {
-          getCisCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          getCisCountriesSpy = mockSpyPromiseRejection;
           api.keystone.APIM.getCisCountries = getCisCountriesSpy;
         });
 

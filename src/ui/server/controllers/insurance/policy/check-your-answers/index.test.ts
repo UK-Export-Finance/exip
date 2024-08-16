@@ -19,6 +19,7 @@ import {
   mockCurrenciesResponse,
   mockCurrenciesEmptyResponse,
   mockNominatedLossPayee,
+  mockSpyPromiseRejection,
   referenceNumber,
 } from '../../../../test-mocks';
 import { mockBroker } from '../../../../test-mocks/mock-application';
@@ -133,7 +134,7 @@ describe('controllers/insurance/policy/check-your-answers', () => {
     describe('api error handling', () => {
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          getCurrenciesSpy = mockSpyPromiseRejection;
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
@@ -159,7 +160,7 @@ describe('controllers/insurance/policy/check-your-answers', () => {
 
       describe('when the get countries API call fails', () => {
         beforeEach(() => {
-          getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          getCountriesSpy = mockSpyPromiseRejection;
           api.keystone.countries.getAll = getCountriesSpy;
         });
 

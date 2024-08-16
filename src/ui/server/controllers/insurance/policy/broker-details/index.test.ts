@@ -12,7 +12,7 @@ import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection } from '../../../../test-mocks';
 
 const { NAME, EMAIL, FULL_ADDRESS } = POLICY_FIELD_IDS.BROKER_DETAILS;
 
@@ -228,7 +228,7 @@ describe('controllers/insurance/policy/broker-details', () => {
 
         describe('when there is an error', () => {
           beforeEach(() => {
-            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+            const mapAndSaveSpy = mockSpyPromiseRejection;
 
             mapAndSave.broker = mapAndSaveSpy;
           });

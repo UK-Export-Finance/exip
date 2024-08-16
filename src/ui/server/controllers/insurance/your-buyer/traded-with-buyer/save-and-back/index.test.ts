@@ -6,7 +6,7 @@ import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/buyer-trading-history';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockBuyer } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockBuyer, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const { CONNECTION_WITH_BUYER, TRADED_WITH_BUYER } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
@@ -113,7 +113,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer/save-and-back', ()
   describe('when mapAndSave.yourBuyer fails', () => {
     beforeEach(() => {
       res.locals = mockRes().locals;
-      updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
+      updateMapAndSave = mockSpyPromiseRejection;
       mapAndSave.buyerTradingHistory = updateMapAndSave;
     });
 

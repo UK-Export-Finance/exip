@@ -2,7 +2,7 @@ import { passwordResetLink } from '.';
 import notify from '../../integrations/notify';
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
 import getFullNameString from '../../helpers/get-full-name-string';
-import { mockAccount, mockUrlOrigin, mockSendEmailResponse, mockErrorMessage } from '../../test-mocks';
+import { mockAccount, mockUrlOrigin, mockSendEmailResponse, mockErrorMessage, mockSpyPromiseRejection } from '../../test-mocks';
 
 describe('emails/password-reset-link', () => {
   const sendEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
@@ -40,7 +40,7 @@ describe('emails/password-reset-link', () => {
 
   describe('error handling', () => {
     beforeAll(async () => {
-      notify.sendEmail = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
+      notify.sendEmail = mockSpyPromiseRejection;
     });
 
     test('should throw an error', async () => {

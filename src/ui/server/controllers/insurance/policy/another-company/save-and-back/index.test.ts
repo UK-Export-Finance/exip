@@ -3,8 +3,8 @@ import { FIELD_ID } from '..';
 import { ROUTES } from '../../../../../constants';
 import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/jointly-insured-party';
-import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
 import { Request, Response } from '../../../../../../types';
+import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
@@ -106,7 +106,7 @@ describe('controllers/insurance/policy/another-company/save-and-back', () => {
       beforeEach(() => {
         req.body = validBody;
         res.locals = mockRes().locals;
-        updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
+        updateMapAndSave = mockSpyPromiseRejection;
         mapAndSave.jointlyInsuredParty = updateMapAndSave;
       });
 

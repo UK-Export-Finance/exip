@@ -13,7 +13,7 @@ import accountAlreadyExistsAlreadyVerifiedValidation from './validation/account-
 import saveData from './save-data';
 import application from '../../../../../helpers/create-an-application';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockAccount, mockSession, mockCreateApplicationResponse } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockAccount, mockSession, mockCreateApplicationResponse, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const { FIRST_NAME, LAST_NAME, EMAIL, PASSWORD } = ACCOUNT_FIELD_IDS;
 
@@ -328,7 +328,7 @@ describe('controllers/insurance/account/create/your-details', () => {
 
         describe('when there is an error', () => {
           beforeEach(() => {
-            const saveDataSpy = jest.fn(() => Promise.reject(new Error('mock')));
+            const saveDataSpy = mockSpyPromiseRejection;
 
             saveData.account = saveDataSpy;
           });
@@ -353,7 +353,7 @@ describe('controllers/insurance/account/create/your-details', () => {
 
           req.body = validBody;
 
-          createApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          createApplicationSpy = mockSpyPromiseRejection;
           application.create = createApplicationSpy;
         });
 
