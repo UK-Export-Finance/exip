@@ -13,6 +13,7 @@ export * from './encryption';
 export * from './feedback';
 export * from './generic';
 export * from './helpers';
+export * from './object';
 export * from './ordnance-survey';
 export * from './relationship';
 export * from './test-helpers';

@@ -18,6 +18,18 @@ const updateLossPayeeFinancialInternationalVector = async (connection: Connectio
     const financialInternationals = await getAllLossPayeeFinancialInternational(connection);
     const vectors = await getAllLossPayeeFinancialInternationalVectors(connection);
 
+    if (!financialInternationals.length) {
+      console.info('🚨 No financial internationals available - unable to update vector columns');
+
+      throw new Error('🚨 No financial internationals available - unable to update vector columns');
+    }
+
+    if (!vectors.length) {
+      console.info('🚨 No financial international vectors available - unable to update vector columns');
+
+      throw new Error('🚨 No financial international vectors available - unable to update vector columns');
+    }
+
     const promises = financialInternationals.map(async (financialInternational: object, index: number) => {
       const vector = vectors[index];
 

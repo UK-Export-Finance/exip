@@ -37,16 +37,18 @@ interface RequiredFields {
   agentIsCharging?: boolean;
   agentChargeMethod?: string;
   awardMethodId?: string;
+  migratedV1toV2?: boolean;
 }
 
 /**
  * privateCoverTasks
  * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * @param {Boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
+ * @param {Boolean} migratedV1toV2: Application has been migrated from V1 to V2
  * @returns {Array} Array of tasks
  */
-export const privateCoverTasks = ({ totalContractValueOverThreshold, attemptedPrivateMarketCover }: RequiredFields): Array<string> => {
-  if (totalContractValueOverThreshold) {
+export const privateCoverTasks = ({ totalContractValueOverThreshold, attemptedPrivateMarketCover, migratedV1toV2 }: RequiredFields): Array<string> => {
+  if (totalContractValueOverThreshold || migratedV1toV2) {
     if (attemptedPrivateMarketCover) {
       return [DECLINED_DESCRIPTION];
     }
@@ -120,13 +122,15 @@ export const awardMethodTasks = (awardMethodId?: string): Array<string> => {
 
 /**
  * Required fields for the insurance - export contract section
- * * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
+ * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * @param {Boolean} finalDestinationKnown: "Final destination known"
  * @param {Boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
  * @param {Boolean} isUsingAgent: "Is using an agent to help win the export contract" flag
  * @param {Boolean} agentIsCharging: "Is the agent charging for their support in the export contract?" flag
  * @param {Boolean} agentChargeMethod: Agent charge method
  * @param {String} awardMethodId: Export contract award method ID
+ * @param {Boolean} agentChargeMethod: Agent charge method
+ * @param {Boolean} migratedV1toV2: Application has been migrated from V1 to V2
  * @returns {Array} Required field IDs
  */
 const requiredFields = ({
@@ -137,10 +141,11 @@ const requiredFields = ({
   agentIsCharging,
   agentChargeMethod,
   awardMethodId,
+  migratedV1toV2,
 }: RequiredFields): Array<string> => [
   PAYMENT_TERMS_DESCRIPTION,
   ...getAboutGoodsOrServicesTasks(finalDestinationKnown),
-  ...privateCoverTasks({ totalContractValueOverThreshold, attemptedPrivateMarketCover }),
+  ...privateCoverTasks({ totalContractValueOverThreshold, attemptedPrivateMarketCover, migratedV1toV2 }),
   ...agentTasks({ isUsingAgent, agentIsCharging, agentChargeMethod }),
   ...awardMethodTasks(awardMethodId),
 ];
