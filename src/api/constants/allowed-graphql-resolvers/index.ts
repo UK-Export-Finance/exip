@@ -89,6 +89,7 @@ if (isDevEnvironment) {
     'addAndGetOTP',
     'createApplications',
     'createAnAbandonedApplication',
+    'createManyApplications',
     'createBuyer',
     'deleteAnAccount',
     'deleteApplications',
