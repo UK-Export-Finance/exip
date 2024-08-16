@@ -15,7 +15,7 @@ context(
     let url;
 
     before(() => {
-      cy.completeUpToSpecifiedEligibilitySectionAnswers({ section: 'partyToConsortium', partyToConsortium: true });
+      cy.completeAndSubmitEligibilityForms({ form: 'partyToConsortium', partyToConsortium: true });
 
       url = `${baseUrl}${PARTY_TO_CONSORTIUM_EXIT}`;
 

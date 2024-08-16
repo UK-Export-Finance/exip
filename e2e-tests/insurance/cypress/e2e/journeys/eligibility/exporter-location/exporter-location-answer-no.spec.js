@@ -16,7 +16,7 @@ context(
     const url = `${baseUrl}${EXPORTER_LOCATION}`;
 
     before(() => {
-      cy.completeUpToSpecifiedEligibilitySectionAnswers({ section: 'checkIfEligible' });
+      cy.completeAndSubmitEligibilityForms({ form: 'checkIfEligible' });
 
       cy.assertUrl(url);
     });

@@ -34,7 +34,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
   let companyNumber;
 
   before(() => {
-    cy.completeUpToSpecifiedEligibilitySectionAnswers({ section: 'companiesHouseNumber' });
+    cy.completeAndSubmitEligibilityForms({ form: 'companiesHouseNumber' });
 
     cy.assertUrl(url);
   });

@@ -20,7 +20,7 @@ context(
     const url = `${baseUrl}${CANNOT_APPLY_MULTIPLE_RISKS}`;
 
     before(() => {
-      cy.completeUpToSpecifiedEligibilitySectionAnswers({ section: 'ukGoodsAndServices' });
+      cy.completeAndSubmitEligibilityForms({ form: 'ukGoodsAndServices' });
 
       cy.clickYesRadioInput();
       cy.clickSubmitButton();

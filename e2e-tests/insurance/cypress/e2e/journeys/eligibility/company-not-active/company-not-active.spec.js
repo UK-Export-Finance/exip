@@ -19,8 +19,8 @@ context('Insurance - Eligibility - Company not active - I want to check if I can
   const url = `${baseUrl}${COMPANY_NOT_ACTIVE}`;
 
   before(() => {
-    cy.completeUpToSpecifiedEligibilitySectionAnswers({
-      section: 'companiesHouseNumberSearch',
+    cy.completeAndSubmitEligibilityForms({
+      form: 'companiesHouseNumberSearch',
       companyNumber: COMPANIES_HOUSE_NUMBER_NOT_ACTIVE,
     });
 

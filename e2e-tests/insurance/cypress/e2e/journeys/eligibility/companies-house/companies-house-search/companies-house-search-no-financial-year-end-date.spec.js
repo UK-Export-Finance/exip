@@ -13,8 +13,8 @@ context(
     const url = `${baseUrl}${COMPANY_DETAILS}`;
 
     before(() => {
-      cy.completeUpToSpecifiedEligibilitySectionAnswers({
-        section: 'companiesHouseNumberSearch',
+      cy.completeAndSubmitEligibilityForms({
+        form: 'companiesHouseNumberSearch',
         companyNumber: COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE,
       });
 

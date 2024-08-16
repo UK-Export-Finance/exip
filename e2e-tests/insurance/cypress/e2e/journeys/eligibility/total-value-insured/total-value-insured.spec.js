@@ -25,7 +25,7 @@ context(
     let url;
 
     before(() => {
-      cy.completeUpToSpecifiedEligibilitySectionAnswers({ section: 'buyerCountry' });
+      cy.completeAndSubmitEligibilityForms({ form: 'buyerCountry' });
 
       url = `${baseUrl}${TOTAL_VALUE_INSURED}`;
 

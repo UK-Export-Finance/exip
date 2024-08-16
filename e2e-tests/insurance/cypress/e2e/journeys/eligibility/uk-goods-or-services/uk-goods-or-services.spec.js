@@ -29,7 +29,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
   const url = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
 
   before(() => {
-    cy.completeUpToSpecifiedEligibilitySectionAnswers({ section: 'coverPeriod' });
+    cy.completeAndSubmitEligibilityForms({ form: 'coverPeriod' });
 
     cy.assertUrl(url);
   });

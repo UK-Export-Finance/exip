@@ -24,7 +24,7 @@ context(
     const url = `${baseUrl}${END_BUYER}`;
 
     before(() => {
-      cy.completeUpToSpecifiedEligibilitySectionAnswers({ section: 'ukGoodsAndServices' });
+      cy.completeAndSubmitEligibilityForms({ form: 'ukGoodsAndServices' });
 
       cy.assertUrl(url);
     });

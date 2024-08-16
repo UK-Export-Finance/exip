@@ -15,7 +15,7 @@ context(
     let url;
 
     before(() => {
-      cy.completeUpToSpecifiedEligibilitySectionAnswers({ section: 'memberOfAGroup', memberOfAGroup: true });
+      cy.completeAndSubmitEligibilityForms({ form: 'memberOfAGroup', memberOfAGroup: true });
 
       url = `${baseUrl}${MEMBER_OF_A_GROUP_EXIT}`;
 

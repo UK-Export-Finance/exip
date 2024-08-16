@@ -25,7 +25,7 @@ context(
 
       cy.navigateToCheckIfEligibleUrl();
 
-      cy.completeUpToSpecifiedEligibilitySectionAnswers({ section: 'companyDetails' });
+      cy.completeAndSubmitEligibilityForms({ form: 'companyDetails' });
 
       cy.keyboardInput(autoCompleteField(FIELD_ID).input(), COUNTRY_NAME);
 

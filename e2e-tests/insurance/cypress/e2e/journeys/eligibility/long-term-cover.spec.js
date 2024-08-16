@@ -15,7 +15,7 @@ context(
     let url;
 
     before(() => {
-      cy.completeUpToSpecifiedEligibilitySectionAnswers({ section: 'coverPeriod', underThreshold: false });
+      cy.completeAndSubmitEligibilityForms({ form: 'coverPeriod', completeAndSubmitEligibilityForms: false });
 
       url = `${baseUrl}${LONG_TERM_COVER}`;
 
