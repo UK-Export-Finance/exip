@@ -11,7 +11,7 @@ export const LINKS = {
       'https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1075267/10489_UKEF_Export_Insurance_Proposal_Form_20220513-fillable.pdf',
     NBI_FORM:
       'https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1041659/export-insurance-non-binding-indication-request-form_20170609.pdf',
-    FULL_APPLICATION: 'https://www.gov.uk/guidance/apply-for-ukef-export-insurance',
+    FULL_APPLICATION: 'https://www.gov.uk/guidance/apply-for-ukef-credit-insurance',
     ABILITY_NET: 'https://mcmw.abilityNet.org.uk',
     EQUALITY_ADVISORY_SERVICE: 'https://www.equalityadvisoryservice.com',
     ACCESSIBILITY_GUIDLINES: 'https://www.w3.org/TR/WCAG21',
