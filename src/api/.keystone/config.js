@@ -4176,18 +4176,19 @@ var send_email_reactivate_account_link_default2 = sendEmailReactivateAccountLink
 var import_date_fns5 = require("date-fns");
 
 // constants/application/initial-application-data/index.ts
+var { STATUS, LATEST_VERSION_NUMBER: LATEST_VERSION_NUMBER2, DEAL_TYPE, SUBMISSION_COUNT_DEFAULT } = APPLICATION;
 var INITIAL_APPLICATION_DATA = {
-  status: APPLICATION.STATUS.IN_PROGRESS,
-  version: APPLICATION.LATEST_VERSION_NUMBER,
-  dealType: APPLICATION.DEAL_TYPE,
-  submissionCount: APPLICATION.SUBMISSION_COUNT_DEFAULT
+  status: STATUS.IN_PROGRESS,
+  version: LATEST_VERSION_NUMBER2,
+  dealType: DEAL_TYPE,
+  submissionCount: SUBMISSION_COUNT_DEFAULT
 };
 var initial_application_data_default = INITIAL_APPLICATION_DATA;
 
 // helpers/create-an-application/create-initial-application/index.ts
-var { DEAL_TYPE, LATEST_VERSION_NUMBER: LATEST_VERSION_NUMBER2, STATUS, SUBMISSION_COUNT_DEFAULT, SUBMISSION_DEADLINE_IN_MONTHS, SUBMISSION_TYPE: SUBMISSION_TYPE2 } = APPLICATION;
-var { status, ...APPLICATION_FIELDS } = initial_application_data_default;
-var createInitialApplication = async ({ context, accountId, status: status2 = STATUS.IN_PROGRESS }) => {
+var { STATUS: STATUS2, SUBMISSION_DEADLINE_IN_MONTHS, SUBMISSION_TYPE: SUBMISSION_TYPE2 } = APPLICATION;
+var { status: inititalStatus, ...APPLICATION_FIELDS } = initial_application_data_default;
+var createInitialApplication = async ({ context, accountId, status = STATUS2.IN_PROGRESS }) => {
   try {
     console.info("Creating initial application (createInitialApplication helper) for user %s", accountId);
     const now2 = /* @__PURE__ */ new Date();
@@ -4197,7 +4198,7 @@ var createInitialApplication = async ({ context, accountId, status: status2 = ST
           connect: { id: accountId }
         },
         createdAt: now2,
-        status: status2,
+        status,
         submissionDeadline: (0, import_date_fns5.addMonths)(new Date(now2), SUBMISSION_DEADLINE_IN_MONTHS),
         submissionType: SUBMISSION_TYPE2.MIA,
         updatedAt: now2,
@@ -5054,7 +5055,7 @@ var update_application_columns_default = applicationColumns;
 var createAnApplicationHelper = async (variables, context) => {
   console.info("Creating an application (createAnApplication helper) for user %s", variables.accountId);
   try {
-    const { accountId, eligibilityAnswers, company: companyData, sectionReview: sectionReviewData, status: status2 } = variables;
+    const { accountId, eligibilityAnswers, company: companyData, sectionReview: sectionReviewData, status } = variables;
     const account2 = await get_account_by_id_default(context, accountId);
     if (!account2) {
       console.info("Rejecting application creation - no account found (createAnApplication helper)");
@@ -5063,7 +5064,7 @@ var createAnApplicationHelper = async (variables, context) => {
     const application2 = await create_initial_application_default.create({
       context,
       accountId,
-      status: status2
+      status
     });
     const { id: applicationId } = application2;
     const {
@@ -5165,9 +5166,9 @@ var createABuyer = async (context, countryId) => {
 };
 var create_a_buyer_default = createABuyer;
 
-// helpers/create-many-applications/index.ts
-var createManyApplications = async (context, applicationData) => {
-  console.info("Creating a buyer");
+// helpers/create-many-applications-and-reference-numbers/index.ts
+var createManyApplicationsAndReferenceNumbers = async (context, applicationData) => {
+  console.info("Creating many applications and reference numbers");
   try {
     const applications = await context.db.Application.createMany({
       data: applicationData
@@ -5185,11 +5186,11 @@ var createManyApplications = async (context, applicationData) => {
       referenceNumbers
     };
   } catch (error) {
-    console.error("Error creating many applications - helper %O", error);
-    throw new Error(`Creating many applications - helper ${error}`);
+    console.error("Error creating many applications and reference numbers - helper %O", error);
+    throw new Error(`Creating many applications and reference numbers - helper ${error}`);
   }
 };
-var create_many_applications_default = createManyApplications;
+var create_many_applications_and_reference_numbers_default = createManyApplicationsAndReferenceNumbers;
 
 // helpers/update-applications-data/index.ts
 var updateApplicationsData = async (context, updateData) => {
@@ -5207,7 +5208,7 @@ var updateApplicationsData = async (context, updateData) => {
 var update_applications_data_default = updateApplicationsData;
 
 // custom-resolvers/mutations/create-many-applications/index.ts
-var createManyApplications2 = async (root, variables, context) => {
+var createManyApplications = async (root, variables, context) => {
   console.info("Creating many applications");
   try {
     const emptyArray = new Array(variables.count).fill({});
@@ -5226,14 +5227,16 @@ var createManyApplications2 = async (root, variables, context) => {
       },
       ...initial_application_data_default
     }));
-    const { applications, referenceNumbers } = await create_many_applications_default(context, mockApplicationsData);
+    const { referenceNumbers } = await create_many_applications_and_reference_numbers_default(context, mockApplicationsData);
     const updateApplicationReferenceNumbers = referenceNumbers.map((referenceNumber) => ({
       where: { id: referenceNumber.applicationId },
       data: { referenceNumber: referenceNumber.id }
     }));
     await update_applications_data_default(context, updateApplicationReferenceNumbers);
-    const allApplications = await context.db.Application.findMany();
-    if (applications.length) {
+    const allApplications = await context.query.Application.findMany({
+      query: "id referenceNumber"
+    });
+    if (allApplications.length) {
       return {
         applications: allApplications,
         success: true
@@ -5247,14 +5250,14 @@ var createManyApplications2 = async (root, variables, context) => {
     throw new Error(`Creating many applications ${error}`);
   }
 };
-var create_many_applications_default2 = createManyApplications2;
+var create_many_applications_default = createManyApplications;
 
 // custom-resolvers/mutations/create-an-abandoned-application/index.ts
-var { STATUS: STATUS2 } = APPLICATION;
+var { STATUS: STATUS3 } = APPLICATION;
 var createAnAbandonedApplication = async (root, variables, context) => {
   console.info("Creating an abandoned application for %s", variables.accountId);
   const abandonedApplicationVariables = variables;
-  abandonedApplicationVariables.status = STATUS2.ABANDONED;
+  abandonedApplicationVariables.status = STATUS3.ABANDONED;
   try {
     const createdApplication = await create_an_application_default(abandonedApplicationVariables, context);
     if (createdApplication) {
@@ -8361,8 +8364,8 @@ var submitApplication = async (root, variables, context) => {
       where: { id: variables.applicationId }
     });
     if (application2) {
-      const { status: status2, submissionDeadline, submissionCount } = application2;
-      const isInProgress = status2 === APPLICATION.STATUS.IN_PROGRESS;
+      const { status, submissionDeadline, submissionCount } = application2;
+      const isInProgress = status === APPLICATION.STATUS.IN_PROGRESS;
       const now2 = /* @__PURE__ */ new Date();
       const validSubmissionDate = (0, import_date_fns6.isAfter)(new Date(submissionDeadline), now2);
       const isFirstSubmission = submissionCount === 0;
@@ -8771,9 +8774,9 @@ var APIM = {
           "Content-Type": "application/json",
           [String(APIM_MDM_KEY)]: APIM_MDM_VALUE
         },
-        validateStatus(status2) {
+        validateStatus(status) {
           const acceptableStatus = [200];
-          return acceptableStatus.includes(status2);
+          return acceptableStatus.includes(status);
         }
       });
       if (response.data && response.status === 200) {
@@ -8800,9 +8803,9 @@ var APIM = {
           "Content-Type": "application/json",
           [String(APIM_MDM_KEY)]: APIM_MDM_VALUE
         },
-        validateStatus(status2) {
+        validateStatus(status) {
           const acceptableStatus = [200];
-          return acceptableStatus.includes(status2);
+          return acceptableStatus.includes(status);
         }
       });
       if (response.data && response.status === 200) {
@@ -9051,9 +9054,9 @@ var companiesHouse = {
         method: "get",
         url: `${companiesHouseURL}/company/${companyNumber}`,
         auth: { username, password: "" },
-        validateStatus(status2) {
+        validateStatus(status) {
           const acceptableStatus = [200, 404];
-          return acceptableStatus.includes(status2);
+          return acceptableStatus.includes(status);
         }
       });
       if (response.status === 404) {
@@ -9097,9 +9100,9 @@ var industrySectorNames = {
         method: "get",
         url: `${APIM_MDM_URL2}${APIM_MDM2.INDUSTRY_SECTORS}`,
         headers,
-        validateStatus(status2) {
+        validateStatus(status) {
           const acceptableStatus = [200, 404];
-          return acceptableStatus.includes(status2);
+          return acceptableStatus.includes(status);
         }
       });
       if (!response.data || response.status !== 200) {
@@ -9250,9 +9253,9 @@ var ordnanceSurvey = {
       const response = await (0, import_axios4.default)({
         method: "get",
         url: `${ORDNANCE_SURVEY_API_URL}${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ORDNANCE_SURVEY_API_KEY}`,
-        validateStatus(status2) {
+        validateStatus(status) {
           const acceptableStatus = [200, 404];
-          return acceptableStatus.includes(status2);
+          return acceptableStatus.includes(status);
         }
       });
       if (!response?.data?.results || response.status !== 200) {
@@ -9390,7 +9393,7 @@ var customResolvers = {
     sendEmailPasswordResetLink: send_email_password_reset_link_default,
     sendEmailReactivateAccountLink: send_email_reactivate_account_link_default2,
     createAnApplication: create_an_application_default2,
-    createManyApplications: create_many_applications_default2,
+    createManyApplications: create_many_applications_default,
     createAnAbandonedApplication: create_an_abandoned_application_default,
     deleteApplicationByReferenceNumber: delete_application_by_reference_number_default,
     submitApplication: submit_application_default,
