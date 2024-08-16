@@ -1,7 +1,6 @@
 import { listItem } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.CANNOT_APPLY_MULTIPLE_RISKS;
 
@@ -21,16 +20,7 @@ context(
     const url = `${baseUrl}${CANNOT_APPLY_MULTIPLE_RISKS}`;
 
     before(() => {
-      cy.navigateToCheckIfEligibleUrl();
-      cy.completeCheckIfEligibleForm();
-      cy.completeExporterLocationForm();
-      cy.completeCompaniesHouseNumberForm();
-      cy.completeAndSubmitCompaniesHouseSearchForm({});
-      cy.completeEligibilityCompanyDetailsForm();
-      completeAndSubmitBuyerCountryForm({});
-      cy.completeAndSubmitTotalValueInsuredForm({});
-      cy.completeCoverPeriodForm({});
-      cy.completeUkGoodsAndServicesForm();
+      cy.completeUpToSpecifiedEligibilitySectionAnswers({ section: 'ukGoodsAndServices' });
 
       cy.clickYesRadioInput();
       cy.clickSubmitButton();

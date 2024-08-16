@@ -1,7 +1,6 @@
 import { backLink, cannotApplyPage } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
 
@@ -11,16 +10,7 @@ context(
   'Insurance - UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF credit insurance cover - submit `no - UK goods/services is below the minimum`',
   () => {
     beforeEach(() => {
-      cy.navigateToCheckIfEligibleUrl();
-
-      cy.completeCheckIfEligibleForm();
-      cy.completeExporterLocationForm();
-      cy.completeCompaniesHouseNumberForm();
-      cy.completeAndSubmitCompaniesHouseSearchForm({});
-      cy.completeEligibilityCompanyDetailsForm();
-      completeAndSubmitBuyerCountryForm({});
-      cy.completeAndSubmitTotalValueInsuredForm({});
-      cy.completeCoverPeriodForm({});
+      cy.completeUpToSpecifiedEligibilitySectionAnswers({ section: 'coverPeriod' });
 
       cy.clickNoRadioInput();
       cy.clickSubmitButton();

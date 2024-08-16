@@ -1,6 +1,5 @@
 import { PAGES } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../commands/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.LONG_TERM_COVER;
 
@@ -16,16 +15,7 @@ context(
     let url;
 
     before(() => {
-      cy.navigateToCheckIfEligibleUrl();
-      cy.completeCheckIfEligibleForm();
-
-      cy.completeExporterLocationForm();
-      cy.completeCompaniesHouseNumberForm();
-      cy.completeAndSubmitCompaniesHouseSearchForm({});
-      cy.completeEligibilityCompanyDetailsForm();
-      completeAndSubmitBuyerCountryForm({});
-      cy.completeAndSubmitTotalValueInsuredForm({});
-      cy.completeCoverPeriodForm({ underThreshold: false });
+      cy.completeUpToSpecifiedEligibilitySectionAnswers({ section: 'coverPeriod', underThreshold: false });
 
       url = `${baseUrl}${LONG_TERM_COVER}`;
 

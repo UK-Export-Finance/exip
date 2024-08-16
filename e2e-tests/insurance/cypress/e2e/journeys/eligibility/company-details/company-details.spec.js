@@ -16,11 +16,7 @@ context('Insurance - Eligibility - Companies details page - I want to check if I
   const url = `${baseUrl}${COMPANY_DETAILS}`;
 
   before(() => {
-    cy.navigateToCheckIfEligibleUrl();
-    cy.completeCheckIfEligibleForm();
-    cy.completeExporterLocationForm();
-    cy.completeCompaniesHouseNumberForm();
-    cy.completeAndSubmitCompaniesHouseSearchForm({});
+    cy.completeUpToSpecifiedEligibilitySectionAnswers({ section: 'companiesHouseNumberSearch' });
 
     cy.assertUrl(url);
   });

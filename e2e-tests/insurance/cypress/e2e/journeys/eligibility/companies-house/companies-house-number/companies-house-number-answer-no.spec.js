@@ -14,9 +14,7 @@ context(
     const url = `${baseUrl}${COMPANIES_HOUSE_NUMBER}`;
 
     before(() => {
-      cy.navigateToCheckIfEligibleUrl();
-      cy.completeCheckIfEligibleForm();
-      cy.completeExporterLocationForm();
+      cy.completeUpToSpecifiedEligibilitySectionAnswers({ section: 'exporterLocation' });
     });
 
     beforeEach(() => {

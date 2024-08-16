@@ -5,7 +5,6 @@ import { FIELDS_ELIGIBILITY } from '../../../../../../content-strings/fields/ins
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.END_BUYER;
 
@@ -25,16 +24,7 @@ context(
     const url = `${baseUrl}${END_BUYER}`;
 
     before(() => {
-      cy.navigateToCheckIfEligibleUrl();
-      cy.completeCheckIfEligibleForm();
-      cy.completeExporterLocationForm();
-      cy.completeCompaniesHouseNumberForm();
-      cy.completeAndSubmitCompaniesHouseSearchForm({});
-      cy.completeEligibilityCompanyDetailsForm();
-      completeAndSubmitBuyerCountryForm({});
-      cy.completeAndSubmitTotalValueInsuredForm({});
-      cy.completeCoverPeriodForm({});
-      cy.completeUkGoodsAndServicesForm();
+      cy.completeUpToSpecifiedEligibilitySectionAnswers({ section: 'ukGoodsAndServices' });
 
       cy.assertUrl(url);
     });

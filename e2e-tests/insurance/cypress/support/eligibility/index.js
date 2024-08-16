@@ -11,3 +11,7 @@ Cypress.Commands.add(
   'enterCountryAndAssertExitPageUrlBuyerCountry',
   require('../../../../commands/insurance/eligibility/enter-country-and-assert-exit-page-url-buyer-country'),
 );
+Cypress.Commands.add(
+  'completeUpToSpecifiedEligibilitySectionAnswers',
+  require('../../../../commands/insurance/eligibility/complete-up-to-specified-eligibility-section-answers'),
+);

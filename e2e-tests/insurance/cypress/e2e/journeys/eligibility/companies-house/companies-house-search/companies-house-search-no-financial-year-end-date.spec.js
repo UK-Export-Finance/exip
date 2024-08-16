@@ -13,11 +13,10 @@ context(
     const url = `${baseUrl}${COMPANY_DETAILS}`;
 
     before(() => {
-      cy.navigateToCheckIfEligibleUrl();
-      cy.completeCheckIfEligibleForm();
-      cy.completeExporterLocationForm();
-      cy.completeCompaniesHouseNumberForm();
-      cy.completeAndSubmitCompaniesHouseSearchForm({ companyNumber: COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE });
+      cy.completeUpToSpecifiedEligibilitySectionAnswers({
+        section: 'companiesHouseNumberSearch',
+        companyNumber: COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE,
+      });
 
       cy.assertUrl(url);
     });

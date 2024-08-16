@@ -3,7 +3,6 @@ import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM;
 
@@ -23,17 +22,7 @@ context(
     const url = `${baseUrl}${PARTY_TO_CONSORTIUM}`;
 
     before(() => {
-      cy.navigateToCheckIfEligibleUrl();
-      cy.completeCheckIfEligibleForm();
-      cy.completeExporterLocationForm();
-      cy.completeCompaniesHouseNumberForm();
-      cy.completeAndSubmitCompaniesHouseSearchForm({});
-      cy.completeEligibilityCompanyDetailsForm();
-      completeAndSubmitBuyerCountryForm({});
-      cy.completeAndSubmitTotalValueInsuredForm({});
-      cy.completeCoverPeriodForm({});
-      cy.completeUkGoodsAndServicesForm();
-      cy.completeEndBuyerForm();
+      cy.completeUpToSpecifiedEligibilitySectionAnswers({ section: 'endBuyer' });
 
       cy.assertUrl(url);
     });

@@ -3,7 +3,6 @@ import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { COVER_PERIOD } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 import { FIELDS_ELIGIBILITY } from '../../../../../../content-strings/fields/insurance/eligibility';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COVER_PERIOD;
@@ -26,14 +25,7 @@ context(
     let url;
 
     before(() => {
-      cy.navigateToCheckIfEligibleUrl();
-      cy.completeCheckIfEligibleForm();
-      cy.completeExporterLocationForm();
-      cy.completeCompaniesHouseNumberForm();
-      cy.completeAndSubmitCompaniesHouseSearchForm({});
-      cy.completeEligibilityCompanyDetailsForm();
-      completeAndSubmitBuyerCountryForm({});
-      cy.completeAndSubmitTotalValueInsuredForm({});
+      cy.completeUpToSpecifiedEligibilitySectionAnswers({ section: 'totalValueInsured' });
 
       url = `${baseUrl}${COVER_PERIOD_ROUTE}`;
 
