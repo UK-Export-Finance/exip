@@ -1,6 +1,6 @@
 import { headingCaption, singleInputField, declarationPage } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
-import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
+import { BUTTONS, PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -64,7 +64,7 @@ context(
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: `${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`,
         backLink: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`,
-        assertBackLink: false,
+        submitButtonCopy: BUTTONS.SUBMIT_APPLICATION,
       });
     });
 
@@ -109,7 +109,7 @@ context(
       });
 
       it('renders a submit button and `save and back` button', () => {
-        cy.assertSubmitAndSaveButtons();
+        cy.assertSubmitAndSaveButtons(BUTTONS.SUBMIT_APPLICATION);
       });
     });
 

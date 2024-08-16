@@ -1,7 +1,6 @@
 import { backLink, cannotApplyPage } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
 
@@ -18,7 +17,7 @@ context(
       cy.completeCompaniesHouseNumberForm();
       cy.completeAndSubmitCompaniesHouseSearchForm({});
       cy.completeEligibilityCompanyDetailsForm();
-      completeAndSubmitBuyerCountryForm({});
+      cy.completeAndSubmitBuyerCountryForm({});
       cy.completeAndSubmitTotalValueInsuredForm({});
       cy.completeCoverPeriodForm({});
 
