@@ -25,8 +25,6 @@ context('Insurance - Your buyer - Credit insurance cover - form validation', () 
     cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsuranceYourBuyerSection({});
-
       url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
 
       cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'tradingHistoryWithBuyer', exporterHasTradingHistoryWithBuyer: true });
