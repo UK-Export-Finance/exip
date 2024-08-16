@@ -14,7 +14,7 @@ const { FIELDS } = XLSX;
 /**
  * mapBroker
  * Map an application's broker fields into an array of objects for XLSX generation
- * @param {Application}
+ * @param {Application} application
  * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapBroker = (application: Application) => {

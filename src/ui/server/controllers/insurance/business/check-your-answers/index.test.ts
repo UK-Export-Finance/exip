@@ -33,7 +33,11 @@ describe('controllers/insurance/business/check-your-answers', () => {
   describe('get', () => {
     it('should render template', async () => {
       await get(req, res);
-      const summaryLists = yourBusinessSummaryLists(mockCompany, mockBusiness, referenceNumber);
+      const summaryLists = yourBusinessSummaryLists({
+        company: mockCompany,
+        business: mockBusiness,
+        referenceNumber,
+      });
 
       const expectedVariables = {
         ...insuranceCorePageVariables({

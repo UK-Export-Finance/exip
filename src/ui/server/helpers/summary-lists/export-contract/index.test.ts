@@ -10,10 +10,21 @@ describe('server/helpers/summary-lists/export-contract', () => {
   const mockAnswers = mockExportContract;
   const checkAndChange = true;
 
+  const genericParams = {
+    exportContract: mockAnswers,
+    referenceNumber,
+    countries: mockCountries,
+    checkAndChange,
+  };
+
   describe('generateFields', () => {
     describe('when totalContractValueOverThreshold=false, migratedV1toV2=true', () => {
       it('should return all fields and values from the submitted data/answers', () => {
-        const result = generateFields(mockAnswers, false, true, referenceNumber, mockCountries, checkAndChange);
+        const result = generateFields({
+          ...genericParams,
+          totalContractValueOverThreshold: false,
+          migratedV1toV2: true,
+        });
 
         const expected = [
           generateAboutTheExportFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
@@ -27,7 +38,11 @@ describe('server/helpers/summary-lists/export-contract', () => {
 
     describe('when totalContractValueOverThreshold=true, migratedV1toV2=false', () => {
       it('should return all fields and values from the submitted data/answers', () => {
-        const result = generateFields(mockAnswers, true, false, referenceNumber, mockCountries, checkAndChange);
+        const result = generateFields({
+          ...genericParams,
+          totalContractValueOverThreshold: true,
+          migratedV1toV2: false,
+        });
 
         const expected = [
           generateAboutTheExportFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
@@ -41,7 +56,11 @@ describe('server/helpers/summary-lists/export-contract', () => {
 
     describe('when totalContractValueOverThreshold=false, migratedV1toV2=false', () => {
       it('should return some fields and values from the submitted data/answers', () => {
-        const result = generateFields(mockAnswers, false, false, referenceNumber, mockCountries, checkAndChange);
+        const result = generateFields({
+          ...genericParams,
+          totalContractValueOverThreshold: false,
+          migratedV1toV2: false,
+        });
 
         const expected = [
           generateAboutTheExportFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
@@ -55,9 +74,15 @@ describe('server/helpers/summary-lists/export-contract', () => {
 
   describe('exportContractSummaryLists', () => {
     it('should return an array of summary list rows', () => {
-      const result = exportContractSummaryLists(mockAnswers, false, true, referenceNumber, mockCountries, checkAndChange);
+      const params = {
+        ...genericParams,
+        totalContractValueOverThreshold: false,
+        migratedV1toV2: true,
+      };
 
-      const fields = generateFields(mockAnswers, false, true, referenceNumber, mockCountries, checkAndChange);
+      const result = exportContractSummaryLists(params);
+
+      const fields = generateFields(params);
 
       const expected = generateGroupsOfSummaryLists(fields);
 

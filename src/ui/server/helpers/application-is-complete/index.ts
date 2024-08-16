@@ -12,7 +12,7 @@ const {
 /**
  * applicationIsComplete
  * Check if the application is complete
- * @param {Application}
+ * @param {ApplicationFlat} application
  * @returns {Boolean}
  */
 const applicationIsComplete = (application: ApplicationFlat) => {

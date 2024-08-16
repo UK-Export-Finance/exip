@@ -13,7 +13,7 @@ const {
  * Create an object of mapped currencies into the required structure for GOV radio and select components
  * This is used for forms that have both currency radio inputs, and an alternative currency select component
  * @param {Array} alternativeCurrencies: Array of alternative currencies
- * @param {Array} currencies: Array of supported currencies
+ * @param {Array<Currency>} currencies: Array of supported currencies
  * @param {String} selectedValue: Selected currency
  * @returns {Object} Mapped currencies and submittedValue
  */

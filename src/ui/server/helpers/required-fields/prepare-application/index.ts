@@ -26,7 +26,8 @@ const {
 
 /**
  * Required fields for the insurance - check your answers section
- * @returns {Array} Required field IDs
+ * @param {ApplicationFlat} application
+ * @returns {Array<string>} Required field IDs
  */
 const requiredFields = (application: ApplicationFlat): Array<string> => [
   ...requiredEligibilityFields(application.migratedV1toV2),

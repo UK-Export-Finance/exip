@@ -28,10 +28,10 @@ const {
  * Create all your Turnover fields and values for the Insurance - Turnover govukSummaryList
  * @param {ApplicationBusiness} answers: Turnover answers
  * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange True if coming from check your answers section in submit application section
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} All Turnover fields and values in an object structure for GOVUK summary list structure
  */
-const generateTurnoverFields = (answers: ApplicationBusiness, referenceNumber: number, checkAndChange: boolean): SummaryListGroupData => {
+const generateTurnoverFields = (answers: ApplicationBusiness, referenceNumber: number, checkAndChange?: boolean): SummaryListGroupData => {
   const fields = [
     fieldGroupItem(
       {

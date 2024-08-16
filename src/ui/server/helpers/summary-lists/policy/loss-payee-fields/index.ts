@@ -45,10 +45,10 @@ const {
  * Populate and return Loss payee financial UK fields
  * @param {ApplicationLossPayeeFinancialDetailsUk} answers: Loss payee - financial details - UK answers
  * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
- * @returns {Array<SummaryListItemData>} optional broker fields if yes selected
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {Array<SummaryListItemData>} Optional broker fields if yes is selected
  */
-export const lossPayeeLocatedInUkFields = (answers: ApplicationLossPayeeFinancialDetailsUk, referenceNumber: number, checkAndChange: boolean) => {
+export const lossPayeeLocatedInUkFields = (answers: ApplicationLossPayeeFinancialDetailsUk, referenceNumber: number, checkAndChange?: boolean) => {
   const fields = [
     fieldGroupItem(
       {
@@ -102,13 +102,13 @@ export const lossPayeeLocatedInUkFields = (answers: ApplicationLossPayeeFinancia
  * Populate and return Loss payee financial international fields
  * @param {ApplicationLossPayeeFinancialDetailsInternational} answers: Loss payee - financial details - international answers
  * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
- * @returns {Array<SummaryListItemData>} optional broker fields if yes selected
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {Array<SummaryListItemData>} Optional broker fields if yes is selected
  */
 export const lossPayeeLocatedInternationallyFields = (
   answers: ApplicationLossPayeeFinancialDetailsInternational,
   referenceNumber: number,
-  checkAndChange: boolean,
+  checkAndChange?: boolean,
 ) => {
   const fields = [
     fieldGroupItem(
@@ -160,10 +160,10 @@ export const lossPayeeLocatedInternationallyFields = (
  * If IS_APPOINTED is true, populate and return optional fields.
  * @param {ApplicationNominatedLossPayee} answers: Loss payee answers
  * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
- * @returns {Array<SummaryListItemData>} optional broker fields if yes selected
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {Array<SummaryListItemData>} Optional broker fields if yes is selected
  */
-export const lossPayeeFields = (answers: ApplicationNominatedLossPayee, referenceNumber: number, checkAndChange: boolean) => {
+export const lossPayeeFields = (answers: ApplicationNominatedLossPayee, referenceNumber: number, checkAndChange?: boolean) => {
   let fields = [] as Array<SummaryListItemData>;
 
   /**
@@ -196,9 +196,11 @@ export const lossPayeeFields = (answers: ApplicationNominatedLossPayee, referenc
  * generateLossPayeeFields
  * Create all your loss payee fields and values for the Insurance - Loss payee govukSummaryList
  * @param {ApplicationNominatedLossPayee} answers
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} All loss payee fields and values in an object structure for GOVUK summary list structure
  */
-export const generateLossPayeeFields = (answers: ApplicationNominatedLossPayee, referenceNumber: number, checkAndChange: boolean) => {
+export const generateLossPayeeFields = (answers: ApplicationNominatedLossPayee, referenceNumber: number, checkAndChange?: boolean) => {
   const fields = [
     fieldGroupItem(
       {

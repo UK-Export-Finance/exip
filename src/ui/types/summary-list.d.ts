@@ -1,3 +1,15 @@
+import {
+  ApplicationBroker,
+  ApplicationBusiness,
+  ApplicationCompany,
+  ApplicationExportContract,
+  ApplicationNominatedLossPayee,
+  ApplicationPolicy,
+  ApplicationPolicyContact,
+} from './application';
+import { Country } from './country';
+import { Currency } from './currency';
+
 interface SummaryListCardTitle {
   text: string;
 }
@@ -78,6 +90,32 @@ interface SummaryListGroup {
   rows: Array<SummaryListItem>;
 }
 
+interface SummaryListParamsCore {
+  referenceNumber: number;
+  checkAndChange?: boolean;
+}
+
+interface SummaryListParamsBusiness extends SummaryListParamsCore {
+  company: ApplicationCompany;
+  business: ApplicationBusiness;
+}
+
+interface SummaryListParamsExportContract extends SummaryListParamsCore {
+  exportContract: ApplicationExportContract;
+  totalContractValueOverThreshold: boolean;
+  countries: Array<Country>;
+  migratedV1toV2: boolean;
+}
+
+interface SummaryListParamsPolicy extends SummaryListParamsCore {
+  policy: ApplicationPolicy;
+  policyContact: ApplicationPolicyContact;
+  broker: ApplicationBroker;
+  nominatedLossPayee: ApplicationNominatedLossPayee;
+  currencies: Array<Currency>;
+  countries: Array<Country>;
+}
+
 export {
   SummaryListItem,
   SummaryListItemActions,
@@ -91,4 +129,7 @@ export {
   SummaryListItemValue,
   SummaryListGroup,
   SummaryListGroupData,
+  SummaryListParamsBusiness,
+  SummaryListParamsExportContract,
+  SummaryListParamsPolicy,
 };

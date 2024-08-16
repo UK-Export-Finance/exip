@@ -458,7 +458,7 @@ const getAccountPasswordResetToken = async () => {
 /**
  * getApplicationByReferenceNumber
  * Get's an application by reference number from the API
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object} Application
  */
 const getApplicationByReferenceNumber = async (referenceNumber) => {
@@ -481,7 +481,7 @@ const getApplicationByReferenceNumber = async (referenceNumber) => {
 /**
  * deleteApplicationByReferenceNumber
  * Delete applications by Application reference number
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object}
  */
 const deleteApplicationByReferenceNumber = async (referenceNumber) => {

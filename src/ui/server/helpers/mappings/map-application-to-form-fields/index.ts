@@ -33,7 +33,7 @@ const {
 /**
  * mapApplicationToFormFields
  * Generate an object with application data mappings for UI form fields and summary lists.
- * @param {Application}
+ * @param {Application} application
  * @returns {Application | Object} Mapped application for UI consumption
  */
 const mapApplicationToFormFields = (application?: Application): Application | object => {

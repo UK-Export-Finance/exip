@@ -14,7 +14,7 @@ const { FIRST_NAME, LAST_NAME, EMAIL } = FIELD_IDS;
 /**
  * mapIntroduction
  * Map introductory information for an application
- * @param {Application}
+ * @param {Application} application
  * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapIntroduction = (application: Application) => {

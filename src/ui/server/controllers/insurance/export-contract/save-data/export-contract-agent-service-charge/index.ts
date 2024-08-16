@@ -19,9 +19,9 @@ export const NULL_OR_EMPTY_STRING_FIELDS = [PERCENTAGE_CHARGE, FIXED_SUM_AMOUNT,
  * exportContractAgentServiceCharge
  * Strip invalid fields from submitted form data and update the application.
  * This is used for any save functionality in the "Export contract agent service charge" section of the application.
- * @param {Application}
- * @param {Express.Request.body} Form data
- * @param {Object} Field error list
+ * @param {Application} application
+ * @param {Express.Request.body} formBody
+ * @param {Object} errorList: Field error list
  * @returns {Promise<Object>} Saved data
  */
 const exportContractAgentServiceCharge = async (application: Application, formBody: RequestBody, errorList?: object) => {

@@ -32,7 +32,7 @@ const { HOW_WILL_YOU_GET_PAID_CHANGE, HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE } =
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} Fields and values in an object structure for GOVUK summary list structure
  */
-const generateAboutTheExportFields = (answers: ApplicationExportContract, referenceNumber: number, countries: Array<Country>, checkAndChange: boolean) => {
+const generateAboutTheExportFields = (answers: ApplicationExportContract, referenceNumber: number, countries: Array<Country>, checkAndChange?: boolean) => {
   const fields = [
     fieldGroupItem(
       {
