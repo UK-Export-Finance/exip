@@ -27,15 +27,14 @@ const completeAndSubmitYourBuyerForms = ({
     { name: 'companyOrOrganisation', action: () => cy.completeAndSubmitCompanyOrOrganisationForm({}) },
     { name: 'connectionWithTheBuyer', action: () => cy.completeAndSubmitConnectionWithTheBuyerForm({ hasConnectionToBuyer }) },
     { name: 'tradedWithBuyer', action: () => cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer }) },
-    { name: 'buyerFinancialInformation', action: () => cy.completeAndSubmitBuyerFinancialInformationForm({ exporterHasBuyerFinancialAccounts }) },
   ];
 
   /**
    * if exporterHasTradedWithBuyer
-   * add tradingHistoryWithBuyer step after tradedWithBuyer (using splice)
+   * add tradingHistoryWithBuyer step after tradedWithBuyer
    */
   if (exporterHasTradedWithBuyer) {
-    steps.splice(3, 0, {
+    steps.push({
       name: 'tradingHistoryWithBuyer',
       action: () =>
         cy.completeAndSubmitTradingHistoryWithBuyerForm({
@@ -44,6 +43,8 @@ const completeAndSubmitYourBuyerForms = ({
         }),
     });
   }
+
+  steps.push({ name: 'buyerFinancialInformation', action: () => cy.completeAndSubmitBuyerFinancialInformationForm({ exporterHasBuyerFinancialAccounts }) });
 
   /**
    * carries out steps in steps array
