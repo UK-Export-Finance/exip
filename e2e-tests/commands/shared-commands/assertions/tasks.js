@@ -1,7 +1,5 @@
 Cypress.Commands.add('checkTaskStatus', require('./tasks/check-task-status'));
 
-// TODO: make sure the task function names match the actual command name.
-
 Cypress.Commands.add('checkTaskStatusCannotStart', require('./tasks/check-task-status-cannot-start'));
 Cypress.Commands.add('checkTaskStatusNotStartedYet', require('./tasks/check-task-status-not-started-yet'));
 Cypress.Commands.add('checkTaskStatusInProgress', require('./tasks/check-task-status-in-progress'));

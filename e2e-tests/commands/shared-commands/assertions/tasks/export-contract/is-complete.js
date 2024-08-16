@@ -3,8 +3,8 @@ import task from '.';
 /**
  * Check that the "export contract" task has a "completed" status.
  */
-const checkTaskBusinessStatusIsComplete = () => {
+const checkTaskExportContractStatusIsComplete = () => {
   cy.checkTaskStatusCompleted(task.status);
 };
 
-export default checkTaskBusinessStatusIsComplete;
+export default checkTaskExportContractStatusIsComplete;
