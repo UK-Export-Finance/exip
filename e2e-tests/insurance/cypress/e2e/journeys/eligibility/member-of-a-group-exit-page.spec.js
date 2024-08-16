@@ -15,19 +15,7 @@ context(
     let url;
 
     before(() => {
-      cy.navigateToCheckIfEligibleUrl();
-      cy.completeCheckIfEligibleForm();
-      cy.completeExporterLocationForm();
-      cy.completeCompaniesHouseNumberForm();
-      cy.completeAndSubmitCompaniesHouseSearchForm({});
-      cy.completeEligibilityCompanyDetailsForm();
-      cy.completeAndSubmitBuyerCountryForm({});
-      cy.completeAndSubmitTotalValueInsuredForm({});
-      cy.completeCoverPeriodForm({});
-      cy.completeUkGoodsAndServicesForm();
-      cy.completeEndBuyerForm();
-      cy.completePartyToConsortiumForm({});
-      cy.completeMemberOfAGroupForm({ memberOfAGroup: true });
+      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'memberOfAGroup', memberOfAGroup: true });
 
       url = `${baseUrl}${MEMBER_OF_A_GROUP_EXIT}`;
 

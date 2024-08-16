@@ -22,17 +22,7 @@ context(
     const url = `${baseUrl}${PARTY_TO_CONSORTIUM}`;
 
     before(() => {
-      cy.navigateToCheckIfEligibleUrl();
-      cy.completeCheckIfEligibleForm();
-      cy.completeExporterLocationForm();
-      cy.completeCompaniesHouseNumberForm();
-      cy.completeAndSubmitCompaniesHouseSearchForm({});
-      cy.completeEligibilityCompanyDetailsForm();
-      cy.completeAndSubmitBuyerCountryForm({});
-      cy.completeAndSubmitTotalValueInsuredForm({});
-      cy.completeCoverPeriodForm({});
-      cy.completeUkGoodsAndServicesForm();
-      cy.completeEndBuyerForm();
+      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'endBuyer' });
 
       cy.assertUrl(url);
     });

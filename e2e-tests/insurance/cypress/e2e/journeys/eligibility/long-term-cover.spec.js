@@ -15,16 +15,7 @@ context(
     let url;
 
     before(() => {
-      cy.navigateToCheckIfEligibleUrl();
-      cy.completeCheckIfEligibleForm();
-
-      cy.completeExporterLocationForm();
-      cy.completeCompaniesHouseNumberForm();
-      cy.completeAndSubmitCompaniesHouseSearchForm({});
-      cy.completeEligibilityCompanyDetailsForm();
-      cy.completeAndSubmitBuyerCountryForm({});
-      cy.completeAndSubmitTotalValueInsuredForm({});
-      cy.completeCoverPeriodForm({ underThreshold: false });
+      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'coverPeriod', coverPeriodIsUnderThreshold: false });
 
       url = `${baseUrl}${LONG_TERM_COVER}`;
 

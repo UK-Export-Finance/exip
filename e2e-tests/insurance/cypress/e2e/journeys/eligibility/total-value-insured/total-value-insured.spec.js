@@ -25,13 +25,7 @@ context(
     let url;
 
     before(() => {
-      cy.navigateToCheckIfEligibleUrl();
-      cy.completeCheckIfEligibleForm();
-      cy.completeExporterLocationForm();
-      cy.completeCompaniesHouseNumberForm();
-      cy.completeAndSubmitCompaniesHouseSearchForm({});
-      cy.completeEligibilityCompanyDetailsForm();
-      cy.completeAndSubmitBuyerCountryForm({});
+      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'buyerCountry' });
 
       url = `${baseUrl}${TOTAL_VALUE_INSURED}`;
 

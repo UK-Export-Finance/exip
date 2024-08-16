@@ -9,6 +9,7 @@ module.exports = {
     ecmaVersion: 2020,
     sourceType: 'module',
   },
+  ignorePatterns: ['webpack.common.config.js'],
   env: {
     jest: true,
     browser: true,
