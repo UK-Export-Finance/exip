@@ -3,7 +3,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT: INSURANCE_ROOT,
-  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS },
+  CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT },
 } = INSURANCE_ROUTES;
 
 const { taskList } = partials.insurancePartials;
@@ -12,7 +12,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Check your answers - Your business page - Save and back', () => {
+context('Insurance - Check your answers - Export contract page - Save and back', () => {
   let referenceNumber;
   let url;
 
@@ -24,7 +24,7 @@ context('Insurance - Check your answers - Your business page - Save and back', (
 
       task.link().click();
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT}`;
 
       cy.assertUrl(url);
     });

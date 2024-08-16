@@ -132,6 +132,20 @@ context(
             expectedErrorMessage: ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
           });
         });
+
+        describe('when going back to the all sections page', () => {
+          beforeEach(() => {
+            cy.navigateToAllSectionsUrl(referenceNumber);
+          });
+
+          it('should retain the status of task `check your answers` as `completed`', () => {
+            cy.checkTaskCheckAnswersStatusIsComplete();
+          });
+
+          it('should retain the status of task `declarations and submit` as `in progress`', () => {
+            cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
+          });
+        });
       });
 
       describe('when submitting a fully completed form', () => {
@@ -143,6 +157,20 @@ context(
           const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
 
           cy.assertUrl(expectedUrl);
+        });
+
+        describe('when going back to the all sections page', () => {
+          beforeEach(() => {
+            cy.navigateToAllSectionsUrl(referenceNumber);
+          });
+
+          it('should retain the status of task `check your answers` as `completed`', () => {
+            cy.checkTaskCheckAnswersStatusIsComplete();
+          });
+
+          it('should retain the status of task `declarations and submit` as `in progress`', () => {
+            cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
+          });
         });
 
         describe('when going back to the page', () => {

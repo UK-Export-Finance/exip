@@ -14,14 +14,14 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  CHECK_YOUR_ANSWERS: { BUYER, EXPORT_CONTRACT, EXPORTER_BUSINESS, POLICY },
+  CHECK_YOUR_ANSWERS: { BUYER, ELIGIBILITY, EXPORTER_BUSINESS, EXPORT_CONTRACT, POLICY },
 } = FIELD_IDS.INSURANCE;
 
 /**
  * createSubmitApplicationTasks
- * @param { Number } Application reference number
- * @param {Array} Task list groups
- * @param { String } Application "Has anti-bribery code of conduct" flag
+ * @param {Number} referenceNumber: Application reference number
+ * @param {TaskListData} otherGroups: Task list groups
+ * @param {String} hasAntiBriberyCodeOfConduct: Application "Has anti-bribery code of conduct" flag
  * @returns {Array} Submit application tasks
  */
 const createSubmitApplicationTasks = (
@@ -41,7 +41,7 @@ const createSubmitApplicationTasks = (
     href: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`,
     title: SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS,
     id: TASK_IDS.SUBMIT_APPLICATION.CHECK_ANSWERS,
-    fields: [BUYER, EXPORT_CONTRACT, EXPORTER_BUSINESS, POLICY],
+    fields: [BUYER, ELIGIBILITY, EXPORTER_BUSINESS, EXPORT_CONTRACT, POLICY],
     dependencies,
   };
 
@@ -50,7 +50,7 @@ const createSubmitApplicationTasks = (
     title: SUBMIT_APPLICATION.TASKS.DECLARATIONS_AND_SUBMIT,
     id: TASK_IDS.SUBMIT_APPLICATION.DECLARATIONS_AND_SUBMIT,
     fields: declarationsRequiredFields(hasAntiBriberyCodeOfConduct),
-    dependencies,
+    dependencies: [...dependencies, ...CHECK_ANSWERS.fields],
   };
 
   const tasks = [CHECK_ANSWERS, DECLARATIONS_AND_SUBMIT] as Array<TaskListDataTask>;

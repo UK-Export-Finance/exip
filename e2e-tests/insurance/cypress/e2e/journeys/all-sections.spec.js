@@ -149,25 +149,11 @@ context('Insurance - All sections - new application', () => {
           cy.navigateToUrl(url);
         });
 
-        it('should render a `check answers` task with no link and `cannot start` status', () => {
-          const task = taskList.submitApplication.tasks.checkAnswers;
-
-          const expectedText = TASKS.LIST.SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS;
-          cy.checkText(task.text(), expectedText);
-
-          task.link().should('not.exist');
-
+        it('should render a `check answers` task with a `cannot start` status', () => {
           cy.checkTaskCheckAnswersStatusIsCannotStart();
         });
 
-        it('should render a `declarations and submit` task with no link and `cannot start yet` status', () => {
-          const task = taskList.submitApplication.tasks.declarationsAndSubmit;
-
-          const expectedText = TASKS.LIST.SUBMIT_APPLICATION.TASKS.DECLARATIONS_AND_SUBMIT;
-          cy.checkText(task.text(), expectedText);
-
-          task.link().should('not.exist');
-
+        it('should render a `declarations and submit` task with a `cannot start` status', () => {
           cy.checkTaskDeclarationsAndSubmitStatusIsCannotStart();
         });
       });

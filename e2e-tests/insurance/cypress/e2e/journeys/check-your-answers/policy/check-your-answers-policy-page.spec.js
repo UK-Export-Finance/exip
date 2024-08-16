@@ -90,6 +90,10 @@ context('Insurance - Check your answers - Policy - I want to confirm my selectio
       it('should retain the status of task `check your answers` as `in progress`', () => {
         cy.checkTaskCheckAnswersStatusIsInProgress();
       });
+
+      it('should retain the status of task `declarations and submit` as `not started yet`', () => {
+        cy.checkTaskDeclarationsAndSubmitStatusIsCannotStart();
+      });
     });
   });
 });

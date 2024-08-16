@@ -16,7 +16,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  CHECK_YOUR_ANSWERS: { BUYER, EXPORT_CONTRACT, EXPORTER_BUSINESS, POLICY },
+  CHECK_YOUR_ANSWERS: { BUYER, ELIGIBILITY, EXPORTER_BUSINESS, EXPORT_CONTRACT, POLICY },
 } = FIELD_IDS.INSURANCE;
 
 describe('server/helpers/task-list/submit-application', () => {
@@ -38,14 +38,14 @@ describe('server/helpers/task-list/submit-application', () => {
     const initialChecksFields = getAllTasksFieldsInAGroup(initialChecksGroup);
     const prepareApplicationFields = getAllTasksFieldsInAGroup(prepareApplicationGroup);
 
-    const expectedDependencies = [...initialChecksFields, ...prepareApplicationFields];
+    const expectedCoreDependencies = [...initialChecksFields, ...prepareApplicationFields];
 
     const CHECK_ANSWERS = {
       href: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`,
       title: SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS,
       id: TASK_IDS.SUBMIT_APPLICATION.CHECK_ANSWERS,
-      fields: [BUYER, EXPORT_CONTRACT, EXPORTER_BUSINESS, POLICY],
-      dependencies: expectedDependencies,
+      fields: [BUYER, ELIGIBILITY, EXPORTER_BUSINESS, EXPORT_CONTRACT, POLICY],
+      dependencies: expectedCoreDependencies,
     };
 
     const DECLARATIONS_AND_SUBMIT = {
@@ -53,7 +53,7 @@ describe('server/helpers/task-list/submit-application', () => {
       title: SUBMIT_APPLICATION.TASKS.DECLARATIONS_AND_SUBMIT,
       id: TASK_IDS.SUBMIT_APPLICATION.DECLARATIONS_AND_SUBMIT,
       fields: declarationsRequiredFields(declaration.hasAntiBriberyCodeOfConduct),
-      dependencies: expectedDependencies,
+      dependencies: [...expectedCoreDependencies, ...CHECK_ANSWERS.fields],
     };
 
     const expected = [CHECK_ANSWERS, DECLARATIONS_AND_SUBMIT];

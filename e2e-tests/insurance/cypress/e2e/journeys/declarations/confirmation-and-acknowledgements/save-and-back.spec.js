@@ -59,7 +59,7 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the status of task `declarations` as `in progress`', () => {
+    it('should retain the status of task `declarations and submit` as `in progress`', () => {
       cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
   });
@@ -77,7 +77,11 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should update the status of task `declarations` to `completed`', () => {
+    it('should retain the status of task `check your answers` as `completed`', () => {
+      cy.checkTaskCheckAnswersStatusIsComplete();
+    });
+
+    it('should update the status of task `declarations and submit` to `completed`', () => {
       cy.checkTaskDeclarationsAndSubmitStatusIsComplete();
     });
 

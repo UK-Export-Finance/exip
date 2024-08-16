@@ -64,7 +64,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the status of task `declarations` as `in progress`', () => {
+    it('should retain the status of task `declarations and submit` as `in progress`', () => {
       cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
   });
@@ -82,7 +82,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the status of task `declarations` as `in progress`', () => {
+    it('should retain the status of task `declarations and submit` as `in progress`', () => {
       cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
 
@@ -106,7 +106,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the status of task `declarations` as `in progress`', () => {
+    it('should retain the status of task `declarations and submit` as `in progress`', () => {
       cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
 

@@ -60,5 +60,19 @@ context(
 
       cy.assertYesRadioOptionIsChecked();
     });
+
+    describe('when going back to the all sections page', () => {
+      beforeEach(() => {
+        cy.navigateToAllSectionsUrl(referenceNumber);
+      });
+
+      it('should retain the status of task `check your answers` as `completed`', () => {
+        cy.checkTaskCheckAnswersStatusIsComplete();
+      });
+
+      it('should retain the status of task `declarations and submit` as `in progress`', () => {
+        cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
+      });
+    });
   },
 );
