@@ -4,7 +4,7 @@ import getTotalContractValueByField from '../../get-total-contract-value-by-fiel
 import createAReferenceNumber from '../../create-a-reference-number';
 import createABroker from '../../create-a-broker';
 import createABusiness from '../../create-a-business';
-import createABuyer from '../../create-a-buyer';
+import createAPopulatedBuyer from '../../create-a-populated-buyer';
 import createADeclaration from '../../create-a-declaration';
 import createAnEligibility from '../../create-an-eligibility';
 import createAPolicy from '../../create-a-policy';
@@ -74,7 +74,7 @@ const createApplicationRelationships = async ({
     const createdRelationships = await Promise.all([
       createABroker(context, applicationId),
       createABusiness(context, applicationId),
-      createABuyer(context, country.id, applicationId),
+      createAPopulatedBuyer(context, country.id, applicationId),
       createADeclaration(context, applicationId),
       createAnEligibility(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
       createAnExportContract(context, applicationId),

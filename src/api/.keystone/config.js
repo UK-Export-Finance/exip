@@ -611,6 +611,7 @@ if (isDevEnvironment) {
     "addAndGetOTP",
     "createApplications",
     "createAnAbandonedApplication",
+    "createManyApplications",
     "createBuyer",
     "deleteAnAccount",
     "deleteApplications",
@@ -2758,6 +2759,16 @@ var typeDefs = `
     referenceNumber: Int
   }
 
+  type ApplicationResponse {
+    id: String
+    referenceNumber: Int
+  }
+
+  type CreateManyApplicationsResponse {
+    success: Boolean!
+    applications: [ApplicationResponse]
+  }
+
   type CreateAnAbandonedApplicationResponse {
     success: Boolean!
     id: String
@@ -2870,6 +2881,12 @@ var typeDefs = `
       company: CompanyInput!
       sectionReview: SectionReviewInput!
     ): CreateAnApplicationResponse
+
+     """ create many applications """
+    createManyApplications(
+      accountId: String!
+      count: Int!
+    ): CreateManyApplicationsResponse
 
     """ create an application """
     createAnAbandonedApplication(
@@ -4157,8 +4174,20 @@ var send_email_reactivate_account_link_default2 = sendEmailReactivateAccountLink
 
 // helpers/create-an-application/create-initial-application/index.ts
 var import_date_fns5 = require("date-fns");
+
+// constants/application/initial-application-data/index.ts
+var INITIAL_APPLICATION_DATA = {
+  status: APPLICATION.STATUS.IN_PROGRESS,
+  version: APPLICATION.LATEST_VERSION_NUMBER,
+  dealType: APPLICATION.DEAL_TYPE,
+  submissionCount: APPLICATION.SUBMISSION_COUNT_DEFAULT
+};
+var initial_application_data_default = INITIAL_APPLICATION_DATA;
+
+// helpers/create-an-application/create-initial-application/index.ts
 var { DEAL_TYPE, LATEST_VERSION_NUMBER: LATEST_VERSION_NUMBER2, STATUS, SUBMISSION_COUNT_DEFAULT, SUBMISSION_DEADLINE_IN_MONTHS, SUBMISSION_TYPE: SUBMISSION_TYPE2 } = APPLICATION;
-var createInitialApplication = async ({ context, accountId, status = STATUS.IN_PROGRESS }) => {
+var { status, ...APPLICATION_FIELDS } = initial_application_data_default;
+var createInitialApplication = async ({ context, accountId, status: status2 = STATUS.IN_PROGRESS }) => {
   try {
     console.info("Creating initial application (createInitialApplication helper) for user %s", accountId);
     const now2 = /* @__PURE__ */ new Date();
@@ -4168,13 +4197,11 @@ var createInitialApplication = async ({ context, accountId, status = STATUS.IN_P
           connect: { id: accountId }
         },
         createdAt: now2,
-        dealType: DEAL_TYPE,
-        status,
-        submissionCount: SUBMISSION_COUNT_DEFAULT,
+        status: status2,
         submissionDeadline: (0, import_date_fns5.addMonths)(new Date(now2), SUBMISSION_DEADLINE_IN_MONTHS),
         submissionType: SUBMISSION_TYPE2.MIA,
         updatedAt: now2,
-        version: LATEST_VERSION_NUMBER2
+        ...APPLICATION_FIELDS
       }
     });
     return application2;
@@ -4395,8 +4422,8 @@ var createABuyerRelationship = async (context, buyerId, applicationId) => {
 };
 var create_a_buyer_relationship_default = createABuyerRelationship;
 
-// helpers/create-a-buyer/index.ts
-var createABuyer = async (context, countryId, applicationId) => {
+// helpers/create-a-populated-buyer/index.ts
+var createAPopulatedBuyer = async (context, countryId, applicationId) => {
   console.info("Creating a buyer for %s", applicationId);
   try {
     const buyer = await context.db.Buyer.createOne({
@@ -4419,11 +4446,11 @@ var createABuyer = async (context, countryId, applicationId) => {
       buyerContact
     };
   } catch (error) {
-    console.error("Error creating a buyer %O", error);
-    throw new Error(`Creating a buyer ${error}`);
+    console.error("Error creating a populated buyer %O", error);
+    throw new Error(`Creating a populated buyer ${error}`);
   }
 };
-var create_a_buyer_default = createABuyer;
+var create_a_populated_buyer_default = createAPopulatedBuyer;
 
 // helpers/create-a-declaration-version/index.ts
 var { ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT, CONFIDENTIALITY, CONFIRMATION_AND_ACKNOWLEDGEMENTS } = declarations_default2.LATEST_DECLARATIONS;
@@ -4916,7 +4943,7 @@ var createApplicationRelationships = async ({
     const createdRelationships = await Promise.all([
       create_a_broker_default(context, applicationId),
       create_a_business_default(context, applicationId),
-      create_a_buyer_default(context, country.id, applicationId),
+      create_a_populated_buyer_default(context, country.id, applicationId),
       create_a_declaration_default(context, applicationId),
       create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
       create_an_export_contract_default(context, applicationId),
@@ -5027,7 +5054,7 @@ var update_application_columns_default = applicationColumns;
 var createAnApplicationHelper = async (variables, context) => {
   console.info("Creating an application (createAnApplication helper) for user %s", variables.accountId);
   try {
-    const { accountId, eligibilityAnswers, company: companyData, sectionReview: sectionReviewData, status } = variables;
+    const { accountId, eligibilityAnswers, company: companyData, sectionReview: sectionReviewData, status: status2 } = variables;
     const account2 = await get_account_by_id_default(context, accountId);
     if (!account2) {
       console.info("Rejecting application creation - no account found (createAnApplication helper)");
@@ -5036,7 +5063,7 @@ var createAnApplicationHelper = async (variables, context) => {
     const application2 = await create_initial_application_default.create({
       context,
       accountId,
-      status
+      status: status2
     });
     const { id: applicationId } = application2;
     const {
@@ -5103,6 +5130,124 @@ var createAnApplication = async (root, variables, context) => {
   }
 };
 var create_an_application_default2 = createAnApplication;
+
+// helpers/get-countries/index.ts
+var getCountries = async (context) => {
+  console.info("Getting countries");
+  try {
+    const countries = await context.db.Country.findMany();
+    return countries;
+  } catch (error) {
+    console.error("Error getting countries %O", error);
+    throw new Error(`Getting countries ${error}`);
+  }
+};
+var get_countries_default = getCountries;
+
+// helpers/create-a-buyer/index.ts
+var createABuyer = async (context, countryId) => {
+  console.info("Creating a buyer");
+  try {
+    const buyer = await context.db.Buyer.createOne({
+      data: {
+        country: {
+          connect: {
+            id: countryId
+          }
+        }
+      }
+    });
+    return buyer;
+  } catch (error) {
+    console.error("Error creating a buyer %O", error);
+    throw new Error(`Creating a buyer ${error}`);
+  }
+};
+var create_a_buyer_default = createABuyer;
+
+// helpers/create-many-applications/index.ts
+var createManyApplications = async (context, applicationData) => {
+  console.info("Creating a buyer");
+  try {
+    const applications = await context.db.Application.createMany({
+      data: applicationData
+    });
+    const referenceNumbersData = applications.map((application2) => ({
+      application: {
+        connect: {
+          id: application2.id
+        }
+      }
+    }));
+    const referenceNumbers = await context.db.ReferenceNumber.createMany({ data: referenceNumbersData });
+    return {
+      applications,
+      referenceNumbers
+    };
+  } catch (error) {
+    console.error("Error creating many applications - helper %O", error);
+    throw new Error(`Creating many applications - helper ${error}`);
+  }
+};
+var create_many_applications_default = createManyApplications;
+
+// helpers/update-applications-data/index.ts
+var updateApplicationsData = async (context, updateData) => {
+  console.info("Updating many applications");
+  try {
+    const updatedApplications = await context.db.Application.updateMany({
+      data: updateData
+    });
+    return updatedApplications;
+  } catch (error) {
+    console.error("Error updating many applications - helper %O", error);
+    throw new Error(`Updating many applications - helper ${error}`);
+  }
+};
+var update_applications_data_default = updateApplicationsData;
+
+// custom-resolvers/mutations/create-many-applications/index.ts
+var createManyApplications2 = async (root, variables, context) => {
+  console.info("Creating many applications");
+  try {
+    const emptyArray = new Array(variables.count).fill({});
+    const countries = await get_countries_default(context);
+    const buyer = await create_a_buyer_default(context, countries[0].id);
+    const mockApplicationsData = emptyArray.map(() => ({
+      owner: {
+        connect: {
+          id: variables.accountId
+        }
+      },
+      buyer: {
+        connect: {
+          id: buyer.id
+        }
+      },
+      ...initial_application_data_default
+    }));
+    const { applications, referenceNumbers } = await create_many_applications_default(context, mockApplicationsData);
+    const updateApplicationReferenceNumbers = referenceNumbers.map((referenceNumber) => ({
+      where: { id: referenceNumber.applicationId },
+      data: { referenceNumber: referenceNumber.id }
+    }));
+    await update_applications_data_default(context, updateApplicationReferenceNumbers);
+    const allApplications = await context.db.Application.findMany();
+    if (applications.length) {
+      return {
+        applications: allApplications,
+        success: true
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (error) {
+    console.error("Error creating many applications %O", error);
+    throw new Error(`Creating many applications ${error}`);
+  }
+};
+var create_many_applications_default2 = createManyApplications2;
 
 // custom-resolvers/mutations/create-an-abandoned-application/index.ts
 var { STATUS: STATUS2 } = APPLICATION;
@@ -5862,19 +6007,6 @@ var populatedApplication = {
 };
 var get_populated_application_default = populatedApplication;
 
-// helpers/get-countries/index.ts
-var getCountries = async (context) => {
-  console.info("Getting countries");
-  try {
-    const countries = await context.db.Country.findMany();
-    return countries;
-  } catch (error) {
-    console.error("Error getting countries %O", error);
-    throw new Error(`Getting countries ${error}`);
-  }
-};
-var get_countries_default = getCountries;
-
 // helpers/replace-character-codes-with-characters/index.ts
 var replaceCharacterCodesWithCharacters = (str) => str.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#x27;/g, "'").replace(/&#x2F;/g, "/").replace(/&#42;/g, "*").replace(/&amp;/g, "&");
 var replace_character_codes_with_characters_default = replaceCharacterCodesWithCharacters;
@@ -6040,8 +6172,8 @@ var DECLARATIONS_FIELDS = {
 // content-strings/links.ts
 var LINKS = {
   EXTERNAL: {
-    GUIDANCE: "https://www.gov.uk/guidance/export-insurance-policy#eligibility",
-    BEFORE_YOU_START: "https://www.gov.uk/guidance/get-a-quote-for-ukef-export-insurance",
+    GUIDANCE: "https://www.gov.uk/guidance/credit-insurance-policy#eligibility",
+    BEFORE_YOU_START: "https://www.gov.uk/guidance/get-a-quote-for-ukef-credit-insurance",
     PRIVACY: "https://www.gov.uk/government/publications/ukef-privacy-notice/ukef-privacy-notice--2",
     FEEDBACK: "https://forms.office.com/r/TacytrRCgJ",
     RESEARCH: "https://forms.office.com/pages/responsepage.aspx?id=jhOEgACUnkCm2ka1KB4LCkj8OKxLpCpDmTbrMyQ3j2JUOUFHNUc0QUhUOFdLNkJXWkRUS0wyMUZFNiQlQCN0PWcu",
@@ -6049,7 +6181,7 @@ var LINKS = {
     APPROVED_BROKER_LIST: "https://www.gov.uk/government/publications/uk-export-finance-insurance-list-of-approved-brokers/export-insurance-approved-brokers",
     PROPOSAL_FORM: "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1075267/10489_UKEF_Export_Insurance_Proposal_Form_20220513-fillable.pdf",
     NBI_FORM: "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1041659/export-insurance-non-binding-indication-request-form_20170609.pdf",
-    FULL_APPLICATION: "https://www.gov.uk/guidance/apply-for-ukef-export-insurance",
+    FULL_APPLICATION: "https://www.gov.uk/guidance/apply-for-ukef-credit-insurance",
     ABILITY_NET: "https://mcmw.abilityNet.org.uk",
     EQUALITY_ADVISORY_SERVICE: "https://www.equalityadvisoryservice.com",
     ACCESSIBILITY_GUIDLINES: "https://www.w3.org/TR/WCAG21",
@@ -8229,8 +8361,8 @@ var submitApplication = async (root, variables, context) => {
       where: { id: variables.applicationId }
     });
     if (application2) {
-      const { status, submissionDeadline, submissionCount } = application2;
-      const isInProgress = status === APPLICATION.STATUS.IN_PROGRESS;
+      const { status: status2, submissionDeadline, submissionCount } = application2;
+      const isInProgress = status2 === APPLICATION.STATUS.IN_PROGRESS;
       const now2 = /* @__PURE__ */ new Date();
       const validSubmissionDate = (0, import_date_fns6.isAfter)(new Date(submissionDeadline), now2);
       const isFirstSubmission = submissionCount === 0;
@@ -8639,9 +8771,9 @@ var APIM = {
           "Content-Type": "application/json",
           [String(APIM_MDM_KEY)]: APIM_MDM_VALUE
         },
-        validateStatus(status) {
+        validateStatus(status2) {
           const acceptableStatus = [200];
-          return acceptableStatus.includes(status);
+          return acceptableStatus.includes(status2);
         }
       });
       if (response.data && response.status === 200) {
@@ -8668,9 +8800,9 @@ var APIM = {
           "Content-Type": "application/json",
           [String(APIM_MDM_KEY)]: APIM_MDM_VALUE
         },
-        validateStatus(status) {
+        validateStatus(status2) {
           const acceptableStatus = [200];
-          return acceptableStatus.includes(status);
+          return acceptableStatus.includes(status2);
         }
       });
       if (response.data && response.status === 200) {
@@ -8919,9 +9051,9 @@ var companiesHouse = {
         method: "get",
         url: `${companiesHouseURL}/company/${companyNumber}`,
         auth: { username, password: "" },
-        validateStatus(status) {
+        validateStatus(status2) {
           const acceptableStatus = [200, 404];
-          return acceptableStatus.includes(status);
+          return acceptableStatus.includes(status2);
         }
       });
       if (response.status === 404) {
@@ -8965,9 +9097,9 @@ var industrySectorNames = {
         method: "get",
         url: `${APIM_MDM_URL2}${APIM_MDM2.INDUSTRY_SECTORS}`,
         headers,
-        validateStatus(status) {
+        validateStatus(status2) {
           const acceptableStatus = [200, 404];
-          return acceptableStatus.includes(status);
+          return acceptableStatus.includes(status2);
         }
       });
       if (!response.data || response.status !== 200) {
@@ -9118,9 +9250,9 @@ var ordnanceSurvey = {
       const response = await (0, import_axios4.default)({
         method: "get",
         url: `${ORDNANCE_SURVEY_API_URL}${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ORDNANCE_SURVEY_API_KEY}`,
-        validateStatus(status) {
+        validateStatus(status2) {
           const acceptableStatus = [200, 404];
-          return acceptableStatus.includes(status);
+          return acceptableStatus.includes(status2);
         }
       });
       if (!response?.data?.results || response.status !== 200) {
@@ -9258,6 +9390,7 @@ var customResolvers = {
     sendEmailPasswordResetLink: send_email_password_reset_link_default,
     sendEmailReactivateAccountLink: send_email_reactivate_account_link_default2,
     createAnApplication: create_an_application_default2,
+    createManyApplications: create_many_applications_default2,
     createAnAbandonedApplication: create_an_abandoned_application_default,
     deleteApplicationByReferenceNumber: delete_application_by_reference_number_default,
     submitApplication: submit_application_default,

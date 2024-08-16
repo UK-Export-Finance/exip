@@ -44,6 +44,7 @@ COPY --chown=node:node ./helpers ./helpers
 COPY --chown=node:node ./integrations ./integrations
 COPY --chown=node:node ./middleware ./middleware
 COPY --chown=node:node ./nullable-checkbox ./nullable-checkbox
+COPY --chown=node:node ./test-mocks ./test-mocks
 COPY --chown=node:node ./XLSX ./XLSX
 
 

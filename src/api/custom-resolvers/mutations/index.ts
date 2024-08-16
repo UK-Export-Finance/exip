@@ -10,6 +10,7 @@ import sendEmailPasswordResetLink from './send-email-password-reset-link';
 import accountPasswordReset from './account-password-reset';
 import sendEmailReactivateAccountLink from './send-email-reactivate-account-link';
 import createAnApplication from './create-an-application';
+import createManyApplications from './create-many-applications';
 import createAnAbandonedApplication from './create-an-abandoned-application';
 import deleteApplicationByReferenceNumber from './delete-application-by-reference-number';
 import submitApplication from './submit-application';
@@ -32,6 +33,7 @@ export {
   accountPasswordReset,
   sendEmailReactivateAccountLink,
   createAnApplication,
+  createManyApplications,
   createAnAbandonedApplication,
   deleteApplicationByReferenceNumber,
   submitApplication,
