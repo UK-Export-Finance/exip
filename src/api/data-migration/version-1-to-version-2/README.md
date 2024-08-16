@@ -99,7 +99,9 @@ This is because, during `npm run dev`, KeystoneJS/prisma checks the schema again
 
 We manage our own data migration, so we do not need these checks to run.
 
-To run `npm run dev` after running the migration script, it can be achieved by adding a `--no-db-push` to the command. However, this should not be necessary since this is for development environments only. In a data migration scenario, `npm run start` should be used.
+To run `npm run dev` after running the migration script, it can be achieved by adding a `--no-db-push` to the `package.json` `dev` script. However, this should only be used for debugging purposes in development environments only.
+
+In a data migration scenario outside of a development environment, `npm run start` should be used.
 
 ## SQL and KeystoneJS queries
 

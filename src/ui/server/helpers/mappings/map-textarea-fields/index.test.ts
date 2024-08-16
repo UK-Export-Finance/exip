@@ -45,10 +45,10 @@ describe('server/helpers/mappings/map-textarea-fields', () => {
       buyer: {
         ...buyer,
         [ADDRESS]: replaceCharacterCodesWithCharacters(buyer[ADDRESS]),
-        [PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: replaceCharacterCodesWithCharacters(buyer[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]),
         relationship: {
           ...buyer.relationship,
           [CONNECTION_WITH_BUYER_DESCRIPTION]: replaceCharacterCodesWithCharacters(buyer.relationship[CONNECTION_WITH_BUYER_DESCRIPTION]),
+          [PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: replaceCharacterCodesWithCharacters(buyer.relationship[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]),
         },
       },
       company: {

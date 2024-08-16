@@ -32,6 +32,7 @@ const get = (req: Request, res: Response) => {
       application.eligibility,
       application.referenceNumber,
       application.totalContractValueOverThreshold,
+      application.migratedV1toV2,
     );
 
     return res.render(TEMPLATE, {

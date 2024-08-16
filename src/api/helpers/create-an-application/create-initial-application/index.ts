@@ -1,9 +1,11 @@
 import { addMonths } from 'date-fns';
 import { APPLICATION } from '../../../constants';
+import INITIAL_APPLICATION_DATA from '../../../constants/application/initial-application-data';
 import { CreateInitialApplicationParams } from '../../../types';
 
-const { DEAL_TYPE, LATEST_VERSION_NUMBER, STATUS, SUBMISSION_COUNT_DEFAULT, SUBMISSION_DEADLINE_IN_MONTHS, SUBMISSION_TYPE } = APPLICATION;
+const { STATUS, SUBMISSION_DEADLINE_IN_MONTHS, SUBMISSION_TYPE } = APPLICATION;
 
+const { status: inititalStatus, ...APPLICATION_FIELDS } = INITIAL_APPLICATION_DATA;
 /**
  * Create the initial application associated with a user and default:
  * - createdAt timestamp.
@@ -31,13 +33,11 @@ const createInitialApplication = async ({ context, accountId, status = STATUS.IN
           connect: { id: accountId },
         },
         createdAt: now,
-        dealType: DEAL_TYPE,
         status,
-        submissionCount: SUBMISSION_COUNT_DEFAULT,
         submissionDeadline: addMonths(new Date(now), SUBMISSION_DEADLINE_IN_MONTHS),
         submissionType: SUBMISSION_TYPE.MIA,
         updatedAt: now,
-        version: LATEST_VERSION_NUMBER,
+        ...APPLICATION_FIELDS,
       },
     });
 
