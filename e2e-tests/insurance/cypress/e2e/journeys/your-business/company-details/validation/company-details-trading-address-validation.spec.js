@@ -22,7 +22,9 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
 
-      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'companyDetails' });
+      cy.startYourBusinessSection({});
+
+      cy.completeCompanyDetailsForm({});
 
       cy.assertUrl(url);
     });
