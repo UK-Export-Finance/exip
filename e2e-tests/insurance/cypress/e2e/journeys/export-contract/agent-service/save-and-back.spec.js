@@ -16,12 +16,7 @@ context('Insurance - Export contract - Agent service - Save and go back', () => 
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.startInsuranceExportContractSection({});
-      cy.completeAndSubmitHowWasTheContractAwardedForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm({});
-      cy.completeAndSubmitHowYouWillGetPaidForm({});
-      cy.completeAndSubmitAgentForm({ isUsingAgent: true });
-      cy.completeAndSubmitAgentDetailsForm({});
+      cy.completeAndSubmitExportContractForms({ formToStopAt: 'agentDetails', isUsingAgent: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_SERVICE}`;
 

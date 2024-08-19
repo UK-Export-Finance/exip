@@ -39,9 +39,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.startInsuranceExportContractSection({});
-        cy.completeAndSubmitHowWasTheContractAwardedForm({});
-        cy.completeAndSubmitAboutGoodsOrServicesForm({});
+        cy.completeAndSubmitExportContractForms({ formToStopAt: 'aboutGoodsOrServices' });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
       });
