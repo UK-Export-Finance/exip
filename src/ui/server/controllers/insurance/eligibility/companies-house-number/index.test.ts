@@ -11,7 +11,7 @@ import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
 
 const {
-  ELIGIBILITY: { ENTER_COMPANIES_HOUSE_NUMBER, NO_COMPANIES_HOUSE_NUMBER, CHECK_YOUR_ANSWERS, COMPANIES_HOUSE_NUMBER_CHANGE },
+  ELIGIBILITY: { ENTER_COMPANIES_HOUSE_NUMBER, NO_COMPANIES_HOUSE_NUMBER_EXIT, CHECK_YOUR_ANSWERS, COMPANIES_HOUSE_NUMBER_CHANGE },
 } = INSURANCE_ROUTES;
 
 describe('controllers/insurance/eligibility/companies-house-number', () => {
@@ -82,10 +82,10 @@ describe('controllers/insurance/eligibility/companies-house-number', () => {
         };
       });
 
-      it(`should redirect to ${NO_COMPANIES_HOUSE_NUMBER}`, () => {
+      it(`should redirect to ${NO_COMPANIES_HOUSE_NUMBER_EXIT}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(NO_COMPANIES_HOUSE_NUMBER);
+        expect(res.redirect).toHaveBeenCalledWith(NO_COMPANIES_HOUSE_NUMBER_EXIT);
       });
     });
 

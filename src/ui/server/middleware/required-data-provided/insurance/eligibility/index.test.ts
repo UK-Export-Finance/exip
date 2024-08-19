@@ -8,7 +8,7 @@ const { ELIGIBILITY, ACCOUNT } = INSURANCE_ROUTES;
 
 const {
   HAVE_AN_ACCOUNT,
-  CANNOT_APPLY,
+  CANNOT_APPLY_EXIT,
   CHECK_IF_ELIGIBLE,
   NEED_TO_START_AGAIN,
   BUYER_COUNTRY,
@@ -24,19 +24,19 @@ const {
   TOTAL_VALUE_INSURED_CHANGE,
   COVER_PERIOD,
   COVER_PERIOD_CHANGE,
-  LONG_TERM_COVER,
+  LONG_TERM_COVER_EXIT,
   COMPANIES_HOUSE_NUMBER,
   COMPANIES_HOUSE_NUMBER_CHANGE,
-  NO_COMPANIES_HOUSE_NUMBER,
+  NO_COMPANIES_HOUSE_NUMBER_EXIT,
   ENTER_COMPANIES_HOUSE_NUMBER,
   ENTER_COMPANIES_HOUSE_NUMBER_CHANGE,
-  COMPANIES_HOUSE_UNAVAILABLE,
-  COMPANY_NOT_ACTIVE,
+  COMPANIES_HOUSE_UNAVAILABLE_EXIT,
+  COMPANY_NOT_ACTIVE_EXIT,
   COMPANY_DETAILS,
   COMPANY_DETAILS_CHANGE,
-  CANNOT_APPLY_MULTIPLE_RISKS,
+  CANNOT_APPLY_MULTIPLE_RISKS_EXIT,
   ELIGIBLE_TO_APPLY_ONLINE,
-  CONTRACT_TOO_SHORT,
+  CONTRACT_TOO_SHORT_EXIT,
   PARTY_TO_CONSORTIUM,
   PARTY_TO_CONSORTIUM_CHANGE,
   MEMBER_OF_A_GROUP,
@@ -138,27 +138,27 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
       });
     });
 
-    describe(`when req.originalUrl is ${LONG_TERM_COVER}`, () => {
+    describe(`when req.originalUrl is ${LONG_TERM_COVER_EXIT}`, () => {
       it('should call req.next', () => {
-        req.originalUrl = LONG_TERM_COVER;
+        req.originalUrl = LONG_TERM_COVER_EXIT;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
       });
     });
 
-    describe(`when req.originalUrl is ${CANNOT_APPLY}`, () => {
+    describe(`when req.originalUrl is ${CANNOT_APPLY_EXIT}`, () => {
       it('should call req.next', () => {
-        req.originalUrl = CANNOT_APPLY;
+        req.originalUrl = CANNOT_APPLY_EXIT;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
       });
     });
 
-    describe(`when req.originalUrl is ${CONTRACT_TOO_SHORT}`, () => {
+    describe(`when req.originalUrl is ${CONTRACT_TOO_SHORT_EXIT}`, () => {
       it('should call req.next', () => {
-        req.originalUrl = CONTRACT_TOO_SHORT;
+        req.originalUrl = CONTRACT_TOO_SHORT_EXIT;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
@@ -174,36 +174,36 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
       });
     });
 
-    describe(`when req.originalUrl is ${NO_COMPANIES_HOUSE_NUMBER}`, () => {
+    describe(`when req.originalUrl is ${NO_COMPANIES_HOUSE_NUMBER_EXIT}`, () => {
       it('should call req.next', () => {
-        req.originalUrl = NO_COMPANIES_HOUSE_NUMBER;
+        req.originalUrl = NO_COMPANIES_HOUSE_NUMBER_EXIT;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
       });
     });
 
-    describe(`when req.originalUrl is ${COMPANIES_HOUSE_UNAVAILABLE}`, () => {
+    describe(`when req.originalUrl is ${COMPANIES_HOUSE_UNAVAILABLE_EXIT}`, () => {
       it('should call req.next', () => {
-        req.originalUrl = COMPANIES_HOUSE_UNAVAILABLE;
+        req.originalUrl = COMPANIES_HOUSE_UNAVAILABLE_EXIT;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
       });
     });
 
-    describe(`when req.originalUrl is ${COMPANY_NOT_ACTIVE}`, () => {
+    describe(`when req.originalUrl is ${COMPANY_NOT_ACTIVE_EXIT}`, () => {
       it('should call req.next', () => {
-        req.originalUrl = COMPANY_NOT_ACTIVE;
+        req.originalUrl = COMPANY_NOT_ACTIVE_EXIT;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
       });
     });
 
-    describe(`when req.originalUrl is ${CANNOT_APPLY_MULTIPLE_RISKS}`, () => {
+    describe(`when req.originalUrl is ${CANNOT_APPLY_MULTIPLE_RISKS_EXIT}`, () => {
       it('should call req.next', () => {
-        req.originalUrl = CANNOT_APPLY_MULTIPLE_RISKS;
+        req.originalUrl = CANNOT_APPLY_MULTIPLE_RISKS_EXIT;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();

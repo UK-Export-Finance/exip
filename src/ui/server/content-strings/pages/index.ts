@@ -17,7 +17,7 @@ const UK_GOODS_OR_SERVICES = {
   PAGE_TITLE: 'Is at least 20% of your export contract value made up from UK goods or services?',
 };
 
-const CANNOT_APPLY = {
+const CANNOT_APPLY_EXIT = {
   PAGE_TITLE: 'You cannot apply for UKEF credit insurance',
   REASON: {
     INTRO: 'This is because',
@@ -160,7 +160,7 @@ const COOKIES_SAVED_PAGE = {
   BODY: 'You can change your preferences at any time.',
 };
 
-const NEED_TO_START_AGAIN_PAGE = {
+const NEED_TO_START_AGAIN_PAGE_EXIT = {
   PAGE_TITLE: 'You need to start again',
   REASON: 'This is because you have not yet answered all the eligibility questions.',
 };
@@ -214,11 +214,11 @@ export const PAGES = {
   EXPORTER_LOCATION,
   ACTIONS,
   UK_GOODS_OR_SERVICES,
-  CANNOT_APPLY,
+  CANNOT_APPLY_EXIT,
   COOKIES_PAGE,
   COOKIES_SAVED_PAGE,
   ACCESSIBILITY_STATEMENT_PAGE,
-  NEED_TO_START_AGAIN_PAGE,
+  NEED_TO_START_AGAIN_PAGE_EXIT,
   PAGE_NOT_FOUND_PAGE,
   PROBLEM_WITH_SERVICE_PAGE,
   CONTACT_US_PAGE,

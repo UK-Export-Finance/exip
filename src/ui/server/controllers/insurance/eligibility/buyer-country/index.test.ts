@@ -13,7 +13,7 @@ import { mockReq, mockRes, mockCountries, mockSpyPromiseRejection } from '../../
 
 const {
   PROBLEM_WITH_SERVICE,
-  ELIGIBILITY: { CANNOT_APPLY: CANNOT_APPLY_ROUTE },
+  ELIGIBILITY: { CANNOT_APPLY_EXIT: CANNOT_APPLY_ROUTE },
 } = INSURANCE_ROUTES;
 
 describe('controllers/insurance/eligibility/buyer-country', () => {

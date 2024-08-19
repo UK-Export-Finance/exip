@@ -29,7 +29,7 @@ describe('controllers/quote/cannot-apply', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.CANNOT_APPLY);
+      expect(TEMPLATE).toEqual(TEMPLATES.CANNOT_APPLY_EXIT);
     });
   });
 
@@ -38,7 +38,7 @@ describe('controllers/quote/cannot-apply', () => {
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
-        ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.CANNOT_APPLY, BACK_LINK: mockPreviousRoute, ORIGINAL_URL: req.originalUrl }),
+        ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.CANNOT_APPLY_EXIT, BACK_LINK: mockPreviousRoute, ORIGINAL_URL: req.originalUrl }),
         userName: getUserNameFromSession(req.session.user),
         EXIT_REASON: mockExitReason,
       });

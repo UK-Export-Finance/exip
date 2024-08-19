@@ -17,7 +17,7 @@ describe('controllers/insurance/eligibility/company-not-active', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.COMPANY_NOT_ACTIVE);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.COMPANY_NOT_ACTIVE_EXIT);
     });
   });
 
@@ -27,7 +27,7 @@ describe('controllers/insurance/eligibility/company-not-active', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.COMPANY_NOT_ACTIVE,
+          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.COMPANY_NOT_ACTIVE_EXIT,
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),

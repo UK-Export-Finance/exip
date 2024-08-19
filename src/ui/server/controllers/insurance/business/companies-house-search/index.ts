@@ -22,7 +22,7 @@ const {
 const {
   PROBLEM_WITH_SERVICE,
   INSURANCE: {
-    ELIGIBILITY: { COMPANY_NOT_ACTIVE, COMPANIES_HOUSE_UNAVAILABLE },
+    ELIGIBILITY: { COMPANY_NOT_ACTIVE_EXIT, COMPANIES_HOUSE_UNAVAILABLE_EXIT },
     EXPORTER_BUSINESS: { COMPANY_DETAILS_ROOT },
     INSURANCE_ROOT,
   },
@@ -120,11 +120,11 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (response.apiError) {
-      return res.redirect(COMPANIES_HOUSE_UNAVAILABLE);
+      return res.redirect(COMPANIES_HOUSE_UNAVAILABLE_EXIT);
     }
 
     if (!response.isActive) {
-      return res.redirect(COMPANY_NOT_ACTIVE);
+      return res.redirect(COMPANY_NOT_ACTIVE_EXIT);
     }
 
     const mappedData = mapCompaniesHouseData(response);

@@ -10,7 +10,7 @@ import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockCountries } from '../../../../test-mocks';
 
 const {
-  ELIGIBILITY: { CANNOT_APPLY: CANNOT_APPLY_ROUTE, TOTAL_VALUE_INSURED, BUYER_COUNTRY_CHANGE, CHECK_YOUR_ANSWERS, CONTRACT_TOO_SHORT },
+  ELIGIBILITY: { CANNOT_APPLY_EXIT: CANNOT_APPLY_ROUTE, TOTAL_VALUE_INSURED, BUYER_COUNTRY_CHANGE, CHECK_YOUR_ANSWERS, CONTRACT_TOO_SHORT_EXIT },
 } = INSURANCE_ROUTES;
 
 describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
@@ -130,10 +130,10 @@ describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${CONTRACT_TOO_SHORT}`, async () => {
+      it(`should redirect to ${CONTRACT_TOO_SHORT_EXIT}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(CONTRACT_TOO_SHORT);
+        expect(res.redirect).toHaveBeenCalledWith(CONTRACT_TOO_SHORT_EXIT);
       });
     });
 
@@ -169,8 +169,8 @@ describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
       it('should add exitReason to req.flash', async () => {
         await post(req, res);
 
-        const { CANNOT_APPLY } = PAGES;
-        const { REASON } = CANNOT_APPLY;
+        const { CANNOT_APPLY_EXIT } = PAGES;
+        const { REASON } = CANNOT_APPLY_EXIT;
 
         const expectedReason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${selectedCountryName}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
 
