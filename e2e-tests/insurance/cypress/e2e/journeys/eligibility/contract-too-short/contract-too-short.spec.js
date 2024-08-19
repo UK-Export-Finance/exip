@@ -3,7 +3,7 @@ import { contractTooShort } from '../../../../../../pages/insurance/eligibility'
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.CONTRACT_TOO_SHORT;
+const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.CONTRACT_TOO_SHORT_EXIT;
 
 const { CONTACT_EFM } = CONTENT_STRINGS;
 

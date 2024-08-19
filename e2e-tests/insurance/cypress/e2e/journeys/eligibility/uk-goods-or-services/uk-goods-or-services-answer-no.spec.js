@@ -2,7 +2,7 @@ import { backLink, cannotApplyPage } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 
-const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
+const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY_EXIT;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -21,7 +21,7 @@ context(
     });
 
     it('redirects to exit page', () => {
-      const expectedUrl = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY}`;
+      const expectedUrl = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY_EXIT}`;
 
       cy.assertUrl(expectedUrl);
     });

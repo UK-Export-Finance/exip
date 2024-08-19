@@ -5,7 +5,7 @@ import { summaryList } from '../../../../../../pages/shared';
 const { VALID_EXPORTER_LOCATION } = INSURANCE_FIELD_IDS.ELIGIBILITY;
 
 const {
-  ELIGIBILITY: { EXPORTER_LOCATION_CHANGE, CHECK_YOUR_ANSWERS, CANNOT_APPLY },
+  ELIGIBILITY: { EXPORTER_LOCATION_CHANGE, CHECK_YOUR_ANSWERS, CANNOT_APPLY_EXIT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -63,8 +63,8 @@ context(
         cy.clickSubmitButton();
       });
 
-      it(`should redirect to ${CANNOT_APPLY}`, () => {
-        cy.assertChangeAnswersPageUrl({ route: CANNOT_APPLY, fieldId, isInsuranceEligibility: true });
+      it(`should redirect to ${CANNOT_APPLY_EXIT}`, () => {
+        cy.assertChangeAnswersPageUrl({ route: CANNOT_APPLY_EXIT, fieldId, isInsuranceEligibility: true });
       });
     });
   },
