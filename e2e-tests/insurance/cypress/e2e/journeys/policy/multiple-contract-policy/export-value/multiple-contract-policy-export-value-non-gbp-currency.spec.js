@@ -36,12 +36,7 @@ context('Insurance - Policy - Multiple contract policy - Export value page - Non
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm({ policyType });
-
-      cy.completeAndSubmitMultipleContractPolicyForm({
-        isoCode: USD.isoCode,
-      });
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'multipleContractPolicy', policyType, isoCode: USD.isoCode });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`;
       multipleContractPolicyUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;

@@ -33,11 +33,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm({});
-      cy.completeAndSubmitSingleContractPolicyForm({
-        isoCode: USD.isoCode,
-      });
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'singleContractPolicy', policyIsoCode: USD.isoCode });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`;
       singleContractPolicyUrl = `${baseUrl}${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
