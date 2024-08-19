@@ -28,12 +28,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.startYourBusinessSection({});
-
-        cy.completeAndSubmitCompanyDetails({});
-        cy.completeAndSubmitNatureOfYourBusiness();
-        cy.completeAndSubmitTurnoverForm({});
-        cy.completeAndSubmitCreditControlForm({ hasCreditControlProcess: true });
+        cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'creditControl', hasCreditControlProcess: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       });

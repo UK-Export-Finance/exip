@@ -29,9 +29,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
 
-      cy.startYourBusinessSection({});
-
-      cy.completeCompanyDetailsForm({});
+      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'companyDetails' });
 
       cy.assertUrl(url);
     });
