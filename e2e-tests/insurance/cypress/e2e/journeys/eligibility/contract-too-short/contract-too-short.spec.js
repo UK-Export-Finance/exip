@@ -8,13 +8,13 @@ const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.CONTRACT_TOO_SHORT_EXIT;
 const { CONTACT_EFM } = CONTENT_STRINGS;
 
 const {
-  ELIGIBILITY: { CONTRACT_TOO_SHORT },
+  ELIGIBILITY: { CONTRACT_TOO_SHORT_EXIT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Eligibility - Contract too short page', () => {
-  const url = `${baseUrl}${CONTRACT_TOO_SHORT}`;
+  const url = `${baseUrl}${CONTRACT_TOO_SHORT_EXIT}`;
 
   before(() => {
     cy.navigateToUrl(url);
@@ -29,8 +29,8 @@ context('Insurance - Eligibility - Contract too short page', () => {
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      backLink: `${CONTRACT_TOO_SHORT}#`,
-      currentHref: CONTRACT_TOO_SHORT,
+      backLink: `${CONTRACT_TOO_SHORT_EXIT}#`,
+      currentHref: CONTRACT_TOO_SHORT_EXIT,
       assertAuthenticatedHeader: false,
       hasAForm: false,
     });

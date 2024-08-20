@@ -92,7 +92,7 @@ export const post = async (req: Request, res: Response) => {
 
     /**
      * If a country has no insurance support and no short term cover,
-     * redirect to CONTRACT_TOO_SHORT.
+     * redirect to CONTRACT_TOO_SHORT_EXIT.
      */
     const noShortTermCover = !country.noInsuranceSupport && !country.shortTermCover;
 

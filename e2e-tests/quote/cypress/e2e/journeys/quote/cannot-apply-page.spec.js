@@ -2,10 +2,10 @@ import { actions, cannotApplyPage } from '../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 
-const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
+const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY_EXIT;
 
 const {
-  QUOTE: { UK_GOODS_OR_SERVICES, CANNOT_APPLY },
+  QUOTE: { UK_GOODS_OR_SERVICES, CANNOT_APPLY_EXIT },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -24,7 +24,7 @@ context('Cannot apply exit page', () => {
     cy.clickNoRadioInput();
     cy.clickSubmitButton();
 
-    expectedUrl = `${baseUrl}${CANNOT_APPLY}`;
+    expectedUrl = `${baseUrl}${CANNOT_APPLY_EXIT}`;
 
     cy.assertUrl(expectedUrl);
   });
@@ -32,7 +32,7 @@ context('Cannot apply exit page', () => {
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: CANNOT_APPLY,
+      currentHref: CANNOT_APPLY_EXIT,
       backLink: UK_GOODS_OR_SERVICES,
       hasAForm: false,
       assertAuthenticatedHeader: false,
