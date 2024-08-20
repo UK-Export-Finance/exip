@@ -26,11 +26,11 @@ describe('controllers/insurance/eligibility/need-to-start-again', () => {
       await get(req, res);
 
       const expectedVariables = {
-        ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.NEED_TO_START_AGAIN_PAGE_EXIT, BACK_LINK: req.headers.referer }),
+        ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.NEED_TO_START_AGAIN_EXIT_PAGE, BACK_LINK: req.headers.referer }),
         userName: getUserNameFromSession(req.session.user),
       };
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.NEED_TO_START_AGAIN, expectedVariables);
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.NEED_TO_START_AGAIN_EXIT, expectedVariables);
     });
   });
 

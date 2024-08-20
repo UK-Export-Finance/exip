@@ -3,7 +3,7 @@ import { PAGES } from '../../../../../../content-strings';
 import { COMPANIES_HOUSE_NUMBER_NOT_ACTIVE } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COMPANY_NOT_ACTIVE;
+const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COMPANY_NOT_ACTIVE_EXIT;
 
 const {
   ACTIONS: { FIND_EFM },
