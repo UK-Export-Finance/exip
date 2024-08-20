@@ -186,7 +186,7 @@ jobs:
           flags: api-test
           verbose: true
 
-   # 4. E2E - Insurance
+  # 4. E2E - Insurance
   e2e-tests-insurance:
     name: E2E Insurance 👷
     needs: [setup]
