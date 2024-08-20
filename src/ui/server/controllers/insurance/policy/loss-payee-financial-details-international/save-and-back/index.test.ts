@@ -5,7 +5,7 @@ import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/loss-payee-financial-details-international';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockApplication, mockLossPayeeFinancialDetailsInternational } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockLossPayeeFinancialDetailsInternational, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
@@ -109,7 +109,7 @@ describe('controllers/insurance/policy/loss-payee-financial-details-internationa
       beforeEach(() => {
         req.body = validBody;
         res.locals = mockRes().locals;
-        updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
+        updateMapAndSave = mockSpyPromiseRejection;
         mapAndSave.lossPayeeFinancialDetailsInternational = updateMapAndSave;
       });
 

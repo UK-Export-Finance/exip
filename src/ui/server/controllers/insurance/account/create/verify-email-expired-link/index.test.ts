@@ -6,7 +6,7 @@ import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockAccount, mockReq, mockRes } from '../../../../../test-mocks';
+import { mockAccount, mockReq, mockRes, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const {
   INSURANCE: {
@@ -136,7 +136,7 @@ describe('controllers/insurance/account/create/verify-email-expired-link', () =>
 
     describe('when there is an error calling the API', () => {
       beforeAll(() => {
-        sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        sendEmailConfirmEmailAddressSpy = mockSpyPromiseRejection;
         api.keystone.account.sendEmailConfirmEmailAddress = sendEmailConfirmEmailAddressSpy;
       });
 

@@ -3,6 +3,7 @@ import sanitiseCompaniesHouseNumber from '../../../helpers/sanitise-companies-ho
 import companiesHouse from '../../../integrations/companies-house';
 import { mapCompaniesHouseFields } from '../../../helpers/map-companies-house-fields';
 import industrySectorNames from '../../../integrations/industry-sector';
+import { mockSpyPromiseRejection } from '../../../test-mocks';
 import mockCompanyAPIResponse from '../../../test-mocks/mock-companies-house-api-response';
 import mockIndustrySectors from '../../../test-mocks/mock-industry-sectors';
 
@@ -61,7 +62,7 @@ describe('custom-resolvers/get-companies-house-information', () => {
 
   describe('when companies house API is down', () => {
     beforeEach(() => {
-      companiesHouse.get = jest.fn(() => Promise.reject(new Error('mock')));
+      companiesHouse.get = mockSpyPromiseRejection;
     });
 
     it('should return object containing success as false and apiError as true', async () => {
@@ -106,7 +107,7 @@ describe('custom-resolvers/get-companies-house-information', () => {
   describe('when companies house returns a response but industry sector errors', () => {
     beforeEach(() => {
       companiesHouse.get = jest.fn(() => Promise.resolve({ success: true, data: mockCompanyAPIResponse }));
-      industrySectorNames.get = jest.fn(() => Promise.reject(new Error('mock')));
+      industrySectorNames.get = mockSpyPromiseRejection;
     });
 
     it('should return object containing success as false and apiError as true', async () => {

@@ -7,7 +7,7 @@ import sendEmail from '../../../../emails';
 import accounts from '../../../../test-helpers/accounts';
 import accountStatusHelper from '../../../../test-helpers/account-status';
 import getKeystoneContext from '../../../../test-helpers/get-keystone-context';
-import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin, mockErrorMessage } from '../../../../test-mocks';
+import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin, mockErrorMessage, mockSpyPromiseRejection } from '../../../../test-mocks';
 import { Account, AccountSignInResponse, Context } from '../../../../types';
 
 dotenv.config();
@@ -135,7 +135,7 @@ describe('custom-resolvers/account-sign-in/account-sign-in-checks', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      sendEmail.accessCodeEmail = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
+      sendEmail.accessCodeEmail = mockSpyPromiseRejection;
     });
 
     test('should throw an error', async () => {

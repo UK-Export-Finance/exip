@@ -13,7 +13,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockCurrencies, mockCurrenciesResponse, mockCurrenciesEmptyResponse } from '../../../../test-mocks';
+import { mockReq, mockRes, mockCurrencies, mockCurrenciesResponse, mockCurrenciesEmptyResponse, mockSpyPromiseRejection } from '../../../../test-mocks';
 import mockApplication, { referenceNumber, mockApplicationSinglePolicyWithoutCurrencyCode } from '../../../../test-mocks/mock-application';
 
 const {
@@ -177,7 +177,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
     describe('api error handling', () => {
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          getCurrenciesSpy = mockSpyPromiseRejection;
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
@@ -385,7 +385,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
       describe('get currencies call', () => {
         describe('when the get currencies API call fails', () => {
           beforeEach(() => {
-            getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+            getCurrenciesSpy = mockSpyPromiseRejection;
             api.keystone.APIM.getCurrencies = getCurrenciesSpy;
           });
 
@@ -431,7 +431,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
 
         describe('when there is an error', () => {
           beforeEach(() => {
-            const savePolicyDataSpy = jest.fn(() => Promise.reject(new Error('mock')));
+            const savePolicyDataSpy = mockSpyPromiseRejection;
 
             mapAndSave.policy = savePolicyDataSpy;
           });

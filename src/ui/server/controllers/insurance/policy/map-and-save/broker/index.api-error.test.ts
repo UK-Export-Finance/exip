@@ -1,6 +1,6 @@
 import mapAndSave from '.';
 import save from '../../save-data/broker';
-import { mockApplication, mockBroker, mockSpyPromise } from '../../../../../test-mocks';
+import { mockApplication, mockBroker, mockSpyPromise, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 describe('controllers/insurance/policy/map-and-save/broker - API error', () => {
   jest.mock('../../save-data/broker');
@@ -27,7 +27,7 @@ describe('controllers/insurance/policy/map-and-save/broker - API error', () => {
 
   describe('when save application broker call fails', () => {
     beforeEach(() => {
-      save.broker = jest.fn(() => Promise.reject(new Error('mock')));
+      save.broker = mockSpyPromiseRejection;
     });
 
     it('should return false', async () => {

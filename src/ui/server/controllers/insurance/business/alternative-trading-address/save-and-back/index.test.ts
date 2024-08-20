@@ -3,8 +3,8 @@ import constructPayload from '../../../../../helpers/construct-payload';
 import { FIELD_IDS } from '..';
 import { ROUTES } from '../../../../../constants';
 import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
-import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
 import mapAndSave from '../../map-and-save/company-different-trading-address';
+import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection } from '../../../../../test-mocks';
 import { Request, Response } from '../../../../../../types';
 
 const {
@@ -110,7 +110,7 @@ describe('controllers/insurance/business/alternative-trading-address/save-and-ba
       beforeEach(() => {
         res.locals = mockRes().locals;
         req.body = validBody;
-        updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
+        updateMapAndSave = mockSpyPromiseRejection;
         mapAndSave.companyDifferentTradingAddress = updateMapAndSave;
       });
 

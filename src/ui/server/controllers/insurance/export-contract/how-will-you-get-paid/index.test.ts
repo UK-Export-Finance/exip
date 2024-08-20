@@ -17,6 +17,7 @@ import {
   mockApplication,
   mockApplicationTotalContractValueThresholdTrue,
   mockApplicationTotalContractValueThresholdFalse,
+  mockSpyPromiseRejection,
   referenceNumber,
 } from '../../../../test-mocks';
 
@@ -330,7 +331,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
 
         describe('when there is an error', () => {
           beforeEach(() => {
-            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+            const mapAndSaveSpy = mockSpyPromiseRejection;
 
             mapAndSave.exportContract = mapAndSaveSpy;
           });

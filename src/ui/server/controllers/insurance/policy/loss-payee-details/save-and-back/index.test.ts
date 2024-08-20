@@ -6,7 +6,7 @@ import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/loss-payee';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const {
   LOSS_PAYEE_DETAILS: { NAME },
@@ -116,7 +116,7 @@ describe('controllers/insurance/policy/loss-payee-details/save-and-back', () => 
       beforeEach(() => {
         req.body = validBody;
         res.locals = mockRes().locals;
-        updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
+        updateMapAndSave = mockSpyPromiseRejection;
         mapAndSave.lossPayee = updateMapAndSave;
       });
 

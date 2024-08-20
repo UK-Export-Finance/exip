@@ -208,8 +208,10 @@ export const mockRes = () => {
   return res;
 };
 
-export const mockSpyPromise = () => jest.fn().mockResolvedValue({});
-
 export const mockErrorMessage = 'Mock error';
 
 export const mockInvalidId = 'invalid-id';
+
+export const mockSpyPromise = () => jest.fn().mockResolvedValue({});
+
+export const mockSpyPromiseRejection = jest.fn().mockRejectedValue(new Error(mockErrorMessage));

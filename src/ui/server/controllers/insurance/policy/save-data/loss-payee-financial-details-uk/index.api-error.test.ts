@@ -1,6 +1,6 @@
 import save from '.';
 import api from '../../../../../api';
-import { mockApplication, mockLossPayeeFinancialDetailsUk } from '../../../../../test-mocks';
+import { mockApplication, mockLossPayeeFinancialDetailsUk, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 describe('controllers/insurance/policy/save-data/loss-payee-financial-details-uk - API error', () => {
   const mockUpdateApplicationResponse = mockApplication;
@@ -13,7 +13,7 @@ describe('controllers/insurance/policy/save-data/loss-payee-financial-details-uk
 
   describe('when there is an error', () => {
     beforeEach(() => {
-      updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+      updateApplicationSpy = mockSpyPromiseRejection;
       api.keystone.application.update.lossPayeeFinancialDetailsUk = updateApplicationSpy;
     });
 

@@ -2,7 +2,7 @@ import save from '.';
 import api from '../../../../api';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import { FIELD_IDS } from '../../../../constants';
-import { mockApplication } from '../../../../test-mocks';
+import { mockApplication, mockSpyPromiseRejection } from '../../../../test-mocks';
 
 const {
   CHECK_YOUR_ANSWERS: { POLICY },
@@ -43,7 +43,7 @@ describe('controllers/insurance/check-your-answers/save-data', () => {
 
   describe('when there is an error calling the API', () => {
     beforeAll(() => {
-      updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+      updateApplicationSpy = mockSpyPromiseRejection;
       api.keystone.application.update.declarations = updateApplicationSpy;
     });
 

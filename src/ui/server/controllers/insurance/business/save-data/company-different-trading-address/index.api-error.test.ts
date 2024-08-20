@@ -1,6 +1,6 @@
 import save from '.';
 import api from '../../../../../api';
-import { mockApplication, mockCompanyDifferentTradingAddress } from '../../../../../test-mocks';
+import { mockApplication, mockCompanyDifferentTradingAddress, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 describe('controllers/insurance/business/save-data/company-different-trading-address - API error', () => {
   const mockUpdateApplicationResponse = mockApplication;
@@ -13,7 +13,7 @@ describe('controllers/insurance/business/save-data/company-different-trading-add
 
   describe('when there is an error', () => {
     beforeEach(() => {
-      updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+      updateApplicationSpy = mockSpyPromiseRejection;
       api.keystone.application.update.companyDifferentTradingAddress = updateApplicationSpy;
     });
 

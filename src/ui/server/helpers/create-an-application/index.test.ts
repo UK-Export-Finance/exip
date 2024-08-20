@@ -2,7 +2,7 @@ import application from '.';
 import { sanitiseData } from '../sanitise-data';
 import mapEligibilityAnswers from '../map-eligibility-answers';
 import api from '../../api';
-import { mockEligibility, mockAccount, mockCreateApplicationResponse } from '../../test-mocks';
+import { mockEligibility, mockAccount, mockCreateApplicationResponse, mockSpyPromiseRejection } from '../../test-mocks';
 
 describe('helpers/create-an-application', () => {
   let createApplicationSpy = jest.fn(() => Promise.resolve(mockCreateApplicationResponse));
@@ -25,7 +25,7 @@ describe('helpers/create-an-application', () => {
 
   describe('when the create application API call fails', () => {
     beforeEach(() => {
-      createApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+      createApplicationSpy = mockSpyPromiseRejection;
 
       api.keystone.application.create = createApplicationSpy;
     });

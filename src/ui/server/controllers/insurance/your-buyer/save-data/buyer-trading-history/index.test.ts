@@ -1,12 +1,12 @@
 import save, { NULL_OR_EMPTY_STRING_FIELDS } from '.';
 import api from '../../../../../api';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
+import YOUR_BUYER_FIELD_IDS from '../../../../../constants/field-ids/insurance/your-buyer';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import stripEmptyFormFields from '../../../../../helpers/strip-empty-form-fields';
 import getDataToSave from '../../../../../helpers/get-data-to-save';
-import { mockApplication, mockBuyerTradingHistory } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
-import YOUR_BUYER_FIELD_IDS from '../../../../../constants/field-ids/insurance/your-buyer';
+import { mockApplication, mockBuyerTradingHistory, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const { TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE, FAILED_PAYMENTS, OUTSTANDING_PAYMENTS } = YOUR_BUYER_FIELD_IDS;
 
@@ -72,7 +72,7 @@ describe('controllers/insurance/your-buyer/save-data/buyer-trading-history', () 
 
   describe('when there is an error calling the API', () => {
     beforeAll(() => {
-      updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+      updateApplicationSpy = mockSpyPromiseRejection;
       api.keystone.application.update.buyerTradingHistory = updateApplicationSpy;
     });
 

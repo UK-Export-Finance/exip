@@ -1,7 +1,7 @@
 import { submissionDeadlineEmail } from '.';
 import notify from '../../integrations/notify';
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
-import { mockApplication, mockSendEmailResponse } from '../../test-mocks';
+import { mockApplication, mockSendEmailResponse, mockSpyPromiseRejection } from '../../test-mocks';
 import { SubmissionDeadlineEmailVariables } from '../../types';
 
 describe('emails/submission-deadline', () => {
@@ -17,8 +17,6 @@ describe('emails/submission-deadline', () => {
     buyerName: String(mockApplication.buyer.companyOrOrganisationName),
     submissionDeadline: new Date(mockApplication.submissionDeadline).toString(),
   } as SubmissionDeadlineEmailVariables;
-
-  const mockErrorMessage = 'Mock error';
 
   beforeAll(async () => {
     notify.sendEmail = sendEmailSpy;
@@ -38,7 +36,7 @@ describe('emails/submission-deadline', () => {
 
   describe('error handling', () => {
     beforeAll(async () => {
-      notify.sendEmail = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
+      notify.sendEmail = mockSpyPromiseRejection;
     });
 
     test('should throw an error', async () => {

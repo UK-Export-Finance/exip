@@ -6,7 +6,7 @@ import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/company-details';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockApplication, mockPhoneNumbers, mockCompany } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockCompany, mockPhoneNumbers, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const {
   YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER },
@@ -120,7 +120,7 @@ describe('controllers/insurance/business/companies-details', () => {
         beforeEach(() => {
           req.body = validBody;
           res.locals = mockRes().locals;
-          updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
+          updateMapAndSave = mockSpyPromiseRejection;
           mapAndSave.companyDetails = updateMapAndSave;
         });
 

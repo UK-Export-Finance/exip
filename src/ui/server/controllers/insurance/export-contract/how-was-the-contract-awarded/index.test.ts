@@ -12,7 +12,7 @@ import generateValidationErrors from './validation';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/export-contract';
 import { ObjectType, Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockExportContract, referenceNumber } from '../../../../test-mocks';
+import { mockReq, mockRes, mockExportContract, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -243,7 +243,7 @@ describe('controllers/insurance/export-contract/how-was-the-contract-awarded', (
     describe('when mapAndSave.exportContract returns an error', () => {
       beforeEach(() => {
         req.body = validBody;
-        const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        const mapAndSaveSpy = mockSpyPromiseRejection;
 
         mapAndSave.exportContract = mapAndSaveSpy;
       });

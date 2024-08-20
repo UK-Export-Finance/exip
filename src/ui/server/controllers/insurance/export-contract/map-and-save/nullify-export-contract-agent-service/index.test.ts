@@ -3,7 +3,7 @@ import saveAgentService from '../../save-data/export-contract-agent-service';
 import saveAgentServiceCharge from '../../save-data/export-contract-agent-service-charge';
 import nullifyAgentServiceData from '../../../../../helpers/nullify-agent-service-data';
 import nullifyAgentServiceChargeData from '../../../../../helpers/nullify-agent-service-charge-data';
-import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
+import { mockApplication, mockSpyPromise, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 describe('controllers/insurance/export-contract/map-and-save/export-contract-agent', () => {
   jest.mock('../../save-data/export-contract-agent-service');
@@ -49,7 +49,7 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
 
   describe('when save saveAgentServiceCharge.exportContractAgentServiceCharge call fails', () => {
     beforeEach(() => {
-      saveAgentServiceCharge.exportContractAgentServiceCharge = jest.fn(() => Promise.reject(new Error('mock')));
+      saveAgentServiceCharge.exportContractAgentServiceCharge = mockSpyPromiseRejection;
     });
 
     it('should return false', async () => {
@@ -73,7 +73,7 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
 
   describe('when save saveAgentService.exportContractAgentService call fails', () => {
     beforeEach(() => {
-      saveAgentService.exportContractAgentService = jest.fn(() => Promise.reject(new Error('mock')));
+      saveAgentService.exportContractAgentService = mockSpyPromiseRejection;
     });
 
     it('should return false', async () => {

@@ -24,6 +24,7 @@ import {
   mockNominatedLossPayee,
   referenceNumber,
   mockSpyPromise,
+  mockSpyPromiseRejection,
 } from '../../../../test-mocks';
 import { mockBroker } from '../../../../test-mocks/mock-application';
 
@@ -162,7 +163,7 @@ describe('controllers/insurance/check-your-answers/policy', () => {
     describe('api error handling', () => {
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          getCurrenciesSpy = mockSpyPromiseRejection;
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
@@ -188,7 +189,7 @@ describe('controllers/insurance/check-your-answers/policy', () => {
 
       describe('when the get countries API call fails', () => {
         beforeEach(() => {
-          getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          getCountriesSpy = mockSpyPromiseRejection;
           api.keystone.countries.getAll = getCountriesSpy;
         });
 
@@ -270,7 +271,7 @@ describe('controllers/insurance/check-your-answers/policy', () => {
 
       describe('when the save data API call fails', () => {
         beforeEach(() => {
-          mockSaveSectionReview = jest.fn(() => Promise.reject(new Error('mock')));
+          mockSaveSectionReview = mockSpyPromiseRejection;
           save.sectionReview = mockSaveSectionReview;
 
           req.body = mockBody;

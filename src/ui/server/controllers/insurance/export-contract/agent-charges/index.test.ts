@@ -24,6 +24,7 @@ import {
   mockCurrencies,
   mockCurrenciesResponse,
   mockExportContractAgentServiceCharge,
+  mockSpyPromiseRejection,
   referenceNumber,
 } from '../../../../test-mocks';
 
@@ -243,7 +244,7 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
 
     describe('when the get countries API call fails', () => {
       beforeEach(() => {
-        getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        getCountriesSpy = mockSpyPromiseRejection;
         api.keystone.countries.getAll = getCountriesSpy;
       });
 
@@ -269,7 +270,7 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
 
     describe('when the get currencies API call fails', () => {
       beforeEach(() => {
-        getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        getCurrenciesSpy = mockSpyPromiseRejection;
         api.keystone.APIM.getCurrencies = getCurrenciesSpy;
       });
 
@@ -342,7 +343,7 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
 
       describe('when the get countries API call fails', () => {
         beforeEach(() => {
-          getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          getCountriesSpy = mockSpyPromiseRejection;
           api.keystone.countries.getAll = getCountriesSpy;
         });
 
@@ -368,7 +369,7 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
 
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          getCurrenciesSpy = mockSpyPromiseRejection;
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
@@ -475,7 +476,7 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
     describe('when mapAndSave.exportContractAgentServiceCharge returns an error', () => {
       beforeEach(() => {
         req.body = validBody;
-        const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        const mapAndSaveSpy = mockSpyPromiseRejection;
 
         mapAndSave.exportContractAgentServiceCharge = mapAndSaveSpy;
       });

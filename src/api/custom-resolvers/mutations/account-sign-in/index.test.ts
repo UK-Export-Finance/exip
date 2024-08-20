@@ -7,7 +7,7 @@ import accountChecks from './account-sign-in-checks';
 import accounts from '../../../test-helpers/accounts';
 import accountStatusHelper from '../../../test-helpers/account-status';
 import authRetries from '../../../test-helpers/auth-retries';
-import { mockAccount, mockOTP, mockUrlOrigin, mockErrorMessage } from '../../../test-mocks';
+import { mockAccount, mockOTP, mockUrlOrigin, mockErrorMessage, mockSpyPromiseRejection } from '../../../test-mocks';
 import { Account, AccountSignInResponse, Context } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
@@ -197,7 +197,7 @@ describe('custom-resolvers/account-sign-in', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      sendEmail.accessCodeEmail = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
+      sendEmail.accessCodeEmail = mockSpyPromiseRejection;
     });
 
     test('should throw an error', async () => {

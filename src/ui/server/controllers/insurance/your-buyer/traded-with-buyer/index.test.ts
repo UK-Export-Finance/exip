@@ -9,7 +9,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import mapAndSave from '../map-and-save/buyer-trading-history';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -312,7 +312,7 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
         beforeEach(() => {
           req.body = validBody;
           res.locals = mockRes().locals;
-          mapAndSave.buyerTradingHistory = jest.fn(() => Promise.reject(new Error('mock')));
+          mapAndSave.buyerTradingHistory = mockSpyPromiseRejection;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

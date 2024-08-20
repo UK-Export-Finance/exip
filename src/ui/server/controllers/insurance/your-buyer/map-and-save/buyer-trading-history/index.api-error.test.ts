@@ -1,6 +1,6 @@
 import mapAndSave from '.';
 import save from '../../save-data/buyer-trading-history';
-import { mockApplication } from '../../../../../test-mocks';
+import { mockApplication, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 describe('controllers/insurance/business/map-and-save/buyer-trading-history - api errors', () => {
   jest.mock('../../save-data/buyer-trading-history');
@@ -24,7 +24,7 @@ describe('controllers/insurance/business/map-and-save/buyer-trading-history - ap
 
   describe('when save application buyer call fails', () => {
     beforeEach(() => {
-      save.buyerTradingHistory = jest.fn(() => Promise.reject(new Error('mock')));
+      save.buyerTradingHistory = mockSpyPromiseRejection;
     });
 
     it('should return false', async () => {

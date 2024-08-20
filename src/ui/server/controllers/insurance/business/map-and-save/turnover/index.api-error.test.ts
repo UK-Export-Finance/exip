@@ -1,7 +1,7 @@
 import mapAndSave from '.';
 import save from '../../save-data/business';
 import { FIELD_IDS } from '../../../../../constants';
-import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
+import { mockApplication, mockSpyPromise, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const {
   EXPORTER_BUSINESS: {
@@ -35,7 +35,7 @@ describe('controllers/insurance/business/map-and-save/turnover - API error', () 
 
   describe('when save application business call fails', () => {
     beforeEach(() => {
-      save.business = jest.fn(() => Promise.reject(new Error('mock')));
+      save.business = mockSpyPromiseRejection;
     });
 
     it('should return false', async () => {

@@ -5,7 +5,7 @@ import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/private-market';
 import generateValidationErrors from '../validation';
 import { Request, Response } from '../../../../../../types';
-import { mockCountries, referenceNumber, mockReq, mockRes } from '../../../../../test-mocks';
+import { mockCountries, mockReq, mockRes, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
@@ -89,7 +89,7 @@ describe('controllers/insurance/export-contract/declined-by-private-market/save-
   describe('api error handling', () => {
     describe('when the mapAndSave call fails', () => {
       beforeEach(() => {
-        mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        mapAndSaveSpy = mockSpyPromiseRejection;
 
         mapAndSave.privateMarket = mapAndSaveSpy;
       });

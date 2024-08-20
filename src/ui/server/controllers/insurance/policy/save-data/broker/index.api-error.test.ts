@@ -1,12 +1,12 @@
 import save from '.';
 import api from '../../../../../api';
-import { mockApplication, mockBroker } from '../../../../../test-mocks';
+import { mockApplication, mockBroker, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 describe('controllers/insurance/policy/save-data/broker - API error', () => {
   const mockFormBody = mockBroker;
 
   beforeEach(() => {
-    const updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+    const updateApplicationSpy = mockSpyPromiseRejection;
     api.keystone.application.update.broker = updateApplicationSpy;
   });
 

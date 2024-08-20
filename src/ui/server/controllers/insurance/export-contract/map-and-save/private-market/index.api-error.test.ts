@@ -1,6 +1,6 @@
 import mapAndSave from '.';
 import save from '../../save-data/private-market';
-import { mockApplication } from '../../../../../test-mocks';
+import { mockApplication, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 describe('controllers/insurance/export-contract/map-and-save/private-market - api errors', () => {
   jest.mock('../../save-data/private-market');
@@ -24,7 +24,7 @@ describe('controllers/insurance/export-contract/map-and-save/private-market - ap
 
   describe('when save application privateMarket call fails', () => {
     beforeEach(() => {
-      save.privateMarket = jest.fn(() => Promise.reject(new Error('mock')));
+      save.privateMarket = mockSpyPromiseRejection;
     });
 
     it('should return false', async () => {

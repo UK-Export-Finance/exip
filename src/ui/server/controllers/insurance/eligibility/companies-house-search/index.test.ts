@@ -13,7 +13,7 @@ import companiesHouse from '../../../../helpers/companies-house-search';
 import mapCompaniesHouseData from '../../../../helpers/mappings/map-companies-house-data';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { CompaniesHouseResponse, Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockCompaniesHouseResponse, mockCompany } from '../../../../test-mocks';
+import { mockReq, mockRes, mockCompaniesHouseResponse, mockCompany, mockSpyPromiseRejection } from '../../../../test-mocks';
 
 const {
   ELIGIBILITY: { COMPANIES_HOUSE_NUMBER },
@@ -245,7 +245,7 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
 
       describe('when there is an error', () => {
         beforeEach(() => {
-          companiesHouse.search = jest.fn(() => Promise.reject(new Error('mock')));
+          companiesHouse.search = mockSpyPromiseRejection;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

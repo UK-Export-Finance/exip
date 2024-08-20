@@ -2,7 +2,7 @@ import getApimCisCountries from '.';
 import APIM from '../../../integrations/APIM';
 import mapCisCountries from '../../../helpers/map-CIS-countries';
 import mockCisCountriesResponse from '../../../test-mocks/mock-APIM-CIS-countries-response';
-import { mockCisCountries, mockErrorMessage } from '../../../test-mocks';
+import { mockCisCountries, mockErrorMessage, mockSpyPromiseRejection } from '../../../test-mocks';
 
 describe('custom-resolvers/get-APIM-CIS-countries', () => {
   jest.mock('../../../integrations/APIM');
@@ -55,7 +55,7 @@ describe('custom-resolvers/get-APIM-CIS-countries', () => {
 
   describe('when APIM CIS API is down', () => {
     beforeEach(() => {
-      APIM.getCisCountries = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
+      APIM.getCisCountries = mockSpyPromiseRejection;
     });
 
     it('should throw an error', async () => {

@@ -3,7 +3,7 @@ import notify from '../../integrations/notify';
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
 import formatDate from '../../helpers/format-date';
 import mapFeedbackSatisfaction from '../../helpers/map-feedback-satisfaction';
-import { mockAccount, mockInsuranceFeedback, mockSendEmailResponse, mockErrorMessage } from '../../test-mocks';
+import { mockAccount, mockInsuranceFeedback, mockSendEmailResponse, mockErrorMessage, mockSpyPromiseRejection } from '../../test-mocks';
 
 describe('emails/insurance-feedback-email', () => {
   const sendEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
@@ -73,7 +73,7 @@ describe('emails/insurance-feedback-email', () => {
 
   describe('error handling', () => {
     beforeAll(async () => {
-      notify.sendEmail = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
+      notify.sendEmail = mockSpyPromiseRejection;
     });
 
     test('should throw an error', async () => {

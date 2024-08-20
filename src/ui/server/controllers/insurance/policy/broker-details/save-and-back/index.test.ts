@@ -6,7 +6,7 @@ import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/broker';
 import { FIELD_IDS } from '..';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const { USING_BROKER } = POLICY_FIELD_IDS;
 
@@ -114,7 +114,7 @@ describe('controllers/insurance/policy/broker-details/save-and-back', () => {
       beforeEach(() => {
         req.body = validBody;
         res.locals = mockRes().locals;
-        updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
+        updateMapAndSave = mockSpyPromiseRejection;
         mapAndSave.broker = updateMapAndSave;
       });
 

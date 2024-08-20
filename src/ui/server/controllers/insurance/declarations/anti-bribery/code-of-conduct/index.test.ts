@@ -8,7 +8,7 @@ import mapApplicationToFormFields from '../../../../../helpers/mappings/map-appl
 import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
 import save from '../../save-data';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockApplication, mockSpyPromise, referenceNumber } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromise, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -209,7 +209,7 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
 
         describe('when the save data API call fails', () => {
           beforeEach(() => {
-            mockSaveDeclaration = jest.fn(() => Promise.reject(new Error('mock')));
+            mockSaveDeclaration = mockSpyPromiseRejection;
             save.declaration = mockSaveDeclaration;
 
             req.body = validBody;

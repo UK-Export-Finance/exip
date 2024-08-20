@@ -3,7 +3,7 @@ import { ROUTES } from '../../../../../constants';
 import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockAccount, mockReq, mockRes } from '../../../../../test-mocks';
+import { mockAccount, mockReq, mockRes, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const {
   INSURANCE: {
@@ -110,7 +110,7 @@ describe('controllers/insurance/account/suspended/verify-email', () => {
   describe('api error handling', () => {
     describe('when the verify reactivate account token API call fails', () => {
       beforeEach(() => {
-        verifyAccountReactivationTokenSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        verifyAccountReactivationTokenSpy = mockSpyPromiseRejection;
 
         api.keystone.account.verifyAccountReactivationToken = verifyAccountReactivationTokenSpy;
       });

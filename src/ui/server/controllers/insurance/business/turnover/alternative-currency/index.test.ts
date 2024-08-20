@@ -12,7 +12,16 @@ import getUserNameFromSession from '../../../../../helpers/get-user-name-from-se
 import generateValidationErrors from './validation';
 import mapAndSave from '../../map-and-save/turnover';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockCurrenciesResponse, mockCurrenciesEmptyResponse, mockApplication, referenceNumber, GBP } from '../../../../../test-mocks';
+import {
+  mockReq,
+  mockRes,
+  mockApplication,
+  mockCurrenciesResponse,
+  mockCurrenciesEmptyResponse,
+  mockSpyPromiseRejection,
+  referenceNumber,
+  GBP,
+} from '../../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -122,7 +131,7 @@ describe('controllers/insurance/business/turnover/alternative-currency', () => {
     describe('api error handling', () => {
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          getCurrenciesSpy = mockSpyPromiseRejection;
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
@@ -253,7 +262,7 @@ describe('controllers/insurance/business/turnover/alternative-currency', () => {
     describe('api error handling', () => {
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          getCurrenciesSpy = mockSpyPromiseRejection;
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 

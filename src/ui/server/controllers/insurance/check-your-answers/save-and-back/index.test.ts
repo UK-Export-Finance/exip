@@ -5,7 +5,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import stripEmptyFormFields from '../../../../helpers/strip-empty-form-fields';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection } from '../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
@@ -80,7 +80,7 @@ describe('controllers/insurance/check-your-answers/save-and-back', () => {
 
     describe('when the save data API call fails', () => {
       beforeEach(() => {
-        mockSaveData = jest.fn(() => Promise.reject(new Error('mock')));
+        mockSaveData = mockSpyPromiseRejection;
         save.sectionReview = mockSaveData;
       });
 

@@ -5,7 +5,7 @@ import insuranceCorePageVariables from '../../../../../helpers/page-variables/co
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockAccount, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const {
   INSURANCE: {
@@ -125,7 +125,7 @@ describe('controllers/insurance/account/sign-in/request-new-code', () => {
 
     describe('when there is an error calling the API', () => {
       beforeAll(() => {
-        signInSendNewCodeSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        signInSendNewCodeSpy = mockSpyPromiseRejection;
         api.keystone.account.signInSendNewCode = signInSendNewCodeSpy;
       });
 

@@ -62,7 +62,7 @@ const sendEmailPasswordResetLink = async (
      */
     const newRetriesEntry = await createAuthenticationRetryEntry(context, accountId);
 
-    if (!newRetriesEntry.success) {
+    if (!newRetriesEntry?.success) {
       return { success: false };
     }
 
@@ -113,7 +113,7 @@ const sendEmailPasswordResetLink = async (
 
     const emailResponse = await sendEmail.passwordResetLink(urlOrigin, email, name, passwordResetHash);
 
-    if (emailResponse.success) {
+    if (emailResponse?.success) {
       return emailResponse;
     }
 

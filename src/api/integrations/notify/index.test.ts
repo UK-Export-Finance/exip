@@ -1,6 +1,7 @@
 // @ts-ignore
 import notificationsClient from 'notifications-node-client';
 import notify from '.';
+import { mockSpyPromiseRejection } from '../../test-mocks';
 
 jest.mock('notifications-node-client');
 
@@ -33,7 +34,7 @@ describe('integrations/notify', () => {
     beforeEach(() => {
       notificationsClient.NotifyClient = () => ({
         prepareUpload: jest.fn(),
-        sendEmail: jest.fn(() => Promise.reject(new Error('mock'))),
+        sendEmail: mockSpyPromiseRejection,
       });
     });
 

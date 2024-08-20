@@ -54,7 +54,7 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
 
     const accountSubmittedResponse = await sendEmail.application.submittedEmail(sendOwnerEmailVars);
 
-    if (!accountSubmittedResponse.success) {
+    if (!accountSubmittedResponse?.success) {
       throw new Error('Sending application submitted email to owner/account');
     }
 
@@ -66,7 +66,7 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
       console.info('Sending application submitted email to policy contact email: %s', sendContactEmailVars.emailAddress);
       const contactSubmittedResponse = await sendEmail.application.submittedEmail(sendContactEmailVars);
 
-      if (!contactSubmittedResponse.success) {
+      if (!contactSubmittedResponse?.success) {
         throw new Error('Sending application submitted email to contact');
       }
     }

@@ -3,7 +3,7 @@ import { FIELD_IDS, FIELD_VALUES } from '../../../../constants';
 import { Request, Response } from '../../../../../types';
 import generateValidationErrors from '../type-of-policy/validation';
 import mapAndSave from '../map-and-save/policy';
-import { mockApplication, mockReq, mockRes } from '../../../../test-mocks';
+import { mockApplication, mockReq, mockRes, mockSpyPromiseRejection } from '../../../../test-mocks';
 
 const { POLICY_TYPE } = FIELD_IDS;
 
@@ -73,7 +73,7 @@ describe('controllers/insurance/policy/call-map-and-save', () => {
 
     describe('when the mapAndSave call fails', () => {
       beforeEach(() => {
-        mockMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
+        mockMapAndSave = mockSpyPromiseRejection;
         mapAndSave.policy = mockMapAndSave;
       });
 

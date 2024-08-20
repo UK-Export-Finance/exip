@@ -2,7 +2,7 @@ import { confirmEmailAddress } from '.';
 import notify from '../../integrations/notify';
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
 import getFullNameString from '../../helpers/get-full-name-string';
-import { mockAccount, mockSendEmailResponse, mockUrlOrigin, mockErrorMessage } from '../../test-mocks';
+import { mockAccount, mockSendEmailResponse, mockUrlOrigin, mockErrorMessage, mockSpyPromiseRejection } from '../../test-mocks';
 
 describe('emails/confirm-email-address', () => {
   const sendEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
@@ -37,7 +37,7 @@ describe('emails/confirm-email-address', () => {
 
   describe('error handling', () => {
     beforeAll(async () => {
-      notify.sendEmail = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
+      notify.sendEmail = mockSpyPromiseRejection;
     });
 
     test('should throw an error', async () => {

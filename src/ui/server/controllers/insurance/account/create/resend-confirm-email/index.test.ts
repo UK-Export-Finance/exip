@@ -4,7 +4,7 @@ import { ROUTES } from '../../../../../constants';
 import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockAccount, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 dotenv.config();
 
@@ -88,7 +88,7 @@ describe('controllers/insurance/account/create/resend-confirm-email', () => {
 
     describe('when there is an error calling the API', () => {
       beforeAll(() => {
-        sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        sendEmailConfirmEmailAddressSpy = mockSpyPromiseRejection;
         api.keystone.account.sendEmailConfirmEmailAddress = sendEmailConfirmEmailAddressSpy;
       });
 

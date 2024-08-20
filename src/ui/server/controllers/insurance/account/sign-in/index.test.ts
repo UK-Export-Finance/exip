@@ -11,7 +11,7 @@ import emailAndPasswordIncorrectValidationErrors from '../../../../shared-valida
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockAccount } from '../../../../test-mocks';
+import { mockReq, mockRes, mockAccount, mockSpyPromiseRejection } from '../../../../test-mocks';
 
 const { EMAIL, PASSWORD } = ACCOUNT_FIELD_IDS;
 
@@ -324,7 +324,7 @@ describe('controllers/insurance/account/sign-in', () => {
       beforeEach(() => {
         req.body = validBody;
 
-        accountSignInSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        accountSignInSpy = mockSpyPromiseRejection;
         api.keystone.account.signIn = accountSignInSpy;
       });
 

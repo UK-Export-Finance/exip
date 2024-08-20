@@ -66,7 +66,7 @@ const send = async (context: Context, urlOrigin: string, accountId: string): Pro
 
     const emailResponse = await sendEmail.confirmEmailAddress(email, urlOrigin, name, latestVerificationHash, id);
 
-    if (emailResponse.success) {
+    if (emailResponse?.success) {
       return emailResponse;
     }
 

@@ -6,7 +6,7 @@ import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/buyer-trading-history';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const { OUTSTANDING_PAYMENTS, FAILED_PAYMENTS, TOTAL_AMOUNT_OVERDUE } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
@@ -112,7 +112,7 @@ describe('controllers/insurance/your-buyer/trading-history/save-and-back', () =>
   describe('when mapAndSave.buyerTradingHistory fails', () => {
     beforeEach(() => {
       res.locals = mockRes().locals;
-      updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
+      updateMapAndSave = mockSpyPromiseRejection;
       mapAndSave.buyerTradingHistory = updateMapAndSave;
     });
 

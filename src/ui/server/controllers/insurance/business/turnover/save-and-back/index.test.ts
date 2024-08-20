@@ -4,7 +4,7 @@ import { ROUTES } from '../../../../../constants';
 import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
 import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/turnover';
-import { mockReq, mockRes, mockApplication, mockBusinessTurnover } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockBusinessTurnover, mockSpyPromiseRejection } from '../../../../../test-mocks';
 import { Request, Response } from '../../../../../../types';
 
 const {
@@ -112,7 +112,7 @@ describe('controllers/insurance/business/turnover/save-and-back', () => {
       beforeEach(() => {
         req.body = validBody;
         res.locals = mockRes().locals;
-        updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
+        updateMapAndSave = mockSpyPromiseRejection;
         mapAndSave.turnover = updateMapAndSave;
       });
 

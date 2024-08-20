@@ -4,7 +4,7 @@ import DECLARATIONS_FIELD_IDS from '../../../../constants/field-ids/insurance/de
 import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
-import { referenceNumber, mockReq, mockRes } from '../../../../test-mocks';
+import { mockReq, mockRes, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE },
@@ -98,7 +98,7 @@ describe('controllers/insurance/declarations/confidentiality/save-and-back', () 
 
     describe('when the mapAndSave call fails', () => {
       beforeEach(() => {
-        mockSaveData = jest.fn(() => Promise.reject(new Error('mock')));
+        mockSaveData = mockSpyPromiseRejection;
         save.declaration = mockSaveData;
       });
 

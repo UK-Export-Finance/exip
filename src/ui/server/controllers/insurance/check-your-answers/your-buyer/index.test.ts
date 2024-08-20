@@ -11,7 +11,7 @@ import sectionStatus from '../../../../helpers/section-status';
 import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockSpyPromise, referenceNumber } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromise, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
@@ -168,7 +168,7 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
 
       describe('when the save data API call fails', () => {
         beforeEach(() => {
-          mockSaveSectionReview = jest.fn(() => Promise.reject(new Error('mock')));
+          mockSaveSectionReview = mockSpyPromiseRejection;
           save.sectionReview = mockSaveSectionReview;
 
           req.body = mockBody;

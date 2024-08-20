@@ -38,7 +38,7 @@ const accountSignInSendNewCode = async (root: any, variables: AccountSignInSendN
 
     const emailResponse = await sendEmail.accessCodeEmail(email, name, String(securityCode));
 
-    if (emailResponse.success) {
+    if (emailResponse?.success) {
       return {
         ...emailResponse,
         accountId: account.id,

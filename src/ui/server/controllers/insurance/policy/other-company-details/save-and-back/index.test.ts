@@ -4,7 +4,7 @@ import { ROUTES } from '../../../../../constants/routes';
 import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/jointly-insured-party';
 import generateValidationErrors from '../validation';
-import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection } from '../../../../../test-mocks';
 import { Request, Response } from '../../../../../../types';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
@@ -17,7 +17,7 @@ describe('controllers/insurance/policy/other-company-details/save-and-back', () 
 
   const updateMapAndSaveSuccess = jest.fn(() => Promise.resolve(true));
   const updateMapAndSaveFalse = jest.fn(() => Promise.resolve(false));
-  const updateMapAndSaveError = jest.fn(() => Promise.reject(new Error('mock')));
+  const updateMapAndSaveError = mockSpyPromiseRejection;
 
   beforeEach(() => {
     req = mockReq();

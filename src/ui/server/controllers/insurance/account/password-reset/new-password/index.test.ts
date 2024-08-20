@@ -9,7 +9,7 @@ import generateValidationErrors from './validation';
 import api from '../../../../../api';
 import cannotUseNewPasswordValidation from './validation/cannot-use-new-password';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockAccount, mockSpyPromiseRejection } from '../../../../../test-mocks';
 const {
   INSURANCE: {
     ACCOUNT: {
@@ -163,7 +163,7 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
     describe('api error handling', () => {
       describe('when the verify account password reset token API call fails', () => {
         beforeEach(() => {
-          verifyAccountPasswordResetTokenSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          verifyAccountPasswordResetTokenSpy = mockSpyPromiseRejection;
           api.keystone.account.verifyPasswordResetToken = verifyAccountPasswordResetTokenSpy;
         });
 
@@ -279,7 +279,7 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
       describe('api error handling', () => {
         describe('when the password reset API call fails', () => {
           beforeEach(() => {
-            passwordResetSpy = jest.fn(() => Promise.reject(new Error('mock')));
+            passwordResetSpy = mockSpyPromiseRejection;
             api.keystone.account.passwordReset = passwordResetSpy;
           });
 

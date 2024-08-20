@@ -2,9 +2,9 @@ import { post } from '.';
 import constructPayload from '../../../../../helpers/construct-payload';
 import { FIELD_ID } from '..';
 import { ROUTES } from '../../../../../constants';
-import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
 import mapAndSave from '../../map-and-save/business';
 import { Request, Response } from '../../../../../../types';
+import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
@@ -105,7 +105,7 @@ describe('controllers/insurance/business/credit-control/save-and-back', () => {
         req.body = validBody;
         res.locals = mockRes().locals;
 
-        updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
+        updateMapAndSave = mockSpyPromiseRejection;
         mapAndSave.business = updateMapAndSave;
       });
 

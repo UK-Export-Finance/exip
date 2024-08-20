@@ -19,6 +19,7 @@ import {
   mockCurrencies,
   mockCurrenciesResponse,
   mockCurrenciesEmptyResponse,
+  mockSpyPromiseRejection,
   referenceNumber,
 } from '../../../../../test-mocks';
 
@@ -146,7 +147,7 @@ describe('controllers/insurance/export-contract/agent-charges/alternative-curren
 
     describe('when the get currencies API call fails', () => {
       beforeEach(() => {
-        getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        getCurrenciesSpy = mockSpyPromiseRejection;
         api.keystone.APIM.getCurrencies = getCurrenciesSpy;
       });
 
@@ -211,7 +212,7 @@ describe('controllers/insurance/export-contract/agent-charges/alternative-curren
 
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          getCurrenciesSpy = mockSpyPromiseRejection;
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
@@ -326,7 +327,7 @@ describe('controllers/insurance/export-contract/agent-charges/alternative-curren
     describe('when mapAndSave.exportContractAgentServiceCharge returns an error', () => {
       beforeEach(() => {
         req.body = validBody;
-        const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        const mapAndSaveSpy = mockSpyPromiseRejection;
 
         mapAndSave.exportContractAgentServiceCharge = mapAndSaveSpy;
       });

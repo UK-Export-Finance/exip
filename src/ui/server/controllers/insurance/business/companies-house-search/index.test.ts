@@ -13,7 +13,7 @@ import companiesHouse from '../../../../helpers/companies-house-search';
 import mapCompaniesHouseData from '../../../../helpers/mappings/map-companies-house-data';
 import saveData from '../save-data/companies-house-search-data';
 import { CompaniesHouseResponse, Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockCompaniesHouseResponse, mockCompany, referenceNumber } from '../../../../test-mocks';
+import { mockReq, mockRes, mockCompaniesHouseResponse, mockCompany, referenceNumber, mockSpyPromiseRejection } from '../../../../test-mocks';
 
 const {
   ELIGIBILITY: {
@@ -227,7 +227,7 @@ describe('controllers/insurance/business/companies-house-search', () => {
 
       describe('when there is an error with companiesHouse.search', () => {
         beforeEach(() => {
-          companiesHouse.search = jest.fn(() => Promise.reject(new Error('mock')));
+          companiesHouse.search = mockSpyPromiseRejection;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -242,7 +242,7 @@ describe('controllers/insurance/business/companies-house-search', () => {
       describe('when there is an error with saveData.companyDetailsPostMigration', () => {
         beforeEach(() => {
           companiesHouse.search = jest.fn(() => Promise.resolve(mockCompaniesHouseResponse));
-          saveData.companyDetailsPostMigration = jest.fn(() => Promise.reject(new Error('mock')));
+          saveData.companyDetailsPostMigration = mockSpyPromiseRejection;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

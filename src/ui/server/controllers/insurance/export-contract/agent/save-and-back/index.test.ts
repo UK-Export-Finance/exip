@@ -5,7 +5,7 @@ import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/export-contract-agent';
 import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
 import { Request, Response } from '../../../../../../types';
-import { referenceNumber, mockCountries, mockReq, mockRes } from '../../../../../test-mocks';
+import { mockCountries, mockReq, mockRes, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
@@ -88,7 +88,7 @@ describe('controllers/insurance/export-contract/agent/save-and-back', () => {
 
   describe('when there is an error calling the API', () => {
     beforeAll(() => {
-      mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+      mapAndSaveSpy = mockSpyPromiseRejection;
 
       mapAndSave.exportContractAgent = mapAndSaveSpy;
     });

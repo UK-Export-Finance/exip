@@ -6,7 +6,7 @@ import BUYER_FIELD_IDS from '../../../../../constants/field-ids/insurance/your-b
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = BUYER_FIELD_IDS;
 
@@ -115,7 +115,7 @@ describe('controllers/insurance/your-buyer/credit-insurance-information/save-and
         req.body = validBody;
 
         res.locals = mockRes().locals;
-        updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
+        updateMapAndSave = mockSpyPromiseRejection;
         mapAndSave.buyerRelationship = updateMapAndSave;
       });
 

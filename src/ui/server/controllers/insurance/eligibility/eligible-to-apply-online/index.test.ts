@@ -5,7 +5,7 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import application from '../../../../helpers/create-an-application';
-import { mockAccount, referenceNumber, mockSession, mockReq, mockRes, mockCreateApplicationResponse } from '../../../../test-mocks';
+import { mockAccount, mockSession, mockReq, mockRes, mockCreateApplicationResponse, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -104,7 +104,7 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
             },
           };
 
-          createApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          createApplicationSpy = mockSpyPromiseRejection;
           application.create = createApplicationSpy;
         });
 

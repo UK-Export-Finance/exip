@@ -1,6 +1,6 @@
 import mapAndSave from '.';
 import save from '../../save-data/export-contract-agent-service-charge';
-import { mockApplication } from '../../../../../test-mocks';
+import { mockApplication, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 describe('controllers/insurance/export-contract/map-and-save/export-contract-agent-service-charge - api errors', () => {
   jest.mock('../../save-data/export-contract-agent-service');
@@ -24,7 +24,7 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
 
   describe('when save application exportContractAgentServiceCharge call fails', () => {
     beforeEach(() => {
-      save.exportContractAgentServiceCharge = jest.fn(() => Promise.reject(new Error('mock')));
+      save.exportContractAgentServiceCharge = mockSpyPromiseRejection;
     });
 
     it('should return false', async () => {

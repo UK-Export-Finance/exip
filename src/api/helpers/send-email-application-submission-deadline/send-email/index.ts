@@ -16,7 +16,9 @@ const send = async (applications: Array<Application>) => {
     const mapped = applications.map(async (application) => {
       const variables = mapApplicationSubmissionDeadlineVariables(application);
 
-      return sendEmail.submissionDeadlineEmail(variables.email, variables);
+      const response = await sendEmail.submissionDeadlineEmail(variables.email, variables);
+
+      return response;
     });
 
     const promises = await Promise.all(mapped);
