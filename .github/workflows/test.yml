@@ -193,7 +193,6 @@ jobs:
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
-    timeout-minutes: 30
 
     strategy:
       # Do not cancel in-progress jobs upon failure
@@ -386,7 +385,6 @@ jobs:
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
-    timeout-minutes: 30
 
     strategy:
       # Do not cancel in-progress jobs upon failure
@@ -448,7 +446,6 @@ jobs:
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
-    timeout-minutes: 30
 
     strategy:
       # Do not cancel in-progress jobs upon failure

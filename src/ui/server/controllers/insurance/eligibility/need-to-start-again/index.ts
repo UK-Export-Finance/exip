@@ -5,7 +5,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import { Request, Response } from '../../../../../types';
 
 export const get = (req: Request, res: Response) =>
-  res.render(TEMPLATES.SHARED_PAGES.NEED_TO_START_AGAIN, {
+  res.render(TEMPLATES.SHARED_PAGES.NEED_TO_START_AGAIN_EXIT, {
     ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.NEED_TO_START_AGAIN_PAGE_EXIT, BACK_LINK: req.headers.referer }),
     userName: getUserNameFromSession(req.session.user),
   });
