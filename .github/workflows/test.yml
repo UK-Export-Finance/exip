@@ -294,25 +294,15 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
-
+        uses: ./.github/actions/retry
+        with:
+          command: npm run ci:all
+          working-directory: ./
+  
       - name: Docker
-        run: |
-          max_attempts=3
-          attempt_num=1
-          until [ $attempt_num -gt $max_attempts ]
-          do
-            echo "Attempt $attempt_num to start Docker"
-            docker compose up --build -d && break
-            attempt_num=$((attempt_num + 1))
-            echo "Retrying in 5 seconds..."
-            sleep 5
-          done
-          if [ $attempt_num -gt $max_attempts ]; then
-            echo "Failed to start Docker after $max_attempts attempts."
-            exit 1
-          fi
+        uses: ./.github/actions/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -371,39 +361,15 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: |
-          max_attempts=3
-          attempt_num=1
-          until [ $attempt_num -gt $max_attempts ]
-          do
-            echo "Attempt $attempt_num to install dependencies"
-            npm run ci:all && break
-            attempt_num=$((attempt_num + 1))
-            echo "Retrying in 5 seconds..."
-            sleep 5
-          done
-          if [ $attempt_num -gt $max_attempts ]; then
-            echo "Failed to install dependencies after $max_attempts attempts."
-            exit 1
-          fi
-
+        uses: ./.github/actions/retry
+        with:
+          command: npm run ci:all
+          working-directory: ./
+  
       - name: Docker
-        run: |
-          max_attempts=3
-          attempt_num=1
-          until [ $attempt_num -gt $max_attempts ]
-          do
-            echo "Attempt $attempt_num to start Docker"
-            docker compose up --build -d && break
-            attempt_num=$((attempt_num + 1))
-            echo "Retrying in 5 seconds..."
-            sleep 5
-          done
-          if [ $attempt_num -gt $max_attempts ]; then
-            echo "Failed to start Docker after $max_attempts attempts."
-            exit 1
-          fi
+        uses: ./.github/actions/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -469,39 +435,15 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: |
-          max_attempts=3
-          attempt_num=1
-          until [ $attempt_num -gt $max_attempts ]
-          do
-            echo "Attempt $attempt_num to install dependencies"
-            npm run ci:all && break
-            attempt_num=$((attempt_num + 1))
-            echo "Retrying in 5 seconds..."
-            sleep 5
-          done
-          if [ $attempt_num -gt $max_attempts ]; then
-            echo "Failed to install dependencies after $max_attempts attempts."
-            exit 1
-          fi
-
+        uses: ./.github/actions/retry
+        with:
+          command: npm run ci:all
+          working-directory: ./
+    
       - name: Docker
-        run: |
-          max_attempts=3
-          attempt_num=1
-          until [ $attempt_num -gt $max_attempts ]
-          do
-            echo "Attempt $attempt_num to start Docker"
-            docker compose up --build -d && break
-            attempt_num=$((attempt_num + 1))
-            echo "Retrying in 5 seconds..."
-            sleep 5
-          done
-          if [ $attempt_num -gt $max_attempts ]; then
-            echo "Failed to start Docker after $max_attempts attempts."
-            exit 1
-          fi
+        uses: ./.github/actions/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -548,39 +490,15 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: |
-          max_attempts=3
-          attempt_num=1
-          until [ $attempt_num -gt $max_attempts ]
-          do
-            echo "Attempt $attempt_num to install dependencies"
-            npm run ci:all && break
-            attempt_num=$((attempt_num + 1))
-            echo "Retrying in 5 seconds..."
-            sleep 5
-          done
-          if [ $attempt_num -gt $max_attempts ]; then
-            echo "Failed to install dependencies after $max_attempts attempts."
-            exit 1
-          fi
-
+        uses: ./.github/actions/retry
+        with:
+          command: npm run ci:all
+          working-directory: ./
+  
       - name: Docker
-        run: |
-          max_attempts=3
-          attempt_num=1
-          until [ $attempt_num -gt $max_attempts ]
-          do
-            echo "Attempt $attempt_num to start Docker"
-            docker compose up --build -d && break
-            attempt_num=$((attempt_num + 1))
-            echo "Retrying in 5 seconds..."
-            sleep 5
-          done
-          if [ $attempt_num -gt $max_attempts ]; then
-            echo "Failed to start Docker after $max_attempts attempts."
-            exit 1
-          fi
+        uses: ./.github/actions/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -645,39 +563,15 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: |
-          max_attempts=3
-          attempt_num=1
-          until [ $attempt_num -gt $max_attempts ]
-          do
-            echo "Attempt $attempt_num to install dependencies"
-            npm run ci:all && break
-            attempt_num=$((attempt_num + 1))
-            echo "Retrying in 5 seconds..."
-            sleep 5
-          done
-          if [ $attempt_num -gt $max_attempts ]; then
-            echo "Failed to install dependencies after $max_attempts attempts."
-            exit 1
-          fi
-
+        uses: ./.github/actions/retry
+        with:
+          command: npm run ci:all
+          working-directory: ./
+  
       - name: Docker
-        run: |
-          max_attempts=3
-          attempt_num=1
-          until [ $attempt_num -gt $max_attempts ]
-          do
-            echo "Attempt $attempt_num to start Docker"
-            docker compose up --build -d && break
-            attempt_num=$((attempt_num + 1))
-            echo "Retrying in 5 seconds..."
-            sleep 5
-          done
-          if [ $attempt_num -gt $max_attempts ]; then
-            echo "Failed to start Docker after $max_attempts attempts."
-            exit 1
-          fi
+        uses: ./.github/actions/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -739,39 +633,15 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: |
-          max_attempts=3
-          attempt_num=1
-          until [ $attempt_num -gt $max_attempts ]
-          do
-            echo "Attempt $attempt_num to install dependencies"
-            npm run ci:all && break
-            attempt_num=$((attempt_num + 1))
-            echo "Retrying in 5 seconds..."
-            sleep 5
-          done
-          if [ $attempt_num -gt $max_attempts ]; then
-            echo "Failed to install dependencies after $max_attempts attempts."
-            exit 1
-          fi
-
+        uses: ./.github/actions/retry
+        with:
+          command: npm run ci:all
+          working-directory: ./
+  
       - name: Docker
-        run: |
-          max_attempts=3
-          attempt_num=1
-          until [ $attempt_num -gt $max_attempts ]
-          do
-            echo "Attempt $attempt_num to start Docker"
-            docker compose up --build -d && break
-            attempt_num=$((attempt_num + 1))
-            echo "Retrying in 5 seconds..."
-            sleep 5
-          done
-          if [ $attempt_num -gt $max_attempts ]; then
-            echo "Failed to start Docker after $max_attempts attempts."
-            exit 1
-          fi
+        uses: ./.github/actions/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -841,39 +711,15 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: |
-          max_attempts=3
-          attempt_num=1
-          until [ $attempt_num -gt $max_attempts ]
-          do
-            echo "Attempt $attempt_num to install dependencies"
-            npm run ci:all && break
-            attempt_num=$((attempt_num + 1))
-            echo "Retrying in 5 seconds..."
-            sleep 5
-          done
-          if [ $attempt_num -gt $max_attempts ]; then
-            echo "Failed to install dependencies after $max_attempts attempts."
-            exit 1
-          fi
-
+        uses: ./.github/actions/retry
+        with:
+          command: npm run ci:all
+          working-directory: ./
+  
       - name: Docker
-        run: |
-          max_attempts=3
-          attempt_num=1
-          until [ $attempt_num -gt $max_attempts ]
-          do
-            echo "Attempt $attempt_num to start Docker"
-            docker compose up --build -d && break
-            attempt_num=$((attempt_num + 1))
-            echo "Retrying in 5 seconds..."
-            sleep 5
-          done
-          if [ $attempt_num -gt $max_attempts ]; then
-            echo "Failed to start Docker after $max_attempts attempts."
-            exit 1
-          fi
+        uses: ./.github/actions/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -926,39 +772,15 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: |
-          max_attempts=3
-          attempt_num=1
-          until [ $attempt_num -gt $max_attempts ]
-          do
-            echo "Attempt $attempt_num to install dependencies"
-            npm run ci:all && break
-            attempt_num=$((attempt_num + 1))
-            echo "Retrying in 5 seconds..."
-            sleep 5
-          done
-          if [ $attempt_num -gt $max_attempts ]; then
-            echo "Failed to install dependencies after $max_attempts attempts."
-            exit 1
-          fi
-
+        uses: ./.github/actions/retry
+        with:
+          command: npm run ci:all
+          working-directory: ./
+  
       - name: Docker
-        run: |
-          max_attempts=3
-          attempt_num=1
-          until [ $attempt_num -gt $max_attempts ]
-          do
-            echo "Attempt $attempt_num to start Docker"
-            docker compose up --build -d && break
-            attempt_num=$((attempt_num + 1))
-            echo "Retrying in 5 seconds..."
-            sleep 5
-          done
-          if [ $attempt_num -gt $max_attempts ]; then
-            echo "Failed to start Docker after $max_attempts attempts."
-            exit 1
-          fi
+        uses: ./.github/actions/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -1012,39 +834,15 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: |
-          max_attempts=3
-          attempt_num=1
-          until [ $attempt_num -gt $max_attempts ]
-          do
-            echo "Attempt $attempt_num to install dependencies"
-            npm run ci:all && break
-            attempt_num=$((attempt_num + 1))
-            echo "Retrying in 5 seconds..."
-            sleep 5
-          done
-          if [ $attempt_num -gt $max_attempts ]; then
-            echo "Failed to install dependencies after $max_attempts attempts."
-            exit 1
-          fi
-
+        uses: ./.github/actions/retry
+        with:
+          command: npm run ci:all
+          working-directory: ./
+  
       - name: Docker
-        run: |
-          max_attempts=3
-          attempt_num=1
-          until [ $attempt_num -gt $max_attempts ]
-          do
-            echo "Attempt $attempt_num to start Docker"
-            docker compose up --build -d && break
-            attempt_num=$((attempt_num + 1))
-            echo "Retrying in 5 seconds..."
-            sleep 5
-          done
-          if [ $attempt_num -gt $max_attempts ]; then
-            echo "Failed to start Docker after $max_attempts attempts."
-            exit 1
-          fi
+        uses: ./.github/actions/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -1101,39 +899,15 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: |
-          max_attempts=3
-          attempt_num=1
-          until [ $attempt_num -gt $max_attempts ]
-          do
-            echo "Attempt $attempt_num to install dependencies"
-            npm run ci:all && break
-            attempt_num=$((attempt_num + 1))
-            echo "Retrying in 5 seconds..."
-            sleep 5
-          done
-          if [ $attempt_num -gt $max_attempts ]; then
-            echo "Failed to install dependencies after $max_attempts attempts."
-            exit 1
-          fi
-
+        uses: ./.github/actions/retry
+        with:
+          command: npm run ci:all
+          working-directory: ./
+  
       - name: Docker
-        run: |
-          max_attempts=3
-          attempt_num=1
-          until [ $attempt_num -gt $max_attempts ]
-          do
-            echo "Attempt $attempt_num to start Docker"
-            docker compose up --build -d && break
-            attempt_num=$((attempt_num + 1))
-            echo "Retrying in 5 seconds..."
-            sleep 5
-          done
-          if [ $attempt_num -gt $max_attempts ]; then
-            echo "Failed to start Docker after $max_attempts attempts."
-            exit 1
-          fi
+        uses: ./.github/actions/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -1175,39 +949,15 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: |
-          max_attempts=3
-          attempt_num=1
-          until [ $attempt_num -gt $max_attempts ]
-          do
-            echo "Attempt $attempt_num to install dependencies"
-            npm run ci:all && break
-            attempt_num=$((attempt_num + 1))
-            echo "Retrying in 5 seconds..."
-            sleep 5
-          done
-          if [ $attempt_num -gt $max_attempts ]; then
-            echo "Failed to install dependencies after $max_attempts attempts."
-            exit 1
-          fi
-
+        uses: ./.github/actions/retry
+        with:
+          command: npm run ci:all
+          working-directory: ./
+  
       - name: Docker
-        run: |
-          max_attempts=3
-          attempt_num=1
-          until [ $attempt_num -gt $max_attempts ]
-          do
-            echo "Attempt $attempt_num to start Docker"
-            docker compose up --build -d && break
-            attempt_num=$((attempt_num + 1))
-            echo "Retrying in 5 seconds..."
-            sleep 5
-          done
-          if [ $attempt_num -gt $max_attempts ]; then
-            echo "Failed to start Docker after $max_attempts attempts."
-            exit 1
-          fi
+        uses: ./.github/actions/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s

@@ -1,11 +1,8 @@
 name: "Retry Steps"
-description: "Composite action to retry steps"
 inputs:
   command:
-    description: "The command to run with retries"
     required: true
   working-directory:
-    description: "The working directory for the command"
     required: false
     default: "."
 runs:
@@ -19,11 +16,7 @@ runs:
           echo "Attempt $attempt_num to run command"
           cd ${{ inputs.working-directory }} && ${{ inputs.command }} && break
           attempt_num=$((attempt_num + 1))
-          echo "Retrying in 5 seconds..."
-          sleep 5
         done
         if [ $attempt_num -gt $max_attempts ]; then
-          echo "Failed to run command after $max_attempts attempts."
           exit 1
         fi
-      shell: bash
