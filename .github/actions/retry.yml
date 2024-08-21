@@ -26,3 +26,4 @@ runs:
           echo "Failed to run command after $max_attempts attempts."
           exit 1
         fi
+      shell: bash
