@@ -89,6 +89,10 @@ context(
           it('should retain the status of task `check your answers` as `in progress`', () => {
             cy.checkTaskCheckAnswersStatusIsInProgress();
           });
+
+          it('should retain the status of task `declarations and submit` as `cannot start`', () => {
+            cy.checkTaskDeclarationsAndSubmitStatusIsCannotStart();
+          });
         });
       });
     });

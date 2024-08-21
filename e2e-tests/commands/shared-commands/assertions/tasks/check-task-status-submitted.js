@@ -6,14 +6,14 @@ const {
 } = APPLICATION;
 
 /**
- * checkSubmittedTaskStatus
+ * checkTaskStatusSubmitted
  * Check a task has a "submitted" status
  * @param {Function} selector: Cypress selector
  */
-const checkSubmittedTaskStatus = (selector) => {
+const checkTaskStatusSubmitted = (selector) => {
   cy.checkText(selector(), SUBMITTED);
 
   cy.checkClassName(selector(), `${CLASSES.TAGS.ROOT} ${CLASSES.TAGS.GREEN}`);
 };
 
-export default checkSubmittedTaskStatus;
+export default checkTaskStatusSubmitted;

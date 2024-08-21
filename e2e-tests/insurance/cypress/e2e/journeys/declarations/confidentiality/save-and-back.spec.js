@@ -25,6 +25,7 @@ context('Insurance - Declarations - Confidentiality page - Save and go back', ()
       referenceNumber = refNumber;
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+      cy.completeAndSubmitCheckYourAnswers();
 
       // go to the page we want to test.
       task.link().click();
@@ -54,7 +55,7 @@ context('Insurance - Declarations - Confidentiality page - Save and go back', ()
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the status of task `declarations` as `not started yet`', () => {
+    it('should retain the status of task `declarations and submit` as `not started yet`', () => {
       cy.checkTaskDeclarationsAndSubmitStatusIsNotStartedYet();
     });
   });
@@ -72,7 +73,11 @@ context('Insurance - Declarations - Confidentiality page - Save and go back', ()
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should update the status of task `declarations` to `in progress`', () => {
+    it('should retain the status of task `check your answers` as `completed`', () => {
+      cy.checkTaskCheckAnswersStatusIsComplete();
+    });
+
+    it('should retain the status of task `declarations and submit` as `in progress`', () => {
       cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
 

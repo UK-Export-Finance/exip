@@ -31,6 +31,7 @@ context(
         referenceNumber = refNumber;
 
         cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+        cy.completeAndSubmitCheckYourAnswers();
 
         // go to the page we want to test.
         taskList.submitApplication.tasks.declarationsAndSubmit.link().click();
@@ -106,6 +107,20 @@ context(
             expectedErrorMessage: ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
           });
         });
+
+        describe('when going back to the all sections page', () => {
+          beforeEach(() => {
+            cy.navigateToAllSectionsUrl(referenceNumber);
+          });
+
+          it('should retain the status of task `check your answers` as `completed`', () => {
+            cy.checkTaskCheckAnswersStatusIsComplete();
+          });
+
+          it('should retain the status of task `declarations and submit` as `in progress`', () => {
+            cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
+          });
+        });
       });
 
       describe('when submitting a fully completed form', () => {
@@ -124,6 +139,20 @@ context(
             cy.navigateToUrl(url);
 
             cy.assertYesRadioOptionIsChecked();
+          });
+        });
+
+        describe('when going back to the all sections page', () => {
+          beforeEach(() => {
+            cy.navigateToAllSectionsUrl(referenceNumber);
+          });
+
+          it('should retain the status of task `check your answers` as `completed`', () => {
+            cy.checkTaskCheckAnswersStatusIsComplete();
+          });
+
+          it('should retain the status of task `declarations and submit` as `in progress`', () => {
+            cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
           });
         });
       });

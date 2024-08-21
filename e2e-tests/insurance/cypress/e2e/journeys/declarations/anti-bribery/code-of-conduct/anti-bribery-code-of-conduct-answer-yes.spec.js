@@ -23,6 +23,7 @@ context(
         referenceNumber = refNumber;
 
         cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+        cy.completeAndSubmitCheckYourAnswers();
 
         // go to the page we want to test.
         taskList.submitApplication.tasks.declarationsAndSubmit.link().click();
@@ -59,6 +60,20 @@ context(
       cy.clickBackLink();
 
       cy.assertYesRadioOptionIsChecked();
+    });
+
+    describe('when going back to the all sections page', () => {
+      beforeEach(() => {
+        cy.navigateToAllSectionsUrl(referenceNumber);
+      });
+
+      it('should retain the status of task `check your answers` as `completed`', () => {
+        cy.checkTaskCheckAnswersStatusIsComplete();
+      });
+
+      it('should retain the status of task `declarations and submit` as `in progress`', () => {
+        cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
+      });
     });
   },
 );
