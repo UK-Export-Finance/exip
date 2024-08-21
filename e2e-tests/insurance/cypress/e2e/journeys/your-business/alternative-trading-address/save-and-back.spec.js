@@ -27,10 +27,7 @@ context('Insurance - Your business - Alternative trading address - Save and go b
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startYourBusinessSection({});
-      cy.completeAndSubmitCompanyDetails({
-        differentTradingAddress: true,
-      });
+      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'companyDetails', differentTradingAddress: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_ROOT}`;
 

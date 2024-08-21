@@ -27,9 +27,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startYourBusinessSection({});
-
-      cy.completeAndSubmitCompanyDetails({});
+      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'companyDetails' });
 
       url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS_ROOT}`;
 

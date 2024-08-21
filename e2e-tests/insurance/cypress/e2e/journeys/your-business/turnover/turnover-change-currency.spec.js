@@ -24,10 +24,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to ch
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startYourBusinessSection({});
-
-      cy.completeAndSubmitCompanyDetails({});
-      cy.completeAndSubmitNatureOfYourBusiness();
+      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'natureOfYourBusiness' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
 
