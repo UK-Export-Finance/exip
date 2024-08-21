@@ -9,12 +9,12 @@ const { SINGLE } = APPLICATION.POLICY_TYPE;
  * @param {String} formToStopAt: the form to stop at
  * @param {String} policyType: Single or multiple. Defaults to single.
  * @param {Boolean} sameName: if name on policy is the same as the signed in user - defaults to true
- * @param {Boolean} usingBroker: whether the applicant is using a broker
- * @param {Boolean} isAppointingLossPayee: whether the applicant is appointing a loss payee
+ * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker"
+ * @param {Boolean} isAppointingLossPayee: Should submit "yes" or "no" to "appointing a loss payee".
  * @param {Boolean} locatedInUK: Should submit "UK" to "loss payee details".
- * @param {String} policyIsoCode: the policy ISO code
- * @param {Boolean} policyAlternativeCurrency: the policy alternative currency
- * @param {Boolean} otherCompanyInvolved: whether another company is involved
+ * @param {String} policyIsoCode: Policy currency ISO code
+ * @param {Boolean} policyAlternativeCurrency: Select the "turnover - alternative currency" option
+ * @param {Boolean} otherCompanyInvolved: If "another company to be insured" is on.
  */
 const completeAndPolicyForms = ({
   formToStopAt,
