@@ -31,6 +31,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
       referenceNumber = refNumber;
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+      cy.completeAndSubmitCheckYourAnswers();
 
       // go to the page we want to test.
       task.link().click();
@@ -63,7 +64,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the status of task `declarations` as `in progress`', () => {
+    it('should retain the status of task `declarations and submit` as `in progress`', () => {
       cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
   });
@@ -81,7 +82,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the status of task `declarations` as `in progress`', () => {
+    it('should retain the status of task `declarations and submit` as `in progress`', () => {
       cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
 
@@ -89,6 +90,20 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
       navigateBackToPage();
 
       cy.assertYesRadioOptionIsChecked();
+    });
+
+    describe('when going back to the all sections page', () => {
+      beforeEach(() => {
+        cy.navigateToAllSectionsUrl(referenceNumber);
+      });
+
+      it('should retain the status of task `check your answers` as `completed`', () => {
+        cy.checkTaskCheckAnswersStatusIsComplete();
+      });
+
+      it('should retain the status of task `declarations and submit` as `in progress`', () => {
+        cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
+      });
     });
   });
 
@@ -105,7 +120,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the status of task `declarations` as `in progress`', () => {
+    it('should retain the status of task `declarations and submit` as `in progress`', () => {
       cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
 
@@ -113,6 +128,20 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
       navigateBackToPage();
 
       cy.assertNoRadioOptionIsChecked();
+    });
+
+    describe('when going back to the all sections page', () => {
+      beforeEach(() => {
+        cy.navigateToAllSectionsUrl(referenceNumber);
+      });
+
+      it('should retain the status of task `check your answers` as `completed`', () => {
+        cy.checkTaskCheckAnswersStatusIsComplete();
+      });
+
+      it('should retain the status of task `declarations and submit` as `in progress`', () => {
+        cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
+      });
     });
   });
 });

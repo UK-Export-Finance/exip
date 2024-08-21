@@ -32,6 +32,7 @@ context(
         referenceNumber = refNumber;
 
         cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+        cy.completeAndSubmitCheckYourAnswers();
 
         // go to the page we want to test.
         taskList.submitApplication.tasks.declarationsAndSubmit.link().click();
@@ -175,6 +176,20 @@ context(
           const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`;
 
           cy.assertUrl(expectedUrl);
+        });
+
+        describe('when going back to the all sections page', () => {
+          beforeEach(() => {
+            cy.navigateToAllSectionsUrl(referenceNumber);
+          });
+
+          it('should retain the status of task `check your answers` as `completed`', () => {
+            cy.checkTaskCheckAnswersStatusIsComplete();
+          });
+
+          it('should retain the status of task `declarations and submit` as `in progress`', () => {
+            cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
+          });
         });
 
         describe('when going back to the page', () => {

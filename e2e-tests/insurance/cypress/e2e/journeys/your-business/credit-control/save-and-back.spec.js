@@ -15,10 +15,7 @@ context('Insurance - Your business - Credit control - Save and go back', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startYourBusinessSection({});
-      cy.completeAndSubmitCompanyDetails({});
-      cy.completeAndSubmitNatureOfYourBusiness();
-      cy.completeAndSubmitTurnoverForm({});
+      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'turnover' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
 

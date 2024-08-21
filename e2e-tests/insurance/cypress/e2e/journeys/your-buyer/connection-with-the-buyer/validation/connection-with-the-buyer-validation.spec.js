@@ -25,8 +25,7 @@ context('Insurance - Your buyer - Connection to the buyer page - form validation
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsuranceYourBuyerSection({});
-      cy.completeAndSubmitCompanyOrOrganisationForm({});
+      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'companyOrOrganisation' });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONNECTION_WITH_BUYER_ROUTE}`;
 

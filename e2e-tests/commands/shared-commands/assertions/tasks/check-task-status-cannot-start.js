@@ -7,14 +7,18 @@ const {
 } = TASKS;
 
 /**
- * checkCannotStartTaskStatus
- * Check a task has a "cannot start" status
- * @param {Function} selector: Cypress selector
+ * checkTaskStatusCannotStart
+ * Check a task has:
+ * - A "cannot start" status.
+ * - No link
+ * @param {Object} selectors: Cypress selectors
  */
-const checkCannotStartTaskStatus = (selector) => {
-  cy.checkText(selector(), CANNOT_START);
+const checkTaskStatusCannotStart = (selectors) => {
+  cy.checkText(selectors.status(), CANNOT_START);
 
-  cy.checkClassName(selector(), `${CLASSES.TAGS.ROOT} ${CLASSES.TAGS.GREY}`);
+  cy.checkClassName(selectors.status(), `${CLASSES.TAGS.ROOT} ${CLASSES.TAGS.GREY}`);
+
+  selectors.link().should('not.exist');
 };
 
-export default checkCannotStartTaskStatus;
+export default checkTaskStatusCannotStart;

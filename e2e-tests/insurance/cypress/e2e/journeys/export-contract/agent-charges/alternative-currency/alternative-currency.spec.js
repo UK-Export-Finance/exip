@@ -35,14 +35,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.startInsuranceExportContractSection({});
-        cy.completeAndSubmitHowWasTheContractAwardedForm({});
-        cy.completeAndSubmitAboutGoodsOrServicesForm({});
-        cy.completeAndSubmitHowYouWillGetPaidForm({});
-        cy.completeAndSubmitAgentForm({ isUsingAgent: true });
-        cy.completeAndSubmitAgentDetailsForm({});
-        cy.completeAndSubmitAgentServiceForm({ agentIsCharging: true });
-        cy.completeAgentChargesForm({ fixedSumMethod: true });
+        cy.completeAndSubmitExportContractForms({ formToStopAt: 'agentCharges', isUsingAgent: true, agentIsCharging: true, fixedSumMethod: true });
 
         cy.clickProvideAlternativeCurrencyLink();
 
