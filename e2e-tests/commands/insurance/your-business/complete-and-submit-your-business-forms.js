@@ -9,15 +9,18 @@
 const completeAndSubmitYourBusinessForms = ({ formToStopAt, hasCreditControlProcess, differentTradingAddress }) => {
   cy.startYourBusinessSection({});
 
-  const steps = [{ name: 'companyDetails', action: () => cy.completeAndSubmitCompanyDetails({ differentTradingAddress }) }];
+  const initialSteps = [{ name: 'companyDetails', action: () => cy.completeAndSubmitCompanyDetails({ differentTradingAddress }) }];
 
   if (differentTradingAddress) {
-    steps.push({ name: 'alternativeTradingAddress', action: () => cy.completeAndSubmitAlternativeTradingAddressForm({}) });
+    initialSteps.push({ name: 'alternativeTradingAddress', action: () => cy.completeAndSubmitAlternativeTradingAddressForm({}) });
   }
 
-  steps.push({ name: 'natureOfYourBusiness', action: () => cy.completeAndSubmitNatureOfYourBusiness() });
-  steps.push({ name: 'turnover', action: () => cy.completeAndSubmitTurnoverForm({}) });
-  steps.push({ name: 'creditControl', action: () => cy.completeAndSubmitCreditControlForm({ hasCreditControlProcess }) });
+  const steps = [
+    ...initialSteps,
+    { name: 'natureOfYourBusiness', action: () => cy.completeAndSubmitNatureOfYourBusiness() },
+    { name: 'turnover', action: () => cy.completeAndSubmitTurnoverForm({}) },
+    { name: 'creditControl', action: () => cy.completeAndSubmitCreditControlForm({ hasCreditControlProcess }) },
+  ];
 
   /**
    * carries out steps in steps array
