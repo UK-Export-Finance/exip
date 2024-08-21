@@ -8,14 +8,11 @@ const { taskList } = partials.insurancePartials;
  * eg, when 'antiBribery' is passed, it will complete all forms up to and including 'antiBribery'
  * @param {String} formToStopAt: the form to stop at
  * @param {String} referenceNumber: application reference number
- * @param {Boolean} completeCheckYourAnswers: if check your answers should be completed
  */
-const completeAndDeclarationsForms = ({ formToStopAt, referenceNumber, completeCheckYourAnswers }) => {
+const completeAndSubmitDeclarationsForms = ({ formToStopAt, referenceNumber }) => {
   cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-  if (completeCheckYourAnswers) {
-    cy.completeAndSubmitCheckYourAnswers();
-  }
+  cy.completeAndSubmitCheckYourAnswers();
 
   // go to the page we want to test.
   taskList.submitApplication.tasks.declarationsAndSubmit.link().click();
@@ -40,4 +37,4 @@ const completeAndDeclarationsForms = ({ formToStopAt, referenceNumber, completeC
   }
 };
 
-export default completeAndDeclarationsForms;
+export default completeAndSubmitDeclarationsForms;
