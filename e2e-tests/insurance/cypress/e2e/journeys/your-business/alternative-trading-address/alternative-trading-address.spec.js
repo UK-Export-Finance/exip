@@ -45,11 +45,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.startYourBusinessSection({});
-
-        cy.completeAndSubmitCompanyDetails({
-          differentTradingAddress: true,
-        });
+        cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'companyDetails', differentTradingAddress: true });
 
         alternativeAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_ROOT}`;
 

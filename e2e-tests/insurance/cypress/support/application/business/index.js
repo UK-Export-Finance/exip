@@ -7,3 +7,5 @@ Cypress.Commands.add(
 Cypress.Commands.add('completeAndSubmitNatureOfYourBusiness', require('../../../../../commands/insurance/complete-and-submit-nature-of-your-business'));
 Cypress.Commands.add('completeAndSubmitTurnoverForm', require('../../../../../commands/insurance/complete-and-submit-turnover-form'));
 Cypress.Commands.add('completeAndSubmitCreditControlForm', require('../../../../../commands/insurance/complete-and-submit-credit-control-form'));
+
+Cypress.Commands.add('completeAndSubmitYourBusinessForms', require('../../../../../commands/insurance/your-business/complete-and-submit-your-business-forms'));
