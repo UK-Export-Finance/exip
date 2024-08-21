@@ -12,7 +12,6 @@ on:
     branches: [main, main-*]
     paths:
       - '.github/workflows/**'
-      - '.github/modules/**'
       - 'docker-compose.yml'
       - 'package*.json'
       - 'src/**'
