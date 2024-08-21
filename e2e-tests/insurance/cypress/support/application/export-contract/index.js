@@ -25,3 +25,8 @@ Cypress.Commands.add('completeAgentServiceForm', require('../../../../../command
 Cypress.Commands.add('completeAndSubmitAgentServiceForm', require('../../../../../commands/insurance/complete-and-submit-agent-service-form'));
 Cypress.Commands.add('completeAgentChargesForm', require('../../../../../commands/insurance/complete-agent-charges-form'));
 Cypress.Commands.add('completeAndSubmitAgentChargesForm', require('../../../../../commands/insurance/complete-and-submit-agent-charges-form'));
+
+Cypress.Commands.add(
+  'completeAndSubmitExportContractForms',
+  require('../../../../../commands/insurance/export-contract/complete-and-submit-export-contract-forms'),
+);

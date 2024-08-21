@@ -30,7 +30,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'codeOfConduct', referenceNumber });
+      cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'codeOfConduct', referenceNumber, completeCheckYourAnswers: true });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`;
 
@@ -57,7 +57,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the status of task `declarations` as `in progress`', () => {
+    it('should retain the status of task `declarations and submit` as `in progress`', () => {
       cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
   });
@@ -75,7 +75,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the status of task `declarations` as `in progress`', () => {
+    it('should retain the status of task `declarations and submit` as `in progress`', () => {
       cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
 
@@ -99,7 +99,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the status of task `declarations` as `in progress`', () => {
+    it('should retain the status of task `declarations and submit` as `in progress`', () => {
       cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
 

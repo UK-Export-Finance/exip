@@ -19,7 +19,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'antiBribery', referenceNumber });
+        cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'antiBribery', referenceNumber, completeCheckYourAnswers: true });
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`;
 
@@ -50,6 +50,20 @@ context(
       cy.clickBackLink();
 
       cy.assertYesRadioOptionIsChecked();
+    });
+
+    describe('when going back to the all sections page', () => {
+      beforeEach(() => {
+        cy.navigateToAllSectionsUrl(referenceNumber);
+      });
+
+      it('should retain the status of task `check your answers` as `completed`', () => {
+        cy.checkTaskCheckAnswersStatusIsComplete();
+      });
+
+      it('should retain the status of task `declarations and submit` as `in progress`', () => {
+        cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
+      });
     });
   },
 );
