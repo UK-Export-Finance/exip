@@ -3,7 +3,7 @@ import FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import saveLossPayee from '../../save-data/nominated-loss-payee';
 import saveUk from '../../save-data/loss-payee-financial-details-uk';
 import saveInternational from '../../save-data/loss-payee-financial-details-international';
-import { mockApplication, mockNominatedLossPayee } from '../../../../../test-mocks';
+import { mockApplication, mockNominatedLossPayee, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const {
   LOSS_PAYEE: { IS_APPOINTED },
@@ -42,7 +42,7 @@ describe('controllers/insurance/policy/map-and-save/loss-payee - API error', () 
 
   describe('when saveLossPayee.nominatedLossPayee call fails', () => {
     beforeEach(() => {
-      saveLossPayee.nominatedLossPayee = jest.fn(() => Promise.reject(new Error('mock')));
+      saveLossPayee.nominatedLossPayee = mockSpyPromiseRejection;
     });
 
     it('should return false', async () => {
@@ -66,7 +66,7 @@ describe('controllers/insurance/policy/map-and-save/loss-payee - API error', () 
 
   describe('when saveUk.lossPayeeFinancialDetailsUk call fails', () => {
     beforeEach(() => {
-      saveUk.lossPayeeFinancialDetailsUk = jest.fn(() => Promise.reject(new Error('mock')));
+      saveUk.lossPayeeFinancialDetailsUk = mockSpyPromiseRejection;
     });
 
     it('should return false', async () => {
@@ -90,7 +90,7 @@ describe('controllers/insurance/policy/map-and-save/loss-payee - API error', () 
 
   describe('when saveInternational.lossPayeeFinancialDetailsInternational call fails', () => {
     beforeEach(() => {
-      saveInternational.lossPayeeFinancialDetailsInternational = jest.fn(() => Promise.reject(new Error('mock')));
+      saveInternational.lossPayeeFinancialDetailsInternational = mockSpyPromiseRejection;
     });
 
     it('should return false', async () => {

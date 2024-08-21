@@ -1,12 +1,12 @@
 import save from '.';
 import api from '../../../../../api';
-import { mockApplication, mockNominatedLossPayee } from '../../../../../test-mocks';
+import { mockApplication, mockNominatedLossPayee, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 describe('controllers/insurance/policy/save-data/nominated-loss-payee - API error', () => {
   const mockFormBody = mockNominatedLossPayee;
 
   beforeEach(() => {
-    const updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+    const updateApplicationSpy = mockSpyPromiseRejection;
     api.keystone.application.update.nominatedLossPayee = updateApplicationSpy;
   });
 

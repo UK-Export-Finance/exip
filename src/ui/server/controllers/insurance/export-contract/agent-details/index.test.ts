@@ -13,7 +13,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/export-contract-agent';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCountries, referenceNumber } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockCountries, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -136,7 +136,7 @@ describe('controllers/insurance/export-contract/agent-details', () => {
 
     describe('when the get countries API call fails', () => {
       beforeEach(() => {
-        getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        getCountriesSpy = mockSpyPromiseRejection;
         api.keystone.countries.getAll = getCountriesSpy;
       });
 
@@ -205,7 +205,7 @@ describe('controllers/insurance/export-contract/agent-details', () => {
 
       describe('when the get countries API call fails', () => {
         beforeEach(() => {
-          getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          getCountriesSpy = mockSpyPromiseRejection;
           api.keystone.countries.getAll = getCountriesSpy;
         });
 
@@ -320,7 +320,7 @@ describe('controllers/insurance/export-contract/agent-details', () => {
     describe('when mapAndSave.exportContractAgent returns an error', () => {
       beforeEach(() => {
         req.body = validBody;
-        const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        const mapAndSaveSpy = mockSpyPromiseRejection;
 
         mapAndSave.exportContractAgent = mapAndSaveSpy;
       });

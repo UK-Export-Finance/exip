@@ -3,7 +3,7 @@ import { ROUTES } from '../../../../../constants';
 import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockAccount, mockReq, mockRes } from '../../../../../test-mocks';
+import { mockAccount, mockReq, mockRes, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const {
   INSURANCE: {
@@ -157,7 +157,7 @@ describe('controllers/insurance/account/create/verify-email', () => {
         req.query.token = mockToken;
         req.query.id = mockAccount.id;
 
-        verifyEmailAddressSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        verifyEmailAddressSpy = mockSpyPromiseRejection;
 
         api.keystone.account.verifyEmailAddress = verifyEmailAddressSpy;
       });

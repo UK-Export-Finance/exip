@@ -20,6 +20,7 @@ import {
   mockCurrenciesResponse,
   mockCurrenciesEmptyResponse,
   mockBuyerTradingHistory,
+  mockSpyPromiseRejection,
   referenceNumber,
 } from '../../../../test-mocks';
 import mapAndSave from '../map-and-save/buyer-trading-history';
@@ -130,7 +131,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
     describe('api error handling', () => {
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          getCurrenciesSpy = mockSpyPromiseRejection;
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
@@ -258,7 +259,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
       describe('get currencies call', () => {
         describe('when the get currencies API call fails', () => {
           beforeEach(() => {
-            getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+            getCurrenciesSpy = mockSpyPromiseRejection;
             api.keystone.APIM.getCurrencies = getCurrenciesSpy;
           });
 
@@ -302,7 +303,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
         beforeEach(() => {
           req.body = validBody;
           res.locals = mockRes().locals;
-          mapAndSave.buyerTradingHistory = jest.fn(() => Promise.reject(new Error('mock')));
+          mapAndSave.buyerTradingHistory = mockSpyPromiseRejection;
           getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
         });
 

@@ -12,7 +12,15 @@ import accessCodeValidationErrors from './validation/rules/access-code';
 import application from '../../../../../helpers/create-an-application';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockAccount, mockSession, mockApplications, mockCreateApplicationResponse } from '../../../../../test-mocks';
+import {
+  mockReq,
+  mockRes,
+  mockAccount,
+  mockSession,
+  mockApplications,
+  mockCreateApplicationResponse,
+  mockSpyPromiseRejection,
+} from '../../../../../test-mocks';
 
 const {
   ACCOUNT: { ACCESS_CODE },
@@ -364,7 +372,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
         beforeEach(() => {
           req.body = validBody;
 
-          verifyAccountSignInCodeSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          verifyAccountSignInCodeSpy = mockSpyPromiseRejection;
           api.keystone.account.verifyAccountSignInCode = verifyAccountSignInCodeSpy;
         });
 
@@ -387,7 +395,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
 
           req.body = validBody;
 
-          createApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          createApplicationSpy = mockSpyPromiseRejection;
           application.create = createApplicationSpy;
         });
 

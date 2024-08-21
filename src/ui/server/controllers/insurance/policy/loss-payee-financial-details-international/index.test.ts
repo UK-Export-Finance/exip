@@ -11,7 +11,14 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/loss-payee-financial-details-international';
 import { Application, Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockLossPayeeFinancialDetailsInternational, referenceNumber, mockApplication } from '../../../../test-mocks';
+import {
+  mockReq,
+  mockRes,
+  mockApplication,
+  mockLossPayeeFinancialDetailsInternational,
+  mockSpyPromiseRejection,
+  referenceNumber,
+} from '../../../../test-mocks';
 
 const { BIC_SWIFT_CODE, IBAN } = POLICY_FIELD_IDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL;
 const { FINANCIAL_ADDRESS } = POLICY_FIELD_IDS;
@@ -210,7 +217,7 @@ describe('controllers/insurance/policy/loss-payee-financial-details-internationa
     describe('when mapAndSave.exportContractAgentServiceCharge returns an error', () => {
       beforeEach(() => {
         req.body = validBody;
-        const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        const mapAndSaveSpy = mockSpyPromiseRejection;
 
         mapAndSave.lossPayeeFinancialDetailsInternational = mapAndSaveSpy;
       });

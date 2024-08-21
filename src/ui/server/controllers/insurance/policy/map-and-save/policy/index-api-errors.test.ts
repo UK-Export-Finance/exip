@@ -1,6 +1,6 @@
 import mapAndSave from '.';
 import save from '../../save-data/policy';
-import { mockApplication } from '../../../../../test-mocks';
+import { mockApplication, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 describe('controllers/insurance/policy/map-and-save/policy - api errors', () => {
   jest.mock('../../save-data/policy');
@@ -24,7 +24,7 @@ describe('controllers/insurance/policy/map-and-save/policy - api errors', () => 
 
   describe('when save application policy call fails', () => {
     beforeEach(() => {
-      save.policy = jest.fn(() => Promise.reject(new Error('mock')));
+      save.policy = mockSpyPromiseRejection;
     });
 
     it('should return false', async () => {
