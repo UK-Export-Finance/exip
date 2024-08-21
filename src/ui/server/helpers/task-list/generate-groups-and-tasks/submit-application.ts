@@ -21,7 +21,7 @@ const {
  * createSubmitApplicationTasks
  * @param {Number} referenceNumber: Application reference number
  * @param {TaskListData} otherGroups: Task list groups
- * @param {String} hasAntiBriberyCodeOfConduct: Application "Has anti-bribery code of conduct" flag
+ * @param {Boolean} hasAntiBriberyCodeOfConduct: "Has anti-bribery code of conduct" flag
  * @returns {Array} Submit application tasks
  */
 const createSubmitApplicationTasks = (
