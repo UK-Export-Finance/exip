@@ -17,7 +17,7 @@ const {
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_ALTERNATIVE_CURRENCY, NATURE_OF_BUSINESS_ROOT, CREDIT_CONTROL },
+  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_CURRENCY_ROOT, CREDIT_CONTROL },
 } = INSURANCE_ROUTES;
 
 const financialYearEnd = {
@@ -40,7 +40,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'natureOfYourBusiness' });
+        cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'turnoverCurrency' });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
         creditControlUrl = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
@@ -61,7 +61,7 @@ context(
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: `${ROOT}/${referenceNumber}${TURNOVER_ROOT}`,
-        backLink: `${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`,
+        backLink: `${ROOT}/${referenceNumber}${TURNOVER_CURRENCY_ROOT}`,
       });
     });
 
@@ -110,14 +110,6 @@ context(
         cy.checkText(field.label(), FIELDS.TURNOVER[fieldId].LABEL);
 
         cy.assertSuffix({ fieldId, value: FIELDS.TURNOVER[fieldId].SUFFIX });
-      });
-
-      it('should render a `provide alternative currency` link', () => {
-        cy.checkLink(
-          partials.provideAlternativeCurrencyLink(),
-          `${ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY}`,
-          CONTENT_STRINGS.PROVIDE_ALTERNATIVE_CURRENCY,
-        );
       });
 
       it('should render save and go back button', () => {

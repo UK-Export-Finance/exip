@@ -24,6 +24,8 @@ const completeAndSubmitAlternativeCurrencyForm = ({ isoCode, alternativeCurrency
 
     cy.clickAlternativeCurrencyRadioAndSubmitCurrency({});
   }
+
+  cy.clickSubmitButton();
 };
 
 export default completeAndSubmitAlternativeCurrencyForm;

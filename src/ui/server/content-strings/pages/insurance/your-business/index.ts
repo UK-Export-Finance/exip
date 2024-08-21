@@ -35,9 +35,9 @@ const EXPORTER_BUSINESS = {
     PAGE_TITLE: 'Turnover',
     PROVIDE_ALTERNATIVE_CURRENCY: 'Use a different currency for your turnover',
   },
-  TURNOVER_ALTERNATIVE_CURRENCY: {
+  TURNOVER_CURRENCY: {
     ...SHARED,
-    PAGE_TITLE: 'What currency is your turnover in?',
+    PAGE_TITLE: 'Which currency do you calculate your turnover in?',
   },
   CREDIT_CONTROL: {
     ...SHARED,

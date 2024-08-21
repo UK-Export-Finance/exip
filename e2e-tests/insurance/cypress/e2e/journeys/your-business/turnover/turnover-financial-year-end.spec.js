@@ -43,7 +43,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, ()
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'natureOfYourBusiness' });
+      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'turnoverCurrency' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
 

@@ -1,17 +1,17 @@
 import { PAGE_VARIABLES, TEMPLATE, FIELD_IDS, PAGE_CONTENT_STRINGS, get, post } from '.';
-import { PAGES } from '../../../../../content-strings';
-import { TEMPLATES } from '../../../../../constants';
-import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
-import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
-import { FIELDS } from '../../../../../content-strings/fields/insurance';
-import api from '../../../../../api';
-import mapRadioAndSelectOptions from '../../../../../helpers/mappings/map-currencies/radio-and-select-options';
-import constructPayload from '../../../../../helpers/construct-payload';
-import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
-import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
+import { PAGES } from '../../../../content-strings';
+import { TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
+import { FIELDS } from '../../../../content-strings/fields/insurance';
+import api from '../../../../api';
+import mapRadioAndSelectOptions from '../../../../helpers/mappings/map-currencies/radio-and-select-options';
+import constructPayload from '../../../../helpers/construct-payload';
+import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
-import mapAndSave from '../../map-and-save/turnover';
-import { Request, Response } from '../../../../../../types';
+import mapAndSave from '../map-and-save/turnover';
+import { Request, Response } from '../../../../../types';
 import {
   mockReq,
   mockRes,
@@ -21,7 +21,7 @@ import {
   mockSpyPromiseRejection,
   referenceNumber,
   GBP,
-} from '../../../../../test-mocks';
+} from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -38,9 +38,9 @@ const {
 
 const { supportedCurrencies, alternativeCurrencies } = mockCurrenciesResponse;
 
-jest.mock('../../map-and-save/turnover');
+jest.mock('../map-and-save/turnover');
 
-describe('controllers/insurance/business/turnover/alternative-currency', () => {
+describe('controllers/insurance/business/turnover-currency', () => {
   let req: Request;
   let res: Response;
 
@@ -91,7 +91,7 @@ describe('controllers/insurance/business/turnover/alternative-currency', () => {
 
   describe('PAGE_CONTENT_STRINGS', () => {
     it('should have the correct template defined', () => {
-      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY);
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY);
     });
   });
 

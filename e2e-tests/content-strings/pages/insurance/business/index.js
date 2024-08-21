@@ -55,9 +55,9 @@ export const TURNOVER = {
   PROVIDE_ALTERNATIVE_CURRENCY: 'Use a different currency for your turnover',
 };
 
-export const TURNOVER_ALTERNATIVE_CURRENCY = {
+export const TURNOVER_CURRENCY = {
   ...SHARED,
-  PAGE_TITLE: 'What currency is your turnover in?',
+  PAGE_TITLE: 'Which currency do you calculate your turnover in?',
 };
 
 export const CREDIT_CONTROL = {

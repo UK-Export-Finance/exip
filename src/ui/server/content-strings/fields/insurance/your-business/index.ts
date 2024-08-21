@@ -115,7 +115,7 @@ export const FIELDS = {
     },
   },
   [CURRENCY_CODE]: {
-    LEGEND: 'What currency is your turnover in?',
+    LEGEND: 'Which currency do you calculate your turnover in?',
   },
   [HAS_CREDIT_CONTROL]: {
     HINT: 'These are often called credit control processes. They may be managed by your legal or financial team.',

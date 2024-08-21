@@ -1,19 +1,19 @@
-import { PAGES } from '../../../../../content-strings';
-import { TEMPLATES } from '../../../../../constants';
-import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
-import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
-import { FIELDS } from '../../../../../content-strings/fields/insurance';
-import api from '../../../../../api';
-import { isPopulatedArray } from '../../../../../helpers/array';
-import mapRadioAndSelectOptions from '../../../../../helpers/mappings/map-currencies/radio-and-select-options';
-import constructPayload from '../../../../../helpers/construct-payload';
-import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
-import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
+import { PAGES } from '../../../../content-strings';
+import { TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
+import { FIELDS } from '../../../../content-strings/fields/insurance';
+import api from '../../../../api';
+import { isPopulatedArray } from '../../../../helpers/array';
+import mapRadioAndSelectOptions from '../../../../helpers/mappings/map-currencies/radio-and-select-options';
+import constructPayload from '../../../../helpers/construct-payload';
+import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
-import mapAndSave from '../../map-and-save/turnover';
-import isChangeRoute from '../../../../../helpers/is-change-route';
-import isCheckAndChangeRoute from '../../../../../helpers/is-check-and-change-route';
-import { Request, Response } from '../../../../../../types';
+import mapAndSave from '../map-and-save/turnover';
+import isChangeRoute from '../../../../helpers/is-change-route';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
+import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
@@ -32,7 +32,7 @@ export const FIELD_IDS = [CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE];
 
 export const TEMPLATE = TEMPLATES.SHARED_PAGES.ALTERNATIVE_CURRENCY;
 
-export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY;
+export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY;
 
 export const PAGE_VARIABLES = {
   FIELDS: {
@@ -76,7 +76,7 @@ export const get = async (req: Request, res: Response) => {
       ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, application.business[TURNOVER_CURRENCY_CODE]),
     });
   } catch (error) {
-    console.error('Error getting Business - Turnover - Alternative currency %O', error);
+    console.error('Error getting Business - Turnover currency %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -150,7 +150,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ROOT}`);
   } catch (error) {
-    console.error('Error posting Business - Turnover - Alternative currency %O', error);
+    console.error('Error posting Business - Turnover currency %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

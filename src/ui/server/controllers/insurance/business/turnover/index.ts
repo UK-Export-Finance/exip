@@ -32,14 +32,7 @@ const {
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
-const {
-  TURNOVER_ALTERNATIVE_CURRENCY,
-  TURNOVER_ALTERNATIVE_CURRENCY_CHANGE,
-  TURNOVER_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE,
-  TURNOVER_SAVE_AND_BACK,
-  CREDIT_CONTROL,
-  CHECK_YOUR_ANSWERS,
-} = EXPORTER_BUSINESS_ROUTES;
+const { TURNOVER_SAVE_AND_BACK, CREDIT_CONTROL, CHECK_YOUR_ANSWERS } = EXPORTER_BUSINESS_ROUTES;
 
 const { TURNOVER: TURNOVER_FIELDS } = FIELDS;
 
@@ -55,26 +48,8 @@ const { TURNOVER: TURNOVER_FIELDS } = FIELDS;
  * @param {Boolean} checkAndChangeRoute: req.originalUrl is a check-and-change route
  * @returns {Object} pageVariables
  */
-const pageVariables = (referenceNumber: number, currencies: Array<Currency>, currencyCode: string, changeRoute?: boolean, checkAndChangeRoute?: boolean) => {
+const pageVariables = (referenceNumber: number, currencies: Array<Currency>, currencyCode: string) => {
   const currency = getCurrencyByCode(currencies, currencyCode);
-
-  let alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY}`;
-
-  /**
-   * If changeRoute,
-   * URL should be ALTERNATIVE_CURRENCY_CHANGE
-   */
-  if (changeRoute) {
-    alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY_CHANGE}`;
-  }
-
-  /**
-   * If checkAndChangeRoute,
-   * URL should be ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE
-   */
-  if (checkAndChangeRoute) {
-    alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`;
-  }
 
   return {
     FIELDS: {
@@ -91,7 +66,6 @@ const pageVariables = (referenceNumber: number, currencies: Array<Currency>, cur
         ...TURNOVER_FIELDS[PERCENTAGE_TURNOVER],
       },
     },
-    PROVIDE_ALTERNATIVE_CURRENCY_URL: alternativeCurrencyUrl,
     SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_SAVE_AND_BACK}`,
     TURNOVER_LEGEND: `${TURNOVER_FIELDS[ESTIMATED_ANNUAL_TURNOVER].LEGEND} ${currency.name}?`,
     CURRENCY_PREFIX_SYMBOL: currency.symbol,
@@ -120,26 +94,7 @@ const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    let isChange;
-    let isCheckAndChange;
-
-    /**
-     * If is a change route
-     * set isChange to true
-     */
-    if (isChangeRoute(req.originalUrl)) {
-      isChange = true;
-    }
-
-    /**
-     * If is a check-and-change route
-     * set isCheckAndChange to true
-     */
-    if (isCheckAndChangeRoute(req.originalUrl)) {
-      isCheckAndChange = true;
-    }
-
-    const generatedPageVariables = pageVariables(referenceNumber, allCurrencies, String(business[TURNOVER_CURRENCY_CODE]), isChange, isCheckAndChange);
+    const generatedPageVariables = pageVariables(referenceNumber, allCurrencies, String(business[TURNOVER_CURRENCY_CODE]));
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -208,13 +163,7 @@ const post = async (req: Request, res: Response) => {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
-      const generatedPageVariables = pageVariables(
-        applicationReferenceNumber,
-        allCurrencies,
-        String(business[TURNOVER_CURRENCY_CODE]),
-        isChange,
-        isCheckAndChange,
-      );
+      const generatedPageVariables = pageVariables(applicationReferenceNumber, allCurrencies, String(business[TURNOVER_CURRENCY_CODE]));
 
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
