@@ -12,7 +12,7 @@ on:
     branches: [main, main-*]
     paths:
       - '.github/workflows/**'
-      - '.github/actions/**'
+      - '.github/modules/**'
       - 'docker-compose.yml'
       - 'package*.json'
       - 'src/**'
