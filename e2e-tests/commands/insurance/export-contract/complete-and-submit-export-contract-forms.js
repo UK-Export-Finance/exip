@@ -23,7 +23,7 @@ const completeAndSubmitExportContractForms = ({
 }) => {
   cy.startInsuranceExportContractSection({ viaTaskList });
 
-  const steps = [
+  const initialSteps = [
     {
       name: 'howWasTheContractAwarded',
       action: () => cy.completeAndSubmitHowWasTheContractAwardedForm({}),
@@ -33,13 +33,16 @@ const completeAndSubmitExportContractForms = ({
   ];
 
   if (totalContractValueOverThreshold) {
-    steps.push({ name: 'privateMarket', action: () => cy.completeAndSubmitPrivateMarketForm({ attemptedPrivateMarketCover }) });
+    initialSteps.push({ name: 'privateMarket', action: () => cy.completeAndSubmitPrivateMarketForm({ attemptedPrivateMarketCover }) });
   }
 
-  steps.push({ name: 'agent', action: () => cy.completeAndSubmitAgentForm({ isUsingAgent }) });
-  steps.push({ name: 'agentDetails', action: () => cy.completeAndSubmitAgentDetailsForm({}) });
-  steps.push({ name: 'agentService', action: () => cy.completeAndSubmitAgentServiceForm({ agentIsCharging }) });
-  steps.push({ name: 'agentCharges', action: () => cy.completeAgentChargesForm({ fixedSumMethod }) });
+  const steps = [
+    ...initialSteps,
+    { name: 'agent', action: () => cy.completeAndSubmitAgentForm({ isUsingAgent }) },
+    { name: 'agentDetails', action: () => cy.completeAndSubmitAgentDetailsForm({}) },
+    { name: 'agentService', action: () => cy.completeAndSubmitAgentServiceForm({ agentIsCharging }) },
+    { name: 'agentCharges', action: () => cy.completeAgentChargesForm({ fixedSumMethod }) },
+  ];
 
   /**
    * carries out steps in steps array
