@@ -12,6 +12,7 @@ on:
     branches: [main, main-*]
     paths:
       - '.github/workflows/**'
+      - '.github/actions/**'
       - 'docker-compose.yml'
       - 'package*.json'
       - 'src/**'
@@ -234,11 +235,14 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
 
       - name: Docker
-        run: docker compose up --build -d
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -289,11 +293,14 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
-
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
+  
       - name: Docker
-        run: docker compose up --build -d
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -352,11 +359,14 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
-
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
+  
       - name: Docker
-        run: docker compose up --build -d
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -422,11 +432,14 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
-
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
+    
       - name: Docker
-        run: docker compose up --build -d
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -473,11 +486,14 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
-
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
+  
       - name: Docker
-        run: docker compose up --build -d
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -542,11 +558,14 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
-
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
+  
       - name: Docker
-        run: docker compose up --build -d
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -608,11 +627,14 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
-
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
+  
       - name: Docker
-        run: docker compose up --build -d
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -682,11 +704,14 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
-
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
+  
       - name: Docker
-        run: docker compose up --build -d
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -739,11 +764,14 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
-
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
+  
       - name: Docker
-        run: docker compose up --build -d
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -797,11 +825,14 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
-
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
+  
       - name: Docker
-        run: docker compose up --build -d
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -858,11 +889,14 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
-
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
+  
       - name: Docker
-        run: docker compose up --build -d
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -904,11 +938,14 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
-
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
+  
       - name: Docker
-        run: docker compose up --build -d
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
