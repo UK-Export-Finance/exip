@@ -235,13 +235,13 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/actions/retry
+        uses: ./.github/actions/retry.yml
         with:
           command: npm run ci:all
           working-directory: ./
 
       - name: Docker
-        uses: ./.github/actions/retry
+        uses: ./.github/actions/retry.yml
         with:
           command: docker compose up --build -d
 
