@@ -222,14 +222,13 @@ jobs:
       cancel-in-progress: true
 
     steps:
+      - uses: actions/checkout@v4
+
       - name: Timezone
         uses: szenius/set-timezone@v2.0
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
 
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-  
       - name: Node
         uses: actions/setup-node@v4
         with:
