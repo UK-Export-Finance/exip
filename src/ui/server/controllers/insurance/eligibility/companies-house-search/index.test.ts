@@ -57,7 +57,7 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
   });
 
   describe('PAGE_CONTENT_STRINGS', () => {
-    it('should have the correct template defined', () => {
+    it('should have the correct strings', () => {
       expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER);
     });
   });

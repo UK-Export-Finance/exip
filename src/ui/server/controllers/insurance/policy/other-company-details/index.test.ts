@@ -51,7 +51,7 @@ describe('controllers/insurance/policy/other-company-details', () => {
   });
 
   describe('PAGE_CONTENT_STRINGS', () => {
-    it('should have the correct properties', () => {
+    it('should have the correct strings', () => {
       const expected = PAGES.INSURANCE.POLICY.OTHER_COMPANY_DETAILS;
 
       expect(PAGE_CONTENT_STRINGS).toEqual(expected);
