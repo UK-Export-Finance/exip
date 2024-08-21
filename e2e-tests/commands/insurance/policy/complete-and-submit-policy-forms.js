@@ -7,11 +7,11 @@ const { SINGLE } = APPLICATION.POLICY_TYPE;
  * completes policy forms up to the specified form to stop at
  * eg, when 'exportValue' is passed, it will complete all forms up to and including 'exportValue'
  * @param {String} formToStopAt: the form to stop at
- * @param {String} policyType: the policy type
- * @param {Boolean} sameName: whether the name on the policy is the same as the applicant
+ * @param {String} policyType: Single or multiple. Defaults to single.
+ * @param {Boolean} sameName: if name on policy is the same as the signed in user - defaults to true
  * @param {Boolean} usingBroker: whether the applicant is using a broker
  * @param {Boolean} isAppointingLossPayee: whether the applicant is appointing a loss payee
- * @param {Boolean} locatedInUK: whether the loss payee is located in the UK
+ * @param {Boolean} locatedInUK: Should submit "UK" to "loss payee details".
  * @param {String} policyIsoCode: the policy ISO code
  * @param {Boolean} policyAlternativeCurrency: the policy alternative currency
  * @param {Boolean} otherCompanyInvolved: whether another company is involved
