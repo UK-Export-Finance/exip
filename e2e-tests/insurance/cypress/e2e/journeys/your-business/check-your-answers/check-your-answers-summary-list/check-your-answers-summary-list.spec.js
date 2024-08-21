@@ -95,7 +95,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
         cy.completeAndSubmitCompanyDetails({ differentTradingAddress: true });
         cy.completeAndSubmitAlternativeTradingAddressForm({});
         cy.completeAndSubmitNatureOfYourBusiness();
-        cy.completeAndSubmitTurnoverForm({});
+        cy.completeAndSubmitTurnoverForm();
         cy.completeAndSubmitCreditControlForm({});
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
@@ -126,7 +126,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
 
         cy.completeAndSubmitCompanyDetails({ differentTradingName: true });
         cy.completeAndSubmitNatureOfYourBusiness();
-        cy.completeAndSubmitTurnoverForm({});
+        cy.completeAndSubmitTurnoverForm();
         cy.completeAndSubmitCreditControlForm({});
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;

@@ -121,7 +121,7 @@ context(
       it(`should redirect to ${CREDIT_CONTROL}`, () => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitTurnoverForm({});
+        cy.completeAndSubmitTurnoverForm();
 
         cy.assertUrl(creditControlUrl);
       });

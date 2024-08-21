@@ -19,7 +19,7 @@ const completeAndSubmitYourBusinessForms = ({ formToStopAt, hasCreditControlProc
     ...initialSteps,
     { name: 'natureOfYourBusiness', action: () => cy.completeAndSubmitNatureOfYourBusiness() },
     { name: 'turnoverCurrency', action: () => cy.completeAndSubmitAlternativeCurrencyForm({}) },
-    { name: 'turnover', action: () => cy.completeAndSubmitTurnoverForm({}) },
+    { name: 'turnover', action: () => cy.completeAndSubmitTurnoverForm() },
     { name: 'creditControl', action: () => cy.completeAndSubmitCreditControlForm({ hasCreditControlProcess }) },
   ];
 

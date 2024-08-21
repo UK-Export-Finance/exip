@@ -11,13 +11,8 @@ const {
 /**
  * completeAndSubmitTurnoverForm
  * complete and submit the "turnover" form.
- * @param {Boolean} alternativeCurrency: Select the "alternative currency" option
  */
-const completeAndSubmitTurnoverForm = ({ alternativeCurrency = false }) => {
-  if (alternativeCurrency) {
-    cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true });
-  }
-
+const completeAndSubmitTurnoverForm = () => {
   cy.keyboardInput(field(ESTIMATED_ANNUAL_TURNOVER).input(), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
   cy.keyboardInput(field(PERCENTAGE_TURNOVER).input(), application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
 
