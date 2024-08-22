@@ -1,11 +1,8 @@
 import { headingCaption, singleInputField, declarationPage } from '../../../../../../pages/shared';
 import { antiBriberyPage } from '../../../../../../pages/insurance/declarations';
-import partials from '../../../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-
-const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY.VERSIONS[1];
 
@@ -31,13 +28,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
-        cy.completeAndSubmitCheckYourAnswers();
-
-        // go to the page we want to test.
-        taskList.submitApplication.tasks.declarationsAndSubmit.link().click();
-
-        cy.completeAndSubmitDeclarationConfidentiality();
+        cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'confidentiality', referenceNumber });
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
 
