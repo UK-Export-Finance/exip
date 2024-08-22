@@ -38,10 +38,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.startInsurancePolicySection({});
-
-        cy.completeAndSubmitPolicyTypeForm({ policyType });
-        cy.completeAndSubmitMultipleContractPolicyForm({});
+        cy.completeAndSubmitPolicyForms({ formToStopAt: 'multipleContractPolicy', policyType });
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`;
 

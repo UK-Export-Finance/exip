@@ -28,14 +28,7 @@ context('Insurance - Declarations - Anti-bribery page - Save and go back', () =>
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
-
-      cy.completeAndSubmitCheckYourAnswers();
-
-      // go to the page we want to test.
-      task.link().click();
-
-      cy.completeAndSubmitDeclarationConfidentiality();
+      cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'confidentiality', referenceNumber });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
 

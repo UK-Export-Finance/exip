@@ -80,7 +80,7 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
   });
 
   describe('PAGE_CONTENT_STRINGS', () => {
-    it('should have the correct template defined', () => {
+    it('should have the correct strings', () => {
       expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.YOUR_BUYER.TRADED_WITH_BUYER);
     });
   });

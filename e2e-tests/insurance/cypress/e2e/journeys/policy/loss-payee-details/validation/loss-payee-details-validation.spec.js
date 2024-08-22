@@ -29,15 +29,7 @@ context('Insurance - Policy - Loss Payee Details - Validation', () => {
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm({});
-      cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitTotalContractValueForm({});
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
-      cy.completeAndSubmitPreCreditPeriodForm({});
-      cy.completeAndSubmitAnotherCompanyForm({});
-      cy.completeAndSubmitBrokerForm({ usingBroker: false });
-      cy.completeAndSubmitLossPayeeForm({ isAppointingLossPayee: true });
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'lossPayee', isAppointingLossPayee: true });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`;
 

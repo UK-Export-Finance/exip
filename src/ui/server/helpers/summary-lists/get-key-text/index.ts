@@ -3,8 +3,7 @@ import { SummaryListItemDataInputField } from '../../../../types';
 /**
  * getKeyText
  * Get the field name text/key to display in a title of a govukSummaryList row
- * @param {Object} All fields
- * @param {String} Field ID
+ * @param {SummaryListItemDataInputField} field: Summary list field
  * @returns {String} Title of the field for a govukSummaryList row
  */
 const getKeyText = (field: SummaryListItemDataInputField) => {
