@@ -11,12 +11,12 @@ const {
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: { TURNOVER_ROOT },
+  EXPORTER_BUSINESS: { TURNOVER_CURRENCY_ROOT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your business - Turnover page - As an Exporter I want to change the currency of my annual turnover', () => {
+context('Insurance - Your business - Turnover currency page - As an Exporter I want to change the currency of my annual turnover', () => {
   let referenceNumber;
   let url;
 
@@ -26,7 +26,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to ch
 
       cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'natureOfYourBusiness' });
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_CURRENCY_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -42,7 +42,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to ch
   });
 
   describe('prefixes should be displayed based on the chosen currency', () => {
-    const { prefixAssertions } = assertCurrencyFormFields({ fieldId: ESTIMATED_ANNUAL_TURNOVER });
+    const { prefixAssertions } = assertCurrencyFormFields({ fieldId: ESTIMATED_ANNUAL_TURNOVER, clickAlternativeCurrencyLink: false });
 
     prefixAssertions();
   });

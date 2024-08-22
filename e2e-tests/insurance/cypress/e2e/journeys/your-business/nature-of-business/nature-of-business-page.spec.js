@@ -16,7 +16,7 @@ const {
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: { TURNOVER_ROOT, NATURE_OF_BUSINESS_ROOT, COMPANY_DETAILS },
+  EXPORTER_BUSINESS: { TURNOVER_CURRENCY_ROOT, NATURE_OF_BUSINESS_ROOT, COMPANY_DETAILS },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -25,7 +25,7 @@ context(
   'Insurance - Your business - Nature of your business page - As an Exporter I want to enter the nature of my business So that UKEF can have clarity on the type of business that I do while processing my Export Insurance Application',
   () => {
     let referenceNumber;
-    let turnoverUrl;
+    let turnoverCurrencyUrl;
     let natureOfBusinessUrl;
 
     before(() => {
@@ -36,7 +36,7 @@ context(
 
         natureOfBusinessUrl = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
 
-        turnoverUrl = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
+        turnoverCurrencyUrl = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_CURRENCY_ROOT}`;
 
         cy.assertUrl(natureOfBusinessUrl);
       });
@@ -102,12 +102,12 @@ context(
     });
 
     describe('form submission', () => {
-      it(`should redirect to ${TURNOVER_ROOT}`, () => {
+      it(`should redirect to ${TURNOVER_CURRENCY_ROOT}`, () => {
         cy.navigateToUrl(natureOfBusinessUrl);
 
         cy.completeAndSubmitNatureOfYourBusiness();
 
-        cy.assertUrl(turnoverUrl);
+        cy.assertUrl(turnoverCurrencyUrl);
       });
     });
 

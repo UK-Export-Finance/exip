@@ -5,11 +5,12 @@
  * @param {String} formToStopAt: the form to stop at
  * @param {Boolean} hasCreditControlProcess: whether the exporter has a credit control process
  * @param {Boolean} differentTradingAddress: whether the exporter has a different trading address
+ * @param {Boolean} differentTradingName: whether the exporter has a different trading name
  */
-const completeAndSubmitYourBusinessForms = ({ formToStopAt, hasCreditControlProcess, differentTradingAddress }) => {
+const completeAndSubmitYourBusinessForms = ({ formToStopAt, hasCreditControlProcess, differentTradingAddress, differentTradingName }) => {
   cy.startYourBusinessSection({});
 
-  const initialSteps = [{ name: 'companyDetails', action: () => cy.completeAndSubmitCompanyDetails({ differentTradingAddress }) }];
+  const initialSteps = [{ name: 'companyDetails', action: () => cy.completeAndSubmitCompanyDetails({ differentTradingAddress, differentTradingName }) }];
 
   if (differentTradingAddress) {
     initialSteps.push({ name: 'alternativeTradingAddress', action: () => cy.completeAndSubmitAlternativeTradingAddressForm({}) });
@@ -18,7 +19,8 @@ const completeAndSubmitYourBusinessForms = ({ formToStopAt, hasCreditControlProc
   const steps = [
     ...initialSteps,
     { name: 'natureOfYourBusiness', action: () => cy.completeAndSubmitNatureOfYourBusiness() },
-    { name: 'turnover', action: () => cy.completeAndSubmitTurnoverForm({}) },
+    { name: 'turnoverCurrency', action: () => cy.completeAndSubmitAlternativeCurrencyForm({}) },
+    { name: 'turnover', action: () => cy.completeAndSubmitTurnoverForm() },
     { name: 'creditControl', action: () => cy.completeAndSubmitCreditControlForm({ hasCreditControlProcess }) },
   ];
 

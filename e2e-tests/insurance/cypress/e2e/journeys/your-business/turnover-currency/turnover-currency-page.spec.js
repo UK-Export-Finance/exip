@@ -3,11 +3,11 @@ import { BUTTONS, ERROR_MESSAGES, PAGES } from '../../../../../../content-string
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { assertCurrencyFormFields } from '../../../../../../shared-test-assertions';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY;
+const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY;
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_ALTERNATIVE_CURRENCY },
+  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_CURRENCY_ROOT, NATURE_OF_BUSINESS_ROOT },
 } = INSURANCE_ROUTES;
 
 const {
@@ -28,9 +28,7 @@ context(
 
         cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'natureOfYourBusiness' });
 
-        cy.clickProvideAlternativeCurrencyLink();
-
-        url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY}`;
+        url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_CURRENCY_ROOT}`;
 
         cy.assertUrl(url);
       });
@@ -47,8 +45,8 @@ context(
     it('renders core page elements', () => {
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-        currentHref: `${ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY}`,
-        backLink: `${ROOT}/${referenceNumber}${TURNOVER_ROOT}`,
+        currentHref: `${ROOT}/${referenceNumber}${TURNOVER_CURRENCY_ROOT}`,
+        backLink: `${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`,
         submitButtonCopy: BUTTONS.CONFIRM,
         assertSaveAndBackButtonDoesNotExist: true,
       });

@@ -16,7 +16,7 @@ const {
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
 const {
-  EXPORTER_BUSINESS: { TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE },
+  EXPORTER_BUSINESS: { TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE, TURNOVER_CURRENCY_CHANGE, TURNOVER_CURRENCY_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {
@@ -33,6 +33,18 @@ const {
  */
 const generateTurnoverFields = (answers: ApplicationBusiness, referenceNumber: number, checkAndChange?: boolean): SummaryListGroupData => {
   const fields = [
+    fieldGroupItem({
+      field: getFieldById(FIELDS.TURNOVER, TURNOVER_CURRENCY_CODE),
+      data: answers,
+      href: generateChangeLink(
+        TURNOVER_CURRENCY_CHANGE,
+        TURNOVER_CURRENCY_CHECK_AND_CHANGE,
+        `#${TURNOVER_CURRENCY_CODE}-label`,
+        referenceNumber,
+        checkAndChange,
+      ),
+      renderChangeLink: true,
+    }),
     fieldGroupItem(
       {
         field: getFieldById(FIELDS.TURNOVER, ESTIMATED_ANNUAL_TURNOVER),

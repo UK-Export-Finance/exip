@@ -1,8 +1,8 @@
 import alternativeCurrencyRule from './alternative-currency';
-import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
-import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import alternativeCurrencyValidation from '../../../../../../../shared-validation/alternative-currency';
-import { mockErrors } from '../../../../../../../test-mocks';
+import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
+import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import alternativeCurrencyValidation from '../../../../../../shared-validation/alternative-currency';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const {
   CURRENCY: { ALTERNATIVE_CURRENCY_CODE },
@@ -14,7 +14,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-describe('controllers/insurance/business/turnover/alternative-currency/validation/rules/alternative-currency', () => {
+describe('controllers/insurance/business/turnover-currency/validation/rules/alternative-currency', () => {
   const mockBody = {};
 
   it('should return alternativeCurrencyValidation', () => {

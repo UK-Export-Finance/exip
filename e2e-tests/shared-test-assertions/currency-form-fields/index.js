@@ -20,7 +20,7 @@ const {
  * @param {Boolean} gbpCurrencyCheckedByDefault: GBP currency should be checked by default
  * @returns {Object} Rendering and form submission assertion functions
  */
-export const assertCurrencyFormFields = ({ legend, hint, errors, fieldId, gbpCurrencyCheckedByDefault }) => {
+export const assertCurrencyFormFields = ({ legend, hint, errors, fieldId, gbpCurrencyCheckedByDefault, clickAlternativeCurrencyLink }) => {
   const assertions = fieldAssertions({
     legend,
     hint,
@@ -32,7 +32,7 @@ export const assertCurrencyFormFields = ({ legend, hint, errors, fieldId, gbpCur
   return {
     rendering: () => renderingAssertions(assertions),
     formSubmission: () => formSubmissionAssertions(assertions),
-    prefixAssertions: () => prefixAssertions({ fieldId }),
+    prefixAssertions: () => prefixAssertions({ fieldId, clickAlternativeCurrencyLink }),
   };
 };
 
