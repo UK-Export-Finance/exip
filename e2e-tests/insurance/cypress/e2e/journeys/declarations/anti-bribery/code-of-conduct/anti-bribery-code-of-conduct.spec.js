@@ -1,11 +1,8 @@
 import { headingCaption, yesRadio, noRadio } from '../../../../../../../pages/shared';
 import { codeOfConductPage } from '../../../../../../../pages/insurance/declarations';
-import partials from '../../../../../../../partials';
 import { PAGES, LINKS, ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-
-const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_CODE_OF_CONDUCT.VERSIONS[1];
 
@@ -30,13 +27,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
-
-        // go to the page we want to test.
-        taskList.submitApplication.tasks.declarationsAndSubmit.link().click();
-
-        cy.completeAndSubmitDeclarationConfidentiality();
-        cy.completeAndSubmitDeclarationAntiBribery();
+        cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'antiBribery', referenceNumber });
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`;
 

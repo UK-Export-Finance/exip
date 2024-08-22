@@ -1,9 +1,6 @@
 import { antiBriberyPage } from '../../../../../../pages/insurance/declarations';
-import partials from '../../../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-
-const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY.VERSIONS[1];
 
@@ -34,12 +31,7 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
-
-      // go to the page we want to test.
-      taskList.submitApplication.tasks.declarationsAndSubmit.link().click();
-
-      cy.completeAndSubmitDeclarationConfidentiality();
+      cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'confidentiality', referenceNumber });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
 

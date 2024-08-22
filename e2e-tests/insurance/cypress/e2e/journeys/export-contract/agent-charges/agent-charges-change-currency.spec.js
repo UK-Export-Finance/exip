@@ -22,13 +22,7 @@ context("Insurance - Export contract - Agent charges page - As an Exporter I wan
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.startInsuranceExportContractSection({});
-      cy.completeAndSubmitHowWasTheContractAwardedForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm({});
-      cy.completeAndSubmitHowYouWillGetPaidForm({});
-      cy.completeAndSubmitAgentForm({ isUsingAgent: true });
-      cy.completeAndSubmitAgentDetailsForm({});
-      cy.completeAndSubmitAgentServiceForm({ agentIsCharging: true });
+      cy.completeAndSubmitExportContractForms({ formToStopAt: 'agentService', isUsingAgent: true, agentIsCharging: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES}`;
 

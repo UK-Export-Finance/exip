@@ -85,6 +85,10 @@ context(
         it('should change the status of task `check your answers` to `completed`', () => {
           cy.checkTaskCheckAnswersStatusIsComplete();
         });
+
+        it('should update the status of task `declarations and submit` to `not started yet`', () => {
+          cy.checkTaskDeclarationsAndSubmitStatusIsNotStartedYet();
+        });
       });
     });
   },

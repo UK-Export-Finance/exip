@@ -32,15 +32,11 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.startInsuranceYourBuyerSection({});
-
         url = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
         buyerFinancialInformationUrl = `${baseUrl}${ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
         alternativeCurrencyUrl = `${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`;
 
-        cy.completeAndSubmitCompanyOrOrganisationForm({});
-        cy.completeAndSubmitConnectionWithTheBuyerForm({});
-        cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
+        cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'tradedWithBuyer', exporterHasTradedWithBuyer: true });
 
         cy.assertUrl(url);
       });

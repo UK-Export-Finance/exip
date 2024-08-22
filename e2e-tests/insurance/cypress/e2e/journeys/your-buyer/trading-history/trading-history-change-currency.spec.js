@@ -20,13 +20,9 @@ context('Insurance - Your buyer - Trading history page - Currency symbol when ch
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsuranceYourBuyerSection({});
-
       url = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
 
-      cy.completeAndSubmitCompanyOrOrganisationForm({});
-      cy.completeAndSubmitConnectionWithTheBuyerForm({});
-      cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
+      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'tradedWithBuyer', exporterHasTradedWithBuyer: true });
 
       cy.assertUrl(url);
     });

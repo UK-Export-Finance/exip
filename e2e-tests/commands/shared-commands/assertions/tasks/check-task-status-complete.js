@@ -7,14 +7,14 @@ const {
 } = TASKS;
 
 /**
- * checkCompletedTaskStatus
+ * checkTaskStatusCompleted
  * Check a task has a "completed" status
  * @param {Function} selector: Cypress selector
  */
-const checkCompletedTaskStatus = (selector) => {
+const checkTaskStatusCompleted = (selector) => {
   cy.checkText(selector(), COMPLETED);
 
   cy.checkClassName(selector(), `${CLASSES.TAGS.ROOT} ${CLASSES.TAGS.TURQUOISE}`);
 };
 
-export default checkCompletedTaskStatus;
+export default checkTaskStatusCompleted;

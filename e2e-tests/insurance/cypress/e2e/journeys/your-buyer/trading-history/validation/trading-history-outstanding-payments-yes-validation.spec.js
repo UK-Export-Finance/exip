@@ -52,10 +52,7 @@ context('Insurance - Your buyer - Trading history page - Outstanding payments ye
       url = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
       buyerFinancialInformationUrl = `${baseUrl}${ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
 
-      cy.startInsuranceYourBuyerSection({});
-      cy.completeAndSubmitCompanyOrOrganisationForm({});
-      cy.completeAndSubmitConnectionWithTheBuyerForm({});
-      cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
+      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'tradedWithBuyer', exporterHasTradedWithBuyer: true });
 
       cy.assertUrl(url);
     });
