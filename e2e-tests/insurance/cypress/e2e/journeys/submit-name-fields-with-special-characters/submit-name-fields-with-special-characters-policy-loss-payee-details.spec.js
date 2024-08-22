@@ -15,11 +15,11 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-const baseUrl = Cypress.config('baseUrl');
-
 const { POLICY } = application;
 
 const nameValue = `${POLICY[NAME]}-'`;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Name fields - Loss payee details - Name field should render special characters without character codes after submission', () => {
   let referenceNumber;
