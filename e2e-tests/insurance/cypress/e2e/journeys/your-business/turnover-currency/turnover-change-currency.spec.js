@@ -42,7 +42,7 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
   });
 
   describe('prefixes should be displayed based on the chosen currency', () => {
-    const { prefixAssertions } = assertCurrencyFormFields({ fieldId: ESTIMATED_ANNUAL_TURNOVER });
+    const { prefixAssertions } = assertCurrencyFormFields({ fieldId: ESTIMATED_ANNUAL_TURNOVER, clickAlternativeCurrencyLink: false });
 
     prefixAssertions();
   });
