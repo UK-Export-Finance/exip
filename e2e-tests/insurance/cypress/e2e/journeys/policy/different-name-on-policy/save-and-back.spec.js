@@ -27,11 +27,7 @@ context('Insurance - Policy - Different name on policy - Save and go back', () =
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm({});
-      cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitTotalContractValueForm({});
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'nameOnPolicy', sameName: false });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
 

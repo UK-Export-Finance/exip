@@ -70,3 +70,5 @@ Cypress.Commands.add(
   'completePrepareApplicationMultiplePolicyType',
   require('../../../../../commands/insurance/complete-prepare-application-section-multiple-policy-type'),
 );
+
+Cypress.Commands.add('completeAndSubmitPolicyForms', require('../../../../../commands/insurance/policy/complete-and-submit-policy-forms'));

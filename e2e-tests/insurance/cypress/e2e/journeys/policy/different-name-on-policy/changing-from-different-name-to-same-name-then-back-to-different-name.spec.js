@@ -24,16 +24,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.startInsurancePolicySection({});
-        cy.completeAndSubmitPolicyTypeForm({});
-        cy.completeAndSubmitSingleContractPolicyForm({});
-        cy.completeAndSubmitTotalContractValueForm({});
-        cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
-        cy.completeAndSubmitDifferentNameOnPolicyForm({});
-        cy.completeAndSubmitPreCreditPeriodForm({});
-        cy.completeAndSubmitAnotherCompanyForm({});
-        cy.completeAndSubmitBrokerForm({});
-        cy.completeAndSubmitLossPayeeForm({});
+        cy.completeAndSubmitPolicyForms({ formToStopAt: 'lossPayee' });
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 

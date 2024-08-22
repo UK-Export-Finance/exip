@@ -4,9 +4,9 @@ import { ValidationErrors } from '../../../types';
 /**
  * generateValidationErrors
  * Generate an error count, error list and summary for GOV design errors.
- * @param {String} Field ID
- * @param {String} Error text
- * @param {Object} Existing validation errors
+ * @param {String} fieldId: Field ID
+ * @param {String} errorText: Error text
+ * @param {ValidationErrors} errors: Existing validation errors
  * @returns {ValidationErrors} Error count, error list and summary
  */
 const generateValidationErrors = (fieldId: string, errorText: string, errors: ValidationErrors = { errorList: {}, summary: [] }): ValidationErrors => {

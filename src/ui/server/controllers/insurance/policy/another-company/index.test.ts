@@ -69,7 +69,7 @@ describe('controllers/insurance/policy/another-company', () => {
   });
 
   describe('PAGE_CONTENT_STRINGS', () => {
-    it('should have the correct properties', () => {
+    it('should have the correct strings', () => {
       const expected = {
         ...PAGES.INSURANCE.POLICY.ANOTHER_COMPANY,
         HINT: FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[REQUESTED].HINT,

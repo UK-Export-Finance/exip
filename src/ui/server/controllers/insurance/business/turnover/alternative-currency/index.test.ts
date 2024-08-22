@@ -90,7 +90,7 @@ describe('controllers/insurance/business/turnover/alternative-currency', () => {
   });
 
   describe('PAGE_CONTENT_STRINGS', () => {
-    it('should have the correct template defined', () => {
+    it('should have the correct strings', () => {
       expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY);
     });
   });

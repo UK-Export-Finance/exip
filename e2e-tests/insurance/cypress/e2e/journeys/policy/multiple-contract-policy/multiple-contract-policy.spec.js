@@ -34,6 +34,8 @@ const {
   },
 } = ERROR_MESSAGES;
 
+const { MULTIPLE } = APPLICATION.POLICY_TYPE;
+
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Multiple contract policy page - As an exporter, I want to enter the type of policy I need for my export contract', () => {
@@ -44,9 +46,7 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection({});
-
-      cy.completeAndSubmitPolicyTypeForm({ policyType: APPLICATION.POLICY_TYPE.MULTIPLE });
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'policyType', policyType: MULTIPLE });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 

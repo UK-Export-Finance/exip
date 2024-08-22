@@ -36,6 +36,8 @@ const assertions = {
   expectedErrorsCount: 3,
 };
 
+const { MULTIPLE } = POLICY_TYPE;
+
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Multiple contract policy page - form validation - total months of cover', () => {
@@ -46,8 +48,7 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm({ policyType: POLICY_TYPE.MULTIPLE });
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'policyType', policyType: MULTIPLE });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 

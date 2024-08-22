@@ -92,7 +92,7 @@ describe('controllers/insurance/your-buyer/buyer-financial-information', () => {
   });
 
   describe('PAGE_CONTENT_STRINGS', () => {
-    it('should have the correct template defined', () => {
+    it('should have the correct strings', () => {
       expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.YOUR_BUYER.BUYER_FINANCIAL_INFORMATION);
     });
   });
