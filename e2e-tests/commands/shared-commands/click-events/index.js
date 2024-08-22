@@ -19,6 +19,3 @@ Cypress.Commands.add('clickTaskCheckAnswers', require('./tasks/click-task-check-
 Cypress.Commands.add('clickTaskDeclarationsAndSubmit', require('./tasks/click-task-declarations-and-submit'));
 
 Cypress.Commands.add('rejectAnalyticsCookies', analytics.rejectAnalyticsCookies);
-
-// const task = taskList.submitApplication.tasks.checkAnswers;
-// cy.clickTaskCheckAnswers();
