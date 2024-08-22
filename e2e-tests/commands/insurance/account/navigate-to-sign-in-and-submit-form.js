@@ -1,8 +1,8 @@
-import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
+import { ACCOUNT as ACCOUNT_ROUTES } from '../../../constants/routes/insurance/account';
 
 const {
-  SIGN_IN: { ROOT: SIGN_IN_ROOT },
-} = INSURANCE_ROUTES;
+  SIGN_IN: { SIGN_IN_ROOT },
+} = ACCOUNT_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
