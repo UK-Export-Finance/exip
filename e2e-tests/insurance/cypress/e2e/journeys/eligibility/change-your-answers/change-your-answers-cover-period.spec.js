@@ -5,7 +5,7 @@ import { summaryList } from '../../../../../../pages/shared';
 const { COVER_PERIOD } = INSURANCE_FIELD_IDS.ELIGIBILITY;
 
 const {
-  ELIGIBILITY: { COVER_PERIOD_CHANGE, CHECK_YOUR_ANSWERS, LONG_TERM_COVER },
+  ELIGIBILITY: { COVER_PERIOD_CHANGE, CHECK_YOUR_ANSWERS, LONG_TERM_COVER_EXIT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -62,8 +62,8 @@ context(
         cy.completeCoverPeriodForm({ underThreshold: false });
       });
 
-      it(`should redirect to ${LONG_TERM_COVER}`, () => {
-        cy.assertChangeAnswersPageUrl({ route: LONG_TERM_COVER, fieldId, isInsuranceEligibility: true });
+      it(`should redirect to ${LONG_TERM_COVER_EXIT}`, () => {
+        cy.assertChangeAnswersPageUrl({ route: LONG_TERM_COVER_EXIT, fieldId, isInsuranceEligibility: true });
       });
     });
   },

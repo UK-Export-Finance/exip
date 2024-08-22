@@ -81,10 +81,10 @@ describe('controllers/quote/exporter-location', () => {
         };
       });
 
-      it(`should redirect to ${ROUTES.QUOTE.CANNOT_APPLY}`, async () => {
+      it(`should redirect to ${ROUTES.QUOTE.CANNOT_APPLY_EXIT}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_APPLY);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_APPLY_EXIT);
       });
 
       it('should add previousRoute and exitReason to req.flash', async () => {
@@ -92,7 +92,7 @@ describe('controllers/quote/exporter-location', () => {
 
         expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.QUOTE.EXPORTER_LOCATION);
 
-        const expectedReason = PAGES.CANNOT_APPLY.REASON.UNSUPPORTED_COMPANY_COUNTRY;
+        const expectedReason = PAGES.CANNOT_APPLY_EXIT.REASON.UNSUPPORTED_COMPANY_COUNTRY;
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });
     });

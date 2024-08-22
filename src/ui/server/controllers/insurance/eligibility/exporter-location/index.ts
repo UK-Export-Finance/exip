@@ -21,7 +21,7 @@ export const PAGE_VARIABLES = {
 
 export const TEMPLATE = TEMPLATES.SHARED_PAGES.SINGLE_RADIO;
 
-const { CHECK_YOUR_ANSWERS, CANNOT_APPLY: CANNOT_APPLY_ROUTE, COMPANIES_HOUSE_NUMBER } = INSURANCE_ROUTES.ELIGIBILITY;
+const { CHECK_YOUR_ANSWERS, CANNOT_APPLY_EXIT: CANNOT_APPLY_ROUTE, COMPANIES_HOUSE_NUMBER } = INSURANCE_ROUTES.ELIGIBILITY;
 
 export const get = (req: Request, res: Response) => {
   const { submittedData } = req.session;
@@ -56,8 +56,8 @@ export const post = (req: Request, res: Response) => {
   const answer = payload[FIELD_ID];
 
   if (answer === 'false') {
-    const { CANNOT_APPLY } = PAGES;
-    const { REASON } = CANNOT_APPLY;
+    const { CANNOT_APPLY_EXIT } = PAGES;
+    const { REASON } = CANNOT_APPLY_EXIT;
 
     req.flash('exitReason', REASON.UNSUPPORTED_COMPANY_COUNTRY);
 

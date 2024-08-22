@@ -12,7 +12,7 @@ import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
 
 const {
-  ELIGIBILITY: { COVER_PERIOD_CHANGE, UK_GOODS_OR_SERVICES, LONG_TERM_COVER, CHECK_YOUR_ANSWERS },
+  ELIGIBILITY: { COVER_PERIOD_CHANGE, UK_GOODS_OR_SERVICES, LONG_TERM_COVER_EXIT, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 describe('controllers/insurance/eligibility/cover-period', () => {
@@ -89,10 +89,10 @@ describe('controllers/insurance/eligibility/cover-period', () => {
         };
       });
 
-      it(`should redirect to ${LONG_TERM_COVER}`, async () => {
+      it(`should redirect to ${LONG_TERM_COVER_EXIT}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(LONG_TERM_COVER);
+        expect(res.redirect).toHaveBeenCalledWith(LONG_TERM_COVER_EXIT);
       });
     });
 

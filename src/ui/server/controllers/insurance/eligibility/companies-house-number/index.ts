@@ -48,7 +48,7 @@ export const post = (req: Request, res: Response) => {
   const answer = payload[FIELD_ID];
 
   if (answer === 'false') {
-    return res.redirect(INSURANCE_ROUTES.ELIGIBILITY.NO_COMPANIES_HOUSE_NUMBER);
+    return res.redirect(INSURANCE_ROUTES.ELIGIBILITY.NO_COMPANIES_HOUSE_NUMBER_EXIT);
   }
 
   req.session.submittedData = {

@@ -10,7 +10,7 @@ import { updateSubmittedData } from '../../../../helpers/update-submitted-data/i
 import isChangeRoute from '../../../../helpers/is-change-route';
 import { Request, Response } from '../../../../../types';
 
-const { CANNOT_APPLY_MULTIPLE_RISKS, CHECK_YOUR_ANSWERS, PARTY_TO_CONSORTIUM } = INSURANCE_ROUTES.ELIGIBILITY;
+const { CANNOT_APPLY_MULTIPLE_RISKS_EXIT, CHECK_YOUR_ANSWERS, PARTY_TO_CONSORTIUM } = INSURANCE_ROUTES.ELIGIBILITY;
 
 const {
   SHARED_PAGES,
@@ -84,7 +84,7 @@ export const post = (req: Request, res: Response) => {
   const answer = payload[FIELD_ID];
 
   if (answer === 'true') {
-    return res.redirect(CANNOT_APPLY_MULTIPLE_RISKS);
+    return res.redirect(CANNOT_APPLY_MULTIPLE_RISKS_EXIT);
   }
 
   req.session.submittedData = {

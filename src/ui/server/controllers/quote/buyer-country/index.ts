@@ -118,7 +118,7 @@ export const post = async (req: Request, res: Response) => {
     const country = getCountryByIsoCode(countries, submittedCountryName);
 
     if (!country) {
-      return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
+      return res.redirect(ROUTES.QUOTE.CANNOT_APPLY_EXIT);
     }
 
     if (country.canGetAQuoteOnline) {
@@ -156,14 +156,14 @@ export const post = async (req: Request, res: Response) => {
 
       req.flash('previousRoute', ROUTES.QUOTE.BUYER_COUNTRY);
 
-      const { CANNOT_APPLY } = PAGES;
-      const { REASON } = CANNOT_APPLY;
+      const { CANNOT_APPLY_EXIT } = PAGES;
+      const { REASON } = CANNOT_APPLY_EXIT;
 
       const reason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${country.name}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
 
       req.flash('exitReason', reason);
 
-      return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
+      return res.redirect(ROUTES.QUOTE.CANNOT_APPLY_EXIT);
     }
   } catch (error) {
     console.error('Error getting CIS countries %O', error);

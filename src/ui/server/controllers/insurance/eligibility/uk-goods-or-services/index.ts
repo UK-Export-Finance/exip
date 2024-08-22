@@ -10,7 +10,7 @@ import { Request, Response } from '../../../../../types';
 import isChangeRoute from '../../../../helpers/is-change-route';
 
 const {
-  ELIGIBILITY: { CANNOT_APPLY: CANNOT_APPLY_ROUTE, END_BUYER, CHECK_YOUR_ANSWERS },
+  ELIGIBILITY: { CANNOT_APPLY_EXIT: CANNOT_APPLY_ROUTE, END_BUYER, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -66,8 +66,8 @@ export const post = (req: Request, res: Response) => {
   const answer = req.body[FIELD_ID];
 
   if (answer === 'false') {
-    const { CANNOT_APPLY } = PAGES;
-    const { REASON } = CANNOT_APPLY;
+    const { CANNOT_APPLY_EXIT } = PAGES;
+    const { REASON } = CANNOT_APPLY_EXIT;
 
     req.flash('exitReason', REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES);
 

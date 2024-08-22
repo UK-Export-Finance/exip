@@ -17,7 +17,7 @@ describe('controllers/insurance/eligibility/no-companies-house-number', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.NO_COMPANIES_HOUSE_NUMBER);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.NO_COMPANIES_HOUSE_NUMBER_EXIT);
     });
   });
 
@@ -27,7 +27,7 @@ describe('controllers/insurance/eligibility/no-companies-house-number', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...corePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.NO_COMPANIES_HOUSE_NUMBER,
+          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.NO_COMPANIES_HOUSE_NUMBER_EXIT,
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),

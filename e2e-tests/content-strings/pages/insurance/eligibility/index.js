@@ -52,7 +52,7 @@ export const PDF_EXIT = {
   },
 };
 
-export const LONG_TERM_COVER = {
+export const LONG_TERM_COVER_EXIT = {
   INTRO: "Currently, this service doesn't provide credit insurance for contracts that are longer than two years.",
   ...PDF_EXIT,
 };
@@ -75,7 +75,7 @@ export const COMPANIES_HOUSE_NUMBER = {
   PAGE_TITLE: 'Enter your Companies House number',
 };
 
-export const NO_COMPANIES_HOUSE_NUMBER = {
+export const NO_COMPANIES_HOUSE_NUMBER_EXIT = {
   PAGE_TITLE: 'You cannot apply for credit insurance',
   ACTIONS: {
     ELIGIBILITY: ACTIONS.ELIGIBILITY,
@@ -92,7 +92,7 @@ export const NO_COMPANIES_HOUSE_NUMBER = {
   BODY: "This is because you do not have a UK Companies House registration number for a company that's actively trading.",
 };
 
-export const COMPANIES_HOUSE_UNAVAILABLE = {
+export const COMPANIES_HOUSE_UNAVAILABLE_EXIT = {
   PAGE_TITLE: 'You cannot search for your Companies House registration number right now',
   ERROR_REASON: 'This is due to technical issues with the Companies House search.',
   TRY_AGAIN_PREFIX: 'You can',
@@ -103,7 +103,7 @@ export const COMPANIES_HOUSE_UNAVAILABLE = {
   INFORMATION: '(You may lose any information you entered on the previous page.)',
 };
 
-export const COMPANY_NOT_ACTIVE = {
+export const COMPANY_NOT_ACTIVE_EXIT = {
   PAGE_TITLE: 'You need to speak with an export finance manager',
   BODY: 'This is because the company you entered is no longer active on Companies House and we cannot process your application.',
   ACTIONS: {
@@ -122,7 +122,7 @@ export const END_BUYER = {
   PAGE_TITLE: 'Does your buyer need to be paid by someone else before they can pay you?',
 };
 
-export const CANNOT_APPLY_MULTIPLE_RISKS = {
+export const CANNOT_APPLY_MULTIPLE_RISKS_EXIT = {
   PAGE_TITLE: 'You cannot apply for credit insurance',
   INTRO: 'We can only provide cover for a single risk. As your buyer is reliant on an end buyer, it means that we would have to cover two risks:',
   LIST: ['your buyer not paying you', 'your buyer not being paid by their end buyer'],
@@ -168,7 +168,7 @@ export const HAVE_AN_ACCOUNT = {
   PAGE_TITLE: 'Do you have an account with us?',
 };
 
-export const CONTRACT_TOO_SHORT = {
+export const CONTRACT_TOO_SHORT_EXIT = {
   PAGE_TITLE: 'Talk to an export finance manager',
   INTRO: "We don't offer short term cover for the country you've selected.",
   CAN_STILL_APPLY:

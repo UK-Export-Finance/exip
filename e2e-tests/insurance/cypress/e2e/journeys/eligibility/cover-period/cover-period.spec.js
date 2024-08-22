@@ -12,7 +12,7 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 const {
-  ELIGIBILITY: { COVER_PERIOD: COVER_PERIOD_ROUTE, LONG_TERM_COVER, TOTAL_VALUE_INSURED, UK_GOODS_OR_SERVICES },
+  ELIGIBILITY: { COVER_PERIOD: COVER_PERIOD_ROUTE, LONG_TERM_COVER_EXIT, TOTAL_VALUE_INSURED, UK_GOODS_OR_SERVICES },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -119,8 +119,8 @@ context(
           cy.completeCoverPeriodForm({ underThreshold: false });
         });
 
-        it(`should redirect to ${LONG_TERM_COVER}`, () => {
-          const expected = `${baseUrl}${LONG_TERM_COVER}`;
+        it(`should redirect to ${LONG_TERM_COVER_EXIT}`, () => {
+          const expected = `${baseUrl}${LONG_TERM_COVER_EXIT}`;
 
           cy.assertUrl(expected);
         });

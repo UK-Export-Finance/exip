@@ -42,16 +42,16 @@ insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUM
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER_CHANGE, companiesHouseNumberGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER_CHANGE, companiesHouseNumberPost);
 
-insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.NO_COMPANIES_HOUSE_NUMBER, noCompaniesHouseNumberGet);
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.NO_COMPANIES_HOUSE_NUMBER_EXIT, noCompaniesHouseNumberGet);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.ENTER_COMPANIES_HOUSE_NUMBER, companiesHouseSearchGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.ENTER_COMPANIES_HOUSE_NUMBER, companiesHouseSearchPost);
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.ENTER_COMPANIES_HOUSE_NUMBER_CHANGE, companiesHouseSearchGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.ENTER_COMPANIES_HOUSE_NUMBER_CHANGE, companiesHouseSearchPost);
 
-insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_UNAVAILABLE, companiesHouseUnavailableGet);
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_UNAVAILABLE_EXIT, companiesHouseUnavailableGet);
 
-insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.COMPANY_NOT_ACTIVE, companyNotActiveGet);
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.COMPANY_NOT_ACTIVE_EXIT, companyNotActiveGet);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.COMPANY_DETAILS, companyDetailsGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.COMPANY_DETAILS, companyDetailsPost);
@@ -73,7 +73,7 @@ insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD, cover
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD_CHANGE, coverPeriodGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD_CHANGE, coverPeriodPost);
 
-insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.LONG_TERM_COVER, longTermCoverGet);
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.LONG_TERM_COVER_EXIT, longTermCoverGet);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, ukGoodsOrServicesGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, ukGoodsOrServicesPost);
@@ -95,7 +95,7 @@ insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP, 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP_CHANGE, memberOfAGroupGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP_CHANGE, memberOfAGroupPost);
 
-insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY_MULTIPLE_RISKS, cannotApplyMultipleRisksGet);
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY_MULTIPLE_RISKS_EXIT, cannotApplyMultipleRisksGet);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.CHECK_YOUR_ANSWERS, checkYourAnswersGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.CHECK_YOUR_ANSWERS, checkYourAnswersPost);
@@ -106,12 +106,12 @@ insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_O
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT, haveAnAccountGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT, haveAnAccountPost);
 
-insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY, cannotApplyGet);
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY_EXIT, cannotApplyGet);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN, needToStartAgainGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN, needToStartAgainPost);
 
-insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.CONTRACT_TOO_SHORT, talkToEfmTooShortGet);
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.CONTRACT_TOO_SHORT_EXIT, talkToEfmTooShortGet);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM_EXIT, partyToConsortiumExitGet);
 
