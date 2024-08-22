@@ -1,4 +1,3 @@
-import partials from '../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { assertMinimalExportContractSummaryListRows } from '../../../../../../../shared-test-assertions';
 import application from '../../../../../../../fixtures/application';
@@ -16,10 +15,6 @@ const {
 
 const { OTHER } = FIELDS.HOW_WAS_THE_CONTRACT_AWARDED[AWARD_METHOD].OPTIONS;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
-
 const baseUrl = Cypress.config('baseUrl');
 
 context(`Insurance - Check your answers - Export contract - Summary list - Contract awarded with ${OTHER.TEXT}`, () => {
@@ -32,7 +27,7 @@ context(`Insurance - Check your answers - Export contract - Summary list - Contr
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber, contractAwardedOtherMethod: true });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       // To get past previous "Check your answers" pages
       cy.completeAndSubmitMultipleCheckYourAnswers({ count: 3 });

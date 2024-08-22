@@ -1,4 +1,3 @@
-import partials from '../../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
 import checkSummaryList from '../../../../../../../../commands/insurance/check-policy-summary-list';
@@ -12,10 +11,6 @@ const {
   REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
 } = POLICY_FIELD_IDS;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Check your answers - Policy - Multiple contract policy - Other company no - Summary List', () => {
@@ -27,7 +22,7 @@ context('Insurance - Check your answers - Policy - Multiple contract policy - Ot
       referenceNumber = refNumber;
       cy.completePrepareApplicationMultiplePolicyType({});
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       // To get past previous "Check your answers" pages
       cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });

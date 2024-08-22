@@ -1,5 +1,4 @@
 import { status, summaryList } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import application from '../../../../../../../fixtures/application';
@@ -17,10 +16,6 @@ const {
   YOUR_BUYER: { ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Check your answers - Your buyer - Alternative currency - As an exporter, I want to change my answers to an alternative currency', () => {
@@ -37,7 +32,7 @@ context('Insurance - Check your answers - Your buyer - Alternative currency - As
         fullyPopulatedBuyerTradingHistory: true,
       });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       // To get past "Your business" check your answers page
       cy.completeAndSubmitMultipleCheckYourAnswers({ count: 1 });

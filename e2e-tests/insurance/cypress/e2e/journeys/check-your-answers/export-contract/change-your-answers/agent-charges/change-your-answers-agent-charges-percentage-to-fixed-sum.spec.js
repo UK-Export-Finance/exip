@@ -1,5 +1,4 @@
 import { status, summaryList } from '../../../../../../../../pages/shared';
-import partials from '../../../../../../../../partials';
 import FIELD_IDS from '../../../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import checkSummaryList from '../../../../../../../../commands/insurance/check-export-contract-summary-list';
@@ -13,10 +12,6 @@ const {
 const {
   AGENT_CHARGES: { FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const fieldId = PERCENTAGE_CHARGE;
 
@@ -37,7 +32,7 @@ context('Insurance - Change your answers - Export contract - Summary list - Perc
         agentChargeMethodPercentage: true,
       });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       // To get past previous "Check your answers" pages
       cy.completeAndSubmitMultipleCheckYourAnswers({ count: 3 });

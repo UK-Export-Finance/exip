@@ -1,5 +1,4 @@
 import { summaryList } from '../../../../../../../../pages/shared';
-import partials from '../../../../../../../../partials';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 
@@ -15,10 +14,6 @@ const {
   },
   ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
 } = INSURANCE_FIELD_IDS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -38,7 +33,7 @@ context(
         referenceNumber = refNumber;
         cy.completePrepareApplicationMultiplePolicyType({ differentPolicyContact: true });
 
-        task.link().click();
+        cy.clickTaskCheckAnswers();
 
         // To get past previous "Check your answers" pages
         cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });

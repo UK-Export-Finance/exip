@@ -1,5 +1,4 @@
 import { summaryList } from '../../../../../../../../pages/shared';
-import partials from '../../../../../../../../partials';
 import { POLICY as FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 
@@ -12,10 +11,6 @@ const {
 const {
   NAME_ON_POLICY: { POSITION },
 } = FIELD_IDS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const fieldId = POSITION;
 
@@ -32,7 +27,7 @@ context(
         referenceNumber = refNumber;
         cy.completePrepareApplicationMultiplePolicyType({ differentPolicyContact: false });
 
-        task.link().click();
+        cy.clickTaskCheckAnswers();
 
         // To get past previous "Check your answers" pages
         cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });

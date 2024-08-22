@@ -1,5 +1,4 @@
 import { field, status, summaryList } from '../../../../../../../../pages/shared';
-import partials from '../../../../../../../../partials';
 import FIELD_IDS from '../../../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import application from '../../../../../../../../fixtures/application';
@@ -14,10 +13,6 @@ const {
 const {
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
 } = FIELD_IDS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const getFieldVariables = (fieldId, referenceNumber) => ({
   route: AGENT_DETAILS_CHECK_AND_CHANGE,
@@ -47,7 +42,7 @@ context('Insurance - Change your answers - Export contract - Summary list - Agen
         isUsingAgent: true,
       });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       // To get past previous "Check your answers" pages
       cy.completeAndSubmitMultipleCheckYourAnswers({ count: 3 });

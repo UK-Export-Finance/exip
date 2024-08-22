@@ -1,4 +1,3 @@
-import partials from '../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { assertMinimalExportContractSummaryListRows } from '../../../../../../../shared-test-assertions';
 
@@ -6,10 +5,6 @@ const {
   ROOT: INSURANCE_ROOT,
   CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT },
 } = INSURANCE_ROUTES;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -25,7 +20,7 @@ context(
 
         cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-        task.link().click();
+        cy.clickTaskCheckAnswers();
 
         // To get past previous "Check your answers" pages
         cy.completeAndSubmitMultipleCheckYourAnswers({ count: 3 });

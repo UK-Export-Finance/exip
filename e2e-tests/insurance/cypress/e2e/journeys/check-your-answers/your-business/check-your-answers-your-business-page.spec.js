@@ -1,5 +1,4 @@
 import { headingCaption, status } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -10,10 +9,6 @@ const {
 } = INSURANCE_ROUTES;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUSINESS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -29,7 +24,7 @@ context(
 
         cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-        task.link().click();
+        cy.clickTaskCheckAnswers();
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 
