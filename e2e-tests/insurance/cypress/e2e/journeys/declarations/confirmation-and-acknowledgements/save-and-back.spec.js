@@ -24,15 +24,7 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
-
-      // go to the page we want to test.
-      taskList.submitApplication.tasks.declarationsAndSubmit.link().click();
-
-      cy.completeAndSubmitDeclarationConfidentiality();
-      cy.completeAndSubmitDeclarationAntiBribery();
-      cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct();
-      cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct();
+      cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'exportingWithCodeOfConduct', referenceNumber });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
@@ -59,7 +51,7 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the status of task `declarations` as `in progress`', () => {
+    it('should retain the status of task `declarations and submit` as `in progress`', () => {
       cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
   });
@@ -77,7 +69,11 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should update the status of task `declarations` to `completed`', () => {
+    it('should retain the status of task `check your answers` as `completed`', () => {
+      cy.checkTaskCheckAnswersStatusIsComplete();
+    });
+
+    it('should update the status of task `declarations and submit` to `completed`', () => {
       cy.checkTaskDeclarationsAndSubmitStatusIsComplete();
     });
 

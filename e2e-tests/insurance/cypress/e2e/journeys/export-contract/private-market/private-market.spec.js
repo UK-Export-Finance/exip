@@ -39,10 +39,7 @@ context(
         declinedByPrivateMarketUrl = `${baseUrl}${ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
 
         // go to the page we want to test.
-        cy.startInsuranceExportContractSection({});
-        cy.completeAndSubmitHowWasTheContractAwardedForm({});
-        cy.completeAndSubmitAboutGoodsOrServicesForm({});
-        cy.completeAndSubmitHowYouWillGetPaidForm({});
+        cy.completeAndSubmitExportContractForms({ formToStopAt: 'howYouWillGetPaid' });
       });
     });
 
