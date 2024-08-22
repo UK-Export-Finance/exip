@@ -26,7 +26,7 @@ context('Cookies page - Quote', () => {
   const buyerCountryUrl = `${baseUrl}${BUYER_COUNTRY}`;
 
   beforeEach(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
     partials.footer.supportLinks.cookies().click();
 

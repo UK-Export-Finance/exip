@@ -17,7 +17,7 @@ context('Change your answers (policy credit period field) - as an exporter, I wa
   const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
   before(() => {
-    cy.login();
+    cy.navigateToRootUrl();
     cy.submitQuoteAnswersHappyPathMultiplePolicy();
     cy.assertUrl(url);
   });

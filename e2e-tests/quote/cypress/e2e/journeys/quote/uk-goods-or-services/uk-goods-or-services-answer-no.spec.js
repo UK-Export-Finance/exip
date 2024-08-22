@@ -16,7 +16,7 @@ context(
     const url = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
 
     beforeEach(() => {
-      cy.login();
+      cy.navigateToRootUrl();
       cy.completeAndSubmitBuyerCountryForm({});
       cy.completeAndSubmitBuyerBodyForm();
       cy.completeAndSubmitExporterLocationForm();

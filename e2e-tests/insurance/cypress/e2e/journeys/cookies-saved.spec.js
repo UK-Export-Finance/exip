@@ -21,7 +21,7 @@ context('Cookies saved page - Insurance', () => {
   const url = `${baseUrl}${COOKIES_SAVED}`;
 
   beforeEach(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
     cy.navigateToCheckIfEligibleUrl();
 

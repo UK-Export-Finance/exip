@@ -16,7 +16,7 @@ context(
     const url = `${baseUrl}${EXPORTER_LOCATION}`;
 
     before(() => {
-      cy.login();
+      cy.navigateToRootUrl();
       cy.completeAndSubmitBuyerCountryForm({});
       cy.completeAndSubmitBuyerBodyForm();
 

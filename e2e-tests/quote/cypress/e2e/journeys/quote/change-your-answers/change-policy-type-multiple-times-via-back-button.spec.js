@@ -21,7 +21,7 @@ context(
     const url = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
 
     const completePreviousForms = () => {
-      cy.login();
+      cy.navigateToRootUrl();
 
       cy.completeAndSubmitBuyerCountryForm({});
       cy.completeAndSubmitBuyerBodyForm();

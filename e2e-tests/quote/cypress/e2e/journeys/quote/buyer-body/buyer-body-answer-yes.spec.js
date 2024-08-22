@@ -15,7 +15,7 @@ context(
     const url = `${baseUrl}${BUYER_BODY}`;
 
     before(() => {
-      cy.login();
+      cy.navigateToRootUrl();
       cy.completeAndSubmitBuyerCountryForm({});
 
       cy.assertUrl(url);

@@ -21,7 +21,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
   const url = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
 
   before(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
     cy.completeAndSubmitBuyerCountryForm({});
     cy.completeAndSubmitBuyerBodyForm();
