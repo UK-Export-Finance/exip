@@ -1,7 +1,3 @@
-import partials from '../../../partials';
-
-const { taskList } = partials.insurancePartials;
-
 /**
  * completeAndDeclarationsForms
  * completes declarations forms up to the specified form to stop at
@@ -15,7 +11,7 @@ const completeAndSubmitDeclarationsForms = ({ formToStopAt, referenceNumber }) =
   cy.completeAndSubmitCheckYourAnswers();
 
   // go to the page we want to test.
-  taskList.submitApplication.tasks.declarationsAndSubmit.link().click();
+  cy.clickTaskDeclarationsAndSubmit();
 
   const steps = [
     { name: 'confidentiality', action: () => cy.completeAndSubmitDeclarationConfidentiality() },
