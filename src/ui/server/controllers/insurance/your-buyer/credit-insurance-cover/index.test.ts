@@ -66,7 +66,7 @@ describe('controllers/insurance/your-buyer/credit-insurance-cover', () => {
   });
 
   describe('PAGE_CONTENT_STRINGS', () => {
-    it('should have the correct page content strings', () => {
+    it('should have the correct strings', () => {
       expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.YOUR_BUYER.CREDIT_INSURANCE_COVER);
     });
   });

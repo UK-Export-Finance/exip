@@ -4,7 +4,7 @@ import { getDate, getMonth, getYear } from 'date-fns';
  * getDateFieldsFromTimestamp
  * Generate an object with day/month/year, prefixed with the provided field ID
  * @param {Date} Timestamp
- * @param {String} Field ID
+ * @param {String} fieldId: Field ID
  * @returns {Object} Object with day/month/year, prefixed with the provided field ID
  */
 const getDateFieldsFromTimestamp = (timestamp: Date, fieldId: string): object => {
