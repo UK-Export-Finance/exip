@@ -65,9 +65,7 @@ context('Insurance - Account - Sign in - Submitting the form with invalid creden
     before(() => {
       cy.saveSession();
 
-      cy.navigateToUrl(signInUrl);
-
-      cy.completeAndSubmitSignInAccountForm({ assertRedirectUrl: false });
+      cy.navigateToSignInAndSubmitForm();
     });
 
     it(`should redirect to ${SUSPENDED_ROOT} with ID query param`, () => {
