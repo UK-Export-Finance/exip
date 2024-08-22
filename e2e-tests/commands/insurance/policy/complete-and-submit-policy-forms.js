@@ -12,8 +12,8 @@ const { SINGLE } = APPLICATION.POLICY_TYPE;
  * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker"
  * @param {Boolean} isAppointingLossPayee: Should submit "yes" or "no" to "appointing a loss payee".
  * @param {Boolean} locatedInUK: Should submit "UK" to "loss payee details".
- * @param {String} policyIsoCode: Policy currency ISO code
- * @param {Boolean} policyAlternativeCurrency: Select the "turnover - alternative currency" option
+ * @param {String} isoCode: Policy currency ISO code
+ * @param {Boolean} alternativeCurrency: Select the "turnover - alternative currency" option
  * @param {Boolean} otherCompanyInvolved: If "another company to be insured" is on.
  */
 const completeAndPolicyForms = ({
@@ -23,8 +23,8 @@ const completeAndPolicyForms = ({
   usingBroker,
   isAppointingLossPayee,
   locatedInUK,
-  policyIsoCode,
-  policyAlternativeCurrency,
+  isoCode,
+  alternativeCurrency,
   otherCompanyInvolved,
 }) => {
   cy.startInsurancePolicySection({});
@@ -34,13 +34,13 @@ const completeAndPolicyForms = ({
   if (policyType === SINGLE) {
     steps.push({
       name: 'singleContractPolicy',
-      action: () => cy.completeAndSubmitSingleContractPolicyForm({ isoCode: policyIsoCode, alternativeCurrency: policyAlternativeCurrency }),
+      action: () => cy.completeAndSubmitSingleContractPolicyForm({ isoCode, alternativeCurrency }),
     });
     steps.push({ name: 'totalContractValue', action: () => cy.completeAndSubmitTotalContractValueForm({}) });
   } else {
     steps.push({
       name: 'multipleContractPolicy',
-      action: () => cy.completeAndSubmitMultipleContractPolicyForm({ isoCode: policyIsoCode, alternativeCurrency: policyAlternativeCurrency }),
+      action: () => cy.completeAndSubmitMultipleContractPolicyForm({ isoCode, alternativeCurrency }),
     });
     steps.push({ name: 'exportValue', action: () => cy.completeAndSubmitExportValueForm({ policyType }) });
   }
