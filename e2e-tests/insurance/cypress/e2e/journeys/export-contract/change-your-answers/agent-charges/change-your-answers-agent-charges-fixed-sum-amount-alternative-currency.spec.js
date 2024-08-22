@@ -1,10 +1,9 @@
 import { summaryList } from '../../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
-// TODO: EMS-3781 - renable
-// import application from '../../../../../../../fixtures/application';
-// import { EUR_CURRENCY_CODE, NON_STANDARD_CURRENCY_CODE, SYMBOLS } from '../../../../../../../fixtures/currencies';
-// import formatCurrency from '../../../../../../../helpers/format-currency';
+import application from '../../../../../../../fixtures/application';
+import { EUR_CURRENCY_CODE, NON_STANDARD_CURRENCY_CODE, SYMBOLS } from '../../../../../../../fixtures/currencies';
+import formatCurrency from '../../../../../../../helpers/format-currency';
 
 const {
   ROOT,
@@ -49,111 +48,111 @@ context(
       cy.deleteApplication(referenceNumber);
     });
 
-    // describe(`changing ${PAYABLE_COUNTRY_CODE} to ${SYMBOLS.EUR}`, () => {
-    //   const currencyCode = EUR_CURRENCY_CODE;
+    describe(`changing ${PAYABLE_COUNTRY_CODE} to ${SYMBOLS.EUR}`, () => {
+      const currencyCode = EUR_CURRENCY_CODE;
 
-    describe('when clicking the `change` link', () => {
-      it(`should redirect to ${AGENT_CHARGES_CHANGE}`, () => {
+      describe('when clicking the `change` link', () => {
+        it(`should redirect to ${AGENT_CHARGES_CHANGE}`, () => {
+          cy.navigateToUrl(checkYourAnswersUrl);
+
+          summaryList.field(fieldId).changeLink().click();
+
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: AGENT_CHARGES_CHANGE, fieldId });
+        });
+      });
+
+      beforeEach(() => {
         cy.navigateToUrl(checkYourAnswersUrl);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: AGENT_CHARGES_CHANGE, fieldId });
+        cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: EUR_CURRENCY_CODE });
+
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: AGENT_CHARGES_CHANGE });
+
+        // submit the AGENT_CHARGES form
+        cy.clickSubmitButton();
+      });
+
+      it(`should redirect to ${AGENT_CHARGES_CHANGE} and then ${CHECK_YOUR_ANSWERS}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS });
+      });
+
+      it(`should render the new answer for ${FIXED_SUM_AMOUNT} including ${SYMBOLS.EUR}`, () => {
+        const row = summaryList.field(FIXED_SUM_AMOUNT);
+        const expected = formatCurrency(application.EXPORT_CONTRACT.AGENT_CHARGES[FIXED_SUM_AMOUNT], currencyCode);
+
+        cy.checkText(row.value(), expected);
       });
     });
 
-    //   beforeEach(() => {
-    //     cy.navigateToUrl(checkYourAnswersUrl);
+    describe(`changing ${PAYABLE_COUNTRY_CODE} to an alternative currency`, () => {
+      const currencyCode = NON_STANDARD_CURRENCY_CODE;
 
-    //     summaryList.field(fieldId).changeLink().click();
+      describe('when clicking the `change` link', () => {
+        it(`should redirect to ${AGENT_CHARGES_CHANGE}`, () => {
+          cy.navigateToUrl(checkYourAnswersUrl);
 
-    //     cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: EUR_CURRENCY_CODE });
+          summaryList.field(fieldId).changeLink().click();
 
-    //     cy.assertChangeAnswersPageUrl({ referenceNumber, route: AGENT_CHARGES_CHANGE });
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: AGENT_CHARGES_CHANGE, fieldId });
+        });
+      });
 
-    //     // submit the AGENT_CHARGES form
-    //     cy.clickSubmitButton();
-    //   });
+      describe('form submission with a new answer', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(checkYourAnswersUrl);
 
-    //   it(`should redirect to ${AGENT_CHARGES_CHANGE} and then ${CHECK_YOUR_ANSWERS}`, () => {
-    //     cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS });
-    //   });
+          summaryList.field(fieldId).changeLink().click();
 
-    //   it(`should render the new answer for ${FIXED_SUM_AMOUNT} including ${SYMBOLS.EUR}`, () => {
-    //     const row = summaryList.field(FIXED_SUM_AMOUNT);
-    //     const expected = formatCurrency(application.EXPORT_CONTRACT.AGENT_CHARGES[FIXED_SUM_AMOUNT], currencyCode);
+          cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true });
 
-    //     cy.checkText(row.value(), expected);
-    //   });
-    // });
+          // submit AGENT_CHARGES form
+          cy.clickSubmitButton();
+        });
 
-    // describe(`changing ${PAYABLE_COUNTRY_CODE} to an alternative currency`, () => {
-    //   const currencyCode = NON_STANDARD_CURRENCY_CODE;
+        it(`should redirect to ${AGENT_CHARGES_CHANGE} and then ${CHECK_YOUR_ANSWERS}`, () => {
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS });
+        });
 
-    //   describe('when clicking the `change` link', () => {
-    //     it(`should redirect to ${AGENT_CHARGES_CHANGE}`, () => {
-    //       cy.navigateToUrl(checkYourAnswersUrl);
+        it(`should render the new answer for ${FIXED_SUM_AMOUNT}`, () => {
+          const row = summaryList.field(FIXED_SUM_AMOUNT);
+          const expected = formatCurrency(application.EXPORT_CONTRACT.AGENT_CHARGES[FIXED_SUM_AMOUNT], currencyCode);
 
-    //       summaryList.field(fieldId).changeLink().click();
+          cy.checkText(row.value(), expected);
+        });
+      });
+    });
 
-    //       cy.assertChangeAnswersPageUrl({ referenceNumber, route: AGENT_CHARGES_CHANGE, fieldId });
-    //     });
-    //   });
+    describe(`changing ${PAYABLE_COUNTRY_CODE} from an alternative currency to ${SYMBOLS.EUR}`, () => {
+      const currencyCode = EUR_CURRENCY_CODE;
 
-    //   describe('form submission with a new answer', () => {
-    //     beforeEach(() => {
-    //       cy.navigateToUrl(checkYourAnswersUrl);
+      describe('form submission with a new answer', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(checkYourAnswersUrl);
 
-    //       summaryList.field(fieldId).changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
-    //       cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true });
+          cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true });
 
-    //       // submit AGENT_CHARGES form
-    //       cy.clickSubmitButton();
-    //     });
+          // submit AGENT_CHARGES form
+          cy.clickSubmitButton();
 
-    //     it(`should redirect to ${AGENT_CHARGES_CHANGE} and then ${CHECK_YOUR_ANSWERS}`, () => {
-    //       cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS });
-    //     });
+          summaryList.field(fieldId).changeLink().click();
 
-    //     it(`should render the new answer for ${FIXED_SUM_AMOUNT}`, () => {
-    //       const row = summaryList.field(FIXED_SUM_AMOUNT);
-    //       const expected = formatCurrency(application.EXPORT_CONTRACT.AGENT_CHARGES[FIXED_SUM_AMOUNT], currencyCode);
+          cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: EUR_CURRENCY_CODE });
 
-    //       cy.checkText(row.value(), expected);
-    //     });
-    //   });
-    // });
+          // submit AGENT_CHARGES form
+          cy.clickSubmitButton();
+        });
 
-    // describe(`changing ${PAYABLE_COUNTRY_CODE} from an alternative currency to ${SYMBOLS.EUR}`, () => {
-    //   const currencyCode = EUR_CURRENCY_CODE;
+        it(`should render the new answer for ${FIXED_SUM_AMOUNT}`, () => {
+          const row = summaryList.field(FIXED_SUM_AMOUNT);
+          const expected = formatCurrency(application.EXPORT_CONTRACT.AGENT_CHARGES[FIXED_SUM_AMOUNT], currencyCode);
 
-    //   describe('form submission with a new answer', () => {
-    //     beforeEach(() => {
-    //       cy.navigateToUrl(checkYourAnswersUrl);
-
-    //       summaryList.field(fieldId).changeLink().click();
-
-    //       cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true });
-
-    //       // submit AGENT_CHARGES form
-    //       cy.clickSubmitButton();
-
-    //       summaryList.field(fieldId).changeLink().click();
-
-    //       cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: EUR_CURRENCY_CODE });
-
-    //       // submit AGENT_CHARGES form
-    //       cy.clickSubmitButton();
-    //     });
-
-    //     it(`should render the new answer for ${FIXED_SUM_AMOUNT}`, () => {
-    //       const row = summaryList.field(FIXED_SUM_AMOUNT);
-    //       const expected = formatCurrency(application.EXPORT_CONTRACT.AGENT_CHARGES[FIXED_SUM_AMOUNT], currencyCode);
-
-    //       cy.checkText(row.value(), expected);
-    //     });
-    //   });
-    // });
+          cy.checkText(row.value(), expected);
+        });
+      });
+    });
   },
 );

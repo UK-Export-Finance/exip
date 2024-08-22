@@ -11,7 +11,7 @@ const {
     EXPORTER_BUSINESS: {
       YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER },
       NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
-      TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+      TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER, TURNOVER_CURRENCY_CODE },
       HAS_CREDIT_CONTROL,
     },
   },
@@ -72,6 +72,10 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
       checkSummaryList[EMPLOYEES_UK]();
     });
 
+    it(`should render a ${TURNOVER_CURRENCY_CODE} summary list row`, () => {
+      checkSummaryList[TURNOVER_CURRENCY_CODE]();
+    });
+
     it(`should render a ${ESTIMATED_ANNUAL_TURNOVER} summary list row`, () => {
       checkSummaryList[ESTIMATED_ANNUAL_TURNOVER]();
     });
@@ -90,13 +94,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.startYourBusinessSection({});
-
-        cy.completeAndSubmitCompanyDetails({ differentTradingAddress: true });
-        cy.completeAndSubmitAlternativeTradingAddressForm({});
-        cy.completeAndSubmitNatureOfYourBusiness();
-        cy.completeAndSubmitTurnoverForm();
-        cy.completeAndSubmitCreditControlForm({});
+        cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'creditControl', differentTradingAddress: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       });
@@ -122,12 +120,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.startYourBusinessSection({});
-
-        cy.completeAndSubmitCompanyDetails({ differentTradingName: true });
-        cy.completeAndSubmitNatureOfYourBusiness();
-        cy.completeAndSubmitTurnoverForm();
-        cy.completeAndSubmitCreditControlForm({});
+        cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'creditControl', differentTradingName: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       });

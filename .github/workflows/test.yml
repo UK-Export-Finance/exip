@@ -743,6 +743,7 @@ jobs:
             'your-business/nature-of-business/**/*.spec.js',
             'your-business/root/**/*.spec.js',
             'your-business/turnover/**/*.spec.js',
+            'your-business/turnover-currency/**/*.spec.js',
           ]
 
     concurrency:

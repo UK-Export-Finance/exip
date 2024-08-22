@@ -103,7 +103,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
       cy.startYourBusinessSection({});
 
       // go through 2 business forms.
-      cy.clickSubmitButtonMultipleTimes({ count: 2 });
+      cy.clickSubmitButtonMultipleTimes({ count: 3 });
 
       field(ESTIMATED_ANNUAL_TURNOVER).input().should('have.value', application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
       field(PERCENTAGE_TURNOVER).input().should('have.value', application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);

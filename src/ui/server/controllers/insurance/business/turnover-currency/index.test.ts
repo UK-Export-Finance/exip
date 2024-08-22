@@ -25,7 +25,8 @@ import {
 
 const {
   INSURANCE_ROOT,
-  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE },
+  EXPORTER_BUSINESS: { TURNOVER_ROOT, CHECK_YOUR_ANSWERS, TURNOVER_CURRENCY_CHANGE, TURNOVER_CURRENCY_CHECK_AND_CHANGE },
+  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -223,24 +224,24 @@ describe('controllers/insurance/business/turnover-currency', () => {
       });
 
       describe("when the url's last substring is `check`", () => {
-        it(`should redirect to ${TURNOVER_CHANGE}`, async () => {
-          req.originalUrl = TURNOVER_CHANGE;
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.originalUrl = TURNOVER_CURRENCY_CHANGE;
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_CHANGE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });
 
       describe("when the url's last substring is `check-and-change`", () => {
-        it(`should redirect to ${TURNOVER_CHECK_AND_CHANGE}`, async () => {
-          req.originalUrl = TURNOVER_CHECK_AND_CHANGE;
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.originalUrl = TURNOVER_CURRENCY_CHECK_AND_CHANGE;
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_CHECK_AND_CHANGE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

@@ -17,7 +17,8 @@ import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE },
+  EXPORTER_BUSINESS: { TURNOVER_ROOT, CHECK_YOUR_ANSWERS },
+  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -133,19 +134,19 @@ export const post = async (req: Request, res: Response) => {
     }
 
     /**
-     * If is a change route
-     * redirect to TURNOVER_CHANGE
+     * If is a check-and-change route
+     * redirect to CHECK_AND_CHANGE_ROUTE
      */
-    if (isChangeRoute(req.originalUrl)) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_CHANGE}`);
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
     /**
-     * If is a check-and-change route
-     * redirect to TURNOVER_CHECK_AND_CHANGE
+     * If is a change route
+     * redirect to CHECK_YOUR_ANSWERS
      */
-    if (isCheckAndChangeRoute(req.originalUrl)) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_CHECK_AND_CHANGE}`);
+    if (isChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ROOT}`);

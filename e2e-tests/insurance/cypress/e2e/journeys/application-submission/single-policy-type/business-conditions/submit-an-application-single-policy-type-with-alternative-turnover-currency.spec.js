@@ -4,7 +4,7 @@ context(
     let referenceNumber;
 
     before(() => {
-      cy.completeSignInAndSubmitAnApplication({ alternativeCurrencyTurnover: true }).then((refNumber) => {
+      cy.completeSignInAndSubmitAnApplication({ alternativeCurrencyTurnover: true, clickAlternativeCurrencyLink: false }).then((refNumber) => {
         referenceNumber = refNumber;
       });
     });

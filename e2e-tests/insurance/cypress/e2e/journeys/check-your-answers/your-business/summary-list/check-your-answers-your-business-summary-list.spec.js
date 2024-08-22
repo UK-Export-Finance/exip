@@ -11,7 +11,7 @@ const {
 const {
   YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
-  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER, TURNOVER_CURRENCY_CODE },
   HAS_CREDIT_CONTROL,
 } = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
 
@@ -75,6 +75,10 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
 
   it(`should render a ${EMPLOYEES_UK} summary list row`, () => {
     checkSummaryList[EMPLOYEES_UK]();
+  });
+
+  it(`should render a ${TURNOVER_CURRENCY_CODE} summary list row`, () => {
+    checkSummaryList[TURNOVER_CURRENCY_CODE]();
   });
 
   it(`should render a ${ESTIMATED_ANNUAL_TURNOVER} summary list row`, () => {
