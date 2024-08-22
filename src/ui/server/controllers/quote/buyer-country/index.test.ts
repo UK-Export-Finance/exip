@@ -268,10 +268,10 @@ describe('controllers/quote/buyer-country', () => {
         req.body[FIELD_ID] = 'Country not in the mock response';
       });
 
-      it(`should redirect to ${ROUTES.QUOTE.CANNOT_APPLY}`, async () => {
+      it(`should redirect to ${ROUTES.QUOTE.CANNOT_APPLY_EXIT}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_APPLY);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_APPLY_EXIT);
       });
     });
 
@@ -308,18 +308,18 @@ describe('controllers/quote/buyer-country', () => {
 
         const countryName = selectedCountryName;
 
-        const { CANNOT_APPLY } = PAGES;
-        const { REASON } = CANNOT_APPLY;
+        const { CANNOT_APPLY_EXIT } = PAGES;
+        const { REASON } = CANNOT_APPLY_EXIT;
 
         const expectedReason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${countryName}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
 
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });
 
-      it(`should redirect to ${ROUTES.QUOTE.CANNOT_APPLY}`, async () => {
+      it(`should redirect to ${ROUTES.QUOTE.CANNOT_APPLY_EXIT}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_APPLY);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_APPLY_EXIT);
       });
     });
 

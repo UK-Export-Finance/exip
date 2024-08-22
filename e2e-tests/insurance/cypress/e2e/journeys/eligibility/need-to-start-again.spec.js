@@ -2,7 +2,7 @@ import { needToStartAgainPage } from '../../../../../pages/shared';
 import { LINKS, PAGES } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
-const CONTENT_STRINGS = PAGES.NEED_TO_START_AGAIN_PAGE;
+const CONTENT_STRINGS = PAGES.NEED_TO_START_AGAIN_EXIT;
 
 const {
   ELIGIBILITY: { BUYER_COUNTRY, EXPORTER_LOCATION, NEED_TO_START_AGAIN },

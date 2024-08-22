@@ -11,7 +11,7 @@ import { updateSubmittedData } from '../../../../helpers/update-submitted-data/i
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
 
-const { CANNOT_APPLY_MULTIPLE_RISKS, CHECK_YOUR_ANSWERS, PARTY_TO_CONSORTIUM, END_BUYER_CHANGE } = INSURANCE_ROUTES.ELIGIBILITY;
+const { CANNOT_APPLY_MULTIPLE_RISKS_EXIT, CHECK_YOUR_ANSWERS, PARTY_TO_CONSORTIUM, END_BUYER_CHANGE } = INSURANCE_ROUTES.ELIGIBILITY;
 
 const {
   SHARED_PAGES,
@@ -105,10 +105,10 @@ describe('controllers/insurance/eligibility/end-buyer', () => {
         };
       });
 
-      it(`should redirect to ${CANNOT_APPLY_MULTIPLE_RISKS}`, () => {
+      it(`should redirect to ${CANNOT_APPLY_MULTIPLE_RISKS_EXIT}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(CANNOT_APPLY_MULTIPLE_RISKS);
+        expect(res.redirect).toHaveBeenCalledWith(CANNOT_APPLY_MULTIPLE_RISKS_EXIT);
       });
     });
 

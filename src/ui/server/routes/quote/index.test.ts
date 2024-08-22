@@ -56,13 +56,13 @@ describe('routes/quote', () => {
     expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.CHECK_YOUR_ANSWERS, checkYourAnswersGet);
     expect(post).toHaveBeenCalledWith(ROUTES.QUOTE.CHECK_YOUR_ANSWERS, checkYourAnswersPost);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_APPLY, cannotObtainCoverGet);
+    expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_APPLY_EXIT, cannotObtainCoverGet);
 
     expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL, getAQuoteByEmailGet);
 
     expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.YOUR_QUOTE, yourQuoteGet);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.NEED_TO_START_AGAIN, needToStartAgainGet);
-    expect(post).toHaveBeenCalledWith(ROUTES.QUOTE.NEED_TO_START_AGAIN, needToStartAgainPost);
+    expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.NEED_TO_START_AGAIN_EXIT, needToStartAgainGet);
+    expect(post).toHaveBeenCalledWith(ROUTES.QUOTE.NEED_TO_START_AGAIN_EXIT, needToStartAgainPost);
   });
 });

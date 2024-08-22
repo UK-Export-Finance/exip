@@ -46,13 +46,13 @@ quoteRouter.post(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE, tellUsAboutYourP
 quoteRouter.get(ROUTES.QUOTE.CHECK_YOUR_ANSWERS, checkYourAnswersGet);
 quoteRouter.post(ROUTES.QUOTE.CHECK_YOUR_ANSWERS, checkYourAnswersPost);
 
-quoteRouter.get(ROUTES.QUOTE.CANNOT_APPLY, cannotObtainCoverGet);
+quoteRouter.get(ROUTES.QUOTE.CANNOT_APPLY_EXIT, cannotObtainCoverGet);
 
 quoteRouter.get(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL, getAQuoteByEmailGet);
 
 quoteRouter.get(ROUTES.QUOTE.YOUR_QUOTE, yourQuoteGet);
 
-quoteRouter.get(ROUTES.QUOTE.NEED_TO_START_AGAIN, needToStartAgainGet);
-quoteRouter.post(ROUTES.QUOTE.NEED_TO_START_AGAIN, needToStartAgainPost);
+quoteRouter.get(ROUTES.QUOTE.NEED_TO_START_AGAIN_EXIT, needToStartAgainGet);
+quoteRouter.post(ROUTES.QUOTE.NEED_TO_START_AGAIN_EXIT, needToStartAgainPost);
 
 export default quoteRouter;

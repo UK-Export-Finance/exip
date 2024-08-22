@@ -24,7 +24,7 @@ const {
 const {
   PROBLEM_WITH_SERVICE,
   INSURANCE: {
-    ELIGIBILITY: { COMPANY_NOT_ACTIVE, COMPANIES_HOUSE_UNAVAILABLE },
+    ELIGIBILITY: { COMPANY_NOT_ACTIVE_EXIT, COMPANIES_HOUSE_UNAVAILABLE_EXIT },
     EXPORTER_BUSINESS: { COMPANY_DETAILS_ROOT },
     INSURANCE_ROOT,
   },
@@ -146,7 +146,7 @@ describe('controllers/insurance/business/companies-house-search', () => {
       });
 
       describe('when companiesHouse.search returns isActive=false', () => {
-        it(`should redirect to ${COMPANY_NOT_ACTIVE}`, async () => {
+        it(`should redirect to ${COMPANY_NOT_ACTIVE_EXIT}`, async () => {
           req.body = validBody;
 
           const mockResponse = {
@@ -159,7 +159,7 @@ describe('controllers/insurance/business/companies-house-search', () => {
 
           await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(COMPANY_NOT_ACTIVE);
+          expect(res.redirect).toHaveBeenCalledWith(COMPANY_NOT_ACTIVE_EXIT);
         });
       });
     });
@@ -196,7 +196,7 @@ describe('controllers/insurance/business/companies-house-search', () => {
       });
 
       describe('when companiesHouse.search returns apiError=true', () => {
-        it(`should redirect to ${COMPANIES_HOUSE_UNAVAILABLE}`, async () => {
+        it(`should redirect to ${COMPANIES_HOUSE_UNAVAILABLE_EXIT}`, async () => {
           req.body = validBody;
 
           const mockResponse = {
@@ -208,7 +208,7 @@ describe('controllers/insurance/business/companies-house-search', () => {
 
           await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(COMPANIES_HOUSE_UNAVAILABLE);
+          expect(res.redirect).toHaveBeenCalledWith(COMPANIES_HOUSE_UNAVAILABLE_EXIT);
         });
       });
 

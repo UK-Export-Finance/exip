@@ -6,6 +6,9 @@ import { mockApplication } from '../../../test-mocks';
 const {
   ACCOUNT: { FIRST_NAME, LAST_NAME },
   COMPANIES_HOUSE: { COMPANY_NAME },
+  EXPORT_CONTRACT: {
+    AGENT_DETAILS: { NAME: AGENT_NAME },
+  },
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION: { NAME: BUYER_NAME },
   },
@@ -27,6 +30,13 @@ const mockApplicationWithCharacterCodes = {
   company: {
     ...mockApplication.company,
     [COMPANY_NAME]: mockStringWithCharacterCodes,
+  },
+  exportContract: {
+    ...mockApplication.exportContract,
+    agent: {
+      ...mockApplication.exportContract.agent,
+      [AGENT_NAME]: mockStringWithCharacterCodes,
+    },
   },
   policyContact: {
     ...mockApplication.policyContact,
@@ -58,6 +68,16 @@ describe('server/helpers/mappings/map-name-fields', () => {
     const expected = replaceCharacterCodesWithCharacters(fieldValue);
 
     expect(result.company[COMPANY_NAME]).toEqual(expected);
+  });
+
+  it(`should replace character codes in exportContract.agent.${AGENT_NAME}`, () => {
+    const result = mapNameFields(mockApplicationWithCharacterCodes);
+
+    const fieldValue = mockApplicationWithCharacterCodes.exportContract.agent[AGENT_NAME];
+
+    const expected = replaceCharacterCodesWithCharacters(fieldValue);
+
+    expect(result.exportContract.agent[AGENT_NAME]).toEqual(expected);
   });
 
   it(`should replace character codes in nominatedLossPayee.${LOSS_PAYEE_NAME}`, () => {

@@ -67,12 +67,12 @@ export const post = (req: Request, res: Response) => {
   if (redirectToExitPage) {
     req.flash('previousRoute', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
 
-    const { CANNOT_APPLY } = PAGES;
-    const { REASON } = CANNOT_APPLY;
+    const { CANNOT_APPLY_EXIT } = PAGES;
+    const { REASON } = CANNOT_APPLY_EXIT;
 
     req.flash('exitReason', REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES);
 
-    return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
+    return res.redirect(ROUTES.QUOTE.CANNOT_APPLY_EXIT);
   }
 
   req.session.submittedData.quoteEligibility = updateSubmittedData(payload, req.session.submittedData.quoteEligibility);

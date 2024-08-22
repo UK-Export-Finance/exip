@@ -23,7 +23,7 @@ const {
 const {
   INSURANCE: {
     PROBLEM_WITH_SERVICE,
-    ELIGIBILITY: { COMPANY_DETAILS, COMPANY_NOT_ACTIVE, COMPANIES_HOUSE_UNAVAILABLE },
+    ELIGIBILITY: { COMPANY_DETAILS, COMPANY_NOT_ACTIVE_EXIT, COMPANIES_HOUSE_UNAVAILABLE_EXIT },
   },
 } = ROUTES;
 
@@ -112,11 +112,11 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (response.apiError) {
-      return res.redirect(COMPANIES_HOUSE_UNAVAILABLE);
+      return res.redirect(COMPANIES_HOUSE_UNAVAILABLE_EXIT);
     }
 
     if (!response.isActive) {
-      return res.redirect(COMPANY_NOT_ACTIVE);
+      return res.redirect(COMPANY_NOT_ACTIVE_EXIT);
     }
 
     /**

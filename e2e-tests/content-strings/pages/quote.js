@@ -25,7 +25,7 @@ const CHECK_YOUR_ANSWERS = {
   SUBMIT_BUTTON: 'Get your quote',
 };
 
-const CANNOT_APPLY = {
+const CANNOT_APPLY_EXIT = {
   PAGE_TITLE: 'You cannot apply for UKEF credit insurance',
   REASON: {
     INTRO: 'This is because',
@@ -130,7 +130,7 @@ const QUOTE = {
   POLICY_TYPE,
   TELL_US_ABOUT_YOUR_POLICY,
   CHECK_YOUR_ANSWERS,
-  CANNOT_APPLY,
+  CANNOT_APPLY_EXIT,
   GET_A_QUOTE_BY_EMAIL,
   YOUR_QUOTE,
 };

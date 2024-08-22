@@ -25,7 +25,7 @@ export const TEMPLATE = TEMPLATES.SHARED_PAGES.BUYER_COUNTRY;
 
 const {
   PROBLEM_WITH_SERVICE,
-  ELIGIBILITY: { CANNOT_APPLY: CANNOT_APPLY_ROUTE, TOTAL_VALUE_INSURED, CHECK_YOUR_ANSWERS, CONTRACT_TOO_SHORT },
+  ELIGIBILITY: { CANNOT_APPLY_EXIT: CANNOT_APPLY_ROUTE, TOTAL_VALUE_INSURED, CHECK_YOUR_ANSWERS, CONTRACT_TOO_SHORT_EXIT },
 } = INSURANCE_ROUTES;
 
 export const get = async (req: Request, res: Response) => {
@@ -92,7 +92,7 @@ export const post = async (req: Request, res: Response) => {
 
     /**
      * If a country has no insurance support and no short term cover,
-     * redirect to CONTRACT_TOO_SHORT.
+     * redirect to CONTRACT_TOO_SHORT_EXIT.
      */
     const noShortTermCover = !country.noInsuranceSupport && !country.shortTermCover;
 
@@ -104,7 +104,7 @@ export const post = async (req: Request, res: Response) => {
         insuranceEligibility: updateSubmittedData(populatedData, req.session.submittedData.insuranceEligibility),
       };
 
-      return res.redirect(CONTRACT_TOO_SHORT);
+      return res.redirect(CONTRACT_TOO_SHORT_EXIT);
     }
 
     if (country.canApplyForInsuranceOnline) {
@@ -130,8 +130,8 @@ export const post = async (req: Request, res: Response) => {
         insuranceEligibility: updateSubmittedData(populatedData, req.session.submittedData.insuranceEligibility),
       };
 
-      const { CANNOT_APPLY } = PAGES;
-      const { REASON } = CANNOT_APPLY;
+      const { CANNOT_APPLY_EXIT } = PAGES;
+      const { REASON } = CANNOT_APPLY_EXIT;
 
       const reason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${country.name}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
 

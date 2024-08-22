@@ -4,7 +4,7 @@ import { Request, Response } from '../../../../../types';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 
-export const TEMPLATE = TEMPLATES.CANNOT_APPLY;
+export const TEMPLATE = TEMPLATES.CANNOT_APPLY_EXIT;
 
 /**
  * get
@@ -18,7 +18,7 @@ export const get = (req: Request, res: Response) => {
 
   return res.render(TEMPLATE, {
     ...corePageVariables({
-      PAGE_CONTENT_STRINGS: PAGES.CANNOT_APPLY,
+      PAGE_CONTENT_STRINGS: PAGES.CANNOT_APPLY_EXIT,
       BACK_LINK: req.headers.referer,
     }),
     userName: getUserNameFromSession(req.session.user),
