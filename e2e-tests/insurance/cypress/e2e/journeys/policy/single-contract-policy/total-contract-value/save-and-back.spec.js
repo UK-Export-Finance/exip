@@ -1,5 +1,4 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
-import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import application from '../../../../../../../fixtures/application';
@@ -17,8 +16,6 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-const policyType = FIELD_VALUES.POLICY_TYPE.SINGLE;
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Single contract policy - Total contract value page - Save and go back', () => {
@@ -29,9 +26,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm({ policyType });
-      cy.completeAndSubmitSingleContractPolicyForm({});
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'singleContractPolicy' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`;
 

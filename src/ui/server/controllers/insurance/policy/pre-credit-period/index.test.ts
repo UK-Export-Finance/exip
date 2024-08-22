@@ -48,7 +48,7 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
   });
 
   describe('PAGE_CONTENT_STRINGS', () => {
-    it('should have the correct properties', () => {
+    it('should have the correct strings', () => {
       const expected = {
         ...PAGES.INSURANCE.POLICY.PRE_CREDIT_PERIOD,
         CREDIT_PERIOD_WITH_BUYER: CREDIT_PERIOD_WITH_BUYER_STRINGS,

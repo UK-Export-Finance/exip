@@ -43,8 +43,7 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm({});
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'policyType' });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 
