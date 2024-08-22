@@ -164,7 +164,7 @@ const application = {
       [DECLINED_DESCRIPTION]: mockAddress0,
     },
     AGENT_DETAILS: {
-      [AGENT_NAME]: 'Mock export contract agent name',
+      [AGENT_NAME]: "Mock export contract agent name O'Neill",
       [AGENT_COUNTRY_CODE]: COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME,
       [AGENT_FULL_ADDRESS]: mockAddress0,
     },

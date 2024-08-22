@@ -35,7 +35,7 @@ const mockApplicationWithCharacterCodes = {
     ...mockApplication.exportContract,
     agent: {
       ...mockApplication.exportContract.agent,
-      [AGENT_NAME]: `${mockApplication.exportContract.agent}'`,
+      [AGENT_NAME]: mockStringWithCharacterCodes,
     },
   },
   policyContact: {
