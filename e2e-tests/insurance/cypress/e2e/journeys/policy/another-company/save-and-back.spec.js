@@ -21,13 +21,7 @@ context('Insurance - Policy - Another company page - Save and back', () => {
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.startInsurancePolicySection({});
-
-      cy.completeAndSubmitPolicyTypeForm({});
-      cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitTotalContractValueForm({});
-      cy.completeAndSubmitNameOnPolicyForm({});
-      cy.completeAndSubmitPreCreditPeriodForm({});
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'preCreditPeriod' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${ANOTHER_COMPANY}`;
 
