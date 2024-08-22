@@ -1,17 +1,17 @@
 import { PAGE_VARIABLES, TEMPLATE, FIELD_IDS, PAGE_CONTENT_STRINGS, get, post } from '.';
-import { PAGES } from '../../../../../content-strings';
-import { TEMPLATES } from '../../../../../constants';
-import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
-import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
-import { FIELDS } from '../../../../../content-strings/fields/insurance';
-import api from '../../../../../api';
-import mapRadioAndSelectOptions from '../../../../../helpers/mappings/map-currencies/radio-and-select-options';
-import constructPayload from '../../../../../helpers/construct-payload';
-import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
-import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
+import { PAGES } from '../../../../content-strings';
+import { TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
+import { FIELDS } from '../../../../content-strings/fields/insurance';
+import api from '../../../../api';
+import mapRadioAndSelectOptions from '../../../../helpers/mappings/map-currencies/radio-and-select-options';
+import constructPayload from '../../../../helpers/construct-payload';
+import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
-import mapAndSave from '../../map-and-save/turnover';
-import { Request, Response } from '../../../../../../types';
+import mapAndSave from '../map-and-save/turnover';
+import { Request, Response } from '../../../../../types';
 import {
   mockReq,
   mockRes,
@@ -21,11 +21,12 @@ import {
   mockSpyPromiseRejection,
   referenceNumber,
   GBP,
-} from '../../../../../test-mocks';
+} from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
-  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE },
+  EXPORTER_BUSINESS: { TURNOVER_ROOT, CHECK_YOUR_ANSWERS, TURNOVER_CURRENCY_CHANGE, TURNOVER_CURRENCY_CHECK_AND_CHANGE },
+  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -38,9 +39,9 @@ const {
 
 const { supportedCurrencies, alternativeCurrencies } = mockCurrenciesResponse;
 
-jest.mock('../../map-and-save/turnover');
+jest.mock('../map-and-save/turnover');
 
-describe('controllers/insurance/business/turnover/alternative-currency', () => {
+describe('controllers/insurance/business/turnover-currency', () => {
   let req: Request;
   let res: Response;
 
@@ -91,7 +92,7 @@ describe('controllers/insurance/business/turnover/alternative-currency', () => {
 
   describe('PAGE_CONTENT_STRINGS', () => {
     it('should have the correct strings', () => {
-      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY);
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY);
     });
   });
 
@@ -223,24 +224,24 @@ describe('controllers/insurance/business/turnover/alternative-currency', () => {
       });
 
       describe("when the url's last substring is `check`", () => {
-        it(`should redirect to ${TURNOVER_CHANGE}`, async () => {
-          req.originalUrl = TURNOVER_CHANGE;
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.originalUrl = TURNOVER_CURRENCY_CHANGE;
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_CHANGE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });
 
       describe("when the url's last substring is `check-and-change`", () => {
-        it(`should redirect to ${TURNOVER_CHECK_AND_CHANGE}`, async () => {
-          req.originalUrl = TURNOVER_CHECK_AND_CHANGE;
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.originalUrl = TURNOVER_CURRENCY_CHECK_AND_CHANGE;
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_CHECK_AND_CHANGE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

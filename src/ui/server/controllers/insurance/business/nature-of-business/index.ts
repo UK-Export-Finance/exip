@@ -28,7 +28,7 @@ const {
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
-const { NATURE_OF_BUSINESS_ROOT, NATURE_OF_BUSINESS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, TURNOVER_ROOT } = EXPORTER_BUSINESS_ROUTES;
+const { NATURE_OF_BUSINESS_ROOT, NATURE_OF_BUSINESS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, TURNOVER_CURRENCY_ROOT } = EXPORTER_BUSINESS_ROUTES;
 
 const { NATURE_OF_YOUR_BUSINESS: NATURE_OF_YOUR_BUSINESS_FIELDS } = FIELDS;
 
@@ -141,7 +141,7 @@ const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ROOT}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_CURRENCY_ROOT}`);
   } catch (error) {
     console.error('Error updating application - your business - nature of business %O', error);
 

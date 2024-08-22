@@ -26,7 +26,7 @@ const {
 
 const {
   NATURE_OF_BUSINESS_ROOT,
-  TURNOVER_ROOT,
+  TURNOVER_CURRENCY_ROOT,
   NATURE_OF_BUSINESS_SAVE_AND_BACK,
   CHECK_YOUR_ANSWERS,
   NATURE_OF_BUSINESS_CHANGE,
@@ -161,7 +161,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
 
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_CURRENCY_ROOT}`;
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 

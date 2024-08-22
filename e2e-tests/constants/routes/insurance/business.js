@@ -3,6 +3,7 @@ const COMPANY_DETAILS_ROOT = `${ROOT}/company-details`;
 const ALTERNATIVE_TRADING_ADDRESS_ROOT = `${ROOT}/alternative-trading-address`;
 const NATURE_OF_BUSINESS_ROOT = `${ROOT}/nature-of-business`;
 const TURNOVER_ROOT = `${ROOT}/turnover`;
+const TURNOVER_CURRENCY_ROOT = `${ROOT}/turnover-currency`;
 const CREDIT_CONTROL_ROOT = `${ROOT}/credit-control`;
 const CHECK_YOUR_ANSWERS = `${ROOT}/check-your-answers`;
 
@@ -25,7 +26,10 @@ export const EXPORTER_BUSINESS = {
   TURNOVER_CHANGE: `${TURNOVER_ROOT}/change`,
   TURNOVER_CHECK_AND_CHANGE: `${TURNOVER_ROOT}/check-and-change`,
   TURNOVER_SAVE_AND_BACK: `${TURNOVER_ROOT}/save-and-back`,
-  TURNOVER_ALTERNATIVE_CURRENCY: `${TURNOVER_ROOT}/alternative-currency`,
+  TURNOVER_CURRENCY_ROOT,
+  TURNOVER_CURRENCY_CHANGE: `${TURNOVER_CURRENCY_ROOT}/change`,
+  TURNOVER_CURRENCY_CHECK_AND_CHANGE: `${TURNOVER_CURRENCY_ROOT}/check-and-change`,
+  TURNOVER_CURRENCY_SAVE_AND_BACK: `${TURNOVER_CURRENCY_ROOT}/save-and-back`,
   CREDIT_CONTROL: CREDIT_CONTROL_ROOT,
   CREDIT_CONTROL_SAVE_AND_BACK: `${CREDIT_CONTROL_ROOT}/save-and-back`,
   CREDIT_CONTROL_CHANGE: `${CREDIT_CONTROL_ROOT}/change`,
