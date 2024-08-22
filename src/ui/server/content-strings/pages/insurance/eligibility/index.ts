@@ -119,7 +119,7 @@ const COMPANY_DETAILS = {
 };
 
 const END_BUYER = {
-  PAGE_TITLE: 'Does your buyer need to be paid by someone else before they can pay you?',
+  PAGE_TITLE: "Does your export contract say you'll only get paid once you're buyer gets paid?",
 };
 
 const CANNOT_APPLY_MULTIPLE_RISKS = {
