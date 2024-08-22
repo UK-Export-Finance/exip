@@ -68,7 +68,7 @@ export const mockExportContractAgent = {
   countryCode: mockCountries[0].isoCode,
   fullAddress: 'Mock export contract agent address',
   isUsingAgent: false,
-  name: 'Mock export contract agent name',
+  name: "Mock export contract agent name O'Neill",
   service: mockExportContractAgentService,
 };
 

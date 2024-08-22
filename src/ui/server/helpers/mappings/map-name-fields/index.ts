@@ -5,6 +5,9 @@ import { Application } from '../../../../types';
 const {
   ACCOUNT: { FIRST_NAME, LAST_NAME },
   COMPANIES_HOUSE: { COMPANY_NAME },
+  EXPORT_CONTRACT: {
+    AGENT_DETAILS: { NAME: AGENT_NAME },
+  },
   POLICY: {
     LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME },
   },
@@ -20,7 +23,7 @@ const {
  * @returns {Object} Application with mapped name field characters
  */
 const mapNameFields = (application: Application): Application => {
-  const { buyer, company, nominatedLossPayee, policyContact } = application;
+  const { buyer, company, exportContract, nominatedLossPayee, policyContact } = application;
 
   if (buyer?.[BUYER_NAME]) {
     const fieldValue = buyer[BUYER_NAME];
@@ -32,6 +35,12 @@ const mapNameFields = (application: Application): Application => {
     const fieldValue = company[COMPANY_NAME];
 
     company[COMPANY_NAME] = replaceCharacterCodesWithCharacters(fieldValue);
+  }
+
+  if (exportContract?.agent?.[AGENT_NAME]) {
+    const fieldValue = exportContract.agent[AGENT_NAME];
+
+    exportContract.agent[AGENT_NAME] = replaceCharacterCodesWithCharacters(fieldValue);
   }
 
   if (nominatedLossPayee?.[LOSS_PAYEE_NAME]) {
