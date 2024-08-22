@@ -160,7 +160,7 @@ const COOKIES_SAVED_PAGE = {
   BODY: 'You can change your preferences at any time.',
 };
 
-const NEED_TO_START_AGAIN_EXIT_PAGE = {
+const NEED_TO_START_AGAIN_EXIT = {
   PAGE_TITLE: 'You need to start again',
   REASON: 'This is because you have not yet answered all the eligibility questions.',
 };
@@ -218,7 +218,7 @@ export const PAGES = {
   COOKIES_PAGE,
   COOKIES_SAVED_PAGE,
   ACCESSIBILITY_STATEMENT_PAGE,
-  NEED_TO_START_AGAIN_EXIT_PAGE,
+  NEED_TO_START_AGAIN_EXIT,
   PAGE_NOT_FOUND_PAGE,
   PROBLEM_WITH_SERVICE_PAGE,
   CONTACT_US_PAGE,
