@@ -15,7 +15,7 @@ const completeBusinessSection = ({
   hasCreditControlProcess = false,
   submitCheckYourAnswers = false,
   alternativeCurrencyTurnover = false,
-  clickAlternativeCurrencyLink = true,
+  clickAlternativeCurrencyLink,
 }) => {
   cy.startYourBusinessSection({ viaTaskList });
 
