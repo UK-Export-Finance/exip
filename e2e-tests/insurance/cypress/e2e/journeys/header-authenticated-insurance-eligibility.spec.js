@@ -1,5 +1,3 @@
-import dashboardPage from '../../../../pages/insurance/dashboard';
-
 context('Insurance - header - authenticated - complete insurance eligibility', () => {
   let referenceNumber;
 
@@ -11,7 +9,7 @@ context('Insurance - header - authenticated - complete insurance eligibility', (
       cy.clickHeaderApplicationsLink();
 
       // start a new application
-      dashboardPage.startNewApplicationButton().click();
+      cy.clickStartNewApplicationButton();
     });
   });
 

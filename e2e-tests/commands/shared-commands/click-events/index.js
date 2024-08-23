@@ -11,4 +11,6 @@ Cypress.Commands.add('clickYesRadioInput', require('./click-yes-radio-input'));
 Cypress.Commands.add('clickProvideAlternativeCurrencyLink', require('./click-provide-alternative-currency-link'));
 Cypress.Commands.add('clickAlternativeCurrencyRadioOption', require('./click-alternative-currency-radio-option'));
 
+Cypress.Commands.add('clickStartNewApplicationButton', require('./click-start-new-application-button'));
+
 Cypress.Commands.add('rejectAnalyticsCookies', analytics.rejectAnalyticsCookies);

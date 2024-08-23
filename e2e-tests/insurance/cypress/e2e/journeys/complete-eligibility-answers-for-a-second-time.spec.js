@@ -1,4 +1,3 @@
-import dashboardPage from '../../../../pages/insurance/dashboard';
 import { autoCompleteField, field } from '../../../../pages/shared';
 import { ROUTES, FIELD_IDS } from '../../../../constants';
 
@@ -28,7 +27,7 @@ context('Insurance - Eligibility - start and complete for a second time after cr
 
       cy.clickHeaderApplicationsLink();
 
-      dashboardPage.startNewApplicationButton().click();
+      cy.clickStartNewApplicationButton();
 
       cy.assertUrl(exporterLocationUrl);
     });

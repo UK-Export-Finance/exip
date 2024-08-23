@@ -1,4 +1,3 @@
-import dashboardPage from '../../../../../../pages/insurance/dashboard';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const { ROOT, ALL_SECTIONS } = INSURANCE_ROUTES;
@@ -12,7 +11,7 @@ context(
     before(() => {
       cy.completeSignInAndGoToDashboard().then(() => {
         // start new application/eligibility flow
-        dashboardPage.startNewApplicationButton().click();
+        cy.clickStartNewApplicationButton();
 
         cy.submitInsuranceEligibilityAnswersFromExporterLocationHappyPath({});
       });
