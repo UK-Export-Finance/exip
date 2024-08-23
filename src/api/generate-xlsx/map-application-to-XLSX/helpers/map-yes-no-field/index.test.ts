@@ -21,17 +21,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/helpers/map-yes-no-field', (
     });
   });
 
-  describe('when value is undefined and a default value is passed', () => {
-    it('should return the default value', () => {
-      const mockDefaultValue = 'Mock default value';
-
-      const response = mapYesNoField({ defaultValue: mockDefaultValue });
-
-      expect(response).toEqual(mockDefaultValue);
-    });
-  });
-
-  describe('when value is "undefined"', () => {
+  describe('when value is undefined', () => {
     it(`should return ${DEFAULT.EMPTY}`, () => {
       const response = mapYesNoField({});
 

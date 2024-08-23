@@ -6,7 +6,7 @@ import BUYER_FIELD_IDS from '../../../../../constants/field-ids/insurance/your-b
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockSpyPromiseRejection } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 
 const { HAS_BUYER_FINANCIAL_ACCOUNTS } = BUYER_FIELD_IDS;
 
@@ -39,7 +39,7 @@ describe('controllers/insurance/your-buyer/buyer-financial-information/save-and-
 
       await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should call mapAndSave.buyerRelationship once with data from constructPayload function', async () => {
@@ -62,7 +62,7 @@ describe('controllers/insurance/your-buyer/buyer-financial-information/save-and-
 
       await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should call mapAndSave.buyerRelationship once with data from constructPayload function', async () => {

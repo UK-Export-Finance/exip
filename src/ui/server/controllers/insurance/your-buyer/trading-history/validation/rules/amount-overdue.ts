@@ -18,7 +18,7 @@ export const MINIMUM = 1;
  * Check submitted form data for errors with the amount overdue field
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
- * @param {Object} Errors object from previous validation errors
+ * * @param {Object} errors: Errors from previous validation errors errors
  * @returns {ValidationErrors}
  */
 const amountOverdueRules = (formBody: RequestBody, errors: object) => {

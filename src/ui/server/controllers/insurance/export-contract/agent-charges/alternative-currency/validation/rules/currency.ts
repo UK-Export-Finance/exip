@@ -20,7 +20,7 @@ const {
  * Check submitted form data to see if currency radio is selected
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
- * @param {Object} Errors object from previous validation errors
+ * * @param {Object} errors: Errors from previous validation errors errors
  * @returns {ValidationErrors}
  */
 const currencyRule = (formBody: RequestBody, errors: object) => emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);

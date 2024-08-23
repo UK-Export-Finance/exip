@@ -7252,15 +7252,12 @@ var map_exporter_contact_details_default = mapExporterContactDetails;
 
 // generate-xlsx/map-application-to-XLSX/helpers/map-yes-no-field/index.ts
 var { YES, NO } = FIELD_VALUES;
-var mapYesNoField = ({ answer, defaultValue }) => {
+var mapYesNoField = ({ answer }) => {
   if (answer === false) {
     return NO;
   }
   if (answer === true) {
     return YES;
-  }
-  if (defaultValue) {
-    return defaultValue;
   }
   return DEFAULT.EMPTY;
 };

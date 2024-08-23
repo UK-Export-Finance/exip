@@ -30,15 +30,6 @@ export const COMPANY_DETAILS = {
   DIFFERENT_TRADING_NAME_HINT: 'Your official trading name will still be on the policy.',
 };
 
-export const CONTACT = {
-  ...SHARED,
-  PAGE_TITLE: 'Your contact details',
-  CONTACT_DETAILS: {
-    LEGEND: 'Contact details',
-    HINT: 'This will be the name on the contract policy',
-  },
-};
-
 export const ALTERNATIVE_TRADING_ADDRESS = {
   ...SHARED,
   PAGE_TITLE: 'Alternative trading address',

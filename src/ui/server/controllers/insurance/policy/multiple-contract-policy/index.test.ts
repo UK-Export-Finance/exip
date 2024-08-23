@@ -1,4 +1,4 @@
-import { pageVariables, TEMPLATE, FIELD_IDS, totalMonthsOfCoverOptions, get, post } from '.';
+import { pageVariables, TEMPLATE, FIELD_IDS, get, post } from '.';
 import { GBP_CURRENCY_CODE, TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
@@ -126,14 +126,6 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
       expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY);
-    });
-  });
-
-  describe('totalMonthsOfCoverOptions', () => {
-    it('should have the correct array of months', () => {
-      const expected = FIELDS.CONTRACT_POLICY.MULTIPLE[TOTAL_MONTHS_OF_COVER].OPTIONS;
-
-      expect(totalMonthsOfCoverOptions).toEqual(expected);
     });
   });
 

@@ -104,7 +104,7 @@ const update = async ({ context, applicationId, data }: TestHelperApplicationUpd
 
 /**
  * deleteAll test helper
- * Get all accounts and delete them.
+ * Get all applications and delete them.
  * @param {Context} context: KeystoneJS context API
  * @returns {Array} Accounts that have been deleted
  */

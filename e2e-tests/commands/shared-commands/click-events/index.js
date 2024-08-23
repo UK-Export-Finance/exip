@@ -15,6 +15,7 @@ Cypress.Commands.add('clickFooterAccessibilityStatementLink', require('./click-f
 Cypress.Commands.add('clickFooterCookiesLink', require('./click-footer-cookies-link'));
 
 Cypress.Commands.add('clickPhaseBannerFeedbackLink', require('./click-phase-banner-feedback-link'));
+Cypress.Commands.add('clickStartNewApplicationButton', require('./click-start-new-application-button'));
 
 Cypress.Commands.add('clickTaskBusiness', require('./tasks/click-task-business'));
 Cypress.Commands.add('clickTaskBuyer', require('./tasks/click-task-buyer'));

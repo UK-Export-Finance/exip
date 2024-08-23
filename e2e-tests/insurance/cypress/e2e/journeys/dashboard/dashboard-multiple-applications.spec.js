@@ -36,7 +36,7 @@ context('Insurance - Dashboard - new application', () => {
     let secondReferenceNumber;
 
     before(() => {
-      dashboardPage.startNewApplicationButton().click();
+      cy.clickStartNewApplicationButton();
 
       cy.submitInsuranceEligibilityAnswersFromExporterLocationHappyPath({});
 

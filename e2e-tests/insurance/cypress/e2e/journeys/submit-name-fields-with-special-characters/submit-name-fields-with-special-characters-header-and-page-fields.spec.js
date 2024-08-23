@@ -1,6 +1,5 @@
 import { INSURANCE_FIELD_IDS } from '../../../../../constants/field-ids/insurance';
 import { field } from '../../../../../pages/shared';
-import dashboardPage from '../../../../../pages/insurance/dashboard';
 import partials from '../../../../../partials';
 import mockAccount from '../../../../../fixtures/account';
 import mockNameWithSpecialCharacters from '../../../../../fixtures/name-with-special-characters';
@@ -51,7 +50,7 @@ context('Insurance - Name fields - Header and page fields should render special 
 
     cy.navigateToDashboardUrl();
 
-    dashboardPage.startNewApplicationButton().click();
+    cy.clickStartNewApplicationButton();
 
     cy.submitInsuranceEligibilityAnswersFromExporterLocationHappyPath({});
 

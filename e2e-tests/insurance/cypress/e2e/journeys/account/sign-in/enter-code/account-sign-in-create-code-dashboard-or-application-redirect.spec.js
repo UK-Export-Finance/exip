@@ -1,5 +1,4 @@
 import header from '../../../../../../../partials/header';
-import dashboardPage from '../../../../../../../pages/insurance/dashboard';
 
 context(
   'Insurance - Account - Sign in - I want to go straight to my application if there is exactly one application in progress or the dashboard otherwise',
@@ -43,7 +42,7 @@ context(
           // go to all applications for user
           cy.clickHeaderApplicationsLink();
           // click on start new application page
-          dashboardPage.startNewApplicationButton().click();
+          cy.clickStartNewApplicationButton();
 
           // complete eligibility questions
           cy.submitInsuranceEligibilityAnswersHappyPath();
