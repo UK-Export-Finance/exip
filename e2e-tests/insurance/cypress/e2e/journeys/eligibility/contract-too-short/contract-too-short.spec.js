@@ -1,5 +1,4 @@
 import { actions } from '../../../../../../pages/shared';
-import { contractTooShort } from '../../../../../../pages/insurance/eligibility';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -45,10 +44,6 @@ context('Insurance - Eligibility - Contract too short page', () => {
 
     it('should render an intro copy', () => {
       cy.checkIntroText(CONTENT_STRINGS.INTRO);
-    });
-
-    it('should render the "can still apply" copy', () => {
-      cy.checkText(contractTooShort.canStillApply(), CONTENT_STRINGS.CAN_STILL_APPLY);
     });
 
     it('should render the `CONTACT EFM` intro', () => {

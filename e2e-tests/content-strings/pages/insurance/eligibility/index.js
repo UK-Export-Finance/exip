@@ -119,7 +119,7 @@ export const COMPANY_DETAILS = {
 };
 
 export const END_BUYER = {
-  PAGE_TITLE: 'Does your buyer need to be paid by someone else before they can pay you?',
+  PAGE_TITLE: "Does your export contract say you'll only get paid once you're buyer gets paid?",
 };
 
 export const CANNOT_APPLY_MULTIPLE_RISKS_EXIT = {
@@ -170,16 +170,14 @@ export const HAVE_AN_ACCOUNT = {
 
 export const CONTRACT_TOO_SHORT_EXIT = {
   PAGE_TITLE: 'Talk to an export finance manager',
-  INTRO: "We don't offer short term cover for the country you've selected.",
-  CAN_STILL_APPLY:
-    "You can still apply for credit insurance through UKEF, but you'll need to speak to an export finance manager instead of using this digital application service.",
+  INTRO: "We do not normally offer short term cover for the country you've selected.",
   CONTACT_EFM: {
-    INTRO: 'Contact',
+    INTRO: 'You might still be able to apply for credit insurance through UKEF - contact',
     LINK: {
       TEXT: 'your nearest export finance manager',
       HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
     },
-    TEXT: `to learn more about your options. If you have any questions, get in touch with our team at ${UKEF_CONTACT_DETAILS.EMAIL.UNDERWRITING}.`,
+    TEXT: `to learn more about your options.`,
   },
 };
 
