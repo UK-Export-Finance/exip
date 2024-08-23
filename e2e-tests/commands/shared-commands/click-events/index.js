@@ -11,6 +11,8 @@ Cypress.Commands.add('clickYesRadioInput', require('./click-yes-radio-input'));
 Cypress.Commands.add('clickProvideAlternativeCurrencyLink', require('./click-provide-alternative-currency-link'));
 Cypress.Commands.add('clickAlternativeCurrencyRadioOption', require('./click-alternative-currency-radio-option'));
 
+Cypress.Commands.add('clickPhaseBannerFeedbackLink', require('./click-phase-banner-feedback-link'));
+
 Cypress.Commands.add('clickTaskBusiness', require('./tasks/click-task-business'));
 Cypress.Commands.add('clickTaskBuyer', require('./tasks/click-task-buyer'));
 Cypress.Commands.add('clickTaskPolicy', require('./tasks/click-task-policy'));

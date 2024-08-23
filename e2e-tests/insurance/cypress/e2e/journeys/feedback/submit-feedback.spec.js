@@ -1,4 +1,3 @@
-import partials from '../../../../../partials';
 import { field } from '../../../../../pages/shared';
 import { ROUTES } from '../../../../../constants';
 import { FIELD_IDS } from '../../../../../constants/field-ids';
@@ -24,7 +23,7 @@ context('Insurance - Feedback - Submit feedback form', () => {
 
       cy.navigateToCheckIfEligibleUrl();
 
-      partials.phaseBanner.feedbackLink().click();
+      cy.clickPhaseBannerFeedbackLink();
       cy.clickSubmitButton();
     });
 
@@ -48,7 +47,7 @@ context('Insurance - Feedback - Submit feedback form', () => {
       cy.saveSession();
 
       cy.navigateToCheckIfEligibleUrl();
-      partials.phaseBanner.feedbackLink().click();
+      cy.clickPhaseBannerFeedbackLink();
 
       field(SATISFIED).label().click();
       cy.keyboardInput(field(IMPROVEMENT).textarea(), 'test');
@@ -78,7 +77,7 @@ context('Insurance - Feedback - Submit feedback form', () => {
       cy.saveSession();
 
       cy.navigateToCheckIfEligibleUrl();
-      partials.phaseBanner.feedbackLink().click();
+      cy.clickPhaseBannerFeedbackLink();
 
       field(SATISFIED).label().click();
       cy.keyboardInput(field(IMPROVEMENT).textarea(), longString);
@@ -106,7 +105,7 @@ context('Insurance - Feedback - Submit feedback form', () => {
       cy.saveSession();
 
       cy.navigateToCheckIfEligibleUrl();
-      partials.phaseBanner.feedbackLink().click();
+      cy.clickPhaseBannerFeedbackLink();
 
       cy.keyboardInput(field(IMPROVEMENT).textarea(), 'test');
       cy.clickSubmitButton();
