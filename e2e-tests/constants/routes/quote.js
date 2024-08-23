@@ -22,7 +22,7 @@ export const QUOTE_ROUTES = {
 
   CHECK_YOUR_ANSWERS: '/quote/check-your-answers',
 
-  CANNOT_APPLY: '/quote/cannot-apply',
+  CANNOT_APPLY_EXIT: '/quote/cannot-apply',
 
   GET_A_QUOTE_BY_EMAIL: '/quote/get-quote-by-email',
 

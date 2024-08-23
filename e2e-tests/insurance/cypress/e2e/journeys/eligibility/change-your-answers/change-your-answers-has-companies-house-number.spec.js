@@ -5,7 +5,7 @@ import { summaryList } from '../../../../../../pages/shared';
 const { HAS_COMPANIES_HOUSE_NUMBER } = INSURANCE_FIELD_IDS.ELIGIBILITY;
 
 const {
-  ELIGIBILITY: { COMPANIES_HOUSE_NUMBER_CHANGE, CHECK_YOUR_ANSWERS, NO_COMPANIES_HOUSE_NUMBER },
+  ELIGIBILITY: { COMPANIES_HOUSE_NUMBER_CHANGE, CHECK_YOUR_ANSWERS, NO_COMPANIES_HOUSE_NUMBER_EXIT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -63,8 +63,8 @@ context(
         cy.clickSubmitButton();
       });
 
-      it(`should redirect to ${NO_COMPANIES_HOUSE_NUMBER}`, () => {
-        cy.assertChangeAnswersPageUrl({ route: NO_COMPANIES_HOUSE_NUMBER, fieldId, isInsuranceEligibility: true });
+      it(`should redirect to ${NO_COMPANIES_HOUSE_NUMBER_EXIT}`, () => {
+        cy.assertChangeAnswersPageUrl({ route: NO_COMPANIES_HOUSE_NUMBER_EXIT, fieldId, isInsuranceEligibility: true });
       });
     });
   },

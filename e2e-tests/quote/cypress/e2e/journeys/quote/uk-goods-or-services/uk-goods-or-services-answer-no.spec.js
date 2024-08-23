@@ -2,10 +2,10 @@ import { backLink, cannotApplyPage } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 
-const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
+const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY_EXIT;
 
 const {
-  QUOTE: { UK_GOODS_OR_SERVICES, CANNOT_APPLY },
+  QUOTE: { UK_GOODS_OR_SERVICES, CANNOT_APPLY_EXIT },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -28,7 +28,7 @@ context(
     });
 
     it('redirects to exit page', () => {
-      const expectedUrl = `${baseUrl}${CANNOT_APPLY}`;
+      const expectedUrl = `${baseUrl}${CANNOT_APPLY_EXIT}`;
 
       cy.assertUrl(expectedUrl);
     });
