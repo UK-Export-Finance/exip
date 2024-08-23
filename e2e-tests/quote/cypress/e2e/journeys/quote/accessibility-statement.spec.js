@@ -31,7 +31,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 context('Accessibility statement page - Quote', () => {
   beforeEach(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
     partials.footer.supportLinks.accessibilityStatement().click();
     cy.assertUrl(`${baseUrl}${ROUTES.ACCESSIBILITY_STATEMENT}`);

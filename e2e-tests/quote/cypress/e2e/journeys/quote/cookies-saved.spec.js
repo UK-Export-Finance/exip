@@ -20,7 +20,7 @@ context('Cookies saved page - Quote', () => {
   const buyerCountryUrl = `${baseUrl}${BUYER_COUNTRY}`;
 
   beforeEach(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
     partials.footer.supportLinks.cookies().click();
 

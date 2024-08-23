@@ -14,7 +14,7 @@ context('Tell us about your multiple policy page - Signed in', () => {
 
   before(() => {
     cy.completeSignInAndGoToApplication({ createApplicationViaApi: false });
-    cy.login();
+    cy.navigateToRootUrl();
 
     cy.completeAndSubmitBuyerCountryForm({});
     cy.completeAndSubmitBuyerBodyForm();

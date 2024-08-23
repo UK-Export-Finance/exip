@@ -29,7 +29,7 @@ context('Insurance - Account - Sign in - unverified account', () => {
 
     /**
      * navigate to the sign in page,
-     * without a verified  account.
+     * without a verified account.
      */
     cy.clickSignInButtonLink();
 
@@ -51,9 +51,7 @@ context('Insurance - Account - Sign in - unverified account', () => {
     });
 
     it(`should redirect to ${CONFIRM_EMAIL_RESENT}`, () => {
-      cy.navigateToUrl(signInUrl);
-
-      cy.completeAndSubmitSignInAccountForm({ assertRedirectUrl: false });
+      cy.navigateToSignInAndSubmitForm();
 
       const expectedUrl = `${confirmEmailResentUrl}?id=${account.id}`;
 

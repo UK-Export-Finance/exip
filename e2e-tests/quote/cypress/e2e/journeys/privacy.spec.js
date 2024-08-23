@@ -3,7 +3,7 @@ import { LINKS } from '../../../../content-strings';
 
 context('Privacy link - as en exporter, I want to read the privacy policy', () => {
   before(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
     partials.footer.supportLinks.privacy().click();
   });

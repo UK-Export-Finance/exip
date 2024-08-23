@@ -37,7 +37,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
   const url = `${baseUrl}${YOUR_QUOTE}`;
 
   before(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
     cy.submitQuoteAnswersHappyPathSinglePolicy({});
     cy.clickSubmitButton();

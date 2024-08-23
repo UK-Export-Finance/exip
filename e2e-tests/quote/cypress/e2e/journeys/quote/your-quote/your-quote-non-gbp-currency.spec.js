@@ -20,7 +20,7 @@ context('Get a quote/your quote page (non GBP currency) - as an exporter, I want
   const url = `${baseUrl}${YOUR_QUOTE}`;
 
   before(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
     cy.submitQuoteAnswersHappyPathSinglePolicy({});
 

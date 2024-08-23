@@ -16,7 +16,7 @@ context('Policy type page - as an exporter, I want to get UKEF credit insurance 
   const url = `${baseUrl}${POLICY_TYPE_ROUTE}`;
 
   before(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
     cy.completeAndSubmitBuyerCountryForm({});
     cy.completeAndSubmitBuyerBodyForm();

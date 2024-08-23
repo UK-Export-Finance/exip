@@ -20,7 +20,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
   const url = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
 
   before(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
     cy.completeAndSubmitBuyerCountryForm({});
     cy.completeAndSubmitBuyerBodyForm();

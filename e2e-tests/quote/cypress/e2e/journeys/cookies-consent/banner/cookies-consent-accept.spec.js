@@ -8,7 +8,7 @@ context('Cookies consent - accept', () => {
   const url = `${baseUrl}${ROUTES.QUOTE.BUYER_COUNTRY}`;
 
   beforeEach(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
     cy.assertUrl(url);
   });

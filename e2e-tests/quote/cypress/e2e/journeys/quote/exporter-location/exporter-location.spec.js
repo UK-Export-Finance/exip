@@ -19,7 +19,7 @@ context('Exporter location page - as an exporter, I want to check if my company 
   const url = `${baseUrl}${EXPORTER_LOCATION}`;
 
   beforeEach(() => {
-    cy.login();
+    cy.navigateToRootUrl();
     cy.completeAndSubmitBuyerCountryForm({});
     cy.completeAndSubmitBuyerBodyForm();
 

@@ -16,7 +16,7 @@ context('Contact us page - Quote', () => {
   const url = ROUTES.CONTACT_US;
 
   beforeEach(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
     // click on contact link in footer
     footer.supportLinks.contact().click();

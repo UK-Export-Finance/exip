@@ -18,7 +18,7 @@ context('Tell us about the policy you need page - form validation', () => {
 
   describe('when submitting an empty form', () => {
     before(() => {
-      cy.login();
+      cy.navigateToRootUrl();
 
       cy.completeAndSubmitBuyerCountryForm({});
       cy.completeAndSubmitBuyerBodyForm();
