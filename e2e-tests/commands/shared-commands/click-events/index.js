@@ -12,6 +12,7 @@ Cypress.Commands.add('clickProvideAlternativeCurrencyLink', require('./click-pro
 Cypress.Commands.add('clickAlternativeCurrencyRadioOption', require('./click-alternative-currency-radio-option'));
 
 Cypress.Commands.add('clickFooterAccessibilityStatementLink', require('./click-footer-accessibility-statement-link'));
+Cypress.Commands.add('clickFooterCookiesLink', require('./click-footer-cookies-link'));
 
 Cypress.Commands.add('clickPhaseBannerFeedbackLink', require('./click-phase-banner-feedback-link'));
 
