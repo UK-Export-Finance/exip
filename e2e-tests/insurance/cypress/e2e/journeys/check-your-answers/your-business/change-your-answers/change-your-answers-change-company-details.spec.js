@@ -1,5 +1,4 @@
 import { field, status, summaryList } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
 import { VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -17,10 +16,6 @@ const {
     ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
   },
 } = INSURANCE_FIELD_IDS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -44,7 +39,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 

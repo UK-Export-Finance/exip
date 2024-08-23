@@ -1,9 +1,3 @@
-import partials from '../../../partials';
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
-
 /**
  * completeAndSubmitCheckYourAnswers
  * Complete and submit all "Application - Check your answers" forms:
@@ -13,7 +7,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
  * 4) Export contract
  */
 const completeAndSubmitCheckYourAnswers = () => {
-  task.link().click();
+  cy.clickTaskCheckAnswers();
 
   cy.completeAndSubmitMultipleCheckYourAnswers({ count: 4 });
 };

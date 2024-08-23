@@ -1,9 +1,4 @@
-import partials from '../../partials';
 import { startNowLink } from '../../pages/shared';
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.policy;
 
 /**
  * startInsurancePolicySection
@@ -14,7 +9,7 @@ const task = taskList.prepareApplication.tasks.policy;
  */
 const startInsurancePolicySection = ({ viaTaskList = true }) => {
   if (viaTaskList) {
-    task.link().click();
+    cy.clickTaskPolicy();
   }
 
   startNowLink().click();

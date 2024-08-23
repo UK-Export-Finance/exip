@@ -1,4 +1,3 @@
-import partials from '../../../../../../../../partials';
 import { POLICY as FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import { summaryList } from '../../../../../../../../pages/shared';
@@ -12,10 +11,6 @@ const {
 const {
   NAME_ON_POLICY: { NAME, OTHER_NAME, SAME_NAME },
 } = FIELD_IDS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const getFieldVariables = (fieldId, referenceNumber) => ({
   route: NAME_ON_POLICY_CHECK_AND_CHANGE,
@@ -42,7 +37,7 @@ context(
         referenceNumber = refNumber;
         cy.completePrepareApplicationMultiplePolicyType({ differentPolicyContact: true });
 
-        task.link().click();
+        cy.clickTaskCheckAnswers();
 
         // To get past previous "Check your answers" pages
         cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });

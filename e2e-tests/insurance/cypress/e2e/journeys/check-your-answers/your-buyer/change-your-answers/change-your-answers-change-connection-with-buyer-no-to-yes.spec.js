@@ -1,5 +1,4 @@
 import { status, summaryList } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
 import checkSummaryList from '../../../../../../../commands/insurance/check-your-buyer-summary-list';
@@ -11,10 +10,6 @@ const {
 } = INSURANCE_ROUTES;
 
 const { CONNECTION_WITH_BUYER: FIELD_ID, CONNECTION_WITH_BUYER_DESCRIPTION } = FIELD_IDS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -30,7 +25,7 @@ context(
 
         cy.completePrepareApplicationSinglePolicyType({ referenceNumber, hasConnectionToBuyer: false });
 
-        task.link().click();
+        cy.clickTaskCheckAnswers();
 
         // To get past "Your business" check your answers page
         cy.completeAndSubmitMultipleCheckYourAnswers({ count: 1 });

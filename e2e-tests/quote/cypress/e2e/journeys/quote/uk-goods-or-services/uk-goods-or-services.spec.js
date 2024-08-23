@@ -31,7 +31,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
   const url = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
 
   before(() => {
-    cy.login();
+    cy.navigateToRootUrl();
     cy.completeAndSubmitBuyerCountryForm({});
     cy.completeAndSubmitBuyerBodyForm();
     cy.completeAndSubmitExporterLocationForm();

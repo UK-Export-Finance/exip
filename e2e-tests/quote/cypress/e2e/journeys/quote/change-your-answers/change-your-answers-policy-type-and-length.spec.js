@@ -65,7 +65,7 @@ context('Change your answers - as an exporter, I want to change the details befo
 
   context('Policy type and length fields - user flow', () => {
     before(() => {
-      cy.login();
+      cy.navigateToRootUrl();
       cy.submitQuoteAnswersHappyPathSinglePolicy({});
 
       cy.assertUrl(url);
@@ -108,7 +108,7 @@ context('Change your answers - as an exporter, I want to change the details befo
 
   context('Policy type and length fields - check new answers', () => {
     beforeEach(() => {
-      cy.login();
+      cy.navigateToRootUrl();
 
       cy.submitQuoteAnswersHappyPathSinglePolicy({});
       cy.assertUrl(url);
@@ -149,7 +149,7 @@ context('Change your answers - as an exporter, I want to change the details befo
   context('change `Policy type` and `Policy length` two times (single, multiple, then single 5 months)', () => {
     context('Policy type and length fields - user flow', () => {
       before(() => {
-        cy.login();
+        cy.navigateToRootUrl();
 
         cy.submitQuoteAnswersHappyPathSinglePolicy({});
         cy.assertUrl(url);
@@ -201,7 +201,7 @@ context('Change your answers - as an exporter, I want to change the details befo
 
     context('Policy type and length fields - check new answers', () => {
       beforeEach(() => {
-        cy.login();
+        cy.navigateToRootUrl();
 
         cy.submitQuoteAnswersHappyPathSinglePolicy({});
         cy.assertUrl(url);
@@ -237,7 +237,7 @@ context('Change your answers - as an exporter, I want to change the details befo
   context('change `Policy type` and `Policy length` three times (single, multiple, single, then multiple)', () => {
     context('Policy type and length fields - user flow', () => {
       before(() => {
-        cy.login();
+        cy.navigateToRootUrl();
 
         cy.submitQuoteAnswersHappyPathSinglePolicy({});
         cy.assertUrl(url);

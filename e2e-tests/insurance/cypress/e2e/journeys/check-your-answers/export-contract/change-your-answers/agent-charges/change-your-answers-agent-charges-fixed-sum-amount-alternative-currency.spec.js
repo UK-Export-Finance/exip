@@ -1,5 +1,4 @@
 import { summaryList } from '../../../../../../../../pages/shared';
-import partials from '../../../../../../../../partials';
 import FIELD_IDS from '../../../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import application from '../../../../../../../../fixtures/application';
@@ -15,10 +14,6 @@ const {
 const {
   AGENT_CHARGES: { FIXED_SUM_AMOUNT, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const fieldId = FIXED_SUM_AMOUNT;
 
@@ -41,7 +36,7 @@ context(
           agentChargeMethodFixedSum: true,
         });
 
-        task.link().click();
+        cy.clickTaskCheckAnswers();
 
         // To get past previous "Check your answers" pages
         cy.completeAndSubmitMultipleCheckYourAnswers({ count: 3 });

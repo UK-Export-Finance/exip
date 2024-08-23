@@ -1,5 +1,4 @@
 import { field, status, summaryList } from '../../../../../../../../pages/shared';
-import partials from '../../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
@@ -11,10 +10,6 @@ const {
 } = INSURANCE_ROUTES;
 
 const { NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER } = POLICY_FIELD_IDS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const getFieldVariables = (fieldId, referenceNumber) => ({
   route: BROKER_CHECK_AND_CHANGE,
@@ -39,7 +34,7 @@ context('Insurance - Change your answers - Policy - Pre-credit period - Change f
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber, needPreCreditPeriod: true });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       // To get past previous "Check your answers" pages
       cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });

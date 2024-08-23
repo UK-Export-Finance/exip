@@ -1,4 +1,3 @@
-import partials from '../../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
@@ -24,10 +23,6 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Change your answers - Policy - Change single to multiple policy type - Summary List', () => {
@@ -40,7 +35,7 @@ context('Insurance - Change your answers - Policy - Change single to multiple po
       referenceNumber = refNumber;
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       // To get past previous "Check your answers" pages
       cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });

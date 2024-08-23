@@ -1,4 +1,3 @@
-import partials from '../../../../../../../partials';
 import { field as fieldSelector, summaryList, radios, autoCompleteField } from '../../../../../../../pages/shared';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/business';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -19,10 +18,6 @@ const {
 
 const { ALTERNATIVE_CURRENCY_CODE } = INSURANCE_FIELD_IDS.CURRENCY;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Check your answers - Turnover currency - Your business - Summary list', () => {
@@ -36,7 +31,7 @@ context('Insurance - Check your answers - Turnover currency - Your business - Su
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 

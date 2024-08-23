@@ -16,7 +16,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 context('Get a quote/your quote page (large contract value) - as an exporter, I want to get an Credit insurance quote', () => {
   before(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
     cy.completeAndSubmitBuyerCountryForm({});
     cy.completeAndSubmitBuyerBodyForm();

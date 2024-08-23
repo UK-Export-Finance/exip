@@ -1,4 +1,3 @@
-import partials from '../../../../../../../partials';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import checkSummaryList from '../../../../../../../commands/insurance/check-your-business-summary-list';
@@ -15,10 +14,6 @@ const {
   HAS_CREDIT_CONTROL,
 } = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Check your answers - Your business - Summary list', () => {
@@ -31,7 +26,7 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 

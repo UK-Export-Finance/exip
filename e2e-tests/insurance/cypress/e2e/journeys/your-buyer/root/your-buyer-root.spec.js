@@ -1,4 +1,3 @@
-import partials from '../../../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import assertSectionStartContent from '../../../../../../commands/shared-commands/assertions/assert-section-start-content';
@@ -10,10 +9,6 @@ const {
   ALL_SECTIONS,
   YOUR_BUYER: { ROOT: YOUR_BUYER_ROOT, COMPANY_OR_ORGANISATION },
 } = INSURANCE_ROUTES;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.buyer;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -29,7 +24,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        task.link().click();
+        cy.clickTaskBuyer();
 
         yourBuyerRootUrl = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUYER_ROOT}`;
         companyOrOrganisationUrl = `${ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`;

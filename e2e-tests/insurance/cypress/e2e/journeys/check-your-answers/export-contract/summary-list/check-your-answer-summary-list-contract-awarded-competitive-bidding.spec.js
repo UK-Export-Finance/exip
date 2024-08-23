@@ -1,4 +1,3 @@
-import partials from '../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { assertMinimalExportContractSummaryListRows } from '../../../../../../../shared-test-assertions';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/export-contract';
@@ -15,10 +14,6 @@ const {
 
 const { COMPETITIVE_BIDDING } = FIELDS.HOW_WAS_THE_CONTRACT_AWARDED[AWARD_METHOD].OPTIONS;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
-
 const baseUrl = Cypress.config('baseUrl');
 
 context(`Insurance - Check your answers - Export contract - Summary list - Contract awarded with ${COMPETITIVE_BIDDING.TEXT}`, () => {
@@ -31,7 +26,7 @@ context(`Insurance - Check your answers - Export contract - Summary list - Contr
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber, contractAwardedCompetitiveBidding: true });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       // To get past previous "Check your answers" pages
       cy.completeAndSubmitMultipleCheckYourAnswers({ count: 3 });

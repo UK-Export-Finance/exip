@@ -3,7 +3,7 @@ import { FOOTER } from '../../../../content-strings';
 
 context('Footer', () => {
   beforeEach(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
     cy.saveSession();
   });

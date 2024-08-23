@@ -1,8 +1,5 @@
-import partials from '../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-
-const { taskList } = partials.insurancePartials;
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -11,12 +8,10 @@ const {
   },
 } = INSURANCE_ROUTES;
 
-const task = taskList.submitApplication.tasks.declarationsAndSubmit;
-
 const baseUrl = Cypress.config('baseUrl');
 
 const navigateBackToPage = () => {
-  task.link().click();
+  cy.clickTaskDeclarationsAndSubmit();
 
   // go through the first 3 declaration forms.
   cy.clickSubmitButtonMultipleTimes({ count: 3 });

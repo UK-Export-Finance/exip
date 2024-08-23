@@ -14,7 +14,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 context('Cookies consent - initial/default', () => {
   beforeEach(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
     const expectedUrl = `${baseUrl}${BUYER_COUNTRY}`;
 
@@ -38,7 +38,7 @@ context('Cookies consent - initial/default', () => {
 
         cy.checkText(partials.cookieBanner.heading(), `${COOKIES_CONSENT.HEADING_INTRO} ${PRODUCT.DESCRIPTION.QUOTE}`);
 
-        cy.login();
+        cy.navigateToRootUrl();
       });
     });
 

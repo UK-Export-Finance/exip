@@ -1,5 +1,4 @@
 import { field as fieldSelector, status, summaryList } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
 import { WEBSITE_EXAMPLES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -14,10 +13,6 @@ const {
 const {
   COMPANY_OR_ORGANISATION: { NAME, ADDRESS, REGISTRATION_NUMBER, WEBSITE },
 } = INSURANCE_FIELD_IDS.YOUR_BUYER;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const getFieldVariables = (fieldId, referenceNumber) => ({
   route: COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE,
@@ -43,7 +38,7 @@ context(
 
         cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-        task.link().click();
+        cy.clickTaskCheckAnswers();
 
         // To get past "Your business" check your answers page
         cy.completeAndSubmitMultipleCheckYourAnswers({ count: 1 });

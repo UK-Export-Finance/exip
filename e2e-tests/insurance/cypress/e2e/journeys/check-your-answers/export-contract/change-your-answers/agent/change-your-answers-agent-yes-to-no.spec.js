@@ -1,5 +1,4 @@
 import { status, summaryList } from '../../../../../../../../pages/shared';
-import partials from '../../../../../../../../partials';
 import FIELD_IDS from '../../../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import checkSummaryList from '../../../../../../../../commands/insurance/check-export-contract-summary-list';
@@ -16,10 +15,6 @@ const {
   AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
 } = FIELD_IDS;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Change your answers - Export contract - Summary list - Agent - Yes to no', () => {
@@ -35,7 +30,7 @@ context('Insurance - Change your answers - Export contract - Summary list - Agen
         isUsingAgent: true,
       });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       // To get past previous "Check your answers" pages
       cy.completeAndSubmitMultipleCheckYourAnswers({ count: 3 });

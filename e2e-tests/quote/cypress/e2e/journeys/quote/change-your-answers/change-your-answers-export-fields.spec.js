@@ -27,7 +27,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
   const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
   before(() => {
-    cy.login();
+    cy.navigateToRootUrl();
     cy.submitQuoteAnswersHappyPathSinglePolicy({});
     cy.assertUrl(url);
   });

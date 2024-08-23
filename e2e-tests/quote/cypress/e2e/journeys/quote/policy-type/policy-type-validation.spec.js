@@ -15,7 +15,7 @@ context('Policy type page - policy type & length validation - single policy type
   const url = `${baseUrl}${POLICY_TYPE_ROUTE}`;
 
   before(() => {
-    cy.login();
+    cy.navigateToRootUrl();
     cy.completeAndSubmitBuyerCountryForm({});
     cy.completeAndSubmitBuyerBodyForm();
     cy.completeAndSubmitExporterLocationForm();

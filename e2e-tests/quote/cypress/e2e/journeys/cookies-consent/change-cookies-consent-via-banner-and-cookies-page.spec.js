@@ -17,7 +17,7 @@ context('Cookies consent - change via banner and cookies page', () => {
     cy.clearCookies();
     Cypress.session.clearAllSavedSessions();
 
-    cy.login();
+    cy.navigateToRootUrl();
 
     cy.saveSession();
   });

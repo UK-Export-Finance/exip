@@ -21,7 +21,7 @@ context('Your quote page - change answers (single policy type to multiple policy
   beforeEach(() => {
     cy.saveSession();
 
-    cy.login();
+    cy.navigateToRootUrl();
 
     cy.submitQuoteAnswersHappyPathSinglePolicy({});
     cy.clickSubmitButton();
