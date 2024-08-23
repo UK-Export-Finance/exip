@@ -5,7 +5,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import stripEmptyFormFields from '../../../../helpers/strip-empty-form-fields';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
@@ -49,7 +49,7 @@ describe('controllers/insurance/check-your-answers/save-and-back', () => {
   it('should redirect to all sections page', async () => {
     await post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+    expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   });
 
   describe('when there is no application', () => {

@@ -4,7 +4,7 @@ import { FIELD_IDS } from '..';
 import { ROUTES } from '../../../../../constants';
 import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
 import mapAndSave from '../../map-and-save/company-different-trading-address';
-import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 import { Request, Response } from '../../../../../../types';
 
 const {
@@ -40,7 +40,7 @@ describe('controllers/insurance/business/alternative-trading-address/save-and-ba
 
       await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should call mapAndSave.companyDifferentTradingAddress once with data from constructPayload', async () => {
@@ -66,7 +66,7 @@ describe('controllers/insurance/business/alternative-trading-address/save-and-ba
 
       await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should not call mapAndSave.companyDifferentTradingAddress', async () => {
