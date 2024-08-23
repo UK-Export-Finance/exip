@@ -1,4 +1,3 @@
-import partials from '../../../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import assertSectionStartContent from '../../../../../../commands/shared-commands/assertions/assert-section-start-content';
@@ -10,10 +9,6 @@ const {
   ALL_SECTIONS,
   POLICY: { ROOT: POLICY_ROOT, TYPE_OF_POLICY },
 } = INSURANCE_ROUTES;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.policy;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -29,7 +24,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        task.link().click();
+        cy.clickTaskPolicy();
 
         insurancePolicyRootUrl = `${baseUrl}${ROOT}/${referenceNumber}${POLICY_ROOT}`;
         typeOfPolicyUrl = `${ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;

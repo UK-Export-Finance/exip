@@ -1,5 +1,4 @@
 import { status, summaryList } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/business';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -11,10 +10,6 @@ const {
 } = INSURANCE_ROUTES;
 
 const { HAS_CREDIT_CONTROL: FIELD_ID } = FIELD_IDS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -44,7 +39,7 @@ context(
           hasCreditControlProcess: true,
         });
 
-        task.link().click();
+        cy.clickTaskCheckAnswers();
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 

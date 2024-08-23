@@ -1,4 +1,3 @@
-import partials from '../../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
 import checkSummaryList from '../../../../../../../../commands/insurance/check-policy-summary-list';
@@ -13,10 +12,6 @@ const {
   BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Check your answers - Policy - Single contract policy - With broker - Summary List', () => {
@@ -28,7 +23,7 @@ context('Insurance - Check your answers - Policy - Single contract policy - With
       referenceNumber = refNumber;
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber, usingBroker: true });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       // To get past previous "Check your answers" pages
       cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });

@@ -1,9 +1,4 @@
-import partials from '../../partials';
 import { startNowLink } from '../../pages/shared';
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.exportContract;
 
 /**
  * startInsuranceExportContractSection
@@ -14,7 +9,7 @@ const task = taskList.prepareApplication.tasks.exportContract;
  */
 const startInsuranceExportContractSection = ({ viaTaskList = true }) => {
   if (viaTaskList) {
-    task.link().click();
+    cy.clickTaskExportContract();
   }
 
   startNowLink().click();

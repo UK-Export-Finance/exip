@@ -1,5 +1,4 @@
 import { field, status, summaryList } from '../../../../../../../../pages/shared';
-import partials from '../../../../../../../../partials';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../../../content-strings/fields/insurance/policy';
 import { FIELD_VALUES } from '../../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
@@ -16,10 +15,6 @@ const {
   USING_BROKER,
   BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
 } = INSURANCE_FIELD_IDS.POLICY;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -43,7 +38,7 @@ context('Insurance - Change your answers - Policy - Broker - As an exporter, I w
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber, usingBroker: true });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       // To get past previous "Check your answers" pages
       cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });

@@ -1,9 +1,6 @@
 import { singleInputField } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-
-const { taskList } = partials.insurancePartials;
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -13,8 +10,6 @@ const {
 } = INSURANCE_ROUTES;
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_ANTI_BRIBERY;
-
-const task = taskList.submitApplication.tasks.declarationsAndSubmit;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -82,7 +77,7 @@ context('Insurance - Declarations - Anti-bribery page - Save and go back', () =>
     });
 
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
-      task.link().click();
+      cy.clickTaskDeclarationsAndSubmit();
 
       // go to the page
       cy.clickSubmitButton();

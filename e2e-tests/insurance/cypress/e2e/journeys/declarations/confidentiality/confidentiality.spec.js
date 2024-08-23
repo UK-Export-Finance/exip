@@ -1,10 +1,7 @@
 import { headingCaption, singleInputField, declarationPage } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-
-const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY.VERSIONS[0];
 
@@ -37,7 +34,7 @@ context(
         cy.completeAndSubmitCheckYourAnswers();
 
         // go to the page we want to test.
-        taskList.submitApplication.tasks.declarationsAndSubmit.link().click();
+        cy.clickTaskDeclarationsAndSubmit();
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`;
 
