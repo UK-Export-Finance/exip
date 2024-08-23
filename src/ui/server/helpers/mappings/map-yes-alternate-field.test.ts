@@ -25,7 +25,7 @@ describe('server/helpers/mappings/map-yes-alternate-field', () => {
     });
   });
 
-  describe('when value is "undefined"', () => {
+  describe('when value is undefined', () => {
     it(`should return ${DEFAULT.EMPTY}`, () => {
       const response = mapYesAlternateField();
 

@@ -6,7 +6,7 @@ import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/broker';
 import { FIELD_IDS } from '..';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 
 const { USING_BROKER } = POLICY_FIELD_IDS;
 
@@ -39,7 +39,7 @@ describe('controllers/insurance/policy/broker-details/save-and-back', () => {
 
       await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should call mapAndSave.broker once with data from constructPayload function', async () => {
@@ -64,7 +64,7 @@ describe('controllers/insurance/policy/broker-details/save-and-back', () => {
 
       await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should call mapAndSave.broker once', async () => {

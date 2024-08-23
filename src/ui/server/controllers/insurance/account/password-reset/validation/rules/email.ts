@@ -15,7 +15,7 @@ const {
  * emailRules
  * Returns emailValidation
  * @param {RequestBody} formBody: Form body
- * @param {Object} Errors object from previous validation errors
+ * @param {Object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const emailRules = (formBody: RequestBody, errors: object) => {

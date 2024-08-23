@@ -27,6 +27,7 @@ const partials = {
   provideAlternativeCurrencyLink: () => cy.get('[data-cy="provide-alternative-currency-link"]'),
   privateMarketWhyDescription,
   skipLink: () => cy.get('[data-cy="skip-link"]'),
+  startNewApplicationButton: () => cy.get('[data-cy="start-new-application-button"]'),
   ukGoodsOrServicesCalculateDescription,
   ukGoodsOrServicesDescription,
 };

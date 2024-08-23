@@ -5,7 +5,7 @@ import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/loss-payee-financial-details-uk';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockApplication, mockLossPayeeFinancialDetailsUk, mockSpyPromiseRejection } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockLossPayeeFinancialDetailsUk, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
@@ -34,7 +34,7 @@ describe('controllers/insurance/policy/loss-payee-financial-details-uk/save-and-
 
       await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should call mapAndSave.lossPayeeFinancialDetailsUk once with data from constructPayload function', async () => {
@@ -59,7 +59,7 @@ describe('controllers/insurance/policy/loss-payee-financial-details-uk/save-and-
 
       await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should call mapAndSave.lossPayeeFinancialDetailsUk once', async () => {

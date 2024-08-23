@@ -6,7 +6,7 @@ import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/company-details';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCompany, mockPhoneNumbers, mockSpyPromiseRejection } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockCompany, mockPhoneNumbers, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 
 const {
   YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER },
@@ -55,7 +55,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
       });
 
       it('should call mapAndSave.companyDetails once', async () => {
@@ -73,7 +73,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
       });
 
       it('should call mapAndSave.companyDetails once with the data from constructPayload function and company', async () => {
