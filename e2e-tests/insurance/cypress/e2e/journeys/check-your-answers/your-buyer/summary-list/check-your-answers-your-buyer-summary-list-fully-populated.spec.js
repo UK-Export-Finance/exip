@@ -21,6 +21,8 @@ const {
   HAS_BUYER_FINANCIAL_ACCOUNTS,
 } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
+const { CURRENCY_CODE } = INSURANCE_FIELD_IDS.CURRENCY;
+
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Check your answers - Your buyer page - Summary list - application over total contract value threshold, all optional buyer fields', () => {
@@ -96,6 +98,10 @@ context('Insurance - Check your answers - Your buyer page - Summary list - appli
 
   it(`should render a ${OUTSTANDING_PAYMENTS} summary list row`, () => {
     checkSummaryList[OUTSTANDING_PAYMENTS]({ shouldRender: true, isYes: true });
+  });
+
+  it(`should render a ${CURRENCY_CODE} summary list row`, () => {
+    checkSummaryList[CURRENCY_CODE]({ shouldRender: true });
   });
 
   it(`should render a ${TOTAL_AMOUNT_OVERDUE} summary list row`, () => {

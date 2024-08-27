@@ -131,6 +131,17 @@ const checkYourBusinessSummaryList = {
       cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
     }
   },
+  [CURRENCY_CODE]: ({ shouldRender = false }) => {
+    const fieldId = CURRENCY_CODE;
+
+    if (shouldRender) {
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
+
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, application.BUYER[CURRENCY_CODE], expectedChangeLinkText);
+    } else {
+      cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+    }
+  },
   [TOTAL_AMOUNT_OVERDUE]: ({ shouldRender = false }) => {
     const fieldId = TOTAL_AMOUNT_OVERDUE;
 

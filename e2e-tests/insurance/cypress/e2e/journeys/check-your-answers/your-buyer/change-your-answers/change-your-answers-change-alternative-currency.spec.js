@@ -7,7 +7,7 @@ import { EUR_CURRENCY_CODE, NON_STANDARD_CURRENCY_CODE, SYMBOLS } from '../../..
 
 const {
   CURRENCY: { CURRENCY_CODE },
-  YOUR_BUYER: { OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE, TOTAL_OUTSTANDING_PAYMENTS },
+  YOUR_BUYER: { TOTAL_AMOUNT_OVERDUE, TOTAL_OUTSTANDING_PAYMENTS },
 } = INSURANCE_FIELD_IDS;
 
 const {
@@ -21,6 +21,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Check your answers - Your buyer - Alternative currency - As an exporter, I want to change my answers to an alternative currency', () => {
   let referenceNumber;
   let url;
+  const fieldId = CURRENCY_CODE;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -54,7 +55,6 @@ context('Insurance - Check your answers - Your buyer - Alternative currency - As
   });
 
   describe(`changing ${CURRENCY_CODE} to ${SYMBOLS.EUR}`, () => {
-    const fieldId = OUTSTANDING_PAYMENTS;
     const currencyCode = EUR_CURRENCY_CODE;
 
     describe('when clicking the `change` link', () => {
@@ -62,9 +62,8 @@ context('Insurance - Check your answers - Your buyer - Alternative currency - As
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
-        cy.clickProvideAlternativeCurrencyLink();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE, fieldId });
       });
     });
 
@@ -74,14 +73,20 @@ context('Insurance - Check your answers - Your buyer - Alternative currency - As
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: EUR_CURRENCY_CODE });
+        cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: EUR_CURRENCY_CODE, clickAlternativeCurrencyLink: false });
 
         // submit TRADING_HISTORY form
         cy.clickSubmitButton();
       });
 
       it(`should redirect to ${YOUR_BUYER}`, () => {
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUYER });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUYER, fieldId });
+      });
+
+      it(`should render the new answer for ${CURRENCY_CODE} including ${SYMBOLS.EUR}`, () => {
+        const row = summaryList.field(CURRENCY_CODE);
+
+        cy.checkText(row.value(), currencyCode);
       });
 
       it(`should render the new answer for ${TOTAL_AMOUNT_OVERDUE} including ${SYMBOLS.EUR}`, () => {
@@ -101,7 +106,6 @@ context('Insurance - Check your answers - Your buyer - Alternative currency - As
   });
 
   describe(`changing ${CURRENCY_CODE} to an alternative currency`, () => {
-    const fieldId = OUTSTANDING_PAYMENTS;
     const currencyCode = NON_STANDARD_CURRENCY_CODE;
 
     describe('when clicking the `change` link', () => {
@@ -109,9 +113,8 @@ context('Insurance - Check your answers - Your buyer - Alternative currency - As
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
-        cy.clickProvideAlternativeCurrencyLink();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE, fieldId });
       });
     });
 
@@ -121,14 +124,20 @@ context('Insurance - Check your answers - Your buyer - Alternative currency - As
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true });
+        cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true, clickAlternativeCurrencyLink: false });
 
         // submit TRADING_HISTORY form
         cy.clickSubmitButton();
       });
 
       it(`should redirect to ${YOUR_BUYER}`, () => {
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUYER });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUYER, fieldId });
+      });
+
+      it(`should render the new answer for ${CURRENCY_CODE}`, () => {
+        const row = summaryList.field(CURRENCY_CODE);
+
+        cy.checkText(row.value(), currencyCode);
       });
 
       it(`should render the new answer for ${TOTAL_AMOUNT_OVERDUE}`, () => {
