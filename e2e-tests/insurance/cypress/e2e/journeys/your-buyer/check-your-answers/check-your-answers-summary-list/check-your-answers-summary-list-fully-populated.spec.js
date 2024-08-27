@@ -43,6 +43,7 @@ context(
             hasHadCreditInsuranceCoverWithBuyer: true,
             exporterHasBuyerFinancialAccounts: true,
             totalContractValueOverThreshold: true,
+            failedToPay: true,
           });
 
           url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;

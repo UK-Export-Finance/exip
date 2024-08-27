@@ -15,7 +15,6 @@
  */
 const completeBuyerSection = ({
   viaTaskList = true,
-  alternativeCurrency = false,
   hasConnectionToBuyer = false,
   exporterHasTradedWithBuyer = false,
   outstandingPayments = false,
@@ -33,18 +32,14 @@ const completeBuyerSection = ({
   cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer });
 
   if (exporterHasTradedWithBuyer) {
-    cy.clickYesRadioInput();
+    cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: outstandingPayments || fullyPopulatedBuyerTradingHistory });
 
-    if (alternativeCurrency) {
-      cy.clickProvideAlternativeCurrencyLink();
-
-      cy.clickAlternativeCurrencyRadioAndSubmitCurrency({});
+    if (outstandingPayments || fullyPopulatedBuyerTradingHistory) {
+      cy.completeAndSubmitAlternativeCurrencyForm({ clickAlternativeCurrencyLink: false });
+      cy.completeAndSubmitOutstandingOrOverduePaymentsForm({ outstandingPayments });
     }
 
-    cy.completeAndSubmitTradingHistoryWithBuyerForm({
-      outstandingPayments: outstandingPayments || fullyPopulatedBuyerTradingHistory,
-      failedToPay: failedToPay || fullyPopulatedBuyerTradingHistory,
-    });
+    cy.completeAndSubmitFailedToPayForm({ failedToPay });
   }
 
   /**

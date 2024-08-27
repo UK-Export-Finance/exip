@@ -19,8 +19,8 @@ Cypress.Commands.add(
   require('../../../../../commands/insurance/your-buyer/complete-and-submit-trading-history-with-buyer-form'),
 );
 Cypress.Commands.add('completeFailedToPayForm', require('../../../../../commands/insurance/your-buyer/complete-failed-to-pay-form'));
-
 Cypress.Commands.add('completeAndSubmitFailedToPayForm', require('../../../../../commands/insurance/your-buyer/complete-and-submit-failed-to-pay-form'));
+
 Cypress.Commands.add(
   'completeOutstandingOrOverduePaymentsForm',
   require('../../../../../commands/insurance/your-buyer/complete-outstanding-or-overdue-payments-form'),

@@ -94,7 +94,6 @@ context('Insurance - Your buyer - Trading history - No outstanding payments - Sa
       cy.navigateToUrl(url);
 
       cy.assertNoRadioOptionIsChecked(0);
-      cy.assertNoRadioOptionIsChecked(1);
     });
   });
 });

@@ -14,7 +14,7 @@ import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route
 
 const {
   INSURANCE_ROOT,
-  YOUR_BUYER: { TRADING_HISTORY_SAVE_AND_BACK: SAVE_AND_BACK, CHECK_YOUR_ANSWERS, CURRENCY_OF_LATE_PAYMENTS, FAILED_TO_PAY },
+  YOUR_BUYER: { TRADING_HISTORY_SAVE_AND_BACK: SAVE_AND_BACK, CHECK_YOUR_ANSWERS, CURRENCY_OF_LATE_PAYMENTS, FAILED_TO_PAY, CREDIT_INSURANCE_COVER },
   CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -91,7 +91,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber } = application;
+    const { referenceNumber, migratedV1toV2, totalContractValueOverThreshold } = application;
 
     const payload = constructPayload(req.body, [FIELD_ID]);
 
@@ -134,12 +134,20 @@ export const post = async (req: Request, res: Response) => {
     }
 
     /**
-     * if totalContractValue is over the threshold and payload answer is false
-     * then should redirect to CREDIT_INSURANCE_COVER
-     * otherwise it should redirect to the BUYER_FINANCIAL_INFORMATION page
+     * if OUTSTANDING_PAYMENTS is true
+     * then should redirect to CURRENCY_OF_LATE_PAYMENTS
      */
     if (payload[FIELD_ID] === 'true') {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CURRENCY_OF_LATE_PAYMENTS}`);
+    }
+
+    /**
+     * if totalContractValue is over the threshold
+     * redirect to CREDIT_INSURANCE_COVER
+     * otherwise it should redirect to the BUYER_FINANCIAL_INFORMATION page
+     */
+    if (totalContractValueOverThreshold || migratedV1toV2) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${FAILED_TO_PAY}`);

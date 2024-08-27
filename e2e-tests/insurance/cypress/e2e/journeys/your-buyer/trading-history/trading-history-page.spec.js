@@ -30,7 +30,7 @@ context(
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
         failedToPayUrl = `${baseUrl}${ROOT}/${referenceNumber}${FAILED_TO_PAY}`;
-        currencyOfLatePaymentsUrl = `${ROOT}/${referenceNumber}${CURRENCY_OF_LATE_PAYMENTS}`;
+        currencyOfLatePaymentsUrl = `${baseUrl}${ROOT}/${referenceNumber}${CURRENCY_OF_LATE_PAYMENTS}`;
 
         cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'tradedWithBuyer', exporterHasTradedWithBuyer: true });
 

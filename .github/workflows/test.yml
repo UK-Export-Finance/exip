@@ -795,7 +795,6 @@ jobs:
       matrix:
         spec:
           [
-            'your-buyer/alternative-currency/**/*.spec.js',
             'your-buyer/buyer-financial-information/**/*.spec.js',
             'your-buyer/change-your-answers/**/*.spec.js',
             'your-buyer/check-your-answers/**/*.spec.js',
