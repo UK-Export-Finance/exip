@@ -1,4 +1,4 @@
-import { FIELD_IDS } from '..';
+import { FIELD_ID } from '..';
 import { ROUTES } from '../../../../../constants';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
@@ -23,7 +23,7 @@ const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const payload = constructPayload(req.body, FIELD_IDS);
+    const payload = constructPayload(req.body, [FIELD_ID]);
 
     // run validation on inputs
     const validationErrors = generateValidationErrors(payload);

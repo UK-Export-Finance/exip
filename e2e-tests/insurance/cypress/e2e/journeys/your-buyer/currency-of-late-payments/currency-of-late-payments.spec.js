@@ -9,7 +9,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.ROOT;
 
 const {
   ROOT,
-  YOUR_BUYER: { ALTERNATIVE_CURRENCY, TRADING_HISTORY },
+  YOUR_BUYER: { CURRENCY_OF_LATE_PAYMENTS, TRADING_HISTORY, OUTSTANDING_OR_OVERDUE_PAYMENTS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -23,7 +23,7 @@ const {
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  'Insurance - Your buyer - Alternative currency - As an exporter, I want to provide the details on trading history with the buyer of my export trade, So that UKEF can gain clarity on whether I have trading history with the buyer as part of due diligence',
+  'Insurance - Your buyer - Currency of late payments - As an exporter, I want to provide the details on trading history with the buyer of my export trade, So that UKEF can gain clarity on whether I have trading history with the buyer as part of due diligence',
   () => {
     let referenceNumber;
     let url;
@@ -33,12 +33,9 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'tradedWithBuyer', exporterHasTradedWithBuyer: true });
+        cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'tradingHistoryWithBuyer', outstandingPayments: true, exporterHasTradedWithBuyer: true });
 
-        cy.clickYesRadioInput();
-        cy.clickProvideAlternativeCurrencyLink();
-
-        url = `${baseUrl}${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`;
+        url = `${baseUrl}${ROOT}/${referenceNumber}${CURRENCY_OF_LATE_PAYMENTS}`;
 
         cy.assertUrl(url);
       });
@@ -55,7 +52,7 @@ context(
     it('renders core page elements', () => {
       cy.corePageChecks({
         pageTitle: YOUR_BUYER_FIELDS[CURRENCY_CODE].LEGEND,
-        currentHref: `${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`,
+        currentHref: `${ROOT}/${referenceNumber}${CURRENCY_OF_LATE_PAYMENTS}`,
         backLink: `${ROOT}/${referenceNumber}${TRADING_HISTORY}`,
         submitButtonCopy: BUTTONS.CONFIRM,
       });
@@ -84,8 +81,8 @@ context(
 
       formSubmission().selectAltRadioButNoAltCurrency({});
 
-      formSubmission().submitASupportedCurrency({ url: TRADING_HISTORY });
-      formSubmission().submitAlternativeCurrency({ url: TRADING_HISTORY });
+      formSubmission().submitASupportedCurrency({ url: OUTSTANDING_OR_OVERDUE_PAYMENTS });
+      formSubmission().submitAlternativeCurrency({ url: OUTSTANDING_OR_OVERDUE_PAYMENTS });
     });
   },
 );

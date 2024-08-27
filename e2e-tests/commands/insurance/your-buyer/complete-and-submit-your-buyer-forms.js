@@ -36,12 +36,15 @@ const completeAndSubmitYourBuyerForms = ({
   if (exporterHasTradedWithBuyer) {
     steps.push({
       name: 'tradingHistoryWithBuyer',
-      action: () =>
-        cy.completeAndSubmitTradingHistoryWithBuyerForm({
-          outstandingPayments: outstandingPayments || fullyPopulatedBuyerTradingHistory,
-          failedToPay: failedToPay || fullyPopulatedBuyerTradingHistory,
-        }),
+      action: () => cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: outstandingPayments || fullyPopulatedBuyerTradingHistory }),
     });
+
+    if (outstandingPayments) {
+      steps.push({ name: 'currencyOfLatePayments', action: () => cy.completeAndSubmitAlternativeCurrencyForm({}) });
+      steps.push({ name: 'outstandingOrOverduePayments', action: () => cy.completeAndSubmitOutstandingOrOverduePaymentsForm({ outstandingPayments }) });
+    }
+
+    steps.push({ name: 'failedToPay', action: () => cy.completeAndSubmitFailedToPayForm({ failedToPay }) });
   }
 
   steps.push({ name: 'buyerFinancialInformation', action: () => cy.completeAndSubmitBuyerFinancialInformationForm({ exporterHasBuyerFinancialAccounts }) });

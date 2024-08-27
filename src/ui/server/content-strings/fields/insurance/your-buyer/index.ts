@@ -79,6 +79,7 @@ export const YOUR_BUYER_FIELDS = {
   },
   [OUTSTANDING_PAYMENTS]: {
     LABEL: 'Do you currently have any outstanding or overdue payments from the buyer?',
+    HINT: 'We will request a copy of your trading history once the application has been submitted',
     SUMMARY: {
       TITLE: 'Outstanding or overdue payments',
     },
@@ -90,7 +91,7 @@ export const YOUR_BUYER_FIELDS = {
     },
   },
   [CURRENCY_CODE]: {
-    LEGEND: 'What currency are the outstanding or overdue payments in?',
+    LEGEND: 'Select the currency the outstanding or overdue payments are in?',
   },
   [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
     LABEL: 'Have you in the past held credit insurance cover on the buyer?',

@@ -18,6 +18,17 @@ Cypress.Commands.add(
   'completeAndSubmitTradingHistoryWithBuyerForm',
   require('../../../../../commands/insurance/your-buyer/complete-and-submit-trading-history-with-buyer-form'),
 );
+Cypress.Commands.add('completeFailedToPayForm', require('../../../../../commands/insurance/your-buyer/complete-failed-to-pay-form'));
+
+Cypress.Commands.add('completeAndSubmitFailedToPayForm', require('../../../../../commands/insurance/your-buyer/complete-and-submit-failed-to-pay-form'));
+Cypress.Commands.add(
+  'completeOutstandingOrOverduePaymentsForm',
+  require('../../../../../commands/insurance/your-buyer/complete-outstanding-or-overdue-payments-form'),
+);
+Cypress.Commands.add(
+  'completeAndSubmitOutstandingOrOverduePaymentsForm',
+  require('../../../../../commands/insurance/your-buyer/complete-and-submit-outstanding-or-overdue-payments-form'),
+);
 Cypress.Commands.add('completeCreditInsuranceCoverForm', require('../../../../../commands/insurance/your-buyer/complete-credit-insurance-cover-form'));
 Cypress.Commands.add(
   'completeAndSubmitCreditInsuranceCoverForm',

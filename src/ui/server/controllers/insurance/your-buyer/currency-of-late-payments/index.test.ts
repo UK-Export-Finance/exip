@@ -27,7 +27,8 @@ import mapAndSave from '../map-and-save/buyer-trading-history';
 
 const {
   INSURANCE_ROOT,
-  YOUR_BUYER: { TRADING_HISTORY, TRADING_HISTORY_CHANGE, TRADING_HISTORY_CHECK_AND_CHANGE },
+  YOUR_BUYER: { OUTSTANDING_OR_OVERDUE_PAYMENTS, CHECK_YOUR_ANSWERS, CURRENCY_OF_LATE_PAYMENTS_CHANGE, CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE },
+  CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -37,7 +38,7 @@ const {
 
 const { supportedCurrencies, alternativeCurrencies } = mockCurrenciesResponse;
 
-describe('controllers/insurance/your-buyer/alternative-currency', () => {
+describe('controllers/insurance/your-buyer/currency-of-late-payments', () => {
   let req: Request;
   let res: Response;
 
@@ -88,7 +89,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
 
   describe('PAGE_CONTENT_STRINGS', () => {
     it('should have the correct strings', () => {
-      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.YOUR_BUYER.ALTERNATIVE_CURRENCY);
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS);
     });
   });
 
@@ -175,7 +176,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
 
       it('should redirect to the next page', async () => {
         await post(req, res);
-        const expected = `${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${OUTSTANDING_OR_OVERDUE_PAYMENTS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
@@ -191,24 +192,24 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
       });
 
       describe("when the url's last substring is `check`", () => {
-        it(`should redirect to ${TRADING_HISTORY_CHANGE}`, async () => {
-          req.originalUrl = TRADING_HISTORY_CHANGE;
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.originalUrl = CURRENCY_OF_LATE_PAYMENTS_CHANGE;
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY_CHANGE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });
 
       describe("when the url's last substring is `check-and-change`", () => {
-        it(`should redirect to ${TRADING_HISTORY_CHECK_AND_CHANGE}`, async () => {
-          req.originalUrl = TRADING_HISTORY_CHECK_AND_CHANGE;
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.originalUrl = CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE;
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY_CHECK_AND_CHANGE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

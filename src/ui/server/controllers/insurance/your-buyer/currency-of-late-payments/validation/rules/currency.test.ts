@@ -15,7 +15,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-describe('controllers/insurance/your-buyer/alternative-currency/validation/rules/currency', () => {
+describe('controllers/insurance/your-buyer/currency-of-late-payments/validation/rules/currency', () => {
   const mockBody = {
     [FIELD_ID]: '',
   } as RequestBody;

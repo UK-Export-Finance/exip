@@ -14,7 +14,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-describe('controllers/insurance/your-buyer/alternative-currency/validation/rules/alternative-currency', () => {
+describe('controllers/insurance/your-buyer/currency-of-late-payments/validation/rules/alternative-currency', () => {
   const mockBody = {};
 
   it('should return alternativeCurrencyValidation', () => {

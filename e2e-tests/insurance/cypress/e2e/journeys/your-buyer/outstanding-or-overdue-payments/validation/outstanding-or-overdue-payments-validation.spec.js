@@ -6,7 +6,7 @@ import SPECIAL_CHARACTERS from '../../../../../../../fixtures/special-characters
 
 const {
   ROOT,
-  YOUR_BUYER: { TRADING_HISTORY, BUYER_FINANCIAL_INFORMATION },
+  YOUR_BUYER: { FAILED_TO_PAY, OUTSTANDING_OR_OVERDUE_PAYMENTS },
 } = INSURANCE_ROUTES;
 
 const { TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE } = FIELD_IDS;
@@ -40,19 +40,19 @@ const submitAndAssertBothFields = ({ value = null, errorTotalOutstanding, errorA
   });
 };
 
-context('Insurance - Your buyer - Trading history page - Outstanding payments yes validation', () => {
+context('Insurance - Your buyer - Outstanding or overdue payments - validation', () => {
   let referenceNumber;
   let url;
-  let buyerFinancialInformationUrl;
+  let failedToPayUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
-      buyerFinancialInformationUrl = `${baseUrl}${ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${OUTSTANDING_OR_OVERDUE_PAYMENTS}`;
+      failedToPayUrl = `${baseUrl}${ROOT}/${referenceNumber}${FAILED_TO_PAY}`;
 
-      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'tradedWithBuyer', exporterHasTradedWithBuyer: true });
+      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'currencyOfLatePayments', outstandingPayments: true, exporterHasTradedWithBuyer: true });
 
       cy.assertUrl(url);
     });
@@ -60,6 +60,7 @@ context('Insurance - Your buyer - Trading history page - Outstanding payments ye
 
   beforeEach(() => {
     cy.saveSession();
+    cy.navigateToUrl(url);
   });
 
   after(() => {
@@ -67,12 +68,6 @@ context('Insurance - Your buyer - Trading history page - Outstanding payments ye
   });
 
   describe(`when leaving ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS} empty`, () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
-      cy.clickYesRadioInput();
-      cy.clickYesRadioInput(1);
-    });
-
     it('should render validation errors', () => {
       submitAndAssertBothFields({
         errorTotalOutstanding: ERRORS[TOTAL_OUTSTANDING_PAYMENTS].IS_EMPTY,
@@ -82,12 +77,6 @@ context('Insurance - Your buyer - Trading history page - Outstanding payments ye
   });
 
   describe(`when entering a value which is not a number for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
-      cy.clickYesRadioInput();
-      cy.clickYesRadioInput(1);
-    });
-
     it('should render validation errors', () => {
       submitAndAssertBothFields({
         value: 'ten',
@@ -98,12 +87,6 @@ context('Insurance - Your buyer - Trading history page - Outstanding payments ye
   });
 
   describe(`when entering a value with a decimal place for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
-      cy.clickYesRadioInput();
-      cy.clickYesRadioInput(1);
-    });
-
     it('should render validation errors', () => {
       submitAndAssertBothFields({
         value: '5.5',
@@ -114,12 +97,6 @@ context('Insurance - Your buyer - Trading history page - Outstanding payments ye
   });
 
   describe(`when entering a value with a comma and decimal place for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
-      cy.clickYesRadioInput();
-      cy.clickYesRadioInput(1);
-    });
-
     it('should render validation errors', () => {
       submitAndAssertBothFields({
         value: '1,250.5',
@@ -131,12 +108,6 @@ context('Insurance - Your buyer - Trading history page - Outstanding payments ye
   });
 
   describe(`when entering a value below the minimum for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
-      cy.clickYesRadioInput();
-      cy.clickYesRadioInput(1);
-    });
-
     it('should render validation errors', () => {
       submitAndAssertBothFields({
         value: '0',
@@ -147,12 +118,6 @@ context('Insurance - Your buyer - Trading history page - Outstanding payments ye
   });
 
   describe(`when entering a value with special characters for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
-      cy.clickYesRadioInput();
-      cy.clickYesRadioInput(1);
-    });
-
     it('should render validation errors', () => {
       submitAndAssertBothFields({
         value: SPECIAL_CHARACTERS,
@@ -167,9 +132,9 @@ context('Insurance - Your buyer - Trading history page - Outstanding payments ye
       cy.navigateToUrl(url);
     });
 
-    it(`should redirect to ${BUYER_FINANCIAL_INFORMATION} page`, () => {
-      cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
-      cy.assertUrl(buyerFinancialInformationUrl);
+    it(`should redirect to ${FAILED_TO_PAY} page`, () => {
+      cy.completeAndSubmitOutstandingOrOverduePaymentsForm({});
+      cy.assertUrl(failedToPayUrl);
     });
   });
 });

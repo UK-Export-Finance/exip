@@ -18,7 +18,8 @@ import mapAndSave from '../map-and-save/buyer-trading-history';
 
 const {
   INSURANCE_ROOT,
-  YOUR_BUYER: { TRADING_HISTORY, TRADING_HISTORY_CHANGE, TRADING_HISTORY_CHECK_AND_CHANGE },
+  YOUR_BUYER: { OUTSTANDING_OR_OVERDUE_PAYMENTS, CHECK_YOUR_ANSWERS },
+  CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -30,7 +31,7 @@ export const FIELD_IDS = [CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE];
 
 export const TEMPLATE = TEMPLATES.SHARED_PAGES.ALTERNATIVE_CURRENCY;
 
-export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.ALTERNATIVE_CURRENCY;
+export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS;
 
 export const PAGE_VARIABLES = {
   FIELDS: {
@@ -46,10 +47,10 @@ export const PAGE_VARIABLES = {
 
 /**
  * get
- * Render the alternative currency page
+ * Render the currency of late payments page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} Alternative currency page
+ * @returns {Express.Response.render} Currency of late payments page
  */
 export const get = async (req: Request, res: Response) => {
   try {
@@ -76,7 +77,7 @@ export const get = async (req: Request, res: Response) => {
       ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, application.buyer.buyerTradingHistory?.currencyCode),
     });
   } catch (error) {
-    console.error('Error getting alternative currency %O', error);
+    console.error('Error getting currency of late payments %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -84,7 +85,7 @@ export const get = async (req: Request, res: Response) => {
 
 /**
  * post
- * Check alternative currency validation errors and if successful, redirect to the next part of the flow.
+ * Check currency of late payments validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
@@ -130,23 +131,23 @@ export const post = async (req: Request, res: Response) => {
 
     /**
      * If is a change route
-     * redirect to TRADING_HISTORY_CHANGE
+     * redirect to CHECK_YOUR_ANSWERS
      */
     if (isChangeRoute(req.originalUrl)) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY_CHANGE}`);
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
     /**
      * If is a check-and-change route
-     * redirect to TRADING_HISTORY_CHECK_AND_CHANGE
+     * redirect to CHECK_AND_CHANGE_ROUTE
      */
     if (isCheckAndChangeRoute(req.originalUrl)) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY_CHECK_AND_CHANGE}`);
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${OUTSTANDING_OR_OVERDUE_PAYMENTS}`);
   } catch (error) {
-    console.error('Error posting alternative currency %O', error);
+    console.error('Error posting currency of late payments %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

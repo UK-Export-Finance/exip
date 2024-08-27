@@ -14,9 +14,6 @@ export const PARTIALS = {
         CONDITIONAL_YES_HTML: 'partials/insurance/connection-with-the-buyer-conditional-yes-html.njk',
         HINT_HTML: 'partials/insurance/connection-with-the-buyer-hint.njk',
       },
-      OUTSTANDING_PAYMENTS: {
-        CONDITIONAL_YES_HTML: 'partials/insurance/buyer-outstanding-payment-conditional-yes-html.njk',
-      },
       BUYER_FINANCIAL_INFORMATION: {
         CUSTOM_CONTENT_HTML: 'partials/insurance/buyer-financial-information-details.njk',
       },

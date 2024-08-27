@@ -6,7 +6,7 @@ import application from '../../../../../../../fixtures/application';
 const { TOTAL_AMOUNT_OVERDUE, TOTAL_OUTSTANDING_PAYMENTS } = FIELD_IDS;
 
 const {
-  YOUR_BUYER: { TRADING_HISTORY },
+  YOUR_BUYER: { OUTSTANDING_OR_OVERDUE_PAYMENTS },
   ROOT,
 } = INSURANCE_ROUTES;
 
@@ -14,7 +14,7 @@ const { BUYER } = application;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your buyer - Trading history - Yes outstanding payments - Save and back', () => {
+context('Insurance - Your buyer - Outstanding or overdue payments - Save and back', () => {
   let referenceNumber;
   let url;
 
@@ -22,9 +22,9 @@ context('Insurance - Your buyer - Trading history - Yes outstanding payments - S
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${OUTSTANDING_OR_OVERDUE_PAYMENTS}`;
 
-      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'tradedWithBuyer', exporterHasTradedWithBuyer: true });
+      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'currencyOfLatePayments', outstandingPayments: true, exporterHasTradedWithBuyer: true });
 
       cy.assertUrl(url);
     });
@@ -58,7 +58,6 @@ context('Insurance - Your buyer - Trading history - Yes outstanding payments - S
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.clickYesRadioInput();
       cy.keyboardInput(field(TOTAL_OUTSTANDING_PAYMENTS).input(), BUYER[TOTAL_OUTSTANDING_PAYMENTS]);
 
       saveAndBackButton().click();
@@ -75,7 +74,6 @@ context('Insurance - Your buyer - Trading history - Yes outstanding payments - S
     it('should retain completed input on the page', () => {
       cy.navigateToUrl(url);
 
-      cy.assertYesRadioOptionIsChecked(0);
       cy.checkValue(field(TOTAL_OUTSTANDING_PAYMENTS), BUYER[TOTAL_OUTSTANDING_PAYMENTS]);
     });
   });
@@ -84,7 +82,7 @@ context('Insurance - Your buyer - Trading history - Yes outstanding payments - S
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeTradingHistoryWithBuyerForm({ outstandingPayments: true });
+      cy.completeAndSubmitOutstandingOrOverduePaymentsForm({});
 
       saveAndBackButton().click();
     });
@@ -98,13 +96,10 @@ context('Insurance - Your buyer - Trading history - Yes outstanding payments - S
     });
 
     it('should retain all inputs on the page', () => {
-      // get to trading-history page
       cy.navigateToUrl(url);
 
-      cy.assertNoRadioOptionIsChecked(0);
       cy.checkValue(field(TOTAL_OUTSTANDING_PAYMENTS), BUYER[TOTAL_OUTSTANDING_PAYMENTS]);
       cy.checkValue(field(TOTAL_AMOUNT_OVERDUE), BUYER[TOTAL_AMOUNT_OVERDUE]);
-      cy.assertNoRadioOptionIsChecked(1);
     });
   });
 });
