@@ -1,9 +1,11 @@
 import { summaryList } from '../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
+import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const { TRADED_WITH_BUYER, OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE, TOTAL_OUTSTANDING_PAYMENTS, FAILED_PAYMENTS } = FIELD_IDS;
+const { CURRENCY_CODE } = INSURANCE_FIELD_IDS.CURRENCY;
 
 const {
   ROOT,
@@ -15,7 +17,7 @@ const fieldId = TRADED_WITH_BUYER;
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  `Insurance - Your buyer - Change your answers - Trading history - ${TRADED_WITH_BUYER} - Yes to no - As an exporter, I want to change my answers to the trading history section from yes to no`,
+  `Insurance - Your buyer - Change your answers - ${TRADED_WITH_BUYER} - Yes to no - As an exporter, I want to change my answers to the traded with buyer section from yes to no`,
   () => {
     let referenceNumber;
     let url;
@@ -59,11 +61,15 @@ context(
       cy.assertSummaryListRowDoesNotExist(summaryList, FAILED_PAYMENTS);
       cy.assertSummaryListRowDoesNotExist(summaryList, TOTAL_AMOUNT_OVERDUE);
       cy.assertSummaryListRowDoesNotExist(summaryList, OUTSTANDING_PAYMENTS);
+      cy.assertSummaryListRowDoesNotExist(summaryList, CURRENCY_CODE);
     });
 
     describe(`when changing the answer again from no to yes and going back to ${TRADING_HISTORY}`, () => {
       it('should have empty field values', () => {
         summaryList.field(fieldId).changeLink().click();
+
+        cy.assertNoRadioOptionIsNotChecked(0);
+        cy.assertYesRadioOptionIsNotChecked(0);
 
         cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
 

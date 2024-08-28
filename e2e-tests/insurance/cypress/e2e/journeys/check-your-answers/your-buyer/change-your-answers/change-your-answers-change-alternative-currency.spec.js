@@ -13,7 +13,7 @@ const {
 const {
   ROOT,
   CHECK_YOUR_ANSWERS: { YOUR_BUYER },
-  YOUR_BUYER: { ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE },
+  YOUR_BUYER: { CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -58,12 +58,12 @@ context('Insurance - Check your answers - Your buyer - Alternative currency - As
     const currencyCode = EUR_CURRENCY_CODE;
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`, () => {
+      it(`should redirect to ${CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE, fieldId });
       });
     });
 
@@ -75,7 +75,6 @@ context('Insurance - Check your answers - Your buyer - Alternative currency - As
 
         cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: EUR_CURRENCY_CODE, clickAlternativeCurrencyLink: false });
 
-        // submit TRADING_HISTORY form
         cy.clickSubmitButton();
       });
 
@@ -109,12 +108,12 @@ context('Insurance - Check your answers - Your buyer - Alternative currency - As
     const currencyCode = NON_STANDARD_CURRENCY_CODE;
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`, () => {
+      it(`should redirect to ${CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE, fieldId });
       });
     });
 
@@ -126,7 +125,6 @@ context('Insurance - Check your answers - Your buyer - Alternative currency - As
 
         cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true, clickAlternativeCurrencyLink: false });
 
-        // submit TRADING_HISTORY form
         cy.clickSubmitButton();
       });
 

@@ -4,10 +4,11 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { summaryList } from '../../../../../../pages/shared';
 import application from '../../../../../../fixtures/application';
 import formatCurrency from '../../../../../../helpers/format-currency';
+import checkSummaryList from '../../../../../../commands/insurance/check-your-buyer-summary-list';
 
 const {
   CURRENCY: { CURRENCY_CODE },
-  YOUR_BUYER: { OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS },
+  YOUR_BUYER: { OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE },
 } = INSURANCE_FIELD_IDS;
 
 const {
@@ -61,6 +62,8 @@ context(
         summaryList.field(fieldId).changeLink().click();
 
         cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
+        cy.completeAndSubmitAlternativeCurrencyForm({ clickAlternativeCurrencyLink: false });
+        cy.completeAndSubmitOutstandingOrOverduePaymentsForm({});
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -74,6 +77,12 @@ context(
         const expected = formatCurrency(application.BUYER[TOTAL_OUTSTANDING_PAYMENTS], currency);
 
         row.value().contains(expected);
+      });
+
+      it('should render the other new answers', () => {
+        checkSummaryList[OUTSTANDING_PAYMENTS]({ shouldRender: true, isYes: true });
+        checkSummaryList[CURRENCY_CODE]({ shouldRender: true });
+        checkSummaryList[TOTAL_AMOUNT_OVERDUE]({ shouldRender: true });
       });
     });
   },

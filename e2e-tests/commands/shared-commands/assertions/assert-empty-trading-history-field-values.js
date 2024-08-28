@@ -8,14 +8,11 @@ const { TOTAL_AMOUNT_OVERDUE, TOTAL_OUTSTANDING_PAYMENTS } = FIELD_IDS;
  * Assert all field values in the "trading history" form are empty.
  */
 const assertEmptyTradingHistoryFieldValues = () => {
-  cy.assertNoRadioOptionIsNotChecked(0);
-  cy.assertYesRadioOptionIsNotChecked(0);
+  cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
+  cy.clickSubmitButton();
 
-  cy.assertNoRadioOptionIsNotChecked(1);
-  cy.assertYesRadioOptionIsNotChecked(1);
-
-  cy.checkValue(field(TOTAL_OUTSTANDING_PAYMENTS), '');
   cy.checkValue(field(TOTAL_AMOUNT_OVERDUE), '');
+  cy.checkValue(field(TOTAL_OUTSTANDING_PAYMENTS), '');
 };
 
 export default assertEmptyTradingHistoryFieldValues;

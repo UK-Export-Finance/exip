@@ -18,8 +18,7 @@ import mapAndSave from '../map-and-save/buyer-trading-history';
 
 const {
   INSURANCE_ROOT,
-  YOUR_BUYER: { OUTSTANDING_OR_OVERDUE_PAYMENTS, CHECK_YOUR_ANSWERS },
-  CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
+  YOUR_BUYER: { OUTSTANDING_OR_OVERDUE_PAYMENTS, OUTSTANDING_OR_OVERDUE_PAYMENTS_CHANGE, OUTSTANDING_OR_OVERDUE_PAYMENTS_CHECK_AND_CHANGE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -134,7 +133,7 @@ export const post = async (req: Request, res: Response) => {
      * redirect to CHECK_YOUR_ANSWERS
      */
     if (isChangeRoute(req.originalUrl)) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${OUTSTANDING_OR_OVERDUE_PAYMENTS_CHANGE}`);
     }
 
     /**
@@ -142,7 +141,7 @@ export const post = async (req: Request, res: Response) => {
      * redirect to CHECK_AND_CHANGE_ROUTE
      */
     if (isCheckAndChangeRoute(req.originalUrl)) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${OUTSTANDING_OR_OVERDUE_PAYMENTS_CHECK_AND_CHANGE}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${OUTSTANDING_OR_OVERDUE_PAYMENTS}`);
