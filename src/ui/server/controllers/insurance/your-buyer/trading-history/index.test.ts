@@ -21,6 +21,7 @@ const {
     FAILED_TO_PAY,
     TRADING_HISTORY_CHANGE,
     TRADING_HISTORY_CHECK_AND_CHANGE,
+    CREDIT_INSURANCE_COVER,
   },
   CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
@@ -178,6 +179,25 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
           await post(req, res);
 
           const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when the totalContractValueOverThreshold is true and ${OUTSTANDING_PAYMENTS} is false`, () => {
+        it(`should redirect to ${CREDIT_INSURANCE_COVER}`, async () => {
+          req.body = {
+            [OUTSTANDING_PAYMENTS]: 'false',
+          };
+
+          res.locals.application = {
+            ...mockApplication,
+            totalContractValueOverThreshold: true,
+          };
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

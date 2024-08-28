@@ -8,7 +8,7 @@ import mapYesNoField from '../../../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../../../generate-change-link';
 import { mockApplicationBuyer, referenceNumber } from '../../../../../../test-mocks/mock-application';
 
-const { TRADING_HISTORY_CHANGE, TRADING_HISTORY_CHECK_AND_CHANGE } = YOUR_BUYER_ROUTES;
+const { TRADING_HISTORY_CHANGE, TRADING_HISTORY_CHECK_AND_CHANGE, FAILED_TO_PAY_CHANGE, FAILED_TO_PAY_CHECK_AND_CHANGE } = YOUR_BUYER_ROUTES;
 
 const { TRADED_WITH_BUYER, OUTSTANDING_PAYMENTS, FAILED_PAYMENTS } = BUYER_FIELD_IDS;
 
@@ -40,7 +40,7 @@ describe('server/helpers/summary-lists/your-buyer/trading-history/optional-field
           {
             field: getFieldById(FIELDS, FAILED_PAYMENTS),
             data: mockAnswers,
-            href: generateChangeLink(TRADING_HISTORY_CHANGE, TRADING_HISTORY_CHECK_AND_CHANGE, `#${FAILED_PAYMENTS}-label`, referenceNumber, checkAndChange),
+            href: generateChangeLink(FAILED_TO_PAY_CHANGE, FAILED_TO_PAY_CHECK_AND_CHANGE, `#${FAILED_PAYMENTS}-label`, referenceNumber, checkAndChange),
             renderChangeLink: true,
           },
           mapYesNoField(mockAnswers[FAILED_PAYMENTS]),
