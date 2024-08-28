@@ -68,10 +68,10 @@ context(
       it('should have empty field values', () => {
         summaryList.field(fieldId).changeLink().click();
 
+        cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
+
         cy.assertNoRadioOptionIsNotChecked(0);
         cy.assertYesRadioOptionIsNotChecked(0);
-
-        cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
 
         cy.assertEmptyTradingHistoryFieldValues();
       });

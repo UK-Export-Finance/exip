@@ -41,6 +41,7 @@ context('Insurance - Check your answers - Your buyer page - Summary list - appli
         hasHadCreditInsuranceCoverWithBuyer: true,
         exporterHasBuyerFinancialAccounts: true,
         totalContractValueOverThreshold: true,
+        buyerFailedToPayOnTime: true,
       });
 
       cy.clickTaskCheckAnswers();

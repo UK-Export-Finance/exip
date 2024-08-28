@@ -22,6 +22,8 @@ const {
     TRADING_HISTORY_CHANGE,
     TRADING_HISTORY_CHECK_AND_CHANGE,
     CREDIT_INSURANCE_COVER,
+    CURRENCY_OF_LATE_PAYMENTS_CHANGE,
+    CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE,
   },
   CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
@@ -160,9 +162,39 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
         });
       });
 
-      describe("when the url's last substring is `check`", () => {
+      describe(`when the url's last substring is "change" and ${OUTSTANDING_PAYMENTS} is true`, () => {
+        it(`should redirect to ${CURRENCY_OF_LATE_PAYMENTS_CHANGE}`, async () => {
+          req.originalUrl = TRADING_HISTORY_CHANGE;
+
+          validBody[OUTSTANDING_PAYMENTS] = 'true';
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CURRENCY_OF_LATE_PAYMENTS_CHANGE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when the url's last substring is "check-and-change" and ${OUTSTANDING_PAYMENTS} is true`, () => {
+        it(`should redirect to ${CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE}`, async () => {
+          req.originalUrl = TRADING_HISTORY_CHECK_AND_CHANGE;
+
+          validBody[OUTSTANDING_PAYMENTS] = 'true';
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when the url's last substring is "change" and ${OUTSTANDING_PAYMENTS} is false`, () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
           req.originalUrl = TRADING_HISTORY_CHANGE;
+
+          validBody[OUTSTANDING_PAYMENTS] = 'false';
 
           await post(req, res);
 
@@ -172,9 +204,11 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
         });
       });
 
-      describe("when the url's last substring is `check-and-change`", () => {
+      describe(`when the url's last substring is "check-and-change" and ${OUTSTANDING_PAYMENTS} is false`, () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
           req.originalUrl = TRADING_HISTORY_CHECK_AND_CHANGE;
+
+          validBody[OUTSTANDING_PAYMENTS] = 'false';
 
           await post(req, res);
 

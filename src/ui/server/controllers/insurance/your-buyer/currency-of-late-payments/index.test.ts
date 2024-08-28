@@ -27,8 +27,13 @@ import mapAndSave from '../map-and-save/buyer-trading-history';
 
 const {
   INSURANCE_ROOT,
-  YOUR_BUYER: { OUTSTANDING_OR_OVERDUE_PAYMENTS, CHECK_YOUR_ANSWERS, CURRENCY_OF_LATE_PAYMENTS_CHANGE, CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE },
-  CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
+  YOUR_BUYER: {
+    OUTSTANDING_OR_OVERDUE_PAYMENTS,
+    OUTSTANDING_OR_OVERDUE_PAYMENTS_CHANGE,
+    OUTSTANDING_OR_OVERDUE_PAYMENTS_CHECK_AND_CHANGE,
+    CURRENCY_OF_LATE_PAYMENTS_CHANGE,
+    CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE,
+  },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -192,24 +197,24 @@ describe('controllers/insurance/your-buyer/currency-of-late-payments', () => {
       });
 
       describe("when the url's last substring is `check`", () => {
-        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+        it(`should redirect to ${OUTSTANDING_OR_OVERDUE_PAYMENTS_CHANGE}`, async () => {
           req.originalUrl = CURRENCY_OF_LATE_PAYMENTS_CHANGE;
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${OUTSTANDING_OR_OVERDUE_PAYMENTS_CHANGE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });
 
       describe("when the url's last substring is `check-and-change`", () => {
-        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+        it(`should redirect to ${OUTSTANDING_OR_OVERDUE_PAYMENTS_CHECK_AND_CHANGE}`, async () => {
           req.originalUrl = CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE;
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${OUTSTANDING_OR_OVERDUE_PAYMENTS_CHECK_AND_CHANGE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
