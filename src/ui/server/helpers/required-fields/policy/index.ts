@@ -7,7 +7,7 @@ const { REQUESTED_START_DATE, POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
 const {
   BROKER_DETAILS: { NAME, BROKER_EMAIL, FULL_ADDRESS },
   CONTRACT_POLICY: {
-    SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
+    SINGLE: { CONTRACT_COMPLETION_DATE, CREDIT_LIMIT, TOTAL_CONTRACT_VALUE },
     MULTIPLE: { TOTAL_MONTHS_OF_COVER },
   },
   EXPORT_VALUE: {
@@ -38,6 +38,7 @@ export const getContractPolicyTasks = (policyType?: string): object => {
   if (policyType && isSinglePolicyType(policyType)) {
     return {
       CONTRACT_COMPLETION_DATE,
+      CREDIT_LIMIT,
       TOTAL_CONTRACT_VALUE,
     };
   }

@@ -13,7 +13,7 @@ const {
   },
   POLICY: {
     CONTRACT_POLICY: {
-      SINGLE: { TOTAL_CONTRACT_VALUE },
+      SINGLE: { TOTAL_CONTRACT_VALUE, CREDIT_LIMIT },
       MULTIPLE: { TOTAL_MONTHS_OF_COVER },
     },
     EXPORT_VALUE: {
@@ -26,16 +26,17 @@ describe('server/helpers/sanitise-data', () => {
   describe('NUMBER_FIELDS', () => {
     it('should return an explicit array of field IDs that are number fields that could have a value of 0', () => {
       const expected = [
+        CREDIT_LIMIT,
+        EMPLOYEES_UK,
+        ESTIMATED_ANNUAL_TURNOVER,
+        FIXED_SUM_AMOUNT,
+        MAXIMUM_BUYER_WILL_OWE,
+        PERCENTAGE_TURNOVER,
+        PERCENTAGE_CHARGE,
         TOTAL_CONTRACT_VALUE,
         TOTAL_MONTHS_OF_COVER,
         TOTAL_SALES_TO_BUYER,
-        MAXIMUM_BUYER_WILL_OWE,
         YEARS_EXPORTING,
-        EMPLOYEES_UK,
-        ESTIMATED_ANNUAL_TURNOVER,
-        PERCENTAGE_TURNOVER,
-        PERCENTAGE_CHARGE,
-        FIXED_SUM_AMOUNT,
       ];
 
       expect(NUMBER_FIELDS).toEqual(expected);

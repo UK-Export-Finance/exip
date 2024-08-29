@@ -31,6 +31,7 @@ export const mockSinglePolicy = {
   policyType: APPLICATION.POLICY_TYPE.SINGLE,
   contractCompletionDate: String(add(new Date(), { months: 3 })),
   totalValueOfContract: 1500,
+  creditLimit: 1000,
 };
 
 export const mockMultiplePolicy = {

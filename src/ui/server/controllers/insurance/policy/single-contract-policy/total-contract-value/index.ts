@@ -25,13 +25,13 @@ const {
 
 const {
   CONTRACT_POLICY: {
-    SINGLE: { TOTAL_CONTRACT_VALUE },
+    SINGLE: { TOTAL_CONTRACT_VALUE, CREDIT_LIMIT },
   },
 } = POLICY_FIELD_IDS;
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE;
 
-export const FIELD_ID = TOTAL_CONTRACT_VALUE;
+export const FIELD_IDS = [TOTAL_CONTRACT_VALUE, CREDIT_LIMIT];
 
 /**
  * pageVariables
@@ -45,9 +45,15 @@ export const pageVariables = (referenceNumber: number, currencies: Array<Currenc
   const currency = getCurrencyByCode(currencies, policyCurrencyCode);
 
   return {
-    FIELD: {
-      ID: FIELD_ID,
-      ...FIELDS.CONTRACT_POLICY.SINGLE[FIELD_ID],
+    FIELDS: {
+      TOTAL_CONTRACT_VALUE: {
+        ID: TOTAL_CONTRACT_VALUE,
+        ...FIELDS.CONTRACT_POLICY.SINGLE[TOTAL_CONTRACT_VALUE],
+      },
+      CREDIT_LIMIT: {
+        ID: CREDIT_LIMIT,
+        ...FIELDS.CONTRACT_POLICY.SINGLE[CREDIT_LIMIT],
+      },
     },
     DYNAMIC_PAGE_TITLE: `${PAGE_CONTENT_STRINGS.PAGE_TITLE} ${currency.name}?`,
     CURRENCY_PREFIX_SYMBOL: currency.symbol,
@@ -125,7 +131,7 @@ export const post = async (req: Request, res: Response) => {
     policy: { policyCurrencyCode },
   } = application;
 
-  const payload = constructPayload(req.body, [TOTAL_CONTRACT_VALUE]);
+  const payload = constructPayload(req.body, FIELD_IDS);
 
   const validationErrors = generateValidationErrors(payload);
 

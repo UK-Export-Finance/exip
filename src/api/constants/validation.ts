@@ -5,6 +5,10 @@ export const MINIMUM_CHARACTERS = {
   ACCOUNT_NUMBER: 6,
   BIC_SWIFT_CODE: 8,
   IBAN: 16,
+  POLICY: {
+    CREDIT_LIMIT: 1,
+    TOTAL_CONTRACT_VALUE: 1,
+  },
 };
 
 export const MAXIMUM_CHARACTERS = {

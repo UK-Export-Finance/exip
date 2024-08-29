@@ -4,12 +4,12 @@ import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import numberAboveMinimumValidation from '../../../../../../../shared-validation/number-above-minimum';
 import { RequestBody } from '../../../../../../../../types';
 
-const MINIMUM = MINIMUM_CHARACTERS.POLICY.TOTAL_CONTRACT_VALUE;
+const MINIMUM = MINIMUM_CHARACTERS.POLICY.CREDIT_LIMIT;
 
 const {
   POLICY: {
     CONTRACT_POLICY: {
-      SINGLE: { TOTAL_CONTRACT_VALUE: FIELD_ID },
+      SINGLE: { CREDIT_LIMIT: FIELD_ID },
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -25,14 +25,14 @@ const {
 } = ERROR_MESSAGES;
 
 /**
- * totalContractValueRules
+ * creditLimitRules
  * Check submitted form data for errors with the total contract value field
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
  * * @param {Object} errors: Errors from previous validation errors errors
  * @returns {ValidationErrors}
  */
-const totalContractValueRules = (formBody: RequestBody, errors: object) =>
+const creditLimitRules = (formBody: RequestBody, errors: object) =>
   numberAboveMinimumValidation({ formBody, fieldId: FIELD_ID, errorMessage: ERROR_MESSAGES_OBJECT, errors, minimum: MINIMUM });
 
-export default totalContractValueRules;
+export default creditLimitRules;

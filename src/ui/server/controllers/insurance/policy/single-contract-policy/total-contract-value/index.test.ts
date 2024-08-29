@@ -1,4 +1,4 @@
-import { PAGE_CONTENT_STRINGS, pageVariables, TEMPLATE, FIELD_ID, get, post } from '.';
+import { PAGE_CONTENT_STRINGS, pageVariables, TEMPLATE, FIELD_IDS, get, post } from '.';
 import { TEMPLATES } from '../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
@@ -31,7 +31,7 @@ const {
 
 const {
   CONTRACT_POLICY: {
-    SINGLE: { TOTAL_CONTRACT_VALUE },
+    SINGLE: { TOTAL_CONTRACT_VALUE, CREDIT_LIMIT },
   },
 } = POLICY_FIELD_IDS;
 
@@ -75,9 +75,15 @@ describe('controllers/insurance/policy/single-contract-policy/total-contract-val
       const currency = getCurrencyByCode(allCurrencies, String(policyCurrencyCode));
 
       const expected = {
-        FIELD: {
-          ID: FIELD_ID,
-          ...FIELDS.CONTRACT_POLICY.SINGLE[FIELD_ID],
+        FIELDS: {
+          TOTAL_CONTRACT_VALUE: {
+            ID: TOTAL_CONTRACT_VALUE,
+            ...FIELDS.CONTRACT_POLICY.SINGLE[TOTAL_CONTRACT_VALUE],
+          },
+          CREDIT_LIMIT: {
+            ID: CREDIT_LIMIT,
+            ...FIELDS.CONTRACT_POLICY.SINGLE[CREDIT_LIMIT],
+          },
         },
         DYNAMIC_PAGE_TITLE: `${PAGE_CONTENT_STRINGS.PAGE_TITLE} ${currency.name}?`,
         CURRENCY_PREFIX_SYMBOL: currency.symbol,
@@ -94,9 +100,9 @@ describe('controllers/insurance/policy/single-contract-policy/total-contract-val
     });
   });
 
-  describe('FIELD_ID', () => {
-    it('should have the correct ID', () => {
-      expect(FIELD_ID).toEqual(TOTAL_CONTRACT_VALUE);
+  describe('FIELD_IDS', () => {
+    it('should have the correct FIELD_IDS', () => {
+      expect(FIELD_IDS).toEqual([TOTAL_CONTRACT_VALUE, CREDIT_LIMIT]);
     });
   });
 
@@ -180,7 +186,8 @@ describe('controllers/insurance/policy/single-contract-policy/total-contract-val
     });
 
     const validBody = {
-      [FIELD_ID]: '1',
+      [TOTAL_CONTRACT_VALUE]: '1',
+      [CREDIT_LIMIT]: '2',
     };
 
     describe('when there are no validation errors', () => {
@@ -191,7 +198,7 @@ describe('controllers/insurance/policy/single-contract-policy/total-contract-val
       it('should call mapAndSave.policy with data from constructPayload function and application', async () => {
         await post(req, res);
 
-        const payload = constructPayload(req.body, [FIELD_ID]);
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         expect(mapAndSave.policy).toHaveBeenCalledTimes(1);
 
@@ -243,7 +250,7 @@ describe('controllers/insurance/policy/single-contract-policy/total-contract-val
 
         await post(req, res);
 
-        const payload = constructPayload(req.body, [FIELD_ID]);
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         const generatedPageVariables = pageVariables(referenceNumber, mockCurrencies, String(policyCurrencyCode));
 

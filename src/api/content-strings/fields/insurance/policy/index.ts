@@ -95,9 +95,18 @@ export const POLICY_FIELDS = {
         },
       },
       [CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
+        LABEL: "What's the total value of the contract you want to insure?",
         HINT: 'Enter a whole number. Do not enter decimals.',
         SUMMARY: {
           TITLE: 'Contract value',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
+        },
+      },
+      [CONTRACT_POLICY.SINGLE.CREDIT_LIMIT]: {
+        LABEL: 'What credit limit do you require?',
+        HINT: 'For example, your total contract maybe £250,000 but the amount you want to insure is £100,000.',
+        SUMMARY: {
+          TITLE: 'Credit limit',
           FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
         },
       },

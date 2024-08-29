@@ -14,7 +14,7 @@ const getPolicyById = async (context: Context, id: string) => {
     const policy = await context.query.Policy.findOne({
       where: { id },
       query:
-        'id policyType requestedStartDate contractCompletionDate totalValueOfContract creditPeriodWithBuyer policyCurrencyCode totalMonthsOfCover totalSalesToBuyer maximumBuyerWillOwe needPreCreditPeriodCover jointlyInsuredParty { id companyName companyNumber countryCode requested }',
+        'id policyType requestedStartDate contractCompletionDate creditLimit totalValueOfContract creditPeriodWithBuyer policyCurrencyCode totalMonthsOfCover totalSalesToBuyer maximumBuyerWillOwe needPreCreditPeriodCover jointlyInsuredParty { id companyName companyNumber countryCode requested }',
     });
 
     return policy;

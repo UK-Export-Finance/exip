@@ -17,7 +17,7 @@ const {
 const {
   POLICY: {
     CONTRACT_POLICY: {
-      SINGLE: { TOTAL_CONTRACT_VALUE },
+      SINGLE: { TOTAL_CONTRACT_VALUE, CREDIT_LIMIT },
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -67,8 +67,19 @@ context(
         cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
-      it('renders `total contract value` hint, prefix and input', () => {
+      it(`renders ${TOTAL_CONTRACT_VALUE} hint, prefix and input`, () => {
         const fieldId = TOTAL_CONTRACT_VALUE;
+        const field = fieldSelector(fieldId);
+
+        cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT);
+
+        cy.checkText(field.prefix(), SYMBOLS.GBP);
+
+        field.input().should('exist');
+      });
+
+      it(`renders ${CREDIT_LIMIT} hint, prefix and input`, () => {
+        const fieldId = CREDIT_LIMIT;
         const field = fieldSelector(fieldId);
 
         cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT);
@@ -106,6 +117,8 @@ context(
           cy.navigateToUrl(url);
 
           fieldSelector(TOTAL_CONTRACT_VALUE).input().should('have.value', application.POLICY[TOTAL_CONTRACT_VALUE]);
+
+          fieldSelector(CREDIT_LIMIT).input().should('have.value', application.POLICY[CREDIT_LIMIT]);
         });
       });
     });

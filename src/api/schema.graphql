@@ -796,6 +796,7 @@ type Policy {
   totalMonthsOfCover: Int
   totalSalesToBuyer: Int
   maximumBuyerWillOwe: Int
+  creditLimit: Int
 }
 
 input PolicyWhereUniqueInput {
@@ -818,6 +819,7 @@ input PolicyWhereInput {
   totalMonthsOfCover: IntNullableFilter
   totalSalesToBuyer: IntNullableFilter
   maximumBuyerWillOwe: IntNullableFilter
+  creditLimit: IntNullableFilter
 }
 
 input PolicyOrderByInput {
@@ -831,6 +833,7 @@ input PolicyOrderByInput {
   totalMonthsOfCover: OrderDirection
   totalSalesToBuyer: OrderDirection
   maximumBuyerWillOwe: OrderDirection
+  creditLimit: OrderDirection
 }
 
 input PolicyUpdateInput {
@@ -846,6 +849,7 @@ input PolicyUpdateInput {
   totalMonthsOfCover: Int
   totalSalesToBuyer: Int
   maximumBuyerWillOwe: Int
+  creditLimit: Int
 }
 
 input JointlyInsuredPartyRelateToOneForUpdateInput {
@@ -872,6 +876,7 @@ input PolicyCreateInput {
   totalMonthsOfCover: Int
   totalSalesToBuyer: Int
   maximumBuyerWillOwe: Int
+  creditLimit: Int
 }
 
 input JointlyInsuredPartyRelateToOneForCreateInput {

@@ -1,16 +1,16 @@
-import totalContractValueRules from './total-contract-value';
+import creditLimitRules from './credit-limit';
 import { MINIMUM_CHARACTERS } from '../../../../../../../constants';
 import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import numberAboveMinimumValidation from '../../../../../../../shared-validation/number-above-minimum';
 import { mockErrors } from '../../../../../../../test-mocks';
 
-const MINIMUM = MINIMUM_CHARACTERS.POLICY.TOTAL_CONTRACT_VALUE;
+const MINIMUM = MINIMUM_CHARACTERS.POLICY.CREDIT_LIMIT;
 
 const {
   POLICY: {
     CONTRACT_POLICY: {
-      SINGLE: { TOTAL_CONTRACT_VALUE: FIELD_ID },
+      SINGLE: { CREDIT_LIMIT: FIELD_ID },
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -25,11 +25,11 @@ const {
   },
 } = ERROR_MESSAGES;
 
-describe('controllers/insurance/policy/single-contract-policy/total-contract-value/validation/rules/total-contract-value', () => {
+describe('controllers/insurance/policy/single-contract-policy/total-contract-value/validation/rules/credit-limit', () => {
   it('should return the result of numberAboveMinimumValidation', () => {
     const mockSubmittedData = {};
 
-    const result = totalContractValueRules(mockSubmittedData, mockErrors);
+    const result = creditLimitRules(mockSubmittedData, mockErrors);
 
     const expected = numberAboveMinimumValidation({
       formBody: mockSubmittedData,

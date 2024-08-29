@@ -5,7 +5,7 @@ import application from '../../fixtures/application';
 const {
   POLICY: {
     CONTRACT_POLICY: {
-      SINGLE: { TOTAL_CONTRACT_VALUE },
+      SINGLE: { CREDIT_LIMIT, TOTAL_CONTRACT_VALUE },
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -23,6 +23,8 @@ const completeTotalContractValueForm = ({ policyValueOverMvpMaximum = false }) =
   } else {
     cy.keyboardInput(field(TOTAL_CONTRACT_VALUE).input(), application.POLICY[TOTAL_CONTRACT_VALUE]);
   }
+
+  cy.keyboardInput(field(CREDIT_LIMIT).input(), application.POLICY[CREDIT_LIMIT]);
 };
 
 export default completeTotalContractValueForm;

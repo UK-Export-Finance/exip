@@ -1078,6 +1078,7 @@ CREATE TABLE IF NOT EXISTS `Policy` (
 	`totalSalesToBuyer` int DEFAULT NULL,
 	`maximumBuyerWillOwe` int DEFAULT NULL,
   `needPreCreditPeriodCover` tinyint(1) DEFAULT NULL,
+  `creditLimit` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Policy_application_idx` (`application`),
   CONSTRAINT `Policy_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE

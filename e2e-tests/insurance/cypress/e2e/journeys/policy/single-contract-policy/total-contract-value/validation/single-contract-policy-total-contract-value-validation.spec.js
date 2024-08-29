@@ -25,7 +25,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Single contract policy - Total contract value page - form validation - total contract value', () => {
+context(`Insurance - Policy - Single contract policy - Total contract value page - form validation - ${TOTAL_CONTRACT_VALUE}`, () => {
   let referenceNumber;
   let url;
 
@@ -53,7 +53,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
 
   const field = fieldSelector(TOTAL_CONTRACT_VALUE);
 
-  it('should render a validation error when total contract value is not provided', () => {
+  it(`should render a validation error when ${TOTAL_CONTRACT_VALUE} is not provided`, () => {
     cy.clickSubmitButton();
 
     cy.checkText(partials.errorSummaryListItems().eq(0), CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT);
@@ -61,7 +61,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     cy.checkText(field.errorMessage(), `Error: ${CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`);
   });
 
-  it('should render a validation error when total contract value is not a number', () => {
+  it(`should render a validation error when ${TOTAL_CONTRACT_VALUE} is not a number`, () => {
     cy.keyboardInput(field.input(), 'Fifty');
     cy.clickSubmitButton();
 
@@ -70,7 +70,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     cy.checkText(field.errorMessage(), `Error: ${CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`);
   });
 
-  it('should render a validation error when total contract value is not a whole number', () => {
+  it(`should render a validation error when ${TOTAL_CONTRACT_VALUE} is not a whole number`, () => {
     cy.keyboardInput(field.input().clear(), '123.456');
     cy.clickSubmitButton();
 
@@ -79,7 +79,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     cy.checkText(field.errorMessage(), `Error: ${CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`);
   });
 
-  it('should render a validation error when total sales to buyer contains a decimal', () => {
+  it(`should render a validation error when ${TOTAL_CONTRACT_VALUE} contains a decimal`, () => {
     cy.keyboardInput(field.input().clear(), '1.2');
     cy.clickSubmitButton();
 
@@ -88,7 +88,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     cy.checkText(field.errorMessage(), `Error: ${CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`);
   });
 
-  it('should render a validation error when total sales to buyer contains a comma and decimal', () => {
+  it(`should render a validation error when ${TOTAL_CONTRACT_VALUE} contains a comma and decimal`, () => {
     cy.keyboardInput(field.input(), '1,234.56');
     cy.clickSubmitButton();
 
@@ -97,7 +97,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     cy.checkText(field.errorMessage(), `Error: ${CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`);
   });
 
-  it('should render a validation error when total contract value is below the minimum', () => {
+  it(`should render a validation error when ${TOTAL_CONTRACT_VALUE} is below the minimum`, () => {
     cy.keyboardInput(field.input(), '0');
     cy.clickSubmitButton();
 
@@ -106,7 +106,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     cy.checkText(field.errorMessage(), `Error: ${CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].BELOW_MINIMUM}`);
   });
 
-  it('should redirect to the next page when total contract value is valid and contains a comma as all fields are valid', () => {
+  it(`should redirect to the next page when ${TOTAL_CONTRACT_VALUE} is valid and contains a comma as all fields are valid`, () => {
     cy.completeAndSubmitTotalContractValueForm({});
     cy.clickBackLink();
 
