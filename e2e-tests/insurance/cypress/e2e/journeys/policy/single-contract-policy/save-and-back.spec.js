@@ -1,5 +1,5 @@
 import { field as fieldSelector } from '../../../../../../pages/shared';
-import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
@@ -8,10 +8,8 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
-    CONTRACT_POLICY: { REQUESTED_START_DATE },
-  },
-} = INSURANCE_FIELD_IDS;
+  CONTRACT_POLICY: { REQUESTED_START_DATE },
+} = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 

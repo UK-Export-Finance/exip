@@ -8,7 +8,7 @@ import { field as fieldSelector } from '../../pages/shared';
  * @param {Integer} errorIndex: Index of the summary list error
  * @param {Object} errorMessages: Percentage error messages
  * @param {Integer} totalExpectedErrors: Total expected errors in the form
- * @param {Integer} totalExpectedOtherErrorsWithValidPercentage: Total expected errors in the form when a percentage field is valid.
+ * @param {Integer} totalExpectedOtherErrorsWithValidPercentage: Total expected errors in the form when the percentage field is valid.
  * @param {Boolean} minimum: Minimum allowed percentage.
  * @returns {Function} Mocha describe block with assertions.
  */

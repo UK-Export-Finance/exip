@@ -1,7 +1,7 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { APPLICATION } from '../../../../../../../constants';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
@@ -10,12 +10,10 @@ const {
 } = APPLICATION;
 
 const {
-  POLICY: {
-    CONTRACT_POLICY: {
-      MULTIPLE: { TOTAL_MONTHS_OF_COVER },
-    },
+  CONTRACT_POLICY: {
+    MULTIPLE: { TOTAL_MONTHS_OF_COVER },
   },
-} = INSURANCE_FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 const {
   ROOT,

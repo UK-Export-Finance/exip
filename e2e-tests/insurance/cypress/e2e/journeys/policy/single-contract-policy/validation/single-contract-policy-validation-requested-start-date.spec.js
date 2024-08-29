@@ -1,6 +1,6 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import dateField from '../../../../../../../commands/insurance/date-field';
 
@@ -10,10 +10,8 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
-    CONTRACT_POLICY: { REQUESTED_START_DATE },
-  },
-} = INSURANCE_FIELD_IDS;
+  CONTRACT_POLICY: { REQUESTED_START_DATE },
+} = POLICY_FIELD_IDS;
 
 const {
   INSURANCE: {

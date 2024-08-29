@@ -11,7 +11,7 @@ const {
 
 const {
   CONTRACT_POLICY: {
-    SINGLE: { TOTAL_CONTRACT_VALUE: FIELD_ID },
+    SINGLE: { CREDIT_LIMIT: FIELD_ID },
   },
 } = POLICY_FIELD_IDS;
 
@@ -57,9 +57,10 @@ context(`Insurance - Policy - Single contract policy - Total contract value page
 
   monetaryFieldValidation({
     fieldId: FIELD_ID,
+    errorIndex: 1,
     errorMessages: ERROR_MESSAGES_OBJECT,
     totalExpectedErrors: 2,
     totalExpectedOtherErrorsWithValidMonetaryValue: 1,
-    minimum: MINIMUM_CHARACTERS.POLICY.TOTAL_CONTRACT_VALUE,
+    minimum: MINIMUM_CHARACTERS.POLICY.CREDIT_LIMIT,
   });
 });

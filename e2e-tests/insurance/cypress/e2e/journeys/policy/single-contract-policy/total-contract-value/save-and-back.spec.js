@@ -1,6 +1,6 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { POLICY as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import application from '../../../../../../../fixtures/application';
 
 const {
@@ -9,12 +9,10 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
-    CONTRACT_POLICY: {
-      SINGLE: { TOTAL_CONTRACT_VALUE },
-    },
+  CONTRACT_POLICY: {
+    SINGLE: { TOTAL_CONTRACT_VALUE, CREDIT_LIMIT },
   },
-} = INSURANCE_FIELD_IDS;
+} = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -124,6 +122,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
 
       it('should have the submitted value', () => {
         fieldSelector(TOTAL_CONTRACT_VALUE).input().should('have.value', application.POLICY[TOTAL_CONTRACT_VALUE]);
+        fieldSelector(CREDIT_LIMIT).input().should('have.value', application.POLICY[CREDIT_LIMIT]);
       });
     });
   });

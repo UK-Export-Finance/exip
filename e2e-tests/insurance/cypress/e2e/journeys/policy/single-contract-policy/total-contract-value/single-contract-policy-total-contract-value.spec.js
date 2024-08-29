@@ -2,7 +2,7 @@ import { field as fieldSelector, headingCaption } from '../../../../../../../pag
 import { PAGES } from '../../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import application from '../../../../../../../fixtures/application';
 import { GBP, SYMBOLS } from '../../../../../../../fixtures/currencies';
 
@@ -15,12 +15,10 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
-    CONTRACT_POLICY: {
-      SINGLE: { TOTAL_CONTRACT_VALUE, CREDIT_LIMIT },
-    },
+  CONTRACT_POLICY: {
+    SINGLE: { TOTAL_CONTRACT_VALUE, CREDIT_LIMIT },
   },
-} = INSURANCE_FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
