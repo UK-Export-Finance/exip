@@ -86,7 +86,10 @@ context(
         cy.assertNoRadioOptionIsNotChecked(0);
         cy.assertYesRadioOptionIsNotChecked(0);
 
-        cy.assertEmptyTradingHistoryFieldValues();
+        cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
+        cy.clickSubmitButton();
+
+        cy.assertEmptyOverdueOrOutstandingFieldValues();
       });
     });
   },

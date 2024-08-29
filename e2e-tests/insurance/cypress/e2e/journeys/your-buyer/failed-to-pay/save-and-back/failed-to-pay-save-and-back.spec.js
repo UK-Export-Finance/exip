@@ -43,7 +43,7 @@ context('Insurance - Your buyer - Failed to pay - Save and back', () => {
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the `your buyer` task status as `not started yet`', () => {
+    it('should retain the `your buyer` task status as `in progress`', () => {
       cy.checkTaskBuyerStatusIsInProgress();
     });
   });
@@ -68,7 +68,7 @@ context('Insurance - Your buyer - Failed to pay - Save and back', () => {
     it('should retain all inputs on the page', () => {
       cy.navigateToUrl(url);
 
-      cy.assertNoRadioOptionIsChecked(0);
+      cy.assertNoRadioOptionIsChecked();
     });
   });
 });

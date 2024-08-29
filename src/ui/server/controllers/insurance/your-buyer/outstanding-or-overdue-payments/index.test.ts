@@ -14,7 +14,16 @@ import mapAndSave from '../map-and-save/buyer-trading-history';
 import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
 import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCurrencies, mockCurrenciesResponse, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
+import {
+  mockReq,
+  mockRes,
+  mockApplication,
+  mockCurrencies,
+  mockCurrenciesResponse,
+  mockSpyPromiseRejection,
+  referenceNumber,
+  mockCurrenciesEmptyResponse,
+} from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -37,7 +46,7 @@ const {
 
 const currencyValue = mockApplication.buyer.buyerTradingHistory[CURRENCY_CODE];
 
-describe('controllers/insurance/your-buyer/trading-history', () => {
+describe('controllers/insurance/your-buyer/outstanding-or-overdue-payments', () => {
   let req: Request;
   let res: Response;
 
@@ -132,6 +141,34 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
         get(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('when the get currencies API call fails', () => {
+        beforeEach(() => {
+          getCurrenciesSpy = mockSpyPromiseRejection;
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when the get currencies response does not return a populated array', () => {
+        beforeEach(() => {
+          getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
       });
     });
   });
@@ -255,6 +292,32 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when the get currencies API call fails', () => {
+        beforeEach(() => {
+          getCurrenciesSpy = mockSpyPromiseRejection;
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when the get currencies response does not return a populated array', () => {
+        beforeEach(() => {
+          getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
 
           expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });

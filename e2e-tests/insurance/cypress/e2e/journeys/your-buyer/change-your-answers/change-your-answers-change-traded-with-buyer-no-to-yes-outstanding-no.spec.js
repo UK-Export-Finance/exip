@@ -3,7 +3,8 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { summaryList } from '../../../../../../pages/shared';
 import checkSummaryList from '../../../../../../commands/insurance/check-your-buyer-summary-list';
 
-const { TRADED_WITH_BUYER, OUTSTANDING_PAYMENTS, HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = FIELD_IDS;
+const { TRADED_WITH_BUYER, OUTSTANDING_PAYMENTS, HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, FAILED_PAYMENTS } =
+  FIELD_IDS;
 
 const {
   ROOT,
@@ -15,7 +16,7 @@ const fieldId = TRADED_WITH_BUYER;
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  `Insurance - Your buyer - Change your answers - ${TRADED_WITH_BUYER} - No to yes - As an exporter, I want to change my answers to the trading history section`,
+  `Insurance - Your buyer - Change your answers - ${TRADED_WITH_BUYER} - No to yes - ${OUTSTANDING_PAYMENTS} as no - As an exporter, I want to change my answers to the trading history section`,
   () => {
     let referenceNumber;
     let url;
@@ -45,14 +46,28 @@ context(
 
       cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
       cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: false });
+      cy.completeAndSubmitFailedToPayForm({ failedToPay: false });
 
       cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
     });
 
-    it('should render the new answers', () => {
+    it(`should render the new answer for ${TRADED_WITH_BUYER}`, () => {
       checkSummaryList[TRADED_WITH_BUYER]({ shouldRender: true, isYes: true });
+    });
+
+    it(`should render the new answer for ${OUTSTANDING_PAYMENTS}`, () => {
       checkSummaryList[OUTSTANDING_PAYMENTS]({ shouldRender: true, isYes: false });
+    });
+
+    it(`should render the new answer for ${FAILED_PAYMENTS}`, () => {
+      checkSummaryList[FAILED_PAYMENTS]({ shouldRender: true, isYes: false });
+    });
+
+    it(`should render the new answer for ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER}`, () => {
       checkSummaryList[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: false });
+    });
+
+    it(`should render the new answer for ${PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER}`, () => {
       checkSummaryList[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: false });
     });
   },

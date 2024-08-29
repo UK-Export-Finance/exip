@@ -91,7 +91,10 @@ context(
         it(`should have the submitted 'no' value and empty ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS} values`, () => {
           cy.navigateToUrl(tradingHistoryUrl);
 
-          cy.assertEmptyTradingHistoryFieldValues();
+          cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
+          cy.clickSubmitButton();
+
+          cy.assertEmptyOverdueOrOutstandingFieldValues();
         });
       });
     });

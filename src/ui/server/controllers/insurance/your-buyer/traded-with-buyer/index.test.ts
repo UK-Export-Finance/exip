@@ -66,7 +66,7 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
   });
 
   describe('FIELD_ID', () => {
-    it('should have the correct FIELD_ID', () => {
+    it('should have the correct ID', () => {
       expect(FIELD_ID).toEqual(TRADED_WITH_BUYER);
     });
   });

@@ -55,7 +55,7 @@ describe('controllers/insurance/your-buyer/failed-to-pay-on-time', () => {
   });
 
   describe('FIELD_ID', () => {
-    it('should have the correct FIELD_ID', () => {
+    it('should have the correct ID', () => {
       expect(FIELD_ID).toEqual(FAILED_PAYMENTS);
     });
   });
@@ -128,16 +128,18 @@ describe('controllers/insurance/your-buyer/failed-to-pay-on-time', () => {
         req.body = validBody;
       });
 
-      it(`should redirect to the next page the totalContractValueOverThreshold is not true`, async () => {
-        res.locals.application = {
-          ...mockApplication,
-          totalContractValueOverThreshold: false,
-        };
+      describe('when totalContractValueOverThreshold is not true', () => {
+        it(`should redirect to the next page`, async () => {
+          res.locals.application = {
+            ...mockApplication,
+            totalContractValueOverThreshold: false,
+          };
 
-        await post(req, res);
-        const expected = `${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
+          await post(req, res);
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
 
-        expect(res.redirect).toHaveBeenCalledWith(expected);
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
 
       it('should call mapAndSave.buyerTradingHistory once with buyer and application', async () => {

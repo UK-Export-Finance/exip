@@ -1,7 +1,8 @@
-import amountOverdueRules, { MINIMUM } from './amount-overdue';
+import amountOverdueRules from './amount-overdue';
 import YOUR_BUYER_FIELD_IDS from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import numberAboveMinimumValidation from '../../../../../../shared-validation/number-above-minimum';
+import { MINIMUM_CHARACTERS } from '../../../../../../constants';
 import { mockErrors } from '../../../../../../test-mocks';
 
 const { TOTAL_AMOUNT_OVERDUE: FIELD_ID } = YOUR_BUYER_FIELD_IDS;
@@ -25,7 +26,7 @@ describe('controllers/insurance/your-buyer/outstanding-or-overdue-payments/valid
       fieldId: FIELD_ID,
       errorMessage: ERROR_MESSAGES_OBJECT,
       errors: mockErrors,
-      minimum: MINIMUM,
+      minimum: MINIMUM_CHARACTERS.ONE,
     });
 
     expect(result).toEqual(expected);

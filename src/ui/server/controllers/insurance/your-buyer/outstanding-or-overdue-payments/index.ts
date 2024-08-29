@@ -14,11 +14,18 @@ import mapAndSave from '../map-and-save/buyer-trading-history';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
+import isPopulatedArray from '../../../../helpers/is-populated-array';
 import api from '../../../../api';
 
 const {
   INSURANCE_ROOT,
-  YOUR_BUYER: { OUTSTANDING_OR_OVERDUE_PAYMENTS_SAVE_AND_BACK: SAVE_AND_BACK, CHECK_YOUR_ANSWERS, FAILED_TO_PAY },
+  YOUR_BUYER: {
+    OUTSTANDING_OR_OVERDUE_PAYMENTS_SAVE_AND_BACK: SAVE_AND_BACK,
+    CHECK_YOUR_ANSWERS,
+    FAILED_TO_PAY,
+    FAILED_TO_PAY_CHANGE,
+    FAILED_TO_PAY_CHECK_AND_CHANGE,
+  },
   CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -27,7 +34,7 @@ const {
   CURRENCY: { CURRENCY_CODE },
 } = INSURANCE_FIELD_IDS;
 
-const { TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE } = YOUR_BUYER_FIELD_IDS;
+const { TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE, FAILED_PAYMENTS } = YOUR_BUYER_FIELD_IDS;
 
 export const FIELD_IDS = [TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE];
 
@@ -85,6 +92,10 @@ export const get = async (req: Request, res: Response) => {
     } = application;
 
     const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
+
+    if (!isPopulatedArray(supportedCurrencies)) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
 
     const generatedPageVariables = pageVariables(referenceNumber, supportedCurrencies, String(buyerTradingHistory[CURRENCY_CODE]));
 
@@ -150,6 +161,10 @@ export const post = async (req: Request, res: Response) => {
     if (validationErrors) {
       const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
 
+      if (!isPopulatedArray(supportedCurrencies)) {
+        return res.redirect(PROBLEM_WITH_SERVICE);
+      }
+
       const generatedPageVariables = pageVariables(referenceNumber, supportedCurrencies, String(buyerTradingHistory[CURRENCY_CODE]));
 
       return res.render(TEMPLATE, {
@@ -170,11 +185,17 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
+    const hasNoFailedPayments = buyerTradingHistory[FAILED_PAYMENTS] === null;
+
     /**
      * If is a change route
      * redirect to CHECK_YOUR_ANSWERS
      */
     if (isChange) {
+      if (hasNoFailedPayments) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${FAILED_TO_PAY_CHANGE}`);
+      }
+
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
@@ -183,6 +204,10 @@ export const post = async (req: Request, res: Response) => {
      * redirect to CHECK_AND_CHANGE_ROUTE
      */
     if (isCheckAndChange) {
+      if (hasNoFailedPayments) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${FAILED_TO_PAY_CHECK_AND_CHANGE}`);
+      }
+
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 

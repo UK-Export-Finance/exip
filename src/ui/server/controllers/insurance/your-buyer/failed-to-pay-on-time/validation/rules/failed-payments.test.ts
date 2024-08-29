@@ -13,7 +13,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-describe('controllers/insurance/your-buyer/trading-history/validation/rules/failed-payments', () => {
+describe('controllers/insurance/your-buyer/failed-to-pay-on-time/validation/rules/failed-payments', () => {
   const mockBody = {
     [FIELD_ID]: '',
   } as RequestBody;

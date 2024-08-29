@@ -67,18 +67,24 @@ context(
         cy.checkText(yesNoRadioHint(), FIELDS[OUTSTANDING_PAYMENTS].HINT);
       });
 
-      describe(OUTSTANDING_PAYMENTS, () => {
-        it('renders `yes` radio button', () => {
-          yesRadio().input().first().should('exist');
+      it('renders `yes` radio button', () => {
+        yesRadio().input().first().should('exist');
 
-          cy.checkText(yesRadio().label().first(), FIELD_VALUES.YES);
-        });
+        cy.checkText(yesRadio().label().first(), FIELD_VALUES.YES);
+      });
 
-        it('renders `no` radio button', () => {
-          noRadio().input().first().should('exist');
+      it('renders `no` radio button', () => {
+        noRadio().input().first().should('exist');
 
-          cy.checkText(noRadio().label().first(), FIELD_VALUES.NO);
-        });
+        cy.checkText(noRadio().label().first(), FIELD_VALUES.NO);
+      });
+
+      it('renders `yes` and `no` radio buttons in the correct order', () => {
+        cy.assertYesNoRadiosOrder({ noRadioFirst: true });
+      });
+
+      it('renders a `save and back` button', () => {
+        cy.assertSaveAndBackButton();
       });
     });
 

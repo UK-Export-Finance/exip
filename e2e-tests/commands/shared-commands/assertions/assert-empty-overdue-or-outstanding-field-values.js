@@ -4,10 +4,10 @@ import { YOUR_BUYER as FIELD_IDS } from '../../../constants/field-ids/insurance/
 const { TOTAL_AMOUNT_OVERDUE, TOTAL_OUTSTANDING_PAYMENTS } = FIELD_IDS;
 
 /**
- * assertEmptyTradingHistoryFieldValues
- * Assert all field values in the "trading history" form are empty.
+ * assertEmptyOverdueOrOutstandingFieldValues
+ * Assert all field values in the "overdue or outstanding" form are empty.
  */
-const assertEmptyTradingHistoryFieldValues = () => {
+const assertEmptyOverdueOrOutstandingFieldValues = () => {
   cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
   cy.clickSubmitButton();
 
@@ -15,4 +15,4 @@ const assertEmptyTradingHistoryFieldValues = () => {
   cy.checkValue(field(TOTAL_OUTSTANDING_PAYMENTS), '');
 };
 
-export default assertEmptyTradingHistoryFieldValues;
+export default assertEmptyOverdueOrOutstandingFieldValues;

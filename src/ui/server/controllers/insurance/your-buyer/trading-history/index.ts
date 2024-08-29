@@ -19,15 +19,16 @@ const {
     CHECK_YOUR_ANSWERS,
     CURRENCY_OF_LATE_PAYMENTS,
     FAILED_TO_PAY,
-    CREDIT_INSURANCE_COVER,
     CURRENCY_OF_LATE_PAYMENTS_CHANGE,
     CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE,
+    FAILED_TO_PAY_CHANGE,
+    FAILED_TO_PAY_CHECK_AND_CHANGE,
   },
   CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-const { OUTSTANDING_PAYMENTS } = YOUR_BUYER_FIELD_IDS;
+const { OUTSTANDING_PAYMENTS, FAILED_PAYMENTS } = YOUR_BUYER_FIELD_IDS;
 
 export const FIELD_ID = OUTSTANDING_PAYMENTS;
 
@@ -99,7 +100,10 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber, migratedV1toV2, totalContractValueOverThreshold } = application;
+    const {
+      referenceNumber,
+      buyer: { buyerTradingHistory },
+    } = application;
 
     const payload = constructPayload(req.body, [FIELD_ID]);
 
@@ -128,26 +132,43 @@ export const post = async (req: Request, res: Response) => {
     const answer = payload[FIELD_ID];
 
     const hasTradingHistory = answer === 'true';
+    const hasNoFailedPayments = buyerTradingHistory[FAILED_PAYMENTS] === null;
 
     /**
-     * If is a change route
-     * redirect to CHECK_YOUR_ANSWERS
+     * If the route is a "change" route,
+     * the exporter has hasTradingHistory,
+     * redirect to CURRENCY_OF_LATE_PAYMENTS_CHANGE
+     * if the exporter has hasNoFailedPayments (FAILED_PAYMENTS has not yet been submitted)
+     * redirect to FAILED_TO_PAY_CHANGE
+     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
      */
     if (isChangeRoute(req.originalUrl)) {
       if (hasTradingHistory) {
         return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CURRENCY_OF_LATE_PAYMENTS_CHANGE}`);
       }
 
+      if (hasNoFailedPayments) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${FAILED_TO_PAY_CHANGE}`);
+      }
+
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
     /**
-     * If is a check-and-change route
-     * redirect to CHECK_AND_CHANGE_ROUTE
+     * If the route is a "check-and-change" route,
+     * the exporter has hasTradingHistory,
+     * redirect to CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE
+     * if the exporter has hasNoFailedPayments (FAILED_PAYMENTS has not yet been submitted)
+     * redirect to FAILED_TO_PAY_CHECK_AND_CHANGE
+     * Otherwise, redirect to CHECK_AND_CHANGE_ROUTE.
      */
     if (isCheckAndChangeRoute(req.originalUrl)) {
       if (hasTradingHistory) {
         return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE}`);
+      }
+
+      if (hasNoFailedPayments) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${FAILED_TO_PAY_CHECK_AND_CHANGE}`);
       }
 
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
@@ -159,15 +180,6 @@ export const post = async (req: Request, res: Response) => {
      */
     if (hasTradingHistory) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CURRENCY_OF_LATE_PAYMENTS}`);
-    }
-
-    /**
-     * if totalContractValue is over the threshold
-     * redirect to CREDIT_INSURANCE_COVER
-     * otherwise it should redirect to the BUYER_FINANCIAL_INFORMATION page
-     */
-    if (totalContractValueOverThreshold || migratedV1toV2) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${FAILED_TO_PAY}`);

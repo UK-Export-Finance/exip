@@ -79,9 +79,15 @@ context(
         row.value().contains(expected);
       });
 
-      it('should render the other new answers', () => {
+      it(`should render the new answer for ${OUTSTANDING_PAYMENTS}`, () => {
         checkSummaryList[OUTSTANDING_PAYMENTS]({ shouldRender: true, isYes: true });
+      });
+
+      it(`should render the new answer for ${CURRENCY_CODE}`, () => {
         checkSummaryList[CURRENCY_CODE]({ shouldRender: true });
+      });
+
+      it(`should render the new answer for ${TOTAL_AMOUNT_OVERDUE}`, () => {
         checkSummaryList[TOTAL_AMOUNT_OVERDUE]({ shouldRender: true });
       });
     });

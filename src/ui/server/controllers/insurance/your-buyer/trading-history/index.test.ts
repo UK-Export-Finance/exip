@@ -21,15 +21,16 @@ const {
     FAILED_TO_PAY,
     TRADING_HISTORY_CHANGE,
     TRADING_HISTORY_CHECK_AND_CHANGE,
-    CREDIT_INSURANCE_COVER,
     CURRENCY_OF_LATE_PAYMENTS_CHANGE,
     CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE,
+    FAILED_TO_PAY_CHANGE,
+    FAILED_TO_PAY_CHECK_AND_CHANGE,
   },
   CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-const { OUTSTANDING_PAYMENTS } = BUYER_FIELD_IDS;
+const { OUTSTANDING_PAYMENTS, FAILED_PAYMENTS } = BUYER_FIELD_IDS;
 
 describe('controllers/insurance/your-buyer/trading-history', () => {
   let req: Request;
@@ -59,7 +60,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
   });
 
   describe('FIELD_ID', () => {
-    it('should have the correct FIELD_IDS', () => {
+    it('should have the correct ID', () => {
       expect(FIELD_ID).toEqual(OUTSTANDING_PAYMENTS);
     });
   });
@@ -150,7 +151,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
-      describe(`when${OUTSTANDING_PAYMENTS} is yes`, () => {
+      describe(`when${OUTSTANDING_PAYMENTS} is true`, () => {
         it(`should redirect to ${CURRENCY_OF_LATE_PAYMENTS}`, async () => {
           validBody[OUTSTANDING_PAYMENTS] = 'true';
 
@@ -204,6 +205,31 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
         });
       });
 
+      describe(`when the url's last substring is "change" and ${OUTSTANDING_PAYMENTS} is false and ${FAILED_PAYMENTS} is null`, () => {
+        it(`should redirect to ${FAILED_TO_PAY_CHANGE}`, async () => {
+          req.originalUrl = TRADING_HISTORY_CHANGE;
+
+          validBody[OUTSTANDING_PAYMENTS] = 'false';
+
+          res.locals.application = {
+            ...mockApplication,
+            buyer: {
+              ...mockApplication.buyer,
+              buyerTradingHistory: {
+                ...mockApplication.buyer.buyerTradingHistory,
+                [FAILED_PAYMENTS]: null,
+              },
+            },
+          };
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${FAILED_TO_PAY_CHANGE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
       describe(`when the url's last substring is "check-and-change" and ${OUTSTANDING_PAYMENTS} is false`, () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
           req.originalUrl = TRADING_HISTORY_CHECK_AND_CHANGE;
@@ -218,20 +244,26 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
         });
       });
 
-      describe(`when the totalContractValueOverThreshold is true and ${OUTSTANDING_PAYMENTS} is false`, () => {
-        it(`should redirect to ${CREDIT_INSURANCE_COVER}`, async () => {
-          req.body = {
-            [OUTSTANDING_PAYMENTS]: 'false',
-          };
+      describe(`when the url's last substring is "check-and-change" and ${OUTSTANDING_PAYMENTS} is false and ${FAILED_PAYMENTS} is null`, () => {
+        it(`should redirect to ${FAILED_TO_PAY_CHECK_AND_CHANGE}`, async () => {
+          req.originalUrl = TRADING_HISTORY_CHECK_AND_CHANGE;
+
+          validBody[OUTSTANDING_PAYMENTS] = 'false';
 
           res.locals.application = {
             ...mockApplication,
-            totalContractValueOverThreshold: true,
+            buyer: {
+              ...mockApplication.buyer,
+              buyerTradingHistory: {
+                ...mockApplication.buyer.buyerTradingHistory,
+                [FAILED_PAYMENTS]: null,
+              },
+            },
           };
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${FAILED_TO_PAY_CHECK_AND_CHANGE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

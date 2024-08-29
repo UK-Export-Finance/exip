@@ -58,18 +58,20 @@ context('Insurance - Your buyer - Failed to pay page', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    describe(FAILED_PAYMENTS, () => {
-      it('renders `yes` radio button', () => {
-        yesRadio().input().first().should('exist');
+    it('renders `yes` radio button', () => {
+      yesRadio().input().first().should('exist');
 
-        cy.checkText(yesRadio().label().first(), FIELD_VALUES.YES);
-      });
+      cy.checkText(yesRadio().label().first(), FIELD_VALUES.YES);
+    });
 
-      it('renders `no` radio button', () => {
-        noRadio().input().first().should('exist');
+    it('renders `no` radio button', () => {
+      noRadio().input().first().should('exist');
 
-        cy.checkText(noRadio().label().first(), FIELD_VALUES.NO);
-      });
+      cy.checkText(noRadio().label().first(), FIELD_VALUES.NO);
+    });
+
+    it('renders `yes` and `no` radio buttons in the correct order', () => {
+      cy.assertYesNoRadiosOrder({ noRadioFirst: true });
     });
   });
 
@@ -88,7 +90,7 @@ context('Insurance - Your buyer - Failed to pay page', () => {
           it('should have the submitted values', () => {
             cy.navigateToUrl(url);
 
-            cy.assertNoRadioOptionIsChecked(0);
+            cy.assertNoRadioOptionIsChecked();
           });
         });
       });
@@ -106,7 +108,7 @@ context('Insurance - Your buyer - Failed to pay page', () => {
           it('should have the submitted values', () => {
             cy.navigateToUrl(url);
 
-            cy.assertYesRadioOptionIsChecked(0);
+            cy.assertYesRadioOptionIsChecked();
           });
         });
       });

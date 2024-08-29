@@ -107,13 +107,11 @@ context('Insurance - Your buyer - Outstanding or overdue payments', () => {
         beforeEach(() => {
           cy.navigateToUrl(tradingHistoryUrl);
 
-          // submit OUTSTANDING_PAYMENTS as yes
           cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
 
           cy.navigateToUrl(tradingHistoryUrl);
 
-          // change OUTSTANDING_PAYMENTS to no
-          cy.completeAndSubmitTradingHistoryWithBuyerForm({});
+          cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: false });
         });
 
         describe('when going back to the page', () => {
