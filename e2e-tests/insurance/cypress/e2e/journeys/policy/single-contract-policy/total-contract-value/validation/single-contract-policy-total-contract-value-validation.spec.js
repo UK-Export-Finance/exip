@@ -19,9 +19,7 @@ const {
   INSURANCE: {
     POLICY: {
       CONTRACT_POLICY: {
-        SINGLE: {
-          [FIELD_ID]: ERROR_MESSAGES_OBJECT,
-        },
+        SINGLE: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
       },
     },
   },

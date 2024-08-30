@@ -20,8 +20,10 @@ export const percentageFieldValidation = ({
   totalExpectedOtherErrorsWithValidPercentage = 0,
   minimum = MINIMUM_CHARACTERS.ZERO,
 }) => {
+  const field = fieldSelector(fieldId);
+
   const assertions = {
-    field: fieldSelector(fieldId),
+    field,
     errorIndex,
     expectedErrorsCount: totalExpectedErrors,
   };
@@ -71,8 +73,6 @@ export const percentageFieldValidation = ({
   });
 
   it(`should NOT display validation errors when ${fieldId} percentage field is correctly entered as a whole number`, () => {
-    const field = fieldSelector(fieldId);
-
     cy.keyboardInput(field.input(), '5');
 
     cy.clickSubmitButton();
@@ -81,8 +81,6 @@ export const percentageFieldValidation = ({
   });
 
   it(`should NOT display validation errors when ${fieldId} percentage field is correctly entered as ${minimum}`, () => {
-    const field = fieldSelector(fieldId);
-
     cy.keyboardInput(field.input(), minimum);
 
     cy.clickSubmitButton();

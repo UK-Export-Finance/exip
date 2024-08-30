@@ -1,7 +1,6 @@
 import { MINIMUM_CHARACTERS } from '../../constants';
 import { field as fieldSelector } from '../../pages/shared';
 
-
 /**
  * monetaryFieldValidation
  * Assert monetary field validation
@@ -21,8 +20,10 @@ export const monetaryFieldValidation = ({
   totalExpectedOtherErrorsWithValidMonetaryValue = 0,
   minimum = MINIMUM_CHARACTERS.ZERO,
 }) => {
+  const field = fieldSelector(fieldId);
+
   const assertions = {
-    field: fieldSelector(fieldId),
+    field,
     errorIndex,
     expectedErrorsCount: totalExpectedErrors,
   };
@@ -69,5 +70,21 @@ export const monetaryFieldValidation = ({
       value: `${minimum - 1}`,
       expectedErrorMessage: errorMessages.BELOW_MINIMUM,
     });
+  });
+
+  it(`should NOT render a validation error when ${fieldId} monetary field is correctly entered with a comma`, () => {
+    cy.keyboardInput(field.input(), '1,234');
+
+    cy.clickSubmitButton();
+
+    cy.assertErrorSummaryListLength(totalExpectedOtherErrorsWithValidMonetaryValue);
+  });
+
+  it(`should NOT render a validation error when ${fieldId} monetary field is correctly entered as ${minimum}`, () => {
+    cy.keyboardInput(field.input(), minimum);
+
+    cy.clickSubmitButton();
+
+    cy.assertErrorSummaryListLength(totalExpectedOtherErrorsWithValidMonetaryValue);
   });
 };
