@@ -13,7 +13,7 @@ const {
   POLICY: {
     TYPE_OF_POLICY: { POLICY_TYPE },
     CONTRACT_POLICY: {
-      SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
+      SINGLE: { CONTRACT_COMPLETION_DATE, REQUESTED_CREDIT_LIMIT, TOTAL_CONTRACT_VALUE },
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -102,6 +102,10 @@ context('Insurance - Policy - Change your answers - Policy type - multiple to si
 
       it(TOTAL_CONTRACT_VALUE, () => {
         checkSummaryList.singleContractPolicy[TOTAL_CONTRACT_VALUE]();
+      });
+
+      it(REQUESTED_CREDIT_LIMIT, () => {
+        checkSummaryList.singleContractPolicy[REQUESTED_CREDIT_LIMIT]();
       });
     });
   });
