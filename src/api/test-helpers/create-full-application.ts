@@ -36,20 +36,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
     context,
   );
 
-  const {
-    eligibilityId,
-    // referenceNumber,
-    policyId,
-    exportContractId,
-    businessId,
-    brokerId,
-    buyerId,
-    companyId,
-    declarationId,
-    // nominatedLossPayeeId,
-    policyContactId,
-    // sectionReviewId,
-  } = application;
+  const { eligibilityId, policyId, exportContractId, businessId, brokerId, buyerId, companyId, declarationId, policyContactId } = application;
 
   const broker = await getBrokerById(context, brokerId);
 
@@ -90,7 +77,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
     },
     data: policyData,
     query:
-      'id policyType requestedStartDate contractCompletionDate totalValueOfContract creditPeriodWithBuyer policyCurrencyCode totalMonthsOfCover totalSalesToBuyer maximumBuyerWillOwe needPreCreditPeriodCover jointlyInsuredParty { id companyName companyNumber countryCode requested }',
+      'id policyType requestedStartDate contractCompletionDate totalValueOfContract creditLimit creditPeriodWithBuyer policyCurrencyCode totalMonthsOfCover totalSalesToBuyer maximumBuyerWillOwe needPreCreditPeriodCover jointlyInsuredParty { id companyName companyNumber countryCode requested }',
   })) as ApplicationPolicy;
 
   /**
