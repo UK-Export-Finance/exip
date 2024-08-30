@@ -1,6 +1,6 @@
 import generatePolicyContactFields from '.';
 import { FORM_TITLES } from '../../../../content-strings/form-titles';
-import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../constants/field-ids/insurance/policy';
 import ACCOUNT_FIELD_IDS from '../../../../constants/field-ids/insurance/account';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
@@ -14,10 +14,8 @@ const {
 } = FORM_TITLES;
 
 const {
-  POLICY: {
-    NAME_ON_POLICY: { NAME, POSITION, IS_SAME_AS_OWNER },
-  },
-} = INSURANCE_FIELD_IDS;
+  NAME_ON_POLICY: { NAME, POSITION, IS_SAME_AS_OWNER },
+} = POLICY_FIELD_IDS;
 
 const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 

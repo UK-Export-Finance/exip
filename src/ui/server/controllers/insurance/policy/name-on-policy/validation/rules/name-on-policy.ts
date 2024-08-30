@@ -1,13 +1,11 @@
-import { FIELD_IDS } from '../../../../../../constants';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 import { RequestBody } from '../../../../../../../types';
 
 const {
-  POLICY: {
-    NAME_ON_POLICY: { NAME: FIELD_ID },
-  },
-} = FIELD_IDS.INSURANCE;
+  NAME_ON_POLICY: { NAME: FIELD_ID },
+} = POLICY_FIELD_IDS;
 
 const {
   INSURANCE: {

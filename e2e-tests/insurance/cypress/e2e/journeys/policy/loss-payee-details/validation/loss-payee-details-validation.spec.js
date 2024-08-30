@@ -2,7 +2,7 @@ import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { MAXIMUM_CHARACTERS } from '../../../../../../../constants/validation';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import assertNameFieldValidation from '../../../../../../../shared-test-assertions/name-field-validation';
 
 const ERRORS = ERROR_MESSAGES.INSURANCE.POLICY;
@@ -13,10 +13,8 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
-    LOSS_PAYEE_DETAILS: { NAME, LOCATION, IS_LOCATED_IN_UK },
-  },
-} = INSURANCE_FIELD_IDS;
+  LOSS_PAYEE_DETAILS: { NAME, LOCATION, IS_LOCATED_IN_UK },
+} = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 

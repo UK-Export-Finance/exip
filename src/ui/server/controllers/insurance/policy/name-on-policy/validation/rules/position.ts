@@ -1,14 +1,12 @@
-import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import nameValidation from '../../../../../../shared-validation/name';
 import { RequestBody } from '../../../../../../../types';
 
 const {
-  POLICY: {
-    NAME_ON_POLICY: { POSITION: FIELD_ID, NAME, SAME_NAME },
-  },
-} = INSURANCE_FIELD_IDS;
+  NAME_ON_POLICY: { POSITION: FIELD_ID, NAME, SAME_NAME },
+} = POLICY_FIELD_IDS;
 
 const {
   INSURANCE: {
