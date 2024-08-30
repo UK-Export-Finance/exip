@@ -13,7 +13,7 @@ const {
   },
   POLICY: {
     CONTRACT_POLICY: {
-      SINGLE: { TOTAL_CONTRACT_VALUE, CREDIT_LIMIT },
+      SINGLE: { TOTAL_CONTRACT_VALUE, REQUESTED_CREDIT_LIMIT },
       MULTIPLE: { TOTAL_MONTHS_OF_COVER },
     },
     EXPORT_VALUE: {
@@ -26,7 +26,7 @@ describe('server/helpers/sanitise-data', () => {
   describe('NUMBER_FIELDS', () => {
     it('should return an explicit array of field IDs that are number fields that could have a value of 0', () => {
       const expected = [
-        CREDIT_LIMIT,
+        REQUESTED_CREDIT_LIMIT,
         EMPLOYEES_UK,
         ESTIMATED_ANNUAL_TURNOVER,
         FIXED_SUM_AMOUNT,

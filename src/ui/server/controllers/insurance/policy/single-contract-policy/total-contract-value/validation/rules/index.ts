@@ -1,8 +1,8 @@
 import totalContractValueRules from './total-contract-value';
-import creditLimitRules from './credit-limit';
+import requestedCreditLimitRules from './requested-credit-limit';
 import { ValidationErrors } from '../../../../../../../../types';
 
-const rules = [totalContractValueRules, creditLimitRules];
+const rules = [totalContractValueRules, requestedCreditLimitRules];
 
 const validationRules = rules as Array<() => ValidationErrors>;
 

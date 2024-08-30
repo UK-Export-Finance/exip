@@ -277,10 +277,10 @@ export const ERROR_MESSAGES = {
             INCORRECT_FORMAT: 'Enter the total value of the contract you want to insure as a whole number - do not enter decimals',
             BELOW_MINIMUM: `The total value of the contract you want to insure must be ${MINIMUM_CHARACTERS.POLICY.TOTAL_CONTRACT_VALUE} or more`,
           },
-          [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.SINGLE.CREDIT_LIMIT]: {
+          [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.SINGLE.REQUESTED_CREDIT_LIMIT]: {
             IS_EMPTY: 'Enter the credit limit you require as a whole number - do not enter decimals',
             INCORRECT_FORMAT: 'Enter the credit limit you require as a whole number - do not enter decimals',
-            BELOW_MINIMUM: `The credit limit you want to insure must be ${MINIMUM_CHARACTERS.POLICY.CREDIT_LIMIT} or more`,
+            BELOW_MINIMUM: `The credit limit you want to insure must be ${MINIMUM_CHARACTERS.POLICY.REQUESTED_CREDIT_LIMIT} or more`,
           },
         },
         MULTIPLE: {

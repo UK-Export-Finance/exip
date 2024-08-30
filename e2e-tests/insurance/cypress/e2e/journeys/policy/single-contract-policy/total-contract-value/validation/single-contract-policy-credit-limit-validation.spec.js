@@ -11,7 +11,7 @@ const {
 
 const {
   CONTRACT_POLICY: {
-    SINGLE: { CREDIT_LIMIT: FIELD_ID },
+    SINGLE: { REQUESTED_CREDIT_LIMIT: FIELD_ID },
   },
 } = POLICY_FIELD_IDS;
 
@@ -59,6 +59,6 @@ context(`Insurance - Policy - Single contract policy - Total contract value page
     errorMessages: ERROR_MESSAGES_OBJECT,
     totalExpectedErrors: 2,
     totalExpectedOtherErrorsWithValidMonetaryValue: 1,
-    minimum: MINIMUM_CHARACTERS.POLICY.CREDIT_LIMIT,
+    minimum: MINIMUM_CHARACTERS.POLICY.REQUESTED_CREDIT_LIMIT,
   });
 });

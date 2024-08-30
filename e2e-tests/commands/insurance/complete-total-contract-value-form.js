@@ -5,7 +5,7 @@ import application from '../../fixtures/application';
 const {
   POLICY: {
     CONTRACT_POLICY: {
-      SINGLE: { CREDIT_LIMIT, TOTAL_CONTRACT_VALUE },
+      SINGLE: { REQUESTED_CREDIT_LIMIT, TOTAL_CONTRACT_VALUE },
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -15,12 +15,12 @@ const {
  * Complete the "Total contract value" form
  * @param {Boolean} policyValueOverMvpMaximum: Should submit an application with a value over the MVP maximum amount
  * @param {String} totalContractValue: Total contract value
- * @param {String} creditLimit: Credit limit
+ * @param {String} requestedCreditLimit: Requested credit limit
  */
 const completeTotalContractValueForm = ({
   policyValueOverMvpMaximum = false,
   totalContractValue = application.POLICY[TOTAL_CONTRACT_VALUE],
-  creditLimit = application.POLICY[CREDIT_LIMIT],
+  requestedCreditLimit = application.POLICY[REQUESTED_CREDIT_LIMIT],
 }) => {
   if (policyValueOverMvpMaximum) {
     const mvpMaximumPlusOne = 50000 + 1;
@@ -29,8 +29,8 @@ const completeTotalContractValueForm = ({
     cy.keyboardInput(field(TOTAL_CONTRACT_VALUE).input(), totalContractValue);
   }
 
-  if (creditLimit) {
-    cy.keyboardInput(field(CREDIT_LIMIT).input(), creditLimit);
+  if (requestedCreditLimit) {
+    cy.keyboardInput(field(REQUESTED_CREDIT_LIMIT).input(), requestedCreditLimit);
   }
 };
 

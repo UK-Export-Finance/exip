@@ -169,7 +169,7 @@ model Policy {
   totalMonthsOfCover       Int?
   totalSalesToBuyer        Int?
   maximumBuyerWillOwe      Int?
-  creditLimit              Int?
+  requestedCreditLimit     Int?
   from_Application_policy  Application[]        @relation("Application_policy")
 
   @@index([applicationId])

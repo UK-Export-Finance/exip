@@ -77,7 +77,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
     },
     data: policyData,
     query:
-      'id policyType requestedStartDate contractCompletionDate totalValueOfContract creditLimit creditPeriodWithBuyer policyCurrencyCode totalMonthsOfCover totalSalesToBuyer maximumBuyerWillOwe needPreCreditPeriodCover jointlyInsuredParty { id companyName companyNumber countryCode requested }',
+      'id policyType requestedStartDate contractCompletionDate totalValueOfContract requestedCreditLimit creditPeriodWithBuyer policyCurrencyCode totalMonthsOfCover totalSalesToBuyer maximumBuyerWillOwe needPreCreditPeriodCover jointlyInsuredParty { id companyName companyNumber countryCode requested }',
   })) as ApplicationPolicy;
 
   /**

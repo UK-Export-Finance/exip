@@ -305,7 +305,7 @@ var POLICY = {
       CONTRACT_COMPLETION_DATE_MONTH: `${CONTRACT_COMPLETION_DATE}-month`,
       CONTRACT_COMPLETION_DATE_YEAR: `${CONTRACT_COMPLETION_DATE}-year`,
       TOTAL_CONTRACT_VALUE: "totalValueOfContract",
-      CREDIT_LIMIT: "creditLimit"
+      REQUESTED_CREDIT_LIMIT: "requestedCreditLimit"
     },
     MULTIPLE: {
       TOTAL_MONTHS_OF_COVER: "totalMonthsOfCover"
@@ -1884,7 +1884,7 @@ var lists = {
       totalMonthsOfCover: (0, import_fields.integer)(),
       totalSalesToBuyer: (0, import_fields.integer)(),
       maximumBuyerWillOwe: (0, import_fields.integer)(),
-      creditLimit: (0, import_fields.integer)()
+      requestedCreditLimit: (0, import_fields.integer)()
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -5404,7 +5404,7 @@ var getPolicyById = async (context, id) => {
     console.info("Getting policy by ID %s", id);
     const policy = await context.query.Policy.findOne({
       where: { id },
-      query: "id policyType requestedStartDate contractCompletionDate creditLimit totalValueOfContract creditPeriodWithBuyer policyCurrencyCode totalMonthsOfCover totalSalesToBuyer maximumBuyerWillOwe needPreCreditPeriodCover jointlyInsuredParty { id companyName companyNumber countryCode requested }"
+      query: "id policyType requestedStartDate contractCompletionDate requestedCreditLimit totalValueOfContract creditPeriodWithBuyer policyCurrencyCode totalMonthsOfCover totalSalesToBuyer maximumBuyerWillOwe needPreCreditPeriodCover jointlyInsuredParty { id companyName companyNumber countryCode requested }"
     });
     return policy;
   } catch (error) {
@@ -6510,7 +6510,7 @@ var POLICY_FIELDS = {
           FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
         }
       },
-      [CONTRACT_POLICY.SINGLE.CREDIT_LIMIT]: {
+      [CONTRACT_POLICY.SINGLE.REQUESTED_CREDIT_LIMIT]: {
         LABEL: "What credit limit do you require?",
         HINT: "For example, your total contract maybe \xA3250,000 but the amount you want to insure is \xA3100,000.",
         SUMMARY: {

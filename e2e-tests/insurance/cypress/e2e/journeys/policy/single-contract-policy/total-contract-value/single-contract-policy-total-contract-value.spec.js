@@ -16,7 +16,7 @@ const {
 
 const {
   CONTRACT_POLICY: {
-    SINGLE: { TOTAL_CONTRACT_VALUE, CREDIT_LIMIT },
+    SINGLE: { TOTAL_CONTRACT_VALUE, REQUESTED_CREDIT_LIMIT },
   },
 } = POLICY_FIELD_IDS;
 
@@ -76,8 +76,8 @@ context(
         field.input().should('exist');
       });
 
-      it(`renders ${CREDIT_LIMIT} hint, prefix and input`, () => {
-        const fieldId = CREDIT_LIMIT;
+      it(`renders ${REQUESTED_CREDIT_LIMIT} hint, prefix and input`, () => {
+        const fieldId = REQUESTED_CREDIT_LIMIT;
         const field = fieldSelector(fieldId);
 
         cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT);
@@ -116,7 +116,7 @@ context(
 
           fieldSelector(TOTAL_CONTRACT_VALUE).input().should('have.value', application.POLICY[TOTAL_CONTRACT_VALUE]);
 
-          fieldSelector(CREDIT_LIMIT).input().should('have.value', application.POLICY[CREDIT_LIMIT]);
+          fieldSelector(REQUESTED_CREDIT_LIMIT).input().should('have.value', application.POLICY[REQUESTED_CREDIT_LIMIT]);
         });
       });
     });

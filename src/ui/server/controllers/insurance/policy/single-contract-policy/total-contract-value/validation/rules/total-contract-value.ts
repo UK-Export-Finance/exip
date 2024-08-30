@@ -26,7 +26,7 @@ const {
 
 /**
  * totalContractValueRules
- * Check submitted form data for errors with the total contract value field
+ * Check submitted form data for errors with the TOTAL_CONTRACT_VALUE field
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
  * * @param {Object} errors: Errors from previous validation errors errors

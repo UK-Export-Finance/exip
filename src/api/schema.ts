@@ -171,7 +171,7 @@ export const lists = {
       totalMonthsOfCover: integer(),
       totalSalesToBuyer: integer(),
       maximumBuyerWillOwe: integer(),
-      creditLimit: integer(),
+      requestedCreditLimit: integer(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {

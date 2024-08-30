@@ -72,7 +72,7 @@ const applicationByReferenceNumberQuery = gql`
           requestedStartDate
           contractCompletionDate
           totalValueOfContract
-          creditLimit
+          requestedCreditLimit
           creditPeriodWithBuyer
           policyCurrencyCode
           totalMonthsOfCover

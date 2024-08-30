@@ -24,7 +24,7 @@ export const POLICY = {
       CONTRACT_COMPLETION_DATE_MONTH: `${CONTRACT_COMPLETION_DATE}-month`,
       CONTRACT_COMPLETION_DATE_YEAR: `${CONTRACT_COMPLETION_DATE}-year`,
       TOTAL_CONTRACT_VALUE: 'totalValueOfContract',
-      CREDIT_LIMIT: 'creditLimit',
+      REQUESTED_CREDIT_LIMIT: 'requestedCreditLimit',
     },
     MULTIPLE: {
       TOTAL_MONTHS_OF_COVER: 'totalMonthsOfCover',

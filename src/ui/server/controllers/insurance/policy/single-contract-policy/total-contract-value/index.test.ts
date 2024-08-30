@@ -31,7 +31,7 @@ const {
 
 const {
   CONTRACT_POLICY: {
-    SINGLE: { TOTAL_CONTRACT_VALUE, CREDIT_LIMIT },
+    SINGLE: { TOTAL_CONTRACT_VALUE, REQUESTED_CREDIT_LIMIT },
   },
 } = POLICY_FIELD_IDS;
 
@@ -80,9 +80,9 @@ describe('controllers/insurance/policy/single-contract-policy/total-contract-val
             ID: TOTAL_CONTRACT_VALUE,
             ...FIELDS.CONTRACT_POLICY.SINGLE[TOTAL_CONTRACT_VALUE],
           },
-          CREDIT_LIMIT: {
-            ID: CREDIT_LIMIT,
-            ...FIELDS.CONTRACT_POLICY.SINGLE[CREDIT_LIMIT],
+          REQUESTED_CREDIT_LIMIT: {
+            ID: REQUESTED_CREDIT_LIMIT,
+            ...FIELDS.CONTRACT_POLICY.SINGLE[REQUESTED_CREDIT_LIMIT],
           },
         },
         DYNAMIC_PAGE_TITLE: `${PAGE_CONTENT_STRINGS.PAGE_TITLE} ${currency.name}?`,
@@ -102,7 +102,7 @@ describe('controllers/insurance/policy/single-contract-policy/total-contract-val
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      expect(FIELD_IDS).toEqual([TOTAL_CONTRACT_VALUE, CREDIT_LIMIT]);
+      expect(FIELD_IDS).toEqual([TOTAL_CONTRACT_VALUE, REQUESTED_CREDIT_LIMIT]);
     });
   });
 
@@ -187,7 +187,7 @@ describe('controllers/insurance/policy/single-contract-policy/total-contract-val
 
     const validBody = {
       [TOTAL_CONTRACT_VALUE]: '1',
-      [CREDIT_LIMIT]: '2',
+      [REQUESTED_CREDIT_LIMIT]: '2',
     };
 
     describe('when there are no validation errors', () => {

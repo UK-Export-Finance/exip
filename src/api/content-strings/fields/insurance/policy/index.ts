@@ -102,7 +102,7 @@ export const POLICY_FIELDS = {
           FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
         },
       },
-      [CONTRACT_POLICY.SINGLE.CREDIT_LIMIT]: {
+      [CONTRACT_POLICY.SINGLE.REQUESTED_CREDIT_LIMIT]: {
         LABEL: 'What credit limit do you require?',
         HINT: 'For example, your total contract maybe £250,000 but the amount you want to insure is £100,000.',
         SUMMARY: {

@@ -10,7 +10,7 @@ const {
 
 const {
   CONTRACT_POLICY: {
-    SINGLE: { TOTAL_CONTRACT_VALUE, CREDIT_LIMIT },
+    SINGLE: { TOTAL_CONTRACT_VALUE, REQUESTED_CREDIT_LIMIT },
   },
 } = FIELD_IDS;
 
@@ -56,7 +56,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitTotalContractValueForm({ creditLimit: '' });
+      cy.completeAndSubmitTotalContractValueForm({ requestedCreditLimit: '' });
     });
 
     it('should redirect to `all sections`', () => {
@@ -71,7 +71,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
       cy.navigateToUrl(url);
 
       fieldSelector(TOTAL_CONTRACT_VALUE).input().should('have.value', application.POLICY[TOTAL_CONTRACT_VALUE]);
-      fieldSelector(CREDIT_LIMIT).input().should('have.value', '');
+      fieldSelector(REQUESTED_CREDIT_LIMIT).input().should('have.value', '');
     });
   });
 
@@ -94,7 +94,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
       cy.navigateToUrl(url);
 
       fieldSelector(TOTAL_CONTRACT_VALUE).input().should('have.value', application.POLICY[TOTAL_CONTRACT_VALUE]);
-      fieldSelector(CREDIT_LIMIT).input().should('have.value', application.POLICY[CREDIT_LIMIT]);
+      fieldSelector(REQUESTED_CREDIT_LIMIT).input().should('have.value', application.POLICY[REQUESTED_CREDIT_LIMIT]);
     });
   });
 });
