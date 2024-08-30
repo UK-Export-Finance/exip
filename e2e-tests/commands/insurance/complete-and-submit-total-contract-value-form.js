@@ -1,11 +1,16 @@
 /**
  * completeAndSubmitTotalContractValueForm
  * Complete and submit the "Total contract value" form
- * @param {Object} Object with flags completing and submitting the form
- * - policyValueOverMvpMaximum: should submit an application with the value over the MVP maximum amount
+ * @param {Boolean} policyValueOverMvpMaximum: Should submit an application with a value over the MVP maximum amount
+ * @param {String} totalContractValue: Total contract value
+ * @param {String} creditLimit: Credit limit
  */
-const completeAndSubmitTotalContractValueForm = ({ policyValueOverMvpMaximum = false }) => {
-  cy.completeTotalContractValueForm({ policyValueOverMvpMaximum });
+const completeAndSubmitTotalContractValueForm = ({ policyValueOverMvpMaximum, totalContractValue, creditLimit }) => {
+  cy.completeTotalContractValueForm({
+    policyValueOverMvpMaximum,
+    totalContractValue,
+    creditLimit,
+  });
 
   cy.clickSubmitButton();
 };

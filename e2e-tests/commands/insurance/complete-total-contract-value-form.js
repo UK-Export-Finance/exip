@@ -13,18 +13,25 @@ const {
 /**
  * completeTotalContractValueForm
  * Complete the "Total contract value" form
- * @param {Object} Object with flags completing and submitting the form
- * - policyValueOverMvpMaximum: should submit an application with a value over the MVP maximum amount
+ * @param {Boolean} policyValueOverMvpMaximum: Should submit an application with a value over the MVP maximum amount
+ * @param {String} totalContractValue: Total contract value
+ * @param {String} creditLimit: Credit limit
  */
-const completeTotalContractValueForm = ({ policyValueOverMvpMaximum = false }) => {
+const completeTotalContractValueForm = ({
+  policyValueOverMvpMaximum = false,
+  totalContractValue = application.POLICY[TOTAL_CONTRACT_VALUE],
+  creditLimit = application.POLICY[CREDIT_LIMIT],
+}) => {
   if (policyValueOverMvpMaximum) {
     const mvpMaximumPlusOne = 50000 + 1;
     cy.keyboardInput(field(TOTAL_CONTRACT_VALUE).input(), mvpMaximumPlusOne);
   } else {
-    cy.keyboardInput(field(TOTAL_CONTRACT_VALUE).input(), application.POLICY[TOTAL_CONTRACT_VALUE]);
+    cy.keyboardInput(field(TOTAL_CONTRACT_VALUE).input(), totalContractValue);
   }
 
-  cy.keyboardInput(field(CREDIT_LIMIT).input(), application.POLICY[CREDIT_LIMIT]);
+  if (creditLimit) {
+    cy.keyboardInput(field(CREDIT_LIMIT).input(), creditLimit);
+  }
 };
 
 export default completeTotalContractValueForm;
