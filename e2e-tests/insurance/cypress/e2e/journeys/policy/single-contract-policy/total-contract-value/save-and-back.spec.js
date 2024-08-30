@@ -56,7 +56,9 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitTotalContractValueForm({ requestedCreditLimit: '' });
+      cy.completeTotalContractValueForm({ requestedCreditLimit: '' });
+
+      cy.clickSaveAndBackButton();
     });
 
     it('should redirect to `all sections`', () => {
@@ -79,7 +81,9 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitTotalContractValueForm({});
+      cy.completeTotalContractValueForm({});
+
+      cy.clickSaveAndBackButton();
     });
 
     it('should redirect to `all sections`', () => {
