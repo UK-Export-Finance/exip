@@ -128,7 +128,7 @@ describe('controllers/insurance/your-buyer/failed-to-pay-on-time', () => {
         req.body = validBody;
       });
 
-      describe('when totalContractValueOverThreshold is not true', () => {
+      describe('when totalContractValueOverThreshold=false', () => {
         it(`should redirect to the next page`, async () => {
           res.locals.application = {
             ...mockApplication,
@@ -197,7 +197,7 @@ describe('controllers/insurance/your-buyer/failed-to-pay-on-time', () => {
         });
       });
 
-      describe(`when the totalContractValueOverThreshold is true`, () => {
+      describe(`when the totalContractValueOverThreshold=true`, () => {
         it(`should redirect to ${CREDIT_INSURANCE_COVER}`, async () => {
           req.body = {
             [FIELD_ID]: 'false',

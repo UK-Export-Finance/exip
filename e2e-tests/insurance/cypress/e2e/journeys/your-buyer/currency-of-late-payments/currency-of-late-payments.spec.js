@@ -23,7 +23,7 @@ const {
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  'Insurance - Your buyer - Currency of late payments - As an exporter, I want to provide the details on trading history with the buyer of my export trade, So that UKEF can gain clarity on whether I have trading history with the buyer as part of due diligence',
+  'Insurance - Your buyer - Currency of late payments - As an exporter, I want to be able to select an alternative currency when reporting any outstanding or overdue payments from the buyer, So that I can report accurate figures on my application',
   () => {
     let referenceNumber;
     let url;

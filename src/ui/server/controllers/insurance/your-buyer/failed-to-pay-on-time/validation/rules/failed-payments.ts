@@ -1,13 +1,11 @@
-import { FIELD_IDS } from '../../../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { RequestBody } from '../../../../../../../types';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 
 const {
-  INSURANCE: {
-    YOUR_BUYER: { FAILED_PAYMENTS: FIELD_ID },
-  },
-} = FIELD_IDS;
+  YOUR_BUYER: { FAILED_PAYMENTS: FIELD_ID },
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {

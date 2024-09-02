@@ -100,7 +100,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber, migratedV1toV2, totalContractValueOverThreshold } = application;
+    const { referenceNumber, totalContractValueOverThreshold } = application;
 
     const payload = constructPayload(req.body, [FIELD_ID]);
 
@@ -147,7 +147,7 @@ export const post = async (req: Request, res: Response) => {
      * redirect to CREDIT_INSURANCE_COVER
      * otherwise it should redirect to the BUYER_FINANCIAL_INFORMATION page
      */
-    if (totalContractValueOverThreshold || migratedV1toV2) {
+    if (totalContractValueOverThreshold) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`);
     }
 

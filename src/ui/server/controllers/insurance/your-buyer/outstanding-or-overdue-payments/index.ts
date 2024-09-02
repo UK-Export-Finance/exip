@@ -189,7 +189,8 @@ export const post = async (req: Request, res: Response) => {
 
     /**
      * If is a change route
-     * redirect to CHECK_YOUR_ANSWERS
+     * if there are no failed payments then redirect to FAILED_TO_PAY_CHANGE
+     * else redirect to CHECK_YOUR_ANSWERS
      */
     if (isChange) {
       if (hasNoFailedPayments) {
@@ -201,6 +202,7 @@ export const post = async (req: Request, res: Response) => {
 
     /**
      * If is a check-and-change route
+     * if there are no failed payments then redirect to FAILED_TO_PAY_CHANGE
      * redirect to CHECK_AND_CHANGE_ROUTE
      */
     if (isCheckAndChange) {

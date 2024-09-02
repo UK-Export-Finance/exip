@@ -91,7 +91,7 @@ export const YOUR_BUYER_FIELDS = {
     },
   },
   [CURRENCY_CODE]: {
-    LEGEND: 'Select the currency the outstanding or overdue payments are in?',
+    LEGEND: 'What is the currency the outstanding or overdue payments are in?',
     SUMMARY: {
       TITLE: 'Outstanding payments currency',
     },

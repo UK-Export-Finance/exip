@@ -68,7 +68,7 @@ context('Insurance - Your buyer - Trading history - No outstanding payments - Sa
     it('should retain completed input on the page', () => {
       cy.navigateToUrl(url);
 
-      cy.assertNoRadioOptionIsChecked(0);
+      cy.assertNoRadioOptionIsChecked();
     });
   });
 
@@ -93,7 +93,7 @@ context('Insurance - Your buyer - Trading history - No outstanding payments - Sa
       // get to trading-history page
       cy.navigateToUrl(url);
 
-      cy.assertNoRadioOptionIsChecked(0);
+      cy.assertNoRadioOptionIsChecked();
     });
   });
 });

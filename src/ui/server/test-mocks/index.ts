@@ -40,7 +40,7 @@ import mockSicCodes from './mock-sic-codes';
 import mockBusinessNatureOfBusiness from './mock-business-nature-of-business';
 import mockBusinessTurnover from './mock-business-turnover';
 import mockBroker from './mock-broker';
-import mockBuyer, { mockBuyerTradingHistory, mockBuyerRelationship, mockBuyerContact } from './mock-buyer';
+import mockBuyer, { mockBuyerTradingHistory, mockBuyerRelationship, mockBuyerContact, mockBuyerOutstandingOrOverduePayments } from './mock-buyer';
 import { mockInsuranceFeedback } from './mock-feedback';
 import mockJointlyInsuredParty from './mock-jointly-insured-party';
 import mockLossPayeeDetails from './mock-loss-payee-details';
@@ -152,6 +152,7 @@ export {
   mockBusinessTurnover,
   mockBuyer,
   mockBuyerContact,
+  mockBuyerOutstandingOrOverduePayments,
   mockBuyerRelationship,
   mockBuyerTradingHistory,
   mockCountries,

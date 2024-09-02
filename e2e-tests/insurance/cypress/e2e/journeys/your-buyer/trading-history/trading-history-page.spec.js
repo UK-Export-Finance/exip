@@ -103,7 +103,7 @@ context(
             it('should have the submitted values', () => {
               cy.navigateToUrl(url);
 
-              cy.assertNoRadioOptionIsChecked(0);
+              cy.assertNoRadioOptionIsChecked();
             });
           });
         });

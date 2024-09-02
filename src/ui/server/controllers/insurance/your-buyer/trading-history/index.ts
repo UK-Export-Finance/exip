@@ -175,7 +175,7 @@ export const post = async (req: Request, res: Response) => {
     }
 
     /**
-     * if OUTSTANDING_PAYMENTS is true
+     * if hasTradingHistory is true
      * then should redirect to CURRENCY_OF_LATE_PAYMENTS
      */
     if (hasTradingHistory) {

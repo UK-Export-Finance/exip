@@ -23,6 +23,7 @@ import {
   mockSpyPromiseRejection,
   referenceNumber,
   mockCurrenciesEmptyResponse,
+  mockBuyerOutstandingOrOverduePayments,
 } from '../../../../test-mocks';
 
 const {
@@ -174,12 +175,7 @@ describe('controllers/insurance/your-buyer/outstanding-or-overdue-payments', () 
   });
 
   describe('post', () => {
-    const value = '5000';
-
-    const validBody = {
-      [TOTAL_OUTSTANDING_PAYMENTS]: value,
-      [TOTAL_AMOUNT_OVERDUE]: value,
-    };
+    const validBody = mockBuyerOutstandingOrOverduePayments;
 
     beforeEach(() => {
       mapAndSave.buyerTradingHistory = jest.fn(() => Promise.resolve(true));

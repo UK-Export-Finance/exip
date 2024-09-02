@@ -18,111 +18,114 @@ const baseUrl = Cypress.config('baseUrl');
 
 const { BUYER } = application;
 
-context('Insurance - Your buyer - Outstanding or overdue payments', () => {
-  let referenceNumber;
-  let url;
-  let failedToPayUrl;
-  let tradingHistoryUrl;
+context(
+  'Insurance - Your buyer - Outstanding or overdue payments - As an Underwriter, I want to know about any outstanding and/or overdue payments the buyer owes the exporter, So that I can better understand the level of risk when assessing the application',
+  () => {
+    let referenceNumber;
+    let url;
+    let failedToPayUrl;
+    let tradingHistoryUrl;
 
-  before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${OUTSTANDING_OR_OVERDUE_PAYMENTS}`;
-      failedToPayUrl = `${baseUrl}${ROOT}/${referenceNumber}${FAILED_TO_PAY}`;
-      tradingHistoryUrl = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
+        url = `${baseUrl}${ROOT}/${referenceNumber}${OUTSTANDING_OR_OVERDUE_PAYMENTS}`;
+        failedToPayUrl = `${baseUrl}${ROOT}/${referenceNumber}${FAILED_TO_PAY}`;
+        tradingHistoryUrl = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
 
-      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'currencyOfLatePayments', outstandingPayments: true, exporterHasTradedWithBuyer: true });
+        cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'currencyOfLatePayments', outstandingPayments: true, exporterHasTradedWithBuyer: true });
 
-      cy.assertUrl(url);
+        cy.assertUrl(url);
+      });
     });
-  });
 
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
-
-  it('renders core page elements', () => {
-    cy.corePageChecks({
-      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${ROOT}/${referenceNumber}${OUTSTANDING_OR_OVERDUE_PAYMENTS}`,
-      backLink: `${ROOT}/${referenceNumber}${CURRENCY_OF_LATE_PAYMENTS}`,
-    });
-  });
-
-  describe('page tests', () => {
     beforeEach(() => {
-      cy.navigateToUrl(url);
+      cy.saveSession();
     });
 
-    it('renders a heading caption', () => {
-      cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    after(() => {
+      cy.deleteApplication(referenceNumber);
     });
 
-    describe(TOTAL_OUTSTANDING_PAYMENTS, () => {
-      it(`should render a label for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
-        cy.checkText(field(TOTAL_OUTSTANDING_PAYMENTS).label(), FIELDS[TOTAL_OUTSTANDING_PAYMENTS].LABEL);
-      });
-
-      it(`should render an input for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
-        field(TOTAL_OUTSTANDING_PAYMENTS).input().should('be.visible');
+    it('renders core page elements', () => {
+      cy.corePageChecks({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currentHref: `${ROOT}/${referenceNumber}${OUTSTANDING_OR_OVERDUE_PAYMENTS}`,
+        backLink: `${ROOT}/${referenceNumber}${CURRENCY_OF_LATE_PAYMENTS}`,
       });
     });
 
-    describe(TOTAL_AMOUNT_OVERDUE, () => {
-      it(`should render a label for ${TOTAL_AMOUNT_OVERDUE}`, () => {
-        cy.checkText(field(TOTAL_AMOUNT_OVERDUE).label(), FIELDS[TOTAL_AMOUNT_OVERDUE].LABEL);
-      });
-
-      it(`should render an input for ${TOTAL_AMOUNT_OVERDUE}`, () => {
-        field(TOTAL_AMOUNT_OVERDUE).input().should('be.visible');
-      });
-    });
-  });
-
-  describe('form submission', () => {
-    describe('when submitting a fully filled form', () => {
-      it(`should redirect to ${FAILED_TO_PAY} page`, () => {
+    describe('page tests', () => {
+      beforeEach(() => {
         cy.navigateToUrl(url);
-
-        cy.completeAndSubmitOutstandingOrOverduePaymentsForm({});
-
-        cy.assertUrl(failedToPayUrl);
       });
 
-      describe('when going back to the page', () => {
-        it('should have the submitted values', () => {
-          cy.navigateToUrl(url);
+      it('renders a heading caption', () => {
+        cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+      });
 
-          cy.checkValue(field(TOTAL_OUTSTANDING_PAYMENTS), BUYER[TOTAL_OUTSTANDING_PAYMENTS]);
-          cy.checkValue(field(TOTAL_AMOUNT_OVERDUE), BUYER[TOTAL_AMOUNT_OVERDUE]);
+      describe(TOTAL_OUTSTANDING_PAYMENTS, () => {
+        it(`should render a label for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+          cy.checkText(field(TOTAL_OUTSTANDING_PAYMENTS).label(), FIELDS[TOTAL_OUTSTANDING_PAYMENTS].LABEL);
+        });
+
+        it(`should render an input for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+          field(TOTAL_OUTSTANDING_PAYMENTS).input().should('be.visible');
         });
       });
 
-      describe(`changing ${OUTSTANDING_PAYMENTS} from "yes" to "no"`, () => {
-        beforeEach(() => {
-          cy.navigateToUrl(tradingHistoryUrl);
+      describe(TOTAL_AMOUNT_OVERDUE, () => {
+        it(`should render a label for ${TOTAL_AMOUNT_OVERDUE}`, () => {
+          cy.checkText(field(TOTAL_AMOUNT_OVERDUE).label(), FIELDS[TOTAL_AMOUNT_OVERDUE].LABEL);
+        });
 
-          cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
+        it(`should render an input for ${TOTAL_AMOUNT_OVERDUE}`, () => {
+          field(TOTAL_AMOUNT_OVERDUE).input().should('be.visible');
+        });
+      });
+    });
 
-          cy.navigateToUrl(tradingHistoryUrl);
+    describe('form submission', () => {
+      describe('when submitting a fully filled form', () => {
+        it(`should redirect to ${FAILED_TO_PAY} page`, () => {
+          cy.navigateToUrl(url);
 
-          cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: false });
+          cy.completeAndSubmitOutstandingOrOverduePaymentsForm({});
+
+          cy.assertUrl(failedToPayUrl);
         });
 
         describe('when going back to the page', () => {
-          it(`should have the submitted values and have removed data from ${TOTAL_OUTSTANDING_PAYMENTS} and ${TOTAL_AMOUNT_OVERDUE}`, () => {
+          it('should have the submitted values', () => {
             cy.navigateToUrl(url);
 
-            cy.checkValue(field(TOTAL_OUTSTANDING_PAYMENTS), '');
-            cy.checkValue(field(TOTAL_AMOUNT_OVERDUE), '');
+            cy.checkValue(field(TOTAL_OUTSTANDING_PAYMENTS), BUYER[TOTAL_OUTSTANDING_PAYMENTS]);
+            cy.checkValue(field(TOTAL_AMOUNT_OVERDUE), BUYER[TOTAL_AMOUNT_OVERDUE]);
+          });
+        });
+
+        describe(`changing ${OUTSTANDING_PAYMENTS} from "yes" to "no"`, () => {
+          beforeEach(() => {
+            cy.navigateToUrl(tradingHistoryUrl);
+
+            cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
+
+            cy.navigateToUrl(tradingHistoryUrl);
+
+            cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: false });
+          });
+
+          describe('when going back to the page', () => {
+            it(`should have the submitted values and have removed data from ${TOTAL_OUTSTANDING_PAYMENTS} and ${TOTAL_AMOUNT_OVERDUE}`, () => {
+              cy.navigateToUrl(url);
+
+              cy.checkValue(field(TOTAL_OUTSTANDING_PAYMENTS), '');
+              cy.checkValue(field(TOTAL_AMOUNT_OVERDUE), '');
+            });
           });
         });
       });
     });
-  });
-});
+  },
+);

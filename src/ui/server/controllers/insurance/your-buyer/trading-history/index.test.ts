@@ -211,16 +211,8 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
 
           validBody[OUTSTANDING_PAYMENTS] = 'false';
 
-          res.locals.application = {
-            ...mockApplication,
-            buyer: {
-              ...mockApplication.buyer,
-              buyerTradingHistory: {
-                ...mockApplication.buyer.buyerTradingHistory,
-                [FAILED_PAYMENTS]: null,
-              },
-            },
-          };
+          res.locals.application = mockApplication;
+          res.locals.application.buyer.buyerTradingHistory[FAILED_PAYMENTS] = null;
 
           await post(req, res);
 
@@ -235,6 +227,8 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
           req.originalUrl = TRADING_HISTORY_CHECK_AND_CHANGE;
 
           validBody[OUTSTANDING_PAYMENTS] = 'false';
+          res.locals.application = mockApplication;
+          res.locals.application.buyer.buyerTradingHistory[FAILED_PAYMENTS] = true;
 
           await post(req, res);
 
@@ -250,16 +244,8 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
 
           validBody[OUTSTANDING_PAYMENTS] = 'false';
 
-          res.locals.application = {
-            ...mockApplication,
-            buyer: {
-              ...mockApplication.buyer,
-              buyerTradingHistory: {
-                ...mockApplication.buyer.buyerTradingHistory,
-                [FAILED_PAYMENTS]: null,
-              },
-            },
-          };
+          res.locals.application = mockApplication;
+          res.locals.application.buyer.buyerTradingHistory[FAILED_PAYMENTS] = null;
 
           await post(req, res);
 

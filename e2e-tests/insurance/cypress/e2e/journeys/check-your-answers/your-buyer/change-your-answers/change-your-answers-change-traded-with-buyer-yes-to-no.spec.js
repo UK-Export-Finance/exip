@@ -83,8 +83,8 @@ context(
 
         cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
 
-        cy.assertNoRadioOptionIsNotChecked(0);
-        cy.assertYesRadioOptionIsNotChecked(0);
+        cy.assertNoRadioOptionIsNotChecked();
+        cy.assertYesRadioOptionIsNotChecked();
 
         cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
         cy.clickSubmitButton();

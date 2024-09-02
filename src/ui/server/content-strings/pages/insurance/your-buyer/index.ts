@@ -38,7 +38,7 @@ const TRADING_HISTORY = {
 
 const CURRENCY_OF_LATE_PAYMENTS = {
   ...SHARED,
-  PAGE_TITLE: 'Select the currency the outstanding or overdue payments are in?',
+  PAGE_TITLE: 'What is the currency the outstanding or overdue payments are in?',
 };
 
 const FAILED_PAYMENTS = {
