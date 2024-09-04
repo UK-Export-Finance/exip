@@ -35,6 +35,11 @@ export const mockBuyerContact = {
   canContactBuyer: true,
 };
 
+export const mockBuyerOutstandingOrOverduePayments = {
+  totalOutstandingPayments: '500',
+  totalOverduePayments: '600',
+};
+
 const mockBuyer = {
   id: 'clacdgc630000kdoqn7wcgrdde',
   companyOrOrganisationName: 'Test name',

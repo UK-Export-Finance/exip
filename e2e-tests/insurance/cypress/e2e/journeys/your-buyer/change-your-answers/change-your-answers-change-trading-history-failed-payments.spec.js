@@ -7,7 +7,7 @@ const { FAILED_PAYMENTS } = FIELD_IDS;
 
 const {
   ROOT,
-  YOUR_BUYER: { TRADING_HISTORY_CHANGE, CHECK_YOUR_ANSWERS },
+  YOUR_BUYER: { FAILED_TO_PAY_CHANGE, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const fieldId = FAILED_PAYMENTS;
@@ -24,7 +24,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'buyerFinancialInformation', exporterHasTradedWithBuyer: true });
+        cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'buyerFinancialInformation', exporterHasTradedWithBuyer: true, failedToPay: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       });
@@ -39,12 +39,12 @@ context(
     });
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${TRADING_HISTORY_CHANGE}`, () => {
+      it(`should redirect to ${FAILED_TO_PAY_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TRADING_HISTORY_CHANGE, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: FAILED_TO_PAY_CHANGE, fieldId });
       });
     });
 
@@ -54,7 +54,7 @@ context(
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.completeAndSubmitTradingHistoryWithBuyerForm({ failedToPay: true });
+        cy.completeAndSubmitFailedToPayForm({ failedToPay: true });
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
