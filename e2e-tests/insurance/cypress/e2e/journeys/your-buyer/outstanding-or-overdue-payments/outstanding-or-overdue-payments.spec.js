@@ -84,6 +84,10 @@ context(
           field(TOTAL_AMOUNT_OVERDUE).input().should('be.visible');
         });
       });
+
+      it('renders a `save and back` button', () => {
+        cy.assertSaveAndBackButton();
+      });
     });
 
     describe('form submission', () => {
