@@ -1,4 +1,4 @@
-import { FIELD_IDS } from '..';
+import { FIELD_ID } from '..';
 import { post } from '.';
 import { ROUTES } from '../../../../../constants';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
@@ -50,7 +50,7 @@ describe('controllers/insurance/your-buyer/trading-history/save-and-back', () =>
 
       expect(updateMapAndSave).toHaveBeenCalledTimes(1);
 
-      const payload = constructPayload(req.body, FIELD_IDS);
+      const payload = constructPayload(req.body, [FIELD_ID]);
       const validationErrors = generateValidationErrors(payload);
 
       expect(updateMapAndSave).toHaveBeenCalledWith(payload, res.locals.application, validationErrors);
@@ -76,7 +76,7 @@ describe('controllers/insurance/your-buyer/trading-history/save-and-back', () =>
 
       expect(updateMapAndSave).toHaveBeenCalledTimes(1);
 
-      const payload = constructPayload(req.body, FIELD_IDS);
+      const payload = constructPayload(req.body, [FIELD_ID]);
       const validationErrors = generateValidationErrors(payload);
 
       expect(updateMapAndSave).toHaveBeenCalledWith(payload, res.locals.application, validationErrors);

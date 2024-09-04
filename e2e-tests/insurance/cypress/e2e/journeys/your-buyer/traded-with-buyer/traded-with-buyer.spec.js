@@ -85,6 +85,10 @@ context('Insurance - Your buyer - Traded with buyer page - As an exporter, I wan
       cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
 
+    it('renders `yes` and `no` radio buttons in the correct order', () => {
+      cy.assertYesNoRadiosOrder({ noRadioFirst: true });
+    });
+
     it('renders a `save and back` button', () => {
       cy.assertSaveAndBackButton();
     });

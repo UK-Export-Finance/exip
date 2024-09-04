@@ -106,7 +106,7 @@ export const YOUR_BUYER_FIELDS = {
     },
   },
   [CURRENCY_CODE]: {
-    LEGEND: 'What currency are the outstanding or overdue payments in?',
+    LEGEND: 'What is the currency the outstanding or overdue payments are in?',
   },
   [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
     LABEL: 'Have you in the past held credit insurance cover on the buyer?',

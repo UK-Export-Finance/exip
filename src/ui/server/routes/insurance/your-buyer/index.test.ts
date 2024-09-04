@@ -13,7 +13,16 @@ import { post as postTradedWithBuyerSaveAndBack } from '../../../controllers/ins
 import { get as getTradingHistory, post as postTradingHistory } from '../../../controllers/insurance/your-buyer/trading-history';
 import { post as postTradingHistorySaveAndBack } from '../../../controllers/insurance/your-buyer/trading-history/save-and-back';
 
-import { get as getAlternativeCurrency, post as postAlternativeCurrency } from '../../../controllers/insurance/your-buyer/alternative-currency';
+import { get as getCurrencyOfLatePayments, post as postCurrencyOfLatePayments } from '../../../controllers/insurance/your-buyer/currency-of-late-payments';
+
+import {
+  get as getOutstandingOrOverduePayments,
+  post as postOutstandingOrOverduePayments,
+} from '../../../controllers/insurance/your-buyer/outstanding-or-overdue-payments';
+import { post as postOutstandingOrOverduePaymentsSaveAndBack } from '../../../controllers/insurance/your-buyer/outstanding-or-overdue-payments/save-and-back';
+
+import { get as getFailedToPay, post as postFailedToPay } from '../../../controllers/insurance/your-buyer/failed-to-pay-on-time';
+import { post as postFailedToPaySaveAndBack } from '../../../controllers/insurance/your-buyer/failed-to-pay-on-time/save-and-back';
 
 import { get as getCreditInsuranceCover, post as postCreditInsuranceCover } from '../../../controllers/insurance/your-buyer/credit-insurance-cover';
 import { post as postCreditInsuranceCoverSaveAndBack } from '../../../controllers/insurance/your-buyer/credit-insurance-cover/save-and-back';
@@ -36,8 +45,8 @@ describe('routes/insurance/your-buyer', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(23);
-    expect(post).toHaveBeenCalledTimes(28);
+    expect(get).toHaveBeenCalledTimes(29);
+    expect(post).toHaveBeenCalledTimes(36);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.ROOT}`, buyerRootGet);
 
@@ -73,12 +82,31 @@ describe('routes/insurance/your-buyer', () => {
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY_CHECK_AND_CHANGE}`, getTradingHistory);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY_CHECK_AND_CHANGE}`, postTradingHistory);
 
-    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY}`, getAlternativeCurrency);
-    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY}`, postAlternativeCurrency);
-    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY_CHANGE}`, getAlternativeCurrency);
-    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY_CHANGE}`, postAlternativeCurrency);
-    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`, getAlternativeCurrency);
-    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`, postAlternativeCurrency);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS}`, getCurrencyOfLatePayments);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS}`, postCurrencyOfLatePayments);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS_CHANGE}`, getCurrencyOfLatePayments);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS_CHANGE}`, postCurrencyOfLatePayments);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE}`, getCurrencyOfLatePayments);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE}`, postCurrencyOfLatePayments);
+
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.FAILED_TO_PAY}`, getFailedToPay);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.FAILED_TO_PAY}`, postFailedToPay);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.FAILED_TO_PAY_SAVE_AND_BACK}`, postFailedToPaySaveAndBack);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.FAILED_TO_PAY_CHANGE}`, getFailedToPay);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.FAILED_TO_PAY_CHANGE}`, postFailedToPay);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.FAILED_TO_PAY_CHECK_AND_CHANGE}`, getFailedToPay);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.FAILED_TO_PAY_CHECK_AND_CHANGE}`, postFailedToPay);
+
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.OUTSTANDING_OR_OVERDUE_PAYMENTS}`, getOutstandingOrOverduePayments);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.OUTSTANDING_OR_OVERDUE_PAYMENTS}`, postOutstandingOrOverduePayments);
+    expect(post).toHaveBeenCalledWith(
+      `/:referenceNumber${YOUR_BUYER.OUTSTANDING_OR_OVERDUE_PAYMENTS_SAVE_AND_BACK}`,
+      postOutstandingOrOverduePaymentsSaveAndBack,
+    );
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.OUTSTANDING_OR_OVERDUE_PAYMENTS_CHANGE}`, getOutstandingOrOverduePayments);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.OUTSTANDING_OR_OVERDUE_PAYMENTS_CHANGE}`, postOutstandingOrOverduePayments);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.OUTSTANDING_OR_OVERDUE_PAYMENTS_CHECK_AND_CHANGE}`, getOutstandingOrOverduePayments);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.OUTSTANDING_OR_OVERDUE_PAYMENTS_CHECK_AND_CHANGE}`, postOutstandingOrOverduePayments);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CREDIT_INSURANCE_COVER}`, getCreditInsuranceCover);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CREDIT_INSURANCE_COVER}`, postCreditInsuranceCover);
