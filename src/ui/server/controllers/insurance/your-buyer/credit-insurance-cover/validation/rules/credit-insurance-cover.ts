@@ -20,7 +20,7 @@ const {
  * Check submitted form data to see if credit insurance cover field radio is selected
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
- * * @param {Object} errors: Errors from previous validation errors errors
+ * * @param {Object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const creditInsuranceCoverRule = (formBody: RequestBody, errors: object) => emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);

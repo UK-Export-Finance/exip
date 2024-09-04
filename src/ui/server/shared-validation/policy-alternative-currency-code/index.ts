@@ -19,7 +19,7 @@ const {
  * policyAlternativeCurrencyCodeRule
  * Returns the result of emptyFieldValidation
  * @param {RequestBody} formBody: Form body
- * * @param {Object} errors: Errors from previous validation errors errors
+ * * @param {Object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const policyAlternativeCurrencyCodeRule = (formBody: RequestBody, errors: object) => alternativeCurrencyValidation(formBody, errors, ERROR_MESSAGE.IS_EMPTY);

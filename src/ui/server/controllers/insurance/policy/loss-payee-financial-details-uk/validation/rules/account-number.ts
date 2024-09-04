@@ -17,7 +17,7 @@ export const MINIMUM = Number(MINIMUM_CHARACTERS.ACCOUNT_NUMBER);
  * Check submitted form data for errors for the account number field
  * Returns numberAboveMinimumValidation if there are any errors.
  * @param {RequestBody} formBody: Form body
- * * @param {Object} errors: Errors from previous validation errors errors
+ * * @param {Object} errors: Errors from previous validation errors
  * @returns {Object} numberMinimumMaximumLength errors
  */
 const accountNumberRules = (formBody: RequestBody, errors: object) =>

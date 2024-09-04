@@ -16,7 +16,7 @@ const { FAILED_PAYMENTS } = FIELD_IDS;
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  "Insurance - Your buyer - Failed to pay page - As an Underwriter, I want to know whether the buyer has ever failed to pay me on time, So that I have accurate information about the buyer's previous behaviour when assessing the application",
+  "Insurance - Your buyer - Failed to pay on time page - As an Underwriter, I want to know whether the buyer has ever failed to pay me on time, So that I have accurate information about the buyer's previous behaviour when assessing the application",
   () => {
     let referenceNumber;
     let url;

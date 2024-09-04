@@ -10,7 +10,7 @@ const ERROR_MESSAGE = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID];
  * currencyRules
  * Returns the result of emptyFieldValidation
  * @param {RequestBody} formBody: Form body
- * * @param {Object} errors: Errors from previous validation errors errors
+ * * @param {Object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const currencyRules = (formBody: RequestBody, errors: object): ValidationErrors => emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);

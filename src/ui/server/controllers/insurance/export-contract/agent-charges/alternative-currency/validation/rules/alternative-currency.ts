@@ -19,7 +19,7 @@ const {
  * alternativeCurrencyRule
  * Returns alternativeCurrencyValidation for the ALTERNATIVE_CURRENCY_CODE field.
  * @param {RequestBody} formBody: Form body
- * * @param {Object} errors: Errors from previous validation errors errors
+ * * @param {Object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const alternativeCurrencyRule = (formBody: RequestBody, errors: object) => alternativeCurrencyValidation(formBody, errors, ERROR_MESSAGE.IS_EMPTY);

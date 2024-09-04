@@ -18,7 +18,7 @@ export const MINIMUM = 1;
  * Check submitted form data for errors with the total outstanding field
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
- * * @param {Object} errors: Errors from previous validation errors errors
+ * * @param {Object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const totalOutstandingRules = (formBody: RequestBody, errors: object) => {
