@@ -22,11 +22,11 @@ const completeTotalContractValueForm = ({
   totalContractValue = application.POLICY[TOTAL_CONTRACT_VALUE],
   requestedCreditLimit = application.POLICY[REQUESTED_CREDIT_LIMIT],
 }) => {
-  if (totalContractValue || policyValueOverMvpMaximum) {
+  if (policyValueOverMvpMaximum) {
     const mvpMaximumPlusOne = 50000 + 1;
 
     cy.keyboardInput(field(TOTAL_CONTRACT_VALUE).input(), mvpMaximumPlusOne);
-  } else {
+  } else if (totalContractValue) {
     cy.keyboardInput(field(TOTAL_CONTRACT_VALUE).input(), totalContractValue);
   }
 
