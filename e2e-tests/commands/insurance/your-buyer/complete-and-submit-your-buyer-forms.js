@@ -10,7 +10,14 @@
  * @param {Boolean} failedToPay: whether the buyer has failed to pay the exporter
  * @param {Boolean} fullyPopulatedBuyerTradingHistory: whether to fully populate the buyer trading history form
  * @param {Boolean} exporterHasBuyerFinancialAccounts: whether the exporter has buyer financial accounts
+ * @param {String} isoCode: Policy currency ISO code
+ * @param {Boolean} alternativeCurrency: If alternative currency should be entered.
+ * @param {Boolean} clickAlternativeCurrencyLink: if the "Alternative currency" link should be clicked.
  */
+
+// TODO
+// TODO - alphabetical ordered documentation
+// TODO - alphabetical ordered documentation
 const completeAndSubmitYourBuyerForms = ({
   formToStopAt,
   viaTaskList,
@@ -20,6 +27,9 @@ const completeAndSubmitYourBuyerForms = ({
   failedToPay,
   fullyPopulatedBuyerTradingHistory,
   exporterHasBuyerFinancialAccounts,
+  isoCode,
+  alternativeCurrency,
+  clickAlternativeCurrencyLink,
 }) => {
   cy.startInsuranceYourBuyerSection({ viaTaskList });
 
@@ -40,7 +50,10 @@ const completeAndSubmitYourBuyerForms = ({
     });
 
     if (outstandingPayments) {
-      steps.push({ name: 'currencyOfLatePayments', action: () => cy.completeAndSubmitAlternativeCurrencyForm({}) });
+      steps.push({
+        name: 'currencyOfLatePayments',
+        action: () => cy.completeAndSubmitAlternativeCurrencyForm({ isoCode, alternativeCurrency, clickAlternativeCurrencyLink }),
+      });
       steps.push({ name: 'outstandingOrOverduePayments', action: () => cy.completeAndSubmitOutstandingOrOverduePaymentsForm({ outstandingPayments }) });
     }
 
