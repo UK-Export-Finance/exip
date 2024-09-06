@@ -39,7 +39,7 @@ const {
 const {
   INSURANCE: {
     EXPORT_CONTRACT: {
-      AGENT_CHARGES: { CONDITIONAL_FIXED_SUM_HTML, CONDITIONAL_PERCENTAGE_HTML },
+      AGENT_CHARGES: { CONDITIONAL_PERCENTAGE_HTML },
     },
   },
 } = PARTIAL_TEMPLATES;
@@ -176,7 +176,6 @@ export const get = async (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
       countries: mapCountries(countries, agent.service.charge[PAYABLE_COUNTRY_CODE]),
-      CONDITIONAL_FIXED_SUM_HTML,
       CONDITIONAL_PERCENTAGE_HTML,
     });
   } catch (error) {
@@ -227,7 +226,6 @@ export const post = async (req: Request, res: Response) => {
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(application),
         countries: mapCountries(countries, payload[PAYABLE_COUNTRY_CODE]),
-        CONDITIONAL_FIXED_SUM_HTML,
         CONDITIONAL_PERCENTAGE_HTML,
         submittedValues: sanitiseData(payload),
         validationErrors,
