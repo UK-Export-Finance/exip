@@ -1,7 +1,7 @@
 import partials from '../../../../partials';
 import { LINKS } from '../../../../content-strings';
 
-context('Privacy link - as en exporter, I want to read the privacy policy', () => {
+context('Privacy link - as an exporter, I want to read the privacy policy', () => {
   before(() => {
     cy.navigateToRootUrl();
 

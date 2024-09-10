@@ -1,5 +1,4 @@
 import { cookiesPage, cookiesSavedPage } from '../../../../pages';
-import partials from '../../../../partials';
 import { BUTTONS, ERROR_MESSAGES, FIELDS, PAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, COOKIE } from '../../../../constants';
 
@@ -28,7 +27,7 @@ context('Cookies page - Insurance', () => {
   beforeEach(() => {
     cy.navigateToCheckIfEligibleUrl();
 
-    partials.footer.supportLinks.cookies().click();
+    cy.clickFooterCookiesLink();
 
     cy.assertUrl(`${baseUrl}${url}`);
 
@@ -188,7 +187,7 @@ context('Cookies page - Insurance', () => {
       describe('when submitting the answer as `accept`', () => {
         beforeEach(() => {
           cy.navigateToCheckIfEligibleUrl();
-          partials.footer.supportLinks.cookies().click();
+          cy.clickFooterCookiesLink();
 
           cy.saveSession();
 

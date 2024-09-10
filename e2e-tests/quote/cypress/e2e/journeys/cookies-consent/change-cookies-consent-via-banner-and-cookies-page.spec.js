@@ -29,7 +29,7 @@ context('Cookies consent - change via banner and cookies page', () => {
       partials.cookieBanner.question.acceptButton().click();
       partials.cookieBanner.hideButton().click();
 
-      partials.footer.supportLinks.cookies().click();
+      cy.clickFooterCookiesLink();
 
       cy.assertUrl(cookiesPageUrl);
 
@@ -80,7 +80,8 @@ context('Cookies consent - change via banner and cookies page', () => {
       partials.cookieBanner.question.rejectButton().click();
       partials.cookieBanner.hideButton().click();
 
-      partials.footer.supportLinks.cookies().click();
+      cy.clickFooterCookiesLink();
+
       cy.assertUrl(cookiesPageUrl);
 
       cy.checkAnalyticsScriptsAreNotRendered();

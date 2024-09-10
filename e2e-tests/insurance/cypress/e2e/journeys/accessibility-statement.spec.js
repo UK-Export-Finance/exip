@@ -1,5 +1,4 @@
 import { accessibilityStatementPage } from '../../../../pages';
-import partials from '../../../../partials';
 import { PAGES } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 
@@ -35,7 +34,7 @@ context('Accessibility statement page - Insurance', () => {
   beforeEach(() => {
     cy.navigateToCheckIfEligibleUrl();
 
-    partials.footer.supportLinks.accessibilityStatement().click();
+    cy.clickFooterAccessibilityStatementLink();
 
     cy.assertUrl(`${baseUrl}${ROUTES.INSURANCE.ACCESSIBILITY_STATEMENT}`);
 
