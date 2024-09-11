@@ -48,7 +48,7 @@
     "csurf": "^1.11.0",
     "date-fns": "^2.30.0",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
+    "express": "^4.20.0",
     "express-rate-limit": "^7.3.1",
     "express-session": "^1.18.0",
     "google-libphonenumber": "^3.2.38",
@@ -70,7 +70,7 @@
     "terser-webpack-plugin": "^5.3.10",
     "ts-node": "^10.9.2",
     "tslib": "^2.7.0",
-    "typescript": "5.4.5",
+    "typescript": "5.6.2",
     "webpack": "^5.94.0",
     "webpack-cli": "^5.1.4",
     "webpack-merge": "^5.10.0"
