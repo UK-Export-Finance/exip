@@ -98,7 +98,7 @@ describe('server/helpers/required-fields/export-contract', () => {
           agentChargeMethod: AGENT_SERVICE_CHARGE_METHOD.FIXED_SUM,
         });
 
-        // TODO: EMS-TBC - renable
+        // TODO: EMS-3828- renable
         // const expected = [METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE];
 
         const expected = [METHOD, PAYABLE_COUNTRY_CODE];

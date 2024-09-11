@@ -69,7 +69,7 @@ export const agentServiceChargeTasks = ({ agentIsCharging, agentChargeMethod }: 
   if (agentIsCharging) {
     const tasks = [METHOD, PAYABLE_COUNTRY_CODE];
 
-    // TODO: EMS-TBC - renable
+    // TODO: EMS-3828 - renable
     // if (agentChargeMethod === AGENT_SERVICE_CHARGE_METHOD.FIXED_SUM) {
     //   tasks.push(FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE);
     // }
