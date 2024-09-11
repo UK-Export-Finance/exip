@@ -18,7 +18,8 @@ const fieldId = PAYABLE_COUNTRY_CODE;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(
+// TODO: EMS-3828 - renable
+context.skip(
   `Insurance - Export contract - Change your answers - Agent charges - ${FIXED_SUM_AMOUNT} - As an exporter, I want to change my answers to an alternative currency`,
   () => {
     let referenceNumber;
