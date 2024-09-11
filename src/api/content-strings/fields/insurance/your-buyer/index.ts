@@ -99,7 +99,7 @@ export const YOUR_BUYER_FIELDS = {
     },
   },
   [FAILED_PAYMENTS]: {
-    LABEL: 'Has the buyer ever failed to pay you on time?',
+    HINT: 'This is when an invoice has still not been paid 30 days or more after the agreed payment date.',
     SUMMARY: {
       TITLE: 'Buyer failed to pay on time?',
       FORM_TITLE: TRADING_HISTORY,
