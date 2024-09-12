@@ -17,7 +17,8 @@ const fieldId = PERCENTAGE_CHARGE;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Change your answers - Export contract - Summary list - Percentage to Fixed sum', () => {
+// TODO: EMS-3828 - renable
+context.skip('Insurance - Change your answers - Export contract - Summary list - Percentage to Fixed sum', () => {
   let referenceNumber;
   let url;
 

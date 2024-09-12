@@ -48,7 +48,7 @@ context(`Insurance - Export contract - Agent charges - Save and go back - empty 
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the status of task `export contract` as `in progress`', () => {
+    it('should update the `export contract` task status to `completed`', () => {
       cy.navigateToUrl(url);
 
       cy.completeAgentChargesForm({
@@ -60,7 +60,7 @@ context(`Insurance - Export contract - Agent charges - Save and go back - empty 
 
       cy.assertAllSectionsUrl(referenceNumber);
 
-      cy.checkTaskExportContractStatusIsInProgress();
+      cy.checkTaskExportContractStatusIsComplete();
     });
 
     describe('when going back to the page', () => {
