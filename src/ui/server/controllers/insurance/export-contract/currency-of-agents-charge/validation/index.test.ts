@@ -1,8 +1,8 @@
 import alternativeCurrencyValidation from '.';
 import validationRules from './rules';
-import combineValidationRules from '../../../../../../helpers/combine-validation-rules';
+import combineValidationRules from '../../../../../helpers/combine-validation-rules';
 
-describe('controllers/insurance/export-contract/agent-charges/alternative-currency/validation', () => {
+describe('controllers/insurance/export-contract/currency-of-agents-charge/validation', () => {
   it('should return an array of results from rule functions', () => {
     const mockFormBody = {};
 

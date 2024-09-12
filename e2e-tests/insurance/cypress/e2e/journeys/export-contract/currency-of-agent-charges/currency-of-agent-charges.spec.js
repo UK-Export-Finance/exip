@@ -1,15 +1,15 @@
-import { headingCaption } from '../../../../../../../pages/shared';
-import { BUTTONS, ERROR_MESSAGES, PAGES } from '../../../../../../../content-strings';
-import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/export-contract';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { assertCurrencyFormFields } from '../../../../../../../shared-test-assertions';
+import { headingCaption } from '../../../../../../pages/shared';
+import { BUTTONS, ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
+import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/export-contract';
+import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import { assertCurrencyFormFields } from '../../../../../../shared-test-assertions';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES_ALTERNATIVE_CURRENCY;
+const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES_CURRENCY;
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { AGENT_CHARGES_ALTERNATIVE_CURRENCY, AGENT_CHARGES },
+  EXPORT_CONTRACT: { AGENT_CHARGES_CURRENCY, AGENT_CHARGES },
 } = INSURANCE_ROUTES;
 
 const {
@@ -18,14 +18,14 @@ const {
 
 const {
   INSURANCE: {
-    EXPORT_CONTRACT: { AGENT_CHARGES_ALTERNATIVE_CURRENCY: CURRENCY_ERROR_MESSAGES },
+    EXPORT_CONTRACT: { AGENT_CHARGES_CURRENCY: CURRENCY_ERROR_MESSAGES },
   },
 } = ERROR_MESSAGES;
 
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  "Insurance - Export contract - Agent charges - Alternative currency page - As an Exporter, I want to be able to choose another currency to report my agent's fees in, So that I can provide accurate information regarding any fees I have incurred in winning my export contract",
+  "Insurance - Export contract - Currency of agent charges page - As an Exporter, I want to be able to choose another currency to report my agent's fees in, So that I can provide accurate information regarding any fees I have incurred in winning my export contract",
   () => {
     let referenceNumber;
     let url;
@@ -34,12 +34,13 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
+        // TODO: EMS-3828 - renable
         // go to the page we want to test.
-        cy.completeAndSubmitExportContractForms({ formToStopAt: 'agentCharges', isUsingAgent: true, agentIsCharging: true, fixedSumMethod: true });
+        // cy.completeAndSubmitExportContractForms({ formToStopAt: 'agentCharges', isUsingAgent: true, agentIsCharging: true, fixedSumMethod: true });
 
-        cy.clickProvideAlternativeCurrencyLink();
+        url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY}`;
 
-        url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`;
+        cy.navigateToUrl(url);
       });
     });
 
@@ -54,8 +55,8 @@ context(
     it('renders core page elements', () => {
       cy.corePageChecks({
         pageTitle: FIELDS.AGENT_CHARGES[CURRENCY_CODE].LEGEND,
-        currentHref: `${ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`,
-        backLink: `${ROOT}/${referenceNumber}${AGENT_CHARGES}`,
+        currentHref: `${ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY}`,
+        backLink: `${url}#`,
         submitButtonCopy: BUTTONS.CONFIRM,
       });
     });

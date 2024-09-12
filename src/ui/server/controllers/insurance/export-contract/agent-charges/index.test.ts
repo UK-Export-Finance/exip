@@ -36,9 +36,9 @@ const {
   EXPORT_CONTRACT: {
     AGENT_CHARGES_CHANGE,
     AGENT_CHARGES_SAVE_AND_BACK,
-    AGENT_CHARGES_ALTERNATIVE_CURRENCY,
-    AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHANGE,
-    AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE,
+    AGENT_CHARGES_CURRENCY,
+    AGENT_CHARGES_CURRENCY_CHANGE,
+    AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE,
     AGENT_CHARGES_CHECK_AND_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
@@ -140,7 +140,7 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
           },
         },
         CURRENCY_PREFIX_SYMBOL: currency.symbol,
-        PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`,
+        PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY}`,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_SAVE_AND_BACK}`,
       };
 
@@ -148,25 +148,25 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
     });
 
     describe('when isChange is provided as true', () => {
-      it(`should return "PROVIDE_ALTERNATIVE_CURRENCY_URL" as ${AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHANGE}`, () => {
+      it(`should return "PROVIDE_ALTERNATIVE_CURRENCY_URL" as ${AGENT_CHARGES_CURRENCY_CHANGE}`, () => {
         const isChange = true;
 
         const result = pageVariables(referenceNumber, mockCurrencies, currencyCode, isChange);
 
-        const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHANGE}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY_CHANGE}`;
 
         expect(result.PROVIDE_ALTERNATIVE_CURRENCY_URL).toEqual(expected);
       });
     });
 
     describe('when checkAndChangeRoute is provided as true', () => {
-      it(`should return "PROVIDE_ALTERNATIVE_CURRENCY_URL" as ${AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`, () => {
+      it(`should return "PROVIDE_ALTERNATIVE_CURRENCY_URL" as ${AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE}`, () => {
         const isChange = false;
         const isCheckAndChangeRoute = true;
 
         const result = pageVariables(referenceNumber, mockCurrencies, currencyCode, isChange, isCheckAndChangeRoute);
 
-        const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE}`;
 
         expect(result.PROVIDE_ALTERNATIVE_CURRENCY_URL).toEqual(expected);
       });

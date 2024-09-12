@@ -13,7 +13,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES;
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { AGENT_CHARGES, AGENT_SERVICE, AGENT_CHARGES_ALTERNATIVE_CURRENCY, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { AGENT_CHARGES, AGENT_SERVICE, AGENT_CHARGES_CURRENCY, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -38,7 +38,7 @@ context(
         cy.completeAndSubmitExportContractForms({ formToStopAt: 'agentService', isUsingAgent: true, agentIsCharging: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES}`;
-        agentChargesAlternativeCurrencyUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`;
+        agentChargesAlternativeCurrencyUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY}`;
         checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       });
     });
@@ -114,12 +114,12 @@ context(
 
           cy.checkLink(
             partials.provideAlternativeCurrencyLink(),
-            `${ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`,
+            `${ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY}`,
             CONTENT_STRINGS.PROVIDE_ALTERNATIVE_CURRENCY,
           );
         });
 
-        it(`should redirect to ${AGENT_CHARGES_ALTERNATIVE_CURRENCY} when clicking the 'provide alternative currency' link`, () => {
+        it(`should redirect to ${AGENT_CHARGES_CURRENCY} when clicking the 'provide alternative currency' link`, () => {
           agentChargesPage[METHOD][FIXED_SUM].label().click();
 
           cy.clickProvideAlternativeCurrencyLink();

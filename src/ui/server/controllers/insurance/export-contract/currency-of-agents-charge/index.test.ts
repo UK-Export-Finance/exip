@@ -1,17 +1,17 @@
 import { FIELD_IDS, PAGE_CONTENT_STRINGS, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
-import { TEMPLATES } from '../../../../../constants';
-import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
-import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
-import { PAGES } from '../../../../../content-strings';
-import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/export-contract';
-import api from '../../../../../api';
-import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
-import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
-import mapRadioAndSelectOptions from '../../../../../helpers/mappings/map-currencies/radio-and-select-options';
-import constructPayload from '../../../../../helpers/construct-payload';
+import { TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
+import { PAGES } from '../../../../content-strings';
+import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/export-contract';
+import api from '../../../../api';
+import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapRadioAndSelectOptions from '../../../../helpers/mappings/map-currencies/radio-and-select-options';
+import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
-import mapAndSave from '../../map-and-save/export-contract-agent-service-charge';
-import { Request, Response } from '../../../../../../types';
+import mapAndSave from '../map-and-save/export-contract-agent-service-charge';
+import { Request, Response } from '../../../../../types';
 import {
   mockReq,
   mockRes,
@@ -21,14 +21,14 @@ import {
   mockCurrenciesEmptyResponse,
   mockSpyPromiseRejection,
   referenceNumber,
-} from '../../../../../test-mocks';
+} from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
   EXPORT_CONTRACT: {
-    AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHANGE,
-    AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE,
+    AGENT_CHARGES_CURRENCY_CHANGE,
+    AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE,
     AGENT_CHARGES,
     AGENT_CHARGES_CHANGE,
     AGENT_CHARGES_CHECK_AND_CHANGE,
@@ -52,11 +52,11 @@ const {
 
 const { supportedCurrencies, alternativeCurrencies } = mockCurrenciesResponse;
 
-describe('controllers/insurance/export-contract/agent-charges/alternative-currency', () => {
+describe('controllers/insurance/export-contract/currency-of-agents-charge', () => {
   let req: Request;
   let res: Response;
 
-  jest.mock('../../map-and-save/export-contract-agent-service-charge');
+  jest.mock('../map-and-save/export-contract-agent-service-charge');
 
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
   mapAndSave.exportContractAgentServiceCharge = jest.fn(() => Promise.resolve(true));
@@ -82,7 +82,7 @@ describe('controllers/insurance/export-contract/agent-charges/alternative-curren
 
   describe('PAGE_CONTENT_STRINGS', () => {
     it('should have the correct strings', () => {
-      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES_ALTERNATIVE_CURRENCY);
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES_CURRENCY);
     });
   });
 
@@ -272,7 +272,7 @@ describe('controllers/insurance/export-contract/agent-charges/alternative-curren
         it(`should redirect to ${AGENT_CHARGES_CHANGE}`, async () => {
           req.body = validBody;
 
-          req.originalUrl = AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHANGE;
+          req.originalUrl = AGENT_CHARGES_CURRENCY_CHANGE;
 
           await post(req, res);
 
@@ -286,7 +286,7 @@ describe('controllers/insurance/export-contract/agent-charges/alternative-curren
         it(`should redirect to ${AGENT_CHARGES_CHECK_AND_CHANGE}`, async () => {
           req.body = validBody;
 
-          req.originalUrl = AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE;
+          req.originalUrl = AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE;
 
           await post(req, res);
 
