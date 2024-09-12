@@ -197,7 +197,7 @@ export const EXPORT_CONTRACT_FIELDS = {
     [PAYABLE_COUNTRY_CODE]: {
       LABEL: 'Country where charges are payable',
       SUMMARY: {
-        TITLE: 'Country that commission is payable',
+        TITLE: 'Country where commission is payable',
         FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
       },
     },

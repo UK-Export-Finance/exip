@@ -1,5 +1,6 @@
-import { headingCaption, yesRadio, noRadio } from '../../../../../../pages/shared';
+import { headingCaption, yesRadio, yesNoRadioHint, noRadio } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
+import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
@@ -11,7 +12,7 @@ const {
   YOUR_BUYER: { OUTSTANDING_OR_OVERDUE_PAYMENTS, FAILED_TO_PAY, BUYER_FINANCIAL_INFORMATION },
 } = INSURANCE_ROUTES;
 
-const { FAILED_PAYMENTS } = FIELD_IDS;
+const { FAILED_PAYMENTS: FIELD_ID } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -64,6 +65,8 @@ context(
         yesRadio().input().first().should('exist');
 
         cy.checkText(yesRadio().label().first(), FIELD_VALUES.YES);
+
+        cy.checkText(yesNoRadioHint(), FIELDS[FIELD_ID].HINT);
       });
 
       it('renders `no` radio button', () => {
@@ -79,7 +82,7 @@ context(
 
     describe('form submission', () => {
       describe('when submitting a fully filled form', () => {
-        describe(`when ${FAILED_PAYMENTS} is "no"`, () => {
+        describe(`when ${FIELD_ID} is "no"`, () => {
           it(`should redirect to ${FAILED_TO_PAY} page`, () => {
             cy.navigateToUrl(url);
 
@@ -97,8 +100,8 @@ context(
           });
         });
 
-        describe(`when ${FAILED_PAYMENTS} is "yes"`, () => {
-          it(`should redirect to ${FAILED_PAYMENTS} page`, () => {
+        describe(`when ${FIELD_ID} is "yes"`, () => {
+          it(`should redirect to ${FIELD_ID} page`, () => {
             cy.navigateToUrl(url);
 
             cy.completeAndSubmitFailedToPayForm({ failedToPay: true });
