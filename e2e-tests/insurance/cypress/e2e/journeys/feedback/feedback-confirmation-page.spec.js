@@ -1,4 +1,3 @@
-import partials from '../../../../../partials';
 import { feedbackConfirmation } from '../../../../../pages/insurance/feedback';
 import { BUTTONS, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
@@ -12,7 +11,7 @@ context('Insurance - Feedback Confirmation page', () => {
 
   before(() => {
     cy.navigateToCheckIfEligibleUrl();
-    partials.phaseBanner.feedbackLink().click();
+    cy.clickPhaseBannerFeedbackLink();
 
     // to reach confirmation page
     cy.clickSubmitButton();

@@ -29,44 +29,43 @@
     }) }}
   {% endif %}
 
-  <div class="govuk-grid-row">
-    <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
-      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+  <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
+    <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters-from-desktop">
+
         <span class="govuk-caption-xl" data-cy="heading-caption">
           {{ CONTENT_STRINGS.HEADING_CAPTION }}
         </span>
 
         <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
-        <div class="govuk-grid-row">
-          {{ monetaryValueInput.render({
-            fieldId: FIELDS.TOTAL_OUTSTANDING_PAYMENTS.ID,
-            label: FIELDS.TOTAL_OUTSTANDING_PAYMENTS.LABEL,
-            currencyPrefixSymbol: CURRENCY_PREFIX_SYMBOL,
-            submittedValue: submittedValues[FIELDS.TOTAL_OUTSTANDING_PAYMENTS.ID] or application.buyer.buyerTradingHistory[FIELDS.TOTAL_OUTSTANDING_PAYMENTS.ID],
-            validationError: validationErrors.errorList[FIELDS.TOTAL_OUTSTANDING_PAYMENTS.ID],
-            legendClass: LEGEND_CLASS
-          }) }}
+        {{ monetaryValueInput.render({
+          fieldId: FIELDS.TOTAL_OUTSTANDING_PAYMENTS.ID,
+          label: FIELDS.TOTAL_OUTSTANDING_PAYMENTS.LABEL,
+          currencyPrefixSymbol: CURRENCY_PREFIX_SYMBOL,
+          submittedValue: submittedValues[FIELDS.TOTAL_OUTSTANDING_PAYMENTS.ID] or application.buyer.buyerTradingHistory[FIELDS.TOTAL_OUTSTANDING_PAYMENTS.ID],
+          validationError: validationErrors.errorList[FIELDS.TOTAL_OUTSTANDING_PAYMENTS.ID],
+          legendClass: LEGEND_CLASS
+        }) }}
 
-          {{ monetaryValueInput.render({
-            fieldId: FIELDS.TOTAL_AMOUNT_OVERDUE.ID,
-            label: FIELDS.TOTAL_AMOUNT_OVERDUE.LABEL,
-            currencyPrefixSymbol: CURRENCY_PREFIX_SYMBOL,
-            submittedValue: submittedValues[FIELDS.TOTAL_AMOUNT_OVERDUE.ID] or application.buyer.buyerTradingHistory[FIELDS.TOTAL_AMOUNT_OVERDUE.ID],
-            validationError: validationErrors.errorList[FIELDS.TOTAL_AMOUNT_OVERDUE.ID],
-            legendClass: LEGEND_CLASS
-          }) }}
-        <div>
+        {{ monetaryValueInput.render({
+          fieldId: FIELDS.TOTAL_AMOUNT_OVERDUE.ID,
+          label: FIELDS.TOTAL_AMOUNT_OVERDUE.LABEL,
+          currencyPrefixSymbol: CURRENCY_PREFIX_SYMBOL,
+          submittedValue: submittedValues[FIELDS.TOTAL_AMOUNT_OVERDUE.ID] or application.buyer.buyerTradingHistory[FIELDS.TOTAL_AMOUNT_OVERDUE.ID],
+          validationError: validationErrors.errorList[FIELDS.TOTAL_AMOUNT_OVERDUE.ID],
+          legendClass: LEGEND_CLASS
+        }) }}
       </div>
+    </div>
 
-      {{ formButtons.render({
-        contentStrings: CONTENT_STRINGS.BUTTONS,
-        saveAndBackUrl: SAVE_AND_BACK_URL
-      }) }}
+    {{ formButtons.render({
+      contentStrings: CONTENT_STRINGS.BUTTONS,
+      saveAndBackUrl: SAVE_AND_BACK_URL
+    }) }}
 
-    </form>
-  </div>
+  </form.
 
 {% endblock %}

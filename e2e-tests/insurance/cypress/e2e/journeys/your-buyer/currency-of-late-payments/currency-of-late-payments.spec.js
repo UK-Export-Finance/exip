@@ -54,7 +54,7 @@ context(
         pageTitle: YOUR_BUYER_FIELDS[CURRENCY_CODE].LEGEND,
         currentHref: `${ROOT}/${referenceNumber}${CURRENCY_OF_LATE_PAYMENTS}`,
         backLink: `${ROOT}/${referenceNumber}${TRADING_HISTORY}`,
-        submitButtonCopy: BUTTONS.CONFIRM,
+        submitButtonCopy: BUTTONS.CONTINUE,
       });
     });
 

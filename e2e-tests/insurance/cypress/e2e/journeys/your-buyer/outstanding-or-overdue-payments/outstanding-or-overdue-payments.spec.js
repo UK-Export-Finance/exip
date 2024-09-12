@@ -4,6 +4,7 @@ import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/f
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import application from '../../../../../../fixtures/application';
+import { GBP, SYMBOLS } from '../../../../../../fixtures/currencies';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.OUTSTANDING_OR_OVERDUE_PAYMENTS;
 
@@ -14,9 +15,11 @@ const {
 
 const { TOTAL_AMOUNT_OVERDUE, TOTAL_OUTSTANDING_PAYMENTS, OUTSTANDING_PAYMENTS } = FIELD_IDS;
 
-const baseUrl = Cypress.config('baseUrl');
-
 const { BUYER } = application;
+
+const currencyName = GBP.name;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context(
   'Insurance - Your buyer - Outstanding or overdue payments - As an Underwriter, I want to know about any outstanding and/or overdue payments the buyer owes the exporter, So that I can better understand the level of risk when assessing the application',
@@ -67,21 +70,37 @@ context(
 
       describe(TOTAL_OUTSTANDING_PAYMENTS, () => {
         it(`should render a label for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
-          cy.checkText(field(TOTAL_OUTSTANDING_PAYMENTS).label(), FIELDS[TOTAL_OUTSTANDING_PAYMENTS].LABEL);
+          cy.assertCopyWithCurrencyName({
+            expectedCopy: FIELDS[TOTAL_OUTSTANDING_PAYMENTS].LABEL,
+            currencyName,
+            selector: field(TOTAL_OUTSTANDING_PAYMENTS).label(),
+          });
         });
 
         it(`should render an input for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
           field(TOTAL_OUTSTANDING_PAYMENTS).input().should('be.visible');
         });
+
+        it(`should render a prefix for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+          cy.checkText(field(TOTAL_OUTSTANDING_PAYMENTS).prefix(), SYMBOLS.GBP);
+        });
       });
 
       describe(TOTAL_AMOUNT_OVERDUE, () => {
         it(`should render a label for ${TOTAL_AMOUNT_OVERDUE}`, () => {
-          cy.checkText(field(TOTAL_AMOUNT_OVERDUE).label(), FIELDS[TOTAL_AMOUNT_OVERDUE].LABEL);
+          cy.assertCopyWithCurrencyName({
+            expectedCopy: FIELDS[TOTAL_AMOUNT_OVERDUE].LABEL,
+            currencyName,
+            selector: field(TOTAL_AMOUNT_OVERDUE).label(),
+          });
         });
 
         it(`should render an input for ${TOTAL_AMOUNT_OVERDUE}`, () => {
           field(TOTAL_AMOUNT_OVERDUE).input().should('be.visible');
+        });
+
+        it(`should render a prefix for ${TOTAL_AMOUNT_OVERDUE}`, () => {
+          cy.checkText(field(TOTAL_AMOUNT_OVERDUE).prefix(), SYMBOLS.GBP);
         });
       });
 

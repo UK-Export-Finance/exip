@@ -1,4 +1,3 @@
-import partials from '../../../../../../partials';
 import { field as fieldSelector } from '../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
@@ -18,7 +17,8 @@ context('Insurance - Feedback - form validation', () => {
 
   before(() => {
     cy.navigateToCheckIfEligibleUrl();
-    partials.phaseBanner.feedbackLink().click();
+
+    cy.clickPhaseBannerFeedbackLink();
   });
 
   beforeEach(() => {
