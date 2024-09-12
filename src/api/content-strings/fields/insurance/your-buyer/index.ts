@@ -125,15 +125,14 @@ export const YOUR_BUYER_FIELDS = {
     MAXIMUM: MAXIMUM_CHARACTERS.BUYER.PREVIOUS_CREDIT_INSURANCE_COVER,
   },
   [TOTAL_OUTSTANDING_PAYMENTS]: {
-    HEADING: 'Tell us about the outstanding or overdue payments',
-    LABEL: 'Total outstanding, including overdue',
+    LABEL: 'Total outstanding, including overdue in',
     SUMMARY: {
       TITLE: 'Total outstanding including overdue',
       FORM_TITLE: TRADING_HISTORY,
     },
   },
   [TOTAL_AMOUNT_OVERDUE]: {
-    LABEL: 'Amount overdue',
+    LABEL: 'Amount overdue in',
     SUMMARY: {
       TITLE: 'Amount overdue',
       FORM_TITLE: TRADING_HISTORY,
