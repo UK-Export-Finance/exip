@@ -18,7 +18,7 @@ import { Request, Response } from '../../../../../types';
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { AGENT_CHARGES, AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE },
+  EXPORT_CONTRACT: { AGENT_CHARGES, AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE, AGENT_CHARGES_CURRENCY_SAVE_AND_BACK },
 } = INSURANCE_ROUTES;
 
 const {
@@ -34,7 +34,13 @@ export const TEMPLATE = TEMPLATES.SHARED_PAGES.ALTERNATIVE_CURRENCY;
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES_CURRENCY;
 
-export const PAGE_VARIABLES = {
+/**
+ * pageVariables
+ * Page fields and "save and go back" URL
+ * @param {Number} referenceNumber: Application reference number
+ * @returns {Object} Page variables
+ */
+export const pageVariables = (referenceNumber: number) => ({
   FIELDS: {
     CURRENCY_CODE: {
       ID: CURRENCY_CODE,
@@ -44,7 +50,8 @@ export const PAGE_VARIABLES = {
       ID: ALTERNATIVE_CURRENCY_CODE,
     },
   },
-};
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY_SAVE_AND_BACK}`,
+});
 
 /**
  * Get the application and render the "Agent charges - Currency of agents charge" page
@@ -65,6 +72,7 @@ export const get = async (req: Request, res: Response) => {
           service: { charge },
         },
       },
+      referenceNumber,
     } = application;
 
     const { alternativeCurrencies, supportedCurrencies } = await api.keystone.APIM.getCurrencies();
@@ -78,7 +86,7 @@ export const get = async (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
       }),
-      ...PAGE_VARIABLES,
+      ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, charge[FIXED_SUM_CURRENCY_CODE]),
     });
@@ -122,7 +130,7 @@ export const post = async (req: Request, res: Response) => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...PAGE_VARIABLES,
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, payload[CURRENCY_CODE]),
         validationErrors,

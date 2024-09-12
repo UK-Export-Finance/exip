@@ -1,4 +1,4 @@
-import { FIELD_IDS, PAGE_CONTENT_STRINGS, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
+import { FIELD_IDS, PAGE_CONTENT_STRINGS, pageVariables, TEMPLATE, get, post } from '.';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
@@ -32,6 +32,7 @@ const {
     AGENT_CHARGES,
     AGENT_CHARGES_CHANGE,
     AGENT_CHARGES_CHECK_AND_CHANGE,
+    AGENT_CHARGES_CURRENCY_SAVE_AND_BACK,
   },
 } = INSURANCE_ROUTES;
 
@@ -92,8 +93,10 @@ describe('controllers/insurance/export-contract/currency-of-agents-charge', () =
     });
   });
 
-  describe('PAGE_VARIABLES', () => {
+  describe('pageVariables', () => {
     it('should have correct properties', () => {
+      const result = pageVariables(referenceNumber);
+
       const expected = {
         FIELDS: {
           CURRENCY_CODE: {
@@ -104,9 +107,10 @@ describe('controllers/insurance/export-contract/currency-of-agents-charge', () =
             ID: ALTERNATIVE_CURRENCY_CODE,
           },
         },
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY_SAVE_AND_BACK}`,
       };
 
-      expect(PAGE_VARIABLES).toEqual(expected);
+      expect(result).toEqual(expected);
     });
   });
 
@@ -125,7 +129,7 @@ describe('controllers/insurance/export-contract/currency-of-agents-charge', () =
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...PAGE_VARIABLES,
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, charge[FIXED_SUM_CURRENCY_CODE]),
       };
@@ -203,7 +207,7 @@ describe('controllers/insurance/export-contract/currency-of-agents-charge', () =
             PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
           }),
-          ...PAGE_VARIABLES,
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, payload[CURRENCY_CODE]),
           validationErrors,
