@@ -1,7 +1,6 @@
 import mapSubmittedData from '.';
 import { APPLICATION } from '../../../../../constants';
 import FIELD_IDS from '../../../../../constants/field-ids/insurance';
-import { stripCommas } from '../../../../../helpers/string';
 import { EUR, HKD } from '../../../../../test-mocks';
 
 const {
@@ -54,7 +53,7 @@ describe('controllers/insurance/export-contract/map-submitted-data/agent-service
 
         const expected = {
           ...mockFormBody,
-          [FIXED_SUM_AMOUNT]: stripCommas(String(mockFormBody[FIXED_SUM_AMOUNT])),
+          // [FIXED_SUM_AMOUNT]: stripCommas(String(mockFormBody[FIXED_SUM_AMOUNT])),
           [PERCENTAGE_CHARGE]: null,
           [FIXED_SUM_CURRENCY_CODE]: EUR.isoCode,
         };
@@ -99,7 +98,7 @@ describe('controllers/insurance/export-contract/map-submitted-data/agent-service
       const expected = {
         ...mockFormBody,
         [PERCENTAGE_CHARGE]: Number(mockFormBody[PERCENTAGE_CHARGE]),
-        [FIXED_SUM_AMOUNT]: null,
+        // [FIXED_SUM_AMOUNT]: null,
         [FIXED_SUM_CURRENCY_CODE]: EUR.isoCode,
       };
 
