@@ -15,9 +15,11 @@ const {
 
 const { TOTAL_AMOUNT_OVERDUE, TOTAL_OUTSTANDING_PAYMENTS, OUTSTANDING_PAYMENTS } = FIELD_IDS;
 
-const baseUrl = Cypress.config('baseUrl');
-
 const { BUYER } = application;
+
+const currencyName = GBP.name;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context(
   'Insurance - Your buyer - Outstanding or overdue payments - As an Underwriter, I want to know about any outstanding and/or overdue payments the buyer owes the exporter, So that I can better understand the level of risk when assessing the application',
@@ -70,7 +72,7 @@ context(
         it(`should render a label for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
           cy.assertCopyWithCurrencyName({
             expectedCopy: FIELDS[TOTAL_OUTSTANDING_PAYMENTS].LABEL,
-            currencyName: GBP.name,
+            currencyName,
             selector: field(TOTAL_OUTSTANDING_PAYMENTS).label(),
           });
         });
@@ -88,7 +90,7 @@ context(
         it(`should render a label for ${TOTAL_AMOUNT_OVERDUE}`, () => {
           cy.assertCopyWithCurrencyName({
             expectedCopy: FIELDS[TOTAL_AMOUNT_OVERDUE].LABEL,
-            currencyName: GBP.name,
+            currencyName,
             selector: field(TOTAL_AMOUNT_OVERDUE).label(),
           });
         });

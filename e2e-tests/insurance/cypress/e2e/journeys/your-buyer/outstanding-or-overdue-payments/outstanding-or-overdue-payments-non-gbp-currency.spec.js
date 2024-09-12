@@ -11,6 +11,8 @@ const {
 
 const { TOTAL_AMOUNT_OVERDUE, TOTAL_OUTSTANDING_PAYMENTS } = FIELD_IDS;
 
+const currencyName = USD.name;
+
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Your buyer - Outstanding or overdue payments - Non-GBP (supported) currency', () => {
@@ -52,7 +54,7 @@ context('Insurance - Your buyer - Outstanding or overdue payments - Non-GBP (sup
       it('should render a label with the non-GBP currency', () => {
         cy.assertCopyWithCurrencyName({
           expectedCopy: FIELDS[TOTAL_OUTSTANDING_PAYMENTS].LABEL,
-          currencyName: USD.name,
+          currencyName,
           selector: field(TOTAL_OUTSTANDING_PAYMENTS).label(),
         });
       });
@@ -66,7 +68,7 @@ context('Insurance - Your buyer - Outstanding or overdue payments - Non-GBP (sup
       it('should render a label with the non-GBP currency', () => {
         cy.assertCopyWithCurrencyName({
           expectedCopy: FIELDS[TOTAL_AMOUNT_OVERDUE].LABEL,
-          currencyName: USD.name,
+          currencyName,
           selector: field(TOTAL_AMOUNT_OVERDUE).label(),
         });
       });
