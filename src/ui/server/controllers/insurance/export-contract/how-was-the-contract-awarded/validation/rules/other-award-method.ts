@@ -20,7 +20,7 @@ const {
  * otherAwardMethodRule
  * if AWARD_METHOD is "OTHER", return providedAndMaxLength for the OTHER_AWARD_METHOD field.
  * @param {RequestBody} formBody: Form body
- * * @param {Object} errors: Errors from previous validation errors
+ * @param {Object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const otherAwardMethodRule = (formBody: RequestBody, errors: object) => {

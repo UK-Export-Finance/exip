@@ -12,7 +12,7 @@ const {
  * Check if CURRENCY_CODE is ALTERNATIVE_CURRENCY_CODE.
  * If so, return emptyFieldValidation for the ALTERNATIVE_CURRENCY_CODE field.
  * @param {RequestBody} formBody: Form body
- * * @param {Object} errors: Errors from previous validation errors
+ * @param {Object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const alternativeCurrencyValidation = (formBody: RequestBody, errors: object, errorMessage: string) => {
