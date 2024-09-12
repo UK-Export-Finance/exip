@@ -119,7 +119,7 @@ const COMPANY_DETAILS = {
 };
 
 const END_BUYER = {
-  PAGE_TITLE: "Does your export contract say you'll only get paid once you're buyer gets paid?",
+  PAGE_TITLE: "Does your export contract say you'll only get paid once your buyer gets paid?",
 };
 
 const CANNOT_APPLY_MULTIPLE_RISKS_EXIT = {

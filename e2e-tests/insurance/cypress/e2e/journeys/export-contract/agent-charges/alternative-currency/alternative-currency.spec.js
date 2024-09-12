@@ -56,7 +56,7 @@ context(
         pageTitle: FIELDS.AGENT_CHARGES[CURRENCY_CODE].LEGEND,
         currentHref: `${ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`,
         backLink: `${ROOT}/${referenceNumber}${AGENT_CHARGES}`,
-        submitButtonCopy: BUTTONS.CONFIRM,
+        submitButtonCopy: BUTTONS.CONTINUE,
       });
     });
 
