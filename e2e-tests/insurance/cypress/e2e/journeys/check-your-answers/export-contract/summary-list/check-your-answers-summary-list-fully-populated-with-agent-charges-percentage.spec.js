@@ -9,7 +9,7 @@ const {
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  'Insurance - Check your answers - Export contract - Summary list - total contract value threshold, private insurance attempt, using an agent, agent is chraging - percentage method',
+  'Insurance - Check your answers - Export contract - Summary list - total contract value threshold, private insurance attempt, using an agent, agent is charging - percentage method',
   () => {
     let referenceNumber;
     let url;

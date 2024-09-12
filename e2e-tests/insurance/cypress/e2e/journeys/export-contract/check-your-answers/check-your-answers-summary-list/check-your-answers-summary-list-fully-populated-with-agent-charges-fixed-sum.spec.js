@@ -7,7 +7,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 // TODO: EMS-3828 - renable
 context.skip(
-  'Insurance - Export contract - Check your answers - Summary list - application over total contract value threshold, private insurance attempt, using an agent, agent is chraging - fixed sum method',
+  'Insurance - Export contract - Check your answers - Summary list - application over total contract value threshold, private insurance attempt, using an agent, agent is charging - fixed sum method',
   () => {
     let referenceNumber;
     let url;
