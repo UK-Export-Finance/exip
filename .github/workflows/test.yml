@@ -804,7 +804,7 @@ jobs:
             'your-buyer/connection-with-the-buyer/**/*.spec.js',
             'your-buyer/credit-insurance-cover/**/*.spec.js',
             'your-buyer/currency-of-late-payments/**/*.spec.js',
-            'your-buyer/failed-to-pay/**/*.spec.js',
+            'your-buyer/failed-to-pay-on-time/**/*.spec.js',
             'your-buyer/outstanding-or-overdue-payments/**/*.spec.js',
             'your-buyer/root/**/*.spec.js',
             'your-buyer/traded-with-buyer/**/*.spec.js',

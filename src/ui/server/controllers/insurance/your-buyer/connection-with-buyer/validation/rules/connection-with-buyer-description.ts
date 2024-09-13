@@ -21,7 +21,7 @@ const {
  * Returns generateValidationErrors if input is empty.
  * Returns inputValidation if field is not empty
  * @param {RequestBody} formBody: Form body
- * * @param {Object} errors: Errors from previous validation errors errors
+ * @param {Object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const connectionWithBuyerDescriptionRule = (formBody: RequestBody, errors: object) => {

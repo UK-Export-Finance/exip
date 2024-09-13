@@ -13,7 +13,7 @@ const { [FIELD_ID]: ERROR_MESSAGES_OBJECT } = ERROR_MESSAGES.INSURANCE.POLICY;
  * Check submitted form data for errors for the sort code field
  * Returns numberHyphenSpacesOnlyValidation if there are any errors.
  * @param {RequestBody} formBody: Form body
- * * @param {Object} errors: Errors from previous validation errors errors
+ * @param {Object} errors: Errors from previous validation errors
  * @returns {Object} numberHyphenSpacesOnlyValidation errors
  */
 const sortCodeRules = (formBody: RequestBody, errors: object) =>
