@@ -75,6 +75,8 @@ context(
         summaryList.field(fieldId).changeLink().click();
 
         cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
+        cy.completeAndSubmitAlternativeCurrencyForm({ clickAlternativeCurrencyLink: false });
+        cy.completeAndSubmitOutstandingOrOverduePaymentsForm({});
       });
 
       it(`should redirect to ${YOUR_BUYER}`, () => {

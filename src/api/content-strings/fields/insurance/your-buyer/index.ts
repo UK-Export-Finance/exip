@@ -99,14 +99,14 @@ export const YOUR_BUYER_FIELDS = {
     },
   },
   [FAILED_PAYMENTS]: {
-    LABEL: 'Has the buyer ever failed to pay you on time?',
+    HINT: 'This is when an invoice has still not been paid 30 days or more after the agreed payment date.',
     SUMMARY: {
       TITLE: 'Buyer failed to pay on time?',
       FORM_TITLE: TRADING_HISTORY,
     },
   },
   [CURRENCY_CODE]: {
-    LEGEND: 'What currency are the outstanding or overdue payments in?',
+    LEGEND: 'What is the currency the outstanding or overdue payments are in?',
   },
   [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
     LABEL: 'Have you in the past held credit insurance cover on the buyer?',
@@ -125,15 +125,14 @@ export const YOUR_BUYER_FIELDS = {
     MAXIMUM: MAXIMUM_CHARACTERS.BUYER.PREVIOUS_CREDIT_INSURANCE_COVER,
   },
   [TOTAL_OUTSTANDING_PAYMENTS]: {
-    HEADING: 'Tell us about the outstanding or overdue payments',
-    LABEL: 'Total outstanding, including overdue',
+    LABEL: 'Total outstanding, including overdue in',
     SUMMARY: {
       TITLE: 'Total outstanding including overdue',
       FORM_TITLE: TRADING_HISTORY,
     },
   },
   [TOTAL_AMOUNT_OVERDUE]: {
-    LABEL: 'Amount overdue',
+    LABEL: 'Amount overdue in',
     SUMMARY: {
       TITLE: 'Amount overdue',
       FORM_TITLE: TRADING_HISTORY,

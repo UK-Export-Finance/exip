@@ -1,4 +1,4 @@
-import { get, post, pageVariables, HTML_FLAGS, TEMPLATE, FIELD_IDS, PAGE_CONTENT_STRINGS } from '.';
+import { get, post, pageVariables, HTML_FLAGS, TEMPLATE, FIELD_ID, PAGE_CONTENT_STRINGS } from '.';
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import BUYER_FIELD_IDS from '../../../../constants/field-ids/insurance/your-buyer';
@@ -65,11 +65,9 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
     });
   });
 
-  describe('FIELD_IDS', () => {
-    it('should have the correct FIELD_IDS', () => {
-      const EXPECTED_FIELD_IDS = [TRADED_WITH_BUYER];
-
-      expect(FIELD_IDS).toEqual(EXPECTED_FIELD_IDS);
+  describe('FIELD_ID', () => {
+    it('should have the correct ID', () => {
+      expect(FIELD_ID).toEqual(TRADED_WITH_BUYER);
     });
   });
 
@@ -155,7 +153,7 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
 
         expect(mapAndSave.buyerTradingHistory).toHaveBeenCalledTimes(1);
 
-        const payload = constructPayload(req.body, FIELD_IDS);
+        const payload = constructPayload(req.body, [FIELD_ID]);
 
         expect(mapAndSave.buyerTradingHistory).toHaveBeenCalledWith(payload, mockApplication);
       });
@@ -261,7 +259,7 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
       it('should render template with validation errors', async () => {
         await post(req, res);
 
-        const payload = constructPayload(req.body, FIELD_IDS);
+        const payload = constructPayload(req.body, [FIELD_ID]);
 
         const validationErrors = tradedWithBuyerValidation(payload);
 

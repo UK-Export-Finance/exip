@@ -1,4 +1,3 @@
-import partials from '../../../../partials';
 import { PAGES } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 
@@ -16,7 +15,7 @@ context('Accessibility statement page - Insurance - Signed in', () => {
       dashboardUrl = `${baseUrl}${ROOT}/${refNumber}${ALL_SECTIONS}`;
     });
 
-    partials.footer.supportLinks.accessibilityStatement().click();
+    cy.clickFooterAccessibilityStatementLink();
 
     cy.assertUrl(`${baseUrl}${ACCESSIBILITY_STATEMENT}`);
 

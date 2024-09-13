@@ -1,6 +1,5 @@
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { cookiesPage, cookiesSavedPage } from '../../../../../pages';
-import partials from '../../../../../partials';
 import { body } from '../../../../../pages/shared';
 import { PAGES, BUTTONS } from '../../../../../content-strings';
 
@@ -22,7 +21,7 @@ context('Cookies saved page - Quote', () => {
   beforeEach(() => {
     cy.navigateToRootUrl();
 
-    partials.footer.supportLinks.cookies().click();
+    cy.clickFooterCookiesLink();
 
     cy.saveSession();
 

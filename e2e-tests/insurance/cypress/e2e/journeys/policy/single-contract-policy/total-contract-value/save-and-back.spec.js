@@ -77,6 +77,30 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     });
   });
 
+  describe(`when only ${REQUESTED_CREDIT_LIMIT} is provided`, () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
+      cy.completeTotalContractValueForm({ totalContractValue: '' });
+
+      cy.clickSaveAndBackButton();
+    });
+
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
+    });
+
+    it('should retain the `type of policy` task status as `in progress`', () => {
+      cy.checkTaskPolicyStatusIsInProgress();
+    });
+
+    it('should have the submitted values when going back to the page', () => {
+      cy.navigateToUrl(url);
+
+      fieldSelector(REQUESTED_CREDIT_LIMIT).input().should('have.value', application.POLICY[REQUESTED_CREDIT_LIMIT]);
+    });
+  });
+
   describe('when all fields are provided', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);

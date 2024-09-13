@@ -22,8 +22,9 @@ const completeTotalContractValueForm = ({
 }) => {
   if (policyValueOverMvpMaximum) {
     const mvpMaximumPlusOne = 50000 + 1;
+
     cy.keyboardInput(field(TOTAL_CONTRACT_VALUE).input(), mvpMaximumPlusOne);
-  } else {
+  } else if (totalContractValue) {
     cy.keyboardInput(field(TOTAL_CONTRACT_VALUE).input(), totalContractValue);
   }
 

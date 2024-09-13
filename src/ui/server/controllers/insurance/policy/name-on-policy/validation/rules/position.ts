@@ -25,7 +25,7 @@ const MAXIMUM = Number(NAME_ON_POLICY[FIELD_ID].MAXIMUM);
  * Returns the result of emptyFieldValidation if SAME_NAME is selected
  * else returns provided errors object
  * @param {RequestBody} formBody: Form body
- * * @param {Object} errors: Errors from previous validation errors errors
+ * @param {Object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const positionRule = (formBody: RequestBody, errors: object) => {
