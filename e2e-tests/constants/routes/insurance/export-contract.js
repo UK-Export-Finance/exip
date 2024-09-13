@@ -8,6 +8,7 @@ const AGENT_ROOT = `${ROOT}/agent`;
 const AGENT_DETAILS_ROOT = `${ROOT}/agent-details`;
 const AGENT_SERVICE_ROOT = `${ROOT}/agent-service`;
 const AGENT_CHARGES_ROOT = `${ROOT}/agent-charges`;
+const HOW_MUCH_IS_THE_AGENT_CHARGING_ROOT = `${ROOT}/how-much-is-the-agent-charging`;
 
 export const EXPORT_CONTRACT = {
   ROOT,
@@ -51,5 +52,9 @@ export const EXPORT_CONTRACT = {
   AGENT_CHARGES_CURRENCY: `${AGENT_CHARGES_ROOT}/alternative-currency`,
   AGENT_CHARGES_CURRENCY_CHANGE: `${AGENT_CHARGES_ROOT}/alternative-currency/change`,
   AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE: `${AGENT_CHARGES_ROOT}/alternative-currency/check-and-change`,
+  HOW_MUCH_IS_THE_AGENT_CHARGING_SAVE_AND_BACK: `${HOW_MUCH_IS_THE_AGENT_CHARGING_ROOT}/save-and-go-back`,
+  HOW_MUCH_IS_THE_AGENT_CHARGING: `${HOW_MUCH_IS_THE_AGENT_CHARGING_ROOT}/alternative-currency`,
+  HOW_MUCH_IS_THE_AGENT_CHARGING_CHANGE: `${HOW_MUCH_IS_THE_AGENT_CHARGING_ROOT}/alternative-currency/change`,
+  HOW_MUCH_IS_THE_AGENT_CHARGING_CHECK_AND_CHANGE: `${HOW_MUCH_IS_THE_AGENT_CHARGING_ROOT}/alternative-currency/check-and-change`,
   CHECK_YOUR_ANSWERS: `${ROOT}/check-your-answers`,
 };
