@@ -34,7 +34,7 @@ const MULTIPLE_CONTRACT_POLICY = {
 
 const SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE = {
   ...SHARED,
-  PAGE_TITLE: "What's the total value of the contract you want to insure in",
+  PAGE_TITLE: 'Tell us about the value of the contract and the value of the policy in',
 };
 
 const MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE = {

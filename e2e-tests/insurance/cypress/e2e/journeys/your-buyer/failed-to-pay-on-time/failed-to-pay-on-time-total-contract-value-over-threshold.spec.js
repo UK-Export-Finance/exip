@@ -7,7 +7,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your buyer - Failed to pay page - total contract value over threshold', () => {
+context('Insurance - Your buyer - Failed to pay on time page - total contract value over threshold', () => {
   let referenceNumber;
   let url;
   let creditInsuranceCoverUrl;
