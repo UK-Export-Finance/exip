@@ -58,11 +58,11 @@ export const pageVariables = (referenceNumber: number, currencies: Array<Currenc
     FIELDS: {
       TOTAL_OUTSTANDING_PAYMENTS: {
         ID: TOTAL_OUTSTANDING_PAYMENTS,
-        ...FIELDS[TOTAL_OUTSTANDING_PAYMENTS],
+        LABEL: `${FIELDS[TOTAL_OUTSTANDING_PAYMENTS].LABEL} ${currency.name}`,
       },
       TOTAL_AMOUNT_OVERDUE: {
         ID: TOTAL_AMOUNT_OVERDUE,
-        ...FIELDS[TOTAL_AMOUNT_OVERDUE],
+        LABEL: `${FIELDS[TOTAL_AMOUNT_OVERDUE].LABEL} ${currency.name}`,
       },
     },
     PAGE_CONTENT_STRINGS,
@@ -91,13 +91,13 @@ export const get = async (req: Request, res: Response) => {
       buyer: { buyerTradingHistory },
     } = application;
 
-    const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
+    const { allCurrencies } = await api.keystone.APIM.getCurrencies();
 
-    if (!isPopulatedArray(supportedCurrencies)) {
+    if (!isPopulatedArray(allCurrencies)) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const generatedPageVariables = pageVariables(referenceNumber, supportedCurrencies, String(buyerTradingHistory[CURRENCY_CODE]));
+    const generatedPageVariables = pageVariables(referenceNumber, allCurrencies, String(buyerTradingHistory[CURRENCY_CODE]));
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({

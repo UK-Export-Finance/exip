@@ -13,9 +13,6 @@ export const APPLICATION = {
     },
   },
   POLICY: {
-    TOTAL_VALUE_OF_CONTRACT: {
-      MINIMUM: 1,
-    },
     TOTAL_MONTHS_OF_COVER: 12,
   },
   STATUS: {

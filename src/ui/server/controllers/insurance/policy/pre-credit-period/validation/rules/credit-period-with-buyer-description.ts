@@ -19,7 +19,7 @@ const {
  * Returns the result of emptyFieldValidation if NEED_PRE_CREDIT_PERIOD is true
  * else returns provided errors object
  * @param {RequestBody} formBody: Form body
- * * @param {Object} errors: Errors from previous validation errors errors
+ * @param {Object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const creditPeriodWithBuyerRule = (formBody: RequestBody, errors: object) => {

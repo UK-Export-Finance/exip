@@ -1,6 +1,6 @@
 import { post } from '.';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { FIELD_ID } from '..';
+import { FIELD_IDS } from '..';
 import constructPayload from '../../../../../../helpers/construct-payload';
 import mapAndSave from '../../../map-and-save/policy';
 import generateValidationErrors from '../validation';
@@ -34,7 +34,7 @@ describe('controllers/insurance/policy/single-contract-policy/total-contract-val
     it('should call mapAndSave.policy with data from constructPayload function, application and validationErrors', async () => {
       await post(req, res);
 
-      const payload = constructPayload(req.body, [FIELD_ID]);
+      const payload = constructPayload(req.body, FIELD_IDS);
 
       const validationErrors = generateValidationErrors(payload);
 

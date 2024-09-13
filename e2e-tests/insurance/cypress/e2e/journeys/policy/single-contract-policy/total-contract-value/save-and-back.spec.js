@@ -1,6 +1,6 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { POLICY as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import application from '../../../../../../../fixtures/application';
 
 const {
@@ -9,12 +9,10 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
-    CONTRACT_POLICY: {
-      SINGLE: { TOTAL_CONTRACT_VALUE },
-    },
+  CONTRACT_POLICY: {
+    SINGLE: { TOTAL_CONTRACT_VALUE, REQUESTED_CREDIT_LIMIT },
   },
-} = INSURANCE_FIELD_IDS;
+} = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -52,20 +50,13 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     it('should redirect to `all sections`', () => {
       cy.assertAllSectionsUrl(referenceNumber);
     });
-
-    it('should retain the `type of policy` task status as `in progress`', () => {
-      cy.checkTaskPolicyStatusIsInProgress();
-    });
   });
 
-  describe('when entering an invalid total contract value and submitting the form via `save and go back` button', () => {
-    const field = fieldSelector(TOTAL_CONTRACT_VALUE);
-    const invalidValue = 'Not a number';
-
+  describe(`when only ${TOTAL_CONTRACT_VALUE} is provided`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(field.input(), invalidValue);
+      cy.completeTotalContractValueForm({ requestedCreditLimit: '' });
 
       cy.clickSaveAndBackButton();
     });
@@ -78,33 +69,19 @@ context('Insurance - Policy - Single contract policy - Total contract value page
       cy.checkTaskPolicyStatusIsInProgress();
     });
 
-    describe('when going back to the page', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
+    it('should have the submitted values when going back to the page', () => {
+      cy.navigateToUrl(url);
 
-        cy.keyboardInput(field.input(), invalidValue);
-
-        cy.clickSaveAndBackButton();
-
-        cy.startInsurancePolicySection({});
-
-        // go through the first 2 single contract policy forms.
-        cy.clickSubmitButtonMultipleTimes({ count: 2 });
-      });
-
-      it('should NOT have saved the submitted value', () => {
-        field.input().should('have.value', '');
-      });
+      fieldSelector(TOTAL_CONTRACT_VALUE).input().should('have.value', application.POLICY[TOTAL_CONTRACT_VALUE]);
+      fieldSelector(REQUESTED_CREDIT_LIMIT).input().should('have.value', '');
     });
   });
 
-  describe('when entering a valid total contract value and submitting the form via `save and go back` button', () => {
-    const field = fieldSelector(TOTAL_CONTRACT_VALUE);
-
+  describe(`when only ${REQUESTED_CREDIT_LIMIT} is provided`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(field.input(), application.POLICY[TOTAL_CONTRACT_VALUE]);
+      cy.completeTotalContractValueForm({ totalContractValue: '' });
 
       cy.clickSaveAndBackButton();
     });
@@ -117,14 +94,35 @@ context('Insurance - Policy - Single contract policy - Total contract value page
       cy.checkTaskPolicyStatusIsInProgress();
     });
 
-    describe('when going back to the page', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-      });
+    it('should have the submitted values when going back to the page', () => {
+      cy.navigateToUrl(url);
 
-      it('should have the submitted value', () => {
-        fieldSelector(TOTAL_CONTRACT_VALUE).input().should('have.value', application.POLICY[TOTAL_CONTRACT_VALUE]);
-      });
+      fieldSelector(REQUESTED_CREDIT_LIMIT).input().should('have.value', application.POLICY[REQUESTED_CREDIT_LIMIT]);
+    });
+  });
+
+  describe('when all fields are provided', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
+      cy.completeTotalContractValueForm({});
+
+      cy.clickSaveAndBackButton();
+    });
+
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
+    });
+
+    it('should retain the `type of policy` task status as `in progress`', () => {
+      cy.checkTaskPolicyStatusIsInProgress();
+    });
+
+    it('should have the submitted values when going back to the page', () => {
+      cy.navigateToUrl(url);
+
+      fieldSelector(TOTAL_CONTRACT_VALUE).input().should('have.value', application.POLICY[TOTAL_CONTRACT_VALUE]);
+      fieldSelector(REQUESTED_CREDIT_LIMIT).input().should('have.value', application.POLICY[REQUESTED_CREDIT_LIMIT]);
     });
   });
 });

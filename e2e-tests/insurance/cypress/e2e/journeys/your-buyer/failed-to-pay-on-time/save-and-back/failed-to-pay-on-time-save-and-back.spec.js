@@ -8,7 +8,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your buyer - Failed to pay - Save and back', () => {
+context('Insurance - Your buyer - Failed to pay on time - Save and back', () => {
   let referenceNumber;
   let url;
 
