@@ -6962,14 +6962,14 @@ var YOUR_BUYER_FIELDS = {
     }
   },
   [FAILED_PAYMENTS]: {
-    LABEL: "Has the buyer ever failed to pay you on time?",
+    HINT: "This is when an invoice has still not been paid 30 days or more after the agreed payment date.",
     SUMMARY: {
       TITLE: "Buyer failed to pay on time?",
       FORM_TITLE: TRADING_HISTORY
     }
   },
   [CURRENCY_CODE2]: {
-    LEGEND: "What currency are the outstanding or overdue payments in?"
+    LEGEND: "What is the currency the outstanding or overdue payments are in?"
   },
   [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
     LABEL: "Have you in the past held credit insurance cover on the buyer?",
@@ -6988,15 +6988,14 @@ var YOUR_BUYER_FIELDS = {
     MAXIMUM: MAXIMUM_CHARACTERS.BUYER.PREVIOUS_CREDIT_INSURANCE_COVER
   },
   [TOTAL_OUTSTANDING_PAYMENTS]: {
-    HEADING: "Tell us about the outstanding or overdue payments",
-    LABEL: "Total outstanding, including overdue",
+    LABEL: "Total outstanding, including overdue in",
     SUMMARY: {
       TITLE: "Total outstanding including overdue",
       FORM_TITLE: TRADING_HISTORY
     }
   },
   [TOTAL_AMOUNT_OVERDUE]: {
-    LABEL: "Amount overdue",
+    LABEL: "Amount overdue in",
     SUMMARY: {
       TITLE: "Amount overdue",
       FORM_TITLE: TRADING_HISTORY
@@ -7494,7 +7493,7 @@ var {
     CONTRACT_POLICY: {
       SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE3 },
       POLICY_CURRENCY_CODE,
-      SINGLE: { TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE2 }
+      SINGLE: { REQUESTED_CREDIT_LIMIT, TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE2 }
     }
   }
 } = insurance_default;
@@ -7502,7 +7501,8 @@ var mapSingleContractPolicy = (policy) => {
   const mapped = [
     xlsx_row_default(String(FIELDS8[CONTRACT_COMPLETION_DATE3]), format_date_default(policy[CONTRACT_COMPLETION_DATE3], DATE_FORMAT.XLSX)),
     xlsx_row_default(String(CONTENT_STRINGS2[CURRENCY_CODE3].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
-    xlsx_row_default(String(FIELDS8[TOTAL_CONTRACT_VALUE2]), format_currency_default2(policy[TOTAL_CONTRACT_VALUE2], policy[POLICY_CURRENCY_CODE]))
+    xlsx_row_default(String(FIELDS8[TOTAL_CONTRACT_VALUE2]), format_currency_default2(policy[TOTAL_CONTRACT_VALUE2], policy[POLICY_CURRENCY_CODE])),
+    xlsx_row_default(String(CONTENT_STRINGS2[REQUESTED_CREDIT_LIMIT].SUMMARY?.TITLE), format_currency_default2(policy[REQUESTED_CREDIT_LIMIT], policy[POLICY_CURRENCY_CODE]))
   ];
   return mapped;
 };
