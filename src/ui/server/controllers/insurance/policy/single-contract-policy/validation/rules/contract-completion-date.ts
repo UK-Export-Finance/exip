@@ -1,6 +1,6 @@
 import { add, isAfter, isBefore, isSameDay } from 'date-fns';
 import { ELIGIBILITY } from '../../../../../../constants';
-import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import dateRules from '../../../../../../shared-validation/date';
 import createTimestampFromNumbers from '../../../../../../helpers/date/create-timestamp-from-numbers';
@@ -8,13 +8,11 @@ import generateValidationErrors from '../../../../../../helpers/validation';
 import { RequestBody } from '../../../../../../../types';
 
 const {
-  POLICY: {
-    CONTRACT_POLICY: {
-      REQUESTED_START_DATE,
-      SINGLE: { CONTRACT_COMPLETION_DATE: FIELD_ID },
-    },
+  CONTRACT_POLICY: {
+    REQUESTED_START_DATE,
+    SINGLE: { CONTRACT_COMPLETION_DATE: FIELD_ID },
   },
-} = INSURANCE_FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 const {
   INSURANCE: {

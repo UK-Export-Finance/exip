@@ -16,7 +16,7 @@ const {
   POLICY: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
-      SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
+      SINGLE: { CONTRACT_COMPLETION_DATE, REQUESTED_CREDIT_LIMIT, TOTAL_CONTRACT_VALUE },
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -145,6 +145,44 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
 
       describe('form submission with a new answer', () => {
         const newAnswer = application.POLICY[fieldId] - 500;
+
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+
+          summaryList.field(fieldId).changeLink().click();
+
+          cy.keyboardInput(field(fieldId).input(), newAnswer);
+
+          cy.clickSubmitButton();
+        });
+
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+        });
+
+        it('should render the new answer', () => {
+          const expected = formatCurrency(newAnswer);
+
+          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
+        });
+      });
+    });
+
+    describe(REQUESTED_CREDIT_LIMIT, () => {
+      const fieldId = REQUESTED_CREDIT_LIMIT;
+
+      describe('when clicking the `change` link', () => {
+        it(`should redirect to ${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE}`, () => {
+          cy.navigateToUrl(url);
+
+          summaryList.field(fieldId).changeLink().click();
+
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE, fieldId });
+        });
+      });
+
+      describe('form submission with a new answer', () => {
+        const newAnswer = application.POLICY[fieldId] - 100;
 
         beforeEach(() => {
           cy.navigateToUrl(url);

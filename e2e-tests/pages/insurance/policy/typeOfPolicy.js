@@ -1,13 +1,11 @@
 import { field } from '../../shared';
-import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../constants/field-ids/insurance/policy';
 
 const {
-  POLICY: {
-    SINGLE_POLICY_TYPE,
-    MULTIPLE_POLICY_TYPE,
-    TYPE_OF_POLICY: { POLICY_TYPE },
-  },
-} = INSURANCE_FIELD_IDS;
+  SINGLE_POLICY_TYPE,
+  MULTIPLE_POLICY_TYPE,
+  TYPE_OF_POLICY: { POLICY_TYPE },
+} = POLICY_FIELD_IDS;
 
 const typeOfPolicy = {
   [POLICY_TYPE]: {
