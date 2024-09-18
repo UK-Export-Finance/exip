@@ -1,17 +1,17 @@
-import { FIELD_IDS, PAGE_CONTENT_STRINGS, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
-import { TEMPLATES } from '../../../../../constants';
-import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
-import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
-import { PAGES } from '../../../../../content-strings';
-import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/export-contract';
-import api from '../../../../../api';
-import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
-import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
-import mapRadioAndSelectOptions from '../../../../../helpers/mappings/map-currencies/radio-and-select-options';
-import constructPayload from '../../../../../helpers/construct-payload';
+import { FIELD_IDS, PAGE_CONTENT_STRINGS, pageVariables, TEMPLATE, get, post } from '.';
+import { TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
+import { PAGES } from '../../../../content-strings';
+import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/export-contract';
+import api from '../../../../api';
+import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapRadioAndSelectOptions from '../../../../helpers/mappings/map-currencies/radio-and-select-options';
+import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
-import mapAndSave from '../../map-and-save/export-contract-agent-service-charge';
-import { Request, Response } from '../../../../../../types';
+import mapAndSave from '../map-and-save/export-contract-agent-service-charge';
+import { Request, Response } from '../../../../../types';
 import {
   mockReq,
   mockRes,
@@ -21,17 +21,18 @@ import {
   mockCurrenciesEmptyResponse,
   mockSpyPromiseRejection,
   referenceNumber,
-} from '../../../../../test-mocks';
+} from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
   EXPORT_CONTRACT: {
-    AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHANGE,
-    AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE,
+    AGENT_CHARGES_CURRENCY_CHANGE,
+    AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE,
     AGENT_CHARGES,
     AGENT_CHARGES_CHANGE,
     AGENT_CHARGES_CHECK_AND_CHANGE,
+    AGENT_CHARGES_CURRENCY_SAVE_AND_BACK,
   },
 } = INSURANCE_ROUTES;
 
@@ -52,11 +53,11 @@ const {
 
 const { supportedCurrencies, alternativeCurrencies } = mockCurrenciesResponse;
 
-describe('controllers/insurance/export-contract/agent-charges/alternative-currency', () => {
+describe('controllers/insurance/export-contract/currency-of-agents-charge', () => {
   let req: Request;
   let res: Response;
 
-  jest.mock('../../map-and-save/export-contract-agent-service-charge');
+  jest.mock('../map-and-save/export-contract-agent-service-charge');
 
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
   mapAndSave.exportContractAgentServiceCharge = jest.fn(() => Promise.resolve(true));
@@ -82,7 +83,7 @@ describe('controllers/insurance/export-contract/agent-charges/alternative-curren
 
   describe('PAGE_CONTENT_STRINGS', () => {
     it('should have the correct strings', () => {
-      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES_ALTERNATIVE_CURRENCY);
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES_CURRENCY);
     });
   });
 
@@ -92,8 +93,10 @@ describe('controllers/insurance/export-contract/agent-charges/alternative-curren
     });
   });
 
-  describe('PAGE_VARIABLES', () => {
+  describe('pageVariables', () => {
     it('should have correct properties', () => {
+      const result = pageVariables(referenceNumber);
+
       const expected = {
         FIELDS: {
           CURRENCY_CODE: {
@@ -104,9 +107,10 @@ describe('controllers/insurance/export-contract/agent-charges/alternative-curren
             ID: ALTERNATIVE_CURRENCY_CODE,
           },
         },
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY_SAVE_AND_BACK}`,
       };
 
-      expect(PAGE_VARIABLES).toEqual(expected);
+      expect(result).toEqual(expected);
     });
   });
 
@@ -125,7 +129,7 @@ describe('controllers/insurance/export-contract/agent-charges/alternative-curren
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...PAGE_VARIABLES,
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, charge[FIXED_SUM_CURRENCY_CODE]),
       };
@@ -203,7 +207,7 @@ describe('controllers/insurance/export-contract/agent-charges/alternative-curren
             PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
           }),
-          ...PAGE_VARIABLES,
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, payload[CURRENCY_CODE]),
           validationErrors,
@@ -272,7 +276,7 @@ describe('controllers/insurance/export-contract/agent-charges/alternative-curren
         it(`should redirect to ${AGENT_CHARGES_CHANGE}`, async () => {
           req.body = validBody;
 
-          req.originalUrl = AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHANGE;
+          req.originalUrl = AGENT_CHARGES_CURRENCY_CHANGE;
 
           await post(req, res);
 
@@ -286,7 +290,7 @@ describe('controllers/insurance/export-contract/agent-charges/alternative-curren
         it(`should redirect to ${AGENT_CHARGES_CHECK_AND_CHANGE}`, async () => {
           req.body = validBody;
 
-          req.originalUrl = AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE;
+          req.originalUrl = AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE;
 
           await post(req, res);
 

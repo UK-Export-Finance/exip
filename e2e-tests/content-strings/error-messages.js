@@ -221,7 +221,7 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: 'Select the country where charges are payable',
         },
       },
-      AGENT_CHARGES_ALTERNATIVE_CURRENCY: {
+      AGENT_CHARGES_CURRENCY: {
         [FIELD_IDS.INSURANCE.CURRENCY.CURRENCY_CODE]: {
           IS_EMPTY: 'Select the currency the agent is charging you in',
         },
