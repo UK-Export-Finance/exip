@@ -53,6 +53,7 @@ describe('controllers/insurance/export-contract/map-submitted-data/agent-service
 
         const expected = {
           ...mockFormBody,
+          // TODO: EMS-3828 - renable
           // [FIXED_SUM_AMOUNT]: stripCommas(String(mockFormBody[FIXED_SUM_AMOUNT])),
           [PERCENTAGE_CHARGE]: null,
           [FIXED_SUM_CURRENCY_CODE]: EUR.isoCode,
