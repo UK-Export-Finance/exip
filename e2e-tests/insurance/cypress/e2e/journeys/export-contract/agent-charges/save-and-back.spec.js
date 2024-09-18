@@ -86,7 +86,7 @@ context(`Insurance - Export contract - Agent charges - Save and go back - empty 
 
       cy.assertAllSectionsUrl(referenceNumber);
 
-      cy.checkTaskExportContractStatusIsInProgress();
+      cy.checkTaskExportContractStatusIsComplete();
     });
 
     describe('when going back to the page', () => {
@@ -115,7 +115,7 @@ context(`Insurance - Export contract - Agent charges - Save and go back - empty 
 
       cy.assertAllSectionsUrl(referenceNumber);
 
-      cy.checkTaskExportContractStatusIsInProgress();
+      cy.checkTaskExportContractStatusIsComplete();
     });
 
     describe('when going back to the page', () => {
@@ -143,7 +143,7 @@ context(`Insurance - Export contract - Agent charges - Save and go back - empty 
 
       cy.assertAllSectionsUrl(referenceNumber);
 
-      cy.checkTaskExportContractStatusIsInProgress();
+      cy.checkTaskExportContractStatusIsComplete();
     });
 
     describe('when going back to the page', () => {
