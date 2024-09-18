@@ -33,18 +33,18 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE, PERCENTAGE_CHARGE },
+  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_CURRENCY_CODE, PERCENTAGE, PERCENTAGE_CHARGE },
 } = EXPORT_CONTRACT_FIELD_IDS;
 
 const {
   INSURANCE: {
     EXPORT_CONTRACT: {
-      AGENT_CHARGES: { CONDITIONAL_FIXED_SUM_HTML, CONDITIONAL_PERCENTAGE_HTML },
+      AGENT_CHARGES: { CONDITIONAL_PERCENTAGE_HTML },
     },
   },
 } = PARTIAL_TEMPLATES;
 
-export const FIELD_IDS = [METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE];
+export const FIELD_IDS = [METHOD, PAYABLE_COUNTRY_CODE, PERCENTAGE_CHARGE];
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES;
 
@@ -100,11 +100,6 @@ export const pageVariables = (
       FIXED_SUM: {
         ID: FIXED_SUM,
         ...FIELDS.AGENT_CHARGES[FIXED_SUM],
-      },
-      FIXED_SUM_AMOUNT: {
-        ID: FIXED_SUM_AMOUNT,
-        ...FIELDS.AGENT_CHARGES[FIXED_SUM_AMOUNT],
-        LABEL: `${FIELDS.AGENT_CHARGES[FIXED_SUM_AMOUNT].LABEL} ${currency.name}?`,
       },
       PERCENTAGE: {
         ID: PERCENTAGE,
@@ -176,7 +171,6 @@ export const get = async (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
       countries: mapCountries(countries, agent.service.charge[PAYABLE_COUNTRY_CODE]),
-      CONDITIONAL_FIXED_SUM_HTML,
       CONDITIONAL_PERCENTAGE_HTML,
     });
   } catch (error) {
@@ -227,7 +221,6 @@ export const post = async (req: Request, res: Response) => {
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(application),
         countries: mapCountries(countries, payload[PAYABLE_COUNTRY_CODE]),
-        CONDITIONAL_FIXED_SUM_HTML,
         CONDITIONAL_PERCENTAGE_HTML,
         submittedValues: sanitiseData(payload),
         validationErrors,

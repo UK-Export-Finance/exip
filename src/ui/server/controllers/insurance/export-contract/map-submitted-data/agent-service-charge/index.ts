@@ -1,7 +1,7 @@
 import { APPLICATION } from '../../../../../constants';
 import FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import { objectHasProperty } from '../../../../../helpers/object';
-import { isEmptyString, stripCommas } from '../../../../../helpers/string';
+import { isEmptyString } from '../../../../../helpers/string';
 import { RequestBody } from '../../../../../../types';
 
 const {
@@ -15,9 +15,11 @@ const {
 const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
   EXPORT_CONTRACT: {
-    AGENT_CHARGES: { PERCENTAGE_CHARGE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, METHOD },
+    AGENT_CHARGES: { PERCENTAGE_CHARGE, FIXED_SUM_CURRENCY_CODE, METHOD },
   },
 } = FIELD_IDS;
+
+// TODO: EMS-3828 - renable FIXED_SUM_AMOUNT mapping
 
 /**
  * mapSubmittedData
@@ -31,13 +33,13 @@ const mapSubmittedData = (formBody: RequestBody): object => {
   const populatedData = formBody;
 
   if (formBody[METHOD] === FIXED_SUM) {
-    populatedData[FIXED_SUM_AMOUNT] = stripCommas(String(populatedData[FIXED_SUM_AMOUNT]));
+    // populatedData[FIXED_SUM_AMOUNT] = stripCommas(String(populatedData[FIXED_SUM_AMOUNT]));
     populatedData[PERCENTAGE_CHARGE] = null;
   }
 
   if (formBody[METHOD] === PERCENTAGE) {
     populatedData[PERCENTAGE_CHARGE] = Number(populatedData[PERCENTAGE_CHARGE]);
-    populatedData[FIXED_SUM_AMOUNT] = null;
+    // populatedData[FIXED_SUM_AMOUNT] = null;
     populatedData[FIXED_SUM_CURRENCY_CODE] = null;
   }
 

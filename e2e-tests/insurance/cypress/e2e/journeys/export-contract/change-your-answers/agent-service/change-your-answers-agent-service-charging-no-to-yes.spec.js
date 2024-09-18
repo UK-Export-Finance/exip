@@ -10,7 +10,7 @@ const {
 
 const {
   AGENT_SERVICE: { IS_CHARGING: FIELD_ID },
-  AGENT_CHARGES: { FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
+  AGENT_CHARGES: { PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -72,8 +72,10 @@ context(
           const expectedUrl = `${agentChargesUrl}#${FIELD_ID}-label`;
           cy.assertUrl(expectedUrl);
 
+          // TODO: EMS-3828 - renable
           cy.completeAndSubmitAgentChargesForm({
-            fixedSumMethod: true,
+            // fixedSumMethod: true,
+            percentageMethod: true,
           });
 
           cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId: FIELD_ID });
@@ -81,8 +83,10 @@ context(
 
         it(`should render new ${FIELD_ID} answer and other agent charges fields`, () => {
           checkSummaryList[FIELD_ID]({ shouldRender: true, isYes: true });
-          checkSummaryList[FIXED_SUM_AMOUNT]({ shouldRender: true });
-          checkSummaryList[PERCENTAGE_CHARGE]({ shouldRender: false });
+
+          // checkSummaryList[FIXED_SUM_AMOUNT]({ shouldRender: true });
+
+          checkSummaryList[PERCENTAGE_CHARGE]({ shouldRender: true });
           checkSummaryList[PAYABLE_COUNTRY_CODE]({ shouldRender: true });
         });
       });

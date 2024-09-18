@@ -13,7 +13,7 @@ const {
   USING_AGENT,
   AGENT_DETAILS: { AGENT_NAME, AGENT_FULL_ADDRESS, AGENT_COUNTRY_CODE },
   AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
-  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE_CHARGE },
+  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, PERCENTAGE_CHARGE },
 } = FIELD_IDS;
 
 /**
@@ -69,9 +69,10 @@ export const agentServiceChargeTasks = ({ agentIsCharging, agentChargeMethod }: 
   if (agentIsCharging) {
     const tasks = [METHOD, PAYABLE_COUNTRY_CODE];
 
-    if (agentChargeMethod === AGENT_SERVICE_CHARGE_METHOD.FIXED_SUM) {
-      tasks.push(FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE);
-    }
+    // TODO: EMS-3828 - renable
+    // if (agentChargeMethod === AGENT_SERVICE_CHARGE_METHOD.FIXED_SUM) {
+    //   tasks.push(FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE);
+    // }
 
     if (agentChargeMethod === AGENT_SERVICE_CHARGE_METHOD.PERCENTAGE) {
       tasks.push(PERCENTAGE_CHARGE);
