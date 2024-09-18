@@ -17,7 +17,7 @@ const {
   POLICY: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
-      SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
+      SINGLE: { CONTRACT_COMPLETION_DATE, REQUESTED_CREDIT_LIMIT, TOTAL_CONTRACT_VALUE },
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -196,7 +196,50 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
 
           summaryList.field(fieldId).changeLink().click();
 
-          fieldVariables.newValueInput = application.POLICY[fieldId] - 500;
+          cy.changeAnswerField(fieldVariables, field(fieldId).input());
+        });
+
+        it(`should redirect to ${TYPE_OF_POLICY}`, () => {
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
+        });
+
+        it('should render the new answer', () => {
+          fieldVariables.newValue = formatCurrency(fieldVariables.newValueInput);
+          cy.checkChangeAnswerRendered({ fieldVariables });
+        });
+      });
+    });
+
+    describe(REQUESTED_CREDIT_LIMIT, () => {
+      const fieldId = REQUESTED_CREDIT_LIMIT;
+
+      const fieldVariables = {
+        route: SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE,
+        newValueInput: application.POLICY[fieldId] - 100,
+        fieldId,
+        referenceNumber,
+        summaryList,
+        changeLink: summaryList.field(fieldId).changeLink,
+      };
+
+      describe('when clicking the `change` link', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+
+          cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
+        });
+
+        it(`should redirect to ${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE}`, () => {
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: fieldVariables.route, fieldId });
+        });
+      });
+
+      describe('form submission with a new answer', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+
+          summaryList.field(fieldId).changeLink().click();
+
           cy.changeAnswerField(fieldVariables, field(fieldId).input());
         });
 

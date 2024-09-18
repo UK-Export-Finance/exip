@@ -1,7 +1,7 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import application from '../../../../../../../fixtures/application';
 
 const {
@@ -10,12 +10,10 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
-    EXPORT_VALUE: {
-      MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
-    },
+  EXPORT_VALUE: {
+    MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
   },
-} = INSURANCE_FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 const policyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 

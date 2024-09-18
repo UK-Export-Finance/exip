@@ -1,14 +1,12 @@
-import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../constants/field-ids/insurance/policy';
 import { field } from '../../pages/shared';
 import application from '../../fixtures/application';
 
 const {
-  POLICY: {
-    CONTRACT_POLICY: {
-      SINGLE: { REQUESTED_CREDIT_LIMIT, TOTAL_CONTRACT_VALUE },
-    },
+  CONTRACT_POLICY: {
+    SINGLE: { REQUESTED_CREDIT_LIMIT, TOTAL_CONTRACT_VALUE },
   },
-} = INSURANCE_FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 /**
  * completeTotalContractValueForm
