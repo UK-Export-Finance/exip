@@ -46,13 +46,13 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE, PERCENTAGE_CHARGE },
+  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_CURRENCY_CODE, PERCENTAGE, PERCENTAGE_CHARGE },
 } = EXPORT_CONTRACT_FIELD_IDS;
 
 const {
   INSURANCE: {
     EXPORT_CONTRACT: {
-      AGENT_CHARGES: { CONDITIONAL_FIXED_SUM_HTML, CONDITIONAL_PERCENTAGE_HTML },
+      AGENT_CHARGES: { CONDITIONAL_PERCENTAGE_HTML },
     },
   },
 } = PARTIAL_TEMPLATES;
@@ -87,7 +87,7 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE];
+      const expected = [METHOD, PAYABLE_COUNTRY_CODE, PERCENTAGE_CHARGE];
 
       expect(FIELD_IDS).toEqual(expected);
     });
@@ -124,11 +124,6 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
           FIXED_SUM: {
             ID: FIXED_SUM,
             ...FIELDS.AGENT_CHARGES[FIXED_SUM],
-          },
-          FIXED_SUM_AMOUNT: {
-            ID: FIXED_SUM_AMOUNT,
-            ...FIELDS.AGENT_CHARGES[FIXED_SUM_AMOUNT],
-            LABEL: `${FIELDS.AGENT_CHARGES[FIXED_SUM_AMOUNT].LABEL} ${currency.name}?`,
           },
           PERCENTAGE: {
             ID: PERCENTAGE,
@@ -198,7 +193,6 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
         countries: mapCountries(mockCountries, agent.service.charge[PAYABLE_COUNTRY_CODE]),
-        CONDITIONAL_FIXED_SUM_HTML,
         CONDITIONAL_PERCENTAGE_HTML,
       };
 
@@ -222,7 +216,6 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
           userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplication),
           countries: mapCountries(mockCountries, agent.service.charge[PAYABLE_COUNTRY_CODE]),
-          CONDITIONAL_FIXED_SUM_HTML,
           CONDITIONAL_PERCENTAGE_HTML,
         };
 
@@ -298,7 +291,6 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
   describe('post', () => {
     const validBody = {
       [METHOD]: mockExportContractAgentServiceCharge[METHOD],
-      [FIXED_SUM_AMOUNT]: mockExportContractAgentServiceCharge[FIXED_SUM_AMOUNT],
       [PAYABLE_COUNTRY_CODE]: mockExportContractAgentServiceCharge[PAYABLE_COUNTRY_CODE],
     };
 
@@ -334,7 +326,6 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
           userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplication),
           countries: mapCountries(mockCountries, payload[PAYABLE_COUNTRY_CODE]),
-          CONDITIONAL_FIXED_SUM_HTML,
           CONDITIONAL_PERCENTAGE_HTML,
           submittedValues: sanitiseData(payload),
           validationErrors,

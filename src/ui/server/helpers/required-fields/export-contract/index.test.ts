@@ -15,7 +15,7 @@ const {
   USING_AGENT,
   AGENT_DETAILS: { AGENT_NAME, AGENT_FULL_ADDRESS, AGENT_COUNTRY_CODE },
   AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
-  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE_CHARGE },
+  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, PERCENTAGE_CHARGE },
 } = FIELD_IDS;
 
 describe('server/helpers/required-fields/export-contract', () => {
@@ -98,7 +98,10 @@ describe('server/helpers/required-fields/export-contract', () => {
           agentChargeMethod: AGENT_SERVICE_CHARGE_METHOD.FIXED_SUM,
         });
 
-        const expected = [METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE];
+        // TODO: EMS-3828- renable
+        // const expected = [METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE];
+
+        const expected = [METHOD, PAYABLE_COUNTRY_CODE];
 
         expect(result).toEqual(expected);
       });

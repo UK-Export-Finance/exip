@@ -3,7 +3,7 @@ import FIELD_IDS from '../../constants/field-ids/insurance/policy';
 
 const {
   CONTRACT_POLICY: {
-    SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
+    SINGLE: { CONTRACT_COMPLETION_DATE, REQUESTED_CREDIT_LIMIT, TOTAL_CONTRACT_VALUE },
   },
 } = FIELD_IDS;
 
@@ -16,6 +16,7 @@ describe('server/helpers/nullify-single-contract-policy-fields', () => {
     const expected = {
       ...mockFormBody,
       [CONTRACT_COMPLETION_DATE]: null,
+      [REQUESTED_CREDIT_LIMIT]: null,
       [TOTAL_CONTRACT_VALUE]: null,
     };
 

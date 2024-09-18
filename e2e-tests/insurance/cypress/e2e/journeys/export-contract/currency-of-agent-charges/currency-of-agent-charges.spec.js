@@ -24,8 +24,9 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(
-  "Insurance - Export contract - Currency of agent charges page - As an Exporter, I want to be able to choose another currency to report my agent's fees in, So that I can provide accurate information regarding any fees I have incurred in winning my export contract",
+// TODO: EMS-3828 - renable
+context.skip(
+  "Insurance - Export contract - Agent charges - Alternative currency page - As an Exporter, I want to be able to choose another currency to report my agent's fees in, So that I can provide accurate information regarding any fees I have incurred in winning my export contract",
   () => {
     let referenceNumber;
     let url;

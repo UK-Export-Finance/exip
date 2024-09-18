@@ -65,10 +65,6 @@
           <legend class="govuk-fieldset__legend govuk-!-font-weight-bold govuk-!-font-size-24" data-cy="{{ methodId }}-legend">{{ methodField.LABEL }}</legend>
         {% endset %}
 
-        {% set conditionalFixedSumHtml %}
-          {% include CONDITIONAL_FIXED_SUM_HTML %}
-        {% endset %}
-
         {% set conditionalPercentageHtml %}
           {% include CONDITIONAL_PERCENTAGE_HTML %}
         {% endset %}
@@ -94,9 +90,6 @@
               checked: methodIsFixedSum,
               attributes: {
                 "data-cy": methodId + '-' + fixedSumField.ID + "-input"
-              },
-              conditional: {
-                html: conditionalFixedSumHtml
               }
             },
             {
