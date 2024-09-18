@@ -1,5 +1,5 @@
 import { POLICY_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance';
-import FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import fieldGroupItem from '../../../generate-field-group-item';
 import getFieldById from '../../../../get-field-by-id';
@@ -11,9 +11,9 @@ import generateChangeLink from '../../../../generate-change-link';
 const {
   CONTRACT_POLICY: {
     POLICY_CURRENCY_CODE,
-    SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
+    SINGLE: { CONTRACT_COMPLETION_DATE, REQUESTED_CREDIT_LIMIT, TOTAL_CONTRACT_VALUE },
   },
-} = FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 const {
   POLICY: {
@@ -60,6 +60,20 @@ const generateSingleContractPolicyFields = (answers: ApplicationPolicy, referenc
         ),
       },
       answers[TOTAL_CONTRACT_VALUE] && formatCurrency(answers[TOTAL_CONTRACT_VALUE], answers[POLICY_CURRENCY_CODE]),
+    ),
+    fieldGroupItem(
+      {
+        field: getFieldById(FIELDS.CONTRACT_POLICY.SINGLE, REQUESTED_CREDIT_LIMIT),
+        renderChangeLink: true,
+        href: generateChangeLink(
+          SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE,
+          SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE,
+          `#${REQUESTED_CREDIT_LIMIT}-label`,
+          referenceNumber,
+          checkAndChange,
+        ),
+      },
+      answers[REQUESTED_CREDIT_LIMIT] && formatCurrency(answers[REQUESTED_CREDIT_LIMIT], answers[POLICY_CURRENCY_CODE]),
     ),
   ] as Array<SummaryListItemData>;
 

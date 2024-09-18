@@ -1,6 +1,6 @@
 import { summaryList } from '../../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
 
 const {
@@ -9,16 +9,14 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
-    TYPE_OF_POLICY: { POLICY_TYPE },
-    CONTRACT_POLICY: {
-      MULTIPLE: { TOTAL_MONTHS_OF_COVER },
-    },
-    EXPORT_VALUE: {
-      MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
-    },
+  TYPE_OF_POLICY: { POLICY_TYPE },
+  CONTRACT_POLICY: {
+    MULTIPLE: { TOTAL_MONTHS_OF_COVER },
   },
-} = INSURANCE_FIELD_IDS;
+  EXPORT_VALUE: {
+    MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
+  },
+} = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 

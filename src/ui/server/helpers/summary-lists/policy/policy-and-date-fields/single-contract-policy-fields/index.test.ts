@@ -11,7 +11,7 @@ import { referenceNumber, mockSinglePolicy } from '../../../../../test-mocks/moc
 const {
   CONTRACT_POLICY: {
     POLICY_CURRENCY_CODE,
-    SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
+    SINGLE: { CONTRACT_COMPLETION_DATE, REQUESTED_CREDIT_LIMIT, TOTAL_CONTRACT_VALUE },
   },
 } = FIELD_IDS;
 
@@ -35,6 +35,11 @@ describe('server/helpers/summary-lists/policy/policy-and-date-fields/single-cont
       renderChangeLink: true,
       href: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE}#${TOTAL_CONTRACT_VALUE}-label`,
     },
+    [REQUESTED_CREDIT_LIMIT]: {
+      field: getFieldById(FIELDS.CONTRACT_POLICY.SINGLE, REQUESTED_CREDIT_LIMIT),
+      renderChangeLink: true,
+      href: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE}#${REQUESTED_CREDIT_LIMIT}-label`,
+    },
   };
 
   it('should return fields and values from the submitted data/answers', () => {
@@ -43,6 +48,7 @@ describe('server/helpers/summary-lists/policy/policy-and-date-fields/single-cont
     const expected = [
       fieldGroupItem(expectedBase[CONTRACT_COMPLETION_DATE], formatDate(mockAnswers[CONTRACT_COMPLETION_DATE])),
       fieldGroupItem(expectedBase[TOTAL_CONTRACT_VALUE], formatCurrency(mockAnswers[TOTAL_CONTRACT_VALUE], mockAnswers[POLICY_CURRENCY_CODE])),
+      fieldGroupItem(expectedBase[REQUESTED_CREDIT_LIMIT], formatCurrency(mockAnswers[REQUESTED_CREDIT_LIMIT], mockAnswers[POLICY_CURRENCY_CODE])),
     ];
 
     expect(result).toEqual(expected);

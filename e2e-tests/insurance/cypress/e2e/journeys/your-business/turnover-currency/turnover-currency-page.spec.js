@@ -47,7 +47,7 @@ context(
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: `${ROOT}/${referenceNumber}${TURNOVER_CURRENCY_ROOT}`,
         backLink: `${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`,
-        submitButtonCopy: BUTTONS.CONFIRM,
+        submitButtonCopy: BUTTONS.CONTINUE,
         assertSaveAndBackButtonDoesNotExist: true,
       });
     });

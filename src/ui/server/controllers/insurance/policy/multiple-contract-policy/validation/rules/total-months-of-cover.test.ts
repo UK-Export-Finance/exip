@@ -1,17 +1,15 @@
 import totalMonthsOfCover, { MAXIMUM } from './total-months-of-cover';
-import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import { mockErrors } from '../../../../../../test-mocks';
 
 const {
-  POLICY: {
-    CONTRACT_POLICY: {
-      MULTIPLE: { TOTAL_MONTHS_OF_COVER: FIELD_ID },
-    },
+  CONTRACT_POLICY: {
+    MULTIPLE: { TOTAL_MONTHS_OF_COVER: FIELD_ID },
   },
-} = INSURANCE_FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 const {
   INSURANCE: {

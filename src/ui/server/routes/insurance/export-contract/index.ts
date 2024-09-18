@@ -25,10 +25,7 @@ import { get as agentServiceGet, post as agentServicePost } from '../../../contr
 import { post as agentServiceSaveAndBackPost } from '../../../controllers/insurance/export-contract/agent-service/save-and-back';
 import { get as agentChargesGet, post as agentChargesPost } from '../../../controllers/insurance/export-contract/agent-charges';
 import { post as agentChargesSaveAndBackPost } from '../../../controllers/insurance/export-contract/agent-charges/save-and-back';
-import {
-  get as agentChargesAlternativeCurrencyGet,
-  post as agentChargesAlternativeCurrencyPost,
-} from '../../../controllers/insurance/export-contract/agent-charges/alternative-currency';
+import { get as agentChargesCurrencyGet, post as agentChargesCurrencyPost } from '../../../controllers/insurance/export-contract/currency-of-agents-charge';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/export-contract/check-your-answers';
 
 const {
@@ -69,9 +66,9 @@ const {
   AGENT_CHARGES_SAVE_AND_BACK,
   AGENT_CHARGES_CHANGE,
   AGENT_CHARGES_CHECK_AND_CHANGE,
-  AGENT_CHARGES_ALTERNATIVE_CURRENCY,
-  AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHANGE,
-  AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE,
+  AGENT_CHARGES_CURRENCY,
+  AGENT_CHARGES_CURRENCY_CHANGE,
+  AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE,
   CHECK_YOUR_ANSWERS,
 } = EXPORT_CONTRACT;
 
@@ -153,14 +150,14 @@ exportContractRoute.post(`/:referenceNumber${AGENT_CHARGES_CHANGE}`, agentCharge
 exportContractRoute.get(`/:referenceNumber${AGENT_CHARGES_CHECK_AND_CHANGE}`, agentChargesGet);
 exportContractRoute.post(`/:referenceNumber${AGENT_CHARGES_CHECK_AND_CHANGE}`, agentChargesPost);
 
-exportContractRoute.get(`/:referenceNumber${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`, agentChargesAlternativeCurrencyGet);
-exportContractRoute.post(`/:referenceNumber${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`, agentChargesAlternativeCurrencyPost);
+exportContractRoute.get(`/:referenceNumber${AGENT_CHARGES_CURRENCY}`, agentChargesCurrencyGet);
+exportContractRoute.post(`/:referenceNumber${AGENT_CHARGES_CURRENCY}`, agentChargesCurrencyPost);
 
-exportContractRoute.get(`/:referenceNumber${AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHANGE}`, agentChargesAlternativeCurrencyGet);
-exportContractRoute.post(`/:referenceNumber${AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHANGE}`, agentChargesAlternativeCurrencyPost);
+exportContractRoute.get(`/:referenceNumber${AGENT_CHARGES_CURRENCY_CHANGE}`, agentChargesCurrencyGet);
+exportContractRoute.post(`/:referenceNumber${AGENT_CHARGES_CURRENCY_CHANGE}`, agentChargesCurrencyPost);
 
-exportContractRoute.get(`/:referenceNumber${AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`, agentChargesAlternativeCurrencyGet);
-exportContractRoute.post(`/:referenceNumber${AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`, agentChargesAlternativeCurrencyPost);
+exportContractRoute.get(`/:referenceNumber${AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE}`, agentChargesCurrencyGet);
+exportContractRoute.post(`/:referenceNumber${AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE}`, agentChargesCurrencyPost);
 
 exportContractRoute.get(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
 exportContractRoute.post(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

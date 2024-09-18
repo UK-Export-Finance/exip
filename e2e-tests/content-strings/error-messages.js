@@ -72,7 +72,7 @@ export const ERROR_MESSAGES = {
         TECHNICAL_ISSUES: 'Due to technical issues, you cannot search for your Companies House registration number right now - try again in few minutes',
       },
       [FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_END_BUYER]: {
-        IS_EMPTY: 'Select if there will be an end buyer for this export contract',
+        IS_EMPTY: "Select if your contract says you'll only get paid once your buyer gets paid or not",
       },
       [FIELD_IDS.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT]: {
         IS_EMPTY: 'Select if you have a UK Export Finance account',
@@ -221,7 +221,7 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: 'Select the country where charges are payable',
         },
       },
-      AGENT_CHARGES_ALTERNATIVE_CURRENCY: {
+      AGENT_CHARGES_CURRENCY: {
         [FIELD_IDS.INSURANCE.CURRENCY.CURRENCY_CODE]: {
           IS_EMPTY: 'Select the currency the agent is charging you in',
         },
@@ -275,7 +275,12 @@ export const ERROR_MESSAGES = {
           [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
             IS_EMPTY: 'Enter the total value of the contract you want to insure as a whole number - do not enter decimals',
             INCORRECT_FORMAT: 'Enter the total value of the contract you want to insure as a whole number - do not enter decimals',
-            BELOW_MINIMUM: 'The total value of the contract you want to insure must be 1 or more',
+            BELOW_MINIMUM: `The total value of the contract you want to insure must be ${MINIMUM_CHARACTERS.POLICY.TOTAL_CONTRACT_VALUE} or more`,
+          },
+          [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.SINGLE.REQUESTED_CREDIT_LIMIT]: {
+            IS_EMPTY: 'Enter the credit limit you require as a whole number - do not enter decimals',
+            INCORRECT_FORMAT: 'Enter the credit limit you require as a whole number - do not enter decimals',
+            BELOW_MINIMUM: `The credit limit you want to insure must be ${MINIMUM_CHARACTERS.POLICY.REQUESTED_CREDIT_LIMIT} or more`,
           },
         },
         MULTIPLE: {

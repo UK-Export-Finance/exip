@@ -24,9 +24,9 @@ const {
   PROBLEM_WITH_SERVICE,
   EXPORT_CONTRACT: {
     AGENT_CHARGES_SAVE_AND_BACK,
-    AGENT_CHARGES_ALTERNATIVE_CURRENCY,
-    AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHANGE,
-    AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE,
+    AGENT_CHARGES_CURRENCY,
+    AGENT_CHARGES_CURRENCY_CHANGE,
+    AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
   CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT: CHECK_AND_CHANGE_ROUTE },
@@ -69,22 +69,22 @@ export const pageVariables = (
 ) => {
   const currency = getCurrencyByCode(currencies, currencyCode);
 
-  let alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`;
+  let alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY}`;
 
   /**
    * If changeRoute,
-   * URL should be AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHANGE
+   * URL should be AGENT_CHARGES_CURRENCY_CHANGE
    */
   if (changeRoute) {
-    alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHANGE}`;
+    alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY_CHANGE}`;
   }
 
   /**
    * If checkAndChangeRoute,
-   * URL should be AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHANGE
+   * URL should be AGENT_CHARGES_CURRENCY_CHANGE
    */
   if (checkAndChangeRoute) {
-    alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`;
+    alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE}`;
   }
 
   return {

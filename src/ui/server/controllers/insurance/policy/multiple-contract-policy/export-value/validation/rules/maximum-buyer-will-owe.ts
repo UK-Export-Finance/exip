@@ -1,15 +1,13 @@
-import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import numberAboveMinimumValidation from '../../../../../../../shared-validation/number-above-minimum';
 import { RequestBody } from '../../../../../../../../types';
 
 const {
-  POLICY: {
-    EXPORT_VALUE: {
-      MULTIPLE: { MAXIMUM_BUYER_WILL_OWE: FIELD_ID },
-    },
+  EXPORT_VALUE: {
+    MULTIPLE: { MAXIMUM_BUYER_WILL_OWE: FIELD_ID },
   },
-} = INSURANCE_FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 const {
   INSURANCE: {
@@ -28,7 +26,7 @@ export const MINIMUM = 1;
  * Check submitted form data for errors with the maximum buyer will owe field
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
- * * @param {Object} errors: Errors from previous validation errors errors
+ * @param {Object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const maximumBuyerWillOweRules = (formBody: RequestBody, errors: object) =>

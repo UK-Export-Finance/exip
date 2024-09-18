@@ -2,24 +2,30 @@
  * completeAndSubmitYourBuyerForms
  * completes your buyer forms up to the specified form to stop at
  * eg, when 'connectionWithTheBuyer' is passed, it will complete all forms up to and including 'connectionWithTheBuyer'
- * @param {String} formToStopAt: the form to stop at
- * @param {Boolean} viaTaskList: whether to complete the section via the task list
- * @param {Boolean} hasConnectionToBuyer: whether the exporter has a connection with the buyer
+ * @param {Boolean} alternativeCurrency: If alternative currency should be entered.
+ * @param {Boolean} clickAlternativeCurrencyLink: if the "Alternative currency" link should be clicked.
  * @param {Boolean} exporterHasTradedWithBuyer: whether the exporter has traded with the buyer
- * @param {Boolean} outstandingPayments: whether the exporter has outstanding payments with the buyer
  * @param {Boolean} failedToPay: whether the buyer has failed to pay the exporter
+ * @param {String} formToStopAt: the form to stop at
  * @param {Boolean} fullyPopulatedBuyerTradingHistory: whether to fully populate the buyer trading history form
+ * @param {Boolean} hasConnectionToBuyer: whether the exporter has a connection with the buyer
  * @param {Boolean} exporterHasBuyerFinancialAccounts: whether the exporter has buyer financial accounts
+ * @param {String} isoCode: Policy currency ISO code
+ * @param {Boolean} outstandingPayments: whether the exporter has outstanding payments with the buyer
+ * @param {Boolean} viaTaskList: whether to complete the section via the task list
  */
 const completeAndSubmitYourBuyerForms = ({
-  formToStopAt,
-  viaTaskList,
-  hasConnectionToBuyer,
+  alternativeCurrency,
+  clickAlternativeCurrencyLink,
   exporterHasTradedWithBuyer,
-  outstandingPayments,
   failedToPay,
+  formToStopAt,
   fullyPopulatedBuyerTradingHistory,
   exporterHasBuyerFinancialAccounts,
+  hasConnectionToBuyer,
+  isoCode,
+  outstandingPayments,
+  viaTaskList,
 }) => {
   cy.startInsuranceYourBuyerSection({ viaTaskList });
 
@@ -40,7 +46,10 @@ const completeAndSubmitYourBuyerForms = ({
     });
 
     if (outstandingPayments) {
-      steps.push({ name: 'currencyOfLatePayments', action: () => cy.completeAndSubmitAlternativeCurrencyForm({}) });
+      steps.push({
+        name: 'currencyOfLatePayments',
+        action: () => cy.completeAndSubmitAlternativeCurrencyForm({ isoCode, alternativeCurrency, clickAlternativeCurrencyLink }),
+      });
       steps.push({ name: 'outstandingOrOverduePayments', action: () => cy.completeAndSubmitOutstandingOrOverduePaymentsForm({ outstandingPayments }) });
     }
 

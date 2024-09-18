@@ -1,14 +1,12 @@
-import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import nameValidation from '../../../../../../shared-validation/name';
 import { RequestBody } from '../../../../../../../types';
 
 const {
-  POLICY: {
-    NAME_ON_POLICY: { POSITION: FIELD_ID, NAME, SAME_NAME },
-  },
-} = INSURANCE_FIELD_IDS;
+  NAME_ON_POLICY: { POSITION: FIELD_ID, NAME, SAME_NAME },
+} = POLICY_FIELD_IDS;
 
 const {
   INSURANCE: {
@@ -27,7 +25,7 @@ const MAXIMUM = Number(NAME_ON_POLICY[FIELD_ID].MAXIMUM);
  * Returns the result of emptyFieldValidation if SAME_NAME is selected
  * else returns provided errors object
  * @param {RequestBody} formBody: Form body
- * * @param {Object} errors: Errors from previous validation errors errors
+ * @param {Object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const positionRule = (formBody: RequestBody, errors: object) => {

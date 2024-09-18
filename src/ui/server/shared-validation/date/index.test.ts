@@ -1,5 +1,5 @@
 import dateRules from '.';
-import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../content-strings';
 import validDateFormatRules from './valid-format';
 import generateValidationErrors from '../../helpers/validation';
@@ -7,10 +7,8 @@ import getDaysInAMonth from '../../helpers/date/get-days-in-a-month';
 import { mockErrors } from '../../test-mocks';
 
 const {
-  POLICY: {
-    CONTRACT_POLICY: { REQUESTED_START_DATE: FIELD_ID },
-  },
-} = INSURANCE_FIELD_IDS;
+  CONTRACT_POLICY: { REQUESTED_START_DATE: FIELD_ID },
+} = POLICY_FIELD_IDS;
 
 const {
   INSURANCE: {

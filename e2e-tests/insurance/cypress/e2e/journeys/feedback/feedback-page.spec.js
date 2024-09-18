@@ -1,4 +1,3 @@
-import partials from '../../../../../partials';
 import { field as fieldSelector } from '../../../../../pages/shared';
 import { BUTTONS, PAGES, FIELDS as FIELD_STRINGS } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
@@ -23,7 +22,7 @@ context(
     before(() => {
       cy.navigateToCheckIfEligibleUrl();
 
-      partials.phaseBanner.feedbackLink().click();
+      cy.clickPhaseBannerFeedbackLink();
     });
 
     beforeEach(() => {

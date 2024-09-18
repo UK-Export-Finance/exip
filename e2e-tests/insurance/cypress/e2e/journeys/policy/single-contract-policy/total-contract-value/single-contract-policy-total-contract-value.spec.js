@@ -2,7 +2,7 @@ import { field as fieldSelector, headingCaption } from '../../../../../../../pag
 import { PAGES } from '../../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import application from '../../../../../../../fixtures/application';
 import { GBP, SYMBOLS } from '../../../../../../../fixtures/currencies';
 
@@ -15,12 +15,10 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
-    CONTRACT_POLICY: {
-      SINGLE: { TOTAL_CONTRACT_VALUE },
-    },
+  CONTRACT_POLICY: {
+    SINGLE: { TOTAL_CONTRACT_VALUE, REQUESTED_CREDIT_LIMIT },
   },
-} = INSURANCE_FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -67,8 +65,19 @@ context(
         cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
-      it('renders `total contract value` hint, prefix and input', () => {
+      it(`renders ${TOTAL_CONTRACT_VALUE} hint, prefix and input`, () => {
         const fieldId = TOTAL_CONTRACT_VALUE;
+        const field = fieldSelector(fieldId);
+
+        cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT);
+
+        cy.checkText(field.prefix(), SYMBOLS.GBP);
+
+        field.input().should('exist');
+      });
+
+      it(`renders ${REQUESTED_CREDIT_LIMIT} hint, prefix and input`, () => {
+        const fieldId = REQUESTED_CREDIT_LIMIT;
         const field = fieldSelector(fieldId);
 
         cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT);
@@ -106,6 +115,8 @@ context(
           cy.navigateToUrl(url);
 
           fieldSelector(TOTAL_CONTRACT_VALUE).input().should('have.value', application.POLICY[TOTAL_CONTRACT_VALUE]);
+
+          fieldSelector(REQUESTED_CREDIT_LIMIT).input().should('have.value', application.POLICY[REQUESTED_CREDIT_LIMIT]);
         });
       });
     });

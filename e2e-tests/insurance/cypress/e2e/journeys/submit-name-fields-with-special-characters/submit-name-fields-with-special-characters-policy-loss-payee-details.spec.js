@@ -1,5 +1,5 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
-import { INSURANCE_FIELD_IDS } from '../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
 import { field } from '../../../../../pages/shared';
 import application from '../../../../../fixtures/application';
 
@@ -9,11 +9,9 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
-    LOSS_PAYEE_DETAILS: { NAME },
-    FINANCIAL_ADDRESS,
-  },
-} = INSURANCE_FIELD_IDS;
+  LOSS_PAYEE_DETAILS: { NAME },
+  FINANCIAL_ADDRESS,
+} = POLICY_FIELD_IDS;
 
 const { POLICY } = application;
 
