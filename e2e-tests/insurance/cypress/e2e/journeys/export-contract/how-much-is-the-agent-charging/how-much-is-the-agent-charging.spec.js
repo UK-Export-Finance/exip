@@ -30,8 +30,6 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        // cy.completeAndSubmitExportContractForms({ formToStopAt: 'howMuchAgentIsCharging', isUsingAgent: true, agentIsCharging: true, fixedSumMethod: true });
-        // cy.completeAndSubmitExportContractForms({ formToStopAt: 'agentCharges', isUsingAgent: true, agentIsCharging: true, fixedSumMethod: true });
         cy.completeAndSubmitExportContractForms({ formToStopAt: 'currencyOfAgentCharges', isUsingAgent: true, agentIsCharging: true, fixedSumMethod: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${HOW_MUCH_IS_THE_AGENT_CHARGING}`;
