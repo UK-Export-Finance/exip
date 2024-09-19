@@ -184,6 +184,12 @@ describe('controllers/insurance/export-contract/how-much-is-the-agent-charging',
         req.body = validBody;
       });
 
+      it('should NOT call api.keystone.APIM.getCurrencies', async () => {
+        await post(req, res);
+
+        expect(getCurrenciesSpy).toHaveBeenCalledTimes(0);
+      });
+
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
         await post(req, res);
 
