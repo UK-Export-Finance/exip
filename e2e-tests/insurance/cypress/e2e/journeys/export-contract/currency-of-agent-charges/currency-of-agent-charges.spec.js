@@ -1,5 +1,5 @@
 import { headingCaption } from '../../../../../../pages/shared';
-import { BUTTONS, ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
+import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/export-contract';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -9,7 +9,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES_CURRENCY;
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { AGENT_CHARGES_CURRENCY, AGENT_CHARGES },
+  EXPORT_CONTRACT: { AGENT_CHARGES, AGENT_CHARGES_CURRENCY, HOW_MUCH_IS_THE_AGENT_CHARGING },
 } = INSURANCE_ROUTES;
 
 const {
@@ -24,24 +24,22 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-// TODO: EMS-3828 - renable
-context.skip(
+context(
   "Insurance - Export contract - Agent charges - Alternative currency page - As an Exporter, I want to be able to choose another currency to report my agent's fees in, So that I can provide accurate information regarding any fees I have incurred in winning my export contract",
   () => {
     let referenceNumber;
     let url;
+    let howMuchAgentIsChargingUrl;
 
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        // TODO: EMS-3828 - renable
         // go to the page we want to test.
-        // cy.completeAndSubmitExportContractForms({ formToStopAt: 'agentCharges', isUsingAgent: true, agentIsCharging: true, fixedSumMethod: true });
+        cy.completeAndSubmitExportContractForms({ formToStopAt: 'agentCharges', isUsingAgent: true, agentIsCharging: true, fixedSumMethod: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY}`;
-
-        cy.navigateToUrl(url);
+        howMuchAgentIsChargingUrl = `${baseUrl}${ROOT}/${referenceNumber}${HOW_MUCH_IS_THE_AGENT_CHARGING}`;
       });
     });
 
@@ -57,8 +55,7 @@ context.skip(
       cy.corePageChecks({
         pageTitle: FIELDS.AGENT_CHARGES[CURRENCY_CODE].LEGEND,
         currentHref: `${ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY}`,
-        backLink: `${url}#`,
-        submitButtonCopy: BUTTONS.CONTINUE,
+        backLink: `${ROOT}/${referenceNumber}${AGENT_CHARGES}`,
       });
     });
 
@@ -92,6 +89,14 @@ context.skip(
 
       formSubmission().submitASupportedCurrency({ url: AGENT_CHARGES });
       formSubmission().submitAlternativeCurrency({ url: AGENT_CHARGES });
+    });
+
+    describe('form submission', () => {
+      it(`should redirect to ${HOW_MUCH_IS_THE_AGENT_CHARGING}`, () => {
+        cy.completeAndSubmitAlternativeCurrencyForm({});
+
+        cy.assertUrl(howMuchAgentIsChargingUrl);
+      });
     });
   },
 );
