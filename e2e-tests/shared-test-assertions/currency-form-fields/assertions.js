@@ -120,9 +120,9 @@ const assertCurrencyFormFields = ({
 
     cy.checkText(fieldSelector(alternativeCurrencyFieldId).errorMessage(), `Error: ${errors[alternativeCurrencyFieldId].IS_EMPTY}`);
   },
-  submitRadioAndAssertUrl: ({ currency, completeNonCurrencyFields, url, viaSaveAndBack }) => {
-    if (completeNonCurrencyFields) {
-      completeNonCurrencyFields();
+  submitRadioAndAssertUrl: ({ currency, completeNonCurrencyFieldsFunction, url, viaSaveAndBack }) => {
+    if (completeNonCurrencyFieldsFunction) {
+      completeNonCurrencyFieldsFunction();
     }
 
     const option = currencyRadio({ fieldId, currency });
@@ -137,9 +137,9 @@ const assertCurrencyFormFields = ({
 
     cy.url().should('include', url);
   },
-  submitAndAssertRadioIsChecked: ({ currency, completeNonCurrencyFields, viaSaveAndBack }) => {
-    if (completeNonCurrencyFields) {
-      completeNonCurrencyFields();
+  submitAndAssertRadioIsChecked: ({ currency, completeNonCurrencyFieldsFunction, viaSaveAndBack }) => {
+    if (completeNonCurrencyFieldsFunction) {
+      completeNonCurrencyFieldsFunction();
     }
 
     const option = currencyRadio({ fieldId, currency });

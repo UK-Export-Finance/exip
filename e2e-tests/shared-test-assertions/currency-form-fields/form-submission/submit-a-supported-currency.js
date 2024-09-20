@@ -1,13 +1,19 @@
 import { EUR_CURRENCY_CODE, GBP_CURRENCY_CODE, USD_CURRENCY_CODE, JPY_CURRENCY_CODE } from '../../../fixtures/currencies';
 
-const submitASupportedCurrency = ({ url, completeNonCurrencyFields, viaSaveAndBack = false, submitRadioAndAssertUrl, submitAndAssertRadioIsChecked }) => {
+const submitASupportedCurrency = ({
+  url,
+  completeNonCurrencyFieldsFunction,
+  viaSaveAndBack = false,
+  submitRadioAndAssertUrl,
+  submitAndAssertRadioIsChecked,
+}) => {
   describe('when submitting a supported currency', () => {
     describe(EUR_CURRENCY_CODE, () => {
       it('should redirect to the next page', () => {
         submitRadioAndAssertUrl({
           currency: EUR_CURRENCY_CODE,
           url,
-          completeNonCurrencyFields,
+          completeNonCurrencyFieldsFunction,
           viaSaveAndBack,
         });
       });
@@ -15,7 +21,7 @@ const submitASupportedCurrency = ({ url, completeNonCurrencyFields, viaSaveAndBa
       it('should render the submitted answer when going back to the page', () => {
         submitAndAssertRadioIsChecked({
           currency: EUR_CURRENCY_CODE,
-          completeNonCurrencyFields,
+          completeNonCurrencyFieldsFunction,
           viaSaveAndBack,
         });
       });
@@ -26,7 +32,7 @@ const submitASupportedCurrency = ({ url, completeNonCurrencyFields, viaSaveAndBa
         submitRadioAndAssertUrl({
           currency: GBP_CURRENCY_CODE,
           url,
-          completeNonCurrencyFields,
+          completeNonCurrencyFieldsFunction,
           viaSaveAndBack,
         });
       });
@@ -34,7 +40,7 @@ const submitASupportedCurrency = ({ url, completeNonCurrencyFields, viaSaveAndBa
       it('should render the submitted answer when going back to the page', () => {
         submitAndAssertRadioIsChecked({
           currency: GBP_CURRENCY_CODE,
-          completeNonCurrencyFields,
+          completeNonCurrencyFieldsFunction,
           viaSaveAndBack,
         });
       });
@@ -45,7 +51,7 @@ const submitASupportedCurrency = ({ url, completeNonCurrencyFields, viaSaveAndBa
         submitRadioAndAssertUrl({
           currency: USD_CURRENCY_CODE,
           url,
-          completeNonCurrencyFields,
+          completeNonCurrencyFieldsFunction,
           viaSaveAndBack,
         });
       });
@@ -53,7 +59,7 @@ const submitASupportedCurrency = ({ url, completeNonCurrencyFields, viaSaveAndBa
       it('should render the submitted answer when going back to the page', () => {
         submitAndAssertRadioIsChecked({
           currency: USD_CURRENCY_CODE,
-          completeNonCurrencyFields,
+          completeNonCurrencyFieldsFunction,
           viaSaveAndBack,
         });
       });
@@ -64,7 +70,7 @@ const submitASupportedCurrency = ({ url, completeNonCurrencyFields, viaSaveAndBa
         submitRadioAndAssertUrl({
           currency: JPY_CURRENCY_CODE,
           url,
-          completeNonCurrencyFields,
+          completeNonCurrencyFieldsFunction,
           viaSaveAndBack,
         });
       });
@@ -72,7 +78,7 @@ const submitASupportedCurrency = ({ url, completeNonCurrencyFields, viaSaveAndBa
       it('should render the submitted answer when going back to the page', () => {
         submitAndAssertRadioIsChecked({
           currency: JPY_CURRENCY_CODE,
-          completeNonCurrencyFields,
+          completeNonCurrencyFieldsFunction,
           viaSaveAndBack,
         });
       });

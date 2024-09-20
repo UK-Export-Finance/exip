@@ -123,7 +123,7 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
 
     formSubmission().submitASupportedCurrency({
       url: MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
-      completeNonCurrencyFields: () => cy.completeMultipleContractPolicyForm({ chooseCurrency: false }),
+      completeNonCurrencyFieldsFunction: () => cy.completeMultipleContractPolicyForm({ chooseCurrency: false }),
     });
 
     formSubmission().submitAlternativeCurrency({ url: MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE });

@@ -15,6 +15,7 @@ const { ALL_SECTIONS } = INSURANCE_ROUTES;
  * @param {Function} submitRadioAndAssertUrl: Submit a radio option and assert the URL.
  * @param {Function} submitAlternativeCurrencyAndAssertUrl: Submit an alternative currency and assert the URL.
  * @param {Function} submitAlternativeCurrencyAndAssertInput: Submit an alternative currency and assert the input.
+ * @param {Function} completeNonCurrencyFieldsFunction: Optional function to complete non-currency form fields.
  * @returns {Object} Object with Mocha describe blocks and assertions for particular scenarios.
  */
 const formSubmissionAssertions = ({
@@ -25,7 +26,7 @@ const formSubmissionAssertions = ({
   submitRadioAndAssertUrl,
   submitAlternativeCurrencyAndAssertUrl,
   submitAlternativeCurrencyAndAssertInput,
-  completeNonCurrencyFields, // TODO: rename so it's clear this is a function.
+  completeNonCurrencyFieldsFunction,
 }) => {
   const executeTests = () => {
     describe('currency form fields - form submission', () => {
@@ -33,7 +34,7 @@ const formSubmissionAssertions = ({
         selectAltRadioButNoAltCurrency({ errorIndex, rendersAlternativeCurrencyValidationError });
 
         submitASupportedCurrency({
-          completeNonCurrencyFields,
+          completeNonCurrencyFieldsFunction,
           submitRadioAndAssertUrl,
           submitAndAssertRadioIsChecked,
           url,
@@ -51,7 +52,7 @@ const formSubmissionAssertions = ({
         // tests are failing - I think, need to update some functions/commands in assertions
         // to click save and back, instead of submit
         submitASupportedCurrency({
-          completeNonCurrencyFields,
+          completeNonCurrencyFieldsFunction,
           submitRadioAndAssertUrl,
           submitAndAssertRadioIsChecked,
           url: ALL_SECTIONS,
