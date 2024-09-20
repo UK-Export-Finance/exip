@@ -62,7 +62,7 @@ context(
         cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
-      it(`renders ${FIELD_ID} prefix and input`, () => {
+      it(`renders ${FIELD_ID} hint, prefix and input`, () => {
         const field = fieldSelector(FIELD_ID);
 
         cy.checkText(field.hint(), FIELD_STRINGS.AGENT_CHARGES[FIELD_ID].HINT);
