@@ -10,6 +10,8 @@ const {
   CURRENCY: { ALTERNATIVE_CURRENCY_CODE },
 } = INSURANCE_FIELD_IDS;
 
+// TODO: update documentation
+
 /**
  * assertCurrencyFormFields
  * Assert currency form fields
@@ -21,19 +23,20 @@ const {
  * @returns {Object} Rendering and form submission assertion functions
  */
 export const assertCurrencyFormFields = ({ legend, hint, errors, fieldId, gbpCurrencyCheckedByDefault, clickAlternativeCurrencyLink, url }) => {
-  const assertions = fieldAssertions({
-    legend,
-    hint,
-    alternativeCurrencyText: FIELDS[ALTERNATIVE_CURRENCY_CODE].TEXT,
-    errors,
-    gbpCurrencyCheckedByDefault,
-  });
+  const assertions = {
+    url,
+    ...fieldAssertions({
+      legend,
+      hint,
+      alternativeCurrencyText: FIELDS[ALTERNATIVE_CURRENCY_CODE].TEXT,
+      errors,
+      gbpCurrencyCheckedByDefault,
+    }),
+  };
 
   return {
     rendering: () => renderingAssertions(assertions),
-
-    // TODO: maybe url in assertions object above?
-    formSubmission: () => formSubmissionAssertions({ ...assertions, url }),
+    formSubmission: () => formSubmissionAssertions(assertions),
     prefixAssertions: () => prefixAssertions({ fieldId, clickAlternativeCurrencyLink }),
   };
 };
