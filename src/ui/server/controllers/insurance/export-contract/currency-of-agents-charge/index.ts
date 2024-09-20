@@ -11,14 +11,12 @@ import mapRadioAndSelectOptions from '../../../../helpers/mappings/map-currencie
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/export-contract-agent-service-charge';
-import isChangeRoute from '../../../../helpers/is-change-route';
-import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { AGENT_CHARGES, AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE, AGENT_CHARGES_CURRENCY_SAVE_AND_BACK },
+  EXPORT_CONTRACT: { HOW_MUCH_IS_THE_AGENT_CHARGING, AGENT_CHARGES_CURRENCY_SAVE_AND_BACK },
 } = INSURANCE_ROUTES;
 
 const {
@@ -149,25 +147,9 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    /**
-     * If is a change route
-     * redirect to AGENT_CHARGES_CHANGE
-     */
-    if (isChangeRoute(req.originalUrl)) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CHANGE}`);
-    }
-
-    /**
-     * If is a check and change route
-     * redirect to AGENT_CHARGES_CHECK_AND_CHANGE
-     */
-    if (isCheckAndChangeRoute(req.originalUrl)) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CHECK_AND_CHANGE}`);
-    }
-
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${HOW_MUCH_IS_THE_AGENT_CHARGING}`);
   } catch (error) {
-    console.error('Error updating application - export contract - agent charges - alternative currency %O', error);
+    console.error('Error updating application - export contract - currency of agents charge %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
