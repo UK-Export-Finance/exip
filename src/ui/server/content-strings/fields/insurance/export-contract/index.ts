@@ -181,6 +181,7 @@ export const EXPORT_CONTRACT_FIELDS = {
     },
     [FIXED_SUM_AMOUNT]: {
       LABEL: 'How much are they charging in',
+      HINT: 'Enter a whole number. Do not enter decimals.',
       SUMMARY: {
         TITLE: 'How much they are charging',
         FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,

@@ -61,6 +61,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
    */
   const policyData = {
     policyType: POLICY_TYPE.SINGLE,
+    requestedCreditLimit: 100,
     totalSalesToBuyer: 123,
     totalValueOfContract: 456,
     maximumBuyerWillOwe: 789,
