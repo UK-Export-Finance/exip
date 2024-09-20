@@ -24,7 +24,7 @@ const {
     CONTRACT_POLICY: {
       SINGLE: { CONTRACT_COMPLETION_DATE },
       POLICY_CURRENCY_CODE,
-      SINGLE: { TOTAL_CONTRACT_VALUE },
+      SINGLE: { REQUESTED_CREDIT_LIMIT, TOTAL_CONTRACT_VALUE },
     },
   },
 } = FIELD_IDS;
@@ -50,6 +50,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-single-contra
       xlsxRow(String(FIELDS[CONTRACT_COMPLETION_DATE]), formatDate(policy[CONTRACT_COMPLETION_DATE], DATE_FORMAT.XLSX)),
       xlsxRow(String(CONTENT_STRINGS[CURRENCY_CODE].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
       xlsxRow(String(FIELDS[TOTAL_CONTRACT_VALUE]), formatCurrency(policy[TOTAL_CONTRACT_VALUE], policy[POLICY_CURRENCY_CODE])),
+      xlsxRow(String(CONTENT_STRINGS[REQUESTED_CREDIT_LIMIT].SUMMARY?.TITLE), formatCurrency(policy[REQUESTED_CREDIT_LIMIT], policy[POLICY_CURRENCY_CODE])),
     ];
 
     expect(result).toEqual(expected);
