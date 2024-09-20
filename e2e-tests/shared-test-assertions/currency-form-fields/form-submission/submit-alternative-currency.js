@@ -4,16 +4,17 @@
  * @param {String} expectedRedirectUrl: Page URL to assert after successful form submission
  * @param {Function} submitAlternativeCurrencyAndAssertUrl: Submit an alternative currency and assert the URL.
  * @param {Function} submitAlternativeCurrencyAndAssertInput: Submit an alternative currency and assert the input.
+ * @param {Boolean} viaSaveAndBack: Flag whether to submit the form via the "save and back" button.
  * @returns {Object} Object with Mocha describe blocks and assertions for particular scenarios.
  */
-const submitAlternativeCurrency = ({ expectedRedirectUrl, submitAlternativeCurrencyAndAssertUrl, submitAlternativeCurrencyAndAssertInput }) => {
+const submitAlternativeCurrency = ({ expectedRedirectUrl, submitAlternativeCurrencyAndAssertUrl, submitAlternativeCurrencyAndAssertInput, viaSaveAndBack }) => {
   describe('when submitting an alternative currency', () => {
     it('should redirect to the next page', () => {
       submitAlternativeCurrencyAndAssertUrl(expectedRedirectUrl);
     });
 
     it('should render the submitted answer when going back to the page', () => {
-      submitAlternativeCurrencyAndAssertInput();
+      submitAlternativeCurrencyAndAssertInput({ viaSaveAndBack });
     });
   });
 };

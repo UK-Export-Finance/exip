@@ -111,10 +111,14 @@ const assertCurrencyFormFields = ({
     const expectedValue = `${NON_STANDARD_CURRENCY_NAME} (${NON_STANDARD_CURRENCY_CODE})`;
     checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(alternativeCurrencyFieldId, DZA.NAME, NON_STANDARD_CURRENCY_NAME, expectedValue);
   },
-  rendersAlternativeCurrencyValidationError: ({ errorIndex = 0 }) => {
+  rendersAlternativeCurrencyValidationError: ({ errorIndex = 0, viaSaveAndBack }) => {
     cy.clickAlternativeCurrencyRadioOption();
 
-    cy.clickSubmitButton();
+    if (viaSaveAndBack) {
+      cy.clickSaveAndBackButton();
+    } else {
+      cy.clickSubmitButton();
+    }
 
     cy.checkText(partials.errorSummaryListItems().eq(errorIndex), errors[alternativeCurrencyFieldId].IS_EMPTY);
 
@@ -164,7 +168,7 @@ const assertCurrencyFormFields = ({
 
     cy.url().should('include', url);
   },
-  submitAlternativeCurrencyAndAssertInput: () => {
+  submitAlternativeCurrencyAndAssertInput: ({ viaSaveAndBack }) => {
     const option5 = currencyRadio({ alternativeCurrencyFieldId });
 
     // clicks alternative currency radio
@@ -173,7 +177,11 @@ const assertCurrencyFormFields = ({
     // search for currency
     cy.autocompleteKeyboardInput(alternativeCurrencyFieldId, NON_STANDARD_CURRENCY_NAME);
 
-    cy.clickSubmitButton();
+    if (viaSaveAndBack) {
+      cy.clickSaveAndBackButton();
+    } else {
+      cy.clickSubmitButton();
+    }
 
     cy.go('back');
 

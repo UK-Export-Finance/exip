@@ -48,9 +48,6 @@ const formSubmissionAssertions = ({
       });
 
       describe('via `save and back` button', () => {
-        // TODO
-        // tests are failing - I think, need to update some functions/commands in assertions
-        // to click save and back, instead of submit
         submitASupportedCurrency({
           completeNonCurrencyFieldsFunction,
           submitRadioAndAssertUrl,
@@ -63,6 +60,7 @@ const formSubmissionAssertions = ({
           expectedRedirectUrl: ALL_SECTIONS,
           submitAlternativeCurrencyAndAssertUrl,
           submitAlternativeCurrencyAndAssertInput,
+          viaSaveAndBack: true,
         });
       });
     });
