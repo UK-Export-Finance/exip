@@ -6,5 +6,6 @@ export const EXPORT_CONTRACT_TEMPLATES = {
   AGENT_DETAILS: 'insurance/export-contract/agent-details.njk',
   AGENT_SERVICE: 'insurance/export-contract/agent-service.njk',
   AGENT_CHARGES: 'insurance/export-contract/agent-charges.njk',
+  HOW_MUCH_IS_THE_AGENT_CHARGING: 'insurance/export-contract/how-much-is-the-agent-charging.njk',
   CHECK_YOUR_ANSWERS: 'insurance/export-contract/check-your-answers.njk',
 };
