@@ -116,18 +116,14 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
       legend: CONTRACT_POLICY[CURRENCY_CODE].LEGEND,
       hint: CONTRACT_POLICY[CURRENCY_CODE].HINT,
       errors: CONTRACT_ERROR_MESSAGES,
+      errorIndex: 2,
+      redirectUrl: SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
+      completeNonCurrencyFieldsFunction: () => cy.completeSingleContractPolicyForm({ chooseCurrency: false }),
     });
 
     rendering();
 
-    formSubmission().selectAltRadioButNoAltCurrency({ errorIndex: 2 });
-
-    formSubmission().submitASupportedCurrency({
-      url: SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
-      completeNonCurrencyFieldsFunction: () => cy.completeSingleContractPolicyForm({ chooseCurrency: false }),
-    });
-
-    formSubmission().submitAlternativeCurrency({ url: SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE });
+    formSubmission({}).executeTests();
   });
 
   describe('form submission', () => {

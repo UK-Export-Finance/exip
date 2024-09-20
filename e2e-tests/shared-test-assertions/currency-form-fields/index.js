@@ -12,6 +12,10 @@ const {
 
 // TODO: update documentation
 
+// TODO: update to consume and pass:
+// completeNonCurrencyFieldsFunction
+// errorIndex
+
 /**
  * assertCurrencyFormFields
  * Assert currency form fields

@@ -84,14 +84,12 @@ context.skip(
       const { rendering, formSubmission } = assertCurrencyFormFields({
         gbpCurrencyCheckedByDefault: true,
         errors: CURRENCY_ERROR_MESSAGES,
+        redirectUrl: AGENT_CHARGES,
       });
 
       rendering();
 
-      formSubmission().selectAltRadioButNoAltCurrency({});
-
-      formSubmission().submitASupportedCurrency({ url: AGENT_CHARGES });
-      formSubmission().submitAlternativeCurrency({ url: AGENT_CHARGES });
+      formSubmission({}).executeTests();
     });
   },
 );
