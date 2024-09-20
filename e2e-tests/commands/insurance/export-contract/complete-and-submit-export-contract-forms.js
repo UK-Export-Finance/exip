@@ -10,6 +10,7 @@
  * @param {Boolean} isUsingAgent: if the exporter is using an agent
  * @param {Boolean} agentIsCharging: if the agent is charging
  * @param {Boolean} fixedSumMethod: if the agent is charging using fixed sum method
+ * @param {String} fixedSumAmount: Fixed sum amount
  */
 const completeAndSubmitExportContractForms = ({
   formToStopAt,
@@ -20,6 +21,7 @@ const completeAndSubmitExportContractForms = ({
   isUsingAgent,
   agentIsCharging,
   fixedSumMethod,
+  fixedSumAmount,
 }) => {
   cy.startInsuranceExportContractSection({ viaTaskList });
 
@@ -36,13 +38,21 @@ const completeAndSubmitExportContractForms = ({
     initialSteps.push({ name: 'privateMarket', action: () => cy.completeAndSubmitPrivateMarketForm({ attemptedPrivateMarketCover }) });
   }
 
-  const steps = [
+  let steps = [
     ...initialSteps,
     { name: 'agent', action: () => cy.completeAndSubmitAgentForm({ isUsingAgent }) },
     { name: 'agentDetails', action: () => cy.completeAndSubmitAgentDetailsForm({}) },
     { name: 'agentService', action: () => cy.completeAndSubmitAgentServiceForm({ agentIsCharging }) },
-    { name: 'agentCharges', action: () => cy.completeAgentChargesForm({ fixedSumMethod }) },
+    { name: 'agentCharges', action: () => cy.completeAndSubmitAgentChargesForm({ fixedSumMethod }) },
   ];
+
+  if (fixedSumMethod) {
+    steps = [
+      ...steps,
+      { name: 'currencyOfAgentCharges', action: () => cy.completeAndSubmitAlternativeCurrencyForm({}) },
+      { name: 'howMuchAgentIsCharging', action: () => cy.completeAndSubmitHowMuchIsTheAgentChargingForm({ fixedSumAmount }) },
+    ];
+  }
 
   /**
    * carries out steps in steps array

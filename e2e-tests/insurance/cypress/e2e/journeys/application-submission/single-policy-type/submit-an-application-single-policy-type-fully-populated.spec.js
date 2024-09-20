@@ -24,7 +24,6 @@ context(
         isUsingAgent: true,
         agentIsCharging: true,
         agentChargeMethodFixedSum: true,
-        agentChargeMethodPercentage: true,
         hasConnectionToBuyer: true,
         buyerOutstandingPayments: true,
         buyerFailedToPayOnTime: true,

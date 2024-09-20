@@ -43,7 +43,7 @@
 
         {{ monetaryValueInput.render({
           fieldId: FIELD_ID,
-          label: FIELDS[FIELD_ID].LABEL,
+          hintText: FIELD.HINT,
           currencyPrefixSymbol: CURRENCY_PREFIX_SYMBOL,
           submittedValue: submittedValues[FIELD_ID] or application.exportContract.agent.service.charge[FIELD_ID],
           validationError: validationErrors.errorList[FIELD_ID]

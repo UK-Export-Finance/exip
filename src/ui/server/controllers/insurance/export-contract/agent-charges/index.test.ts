@@ -33,15 +33,7 @@ const { supportedCurrencies } = mockCurrenciesResponse;
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: {
-    AGENT_CHARGES_CHANGE,
-    AGENT_CHARGES_SAVE_AND_BACK,
-    AGENT_CHARGES_CURRENCY,
-    AGENT_CHARGES_CURRENCY_CHANGE,
-    AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE,
-    AGENT_CHARGES_CHECK_AND_CHANGE,
-    CHECK_YOUR_ANSWERS,
-  },
+  EXPORT_CONTRACT: { AGENT_CHARGES_CHECK_AND_CHANGE, AGENT_CHARGES_SAVE_AND_BACK, AGENT_CHARGES_CURRENCY },
   CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
@@ -135,36 +127,10 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
           },
         },
         CURRENCY_PREFIX_SYMBOL: currency.symbol,
-        PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY}`,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
-    });
-
-    describe('when isChange is provided as true', () => {
-      it(`should return "PROVIDE_ALTERNATIVE_CURRENCY_URL" as ${AGENT_CHARGES_CURRENCY_CHANGE}`, () => {
-        const isChange = true;
-
-        const result = pageVariables(referenceNumber, mockCurrencies, currencyCode, isChange);
-
-        const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY_CHANGE}`;
-
-        expect(result.PROVIDE_ALTERNATIVE_CURRENCY_URL).toEqual(expected);
-      });
-    });
-
-    describe('when checkAndChangeRoute is provided as true', () => {
-      it(`should return "PROVIDE_ALTERNATIVE_CURRENCY_URL" as ${AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE}`, () => {
-        const isChange = false;
-        const isCheckAndChangeRoute = true;
-
-        const result = pageVariables(referenceNumber, mockCurrencies, currencyCode, isChange, isCheckAndChangeRoute);
-
-        const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE}`;
-
-        expect(result.PROVIDE_ALTERNATIVE_CURRENCY_URL).toEqual(expected);
-      });
     });
   });
 
@@ -197,30 +163,6 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    describe("when the url's last substring is `change`", () => {
-      it('should render template with alternative pageVariables', async () => {
-        const isChangeRoute = true;
-
-        req.originalUrl = AGENT_CHARGES_CHANGE;
-
-        await get(req, res);
-
-        const expectedVariables = {
-          ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS,
-            BACK_LINK: req.headers.referer,
-          }),
-          ...pageVariables(referenceNumber, supportedCurrencies, currencyCode, isChangeRoute),
-          userName: getUserNameFromSession(req.session.user),
-          application: mapApplicationToFormFields(mockApplication),
-          countries: mapCountries(mockCountries, agent.service.charge[PAYABLE_COUNTRY_CODE]),
-          CONDITIONAL_PERCENTAGE_HTML,
-        };
-
-        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-      });
     });
 
     describe('when there is no application', () => {
@@ -414,10 +356,10 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
         expect(mapAndSave.exportContractAgentServiceCharge).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+      it(`should redirect to ${AGENT_CHARGES_CURRENCY}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

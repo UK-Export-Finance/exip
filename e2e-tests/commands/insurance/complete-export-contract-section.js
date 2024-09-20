@@ -67,18 +67,15 @@ const completeExportContractSection = ({
     if (agentIsCharging) {
       cy.completeAndSubmitAgentChargesForm({
         fixedSumMethod: agentChargeMethodFixedSum,
-        fixedSumAmount: agentChargeFixedSumAmount,
         percentageMethod: agentChargeMethodPercentage,
       });
 
-      if (alternativeCurrency) {
-        cy.clickBackLink();
+      if (agentChargeMethodFixedSum) {
+        cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency });
 
-        cy.clickProvideAlternativeCurrencyLink();
-
-        cy.clickAlternativeCurrencyRadioAndSubmitCurrency({});
-
-        cy.clickSubmitButton();
+        cy.completeAndSubmitHowMuchIsTheAgentChargingForm({
+          fixedSumAmount: agentChargeFixedSumAmount,
+        });
       }
     }
   }
