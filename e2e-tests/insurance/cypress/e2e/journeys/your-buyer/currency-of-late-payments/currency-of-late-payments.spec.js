@@ -75,14 +75,12 @@ context(
 
       const { rendering, formSubmission } = assertCurrencyFormFields({
         errors: ERRORS,
+        url: OUTSTANDING_OR_OVERDUE_PAYMENTS,
       });
 
       rendering();
 
-      formSubmission().selectAltRadioButNoAltCurrency({});
-
-      formSubmission().submitASupportedCurrency({ url: OUTSTANDING_OR_OVERDUE_PAYMENTS });
-      formSubmission().submitAlternativeCurrency({ url: OUTSTANDING_OR_OVERDUE_PAYMENTS });
+      formSubmission({}).executeTests();
     });
   },
 );
