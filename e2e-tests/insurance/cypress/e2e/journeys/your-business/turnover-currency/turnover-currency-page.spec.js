@@ -69,7 +69,8 @@ context(
 
       const { rendering, formSubmission } = assertCurrencyFormFields({
         errors: ERRORS,
-        redirectUrl: TURNOVER_ROOT,
+        expectedRedirectUrl: TURNOVER_ROOT,
+        hasSaveAndBack: false,
       });
 
       rendering();

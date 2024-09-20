@@ -117,7 +117,7 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
       hint: CONTRACT_POLICY[CURRENCY_CODE].HINT,
       errors: CONTRACT_ERROR_MESSAGES,
       errorIndex: 2,
-      redirectUrl: SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
+      expectedRedirectUrl: SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
       completeNonCurrencyFieldsFunction: () => cy.completeSingleContractPolicyForm({ chooseCurrency: false }),
     });
 

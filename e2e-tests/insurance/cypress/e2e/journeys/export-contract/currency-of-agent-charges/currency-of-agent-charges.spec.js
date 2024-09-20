@@ -81,7 +81,7 @@ context(
       const { rendering, formSubmission } = assertCurrencyFormFields({
         gbpCurrencyCheckedByDefault: true,
         errors: CURRENCY_ERROR_MESSAGES,
-        redirectUrl: AGENT_CHARGES,
+        expectedRedirectUrl: AGENT_CHARGES,
       });
 
       rendering();
