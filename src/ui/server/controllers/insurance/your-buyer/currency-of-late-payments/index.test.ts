@@ -73,24 +73,6 @@ describe('controllers/insurance/your-buyer/currency-of-late-payments', () => {
             ID: ALTERNATIVE_CURRENCY_CODE,
           },
         },
-      };
-
-      expect(pageVariables).toEqual(expected);
-    });
-  });
-
-  describe('PAGE_VARIABLES', () => {
-    it('should have correct properties', () => {
-      const expected = {
-        FIELDS: {
-          CURRENCY_CODE: {
-            ID: CURRENCY_CODE,
-            ...FIELDS[CURRENCY_CODE],
-          },
-          ALTERNATIVE_CURRENCY_CODE: {
-            ID: ALTERNATIVE_CURRENCY_CODE,
-          },
-        },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
       };
 

@@ -88,7 +88,7 @@ describe('routes/insurance/export-contract', () => {
 
   it('should setup all routes', () => {
     expect(get).toHaveBeenCalledTimes(33);
-    expect(post).toHaveBeenCalledTimes(41);
+    expect(post).toHaveBeenCalledTimes(42);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROOT}`, exportContractRootGet);
 
