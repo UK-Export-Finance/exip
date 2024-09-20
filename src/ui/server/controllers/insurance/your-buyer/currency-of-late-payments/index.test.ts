@@ -1,4 +1,4 @@
-import { PAGE_VARIABLES, TEMPLATE, FIELD_IDS, PAGE_CONTENT_STRINGS, get, post } from '.';
+import { pageVariables, TEMPLATE, FIELD_IDS, PAGE_CONTENT_STRINGS, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES } from '../../../../constants';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
@@ -31,6 +31,7 @@ const {
     OUTSTANDING_OR_OVERDUE_PAYMENTS,
     OUTSTANDING_OR_OVERDUE_PAYMENTS_CHANGE,
     OUTSTANDING_OR_OVERDUE_PAYMENTS_CHECK_AND_CHANGE,
+    OUTSTANDING_OR_OVERDUE_PAYMENTS_SAVE_AND_BACK: SAVE_AND_BACK,
     CURRENCY_OF_LATE_PAYMENTS_CHANGE,
     CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE,
   },
@@ -60,7 +61,7 @@ describe('controllers/insurance/your-buyer/currency-of-late-payments', () => {
     jest.resetAllMocks();
   });
 
-  describe('PAGE_VARIABLES', () => {
+  describe('pageVariables', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELDS: {
@@ -74,7 +75,26 @@ describe('controllers/insurance/your-buyer/currency-of-late-payments', () => {
         },
       };
 
-      expect(PAGE_VARIABLES).toEqual(expected);
+      expect(pageVariables).toEqual(expected);
+    });
+  });
+
+  describe('PAGE_VARIABLES', () => {
+    it('should have correct properties', () => {
+      const expected = {
+        FIELDS: {
+          CURRENCY_CODE: {
+            ID: CURRENCY_CODE,
+            ...FIELDS[CURRENCY_CODE],
+          },
+          ALTERNATIVE_CURRENCY_CODE: {
+            ID: ALTERNATIVE_CURRENCY_CODE,
+          },
+        },
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
+      };
+
+      expect(pageVariables(referenceNumber)).toEqual(expected);
     });
   });
 
@@ -114,7 +134,7 @@ describe('controllers/insurance/your-buyer/currency-of-late-payments', () => {
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),
-        ...PAGE_VARIABLES,
+        ...pageVariables(referenceNumber),
         application: mapApplicationToFormFields(mockApplication),
         ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, mockBuyerTradingHistory.currencyCode),
       };
@@ -241,7 +261,7 @@ describe('controllers/insurance/your-buyer/currency-of-late-payments', () => {
             BACK_LINK: req.headers.referer,
           }),
           userName: getUserNameFromSession(req.session.user),
-          ...PAGE_VARIABLES,
+          ...pageVariables(referenceNumber),
           validationErrors,
           ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, payload[ALTERNATIVE_CURRENCY_CODE]),
         };

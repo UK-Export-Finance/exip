@@ -18,7 +18,12 @@ import mapAndSave from '../map-and-save/buyer-trading-history';
 
 const {
   INSURANCE_ROOT,
-  YOUR_BUYER: { OUTSTANDING_OR_OVERDUE_PAYMENTS, OUTSTANDING_OR_OVERDUE_PAYMENTS_CHANGE, OUTSTANDING_OR_OVERDUE_PAYMENTS_CHECK_AND_CHANGE },
+  YOUR_BUYER: {
+    OUTSTANDING_OR_OVERDUE_PAYMENTS,
+    OUTSTANDING_OR_OVERDUE_PAYMENTS_CHANGE,
+    OUTSTANDING_OR_OVERDUE_PAYMENTS_CHECK_AND_CHANGE,
+    OUTSTANDING_OR_OVERDUE_PAYMENTS_SAVE_AND_BACK: SAVE_AND_BACK,
+  },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -32,7 +37,8 @@ export const TEMPLATE = TEMPLATES.SHARED_PAGES.ALTERNATIVE_CURRENCY;
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS;
 
-export const PAGE_VARIABLES = {
+// TODO: documentation
+export const pageVariables = (referenceNumber: number) => ({
   FIELDS: {
     CURRENCY_CODE: {
       ID: CURRENCY_CODE,
@@ -42,7 +48,8 @@ export const PAGE_VARIABLES = {
       ID: ALTERNATIVE_CURRENCY_CODE,
     },
   },
-};
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
+});
 
 /**
  * get
@@ -59,6 +66,8 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
+    const { referenceNumber } = application;
+
     const { alternativeCurrencies, supportedCurrencies } = await api.keystone.APIM.getCurrencies();
 
     if (!isPopulatedArray(supportedCurrencies) || !isPopulatedArray(alternativeCurrencies)) {
@@ -70,7 +79,7 @@ export const get = async (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
       }),
-      ...PAGE_VARIABLES,
+      ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
       ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, application.buyer.buyerTradingHistory?.currencyCode),
@@ -115,7 +124,7 @@ export const post = async (req: Request, res: Response) => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...PAGE_VARIABLES,
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         validationErrors,
         ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, payload[CURRENCY_CODE]),
