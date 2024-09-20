@@ -116,7 +116,7 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
       hint: CONTRACT_POLICY[CURRENCY_CODE].HINT,
       errors: CONTRACT_ERROR_MESSAGES,
       errorIndex: 2,
-      redirectUrl: MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
+      expectedRedirectUrl: MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
       completeNonCurrencyFieldsFunction: () => cy.completeMultipleContractPolicyForm({ chooseCurrency: false }),
     });
 
