@@ -6992,6 +6992,10 @@ var YOUR_BUYER_FIELDS = {
   },
   [CURRENCY_CODE2]: {
     LEGEND: 'What is the currency the outstanding or overdue payments are in?',
+    SUMMARY: {
+      TITLE: 'Outstanding payments currency',
+      FORM_TITLE: TRADING_HISTORY,
+    },
   },
   [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
     LABEL: 'Have you in the past held credit insurance cover on the buyer?',
@@ -7888,11 +7892,13 @@ var { FIELDS: FIELDS21 } = XLSX;
 var mapOutstandingPayments = (tradingHistory) => {
   if (tradingHistory[OUTSTANDING_PAYMENTS3]) {
     const values = {
+      currency: tradingHistory[CURRENCY_CODE5],
       totalOutstanding: format_currency_default(tradingHistory[TOTAL_OUTSTANDING_PAYMENTS3], tradingHistory[CURRENCY_CODE5]),
       totalAmountOverdue: format_currency_default(tradingHistory[TOTAL_AMOUNT_OVERDUE2], tradingHistory[CURRENCY_CODE5]),
     };
     const mapped = [
       xlsx_row_default(String(FIELDS21[TOTAL_OUTSTANDING_PAYMENTS3]), values.totalOutstanding),
+      xlsx_row_default(String(YOUR_BUYER_FIELDS[CURRENCY_CODE5].SUMMARY?.TITLE), values.currency),
       xlsx_row_default(String(YOUR_BUYER_FIELDS[TOTAL_AMOUNT_OVERDUE2].SUMMARY?.TITLE), values.totalAmountOverdue),
     ];
     return mapped;
