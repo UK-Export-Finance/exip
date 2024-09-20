@@ -32,6 +32,12 @@ export const FIELD_ID = TRADED_WITH_BUYER;
 
 export const FIELD_IDS = [FIELD_ID];
 
+/**
+ * pageVariables
+ * Page fields and "save and go back" URL
+ * @param {Number} referenceNumber: Application reference number
+ * @returns {Object} Page variables
+ */
 export const pageVariables = (referenceNumber: number) => ({
   FIELD_ID,
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER_SAVE_AND_BACK}`,

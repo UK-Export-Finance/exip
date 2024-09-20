@@ -7,6 +7,7 @@ import mapAndSave from '../../map-and-save/export-contract-agent-service-charge'
 import { Request, Response } from '../../../../../../types';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+
 /**
  * post
  * Save any valid "Agent charges - Currency of agents charge" form fields and if successful, redirect to the all sections page

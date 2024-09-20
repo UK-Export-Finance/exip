@@ -37,7 +37,12 @@ export const TEMPLATE = TEMPLATES.SHARED_PAGES.ALTERNATIVE_CURRENCY;
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS;
 
-// TODO: documentation
+/**
+ * pageVariables
+ * Page fields and "save and go back" URL
+ * @param {Number} referenceNumber: Application reference number
+ * @returns {Object} Page variables
+ */
 export const pageVariables = (referenceNumber: number) => ({
   FIELDS: {
     CURRENCY_CODE: {

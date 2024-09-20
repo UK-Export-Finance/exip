@@ -38,7 +38,12 @@ export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER;
 
-// TODO: documentation
+/**
+ * pageVariables
+ * Page fields and "save and go back" URL
+ * @param {Number} referenceNumber: Application reference number
+ * @returns {Object} Page variables
+ */
 export const pageVariables = (referenceNumber: number) => ({
   FIELD_ID: CONNECTION_WITH_BUYER,
   FIELDS: {
