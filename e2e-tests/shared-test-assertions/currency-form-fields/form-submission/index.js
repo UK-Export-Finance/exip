@@ -5,11 +5,11 @@ import submitASupportedCurrency from './submit-a-supported-currency';
 
 const { ALL_SECTIONS } = INSURANCE_ROUTES;
 
-// TODO: update documentation
-
 /**
  * formSubmissionAssertions
  * Form submission assertions for currency form fields.
+ * @param {Number} errorIndex: Index of the first currency field error.
+ * @param {String} expectedRedirectUrl: Page URL to assert after successful form submission
  * @param {Function} rendersAlternativeCurrencyValidationError: Assert alternative currency input validation error.
  * @param {Function} submitAndAssertRadioIsChecked: Submit a radio option and assert the radio is checked.
  * @param {Function} submitRadioAndAssertUrl: Submit a radio option and assert the URL.
@@ -20,7 +20,7 @@ const { ALL_SECTIONS } = INSURANCE_ROUTES;
  */
 const formSubmissionAssertions = ({
   errorIndex,
-  url,
+  expectedRedirectUrl,
   rendersAlternativeCurrencyValidationError,
   submitAndAssertRadioIsChecked,
   submitRadioAndAssertUrl,
@@ -37,11 +37,11 @@ const formSubmissionAssertions = ({
           completeNonCurrencyFieldsFunction,
           submitRadioAndAssertUrl,
           submitAndAssertRadioIsChecked,
-          url,
+          expectedRedirectUrl,
         });
 
         submitAlternativeCurrency({
-          url,
+          expectedRedirectUrl,
           submitAlternativeCurrencyAndAssertUrl,
           submitAlternativeCurrencyAndAssertInput,
         });
@@ -55,12 +55,12 @@ const formSubmissionAssertions = ({
           completeNonCurrencyFieldsFunction,
           submitRadioAndAssertUrl,
           submitAndAssertRadioIsChecked,
-          url: ALL_SECTIONS,
+          expectedRedirectUrl: ALL_SECTIONS,
           viaSaveAndBack: true,
         });
 
         submitAlternativeCurrency({
-          url: ALL_SECTIONS,
+          expectedRedirectUrl: ALL_SECTIONS,
           submitAlternativeCurrencyAndAssertUrl,
           submitAlternativeCurrencyAndAssertInput,
         });

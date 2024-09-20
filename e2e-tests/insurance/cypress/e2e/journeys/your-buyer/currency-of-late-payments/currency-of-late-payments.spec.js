@@ -75,7 +75,7 @@ context(
 
       const { rendering, formSubmission } = assertCurrencyFormFields({
         errors: ERRORS,
-        url: OUTSTANDING_OR_OVERDUE_PAYMENTS,
+        redirectUrl: OUTSTANDING_OR_OVERDUE_PAYMENTS,
       });
 
       rendering();
