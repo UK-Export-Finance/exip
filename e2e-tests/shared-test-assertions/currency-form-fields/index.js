@@ -10,37 +10,46 @@ const {
   CURRENCY: { ALTERNATIVE_CURRENCY_CODE },
 } = INSURANCE_FIELD_IDS;
 
-// TODO: update documentation
-
-// TODO: update to consume and pass:
-// completeNonCurrencyFieldsFunction
-// errorIndex
-
 /**
  * assertCurrencyFormFields
  * Assert currency form fields
- * @param {Function} legend: Legend selector
- * @param {Function} hint: Hint selector
+ * @param {Function} completeNonCurrencyFieldsFunction: Optional function to complete non-currency form fields.
+ * @param {Number} errorIndex: Index of the currency field error.
  * @param {Object} errors: Other validation errors for the same form
  * @param {String} fieldId: Field ID of input for prefix assertion
  * @param {Boolean} gbpCurrencyCheckedByDefault: GBP currency should be checked by default
+ * @param {Function} hint: Hint selector
+ * @param {Function} legend: Legend selector
  * @returns {Object} Rendering and form submission assertion functions
  */
-export const assertCurrencyFormFields = ({ legend, hint, errors, fieldId, gbpCurrencyCheckedByDefault, clickAlternativeCurrencyLink, url }) => {
-  const assertions = {
-    url,
-    ...fieldAssertions({
-      legend,
-      hint,
-      alternativeCurrencyText: FIELDS[ALTERNATIVE_CURRENCY_CODE].TEXT,
-      errors,
-      gbpCurrencyCheckedByDefault,
-    }),
-  };
+export const assertCurrencyFormFields = ({
+  completeNonCurrencyFieldsFunction,
+  clickAlternativeCurrencyLink,
+  errorIndex,
+  errors,
+  fieldId,
+  gbpCurrencyCheckedByDefault,
+  hint,
+  legend,
+  url,
+}) => {
+  const assertions = fieldAssertions({
+    alternativeCurrencyText: FIELDS[ALTERNATIVE_CURRENCY_CODE].TEXT,
+    errors,
+    gbpCurrencyCheckedByDefault,
+    hint,
+    legend,
+  });
 
   return {
     rendering: () => renderingAssertions(assertions),
-    formSubmission: () => formSubmissionAssertions(assertions),
+    formSubmission: () =>
+      formSubmissionAssertions({
+        ...assertions,
+        completeNonCurrencyFieldsFunction,
+        errorIndex,
+        url,
+      }),
     prefixAssertions: () => prefixAssertions({ fieldId, clickAlternativeCurrencyLink }),
   };
 };
