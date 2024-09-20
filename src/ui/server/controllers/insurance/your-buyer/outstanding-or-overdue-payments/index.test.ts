@@ -188,6 +188,12 @@ describe('controllers/insurance/your-buyer/outstanding-or-overdue-payments', () 
         req.body = validBody;
       });
 
+      it('should NOT call api.keystone.APIM.getCurrencies', async () => {
+        await post(req, res);
+
+        expect(getCurrenciesSpy).toHaveBeenCalledTimes(0);
+      });
+
       it('should call mapAndSave.buyerTradingHistory once with data from constructPayload function and application', async () => {
         await post(req, res);
 
@@ -231,6 +237,12 @@ describe('controllers/insurance/your-buyer/outstanding-or-overdue-payments', () 
     });
 
     describe('when there are validation errors', () => {
+      it('should call api.keystone.APIM.getCurrencies', async () => {
+        await get(req, res);
+
+        expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
+      });
+
       it('should render template with validation errors', async () => {
         await post(req, res);
 
@@ -300,7 +312,7 @@ describe('controllers/insurance/your-buyer/outstanding-or-overdue-payments', () 
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-          await get(req, res);
+          await post(req, res);
 
           expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
@@ -313,7 +325,7 @@ describe('controllers/insurance/your-buyer/outstanding-or-overdue-payments', () 
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-          await get(req, res);
+          await post(req, res);
 
           expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });

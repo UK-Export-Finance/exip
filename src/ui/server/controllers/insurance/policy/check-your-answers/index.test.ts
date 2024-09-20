@@ -69,6 +69,12 @@ describe('controllers/insurance/policy/check-your-answers', () => {
   });
 
   describe('get', () => {
+    it('should call api.keystone.countries.getAll', async () => {
+      await get(req, res);
+
+      expect(getCountriesSpy).toHaveBeenCalledTimes(1);
+    });
+
     it('should call api.keystone.APIM.getCurrencies', async () => {
       await get(req, res);
 
@@ -105,18 +111,6 @@ describe('controllers/insurance/policy/check-your-answers', () => {
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    it('should call api.keystone.countries.getAll', async () => {
-      await get(req, res);
-
-      expect(getCountriesSpy).toHaveBeenCalledTimes(1);
-    });
-
-    it('should call api.keystone.APIM.getCurrencies', async () => {
-      await get(req, res);
-
-      expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
     });
 
     describe('when there is no application', () => {

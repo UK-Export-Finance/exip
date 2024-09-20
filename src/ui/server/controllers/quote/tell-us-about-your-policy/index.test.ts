@@ -389,6 +389,12 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         req.body = {};
       });
 
+      it('should call api.keystone.APIM.getCurrencies', async () => {
+        await get(req, res);
+
+        expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
+      });
+
       it('should render template with validation errors and submitted values from constructPayload function', async () => {
         await post(req, res);
 
@@ -559,6 +565,12 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
       beforeEach(() => {
         req.body = validBody;
+      });
+
+      it('should call api.keystone.APIM.getCurrencies', async () => {
+        await get(req, res);
+
+        expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
       });
 
       it('should update the session with submitted data, populated with full currency object from constructPayload function', async () => {
