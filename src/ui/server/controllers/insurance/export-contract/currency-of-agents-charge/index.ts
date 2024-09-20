@@ -91,7 +91,7 @@ export const get = async (req: Request, res: Response) => {
       ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, charge[FIXED_SUM_CURRENCY_CODE]),
     });
   } catch (error) {
-    console.error('Error getting Export contract - Agent charges - Alternative currency %O', error);
+    console.error('Error getting Export contract - Agent charges - currency of agents charge %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

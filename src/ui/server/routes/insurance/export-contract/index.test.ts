@@ -25,6 +25,7 @@ import { post as agentServiceSaveAndBackPost } from '../../../controllers/insura
 import { get as agentChargesGet, post as agentChargesPost } from '../../../controllers/insurance/export-contract/agent-charges';
 import { post as agentChargesSaveAndBackPost } from '../../../controllers/insurance/export-contract/agent-charges/save-and-back';
 import { get as agentChargesCurrencyGet, post as agentChargesCurrencyPost } from '../../../controllers/insurance/export-contract/currency-of-agents-charge';
+import { post as agentChargesCurrencySaveAndBackPost } from '../../../controllers/insurance/export-contract/currency-of-agents-charge/save-and-back';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/export-contract/check-your-answers';
 
 const {
@@ -65,6 +66,7 @@ const {
   AGENT_CHARGES_CHANGE,
   AGENT_CHARGES_CHECK_AND_CHANGE,
   AGENT_CHARGES_CURRENCY,
+  AGENT_CHARGES_CURRENCY_SAVE_AND_BACK,
   AGENT_CHARGES_CURRENCY_CHANGE,
   AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE,
   CHECK_YOUR_ANSWERS,
@@ -81,7 +83,7 @@ describe('routes/insurance/export-contract', () => {
 
   it('should setup all routes', () => {
     expect(get).toHaveBeenCalledTimes(32);
-    expect(post).toHaveBeenCalledTimes(40);
+    expect(post).toHaveBeenCalledTimes(41);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROOT}`, exportContractRootGet);
 
@@ -158,6 +160,7 @@ describe('routes/insurance/export-contract', () => {
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_CURRENCY}`, agentChargesCurrencyGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_CURRENCY}`, agentChargesCurrencyPost);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_CURRENCY_SAVE_AND_BACK}`, agentChargesCurrencySaveAndBackPost);
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_CURRENCY_CHANGE}`, agentChargesCurrencyGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_CURRENCY_CHANGE}`, agentChargesCurrencyPost);
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE}`, agentChargesCurrencyGet);
