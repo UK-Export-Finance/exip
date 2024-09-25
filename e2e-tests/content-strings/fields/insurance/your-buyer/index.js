@@ -131,6 +131,7 @@ export const YOUR_BUYER_FIELDS = {
   },
   [TOTAL_OUTSTANDING_PAYMENTS]: {
     LABEL: 'Total outstanding, including overdue in',
+    HINT: 'Enter a whole number. Do not enter decimals.',
     SUMMARY: {
       TITLE: 'Total outstanding including overdue',
       FORM_TITLE: TRADING_HISTORY,
@@ -138,6 +139,7 @@ export const YOUR_BUYER_FIELDS = {
   },
   [TOTAL_AMOUNT_OVERDUE]: {
     LABEL: 'Amount overdue in',
+    HINT: 'Enter a whole number. Do not enter decimals.',
     SUMMARY: {
       TITLE: 'Amount overdue',
       FORM_TITLE: TRADING_HISTORY,

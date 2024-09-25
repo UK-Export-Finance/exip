@@ -69,7 +69,7 @@ context(
       });
 
       describe(TOTAL_OUTSTANDING_PAYMENTS, () => {
-        it(`should render a label for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+        it('should render a label', () => {
           cy.assertCopyWithCurrencyName({
             expectedCopy: FIELDS[TOTAL_OUTSTANDING_PAYMENTS].LABEL,
             currencyName,
@@ -77,17 +77,21 @@ context(
           });
         });
 
-        it(`should render an input for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+        it('should render a hint', () => {
+          cy.checkText(field(TOTAL_OUTSTANDING_PAYMENTS).hint(), FIELDS[TOTAL_OUTSTANDING_PAYMENTS].HINT);
+        });
+
+        it('should render an input', () => {
           field(TOTAL_OUTSTANDING_PAYMENTS).input().should('be.visible');
         });
 
-        it(`should render a prefix for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+        it('should render a prefix', () => {
           cy.checkText(field(TOTAL_OUTSTANDING_PAYMENTS).prefix(), SYMBOLS.GBP);
         });
       });
 
       describe(TOTAL_AMOUNT_OVERDUE, () => {
-        it(`should render a label for ${TOTAL_AMOUNT_OVERDUE}`, () => {
+        it('should render a label', () => {
           cy.assertCopyWithCurrencyName({
             expectedCopy: FIELDS[TOTAL_AMOUNT_OVERDUE].LABEL,
             currencyName,
@@ -95,11 +99,15 @@ context(
           });
         });
 
-        it(`should render an input for ${TOTAL_AMOUNT_OVERDUE}`, () => {
+        it('should render a hint', () => {
+          cy.checkText(field(TOTAL_AMOUNT_OVERDUE).hint(), FIELDS[TOTAL_AMOUNT_OVERDUE].HINT);
+        });
+
+        it('should render an input', () => {
           field(TOTAL_AMOUNT_OVERDUE).input().should('be.visible');
         });
 
-        it(`should render a prefix for ${TOTAL_AMOUNT_OVERDUE}`, () => {
+        it('should render a prefix', () => {
           cy.checkText(field(TOTAL_AMOUNT_OVERDUE).prefix(), SYMBOLS.GBP);
         });
       });
