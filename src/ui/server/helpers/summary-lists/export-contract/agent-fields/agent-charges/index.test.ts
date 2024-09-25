@@ -62,7 +62,7 @@ describe('server/helpers/summary-lists/export-contract/agent-fields/agent-charge
     });
   });
 
-  describe.only(`when ${IS_CHARGING} is true and ${FIXED_SUM_AMOUNT} is provided`, () => {
+  describe(`when ${IS_CHARGING} is true and ${FIXED_SUM_AMOUNT} is provided`, () => {
     const mockAnswers = {
       ...mockAnswersChargingTrue,
       charge: {
