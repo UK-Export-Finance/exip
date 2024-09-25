@@ -179,6 +179,12 @@ describe('controllers/insurance/your-buyer/currency-of-late-payments', () => {
         req.body = validBody;
       });
 
+      it('should NOT call api.keystone.APIM.getCurrencies', async () => {
+        await post(req, res);
+
+        expect(getCurrenciesSpy).toHaveBeenCalledTimes(0);
+      });
+
       it('should redirect to the next page', async () => {
         await post(req, res);
         const expected = `${INSURANCE_ROOT}/${referenceNumber}${OUTSTANDING_OR_OVERDUE_PAYMENTS}`;

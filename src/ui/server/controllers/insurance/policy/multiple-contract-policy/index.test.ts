@@ -233,6 +233,12 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
         req.body = validBody;
       });
 
+      it('should NOT call api.keystone.APIM.getCurrencies', async () => {
+        await post(req, res);
+
+        expect(getCurrenciesSpy).toHaveBeenCalledTimes(0);
+      });
+
       it('should call mapAndSave.policy with data from constructPayload function and application', async () => {
         await post(req, res);
 
