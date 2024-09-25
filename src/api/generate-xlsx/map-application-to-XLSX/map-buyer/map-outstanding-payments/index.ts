@@ -21,12 +21,14 @@ const { FIELDS } = XLSX;
 const mapOutstandingPayments = (tradingHistory: BuyerTradingHistory) => {
   if (tradingHistory[OUTSTANDING_PAYMENTS]) {
     const values = {
+      currency: tradingHistory[CURRENCY_CODE],
       totalOutstanding: formatCurrency(tradingHistory[TOTAL_OUTSTANDING_PAYMENTS], tradingHistory[CURRENCY_CODE]),
       totalAmountOverdue: formatCurrency(tradingHistory[TOTAL_AMOUNT_OVERDUE], tradingHistory[CURRENCY_CODE]),
     };
 
     const mapped = [
       xlsxRow(String(FIELDS[TOTAL_OUTSTANDING_PAYMENTS]), values.totalOutstanding),
+      xlsxRow(String(CONTENT_STRINGS[CURRENCY_CODE].SUMMARY?.TITLE), values.currency),
       xlsxRow(String(CONTENT_STRINGS[TOTAL_AMOUNT_OVERDUE].SUMMARY?.TITLE), values.totalAmountOverdue),
     ];
 
