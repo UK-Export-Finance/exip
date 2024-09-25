@@ -204,6 +204,12 @@ describe('controllers/insurance/business/turnover-currency', () => {
         req.body = validBody;
       });
 
+      it('should NOT call api.keystone.APIM.getCurrencies', async () => {
+        await post(req, res);
+
+        expect(getCurrenciesSpy).toHaveBeenCalledTimes(0);
+      });
+
       it('should call mapAndSave.business once with the data from constructPayload function and application', async () => {
         await post(req, res);
 

@@ -180,6 +180,12 @@ describe('controllers/insurance/business/turnover', () => {
     };
 
     describe('when there are validation errors', () => {
+      it('should call api.keystone.APIM.getCurrencies', async () => {
+        await get(req, res);
+
+        expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
+      });
+
       it('should render template with validation errors and submitted values', async () => {
         req.body = {};
 
@@ -208,11 +214,10 @@ describe('controllers/insurance/business/turnover', () => {
         req.body = validBody;
       });
 
-      it('should redirect to next page', async () => {
+      it('should NOT call api.keystone.APIM.getCurrencies', async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
-        expect(res.redirect).toHaveBeenCalledWith(expected);
+        expect(getCurrenciesSpy).toHaveBeenCalledTimes(0);
       });
 
       it('should call mapAndSave.turnover once with data from constructPayload and application', async () => {
@@ -223,6 +228,13 @@ describe('controllers/insurance/business/turnover', () => {
         expect(mapAndSave.turnover).toHaveBeenCalledTimes(1);
 
         expect(mapAndSave.turnover).toHaveBeenCalledWith(payload, mockApplication);
+      });
+
+      it('should redirect to next page', async () => {
+        await post(req, res);
+
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
+        expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
       describe("when the url's last substring is `change`", () => {
