@@ -1,5 +1,5 @@
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance';
-import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
+import FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import { EXPORT_CONTRACT as EXPORT_CONTRACT_ROUTES } from '../../../../../constants/routes/insurance/export-contract';
 import fieldGroupItem from '../../../generate-field-group-item';
 import getFieldById from '../../../../get-field-by-id';
@@ -12,12 +12,21 @@ import { transformEmptyDecimalsToWholeNumber, numberHasDecimalPlaces } from '../
 import { ApplicationExportContractAgentService, Country } from '../../../../../../types';
 
 const {
-  AGENT_SERVICE: { IS_CHARGING },
-  AGENT_CHARGES: { FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
+  CURRENCY: { CURRENCY_CODE },
+  EXPORT_CONTRACT: {
+    AGENT_SERVICE: { IS_CHARGING },
+    AGENT_CHARGES: { FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
+  },
 } = FIELD_IDS;
 
-const { AGENT_SERVICE_CHANGE, AGENT_SERVICE_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
-const { AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
+const {
+  AGENT_CHARGES_CURRENCY_CHANGE,
+  AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE,
+  AGENT_CHARGES_CHANGE,
+  AGENT_CHARGES_CHECK_AND_CHANGE,
+  AGENT_SERVICE_CHANGE,
+  AGENT_SERVICE_CHECK_AND_CHANGE,
+} = EXPORT_CONTRACT_ROUTES;
 
 /**
  * agentChargesFields
@@ -29,7 +38,7 @@ const { AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE } = EXPORT_CONTRACT
  * @returns {Array<SummaryListItemData>} Agent charges fields
  */
 const agentChargesFields = (answers: ApplicationExportContractAgentService, referenceNumber: number, countries: Array<Country>, checkAndChange?: boolean) => {
-  const fields = [
+  let fields = [
     fieldGroupItem(
       {
         field: getFieldById(FIELDS.AGENT_SERVICE, IS_CHARGING),
@@ -54,7 +63,23 @@ const agentChargesFields = (answers: ApplicationExportContractAgentService, refe
        */
       const decimalPlaces = numberHasDecimalPlaces(answer) ? 2 : 0;
 
-      fields.push(
+      fields = [
+        ...fields,
+        fieldGroupItem(
+          {
+            field: getFieldById(FIELDS.AGENT_CHARGES, CURRENCY_CODE),
+            data: answers.charge,
+            href: generateChangeLink(
+              AGENT_CHARGES_CURRENCY_CHANGE,
+              AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE,
+              `#${FIXED_SUM_CURRENCY_CODE}-label`,
+              referenceNumber,
+              checkAndChange,
+            ),
+            renderChangeLink: true,
+          },
+          answers.charge[FIXED_SUM_CURRENCY_CODE],
+        ),
         fieldGroupItem(
           {
             field: getFieldById(FIELDS.AGENT_CHARGES, FIXED_SUM_AMOUNT),
@@ -64,7 +89,7 @@ const agentChargesFields = (answers: ApplicationExportContractAgentService, refe
           },
           formatCurrency(Number(answer), answers.charge[FIXED_SUM_CURRENCY_CODE], decimalPlaces),
         ),
-      );
+      ];
     }
 
     if (answers.charge[PERCENTAGE_CHARGE]) {

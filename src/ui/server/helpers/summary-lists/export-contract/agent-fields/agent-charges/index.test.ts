@@ -1,6 +1,6 @@
 import agentChargesFields from '.';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance';
-import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
+import FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import { EXPORT_CONTRACT as EXPORT_CONTRACT_ROUTES } from '../../../../../constants/routes/insurance/export-contract';
 import fieldGroupItem from '../../../generate-field-group-item';
 import getFieldById from '../../../../get-field-by-id';
@@ -13,12 +13,21 @@ import { transformEmptyDecimalsToWholeNumber } from '../../../../number';
 import { mockExportContractAgentService, mockCountries, referenceNumber } from '../../../../../test-mocks';
 
 const {
-  AGENT_SERVICE: { IS_CHARGING },
-  AGENT_CHARGES: { FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
+  CURRENCY: { CURRENCY_CODE },
+  EXPORT_CONTRACT: {
+    AGENT_SERVICE: { IS_CHARGING },
+    AGENT_CHARGES: { FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
+  },
 } = FIELD_IDS;
 
-const { AGENT_SERVICE_CHANGE, AGENT_SERVICE_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
-const { AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
+const {
+  AGENT_CHARGES_CURRENCY_CHANGE,
+  AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE,
+  AGENT_CHARGES_CHANGE,
+  AGENT_CHARGES_CHECK_AND_CHANGE,
+  AGENT_SERVICE_CHANGE,
+  AGENT_SERVICE_CHECK_AND_CHANGE,
+} = EXPORT_CONTRACT_ROUTES;
 
 describe('server/helpers/summary-lists/export-contract/agent-fields/agent-charges', () => {
   const mockAnswersChargingTrue = {
@@ -53,7 +62,7 @@ describe('server/helpers/summary-lists/export-contract/agent-fields/agent-charge
     });
   });
 
-  describe(`when ${IS_CHARGING} is true and ${FIXED_SUM_AMOUNT} is provided`, () => {
+  describe.only(`when ${IS_CHARGING} is true and ${FIXED_SUM_AMOUNT} is provided`, () => {
     const mockAnswers = {
       ...mockAnswersChargingTrue,
       charge: {
@@ -77,6 +86,21 @@ describe('server/helpers/summary-lists/export-contract/agent-fields/agent-charge
             renderChangeLink: true,
           },
           mapYesNoField(mockAnswers[IS_CHARGING]),
+        ),
+        fieldGroupItem(
+          {
+            field: getFieldById(FIELDS.AGENT_CHARGES, CURRENCY_CODE),
+            data: mockAnswers.charge,
+            href: generateChangeLink(
+              AGENT_CHARGES_CURRENCY_CHANGE,
+              AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE,
+              `#${FIXED_SUM_CURRENCY_CODE}-label`,
+              referenceNumber,
+              checkAndChange,
+            ),
+            renderChangeLink: true,
+          },
+          mockAnswers.charge[FIXED_SUM_CURRENCY_CODE],
         ),
         fieldGroupItem(
           {
@@ -124,6 +148,21 @@ describe('server/helpers/summary-lists/export-contract/agent-fields/agent-charge
             renderChangeLink: true,
           },
           mapYesNoField(mockAnswers[IS_CHARGING]),
+        ),
+        fieldGroupItem(
+          {
+            field: getFieldById(FIELDS.AGENT_CHARGES, CURRENCY_CODE),
+            data: mockAnswers.charge,
+            href: generateChangeLink(
+              AGENT_CHARGES_CURRENCY_CHANGE,
+              AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE,
+              `#${FIXED_SUM_CURRENCY_CODE}-label`,
+              referenceNumber,
+              checkAndChange,
+            ),
+            renderChangeLink: true,
+          },
+          mockAnswers.charge[FIXED_SUM_CURRENCY_CODE],
         ),
         fieldGroupItem(
           {

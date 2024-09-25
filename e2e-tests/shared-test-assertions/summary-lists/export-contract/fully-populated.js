@@ -9,7 +9,7 @@ const {
   USING_AGENT,
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
   AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
-  AGENT_CHARGES: { FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
+  AGENT_CHARGES: { FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
 /**
@@ -68,6 +68,10 @@ const assertFullyPopulatedExportContractSummaryListRows = ({ agentChargeMethodFi
   });
 
   if (agentChargeMethodFixedSum) {
+    it(`should render a ${FIXED_SUM_CURRENCY_CODE} summary list row`, () => {
+      checkSummaryList[FIXED_SUM_CURRENCY_CODE]({ shouldRender: true });
+    });
+
     it(`should render a ${FIXED_SUM_AMOUNT} summary list row`, () => {
       checkSummaryList[FIXED_SUM_AMOUNT]({ shouldRender: true, agentChargeFixedSumAmount });
     });
