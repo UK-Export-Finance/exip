@@ -63,6 +63,14 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
     });
   });
 
+  it(`should display validation errors when ${FIELD_ID} has letters`, () => {
+    cy.submitAndAssertFieldErrors({
+      ...assertions,
+      value: 'one',
+      expectedErrorMessage: ERROR_MESSAGE.INCORRECT_FORMAT,
+    });
+  });
+
   it(`should display validation errors when ${FIELD_ID} is negative but has a decimal place`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,

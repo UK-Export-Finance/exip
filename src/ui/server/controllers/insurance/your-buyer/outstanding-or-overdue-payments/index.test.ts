@@ -74,10 +74,12 @@ describe('controllers/insurance/your-buyer/outstanding-or-overdue-payments', () 
         FIELDS: {
           TOTAL_OUTSTANDING_PAYMENTS: {
             ID: TOTAL_OUTSTANDING_PAYMENTS,
+            ...FIELDS[TOTAL_OUTSTANDING_PAYMENTS],
             LABEL: `${FIELDS[TOTAL_OUTSTANDING_PAYMENTS].LABEL} ${currency.name}`,
           },
           TOTAL_AMOUNT_OVERDUE: {
             ID: TOTAL_AMOUNT_OVERDUE,
+            ...FIELDS[TOTAL_AMOUNT_OVERDUE],
             LABEL: `${FIELDS[TOTAL_AMOUNT_OVERDUE].LABEL} ${currency.name}`,
           },
         },

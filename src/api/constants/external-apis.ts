@@ -20,7 +20,15 @@ export const EXTERNAL_API_DEFINITIONS = {
       NO: 'N',
     },
     NO_COVER: 'Off cover',
-    INVALID_COUNTRIES: ['EC Market n/k', 'Non EC Market n/k', 'Non UK', 'Third Country', 'Eastern and Southern African Trade and Development Bank'],
+    INVALID_COUNTRIES: [
+      'CABEI',
+      'Cor Andino Fom',
+      'Eastern and Southern African Trade and Development Bank',
+      'EC Market n/k',
+      'Non EC Market n/k',
+      'Non UK',
+      'Third Country',
+    ],
     INVALID_CURRENCIES: ['Gold'],
   },
   COMPANIES_HOUSE: {

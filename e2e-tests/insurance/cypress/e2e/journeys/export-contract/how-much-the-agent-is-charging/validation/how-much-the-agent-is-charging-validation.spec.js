@@ -63,6 +63,14 @@ context('Insurance - Export contract - How much the agent is charging page - for
     });
   });
 
+  it(`should display validation errors when ${FIELD_ID} has letters`, () => {
+    cy.submitAndAssertFieldErrors({
+      ...assertions,
+      value: 'one',
+      expectedErrorMessage: ERROR_MESSAGES_OBJECT.INCORRECT_FORMAT,
+    });
+  });
+
   it(`should display validation errors when ${FIELD_ID} is below ${MINIMUM_CHARACTERS.ONE}`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,

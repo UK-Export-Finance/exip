@@ -91,6 +91,20 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         });
       });
     });
+
+    describe(`when ${FIELD_ID} has letters`, () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
+      it(`should display validation errors for ${FIELD_ID}`, () => {
+        cy.submitAndAssertFieldErrors({
+          ...assertions,
+          value: 'one',
+          expectedErrorMessage: NATURE_OF_BUSINESS_ERRORS[FIELD_ID].INCORRECT_FORMAT,
+        });
+      });
+    });
   });
 
   describe(`when ${FIELD_ID} is correctly entered as a whole number`, () => {
