@@ -9,7 +9,7 @@ const AGENT_DETAILS_ROOT = `${ROOT}/agent-details`;
 const AGENT_SERVICE_ROOT = `${ROOT}/agent-service`;
 const AGENT_CHARGES_ROOT = `${ROOT}/agent-charges`;
 const AGENT_CHARGES_CURRENCY_ROOT = `${ROOT}/currency-of-agents-charge`;
-const HOW_MUCH_THE_AGENT_IS_CHARGING_ROOT = `${ROOT}/how-much-is-the-agent-charging`;
+const HOW_MUCH_THE_AGENT_IS_CHARGING_ROOT = `${ROOT}/how-much-the-agent-is-charging`;
 
 export const EXPORT_CONTRACT = {
   ROOT,

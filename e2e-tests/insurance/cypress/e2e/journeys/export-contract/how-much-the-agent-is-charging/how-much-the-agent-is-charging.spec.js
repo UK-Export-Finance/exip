@@ -82,7 +82,7 @@ context(
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitHowMuchIsTheAgentChargingForm({});
+        cy.completeAndSubmitHowMuchTheAgentIsChargingForm({});
 
         cy.assertUrl(checkYourAnswersUrl);
       });

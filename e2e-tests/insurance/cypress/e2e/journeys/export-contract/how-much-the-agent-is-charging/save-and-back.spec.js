@@ -47,7 +47,7 @@ context('Insurance - Export contract - How much the agent is charging - Save and
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeHowMuchIsTheAgentChargingForm({});
+      cy.completeHowMuchTheAgentIsChargingForm({});
 
       cy.clickSaveAndBackButton();
     });
@@ -59,7 +59,7 @@ context('Insurance - Export contract - How much the agent is charging - Save and
     it('should retain the status of task `export contract` as ` in progress`', () => {
       cy.navigateToUrl(url);
 
-      cy.completeHowMuchIsTheAgentChargingForm({});
+      cy.completeHowMuchTheAgentIsChargingForm({});
 
       cy.clickSaveAndBackButton();
 
@@ -74,7 +74,7 @@ context('Insurance - Export contract - How much the agent is charging - Save and
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeHowMuchIsTheAgentChargingForm({ fixedSumAmount });
+      cy.completeHowMuchTheAgentIsChargingForm({ fixedSumAmount });
 
       cy.clickSaveAndBackButton();
     });
@@ -107,7 +107,7 @@ context('Insurance - Export contract - How much the agent is charging - Save and
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeHowMuchIsTheAgentChargingForm({ fixedSumAmount });
+      cy.completeHowMuchTheAgentIsChargingForm({ fixedSumAmount });
 
       cy.clickSaveAndBackButton();
     });
@@ -139,7 +139,7 @@ context('Insurance - Export contract - How much the agent is charging - Save and
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeHowMuchIsTheAgentChargingForm({ fixedSumAmount });
+      cy.completeHowMuchTheAgentIsChargingForm({ fixedSumAmount });
 
       cy.clickSaveAndBackButton();
     });

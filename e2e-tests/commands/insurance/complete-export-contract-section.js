@@ -73,7 +73,7 @@ const completeExportContractSection = ({
       if (agentChargeMethodFixedSum) {
         cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency });
 
-        cy.completeAndSubmitHowMuchIsTheAgentChargingForm({
+        cy.completeAndSubmitHowMuchTheAgentIsChargingForm({
           fixedSumAmount: agentChargeFixedSumAmount,
         });
       }

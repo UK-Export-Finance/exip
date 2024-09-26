@@ -50,7 +50,7 @@ const completeAndSubmitExportContractForms = ({
     steps = [
       ...steps,
       { name: 'currencyOfAgentCharges', action: () => cy.completeAndSubmitAlternativeCurrencyForm({}) },
-      { name: 'howMuchAgentIsCharging', action: () => cy.completeAndSubmitHowMuchIsTheAgentChargingForm({ fixedSumAmount }) },
+      { name: 'howMuchAgentIsCharging', action: () => cy.completeAndSubmitHowMuchTheAgentIsChargingForm({ fixedSumAmount }) },
     ];
   }
 

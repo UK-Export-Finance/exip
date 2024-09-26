@@ -7,12 +7,12 @@ const {
 } = FIELD_IDS;
 
 /**
- * completeHowMuchIsTheAgentChargingForm
- * Complete the "How much is the agent charging" form
+ * completeHowMuchTheAgentIsChargingForm
+ * Complete the "How much the agent is charging" form
  * @param {String} fixedSumAmount: Fixed sum amount
  */
-const completeHowMuchIsTheAgentChargingForm = ({ fixedSumAmount = application.EXPORT_CONTRACT.AGENT_CHARGES[FIXED_SUM_AMOUNT] }) => {
+const completeHowMuchTheAgentIsChargingForm = ({ fixedSumAmount = application.EXPORT_CONTRACT.AGENT_CHARGES[FIXED_SUM_AMOUNT] }) => {
   cy.keyboardInput(field(FIXED_SUM_AMOUNT).input(), fixedSumAmount);
 };
 
-export default completeHowMuchIsTheAgentChargingForm;
+export default completeHowMuchTheAgentIsChargingForm;
