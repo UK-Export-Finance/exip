@@ -207,6 +207,10 @@ export const EXPORT_CONTRACT_FIELDS = {
     },
     [CURRENCY_CODE]: {
       LEGEND: 'What currency is the agent charging you in?',
+      SUMMARY: {
+        TITLE: "Currency of the agent's charge",
+        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
+      },
     },
   },
 };
