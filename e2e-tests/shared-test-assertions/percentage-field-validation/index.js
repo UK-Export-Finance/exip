@@ -56,6 +56,14 @@ export const percentageFieldValidation = ({
     });
   });
 
+  it(`should display validation errors when ${fieldId} percentage has letters`, () => {
+    cy.submitAndAssertFieldErrors({
+      ...assertions,
+      value: 'one',
+      expectedErrorMessage: errorMessages.INCORRECT_FORMAT,
+    });
+  });
+
   it(`should display validation errors when ${fieldId} percentage field is over 100`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
