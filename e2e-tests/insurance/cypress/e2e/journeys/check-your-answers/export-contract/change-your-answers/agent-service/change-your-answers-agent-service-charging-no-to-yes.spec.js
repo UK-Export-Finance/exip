@@ -83,10 +83,9 @@ context('Insurance - Change your answers - Export contract - Summary list - Agen
         const expectedUrl = `${agentChargesUrl}#${FIELD_ID}-label`;
         cy.assertUrl(expectedUrl);
 
-        // TODO: EMS-3828 - renable
         cy.completeAndSubmitAgentChargesForm({
-          // fixedSumMethod: true,
-          percentageMethod: true,
+          fixedSumMethod: true,
+          percentageMethod: false,
         });
 
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: EXPORT_CONTRACT, fieldId: FIELD_ID });

@@ -124,12 +124,11 @@ context(
           cy.assertUrl(agentChargesCurrencyUrl);
         });
 
-        // TODO: EMS-3828 - renable
-        // it('should retain the `export contract` task status as `in progress`', () => {
-        //   cy.navigateToAllSectionsUrl(referenceNumber);
+        it('should retain the `export contract` task status as `in progress`', () => {
+          cy.navigateToAllSectionsUrl(referenceNumber);
 
-        //   cy.checkTaskExportContractStatusIsInProgress();
-        // });
+          cy.checkTaskExportContractStatusIsInProgress();
+        });
 
         describe('when going back to the page', () => {
           beforeEach(() => {

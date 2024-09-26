@@ -19,8 +19,7 @@ const fieldId = FIXED_SUM_AMOUNT;
 
 const baseUrl = Cypress.config('baseUrl');
 
-// TODO: EMS-3828 - renable
-context.skip(
+context(
   `Insurance - Change your answers - Export contract - Summary list - Agent charges - ${FIXED_SUM_AMOUNT} - As an exporter, I want to change my answers to an alternative currency`,
   () => {
     let referenceNumber;

@@ -72,10 +72,9 @@ context(
           const expectedUrl = `${agentChargesUrl}#${FIELD_ID}-label`;
           cy.assertUrl(expectedUrl);
 
-          // TODO: EMS-3828 - renable
           cy.completeAndSubmitAgentChargesForm({
-            // fixedSumMethod: true,
-            percentageMethod: true,
+            fixedSumMethod: true,
+            percentageMethod: false,
           });
 
           cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId: FIELD_ID });

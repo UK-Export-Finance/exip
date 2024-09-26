@@ -60,8 +60,7 @@ context(`Insurance - Export contract - Agent charges - Save and go back - empty 
 
       cy.assertAllSectionsUrl(referenceNumber);
 
-      // TODO: EMS-3828 - renable
-      // cy.checkTaskExportContractStatusIsInProgress();
+      cy.checkTaskExportContractStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {
@@ -87,8 +86,7 @@ context(`Insurance - Export contract - Agent charges - Save and go back - empty 
 
       cy.assertAllSectionsUrl(referenceNumber);
 
-      // TODO: EMS-3828 - renable
-      // cy.checkTaskExportContractStatusIsInProgress();
+      cy.checkTaskExportContractStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {
@@ -117,8 +115,7 @@ context(`Insurance - Export contract - Agent charges - Save and go back - empty 
 
       cy.assertAllSectionsUrl(referenceNumber);
 
-      // TODO: EMS-3828 - renable
-      // cy.checkTaskExportContractStatusIsInProgress();
+      cy.checkTaskExportContractStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {
@@ -146,8 +143,7 @@ context(`Insurance - Export contract - Agent charges - Save and go back - empty 
 
       cy.assertAllSectionsUrl(referenceNumber);
 
-      // TODO: EMS-3828 - renable
-      // cy.checkTaskExportContractStatusIsInProgress();
+      cy.checkTaskExportContractStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {

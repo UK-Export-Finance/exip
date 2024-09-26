@@ -19,8 +19,6 @@ const {
   },
 } = FIELD_IDS;
 
-// TODO: EMS-3828 - renable FIXED_SUM_AMOUNT mapping
-
 /**
  * mapSubmittedData
  * Map agent service charge fields.

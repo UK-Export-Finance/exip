@@ -90,8 +90,7 @@ context(
             cy.assertRadioOptionIsNotChecked(agentChargesPage[METHOD][FIXED_SUM].input());
             cy.assertRadioOptionIsNotChecked(agentChargesPage[METHOD][PERCENTAGE].input());
 
-            // TODO: EMS-3828 - renable
-            // cy.checkValue(field(FIXED_SUM_AMOUNT), '');
+            cy.checkValue(field(FIXED_SUM_AMOUNT), '');
 
             cy.checkValue(field(PERCENTAGE_CHARGE), '');
             cy.checkValue(autoCompleteField(PAYABLE_COUNTRY_CODE), '');
