@@ -14,6 +14,7 @@ import { get as getTradingHistory, post as postTradingHistory } from '../../../c
 import { post as postTradingHistorySaveAndBack } from '../../../controllers/insurance/your-buyer/trading-history/save-and-back';
 
 import { get as getCurrencyOfLatePayments, post as postCurrencyOfLatePayments } from '../../../controllers/insurance/your-buyer/currency-of-late-payments';
+import { post as postCurrencyOfLatePaymentsSaveAndBack } from '../../../controllers/insurance/your-buyer/currency-of-late-payments/save-and-back';
 
 import {
   get as getOutstandingOrOverduePayments,
@@ -74,6 +75,7 @@ yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY_CHECK_AND_CH
 
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS}`, getCurrencyOfLatePayments);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS}`, postCurrencyOfLatePayments);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS_SAVE_AND_BACK}`, postCurrencyOfLatePaymentsSaveAndBack);
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS_CHANGE}`, getCurrencyOfLatePayments);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS_CHANGE}`, postCurrencyOfLatePayments);
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE}`, getCurrencyOfLatePayments);
