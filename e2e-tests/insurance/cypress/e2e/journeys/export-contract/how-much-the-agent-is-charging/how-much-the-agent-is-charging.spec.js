@@ -4,6 +4,7 @@ import { EXPORT_CONTRACT_FIELDS as FIELD_STRINGS } from '../../../../../../conte
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { GBP, SYMBOLS } from '../../../../../../fixtures/currencies';
+import application from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.HOW_MUCH_IS_THE_AGENT_CHARGING;
 
@@ -84,6 +85,16 @@ context(
         cy.completeAndSubmitHowMuchIsTheAgentChargingForm({});
 
         cy.assertUrl(checkYourAnswersUrl);
+      });
+
+      describe('when going back to the page', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+        });
+
+        it('should have the submitted value', () => {
+          cy.checkValue(fieldSelector(FIELD_ID), application.EXPORT_CONTRACT.AGENT_CHARGES[FIELD_ID]);
+        });
       });
     });
   },

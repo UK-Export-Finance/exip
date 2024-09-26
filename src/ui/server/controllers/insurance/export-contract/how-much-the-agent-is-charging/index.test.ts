@@ -4,20 +4,22 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { EXPORT_CONTRACT as EXPORT_CONTRACT_FIELD_IDS } from '../../../../constants/field-ids/insurance/export-contract';
 import { PAGES } from '../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/export-contract';
+import api from '../../../../api';
 import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import constructPayload from '../../../../helpers/construct-payload';
-import api from '../../../../api';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
+import mapAndSave from '../map-and-save/export-contract-agent-service-charge';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockCurrencies, mockCurrenciesResponse, mockCurrenciesEmptyResponse, mockSpyPromiseRejection } from '../../../../test-mocks';
 import { mockApplicationMultiplePolicy as mockApplication } from '../../../../test-mocks/mock-application';
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, HOW_MUCH_IS_THE_AGENT_CHARGING_SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -42,7 +44,10 @@ describe('controllers/insurance/export-contract/how-much-the-agent-is-charging',
   let req: Request;
   let res: Response;
 
+  jest.mock('../map-and-save/export-contract-agent-service-charge');
+
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
+  mapAndSave.exportContractAgentServiceCharge = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
@@ -74,7 +79,7 @@ describe('controllers/insurance/export-contract/how-much-the-agent-is-charging',
         },
         DYNAMIC_PAGE_TITLE: `${PAGE_CONTENT_STRINGS.PAGE_TITLE} ${currency.name}?`,
         CURRENCY_PREFIX_SYMBOL: currency.symbol,
-        SAVE_AND_BACK_URL: `#${referenceNumber}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${HOW_MUCH_IS_THE_AGENT_CHARGING_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -190,6 +195,18 @@ describe('controllers/insurance/export-contract/how-much-the-agent-is-charging',
         expect(getCurrenciesSpy).toHaveBeenCalledTimes(0);
       });
 
+      it('should call mapAndSave.exportContractAgentServiceCharge with data from constructPayload function and application', async () => {
+        req.body = validBody;
+
+        await post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
+
+        expect(mapAndSave.exportContractAgentServiceCharge).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.exportContractAgentServiceCharge).toHaveBeenCalledWith(payload, res.locals.application);
+      });
+
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
         await post(req, res);
 
@@ -229,7 +246,7 @@ describe('controllers/insurance/export-contract/how-much-the-agent-is-charging',
           ...generatedPageVariables,
           userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplication),
-          submittedValues: payload,
+          submittedValues: sanitiseData(payload),
           validationErrors: generateValidationErrors(payload),
         };
 
@@ -240,6 +257,36 @@ describe('controllers/insurance/export-contract/how-much-the-agent-is-charging',
     describe('when there is no application', () => {
       beforeEach(() => {
         delete res.locals.application;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('when mapAndSave.exportContractAgentServiceCharge does not return a true boolean', () => {
+      beforeEach(() => {
+        req.body = validBody;
+        const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
+
+        mapAndSave.exportContractAgentServiceCharge = mapAndSaveSpy;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('when mapAndSave.exportContractAgentServiceCharge returns an error', () => {
+      beforeEach(() => {
+        req.body = validBody;
+        const mapAndSaveSpy = mockSpyPromiseRejection;
+
+        mapAndSave.exportContractAgentServiceCharge = mapAndSaveSpy;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

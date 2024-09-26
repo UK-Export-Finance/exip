@@ -3,19 +3,21 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { EXPORT_CONTRACT as EXPORT_CONTRACT_FIELD_IDS } from '../../../../constants/field-ids/insurance/export-contract';
 import { PAGES } from '../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/export-contract';
+import api from '../../../../api';
 import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import constructPayload from '../../../../helpers/construct-payload';
-import api from '../../../../api';
 import { isPopulatedArray } from '../../../../helpers/array';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
+import mapAndSave from '../map-and-save/export-contract-agent-service-charge';
 import { Currency, Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, HOW_MUCH_IS_THE_AGENT_CHARGING_SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -45,7 +47,7 @@ export const pageVariables = (referenceNumber: number, currencies: Array<Currenc
     },
     DYNAMIC_PAGE_TITLE: `${PAGE_CONTENT_STRINGS.PAGE_TITLE} ${currency.name}?`,
     CURRENCY_PREFIX_SYMBOL: currency.symbol,
-    SAVE_AND_BACK_URL: `#${referenceNumber}`,
+    SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${HOW_MUCH_IS_THE_AGENT_CHARGING_SAVE_AND_BACK}`,
   };
 };
 
@@ -53,10 +55,10 @@ export const TEMPLATE = TEMPLATES.INSURANCE.EXPORT_CONTRACT.HOW_MUCH_IS_THE_AGEN
 
 /**
  * get
- * Get the application and render the "Export contract - How much is the agent charging"
+ * Get the application and render the "Export contract - How much the agent is charging"
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} "Export contract - How much is the agent charging" page
+ * @returns {Express.Response.render} "Export contract - How much the agent is charging" page
  */
 export const get = async (req: Request, res: Response) => {
   const { application } = res.locals;
@@ -160,7 +162,7 @@ export const post = async (req: Request, res: Response) => {
         ...generatedPageVariables,
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(application),
-        submittedValues: payload,
+        submittedValues: sanitiseData(payload),
         validationErrors,
       });
     } catch (error) {
@@ -170,5 +172,17 @@ export const post = async (req: Request, res: Response) => {
     }
   }
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+  try {
+    const saveResponse = await mapAndSave.exportContractAgentServiceCharge(payload, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+  } catch (error) {
+    console.error('Error updating application - export contract - how much the agent is charging %O', error);
+
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
 };
