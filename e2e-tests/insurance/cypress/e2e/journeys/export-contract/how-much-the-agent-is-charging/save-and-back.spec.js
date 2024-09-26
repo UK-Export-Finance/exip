@@ -4,7 +4,7 @@ import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-co
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { HOW_MUCH_IS_THE_AGENT_CHARGING },
+  EXPORT_CONTRACT: { HOW_MUCH_THE_AGENT_IS_CHARGING },
 } = INSURANCE_ROUTES;
 
 const {
@@ -29,7 +29,7 @@ context('Insurance - Export contract - How much the agent is charging - Save and
         fixedSumMethod: true,
       });
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${HOW_MUCH_IS_THE_AGENT_CHARGING}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${HOW_MUCH_THE_AGENT_IS_CHARGING}`;
 
       cy.assertUrl(url);
     });

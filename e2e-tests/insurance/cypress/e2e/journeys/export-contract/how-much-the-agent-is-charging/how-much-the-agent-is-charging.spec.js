@@ -6,11 +6,11 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { GBP, SYMBOLS } from '../../../../../../fixtures/currencies';
 import application from '../../../../../../fixtures/application';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.HOW_MUCH_IS_THE_AGENT_CHARGING;
+const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.HOW_MUCH_THE_AGENT_IS_CHARGING;
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { AGENT_CHARGES_CURRENCY, HOW_MUCH_IS_THE_AGENT_CHARGING, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { AGENT_CHARGES_CURRENCY, HOW_MUCH_THE_AGENT_IS_CHARGING, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -33,7 +33,7 @@ context(
         // go to the page we want to test.
         cy.completeAndSubmitExportContractForms({ formToStopAt: 'currencyOfAgentCharges', isUsingAgent: true, agentIsCharging: true, fixedSumMethod: true });
 
-        url = `${baseUrl}${ROOT}/${referenceNumber}${HOW_MUCH_IS_THE_AGENT_CHARGING}`;
+        url = `${baseUrl}${ROOT}/${referenceNumber}${HOW_MUCH_THE_AGENT_IS_CHARGING}`;
         checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       });
     });
@@ -49,7 +49,7 @@ context(
     it('renders core page elements', () => {
       cy.corePageChecks({
         pageTitle: `${CONTENT_STRINGS.PAGE_TITLE} ${GBP.name}?`,
-        currentHref: `${ROOT}/${referenceNumber}${HOW_MUCH_IS_THE_AGENT_CHARGING}`,
+        currentHref: `${ROOT}/${referenceNumber}${HOW_MUCH_THE_AGENT_IS_CHARGING}`,
         backLink: `${ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY}`,
       });
     });

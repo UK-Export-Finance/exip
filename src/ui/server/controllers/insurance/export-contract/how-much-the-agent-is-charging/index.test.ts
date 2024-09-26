@@ -19,7 +19,7 @@ import { mockApplicationMultiplePolicy as mockApplication } from '../../../../te
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, HOW_MUCH_IS_THE_AGENT_CHARGING_SAVE_AND_BACK },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, HOW_MUCH_THE_AGENT_IS_CHARGING_SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -62,7 +62,7 @@ describe('controllers/insurance/export-contract/how-much-the-agent-is-charging',
 
   describe('PAGE_CONTENT_STRINGS', () => {
     it('should have the correct strings', () => {
-      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.EXPORT_CONTRACT.HOW_MUCH_IS_THE_AGENT_CHARGING);
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.EXPORT_CONTRACT.HOW_MUCH_THE_AGENT_IS_CHARGING);
     });
   });
 
@@ -79,7 +79,7 @@ describe('controllers/insurance/export-contract/how-much-the-agent-is-charging',
         },
         DYNAMIC_PAGE_TITLE: `${PAGE_CONTENT_STRINGS.PAGE_TITLE} ${currency.name}?`,
         CURRENCY_PREFIX_SYMBOL: currency.symbol,
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${HOW_MUCH_IS_THE_AGENT_CHARGING_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${HOW_MUCH_THE_AGENT_IS_CHARGING_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -88,7 +88,7 @@ describe('controllers/insurance/export-contract/how-much-the-agent-is-charging',
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.EXPORT_CONTRACT.HOW_MUCH_IS_THE_AGENT_CHARGING);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.EXPORT_CONTRACT.HOW_MUCH_THE_AGENT_IS_CHARGING);
     });
   });
 
