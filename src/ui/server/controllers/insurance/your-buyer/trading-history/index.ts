@@ -45,6 +45,12 @@ export const HTML_FLAGS = {
   NO_RADIO_AS_FIRST_OPTION: true,
 };
 
+/**
+ * pageVariables
+ * Page fields and "save and go back" URL
+ * @param {Number} referenceNumber: Application reference number
+ * @returns {Object} Page variables
+ */
 export const pageVariables = (referenceNumber: number) => ({
   FIELD_ID,
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,

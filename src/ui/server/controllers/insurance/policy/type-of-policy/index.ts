@@ -31,6 +31,12 @@ const {
   TYPE_OF_POLICY: { POLICY_TYPE: FIELD_ID },
 } = POLICY_FIELD_IDS;
 
+/**
+ * pageVariables
+ * Page fields and "save and go back" URL
+ * @param {Number} referenceNumber: Application reference number
+ * @returns {Object} Page variables
+ */
 export const pageVariables = (referenceNumber: number) => ({
   FIELD: FIELDS[FIELD_ID],
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY_SAVE_AND_BACK}`,

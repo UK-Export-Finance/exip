@@ -28,6 +28,12 @@ const { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE } = COMPANY_OR_ORGA
 
 export const FIELD_IDS = [NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE];
 
+/**
+ * pageVariables
+ * Page fields and "save and go back" URL
+ * @param {Number} referenceNumber: Application reference number
+ * @returns {Object} Page variables
+ */
 export const pageVariables = (referenceNumber: number) => ({
   FIELDS: {
     NAME: {
