@@ -217,6 +217,19 @@ const checkExportContractSummaryList = {
       cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
     }
   },
+  [FIXED_SUM_CURRENCY_CODE]: ({ shouldRender = false }) => {
+    const fieldId = FIXED_SUM_CURRENCY_CODE;
+
+    if (shouldRender) {
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.AGENT_CHARGES);
+
+      const expectedValue = application.EXPORT_CONTRACT.AGENT_CHARGES[fieldId];
+
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    } else {
+      cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+    }
+  },
   [FIXED_SUM_AMOUNT]: ({ shouldRender = false, agentChargeFixedSumAmount }) => {
     const fieldId = FIXED_SUM_AMOUNT;
 
