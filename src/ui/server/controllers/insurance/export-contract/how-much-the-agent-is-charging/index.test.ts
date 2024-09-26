@@ -38,7 +38,7 @@ const {
 
 const { allCurrencies } = mockCurrenciesResponse;
 
-describe('controllers/insurance/export-contract/how-much-is-the-agent-charging', () => {
+describe('controllers/insurance/export-contract/how-much-the-agent-is-charging', () => {
   let req: Request;
   let res: Response;
 

@@ -29,7 +29,7 @@ const assertions = {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Export contract - How much is the agent charging page - form validation', () => {
+context('Insurance - Export contract - How much the agent is charging page - form validation', () => {
   let referenceNumber;
   let url;
 

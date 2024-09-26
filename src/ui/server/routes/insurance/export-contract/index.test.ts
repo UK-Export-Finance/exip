@@ -26,9 +26,9 @@ import { get as agentChargesGet, post as agentChargesPost } from '../../../contr
 import { post as agentChargesSaveAndBackPost } from '../../../controllers/insurance/export-contract/agent-charges/save-and-back';
 import { get as agentChargesCurrencyGet, post as agentChargesCurrencyPost } from '../../../controllers/insurance/export-contract/currency-of-agents-charge';
 import {
-  get as howMuchIsTheAgentChargingGet,
-  post as howMuchIsTheAgentChargingPost,
-} from '../../../controllers/insurance/export-contract/how-much-is-the-agent-charging';
+  get as howMuchTheAgentIsChargingGet,
+  post as howMuchTheAgentIsChargingPost,
+} from '../../../controllers/insurance/export-contract/how-much-the-agent-is-charging';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/export-contract/check-your-answers';
 
 const {
@@ -168,8 +168,8 @@ describe('routes/insurance/export-contract', () => {
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE}`, agentChargesCurrencyGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE}`, agentChargesCurrencyPost);
 
-    expect(get).toHaveBeenCalledWith(`/:referenceNumber${HOW_MUCH_IS_THE_AGENT_CHARGING}`, howMuchIsTheAgentChargingGet);
-    expect(post).toHaveBeenCalledWith(`/:referenceNumber${HOW_MUCH_IS_THE_AGENT_CHARGING}`, howMuchIsTheAgentChargingPost);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${HOW_MUCH_IS_THE_AGENT_CHARGING}`, howMuchTheAgentIsChargingGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${HOW_MUCH_IS_THE_AGENT_CHARGING}`, howMuchTheAgentIsChargingPost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

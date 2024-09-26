@@ -19,7 +19,7 @@ const {
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  "Insurance - Export contract - How much is the agent charging page - As an exporter, I want to state what my agent's charges are, So that UKEF, the legal team and the British Embassy are aware of expenses incurred in my export contract bid",
+  "Insurance - Export contract - How much the agent is charging page - As an exporter, I want to state what my agent's charges are, So that UKEF, the legal team and the British Embassy are aware of expenses incurred in my export contract bid",
   () => {
     let referenceNumber;
     let url;
