@@ -6,7 +6,7 @@ import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/export-contract-agent-service-charge';
 import generateValidationErrors from '../validation';
 import { Request, Response } from '../../../../../../types';
-import { mockCurrencies, mockReq, mockRes, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
+import { EUR, mockReq, mockRes, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
@@ -24,7 +24,7 @@ describe('controllers/insurance/export-contract/currency-of-agents-charge/save-a
 
   const mockFormBody = {
     _csrf: '1234',
-    [CURRENCY_CODE]: mockCurrencies[0].isoCode,
+    [CURRENCY_CODE]: EUR.isoCode,
   };
 
   beforeEach(() => {

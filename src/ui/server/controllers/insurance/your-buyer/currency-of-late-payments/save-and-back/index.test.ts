@@ -18,66 +18,66 @@ describe('controllers/insurance/your-buyer/curreny-of-late-payments/save-and-bac
   let req: Request;
   let res: Response;
 
-  let updateMapAndSave = jest.fn(() => Promise.resolve(true));
+  jest.mock('../../map-and-save/buyer-trading-history');
+
+  let mapAndSaveSpy = jest.fn(() => Promise.resolve(true));
+
+  const mockFormBody = {
+    [CURRENCY_CODE]: EUR.isoCode,
+  };
 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
 
-    mapAndSave.buyerTradingHistory = updateMapAndSave;
+    req.body = mockFormBody;
+
+    mapAndSave.buyerTradingHistory = mapAndSaveSpy;
   });
 
   afterAll(() => {
     jest.resetAllMocks();
   });
 
-  const validBody = {
-    [CURRENCY_CODE]: EUR.isoCode,
-  };
+  describe('when the form has data', () => {
+    beforeEach(() => {
+      jest.resetAllMocks();
 
-  describe('when there are no validation errors', () => {
-    it('should redirect to all sections page', async () => {
-      req.body = validBody;
-
-      await post(req, res);
-
-      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      mapAndSaveSpy = jest.fn(() => Promise.resolve(true));
+      mapAndSave.buyerTradingHistory = mapAndSaveSpy;
     });
 
-    it('should call mapAndSave.buyerTradingHistory once with data from constructPayload function', async () => {
-      req.body = validBody;
+    it('should call mapAndSave.buyerTradingHistory with data from constructPayload function, application and validationErrors', async () => {
+      await post(req, res);
+
+      const payload = constructPayload(req.body, FIELD_IDS);
+
+      const validationErrors = generateValidationErrors(payload);
+
+      expect(mapAndSave.buyerTradingHistory).toHaveBeenCalledTimes(1);
+      expect(mapAndSave.buyerTradingHistory).toHaveBeenCalledWith(payload, res.locals.application, validationErrors);
+    });
+
+    it(`should redirect to ${ALL_SECTIONS}`, async () => {
+      mapAndSave.buyerTradingHistory = mapAndSaveSpy;
 
       await post(req, res);
 
-      expect(updateMapAndSave).toHaveBeenCalledTimes(1);
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      const payload = constructPayload(req.body, FIELD_IDS);
-      const validationErrors = generateValidationErrors(payload);
-
-      expect(updateMapAndSave).toHaveBeenCalledWith(payload, res.locals.application, validationErrors);
+      expect(res.redirect).toHaveBeenCalledWith(expected);
     });
   });
 
-  describe('when there are validation errors', () => {
-    it('should redirect to all sections page', async () => {
-      req.body = {};
+  describe('when the form does not have any data', () => {
+    it(`should redirect to ${ALL_SECTIONS}`, async () => {
+      req.body = { _csrf: '1234' };
 
       await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-    });
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-    it('should call mapAndSave.buyerTradingHistory once with data from constructPayload function', async () => {
-      req.body = {};
-
-      await post(req, res);
-
-      expect(updateMapAndSave).toHaveBeenCalledTimes(1);
-
-      const payload = constructPayload(req.body, FIELD_IDS);
-      const validationErrors = generateValidationErrors(payload);
-
-      expect(updateMapAndSave).toHaveBeenCalledWith(payload, res.locals.application, validationErrors);
+      expect(res.redirect).toHaveBeenCalledWith(expected);
     });
   });
 
@@ -96,10 +96,9 @@ describe('controllers/insurance/your-buyer/curreny-of-late-payments/save-and-bac
   describe('api error handling', () => {
     describe('when mapAndSave.buyerTradingHistory returns false', () => {
       beforeEach(() => {
-        req.body = validBody;
         res.locals = mockRes().locals;
-        updateMapAndSave = jest.fn(() => Promise.resolve(false));
-        mapAndSave.buyerTradingHistory = updateMapAndSave;
+        mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
+        mapAndSave.buyerTradingHistory = mapAndSaveSpy;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -111,11 +110,9 @@ describe('controllers/insurance/your-buyer/curreny-of-late-payments/save-and-bac
 
     describe('when mapAndSave.buyerTradingHistory fails', () => {
       beforeEach(() => {
-        req.body = validBody;
-
         res.locals = mockRes().locals;
-        updateMapAndSave = mockSpyPromiseRejection;
-        mapAndSave.buyerTradingHistory = updateMapAndSave;
+        mapAndSaveSpy = mockSpyPromiseRejection;
+        mapAndSave.buyerTradingHistory = mapAndSaveSpy;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
