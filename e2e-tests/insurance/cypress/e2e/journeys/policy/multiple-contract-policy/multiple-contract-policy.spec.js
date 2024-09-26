@@ -115,18 +115,14 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
       legend: CONTRACT_POLICY[CURRENCY_CODE].LEGEND,
       hint: CONTRACT_POLICY[CURRENCY_CODE].HINT,
       errors: CONTRACT_ERROR_MESSAGES,
+      errorIndex: 2,
+      expectedRedirectUrl: MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
+      completeNonCurrencyFieldsFunction: () => cy.completeMultipleContractPolicyForm({ chooseCurrency: false }),
     });
 
     rendering();
 
-    formSubmission().selectAltRadioButNoAltCurrency({ errorIndex: 2 });
-
-    formSubmission().submitASupportedCurrency({
-      url: MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
-      completeNonCurrencyFields: () => cy.completeMultipleContractPolicyForm({ chooseCurrency: false }),
-    });
-
-    formSubmission().submitAlternativeCurrency({ url: MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE });
+    formSubmission({}).executeTests();
   });
 
   describe('form submission', () => {

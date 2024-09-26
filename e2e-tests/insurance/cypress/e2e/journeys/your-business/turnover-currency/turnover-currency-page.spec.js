@@ -69,14 +69,13 @@ context(
 
       const { rendering, formSubmission } = assertCurrencyFormFields({
         errors: ERRORS,
+        expectedRedirectUrl: TURNOVER_ROOT,
+        hasSaveAndBack: false,
       });
 
       rendering();
 
-      formSubmission().selectAltRadioButNoAltCurrency({});
-
-      formSubmission().submitASupportedCurrency({ url: TURNOVER_ROOT });
-      formSubmission().submitAlternativeCurrency({ url: TURNOVER_ROOT });
+      formSubmission({}).executeTests();
     });
   },
 );
