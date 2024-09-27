@@ -17,7 +17,7 @@ const {
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  'Insurance - Your business - Turnover - Alternative currency page - As an Exporter I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application',
+  'Insurance - Your business - Turnover - Currency page - As an Exporter I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application',
   () => {
     let referenceNumber;
     let url;
@@ -70,7 +70,6 @@ context(
       const { rendering, formSubmission } = assertCurrencyFormFields({
         errors: ERRORS,
         expectedRedirectUrl: TURNOVER_ROOT,
-        hasSaveAndBack: false,
       });
 
       rendering();

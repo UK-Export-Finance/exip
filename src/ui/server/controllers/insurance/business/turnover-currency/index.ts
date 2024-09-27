@@ -48,10 +48,10 @@ export const PAGE_VARIABLES = {
 };
 
 /**
- * gets the template for Business - Turnover - Alternative currency page
+ * gets the template for Business - Turnover - Currency page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} renders Business - Turnover - Alternative currency page with/without previously submitted details
+ * @returns {Express.Response.render} renders Business - Turnover - Currency page with/without previously submitted details
  */
 export const get = async (req: Request, res: Response) => {
   try {
@@ -85,7 +85,7 @@ export const get = async (req: Request, res: Response) => {
 
 /**
  * post
- * Check Business - Turnover - Alternative currency page validation errors and if successful, redirect to the next part of the flow.
+ * Check Business - Turnover - Currency page validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
@@ -151,7 +151,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ROOT}`);
   } catch (error) {
-    console.error('Error posting Business - Turnover currency %O', error);
+    console.error('Error posting business - turnover currency %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

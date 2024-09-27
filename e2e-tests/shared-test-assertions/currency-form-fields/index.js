@@ -21,7 +21,6 @@ const {
  * @param {Function} hint: Hint selector
  * @param {Function} legend: Legend selector
  * @param {String} expectedRedirectUrl: Page URL to assert after successful form submission
- * @param {Boolean} hasSaveAndBack: Temporary Flag for if the form has "save and back" functionality
  * @returns {Object} Rendering and form submission assertion functions
  */
 export const assertCurrencyFormFields = ({
@@ -34,7 +33,6 @@ export const assertCurrencyFormFields = ({
   hint,
   legend,
   expectedRedirectUrl,
-  hasSaveAndBack,
 }) => {
   const assertions = fieldAssertions({
     alternativeCurrencyText: FIELDS[ALTERNATIVE_CURRENCY_CODE].TEXT,
@@ -52,7 +50,6 @@ export const assertCurrencyFormFields = ({
         completeNonCurrencyFieldsFunction,
         errorIndex,
         expectedRedirectUrl,
-        hasSaveAndBack,
       }),
     prefixAssertions: () => prefixAssertions({ fieldId, clickAlternativeCurrencyLink }),
   };

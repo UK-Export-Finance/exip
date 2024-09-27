@@ -22,6 +22,7 @@ import { get as getTurnover, post as postTurnover } from '../../../controllers/i
 import { post as postTurnoverSaveAndBack } from '../../../controllers/insurance/business/turnover/save-and-back';
 
 import { get as getTurnoverCurrency, post as postTurnoverCurrency } from '../../../controllers/insurance/business/turnover-currency';
+import { post as postTurnoverCurrencySaveAndBack } from '../../../controllers/insurance/business/turnover-currency/save-and-back';
 
 import { get as getCreditControl, post as postCreditControl } from '../../../controllers/insurance/business/credit-control';
 import { post as postCreditControlSaveAndBack } from '../../../controllers/insurance/business/credit-control/save-and-back';
@@ -79,6 +80,7 @@ insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSIN
 
 insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY_ROOT}`, getTurnoverCurrency);
 insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY_ROOT}`, postTurnoverCurrency);
+insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY_SAVE_AND_BACK}`, postTurnoverCurrencySaveAndBack);
 insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY_CHANGE}`, getTurnoverCurrency);
 insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY_CHANGE}`, postTurnoverCurrency);
 insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY_CHECK_AND_CHANGE}`, getTurnoverCurrency);
