@@ -32,7 +32,9 @@ export const get = async (req: Request, res: Response) => {
   try {
     const countries = await api.keystone.countries.getAll();
 
-    if (!isPopulatedArray(countries)) {
+    const { allCurrencies } = await api.keystone.APIM.getCurrencies();
+
+    if (!isPopulatedArray(countries) || !isPopulatedArray(allCurrencies)) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
@@ -42,6 +44,7 @@ export const get = async (req: Request, res: Response) => {
       migratedV1toV2,
       referenceNumber,
       countries,
+      currencies: allCurrencies,
     });
 
     return res.render(TEMPLATE, {
