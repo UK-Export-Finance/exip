@@ -28,9 +28,10 @@ import { post as agentChargesSaveAndBackPost } from '../../../controllers/insura
 import { get as agentChargesCurrencyGet, post as agentChargesCurrencyPost } from '../../../controllers/insurance/export-contract/currency-of-agents-charge';
 import { post as agentChargesCurrencySaveAndBackPost } from '../../../controllers/insurance/export-contract/currency-of-agents-charge/save-and-back';
 import {
-  get as howMuchIsTheAgentChargingGet,
-  post as howMuchIsTheAgentChargingPost,
-} from '../../../controllers/insurance/export-contract/how-much-is-the-agent-charging';
+  get as howMuchTheAgentIsChargingGet,
+  post as howMuchTheAgentIsChargingPost,
+} from '../../../controllers/insurance/export-contract/how-much-the-agent-is-charging';
+import { post as howMuchTheAgentIsChargingSaveAndBackPost } from '../../../controllers/insurance/export-contract/how-much-the-agent-is-charging/save-and-back';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/export-contract/check-your-answers';
 
 const {
@@ -75,7 +76,8 @@ const {
   AGENT_CHARGES_CURRENCY_SAVE_AND_BACK,
   AGENT_CHARGES_CURRENCY_CHANGE,
   AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE,
-  HOW_MUCH_IS_THE_AGENT_CHARGING,
+  HOW_MUCH_THE_AGENT_IS_CHARGING,
+  HOW_MUCH_THE_AGENT_IS_CHARGING_SAVE_AND_BACK,
   CHECK_YOUR_ANSWERS,
 } = EXPORT_CONTRACT;
 
@@ -168,8 +170,9 @@ exportContractRoute.post(`/:referenceNumber${AGENT_CHARGES_CURRENCY_CHANGE}`, ag
 exportContractRoute.get(`/:referenceNumber${AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE}`, agentChargesCurrencyGet);
 exportContractRoute.post(`/:referenceNumber${AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE}`, agentChargesCurrencyPost);
 
-exportContractRoute.get(`/:referenceNumber${HOW_MUCH_IS_THE_AGENT_CHARGING}`, howMuchIsTheAgentChargingGet);
-exportContractRoute.post(`/:referenceNumber${HOW_MUCH_IS_THE_AGENT_CHARGING}`, howMuchIsTheAgentChargingPost);
+exportContractRoute.get(`/:referenceNumber${HOW_MUCH_THE_AGENT_IS_CHARGING}`, howMuchTheAgentIsChargingGet);
+exportContractRoute.post(`/:referenceNumber${HOW_MUCH_THE_AGENT_IS_CHARGING}`, howMuchTheAgentIsChargingPost);
+exportContractRoute.post(`/:referenceNumber${HOW_MUCH_THE_AGENT_IS_CHARGING_SAVE_AND_BACK}`, howMuchTheAgentIsChargingSaveAndBackPost);
 
 exportContractRoute.get(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
 exportContractRoute.post(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);
