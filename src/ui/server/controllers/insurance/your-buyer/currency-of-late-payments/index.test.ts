@@ -90,7 +90,7 @@ describe('controllers/insurance/your-buyer/currency-of-late-payments', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.ALTERNATIVE_CURRENCY);
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.CURRENCY);
     });
   });
 
