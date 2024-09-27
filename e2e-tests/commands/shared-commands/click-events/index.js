@@ -8,7 +8,6 @@ Cypress.Commands.add('clickSignInButtonLink', require('./click-sign-in-button-li
 Cypress.Commands.add('clickSignInResetPasswordLink', require('./click-sign-in-reset-password-link'));
 Cypress.Commands.add('clickYesRadioInput', require('./click-yes-radio-input'));
 
-Cypress.Commands.add('clickProvideAlternativeCurrencyLink', require('./click-provide-alternative-currency-link'));
 Cypress.Commands.add('clickAlternativeCurrencyRadioOption', require('./click-alternative-currency-radio-option'));
 
 Cypress.Commands.add('clickFooterAccessibilityStatementLink', require('./click-footer-accessibility-statement-link'));

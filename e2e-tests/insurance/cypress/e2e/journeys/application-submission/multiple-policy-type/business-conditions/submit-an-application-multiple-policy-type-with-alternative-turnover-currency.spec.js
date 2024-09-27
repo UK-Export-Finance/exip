@@ -9,7 +9,6 @@ context(
       cy.completeSignInAndSubmitAnApplication({
         policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
         alternativeCurrencyTurnover: true,
-        clickAlternativeCurrencyLink: false,
       }).then((refNumber) => {
         referenceNumber = refNumber;
       });

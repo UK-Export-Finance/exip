@@ -34,7 +34,7 @@ const completeBuyerSection = ({
     cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: outstandingPayments || fullyPopulatedBuyerTradingHistory });
 
     if (outstandingPayments || fullyPopulatedBuyerTradingHistory) {
-      cy.completeAndSubmitAlternativeCurrencyForm({ clickAlternativeCurrencyLink: false });
+      cy.completeAndSubmitAlternativeCurrencyForm({});
       cy.completeAndSubmitOutstandingOrOverduePaymentsForm({ outstandingPayments });
     }
 

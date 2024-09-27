@@ -39,7 +39,7 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
   });
 
   describe(`prefixes should be displayed based on the chosen currency for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
-    const { prefixAssertions } = assertCurrencyFormFields({ fieldId: TOTAL_OUTSTANDING_PAYMENTS, clickAlternativeCurrencyLink: false });
+    const { prefixAssertions } = assertCurrencyFormFields({ fieldId: TOTAL_OUTSTANDING_PAYMENTS });
 
     prefixAssertions();
   });
@@ -49,10 +49,10 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
       cy.saveSession();
       cy.navigateToUrl(url);
       // change to GBP
-      cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: GBP_CURRENCY_CODE, clickAlternativeCurrencyLink: false });
+      cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: GBP_CURRENCY_CODE });
     });
 
-    const { prefixAssertions } = assertCurrencyFormFields({ fieldId: TOTAL_AMOUNT_OVERDUE, clickAlternativeCurrencyLink: false });
+    const { prefixAssertions } = assertCurrencyFormFields({ fieldId: TOTAL_AMOUNT_OVERDUE });
 
     prefixAssertions();
   });

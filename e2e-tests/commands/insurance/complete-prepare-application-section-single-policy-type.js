@@ -78,7 +78,6 @@ const completePrepareApplicationSinglePolicyType = ({
   totalContractValueOverThreshold = false,
   submitCheckYourAnswers = true,
   usingBroker = false,
-  clickAlternativeCurrencyLink = true,
 }) => {
   cy.completeBusinessSection({
     differentTradingName,
@@ -86,7 +85,6 @@ const completePrepareApplicationSinglePolicyType = ({
     hasCreditControlProcess,
     submitCheckYourAnswers,
     alternativeCurrencyTurnover,
-    clickAlternativeCurrencyLink,
   });
 
   cy.completeBuyerSection({

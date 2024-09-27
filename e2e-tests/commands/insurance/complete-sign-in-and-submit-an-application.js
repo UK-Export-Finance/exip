@@ -76,7 +76,6 @@ const completeSignInAndSubmitAnApplication = ({
   policyValueOverMvpMaximum = false,
   totalContractValueOverThreshold = false,
   usingBroker = false,
-  clickAlternativeCurrencyLink = true,
 }) => {
   completeSignInAndGoToApplication({
     companyNumber,
@@ -114,7 +113,6 @@ const completeSignInAndSubmitAnApplication = ({
         referenceNumber,
         totalContractValueOverThreshold,
         usingBroker,
-        clickAlternativeCurrencyLink,
       });
     } else {
       cy.completePrepareApplicationSinglePolicyType({
@@ -147,7 +145,6 @@ const completeSignInAndSubmitAnApplication = ({
         referenceNumber,
         totalContractValueOverThreshold,
         usingBroker,
-        clickAlternativeCurrencyLink,
       });
     }
     cy.completeAndSubmitCheckYourAnswers();
