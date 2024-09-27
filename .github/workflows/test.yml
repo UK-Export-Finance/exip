@@ -597,6 +597,7 @@ jobs:
             'export-contract/agent-details/**/*.spec.js',
             'export-contract/agent-service/**/*.spec.js',
             'export-contract/agent-charges/**/*.spec.js',
+            'export-contract/how-much-the-agent-is-charging/**/*.spec.js',
             # TODO: EMS-3828 - renable
             # 'export-contract/currency-of-agent-charges/*.spec.js',
             'export-contract/change-your-answers/about-goods-or-services/*.spec.js',

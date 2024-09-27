@@ -26,9 +26,11 @@ Cypress.Commands.add('completeAndSubmitAgentServiceForm', require('../../../../.
 Cypress.Commands.add('completeAgentChargesForm', require('../../../../../commands/insurance/complete-agent-charges-form'));
 Cypress.Commands.add('completeAndSubmitAgentChargesForm', require('../../../../../commands/insurance/complete-and-submit-agent-charges-form'));
 
+Cypress.Commands.add('completeHowMuchTheAgentIsChargingForm', require('../../../../../commands/insurance/complete-how-much-the-agent-is-charging-form'));
+
 Cypress.Commands.add(
-  'completeAndSubmitHowMuchIsTheAgentChargingForm',
-  require('../../../../../commands/insurance/complete-and-submit-how-much-is-the-agent-charging-form'),
+  'completeAndSubmitHowMuchTheAgentIsChargingForm',
+  require('../../../../../commands/insurance/complete-and-submit-how-much-the-agent-is-charging-form'),
 );
 
 Cypress.Commands.add(
