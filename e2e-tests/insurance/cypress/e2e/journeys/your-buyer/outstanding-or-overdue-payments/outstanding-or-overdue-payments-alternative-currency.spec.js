@@ -30,7 +30,6 @@ context('Insurance - Your buyer - Outstanding or overdue payments - Alternative 
         outstandingPayments: true,
         exporterHasTradedWithBuyer: true,
         alternativeCurrency: true,
-        clickAlternativeCurrencyLink: false,
       });
 
       cy.assertUrl(url);

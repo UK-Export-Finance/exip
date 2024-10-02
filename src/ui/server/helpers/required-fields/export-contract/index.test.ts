@@ -15,7 +15,7 @@ const {
   USING_AGENT,
   AGENT_DETAILS: { AGENT_NAME, AGENT_FULL_ADDRESS, AGENT_COUNTRY_CODE },
   AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
-  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, PERCENTAGE_CHARGE },
+  AGENT_CHARGES: { FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, METHOD, PAYABLE_COUNTRY_CODE, PERCENTAGE_CHARGE },
 } = FIELD_IDS;
 
 describe('server/helpers/required-fields/export-contract', () => {
@@ -91,23 +91,20 @@ describe('server/helpers/required-fields/export-contract', () => {
   });
 
   describe('agentServiceChargeTasks', () => {
-    describe(`when agentIsCharging is true and agentChargeMethod is ${AGENT_SERVICE_CHARGE_METHOD.FIXED_SUM}`, () => {
+    describe(`when agentIsCharging is true and ${METHOD} is ${AGENT_SERVICE_CHARGE_METHOD.FIXED_SUM}`, () => {
       it('should return an array with required agent service charge field IDs', () => {
         const result = agentServiceChargeTasks({
           agentIsCharging: true,
           agentChargeMethod: AGENT_SERVICE_CHARGE_METHOD.FIXED_SUM,
         });
 
-        // TODO: EMS-3828- renable
-        // const expected = [METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE];
-
-        const expected = [METHOD, PAYABLE_COUNTRY_CODE];
+        const expected = [METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE];
 
         expect(result).toEqual(expected);
       });
     });
 
-    describe(`when agentIsCharging is true and agentChargeMethod is ${AGENT_SERVICE_CHARGE_METHOD.PERCENTAGE}`, () => {
+    describe(`when agentIsCharging is true and ${METHOD} is ${AGENT_SERVICE_CHARGE_METHOD.PERCENTAGE}`, () => {
       it('should return an array with required agent service charge field IDs', () => {
         const result = agentServiceChargeTasks({
           agentIsCharging: true,
@@ -120,7 +117,7 @@ describe('server/helpers/required-fields/export-contract', () => {
       });
     });
 
-    describe('when agentIsCharging is false and agentChargeMethod is NOT provided', () => {
+    describe(`when agentIsCharging is false and ${METHOD} is NOT provided`, () => {
       it('should return an array with required agent service charge field IDs', () => {
         const result = agentServiceChargeTasks({ agentIsCharging: true });
 

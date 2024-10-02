@@ -24,7 +24,6 @@ const partials = {
   html: (id) => cy.get(`[data-cy="${id}-html"]`),
   pagination,
   phaseBanner,
-  provideAlternativeCurrencyLink: () => cy.get('[data-cy="provide-alternative-currency-link"]'),
   privateMarketWhyDescription,
   skipLink: () => cy.get('[data-cy="skip-link"]'),
   startNewApplicationButton: () => cy.get('[data-cy="start-new-application-button"]'),

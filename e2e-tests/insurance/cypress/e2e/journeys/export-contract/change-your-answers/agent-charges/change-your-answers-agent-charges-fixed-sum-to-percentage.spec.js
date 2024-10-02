@@ -14,8 +14,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-// TODO: EMS-3828 - renable
-context.skip(
+context(
   'Insurance - Export contract - Change your answers - Agent charges - Fixed sum to percentage - As an Exporter, I want to be able to review my input regarding the amount an agent is charging for helping me win my export contract, So that I can be assured I am providing UKEF with the right information',
   () => {
     let referenceNumber;

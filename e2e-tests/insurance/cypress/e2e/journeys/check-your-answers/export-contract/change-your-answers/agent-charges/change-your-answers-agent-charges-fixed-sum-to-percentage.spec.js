@@ -15,8 +15,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-// TODO: EMS-3828 - renable
-context.skip('Insurance - Change your answers - Export contract - Summary list - Agent charges - Fixed sum to percentage', () => {
+context('Insurance - Change your answers - Export contract - Summary list - Agent charges - Fixed sum to percentage', () => {
   let referenceNumber;
   let url;
 

@@ -97,7 +97,7 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true, clickAlternativeCurrencyLink: false });
+        cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true });
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
