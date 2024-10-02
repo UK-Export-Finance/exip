@@ -14,7 +14,7 @@ const {
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
-describe('controllers/insurance/your-buyer/curreny-of-late-payments/save-and-back', () => {
+describe('controllers/insurance/your-buyer/currency-of-late-payments/save-and-back', () => {
   let req: Request;
   let res: Response;
 
