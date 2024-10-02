@@ -37,9 +37,9 @@ const formSubmissionAssertions = ({
 
         submitASupportedCurrency({
           completeNonCurrencyFieldsFunction,
+          expectedRedirectUrl,
           submitRadioAndAssertUrl,
           submitAndAssertRadioIsChecked,
-          expectedRedirectUrl,
         });
 
         submitAlternativeCurrency({
@@ -53,9 +53,9 @@ const formSubmissionAssertions = ({
         describe('via `save and back` button', () => {
           submitASupportedCurrency({
             completeNonCurrencyFieldsFunction,
+            expectedRedirectUrl: ALL_SECTIONS,
             submitRadioAndAssertUrl,
             submitAndAssertRadioIsChecked,
-            expectedRedirectUrl: ALL_SECTIONS,
             viaSaveAndBack: true,
           });
 
