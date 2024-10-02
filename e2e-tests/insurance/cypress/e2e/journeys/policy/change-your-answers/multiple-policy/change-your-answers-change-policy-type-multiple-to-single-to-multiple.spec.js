@@ -64,13 +64,13 @@ context('Insurance - Policy - Change your answers - Policy type - multiple to si
   it(`should have empty field values when going back to ${MULTIPLE_CONTRACT_POLICY} and ${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`, () => {
     cy.assertEmptyRequestedStartDateFieldValues();
 
-    field(TOTAL_MONTHS_OF_COVER).input().should('have.value', '');
+    cy.checkValue(field(TOTAL_MONTHS_OF_COVER).input(), '');
 
     cy.assertCurrencyFormFieldsAreEmpty();
 
     cy.navigateToUrl(exportValueUrl);
 
-    field(TOTAL_SALES_TO_BUYER).input().should('have.value', '');
-    field(MAXIMUM_BUYER_WILL_OWE).input().should('have.value', '');
+    cy.checkValue(field(TOTAL_SALES_TO_BUYER).input(), '');
+    cy.checkValue(field(MAXIMUM_BUYER_WILL_OWE).input(), '');
   });
 });

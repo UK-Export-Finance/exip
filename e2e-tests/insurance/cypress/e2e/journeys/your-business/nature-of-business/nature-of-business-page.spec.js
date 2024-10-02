@@ -115,9 +115,9 @@ context(
       it('should have the submitted values', () => {
         cy.navigateToUrl(natureOfBusinessUrl);
 
-        fieldSelector(GOODS_OR_SERVICES).textarea().should('have.value', application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
-        fieldSelector(YEARS_EXPORTING).input().should('have.value', application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
-        fieldSelector(EMPLOYEES_UK).input().should('have.value', application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
+        cy.checkValue(fieldSelector(GOODS_OR_SERVICES).textarea(), application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
+        cy.checkValue(fieldSelector(YEARS_EXPORTING).input(), application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
+        cy.checkValue(fieldSelector(EMPLOYEES_UK).input(), application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
       });
     });
   },
