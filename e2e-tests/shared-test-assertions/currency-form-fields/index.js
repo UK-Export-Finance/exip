@@ -33,7 +33,7 @@ export const assertCurrencyFormFields = ({
   hint,
   legend,
   expectedRedirectUrl,
-  hasSaveAndBack,
+  hasSaveAndBack = true,
 }) => {
   const assertions = fieldAssertions({
     alternativeCurrencyText: FIELDS[ALTERNATIVE_CURRENCY_CODE].TEXT,
