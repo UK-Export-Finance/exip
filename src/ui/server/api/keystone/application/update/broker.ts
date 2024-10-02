@@ -21,22 +21,22 @@ const updateBroker = async (id: string, update: object) => {
     const response = (await apollo('POST', updateBrokerMutation, variables)) as ApolloResponse;
 
     if (response.errors) {
-      console.error('GraphQL error updating application broker %O', response.errors);
+      console.error('GraphQL error updating application broker %o', response.errors);
     }
 
     if (response?.networkError?.result?.errors) {
-      console.error('GraphQL network error updating application broker %O', response.networkError.result.errors);
+      console.error('GraphQL network error updating application broker %o', response.networkError.result.errors);
     }
 
     if (response?.data?.updateBroker) {
       return response.data.updateBroker;
     }
 
-    console.error('Error with GraphQL updateBrokerMutation %O', response);
+    console.error('Error with GraphQL updateBrokerMutation %o', response);
 
     throw new Error('Updating application broker');
   } catch (error) {
-    console.error('Error updating application broker %O', error);
+    console.error('Error updating application broker %o', error);
 
     throw new Error('Updating application broker');
   }

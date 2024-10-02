@@ -158,7 +158,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (error) {
-    console.error('Error updating application - policy - type of policy %O', error);
+    console.error('Error updating application - policy - type of policy %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

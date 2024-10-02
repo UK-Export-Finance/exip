@@ -82,7 +82,7 @@ export const get = async (req: Request, res: Response) => {
       submittedValues: application.buyer.buyerTradingHistory,
     });
   } catch (error) {
-    console.error('Error getting insurance - your buyer - traded with buyer %O', error);
+    console.error('Error getting insurance - your buyer - traded with buyer %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -183,7 +183,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`);
   } catch (error) {
-    console.error('Error posting insurance - your buyer - traded with buyer %O', error);
+    console.error('Error posting insurance - your buyer - traded with buyer %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

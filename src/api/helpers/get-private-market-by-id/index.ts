@@ -17,7 +17,7 @@ const getPrivateMarketById = async (context: Context, id: string) => {
 
     return privateMarket;
   } catch (error) {
-    console.error('Getting privateMarket by ID %s %O', id, error);
+    console.error('Getting privateMarket by ID %s %o', id, error);
 
     throw new Error(`Error Getting privateMarket by ID ${id} ${error}`);
   }

@@ -29,7 +29,7 @@ const createAPolicy = async (context: Context, applicationId: string): Promise<C
       jointlyInsuredParty,
     };
   } catch (error) {
-    console.error('Error creating a policy %O', error);
+    console.error('Error creating a policy %o', error);
 
     throw new Error(`Creating a policy ${error}`);
   }

@@ -37,7 +37,7 @@ const generateOTPAndUpdateAccount = async (context: Context, accountId: string):
       securityCode,
     };
   } catch (error) {
-    console.error('Error adding OTP to an account %O', error);
+    console.error('Error adding OTP to an account %o', error);
 
     throw new Error(`Adding OTP to an account ${error}`);
   }

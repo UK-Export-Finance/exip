@@ -17,7 +17,7 @@ const updateApplicationsData = async (context: Context, updateData: ObjectType) 
 
     return updatedApplications;
   } catch (error) {
-    console.error('Error updating many applications - helper %O', error);
+    console.error('Error updating many applications - helper %o', error);
 
     throw new Error(`Updating many applications - helper ${error}`);
   }

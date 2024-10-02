@@ -27,7 +27,7 @@ const get = (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
     });
   } catch (error) {
-    console.error('Error getting insurance feedback page %O', error);
+    console.error('Error getting insurance feedback page %o', error);
 
     return res.redirect(ROUTES.INSURANCE.PROBLEM_WITH_SERVICE);
   }

@@ -29,7 +29,7 @@ const getTotalContractValueByField = async (context: Context, field: string, val
 
     return totalContractValue;
   } catch (error) {
-    console.error('Error getting totalContractValue by field/value %O', error);
+    console.error('Error getting totalContractValue by field/value %o', error);
 
     throw new Error(`Getting totalContractValue by field/value ${error}`);
   }

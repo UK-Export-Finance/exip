@@ -31,7 +31,7 @@ const updateInactiveApplications = async (context: Context): Promise<SuccessResp
       success: true,
     };
   } catch (error) {
-    console.error('Error getting and updating inactive applications %O', error);
+    console.error('Error getting and updating inactive applications %o', error);
 
     throw new Error(`Error getting and updating inactive applications ${error}`);
   }

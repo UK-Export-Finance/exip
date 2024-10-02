@@ -23,7 +23,7 @@ const createACompanyDifferentTradingAddress = async (context: Context, companyId
 
     return differentTradingAddress;
   } catch (error) {
-    console.error('Error creating a company different trading address %O', error);
+    console.error('Error creating a company different trading address %o', error);
 
     throw new Error(`Creating a company different trading address ${error}`);
   }

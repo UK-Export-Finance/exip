@@ -28,7 +28,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
       success: false,
     };
   } catch (error) {
-    console.error('Error creating application for user %s %O', variables.accountId, error);
+    console.error('Error creating application for user %s %o', variables.accountId, error);
 
     throw new Error(`Creating application for user ${variables.accountId} ${error}`);
   }

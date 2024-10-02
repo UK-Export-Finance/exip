@@ -68,7 +68,7 @@ const create = async ({ context, data, accountId, deleteAccountStatus = true }: 
 
     return accountStatus;
   } catch (error) {
-    console.error('Error creating account status %O', error);
+    console.error('Error creating account status %o', error);
 
     return error;
   }

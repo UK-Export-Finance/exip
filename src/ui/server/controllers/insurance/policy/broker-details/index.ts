@@ -79,7 +79,7 @@ export const get = (req: Request, res: Response) => {
       application: mapApplicationToFormFields(application),
     });
   } catch (error) {
-    console.error('Error getting broker details %O', error);
+    console.error('Error getting broker details %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -137,7 +137,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`);
   } catch (error) {
-    console.error('Error updating application - policy - broker details %O', error);
+    console.error('Error updating application - policy - broker details %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

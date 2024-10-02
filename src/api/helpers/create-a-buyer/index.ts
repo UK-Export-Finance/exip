@@ -23,7 +23,7 @@ const createABuyer = async (context: Context, countryId: string) => {
 
     return buyer;
   } catch (error) {
-    console.error('Error creating a buyer %O', error);
+    console.error('Error creating a buyer %o', error);
 
     throw new Error(`Creating a buyer ${error}`);
   }

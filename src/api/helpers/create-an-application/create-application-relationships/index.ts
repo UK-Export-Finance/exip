@@ -105,7 +105,7 @@ const createApplicationRelationships = async ({
 
     return relationshipIds;
   } catch (error) {
-    console.error('Error creating application relationships (createApplicationRelationships helper) for application %s %O', applicationId, error);
+    console.error('Error creating application relationships (createApplicationRelationships helper) for application %s %o', applicationId, error);
 
     throw new Error(`Creating application relationships (createApplicationRelationships helper) for application ${applicationId} ${error}`);
   }
