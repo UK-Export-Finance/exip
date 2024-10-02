@@ -16,7 +16,7 @@ import { Request, Response } from '../../../../../types';
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { HOW_MUCH_IS_THE_AGENT_CHARGING, AGENT_CHARGES_CURRENCY_SAVE_AND_BACK },
+  EXPORT_CONTRACT: { HOW_MUCH_THE_AGENT_IS_CHARGING, AGENT_CHARGES_CURRENCY_SAVE_AND_BACK },
 } = INSURANCE_ROUTES;
 
 const {
@@ -28,7 +28,7 @@ const {
 
 export const FIELD_IDS = [CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE];
 
-export const TEMPLATE = TEMPLATES.SHARED_PAGES.ALTERNATIVE_CURRENCY;
+export const TEMPLATE = TEMPLATES.SHARED_PAGES.CURRENCY;
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES_CURRENCY;
 
@@ -147,7 +147,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${HOW_MUCH_IS_THE_AGENT_CHARGING}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${HOW_MUCH_THE_AGENT_IS_CHARGING}`);
   } catch (error) {
     console.error('Error updating application - export contract - currency of agents charge %O', error);
 

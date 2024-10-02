@@ -13,8 +13,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-// TODO: EMS-3828 - renable
-context.skip("Insurance - Export contract - Agent charges page - As an Exporter I want to change the currency of my agent's charges", () => {
+context("Insurance - Export contract - Agent charges page - As an Exporter I want to change the currency of my agent's charges", () => {
   let referenceNumber;
   let url;
 

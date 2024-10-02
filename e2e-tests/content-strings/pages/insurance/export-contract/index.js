@@ -66,7 +66,7 @@ const AGENT_CHARGES_CURRENCY = {
   PAGE_TITLE: 'What currency is the agent charging you in?',
 };
 
-const HOW_MUCH_IS_THE_AGENT_CHARGING = {
+const HOW_MUCH_THE_AGENT_IS_CHARGING = {
   ...SHARED,
   PAGE_TITLE: 'How much is the agent charging in',
 };
@@ -88,6 +88,6 @@ module.exports = {
   AGENT_SERVICE,
   AGENT_CHARGES,
   AGENT_CHARGES_CURRENCY,
-  HOW_MUCH_IS_THE_AGENT_CHARGING,
+  HOW_MUCH_THE_AGENT_IS_CHARGING,
   CHECK_YOUR_ANSWERS,
 };

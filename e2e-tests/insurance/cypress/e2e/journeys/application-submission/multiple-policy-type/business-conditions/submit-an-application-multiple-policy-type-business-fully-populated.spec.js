@@ -10,7 +10,6 @@ context('Insurance - submit an application - Multiple policy - fully populated b
       differentTradingAddress: true,
       policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
       usingBroker: true,
-      clickAlternativeCurrencyLink: false,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });

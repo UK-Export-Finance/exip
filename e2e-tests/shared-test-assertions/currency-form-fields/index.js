@@ -25,7 +25,6 @@ const {
  */
 export const assertCurrencyFormFields = ({
   completeNonCurrencyFieldsFunction,
-  clickAlternativeCurrencyLink,
   errorIndex,
   errors,
   fieldId,
@@ -51,7 +50,7 @@ export const assertCurrencyFormFields = ({
         errorIndex,
         expectedRedirectUrl,
       }),
-    prefixAssertions: () => prefixAssertions({ fieldId, clickAlternativeCurrencyLink }),
+    prefixAssertions: () => prefixAssertions({ fieldId }),
   };
 };
 

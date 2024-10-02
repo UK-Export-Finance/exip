@@ -6,7 +6,7 @@ import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insuranc
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { HOW_MUCH_IS_THE_AGENT_CHARGING },
+  EXPORT_CONTRACT: { HOW_MUCH_THE_AGENT_IS_CHARGING },
 } = INSURANCE_ROUTES;
 
 const {
@@ -29,7 +29,7 @@ const assertions = {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Export contract - How much is the agent charging page - form validation', () => {
+context('Insurance - Export contract - How much the agent is charging page - form validation', () => {
   let referenceNumber;
   let url;
 
@@ -37,7 +37,7 @@ context('Insurance - Export contract - How much is the agent charging page - for
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${HOW_MUCH_IS_THE_AGENT_CHARGING}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${HOW_MUCH_THE_AGENT_IS_CHARGING}`;
     });
   });
 

@@ -64,7 +64,7 @@ context(
 
       cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
       cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
-      cy.completeAndSubmitAlternativeCurrencyForm({ clickAlternativeCurrencyLink: false });
+      cy.completeAndSubmitAlternativeCurrencyForm({});
       cy.completeAndSubmitOutstandingOrOverduePaymentsForm({});
       cy.completeAndSubmitFailedToPayForm({ failedToPay: true });
 

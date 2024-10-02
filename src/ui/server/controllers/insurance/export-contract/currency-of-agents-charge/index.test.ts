@@ -26,7 +26,7 @@ import {
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { AGENT_CHARGES_CURRENCY_SAVE_AND_BACK, HOW_MUCH_IS_THE_AGENT_CHARGING },
+  EXPORT_CONTRACT: { AGENT_CHARGES_CURRENCY_SAVE_AND_BACK, HOW_MUCH_THE_AGENT_IS_CHARGING },
 } = INSURANCE_ROUTES;
 
 const {
@@ -82,7 +82,7 @@ describe('controllers/insurance/export-contract/currency-of-agents-charge', () =
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.ALTERNATIVE_CURRENCY);
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.CURRENCY);
     });
   });
 
@@ -257,10 +257,10 @@ describe('controllers/insurance/export-contract/currency-of-agents-charge', () =
         expect(mapAndSave.exportContractAgentServiceCharge).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
-      it(`should redirect to ${HOW_MUCH_IS_THE_AGENT_CHARGING}`, async () => {
+      it(`should redirect to ${HOW_MUCH_THE_AGENT_IS_CHARGING}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${referenceNumber}${HOW_MUCH_IS_THE_AGENT_CHARGING}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${HOW_MUCH_THE_AGENT_IS_CHARGING}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

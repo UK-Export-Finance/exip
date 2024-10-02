@@ -9,7 +9,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES_CURRENCY;
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { AGENT_CHARGES, AGENT_CHARGES_CURRENCY, HOW_MUCH_IS_THE_AGENT_CHARGING },
+  EXPORT_CONTRACT: { AGENT_CHARGES, AGENT_CHARGES_CURRENCY, HOW_MUCH_THE_AGENT_IS_CHARGING },
 } = INSURANCE_ROUTES;
 
 const {
@@ -39,7 +39,7 @@ context(
         cy.completeAndSubmitExportContractForms({ formToStopAt: 'agentCharges', isUsingAgent: true, agentIsCharging: true, fixedSumMethod: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY}`;
-        howMuchAgentIsChargingUrl = `${baseUrl}${ROOT}/${referenceNumber}${HOW_MUCH_IS_THE_AGENT_CHARGING}`;
+        howMuchAgentIsChargingUrl = `${baseUrl}${ROOT}/${referenceNumber}${HOW_MUCH_THE_AGENT_IS_CHARGING}`;
       });
     });
 
@@ -90,7 +90,7 @@ context(
     });
 
     describe('form submission', () => {
-      it(`should redirect to ${HOW_MUCH_IS_THE_AGENT_CHARGING}`, () => {
+      it(`should redirect to ${HOW_MUCH_THE_AGENT_IS_CHARGING}`, () => {
         cy.completeAndSubmitAlternativeCurrencyForm({});
 
         cy.assertUrl(howMuchAgentIsChargingUrl);

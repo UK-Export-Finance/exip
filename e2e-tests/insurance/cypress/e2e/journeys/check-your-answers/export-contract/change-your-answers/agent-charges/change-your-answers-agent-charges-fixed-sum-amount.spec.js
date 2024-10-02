@@ -18,8 +18,7 @@ const fieldId = FIXED_SUM_AMOUNT;
 
 const baseUrl = Cypress.config('baseUrl');
 
-// TODO: EMS-3828 - renable
-context.skip(`Insurance - Change your answers - Export contract - Summary list - Agent charges - ${FIXED_SUM_AMOUNT}`, () => {
+context(`Insurance - Change your answers - Export contract - Summary list - Agent charges - ${FIXED_SUM_AMOUNT}`, () => {
   let referenceNumber;
   let url;
 

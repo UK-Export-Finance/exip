@@ -68,7 +68,7 @@ context('Insurance - Check your answers - Turnover currency - Your business - Su
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true, clickAlternativeCurrencyLink: false });
+        cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true });
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {

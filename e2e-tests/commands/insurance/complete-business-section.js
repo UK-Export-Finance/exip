@@ -15,7 +15,6 @@ const completeBusinessSection = ({
   hasCreditControlProcess = false,
   submitCheckYourAnswers = false,
   alternativeCurrencyTurnover = false,
-  clickAlternativeCurrencyLink,
 }) => {
   cy.startYourBusinessSection({ viaTaskList });
 
@@ -26,7 +25,7 @@ const completeBusinessSection = ({
   }
 
   cy.completeAndSubmitNatureOfYourBusiness();
-  cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: alternativeCurrencyTurnover, clickAlternativeCurrencyLink });
+  cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: alternativeCurrencyTurnover });
   cy.completeAndSubmitTurnoverForm();
   cy.completeAndSubmitCreditControlForm({ hasCreditControlProcess });
 
