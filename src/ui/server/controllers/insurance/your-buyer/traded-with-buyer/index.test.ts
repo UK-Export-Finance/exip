@@ -235,7 +235,7 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
         });
       });
 
-      describe(`when the totalContractValueOverThreshold is true and ${TRADED_WITH_BUYER} is false`, () => {
+      describe(`when totalContractValueOverThreshold=true and ${TRADED_WITH_BUYER} is false`, () => {
         it(`should redirect to ${CREDIT_INSURANCE_COVER}`, async () => {
           req.body = {
             [TRADED_WITH_BUYER]: 'false',

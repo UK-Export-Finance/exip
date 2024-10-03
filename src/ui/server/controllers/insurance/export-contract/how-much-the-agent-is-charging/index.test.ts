@@ -19,7 +19,8 @@ import { mockApplicationMultiplePolicy as mockApplication } from '../../../../te
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, HOW_MUCH_THE_AGENT_IS_CHARGING_SAVE_AND_BACK },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, HOW_MUCH_THE_AGENT_IS_CHARGING_SAVE_AND_BACK, HOW_MUCH_THE_AGENT_IS_CHARGING_CHECK_AND_CHANGE },
+  CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -205,6 +206,18 @@ describe('controllers/insurance/export-contract/how-much-the-agent-is-charging',
         expect(mapAndSave.exportContractAgentServiceCharge).toHaveBeenCalledTimes(1);
 
         expect(mapAndSave.exportContractAgentServiceCharge).toHaveBeenCalledWith(payload, res.locals.application);
+      });
+
+      describe("when the url's last substring is 'check-and-change'", () => {
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.originalUrl = HOW_MUCH_THE_AGENT_IS_CHARGING_CHECK_AND_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {

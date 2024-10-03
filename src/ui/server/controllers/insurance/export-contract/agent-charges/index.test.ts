@@ -1,5 +1,5 @@
 import { pageVariables, FIELD_IDS, PAGE_CONTENT_STRINGS, TEMPLATE, get, post } from '.';
-import { TEMPLATES } from '../../../../constants';
+import { APPLICATION, TEMPLATES } from '../../../../constants';
 import { PARTIALS as PARTIAL_TEMPLATES } from '../../../../constants/templates/partials';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
@@ -28,12 +28,28 @@ import {
   referenceNumber,
 } from '../../../../test-mocks';
 
+const {
+  EXPORT_CONTRACT: {
+    AGENT_SERVICE_CHARGE: {
+      METHOD: { FIXED_SUM: METHOD_FIXED_SUM, PERCENTAGE: METHOD_PERCENTAGE },
+    },
+  },
+} = APPLICATION;
+
 const { supportedCurrencies } = mockCurrenciesResponse;
 
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { AGENT_CHARGES_CHECK_AND_CHANGE, AGENT_CHARGES_SAVE_AND_BACK, AGENT_CHARGES_CURRENCY },
+  EXPORT_CONTRACT: {
+    AGENT_CHARGES_CHECK_AND_CHANGE,
+    AGENT_CHARGES_SAVE_AND_BACK,
+    AGENT_CHARGES_CURRENCY,
+    AGENT_CHARGES_CHANGE,
+    AGENT_CHARGES_CURRENCY_CHANGE,
+    AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE,
+    CHECK_YOUR_ANSWERS,
+  },
   CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
@@ -236,6 +252,17 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
       [PAYABLE_COUNTRY_CODE]: mockExportContractAgentServiceCharge[PAYABLE_COUNTRY_CODE],
     };
 
+    const validBodyFixedSumMethod = {
+      ...validBody,
+      [METHOD]: METHOD_FIXED_SUM,
+    };
+
+    const validBodyPercentageMethod = {
+      ...validBody,
+      [METHOD]: METHOD_PERCENTAGE,
+      [PERCENTAGE_CHARGE]: mockExportContractAgentServiceCharge[PERCENTAGE_CHARGE],
+    };
+
     beforeEach(() => {
       getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
       getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
@@ -356,17 +383,75 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
         expect(mapAndSave.exportContractAgentServiceCharge).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
-      it(`should redirect to ${AGENT_CHARGES_CURRENCY}`, async () => {
-        await post(req, res);
+      describe(`when ${METHOD} is ${METHOD_FIXED_SUM}`, () => {
+        it(`should redirect to ${AGENT_CHARGES_CURRENCY}`, async () => {
+          req.body = validBodyFixedSumMethod;
 
-        const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY}`;
+          await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(expected);
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
 
-      describe("when the url's last substring is `check-and-change`", () => {
+      describe(`when ${METHOD} is ${METHOD_PERCENTAGE}`, () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.body = validBodyPercentageMethod;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when ${METHOD} is ${METHOD_FIXED_SUM} and the url's last substring is 'change'`, () => {
+        it(`should redirect to ${AGENT_CHARGES_CURRENCY_CHANGE}`, async () => {
+          req.body = validBodyFixedSumMethod;
+
+          req.originalUrl = AGENT_CHARGES_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY_CHANGE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when ${METHOD} is ${METHOD_PERCENTAGE} and the url's last substring is 'change'`, () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.body = validBodyPercentageMethod;
+
+          req.originalUrl = AGENT_CHARGES_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when ${METHOD} is ${METHOD_FIXED_SUM} and the url's last substring is 'check-and-change'`, () => {
+        it(`should redirect to ${AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE}`, async () => {
+          req.body = validBodyFixedSumMethod;
+
+          req.originalUrl = AGENT_CHARGES_CHECK_AND_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when ${METHOD} is ${METHOD_PERCENTAGE} and the url's last substring is 'check-and-change'`, () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
-          req.body = validBody;
+          req.body = validBodyPercentageMethod;
 
           req.originalUrl = AGENT_CHARGES_CHECK_AND_CHANGE;
 
