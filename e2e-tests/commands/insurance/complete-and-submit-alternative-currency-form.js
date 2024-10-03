@@ -12,8 +12,7 @@ const { CURRENCY_CODE } = INSURANCE_FIELD_IDS.CURRENCY;
  * @param {Boolean} alternativeCurrency: If alternative currency should be entered.
  */
 
-// TODO: update alternativeCurrency to be false by default.
-const completeAndSubmitAlternativeCurrencyForm = ({ isoCode, alternativeCurrency = true }) => {
+const completeAndSubmitAlternativeCurrencyForm = ({ isoCode, alternativeCurrency = false }) => {
   if (isoCode) {
     radios(CURRENCY_CODE, isoCode).option.label().click();
     cy.clickSubmitButton();
