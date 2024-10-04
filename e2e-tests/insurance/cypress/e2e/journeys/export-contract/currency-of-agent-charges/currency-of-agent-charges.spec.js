@@ -97,6 +97,12 @@ context(
 
         cy.assertUrl(howMuchAgentIsChargingUrl);
       });
+
+      it('should retain the status of task `export contract` as `in progress`', () => {
+        cy.navigateToAllSectionsUrl(referenceNumber);
+
+        cy.checkTaskExportContractStatusIsInProgress();
+      });
     });
   },
 );
