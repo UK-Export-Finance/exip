@@ -54,7 +54,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_CURRENCY_CODE, PERCENTAGE, PERCENTAGE_CHARGE },
+  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_CURRENCY_CODE, FIXED_SUM_AMOUNT, PERCENTAGE, PERCENTAGE_CHARGE },
 } = EXPORT_CONTRACT_FIELD_IDS;
 
 const {
@@ -407,8 +407,11 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
         });
       });
 
-      describe(`when ${METHOD} is ${METHOD_FIXED_SUM} and the url's last substring is 'change'`, () => {
+      describe(`when ${METHOD} is ${METHOD_FIXED_SUM}, no ${FIXED_SUM_AMOUNT} available and the url's last substring is 'change'`, () => {
         it(`should redirect to ${AGENT_CHARGES_CURRENCY_CHANGE}`, async () => {
+          res.locals.application = mockApplication;
+          res.locals.application.exportContract.agent.service.charge.fixedSumAmount = '';
+
           req.body = validBodyFixedSumMethod;
 
           req.originalUrl = AGENT_CHARGES_CHANGE;
@@ -435,8 +438,11 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
         });
       });
 
-      describe(`when ${METHOD} is ${METHOD_FIXED_SUM} and the url's last substring is 'check-and-change'`, () => {
+      describe(`when ${METHOD} is ${METHOD_FIXED_SUM}, no ${FIXED_SUM_AMOUNT} available and the url's last substring is 'check-and-change'`, () => {
         it(`should redirect to ${AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE}`, async () => {
+          res.locals.application = mockApplication;
+          res.locals.application.exportContract.agent.service.charge.fixedSumAmount = '';
+
           req.body = validBodyFixedSumMethod;
 
           req.originalUrl = AGENT_CHARGES_CHECK_AND_CHANGE;

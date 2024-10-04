@@ -37,7 +37,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_CURRENCY_CODE, PERCENTAGE, PERCENTAGE_CHARGE },
+  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE, PERCENTAGE_CHARGE },
 } = EXPORT_CONTRACT_FIELD_IDS;
 
 const {
@@ -198,24 +198,27 @@ export const post = async (req: Request, res: Response) => {
     }
 
     const isFixedSumMethod = payload[METHOD] === AGENT_SERVICE_CHARGE.METHOD.FIXED_SUM;
+    const hasFixedSumAmount = agent.service.charge[FIXED_SUM_AMOUNT];
 
     /**
      * If the route is a "change" route,
      * the agent charges are FIXED_SUM METHOD,
+     * and no FIXED_SUM_AMOUNT is available,
      * redirect to AGENT_CHARGES_CURRENCY_CHANGE form.
      */
-    if (isChangeRoute(req.originalUrl) && isFixedSumMethod) {
+    if (isChangeRoute(req.originalUrl) && isFixedSumMethod && !hasFixedSumAmount) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY_CHANGE}`);
     }
 
     /**
      * If the route is a "check and change" route,
      * the agent charges are FIXED_SUM METHOD,
+     * and no FIXED_SUM_AMOUNT is available,
      * redirect to AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE.
      * Otherwise, redirect to CHECK_AND_CHANGE_ROUTE.
      */
     if (isCheckAndChangeRoute(req.originalUrl)) {
-      if (isFixedSumMethod) {
+      if (isFixedSumMethod && !hasFixedSumAmount) {
         return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE}`);
       }
 

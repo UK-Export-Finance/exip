@@ -31,7 +31,7 @@ context(`Insurance - Change your answers - Export contract - Summary list - Agen
         referenceNumber,
         isUsingAgent: true,
         agentIsCharging: true,
-        agentChargeMethodFixedSum: true,
+        agentChargeMethodPercentage: true,
       });
 
       cy.clickTaskCheckAnswers();

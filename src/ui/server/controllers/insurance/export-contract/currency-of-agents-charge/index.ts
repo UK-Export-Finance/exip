@@ -118,7 +118,10 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { exportContract, referenceNumber } = application;
+  const {
+    exportContract: { agent },
+    referenceNumber,
+  } = application;
 
   const payload = constructPayload(req.body, FIELD_IDS);
 
@@ -156,7 +159,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const hasFixedSumAmount = exportContract.agent.service.charge[FIXED_SUM_AMOUNT];
+    const hasFixedSumAmount = agent.service.charge[FIXED_SUM_AMOUNT];
 
     if (isChangeRoute(req.originalUrl)) {
       /**
