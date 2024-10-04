@@ -68,18 +68,6 @@ context(`Insurance - Export contract - Agent charges - Save and go back - ${METH
   });
 
   describe('when all fields are provided', () => {
-    // it('should update the `export contract` task status to `completed`', () => {
-    //   cy.navigateToUrl(url);
-
-    //   cy.completeAgentChargesForm({ fixedSumMethod: true });
-
-    //   cy.clickSaveAndBackButton();
-
-    //   cy.navigateToAllSectionsUrl(referenceNumber);
-
-    //   cy.checkTaskExportContractStatusIsComplete();
-    // });
-
     it('should retain the status of task `export contract` as `in progress`', () => {
       cy.navigateToUrl(url);
 
