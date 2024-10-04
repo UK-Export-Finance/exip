@@ -1,7 +1,7 @@
 import { autoCompleteField, field, radios, summaryList } from '../../../../../../../pages/shared';
 import { agentChargesPage } from '../../../../../../../pages/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import checkSummaryList from '../../../../../../../commands/insurance/check-export-contract-summary-list';
 import { GBP } from '../../../../../../../fixtures/currencies';
 
