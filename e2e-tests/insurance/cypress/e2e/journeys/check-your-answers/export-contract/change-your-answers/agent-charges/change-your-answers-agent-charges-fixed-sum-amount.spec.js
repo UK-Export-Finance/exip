@@ -74,10 +74,7 @@ context(`Insurance - Change your answers - Export contract - Summary list - Agen
     it(`should redirect to ${EXPORT_CONTRACT}`, () => {
       summaryList.field(fieldId).changeLink().click();
 
-      cy.completeAndSubmitAgentChargesForm({
-        fixedSumMethod: true,
-        fixedSumAmount: newValueInput,
-      });
+      cy.completeAndSubmitHowMuchTheAgentIsChargingForm({ fixedSumAmount: newValueInput });
 
       cy.assertChangeAnswersPageUrl({ referenceNumber, route: EXPORT_CONTRACT, fieldId });
     });
