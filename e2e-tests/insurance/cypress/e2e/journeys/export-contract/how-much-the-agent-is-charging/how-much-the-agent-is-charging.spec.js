@@ -87,6 +87,12 @@ context(
         cy.assertUrl(checkYourAnswersUrl);
       });
 
+      it('should update the `export contract` task status to `completed`', () => {
+        cy.navigateToAllSectionsUrl(referenceNumber);
+
+        cy.checkTaskExportContractStatusIsComplete();
+      });
+
       describe('when going back to the page', () => {
         beforeEach(() => {
           cy.navigateToUrl(url);
