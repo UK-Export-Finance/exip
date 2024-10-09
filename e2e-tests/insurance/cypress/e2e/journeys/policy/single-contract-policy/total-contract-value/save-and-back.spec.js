@@ -72,8 +72,8 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     it('should have the submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
-      fieldSelector(TOTAL_CONTRACT_VALUE).input().should('have.value', application.POLICY[TOTAL_CONTRACT_VALUE]);
-      fieldSelector(REQUESTED_CREDIT_LIMIT).input().should('have.value', '');
+      cy.checkValue(fieldSelector(TOTAL_CONTRACT_VALUE).input(), application.POLICY[TOTAL_CONTRACT_VALUE]);
+      cy.checkValue(fieldSelector(REQUESTED_CREDIT_LIMIT).input(), '');
     });
   });
 
@@ -97,7 +97,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     it('should have the submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
-      fieldSelector(REQUESTED_CREDIT_LIMIT).input().should('have.value', application.POLICY[REQUESTED_CREDIT_LIMIT]);
+      cy.checkValue(fieldSelector(REQUESTED_CREDIT_LIMIT).input(), application.POLICY[REQUESTED_CREDIT_LIMIT]);
     });
   });
 
@@ -121,8 +121,8 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     it('should have the submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
-      fieldSelector(TOTAL_CONTRACT_VALUE).input().should('have.value', application.POLICY[TOTAL_CONTRACT_VALUE]);
-      fieldSelector(REQUESTED_CREDIT_LIMIT).input().should('have.value', application.POLICY[REQUESTED_CREDIT_LIMIT]);
+      cy.checkValue(fieldSelector(TOTAL_CONTRACT_VALUE).input(), application.POLICY[TOTAL_CONTRACT_VALUE]);
+      cy.checkValue(fieldSelector(REQUESTED_CREDIT_LIMIT).input(), application.POLICY[REQUESTED_CREDIT_LIMIT]);
     });
   });
 });

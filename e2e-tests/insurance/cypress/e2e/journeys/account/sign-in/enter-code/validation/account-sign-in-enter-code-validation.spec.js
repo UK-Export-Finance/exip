@@ -72,7 +72,7 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
       expectedErrorMessage,
     });
 
-    field.input().should('have.value', invalidAccessCode);
+    cy.checkValue(field.input(), invalidAccessCode);
   });
 
   describe('when submitting a valid access code', () => {
