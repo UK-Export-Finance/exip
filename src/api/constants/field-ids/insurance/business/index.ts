@@ -20,7 +20,7 @@ const EXPORTER_BUSINESS = {
   },
   YOUR_COMPANY: {
     YOUR_BUSINESS: 'yourBusiness',
-    TRADING_ADDRESS: 'hasDifferentTradingAddress',
+    HAS_DIFFERENT_TRADING_ADDRESS: 'hasDifferentTradingAddress',
     HAS_DIFFERENT_TRADING_NAME: 'hasDifferentTradingName',
     DIFFERENT_TRADING_NAME: 'differentTradingName',
     WEBSITE: 'companyWebsite',

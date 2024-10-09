@@ -25,7 +25,7 @@ const {
 const {
   COMPANIES_HOUSE: { FINANCIAL_YEAR_END_DATE },
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_ADDRESS, DIFFERENT_TRADING_NAME },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_ADDRESS, DIFFERENT_TRADING_NAME },
     ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
   },
 } = INSURANCE_FIELD_IDS;
@@ -51,12 +51,12 @@ const summaryList = (mockAnswers: ApplicationCompany, refNumber: number, financi
   ),
   fieldGroupItem(
     {
-      field: getFieldById(FIELDS.COMPANY_DETAILS, TRADING_ADDRESS),
+      field: getFieldById(FIELDS.COMPANY_DETAILS, HAS_DIFFERENT_TRADING_ADDRESS),
       data: mockAnswers,
-      href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${TRADING_ADDRESS}-label`, refNumber, checkAndChange),
+      href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${HAS_DIFFERENT_TRADING_ADDRESS}-label`, refNumber, checkAndChange),
       renderChangeLink: true,
     },
-    mapYesAlternateField(mockAnswers[TRADING_ADDRESS], address),
+    mapYesAlternateField(mockAnswers[HAS_DIFFERENT_TRADING_ADDRESS], address),
   ),
   fieldGroupItem({
     field: getFieldById(FIELDS.COMPANY_DETAILS, WEBSITE),
