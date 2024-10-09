@@ -227,7 +227,6 @@ const checkExportContractSummaryList = {
      * - The data uses the FIXED_SUM_CURRENCY_CODE field ID.
      * The summary has to use the CURRENCY_CODE field ID to match the generic curency form field ID.
      */
-
     const summaryListFieldId = CURRENCY_CODE;
 
     if (shouldRender) {
