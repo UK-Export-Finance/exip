@@ -25,7 +25,7 @@ const getFieldVariables = (fieldId, referenceNumber) => ({
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Change your answers - Export contract - Summary list - Agent charges - Alternative currency page', () => {
+context('Insurance - Change your answers - Export contract - Summary list - Currency of agent charges', () => {
   let referenceNumber;
   let url;
 

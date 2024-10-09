@@ -1,12 +1,12 @@
 import { summaryList } from '../../../../../../../pages/shared';
-import { ROUTES } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
-import { INSURANCE_ROOT } from '../../../../../../../constants/routes/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { USD } from '../../../../../../../fixtures/currencies';
 
 const {
+  ROOT,
   EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_CHARGES_CURRENCY_CHANGE },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
   CURRENCY: { CURRENCY_CODE },
@@ -25,7 +25,7 @@ const getFieldVariables = (fieldId, referenceNumber) => ({
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  'Insurance - Export contract - Change your answers - Agent charges - Alternative currency - As an exporter, I want to change my answers to the export contract section',
+  'Insurance - Export contract - Change your answers - Currency of agent charges - As an exporter, I want to change my answers to the export contract section',
   () => {
     let referenceNumber;
     let checkYourAnswersUrl;
@@ -40,7 +40,8 @@ context(
           agentChargeMethodFixedSum: true,
         });
 
-        checkYourAnswersUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
         cy.assertUrl(checkYourAnswersUrl);
       });
     });
