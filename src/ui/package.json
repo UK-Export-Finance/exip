@@ -43,7 +43,7 @@
     "babel-loader": "^9.2.1",
     "compression": "^1.7.4",
     "connect-flash": "^0.1.1",
-    "cookie-parser": "^1.4.6",
+    "cookie-parser": "^1.4.7",
     "cross-fetch": "^4.0.0",
     "csurf": "^1.11.0",
     "date-fns": "^4.1.0",
