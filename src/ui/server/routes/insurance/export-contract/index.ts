@@ -78,6 +78,8 @@ const {
   AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE,
   HOW_MUCH_THE_AGENT_IS_CHARGING,
   HOW_MUCH_THE_AGENT_IS_CHARGING_SAVE_AND_BACK,
+  HOW_MUCH_THE_AGENT_IS_CHARGING_CHANGE,
+  HOW_MUCH_THE_AGENT_IS_CHARGING_CHECK_AND_CHANGE,
   CHECK_YOUR_ANSWERS,
 } = EXPORT_CONTRACT;
 
@@ -161,18 +163,19 @@ exportContractRoute.post(`/:referenceNumber${AGENT_CHARGES_CHECK_AND_CHANGE}`, a
 
 exportContractRoute.get(`/:referenceNumber${AGENT_CHARGES_CURRENCY}`, agentChargesCurrencyGet);
 exportContractRoute.post(`/:referenceNumber${AGENT_CHARGES_CURRENCY}`, agentChargesCurrencyPost);
-
 exportContractRoute.post(`/:referenceNumber${AGENT_CHARGES_CURRENCY_SAVE_AND_BACK}`, agentChargesCurrencySaveAndBackPost);
-
 exportContractRoute.get(`/:referenceNumber${AGENT_CHARGES_CURRENCY_CHANGE}`, agentChargesCurrencyGet);
 exportContractRoute.post(`/:referenceNumber${AGENT_CHARGES_CURRENCY_CHANGE}`, agentChargesCurrencyPost);
-
 exportContractRoute.get(`/:referenceNumber${AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE}`, agentChargesCurrencyGet);
 exportContractRoute.post(`/:referenceNumber${AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE}`, agentChargesCurrencyPost);
 
 exportContractRoute.get(`/:referenceNumber${HOW_MUCH_THE_AGENT_IS_CHARGING}`, howMuchTheAgentIsChargingGet);
 exportContractRoute.post(`/:referenceNumber${HOW_MUCH_THE_AGENT_IS_CHARGING}`, howMuchTheAgentIsChargingPost);
 exportContractRoute.post(`/:referenceNumber${HOW_MUCH_THE_AGENT_IS_CHARGING_SAVE_AND_BACK}`, howMuchTheAgentIsChargingSaveAndBackPost);
+exportContractRoute.get(`/:referenceNumber${HOW_MUCH_THE_AGENT_IS_CHARGING_CHANGE}`, howMuchTheAgentIsChargingGet);
+exportContractRoute.post(`/:referenceNumber${HOW_MUCH_THE_AGENT_IS_CHARGING_CHANGE}`, howMuchTheAgentIsChargingPost);
+exportContractRoute.get(`/:referenceNumber${HOW_MUCH_THE_AGENT_IS_CHARGING_CHECK_AND_CHANGE}`, howMuchTheAgentIsChargingGet);
+exportContractRoute.post(`/:referenceNumber${HOW_MUCH_THE_AGENT_IS_CHARGING_CHECK_AND_CHANGE}`, howMuchTheAgentIsChargingPost);
 
 exportContractRoute.get(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
 exportContractRoute.post(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

@@ -27,11 +27,13 @@ const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
   EXPORT_CONTRACT: {
-    CHECK_YOUR_ANSWERS,
+    AGENT_CHARGES_CURRENCY_SAVE_AND_BACK,
     AGENT_CHARGES_CURRENCY_CHANGE,
     AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE,
-    AGENT_CHARGES_CURRENCY_SAVE_AND_BACK,
     HOW_MUCH_THE_AGENT_IS_CHARGING,
+    HOW_MUCH_THE_AGENT_IS_CHARGING_CHANGE,
+    HOW_MUCH_THE_AGENT_IS_CHARGING_CHECK_AND_CHANGE,
+    CHECK_YOUR_ANSWERS,
   },
   CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
@@ -39,7 +41,7 @@ const {
 const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
   EXPORT_CONTRACT: {
-    AGENT_CHARGES: { FIXED_SUM_CURRENCY_CODE },
+    AGENT_CHARGES: { FIXED_SUM_CURRENCY_CODE, FIXED_SUM_AMOUNT },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -89,7 +91,7 @@ describe('controllers/insurance/export-contract/currency-of-agents-charge', () =
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.ALTERNATIVE_CURRENCY);
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.CURRENCY);
     });
   });
 
@@ -264,26 +266,67 @@ describe('controllers/insurance/export-contract/currency-of-agents-charge', () =
         expect(mapAndSave.exportContractAgentServiceCharge).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
-      describe("when the url's last substring is `change`", () => {
-        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+      describe("when the url's last substring is 'change'", () => {
+        beforeEach(() => {
           req.originalUrl = AGENT_CHARGES_CURRENCY_CHANGE;
+        });
 
-          await post(req, res);
+        describe(`when the application/agent data does NOT have a ${FIXED_SUM_AMOUNT} value`, () => {
+          it(`should redirect to ${HOW_MUCH_THE_AGENT_IS_CHARGING_CHANGE}`, async () => {
+            res.locals.application = mockApplication;
+            res.locals.application.exportContract.agent.service.charge.fixedSumAmount = '';
 
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-          expect(res.redirect).toHaveBeenCalledWith(expected);
+            await post(req, res);
+
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${HOW_MUCH_THE_AGENT_IS_CHARGING_CHANGE}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
+        });
+
+        describe(`when the application/agent data has a ${FIXED_SUM_AMOUNT} value`, () => {
+          it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+            res.locals.application = mockApplication;
+            res.locals.application.exportContract.agent.service.charge.fixedSumAmount = '123';
+
+            await post(req, res);
+
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
         });
       });
 
-      describe("when the url's last substring is `check-and-change`", () => {
-        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+      describe("when the url's last substring is 'check-and-change'", () => {
+        beforeEach(() => {
           req.originalUrl = AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE;
+        });
 
-          await post(req, res);
+        describe(`when the application/agent data does NOT have a ${FIXED_SUM_AMOUNT} value`, () => {
+          it(`should redirect to ${HOW_MUCH_THE_AGENT_IS_CHARGING_CHECK_AND_CHANGE}`, async () => {
+            res.locals.application = mockApplication;
+            res.locals.application.exportContract.agent.service.charge.fixedSumAmount = '';
 
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+            await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(expected);
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${HOW_MUCH_THE_AGENT_IS_CHARGING_CHECK_AND_CHANGE}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
+        });
+
+        describe(`when the application/agent data has a ${FIXED_SUM_AMOUNT} value`, () => {
+          it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+            res.locals.application = mockApplication;
+            res.locals.application.exportContract.agent.service.charge.fixedSumAmount = '123';
+
+            await post(req, res);
+
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
         });
       });
 

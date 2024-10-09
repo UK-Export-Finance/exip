@@ -4,7 +4,7 @@ import { assertCurrencyFormFields } from '../../../../../../shared-test-assertio
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { AGENT_CHARGES },
+  EXPORT_CONTRACT: { AGENT_CHARGES, HOW_MUCH_THE_AGENT_IS_CHARGING },
 } = INSURANCE_ROUTES;
 
 const {
@@ -13,8 +13,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-// TODO: EMS-3828 - renable
-context.skip("Insurance - Export contract - Agent charges page - As an Exporter I want to change the currency of my agent's charges", () => {
+context("Insurance - Export contract - Agent charges page - As an Exporter I want to change the currency of my agent's charges", () => {
   let referenceNumber;
   let url;
 
@@ -31,30 +30,18 @@ context.skip("Insurance - Export contract - Agent charges page - As an Exporter 
     });
   });
 
-  beforeEach(() => {
-    cy.saveSession();
-    cy.navigateToUrl(url);
-
-    cy.completeAgentChargesForm({
-      fixedSumMethod: true,
-      fixedSumAmount: null,
-      payableCountry: null,
-    });
-  });
-
   after(() => {
     cy.deleteApplication(referenceNumber);
   });
 
-  describe('prefixes should be displayed based on the chosen currency', () => {
-    before(() => {
+  describe(`${HOW_MUCH_THE_AGENT_IS_CHARGING} prefixes should be displayed based on the chosen currency`, () => {
+    beforeEach(() => {
       cy.saveSession();
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitAgentChargesForm({
         fixedSumMethod: true,
-        fixedSumAmount: null,
-        payableCountry: null,
+        percentageMethod: false,
       });
     });
 

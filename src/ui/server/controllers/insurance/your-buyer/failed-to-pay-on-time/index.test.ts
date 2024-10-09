@@ -165,7 +165,7 @@ describe('controllers/insurance/your-buyer/failed-to-pay-on-time', () => {
         expect(mapAndSave.buyerTradingHistory).toHaveBeenCalledWith(payload, mockApplication);
       });
 
-      describe(`when the url's last substring is 'change'`, () => {
+      describe("when the url's last substring is 'change'", () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
           req.body = {
             [FIELD_ID]: 'false',
@@ -181,7 +181,7 @@ describe('controllers/insurance/your-buyer/failed-to-pay-on-time', () => {
         });
       });
 
-      describe(`when the url's last substring is 'check-and-change'`, () => {
+      describe("when the url's last substring is 'check-and-change'", () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
           req.body = {
             [FIELD_ID]: 'true',
@@ -197,7 +197,7 @@ describe('controllers/insurance/your-buyer/failed-to-pay-on-time', () => {
         });
       });
 
-      describe(`when the totalContractValueOverThreshold=true`, () => {
+      describe(`when totalContractValueOverThreshold=true`, () => {
         it(`should redirect to ${CREDIT_INSURANCE_COVER}`, async () => {
           req.body = {
             [FIELD_ID]: 'false',

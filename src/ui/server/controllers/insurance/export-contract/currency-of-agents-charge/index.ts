@@ -18,20 +18,26 @@ import { Request, Response } from '../../../../../types';
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, HOW_MUCH_THE_AGENT_IS_CHARGING, AGENT_CHARGES_CURRENCY_SAVE_AND_BACK },
+  EXPORT_CONTRACT: {
+    HOW_MUCH_THE_AGENT_IS_CHARGING,
+    HOW_MUCH_THE_AGENT_IS_CHARGING_CHANGE,
+    HOW_MUCH_THE_AGENT_IS_CHARGING_CHECK_AND_CHANGE,
+    AGENT_CHARGES_CURRENCY_SAVE_AND_BACK,
+    CHECK_YOUR_ANSWERS,
+  },
   CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
 const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
   EXPORT_CONTRACT: {
-    AGENT_CHARGES: { FIXED_SUM_CURRENCY_CODE },
+    AGENT_CHARGES: { FIXED_SUM_CURRENCY_CODE, FIXED_SUM_AMOUNT },
   },
 } = INSURANCE_FIELD_IDS;
 
 export const FIELD_IDS = [CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE];
 
-export const TEMPLATE = TEMPLATES.SHARED_PAGES.ALTERNATIVE_CURRENCY;
+export const TEMPLATE = TEMPLATES.SHARED_PAGES.CURRENCY;
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES_CURRENCY;
 
@@ -112,7 +118,10 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = application;
+  const {
+    exportContract: { agent },
+    referenceNumber,
+  } = application;
 
   const payload = constructPayload(req.body, FIELD_IDS);
 
@@ -150,11 +159,36 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
+    const hasFixedSumAmount = agent.service.charge[FIXED_SUM_AMOUNT];
+
     if (isChangeRoute(req.originalUrl)) {
+      /**
+       * If the URL is a "change" route,
+       * and there is no FIXED_SUM_AMOUNT,
+       * redirect to HOW_MUCH_THE_AGENT_IS_CHARGING with /change in URL.
+       * This ensures that the next page can consume /change in the URL
+       * and therefore correctly redirect on submission.
+       */
+
+      if (!hasFixedSumAmount) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${HOW_MUCH_THE_AGENT_IS_CHARGING_CHANGE}`);
+      }
+
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
     if (isCheckAndChangeRoute(req.originalUrl)) {
+      /**
+       * If the URL is a "check and change" route,
+       * and there is no FIXED_SUM_AMOUNT,
+       * redirect to HOW_MUCH_THE_AGENT_IS_CHARGING with /check-and-change in URL.
+       * This ensures that the next page can consume /change in the URL
+       * and therefore correctly redirect on submission.
+       */
+      if (!hasFixedSumAmount) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${HOW_MUCH_THE_AGENT_IS_CHARGING_CHECK_AND_CHANGE}`);
+      }
+
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 

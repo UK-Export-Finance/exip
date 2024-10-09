@@ -1,5 +1,4 @@
-// TODO: EMS-3828 - renable
-context.skip('Insurance - submit an application - Single policy type, using an agent, fixed sum method, alternative currency', () => {
+context('Insurance - submit an application - Single policy type, using an agent, fixed sum method, alternative currency', () => {
   let referenceNumber;
 
   before(() => {

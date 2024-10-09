@@ -3,7 +3,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { AGENT_CHARGES, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { AGENT_CHARGES, AGENT_CHARGES_CURRENCY },
 } = INSURANCE_ROUTES;
 
 const {
@@ -12,11 +12,10 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-// TODO: EMS-3828 - renable
-context.skip('Insurance - Export contract - Agent charges page - Fixed sum amount with a comma', () => {
+context('Insurance - Export contract - Agent charges page - Fixed sum amount with a comma', () => {
   let referenceNumber;
   let url;
-  let checkYourAnswersUrl;
+  let agentChargesCurrencyUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -26,7 +25,7 @@ context.skip('Insurance - Export contract - Agent charges page - Fixed sum amoun
       cy.completeAndSubmitExportContractForms({ formToStopAt: 'agentService', isUsingAgent: true, agentIsCharging: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES}`;
-      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      agentChargesCurrencyUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY}`;
     });
   });
 
@@ -47,16 +46,16 @@ context.skip('Insurance - Export contract - Agent charges page - Fixed sum amoun
       const fixedSumAmount = '1,000';
       const amount = '1000';
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+      it(`should redirect to ${AGENT_CHARGES_CURRENCY}`, () => {
         cy.completeAndSubmitAgentChargesForm({ fixedSumMethod: true, fixedSumAmount });
 
-        cy.assertUrl(checkYourAnswersUrl);
+        cy.assertUrl(agentChargesCurrencyUrl);
       });
 
-      it('should update the `export contract` task status to `completed`', () => {
+      it('should retain the status of task `export contract` as `in progress`', () => {
         cy.navigateToAllSectionsUrl(referenceNumber);
 
-        cy.checkTaskExportContractStatusIsComplete();
+        cy.checkTaskExportContractStatusIsInProgress();
       });
 
       describe('when going back to the page', () => {

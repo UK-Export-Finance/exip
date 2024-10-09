@@ -26,7 +26,6 @@ const {
  */
 export const assertCurrencyFormFields = ({
   completeNonCurrencyFieldsFunction,
-  clickAlternativeCurrencyLink,
   errorIndex,
   errors,
   fieldId,
@@ -34,7 +33,7 @@ export const assertCurrencyFormFields = ({
   hint,
   legend,
   expectedRedirectUrl,
-  hasSaveAndBack,
+  hasSaveAndBack = true,
 }) => {
   const assertions = fieldAssertions({
     alternativeCurrencyText: FIELDS[ALTERNATIVE_CURRENCY_CODE].TEXT,
@@ -54,7 +53,7 @@ export const assertCurrencyFormFields = ({
         expectedRedirectUrl,
         hasSaveAndBack,
       }),
-    prefixAssertions: () => prefixAssertions({ fieldId, clickAlternativeCurrencyLink }),
+    prefixAssertions: () => prefixAssertions({ fieldId }),
   };
 };
 

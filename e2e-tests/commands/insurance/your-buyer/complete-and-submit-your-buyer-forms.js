@@ -3,7 +3,6 @@
  * completes your buyer forms up to the specified form to stop at
  * eg, when 'connectionWithTheBuyer' is passed, it will complete all forms up to and including 'connectionWithTheBuyer'
  * @param {Boolean} alternativeCurrency: If alternative currency should be entered.
- * @param {Boolean} clickAlternativeCurrencyLink: if the "Alternative currency" link should be clicked.
  * @param {Boolean} exporterHasTradedWithBuyer: whether the exporter has traded with the buyer
  * @param {Boolean} failedToPay: whether the buyer has failed to pay the exporter
  * @param {String} formToStopAt: the form to stop at
@@ -16,7 +15,6 @@
  */
 const completeAndSubmitYourBuyerForms = ({
   alternativeCurrency,
-  clickAlternativeCurrencyLink,
   exporterHasTradedWithBuyer,
   failedToPay,
   formToStopAt,
@@ -48,7 +46,7 @@ const completeAndSubmitYourBuyerForms = ({
     if (outstandingPayments) {
       steps.push({
         name: 'currencyOfLatePayments',
-        action: () => cy.completeAndSubmitAlternativeCurrencyForm({ isoCode, alternativeCurrency, clickAlternativeCurrencyLink }),
+        action: () => cy.completeAndSubmitAlternativeCurrencyForm({ isoCode, alternativeCurrency }),
       });
       steps.push({ name: 'outstandingOrOverduePayments', action: () => cy.completeAndSubmitOutstandingOrOverduePaymentsForm({ outstandingPayments }) });
     }

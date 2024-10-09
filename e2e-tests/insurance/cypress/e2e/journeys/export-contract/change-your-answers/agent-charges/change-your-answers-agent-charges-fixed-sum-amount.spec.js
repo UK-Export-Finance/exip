@@ -6,7 +6,7 @@ import application from '../../../../../../../fixtures/application';
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_CHARGES_CHANGE },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, HOW_MUCH_THE_AGENT_IS_CHARGING_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {
@@ -17,8 +17,7 @@ const fieldId = FIXED_SUM_AMOUNT;
 
 const baseUrl = Cypress.config('baseUrl');
 
-// TODO: EMS-3828 - renable
-context.skip(
+context(
   `Insurance - Export contract - Change your answers - Agent charges - ${FIXED_SUM_AMOUNT} - As an Exporter, I want to be able to review my input regarding the amount an agent is charging for helping me win my export contract, So that I can be assured I am providing UKEF with the right information`,
   () => {
     let referenceNumber;
@@ -49,12 +48,12 @@ context.skip(
     });
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${AGENT_CHARGES_CHANGE}`, () => {
+      it(`should redirect to ${HOW_MUCH_THE_AGENT_IS_CHARGING_CHANGE}`, () => {
         cy.navigateToUrl(checkYourAnswersUrl);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: AGENT_CHARGES_CHANGE, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: HOW_MUCH_THE_AGENT_IS_CHARGING_CHANGE, fieldId });
       });
     });
 

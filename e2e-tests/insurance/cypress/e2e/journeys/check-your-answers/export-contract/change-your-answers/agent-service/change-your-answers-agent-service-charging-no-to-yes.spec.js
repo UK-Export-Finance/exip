@@ -11,7 +11,7 @@ const {
 
 const {
   AGENT_SERVICE: { IS_CHARGING: FIELD_ID },
-  AGENT_CHARGES: { PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
+  AGENT_CHARGES: { FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -69,7 +69,7 @@ context('Insurance - Change your answers - Export contract - Summary list - Agen
         cy.navigateToUrl(url);
       });
 
-      it(`should redirect to ${EXPORT_CONTRACT} after completing (now required) ${AGENT_CHARGES_CHECK_AND_CHANGE} fields`, () => {
+      it(`should redirect to ${AGENT_SERVICE_CHECK_AND_CHANGE} and then ${EXPORT_CONTRACT} after completing (now required) agent charges related forms`, () => {
         summaryList.field(FIELD_ID).changeLink().click();
 
         cy.navigateToUrl(url);
@@ -83,21 +83,22 @@ context('Insurance - Change your answers - Export contract - Summary list - Agen
         const expectedUrl = `${agentChargesUrl}#${FIELD_ID}-label`;
         cy.assertUrl(expectedUrl);
 
-        // TODO: EMS-3828 - renable
         cy.completeAndSubmitAgentChargesForm({
-          // fixedSumMethod: true,
-          percentageMethod: true,
+          fixedSumMethod: true,
+          percentageMethod: false,
         });
+
+        cy.completeAndSubmitAlternativeCurrencyForm({});
+
+        cy.completeAndSubmitHowMuchTheAgentIsChargingForm({});
 
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: EXPORT_CONTRACT, fieldId: FIELD_ID });
       });
 
       it(`should render new ${FIELD_ID} answer and other agent charges fields`, () => {
         checkSummaryList[FIELD_ID]({ shouldRender: true, isYes: true });
-
-        // checkSummaryList[FIXED_SUM_AMOUNT]({ shouldRender: true });
-
-        checkSummaryList[PERCENTAGE_CHARGE]({ shouldRender: true });
+        checkSummaryList[FIXED_SUM_AMOUNT]({ shouldRender: true });
+        checkSummaryList[PERCENTAGE_CHARGE]({ shouldRender: false });
         checkSummaryList[PAYABLE_COUNTRY_CODE]({ shouldRender: true });
       });
 

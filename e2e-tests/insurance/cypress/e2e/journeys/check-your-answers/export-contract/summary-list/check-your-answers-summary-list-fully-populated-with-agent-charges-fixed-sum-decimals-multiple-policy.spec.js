@@ -8,8 +8,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-// TODO: EMS-3828 - renable
-context.skip(
+context(
   'Insurance - Check your answers - Export contract - Summary list - total contract value threshold, private insurance attempt, using an agent, agent is charging - fixed sum method with decimal places - multiple policy',
   () => {
     let referenceNumber;

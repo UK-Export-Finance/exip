@@ -76,6 +76,8 @@ const {
   AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE,
   HOW_MUCH_THE_AGENT_IS_CHARGING,
   HOW_MUCH_THE_AGENT_IS_CHARGING_SAVE_AND_BACK,
+  HOW_MUCH_THE_AGENT_IS_CHARGING_CHANGE,
+  HOW_MUCH_THE_AGENT_IS_CHARGING_CHECK_AND_CHANGE,
   CHECK_YOUR_ANSWERS,
 } = EXPORT_CONTRACT;
 
@@ -89,8 +91,8 @@ describe('routes/insurance/export-contract', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(33);
-    expect(post).toHaveBeenCalledTimes(43);
+    expect(get).toHaveBeenCalledTimes(35);
+    expect(post).toHaveBeenCalledTimes(45);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROOT}`, exportContractRootGet);
 
@@ -176,6 +178,10 @@ describe('routes/insurance/export-contract', () => {
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${HOW_MUCH_THE_AGENT_IS_CHARGING}`, howMuchTheAgentIsChargingGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${HOW_MUCH_THE_AGENT_IS_CHARGING}`, howMuchTheAgentIsChargingPost);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${HOW_MUCH_THE_AGENT_IS_CHARGING_SAVE_AND_BACK}`, howMuchTheAgentIsChargingSaveAndBackPost);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${HOW_MUCH_THE_AGENT_IS_CHARGING_CHANGE}`, howMuchTheAgentIsChargingGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${HOW_MUCH_THE_AGENT_IS_CHARGING_CHANGE}`, howMuchTheAgentIsChargingPost);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${HOW_MUCH_THE_AGENT_IS_CHARGING_CHECK_AND_CHANGE}`, howMuchTheAgentIsChargingGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${HOW_MUCH_THE_AGENT_IS_CHARGING_CHECK_AND_CHANGE}`, howMuchTheAgentIsChargingPost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

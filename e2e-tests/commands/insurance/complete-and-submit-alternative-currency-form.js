@@ -10,23 +10,14 @@ const { CURRENCY_CODE } = INSURANCE_FIELD_IDS.CURRENCY;
  * if alternativeCurrency true, then enters alternative currency and submits alternative currency form
  * @param {String} isoCode: isoCode for radio selection.
  * @param {Boolean} alternativeCurrency: If alternative currency should be entered.
- * @param {Boolean} clickAlternativeCurrencyLink: if the "Alternative currency" link should be clicked.
  */
-const completeAndSubmitAlternativeCurrencyForm = ({ isoCode, alternativeCurrency, clickAlternativeCurrencyLink = true }) => {
+const completeAndSubmitAlternativeCurrencyForm = ({ isoCode, alternativeCurrency = false }) => {
   if (isoCode) {
-    if (clickAlternativeCurrencyLink) {
-      cy.clickProvideAlternativeCurrencyLink();
-    }
-
     radios(CURRENCY_CODE, isoCode).option.label().click();
     cy.clickSubmitButton();
   }
 
   if (alternativeCurrency) {
-    if (clickAlternativeCurrencyLink) {
-      cy.clickProvideAlternativeCurrencyLink();
-    }
-
     cy.clickAlternativeCurrencyRadioAndSubmitCurrency({ currency: isoCode });
   }
 

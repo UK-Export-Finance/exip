@@ -30,7 +30,6 @@ context('Insurance - Your buyer - Outstanding or overdue payments - Non-GBP (sup
         outstandingPayments: true,
         exporterHasTradedWithBuyer: true,
         isoCode: USD.isoCode,
-        clickAlternativeCurrencyLink: false,
       });
 
       cy.assertUrl(url);
