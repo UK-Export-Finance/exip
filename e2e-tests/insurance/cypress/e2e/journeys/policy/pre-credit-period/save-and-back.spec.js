@@ -109,7 +109,7 @@ context('Insurance - Policy - Pre-credit period page - Save and go back', () => 
       cy.clickSubmitButtonMultipleTimes({ count: 4 });
 
       cy.assertYesRadioOptionIsChecked();
-      descriptionField.textarea().should('have.value', '');
+      cy.checkValue(descriptionField.textarea(), '');
     });
   });
 
@@ -135,7 +135,7 @@ context('Insurance - Policy - Pre-credit period page - Save and go back', () => 
       cy.clickSubmitButtonMultipleTimes({ count: 4 });
 
       cy.assertYesRadioOptionIsChecked();
-      descriptionField.textarea().should('have.value', mockApplication.POLICY[CREDIT_PERIOD_WITH_BUYER]);
+      cy.checkValue(descriptionField.textarea(), mockApplication.POLICY[CREDIT_PERIOD_WITH_BUYER]);
     });
   });
 });

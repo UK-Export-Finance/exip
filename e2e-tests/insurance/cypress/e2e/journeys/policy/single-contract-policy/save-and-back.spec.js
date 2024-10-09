@@ -89,9 +89,9 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
       cy.startInsurancePolicySection({});
       cy.clickSubmitButton();
 
-      field.dayInput().should('have.value', '');
-      field.monthInput().should('have.value', '');
-      field.yearInput().should('have.value', '');
+      cy.checkValue(field.dayInput(), '');
+      cy.checkValue(field.monthInput(), '');
+      cy.checkValue(field.yearInput(), '');
     });
   });
 
@@ -121,9 +121,9 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
       cy.startInsurancePolicySection({});
       cy.clickSubmitButton();
 
-      field.dayInput().should('have.value', '1');
-      field.monthInput().should('have.value', month);
-      field.yearInput().should('have.value', new Date(futureDate).getFullYear());
+      cy.checkValue(field.dayInput(), '1');
+      cy.checkValue(field.monthInput(), month);
+      cy.checkValue(field.yearInput(), new Date(futureDate).getFullYear());
     });
   });
 });

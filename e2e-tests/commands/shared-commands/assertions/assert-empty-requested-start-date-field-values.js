@@ -10,9 +10,9 @@ const {
  * Assert all REQUESTED_START_DATE field values are empty.
  */
 const assertEmptyRequestedStartDateFieldValues = () => {
-  field(REQUESTED_START_DATE).dayInput().should('have.value', '');
-  field(REQUESTED_START_DATE).monthInput().should('have.value', '');
-  field(REQUESTED_START_DATE).yearInput().should('have.value', '');
+  cy.checkValue(field(REQUESTED_START_DATE).dayInput(), '');
+  cy.checkValue(field(REQUESTED_START_DATE).monthInput(), '');
+  cy.checkValue(field(REQUESTED_START_DATE).yearInput(), '');
 };
 
 export default assertEmptyRequestedStartDateFieldValues;
