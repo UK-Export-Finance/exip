@@ -48,7 +48,6 @@ context(
         currentHref: `${ROOT}/${referenceNumber}${TURNOVER_CURRENCY_ROOT}`,
         backLink: `${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`,
         submitButtonCopy: BUTTONS.CONTINUE,
-        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 
@@ -59,6 +58,10 @@ context(
 
       it('renders a heading caption', () => {
         cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+      });
+
+      it('renders a `save and back` button', () => {
+        cy.assertSaveAndBackButton();
       });
     });
 
