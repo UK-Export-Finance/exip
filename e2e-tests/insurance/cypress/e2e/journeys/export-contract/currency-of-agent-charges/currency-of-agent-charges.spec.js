@@ -81,7 +81,7 @@ context(
       const { rendering, formSubmission } = assertCurrencyFormFields({
         gbpCurrencyCheckedByDefault: true,
         errors: CURRENCY_ERROR_MESSAGES,
-        expectedRedirectUrl: AGENT_CHARGES,
+        expectedRedirectUrl: HOW_MUCH_THE_AGENT_IS_CHARGING,
       });
 
       rendering();
@@ -91,9 +91,17 @@ context(
 
     describe('form submission', () => {
       it(`should redirect to ${HOW_MUCH_THE_AGENT_IS_CHARGING}`, () => {
+        cy.navigateToUrl(url);
+
         cy.completeAndSubmitAlternativeCurrencyForm({});
 
         cy.assertUrl(howMuchAgentIsChargingUrl);
+      });
+
+      it('should retain the status of task `export contract` as `in progress`', () => {
+        cy.navigateToAllSectionsUrl(referenceNumber);
+
+        cy.checkTaskExportContractStatusIsInProgress();
       });
     });
   },
