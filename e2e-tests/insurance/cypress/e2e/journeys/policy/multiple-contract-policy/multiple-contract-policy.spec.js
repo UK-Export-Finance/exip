@@ -147,9 +147,14 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
       it('should have the submitted values', () => {
         cy.navigateToUrl(url);
 
-        fieldSelector(REQUESTED_START_DATE).dayInput().should('have.value', application.POLICY[REQUESTED_START_DATE].day);
-        fieldSelector(REQUESTED_START_DATE).monthInput().should('have.value', application.POLICY[REQUESTED_START_DATE].month);
-        fieldSelector(REQUESTED_START_DATE).yearInput().should('have.value', application.POLICY[REQUESTED_START_DATE].year);
+        const { day, month, year } = application.POLICY[REQUESTED_START_DATE];
+
+        cy.checkDateFieldValues({
+          selector: fieldSelector(REQUESTED_START_DATE),
+          day,
+          month,
+          year,
+        });
 
         cy.checkValue(fieldSelector(TOTAL_MONTHS_OF_COVER), application.POLICY[TOTAL_MONTHS_OF_COVER]);
 

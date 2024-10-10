@@ -152,13 +152,21 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
 
         cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`);
 
-        fieldSelector(REQUESTED_START_DATE).dayInput().should('have.value', application.POLICY[REQUESTED_START_DATE].day);
-        fieldSelector(REQUESTED_START_DATE).monthInput().should('have.value', application.POLICY[REQUESTED_START_DATE].month);
-        fieldSelector(REQUESTED_START_DATE).yearInput().should('have.value', application.POLICY[REQUESTED_START_DATE].year);
+        const { POLICY } = application;
 
-        fieldSelector(CONTRACT_COMPLETION_DATE).dayInput().should('have.value', application.POLICY[CONTRACT_COMPLETION_DATE].day);
-        fieldSelector(CONTRACT_COMPLETION_DATE).monthInput().should('have.value', application.POLICY[CONTRACT_COMPLETION_DATE].month);
-        fieldSelector(CONTRACT_COMPLETION_DATE).yearInput().should('have.value', application.POLICY[CONTRACT_COMPLETION_DATE].year);
+        cy.checkDateFieldValues({
+          selector: fieldSelector(REQUESTED_START_DATE),
+          day: POLICY[REQUESTED_START_DATE].day,
+          month: POLICY[REQUESTED_START_DATE].month,
+          year: POLICY[REQUESTED_START_DATE].year,
+        });
+
+        cy.checkDateFieldValues({
+          selector: fieldSelector(CONTRACT_COMPLETION_DATE),
+          day: POLICY[CONTRACT_COMPLETION_DATE].day,
+          month: POLICY[CONTRACT_COMPLETION_DATE].month,
+          year: POLICY[CONTRACT_COMPLETION_DATE].year,
+        });
 
         const isoCode = application.POLICY[POLICY_CURRENCY_CODE];
 

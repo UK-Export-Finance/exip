@@ -89,9 +89,7 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
       cy.startInsurancePolicySection({});
       cy.clickSubmitButton();
 
-      field.dayInput().should('have.value', '');
-      field.monthInput().should('have.value', '');
-      field.yearInput().should('have.value', '');
+      cy.assertEmptyRequestedStartDateFieldValues({});
     });
   });
 
@@ -121,9 +119,12 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
       cy.startInsurancePolicySection({});
       cy.clickSubmitButton();
 
-      field.dayInput().should('have.value', '1');
-      field.monthInput().should('have.value', month);
-      field.yearInput().should('have.value', new Date(futureDate).getFullYear());
+      cy.checkDateFieldValues({
+        selector: field,
+        day: '1',
+        month,
+        year: new Date(futureDate).getFullYear(),
+      });
     });
   });
 });
