@@ -136,7 +136,10 @@ context('Insurance - Change your answers - Policy - Pre-credit period - Change f
 
           cy.assertNoRadioOptionIsChecked();
 
-          cy.checkValue(field(CREDIT_PERIOD_WITH_BUYER).textarea(), '');
+          cy.checkTextareaValue({
+            fieldId: CREDIT_PERIOD_WITH_BUYER,
+            expectedValue: '',
+          });
         });
       });
     });

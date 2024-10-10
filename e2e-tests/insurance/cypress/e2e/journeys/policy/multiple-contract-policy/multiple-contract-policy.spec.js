@@ -147,11 +147,11 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
       it('should have the submitted values', () => {
         cy.navigateToUrl(url);
 
-        cy.checkValue(fieldSelector(REQUESTED_START_DATE).dayInput(), application.POLICY[REQUESTED_START_DATE].day);
-        cy.checkValue(fieldSelector(REQUESTED_START_DATE).monthInput(), application.POLICY[REQUESTED_START_DATE].month);
-        cy.checkValue(fieldSelector(REQUESTED_START_DATE).yearInput(), application.POLICY[REQUESTED_START_DATE].year);
+        fieldSelector(REQUESTED_START_DATE).dayInput().should('have.value', application.POLICY[REQUESTED_START_DATE].day);
+        fieldSelector(REQUESTED_START_DATE).monthInput().should('have.value', application.POLICY[REQUESTED_START_DATE].month);
+        fieldSelector(REQUESTED_START_DATE).yearInput().should('have.value', application.POLICY[REQUESTED_START_DATE].year);
 
-        cy.checkValue(fieldSelector(TOTAL_MONTHS_OF_COVER).input(), application.POLICY[TOTAL_MONTHS_OF_COVER]);
+        cy.checkValue(fieldSelector(TOTAL_MONTHS_OF_COVER), application.POLICY[TOTAL_MONTHS_OF_COVER]);
 
         const isoCode = application.POLICY[POLICY_CURRENCY_CODE];
 

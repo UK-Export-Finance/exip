@@ -170,7 +170,10 @@ context(
         it('should have the submitted values', () => {
           cy.navigateToUrl(url);
 
-          cy.checkValue(aboutGoodsOrServicesPage[DESCRIPTION].textarea(), application.EXPORT_CONTRACT[DESCRIPTION]);
+          cy.checkTextareaValue({
+            fieldId: DESCRIPTION,
+            expectedValue: application.EXPORT_CONTRACT[DESCRIPTION],
+          });
 
           cy.assertYesRadioOptionIsChecked();
 
@@ -203,7 +206,10 @@ context(
         it('should retain the submitted value when going back to the page', () => {
           cy.clickBackLink();
 
-          cy.checkValue(descriptionField.textarea(), submittedValue);
+          cy.checkTextareaValue({
+            fieldId: DESCRIPTION,
+            expectedValue: submittedValue,
+          });
         });
       });
     });
