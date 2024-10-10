@@ -70,6 +70,7 @@ context('Insurance - Account - Suspended - Verify email - Visit with an expired 
         currentHref: verifyEmailUrl,
         assertBackLink: false,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
         submitButtonCopy: BUTTONS.REACTIVATE_ACCOUNT,
       });
 

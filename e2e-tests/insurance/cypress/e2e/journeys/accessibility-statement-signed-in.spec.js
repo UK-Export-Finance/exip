@@ -29,6 +29,7 @@ context('Accessibility statement page - Insurance - Signed in', () => {
       backLink: dashboardUrl,
       hasAForm: false,
       assertAuthenticatedHeader: true,
+      assertSaveAndBackButtonDoesNotExist: true,
       isInsurancePage: true,
     });
   });

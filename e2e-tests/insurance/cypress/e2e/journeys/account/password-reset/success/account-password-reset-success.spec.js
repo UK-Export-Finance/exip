@@ -66,6 +66,7 @@ context(
             currentHref: successUrl,
             assertBackLink: false,
             assertAuthenticatedHeader: false,
+            assertSaveAndBackButtonDoesNotExist: true,
             hasAForm: false,
           });
 

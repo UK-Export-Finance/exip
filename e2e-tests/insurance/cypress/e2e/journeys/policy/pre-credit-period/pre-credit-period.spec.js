@@ -68,10 +68,6 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    it('renders a `save and back` button', () => {
-      cy.assertSaveAndBackButton();
-    });
-
     describe(`renders ${NEED_PRE_CREDIT_PERIOD} label and inputs`, () => {
       it('renders `yes` and `no` radio buttons in the correct order', () => {
         cy.assertYesNoRadiosOrder({ noRadioFirst: true });

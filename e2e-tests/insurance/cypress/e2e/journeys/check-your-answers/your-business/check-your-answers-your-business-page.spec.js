@@ -62,10 +62,6 @@ context(
         cy.checkTaskStatusCompleted(status);
       });
 
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
-      });
-
       describe('form submission', () => {
         it(`should redirect to ${YOUR_BUYER}`, () => {
           cy.navigateToUrl(url);

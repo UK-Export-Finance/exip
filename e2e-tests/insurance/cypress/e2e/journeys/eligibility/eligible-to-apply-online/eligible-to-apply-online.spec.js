@@ -41,6 +41,7 @@ context(
         backLink: CHECK_YOUR_ANSWERS,
         submitButtonCopy: CONTENT_STRINGS.SUBMIT_BUTTON,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

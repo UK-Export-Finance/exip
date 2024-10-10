@@ -42,6 +42,7 @@ context(
         currentHref: TOTAL_VALUE_INSURED,
         backLink: BUYER_COUNTRY,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

@@ -100,10 +100,6 @@ context(
         const expectedLabel = FIELD_STRINGS[LOCATION].OPTIONS.INTERNATIONAL.TEXT;
         cy.checkText(field.label(), expectedLabel);
       });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
-      });
     });
 
     describe('form submission', () => {

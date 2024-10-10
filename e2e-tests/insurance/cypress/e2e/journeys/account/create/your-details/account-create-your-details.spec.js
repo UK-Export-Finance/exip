@@ -50,6 +50,7 @@ context(
         currentHref: YOUR_DETAILS,
         backLink: HAVE_AN_ACCOUNT,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
         lightHouseThresholds: {
           performance: 70,
         },

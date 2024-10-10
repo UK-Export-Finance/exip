@@ -111,10 +111,6 @@ context(
 
         cy.assertSuffix({ fieldId, value: FIELDS.TURNOVER[fieldId].SUFFIX });
       });
-
-      it('should render save and go back button', () => {
-        cy.assertSaveAndBackButton();
-      });
     });
 
     describe('form submission', () => {

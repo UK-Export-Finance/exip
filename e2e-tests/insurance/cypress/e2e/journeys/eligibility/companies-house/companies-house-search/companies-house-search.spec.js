@@ -49,6 +49,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
       currentHref: ENTER_COMPANIES_HOUSE_NUMBER,
       backLink: COMPANIES_HOUSE_NUMBER,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

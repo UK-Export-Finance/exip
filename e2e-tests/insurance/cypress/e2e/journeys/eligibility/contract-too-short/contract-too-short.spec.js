@@ -31,6 +31,7 @@ context('Insurance - Eligibility - Contract too short page', () => {
       backLink: `${CONTRACT_TOO_SHORT_EXIT}#`,
       currentHref: CONTRACT_TOO_SHORT_EXIT,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       hasAForm: false,
     });
   });

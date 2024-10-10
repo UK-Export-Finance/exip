@@ -42,6 +42,7 @@ context('Insurance - All sections - new application', () => {
       backLink: ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE,
       hasAForm: false,
       assertBackLink: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

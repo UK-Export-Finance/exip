@@ -137,10 +137,6 @@ context(
         field(PHONE_NUMBER).input().should('exist');
         cy.checkAriaLabel(field(PHONE_NUMBER).input(), CONTENT_STRINGS.PHONE_NUMBER);
       });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
-      });
     });
   },
 );

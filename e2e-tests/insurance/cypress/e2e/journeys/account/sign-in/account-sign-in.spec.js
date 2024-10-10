@@ -56,6 +56,7 @@ context(
         currentHref: SIGN_IN_ROOT,
         backLink: YOUR_DETAILS,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
         lightHouseThresholds: {
           performance: 70,
         },

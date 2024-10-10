@@ -29,6 +29,7 @@ context('Insurance Eligibility - check if eligible page', () => {
       currentHref: CHECK_IF_ELIGIBLE,
       backLink: `${CHECK_IF_ELIGIBLE}#`,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

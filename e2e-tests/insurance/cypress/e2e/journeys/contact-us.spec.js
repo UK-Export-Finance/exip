@@ -34,6 +34,7 @@ context('Contact us page - Insurance', () => {
       backLink: ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE,
       hasAForm: false,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       isInsurancePage: true,
     });
   });

@@ -40,6 +40,7 @@ context(
         currentHref: HAVE_AN_ACCOUNT,
         backLink: ELIGIBLE_TO_APPLY_ONLINE,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

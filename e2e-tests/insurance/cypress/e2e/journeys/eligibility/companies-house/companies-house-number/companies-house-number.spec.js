@@ -32,6 +32,7 @@ context(
         currentHref: ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER,
         backLink: ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

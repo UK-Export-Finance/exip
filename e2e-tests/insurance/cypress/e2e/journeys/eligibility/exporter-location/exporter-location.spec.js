@@ -32,6 +32,7 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
       currentHref: EXPORTER_LOCATION,
       backLink: CHECK_IF_ELIGIBLE,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

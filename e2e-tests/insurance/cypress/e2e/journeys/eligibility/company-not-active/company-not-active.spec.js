@@ -33,6 +33,7 @@ context('Insurance - Eligibility - Company not active - I want to check if I can
       currentHref: COMPANY_NOT_ACTIVE_EXIT,
       backLink: ENTER_COMPANIES_HOUSE_NUMBER,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       hasAForm: false,
     });
   });

@@ -43,6 +43,7 @@ context('Cookies page - Insurance', () => {
       backLink: CHECK_IF_ELIGIBLE,
       submitButtonCopy: BUTTONS.SAVE_CHANGES,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       isInsurancePage: true,
     });
   });

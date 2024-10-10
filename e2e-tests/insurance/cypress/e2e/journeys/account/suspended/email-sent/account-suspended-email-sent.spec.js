@@ -59,6 +59,7 @@ context(
             currentHref: EMAIL_SENT,
             backLink: `${SUSPENDED_ROOT}?id=${account.id}`,
             assertAuthenticatedHeader: false,
+            assertSaveAndBackButtonDoesNotExist: true,
             hasAForm: false,
           });
         });

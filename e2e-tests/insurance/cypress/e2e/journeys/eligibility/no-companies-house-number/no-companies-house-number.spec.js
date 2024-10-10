@@ -31,6 +31,7 @@ context('Insurance - Eligibility - You cannot apply for credit insurance page (n
       currentHref: NO_COMPANIES_HOUSE_NUMBER_EXIT,
       assertBackLink: false,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       hasAForm: false,
     });
   });

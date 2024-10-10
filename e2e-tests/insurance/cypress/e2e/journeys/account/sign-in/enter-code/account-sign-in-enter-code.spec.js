@@ -54,6 +54,7 @@ context(
           currentHref: ENTER_CODE,
           backLink: SIGN_IN_ROOT,
           assertAuthenticatedHeader: false,
+          assertSaveAndBackButtonDoesNotExist: true,
         });
       });
 

@@ -88,6 +88,7 @@ context('Insurance - Account - Password reset - expired link page', () => {
         currentHref: EXPIRED_LINK,
         assertBackLink: false,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
         hasAForm: false,
       });
 

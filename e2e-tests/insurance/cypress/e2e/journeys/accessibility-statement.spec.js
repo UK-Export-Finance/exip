@@ -50,6 +50,7 @@ context('Accessibility statement page - Insurance', () => {
       backLink: checkIfEligibleUrl,
       hasAForm: false,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       isInsurancePage: true,
     });
   });

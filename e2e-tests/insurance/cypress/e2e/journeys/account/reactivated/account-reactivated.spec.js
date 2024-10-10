@@ -52,6 +52,7 @@ context('Insurance - Account - Reactivated page', () => {
         currentHref: REACTIVATED_ROOT,
         assertBackLink: false,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
         hasAForm: false,
       });
 

@@ -100,10 +100,6 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
       cy.checkText(field.hint(), CONTRACT_POLICY.MULTIPLE[fieldId].HINT);
       field.input().should('exist');
     });
-
-    it('renders a `save and back` button', () => {
-      cy.assertSaveAndBackButton();
-    });
   });
 
   describe('currency form fields', () => {

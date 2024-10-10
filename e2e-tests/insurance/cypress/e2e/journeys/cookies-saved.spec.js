@@ -42,6 +42,7 @@ context('Cookies saved page - Insurance', () => {
       backLink: COOKIES,
       hasAForm: false,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       isInsurancePage: true,
       assertCookies: false,
     });

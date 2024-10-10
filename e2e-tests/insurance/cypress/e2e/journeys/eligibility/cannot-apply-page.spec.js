@@ -38,6 +38,7 @@ context('Insurance Eligibility - Cannot apply exit page', () => {
       backLink: BUYER_COUNTRY,
       hasAForm: false,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

@@ -115,10 +115,6 @@ context(
           cy.checkLink(brokerPage.link(), APPROVED_BROKER_LIST, CONTENT_STRINGS.LINK_TEXT);
         });
       });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
-      });
     });
 
     describe('form submission', () => {

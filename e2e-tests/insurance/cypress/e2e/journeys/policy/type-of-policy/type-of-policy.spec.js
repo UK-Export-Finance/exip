@@ -88,10 +88,6 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
 
       cy.checkText(multiplePolicyField.hintList.item3(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[2]);
     });
-
-    it('renders a `save and back` button', () => {
-      cy.assertSaveAndBackButton();
-    });
   });
 
   describe('form submission', () => {

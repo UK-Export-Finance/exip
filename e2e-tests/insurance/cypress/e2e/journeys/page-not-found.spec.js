@@ -22,6 +22,7 @@ context('Insurance - page not found', () => {
       hasAForm: false,
       assertBackLink: false,
       assertAuthenticatedHeader: true,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 
