@@ -41,6 +41,7 @@ Cypress.Commands.add('checkTextAndValue', require('./check-text-and-value'));
 Cypress.Commands.add('checkTextareaValue', require('./check-textarea-value'));
 Cypress.Commands.add('checkTypeAttribute', require('./check-type-attribute'));
 Cypress.Commands.add('checkValue', require('./check-value'));
+Cypress.Commands.add('checkDateFieldValues', require('./check-date-field-values'));
 
 Cypress.Commands.add('checkAuthenticatedHeader', require('./check-authenticated-header'));
 

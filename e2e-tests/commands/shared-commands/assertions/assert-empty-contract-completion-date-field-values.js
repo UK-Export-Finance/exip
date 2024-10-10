@@ -12,9 +12,9 @@ const {
  * Assert all CONTRACT_COMPLETION_DATE field values are empty.
  */
 const assertEmptyContractCompletionDateFieldValues = () => {
-  field(CONTRACT_COMPLETION_DATE).dayInput().should('have.value', '');
-  field(CONTRACT_COMPLETION_DATE).monthInput().should('have.value', '');
-  field(CONTRACT_COMPLETION_DATE).yearInput().should('have.value', '');
+  const selector = field(CONTRACT_COMPLETION_DATE);
+
+  cy.checkDateFieldValues({ selector });
 };
 
 export default assertEmptyContractCompletionDateFieldValues;
