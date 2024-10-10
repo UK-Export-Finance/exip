@@ -37,8 +37,6 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, fieldId, e
         const month = date.getMonth() + 1;
         const year = date.getFullYear();
 
-        field.dayInput().clear();
-
         cy.completeDateFormFields({ idPrefix: fieldId, day: null, month, year });
 
         cy.clickSubmitButton();
@@ -55,9 +53,6 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, fieldId, e
        * Check validation errors.
        */
       providedWithoutOtherFields: () => {
-        field.monthInput().clear();
-        field.yearInput().clear();
-
         cy.completeDateFormFields({ idPrefix: fieldId, day: '1', month: null, year: null });
 
         cy.clickSubmitButton();
@@ -116,8 +111,6 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, fieldId, e
        * Check validation errors.
        */
       notProvided: () => {
-        field.monthInput().clear();
-
         cy.completeDateFormFields({ idPrefix: fieldId, day: '1', month: null, year: '2023' });
 
         cy.clickSubmitButton();
@@ -134,9 +127,6 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, fieldId, e
        * Check validation errors.
        */
       providedWithoutOtherFields: () => {
-        field.dayInput().clear();
-        field.yearInput().clear();
-
         cy.completeDateFormFields({ idPrefix: fieldId, day: null, month: '1', year: null });
 
         cy.clickSubmitButton();
@@ -153,9 +143,6 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, fieldId, e
        * Check validation errors.
        */
       notANumber: () => {
-        field.dayInput().clear();
-        field.yearInput().clear();
-
         cy.completeDateFormFields({ idPrefix: fieldId, day: null, month: 'One', year: null });
 
         cy.clickSubmitButton();
@@ -174,8 +161,6 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, fieldId, e
        * Check validation errors.
        */
       notProvided: () => {
-        field.yearInput().clear();
-
         cy.completeDateFormFields({ idPrefix: fieldId, day: '1', month: '2', year: null });
 
         cy.clickSubmitButton();
@@ -192,9 +177,6 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, fieldId, e
        * Check validation errors.
        */
       providedWithoutOtherFields: () => {
-        field.dayInput().clear();
-        field.monthInput().clear();
-
         cy.completeDateFormFields({ idPrefix: fieldId, day: null, month: null, year: '2023' });
 
         cy.clickSubmitButton();
@@ -227,9 +209,6 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, fieldId, e
        * Check validation errors.
        */
       notANumber: () => {
-        field.dayInput().clear();
-        field.monthInput().clear();
-
         cy.completeDateFormFields({ idPrefix: fieldId, day: null, month: null, year: 'One' });
 
         cy.clickSubmitButton();
