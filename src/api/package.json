@@ -23,9 +23,9 @@
     "test": "jest --runInBand --verbose --silent --coverage --config=jest.config.js"
   },
   "dependencies": {
-    "@babel/core": "^7.25.7",
+    "@babel/core": "^7.25.8",
     "@babel/plugin-transform-runtime": "^7.25.7",
-    "@babel/preset-env": "^7.25.7",
+    "@babel/preset-env": "^7.25.8",
     "@babel/preset-typescript": "^7.25.7",
     "@graphql-tools/schema": "^10.0.6",
     "@keystone-6/auth": "^7.0.3",
@@ -35,7 +35,7 @@
     "@types/overload-protection": "^1.2.4",
     "apollo-server-express": "^3.13.0",
     "axios": "^1.7.7",
-    "axios-mock-adapter": "^2.0.0",
+    "axios-mock-adapter": "^2.1.0",
     "date-fns": "^4.1.0",
     "dotenv": "16.4.5",
     "exceljs": "^4.4.0",
