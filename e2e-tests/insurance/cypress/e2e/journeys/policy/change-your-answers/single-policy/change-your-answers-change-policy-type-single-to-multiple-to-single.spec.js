@@ -66,7 +66,7 @@ context('Insurance - Policy - Change your answers - Policy type - single to mult
 
     cy.navigateToUrl(totalContractValueUrl);
 
-    cy.checkValue(field(TOTAL_CONTRACT_VALUE).input(), '');
-    cy.checkValue(field(REQUESTED_CREDIT_LIMIT).input(), '');
+    cy.checkValue(field(TOTAL_CONTRACT_VALUE), '');
+    cy.checkValue(field(REQUESTED_CREDIT_LIMIT), '');
   });
 });

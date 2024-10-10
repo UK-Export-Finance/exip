@@ -17,7 +17,7 @@ import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  EXPORTER_BUSINESS: { TURNOVER_ROOT, CHECK_YOUR_ANSWERS },
+  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_SAVE_AND_BACK: SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
   CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -35,7 +35,13 @@ export const TEMPLATE = TEMPLATES.SHARED_PAGES.CURRENCY;
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY;
 
-export const PAGE_VARIABLES = {
+/**
+ * pageVariables
+ * Page fields and "save and go back" URL
+ * @param {Number} referenceNumber: Application reference number
+ * @returns {Object} Page variables
+ */
+export const pageVariables = (referenceNumber: number) => ({
   FIELDS: {
     CURRENCY_CODE: {
       ID: CURRENCY_CODE,
@@ -45,13 +51,14 @@ export const PAGE_VARIABLES = {
       ID: ALTERNATIVE_CURRENCY_CODE,
     },
   },
-};
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
+});
 
 /**
- * gets the template for Business - Turnover - Alternative currency page
+ * gets the template for Business - Turnover - Currency page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} renders Business - Turnover - Alternative currency page with/without previously submitted details
+ * @returns {Express.Response.render} renders Business - Turnover - Currency page with/without previously submitted details
  */
 export const get = async (req: Request, res: Response) => {
   try {
@@ -60,6 +67,8 @@ export const get = async (req: Request, res: Response) => {
     if (!application) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
+
+    const { referenceNumber } = application;
 
     const { alternativeCurrencies, supportedCurrencies } = await api.keystone.APIM.getCurrencies();
 
@@ -72,7 +81,7 @@ export const get = async (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
       }),
-      ...PAGE_VARIABLES,
+      ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, application.business[TURNOVER_CURRENCY_CODE]),
     });
@@ -85,7 +94,7 @@ export const get = async (req: Request, res: Response) => {
 
 /**
  * post
- * Check Business - Turnover - Alternative currency page validation errors and if successful, redirect to the next part of the flow.
+ * Check Business - Turnover - Currency page validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
@@ -116,7 +125,7 @@ export const post = async (req: Request, res: Response) => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...PAGE_VARIABLES,
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, payload[CURRENCY_CODE]),
         validationErrors,
@@ -151,7 +160,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ROOT}`);
   } catch (error) {
-    console.error('Error posting Business - Turnover currency %O', error);
+    console.error('Error posting business - turnover currency %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

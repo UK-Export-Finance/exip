@@ -1,4 +1,4 @@
-import { summaryList, field } from '../../../../../../../pages/shared';
+import { summaryList } from '../../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../../../../../../constants/routes/insurance';
@@ -104,7 +104,10 @@ context('Insurance - Policy - Change your answers - Pre-credit period - As an ex
 
           cy.assertNoRadioOptionIsChecked();
 
-          cy.checkValue(field(CREDIT_PERIOD_WITH_BUYER).textarea(), '');
+          cy.checkTextareaValue({
+            fieldId: CREDIT_PERIOD_WITH_BUYER,
+            expectedValue: '',
+          });
         });
       });
     });

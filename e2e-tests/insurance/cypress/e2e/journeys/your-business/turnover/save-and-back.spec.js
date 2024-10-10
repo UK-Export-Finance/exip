@@ -76,8 +76,8 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
       // go through 3 business forms.
       cy.clickSubmitButtonMultipleTimes({ count: 3 });
 
-      cy.checkValue(field(ESTIMATED_ANNUAL_TURNOVER).input(), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
-      cy.checkValue(field(PERCENTAGE_TURNOVER).input(), '');
+      cy.checkValue(field(ESTIMATED_ANNUAL_TURNOVER), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
+      cy.checkValue(field(PERCENTAGE_TURNOVER), '');
     });
   });
 
@@ -105,8 +105,8 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
       // go through 2 business forms.
       cy.clickSubmitButtonMultipleTimes({ count: 3 });
 
-      cy.checkValue(field(ESTIMATED_ANNUAL_TURNOVER).input(), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
-      cy.checkValue(field(PERCENTAGE_TURNOVER).input(), application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
+      cy.checkValue(field(ESTIMATED_ANNUAL_TURNOVER), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
+      cy.checkValue(field(PERCENTAGE_TURNOVER), application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
     });
   });
 });
