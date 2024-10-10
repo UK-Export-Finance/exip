@@ -64,10 +64,6 @@ context(
         cy.checkTaskStatusCompleted(status);
       });
 
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
-      });
-
       describe('form submission', () => {
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
           cy.navigateToUrl(url);

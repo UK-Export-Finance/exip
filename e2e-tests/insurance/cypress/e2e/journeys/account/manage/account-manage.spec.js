@@ -87,6 +87,7 @@ context(
             assertBackLink: true,
             hasAForm: false,
             assertAuthenticatedHeader: true,
+            assertSaveAndBackButtonDoesNotExist: true,
           });
         });
 

@@ -67,10 +67,6 @@ context(
       it('renders a heading caption', () => {
         cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
-      });
     });
 
     describe('currency form fields', () => {

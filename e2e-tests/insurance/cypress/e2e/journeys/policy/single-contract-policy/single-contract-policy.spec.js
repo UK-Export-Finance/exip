@@ -101,10 +101,6 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
       field.monthInput().should('exist');
       field.yearInput().should('exist');
     });
-
-    it('renders a `save and back` button', () => {
-      cy.assertSaveAndBackButton();
-    });
   });
 
   describe('currency form fields', () => {

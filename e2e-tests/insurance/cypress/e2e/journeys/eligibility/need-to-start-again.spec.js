@@ -37,6 +37,7 @@ context('Insurance Eligibility - Need to start again exit page', () => {
       assertBackLink: false,
       submitButtonCopy: LINKS.START_AGAIN.TEXT,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

@@ -31,6 +31,7 @@ context('Insurance - Eligibility - Companies details page - I want to check if I
       currentHref: COMPANY_DETAILS,
       backLink: ENTER_COMPANIES_HOUSE_NUMBER,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 
