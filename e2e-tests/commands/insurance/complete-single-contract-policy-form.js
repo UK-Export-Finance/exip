@@ -1,5 +1,5 @@
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
-import { radios, field } from '../../pages/shared';
+import { radios } from '../../pages/shared';
 import application from '../../fixtures/application';
 import { NON_STANDARD_CURRENCY_CODE } from '../../fixtures/currencies';
 
@@ -14,6 +14,8 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
+const { POLICY } = application;
+
 /**
  * completeSingleContractPolicyForm
  * Complete the "single contract policy" form.
@@ -22,13 +24,19 @@ const {
  * @param {Boolean} chooseCurrency: Whether to choose a currency or not
  */
 const completeSingleContractPolicyForm = ({ isoCode = application.POLICY[POLICY_CURRENCY_CODE], alternativeCurrency = false, chooseCurrency = true }) => {
-  cy.keyboardInput(field(REQUESTED_START_DATE).dayInput(), application.POLICY[REQUESTED_START_DATE].day);
-  cy.keyboardInput(field(REQUESTED_START_DATE).monthInput(), application.POLICY[REQUESTED_START_DATE].month);
-  cy.keyboardInput(field(REQUESTED_START_DATE).yearInput(), application.POLICY[REQUESTED_START_DATE].year);
+  cy.completeDateFormFields({
+    idPrefix: REQUESTED_START_DATE,
+    day: POLICY[REQUESTED_START_DATE].day,
+    month: POLICY[REQUESTED_START_DATE].month,
+    year: POLICY[REQUESTED_START_DATE].year,
+  });
 
-  cy.keyboardInput(field(CONTRACT_COMPLETION_DATE).dayInput(), application.POLICY[CONTRACT_COMPLETION_DATE].day);
-  cy.keyboardInput(field(CONTRACT_COMPLETION_DATE).monthInput(), application.POLICY[CONTRACT_COMPLETION_DATE].month);
-  cy.keyboardInput(field(CONTRACT_COMPLETION_DATE).yearInput(), application.POLICY[CONTRACT_COMPLETION_DATE].year);
+  cy.completeDateFormFields({
+    idPrefix: CONTRACT_COMPLETION_DATE,
+    day: POLICY[CONTRACT_COMPLETION_DATE].day,
+    month: POLICY[CONTRACT_COMPLETION_DATE].month,
+    year: POLICY[CONTRACT_COMPLETION_DATE].year,
+  });
 
   if (chooseCurrency) {
     if (alternativeCurrency) {

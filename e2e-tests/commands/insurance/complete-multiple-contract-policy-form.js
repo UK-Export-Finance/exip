@@ -14,6 +14,8 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
+const { day, month, year } = application.POLICY[REQUESTED_START_DATE];
+
 /**
  * completeMultipleContractPolicyForm
  * Complete the "multiple contract policy" form
@@ -22,9 +24,7 @@ const {
  * @param {Boolean} chooseCurrency: Whether to choose a currency or not
  */
 const completeMultipleContractPolicyForm = ({ isoCode = application.POLICY[POLICY_CURRENCY_CODE], alternativeCurrency = false, chooseCurrency = true }) => {
-  cy.keyboardInput(field(REQUESTED_START_DATE).dayInput(), application.POLICY[REQUESTED_START_DATE].day);
-  cy.keyboardInput(field(REQUESTED_START_DATE).monthInput(), application.POLICY[REQUESTED_START_DATE].month);
-  cy.keyboardInput(field(REQUESTED_START_DATE).yearInput(), application.POLICY[REQUESTED_START_DATE].year);
+  cy.completeDateFormFields({ idPrefix: REQUESTED_START_DATE, day, month, year });
 
   cy.keyboardInput(field(TOTAL_MONTHS_OF_COVER).input(), application.POLICY[TOTAL_MONTHS_OF_COVER]);
 
