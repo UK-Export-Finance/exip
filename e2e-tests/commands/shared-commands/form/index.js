@@ -2,6 +2,8 @@ Cypress.Commands.add('changeAnswerField', require('./change-answer-field'));
 Cypress.Commands.add('changeAnswerSelectField', require('./change-answer-select-field'));
 Cypress.Commands.add('changeAnswerRadioField', require('./change-answer-radio-field'));
 
+Cypress.Commands.add('completeDateFormFields', require('./complete-date-form-fields'));
+
 Cypress.Commands.add('completeAlternativeCurrencyField', require('./complete-alternative-currency-field'));
 Cypress.Commands.add('clickAlternativeCurrencyRadioAndCompleteCurrency', require('./click-alternative-currency-radio-and-complete-currency'));
 Cypress.Commands.add('clickAlternativeCurrencyRadioAndSubmitCurrency', require('./click-alternative-currency-radio-and-submit-currency'));
