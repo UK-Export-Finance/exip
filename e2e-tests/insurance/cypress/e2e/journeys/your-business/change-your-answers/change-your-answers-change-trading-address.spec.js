@@ -6,7 +6,7 @@ import application from '../../../../../../fixtures/application';
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { TRADING_ADDRESS },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_ADDRESS },
     ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
   },
 } = INSURANCE_FIELD_IDS;
@@ -19,7 +19,7 @@ const {
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  `Insurance - Your business - Change your answers - ${TRADING_ADDRESS} and ${FULL_ADDRESS} - As an exporter, I want to change my answers to the trading address / alternative trading address sections`,
+  `Insurance - Your business - Change your answers - ${HAS_DIFFERENT_TRADING_ADDRESS} and ${FULL_ADDRESS} - As an exporter, I want to change my answers to the trading address / alternative trading address sections`,
   () => {
     let referenceNumber;
     let url;
@@ -44,8 +44,8 @@ context(
       cy.deleteApplication(referenceNumber);
     });
 
-    describe(`do NOT change any answers (${TRADING_ADDRESS} remains as ${FIELD_VALUES.NO})`, () => {
-      const fieldId = TRADING_ADDRESS;
+    describe(`do NOT change any answers (${HAS_DIFFERENT_TRADING_ADDRESS} remains as ${FIELD_VALUES.NO})`, () => {
+      const fieldId = HAS_DIFFERENT_TRADING_ADDRESS;
 
       beforeEach(() => {
         cy.navigateToUrl(url);
@@ -60,8 +60,8 @@ context(
       });
     });
 
-    describe(`change ${TRADING_ADDRESS} from ${FIELD_VALUES.NO} to ${FIELD_VALUES.YES}`, () => {
-      const fieldId = TRADING_ADDRESS;
+    describe(`change ${HAS_DIFFERENT_TRADING_ADDRESS} from ${FIELD_VALUES.NO} to ${FIELD_VALUES.YES}`, () => {
+      const fieldId = HAS_DIFFERENT_TRADING_ADDRESS;
 
       describe('when clicking the `change` link', () => {
         it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
@@ -96,7 +96,7 @@ context(
     });
 
     describe(`change ${FULL_ADDRESS}`, () => {
-      const fieldId = TRADING_ADDRESS;
+      const fieldId = HAS_DIFFERENT_TRADING_ADDRESS;
       const newAnswer = 'Mock address 2';
 
       describe('when clicking the `change` link', () => {
@@ -131,8 +131,8 @@ context(
       });
     });
 
-    describe(`change ${TRADING_ADDRESS} from ${FIELD_VALUES.YES} to ${FIELD_VALUES.NO}`, () => {
-      const fieldId = TRADING_ADDRESS;
+    describe(`change ${HAS_DIFFERENT_TRADING_ADDRESS} from ${FIELD_VALUES.YES} to ${FIELD_VALUES.NO}`, () => {
+      const fieldId = HAS_DIFFERENT_TRADING_ADDRESS;
 
       describe('when clicking the `change` link', () => {
         it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {

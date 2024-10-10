@@ -5,7 +5,7 @@ import { mockApplication, mockSpyPromiseRejection } from '../../../../../test-mo
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, HAS_DIFFERENT_TRADING_ADDRESS, PHONE_NUMBER },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -15,7 +15,7 @@ describe('controllers/insurance/business/save-data/company-details - API error',
 
   const mockFormBody = {
     [HAS_DIFFERENT_TRADING_NAME]: 'true',
-    [TRADING_ADDRESS]: 'false',
+    [HAS_DIFFERENT_TRADING_ADDRESS]: 'false',
     [PHONE_NUMBER]: '*99',
   };
 

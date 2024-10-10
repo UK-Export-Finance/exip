@@ -32,7 +32,7 @@ const {
     HAS_CREDIT_CONTROL,
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER },
-    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, PHONE_NUMBER, TRADING_ADDRESS, WEBSITE },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, PHONE_NUMBER, HAS_DIFFERENT_TRADING_ADDRESS, WEBSITE },
   },
   POLICY: {
     BROKER_DETAILS: { NAME: BROKER_NAME, EMAIL: BROKER_EMAIL, FULL_ADDRESS: BROKER_ADDRESS },
@@ -172,7 +172,7 @@ export const XLSX = {
     [TOTAL_MONTHS_OF_COVER]: 'Requested length of insurance',
     [TOTAL_OUTSTANDING_PAYMENTS]: 'Total outstanding payments',
     [TOTAL_SALES_TO_BUYER]: 'Total sales estimate',
-    [TRADING_ADDRESS]: 'Different trading address?',
+    [HAS_DIFFERENT_TRADING_ADDRESS]: 'Different trading address?',
     [TRADED_WITH_BUYER]: 'Has the exporter traded with this buyer before?',
     [USING_BROKER]: 'Using a broker for this insurance?',
     [WEBSITE]: 'Exporter Company website (optional)',

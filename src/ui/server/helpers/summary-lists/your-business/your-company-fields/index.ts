@@ -21,7 +21,7 @@ const {
 const {
   EXPORTER_BUSINESS: {
     ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
-    YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_ADDRESS },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_ADDRESS },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -56,12 +56,18 @@ const generateYourCompanyFields = (answers: ApplicationCompany, referenceNumber:
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS.COMPANY_DETAILS, TRADING_ADDRESS),
+        field: getFieldById(FIELDS.COMPANY_DETAILS, HAS_DIFFERENT_TRADING_ADDRESS),
         data: answers,
-        href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${TRADING_ADDRESS}-label`, referenceNumber, checkAndChange),
+        href: generateChangeLink(
+          COMPANY_DETAILS_CHANGE,
+          COMPANY_DETAILS_CHECK_AND_CHANGE,
+          `#${HAS_DIFFERENT_TRADING_ADDRESS}-label`,
+          referenceNumber,
+          checkAndChange,
+        ),
         renderChangeLink: true,
       },
-      mapYesAlternateField(answers[TRADING_ADDRESS], addressHtmlString),
+      mapYesAlternateField(answers[HAS_DIFFERENT_TRADING_ADDRESS], addressHtmlString),
     ),
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_DETAILS, WEBSITE),

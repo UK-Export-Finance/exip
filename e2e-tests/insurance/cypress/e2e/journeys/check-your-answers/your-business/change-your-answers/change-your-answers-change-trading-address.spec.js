@@ -12,7 +12,7 @@ const {
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { TRADING_ADDRESS },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_ADDRESS },
     ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
   },
 } = INSURANCE_FIELD_IDS;
@@ -29,7 +29,7 @@ const getFieldVariables = (fieldId, referenceNumber, route = COMPANY_DETAILS_CHE
   changeLink: summaryList.field(fieldId).changeLink,
 });
 
-context(`Insurance - Change your answers - ${TRADING_ADDRESS} and ${FULL_ADDRESS} - Your business - Change your answers`, () => {
+context(`Insurance - Change your answers - ${HAS_DIFFERENT_TRADING_ADDRESS} and ${FULL_ADDRESS} - Your business - Change your answers`, () => {
   let referenceNumber;
   let url;
 
@@ -57,8 +57,8 @@ context(`Insurance - Change your answers - ${TRADING_ADDRESS} and ${FULL_ADDRESS
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(`do NOT change any answers (${TRADING_ADDRESS} remains as ${FIELD_VALUES.NO})`, () => {
-    const fieldId = TRADING_ADDRESS;
+  describe(`do NOT change any answers (${HAS_DIFFERENT_TRADING_ADDRESS} remains as ${FIELD_VALUES.NO})`, () => {
+    const fieldId = HAS_DIFFERENT_TRADING_ADDRESS;
 
     describe('form submission with a new answer', () => {
       beforeEach(() => {
@@ -77,8 +77,8 @@ context(`Insurance - Change your answers - ${TRADING_ADDRESS} and ${FULL_ADDRESS
     });
   });
 
-  describe(`change ${TRADING_ADDRESS} from ${FIELD_VALUES.NO} to ${FIELD_VALUES.YES}`, () => {
-    const fieldId = TRADING_ADDRESS;
+  describe(`change ${HAS_DIFFERENT_TRADING_ADDRESS} from ${FIELD_VALUES.NO} to ${FIELD_VALUES.YES}`, () => {
+    const fieldId = HAS_DIFFERENT_TRADING_ADDRESS;
 
     let fieldVariables = getFieldVariables(fieldId, referenceNumber, COMPANY_DETAILS_CHECK_AND_CHANGE);
 
@@ -124,7 +124,7 @@ context(`Insurance - Change your answers - ${TRADING_ADDRESS} and ${FULL_ADDRESS
   });
 
   describe(`change ${FULL_ADDRESS}`, () => {
-    const fieldId = TRADING_ADDRESS;
+    const fieldId = HAS_DIFFERENT_TRADING_ADDRESS;
     const newAnswer = 'Mock address 2';
 
     describe('when clicking the `change` link', () => {
@@ -161,8 +161,8 @@ context(`Insurance - Change your answers - ${TRADING_ADDRESS} and ${FULL_ADDRESS
     });
   });
 
-  describe(`change ${TRADING_ADDRESS} from ${FIELD_VALUES.YES} to ${FIELD_VALUES.NO}`, () => {
-    const fieldId = TRADING_ADDRESS;
+  describe(`change ${HAS_DIFFERENT_TRADING_ADDRESS} from ${FIELD_VALUES.YES} to ${FIELD_VALUES.NO}`, () => {
+    const fieldId = HAS_DIFFERENT_TRADING_ADDRESS;
 
     let fieldVariables = getFieldVariables(fieldId, referenceNumber, COMPANY_DETAILS_CHECK_AND_CHANGE);
 

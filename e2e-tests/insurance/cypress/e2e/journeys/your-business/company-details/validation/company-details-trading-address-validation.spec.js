@@ -4,7 +4,7 @@ import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { TRADING_ADDRESS },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_ADDRESS },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -44,8 +44,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should display validation errors if ${TRADING_ADDRESS} is left empty`, () => {
-    const field = companyDetails[TRADING_ADDRESS];
+  it(`should display validation errors if ${HAS_DIFFERENT_TRADING_ADDRESS} is left empty`, () => {
+    const field = companyDetails[HAS_DIFFERENT_TRADING_ADDRESS];
 
     const radioField = {
       ...field,
@@ -54,7 +54,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     cy.submitAndAssertRadioErrors({
       field: radioField,
-      expectedErrorMessage: COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY,
+      expectedErrorMessage: COMPANY_DETAILS_ERRORS[HAS_DIFFERENT_TRADING_ADDRESS].IS_EMPTY,
     });
   });
 });

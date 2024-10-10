@@ -3,7 +3,7 @@ export const EXPORTER_BUSINESS = {
     ADDRESS: 'address',
     YOUR_BUSINESS: 'yourBusiness',
     HAS_DIFFERENT_TRADING_NAME: 'hasDifferentTradingName',
-    TRADING_ADDRESS: 'hasDifferentTradingAddress',
+    HAS_DIFFERENT_TRADING_ADDRESS: 'hasDifferentTradingAddress',
     WEBSITE: 'companyWebsite',
     PHONE_NUMBER: 'phoneNumber',
     DIFFERENT_TRADING_NAME: 'differentTradingName',

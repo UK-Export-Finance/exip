@@ -7,7 +7,7 @@ import { mockErrors } from '../../../../../../../test-mocks';
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { TRADING_ADDRESS: FIELD_ID },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_ADDRESS: FIELD_ID },
   },
 } = INSURANCE_FIELD_IDS;
 

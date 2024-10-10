@@ -7,7 +7,7 @@ import { mockApplication, mockSpyPromise, mockSpyPromiseRejection } from '../../
 const {
   COMPANIES_HOUSE: { COMPANY_NUMBER },
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, HAS_DIFFERENT_TRADING_ADDRESS, PHONE_NUMBER },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -17,7 +17,7 @@ describe('controllers/insurance/business/map-and-save/company-details - API erro
   const mockFormBody = {
     _csrf: '1234',
     [HAS_DIFFERENT_TRADING_NAME]: 'true',
-    [TRADING_ADDRESS]: 'false',
+    [HAS_DIFFERENT_TRADING_ADDRESS]: 'false',
     [PHONE_NUMBER]: '*99',
     [COMPANY_NUMBER]: mockApplication.company.companyNumber,
   };

@@ -14,7 +14,7 @@ import { Application, Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockPhoneNumbers, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const {
-  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_NAME },
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, HAS_DIFFERENT_TRADING_ADDRESS, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_NAME },
 } = BUSINESS_FIELD_IDS;
 
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
@@ -70,7 +70,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_NAME];
+      const expected = [HAS_DIFFERENT_TRADING_NAME, HAS_DIFFERENT_TRADING_ADDRESS, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_NAME];
 
       expect(FIELD_IDS).toEqual(expected);
     });
@@ -111,7 +111,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
       const submittedValues = {
         [HAS_DIFFERENT_TRADING_NAME]: company?.[HAS_DIFFERENT_TRADING_NAME],
-        [TRADING_ADDRESS]: company?.[TRADING_ADDRESS],
+        [HAS_DIFFERENT_TRADING_ADDRESS]: company?.[HAS_DIFFERENT_TRADING_ADDRESS],
         [WEBSITE]: company?.[WEBSITE],
         [PHONE_NUMBER]: company?.[PHONE_NUMBER],
         [DIFFERENT_TRADING_NAME]: company?.[DIFFERENT_TRADING_NAME],
@@ -148,7 +148,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
     const validBody = {
       [HAS_DIFFERENT_TRADING_NAME]: 'true',
-      [TRADING_ADDRESS]: 'false',
+      [HAS_DIFFERENT_TRADING_ADDRESS]: 'false',
       [PHONE_NUMBER]: VALID_PHONE_NUMBERS.LANDLINE,
       [DIFFERENT_TRADING_NAME]: 'test',
     };
@@ -163,7 +163,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
         const expectedSubmittedValues = {
           [HAS_DIFFERENT_TRADING_NAME]: sanitiseValue({ key: HAS_DIFFERENT_TRADING_NAME, value: payload[HAS_DIFFERENT_TRADING_NAME] }),
-          [TRADING_ADDRESS]: sanitiseValue({ key: TRADING_ADDRESS, value: payload[TRADING_ADDRESS] }),
+          [HAS_DIFFERENT_TRADING_ADDRESS]: sanitiseValue({ key: HAS_DIFFERENT_TRADING_ADDRESS, value: payload[HAS_DIFFERENT_TRADING_ADDRESS] }),
           [WEBSITE]: payload[WEBSITE],
           [PHONE_NUMBER]: payload[PHONE_NUMBER],
           [DIFFERENT_TRADING_NAME]: payload[DIFFERENT_TRADING_NAME],
@@ -219,12 +219,12 @@ describe('controllers/insurance/business/companies-details', () => {
           res.locals.application = applicationWithoutDifferentTradingAddress;
         });
 
-        describe(`when req.body has ${TRADING_ADDRESS} with a value of 'true'`, () => {
+        describe(`when req.body has ${HAS_DIFFERENT_TRADING_ADDRESS} with a value of 'true'`, () => {
           describe('when the route is NOT a check or check-and-change route', () => {
             it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_ROOT}`, async () => {
               req.body = {
                 ...validBody,
-                [TRADING_ADDRESS]: 'true',
+                [HAS_DIFFERENT_TRADING_ADDRESS]: 'true',
               };
 
               await post(req, res);
@@ -238,7 +238,7 @@ describe('controllers/insurance/business/companies-details', () => {
             it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_CHANGE}`, async () => {
               req.body = {
                 ...validBody,
-                [TRADING_ADDRESS]: 'true',
+                [HAS_DIFFERENT_TRADING_ADDRESS]: 'true',
               };
 
               req.originalUrl = COMPANY_DETAILS_CHANGE;
@@ -254,7 +254,7 @@ describe('controllers/insurance/business/companies-details', () => {
             it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE}`, async () => {
               req.body = {
                 ...validBody,
-                [TRADING_ADDRESS]: 'true',
+                [HAS_DIFFERENT_TRADING_ADDRESS]: 'true',
               };
 
               req.originalUrl = COMPANY_DETAILS_CHECK_AND_CHANGE;
@@ -272,7 +272,7 @@ describe('controllers/insurance/business/companies-details', () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
           req.body = {
             ...validBody,
-            [TRADING_ADDRESS]: 'false',
+            [HAS_DIFFERENT_TRADING_ADDRESS]: 'false',
           };
 
           req.originalUrl = COMPANY_DETAILS_CHANGE;
@@ -288,7 +288,7 @@ describe('controllers/insurance/business/companies-details', () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
           req.body = {
             ...validBody,
-            [TRADING_ADDRESS]: 'false',
+            [HAS_DIFFERENT_TRADING_ADDRESS]: 'false',
           };
 
           req.originalUrl = COMPANY_DETAILS_CHECK_AND_CHANGE;

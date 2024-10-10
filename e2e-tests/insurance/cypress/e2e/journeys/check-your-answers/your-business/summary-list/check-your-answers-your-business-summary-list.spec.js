@@ -8,7 +8,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER },
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER, TURNOVER_CURRENCY_CODE },
   HAS_CREDIT_CONTROL,
@@ -48,8 +48,8 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
     checkSummaryList[HAS_DIFFERENT_TRADING_NAME]({});
   });
 
-  it(`should render a ${TRADING_ADDRESS} summary list row`, () => {
-    checkSummaryList[TRADING_ADDRESS]({});
+  it(`should render a ${HAS_DIFFERENT_TRADING_ADDRESS} summary list row`, () => {
+    checkSummaryList[HAS_DIFFERENT_TRADING_ADDRESS]({});
   });
 
   it(`should render a ${WEBSITE} summary list row`, () => {

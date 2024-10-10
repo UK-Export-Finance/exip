@@ -9,7 +9,7 @@ import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 const {
   COMPANIES_HOUSE: { COMPANY_NUMBER },
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, HAS_DIFFERENT_TRADING_ADDRESS, PHONE_NUMBER },
     ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
   },
 } = INSURANCE_FIELD_IDS;
@@ -21,7 +21,7 @@ describe('controllers/insurance/business/map-and-save/company-details', () => {
   let mockFormBody = {
     _csrf: '1234',
     [HAS_DIFFERENT_TRADING_NAME]: 'true',
-    [TRADING_ADDRESS]: 'true',
+    [HAS_DIFFERENT_TRADING_ADDRESS]: 'true',
     [FULL_ADDRESS]: 'Mock address',
     [PHONE_NUMBER]: '*99',
     [COMPANY_NUMBER]: mockApplication.company.companyNumber,
@@ -35,7 +35,7 @@ describe('controllers/insurance/business/map-and-save/company-details', () => {
 
   const mockValidationErrors = generateValidationErrors(PHONE_NUMBER, 'error', {});
 
-  describe('when the form has data, TRADING_ADDRESS=true, has FULL_ADDRESS', () => {
+  describe('when the form has data, HAS_DIFFERENT_TRADING_ADDRESS=true, has FULL_ADDRESS', () => {
     describe('when the form has validation errors', () => {
       it('should call saveCompany.companyDetails with application, mapped submitted data and validationErrors.errorList', async () => {
         await mapAndSave.companyDetails(mockFormBody, mockApplication, mockValidationErrors);

@@ -3,7 +3,7 @@ import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/bus
 import { RequestBody } from '../../../../../../types';
 
 const {
-  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, TRADING_ADDRESS },
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, HAS_DIFFERENT_TRADING_ADDRESS },
 } = BUSINESS_FIELD_IDS;
 
 describe('controllers/insurance/business/map-submitted-data/company-details', () => {
@@ -13,11 +13,11 @@ describe('controllers/insurance/business/map-submitted-data/company-details', ()
     mockFormBody = {
       [HAS_DIFFERENT_TRADING_NAME]: 'true',
       [DIFFERENT_TRADING_NAME]: 'test',
-      [TRADING_ADDRESS]: 'false',
+      [HAS_DIFFERENT_TRADING_ADDRESS]: 'false',
     };
   });
 
-  describe(`when ${HAS_DIFFERENT_TRADING_NAME} is true and ${TRADING_ADDRESS} is populated`, () => {
+  describe(`when ${HAS_DIFFERENT_TRADING_NAME} is true and ${HAS_DIFFERENT_TRADING_ADDRESS} is populated`, () => {
     it('should return mockFormBody', () => {
       const response = mapSubmittedData(mockFormBody);
 
@@ -48,16 +48,16 @@ describe('controllers/insurance/business/map-submitted-data/company-details', ()
 
       const expected = {
         [DIFFERENT_TRADING_NAME]: 'test',
-        [TRADING_ADDRESS]: 'false',
+        [HAS_DIFFERENT_TRADING_ADDRESS]: 'false',
       };
 
       expect(response).toEqual(expected);
     });
   });
 
-  describe(`when ${TRADING_ADDRESS} is an empty string`, () => {
-    it(`should remove ${TRADING_ADDRESS}`, () => {
-      mockFormBody[TRADING_ADDRESS] = '';
+  describe(`when ${HAS_DIFFERENT_TRADING_ADDRESS} is an empty string`, () => {
+    it(`should remove ${HAS_DIFFERENT_TRADING_ADDRESS}`, () => {
+      mockFormBody[HAS_DIFFERENT_TRADING_ADDRESS] = '';
 
       const response = mapSubmittedData(mockFormBody);
 
