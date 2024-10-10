@@ -3,6 +3,7 @@ import { ROUTES, TEMPLATES } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
 import api from '../../../../api';
+import { isPopulatedArray } from '../../../../helpers/array';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { exportContractSummaryLists } from '../../../../helpers/summary-lists/export-contract';
@@ -67,12 +68,19 @@ export const get = async (req: Request, res: Response) => {
 
     const countries = await api.keystone.countries.getAll();
 
+    const { allCurrencies } = await api.keystone.APIM.getCurrencies();
+
+    if (!isPopulatedArray(countries) || !isPopulatedArray(allCurrencies)) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
     const summaryList = exportContractSummaryLists({
       exportContract,
       totalContractValueOverThreshold,
       migratedV1toV2,
       referenceNumber,
       countries,
+      currencies: allCurrencies,
       checkAndChange,
     });
 

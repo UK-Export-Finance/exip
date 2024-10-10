@@ -45,7 +45,7 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.OUTSTANDING_OR_OV
 /**
  * pageVariables for outstanding-or-overdue page
  * @param {Number} referenceNumber: Application reference number
- * @param {Array<Currency>} currencies: Array of currencies
+ * @param {Array<Currency>} currencies: Currencies
  * @param {String} currencyCode: Provided currency code
  * @param {Boolean} changeRoute: req.originalUrl is a change route
  * @param {Boolean} checkAndChangeRoute: req.originalUrl is a check-and-change route
