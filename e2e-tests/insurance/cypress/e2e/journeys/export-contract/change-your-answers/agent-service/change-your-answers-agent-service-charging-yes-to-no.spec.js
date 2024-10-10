@@ -1,18 +1,22 @@
-import { autoCompleteField, field, summaryList } from '../../../../../../../pages/shared';
+import { autoCompleteField, field, radios, summaryList } from '../../../../../../../pages/shared';
 import { agentChargesPage } from '../../../../../../../pages/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import checkSummaryList from '../../../../../../../commands/insurance/check-export-contract-summary-list';
+import { GBP } from '../../../../../../../fixtures/currencies';
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_SERVICE_CHANGE, AGENT_CHARGES },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_SERVICE_CHANGE, AGENT_CHARGES, AGENT_CHARGES_CURRENCY, HOW_MUCH_THE_AGENT_IS_CHARGING },
 } = INSURANCE_ROUTES;
 
 const {
-  AGENT_SERVICE: { IS_CHARGING: FIELD_ID },
-  AGENT_CHARGES: { FIXED_SUM, FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, METHOD, PAYABLE_COUNTRY_CODE, PERCENTAGE },
-} = FIELD_IDS;
+  CURRENCY: { CURRENCY_CODE },
+  EXPORT_CONTRACT: {
+    AGENT_SERVICE: { IS_CHARGING: FIELD_ID },
+    AGENT_CHARGES: { FIXED_SUM, FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, METHOD, PAYABLE_COUNTRY_CODE, PERCENTAGE },
+  },
+} = INSURANCE_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -79,21 +83,35 @@ context(
           checkSummaryList[PAYABLE_COUNTRY_CODE]({ shouldRender: false });
         });
 
-        describe(`when changing the answer again from no to yes and going back to ${AGENT_CHARGES}`, () => {
-          it('should have an empty values', () => {
+        describe(`when changing the answer again from no to yes and going back to ${AGENT_CHARGES}, ${AGENT_CHARGES_CURRENCY} and ${HOW_MUCH_THE_AGENT_IS_CHARGING}`, () => {
+          it('should have empty field values', () => {
             summaryList.field(FIELD_ID).changeLink().click();
 
             cy.completeAndSubmitAgentServiceForm({
               agentIsCharging: true,
             });
 
+            // assert AGENT_CHARGES field values.
             cy.assertRadioOptionIsNotChecked(agentChargesPage[METHOD][FIXED_SUM].input());
             cy.assertRadioOptionIsNotChecked(agentChargesPage[METHOD][PERCENTAGE].input());
 
-            cy.checkValue(field(FIXED_SUM_AMOUNT), '');
-
             cy.checkValue(field(PERCENTAGE_CHARGE), '');
             cy.checkValue(autoCompleteField(PAYABLE_COUNTRY_CODE), '');
+
+            cy.completeAndSubmitAgentChargesForm({ fixedSumMethod: true });
+
+            /**
+             * Assert AGENT_CHARGES_CURRENCY field values.
+             * GBP radio option should be checked by default.
+             */
+            const { option } = radios(CURRENCY_CODE, GBP.isoCode);
+
+            cy.assertRadioOptionIsChecked(option.input());
+
+            cy.completeAndSubmitAlternativeCurrencyForm({});
+
+            // assert HOW_MUCH_THE_AGENT_IS_CHARGING field values.
+            cy.checkValue(field(FIXED_SUM_AMOUNT), '');
           });
         });
       });

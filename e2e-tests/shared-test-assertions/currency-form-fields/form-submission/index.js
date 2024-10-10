@@ -16,7 +16,6 @@ const { ALL_SECTIONS } = INSURANCE_ROUTES;
  * @param {Function} submitAlternativeCurrencyAndAssertUrl: Submit an alternative currency and assert the URL.
  * @param {Function} submitAlternativeCurrencyAndAssertInput: Submit an alternative currency and assert the input.
  * @param {Function} completeNonCurrencyFieldsFunction: Optional function to complete non-currency form fields.
- * @param {Boolean} hasSaveAndBack: Temporary Flag for if the form has "save and back" functionality
  * @returns {Object} Object with Mocha describe blocks and assertions for particular scenarios.
  */
 const formSubmissionAssertions = ({
@@ -28,7 +27,6 @@ const formSubmissionAssertions = ({
   submitAlternativeCurrencyAndAssertUrl,
   submitAlternativeCurrencyAndAssertInput,
   completeNonCurrencyFieldsFunction,
-  hasSaveAndBack,
 }) => {
   const executeTests = () => {
     describe('currency form fields - form submission', () => {
@@ -37,9 +35,9 @@ const formSubmissionAssertions = ({
 
         submitASupportedCurrency({
           completeNonCurrencyFieldsFunction,
+          expectedRedirectUrl,
           submitRadioAndAssertUrl,
           submitAndAssertRadioIsChecked,
-          expectedRedirectUrl,
         });
 
         submitAlternativeCurrency({
@@ -49,24 +47,22 @@ const formSubmissionAssertions = ({
         });
       });
 
-      if (hasSaveAndBack) {
-        describe('via `save and back` button', () => {
-          submitASupportedCurrency({
-            completeNonCurrencyFieldsFunction,
-            submitRadioAndAssertUrl,
-            submitAndAssertRadioIsChecked,
-            expectedRedirectUrl: ALL_SECTIONS,
-            viaSaveAndBack: true,
-          });
-
-          submitAlternativeCurrency({
-            expectedRedirectUrl: ALL_SECTIONS,
-            submitAlternativeCurrencyAndAssertUrl,
-            submitAlternativeCurrencyAndAssertInput,
-            viaSaveAndBack: true,
-          });
+      describe('via `save and back` button', () => {
+        submitASupportedCurrency({
+          completeNonCurrencyFieldsFunction,
+          expectedRedirectUrl: ALL_SECTIONS,
+          submitRadioAndAssertUrl,
+          submitAndAssertRadioIsChecked,
+          viaSaveAndBack: true,
         });
-      }
+
+        submitAlternativeCurrency({
+          expectedRedirectUrl: ALL_SECTIONS,
+          submitAlternativeCurrencyAndAssertUrl,
+          submitAlternativeCurrencyAndAssertInput,
+          viaSaveAndBack: true,
+        });
+      });
     });
   };
 

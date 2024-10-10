@@ -1,4 +1,4 @@
-import { PAGE_VARIABLES, TEMPLATE, FIELD_IDS, PAGE_CONTENT_STRINGS, get, post } from '.';
+import { pageVariables, TEMPLATE, FIELD_IDS, PAGE_CONTENT_STRINGS, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -25,7 +25,7 @@ import {
 
 const {
   INSURANCE_ROOT,
-  EXPORTER_BUSINESS: { TURNOVER_ROOT, CHECK_YOUR_ANSWERS, TURNOVER_CURRENCY_CHANGE, TURNOVER_CURRENCY_CHECK_AND_CHANGE },
+  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_SAVE_AND_BACK: SAVE_AND_BACK, TURNOVER_CURRENCY_CHANGE, TURNOVER_CURRENCY_CHECK_AND_CHANGE, CHECK_YOUR_ANSWERS },
   CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -58,7 +58,7 @@ describe('controllers/insurance/business/turnover-currency', () => {
     jest.resetAllMocks();
   });
 
-  describe('PAGE_VARIABLES', () => {
+  describe('pageVariables', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELDS: {
@@ -70,9 +70,10 @@ describe('controllers/insurance/business/turnover-currency', () => {
             ID: ALTERNATIVE_CURRENCY_CODE,
           },
         },
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
       };
 
-      expect(PAGE_VARIABLES).toEqual(expected);
+      expect(pageVariables(referenceNumber)).toEqual(expected);
     });
   });
 
@@ -111,7 +112,7 @@ describe('controllers/insurance/business/turnover-currency', () => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...PAGE_VARIABLES,
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, mockApplication.business[TURNOVER_CURRENCY_CODE]),
       });
@@ -191,7 +192,7 @@ describe('controllers/insurance/business/turnover-currency', () => {
             PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
           }),
-          ...PAGE_VARIABLES,
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, ''),
           validationErrors,

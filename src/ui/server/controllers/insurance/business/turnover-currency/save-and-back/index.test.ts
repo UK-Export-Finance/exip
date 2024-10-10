@@ -1,29 +1,28 @@
+import { FIELD_IDS } from '..';
 import { post } from '.';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
-import { FIELD_IDS } from '..';
 import constructPayload from '../../../../../helpers/construct-payload';
-import mapAndSave from '../../map-and-save/export-contract-agent-service-charge';
 import generateValidationErrors from '../validation';
+import mapAndSave from '../../map-and-save/turnover';
 import { Request, Response } from '../../../../../../types';
 import { EUR, mockReq, mockRes, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
-
-const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 const {
   CURRENCY: { CURRENCY_CODE },
 } = INSURANCE_FIELD_IDS;
 
-describe('controllers/insurance/export-contract/currency-of-agents-charge/save-and-back', () => {
+const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+
+describe('controllers/insurance/business/turnover-currency/save-and-back', () => {
   let req: Request;
   let res: Response;
 
-  jest.mock('../../map-and-save/export-contract-agent-service-charge');
+  jest.mock('../../map-and-save/turnover');
 
   let mapAndSaveSpy = jest.fn(() => Promise.resolve(true));
 
   const mockFormBody = {
-    _csrf: '1234',
     [CURRENCY_CODE]: EUR.isoCode,
   };
 
@@ -33,7 +32,11 @@ describe('controllers/insurance/export-contract/currency-of-agents-charge/save-a
 
     req.body = mockFormBody;
 
-    mapAndSave.exportContractAgentServiceCharge = mapAndSaveSpy;
+    mapAndSave.turnover = mapAndSaveSpy;
+  });
+
+  afterAll(() => {
+    jest.resetAllMocks();
   });
 
   describe('when the form has data', () => {
@@ -41,22 +44,22 @@ describe('controllers/insurance/export-contract/currency-of-agents-charge/save-a
       jest.resetAllMocks();
 
       mapAndSaveSpy = jest.fn(() => Promise.resolve(true));
-      mapAndSave.exportContractAgentServiceCharge = mapAndSaveSpy;
+      mapAndSave.turnover = mapAndSaveSpy;
     });
 
-    it('should call mapAndSave.exportContractAgentServiceCharge with data from constructPayload function, application and validationErrors', async () => {
+    it('should call mapAndSave.turnover with data from constructPayload function, application and validationErrors', async () => {
       await post(req, res);
 
       const payload = constructPayload(req.body, FIELD_IDS);
 
       const validationErrors = generateValidationErrors(payload);
 
-      expect(mapAndSave.exportContractAgentServiceCharge).toHaveBeenCalledTimes(1);
-      expect(mapAndSave.exportContractAgentServiceCharge).toHaveBeenCalledWith(payload, res.locals.application, validationErrors);
+      expect(mapAndSave.turnover).toHaveBeenCalledTimes(1);
+      expect(mapAndSave.turnover).toHaveBeenCalledWith(payload, res.locals.application, validationErrors);
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, async () => {
-      mapAndSave.exportContractAgentServiceCharge = mapAndSaveSpy;
+      mapAndSave.turnover = mapAndSaveSpy;
 
       await post(req, res);
 
@@ -91,10 +94,11 @@ describe('controllers/insurance/export-contract/currency-of-agents-charge/save-a
   });
 
   describe('api error handling', () => {
-    describe('when the mapAndSave call does not return anything', () => {
+    describe('when mapAndSave.turnover returns false', () => {
       beforeEach(() => {
+        res.locals = mockRes().locals;
         mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
-        mapAndSave.exportContractAgentServiceCharge = mapAndSaveSpy;
+        mapAndSave.turnover = mapAndSaveSpy;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -104,11 +108,11 @@ describe('controllers/insurance/export-contract/currency-of-agents-charge/save-a
       });
     });
 
-    describe('when the mapAndSave call fails', () => {
+    describe('when mapAndSave.turnover fails', () => {
       beforeEach(() => {
+        res.locals = mockRes().locals;
         mapAndSaveSpy = mockSpyPromiseRejection;
-
-        mapAndSave.exportContractAgentServiceCharge = mapAndSaveSpy;
+        mapAndSave.turnover = mapAndSaveSpy;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

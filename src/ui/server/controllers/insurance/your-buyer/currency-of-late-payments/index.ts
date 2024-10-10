@@ -11,10 +11,10 @@ import api from '../../../../api';
 import { isPopulatedArray } from '../../../../helpers/array';
 import mapRadioAndSelectOptions from '../../../../helpers/mappings/map-currencies/radio-and-select-options';
 import constructPayload from '../../../../helpers/construct-payload';
+import mapAndSave from '../map-and-save/buyer-trading-history';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
-import mapAndSave from '../map-and-save/buyer-trading-history';
 
 const {
   INSURANCE_ROOT,

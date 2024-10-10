@@ -94,7 +94,7 @@ context('Insurance - Policy - Multiple contract policy Export value page - Save 
       });
 
       it('should NOT have saved the submitted value', () => {
-        field.input().should('have.value', '');
+        cy.checkValue(field, '');
       });
     });
   });
@@ -124,7 +124,7 @@ context('Insurance - Policy - Multiple contract policy Export value page - Save 
       });
 
       it('should have the submitted value', () => {
-        fieldSelector(TOTAL_SALES_TO_BUYER).input().should('have.value', application.POLICY[TOTAL_SALES_TO_BUYER]);
+        cy.checkValue(fieldSelector(TOTAL_SALES_TO_BUYER), application.POLICY[TOTAL_SALES_TO_BUYER]);
       });
     });
   });
@@ -143,8 +143,8 @@ context('Insurance - Policy - Multiple contract policy Export value page - Save 
       });
 
       it('should render all submitted values', () => {
-        fieldSelector(TOTAL_SALES_TO_BUYER).input().should('have.value', application.POLICY[TOTAL_SALES_TO_BUYER]);
-        fieldSelector(MAXIMUM_BUYER_WILL_OWE).input().should('have.value', application.POLICY[MAXIMUM_BUYER_WILL_OWE]);
+        cy.checkValue(fieldSelector(TOTAL_SALES_TO_BUYER), application.POLICY[TOTAL_SALES_TO_BUYER]);
+        cy.checkValue(fieldSelector(MAXIMUM_BUYER_WILL_OWE), application.POLICY[MAXIMUM_BUYER_WILL_OWE]);
       });
     });
   });

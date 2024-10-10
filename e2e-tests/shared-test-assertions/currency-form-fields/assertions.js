@@ -160,10 +160,11 @@ const assertCurrencyFormFields = ({
 
     cy.assertRadioOptionIsChecked(option.input());
   },
-  submitAlternativeCurrencyAndAssertUrl: (url) => {
+  submitAlternativeCurrencyAndAssertUrl: ({ url, viaSaveAndBack }) => {
     cy.clickAlternativeCurrencyRadioAndSubmitCurrency({
       fieldId: alternativeCurrencyFieldId,
       currency: NON_STANDARD_CURRENCY_NAME,
+      viaSaveAndBack,
     });
 
     cy.url().should('include', url);

@@ -7,7 +7,7 @@ import application from '../../../../../../../../fixtures/application';
 const {
   ROOT,
   CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT },
-  EXPORT_CONTRACT: { AGENT_CHARGES_CHECK_AND_CHANGE },
+  EXPORT_CONTRACT: { HOW_MUCH_THE_AGENT_IS_CHARGING_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {
@@ -55,12 +55,12 @@ context(`Insurance - Change your answers - Export contract - Summary list - Agen
   });
 
   describe('when clicking the `change` link', () => {
-    it(`should redirect to ${AGENT_CHARGES_CHECK_AND_CHANGE}`, () => {
+    it(`should redirect to ${HOW_MUCH_THE_AGENT_IS_CHARGING_CHECK_AND_CHANGE}`, () => {
       cy.navigateToUrl(url);
 
       summaryList.field(fieldId).changeLink().click();
 
-      cy.assertChangeAnswersPageUrl({ referenceNumber, route: AGENT_CHARGES_CHECK_AND_CHANGE, fieldId });
+      cy.assertChangeAnswersPageUrl({ referenceNumber, route: HOW_MUCH_THE_AGENT_IS_CHARGING_CHECK_AND_CHANGE, fieldId });
     });
   });
 
@@ -74,10 +74,7 @@ context(`Insurance - Change your answers - Export contract - Summary list - Agen
     it(`should redirect to ${EXPORT_CONTRACT}`, () => {
       summaryList.field(fieldId).changeLink().click();
 
-      cy.completeAndSubmitAgentChargesForm({
-        fixedSumMethod: true,
-        fixedSumAmount: newValueInput,
-      });
+      cy.completeAndSubmitHowMuchTheAgentIsChargingForm({ fixedSumAmount: newValueInput });
 
       cy.assertChangeAnswersPageUrl({ referenceNumber, route: EXPORT_CONTRACT, fieldId });
     });

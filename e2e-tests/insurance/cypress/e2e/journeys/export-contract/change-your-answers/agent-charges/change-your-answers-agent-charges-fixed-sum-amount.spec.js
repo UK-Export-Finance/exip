@@ -6,7 +6,7 @@ import application from '../../../../../../../fixtures/application';
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_CHARGES_CHANGE },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, HOW_MUCH_THE_AGENT_IS_CHARGING_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {
@@ -48,12 +48,12 @@ context(
     });
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${AGENT_CHARGES_CHANGE}`, () => {
+      it(`should redirect to ${HOW_MUCH_THE_AGENT_IS_CHARGING_CHANGE}`, () => {
         cy.navigateToUrl(checkYourAnswersUrl);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: AGENT_CHARGES_CHANGE, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: HOW_MUCH_THE_AGENT_IS_CHARGING_CHANGE, fieldId });
       });
     });
 

@@ -10,7 +10,7 @@
 const submitAlternativeCurrency = ({ expectedRedirectUrl, submitAlternativeCurrencyAndAssertUrl, submitAlternativeCurrencyAndAssertInput, viaSaveAndBack }) => {
   describe('when submitting an alternative currency', () => {
     it('should redirect to the next page', () => {
-      submitAlternativeCurrencyAndAssertUrl(expectedRedirectUrl);
+      submitAlternativeCurrencyAndAssertUrl({ url: expectedRedirectUrl, viaSaveAndBack });
     });
 
     it('should render the submitted answer when going back to the page', () => {

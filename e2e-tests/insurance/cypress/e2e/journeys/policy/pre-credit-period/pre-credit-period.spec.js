@@ -177,7 +177,10 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
 
           const expectedValue = mockApplication.POLICY[CREDIT_PERIOD_WITH_BUYER];
 
-          fieldSelector(CREDIT_PERIOD_WITH_BUYER).textarea().should('have.value', expectedValue);
+          cy.checkTextareaValue({
+            fieldId: CREDIT_PERIOD_WITH_BUYER,
+            expectedValue,
+          });
         });
       });
     });

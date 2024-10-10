@@ -14,6 +14,7 @@ import { get as getTradingHistory, post as postTradingHistory } from '../../../c
 import { post as postTradingHistorySaveAndBack } from '../../../controllers/insurance/your-buyer/trading-history/save-and-back';
 
 import { get as getCurrencyOfLatePayments, post as postCurrencyOfLatePayments } from '../../../controllers/insurance/your-buyer/currency-of-late-payments';
+import { post as postCurrencyOfLatePaymentsSaveAndBack } from '../../../controllers/insurance/your-buyer/currency-of-late-payments/save-and-back';
 
 import {
   get as getOutstandingOrOverduePayments,
@@ -46,7 +47,7 @@ describe('routes/insurance/your-buyer', () => {
 
   it('should setup all routes', () => {
     expect(get).toHaveBeenCalledTimes(29);
-    expect(post).toHaveBeenCalledTimes(36);
+    expect(post).toHaveBeenCalledTimes(37);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.ROOT}`, buyerRootGet);
 
@@ -84,6 +85,7 @@ describe('routes/insurance/your-buyer', () => {
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS}`, getCurrencyOfLatePayments);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS}`, postCurrencyOfLatePayments);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS_SAVE_AND_BACK}`, postCurrencyOfLatePaymentsSaveAndBack);
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS_CHANGE}`, getCurrencyOfLatePayments);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS_CHANGE}`, postCurrencyOfLatePayments);
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE}`, getCurrencyOfLatePayments);

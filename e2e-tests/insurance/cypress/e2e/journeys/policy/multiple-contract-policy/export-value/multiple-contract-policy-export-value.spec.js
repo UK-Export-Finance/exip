@@ -127,8 +127,8 @@ context(
         it('should have the submitted values', () => {
           cy.navigateToUrl(url);
 
-          fieldSelector(TOTAL_SALES_TO_BUYER).input().should('have.value', application.POLICY[TOTAL_SALES_TO_BUYER]);
-          fieldSelector(MAXIMUM_BUYER_WILL_OWE).input().should('have.value', application.POLICY[MAXIMUM_BUYER_WILL_OWE]);
+          cy.checkValue(fieldSelector(TOTAL_SALES_TO_BUYER), application.POLICY[TOTAL_SALES_TO_BUYER]);
+          cy.checkValue(fieldSelector(MAXIMUM_BUYER_WILL_OWE), application.POLICY[MAXIMUM_BUYER_WILL_OWE]);
         });
       });
     });

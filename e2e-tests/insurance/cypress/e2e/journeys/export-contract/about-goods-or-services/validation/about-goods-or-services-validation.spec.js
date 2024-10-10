@@ -124,7 +124,10 @@ context('Insurance - Export contract - About goods or services page - form valid
         includeFinalDestination: true,
       });
 
-      descriptionField.textarea().should('have.value', descriptionOverMaximum);
+      cy.checkTextareaValue({
+        fieldId: DESCRIPTION,
+        expectedValue: descriptionOverMaximum,
+      });
 
       cy.assertYesRadioOptionIsChecked();
 
@@ -141,7 +144,10 @@ context('Insurance - Export contract - About goods or services page - form valid
         description: descriptionOverMaximum,
       });
 
-      descriptionField.textarea().should('have.value', descriptionOverMaximum);
+      cy.checkTextareaValue({
+        fieldId: DESCRIPTION,
+        expectedValue: descriptionOverMaximum,
+      });
 
       cy.assertNoRadioOptionIsChecked();
     });
