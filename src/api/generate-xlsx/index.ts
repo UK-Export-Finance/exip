@@ -83,7 +83,7 @@ const XLSX = (application: Application, countries: Array<Country>): Promise<stri
       workbook.xlsx.writeFile(filePath).then(() => resolve(filePath));
     });
   } catch (error) {
-    console.error('Error generating XLSX file %O', error);
+    console.error('Error generating XLSX file %o', error);
 
     throw new Error(`Generating XLSX file ${error}`);
   }

@@ -140,7 +140,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(COMPANY_DETAILS);
   } catch (error) {
-    console.error('Error calling companies house %O', error);
+    console.error('Error calling companies house %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

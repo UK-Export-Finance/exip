@@ -130,7 +130,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT}`);
   } catch (error) {
-    console.error('Error updating application - export contract - declined by private market %O', error);
+    console.error('Error updating application - export contract - declined by private market %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

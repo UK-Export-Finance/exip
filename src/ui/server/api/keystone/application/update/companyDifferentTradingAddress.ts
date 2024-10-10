@@ -21,22 +21,22 @@ const updateCompanyDifferentTradingAddress = async (id: string, update: object) 
     const response = (await apollo('POST', updateCompanyDifferentTradingAddressMutation, variables)) as ApolloResponse;
 
     if (response.errors) {
-      console.error('GraphQL error updating companyDifferentTradingAddress %O', response.errors);
+      console.error('GraphQL error updating companyDifferentTradingAddress %o', response.errors);
     }
 
     if (response?.networkError?.result?.errors) {
-      console.error('GraphQL network error updating companyDifferentTradingAddress %O', response.networkError.result.errors);
+      console.error('GraphQL network error updating companyDifferentTradingAddress %o', response.networkError.result.errors);
     }
 
     if (response?.data?.updateCompanyDifferentTradingAddress) {
       return response.data.updateCompanyDifferentTradingAddress;
     }
 
-    console.error('Error with GraphQL updateCompanyDifferentTradingAddressMutation %O', response);
+    console.error('Error with GraphQL updateCompanyDifferentTradingAddressMutation %o', response);
 
     throw new Error('Updating company companyDifferentTradingAddress');
   } catch (error) {
-    console.error('Error updating companyDifferentTradingAddress %O', error);
+    console.error('Error updating companyDifferentTradingAddress %o', error);
 
     throw new Error('Updating companyDifferentTradingAddress');
   }

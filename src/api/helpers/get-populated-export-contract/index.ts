@@ -32,7 +32,7 @@ const getPopulatedExportContract = async (context: Context, id: string) => {
 
     return populatedExportContract;
   } catch (error) {
-    console.error('Getting populated exportContract %s %O', id, error);
+    console.error('Getting populated exportContract %s %o', id, error);
 
     throw new Error(`Error Getting populated exportContract ${id} ${error}`);
   }

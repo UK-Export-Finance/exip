@@ -17,22 +17,22 @@ const eligibility = {
       const response = (await apollo('POST', updateEligibilityMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error updating eligibility %O', response.errors);
+        console.error('GraphQL error updating eligibility %o', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error updating eligibility %O', response.networkError.result.errors);
+        console.error('GraphQL network error updating eligibility %o', response.networkError.result.errors);
       }
 
       if (response?.data?.updateEligibility) {
         return response.data.updateEligibility;
       }
 
-      console.error('Error with GraphQL updateEligibilityMutation %O', response);
+      console.error('Error with GraphQL updateEligibilityMutation %o', response);
 
       throw new Error('Updating eligibility');
     } catch (error) {
-      console.error('Error updating eligibility %O', error);
+      console.error('Error updating eligibility %o', error);
 
       throw new Error('Updating eligibility');
     }

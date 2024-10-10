@@ -26,7 +26,7 @@ const createLossPayeeFinancialDetailsUk = async ({ context }: TestHelperCreate) 
 
     return lossPayeeFinancialDetailsUk;
   } catch (error) {
-    console.error('Error creating a loss payee financial uk (test helpers) %O', error);
+    console.error('Error creating a loss payee financial uk (test helpers) %o', error);
 
     return error;
   }

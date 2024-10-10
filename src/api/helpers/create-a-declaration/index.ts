@@ -27,7 +27,7 @@ const createADeclaration = async (context: Context, applicationId: string) => {
       declarationVersion,
     };
   } catch (error) {
-    console.error('Error creating an application declaration %O', error);
+    console.error('Error creating an application declaration %o', error);
 
     throw new Error(`Creating an application declaration ${error}`);
   }

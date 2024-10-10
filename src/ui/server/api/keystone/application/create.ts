@@ -28,22 +28,22 @@ const createApplication = async (eligibilityAnswers: SubmittedDataInsuranceEligi
     const response = (await apollo('POST', createAnApplicationMutation, variables)) as ApolloResponse;
 
     if (response.errors) {
-      console.error('GraphQL error creating application for user %s %O', accountId, response.errors);
+      console.error('GraphQL error creating application for user %s %o', accountId, response.errors);
     }
 
     if (response?.networkError?.result?.errors) {
-      console.error('GraphQL network error creating application for user %s %O', accountId, response.networkError.result.errors);
+      console.error('GraphQL network error creating application for user %s %o', accountId, response.networkError.result.errors);
     }
 
     if (response?.data?.createAnApplication?.success) {
       return response.data.createAnApplication;
     }
 
-    console.error('Error with GraphQL createApplicationMutation for user %s %O', accountId, response);
+    console.error('Error with GraphQL createApplicationMutation for user %s %o', accountId, response);
 
     throw new Error(`Creating application for user ${accountId}`);
   } catch (error) {
-    console.error('Error creating application for user %s %O', accountId, error);
+    console.error('Error creating application for user %s %o', accountId, error);
 
     throw new Error(`Creating application for user ${accountId}`);
   }

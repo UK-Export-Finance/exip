@@ -74,7 +74,7 @@ const createManyApplications = async (root: any, variables: CreateManyApplicatio
       success: false,
     };
   } catch (error) {
-    console.error('Error creating many applications %O', error);
+    console.error('Error creating many applications %o', error);
 
     throw new Error(`Creating many applications ${error}`);
   }

@@ -31,7 +31,7 @@ const createABuyerTradingHistory = async (context: Context, buyerId: string, app
 
     return buyerTradingHistory;
   } catch (error) {
-    console.error('Error creating a buyer trading history %O', error);
+    console.error('Error creating a buyer trading history %o', error);
 
     throw new Error(`Creating a buyer trading history ${error}`);
   }

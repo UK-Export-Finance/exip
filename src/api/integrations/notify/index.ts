@@ -38,7 +38,7 @@ const notify = {
         emailRecipient: sendToEmailAddress,
       };
     } catch (error) {
-      console.error('Error calling Notify API. Unable to send email %O', error);
+      console.error('Error calling Notify API. Unable to send email %o', error);
 
       throw new Error(`Calling Notify API. Unable to send email ${error}`);
     }

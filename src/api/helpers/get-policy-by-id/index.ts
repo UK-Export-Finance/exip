@@ -19,7 +19,7 @@ const getPolicyById = async (context: Context, id: string) => {
 
     return policy;
   } catch (error) {
-    console.error('Getting policy by ID %s %O', id, error);
+    console.error('Getting policy by ID %s %o', id, error);
 
     throw new Error(`Error Getting policy by ID ${id} ${error}`);
   }

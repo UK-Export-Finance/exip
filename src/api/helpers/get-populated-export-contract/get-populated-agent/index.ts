@@ -30,7 +30,7 @@ const getPopulatedAgent = async (context: Context, id: string) => {
 
     return populatedAgent;
   } catch (error) {
-    console.error('Getting populated exportContract agent %s %O', id, error);
+    console.error('Getting populated exportContract agent %s %o', id, error);
 
     throw new Error(`Error Getting populated exportContract agent ${id} ${error}`);
   }

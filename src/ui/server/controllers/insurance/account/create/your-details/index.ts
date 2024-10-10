@@ -177,7 +177,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(CONFIRM_EMAIL);
   } catch (error) {
-    console.error('Error creating account %O', error);
+    console.error('Error creating account %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

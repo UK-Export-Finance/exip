@@ -21,22 +21,22 @@ const updateDeclaration = async (id: string, update: object) => {
     const response = (await apollo('POST', updateApplicationDeclarationMutation, variables)) as ApolloResponse;
 
     if (response.errors) {
-      console.error('GraphQL error updating application declaration %O', response.errors);
+      console.error('GraphQL error updating application declaration %o', response.errors);
     }
 
     if (response?.networkError?.result?.errors) {
-      console.error('GraphQL network error updating application declaration %O', response.networkError.result.errors);
+      console.error('GraphQL network error updating application declaration %o', response.networkError.result.errors);
     }
 
     if (response?.data?.updateDeclaration) {
       return response.data.updateDeclaration;
     }
 
-    console.error('Error with GraphQL updateApplicationDeclarationMutation %O', response);
+    console.error('Error with GraphQL updateApplicationDeclarationMutation %o', response);
 
     throw new Error('Updating application declaration');
   } catch (error) {
-    console.error('Error updating application declaration %O', error);
+    console.error('Error updating application declaration %o', error);
 
     throw new Error('Updating application declaration');
   }

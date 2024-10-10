@@ -29,7 +29,7 @@ const createABuyerContact = async (context: Context, buyerId: string, applicatio
 
     return buyerContact;
   } catch (error) {
-    console.error('Error creating a buyer contact %O', error);
+    console.error('Error creating a buyer contact %o', error);
 
     throw new Error(`Creating a buyer contact ${error}`);
   }

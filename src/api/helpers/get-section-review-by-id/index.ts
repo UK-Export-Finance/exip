@@ -17,7 +17,7 @@ const getSectionReviewById = async (context: Context, id: string) => {
 
     return sectionReview;
   } catch (error) {
-    console.error('Getting sectionReview by ID %s %O', id, error);
+    console.error('Getting sectionReview by ID %s %o', id, error);
 
     throw new Error(`Error Getting sectionReview by ID ${id} ${error}`);
   }

@@ -104,7 +104,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`);
   } catch (error) {
-    console.error('Error updating application - declarations - confidentiality %O', error);
+    console.error('Error updating application - declarations - confidentiality %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

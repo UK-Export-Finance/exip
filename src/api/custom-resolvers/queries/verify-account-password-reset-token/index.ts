@@ -54,7 +54,7 @@ const verifyAccountPasswordResetToken = async (
       invalid: true,
     };
   } catch (error) {
-    console.error('Error verifying account password reset token %O', error);
+    console.error('Error verifying account password reset token %o', error);
 
     throw new Error(`Verifying account password reset token ${error}`);
   }

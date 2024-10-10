@@ -44,7 +44,7 @@ const decryptFinancialUk = (applicationFinancialUk: ApplicationLossPayeeFinancia
 
     return mapped;
   } catch (error) {
-    console.error('Error decrypting financial uk %O', error);
+    console.error('Error decrypting financial uk %o', error);
 
     throw new Error(`Error decrypting financial uk ${error}`);
   }

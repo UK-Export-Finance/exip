@@ -21,22 +21,22 @@ const updateSectionReview = async (id: string, update: object) => {
     const response = (await apollo('POST', updateApplicationSectionReviewMutation, variables)) as ApolloResponse;
 
     if (response.errors) {
-      console.error('GraphQL error updating application section review %O', response.errors);
+      console.error('GraphQL error updating application section review %o', response.errors);
     }
 
     if (response?.networkError?.result?.errors) {
-      console.error('GraphQL network error updating application section review %O', response.networkError.result.errors);
+      console.error('GraphQL network error updating application section review %o', response.networkError.result.errors);
     }
 
     if (response?.data?.updateSectionReview) {
       return response.data.updateSectionReview;
     }
 
-    console.error('Error with GraphQL updateApplicationSectionReviewMutation %O', response);
+    console.error('Error with GraphQL updateApplicationSectionReviewMutation %o', response);
 
     throw new Error('Updating application section review');
   } catch (error) {
-    console.error('Error updating application section review %O', error);
+    console.error('Error updating application section review %o', error);
 
     throw new Error('Updating application section review');
   }

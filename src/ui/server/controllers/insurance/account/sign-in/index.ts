@@ -160,7 +160,7 @@ export const post = async (req: Request, res: Response) => {
       validationErrors,
     });
   } catch (error) {
-    console.error('Error signing in account %O', error);
+    console.error('Error signing in account %o', error);
 
     return res.redirect(ROUTES.INSURANCE.PROBLEM_WITH_SERVICE);
   }

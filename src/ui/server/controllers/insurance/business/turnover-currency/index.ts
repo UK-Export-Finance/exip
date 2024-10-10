@@ -86,7 +86,7 @@ export const get = async (req: Request, res: Response) => {
       ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, application.business[TURNOVER_CURRENCY_CODE]),
     });
   } catch (error) {
-    console.error('Error getting Business - Turnover currency %O', error);
+    console.error('Error getting Business - Turnover currency %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -160,7 +160,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ROOT}`);
   } catch (error) {
-    console.error('Error posting business - turnover currency %O', error);
+    console.error('Error posting business - turnover currency %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

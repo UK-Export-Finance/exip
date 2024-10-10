@@ -22,7 +22,7 @@ const application = {
 
       return response;
     } catch (error) {
-      console.error('Error sending application submitted email to to application owner or provided business contact %O', error);
+      console.error('Error sending application submitted email to to application owner or provided business contact %o', error);
 
       throw new Error(`Sending application submitted email to to application owner or provided business contact ${error}`);
     }
@@ -61,7 +61,7 @@ const application = {
 
       throw new Error('Sending application submitted email to underwriting team - invalid file / file not found');
     } catch (error) {
-      console.error('Error sending application submitted email to underwriting team %O', error);
+      console.error('Error sending application submitted email to underwriting team %o', error);
 
       throw new Error(`Sending application submitted email to underwriting team ${error}`);
     }

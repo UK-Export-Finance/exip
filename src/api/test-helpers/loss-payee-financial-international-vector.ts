@@ -19,7 +19,7 @@ const createLossPayeeFinancialDetailsInternationalVector = async ({ context, dat
 
     return lossPayeeFinancialDetailsInternational;
   } catch (error) {
-    console.error('Error creating a loss payee financial international vector (test helpers) %O', error);
+    console.error('Error creating a loss payee financial international vector (test helpers) %o', error);
 
     return error;
   }

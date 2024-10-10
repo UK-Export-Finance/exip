@@ -48,7 +48,7 @@ const updateLossPayeeFinancialDetailsInternational = async (
       success: false,
     };
   } catch (error) {
-    console.error('Error updating loss payee financial international %O', error);
+    console.error('Error updating loss payee financial international %o', error);
 
     throw new Error(`Updating loss payee financial international ${error}`);
   }

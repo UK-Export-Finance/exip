@@ -111,7 +111,7 @@ export const get = async (req: Request, res: Response) => {
       application: mapApplicationToFormFields(application),
     });
   } catch (error) {
-    console.error('Error getting outstanding or overdue payments %O', error);
+    console.error('Error getting outstanding or overdue payments %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -217,7 +217,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${FAILED_TO_PAY}`);
   } catch (error) {
-    console.error('Error posting outstanding or overdue payments with the buyer %O', error);
+    console.error('Error posting outstanding or overdue payments with the buyer %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

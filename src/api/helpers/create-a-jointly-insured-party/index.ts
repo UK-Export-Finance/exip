@@ -21,7 +21,7 @@ const createAJointlyInsuredParty = async (context: Context, policyId: string): P
 
     return jointlyInsuredParty;
   } catch (error) {
-    console.error('Error creating a jointly insured party %O', error);
+    console.error('Error creating a jointly insured party %o', error);
 
     throw new Error(`Creating a jointly insured party ${error}`);
   }

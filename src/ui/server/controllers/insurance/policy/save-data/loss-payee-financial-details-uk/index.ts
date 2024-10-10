@@ -37,7 +37,7 @@ const lossPayeeFinancialDetailsUk = async (application: Application, formBody: R
 
     return saveResponse;
   } catch (error) {
-    console.error("Error updating application's loss payee financial details uk %O", error);
+    console.error("Error updating application's loss payee financial details uk %o", error);
 
     throw new Error("Updating application's loss payee financial details uk");
   }

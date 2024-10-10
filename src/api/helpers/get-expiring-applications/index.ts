@@ -41,7 +41,7 @@ const getExpiringApplications = async (context: Context): Promise<Application[]>
 
     return applications;
   } catch (error) {
-    console.error('Error getting expiring applications (getExpiringApplications helper) %O', error);
+    console.error('Error getting expiring applications (getExpiringApplications helper) %o', error);
 
     throw new Error(`Error getting expiring applications (getExpiringApplications helper) ${error}`);
   }

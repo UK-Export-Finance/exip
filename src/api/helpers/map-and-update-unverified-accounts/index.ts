@@ -32,7 +32,7 @@ const mapAndUpdateUnverifiedAccounts = async (accounts: Array<Account>, context:
       data: accountStatus,
     });
   } catch (error) {
-    console.error('Error mapping and updating unverified accounts %O', error);
+    console.error('Error mapping and updating unverified accounts %o', error);
 
     throw new Error(`Error mapping and updating unverified accounts ${error}`);
   }

@@ -51,7 +51,7 @@ const createACompany = async (context: Context, applicationId: string, companyDa
       differentTradingAddress: createdDifferentTradingAddress,
     };
   } catch (error) {
-    console.error('Error creating a company, address, SIC codes and company different trading address %O', error);
+    console.error('Error creating a company, address, SIC codes and company different trading address %o', error);
 
     throw new Error(`Creating a company, address, SIC codes and company different trading address ${error}`);
   }

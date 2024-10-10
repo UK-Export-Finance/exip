@@ -93,7 +93,7 @@ const updateApplicationColumns = async ({
 
     return updatedApplication;
   } catch (error) {
-    console.error('Error updating application relationship columns (updateApplicationColumns helper) for application %s %O', applicationId, error);
+    console.error('Error updating application relationship columns (updateApplicationColumns helper) for application %s %o', applicationId, error);
 
     throw new Error(`Updating application relationship columns (updateApplicationColumns helper) for application ${applicationId} ${error}`);
   }

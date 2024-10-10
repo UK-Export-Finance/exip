@@ -22,7 +22,7 @@ export const accessCodeEmail = async (emailAddress: string, name: string, securi
 
     return response;
   } catch (error) {
-    console.error('Error sending access code email for account sign in %O', error);
+    console.error('Error sending access code email for account sign in %o', error);
 
     throw new Error(`Sending access code email for account sign in ${error}`);
   }

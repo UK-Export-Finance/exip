@@ -63,7 +63,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (error) {
-    console.error('Error posting account password reset - expired link form %O', error);
+    console.error('Error posting account password reset - expired link form %o', error);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

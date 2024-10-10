@@ -33,7 +33,7 @@ const createAnExportContract = async (context: Context, applicationId: string): 
       agentService,
     };
   } catch (error) {
-    console.error('Error creating an export contract %O', error);
+    console.error('Error creating an export contract %o', error);
 
     throw new Error(`Creating an export contract ${error}`);
   }

@@ -33,7 +33,7 @@ const mapApplicationToXLSX = (application: Application, countries: Array<Country
 
     return mapped;
   } catch (error) {
-    console.error('Error mapping application to XLSX %O', error);
+    console.error('Error mapping application to XLSX %o', error);
 
     throw new Error(`Mapping application to XLSX ${error}`);
   }

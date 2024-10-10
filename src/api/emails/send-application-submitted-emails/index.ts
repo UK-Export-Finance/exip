@@ -109,7 +109,7 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
       success: true,
     };
   } catch (error) {
-    console.error('Error sending application submitted emails %O', error);
+    console.error('Error sending application submitted emails %o', error);
 
     throw new Error(`Sending application submitted emails ${error}`);
   }

@@ -47,7 +47,7 @@ const createNewApplicationRelationships = async (connection: Connection) => {
 
     return [...newRelationships, ...financialVectorRelationships];
   } catch (error) {
-    console.error(`🚨 error ${loggingMessage} %O`, error);
+    console.error(`🚨 error ${loggingMessage} %o`, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

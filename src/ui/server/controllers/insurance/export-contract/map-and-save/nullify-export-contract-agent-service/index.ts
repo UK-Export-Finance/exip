@@ -37,7 +37,7 @@ const exportContractAgentServiceAndCharge = async (application: Application) => 
 
     return saveResponse;
   } catch (error) {
-    console.error('Error mapping and saving application - export contract agent - nullifying agent service and charge data %O', error);
+    console.error('Error mapping and saving application - export contract agent - nullifying agent service and charge data %o', error);
 
     return false;
   }

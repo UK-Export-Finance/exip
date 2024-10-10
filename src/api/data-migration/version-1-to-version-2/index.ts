@@ -60,7 +60,7 @@ const dataMigration = async () => {
 
     process.exit();
   } catch (error) {
-    console.error('🚨 error with data migration %O', error);
+    console.error('🚨 error with data migration %o', error);
 
     throw new Error(`🚨 error with data migration ${error}`);
   }

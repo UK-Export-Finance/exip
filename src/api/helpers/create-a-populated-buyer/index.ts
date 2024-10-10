@@ -45,7 +45,7 @@ const createAPopulatedBuyer = async (context: Context, countryId: string, applic
       buyerContact,
     };
   } catch (error) {
-    console.error('Error creating a populated buyer %O', error);
+    console.error('Error creating a populated buyer %o', error);
 
     throw new Error(`Creating a populated buyer ${error}`);
   }

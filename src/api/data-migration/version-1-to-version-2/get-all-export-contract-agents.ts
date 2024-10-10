@@ -19,7 +19,7 @@ const getAllExportContractAgents = async (connection: Connection) => {
 
     return agents;
   } catch (error) {
-    console.error('🚨 error %s %O', loggingMessage, error);
+    console.error('🚨 error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

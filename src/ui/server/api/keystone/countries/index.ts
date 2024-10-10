@@ -11,22 +11,22 @@ const countries = {
       const response = (await apollo('POST', getCountries, {})) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error getting countries %O', response.errors);
+        console.error('GraphQL error getting countries %o', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error getting countries %O', response.networkError.result.errors);
+        console.error('GraphQL network error getting countries %o', response.networkError.result.errors);
       }
 
       if (response?.data?.countries) {
         return response.data.countries;
       }
 
-      console.error('Error with GraphQL getCountries %O', response);
+      console.error('Error with GraphQL getCountries %o', response);
 
       throw new Error('Getting countries');
     } catch (error) {
-      console.error('Error getting countries %O', error);
+      console.error('Error getting countries %o', error);
 
       throw new Error('Getting countries');
     }
@@ -40,22 +40,22 @@ const countries = {
       const response = (await apollo('POST', getCountriesByIsoCodeQuery, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error getting country %O', response.errors);
+        console.error('GraphQL error getting country %o', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error getting country %O', response.networkError.result.errors);
+        console.error('GraphQL network error getting country %o', response.networkError.result.errors);
       }
 
       if (response?.data?.countries) {
         return response.data.countries[0];
       }
 
-      console.error('Error with GraphQL getCountriesByIsoCodeQuery %O', response);
+      console.error('Error with GraphQL getCountriesByIsoCodeQuery %o', response);
 
       throw new Error('Getting country');
     } catch (error) {
-      console.error('Error getting country %O', error);
+      console.error('Error getting country %o', error);
 
       throw new Error('Getting country');
     }

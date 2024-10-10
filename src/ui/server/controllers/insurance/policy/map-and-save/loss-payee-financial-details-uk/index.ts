@@ -34,7 +34,7 @@ const lossPayeeFinancialDetailsUk = async (formBody: RequestBody, application: A
 
     return true;
   } catch (error) {
-    console.error('Error mapping and saving application - policy - loss payee financial details UK %O', error);
+    console.error('Error mapping and saving application - policy - loss payee financial details UK %o', error);
 
     return false;
   }

@@ -19,7 +19,7 @@ const getAllLossPayeeFinancialUk = async (connection: Connection) => {
 
     return financials;
   } catch (error) {
-    console.error('🚨 error %s %O', loggingMessage, error);
+    console.error('🚨 error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

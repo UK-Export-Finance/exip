@@ -170,7 +170,7 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
 
     throw new Error(`Account creation - sending email verification for account creation ${emailResponse}`);
   } catch (error) {
-    console.error('Error Account creation - creating account %O', error);
+    console.error('Error Account creation - creating account %o', error);
 
     throw new Error(`Account creation - creating account ${error}`);
   }

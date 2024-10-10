@@ -26,7 +26,7 @@ const createASectionReview = async (context: Context, applicationId: string, sec
 
     return sectionReview;
   } catch (error) {
-    console.error('Error creating a section review %O', error);
+    console.error('Error creating a section review %o', error);
 
     throw new Error(`Creating a section review ${error}`);
   }

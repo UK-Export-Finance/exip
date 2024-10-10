@@ -32,7 +32,7 @@ const createManyApplicationsAndReferenceNumbers = async (context: Context, appli
       referenceNumbers,
     };
   } catch (error) {
-    console.error('Error creating many applications and reference numbers - helper %O', error);
+    console.error('Error creating many applications and reference numbers - helper %o', error);
 
     throw new Error(`Creating many applications and reference numbers - helper ${error}`);
   }

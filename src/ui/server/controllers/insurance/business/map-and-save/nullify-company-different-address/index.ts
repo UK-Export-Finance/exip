@@ -22,7 +22,7 @@ const companyDifferentTradingAddress = async (application: Application) => {
 
     return saveResponse;
   } catch (error) {
-    console.error('Error mapping and saving application - business - company details - nullifying different trading address data %O', error);
+    console.error('Error mapping and saving application - business - company details - nullifying different trading address data %o', error);
 
     return false;
   }

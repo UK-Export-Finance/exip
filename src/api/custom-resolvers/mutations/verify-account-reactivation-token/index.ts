@@ -89,7 +89,7 @@ const verifyAccountReactivationToken = async (
       invalid: true,
     };
   } catch (error) {
-    console.error('Error checking account and reactivating account(verifyAccountReactivationToken mutation) %O', error);
+    console.error('Error checking account and reactivating account(verifyAccountReactivationToken mutation) %o', error);
 
     throw new Error(`Checking account and reactivating account(verifyAccountReactivationToken mutation) ${error}`);
   }

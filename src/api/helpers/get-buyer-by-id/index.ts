@@ -17,7 +17,7 @@ const getBuyerById = async (context: Context, id: string) => {
 
     return buyer;
   } catch (error) {
-    console.error('Getting buyer by ID %s %O', id, error);
+    console.error('Getting buyer by ID %s %o', id, error);
 
     throw new Error(`Error Getting buyer by ID ${id} ${error}`);
   }

@@ -22,7 +22,7 @@ export const submissionDeadlineEmail = async (
 
     return response;
   } catch (error) {
-    console.error('Error sending submission deadline email for applicationId %s - %O', submissionDeadlineEmailVariables.referenceNumber, error);
+    console.error('Error sending submission deadline email for applicationId %s - %o', submissionDeadlineEmailVariables.referenceNumber, error);
 
     throw new Error(`Sending submission deadline email for ${submissionDeadlineEmailVariables.referenceNumber} - ${error}`);
   }

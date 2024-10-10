@@ -31,7 +31,7 @@ const updateCompanyPostDataMigration = async (root: any, variables: UpdateCompan
     const { id: addressId, ...addressFields } = registeredOfficeAddress;
 
     if (!updatedCompany.registeredOfficeAddressId) {
-      console.error('Unable to update company address - does not exist (post data migration) %O', id);
+      console.error('Unable to update company address - does not exist (post data migration) %o', id);
 
       throw new Error(`Unable to update company address - does not exist (post data migration) ${id}`);
     }
@@ -51,7 +51,7 @@ const updateCompanyPostDataMigration = async (root: any, variables: UpdateCompan
       success: true,
     };
   } catch (error) {
-    console.error('Error updating company (post data migration) %O', error);
+    console.error('Error updating company (post data migration) %o', error);
 
     throw new Error(`Updating company (post data migration) ${error}`);
   }

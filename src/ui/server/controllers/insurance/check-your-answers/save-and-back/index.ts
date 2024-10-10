@@ -41,7 +41,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   } catch (error) {
-    console.error('Error updating check your answers section review %O', error);
+    console.error('Error updating check your answers section review %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

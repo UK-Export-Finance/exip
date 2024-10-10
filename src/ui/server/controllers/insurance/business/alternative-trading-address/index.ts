@@ -85,7 +85,7 @@ const get = (req: Request, res: Response) => {
       SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
     });
   } catch (error) {
-    console.error('Error getting alternative trading address %O', error);
+    console.error('Error getting alternative trading address %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -154,7 +154,7 @@ const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`);
   } catch (error) {
-    console.error('Error posting alternative trading address %O', error);
+    console.error('Error posting alternative trading address %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

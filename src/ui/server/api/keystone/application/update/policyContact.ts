@@ -21,22 +21,22 @@ const updatePolicy = async (id: string, update: object) => {
     const response = (await apollo('POST', updateApplicationPolicyContactMutation, variables)) as ApolloResponse;
 
     if (response.errors) {
-      console.error('GraphQL error updating application policyContact %O', response.errors);
+      console.error('GraphQL error updating application policyContact %o', response.errors);
     }
 
     if (response?.networkError?.result?.errors) {
-      console.error('GraphQL network error updating application policyContact %O', response.networkError.result.errors);
+      console.error('GraphQL network error updating application policyContact %o', response.networkError.result.errors);
     }
 
     if (response?.data?.updatePolicyContact) {
       return response.data.updatePolicyContact;
     }
 
-    console.error('Error with GraphQL updateApplicationPolicyContactMutation %O', response);
+    console.error('Error with GraphQL updateApplicationPolicyContactMutation %o', response);
 
     throw new Error('Updating application policyContact');
   } catch (error) {
-    console.error('Error updating application policyContact %O', error);
+    console.error('Error updating application policyContact %o', error);
 
     throw new Error('Updating application policyContact');
   }

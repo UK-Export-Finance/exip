@@ -20,7 +20,7 @@ const getApimCisCountries = async () => {
 
     return { success: false };
   } catch (error) {
-    console.error('Error Getting and mapping CIS countries from APIM %O', error);
+    console.error('Error Getting and mapping CIS countries from APIM %o', error);
 
     throw new Error(`Getting and mapping CIS countries from APIM ${error}`);
   }

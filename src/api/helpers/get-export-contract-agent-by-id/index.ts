@@ -17,7 +17,7 @@ const getExportContractAgentById = async (context: Context, id: string) => {
 
     return exportContractAgent;
   } catch (error) {
-    console.error('Getting exportContractAgent by ID %s %O', id, error);
+    console.error('Getting exportContractAgent by ID %s %o', id, error);
 
     throw new Error(`Error Getting exportContractAgent by ID ${id} ${error}`);
   }

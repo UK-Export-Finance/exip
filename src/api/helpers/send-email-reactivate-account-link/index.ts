@@ -76,7 +76,7 @@ const send = async (variables: AccountSendEmailReactivateLinkVariables, context:
 
     return { accountId, email, success: false };
   } catch (error) {
-    console.error('Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper) %O', error);
+    console.error('Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper) %o', error);
 
     throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper) ${error}`);
   }

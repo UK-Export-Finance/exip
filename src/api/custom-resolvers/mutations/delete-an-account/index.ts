@@ -60,7 +60,7 @@ const deleteAnAccount = async (root: any, variables: AccountDeletionVariables, c
       success: true,
     };
   } catch (error) {
-    console.error('Error deleting account %O', error);
+    console.error('Error deleting account %o', error);
 
     throw new Error(`Deleting account ${error}`);
   }

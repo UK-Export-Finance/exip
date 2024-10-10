@@ -23,7 +23,7 @@ const createAReferenceNumber = async (context: Context, applicationId: string) =
 
     return created.id;
   } catch (error) {
-    console.error('Error creating a reference number %O', error);
+    console.error('Error creating a reference number %o', error);
 
     throw new Error(`Creating a reference number ${error}`);
   }

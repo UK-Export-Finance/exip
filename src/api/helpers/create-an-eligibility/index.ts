@@ -45,7 +45,7 @@ const createAnEligibility = async (
 
     return eligibility;
   } catch (error) {
-    console.error('Error creating an eligibility %O', error);
+    console.error('Error creating an eligibility %o', error);
 
     throw new Error(`Creating an eligibility ${error}`);
   }
