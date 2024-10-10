@@ -81,8 +81,8 @@ context('Insurance - Your business - Nature of your business page - Save and bac
         expectedValue: application.EXPORTER_BUSINESS[GOODS_OR_SERVICES],
       });
 
-      cy.checkValue(field(YEARS_EXPORTING).input(), '');
-      cy.checkValue(field(EMPLOYEES_UK).input(), '');
+      cy.checkValue(field(YEARS_EXPORTING), '');
+      cy.checkValue(field(EMPLOYEES_UK), '');
     });
   });
 
@@ -116,8 +116,8 @@ context('Insurance - Your business - Nature of your business page - Save and bac
         expectedValue: application.EXPORTER_BUSINESS[GOODS_OR_SERVICES],
       });
 
-      cy.checkValue(field(YEARS_EXPORTING).input(), application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
-      cy.checkValue(field(EMPLOYEES_UK).input(), application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
+      cy.checkValue(field(YEARS_EXPORTING), application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
+      cy.checkValue(field(EMPLOYEES_UK), application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
     });
   });
 });

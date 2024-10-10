@@ -120,8 +120,8 @@ context(
           expectedValue: application.EXPORTER_BUSINESS[GOODS_OR_SERVICES],
         });
 
-        cy.checkValue(fieldSelector(YEARS_EXPORTING).input(), application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
-        cy.checkValue(fieldSelector(EMPLOYEES_UK).input(), application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
+        cy.checkValue(fieldSelector(YEARS_EXPORTING), application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
+        cy.checkValue(fieldSelector(EMPLOYEES_UK), application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
       });
     });
   },
