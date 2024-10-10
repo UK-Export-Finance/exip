@@ -9,7 +9,7 @@ import getCountryByIsoCode from '../../../get-country-by-iso-code';
 import generateChangeLink from '../../../generate-change-link';
 import replaceNewLineWithLineBreak from '../../../replace-new-line-with-line-break';
 import agentChargesFields from './agent-charges';
-import { ApplicationExportContractAgent, ApplicationExportContractAgentService, Country, SummaryListItemData } from '../../../../../types';
+import { ApplicationExportContractAgent, ApplicationExportContractAgentService, Country, Currency, SummaryListItemData } from '../../../../../types';
 
 const {
   EXPORT_CONTRACT: { AGENT: FORM_TITLE },
@@ -95,10 +95,17 @@ export const agentServiceFields = (answers: ApplicationExportContractAgentServic
  * @param {ApplicationExportContractAgent} answers: All submitted agent data
  * @param {Number} referenceNumber: Application reference number
  * @param {Array<Country>} countries: Countries
+ * @param {Array<Currency>} currencies: Currencies
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} Fields and values in an object structure for GOVUK summary list structure
  */
-const agentFields = (answers: ApplicationExportContractAgent, referenceNumber: number, countries: Array<Country>, checkAndChange?: boolean) => {
+const agentFields = (
+  answers: ApplicationExportContractAgent,
+  referenceNumber: number,
+  countries: Array<Country>,
+  currencies: Array<Currency>,
+  checkAndChange?: boolean,
+) => {
   let fields = [
     fieldGroupItem(
       {
@@ -116,7 +123,7 @@ const agentFields = (answers: ApplicationExportContractAgent, referenceNumber: n
       ...fields,
       ...agentDetailsFields(answers, referenceNumber, countries, checkAndChange),
       ...agentServiceFields(answers.service, referenceNumber, checkAndChange),
-      ...agentChargesFields(answers.service, referenceNumber, countries, checkAndChange),
+      ...agentChargesFields(answers.service, referenceNumber, countries, currencies, checkAndChange),
     ];
   }
 

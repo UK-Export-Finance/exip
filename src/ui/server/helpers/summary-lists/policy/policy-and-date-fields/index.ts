@@ -35,7 +35,7 @@ const {
  * Create all policy fields and values for the Insurance - Type of policy govukSummaryList
  * @param {Object} answers: All submitted policy data
  * @param {Integer} referenceNumber: Application reference number
- * @param {Array<Currency>} currencies: Array of currencies
+ * @param {Array<Currency>} currencies: Currencies
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} All policy fields and values in an object structure for GOVUK summary list structure
  */
