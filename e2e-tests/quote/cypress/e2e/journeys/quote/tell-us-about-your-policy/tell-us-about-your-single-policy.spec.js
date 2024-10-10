@@ -86,10 +86,10 @@ context('Tell us about your single policy page - as an exporter, I want to provi
 
       const field = fieldSelector(fieldId);
 
-      field.input().select(1).should('have.value', GBP.isoCode);
-      field.input().select(2).should('have.value', EUR.isoCode);
-      field.input().select(3).should('have.value', USD.isoCode);
-      field.input().select(4).should('have.value', JPY.isoCode);
+      cy.checkValue(field.input().select(1), GBP.isoCode);
+      cy.checkValue(field.input().select(2), EUR.isoCode);
+      cy.checkValue(field.input().select(3), USD.isoCode);
+      cy.checkValue(field.input().select(4), JPY.isoCode);
     });
 
     it('should render `contract value` label and input', () => {

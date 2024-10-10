@@ -67,7 +67,7 @@ context(
         it('should have the submitted values', () => {
           cy.navigateToUrl(url);
 
-          aboutGoodsOrServicesPage[DESCRIPTION].textarea().should('have.value', application.EXPORT_CONTRACT[DESCRIPTION]);
+          cy.checkValue(aboutGoodsOrServicesPage[DESCRIPTION].textarea(), application.EXPORT_CONTRACT[DESCRIPTION]);
 
           cy.assertNoRadioOptionIsChecked();
         });
