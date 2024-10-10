@@ -1,4 +1,3 @@
-import { field as fieldSelector } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
@@ -14,8 +13,6 @@ const { CREDIT_PERIOD_WITH_BUYER } = POLICY_FIELD_IDS;
 const {
   [CREDIT_PERIOD_WITH_BUYER]: { MAXIMUM },
 } = FIELDS;
-
-const descriptionField = fieldSelector(CREDIT_PERIOD_WITH_BUYER);
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -109,7 +106,11 @@ context('Insurance - Policy - Pre-credit period page - Save and go back', () => 
       cy.clickSubmitButtonMultipleTimes({ count: 4 });
 
       cy.assertYesRadioOptionIsChecked();
-      cy.checkValue(descriptionField.textarea(), '');
+
+      cy.checkTextareaValue({
+        fieldId: CREDIT_PERIOD_WITH_BUYER,
+        expectedValue: '',
+      });
     });
   });
 
@@ -135,7 +136,11 @@ context('Insurance - Policy - Pre-credit period page - Save and go back', () => 
       cy.clickSubmitButtonMultipleTimes({ count: 4 });
 
       cy.assertYesRadioOptionIsChecked();
-      cy.checkValue(descriptionField.textarea(), mockApplication.POLICY[CREDIT_PERIOD_WITH_BUYER]);
+
+      cy.checkTextareaValue({
+        fieldId: CREDIT_PERIOD_WITH_BUYER,
+        expectedValue: mockApplication.POLICY[CREDIT_PERIOD_WITH_BUYER],
+      });
     });
   });
 });

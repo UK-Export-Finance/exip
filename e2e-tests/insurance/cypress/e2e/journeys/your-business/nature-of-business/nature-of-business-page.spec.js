@@ -115,7 +115,11 @@ context(
       it('should have the submitted values', () => {
         cy.navigateToUrl(natureOfBusinessUrl);
 
-        cy.checkValue(fieldSelector(GOODS_OR_SERVICES).textarea(), application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
+        cy.checkTextareaValue({
+          fieldId: GOODS_OR_SERVICES,
+          expectedValue: application.EXPORTER_BUSINESS[GOODS_OR_SERVICES],
+        });
+
         cy.checkValue(fieldSelector(YEARS_EXPORTING).input(), application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
         cy.checkValue(fieldSelector(EMPLOYEES_UK).input(), application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
       });
