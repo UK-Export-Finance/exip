@@ -1,7 +1,9 @@
 import { summaryList } from '../../../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import application from '../../../../../../../../fixtures/application';
 import { USD } from '../../../../../../../../fixtures/currencies';
+import formatCurrency from '../../../../../../../../helpers/format-currency';
 
 const {
   ROOT,
@@ -11,6 +13,9 @@ const {
 
 const {
   CURRENCY: { CURRENCY_CODE },
+  EXPORT_CONTRACT: {
+    AGENT_CHARGES: { FIXED_SUM_AMOUNT },
+  },
 } = INSURANCE_FIELD_IDS;
 
 const getFieldVariables = (fieldId, referenceNumber) => ({
@@ -95,8 +100,12 @@ context('Insurance - Change your answers - Export contract - Summary list - Curr
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: EXPORT_CONTRACT, fieldId });
       });
 
-      it('should render the new answer', () => {
-        cy.checkChangeAnswerRendered({ fieldVariables });
+      it(`should render the new answer for ${CURRENCY_CODE} and ${FIXED_SUM_AMOUNT}`, () => {
+        cy.checkText(summaryList.field(CURRENCY_CODE).value(), USD.name);
+
+        const expectedAmount = formatCurrency(application.EXPORT_CONTRACT.AGENT_CHARGES[FIXED_SUM_AMOUNT], USD.isoCode);
+
+        cy.checkText(summaryList.field(FIXED_SUM_AMOUNT).value(), expectedAmount);
       });
     });
   });
