@@ -1,22 +1,26 @@
 import { summaryList } from '../../pages/shared';
 import getSummaryListField from './get-summary-list-field';
 import { EXPECTED_SINGLE_LINE_STRING, FIELD_VALUES } from '../../constants';
-import FIELD_IDS from '../../constants/field-ids/insurance/export-contract';
+import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../content-strings/fields/insurance/export-contract';
 import formatCurrency from '../../helpers/format-currency';
 import application from '../../fixtures/application';
 import COUNTRIES from '../../fixtures/countries';
+import { GBP } from '../../fixtures/currencies';
 
 const {
-  HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD },
-  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
-  HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
-  PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
-  USING_AGENT,
-  AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
-  AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
-  AGENT_CHARGES: { FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
-} = FIELD_IDS;
+  CURRENCY: { CURRENCY_CODE },
+  EXPORT_CONTRACT: {
+    HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD },
+    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
+    HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
+    PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
+    USING_AGENT,
+    AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
+    AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
+    AGENT_CHARGES: { FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
+  },
+} = INSURANCE_FIELD_IDS;
 
 const { OPEN_TENDER } = FIELDS.HOW_WAS_THE_CONTRACT_AWARDED[AWARD_METHOD].OPTIONS;
 
@@ -218,16 +222,22 @@ const checkExportContractSummaryList = {
     }
   },
   [FIXED_SUM_CURRENCY_CODE]: ({ shouldRender = false }) => {
-    const fieldId = FIXED_SUM_CURRENCY_CODE;
+    /**
+     * NOTE:
+     * - The summary list uses the CURRENCY_CODE field ID.
+     * - The data uses the FIXED_SUM_CURRENCY_CODE field ID.
+     * The summary has to use the CURRENCY_CODE field ID to match the generic curency form field ID.
+     */
+    const summaryListFieldId = CURRENCY_CODE;
 
     if (shouldRender) {
-      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.AGENT_CHARGES);
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(summaryListFieldId, FIELDS.AGENT_CHARGES);
 
-      const expectedValue = application.EXPORT_CONTRACT.AGENT_CHARGES[fieldId];
+      const expectedValue = GBP.name;
 
-      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+      cy.assertSummaryListRow(summaryList, summaryListFieldId, expectedKey, expectedValue, expectedChangeLinkText);
     } else {
-      cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+      cy.assertSummaryListRowDoesNotExist(summaryList, summaryListFieldId);
     }
   },
   [FIXED_SUM_AMOUNT]: ({ shouldRender = false, agentChargeFixedSumAmount }) => {

@@ -43,7 +43,7 @@ const mapLossPayeeFinancialDetailsInternational = (variables: ApplicationLossPay
 
     return updateData;
   } catch (error) {
-    console.error('Error mapping loss payee financial international %O', error);
+    console.error('Error mapping loss payee financial international %o', error);
 
     throw new Error(`Error mapping loss payee financial international ${error}`);
   }

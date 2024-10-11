@@ -42,7 +42,7 @@ const { TURNOVER: TURNOVER_FIELDS } = FIELDS;
  * when is checkAndChangeRoute, then alternative currency url should be ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE
  * else should be ALTERNATIVE_CURRENCY
  * @param {Number} referenceNumber: Application reference number
- * @param {Array<Currency>} currencies: Array of currencies
+ * @param {Array<Currency>} currencies: Currencies
  * @param {String} currencyCode: Provided currency code
  * @param {Boolean} changeRoute: req.originalUrl is a change route
  * @param {Boolean} checkAndChangeRoute: req.originalUrl is a check-and-change route
@@ -106,7 +106,7 @@ const get = async (req: Request, res: Response) => {
       ...generatedPageVariables,
     });
   } catch (error) {
-    console.error('Error getting turnover %O', error);
+    console.error('Error getting turnover %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -198,7 +198,7 @@ const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CREDIT_CONTROL}`);
   } catch (error) {
-    console.error('Error updating application - your business - turnover %O', error);
+    console.error('Error updating application - your business - turnover %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

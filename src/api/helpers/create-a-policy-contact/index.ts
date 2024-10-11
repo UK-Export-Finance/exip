@@ -21,7 +21,7 @@ const createAPolicyContact = async (context: Context, applicationId: string) => 
 
     return policyContact;
   } catch (error) {
-    console.error('Error creating a policy contact %O', error);
+    console.error('Error creating a policy contact %o', error);
 
     throw new Error(`Creating a policy contact ${error}`);
   }

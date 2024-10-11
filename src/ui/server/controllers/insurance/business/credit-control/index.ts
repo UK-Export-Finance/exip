@@ -69,7 +69,7 @@ export const get = (req: Request, res: Response) => {
       SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
     });
   } catch (error) {
-    console.error('Error getting credit control %O', error);
+    console.error('Error getting credit control %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -131,7 +131,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
   } catch (error) {
-    console.error('Error posting credit control %O', error);
+    console.error('Error posting credit control %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

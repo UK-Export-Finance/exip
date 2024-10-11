@@ -17,7 +17,7 @@ const getCountryById = async (context: Context, id: string) => {
 
     return country;
   } catch (error) {
-    console.error('Getting country by ID %s %O', id, error);
+    console.error('Getting country by ID %s %o', id, error);
 
     throw new Error(`Error Getting country by ID ${id} ${error}`);
   }

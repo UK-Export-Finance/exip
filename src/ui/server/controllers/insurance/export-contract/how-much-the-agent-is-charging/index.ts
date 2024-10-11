@@ -13,11 +13,13 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/export-contract-agent-service-charge';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Currency, Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
   EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, HOW_MUCH_THE_AGENT_IS_CHARGING_SAVE_AND_BACK },
+  CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -103,7 +105,7 @@ export const get = async (req: Request, res: Response) => {
       application: mapApplicationToFormFields(application),
     });
   } catch (error) {
-    console.error('Error getting currencies %O', error);
+    console.error('Error getting currencies %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -166,7 +168,7 @@ export const post = async (req: Request, res: Response) => {
         validationErrors,
       });
     } catch (error) {
-      console.error('Error getting currencies %O', error);
+      console.error('Error getting currencies %o', error);
 
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
@@ -179,9 +181,13 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
+    }
+
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
   } catch (error) {
-    console.error('Error updating application - export contract - how much the agent is charging %O', error);
+    console.error('Error updating application - export contract - how much the agent is charging %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

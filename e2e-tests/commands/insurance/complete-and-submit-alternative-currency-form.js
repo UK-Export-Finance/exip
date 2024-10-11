@@ -1,5 +1,6 @@
 import { radios } from '../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
+import { NON_STANDARD_CURRENCY_CODE } from '../../fixtures/currencies';
 
 const { CURRENCY_CODE } = INSURANCE_FIELD_IDS.CURRENCY;
 
@@ -11,14 +12,14 @@ const { CURRENCY_CODE } = INSURANCE_FIELD_IDS.CURRENCY;
  * @param {String} isoCode: isoCode for radio selection.
  * @param {Boolean} alternativeCurrency: If alternative currency should be entered.
  */
-const completeAndSubmitAlternativeCurrencyForm = ({ isoCode, alternativeCurrency = true }) => {
+const completeAndSubmitAlternativeCurrencyForm = ({ isoCode, alternativeCurrency = false }) => {
   if (isoCode) {
     radios(CURRENCY_CODE, isoCode).option.label().click();
     cy.clickSubmitButton();
   }
 
   if (alternativeCurrency) {
-    cy.clickAlternativeCurrencyRadioAndSubmitCurrency({ currency: isoCode });
+    cy.clickAlternativeCurrencyRadioAndSubmitCurrency({ currency: NON_STANDARD_CURRENCY_CODE });
   }
 
   if (!isoCode && !alternativeCurrency) {

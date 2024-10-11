@@ -118,7 +118,7 @@ export const get = async (req: Request, res: Response) => {
       ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, currencyAnswer),
     });
   } catch (error) {
-    console.error('Error getting currencies %O', error);
+    console.error('Error getting currencies %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -169,7 +169,7 @@ export const post = async (req: Request, res: Response) => {
         validationErrors,
       });
     } catch (error) {
-      console.error('Error getting currencies %O', error);
+      console.error('Error getting currencies %o', error);
 
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
@@ -215,7 +215,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`);
   } catch (error) {
-    console.error('Error updating application - policy - single contract policy %O', error);
+    console.error('Error updating application - policy - single contract policy %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

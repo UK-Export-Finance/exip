@@ -70,7 +70,7 @@ const accountSignInChecks = async (context: Context, account: Account, urlOrigin
       success: false,
     };
   } catch (error) {
-    console.error('Error validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) %O', error);
+    console.error('Error validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) %o', error);
 
     throw new Error(`Validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) ${error}`);
   }

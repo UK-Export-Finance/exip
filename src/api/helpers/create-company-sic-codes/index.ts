@@ -31,7 +31,7 @@ const createCompanySicCodes = async (
 
     return [];
   } catch (error) {
-    console.error('Error creating company SIC codes for %s %O', companyId, error);
+    console.error('Error creating company SIC codes for %s %o', companyId, error);
 
     throw new Error(`Creating company SIC codes for ${companyId} ${error}`);
   }

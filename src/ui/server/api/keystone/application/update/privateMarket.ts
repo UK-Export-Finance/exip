@@ -21,22 +21,22 @@ const updatePrivateMarket = async (id: string, update: object) => {
     const response = (await apollo('POST', updateApplicationPrivateMarketMutation, variables)) as ApolloResponse;
 
     if (response.errors) {
-      console.error('GraphQL error updating application private market %O', response.errors);
+      console.error('GraphQL error updating application private market %o', response.errors);
     }
 
     if (response?.networkError?.result?.errors) {
-      console.error('GraphQL network error updating application private market %O', response.networkError.result.errors);
+      console.error('GraphQL network error updating application private market %o', response.networkError.result.errors);
     }
 
     if (response?.data?.updatePrivateMarket) {
       return response.data.updatePrivateMarket;
     }
 
-    console.error('Error with GraphQL updateApplicationPrivateMarketMutation %O', response);
+    console.error('Error with GraphQL updateApplicationPrivateMarketMutation %o', response);
 
     throw new Error('Updating application private market');
   } catch (error) {
-    console.error('Error updating application private market %O', error);
+    console.error('Error updating application private market %o', error);
 
     throw new Error('Updating application private market');
   }

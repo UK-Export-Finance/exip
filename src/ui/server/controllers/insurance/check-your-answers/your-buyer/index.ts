@@ -80,7 +80,7 @@ export const get = async (req: Request, res: Response) => {
       ...pageVariables(referenceNumber),
     });
   } catch (error) {
-    console.error('Error getting Check your answers - Your buyer %O', error);
+    console.error('Error getting Check your answers - Your buyer %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -114,7 +114,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`);
   } catch (error) {
-    console.error('Error updating Check your answers - Your buyer %O', error);
+    console.error('Error updating Check your answers - Your buyer %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

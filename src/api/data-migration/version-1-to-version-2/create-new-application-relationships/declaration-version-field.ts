@@ -39,7 +39,7 @@ const updateDeclarationVersionField = async (connection: Connection) => {
 
     return Promise.all(declarationPromises);
   } catch (error) {
-    console.error('🚨 error %s %O', loggingMessage, error);
+    console.error('🚨 error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

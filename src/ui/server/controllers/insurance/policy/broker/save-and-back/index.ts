@@ -40,7 +40,7 @@ const post = async (req: Request, res: Response) => {
     // redirect to all sections page
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   } catch (error) {
-    console.error('Error updating application - policy - broker (save and back) %O', error);
+    console.error('Error updating application - policy - broker (save and back) %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

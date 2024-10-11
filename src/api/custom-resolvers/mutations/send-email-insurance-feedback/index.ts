@@ -24,7 +24,7 @@ const sendEmailInsuranceFeedback = async (root: any, variables: InsuranceFeedbac
       success: false,
     };
   } catch (error) {
-    console.error('Error generating and sending email for insurance feedback %O', error);
+    console.error('Error generating and sending email for insurance feedback %o', error);
 
     throw new Error(`Generating and sending email for insurance feedback ${error}`);
   }

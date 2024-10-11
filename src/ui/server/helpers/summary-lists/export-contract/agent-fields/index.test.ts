@@ -10,7 +10,7 @@ import getCountryByIsoCode from '../../../get-country-by-iso-code';
 import generateChangeLink from '../../../generate-change-link';
 import replaceNewLineWithLineBreak from '../../../replace-new-line-with-line-break';
 import agentChargesFields from './agent-charges';
-import { mockApplication, mockCountries, referenceNumber } from '../../../../test-mocks';
+import { mockApplication, mockCountries, mockCurrencies, referenceNumber } from '../../../../test-mocks';
 
 const {
   EXPORT_CONTRACT: { AGENT: FORM_TITLE },
@@ -97,7 +97,7 @@ describe('server/helpers/summary-lists/export-contract/agent-fields', () => {
   describe('agentFields', () => {
     describe(`when ${USING_AGENT} is false`, () => {
       it(`should return one ${USING_AGENT} field and value`, () => {
-        const result = agentFields(mockAnswersUsingAgentFalse, referenceNumber, mockCountries, checkAndChange);
+        const result = agentFields(mockAnswersUsingAgentFalse, referenceNumber, mockCountries, mockCurrencies, checkAndChange);
 
         const expected = {
           title: FORM_TITLE,
@@ -120,7 +120,7 @@ describe('server/helpers/summary-lists/export-contract/agent-fields', () => {
 
     describe(`when ${USING_AGENT} is true`, () => {
       it(`should return ${USING_AGENT} and agentDetailsFields`, () => {
-        const result = agentFields(mockAnswersUsingAgentTrue, referenceNumber, mockCountries, checkAndChange);
+        const result = agentFields(mockAnswersUsingAgentTrue, referenceNumber, mockCountries, mockCurrencies, checkAndChange);
 
         const expected = {
           title: FORM_TITLE,
@@ -136,7 +136,7 @@ describe('server/helpers/summary-lists/export-contract/agent-fields', () => {
             ),
             ...agentDetailsFields(mockAnswersUsingAgentTrue, referenceNumber, mockCountries, checkAndChange),
             ...agentServiceFields(mockAnswersUsingAgentTrue.service, referenceNumber, checkAndChange),
-            ...agentChargesFields(mockAnswersUsingAgentTrue.service, referenceNumber, mockCountries, checkAndChange),
+            ...agentChargesFields(mockAnswersUsingAgentTrue.service, referenceNumber, mockCountries, mockCurrencies, checkAndChange),
           ],
         };
 

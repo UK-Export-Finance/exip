@@ -43,7 +43,7 @@ const APIM = {
         success: false,
       };
     } catch (error) {
-      console.error('Error calling APIM - CIS countries %O', error);
+      console.error('Error calling APIM - CIS countries %o', error);
 
       throw new Error(`Calling APIM - CIS countries ${error}`);
     }
@@ -76,7 +76,7 @@ const APIM = {
         success: false,
       };
     } catch (error) {
-      console.error('Error calling APIM - currencies %O', error);
+      console.error('Error calling APIM - currencies %o', error);
 
       throw new Error(`Calling APIM - currencies ${error}`);
     }

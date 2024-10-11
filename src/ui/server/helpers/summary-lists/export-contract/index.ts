@@ -12,6 +12,7 @@ import { SummaryListParamsExportContract, SummaryListGroupData } from '../../../
  * @param {Boolean} migratedV1toV2: Application has been migrated from V1 to V2
  * @param {Number} referenceNumber: Application reference number
  * @param {Array<Country>} countries: Countries
+ * @param {Array<Currency>} currencies: Currencies
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} Fields and values in an object structure for GOVUK summary list structure
  */
@@ -21,6 +22,7 @@ export const generateFields = ({
   migratedV1toV2,
   referenceNumber,
   countries,
+  currencies,
   checkAndChange,
 }: SummaryListParamsExportContract) => {
   const fields = [generateAboutTheExportFields(exportContract, referenceNumber, countries, checkAndChange)] as Array<SummaryListGroupData>;
@@ -29,7 +31,7 @@ export const generateFields = ({
     fields.push(generatePrivateMarketFields(exportContract.privateMarket, referenceNumber, checkAndChange));
   }
 
-  fields.push(generateAgentFields(exportContract.agent, referenceNumber, countries, checkAndChange));
+  fields.push(generateAgentFields(exportContract.agent, referenceNumber, countries, currencies, checkAndChange));
 
   return fields;
 };
@@ -42,6 +44,7 @@ export const generateFields = ({
  * @param {Boolean} migratedV1toV2: Application has been migrated from V1 to V2
  * @param {Number} referenceNumber: Application reference number
  * @param {Array<Country>} countries: Countries
+ * @param {Array<Currency>} currencies: Currencies
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
@@ -51,9 +54,10 @@ export const exportContractSummaryLists = ({
   migratedV1toV2,
   referenceNumber,
   countries,
+  currencies,
   checkAndChange,
 }: SummaryListParamsExportContract) => {
-  const fields = generateFields({ exportContract, totalContractValueOverThreshold, migratedV1toV2, referenceNumber, countries, checkAndChange });
+  const fields = generateFields({ exportContract, totalContractValueOverThreshold, migratedV1toV2, referenceNumber, countries, currencies, checkAndChange });
 
   const summaryList = generateGroupsOfSummaryLists(fields);
 

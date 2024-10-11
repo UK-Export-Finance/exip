@@ -22,7 +22,7 @@ const blockAccount = async (context: Context, statusId: string): Promise<boolean
 
     return false;
   } catch (error) {
-    console.error('Error blocking account %O', error);
+    console.error('Error blocking account %o', error);
 
     throw new Error(`Blocking account ${error}`);
   }

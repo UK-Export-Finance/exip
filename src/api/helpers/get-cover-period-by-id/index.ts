@@ -17,7 +17,7 @@ const getCoverPeriodById = async (context: Context, id: string) => {
 
     return coverPeriod;
   } catch (error) {
-    console.error('Getting coverPeriod by ID %s %O', id, error);
+    console.error('Getting coverPeriod by ID %s %o', id, error);
 
     throw new Error(`Error Getting coverPeriod by ID ${id} ${error}`);
   }

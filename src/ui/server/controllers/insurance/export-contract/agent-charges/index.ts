@@ -15,6 +15,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/export-contract-agent-service-charge';
+import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Currency, Request, Response } from '../../../../../types';
 
@@ -25,12 +26,18 @@ const {
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { AGENT_CHARGES_SAVE_AND_BACK, AGENT_CHARGES_CURRENCY, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: {
+    AGENT_CHARGES_SAVE_AND_BACK,
+    AGENT_CHARGES_CURRENCY,
+    AGENT_CHARGES_CURRENCY_CHANGE,
+    AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE,
+    CHECK_YOUR_ANSWERS,
+  },
   CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
 const {
-  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_CURRENCY_CODE, PERCENTAGE, PERCENTAGE_CHARGE },
+  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE, PERCENTAGE_CHARGE },
 } = EXPORT_CONTRACT_FIELD_IDS;
 
 const {
@@ -51,7 +58,7 @@ export const TEMPLATE = TEMPLATES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES;
  * pageVariables
  * Page fields and "save and go back" URL
  * @param {Number} referenceNumber: Application reference number
- * @param {Array<Currency>} currencies: Array of currencies
+ * @param {Array<Currency>} currencies: Currencies
  * @param {String} currencyCode: Provided currency code
  * @returns {Object} Page variables
  */
@@ -125,7 +132,7 @@ export const get = async (req: Request, res: Response) => {
       CONDITIONAL_PERCENTAGE_HTML,
     });
   } catch (error) {
-    console.error('Error getting countries %O', error);
+    console.error('Error getting countries %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -177,7 +184,7 @@ export const post = async (req: Request, res: Response) => {
         validationErrors,
       });
     } catch (error) {
-      console.error('Error getting countries or currencies %O', error);
+      console.error('Error getting countries or currencies %o', error);
 
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
@@ -190,16 +197,33 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
+    const isFixedSumMethod = payload[METHOD] === AGENT_SERVICE_CHARGE.METHOD.FIXED_SUM;
+    const hasFixedSumAmount = agent.service.charge[FIXED_SUM_AMOUNT];
+
     /**
-     * If the route is a "check and change" route,
-     * redirect to CHECK_AND_CHANGE_ROUTE.
-     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
+     * If the route is a "change" route,
+     * the agent charges are FIXED_SUM METHOD,
+     * and no FIXED_SUM_AMOUNT is available,
+     * redirect to AGENT_CHARGES_CURRENCY_CHANGE form.
      */
-    if (isCheckAndChangeRoute(req.originalUrl)) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
+    if (isChangeRoute(req.originalUrl) && isFixedSumMethod && !hasFixedSumAmount) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY_CHANGE}`);
     }
 
-    const isFixedSumMethod = payload[METHOD] === AGENT_SERVICE_CHARGE.METHOD.FIXED_SUM;
+    /**
+     * If the route is a "check and change" route,
+     * the agent charges are FIXED_SUM METHOD,
+     * and no FIXED_SUM_AMOUNT is available,
+     * redirect to AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE.
+     * Otherwise, redirect to CHECK_AND_CHANGE_ROUTE.
+     */
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      if (isFixedSumMethod && !hasFixedSumAmount) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE}`);
+      }
+
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
+    }
 
     /**
      * If the agent charges are FIXED_SUM METHOD,
@@ -212,7 +236,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
   } catch (error) {
-    console.error('Error updating application - export contract - agent charges %O', error);
+    console.error('Error updating application - export contract - agent charges %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

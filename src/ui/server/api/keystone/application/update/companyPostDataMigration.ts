@@ -23,22 +23,22 @@ const updateCompanyPostDataMigration = async (id: string, update: object) => {
     const response = (await apollo('POST', updateCompanyPostDataMigrationMutation, variables)) as ApolloResponse;
 
     if (response.errors) {
-      console.error('GraphQL error updating application company (post data migration) %O', response.errors);
+      console.error('GraphQL error updating application company (post data migration) %o', response.errors);
     }
 
     if (response?.networkError?.result?.errors) {
-      console.error('GraphQL network error updating application company (post data migration) %O', response.networkError.result.errors);
+      console.error('GraphQL network error updating application company (post data migration) %o', response.networkError.result.errors);
     }
 
     if (response?.data?.updateCompanyPostDataMigration) {
       return response.data.updateCompanyPostDataMigration;
     }
 
-    console.error('Error with GraphQL updateCompanyPostDataMigration %O', response);
+    console.error('Error with GraphQL updateCompanyPostDataMigration %o', response);
 
     throw new Error('Updating application company (post data migration)');
   } catch (error) {
-    console.error('Error updating application company (post data migration) %O', error);
+    console.error('Error updating application company (post data migration) %o', error);
 
     throw new Error('Updating application company (post data migration)');
   }

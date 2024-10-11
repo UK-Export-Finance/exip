@@ -36,7 +36,7 @@ const updateUnverifiedAccounts = async (context: Context): Promise<SuccessRespon
       success: true,
     };
   } catch (error) {
-    console.error('Error getting and updating unverified accounts %O', error);
+    console.error('Error getting and updating unverified accounts %o', error);
 
     throw new Error(`Error getting and updating unverified accounts ${error}`);
   }

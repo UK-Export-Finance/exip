@@ -90,7 +90,7 @@ export const get = async (req: Request, res: Response) => {
       countries: mappedCountries,
     });
   } catch (error) {
-    console.error('Error getting countries %O', error);
+    console.error('Error getting countries %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -139,7 +139,7 @@ export const post = async (req: Request, res: Response) => {
         countries: mappedCountries,
       });
     } catch (error) {
-      console.error('Error getting countries %O', error);
+      console.error('Error getting countries %o', error);
 
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
@@ -171,7 +171,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICE}`);
   } catch (error) {
-    console.error('Error updating application - export contract - agent details %O', error);
+    console.error('Error updating application - export contract - agent details %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

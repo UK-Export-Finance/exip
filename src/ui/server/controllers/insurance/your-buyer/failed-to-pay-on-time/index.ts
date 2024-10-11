@@ -79,7 +79,7 @@ export const get = async (req: Request, res: Response) => {
       applicationAnswer: buyerTradingHistory[FIELD_ID],
     });
   } catch (error) {
-    console.error('Error getting failed to pay on time %O', error);
+    console.error('Error getting failed to pay on time %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -153,7 +153,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`);
   } catch (error) {
-    console.error('Error posting failed to pay on time %O', error);
+    console.error('Error posting failed to pay on time %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

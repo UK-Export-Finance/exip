@@ -9,7 +9,8 @@ import getCountryByIsoCode from '../../../../get-country-by-iso-code';
 import generateChangeLink from '../../../../generate-change-link';
 import formatCurrency from '../../../../format-currency';
 import { transformEmptyDecimalsToWholeNumber, numberHasDecimalPlaces } from '../../../../number';
-import { ApplicationExportContractAgentService, Country } from '../../../../../../types';
+import getCurrencyByCode from '../../../../get-currency-by-code';
+import { ApplicationExportContractAgentService, Country, Currency } from '../../../../../../types';
 
 const {
   CURRENCY: { CURRENCY_CODE },
@@ -26,6 +27,8 @@ const {
   AGENT_CHARGES_CHECK_AND_CHANGE,
   AGENT_SERVICE_CHANGE,
   AGENT_SERVICE_CHECK_AND_CHANGE,
+  HOW_MUCH_THE_AGENT_IS_CHARGING_CHANGE,
+  HOW_MUCH_THE_AGENT_IS_CHARGING_CHECK_AND_CHANGE,
 } = EXPORT_CONTRACT_ROUTES;
 
 /**
@@ -34,10 +37,17 @@ const {
  * @param {ApplicationExportContractAgentService} answers: All submitted agent data
  * @param {Number} referenceNumber: Application reference number
  * @param {Array<Country>} countries: Countries
+ * @param {Array<Currency>} currencies: Currencies
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>} Agent charges fields
  */
-const agentChargesFields = (answers: ApplicationExportContractAgentService, referenceNumber: number, countries: Array<Country>, checkAndChange?: boolean) => {
+const agentChargesFields = (
+  answers: ApplicationExportContractAgentService,
+  referenceNumber: number,
+  countries: Array<Country>,
+  currencies: Array<Currency>,
+  checkAndChange?: boolean,
+) => {
   let fields = [
     fieldGroupItem(
       {
@@ -72,19 +82,25 @@ const agentChargesFields = (answers: ApplicationExportContractAgentService, refe
             href: generateChangeLink(
               AGENT_CHARGES_CURRENCY_CHANGE,
               AGENT_CHARGES_CURRENCY_CHECK_AND_CHANGE,
-              `#${FIXED_SUM_CURRENCY_CODE}-label`,
+              `#${CURRENCY_CODE}-label`,
               referenceNumber,
               checkAndChange,
             ),
             renderChangeLink: true,
           },
-          answers.charge[FIXED_SUM_CURRENCY_CODE],
+          getCurrencyByCode(currencies, answers.charge[FIXED_SUM_CURRENCY_CODE]).name,
         ),
         fieldGroupItem(
           {
             field: getFieldById(FIELDS.AGENT_CHARGES, FIXED_SUM_AMOUNT),
             data: answers.charge,
-            href: generateChangeLink(AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE, `#${FIXED_SUM_AMOUNT}-label`, referenceNumber, checkAndChange),
+            href: generateChangeLink(
+              HOW_MUCH_THE_AGENT_IS_CHARGING_CHANGE,
+              HOW_MUCH_THE_AGENT_IS_CHARGING_CHECK_AND_CHANGE,
+              `#${FIXED_SUM_AMOUNT}-label`,
+              referenceNumber,
+              checkAndChange,
+            ),
             renderChangeLink: true,
           },
           formatCurrency(Number(answer), answers.charge[FIXED_SUM_CURRENCY_CODE], decimalPlaces),

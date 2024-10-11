@@ -25,7 +25,7 @@ const {
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  "Insurance - Export contract - Agent charges - Alternative currency page - As an Exporter, I want to be able to choose another currency to report my agent's fees in, So that I can provide accurate information regarding any fees I have incurred in winning my export contract",
+  "Insurance - Export contract - Currency of agent charges page - As an Exporter, I want to be able to choose another currency to report my agent's fees in, So that I can provide accurate information regarding any fees I have incurred in winning my export contract",
   () => {
     let referenceNumber;
     let url;
@@ -81,7 +81,7 @@ context(
       const { rendering, formSubmission } = assertCurrencyFormFields({
         gbpCurrencyCheckedByDefault: true,
         errors: CURRENCY_ERROR_MESSAGES,
-        expectedRedirectUrl: AGENT_CHARGES,
+        expectedRedirectUrl: HOW_MUCH_THE_AGENT_IS_CHARGING,
       });
 
       rendering();
@@ -91,9 +91,17 @@ context(
 
     describe('form submission', () => {
       it(`should redirect to ${HOW_MUCH_THE_AGENT_IS_CHARGING}`, () => {
+        cy.navigateToUrl(url);
+
         cy.completeAndSubmitAlternativeCurrencyForm({});
 
         cy.assertUrl(howMuchAgentIsChargingUrl);
+      });
+
+      it('should retain the status of task `export contract` as `in progress`', () => {
+        cy.navigateToAllSectionsUrl(referenceNumber);
+
+        cy.checkTaskExportContractStatusIsInProgress();
       });
     });
   },

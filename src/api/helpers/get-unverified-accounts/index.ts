@@ -31,7 +31,7 @@ const getUnverifiedAccounts = async (context: Context): Promise<Account[]> => {
 
     return accounts;
   } catch (error) {
-    console.error('Error getting unverified accounts (getUnverifiedAccounts helper) %O', error);
+    console.error('Error getting unverified accounts (getUnverifiedAccounts helper) %o', error);
 
     throw new Error(`Error getting unverified accounts (getUnverifiedAccounts helper) ${error}`);
   }

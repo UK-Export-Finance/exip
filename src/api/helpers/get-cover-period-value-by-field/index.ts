@@ -29,7 +29,7 @@ const getCoverPeriodValueByField = async (context: Context, field: string, value
 
     return coverPeriod;
   } catch (error) {
-    console.error('Error getting coverPeriod by field/value %O', error);
+    console.error('Error getting coverPeriod by field/value %o', error);
 
     throw new Error(`Getting coverPeriod by field/value ${error}`);
   }

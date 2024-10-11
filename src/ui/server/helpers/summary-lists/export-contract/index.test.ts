@@ -3,7 +3,7 @@ import generateAboutTheExportFields from './about-the-export-fields';
 import generatePrivateMarketFields from './private-market-fields';
 import generateAgentFields from './agent-fields';
 import generateGroupsOfSummaryLists from '../generate-groups-of-summary-lists';
-import { mockCountries } from '../../../test-mocks';
+import { mockCountries, mockCurrencies } from '../../../test-mocks';
 import { referenceNumber, mockExportContract } from '../../../test-mocks/mock-application';
 
 describe('server/helpers/summary-lists/export-contract', () => {
@@ -14,6 +14,7 @@ describe('server/helpers/summary-lists/export-contract', () => {
     exportContract: mockAnswers,
     referenceNumber,
     countries: mockCountries,
+    currencies: mockCurrencies,
     checkAndChange,
   };
 
@@ -29,7 +30,7 @@ describe('server/helpers/summary-lists/export-contract', () => {
         const expected = [
           generateAboutTheExportFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
           generatePrivateMarketFields(mockAnswers.privateMarket, referenceNumber, checkAndChange),
-          generateAgentFields(mockAnswers.agent, referenceNumber, mockCountries, checkAndChange),
+          generateAgentFields(mockAnswers.agent, referenceNumber, mockCountries, mockCurrencies, checkAndChange),
         ];
 
         expect(result).toEqual(expected);
@@ -47,7 +48,7 @@ describe('server/helpers/summary-lists/export-contract', () => {
         const expected = [
           generateAboutTheExportFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
           generatePrivateMarketFields(mockAnswers.privateMarket, referenceNumber, checkAndChange),
-          generateAgentFields(mockAnswers.agent, referenceNumber, mockCountries, checkAndChange),
+          generateAgentFields(mockAnswers.agent, referenceNumber, mockCountries, mockCurrencies, checkAndChange),
         ];
 
         expect(result).toEqual(expected);
@@ -64,7 +65,7 @@ describe('server/helpers/summary-lists/export-contract', () => {
 
         const expected = [
           generateAboutTheExportFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
-          generateAgentFields(mockAnswers.agent, referenceNumber, mockCountries, checkAndChange),
+          generateAgentFields(mockAnswers.agent, referenceNumber, mockCountries, mockCurrencies, checkAndChange),
         ];
 
         expect(result).toEqual(expected);

@@ -22,7 +22,7 @@ const NEW_COUNTRY_INPUT = XAD.NAME;
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  'Insurance - Export contract - Change your answers - About goods or services - As an exporter, I want to change my answers to the type of policy section',
+  'Insurance - Export contract - Change your answers - About goods or services - As an exporter, I want to change my answers to the export contract section',
   () => {
     let referenceNumber;
     let checkYourAnswersUrl;

@@ -39,7 +39,7 @@ const createAnAbandonedApplication = async (root: any, variables: CreateAnApplic
       success: false,
     };
   } catch (error) {
-    console.error('Error creating an abandoned application %O', error);
+    console.error('Error creating an abandoned application %o', error);
 
     throw new Error(`Creating an abandoned application ${error}`);
   }

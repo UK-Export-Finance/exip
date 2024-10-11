@@ -17,22 +17,22 @@ const submitApplication = async (applicationId: string) => {
     const response = (await apollo('POST', submitApplicationMutation, variables)) as ApolloResponse;
 
     if (response.errors) {
-      console.error('GraphQL error submitting application %O', response.errors);
+      console.error('GraphQL error submitting application %o', response.errors);
     }
 
     if (response?.networkError?.result?.errors) {
-      console.error('GraphQL network error submitting application %O', response.networkError.result.errors);
+      console.error('GraphQL network error submitting application %o', response.networkError.result.errors);
     }
 
     if (response?.data?.submitApplication) {
       return response.data.submitApplication;
     }
 
-    console.error('Error with GraphQL submitApplicationMutation %O', response);
+    console.error('Error with GraphQL submitApplicationMutation %o', response);
 
     throw new Error(`Submitting application ${applicationId}`);
   } catch (error) {
-    console.error('Error submitting application %O', error);
+    console.error('Error submitting application %o', error);
 
     throw new Error(`Submitting application ${applicationId}`);
   }
