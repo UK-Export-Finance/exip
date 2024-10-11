@@ -11,15 +11,15 @@
  */
 const completeDateFormFields = ({ idPrefix, day, month, year }) => {
   if (day !== null) {
-    cy.keyboardInput(cy.get(`[data-cy="${idPrefix}-day"]`), day);
+    cy.keyboardInput(cy.get(`[data-cy="${idPrefix}-day-input"]`), day);
   }
 
   if (month !== null) {
-    cy.keyboardInput(cy.get(`[data-cy="${idPrefix}-month"]`), month);
+    cy.keyboardInput(cy.get(`[data-cy="${idPrefix}-month-input"]`), month);
   }
 
   if (year !== null) {
-    cy.keyboardInput(cy.get(`[data-cy="${idPrefix}-year"]`), year);
+    cy.keyboardInput(cy.get(`[data-cy="${idPrefix}-year-input"]`), year);
   }
 };
 
