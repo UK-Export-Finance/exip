@@ -77,7 +77,7 @@ context(
             percentageMethod: false,
           });
 
-          cy.completeAndSubmitAlternativeCurrencyForm({});
+          cy.completeAndSubmitCurrencyForm({});
 
           cy.completeAndSubmitHowMuchTheAgentIsChargingForm({});
 

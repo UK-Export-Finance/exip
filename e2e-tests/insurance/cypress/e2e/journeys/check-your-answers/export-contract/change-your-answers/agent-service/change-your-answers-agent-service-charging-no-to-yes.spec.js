@@ -88,7 +88,7 @@ context('Insurance - Change your answers - Export contract - Summary list - Agen
           percentageMethod: false,
         });
 
-        cy.completeAndSubmitAlternativeCurrencyForm({});
+        cy.completeAndSubmitCurrencyForm({});
 
         cy.completeAndSubmitHowMuchTheAgentIsChargingForm({});
 

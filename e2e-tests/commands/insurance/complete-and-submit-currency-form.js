@@ -5,14 +5,14 @@ import { NON_STANDARD_CURRENCY_CODE } from '../../fixtures/currencies';
 const { CURRENCY_CODE } = INSURANCE_FIELD_IDS.CURRENCY;
 
 /**
- * completeAndSubmitAlternativeCurrencyForm
- * conditionally clicks "alternative currency" hyperlink and completes the alternative currency form
+ * completeAndSubmitCurrencyForm
+ * conditionally clicks "alternative currency" radio and selects an alternative currency
  * if isoCode provided - clicks the radio for currency and submits alternative currency form
  * if alternativeCurrency true, then enters alternative currency and submits alternative currency form
  * @param {String} isoCode: isoCode for radio selection.
  * @param {Boolean} alternativeCurrency: If alternative currency should be entered.
  */
-const completeAndSubmitAlternativeCurrencyForm = ({ isoCode, alternativeCurrency = false }) => {
+const completeAndSubmitCurrencyForm = ({ isoCode, alternativeCurrency = false }) => {
   if (isoCode) {
     radios(CURRENCY_CODE, isoCode).option.label().click();
     cy.clickSubmitButton();
@@ -27,4 +27,4 @@ const completeAndSubmitAlternativeCurrencyForm = ({ isoCode, alternativeCurrency
   }
 };
 
-export default completeAndSubmitAlternativeCurrencyForm;
+export default completeAndSubmitCurrencyForm;

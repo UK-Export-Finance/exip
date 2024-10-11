@@ -17,28 +17,28 @@ const prefixAssertions = ({ fieldId }) => {
 
   describe(`when selecting ${USD_CURRENCY_CODE} as the currency code`, () => {
     it(`should display ${SYMBOLS.USD} as the prefix`, () => {
-      cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: USD_CURRENCY_CODE });
+      cy.completeAndSubmitCurrencyForm({ isoCode: USD_CURRENCY_CODE });
       cy.assertPrefix({ fieldId, value: SYMBOLS.USD });
     });
   });
 
   describe(`when selecting ${JPY_CURRENCY_CODE} as the currency code`, () => {
     it(`should display ${SYMBOLS.JPY} as the prefix`, () => {
-      cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: JPY_CURRENCY_CODE });
+      cy.completeAndSubmitCurrencyForm({ isoCode: JPY_CURRENCY_CODE });
       cy.assertPrefix({ fieldId, value: SYMBOLS.JPY });
     });
   });
 
   describe(`when selecting ${EUR_CURRENCY_CODE} as the currency code`, () => {
     it(`should display ${SYMBOLS.EUR} as the prefix`, () => {
-      cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: EUR_CURRENCY_CODE });
+      cy.completeAndSubmitCurrencyForm({ isoCode: EUR_CURRENCY_CODE });
       cy.assertPrefix({ fieldId, value: SYMBOLS.EUR });
     });
   });
 
   describe('when selecting an alternate currency as the currency code', () => {
     it('should not display a prefix', () => {
-      cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true });
+      cy.completeAndSubmitCurrencyForm({ alternativeCurrency: true });
       cy.assertPrefix({ fieldId });
     });
   });
