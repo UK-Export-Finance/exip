@@ -140,7 +140,7 @@ ui.use(
 /* eslint-disable no-unused-vars, prettier/prettier */
 // @ts-ignore
 const errorHandler: express.ErrorRequestHandler = (error, req, res, next) => {
-  console.error('Error with EXIP UI app %O', error);
+  console.error('Error with EXIP UI app %o', error);
 
   res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
 };

@@ -69,7 +69,7 @@ const mapTextareaFields = (application: Application): Application => {
 
     return application;
   } catch (error) {
-    console.error('Error mapping textarea fields %O', error);
+    console.error('Error mapping textarea fields %o', error);
 
     throw new Error(`Error mapping textarea fields ${error}`);
   }

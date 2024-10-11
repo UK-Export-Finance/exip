@@ -90,7 +90,7 @@ export const get = async (req: Request, res: Response) => {
       ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, application.buyer.buyerTradingHistory?.currencyCode),
     });
   } catch (error) {
-    console.error('Error getting currency of late payments %O', error);
+    console.error('Error getting currency of late payments %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -160,7 +160,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${OUTSTANDING_OR_OVERDUE_PAYMENTS}`);
   } catch (error) {
-    console.error('Error posting currency of late payments %O', error);
+    console.error('Error posting currency of late payments %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

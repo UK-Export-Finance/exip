@@ -29,7 +29,7 @@ const getNominatedLossPayee = async (context: Context, lossPayeeId: string, decr
 
     return nominatedLossPayee;
   } catch (error) {
-    console.error('Error getting nominated loss payee (getNominatedLossPayee helper) %O', error);
+    console.error('Error getting nominated loss payee (getNominatedLossPayee helper) %o', error);
 
     throw new Error(`Error getting nominated loss payee (getNominatedLossPayee helper) ${error}`);
   }

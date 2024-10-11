@@ -43,7 +43,7 @@ const createInitialApplication = async ({ context, accountId, status = STATUS.IN
 
     return application;
   } catch (error) {
-    console.error('Error creating initial application (createInitialApplication helper) for user %s %O', accountId, error);
+    console.error('Error creating initial application (createInitialApplication helper) for user %s %o', accountId, error);
 
     throw new Error(`Creating initial application (createInitialApplication helper) for user ${accountId} ${error}`);
   }

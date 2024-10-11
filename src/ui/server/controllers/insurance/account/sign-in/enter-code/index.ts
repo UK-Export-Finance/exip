@@ -197,7 +197,7 @@ export const post = async (req: Request, res: Response) => {
       validationErrors,
     });
   } catch (error) {
-    console.error('Error verifying account sign in code %O', error);
+    console.error('Error verifying account sign in code %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

@@ -25,7 +25,7 @@ const updateLossPayeeFinancialInternationalUk = async (
 
     return updated;
   } catch (error) {
-    console.error('Error updating loss payee financial uk (helper) %O', error);
+    console.error('Error updating loss payee financial uk (helper) %o', error);
 
     throw new Error(`Updating loss payee financial uk (helper) ${error}`);
   }

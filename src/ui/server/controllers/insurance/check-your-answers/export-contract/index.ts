@@ -107,7 +107,7 @@ export const get = async (req: Request, res: Response) => {
       SUMMARY_LISTS: summaryList,
     });
   } catch (error) {
-    console.error('Error getting Check your answers - Export contract %O', error);
+    console.error('Error getting Check your answers - Export contract %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -141,7 +141,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   } catch (error) {
-    console.error('Error updating Check your answers - Export contract %O', error);
+    console.error('Error updating Check your answers - Export contract %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

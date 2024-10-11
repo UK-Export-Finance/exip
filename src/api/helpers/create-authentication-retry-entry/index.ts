@@ -34,7 +34,7 @@ const createAuthenticationRetryEntry = async (context: Context, accountId: strin
       success: false,
     };
   } catch (error) {
-    console.error('Error creating account authentication retry entry %O', error);
+    console.error('Error creating account authentication retry entry %o', error);
 
     throw new Error(`${error}`);
   }

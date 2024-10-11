@@ -45,7 +45,7 @@ const industrySectorNames = {
         data: response.data,
       };
     } catch (error) {
-      console.error('Error calling industry sector API %O', error);
+      console.error('Error calling industry sector API %o', error);
 
       return {
         success: false,

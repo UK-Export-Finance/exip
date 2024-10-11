@@ -96,7 +96,7 @@ const get = (req: Request, res: Response) => {
       SUMMARY_LIST: companiesHouseSummaryList(mappedApplication.company, IS_APPLICATION_SUMMARY_LIST),
     });
   } catch (error) {
-    console.error('Error getting company details %O', error);
+    console.error('Error getting company details %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -223,7 +223,7 @@ const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`);
   } catch (error) {
-    console.error('Error updating application - your business - company details %O', error);
+    console.error('Error updating application - your business - company details %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

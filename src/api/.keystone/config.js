@@ -135,7 +135,7 @@ var getUnverifiedAccounts = async (context) => {
     });
     return accounts;
   } catch (error) {
-    console.error("Error getting unverified accounts (getUnverifiedAccounts helper) %O", error);
+    console.error("Error getting unverified accounts (getUnverifiedAccounts helper) %o", error);
     throw new Error(`Error getting unverified accounts (getUnverifiedAccounts helper) ${error}`);
   }
 };
@@ -183,7 +183,7 @@ var mapAndUpdateUnverifiedAccounts = async (accounts, context) => {
       data: accountStatus2
     });
   } catch (error) {
-    console.error("Error mapping and updating unverified accounts %O", error);
+    console.error("Error mapping and updating unverified accounts %o", error);
     throw new Error(`Error mapping and updating unverified accounts ${error}`);
   }
 };
@@ -205,7 +205,7 @@ var updateUnverifiedAccounts = async (context) => {
       success: true
     };
   } catch (error) {
-    console.error("Error getting and updating unverified accounts %O", error);
+    console.error("Error getting and updating unverified accounts %o", error);
     throw new Error(`Error getting and updating unverified accounts ${error}`);
   }
 };
@@ -1136,7 +1136,7 @@ var getInactiveApplications = async (context) => {
     });
     return applications;
   } catch (error) {
-    console.error("Error getting inactive applications (getInactiveApplications helper) %O", error);
+    console.error("Error getting inactive applications (getInactiveApplications helper) %o", error);
     throw new Error(`Error getting inactive applications (getInactiveApplications helper) ${error}`);
   }
 };
@@ -1168,7 +1168,7 @@ var mapAndUpdateInactiveApplications = async (applications, context) => {
       data: updateData
     });
   } catch (error) {
-    console.error("Error mapping and updating inactive applications %O", error);
+    console.error("Error mapping and updating inactive applications %o", error);
     throw new Error(`Error mapping and updating inactive applications ${error}`);
   }
 };
@@ -1186,7 +1186,7 @@ var updateInactiveApplications = async (context) => {
       success: true
     };
   } catch (error) {
-    console.error("Error getting and updating inactive applications %O", error);
+    console.error("Error getting and updating inactive applications %o", error);
     throw new Error(`Error getting and updating inactive applications ${error}`);
   }
 };
@@ -1251,7 +1251,7 @@ var getExpiringApplications = async (context) => {
     });
     return applications;
   } catch (error) {
-    console.error("Error getting expiring applications (getExpiringApplications helper) %O", error);
+    console.error("Error getting expiring applications (getExpiringApplications helper) %o", error);
     throw new Error(`Error getting expiring applications (getExpiringApplications helper) ${error}`);
   }
 };
@@ -1320,7 +1320,7 @@ var notify = {
         emailRecipient: sendToEmailAddress
       };
     } catch (error) {
-      console.error("Error calling Notify API. Unable to send email %O", error);
+      console.error("Error calling Notify API. Unable to send email %o", error);
       throw new Error(`Calling Notify API. Unable to send email ${error}`);
     }
   }
@@ -1341,7 +1341,7 @@ var callNotify = async (templateId, emailAddress, variables, file) => {
     }
     throw new Error(`Sending email ${emailResponse}`);
   } catch (error) {
-    console.error("Error sending email %O", error);
+    console.error("Error sending email %o", error);
     throw new Error(`Sending email ${error}`);
   }
 };
@@ -1355,7 +1355,7 @@ var confirmEmailAddress = async (emailAddress, urlOrigin, name, verificationHash
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
   } catch (error) {
-    console.error("Error sending confirm email address email %O", error);
+    console.error("Error sending confirm email address email %o", error);
     throw new Error(`Sending confirm email address email ${error}`);
   }
 };
@@ -1369,7 +1369,7 @@ var accessCodeEmail = async (emailAddress, name, securityCode) => {
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
   } catch (error) {
-    console.error("Error sending access code email for account sign in %O", error);
+    console.error("Error sending access code email for account sign in %o", error);
     throw new Error(`Sending access code email for account sign in ${error}`);
   }
 };
@@ -1383,7 +1383,7 @@ var passwordResetLink = async (urlOrigin, emailAddress, name, passwordResetHash)
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
   } catch (error) {
-    console.error("Error sending email for account password reset %O", error);
+    console.error("Error sending email for account password reset %o", error);
     throw new Error(`Sending email for account password reset ${error}`);
   }
 };
@@ -1397,7 +1397,7 @@ var reactivateAccountLink = async (urlOrigin, emailAddress, name, reactivationHa
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
   } catch (error) {
-    console.error("Error sending email for account reactivation %O", error);
+    console.error("Error sending email for account reactivation %o", error);
     throw new Error(`Sending email for account reactivation ${error}`);
   }
 };
@@ -1428,7 +1428,7 @@ var readFile = async (filePath) => {
     }
     throw new Error("Reading file - does not exist or is unaccepted file type");
   } catch (error) {
-    console.error("Error reading file %O", error);
+    console.error("Error reading file %o", error);
     throw new Error(`Reading file ${error}`);
   }
 };
@@ -1441,7 +1441,7 @@ var unlink = async (filePath) => {
     }
     return false;
   } catch (error) {
-    console.error("Error deleting file %O", error);
+    console.error("Error deleting file %o", error);
     throw new Error(`Deleting file ${error}`);
   }
 };
@@ -1469,7 +1469,7 @@ var application = {
       const response = await callNotify(templateId, emailAddress, variables);
       return response;
     } catch (error) {
-      console.error("Error sending application submitted email to to application owner or provided business contact %O", error);
+      console.error("Error sending application submitted email to to application owner or provided business contact %o", error);
       throw new Error(`Sending application submitted email to to application owner or provided business contact ${error}`);
     }
   },
@@ -1494,7 +1494,7 @@ var application = {
       }
       throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
     } catch (error) {
-      console.error("Error sending application submitted email to underwriting team %O", error);
+      console.error("Error sending application submitted email to underwriting team %o", error);
       throw new Error(`Sending application submitted email to underwriting team ${error}`);
     }
   }
@@ -1509,7 +1509,7 @@ var documentsEmail = async (variables, templateId) => {
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
   } catch (error) {
-    console.error("Error sending documents email %O", error);
+    console.error("Error sending documents email %o", error);
     throw new Error(`Sending documents email ${error}`);
   }
 };
@@ -1541,7 +1541,7 @@ var insuranceFeedbackEmail = async (variables) => {
     const response = await callNotify(templateId, emailAddress, emailVariables);
     return response;
   } catch (error) {
-    console.error("Error sending insurance feedback email %O", error);
+    console.error("Error sending insurance feedback email %o", error);
     throw new Error(`Sending insurance feedback email ${error}`);
   }
 };
@@ -1554,7 +1554,7 @@ var submissionDeadlineEmail = async (emailAddress, submissionDeadlineEmailVariab
     const response = await callNotify(templateId, emailAddress, submissionDeadlineEmailVariables);
     return response;
   } catch (error) {
-    console.error("Error sending submission deadline email for applicationId %s - %O", submissionDeadlineEmailVariables.referenceNumber, error);
+    console.error("Error sending submission deadline email for applicationId %s - %o", submissionDeadlineEmailVariables.referenceNumber, error);
     throw new Error(`Sending submission deadline email for ${submissionDeadlineEmailVariables.referenceNumber} - ${error}`);
   }
 };
@@ -1585,7 +1585,7 @@ var send = async (applications) => {
     const promises = await Promise.all(mapped);
     return promises;
   } catch (error) {
-    console.error("Error sending application submission deadline email (send helper) %O", error);
+    console.error("Error sending application submission deadline email (send helper) %o", error);
     throw new Error(`Sending application submission deadline email (send helper) ${error}`);
   }
 };
@@ -1614,7 +1614,7 @@ var applicationSubmissionDeadlineEmail = async (context) => {
       success: true
     };
   } catch (error) {
-    console.error("Error sending application submission deadline email (emailApplicationSubmissionDeadlineEmail helper) %O", error);
+    console.error("Error sending application submission deadline email (emailApplicationSubmissionDeadlineEmail helper) %o", error);
     throw new Error(`Sending application submission deadline email (emailApplicationSubmissionDeadlineEmail helper) ${error}`);
   }
 };
@@ -1663,7 +1663,7 @@ var timestamp = async (context, applicationId) => {
     });
     return application2;
   } catch (error) {
-    console.error("Error updating application updatedAt timestamp %O", error);
+    console.error("Error updating application updatedAt timestamp %o", error);
     throw new Error(`Updating application updatedAt timestamp ${error}`);
   }
 };
@@ -3070,7 +3070,7 @@ var getAccountStatusById = async (context, id) => {
     });
     return accountStatus2;
   } catch (error) {
-    console.error("Error getting account status by ID %O", error);
+    console.error("Error getting account status by ID %o", error);
     throw new Error(`Getting account status by ID ${error}`);
   }
 };
@@ -3098,7 +3098,7 @@ var getAccountByField = async (context, field, value) => {
     };
     return populatedAccount;
   } catch (error) {
-    console.error("Error getting account by field/value %O", error);
+    console.error("Error getting account by field/value %o", error);
     throw new Error(`Getting account by field/value ${error}`);
   }
 };
@@ -3193,7 +3193,7 @@ var getAccountById = async (context, accountId) => {
     });
     return account2;
   } catch (error) {
-    console.error("Error getting account by ID %O", error);
+    console.error("Error getting account by ID %o", error);
     throw new Error(`Getting account by ID ${error}`);
   }
 };
@@ -3211,7 +3211,7 @@ var account = async (context, accountId, updateData) => {
     });
     return updatedAccount;
   } catch (error) {
-    console.error("Error updating account %O", error);
+    console.error("Error updating account %o", error);
     throw new Error(`Updating account ${error}`);
   }
 };
@@ -3229,7 +3229,7 @@ var accountStatus = async (context, accountStatusId, updateData) => {
     });
     return updatedAccountStatus;
   } catch (error) {
-    console.error("Error updating account status %O", error);
+    console.error("Error updating account status %o", error);
     throw new Error(`Updating account status ${error}`);
   }
 };
@@ -3272,7 +3272,7 @@ var send2 = async (context, urlOrigin, accountId) => {
     }
     throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${emailResponse}`);
   } catch (error) {
-    console.error("Error sending email verification (sendEmailConfirmEmailAddress helper) %O", error);
+    console.error("Error sending email verification (sendEmailConfirmEmailAddress helper) %o", error);
     throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${error}`);
   }
 };
@@ -3322,7 +3322,7 @@ var send3 = async (variables, context) => {
     }
     return { accountId, email, success: false };
   } catch (error) {
-    console.error("Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper) %O", error);
+    console.error("Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper) %o", error);
     throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper) ${error}`);
   }
 };
@@ -3430,7 +3430,7 @@ var createAnAccount = async (root, variables, context) => {
     }
     throw new Error(`Account creation - sending email verification for account creation ${emailResponse}`);
   } catch (error) {
-    console.error("Error Account creation - creating account %O", error);
+    console.error("Error Account creation - creating account %o", error);
     throw new Error(`Account creation - creating account ${error}`);
   }
 };
@@ -3451,7 +3451,7 @@ var getAuthenticationRetriesByAccountId = async (context, accountId) => {
     });
     return retries;
   } catch (error) {
-    console.error("Error getting authentication retries by account ID %O", error);
+    console.error("Error getting authentication retries by account ID %o", error);
     throw new Error(`Getting authentication retries by account ID ${error}`);
   }
 };
@@ -3489,7 +3489,7 @@ var deleteAnAccount = async (root, variables, context) => {
       success: true
     };
   } catch (error) {
-    console.error("Error deleting account %O", error);
+    console.error("Error deleting account %o", error);
     throw new Error(`Deleting account ${error}`);
   }
 };
@@ -3550,7 +3550,7 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
       emailRecipient: account2[EMAIL2]
     };
   } catch (error) {
-    console.error("Error verifying account email address %O", error);
+    console.error("Error verifying account email address %o", error);
     throw new Error(`Verifying account email address ${error}`);
   }
 };
@@ -3566,7 +3566,7 @@ var sendEmailConfirmEmailAddressMutation = async (root, variables, context) => {
     }
     throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${emailResponse}`);
   } catch (error) {
-    console.error("Error sending email verification for account creation (sendEmailConfirmEmailAddress mutation) %O", error);
+    console.error("Error sending email verification for account creation (sendEmailConfirmEmailAddress mutation) %o", error);
     throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${error}`);
   }
 };
@@ -3596,7 +3596,7 @@ var createAuthenticationRetryEntry = async (context, accountId) => {
       success: false
     };
   } catch (error) {
-    console.error("Error creating account authentication retry entry %O", error);
+    console.error("Error creating account authentication retry entry %o", error);
     throw new Error(`${error}`);
   }
 };
@@ -3624,7 +3624,7 @@ var shouldBlockAccount = async (context, accountId) => {
     }
     return false;
   } catch (error) {
-    console.error("Error checking account authentication retries %O", error);
+    console.error("Error checking account authentication retries %o", error);
     throw new Error(`Checking account authentication retries  ${error}`);
   }
 };
@@ -3641,7 +3641,7 @@ var blockAccount = async (context, statusId) => {
     }
     return false;
   } catch (error) {
-    console.error("Error blocking account %O", error);
+    console.error("Error blocking account %o", error);
     throw new Error(`Blocking account ${error}`);
   }
 };
@@ -3674,7 +3674,7 @@ var generateOtp = () => {
       expiry
     };
   } catch (error) {
-    console.error("Error generating OTP %O", error);
+    console.error("Error generating OTP %o", error);
     throw new Error(`Error generating OTP ${error}`);
   }
 };
@@ -3702,7 +3702,7 @@ var generateOTPAndUpdateAccount = async (context, accountId) => {
       securityCode
     };
   } catch (error) {
-    console.error("Error adding OTP to an account %O", error);
+    console.error("Error adding OTP to an account %o", error);
     throw new Error(`Adding OTP to an account ${error}`);
   }
 };
@@ -3739,7 +3739,7 @@ var accountSignInChecks = async (context, account2, urlOrigin) => {
       success: false
     };
   } catch (error) {
-    console.error("Error validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) %O", error);
+    console.error("Error validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) %o", error);
     throw new Error(`Validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) ${error}`);
   }
 };
@@ -3786,7 +3786,7 @@ var accountSignIn = async (root, variables, context) => {
     }
     return { success: false };
   } catch (error) {
-    console.error("Error signing into account %O", error);
+    console.error("Error signing into account %o", error);
     throw new Error(`Signing in account (accountSignIn mutation) ${error}`);
   }
 };
@@ -3816,7 +3816,7 @@ var accountSignInSendNewCode = async (root, variables, context) => {
       success: false
     };
   } catch (error) {
-    console.error("Error generating and sending new sign in code for account (accountSignInSendNewCode mutation) %O", error);
+    console.error("Error generating and sending new sign in code for account (accountSignInSendNewCode mutation) %o", error);
     throw new Error(`Generating and sending new sign in code for account (accountSignInSendNewCode mutation) ${error}`);
   }
 };
@@ -3841,7 +3841,7 @@ var isValidOTP = (securityCode, otpSalt, otpHash) => {
     }
     return false;
   } catch (error) {
-    console.error("Error validating OTP %O", error);
+    console.error("Error validating OTP %o", error);
     throw new Error(`Error validating OTP ${error}`);
   }
 };
@@ -3860,7 +3860,7 @@ var deleteAuthenticationRetries = async (context, accountId) => {
     });
     return result;
   } catch (error) {
-    console.error("Error deleting authentication retries %O", error);
+    console.error("Error deleting authentication retries %o", error);
     throw new Error(`Deleting authentication retries ${error}`);
   }
 };
@@ -3954,7 +3954,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
       success: false
     };
   } catch (error) {
-    console.error("Error verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) %O", error);
+    console.error("Error verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) %o", error);
     throw new Error(`Verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) ${error}`);
   }
 };
@@ -3976,7 +3976,7 @@ var addAndGetOTP = async (root, variables, context) => {
       securityCode
     };
   } catch (error) {
-    console.error("Error adding OTP to an account (addAndGetOTP mutation) %O", error);
+    console.error("Error adding OTP to an account (addAndGetOTP mutation) %o", error);
     throw new Error(`Adding OTP to an account (addAndGetOTP mutation) ${error}`);
   }
 };
@@ -4070,7 +4070,7 @@ var hasAccountUsedPasswordBefore = async (context, accountId, newPassword) => {
     }
     return usedBefore;
   } catch (error) {
-    console.error("Error checking if an account has used a password before %O", error);
+    console.error("Error checking if an account has used a password before %o", error);
     throw new Error(`Checking if an account has used a password before ${error}`);
   }
 };
@@ -4088,7 +4088,7 @@ var createAuthenticationEntry = async (context, entry) => {
     });
     return result;
   } catch (error) {
-    console.error("Error creating authentication entry %O", error);
+    console.error("Error creating authentication entry %o", error);
     throw new Error(`Creating authentication entry ${error}`);
   }
 };
@@ -4164,7 +4164,7 @@ var accountPasswordReset = async (root, variables, context) => {
       success: true
     };
   } catch (error) {
-    console.error("Error resetting account password %O", error);
+    console.error("Error resetting account password %o", error);
     throw new Error(`Resetting account password ${error}`);
   }
 };
@@ -4177,7 +4177,7 @@ var sendEmailReactivateAccountLink = async (root, variables, context) => {
     const reactiveAccountResponse = await send_email_reactivate_account_link_default.send(variables, context);
     return reactiveAccountResponse;
   } catch (error) {
-    console.error("Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) %O", error);
+    console.error("Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) %o", error);
     throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) ${error}`);
   }
 };
@@ -4218,7 +4218,7 @@ var createInitialApplication = async ({ context, accountId, status = STATUS2.IN_
     });
     return application2;
   } catch (error) {
-    console.error("Error creating initial application (createInitialApplication helper) for user %s %O", accountId, error);
+    console.error("Error creating initial application (createInitialApplication helper) for user %s %o", accountId, error);
     throw new Error(`Creating initial application (createInitialApplication helper) for user ${accountId} ${error}`);
   }
 };
@@ -4244,7 +4244,7 @@ var getCountryByField = async (context, field, value) => {
     const country = countriesArray[0];
     return country;
   } catch (error) {
-    console.error("Error getting country by field/value %O", error);
+    console.error("Error getting country by field/value %o", error);
     throw new Error(`Getting country by field/value ${error}`);
   }
 };
@@ -4267,7 +4267,7 @@ var getCoverPeriodValueByField = async (context, field, value) => {
     const [coverPeriod] = coverPeriodsArray;
     return coverPeriod;
   } catch (error) {
-    console.error("Error getting coverPeriod by field/value %O", error);
+    console.error("Error getting coverPeriod by field/value %o", error);
     throw new Error(`Getting coverPeriod by field/value ${error}`);
   }
 };
@@ -4290,7 +4290,7 @@ var getTotalContractValueByField = async (context, field, value) => {
     const [totalContractValue] = totalContractValuesArray;
     return totalContractValue;
   } catch (error) {
-    console.error("Error getting totalContractValue by field/value %O", error);
+    console.error("Error getting totalContractValue by field/value %o", error);
     throw new Error(`Getting totalContractValue by field/value ${error}`);
   }
 };
@@ -4311,7 +4311,7 @@ var createAReferenceNumber = async (context, applicationId) => {
     });
     return created.id;
   } catch (error) {
-    console.error("Error creating a reference number %O", error);
+    console.error("Error creating a reference number %o", error);
     throw new Error(`Creating a reference number ${error}`);
   }
 };
@@ -4330,7 +4330,7 @@ var createABroker = async (context, applicationId) => {
     });
     return broker;
   } catch (error) {
-    console.error("Error creating a broker %O", error);
+    console.error("Error creating a broker %o", error);
     throw new Error(`Creating a broker ${error}`);
   }
 };
@@ -4349,7 +4349,7 @@ var createABusiness = async (context, applicationId) => {
     });
     return business;
   } catch (error) {
-    console.error("Error creating a business %O", error);
+    console.error("Error creating a business %o", error);
     throw new Error(`Creating a business ${error}`);
   }
 };
@@ -4376,7 +4376,7 @@ var createABuyerTradingHistory = async (context, buyerId, applicationId) => {
     });
     return buyerTradingHistory;
   } catch (error) {
-    console.error("Error creating a buyer trading history %O", error);
+    console.error("Error creating a buyer trading history %o", error);
     throw new Error(`Creating a buyer trading history ${error}`);
   }
 };
@@ -4402,7 +4402,7 @@ var createABuyerContact = async (context, buyerId, applicationId) => {
     });
     return buyerContact;
   } catch (error) {
-    console.error("Error creating a buyer contact %O", error);
+    console.error("Error creating a buyer contact %o", error);
     throw new Error(`Creating a buyer contact ${error}`);
   }
 };
@@ -4428,7 +4428,7 @@ var createABuyerRelationship = async (context, buyerId, applicationId) => {
     });
     return buyerRelationship;
   } catch (error) {
-    console.error("Error creating a buyer relationship %O", error);
+    console.error("Error creating a buyer relationship %o", error);
     throw new Error(`Creating a buyer relationship ${error}`);
   }
 };
@@ -4458,7 +4458,7 @@ var createAPopulatedBuyer = async (context, countryId, applicationId) => {
       buyerContact
     };
   } catch (error) {
-    console.error("Error creating a populated buyer %O", error);
+    console.error("Error creating a populated buyer %o", error);
     throw new Error(`Creating a populated buyer ${error}`);
   }
 };
@@ -4483,7 +4483,7 @@ var createADeclarationVersion = async (context, declarationId) => {
     });
     return declaration;
   } catch (error) {
-    console.error("Error creating an application declaration version %O", error);
+    console.error("Error creating an application declaration version %o", error);
     throw new Error(`Creating an application declaration version ${error}`);
   }
 };
@@ -4506,7 +4506,7 @@ var createADeclaration = async (context, applicationId) => {
       declarationVersion
     };
   } catch (error) {
-    console.error("Error creating an application declaration %O", error);
+    console.error("Error creating an application declaration %o", error);
     throw new Error(`Creating an application declaration ${error}`);
   }
 };
@@ -4535,7 +4535,7 @@ var createAnEligibility = async (context, countryId, applicationId, coverPeriodI
     });
     return eligibility;
   } catch (error) {
-    console.error("Error creating an eligibility %O", error);
+    console.error("Error creating an eligibility %o", error);
     throw new Error(`Creating an eligibility ${error}`);
   }
 };
@@ -4554,7 +4554,7 @@ var createAJointlyInsuredParty = async (context, policyId) => {
     });
     return jointlyInsuredParty;
   } catch (error) {
-    console.error("Error creating a jointly insured party %O", error);
+    console.error("Error creating a jointly insured party %o", error);
     throw new Error(`Creating a jointly insured party ${error}`);
   }
 };
@@ -4578,7 +4578,7 @@ var createAPolicy = async (context, applicationId) => {
       jointlyInsuredParty
     };
   } catch (error) {
-    console.error("Error creating a policy %O", error);
+    console.error("Error creating a policy %o", error);
     throw new Error(`Creating a policy ${error}`);
   }
 };
@@ -4597,7 +4597,7 @@ var createAPolicyContact = async (context, applicationId) => {
     });
     return policyContact;
   } catch (error) {
-    console.error("Error creating a policy contact %O", error);
+    console.error("Error creating a policy contact %o", error);
     throw new Error(`Creating a policy contact ${error}`);
   }
 };
@@ -4626,7 +4626,7 @@ var createALossPayeeFinancialInternational = async (context, lossPayeeId) => {
       vector
     };
   } catch (error) {
-    console.error("Error creating a loss payee financial (international) for %O", error);
+    console.error("Error creating a loss payee financial (international) for %o", error);
     throw new Error(`Creating a loss payee financial (international) for ${error}`);
   }
 };
@@ -4655,7 +4655,7 @@ var createALossPayeeFinancialUk = async (context, lossPayeeId) => {
       vector
     };
   } catch (error) {
-    console.error("Error creating a loss payee financial (UK) for %O", error);
+    console.error("Error creating a loss payee financial (UK) for %o", error);
     throw new Error(`Creating a loss payee financial (UK) for ${error}`);
   }
 };
@@ -4676,7 +4676,7 @@ var createANominatedLossPayee = async (context, applicationId) => {
     await create_a_loss_payee_financial_uk_default(context, nominatedLossPayee.id);
     return nominatedLossPayee;
   } catch (error) {
-    console.error("Error creating a nominated loss payee for %O", error);
+    console.error("Error creating a nominated loss payee for %o", error);
     throw new Error(`Creating a nominated loss payee for ${error}`);
   }
 };
@@ -4698,7 +4698,7 @@ var createACompanyAddress = async (context, addressData, companyId) => {
     });
     return companyAddress;
   } catch (error) {
-    console.error("Error creating a company address %O", error);
+    console.error("Error creating a company address %o", error);
     throw new Error(`Creating a company address ${error}`);
   }
 };
@@ -4743,7 +4743,7 @@ var createCompanySicCodes = async (context, companyId, sicCodes, industrySectorN
     }
     return [];
   } catch (error) {
-    console.error("Error creating company SIC codes for %s %O", companyId, error);
+    console.error("Error creating company SIC codes for %s %o", companyId, error);
     throw new Error(`Creating company SIC codes for ${companyId} ${error}`);
   }
 };
@@ -4764,7 +4764,7 @@ var createACompanyDifferentTradingAddress = async (context, companyId) => {
     });
     return differentTradingAddress;
   } catch (error) {
-    console.error("Error creating a company different trading address %O", error);
+    console.error("Error creating a company different trading address %o", error);
     throw new Error(`Creating a company different trading address ${error}`);
   }
 };
@@ -4793,7 +4793,7 @@ var createACompany = async (context, applicationId, companyData) => {
       differentTradingAddress: createdDifferentTradingAddress
     };
   } catch (error) {
-    console.error("Error creating a company, address, SIC codes and company different trading address %O", error);
+    console.error("Error creating a company, address, SIC codes and company different trading address %o", error);
     throw new Error(`Creating a company, address, SIC codes and company different trading address ${error}`);
   }
 };
@@ -4812,7 +4812,7 @@ var createAPrivateMarket = async (context, exportContractId) => {
     });
     return privateMarket;
   } catch (error) {
-    console.error("Error creating a private market %O", error);
+    console.error("Error creating a private market %o", error);
     throw new Error(`Creating a private market ${error}`);
   }
 };
@@ -4831,7 +4831,7 @@ var createAnExportContractAgentService = async (context, agentId) => {
     });
     return agentService;
   } catch (error) {
-    console.error("Error creating an export contract agent service %O", error);
+    console.error("Error creating an export contract agent service %o", error);
     throw new Error(`Creating an export contract agent service ${error}`);
   }
 };
@@ -4850,7 +4850,7 @@ var createAnExportContractAgentServiceCharge = async (context, agentServiceId) =
     });
     return agentService;
   } catch (error) {
-    console.error("Error creating an export contract agent service charge %O", error);
+    console.error("Error creating an export contract agent service charge %o", error);
     throw new Error(`Creating an export contract agent service charge ${error}`);
   }
 };
@@ -4875,7 +4875,7 @@ var createAnExportContractAgent = async (context, exportContractId) => {
       agentServiceCharge
     };
   } catch (error) {
-    console.error("Error creating an export contract agent %O", error);
+    console.error("Error creating an export contract agent %o", error);
     throw new Error(`Creating an export contract agent ${error}`);
   }
 };
@@ -4902,7 +4902,7 @@ var createAnExportContract = async (context, applicationId) => {
       agentService
     };
   } catch (error) {
-    console.error("Error creating an export contract %O", error);
+    console.error("Error creating an export contract %o", error);
     throw new Error(`Creating an export contract ${error}`);
   }
 };
@@ -4922,7 +4922,7 @@ var createASectionReview = async (context, applicationId, sectionReviewData) => 
     });
     return sectionReview;
   } catch (error) {
-    console.error("Error creating a section review %O", error);
+    console.error("Error creating a section review %o", error);
     throw new Error(`Creating a section review ${error}`);
   }
 };
@@ -4982,7 +4982,7 @@ var createApplicationRelationships = async ({
     };
     return relationshipIds;
   } catch (error) {
-    console.error("Error creating application relationships (createApplicationRelationships helper) for application %s %O", applicationId, error);
+    console.error("Error creating application relationships (createApplicationRelationships helper) for application %s %o", applicationId, error);
     throw new Error(`Creating application relationships (createApplicationRelationships helper) for application ${applicationId} ${error}`);
   }
 };
@@ -5053,7 +5053,7 @@ var updateApplicationColumns = async ({
     });
     return updatedApplication;
   } catch (error) {
-    console.error("Error updating application relationship columns (updateApplicationColumns helper) for application %s %O", applicationId, error);
+    console.error("Error updating application relationship columns (updateApplicationColumns helper) for application %s %o", applicationId, error);
     throw new Error(`Updating application relationship columns (updateApplicationColumns helper) for application ${applicationId} ${error}`);
   }
 };
@@ -5116,7 +5116,7 @@ var createAnApplicationHelper = async (variables, context) => {
     });
     return updatedApplication;
   } catch (error) {
-    console.error("Error creating an application (createAnApplication helper) for user %s %O", variables.accountId, error);
+    console.error("Error creating an application (createAnApplication helper) for user %s %o", variables.accountId, error);
     throw new Error(`Creating an application (createAnApplication helper) for user ${variables.accountId} ${error}`);
   }
 };
@@ -5137,7 +5137,7 @@ var createAnApplication = async (root, variables, context) => {
       success: false
     };
   } catch (error) {
-    console.error("Error creating application for user %s %O", variables.accountId, error);
+    console.error("Error creating application for user %s %o", variables.accountId, error);
     throw new Error(`Creating application for user ${variables.accountId} ${error}`);
   }
 };
@@ -5150,7 +5150,7 @@ var getCountries = async (context) => {
     const countries = await context.db.Country.findMany();
     return countries;
   } catch (error) {
-    console.error("Error getting countries %O", error);
+    console.error("Error getting countries %o", error);
     throw new Error(`Getting countries ${error}`);
   }
 };
@@ -5171,7 +5171,7 @@ var createABuyer = async (context, countryId) => {
     });
     return buyer;
   } catch (error) {
-    console.error("Error creating a buyer %O", error);
+    console.error("Error creating a buyer %o", error);
     throw new Error(`Creating a buyer ${error}`);
   }
 };
@@ -5197,7 +5197,7 @@ var createManyApplicationsAndReferenceNumbers = async (context, applicationData)
       referenceNumbers
     };
   } catch (error) {
-    console.error("Error creating many applications and reference numbers - helper %O", error);
+    console.error("Error creating many applications and reference numbers - helper %o", error);
     throw new Error(`Creating many applications and reference numbers - helper ${error}`);
   }
 };
@@ -5212,7 +5212,7 @@ var updateApplicationsData = async (context, updateData) => {
     });
     return updatedApplications;
   } catch (error) {
-    console.error("Error updating many applications - helper %O", error);
+    console.error("Error updating many applications - helper %o", error);
     throw new Error(`Updating many applications - helper ${error}`);
   }
 };
@@ -5257,7 +5257,7 @@ var createManyApplications = async (root, variables, context) => {
       success: false
     };
   } catch (error) {
-    console.error("Error creating many applications %O", error);
+    console.error("Error creating many applications %o", error);
     throw new Error(`Creating many applications ${error}`);
   }
 };
@@ -5281,7 +5281,7 @@ var createAnAbandonedApplication = async (root, variables, context) => {
       success: false
     };
   } catch (error) {
-    console.error("Error creating an abandoned application %O", error);
+    console.error("Error creating an abandoned application %o", error);
     throw new Error(`Creating an abandoned application ${error}`);
   }
 };
@@ -5302,7 +5302,7 @@ var getApplicationByReferenceNumber = async (referenceNumber, context) => {
     }
     return null;
   } catch (error) {
-    console.error("Error getting application by reference number %O", error);
+    console.error("Error getting application by reference number %o", error);
     throw new Error(`Error getting application by reference number ${error}`);
   }
 };
@@ -5331,7 +5331,7 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
       success: false
     };
   } catch (error) {
-    console.error("Error deleting application by reference number (DeleteApplicationByReferenceNumber mutation) %O", error);
+    console.error("Error deleting application by reference number (DeleteApplicationByReferenceNumber mutation) %o", error);
     throw new Error(`Deleting application by reference number (DeleteApplicationByReferenceNumber mutation) ${error}`);
   }
 };
@@ -5349,7 +5349,7 @@ var getEligibilityById = async (context, id) => {
     });
     return eligibility;
   } catch (error) {
-    console.error("Getting eligibility by ID %s %O", id, error);
+    console.error("Getting eligibility by ID %s %o", id, error);
     throw new Error(`Error Getting eligibility by ID ${id} ${error}`);
   }
 };
@@ -5364,7 +5364,7 @@ var getCoverPeriodById = async (context, id) => {
     });
     return coverPeriod;
   } catch (error) {
-    console.error("Getting coverPeriod by ID %s %O", id, error);
+    console.error("Getting coverPeriod by ID %s %o", id, error);
     throw new Error(`Error Getting coverPeriod by ID ${id} ${error}`);
   }
 };
@@ -5379,7 +5379,7 @@ var getTotalContractValueById = async (context, id) => {
     });
     return totalContractValue;
   } catch (error) {
-    console.error("Getting totalContractValue by ID %s %O", id, error);
+    console.error("Getting totalContractValue by ID %s %o", id, error);
     throw new Error(`Error Getting totalContractValue by ID ${id} ${error}`);
   }
 };
@@ -5400,7 +5400,7 @@ var getPopulatedEligibility = async (context, id, buyerCountry) => {
     };
     return populatedEligibility;
   } catch (error) {
-    console.error("Getting populated eligibility %s %O", id, error);
+    console.error("Getting populated eligibility %s %o", id, error);
     throw new Error(`Error Getting populated eligibility ${id} ${error}`);
   }
 };
@@ -5416,7 +5416,7 @@ var getPolicyById = async (context, id) => {
     });
     return policy;
   } catch (error) {
-    console.error("Getting policy by ID %s %O", id, error);
+    console.error("Getting policy by ID %s %o", id, error);
     throw new Error(`Error Getting policy by ID ${id} ${error}`);
   }
 };
@@ -5431,7 +5431,7 @@ var getPolicyContactById = async (context, id) => {
     });
     return policyContact;
   } catch (error) {
-    console.error("Getting policyContact by ID %s %O", id, error);
+    console.error("Getting policyContact by ID %s %o", id, error);
     throw new Error(`Error Getting policyContact by ID ${id} ${error}`);
   }
 };
@@ -5450,7 +5450,7 @@ var generateDecipher = (key2, iv) => {
   try {
     return import_crypto10.default.createDecipheriv(ENCRYPTION_METHOD, key2, iv);
   } catch (error) {
-    console.error("Error generating decipher %O", error);
+    console.error("Error generating decipher %o", error);
     throw new Error(`Error generating decipher ${error}`);
   }
 };
@@ -5462,7 +5462,7 @@ var generateBufferInStringFormat = (value) => {
   try {
     return Buffer.from(value, STRING_ENCODING2).toString(OUTPUT_ENCODING);
   } catch (error) {
-    console.error("Error generating buffer %O", error);
+    console.error("Error generating buffer %o", error);
     throw new Error(`Error generating buffer ${error}`);
   }
 };
@@ -5481,7 +5481,7 @@ var decryptData = (dataToDecrypt) => {
     const decipherFinal = decipher.final(OUTPUT_ENCODING2);
     return decipherUpdate.concat(decipherFinal);
   } catch (error) {
-    console.error("Error decrypting data %O", error);
+    console.error("Error decrypting data %o", error);
     throw new Error(`Error decrypting data ${error}`);
   }
 };
@@ -5512,7 +5512,7 @@ var decryptFinancialUk = (applicationFinancialUk) => {
     mapped.sortCode = decryptedSortCode;
     return mapped;
   } catch (error) {
-    console.error("Error decrypting financial uk %O", error);
+    console.error("Error decrypting financial uk %o", error);
     throw new Error(`Error decrypting financial uk ${error}`);
   }
 };
@@ -5540,7 +5540,7 @@ var decryptFinancialInternational = (applicationFinancialInternational) => {
     mapped.iban = decryptedIban;
     return mapped;
   } catch (error) {
-    console.error("Error decrypting international uk %O", error);
+    console.error("Error decrypting international uk %o", error);
     throw new Error(`Error decrypting international uk ${error}`);
   }
 };
@@ -5568,7 +5568,7 @@ var decryptNominatedLossPayee = (nominatedLossPayee, decryptFinancialUk2, decryp
     }
     return mapped;
   } catch (error) {
-    console.error("Error decrypting nominated loss payee %O", error);
+    console.error("Error decrypting nominated loss payee %o", error);
     throw new Error(`Error decrypting nominated loss payee ${error}`);
   }
 };
@@ -5588,7 +5588,7 @@ var getNominatedLossPayee = async (context, lossPayeeId, decryptFinancialUk2, de
     }
     return nominatedLossPayee;
   } catch (error) {
-    console.error("Error getting nominated loss payee (getNominatedLossPayee helper) %O", error);
+    console.error("Error getting nominated loss payee (getNominatedLossPayee helper) %o", error);
     throw new Error(`Error getting nominated loss payee (getNominatedLossPayee helper) ${error}`);
   }
 };
@@ -5603,7 +5603,7 @@ var getExportContractById = async (context, id) => {
     });
     return exportContract;
   } catch (error) {
-    console.error("Getting exportContract by ID %s %O", id, error);
+    console.error("Getting exportContract by ID %s %o", id, error);
     throw new Error(`Error Getting exportContract by ID ${id} ${error}`);
   }
 };
@@ -5618,7 +5618,7 @@ var getExportContractAgentById = async (context, id) => {
     });
     return exportContractAgent;
   } catch (error) {
-    console.error("Getting exportContractAgent by ID %s %O", id, error);
+    console.error("Getting exportContractAgent by ID %s %o", id, error);
     throw new Error(`Error Getting exportContractAgent by ID ${id} ${error}`);
   }
 };
@@ -5633,7 +5633,7 @@ var getExportContractAgentServiceById = async (context, id) => {
     });
     return exportContractAgentService;
   } catch (error) {
-    console.error("Getting exportContractAgentService by ID %s %O", id, error);
+    console.error("Getting exportContractAgentService by ID %s %o", id, error);
     throw new Error(`Error Getting exportContractAgentService by ID ${id} ${error}`);
   }
 };
@@ -5648,7 +5648,7 @@ var getExportContractAgentServiceChargeById = async (context, id) => {
     });
     return exportContractAgentServiceCharge;
   } catch (error) {
-    console.error("Getting exportContractAgentServiceCharge by ID %s %O", id, error);
+    console.error("Getting exportContractAgentServiceCharge by ID %s %o", id, error);
     throw new Error(`Error Getting exportContractAgentServiceCharge by ID ${id} ${error}`);
   }
 };
@@ -5670,7 +5670,7 @@ var getPopulatedAgent = async (context, id) => {
     };
     return populatedAgent;
   } catch (error) {
-    console.error("Getting populated exportContract agent %s %O", id, error);
+    console.error("Getting populated exportContract agent %s %o", id, error);
     throw new Error(`Error Getting populated exportContract agent ${id} ${error}`);
   }
 };
@@ -5685,7 +5685,7 @@ var getPrivateMarketById = async (context, id) => {
     });
     return privateMarket;
   } catch (error) {
-    console.error("Getting privateMarket by ID %s %O", id, error);
+    console.error("Getting privateMarket by ID %s %o", id, error);
     throw new Error(`Error Getting privateMarket by ID ${id} ${error}`);
   }
 };
@@ -5707,7 +5707,7 @@ var getPopulatedExportContract = async (context, id) => {
     };
     return populatedExportContract;
   } catch (error) {
-    console.error("Getting populated exportContract %s %O", id, error);
+    console.error("Getting populated exportContract %s %o", id, error);
     throw new Error(`Error Getting populated exportContract ${id} ${error}`);
   }
 };
@@ -5722,7 +5722,7 @@ var getCompanyById = async (context, id) => {
     });
     return company;
   } catch (error) {
-    console.error("Getting company by ID %s %O", id, error);
+    console.error("Getting company by ID %s %o", id, error);
     throw new Error(`Error Getting company by ID ${id} ${error}`);
   }
 };
@@ -5737,7 +5737,7 @@ var getCompanyAddressById = async (context, id) => {
     });
     return companyAddress;
   } catch (error) {
-    console.error("Getting company address by ID %s %O", id, error);
+    console.error("Getting company address by ID %s %o", id, error);
     throw new Error(`Error Getting company address by ID ${id} ${error}`);
   }
 };
@@ -5756,7 +5756,7 @@ var getCompanySicCodesByCompanyId = async (context, id) => {
     });
     return companySicCodes;
   } catch (error) {
-    console.error("Getting company SIC codes by company ID %s %O", id, error);
+    console.error("Getting company SIC codes by company ID %s %o", id, error);
     throw new Error(`Error Getting company SIC codes by company ID ${id} ${error}`);
   }
 };
@@ -5771,7 +5771,7 @@ var getCompanyDifferentTradingAddressById = async (context, id) => {
     });
     return differentTradingAddress;
   } catch (error) {
-    console.error("Getting company different trading address by ID %s %O", id, error);
+    console.error("Getting company different trading address by ID %s %o", id, error);
     throw new Error(`Error Getting company different trading address by ID ${id} ${error}`);
   }
 };
@@ -5793,7 +5793,7 @@ var getPopulatedCompany = async (context, id) => {
     };
     return populatedCompany;
   } catch (error) {
-    console.error("Getting populated company %s %O", id, error);
+    console.error("Getting populated company %s %o", id, error);
     throw new Error(`Error Getting populated company ${id} ${error}`);
   }
 };
@@ -5808,7 +5808,7 @@ var getBusinessById = async (context, id) => {
     });
     return business;
   } catch (error) {
-    console.error("Getting business by ID %s %O", id, error);
+    console.error("Getting business by ID %s %o", id, error);
     throw new Error(`Error Getting business by ID ${id} ${error}`);
   }
 };
@@ -5823,7 +5823,7 @@ var getBrokerById = async (context, id) => {
     });
     return broker;
   } catch (error) {
-    console.error("Getting broker by ID %s %O", id, error);
+    console.error("Getting broker by ID %s %o", id, error);
     throw new Error(`Error Getting broker by ID ${id} ${error}`);
   }
 };
@@ -5838,7 +5838,7 @@ var getBuyerById = async (context, id) => {
     });
     return buyer;
   } catch (error) {
-    console.error("Getting buyer by ID %s %O", id, error);
+    console.error("Getting buyer by ID %s %o", id, error);
     throw new Error(`Error Getting buyer by ID ${id} ${error}`);
   }
 };
@@ -5853,7 +5853,7 @@ var getCountryById = async (context, id) => {
     });
     return country;
   } catch (error) {
-    console.error("Getting country by ID %s %O", id, error);
+    console.error("Getting country by ID %s %o", id, error);
     throw new Error(`Error Getting country by ID ${id} ${error}`);
   }
 };
@@ -5868,7 +5868,7 @@ var getBuyerRelationshipById = async (context, id) => {
     });
     return buyerRelationship;
   } catch (error) {
-    console.error("Getting buyer relationship by ID %s %O", id, error);
+    console.error("Getting buyer relationship by ID %s %o", id, error);
     throw new Error(`Error Getting buyer relationship by ID ${id} ${error}`);
   }
 };
@@ -5883,7 +5883,7 @@ var getBuyerTradingHistoryById = async (context, id) => {
     });
     return buyerTradingHistory;
   } catch (error) {
-    console.error("Getting buyer trading history by ID %s %O", id, error);
+    console.error("Getting buyer trading history by ID %s %o", id, error);
     throw new Error(`Error Getting buyer trading history by ID ${id} ${error}`);
   }
 };
@@ -5905,7 +5905,7 @@ var getPopulatedBuyer = async (context, id) => {
     };
     return populatedBuyer;
   } catch (error) {
-    console.error("Getting populated buyer %s %O", id, error);
+    console.error("Getting populated buyer %s %o", id, error);
     throw new Error(`Error Getting populated buyer ${id} ${error}`);
   }
 };
@@ -5920,7 +5920,7 @@ var getDeclarationById = async (context, id) => {
     });
     return declaration;
   } catch (error) {
-    console.error("Getting declaration by ID %s %O", id, error);
+    console.error("Getting declaration by ID %s %o", id, error);
     throw new Error(`Error Getting declaration by ID ${id} ${error}`);
   }
 };
@@ -5935,7 +5935,7 @@ var getSectionReviewById = async (context, id) => {
     });
     return sectionReview;
   } catch (error) {
-    console.error("Getting sectionReview by ID %s %O", id, error);
+    console.error("Getting sectionReview by ID %s %o", id, error);
     throw new Error(`Error Getting sectionReview by ID ${id} ${error}`);
   }
 };
@@ -6012,7 +6012,7 @@ var getPopulatedApplication = async ({
     };
     return populatedApplication2;
   } catch (error) {
-    console.error("Getting populated application (helper) %s %O", application2.id, error);
+    console.error("Getting populated application (helper) %s %o", application2.id, error);
     throw new Error(`Error Getting populated application (helper) ${application2.id} ${error}`);
   }
 };
@@ -6120,7 +6120,7 @@ var send4 = async (application2, xlsxPath) => {
       success: true
     };
   } catch (error) {
-    console.error("Error sending application submitted emails %O", error);
+    console.error("Error sending application submitted emails %o", error);
     throw new Error(`Sending application submitted emails ${error}`);
   }
 };
@@ -7001,6 +7001,7 @@ var YOUR_BUYER_FIELDS = {
   },
   [TOTAL_OUTSTANDING_PAYMENTS]: {
     LABEL: "Total outstanding, including overdue in",
+    HINT: "Enter a whole number. Do not enter decimals.",
     SUMMARY: {
       TITLE: "Total outstanding including overdue",
       FORM_TITLE: TRADING_HISTORY
@@ -7008,6 +7009,7 @@ var YOUR_BUYER_FIELDS = {
   },
   [TOTAL_AMOUNT_OVERDUE]: {
     LABEL: "Amount overdue in",
+    HINT: "Enter a whole number. Do not enter decimals.",
     SUMMARY: {
       TITLE: "Amount overdue",
       FORM_TITLE: TRADING_HISTORY
@@ -8124,7 +8126,7 @@ var mapApplicationToXLSX = (application2, countries) => {
     };
     return mapped;
   } catch (error) {
-    console.error("Error mapping application to XLSX %O", error);
+    console.error("Error mapping application to XLSX %o", error);
     throw new Error(`Mapping application to XLSX ${error}`);
   }
 };
@@ -8382,7 +8384,7 @@ var XLSX2 = (application2, countries) => {
       workbook.xlsx.writeFile(filePath).then(() => resolve(filePath));
     });
   } catch (error) {
-    console.error("Error generating XLSX file %O", error);
+    console.error("Error generating XLSX file %o", error);
     throw new Error(`Generating XLSX file ${error}`);
   }
 };
@@ -8438,7 +8440,7 @@ var submitApplication = async (root, variables, context) => {
       success: false
     };
   } catch (error) {
-    console.error("Error submitting application %O", error);
+    console.error("Error submitting application %o", error);
     throw new Error(`Submitting application ${error}`);
   }
 };
@@ -8464,7 +8466,7 @@ var createFeedback = async (root, variables, context) => {
     }
     return { success: false };
   } catch (error) {
-    console.error("Error creating feedback %O", error);
+    console.error("Error creating feedback %o", error);
     throw new Error(`Creating feedback: ${error}`);
   }
 };
@@ -8515,7 +8517,7 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
       invalid: true
     };
   } catch (error) {
-    console.error("Error checking account and reactivating account(verifyAccountReactivationToken mutation) %O", error);
+    console.error("Error checking account and reactivating account(verifyAccountReactivationToken mutation) %o", error);
     throw new Error(`Checking account and reactivating account(verifyAccountReactivationToken mutation) ${error}`);
   }
 };
@@ -8535,7 +8537,7 @@ var updateCompanyPostDataMigration = async (root, variables, context) => {
     });
     const { id: addressId, ...addressFields } = registeredOfficeAddress;
     if (!updatedCompany.registeredOfficeAddressId) {
-      console.error("Unable to update company address - does not exist (post data migration) %O", id);
+      console.error("Unable to update company address - does not exist (post data migration) %o", id);
       throw new Error(`Unable to update company address - does not exist (post data migration) ${id}`);
     }
     await context.db.CompanyAddress.updateOne({
@@ -8551,7 +8553,7 @@ var updateCompanyPostDataMigration = async (root, variables, context) => {
       success: true
     };
   } catch (error) {
-    console.error("Error updating company (post data migration) %O", error);
+    console.error("Error updating company (post data migration) %o", error);
     throw new Error(`Updating company (post data migration) ${error}`);
   }
 };
@@ -8580,7 +8582,7 @@ var encrypt = (dataToEncrypt) => {
       iv
     };
   } catch (error) {
-    console.error("Error encrypting data %O", error);
+    console.error("Error encrypting data %o", error);
     throw new Error(`Error encrypting data ${error}`);
   }
 };
@@ -8612,7 +8614,7 @@ var mapLossPayeeFinancialDetailsUk2 = (variables) => {
     };
     return updateData;
   } catch (error) {
-    console.error("Error mapping loss payee financial UK %O", error);
+    console.error("Error mapping loss payee financial UK %o", error);
     throw new Error(`Error mapping loss payee financial UK ${error}`);
   }
 };
@@ -8630,7 +8632,7 @@ var updateLossPayeeFinancialInternationalUk = async (context, id, data) => {
     });
     return updated;
   } catch (error) {
-    console.error("Error updating loss payee financial uk (helper) %O", error);
+    console.error("Error updating loss payee financial uk (helper) %o", error);
     throw new Error(`Updating loss payee financial uk (helper) ${error}`);
   }
 };
@@ -8648,7 +8650,7 @@ var updateLossPayeeFinancialUkVector = async (context, id, data) => {
     });
     return updated;
   } catch (error) {
-    console.error("Error updating loss payee financial uk vector (helper) %O", error);
+    console.error("Error updating loss payee financial uk vector (helper) %o", error);
     throw new Error(`Updating loss payee financial uk vector (helper) ${error}`);
   }
 };
@@ -8671,7 +8673,7 @@ var updateLossPayeeFinancialDetailsUk = async (root, variables, context) => {
       success: false
     };
   } catch (error) {
-    console.error("Error updating loss payee financial UK %O", error);
+    console.error("Error updating loss payee financial UK %o", error);
     throw new Error(`Updating loss payee financial UK ${error}`);
   }
 };
@@ -8702,7 +8704,7 @@ var mapLossPayeeFinancialDetailsInternational2 = (variables) => {
     };
     return updateData;
   } catch (error) {
-    console.error("Error mapping loss payee financial international %O", error);
+    console.error("Error mapping loss payee financial international %o", error);
     throw new Error(`Error mapping loss payee financial international ${error}`);
   }
 };
@@ -8720,7 +8722,7 @@ var updateLossPayeeFinancialInternational = async (context, id, data) => {
     });
     return updated;
   } catch (error) {
-    console.error("Error updating loss payee financial international (helper) %O", error);
+    console.error("Error updating loss payee financial international (helper) %o", error);
     throw new Error(`Updating loss payee financial international (helper) ${error}`);
   }
 };
@@ -8738,7 +8740,7 @@ var updateLossPayeeFinancialInternationalVector = async (context, id, data) => {
     });
     return updated;
   } catch (error) {
-    console.error("Error updating loss payee financial international vector (helper) %O", error);
+    console.error("Error updating loss payee financial international vector (helper) %o", error);
     throw new Error(`Updating loss payee financial international vector (helper) ${error}`);
   }
 };
@@ -8761,7 +8763,7 @@ var updateLossPayeeFinancialDetailsInternational = async (root, variables, conte
       success: false
     };
   } catch (error) {
-    console.error("Error updating loss payee financial international %O", error);
+    console.error("Error updating loss payee financial international %o", error);
     throw new Error(`Updating loss payee financial international ${error}`);
   }
 };
@@ -8786,7 +8788,7 @@ var getAccountPasswordResetToken = async (root, variables, context) => {
     console.info("Unable to get account password reset token - reset hash does not exist");
     return { success: false };
   } catch (error) {
-    console.error("Error getting account password reset token %O", error);
+    console.error("Error getting account password reset token %o", error);
     throw new Error(`Getting account password reset token ${error}`);
   }
 };
@@ -8824,7 +8826,7 @@ var APIM = {
         success: false
       };
     } catch (error) {
-      console.error("Error calling APIM - CIS countries %O", error);
+      console.error("Error calling APIM - CIS countries %o", error);
       throw new Error(`Calling APIM - CIS countries ${error}`);
     }
   },
@@ -8853,7 +8855,7 @@ var APIM = {
         success: false
       };
     } catch (error) {
-      console.error("Error calling APIM - currencies %O", error);
+      console.error("Error calling APIM - currencies %o", error);
       throw new Error(`Calling APIM - currencies ${error}`);
     }
   }
@@ -9017,7 +9019,7 @@ var getApimCisCountries = async () => {
     }
     return { success: false };
   } catch (error) {
-    console.error("Error Getting and mapping CIS countries from APIM %O", error);
+    console.error("Error Getting and mapping CIS countries from APIM %o", error);
     throw new Error(`Getting and mapping CIS countries from APIM ${error}`);
   }
 };
@@ -9062,7 +9064,7 @@ var getApimCurrencies = async () => {
     }
     return { success: false };
   } catch (error) {
-    console.error("Error Getting and mapping currencies from APIM %O", error);
+    console.error("Error Getting and mapping currencies from APIM %o", error);
     throw new Error(`Getting and mapping currencies from APIM ${error}`);
   }
 };
@@ -9110,7 +9112,7 @@ var companiesHouse = {
         data: response.data
       };
     } catch (error) {
-      console.error("Error calling Companies House API %O", error);
+      console.error("Error calling Companies House API %o", error);
       throw new Error(`Calling Companies House API. Unable to search for company ${error}`);
     }
   }
@@ -9150,7 +9152,7 @@ var industrySectorNames = {
         data: response.data
       };
     } catch (error) {
-      console.error("Error calling industry sector API %O", error);
+      console.error("Error calling industry sector API %o", error);
       return {
         success: false,
         apiError: true
@@ -9240,7 +9242,7 @@ var getCompaniesHouseInformation = async (root, variables) => {
       success: true
     };
   } catch (error) {
-    console.error("Error getting companies house information %O", error);
+    console.error("Error getting companies house information %o", error);
     return {
       apiError: true,
       success: false
@@ -9271,7 +9273,7 @@ var getApplicationByReferenceNumberQuery = async (root, variables, context) => {
       success: false
     };
   } catch (error) {
-    console.error("Error getting application by reference number (GetApplicationByReferenceNumber query) %O", error);
+    console.error("Error getting application by reference number (GetApplicationByReferenceNumber query) %o", error);
     throw new Error(`Get application by reference number (GetApplicationByReferenceNumber query) ${error}`);
   }
 };
@@ -9303,7 +9305,7 @@ var ordnanceSurvey = {
         data: response.data.results
       };
     } catch (error) {
-      console.error("Error calling Ordnance Survey API %O", error);
+      console.error("Error calling Ordnance Survey API %o", error);
       throw new Error(`Calling Ordnance Survey API. Unable to search for address ${error}`);
     }
   }
@@ -9370,7 +9372,7 @@ var getOrdnanceSurveyAddress = async (root, variables) => {
       success: true
     };
   } catch (error) {
-    console.error("Error getting Ordnance Survey address results %O", error);
+    console.error("Error getting Ordnance Survey address results %o", error);
     return {
       apiError: true,
       success: false
@@ -9407,7 +9409,7 @@ var verifyAccountPasswordResetToken = async (root, variables, context) => {
       invalid: true
     };
   } catch (error) {
-    console.error("Error verifying account password reset token %O", error);
+    console.error("Error verifying account password reset token %o", error);
     throw new Error(`Verifying account password reset token ${error}`);
   }
 };

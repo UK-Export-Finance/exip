@@ -98,7 +98,7 @@ export const get = async (req: Request, res: Response) => {
       ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, charge[FIXED_SUM_CURRENCY_CODE]),
     });
   } catch (error) {
-    console.error('Error getting Export contract - Agent charges - currency of agents charge %O', error);
+    console.error('Error getting Export contract - Agent charges - currency of agents charge %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -146,7 +146,7 @@ export const post = async (req: Request, res: Response) => {
         validationErrors,
       });
     } catch (error) {
-      console.error('Error getting currencies %O', error);
+      console.error('Error getting currencies %o', error);
 
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
@@ -194,7 +194,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${HOW_MUCH_THE_AGENT_IS_CHARGING}`);
   } catch (error) {
-    console.error('Error updating application - export contract - currency of agents charge %O', error);
+    console.error('Error updating application - export contract - currency of agents charge %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

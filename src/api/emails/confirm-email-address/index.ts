@@ -30,7 +30,7 @@ export const confirmEmailAddress = async (
 
     return response;
   } catch (error) {
-    console.error('Error sending confirm email address email %O', error);
+    console.error('Error sending confirm email address email %o', error);
 
     throw new Error(`Sending confirm email address email ${error}`);
   }

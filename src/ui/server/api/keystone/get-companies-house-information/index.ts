@@ -11,22 +11,22 @@ const getCompaniesHouseInformation = async (companiesHouseNumber: string) => {
     const response = (await apollo('GET', getCompaniesHouseInformationQuery, queryParams)) as ApolloResponse;
 
     if (response.errors) {
-      console.error('GraphQL network error querying companies house information %O', response.errors);
+      console.error('GraphQL network error querying companies house information %o', response.errors);
     }
 
     if (response?.networkError?.result?.errors) {
-      console.error('GraphQL network error querying companies house information %O', response.networkError.result.errors);
+      console.error('GraphQL network error querying companies house information %o', response.networkError.result.errors);
     }
 
     if (response?.data?.getCompaniesHouseInformation) {
       return response.data.getCompaniesHouseInformation;
     }
 
-    console.error('Error with GraphQL getCompaniesHouseInformation %O', response);
+    console.error('Error with GraphQL getCompaniesHouseInformation %o', response);
 
     throw new Error('Getting Companies house information');
   } catch (error) {
-    console.error('Error getting companies house information %O', error);
+    console.error('Error getting companies house information %o', error);
 
     throw new Error('Getting Companies house information');
   }

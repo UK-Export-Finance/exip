@@ -37,7 +37,7 @@ const ordnanceSurvey = {
         data: response.data.results,
       };
     } catch (error) {
-      console.error('Error calling Ordnance Survey API %O', error);
+      console.error('Error calling Ordnance Survey API %o', error);
 
       throw new Error(`Calling Ordnance Survey API. Unable to search for address ${error}`);
     }

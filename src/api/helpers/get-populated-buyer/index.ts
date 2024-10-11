@@ -32,7 +32,7 @@ const getPopulatedBuyer = async (context: Context, id: string) => {
 
     return populatedBuyer;
   } catch (error) {
-    console.error('Getting populated buyer %s %O', id, error);
+    console.error('Getting populated buyer %s %o', id, error);
 
     throw new Error(`Error Getting populated buyer ${id} ${error}`);
   }

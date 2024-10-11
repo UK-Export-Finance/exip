@@ -80,7 +80,7 @@ export const get = async (req: Request, res: Response) => {
       application: mapApplicationToFormFields(application),
     });
   } catch (error) {
-    console.error('Error getting insurance - your buyer - buyers company or organisation %O', error);
+    console.error('Error getting insurance - your buyer - buyers company or organisation %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -130,7 +130,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CONNECTION_WITH_BUYER}`);
   } catch (error) {
-    console.error('Error posting insurance - your buyer - buyers company or organisation %O', error);
+    console.error('Error posting insurance - your buyer - buyers company or organisation %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

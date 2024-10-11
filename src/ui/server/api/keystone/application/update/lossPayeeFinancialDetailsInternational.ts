@@ -20,22 +20,22 @@ const updateLossPayeeFinancialDetailsInternational = async (id: string, update: 
     const response = (await apollo('POST', updateLossPayeeFinancialDetailsInternationalMutation, variables)) as ApolloResponse;
 
     if (response.errors) {
-      console.error('GraphQL error updating application loss payee financial details international %O', response.errors);
+      console.error('GraphQL error updating application loss payee financial details international %o', response.errors);
     }
 
     if (response?.networkError?.result?.errors) {
-      console.error('GraphQL network error updating application loss payee financial details international %O', response.networkError.result.errors);
+      console.error('GraphQL network error updating application loss payee financial details international %o', response.networkError.result.errors);
     }
 
     if (response?.data?.updateLossPayeeFinancialDetailsInternational) {
       return response.data.updateLossPayeeFinancialDetailsInternational;
     }
 
-    console.error('Error with GraphQL updateLossPayeeFinancialDetailsInternational %O', response);
+    console.error('Error with GraphQL updateLossPayeeFinancialDetailsInternational %o', response);
 
     throw new Error('Updating application loss payee financial details international');
   } catch (error) {
-    console.error('Error updating application loss payee financial details international %O', error);
+    console.error('Error updating application loss payee financial details international %o', error);
 
     throw new Error('Updating application loss payee financial details international');
   }

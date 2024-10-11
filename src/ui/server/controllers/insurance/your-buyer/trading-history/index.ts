@@ -85,7 +85,7 @@ export const get = async (req: Request, res: Response) => {
       submittedValues: application.buyer.buyerTradingHistory,
     });
   } catch (error) {
-    console.error('Error getting trading history with the buyer %O', error);
+    console.error('Error getting trading history with the buyer %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -190,7 +190,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${FAILED_TO_PAY}`);
   } catch (error) {
-    console.error('Error posting trading history with the buyer %O', error);
+    console.error('Error posting trading history with the buyer %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

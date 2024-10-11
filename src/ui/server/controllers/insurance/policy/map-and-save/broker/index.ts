@@ -33,7 +33,7 @@ const broker = async (formBody: RequestBody, application: Application, validatio
 
     return true;
   } catch (error) {
-    console.error('Error mapping and saving application - policy - broker %O', error);
+    console.error('Error mapping and saving application - policy - broker %o', error);
 
     return false;
   }
