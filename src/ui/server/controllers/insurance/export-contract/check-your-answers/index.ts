@@ -32,7 +32,9 @@ export const get = async (req: Request, res: Response) => {
   try {
     const countries = await api.keystone.countries.getAll();
 
-    if (!isPopulatedArray(countries)) {
+    const { allCurrencies } = await api.keystone.APIM.getCurrencies();
+
+    if (!isPopulatedArray(countries) || !isPopulatedArray(allCurrencies)) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
@@ -42,6 +44,7 @@ export const get = async (req: Request, res: Response) => {
       migratedV1toV2,
       referenceNumber,
       countries,
+      currencies: allCurrencies,
     });
 
     return res.render(TEMPLATE, {
@@ -54,7 +57,7 @@ export const get = async (req: Request, res: Response) => {
       SUMMARY_LISTS: summaryLists,
     });
   } catch (error) {
-    console.error('Error getting countries %O', error);
+    console.error('Error getting countries %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

@@ -19,7 +19,7 @@ const getAllLossPayeeFinancialUkVectors = async (connection: Connection) => {
 
     return vectors;
   } catch (error) {
-    console.error('🚨 error %s %O', loggingMessage, error);
+    console.error('🚨 error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

@@ -14,7 +14,7 @@ const generateDecipher = (key: string, iv: string) => {
   try {
     return crypto.createDecipheriv(ENCRYPTION_METHOD, key, iv);
   } catch (error) {
-    console.error('Error generating decipher %O', error);
+    console.error('Error generating decipher %o', error);
 
     throw new Error(`Error generating decipher ${error}`);
   }

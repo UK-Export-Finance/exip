@@ -21,7 +21,7 @@ const createABusiness = async (context: Context, applicationId: string) => {
 
     return business;
   } catch (error) {
-    console.error('Error creating a business %O', error);
+    console.error('Error creating a business %o', error);
 
     throw new Error(`Creating a business ${error}`);
   }

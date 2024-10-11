@@ -113,7 +113,7 @@ export const post = async (req: Request, res: Response) => {
       validationErrors,
     });
   } catch (error) {
-    console.error('Error posting account password reset form %O', error);
+    console.error('Error posting account password reset form %o', error);
     return res.redirect(ROUTES.INSURANCE.PROBLEM_WITH_SERVICE);
   }
 };

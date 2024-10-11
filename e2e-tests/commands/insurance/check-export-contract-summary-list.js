@@ -6,6 +6,7 @@ import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../content-strings/fields/i
 import formatCurrency from '../../helpers/format-currency';
 import application from '../../fixtures/application';
 import COUNTRIES from '../../fixtures/countries';
+import { GBP } from '../../fixtures/currencies';
 
 const {
   CURRENCY: { CURRENCY_CODE },
@@ -232,7 +233,7 @@ const checkExportContractSummaryList = {
     if (shouldRender) {
       const { expectedKey, expectedChangeLinkText } = getSummaryListField(summaryListFieldId, FIELDS.AGENT_CHARGES);
 
-      const expectedValue = application.EXPORT_CONTRACT.AGENT_CHARGES[FIXED_SUM_CURRENCY_CODE];
+      const expectedValue = GBP.name;
 
       cy.assertSummaryListRow(summaryList, summaryListFieldId, expectedKey, expectedValue, expectedChangeLinkText);
     } else {

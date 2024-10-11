@@ -21,7 +21,7 @@ const account = async (context: Context, accountId: string, updateData: object) 
 
     return updatedAccount;
   } catch (error) {
-    console.error('Error updating account %O', error);
+    console.error('Error updating account %o', error);
 
     throw new Error(`Updating account ${error}`);
   }
@@ -51,7 +51,7 @@ const accountStatus = async (context: Context, accountStatusId: string, updateDa
 
     return updatedAccountStatus;
   } catch (error) {
-    console.error('Error updating account status %O', error);
+    console.error('Error updating account status %o', error);
 
     throw new Error(`Updating account status ${error}`);
   }

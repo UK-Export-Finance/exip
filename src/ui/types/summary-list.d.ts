@@ -104,6 +104,7 @@ interface SummaryListParamsExportContract extends SummaryListParamsCore {
   exportContract: ApplicationExportContract;
   totalContractValueOverThreshold: boolean;
   countries: Array<Country>;
+  currencies: Array<Currency>;
   migratedV1toV2: boolean;
 }
 

@@ -101,7 +101,7 @@ export const get = (req: Request, res: Response) => {
       applicationAnswer: application.buyer.relationship[CONNECTION_WITH_BUYER],
     });
   } catch (error) {
-    console.error('Error getting connection to the buyer %O', error);
+    console.error('Error getting connection to the buyer %o', error);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -165,7 +165,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`);
   } catch (error) {
-    console.error('Error posting connection to the buyer %O', error);
+    console.error('Error posting connection to the buyer %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

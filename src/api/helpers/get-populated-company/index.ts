@@ -32,7 +32,7 @@ const getPopulatedCompany = async (context: Context, id: string) => {
 
     return populatedCompany;
   } catch (error) {
-    console.error('Getting populated company %s %O', id, error);
+    console.error('Getting populated company %s %o', id, error);
 
     throw new Error(`Error Getting populated company ${id} ${error}`);
   }

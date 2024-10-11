@@ -27,22 +27,22 @@ const account = {
       const response = (await apollo('POST', createAccountMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error creating an account %O', response.errors);
+        console.error('GraphQL error creating an account %o', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error creating an account %O', response.networkError.result.errors);
+        console.error('GraphQL network error creating an account %o', response.networkError.result.errors);
       }
 
       if (response?.data?.createAnAccount) {
         return response.data.createAnAccount;
       }
 
-      console.error('Error with GraphQL createAccountMutation query %O', response);
+      console.error('Error with GraphQL createAccountMutation query %o', response);
 
       throw new Error('Creating an account');
     } catch (error) {
-      console.error('Error creating an account %O', error);
+      console.error('Error creating an account %o', error);
 
       throw new Error('Creating an account');
     }
@@ -56,22 +56,22 @@ const account = {
       const response = (await apollo('POST', getAccountQuery, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error getting an account %O', response.errors);
+        console.error('GraphQL error getting an account %o', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error getting an account %O', response.networkError.result.errors);
+        console.error('GraphQL network error getting an account %o', response.networkError.result.errors);
       }
 
       if (response?.data?.account) {
         return response.data.account;
       }
 
-      console.error('Error with GraphQL getAccountQuery %O', response);
+      console.error('Error with GraphQL getAccountQuery %o', response);
 
       throw new Error('Getting an account');
     } catch (error) {
-      console.error('Error getting an account %O', error);
+      console.error('Error getting an account %o', error);
 
       throw new Error('Getting an account');
     }
@@ -85,22 +85,22 @@ const account = {
       const response = (await apollo('POST', verifyAccountEmailAddressMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error verifying account email address %O', response.errors);
+        console.error('GraphQL error verifying account email address %o', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error verifying account email address %O', response.networkError.result.errors);
+        console.error('GraphQL network error verifying account email address %o', response.networkError.result.errors);
       }
 
       if (response?.data?.verifyAccountEmailAddress) {
         return response.data.verifyAccountEmailAddress;
       }
 
-      console.error('Error with GraphQL verifyAccountEmailAddressMutation %O', response);
+      console.error('Error with GraphQL verifyAccountEmailAddressMutation %o', response);
 
       throw new Error('Verifying account email address');
     } catch (error) {
-      console.error('Error verifying account email address %O', error);
+      console.error('Error verifying account email address %o', error);
 
       throw new Error('Verifying account email address');
     }
@@ -114,22 +114,22 @@ const account = {
       const response = (await apollo('POST', sendEmailConfirmEmailAddressMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error sending email verification for account creation %O', response.errors);
+        console.error('GraphQL error sending email verification for account creation %o', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error sending email verification for account creation %O', response.networkError.result.errors);
+        console.error('GraphQL network error sending email verification for account creation %o', response.networkError.result.errors);
       }
 
       if (response?.data?.sendEmailConfirmEmailAddress) {
         return response.data.sendEmailConfirmEmailAddress;
       }
 
-      console.error('Error with GraphQL sendEmailConfirmEmailAddressMutation %O', response);
+      console.error('Error with GraphQL sendEmailConfirmEmailAddressMutation %o', response);
 
       throw new Error('Sending email verification for account creation');
     } catch (error) {
-      console.error('Error sending email verification for account creation %O', error);
+      console.error('Error sending email verification for account creation %o', error);
 
       throw new Error('Sending email verification for account creation');
     }
@@ -143,22 +143,22 @@ const account = {
       const response = (await apollo('POST', accountSignInMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error signing in account %O', response.errors);
+        console.error('GraphQL error signing in account %o', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error signing in account %O', response.networkError.result.errors);
+        console.error('GraphQL network error signing in account %o', response.networkError.result.errors);
       }
 
       if (response?.data?.accountSignIn) {
         return response.data.accountSignIn;
       }
 
-      console.error('Error with GraphQL accountSignInMutation %O', response);
+      console.error('Error with GraphQL accountSignInMutation %o', response);
 
       throw new Error('Signing in account');
     } catch (error) {
-      console.error('Error signing into account %O', error);
+      console.error('Error signing into account %o', error);
 
       throw new Error('Signing in account');
     }
@@ -172,22 +172,22 @@ const account = {
       const response = (await apollo('POST', accountSignInSendNewCodeMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error sending new sign in code for account %O', response.errors);
+        console.error('GraphQL error sending new sign in code for account %o', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error sending new sign in code for account %O', response.networkError.result.errors);
+        console.error('GraphQL network error sending new sign in code for account %o', response.networkError.result.errors);
       }
 
       if (response?.data?.accountSignInSendNewCode) {
         return response.data.accountSignInSendNewCode;
       }
 
-      console.error('Error with GraphQL accountSignInSendNewCodeMutation %O', response);
+      console.error('Error with GraphQL accountSignInSendNewCodeMutation %o', response);
 
       throw new Error('Sending new sign in code for account');
     } catch (error) {
-      console.error('Error sending new sign in code for account %O', error);
+      console.error('Error sending new sign in code for account %o', error);
 
       throw new Error('Sending new sign in code for account');
     }
@@ -201,22 +201,22 @@ const account = {
       const response = (await apollo('POST', verifyAccountSignInCodeMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error verifying account sign in code %O', response.errors);
+        console.error('GraphQL error verifying account sign in code %o', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error verifying account sign in code %O', response.networkError.result.errors);
+        console.error('GraphQL network error verifying account sign in code %o', response.networkError.result.errors);
       }
 
       if (response?.data?.verifyAccountSignInCode) {
         return response.data.verifyAccountSignInCode;
       }
 
-      console.error('Error with GraphQL verifyAccountSignInCodeMutation %O', response);
+      console.error('Error with GraphQL verifyAccountSignInCodeMutation %o', response);
 
       throw new Error('Verifying account sign in code');
     } catch (error) {
-      console.error('Error verifying account sign in code %O', error);
+      console.error('Error verifying account sign in code %o', error);
 
       throw new Error('Verifying account sign in code');
     }
@@ -230,22 +230,22 @@ const account = {
       const response = (await apollo('POST', verifyAccountSessionMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error verifying account session %O', response.errors);
+        console.error('GraphQL error verifying account session %o', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error verifying account session %O', response.networkError.result.errors);
+        console.error('GraphQL network error verifying account session %o', response.networkError.result.errors);
       }
 
       if (response?.data?.verifyAccountSession) {
         return response.data.verifyAccountSession;
       }
 
-      console.error('Error with GraphQL verifyAccountSessionMutation %O', response);
+      console.error('Error with GraphQL verifyAccountSessionMutation %o', response);
 
       throw new Error('Verifying account session');
     } catch (error) {
-      console.error('Error verifying account session %O', error);
+      console.error('Error verifying account session %o', error);
 
       throw new Error('Verifying account session');
     }
@@ -259,22 +259,22 @@ const account = {
       const response = (await apollo('POST', sendEmailPasswordResetLinkMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error sending email for account password reset %O', response.errors);
+        console.error('GraphQL error sending email for account password reset %o', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error sending email for account password reset %O', response.networkError.result.errors);
+        console.error('GraphQL network error sending email for account password reset %o', response.networkError.result.errors);
       }
 
       if (response?.data?.sendEmailPasswordResetLink) {
         return response.data.sendEmailPasswordResetLink;
       }
 
-      console.error('Error with GraphQL sendEmailPasswordResetLinkMutation %O', response);
+      console.error('Error with GraphQL sendEmailPasswordResetLinkMutation %o', response);
 
       throw new Error('Sending email for account password reset');
     } catch (error) {
-      console.error('Error sending email for account password reset %O', error);
+      console.error('Error sending email for account password reset %o', error);
 
       throw new Error('Sending email for account password reset');
     }
@@ -288,22 +288,22 @@ const account = {
       const response = (await apollo('POST', sendEmailReactivateAccountLinkMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error sending email for account reactivation %O', response.errors);
+        console.error('GraphQL error sending email for account reactivation %o', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error sending email for account reactivation %O', response.networkError.result.errors);
+        console.error('GraphQL network error sending email for account reactivation %o', response.networkError.result.errors);
       }
 
       if (response?.data?.sendEmailReactivateAccountLink) {
         return response.data.sendEmailReactivateAccountLink;
       }
 
-      console.error('Error with GraphQL sendEmailReactivateAccountLinkMutation %O', response);
+      console.error('Error with GraphQL sendEmailReactivateAccountLinkMutation %o', response);
 
       throw new Error('Sending email for account reactivation');
     } catch (error) {
-      console.error('Error sending email for account reactivation %O', error);
+      console.error('Error sending email for account reactivation %o', error);
 
       throw new Error('Sending email for account reactivation');
     }
@@ -317,22 +317,22 @@ const account = {
       const response = (await apollo('POST', verifyAccountReactivationTokenMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error verifying account reactivation token %O', response.errors);
+        console.error('GraphQL error verifying account reactivation token %o', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error verifying account reactivation token %O', response.networkError.result.errors);
+        console.error('GraphQL network error verifying account reactivation token %o', response.networkError.result.errors);
       }
 
       if (response?.data?.verifyAccountReactivationToken) {
         return response.data.verifyAccountReactivationToken;
       }
 
-      console.error('Error with GraphQL verifyAccountReactivationTokenMutation %O', response);
+      console.error('Error with GraphQL verifyAccountReactivationTokenMutation %o', response);
 
       throw new Error('Verifying account reactivation token');
     } catch (error) {
-      console.error('Error verifying account reactivation token %O', error);
+      console.error('Error verifying account reactivation token %o', error);
 
       throw new Error('Verifying account reactivation token');
     }
@@ -346,22 +346,22 @@ const account = {
       const response = (await apollo('POST', verifyAccountPasswordResetTokenQuery, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error verifying account password reset token %O', response.errors);
+        console.error('GraphQL error verifying account password reset token %o', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error verifying account password reset token %O', response.networkError.result.errors);
+        console.error('GraphQL network error verifying account password reset token %o', response.networkError.result.errors);
       }
 
       if (response?.data?.verifyAccountPasswordResetToken) {
         return response.data.verifyAccountPasswordResetToken;
       }
 
-      console.error('Error with GraphQL verifyAccountPasswordResetTokenQuery %O', response);
+      console.error('Error with GraphQL verifyAccountPasswordResetTokenQuery %o', response);
 
       throw new Error('Verifying account password reset token');
     } catch (error) {
-      console.error('Error verifying account password reset token %O', error);
+      console.error('Error verifying account password reset token %o', error);
 
       throw new Error('Verifying account password reset token');
     }
@@ -375,22 +375,22 @@ const account = {
       const response = (await apollo('POST', accountPasswordResetMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error resetting account password %O', response.errors);
+        console.error('GraphQL error resetting account password %o', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error resetting account password %O', response.networkError.result.errors);
+        console.error('GraphQL network error resetting account password %o', response.networkError.result.errors);
       }
 
       if (response?.data?.accountPasswordReset) {
         return response.data.accountPasswordReset;
       }
 
-      console.error('Error with GraphQL accountPasswordResetMutation %O', response);
+      console.error('Error with GraphQL accountPasswordResetMutation %o', response);
 
       throw new Error('Resetting account password');
     } catch (error) {
-      console.error('Error resetting account password %O', error);
+      console.error('Error resetting account password %o', error);
 
       throw new Error('Resetting account password');
     }

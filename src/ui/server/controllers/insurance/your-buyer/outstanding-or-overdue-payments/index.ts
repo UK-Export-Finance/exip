@@ -45,7 +45,7 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.OUTSTANDING_OR_OV
 /**
  * pageVariables for outstanding-or-overdue page
  * @param {Number} referenceNumber: Application reference number
- * @param {Array<Currency>} currencies: Array of currencies
+ * @param {Array<Currency>} currencies: Currencies
  * @param {String} currencyCode: Provided currency code
  * @param {Boolean} changeRoute: req.originalUrl is a change route
  * @param {Boolean} checkAndChangeRoute: req.originalUrl is a check-and-change route
@@ -111,7 +111,7 @@ export const get = async (req: Request, res: Response) => {
       application: mapApplicationToFormFields(application),
     });
   } catch (error) {
-    console.error('Error getting outstanding or overdue payments %O', error);
+    console.error('Error getting outstanding or overdue payments %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -217,7 +217,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${FAILED_TO_PAY}`);
   } catch (error) {
-    console.error('Error posting outstanding or overdue payments with the buyer %O', error);
+    console.error('Error posting outstanding or overdue payments with the buyer %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

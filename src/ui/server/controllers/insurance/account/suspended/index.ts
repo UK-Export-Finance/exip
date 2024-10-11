@@ -60,7 +60,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (error) {
-    console.error('Error posting account suspended form %O', error);
+    console.error('Error posting account suspended form %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

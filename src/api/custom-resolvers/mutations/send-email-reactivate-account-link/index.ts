@@ -21,7 +21,7 @@ const sendEmailReactivateAccountLink = async (
 
     return reactiveAccountResponse;
   } catch (error) {
-    console.error('Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) %O', error);
+    console.error('Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) %o', error);
 
     throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) ${error}`);
   }

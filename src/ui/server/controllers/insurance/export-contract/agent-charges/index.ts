@@ -58,7 +58,7 @@ export const TEMPLATE = TEMPLATES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES;
  * pageVariables
  * Page fields and "save and go back" URL
  * @param {Number} referenceNumber: Application reference number
- * @param {Array<Currency>} currencies: Array of currencies
+ * @param {Array<Currency>} currencies: Currencies
  * @param {String} currencyCode: Provided currency code
  * @returns {Object} Page variables
  */
@@ -132,7 +132,7 @@ export const get = async (req: Request, res: Response) => {
       CONDITIONAL_PERCENTAGE_HTML,
     });
   } catch (error) {
-    console.error('Error getting countries %O', error);
+    console.error('Error getting countries %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -184,7 +184,7 @@ export const post = async (req: Request, res: Response) => {
         validationErrors,
       });
     } catch (error) {
-      console.error('Error getting countries or currencies %O', error);
+      console.error('Error getting countries or currencies %o', error);
 
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
@@ -236,7 +236,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
   } catch (error) {
-    console.error('Error updating application - export contract - agent charges %O', error);
+    console.error('Error updating application - export contract - agent charges %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

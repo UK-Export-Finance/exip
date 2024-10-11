@@ -24,7 +24,7 @@ const deleteAuthenticationRetries = async (context: Context, accountId: string) 
 
     return result;
   } catch (error) {
-    console.error('Error deleting authentication retries %O', error);
+    console.error('Error deleting authentication retries %o', error);
 
     throw new Error(`Deleting authentication retries ${error}`);
   }

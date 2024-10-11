@@ -17,7 +17,7 @@ const getBuyerRelationshipById = async (context: Context, id: string) => {
 
     return buyerRelationship;
   } catch (error) {
-    console.error('Getting buyer relationship by ID %s %O', id, error);
+    console.error('Getting buyer relationship by ID %s %o', id, error);
 
     throw new Error(`Error Getting buyer relationship by ID ${id} ${error}`);
   }
