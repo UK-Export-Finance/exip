@@ -93,7 +93,7 @@ context(
       it(`should redirect to ${HOW_MUCH_THE_AGENT_IS_CHARGING}`, () => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitAlternativeCurrencyForm({});
+        cy.completeAndSubmitCurrencyForm({});
 
         cy.assertUrl(howMuchAgentIsChargingUrl);
       });

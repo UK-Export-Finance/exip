@@ -73,7 +73,7 @@ context(
 
         summaryList.field(CURRENCY_CODE).changeLink().click();
 
-        cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true });
+        cy.completeAndSubmitCurrencyForm({ alternativeCurrency: true });
       });
 
       it(`should redirect to ${EXPORT_CONTRACT}`, () => {
@@ -99,7 +99,7 @@ context(
 
         summaryList.field(CURRENCY_CODE).changeLink().click();
 
-        cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: currencyCode });
+        cy.completeAndSubmitCurrencyForm({ isoCode: currencyCode });
       });
 
       it(`should render the new answer for ${CURRENCY_CODE} and ${FIXED_SUM_AMOUNT}`, () => {

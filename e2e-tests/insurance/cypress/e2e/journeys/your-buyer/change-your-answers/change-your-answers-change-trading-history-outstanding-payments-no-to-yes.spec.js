@@ -62,7 +62,7 @@ context(
         summaryList.field(fieldId).changeLink().click();
 
         cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
-        cy.completeAndSubmitAlternativeCurrencyForm({});
+        cy.completeAndSubmitCurrencyForm({});
         cy.completeAndSubmitOutstandingOrOverduePaymentsForm({});
       });
 

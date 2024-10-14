@@ -108,7 +108,7 @@ context(
 
             cy.assertRadioOptionIsChecked(option.input());
 
-            cy.completeAndSubmitAlternativeCurrencyForm({});
+            cy.completeAndSubmitCurrencyForm({});
 
             // assert HOW_MUCH_THE_AGENT_IS_CHARGING field values.
             cy.checkValue(field(FIXED_SUM_AMOUNT), '');

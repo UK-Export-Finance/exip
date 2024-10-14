@@ -46,7 +46,7 @@ const completeAndSubmitYourBuyerForms = ({
     if (outstandingPayments) {
       steps.push({
         name: 'currencyOfLatePayments',
-        action: () => cy.completeAndSubmitAlternativeCurrencyForm({ isoCode, alternativeCurrency }),
+        action: () => cy.completeAndSubmitCurrencyForm({ isoCode, alternativeCurrency }),
       });
       steps.push({ name: 'outstandingOrOverduePayments', action: () => cy.completeAndSubmitOutstandingOrOverduePaymentsForm({ outstandingPayments }) });
     }
