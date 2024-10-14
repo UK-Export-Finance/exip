@@ -21,7 +21,13 @@ module.exports = {
     },
   },
   rules: {
-    'import/no-unresolved': [2, { caseSensitive: false }],
+    /**
+     * Ignore 2x NPM package imports used for data migration.
+     * We do not want to include these packages in package.json when data migration is irrelevant.
+     * We only need these packages and data migration during major phases/releases of EXIPs,
+     * that contain breaking data changes.
+     */
+    'import/no-unresolved': [2, { caseSensitive: false, ignore: ['@paralleldrive/cuid2', 'mysql2/promise'] }],
     '@typescript-eslint/indent': ['error', 2],
     'max-len': [
       'error',
