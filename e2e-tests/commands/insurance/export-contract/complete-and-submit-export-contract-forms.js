@@ -49,7 +49,7 @@ const completeAndSubmitExportContractForms = ({
   if (fixedSumMethod) {
     steps = [
       ...steps,
-      { name: 'currencyOfAgentCharges', action: () => cy.completeAndSubmitAlternativeCurrencyForm({}) },
+      { name: 'currencyOfAgentCharges', action: () => cy.completeAndSubmitCurrencyForm({}) },
       { name: 'howMuchAgentIsCharging', action: () => cy.completeAndSubmitHowMuchTheAgentIsChargingForm({ fixedSumAmount }) },
     ];
   }

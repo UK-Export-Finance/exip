@@ -25,7 +25,7 @@ const completeBusinessSection = ({
   }
 
   cy.completeAndSubmitNatureOfYourBusiness();
-  cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: alternativeCurrencyTurnover });
+  cy.completeAndSubmitCurrencyForm({ alternativeCurrency: alternativeCurrencyTurnover });
   cy.completeAndSubmitTurnoverForm();
   cy.completeAndSubmitCreditControlForm({ hasCreditControlProcess });
 

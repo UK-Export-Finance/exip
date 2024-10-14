@@ -49,7 +49,7 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
       cy.saveSession();
       cy.navigateToUrl(url);
       // change to GBP
-      cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: GBP_CURRENCY_CODE });
+      cy.completeAndSubmitCurrencyForm({ isoCode: GBP_CURRENCY_CODE });
     });
 
     const { prefixAssertions } = assertCurrencyFormFields({ fieldId: TOTAL_AMOUNT_OVERDUE });

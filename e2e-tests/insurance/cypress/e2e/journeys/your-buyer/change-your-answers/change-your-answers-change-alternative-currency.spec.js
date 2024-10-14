@@ -60,7 +60,7 @@ context('Insurance - Your buyer - Change your answers - Alternative currency - A
 
         summaryList.field(currencyFieldId).changeLink().click();
 
-        cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: EUR_CURRENCY_CODE });
+        cy.completeAndSubmitCurrencyForm({ isoCode: EUR_CURRENCY_CODE });
         cy.clickSubmitButton();
       });
 
@@ -109,7 +109,7 @@ context('Insurance - Your buyer - Change your answers - Alternative currency - A
 
         summaryList.field(currencyFieldId).changeLink().click();
 
-        cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true });
+        cy.completeAndSubmitCurrencyForm({ alternativeCurrency: true });
         cy.clickSubmitButton();
       });
 
