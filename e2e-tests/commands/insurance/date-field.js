@@ -27,7 +27,7 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, fieldId, e
   };
 
   return {
-    day: {
+    dayAssertions: {
       /**
        * Submit a date without a day.
        * Check validation errors.
@@ -105,7 +105,7 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, fieldId, e
         });
       },
     },
-    month: {
+    monthAssertions: {
       /**
        * Submit a date without a month.
        * Check validation errors.
@@ -155,7 +155,7 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, fieldId, e
         });
       },
     },
-    year: {
+    yearAssertions: {
       /**
        * Submit a date without a year.
        * Check validation errors.
@@ -299,8 +299,8 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, fieldId, e
         const month = dateValue.getMonth() + 1;
         const year = dateValue.getFullYear();
 
-        cy.completeDateFormFields({ idPrefix: fieldA, day, month, year });
-        cy.completeDateFormFields({ idPrefix: fieldB, day, month, year });
+        cy.completeDateFormFields({ idPrefix: fieldA.id, day, month, year });
+        cy.completeDateFormFields({ idPrefix: fieldB.id, day, month, year });
 
         cy.clickSubmitButton();
 
@@ -322,7 +322,7 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, fieldId, e
         const month = dateValue.getMonth() + 1;
         const year = dateValue.getFullYear();
 
-        cy.completeDateFormFields({ idPrefix: fieldB, day, month, year });
+        cy.completeDateFormFields({ idPrefix: fieldB.id, day, month, year });
 
         cy.clickSubmitButton();
 
@@ -344,7 +344,7 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, fieldId, e
         const month = dateValue.getMonth() + 1;
         const year = dateValue.getFullYear();
 
-        cy.completeDateFormFields({ idPrefix: fieldB, day, month, year });
+        cy.completeDateFormFields({ idPrefix: fieldB.id, day, month, year });
 
         cy.clickSubmitButton();
 
