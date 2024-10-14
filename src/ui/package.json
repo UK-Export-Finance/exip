@@ -52,7 +52,7 @@
     "express-rate-limit": "^7.4.1",
     "express-session": "^1.18.1",
     "google-libphonenumber": "^3.2.38",
-    "govuk-frontend": "^5.6.0",
+    "govuk-frontend": "^5.7.1",
     "graphql": "^16.9.0",
     "graphql-tag": "^2.12.6",
     "is-url": "^1.2.4",
@@ -70,7 +70,7 @@
     "terser-webpack-plugin": "^5.3.10",
     "ts-node": "^10.9.2",
     "tslib": "^2.7.0",
-    "typescript": "5.6.3",
+    "typescript": "5.4.5",
     "webpack": "^5.95.0",
     "webpack-cli": "^5.1.4",
     "webpack-merge": "^5.10.0"
