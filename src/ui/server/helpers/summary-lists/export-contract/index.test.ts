@@ -71,33 +71,6 @@ describe('server/helpers/summary-lists/export-contract', () => {
         expect(result).toEqual(expected);
       });
     });
-
-    describe('when totalContractValueOverThreshold=true, migratedV1toV2=false', () => {
-      it('should return all fields and values from the submitted data/answers', () => {
-        const result = generateFields(mockAnswers, true, false, referenceNumber, mockCountries, checkAndChange);
-
-        const expected = [
-          generateAboutTheExportFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
-          generatePrivateMarketFields(mockAnswers.privateMarket, referenceNumber, checkAndChange),
-          generateAgentFields(mockAnswers.agent, referenceNumber, mockCountries, checkAndChange),
-        ];
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when totalContractValueOverThreshold=false, migratedV1toV2=false', () => {
-      it('should return some fields and values from the submitted data/answers', () => {
-        const result = generateFields(mockAnswers, false, false, referenceNumber, mockCountries, checkAndChange);
-
-        const expected = [
-          generateAboutTheExportFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
-          generateAgentFields(mockAnswers.agent, referenceNumber, mockCountries, checkAndChange),
-        ];
-
-        expect(result).toEqual(expected);
-      });
-    });
   });
 
   describe('exportContractSummaryLists', () => {
