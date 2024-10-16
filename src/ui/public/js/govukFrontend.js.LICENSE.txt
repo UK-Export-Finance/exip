@@ -87,6 +87,7 @@
  * Skip link component
  *
  * @preserve
+ * @augments GOVUKFrontendComponent<HTMLAnchorElement>
  */
 
 /**
