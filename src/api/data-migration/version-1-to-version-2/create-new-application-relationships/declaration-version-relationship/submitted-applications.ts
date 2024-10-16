@@ -2,7 +2,7 @@ import { Connection } from 'mysql2/promise';
 import { DECLARATIONS } from '../../../../constants';
 import getAllSubmittedApplications from '../../get-all-submitted-applications';
 import createCuid from '../../create-cuid';
-import executeSqlQuery from '../../execute-sql-query';
+import executeSqlQuery from '../../../execute-sql-query';
 import { Application } from '../../../../types';
 
 const {

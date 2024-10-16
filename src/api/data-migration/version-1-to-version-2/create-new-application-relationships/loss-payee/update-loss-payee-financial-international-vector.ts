@@ -1,7 +1,7 @@
 import { Connection } from 'mysql2/promise';
 import getAllLossPayeeFinancialInternational from '../../get-all-loss-payee-financial-internationals';
 import getAllLossPayeeFinancialInternationalVectors from '../../get-all-loss-payee-financial-international-vectors';
-import executeSqlQuery from '../../execute-sql-query';
+import executeSqlQuery from '../../../execute-sql-query';
 
 /**
  * updateLossPayeeFinancialInternationalVector

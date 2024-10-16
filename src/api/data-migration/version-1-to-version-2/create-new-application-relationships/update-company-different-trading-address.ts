@@ -1,7 +1,7 @@
 import { Connection } from 'mysql2/promise';
 import getAllCompanies from '../get-all-companies';
 import getAllCompanyDifferentTradingAddresses from '../get-all-company-different-trading-addresses';
-import executeSqlQuery from '../execute-sql-query';
+import executeSqlQuery from '../../execute-sql-query';
 
 /**
  * updateCompanyDifferentTradingAddress

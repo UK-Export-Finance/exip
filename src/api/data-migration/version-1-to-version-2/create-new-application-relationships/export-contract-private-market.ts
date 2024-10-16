@@ -1,7 +1,7 @@
 import { Connection } from 'mysql2/promise';
 import getAllExportContracts from '../get-all-export-contracts';
 import getAllPrivateMarkets from '../get-all-private-markets';
-import executeSqlQuery from '../execute-sql-query';
+import executeSqlQuery from '../../execute-sql-query';
 
 /**
  * updateExportContractPrivateMarket

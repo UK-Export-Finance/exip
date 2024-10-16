@@ -2,7 +2,7 @@ import { Connection } from 'mysql2/promise';
 import getAllBuyerContacts from '../get-all-buyer-contacts';
 import getAllBuyerRelationships from '../get-all-buyer-relationships';
 import getAllBuyerTradingHistories from '../get-all-buyer-trading-histories';
-import executeSqlQuery from '../execute-sql-query';
+import executeSqlQuery from '../../execute-sql-query';
 import { ApplicationBuyerMvp } from '../../../types';
 
 /**

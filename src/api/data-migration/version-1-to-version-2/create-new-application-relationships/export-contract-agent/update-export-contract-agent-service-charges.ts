@@ -1,7 +1,7 @@
 import { Connection } from 'mysql2/promise';
 import getAllExportContractAgentServices from '../../get-all-export-contract-agent-services';
 import getAllExportContractAgentServiceCharges from '../../get-all-export-contract-agent-service-charges';
-import executeSqlQuery from '../../execute-sql-query';
+import executeSqlQuery from '../../../execute-sql-query';
 
 /**
  * updateExportContractAgentServiceCharges

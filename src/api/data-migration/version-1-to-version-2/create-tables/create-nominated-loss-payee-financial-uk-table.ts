@@ -1,5 +1,5 @@
 import { Connection } from 'mysql2/promise';
-import executeSqlQuery from '../execute-sql-query';
+import executeSqlQuery from '../../execute-sql-query';
 
 /**
  * createLossPayeeFinancialUkTable
