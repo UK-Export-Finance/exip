@@ -32,7 +32,7 @@ const dataMigration = async () => {
 
     await updateApplications(connection);
 
-    console.info('✅ Applications successfully updated.');
+    console.info('✅ Applications successfully updated');
 
     await createNewAccountStatusRelationships(connection);
 
