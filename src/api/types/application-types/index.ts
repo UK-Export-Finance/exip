@@ -297,7 +297,6 @@ export interface Application {
   companySicCodes: Array<ApplicationCompanySicCode>;
   companyAddress: ApplicationCompanyAddress;
   declaration: ApplicationDeclaration;
-  migratedV1toV2?: boolean;
   nominatedLossPayee: ApplicationNominatedLossPayee;
   owner: ApplicationOwner;
   policy: ApplicationPolicy;
@@ -306,6 +305,7 @@ export interface Application {
   totalContractValueOverThreshold: boolean;
   version: number;
   migratedV1toV2?: boolean;
+  migratedV2toV3?: boolean;
 }
 
 export interface ApplicationSubmissionEmailVariables {
@@ -319,12 +319,13 @@ export interface ApplicationSubmissionEmailVariables {
 export interface ApplicationVersion {
   VERSION_NUMBER: string;
   OVER_500K_SUPPORT: boolean;
-  MAXIMUM_BUYER_CAN_OWE: number;
-  TOTAL_VALUE_OF_CONTRACT: number;
-  DEFAULT_FINAL_DESTINATION_KNOWN: boolean;
-  DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: boolean;
+  MAXIMUM_BUYER_CAN_OWE?: number;
+  TOTAL_VALUE_OF_CONTRACT?: number;
+  DEFAULT_FINAL_DESTINATION_KNOWN: boolean | null;
+  DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: boolean | null;
   DEFAULT_CURRENCY?: string;
   BROKER_ADDRESS_AS_MULTIPLE_FIELDS: boolean;
+  REQUESTED_CREDIT_LIMIT_REQUIRED?: boolean;
 }
 
 export interface SectionReview extends Relationship {
