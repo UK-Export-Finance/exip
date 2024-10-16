@@ -1,7 +1,3 @@
-# TODO
-
-# TODO
-
 # EXIP API - data migration - version 2 to version 3 :file_folder:
 
 This directory contains source code for migrating version 2 of EXIP data into the version 3 data structure.
