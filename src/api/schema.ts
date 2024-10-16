@@ -68,6 +68,7 @@ export const lists = {
         db: { nativeType: 'VarChar(4)' },
       }),
       migratedV1toV2: nullableCheckbox(),
+      migratedV2toV3: nullableCheckbox(),
     },
     access: allowAll,
   },
