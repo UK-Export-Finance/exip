@@ -3,6 +3,8 @@ const field = (id) => ({
   legend: () => cy.get(`[data-cy="${id}-legend`),
   heading: () => cy.get(`[data-cy="${id}-heading"]`),
   hint: () => cy.get(`[data-cy="${id}-hint"]`),
+  hintIntro: () => cy.get(`[data-cy="${id}-hint-intro"]`),
+  hintOutro: () => cy.get(`[data-cy="${id}-hint-outro"]`),
   input: () => cy.get(`[data-cy="${id}-input"]`),
   textarea: () => cy.get(`[data-cy="${id}"]`),
   inputOption: () => cy.get(`[data-cy="${id}-input"]`).find('option'),
