@@ -604,7 +604,6 @@ var CUSTOM_RESOLVERS = [
   'getCompaniesHouseInformation',
   'getApplicationByReferenceNumber',
   'submitApplication',
-  'updateCompanyPostDataMigration',
   // feedback
   'createFeedbackAndSendEmail',
   'getApimCisCountries',
@@ -3008,12 +3007,6 @@ var typeDefs = `
       bankAddress: String
       iban: String
       bicSwiftCode: String
-    ): SuccessResponse
-
-    """ update a company (post data migration) """
-    updateCompanyPostDataMigration(
-      id: String
-      company: CompanyInput
     ): SuccessResponse
   }
 
@@ -8603,42 +8596,6 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
 };
 var verify_account_reactivation_token_default = verifyAccountReactivationToken;
 
-// custom-resolvers/mutations/update-company-post-data-migration/index.ts
-var updateCompanyPostDataMigration = async (root, variables, context) => {
-  try {
-    console.info('Updating company (post data migration) %s', variables.id);
-    const { id, company } = variables;
-    const { registeredOfficeAddress, industrySectorNames: industrySectorNames2, sicCodes, ...otherFields } = company;
-    const updatedCompany = await context.db.Company.updateOne({
-      where: {
-        id,
-      },
-      data: otherFields,
-    });
-    const { id: addressId, ...addressFields } = registeredOfficeAddress;
-    if (!updatedCompany.registeredOfficeAddressId) {
-      console.error('Unable to update company address - does not exist (post data migration) %o', id);
-      throw new Error(`Unable to update company address - does not exist (post data migration) ${id}`);
-    }
-    await context.db.CompanyAddress.updateOne({
-      where: {
-        id: updatedCompany.registeredOfficeAddressId,
-      },
-      data: addressFields,
-    });
-    if (sicCodes) {
-      await create_company_sic_codes_default(context, updatedCompany.id, sicCodes, industrySectorNames2);
-    }
-    return {
-      success: true,
-    };
-  } catch (error) {
-    console.error('Error updating company (post data migration) %o', error);
-    throw new Error(`Updating company (post data migration) ${error}`);
-  }
-};
-var update_company_post_data_migration_default = updateCompanyPostDataMigration;
-
 // helpers/encrypt/index.ts
 var import_crypto12 = __toESM(require('crypto'));
 
@@ -9523,7 +9480,6 @@ var customResolvers = {
     submitApplication: submit_application_default,
     createFeedbackAndSendEmail: create_feedback_default,
     verifyAccountReactivationToken: verify_account_reactivation_token_default,
-    updateCompanyPostDataMigration: update_company_post_data_migration_default,
     updateLossPayeeFinancialDetailsUk: update_loss_payee_financial_details_uk_default,
     updateLossPayeeFinancialDetailsInternational: update_loss_payee_financial_details_international_default,
   },

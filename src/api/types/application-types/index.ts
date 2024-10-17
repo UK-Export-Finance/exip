@@ -395,11 +395,6 @@ export interface SubmitApplicationVariables {
   applicationId: string;
 }
 
-export interface UpdateCompanyPostDataMigrationVariables extends Relationship {
-  id: string;
-  company: ApplicationCompanyCore;
-}
-
 export interface UpdateApplicationRelationshipParams {
   context: Context;
   applicationId: string;

@@ -16,7 +16,6 @@ import deleteApplicationByReferenceNumber from './delete-application-by-referenc
 import submitApplication from './submit-application';
 import createFeedbackAndSendEmail from './create-feedback';
 import verifyAccountReactivationToken from './verify-account-reactivation-token';
-import updateCompanyPostDataMigration from './update-company-post-data-migration';
 import updateLossPayeeFinancialDetailsUk from './update-loss-payee-financial-details-uk';
 import updateLossPayeeFinancialDetailsInternational from './update-loss-payee-financial-details-international';
 
@@ -39,7 +38,6 @@ export {
   submitApplication,
   createFeedbackAndSendEmail,
   verifyAccountReactivationToken,
-  updateCompanyPostDataMigration,
   updateLossPayeeFinancialDetailsUk,
   updateLossPayeeFinancialDetailsInternational,
 };
