@@ -6,12 +6,12 @@ const { STATUS, LATEST_VERSION_NUMBER, VERSIONS } = APPLICATION;
 
 /**
  * updateApplicationVersion
- * Update IN_PROGRESS applications from the MVP version (1), to the new "No PDF" version (2)
+ * Update IN_PROGRESS applications from the No PDF version (2), to the new "No PDF iterations" version (3)
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<object>>} executeSqlQuery response
  */
 const updateApplicationVersion = (connection: Connection) => {
-  const originalVersionNumber = VERSIONS[0].VERSION_NUMBER;
+  const originalVersionNumber = VERSIONS[1].VERSION_NUMBER;
 
   const loggingMessage = `Updating IN_PROGRESS FIELD VERSION from ${originalVersionNumber} to ${LATEST_VERSION_NUMBER} in the application table`;
 
