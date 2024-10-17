@@ -58,6 +58,7 @@ context(
           backLink: `${CONFIRM_EMAIL}?id=${account.id}`,
           hasAForm: false,
           assertAuthenticatedHeader: false,
+          assertSaveAndBackButtonDoesNotExist: true,
         });
       });
 

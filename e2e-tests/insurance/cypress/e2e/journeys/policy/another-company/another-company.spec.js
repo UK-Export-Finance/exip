@@ -77,10 +77,6 @@ context(`Insurance - Policy - Another company page - ${story}`, () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    it('renders a `save and back` button', () => {
-      cy.assertSaveAndBackButton();
-    });
-
     describe(`renders ${FIELD_ID}`, () => {
       it('renders a hint', () => {
         cy.checkText(yesNoRadioHint(), FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[FIELD_ID].HINT);

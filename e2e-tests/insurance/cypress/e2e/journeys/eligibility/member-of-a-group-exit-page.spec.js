@@ -33,6 +33,7 @@ context(
         backLink: MEMBER_OF_A_GROUP,
         hasAForm: false,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

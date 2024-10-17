@@ -58,6 +58,7 @@ context(
           currentHref: LINK_SENT,
           backLink: PASSWORD_RESET_ROOT,
           assertAuthenticatedHeader: false,
+          assertSaveAndBackButtonDoesNotExist: true,
           hasAForm: false,
         });
       });

@@ -98,10 +98,6 @@ context(
           cy.checkRadioInputYesAriaLabel(FIELDS.AGENT_SERVICE[fieldId].LABEL);
         });
       });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
-      });
     });
 
     describe('form submission', () => {

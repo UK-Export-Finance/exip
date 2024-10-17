@@ -37,6 +37,7 @@ context(
         currentHref: PARTY_TO_CONSORTIUM,
         backLink: END_BUYER,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

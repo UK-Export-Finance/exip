@@ -27,7 +27,7 @@ context('Insurance - Policy - Single contract policy page - form validation - re
 
   const field = fieldSelector(REQUESTED_START_DATE);
 
-  const { day, month, year, notInTheFuture, invalidFormat, isToday } = dateField.checkValidation({
+  const { dayAssertions, monthAssertions, yearAssertions, notInTheFuture, invalidFormat, isToday } = dateField.checkValidation({
     errorSummaryLength: 3,
     errorIndex: 0,
     field,
@@ -58,47 +58,47 @@ context('Insurance - Policy - Single contract policy page - form validation - re
   });
 
   it('when the day is not provided', () => {
-    day.notProvided();
+    dayAssertions.notProvided();
   });
 
   it('when the month is not provided', () => {
-    month.notProvided();
+    monthAssertions.notProvided();
   });
 
   it('when the year is not provided', () => {
-    year.notProvided();
+    yearAssertions.notProvided();
   });
 
   it('when the day is provided, but month and year are not', () => {
-    day.providedWithoutOtherFields();
+    dayAssertions.providedWithoutOtherFields();
   });
 
   it('when the month is provided, but day and year are not', () => {
-    month.providedWithoutOtherFields();
+    monthAssertions.providedWithoutOtherFields();
   });
 
   it('when the year is provided, but day and month are not', () => {
-    year.providedWithoutOtherFields();
+    yearAssertions.providedWithoutOtherFields();
   });
 
   it('when the day is not a number', () => {
-    day.notANumber();
+    dayAssertions.notANumber();
   });
 
   it('when the month is not a number', () => {
-    month.notANumber();
+    monthAssertions.notANumber();
   });
 
   it('when the year is not a number', () => {
-    year.notANumber();
+    yearAssertions.notANumber();
   });
 
   it('when the day is greater than the last day of month', () => {
-    day.isGreaterThanLastDayOfMonth();
+    dayAssertions.isGreaterThanLastDayOfMonth();
   });
 
   it('when the year does not have enough digits', () => {
-    year.notEnoughDigits();
+    yearAssertions.notEnoughDigits();
   });
 
   it('when the the date is not in the future', () => {

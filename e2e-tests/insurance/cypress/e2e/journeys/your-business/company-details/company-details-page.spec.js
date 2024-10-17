@@ -15,7 +15,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS;
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_NAME },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_NAME },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -115,11 +115,11 @@ context(
       });
 
       it('should display the trading address radios', () => {
-        cy.checkText(companyDetails[TRADING_ADDRESS].label(), CONTENT_STRINGS.TRADING_ADDRESS);
+        cy.checkText(companyDetails[HAS_DIFFERENT_TRADING_ADDRESS].label(), CONTENT_STRINGS.HAS_DIFFERENT_TRADING_ADDRESS);
 
-        cy.checkAriaLabel(yesRadioInput().eq(1), `${CONTENT_STRINGS.TRADING_ADDRESS} Yes`);
+        cy.checkAriaLabel(yesRadioInput().eq(1), `${CONTENT_STRINGS.HAS_DIFFERENT_TRADING_ADDRESS} Yes`);
 
-        cy.checkAriaLabel(noRadioInput().eq(1), `${CONTENT_STRINGS.TRADING_ADDRESS} No`);
+        cy.checkAriaLabel(noRadioInput().eq(1), `${CONTENT_STRINGS.HAS_DIFFERENT_TRADING_ADDRESS} No`);
       });
 
       it('should display the company website text input', () => {
@@ -136,10 +136,6 @@ context(
 
         field(PHONE_NUMBER).input().should('exist');
         cy.checkAriaLabel(field(PHONE_NUMBER).input(), CONTENT_STRINGS.PHONE_NUMBER);
-      });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
       });
     });
   },

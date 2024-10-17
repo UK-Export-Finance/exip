@@ -33,6 +33,7 @@ context(
         backLink: PARTY_TO_CONSORTIUM,
         hasAForm: false,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

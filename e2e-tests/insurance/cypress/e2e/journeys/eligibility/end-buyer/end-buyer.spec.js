@@ -39,6 +39,7 @@ context(
         currentHref: END_BUYER,
         backLink: UK_GOODS_OR_SERVICES,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

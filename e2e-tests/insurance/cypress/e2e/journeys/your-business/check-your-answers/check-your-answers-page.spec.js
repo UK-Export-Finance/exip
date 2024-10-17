@@ -52,10 +52,6 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
     it('renders a heading caption', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
-
-    it('renders a `save and back` button', () => {
-      cy.assertSaveAndBackButton();
-    });
   });
 
   describe('form submission', () => {
