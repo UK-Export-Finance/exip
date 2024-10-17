@@ -32,10 +32,11 @@ To set up and run the API locally to test this data migration, you'll need the f
 The migration should successfully do the following:
 
 1. Connect to the database.
-2. Create a new application "migrated" field.
-3. Create a new requestedCreditLimit field in the policy table.
-4. Update the application version number.
-5. Update the new application "migrated" field.
+2. Remove the application `migratedV1toV2` field.
+3. Create a new application `migratedV2toV3` field.
+4. Create a new requestedCreditLimit field in the policy table.
+5. Update the application version number.
+6. Update the new application `migratedV2toV3` field.
 
 ## How to ensure that data migration was successful
 

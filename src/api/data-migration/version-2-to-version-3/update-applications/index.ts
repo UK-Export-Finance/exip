@@ -1,5 +1,6 @@
 import { Connection } from 'mysql2/promise';
-import addApplicationMigratedField from './add-application-migrated-field';
+import removeMigratedV1toV2Field from './remove-application-migrated-v1-to-v2-field';
+import addMigratedV2toV3Field from './add-application-migrated-v2-to-v3-field';
 import updateApplicationVersion from './update-application-version';
 import addPolicyRequestedCreditLimitField from './add-policy-requested-credit-limit-field';
 import updateApplicationMigrated from './update-application-migrated';
@@ -17,9 +18,9 @@ const updateApplications = async (connection: Connection) => {
 
   try {
     const tables = await Promise.all([
-      // TODO - TBC : remove migratedV1toV2 field.
+      removeMigratedV1toV2Field(connection),
+      addMigratedV2toV3Field(connection),
 
-      addApplicationMigratedField(connection),
       addPolicyRequestedCreditLimitField(connection),
 
       updateApplicationVersion(connection),
