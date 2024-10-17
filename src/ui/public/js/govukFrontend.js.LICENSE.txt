@@ -78,9 +78,16 @@
  */
 
 /**
+ * Service Navigation component
+ *
+ * @preserve
+ */
+
+/**
  * Skip link component
  *
  * @preserve
+ * @augments GOVUKFrontendComponent<HTMLAnchorElement>
  */
 
 /**

@@ -4464,7 +4464,7 @@ var create_a_populated_buyer_default = createAPopulatedBuyer;
 var { ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT, CONFIDENTIALITY, CONFIRMATION_AND_ACKNOWLEDGEMENTS } =
   declarations_default2.LATEST_DECLARATIONS;
 var createADeclarationVersion = async (context, declarationId) => {
-  console.info('Creating an application declaration version for ', declarationId);
+  console.info('Creating an application declaration version for %s', declarationId);
   try {
     const declaration = await context.db.DeclarationVersion.createOne({
       data: {
@@ -4488,7 +4488,7 @@ var create_a_declaration_version_default = createADeclarationVersion;
 
 // helpers/create-a-declaration/index.ts
 var createADeclaration = async (context, applicationId) => {
-  console.info('Creating an application declaration for ', applicationId);
+  console.info('Creating an application declaration for %s', applicationId);
   try {
     const declaration = await context.db.Declaration.createOne({
       data: {
