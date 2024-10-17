@@ -25,7 +25,6 @@ const {
     IS_PARTY_TO_CONSORTIUM,
     IS_MEMBER_OF_A_GROUP,
   },
-  MIGRATED_FROM_V1_TO_V2,
 } = INSURANCE_FIELD_IDS;
 
 const { company, eligibility } = mockApplication;
@@ -40,51 +39,22 @@ const expectedInitialRows = [
 ];
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-eligibility', () => {
-  describe(`when application.${MIGRATED_FROM_V1_TO_V2} is true`, () => {
-    it('should return an array of mapped eligibility fields with some answers as null', () => {
-      const result = mapEligibility({
-        ...mockApplication,
-        [MIGRATED_FROM_V1_TO_V2]: true,
-      });
+  it('should return an array of mapped eligibility fields', () => {
+    const result = mapEligibility(mockApplication);
 
-      const expected = [
-        ...expectedInitialRows,
+    const expected = [
+      ...expectedInitialRows,
 
-        xlsxRow(String(FIELDS[MORE_THAN_250K.VALUE]), mapYesNoField({ answer: null })),
+      xlsxRow(String(FIELDS[MORE_THAN_250K.VALUE]), mapYesNoField({ answer: eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID].valueId === MORE_THAN_250K.DB_ID })),
+      xlsxRow(String(FIELDS[COVER_PERIOD]), eligibility[COVER_PERIOD_ELIGIBILITY].value),
+      xlsxRow(String(FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES]), mapYesNoField({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES] })),
 
-        xlsxRow(String(FIELDS[COVER_PERIOD]), eligibility[COVER_PERIOD_ELIGIBILITY].value),
-        xlsxRow(String(FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES]), mapYesNoField({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES] })),
+      xlsxRow(String(FIELDS[HAS_END_BUYER]), mapYesNoField({ answer: eligibility[HAS_END_BUYER] })),
 
-        xlsxRow(String(FIELDS[HAS_END_BUYER]), mapYesNoField({ answer: null })),
-        xlsxRow(String(FIELDS[IS_PARTY_TO_CONSORTIUM]), mapYesNoField({ answer: null })),
-        xlsxRow(String(FIELDS[IS_MEMBER_OF_A_GROUP]), mapYesNoField({ answer: null })),
-      ];
+      xlsxRow(String(FIELDS[IS_PARTY_TO_CONSORTIUM]), mapYesNoField({ answer: eligibility[IS_PARTY_TO_CONSORTIUM] })),
+      xlsxRow(String(FIELDS[IS_MEMBER_OF_A_GROUP]), mapYesNoField({ answer: eligibility[IS_MEMBER_OF_A_GROUP] })),
+    ];
 
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe(`when application.${MIGRATED_FROM_V1_TO_V2} is false`, () => {
-    it('should return an array of mapped eligibility fields', () => {
-      const result = mapEligibility({
-        ...mockApplication,
-        [MIGRATED_FROM_V1_TO_V2]: false,
-      });
-
-      const expected = [
-        ...expectedInitialRows,
-
-        xlsxRow(String(FIELDS[MORE_THAN_250K.VALUE]), mapYesNoField({ answer: eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID].valueId === MORE_THAN_250K.DB_ID })),
-        xlsxRow(String(FIELDS[COVER_PERIOD]), eligibility[COVER_PERIOD_ELIGIBILITY].value),
-        xlsxRow(String(FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES]), mapYesNoField({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES] })),
-
-        xlsxRow(String(FIELDS[HAS_END_BUYER]), mapYesNoField({ answer: eligibility[HAS_END_BUYER] })),
-
-        xlsxRow(String(FIELDS[IS_PARTY_TO_CONSORTIUM]), mapYesNoField({ answer: eligibility[IS_PARTY_TO_CONSORTIUM] })),
-        xlsxRow(String(FIELDS[IS_MEMBER_OF_A_GROUP]), mapYesNoField({ answer: eligibility[IS_MEMBER_OF_A_GROUP] })),
-      ];
-
-      expect(result).toEqual(expected);
-    });
+    expect(result).toEqual(expected);
   });
 });

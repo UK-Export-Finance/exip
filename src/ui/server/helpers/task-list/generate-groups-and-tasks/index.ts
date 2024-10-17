@@ -29,7 +29,6 @@ const { INITIAL_CHECKS, PREPARE_APPLICATION, SUBMIT_APPLICATION } = TASKS.LIST;
  * @param {Boolean} agentIsCharging: "Is the agent charging for their support in the export contract?" flag
  * @param {String} agentChargeMethod: Agent charge method
  * @param {String} awardMethodId: Export contract award method ID
- * @param {Boolean} migratedV1toV2: Application has been migrated from V1 to V2
  * @returns {Array} Task list groups and tasks
  */
 const generateGroupsAndTasks = (
@@ -53,13 +52,12 @@ const generateGroupsAndTasks = (
   agentIsCharging?: boolean,
   agentChargeMethod?: string,
   awardMethodId?: string,
-  migratedV1toV2?: boolean,
 ): TaskListData => {
   let groups = [
     {
       title: INITIAL_CHECKS.HEADING,
       id: GROUP_IDS.INITIAL_CHECKS,
-      tasks: initialChecksTasks(migratedV1toV2),
+      tasks: initialChecksTasks(),
     },
   ] as TaskListData;
 

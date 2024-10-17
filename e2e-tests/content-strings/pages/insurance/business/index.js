@@ -12,11 +12,6 @@ export const ROOT = {
   OUTRO: 'It should only take a few minutes to complete.',
 };
 
-export const ENTER_COMPANIES_HOUSE_NUMBER = {
-  ...SHARED,
-  PAGE_TITLE: 'Enter your Companies House registration number (CRN)',
-};
-
 export const COMPANY_DETAILS = {
   ...SHARED,
   PAGE_TITLE: 'Your company details',

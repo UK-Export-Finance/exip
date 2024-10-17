@@ -29,17 +29,11 @@ const {
 /**
  * mapEligibility
  * Map an application's eligibility fields into an array of objects for XLSX generation
- * If an application has been migrated from V1 to V2, the following fields/rows should have NULL answers:
- * - MORE_THAN_250K
- * - HAS_END_BUYER
- * - IS_PARTY_TO_CONSORTIUM
- * - IS_MEMBER_OF_A_GROUP
- * This is because, V1 eligibility does not have these fields available and so, the user has not provided an answer.
  * @param {Application}
  * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapEligibility = (application: Application) => {
-  const { company, eligibility, migratedV1toV2 } = application;
+  const { company, eligibility } = application;
 
   let mapped = [
     xlsxRow(CONTENT_STRINGS[VALID_EXPORTER_LOCATION].SUMMARY?.TITLE, mapYesNoField({ answer: eligibility[VALID_EXPORTER_LOCATION] })),
@@ -50,7 +44,7 @@ const mapEligibility = (application: Application) => {
     xlsxRow(String(FIELDS[BUYER_COUNTRY]), eligibility[BUYER_COUNTRY].name),
   ];
 
-  const totalContractValueAnswer = migratedV1toV2 ? null : eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID].valueId === MORE_THAN_250K.DB_ID;
+  const totalContractValueAnswer = eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID].valueId === MORE_THAN_250K.DB_ID;
 
   mapped = [
     ...mapped,
@@ -61,9 +55,9 @@ const mapEligibility = (application: Application) => {
     xlsxRow(String(FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES]), mapYesNoField({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES] })),
   ];
 
-  const endBuyerAnswer = migratedV1toV2 ? null : eligibility[HAS_END_BUYER];
-  const partyToConsortiumAnswer = migratedV1toV2 ? null : eligibility[IS_PARTY_TO_CONSORTIUM];
-  const memberOfGroupAnswer = migratedV1toV2 ? null : eligibility[IS_PARTY_TO_CONSORTIUM];
+  const endBuyerAnswer = eligibility[HAS_END_BUYER];
+  const partyToConsortiumAnswer = eligibility[IS_PARTY_TO_CONSORTIUM];
+  const memberOfGroupAnswer = eligibility[IS_PARTY_TO_CONSORTIUM];
 
   mapped = [
     ...mapped,

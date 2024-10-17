@@ -12,7 +12,6 @@ const {
   EXPORT_CONTRACT: {
     PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
   },
-  MIGRATED_FROM_V1_TO_V2,
 } = FIELD_IDS;
 
 const {
@@ -61,46 +60,10 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-private-market', () => {
     });
   });
 
-  describe(`when ${MIGRATED_FROM_V1_TO_V2} is true`, () => {
-    describe(`when ${ATTEMPTED} is true`, () => {
-      it('should return an array of mapped fields', () => {
-        const mockApplication = mockApplicationEligibilityTotalContractValueBelowThreshold;
-
-        mockApplication[MIGRATED_FROM_V1_TO_V2] = true;
-        mockApplication.exportContract.privateMarket = mockPrivateMarketAttemptedTrue;
-
-        const result = mapPrivateMarket(mockApplication);
-
-        const expected = [
-          xlsxRow(String(FIELDS.EXPORT_CONTRACT[ATTEMPTED]), mapYesNoField({ answer: mockPrivateMarketAttemptedTrue[ATTEMPTED] })),
-          xlsxRow(String(FIELDS.EXPORT_CONTRACT[DECLINED_DESCRIPTION]), mockPrivateMarketAttemptedTrue[DECLINED_DESCRIPTION]),
-        ];
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe(`when ${ATTEMPTED} is false`, () => {
-      it('should return an array with one field', () => {
-        const mockApplication = mockApplicationEligibilityTotalContractValueBelowThreshold;
-
-        mockApplication[MIGRATED_FROM_V1_TO_V2] = true;
-        mockApplication.exportContract.privateMarket = mockPrivateMarketAttemptedFalse;
-
-        const result = mapPrivateMarket(mockApplication);
-
-        const expected = [xlsxRow(String(FIELDS.EXPORT_CONTRACT[ATTEMPTED]), mapYesNoField({ answer: mockPrivateMarketAttemptedFalse[ATTEMPTED] }))];
-
-        expect(result).toEqual(expected);
-      });
-    });
-  });
-
-  describe(`when the total contract value is NOT ${TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE} and ${MIGRATED_FROM_V1_TO_V2} is false`, () => {
+  describe(`when the total contract value is NOT ${TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE}`, () => {
     it('should return an empty array', () => {
       const mockApplication = mockApplicationEligibilityTotalContractValueBelowThreshold;
 
-      mockApplication[MIGRATED_FROM_V1_TO_V2] = false;
       mockApplication.exportContract.privateMarket = mockPrivateMarketAttemptedFalse;
 
       const result = mapPrivateMarket(mockApplication);

@@ -297,7 +297,6 @@ export interface Application {
   companySicCodes: Array<ApplicationCompanySicCode>;
   companyAddress: ApplicationCompanyAddress;
   declaration: ApplicationDeclaration;
-  migratedV1toV2?: boolean;
   nominatedLossPayee: ApplicationNominatedLossPayee;
   owner: ApplicationOwner;
   policy: ApplicationPolicy;
@@ -305,7 +304,6 @@ export interface Application {
   sectionReview: Relationship;
   totalContractValueOverThreshold: boolean;
   version: number;
-  migratedV1toV2?: boolean;
 }
 
 export interface ApplicationSubmissionEmailVariables {
@@ -395,11 +393,6 @@ export interface GetApplicationByReferenceNumberResponse extends SuccessResponse
 
 export interface SubmitApplicationVariables {
   applicationId: string;
-}
-
-export interface UpdateCompanyPostDataMigrationVariables extends Relationship {
-  id: string;
-  company: ApplicationCompanyCore;
 }
 
 export interface UpdateApplicationRelationshipParams {

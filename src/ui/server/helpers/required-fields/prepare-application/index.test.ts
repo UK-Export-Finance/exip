@@ -18,7 +18,6 @@ const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME },
   },
-  MIGRATED_FROM_V1_TO_V2,
   POLICY: {
     TYPE_OF_POLICY: { POLICY_TYPE },
     USING_BROKER,
@@ -34,7 +33,7 @@ describe('server/helpers/required-fields/section-review', () => {
     const result = requiredFields(flatApplicationData);
 
     const expected = [
-      ...requiredEligibilityFields(mockApplication.migratedV1toV2),
+      ...requiredEligibilityFields(),
       ...requiredPolicyFields({
         policyType: flatApplicationData[POLICY_TYPE],
         isUsingBroker: flatApplicationData[USING_BROKER],
@@ -45,7 +44,6 @@ describe('server/helpers/required-fields/section-review', () => {
         attemptedPrivateMarketCover: flatApplicationData[ATTEMPTED],
         isUsingAgent: flatApplicationData[USING_AGENT],
         awardMethodId: flatApplicationData[AWARD_METHOD]?.id,
-        migratedV1toV2: flatApplicationData[MIGRATED_FROM_V1_TO_V2],
       }),
       ...requiredBusinessFields(flatApplicationData[HAS_DIFFERENT_TRADING_NAME]),
       ...requiredYourBuyerFields({

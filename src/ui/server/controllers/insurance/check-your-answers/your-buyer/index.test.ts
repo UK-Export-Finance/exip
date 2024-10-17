@@ -77,7 +77,6 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
         mockApplication.eligibility,
         referenceNumber,
         mockApplication.totalContractValueOverThreshold,
-        mockApplication.migratedV1toV2,
         checkAndChange,
       );
 

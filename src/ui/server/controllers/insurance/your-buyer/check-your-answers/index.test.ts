@@ -42,7 +42,6 @@ describe('controllers/insurance/your-buyer/check-your-answers', () => {
         mockApplication.eligibility,
         referenceNumber,
         mockApplication.totalContractValueOverThreshold,
-        mockApplication.migratedV1toV2,
       );
 
       const expectedVariables = {

@@ -444,12 +444,6 @@ const typeDefs = `
       iban: String
       bicSwiftCode: String
     ): SuccessResponse
-
-    """ update a company (post data migration) """
-    updateCompanyPostDataMigration(
-      id: String
-      company: CompanyInput
-    ): SuccessResponse
   }
 
   type Query {

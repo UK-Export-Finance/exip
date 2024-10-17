@@ -49,7 +49,7 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber, exportContract, totalContractValueOverThreshold, migratedV1toV2 } = application;
+    const { referenceNumber, exportContract, totalContractValueOverThreshold } = application;
 
     const {
       finalDestinationKnown,
@@ -77,7 +77,6 @@ export const get = async (req: Request, res: Response) => {
     const summaryList = exportContractSummaryLists({
       exportContract,
       totalContractValueOverThreshold,
-      migratedV1toV2,
       referenceNumber,
       countries,
       currencies: allCurrencies,

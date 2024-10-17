@@ -17,11 +17,10 @@ const { FIELDS } = XLSX;
 const mapPreviousCoverWithBuyer = (application: Application) => {
   const {
     buyer: { relationship },
-    migratedV1toV2,
     totalContractValueOverThreshold,
   } = application;
 
-  if (totalContractValueOverThreshold || migratedV1toV2) {
+  if (totalContractValueOverThreshold) {
     const answer = relationship[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER];
 
     const mapped = [xlsxRow(String(FIELDS[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]), mapYesNoField({ answer }))];

@@ -19,17 +19,15 @@ describe('server/helpers/summary-lists/export-contract', () => {
   };
 
   describe('generateFields', () => {
-    describe('when totalContractValueOverThreshold=false, migratedV1toV2=true', () => {
+    describe('when totalContractValueOverThreshold=false', () => {
       it('should return all fields and values from the submitted data/answers', () => {
         const result = generateFields({
           ...genericParams,
           totalContractValueOverThreshold: false,
-          migratedV1toV2: true,
         });
 
         const expected = [
           generateAboutTheExportFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
-          generatePrivateMarketFields(mockAnswers.privateMarket, referenceNumber, checkAndChange),
           generateAgentFields(mockAnswers.agent, referenceNumber, mockCountries, mockCurrencies, checkAndChange),
         ];
 
@@ -37,34 +35,16 @@ describe('server/helpers/summary-lists/export-contract', () => {
       });
     });
 
-    describe('when totalContractValueOverThreshold=true, migratedV1toV2=false', () => {
+    describe('when totalContractValueOverThreshold=true', () => {
       it('should return all fields and values from the submitted data/answers', () => {
         const result = generateFields({
           ...genericParams,
           totalContractValueOverThreshold: true,
-          migratedV1toV2: false,
         });
 
         const expected = [
           generateAboutTheExportFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
           generatePrivateMarketFields(mockAnswers.privateMarket, referenceNumber, checkAndChange),
-          generateAgentFields(mockAnswers.agent, referenceNumber, mockCountries, mockCurrencies, checkAndChange),
-        ];
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when totalContractValueOverThreshold=false, migratedV1toV2=false', () => {
-      it('should return some fields and values from the submitted data/answers', () => {
-        const result = generateFields({
-          ...genericParams,
-          totalContractValueOverThreshold: false,
-          migratedV1toV2: false,
-        });
-
-        const expected = [
-          generateAboutTheExportFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
           generateAgentFields(mockAnswers.agent, referenceNumber, mockCountries, mockCurrencies, checkAndChange),
         ];
 
@@ -78,7 +58,6 @@ describe('server/helpers/summary-lists/export-contract', () => {
       const params = {
         ...genericParams,
         totalContractValueOverThreshold: false,
-        migratedV1toV2: true,
       };
 
       const result = exportContractSummaryLists(params);
