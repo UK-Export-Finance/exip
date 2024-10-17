@@ -111,10 +111,6 @@ context(
           cy.checkText(field(TOTAL_AMOUNT_OVERDUE).prefix(), SYMBOLS.GBP);
         });
       });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
-      });
     });
 
     describe('form submission', () => {

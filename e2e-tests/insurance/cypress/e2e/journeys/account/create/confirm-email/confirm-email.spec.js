@@ -59,6 +59,7 @@ context(
           backLink: YOUR_DETAILS,
           hasAForm: false,
           assertAuthenticatedHeader: false,
+          assertSaveAndBackButtonDoesNotExist: true,
           lightHouseThresholds: {
             performance: 69,
           },

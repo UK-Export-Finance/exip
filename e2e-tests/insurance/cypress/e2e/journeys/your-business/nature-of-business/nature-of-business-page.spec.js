@@ -95,10 +95,6 @@ context(
         cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LEGEND);
         field.input().should('exist');
       });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
-      });
     });
 
     describe('form submission', () => {

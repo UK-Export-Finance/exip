@@ -32,6 +32,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
       currentHref: BUYER_COUNTRY,
       backLink: COMPANY_DETAILS,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       lightHouseThresholds: {
         performance: 70,
       },

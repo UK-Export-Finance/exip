@@ -100,10 +100,6 @@ context(
       it('renders `yes` and `no` radio buttons in the correct order', () => {
         cy.assertYesNoRadiosOrder({ noRadioFirst: true });
       });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
-      });
     });
 
     describe('form submission', () => {
