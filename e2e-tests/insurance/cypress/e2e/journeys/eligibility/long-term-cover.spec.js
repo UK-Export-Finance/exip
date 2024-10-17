@@ -33,6 +33,7 @@ context(
         backLink: COVER_PERIOD,
         hasAForm: false,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

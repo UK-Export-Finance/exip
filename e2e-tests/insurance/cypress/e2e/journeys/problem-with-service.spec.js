@@ -26,6 +26,7 @@ context('Problem with service page - Insurance', () => {
       hasAForm: false,
       assertAuthenticatedHeader: false,
       assertBackLink: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       isInsurancePage: true,
       assertCookies: false,
     });

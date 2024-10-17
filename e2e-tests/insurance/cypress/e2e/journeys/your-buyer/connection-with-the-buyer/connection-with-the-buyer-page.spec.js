@@ -124,10 +124,6 @@ context(
         });
       });
 
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
-      });
-
       describe('form submission', () => {
         describe(`when submitting the form with ${CONNECTION_WITH_BUYER} as "no"`, () => {
           it(`should redirect to ${TRADED_WITH_BUYER} page`, () => {

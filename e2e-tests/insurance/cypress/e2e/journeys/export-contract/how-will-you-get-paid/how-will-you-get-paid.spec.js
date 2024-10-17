@@ -86,10 +86,6 @@ context(
           maximumCharacters: MAXIMUM_CHARACTERS.PAYMENT_TERMS_DESCRIPTION,
         });
       });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
-      });
     });
 
     describe('form validation', () => {

@@ -88,10 +88,6 @@ context(
       describe(`searchable autocomplete input (${COUNTRY_CODE})`, () => {
         assertCountryAutocompleteInput({ fieldId: COUNTRY_CODE });
       });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
-      });
     });
 
     describe('form submission', () => {

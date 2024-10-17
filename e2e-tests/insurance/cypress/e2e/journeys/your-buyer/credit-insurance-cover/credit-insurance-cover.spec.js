@@ -84,10 +84,6 @@ context(
 
           cy.checkRadioInputYesAriaLabel(FIELD_STRINGS[fieldId].LABEL);
         });
-
-        it('renders a `save and back` button', () => {
-          cy.assertSaveAndBackButton();
-        });
       });
 
       describe(PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, () => {

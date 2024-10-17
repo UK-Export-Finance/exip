@@ -96,10 +96,6 @@ context(
           cy.assertUrl(brokerDetailsUrl);
         });
       });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
-      });
     });
 
     describe('form submission', () => {

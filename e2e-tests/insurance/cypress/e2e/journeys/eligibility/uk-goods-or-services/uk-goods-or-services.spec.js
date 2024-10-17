@@ -44,6 +44,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
       currentHref: UK_GOODS_OR_SERVICES,
       backLink: COVER_PERIOD,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

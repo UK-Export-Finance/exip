@@ -50,6 +50,7 @@ context(
           currentHref: accountSuspendedUrl,
           assertBackLink: false,
           assertAuthenticatedHeader: false,
+          assertSaveAndBackButtonDoesNotExist: true,
           hasAForm: false,
         });
 

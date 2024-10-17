@@ -98,10 +98,6 @@ context(
           cy.checkText(buyerFinancialInformationPage.line2(), CONTENT_STRINGS.SHARING);
         });
       });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
-      });
     });
 
     describe('when submitting an empty form', () => {

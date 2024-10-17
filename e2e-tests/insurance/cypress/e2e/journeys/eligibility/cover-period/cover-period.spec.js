@@ -42,6 +42,7 @@ context(
         currentHref: COVER_PERIOD_ROUTE,
         backLink: TOTAL_VALUE_INSURED,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

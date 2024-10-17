@@ -82,10 +82,6 @@ context(
           expectedHint: fieldStrings.HINT,
         });
       });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
-      });
     });
 
     describe('form validation', () => {

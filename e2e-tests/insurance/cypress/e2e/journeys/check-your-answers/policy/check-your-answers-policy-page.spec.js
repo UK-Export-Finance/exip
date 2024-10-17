@@ -61,10 +61,6 @@ context('Insurance - Check your answers - Policy - I want to confirm my selectio
     it('renders a `completed` status tag', () => {
       cy.checkTaskStatusCompleted(status);
     });
-
-    it('renders a `save and back` button', () => {
-      cy.assertSaveAndBackButton();
-    });
   });
 
   describe('form submission', () => {

@@ -44,6 +44,7 @@ context('Insurance - application submitted page', () => {
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`,
       backLink: `${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`,
       assertBackLink: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       hasAForm: false,
     });
   });

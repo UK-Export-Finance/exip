@@ -58,6 +58,7 @@ context(
         currentHref: PASSWORD_RESET_ROOT,
         backLink: SIGN_IN_ROOT,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
         submitButtonCopy: BUTTONS.SUBMIT,
       });
     });

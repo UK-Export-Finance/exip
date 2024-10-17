@@ -40,6 +40,7 @@ context(
         currentHref: MEMBER_OF_A_GROUP,
         backLink: PARTY_TO_CONSORTIUM,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 
