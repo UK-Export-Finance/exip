@@ -24,7 +24,7 @@ describe('server/helpers/required-fields/check-your-answers', () => {
       ...requiredEligibilityFields(),
       ...requiredExportContractFields(flatApplicationData),
       ...requiredPolicyFields(flatApplicationData[POLICY_TYPE]),
-      ...requiredSectionReviewFields(flatApplicationData),
+      ...requiredSectionReviewFields(),
       ...requiredYourBuyerFields({}),
     ];
 

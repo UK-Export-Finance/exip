@@ -25,13 +25,16 @@ const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
   EXPORT_CONTRACT: {
+    AGENT,
     HOW_WILL_YOU_GET_PAID_CHANGE,
     HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE,
     HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK,
     PRIVATE_MARKET,
     PRIVATE_MARKET_CHANGE,
     PRIVATE_MARKET_CHECK_AND_CHANGE,
+    CHECK_YOUR_ANSWERS,
   },
+  CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
 const {
@@ -178,24 +181,24 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
         });
 
         describe("when the url's last substring is `change`", () => {
-          it(`should redirect to ${PRIVATE_MARKET_CHANGE}`, async () => {
+          it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
             req.originalUrl = HOW_WILL_YOU_GET_PAID_CHANGE;
 
             await post(req, res);
 
-            const expected = `${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET_CHANGE}`;
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
             expect(res.redirect).toHaveBeenCalledWith(expected);
           });
         });
 
         describe("when the url's last substring is `check-and-change`", () => {
-          it(`should redirect to ${PRIVATE_MARKET_CHECK_AND_CHANGE}`, async () => {
+          it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
             req.originalUrl = HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE;
 
             await post(req, res);
 
-            const expected = `${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET_CHECK_AND_CHANGE}`;
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
             expect(res.redirect).toHaveBeenCalledWith(expected);
           });
@@ -215,12 +218,12 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
       });
 
       describe('when totalContractValueOverThreshold=false, non-check/change routes', () => {
-        it(`should redirect to ${PRIVATE_MARKET}`, async () => {
+        it(`should redirect to ${AGENT}`, async () => {
           res.locals.application = mockApplicationTotalContractValueThresholdFalse;
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

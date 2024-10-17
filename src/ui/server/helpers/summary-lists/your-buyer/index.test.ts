@@ -9,23 +9,23 @@ import mockApplication, { mockApplicationBuyer, referenceNumber } from '../../..
 
 const { buyer } = mockApplication;
 
+const totalContractValueOverThresholdFalse = false;
+const totalContractValueOverThresholdTrue = true;
 const checkAndChange = false;
 
 describe('server/helpers/summary-lists/your-buyer', () => {
   describe('optionalFields', () => {
     describe('when totalContractValueOverThreshold=false', () => {
-      it('should return fields and values from creditInsuranceHistoryFields when totalContractValueOverThreshold is "true"', () => {
-        const result = optionalFields(mockApplicationBuyer, referenceNumber, false, checkAndChange);
+      it('should return an empty array', () => {
+        const result = optionalFields(mockApplicationBuyer, referenceNumber, totalContractValueOverThresholdFalse, checkAndChange);
 
-        const expected = [creditInsuranceHistoryFields(mockApplicationBuyer.relationship, referenceNumber, checkAndChange)];
-
-        expect(result).toEqual(expected);
+        expect(result).toEqual([]);
       });
     });
 
     describe('when totalContractValueOverThreshold=true', () => {
-      it('should return fields and values from creditInsuranceHistoryFields when totalContractValueOverThreshold is "true"', () => {
-        const result = optionalFields(mockApplicationBuyer, referenceNumber, true, checkAndChange);
+      it('should return fields and values from creditInsuranceHistoryFields', () => {
+        const result = optionalFields(mockApplicationBuyer, referenceNumber, totalContractValueOverThresholdTrue, checkAndChange);
 
         const expected = [creditInsuranceHistoryFields(mockApplicationBuyer.relationship, referenceNumber, checkAndChange)];
 
@@ -36,7 +36,7 @@ describe('server/helpers/summary-lists/your-buyer', () => {
 
   describe('generateFields', () => {
     it('should return fields and values from the submitted data/answers', () => {
-      const result = generateFields(mockApplicationBuyer, mockApplication.eligibility, referenceNumber, true, checkAndChange);
+      const result = generateFields(mockApplicationBuyer, mockApplication.eligibility, referenceNumber, totalContractValueOverThresholdTrue, checkAndChange);
 
       const expected = [
         generateCompanyOrOrganisationFields(buyer, mockApplication.eligibility, referenceNumber, checkAndChange),
@@ -52,9 +52,9 @@ describe('server/helpers/summary-lists/your-buyer', () => {
 
   describe('yourBuyerSummaryList', () => {
     it('should return an array of summary list rows', () => {
-      const result = yourBuyerSummaryList(mockApplicationBuyer, mockApplication.eligibility, referenceNumber, false);
+      const result = yourBuyerSummaryList(mockApplicationBuyer, mockApplication.eligibility, referenceNumber, totalContractValueOverThresholdTrue);
 
-      const fields = generateFields(mockApplicationBuyer, mockApplication.eligibility, referenceNumber, true, checkAndChange);
+      const fields = generateFields(mockApplicationBuyer, mockApplication.eligibility, referenceNumber, totalContractValueOverThresholdTrue, checkAndChange);
 
       const expected = generateGroupsOfSummaryLists(fields);
 
