@@ -54,7 +54,7 @@
     "express-session": "^1.18.1",
     "google-libphonenumber": "^3.2.38",
     "govuk-frontend": "^5.7.1",
-    "graphql": "^16.9.0",
+    "graphql": "^15.9.0",
     "graphql-tag": "^2.12.6",
     "is-url": "^1.2.4",
     "joi": "^17.13.3",
