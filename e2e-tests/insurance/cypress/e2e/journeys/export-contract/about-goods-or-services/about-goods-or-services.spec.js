@@ -1,4 +1,4 @@
-import { headingCaption, yesRadio, noRadio, autoCompleteField } from '../../../../../../pages/shared';
+import { autoCompleteField, field as fieldSelector, headingCaption, yesRadio, noRadio } from '../../../../../../pages/shared';
 import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/export-contract';
 import { PAGES } from '../../../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/export-contract';
@@ -72,20 +72,20 @@ context(
         const fieldId = DESCRIPTION;
         const field = aboutGoodsOrServicesPage[fieldId];
 
-        const fieldStrings = FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId];
+        const { HINT, LABEL, MAXIMUM } = FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId];
 
-        cy.checkText(field.hint.intro(), fieldStrings.HINT.INTRO);
+        cy.checkText(fieldSelector(fieldId).hintIntro(), HINT.INTRO);
 
-        cy.checkText(field.hint.list.item1(), fieldStrings.HINT.LIST[0]);
-        cy.checkText(field.hint.list.item2(), fieldStrings.HINT.LIST[1]);
-        cy.checkText(field.hint.list.item3(), fieldStrings.HINT.LIST[2]);
+        cy.checkText(field.hint.list.item1(), HINT.LIST[0]);
+        cy.checkText(field.hint.list.item2(), HINT.LIST[1]);
+        cy.checkText(field.hint.list.item3(), HINT.LIST[2]);
 
-        cy.checkText(field.hint.outro(), fieldStrings.HINT.OUTRO);
+        cy.checkText(fieldSelector(fieldId).hintOutro(), HINT.OUTRO);
 
         cy.assertTextareaRendering({
           fieldId,
-          expectedLabel: fieldStrings.LABEL,
-          maximumCharacters: fieldStrings.MAXIMUM,
+          expectedLabel: LABEL,
+          maximumCharacters: MAXIMUM,
         });
       });
 
