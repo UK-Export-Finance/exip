@@ -13,9 +13,9 @@ const checkAndChange = false;
 
 describe('server/helpers/summary-lists/your-buyer', () => {
   describe('optionalFields', () => {
-    describe('when totalContractValueOverThreshold=false, migratedV1toV2=true', () => {
+    describe('when totalContractValueOverThreshold=false', () => {
       it('should return fields and values from creditInsuranceHistoryFields when totalContractValueOverThreshold is "true"', () => {
-        const result = optionalFields(mockApplicationBuyer, referenceNumber, false, true, checkAndChange);
+        const result = optionalFields(mockApplicationBuyer, referenceNumber, false, checkAndChange);
 
         const expected = [creditInsuranceHistoryFields(mockApplicationBuyer.relationship, referenceNumber, checkAndChange)];
 
@@ -23,21 +23,13 @@ describe('server/helpers/summary-lists/your-buyer', () => {
       });
     });
 
-    describe('when totalContractValueOverThreshold=true, migratedV1toV2=false', () => {
+    describe('when totalContractValueOverThreshold=true', () => {
       it('should return fields and values from creditInsuranceHistoryFields when totalContractValueOverThreshold is "true"', () => {
-        const result = optionalFields(mockApplicationBuyer, referenceNumber, true, false, checkAndChange);
+        const result = optionalFields(mockApplicationBuyer, referenceNumber, true, checkAndChange);
 
         const expected = [creditInsuranceHistoryFields(mockApplicationBuyer.relationship, referenceNumber, checkAndChange)];
 
         expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when totalContractValueOverThreshold=false, migratedV1toV2=false', () => {
-      it('should return fields and values from creditInsuranceHistoryFields when totalContractValueOverThreshold is "false"', () => {
-        const result = optionalFields(mockApplicationBuyer, referenceNumber, false, false, checkAndChange);
-
-        expect(result).toEqual([]);
       });
     });
   });
@@ -50,7 +42,7 @@ describe('server/helpers/summary-lists/your-buyer', () => {
         generateCompanyOrOrganisationFields(buyer, mockApplication.eligibility, referenceNumber, checkAndChange),
         connectionWithBuyerFields(buyer.relationship, referenceNumber, checkAndChange),
         tradingHistoryFields(buyer.buyerTradingHistory, referenceNumber, checkAndChange),
-        ...optionalFields(buyer, referenceNumber, true, false, checkAndChange),
+        ...optionalFields(buyer, referenceNumber, true, checkAndChange),
         financialAccountsFields(buyer.relationship, referenceNumber, checkAndChange),
       ];
 
@@ -60,9 +52,9 @@ describe('server/helpers/summary-lists/your-buyer', () => {
 
   describe('yourBuyerSummaryList', () => {
     it('should return an array of summary list rows', () => {
-      const result = yourBuyerSummaryList(mockApplicationBuyer, mockApplication.eligibility, referenceNumber, true, false);
+      const result = yourBuyerSummaryList(mockApplicationBuyer, mockApplication.eligibility, referenceNumber, false);
 
-      const fields = generateFields(mockApplicationBuyer, mockApplication.eligibility, referenceNumber, true, false, checkAndChange);
+      const fields = generateFields(mockApplicationBuyer, mockApplication.eligibility, referenceNumber, true, checkAndChange);
 
       const expected = generateGroupsOfSummaryLists(fields);
 

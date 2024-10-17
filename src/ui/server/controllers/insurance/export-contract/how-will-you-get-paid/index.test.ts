@@ -31,10 +31,7 @@ const {
     PRIVATE_MARKET,
     PRIVATE_MARKET_CHANGE,
     PRIVATE_MARKET_CHECK_AND_CHANGE,
-    AGENT,
-    CHECK_YOUR_ANSWERS,
   },
-  CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
 const {
@@ -145,10 +142,9 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
         expect(mapAndSave.exportContract).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
-      describe('when totalContractValueOverThreshold=true, migratedV1toV2=false, check/change routes', () => {
+      describe('when totalContractValueOverThreshold=true, check/change routes', () => {
         beforeEach(() => {
           res.locals.application = mockApplicationTotalContractValueThresholdTrue;
-          res.locals.application.migratedV1toV2 = false;
         });
 
         describe("when the url's last substring is `change`", () => {
@@ -176,10 +172,9 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
         });
       });
 
-      describe('when totalContractValueOverThreshold=false, migratedV1toV2=true, check/change routes', () => {
+      describe('when totalContractValueOverThreshold=false, check/change routes', () => {
         beforeEach(() => {
           res.locals.application = mockApplicationTotalContractValueThresholdFalse;
-          res.locals.application.migratedV1toV2 = true;
         });
 
         describe("when the url's last substring is `change`", () => {
@@ -207,41 +202,9 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
         });
       });
 
-      describe('when totalContractValueOverThreshold=false, migratedV1toV2=false, check/change routes', () => {
-        beforeEach(() => {
-          res.locals.application = mockApplicationTotalContractValueThresholdFalse;
-          res.locals.application.migratedV1toV2 = false;
-        });
-
-        describe("when the url's last substring is `change`", () => {
-          it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-            req.originalUrl = HOW_WILL_YOU_GET_PAID_CHANGE;
-
-            await post(req, res);
-
-            const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-
-            expect(res.redirect).toHaveBeenCalledWith(expected);
-          });
-        });
-
-        describe("when the url's last substring is `check-and-change`", () => {
-          it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
-            req.originalUrl = HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE;
-
-            await post(req, res);
-
-            const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
-
-            expect(res.redirect).toHaveBeenCalledWith(expected);
-          });
-        });
-      });
-
-      describe('when totalContractValueOverThreshold=true, migratedV1toV2=false, non-check/change routes', () => {
+      describe('when totalContractValueOverThreshold=true, non-check/change routes', () => {
         it(`should redirect to ${PRIVATE_MARKET}`, async () => {
           res.locals.application = mockApplicationTotalContractValueThresholdTrue;
-          res.locals.application.migratedV1toV2 = false;
 
           await post(req, res);
 
@@ -251,27 +214,13 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
         });
       });
 
-      describe('when totalContractValueOverThreshold=false, migratedV1toV2=true, non-check/change routes', () => {
+      describe('when totalContractValueOverThreshold=false, non-check/change routes', () => {
         it(`should redirect to ${PRIVATE_MARKET}`, async () => {
           res.locals.application = mockApplicationTotalContractValueThresholdFalse;
-          res.locals.application.migratedV1toV2 = true;
 
           await post(req, res);
 
           const expected = `${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET}`;
-
-          expect(res.redirect).toHaveBeenCalledWith(expected);
-        });
-      });
-
-      describe('when totalContractValueOverThreshold=false, migratedV1toV2=false, non-check/change routes', () => {
-        it(`should redirect to ${AGENT}`, async () => {
-          res.locals.application = mockApplicationTotalContractValueThresholdFalse;
-          res.locals.application.migratedV1toV2 = false;
-
-          await post(req, res);
-
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
