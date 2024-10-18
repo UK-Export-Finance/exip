@@ -60,6 +60,7 @@ context(
           assertBackLink: false,
           assertAuthenticatedHeader: false,
           hasAForm: false,
+          assertSaveAndBackButtonDoesNotExist: true,
         });
 
         cy.checkText(body(), CONTENT_STRINGS.BODY);

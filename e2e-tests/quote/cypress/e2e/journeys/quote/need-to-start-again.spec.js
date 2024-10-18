@@ -33,6 +33,7 @@ context('Get a Quote - Need to start again exit page', () => {
       assertBackLink: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

@@ -81,6 +81,7 @@ context(
           hasAForm: false,
           assertAuthenticatedHeader: false,
           submitButtonCopy: CONTENT_STRINGS.REQUEST_NEW_LINK.TEXT,
+          assertSaveAndBackButtonDoesNotExist: true,
         });
 
         // assert body content
