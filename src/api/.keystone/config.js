@@ -395,7 +395,7 @@ var EXPORTER_BUSINESS = {
   },
   YOUR_COMPANY: {
     YOUR_BUSINESS: 'yourBusiness',
-    TRADING_ADDRESS: 'hasDifferentTradingAddress',
+    HAS_DIFFERENT_TRADING_ADDRESS: 'hasDifferentTradingAddress',
     HAS_DIFFERENT_TRADING_NAME: 'hasDifferentTradingName',
     DIFFERENT_TRADING_NAME: 'differentTradingName',
     WEBSITE: 'companyWebsite',
@@ -6282,7 +6282,13 @@ var FIELDS_ELIGIBILITY = {
     },
   },
   [COMPANIES_HOUSE_NUMBER]: {
-    HINT: `<p>For example, 8989898 or SC907816. You'll find it on your incorporation certificate or on the <a class="govuk-link" href="${LINKS.EXTERNAL.COMPANIES_HOUSE}">Companies House website</a>.</p>`,
+    HINT: {
+      INTRO: "For example, 8989898 or SC907816. You'll find it on your incorporation certificate or on the",
+      LINK: {
+        TEXT: 'Companies House website',
+        HREF: LINKS.EXTERNAL.COMPANIES_HOUSE,
+      },
+    },
     SUMMARY: {
       TITLE: 'UK Companies House number',
     },
@@ -6797,7 +6803,7 @@ var {
   EXPORTER_BUSINESS: EXPORTER_BUSINESS2,
 } = insurance_default;
 var {
-  YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, PHONE_NUMBER, WEBSITE },
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, PHONE_NUMBER, WEBSITE },
   ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS: FULL_ADDRESS2 },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
@@ -6840,7 +6846,7 @@ var FIELDS = {
         TITLE: 'Different trading name',
       },
     },
-    [TRADING_ADDRESS]: {
+    [HAS_DIFFERENT_TRADING_ADDRESS]: {
       SUMMARY: {
         TITLE: 'Different trading address',
       },
@@ -7100,7 +7106,7 @@ var {
       HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME2,
       DIFFERENT_TRADING_NAME,
       PHONE_NUMBER: PHONE_NUMBER2,
-      TRADING_ADDRESS: TRADING_ADDRESS2,
+      HAS_DIFFERENT_TRADING_ADDRESS: HAS_DIFFERENT_TRADING_ADDRESS2,
       WEBSITE: WEBSITE2,
     },
   },
@@ -7234,7 +7240,7 @@ var XLSX = {
     [TOTAL_MONTHS_OF_COVER2]: 'Requested length of insurance',
     [TOTAL_OUTSTANDING_PAYMENTS2]: 'Total outstanding payments',
     [TOTAL_SALES_TO_BUYER]: 'Total sales estimate',
-    [TRADING_ADDRESS2]: 'Different trading address?',
+    [HAS_DIFFERENT_TRADING_ADDRESS2]: 'Different trading address?',
     [TRADED_WITH_BUYER2]: 'Has the exporter traded with this buyer before?',
     [USING_BROKER2]: 'Using a broker for this insurance?',
     [WEBSITE2]: 'Exporter Company website (optional)',
@@ -7847,7 +7853,12 @@ var {
     COMPANY_SIC: COMPANY_SIC2,
     FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE3,
   },
-  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME4, TRADING_ADDRESS: TRADING_ADDRESS3, PHONE_NUMBER: PHONE_NUMBER3, WEBSITE: WEBSITE3 },
+  YOUR_COMPANY: {
+    HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME4,
+    HAS_DIFFERENT_TRADING_ADDRESS: HAS_DIFFERENT_TRADING_ADDRESS3,
+    PHONE_NUMBER: PHONE_NUMBER3,
+    WEBSITE: WEBSITE3,
+  },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3 },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2, TURNOVER_CURRENCY_CODE },
   HAS_CREDIT_CONTROL: HAS_CREDIT_CONTROL3,
@@ -7860,7 +7871,7 @@ var mapExporterBusiness = (application2) => {
     xlsx_row_default(String(FIELDS19[COMPANY_SIC2]), map_sic_codes_default2(companySicCodes)),
     xlsx_row_default(String(FIELDS19[HAS_DIFFERENT_TRADING_NAME4]), map_yes_no_field_default({ answer: company[HAS_DIFFERENT_TRADING_NAME4] })),
     map_different_trading_name_default(company),
-    xlsx_row_default(String(FIELDS19[TRADING_ADDRESS3]), map_yes_no_field_default({ answer: company[TRADING_ADDRESS3] })),
+    xlsx_row_default(String(FIELDS19[HAS_DIFFERENT_TRADING_ADDRESS3]), map_yes_no_field_default({ answer: company[HAS_DIFFERENT_TRADING_ADDRESS3] })),
     map_different_trading_address_default(company),
     xlsx_row_default(String(FIELDS19[WEBSITE3]), company[WEBSITE3]),
     xlsx_row_default(String(FIELDS19[PHONE_NUMBER3]), company[PHONE_NUMBER3]),

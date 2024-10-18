@@ -12,6 +12,7 @@ import {
 } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { FIELDS_ELIGIBILITY } from '../../../../../../../content-strings/fields/insurance/eligibility';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER;
 
@@ -24,6 +25,8 @@ const {
 const {
   ELIGIBILITY: { COMPANIES_HOUSE_NUMBER: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
+
+const FIELD_STRINGS = FIELDS_ELIGIBILITY[FIELD_ID];
 
 const field = fieldSelector(FIELD_ID);
 
@@ -58,8 +61,12 @@ context('Insurance - Eligibility - Companies house search page - I want to check
       cy.navigateToUrl(url);
     });
 
-    it(`should render a ${FIELD_ID} input`, () => {
+    it(`should render a ${FIELD_ID} hint and input`, () => {
       field.input().should('exist');
+
+      cy.checkText(field.hintIntro(), FIELD_STRINGS.HINT.INTRO);
+
+      cy.checkLink(field.hintLink(), FIELD_STRINGS.HINT.LINK.HREF, FIELD_STRINGS.HINT.LINK.TEXT);
     });
   });
 
