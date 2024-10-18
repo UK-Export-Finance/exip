@@ -40,9 +40,13 @@
       <div class="govuk-grid-column-three-quarters-from-desktop">
         <div class="companies-house-search">
 
+          {% set hintHtml %}
+            <p><span data-cy="{{ FIELD.ID }}-hint-intro">{{ FIELD.HINT.INTRO }} </span><a class="govuk-link" href="{{ FIELD.HINT.LINK.HREF }}" data-cy="{{ FIELD.ID }}-hint-link">{{ FIELD.HINT.LINK.TEXT }}</a>.</p>
+          {% endset %}
+
           {{ textInput.render({
             id: FIELD.ID,
-            hintHtml: FIELD.HINT,
+            hintHtml: hintHtml,
             value: submittedValues[FIELD.ID],
             errorMessage: validationErrors.errorList[FIELD.ID]
           }) }}

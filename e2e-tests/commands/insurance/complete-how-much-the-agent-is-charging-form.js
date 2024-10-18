@@ -12,7 +12,9 @@ const {
  * @param {String} fixedSumAmount: Fixed sum amount
  */
 const completeHowMuchTheAgentIsChargingForm = ({ fixedSumAmount = application.EXPORT_CONTRACT.AGENT_CHARGES[FIXED_SUM_AMOUNT] }) => {
-  cy.keyboardInput(field(FIXED_SUM_AMOUNT).input(), fixedSumAmount);
+  if (fixedSumAmount) {
+    cy.keyboardInput(field(FIXED_SUM_AMOUNT).input(), fixedSumAmount);
+  }
 };
 
 export default completeHowMuchTheAgentIsChargingForm;

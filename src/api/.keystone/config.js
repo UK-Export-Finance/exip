@@ -6273,7 +6273,13 @@ var FIELDS_ELIGIBILITY = {
     },
   },
   [COMPANIES_HOUSE_NUMBER]: {
-    HINT: `<p>For example, 8989898 or SC907816. You'll find it on your incorporation certificate or on the <a class="govuk-link" href="${LINKS.EXTERNAL.COMPANIES_HOUSE}">Companies House website</a>.</p>`,
+    HINT: {
+      INTRO: "For example, 8989898 or SC907816. You'll find it on your incorporation certificate or on the",
+      LINK: {
+        TEXT: 'Companies House website',
+        HREF: LINKS.EXTERNAL.COMPANIES_HOUSE,
+      },
+    },
     SUMMARY: {
       TITLE: 'UK Companies House number',
     },
