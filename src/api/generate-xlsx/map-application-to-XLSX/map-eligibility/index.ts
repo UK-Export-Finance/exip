@@ -55,15 +55,11 @@ const mapEligibility = (application: Application) => {
     xlsxRow(String(FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES]), mapYesNoField({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES] })),
   ];
 
-  const endBuyerAnswer = eligibility[HAS_END_BUYER];
-  const partyToConsortiumAnswer = eligibility[IS_PARTY_TO_CONSORTIUM];
-  const memberOfGroupAnswer = eligibility[IS_PARTY_TO_CONSORTIUM];
-
   mapped = [
     ...mapped,
-    xlsxRow(String(FIELDS[HAS_END_BUYER]), mapYesNoField({ answer: endBuyerAnswer })),
-    xlsxRow(String(FIELDS[IS_PARTY_TO_CONSORTIUM]), mapYesNoField({ answer: partyToConsortiumAnswer })),
-    xlsxRow(String(FIELDS[IS_MEMBER_OF_A_GROUP]), mapYesNoField({ answer: memberOfGroupAnswer })),
+    xlsxRow(String(FIELDS[HAS_END_BUYER]), mapYesNoField({ answer: eligibility[HAS_END_BUYER] })),
+    xlsxRow(String(FIELDS[IS_PARTY_TO_CONSORTIUM]), mapYesNoField({ answer: eligibility[IS_PARTY_TO_CONSORTIUM] })),
+    xlsxRow(String(FIELDS[IS_MEMBER_OF_A_GROUP]), mapYesNoField({ answer: eligibility[IS_PARTY_TO_CONSORTIUM] })),
   ];
 
   return mapped;
