@@ -52,18 +52,11 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { migratedV1toV2, referenceNumber, totalContractValueOverThreshold } = application;
+    const { referenceNumber, totalContractValueOverThreshold } = application;
 
     const checkAndChange = true;
 
-    const summaryList = yourBuyerSummaryList(
-      application.buyer,
-      application.eligibility,
-      referenceNumber,
-      totalContractValueOverThreshold,
-      migratedV1toV2,
-      checkAndChange,
-    );
+    const summaryList = yourBuyerSummaryList(application.buyer, application.eligibility, referenceNumber, totalContractValueOverThreshold, checkAndChange);
 
     const fields = requiredFields({});
 

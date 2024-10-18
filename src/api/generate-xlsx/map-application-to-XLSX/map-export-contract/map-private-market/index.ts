@@ -19,11 +19,10 @@ const {
 const mapPrivateMarket = (application: Application) => {
   const {
     exportContract: { privateMarket },
-    migratedV1toV2,
     totalContractValueOverThreshold,
   } = application;
 
-  if (totalContractValueOverThreshold || migratedV1toV2) {
+  if (totalContractValueOverThreshold) {
     const attempedPrivateMarketAnswer = privateMarket[ATTEMPTED];
 
     const mapped = [xlsxRow(String(FIELDS.EXPORT_CONTRACT[ATTEMPTED]), mapYesNoField({ answer: attempedPrivateMarketAnswer }))];

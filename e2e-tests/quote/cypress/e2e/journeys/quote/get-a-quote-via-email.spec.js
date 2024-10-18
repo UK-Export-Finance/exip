@@ -35,6 +35,7 @@ context('Get a quote via email exit page', () => {
       hasAForm: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       lightHouseThresholds: {
         seo: 60,
       },

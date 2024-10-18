@@ -36,6 +36,7 @@ context('Tell us about your multiple policy page - Signed in', () => {
       backLink: POLICY_TYPE,
       assertAuthenticatedHeader: true,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       lightHouseThresholds: {
         // accessibility threshold is reduced here because
         // the radio component from design system has an invalid aria attribute.
