@@ -51,10 +51,15 @@
           validationError: validationErrors.errorList[FIELDS.TOTAL_CONTRACT_VALUE.ID]
         }) }}
 
+        {% set hintHtml %}
+          <p class="govuk-hint" data-cy="{{ FIELDS.REQUESTED_CREDIT_LIMIT.ID }}-hint-intro">{{ FIELDS.REQUESTED_CREDIT_LIMIT.HINT.INTRO }}</p>
+          <p class="govuk-hint" data-cy="{{ FIELDS.REQUESTED_CREDIT_LIMIT.ID }}-hint-outro">{{ FIELDS.REQUESTED_CREDIT_LIMIT.HINT.OUTRO }}</p>  
+        {% endset %}
+
         {{ monetaryValueInput.render({
           fieldId: FIELDS.REQUESTED_CREDIT_LIMIT.ID,
           label: FIELDS.REQUESTED_CREDIT_LIMIT.LABEL,
-          hintText: FIELDS.REQUESTED_CREDIT_LIMIT.HINT,
+          hintHtml: hintHtml,
           currencyPrefixSymbol: CURRENCY_PREFIX_SYMBOL,
           submittedValue: submittedValues[FIELDS.REQUESTED_CREDIT_LIMIT.ID] or application.policy[FIELDS.REQUESTED_CREDIT_LIMIT.ID],
           validationError: validationErrors.errorList[FIELDS.REQUESTED_CREDIT_LIMIT.ID]

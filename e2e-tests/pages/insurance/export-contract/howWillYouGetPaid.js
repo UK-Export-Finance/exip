@@ -14,13 +14,11 @@ const howWillYouGetPaid = {
     ...field,
     input: field.textarea,
     hint: {
-      intro: () => cy.get(`[data-cy="${PAYMENT_TERMS_DESCRIPTION}-hint-intro"]`),
       list: {
         item1: () => cy.get(`[data-cy="${PAYMENT_TERMS_DESCRIPTION}-hint-list-item-1"]`),
         item2: () => cy.get(`[data-cy="${PAYMENT_TERMS_DESCRIPTION}-hint-list-item-2"]`),
         item3: () => cy.get(`[data-cy="${PAYMENT_TERMS_DESCRIPTION}-hint-list-item-3"]`),
       },
-      outro: () => cy.get(`[data-cy="${PAYMENT_TERMS_DESCRIPTION}-hint-outro"]`),
     },
   },
 };
