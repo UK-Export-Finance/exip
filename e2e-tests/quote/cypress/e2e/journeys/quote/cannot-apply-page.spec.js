@@ -37,6 +37,7 @@ context('Cannot apply exit page', () => {
       hasAForm: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       lightHouseThresholds: {
         seo: 60,
       },

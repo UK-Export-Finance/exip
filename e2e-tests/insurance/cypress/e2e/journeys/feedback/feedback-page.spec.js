@@ -36,6 +36,7 @@ context(
         backLink: CHECK_IF_ELIGIBLE,
         submitButtonCopy: BUTTONS.SEND_FEEDBACK,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

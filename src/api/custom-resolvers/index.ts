@@ -17,7 +17,6 @@ import {
   submitApplication,
   createFeedbackAndSendEmail,
   verifyAccountReactivationToken,
-  updateCompanyPostDataMigration,
   updateLossPayeeFinancialDetailsUk,
   updateLossPayeeFinancialDetailsInternational,
 } from './mutations';
@@ -58,7 +57,6 @@ const customResolvers = {
     submitApplication,
     createFeedbackAndSendEmail,
     verifyAccountReactivationToken,
-    updateCompanyPostDataMigration,
     updateLossPayeeFinancialDetailsUk,
     updateLossPayeeFinancialDetailsInternational,
   },

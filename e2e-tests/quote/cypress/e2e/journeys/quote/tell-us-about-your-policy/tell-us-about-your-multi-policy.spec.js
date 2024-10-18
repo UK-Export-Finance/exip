@@ -42,6 +42,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
       backLink: POLICY_TYPE,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       lightHouseThresholds: {
         // accessibility threshold is reduced here because
         // the radio component from design system has an invalid aria attribute.
