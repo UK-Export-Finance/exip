@@ -48,6 +48,7 @@ context(
         currentHref: `${ROOT}/${referenceNumber}${YOUR_BUYER_ROOT}`,
         backLink: `${ROOT}/${referenceNumber}${ALL_SECTIONS}`,
         hasAForm: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

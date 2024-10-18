@@ -48,6 +48,7 @@ context(
         currentHref: `${ROOT}/${referenceNumber}${POLICY_ROOT}`,
         backLink: `${ROOT}/${referenceNumber}${ALL_SECTIONS}`,
         hasAForm: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

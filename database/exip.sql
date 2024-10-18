@@ -154,7 +154,6 @@ CREATE TABLE `Application` (
 	`dealType` varchar(4) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'EXIP',
   `policyContact` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `nominatedLossPayee` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `migratedV1toV2` tinyint(1) DEFAULT NULL,
   `migratedV2toV3` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Application_eligibility_idx` (`eligibility`),

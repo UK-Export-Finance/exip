@@ -50,6 +50,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
       backLink: EXPORTER_LOCATION,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

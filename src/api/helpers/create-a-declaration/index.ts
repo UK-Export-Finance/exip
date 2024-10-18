@@ -9,7 +9,7 @@ import { Context } from '../../types';
  * @returns {Promise<ApplicationDeclaration>}  Created declaration
  */
 const createADeclaration = async (context: Context, applicationId: string) => {
-  console.info('Creating an application declaration for ', applicationId);
+  console.info('Creating an application declaration for %s', applicationId);
 
   try {
     const declaration = await context.db.Declaration.createOne({

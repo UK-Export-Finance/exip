@@ -304,7 +304,6 @@ export interface Application {
   sectionReview: Relationship;
   totalContractValueOverThreshold: boolean;
   version: number;
-  migratedV1toV2?: boolean;
   migratedV2toV3?: boolean;
 }
 
@@ -396,11 +395,6 @@ export interface GetApplicationByReferenceNumberResponse extends SuccessResponse
 
 export interface SubmitApplicationVariables {
   applicationId: string;
-}
-
-export interface UpdateCompanyPostDataMigrationVariables extends Relationship {
-  id: string;
-  company: ApplicationCompanyCore;
 }
 
 export interface UpdateApplicationRelationshipParams {

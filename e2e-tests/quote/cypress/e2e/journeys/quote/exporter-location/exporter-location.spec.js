@@ -33,6 +33,7 @@ context('Exporter location page - as an exporter, I want to check if my company 
       backLink: BUYER_BODY,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

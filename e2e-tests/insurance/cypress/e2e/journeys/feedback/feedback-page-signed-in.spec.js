@@ -30,6 +30,7 @@ context('Insurance - Feedback Page - Signed in', () => {
       backLink: dashboardUrl,
       submitButtonCopy: BUTTONS.SEND_FEEDBACK,
       assertAuthenticatedHeader: true,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 });

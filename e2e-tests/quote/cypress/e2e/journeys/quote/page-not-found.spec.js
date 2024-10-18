@@ -22,6 +22,7 @@ context('Quote - page not found', () => {
       assertBackLink: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

@@ -57,6 +57,7 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
       submitButtonCopy: CONTENT_STRINGS.SUBMIT_BUTTON,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

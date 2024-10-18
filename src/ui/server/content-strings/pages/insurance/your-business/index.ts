@@ -14,10 +14,6 @@ const EXPORTER_BUSINESS = {
     },
     OUTRO: 'It should only take a few minutes to complete.',
   },
-  ENTER_COMPANIES_HOUSE_NUMBER: {
-    ...SHARED,
-    PAGE_TITLE: 'Enter your Companies House registration number (CRN)',
-  },
   COMPANY_DETAILS: {
     ...SHARED,
     ...COMPANY_DETAILS,

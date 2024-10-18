@@ -3,8 +3,6 @@ import { ROUTES } from '../../../constants';
 
 import { get as getYourBusiness } from '../../../controllers/insurance/business';
 
-import { get as getEnterCompaniesHouseNumber, post as postEnterCompaniesHouseNumber } from '../../../controllers/insurance/business/companies-house-search';
-
 import { get as getCompanyDetails, post as postCompanyDetails } from '../../../controllers/insurance/business/company-details';
 
 import { post as postCompanyDetailsSaveAndBack } from '../../../controllers/insurance/business/company-details/save-and-back';
@@ -33,9 +31,6 @@ import { get as getCheckYourAnswers, post as postCheckYourAnswers } from '../../
 const insuranceBusinessRouter = express.Router();
 
 insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.ROOT}`, getYourBusiness);
-
-insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.ENTER_COMPANIES_HOUSE_NUMBER}`, getEnterCompaniesHouseNumber);
-insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.ENTER_COMPANIES_HOUSE_NUMBER}`, postEnterCompaniesHouseNumber);
 
 insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`, getCompanyDetails);
 insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS_SAVE_AND_BACK}`, postCompanyDetailsSaveAndBack);

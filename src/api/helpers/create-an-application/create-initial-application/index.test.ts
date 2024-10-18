@@ -39,7 +39,6 @@ describe('helpers/create-an-application/create-initial-application', () => {
     expect(result.declaration).toBeUndefined();
     expect(result.eligibility).toBeUndefined();
     expect(result.exportContract).toBeUndefined();
-    expect(result.migratedV1toV2).toBeNull();
     expect(result.nominatedLossPayee).toBeUndefined();
     expect(result.owner).toBeUndefined();
     expect(result.referenceNumber).toBeNull();
