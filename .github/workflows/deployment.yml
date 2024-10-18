@@ -24,7 +24,6 @@ on:
   push:
     branches:
       - dev
-      - feature
       - staging
       - production
 
