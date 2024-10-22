@@ -12,7 +12,25 @@ import { Application } from '../../../../types';
  * @returns {Object} Mapped application
  */
 export const mapApplication = (application: Application) => {
-  const { status, submissionDate, referenceNumber, buyer } = application;
+  const { id, status, submissionDate, referenceNumber, buyer } = application;
+
+  /**
+   * Specifically log out some missing properties.
+   * Previously in production, there was an issue with application creation.
+   * It seems that some external API, network lag or form submission in quick succession,
+   * caused 2x applications to be created without a buyer country name or reference number.
+   * We were unable to replicate the issue, however, we spent quite some time debugging.
+   * If such properties are missing - when viewing the dashboard/debugging,
+   * errors or confusing behaviour could occur.
+   * Therefore, log out these specific errors for easier, potential future debugging.
+   */
+  if (!buyer.country?.name) {
+    console.error(`Application %s ${referenceNumber} is missing buyer country name (mapApplication helper)`);
+  }
+
+  if (!referenceNumber) {
+    console.error(`Application %s ${id} is missing a reference number (mapApplication helper)`);
+  }
 
   const mapped = {
     status,
@@ -32,6 +50,12 @@ export const mapApplication = (application: Application) => {
  * @param {Array} Applications
  * @returns {Array} Mapped applications
  */
-export const mapApplications = (applications: Array<Application>) => applications.map((application) => mapApplication(application));
+export const mapApplications = (applications: Array<Application>) => {
+  console.info('Mapping applications (mapApplications helper)');
+
+  const mapped = applications.map((application) => mapApplication(application));
+
+  return mapped;
+};
 
 export default mapApplications;
