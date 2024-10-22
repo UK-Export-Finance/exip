@@ -68,7 +68,7 @@ context(
 
         cy.checkText(field.hint(), FIELD_STRINGS.AGENT_CHARGES[FIELD_ID].HINT);
 
-        cy.checkText(field.prefix(), SYMBOLS.GBP);
+        cy.assertPrefix({ fieldId: FIELD_ID, value: SYMBOLS.GBP });
 
         field.input().should('exist');
       });

@@ -98,7 +98,7 @@ context(
           withQuestionMark: true,
         });
 
-        cy.checkText(field.prefix(), FIELDS.TURNOVER[fieldId].PREFIX);
+        cy.assertPrefix({ fieldId, value: FIELDS.TURNOVER[fieldId].PREFIX });
       });
 
       it(`should render ${PERCENTAGE_TURNOVER} section`, () => {

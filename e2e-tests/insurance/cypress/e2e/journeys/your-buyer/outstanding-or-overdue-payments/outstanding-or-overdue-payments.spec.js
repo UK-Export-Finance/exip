@@ -86,7 +86,7 @@ context(
         });
 
         it('should render a prefix', () => {
-          cy.checkText(field(TOTAL_OUTSTANDING_PAYMENTS).prefix(), SYMBOLS.GBP);
+          cy.assertPrefix({ fieldId: TOTAL_OUTSTANDING_PAYMENTS, value: SYMBOLS.GBP });
         });
       });
 
@@ -108,7 +108,7 @@ context(
         });
 
         it('should render a prefix', () => {
-          cy.checkText(field(TOTAL_AMOUNT_OVERDUE).prefix(), SYMBOLS.GBP);
+          cy.assertPrefix({ fieldId: TOTAL_AMOUNT_OVERDUE, value: SYMBOLS.GBP });
         });
       });
     });
