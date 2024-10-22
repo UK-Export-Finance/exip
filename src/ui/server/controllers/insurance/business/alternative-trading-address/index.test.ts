@@ -4,7 +4,7 @@ import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
+import { EXPORTER_BUSINESS_FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../types';
@@ -57,12 +57,12 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
         FIELDS: {
           ALTERNATIVE_TRADING_ADDRESS: {
             ID: FULL_ADDRESS,
-            ...FIELDS[FULL_ADDRESS],
+            ...EXPORTER_BUSINESS_FIELDS[FULL_ADDRESS],
           },
           REGISTERED_OFFICE_ADDRESS: {
             ID: COMPANY_ADDRESS,
-            HEADING: FIELDS[FULL_ADDRESS].REGISTERED_OFFICE_ADDRESS_HEADING,
-            HINT: FIELDS[FULL_ADDRESS].REGISTERED_OFFICE_ADDRESS_HINT,
+            HEADING: EXPORTER_BUSINESS_FIELDS[FULL_ADDRESS].REGISTERED_OFFICE_ADDRESS_HEADING,
+            HINT: EXPORTER_BUSINESS_FIELDS[FULL_ADDRESS].REGISTERED_OFFICE_ADDRESS_HINT,
           },
         },
       };

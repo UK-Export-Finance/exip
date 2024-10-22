@@ -1,7 +1,7 @@
 import mapExporterBusiness from '.';
 import FIELD_IDS from '../../../constants/field-ids/insurance/business';
 import { XLSX } from '../../../content-strings';
-import { FIELDS as YOUR_BUSINESS_FIELDS } from '../../../content-strings/fields/insurance/your-business';
+import { EXPORTER_BUSINESS_FIELDS } from '../../../content-strings/fields/insurance/your-business';
 import { DATE_FORMAT } from '../../../constants';
 import xlsxRow from '../helpers/xlsx-row';
 import mapDifferentTradingName from './map-different-trading-name';
@@ -15,11 +15,11 @@ import { mockApplication } from '../../../test-mocks';
 import mapYesNoField from '../helpers/map-yes-no-field';
 
 const CONTENT_STRINGS = {
-  ...YOUR_BUSINESS_FIELDS.COMPANY_DETAILS,
-  ...YOUR_BUSINESS_FIELDS.NATURE_OF_YOUR_BUSINESS,
-  ...YOUR_BUSINESS_FIELDS.TURNOVER,
-  ...YOUR_BUSINESS_FIELDS.BROKER,
-  ...YOUR_BUSINESS_FIELDS.BROKER_DETAILS,
+  ...EXPORTER_BUSINESS_FIELDS.COMPANY_DETAILS,
+  ...EXPORTER_BUSINESS_FIELDS.NATURE_OF_YOUR_BUSINESS,
+  ...EXPORTER_BUSINESS_FIELDS.TURNOVER,
+  ...EXPORTER_BUSINESS_FIELDS.BROKER,
+  ...EXPORTER_BUSINESS_FIELDS.BROKER_DETAILS,
 };
 
 const {

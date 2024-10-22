@@ -1,6 +1,6 @@
 import { FIELD_IDS, FIELD_VALUES, COMPANIES_HOUSE_NUMBER_SPECIAL_CHARACTERS_NAME } from '../../constants';
 import { summaryList } from '../../pages/shared';
-import { FIELDS_ELIGIBILITY as FIELDS } from '../../content-strings/fields/insurance/eligibility';
+import { ELIGIBILITY_FIELDS as FIELDS } from '../../content-strings/fields/insurance/eligibility';
 import application, { country } from '../../fixtures/application';
 import getSummaryListField from './get-summary-list-field';
 import mockCompanies from '../../fixtures/companies';

@@ -18,7 +18,7 @@ const { COMPANY_NAME } = FIELD_IDS.COMPANIES_HOUSE;
 
 const THRESHOLD = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
 
-export const FIELDS_ELIGIBILITY = {
+export const ELIGIBILITY_FIELDS = {
   [BUYER_COUNTRY]: {
     SUMMARY: {
       TITLE: 'Buyer location',

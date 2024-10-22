@@ -1,7 +1,7 @@
 import { yesNoRadioHint, yesRadio, noRadio } from '../../../../../../pages/shared';
 import { endBuyerPage } from '../../../../../../pages/insurance/eligibility';
 import { PAGES, END_BUYERS_DESCRIPTION, ERROR_MESSAGES } from '../../../../../../content-strings';
-import { FIELDS_ELIGIBILITY } from '../../../../../../content-strings/fields/insurance/eligibility';
+import { ELIGIBILITY_FIELDS } from '../../../../../../content-strings/fields/insurance/eligibility';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -53,7 +53,7 @@ context(
 
         cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
 
-        cy.checkText(yesNoRadioHint(), FIELDS_ELIGIBILITY[FIELD_ID].HINT);
+        cy.checkText(yesNoRadioHint(), ELIGIBILITY_FIELDS[FIELD_ID].HINT);
 
         cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
       });

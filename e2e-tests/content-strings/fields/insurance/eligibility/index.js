@@ -19,7 +19,7 @@ const {
 
 const { COMPANY_NAME } = FIELD_IDS.INSURANCE.COMPANIES_HOUSE;
 
-export const FIELDS_ELIGIBILITY = {
+export const ELIGIBILITY_FIELDS = {
   [BUYER_COUNTRY]: {
     SUMMARY: {
       TITLE: 'Buyer location',

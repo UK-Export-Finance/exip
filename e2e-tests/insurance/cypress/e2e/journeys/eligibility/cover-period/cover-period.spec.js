@@ -3,7 +3,7 @@ import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { COVER_PERIOD } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { FIELDS_ELIGIBILITY } from '../../../../../../content-strings/fields/insurance/eligibility';
+import { ELIGIBILITY_FIELDS } from '../../../../../../content-strings/fields/insurance/eligibility';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COVER_PERIOD;
 
@@ -17,7 +17,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-const { ABOVE, BELOW } = FIELDS_ELIGIBILITY[FIELD_ID].OPTIONS;
+const { ABOVE, BELOW } = ELIGIBILITY_FIELDS[FIELD_ID].OPTIONS;
 
 context(
   'Insurance - Cover period page - I want to enter the length of my export contract, So that I can cover my exposure for the period of the contract',

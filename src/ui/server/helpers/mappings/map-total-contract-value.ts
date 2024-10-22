@@ -1,11 +1,11 @@
 import { DEFAULT } from '../../content-strings';
 import { TOTAL_CONTRACT_VALUE, FIELD_IDS } from '../../constants';
-import { FIELDS_ELIGIBILITY } from '../../content-strings/fields/insurance/eligibility';
+import { ELIGIBILITY_FIELDS } from '../../content-strings/fields/insurance/eligibility';
 
 const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.TOTAL_CONTRACT_VALUE;
 const { LESS_THAN_250K, MORE_THAN_250K } = TOTAL_CONTRACT_VALUE;
 
-const { ABOVE, BELOW } = FIELDS_ELIGIBILITY[FIELD_ID].SUMMARY;
+const { ABOVE, BELOW } = ELIGIBILITY_FIELDS[FIELD_ID].SUMMARY;
 
 /**
  * mapTotalContractValueField

@@ -1,12 +1,12 @@
 import { field as fieldSelector } from '../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
-import { FIELDS_ELIGIBILITY } from '../../../content-strings/fields/insurance/eligibility';
+import { ELIGIBILITY_FIELDS } from '../../../content-strings/fields/insurance/eligibility';
 
 const {
   ELIGIBILITY: { COVER_PERIOD },
 } = INSURANCE_FIELD_IDS;
 
-const { ABOVE, BELOW } = FIELDS_ELIGIBILITY[COVER_PERIOD].OPTIONS;
+const { ABOVE, BELOW } = ELIGIBILITY_FIELDS[COVER_PERIOD].OPTIONS;
 
 /**
  * assertCoverPeriodRadios

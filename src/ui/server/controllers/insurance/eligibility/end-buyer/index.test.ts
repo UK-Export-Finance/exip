@@ -1,6 +1,6 @@
 import { FIELD_ID, PAGE_VARIABLES, HTML_FLAGS, TEMPLATE, get, post } from '.';
 import { PAGES, END_BUYERS_DESCRIPTION, ERROR_MESSAGES } from '../../../../content-strings';
-import { FIELDS_ELIGIBILITY } from '../../../../content-strings/fields/insurance/eligibility';
+import { ELIGIBILITY_FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
 import { FIELD_IDS, TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
@@ -47,7 +47,7 @@ describe('controllers/insurance/eligibility/end-buyer', () => {
         },
         FIELD: {
           ID: FIELD_ID,
-          ...FIELDS_ELIGIBILITY[FIELD_ID],
+          ...ELIGIBILITY_FIELDS[FIELD_ID],
         },
       };
 

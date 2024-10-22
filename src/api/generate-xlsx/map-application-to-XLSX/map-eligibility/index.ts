@@ -1,7 +1,7 @@
 import { TOTAL_CONTRACT_VALUE } from '../../../constants/total-contract-value';
 import { XLSX } from '../../../content-strings';
 import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
-import { FIELDS_ELIGIBILITY as CONTENT_STRINGS } from '../../../content-strings/fields/insurance/eligibility';
+import { ELIGIBILITY_FIELDS as CONTENT_STRINGS } from '../../../content-strings/fields/insurance/eligibility';
 import xlsxRow from '../helpers/xlsx-row';
 import mapYesNoField from '../helpers/map-yes-no-field';
 import { Application } from '../../../types';

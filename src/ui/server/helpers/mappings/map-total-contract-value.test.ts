@@ -1,12 +1,12 @@
 import mapTotalContractValueField from './map-total-contract-value';
 import { TOTAL_CONTRACT_VALUE, FIELD_IDS } from '../../constants';
 import { DEFAULT } from '../../content-strings';
-import { FIELDS_ELIGIBILITY } from '../../content-strings/fields/insurance/eligibility';
+import { ELIGIBILITY_FIELDS } from '../../content-strings/fields/insurance/eligibility';
 
 const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.TOTAL_CONTRACT_VALUE;
 const { LESS_THAN_250K, MORE_THAN_250K } = TOTAL_CONTRACT_VALUE;
 
-const { ABOVE, BELOW } = FIELDS_ELIGIBILITY[FIELD_ID].SUMMARY;
+const { ABOVE, BELOW } = ELIGIBILITY_FIELDS[FIELD_ID].SUMMARY;
 
 describe('server/helpers/mappings/mapTotalContractValueField', () => {
   describe(`when answer is ${MORE_THAN_250K.DB_ID}`, () => {

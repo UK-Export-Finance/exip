@@ -1,5 +1,5 @@
 import { ERROR_MESSAGES, PAGES } from '../../../../content-strings';
-import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
+import { EXPORTER_BUSINESS_FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
@@ -63,7 +63,7 @@ export const get = (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
         HTML_FLAGS,
       }),
-      FIELD_HINT: FIELDS[FIELD_ID].HINT,
+      FIELD_HINT: EXPORTER_BUSINESS_FIELDS[FIELD_ID].HINT,
       userName: getUserNameFromSession(req.session.user),
       applicationAnswer: application.business[FIELD_ID],
       SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
@@ -103,7 +103,7 @@ export const post = async (req: Request, res: Response) => {
           BACK_LINK: req.headers.referer,
           HTML_FLAGS,
         }),
-        FIELD_HINT: FIELDS[FIELD_ID].HINT,
+        FIELD_HINT: EXPORTER_BUSINESS_FIELDS[FIELD_ID].HINT,
         userName: getUserNameFromSession(req.session.user),
         validationErrors,
         submittedValues: payload,
