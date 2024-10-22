@@ -65,11 +65,11 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     });
 
     it(`should NOT render a ${TOTAL_CONTRACT_VALUE} prefix`, () => {
-      field(TOTAL_CONTRACT_VALUE).prefix().should('not.exist');
+      cy.assertPrefix({ fieldId: TOTAL_CONTRACT_VALUE });
     });
 
     it(`should NOT render a ${REQUESTED_CREDIT_LIMIT} prefix`, () => {
-      field(REQUESTED_CREDIT_LIMIT).prefix().should('not.exist');
+      cy.assertPrefix({ fieldId: REQUESTED_CREDIT_LIMIT });
     });
 
     it('should prepopulate the radio on the single contract value page', () => {

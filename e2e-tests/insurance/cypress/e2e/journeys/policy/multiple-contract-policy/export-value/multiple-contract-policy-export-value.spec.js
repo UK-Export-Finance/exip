@@ -79,7 +79,7 @@ context(
 
         cy.checkText(field.hint(), EXPORT_VALUE.MULTIPLE[fieldId].HINT);
 
-        cy.checkText(field.prefix(), SYMBOLS.GBP);
+        cy.assertPrefix({ fieldId: TOTAL_SALES_TO_BUYER, value: SYMBOLS.GBP });
 
         field.input().should('exist');
       });
@@ -91,7 +91,7 @@ context(
 
         cy.checkText(field.label(), EXPORT_VALUE.MULTIPLE[fieldId].LABEL);
 
-        cy.checkText(field.prefix(), SYMBOLS.GBP);
+        cy.assertPrefix({ fieldId, value: SYMBOLS.GBP });
 
         cy.checkText(field.hint.forExample(), HINT.FOR_EXAMPLE);
 
