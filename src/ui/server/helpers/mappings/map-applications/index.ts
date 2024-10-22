@@ -18,7 +18,7 @@ export const mapApplication = (application: Application) => {
    * Specifically log out some missing properties.
    * Previously in production, there was an issue with application creation.
    * It seems that some external API, network lag or form submission in quick succession,
-   * caused 2x applications to be created without a buyer country name or reference number.
+   * caused 2x applications to be created at the same time, without a buyer country name or reference number.
    * We were unable to replicate the issue, however, we spent quite some time debugging.
    * If such properties are missing - when viewing the dashboard/debugging,
    * errors or confusing behaviour could occur.
