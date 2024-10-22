@@ -76,6 +76,7 @@ const CUSTOM_RESOLVERS = [
 
   'getApimCisCountries',
   'getApimCurrencies',
+  'getApimCountriesAndCurrencies',
 ];
 
 /**

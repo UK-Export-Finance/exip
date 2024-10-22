@@ -1,5 +1,4 @@
-import APIM from '../../../integrations/APIM';
-import mapCurrencies from '../../../helpers/map-currencies';
+import apimCisCurrencies from '../../../helpers/get-APIM-currencies';
 
 /**
  * getApimCurrencies
@@ -10,21 +9,9 @@ const getApimCurrencies = async () => {
   try {
     console.info('Getting and mapping currencies from APIM');
 
-    const response = await APIM.getCurrencies();
+    const response = await apimCisCurrencies.get();
 
-    if (response.data) {
-      const supportedCurrencies = mapCurrencies(response.data, false);
-      const alternativeCurrencies = mapCurrencies(response.data, true);
-      const allCurrencies = [...supportedCurrencies, ...alternativeCurrencies];
-
-      return {
-        supportedCurrencies,
-        alternativeCurrencies,
-        allCurrencies,
-      };
-    }
-
-    return { success: false };
+    return response;
   } catch (error) {
     console.error('Error Getting and mapping currencies from APIM %o', error);
 

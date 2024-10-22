@@ -9047,22 +9047,41 @@ var mapCisCountries = (countries) => {
 };
 var map_CIS_countries_default = mapCisCountries;
 
-// custom-resolvers/queries/get-APIM-CIS-countries/index.ts
-var getApimCisCountries = async () => {
+// helpers/get-APIM-CIS-countries/index.ts
+var get = async () => {
   try {
-    console.info('Getting and mapping CIS countries from APIM');
+    console.info('Getting and mapping CIS countries from APIM (apimCisCountries helper)');
     const response = await APIM_default.getCisCountries();
     if (response.data) {
       const mapped = map_CIS_countries_default(response.data);
-      return mapped;
+      return {
+        success: true,
+        countries: mapped,
+      };
     }
     return { success: false };
   } catch (error) {
-    console.error('Error Getting and mapping CIS countries from APIM %o', error);
-    throw new Error(`Getting and mapping CIS countries from APIM ${error}`);
+    console.error('Error Getting and mapping CIS countries from APIM (apimCisCountries helper) %o', error);
+    throw new Error(`Getting and mapping CIS countries from APIM (apimCisCountries helper) ${error}`);
   }
 };
-var get_APIM_CIS_countries_default = getApimCisCountries;
+var apimCisCountries = {
+  get,
+};
+var get_APIM_CIS_countries_default = apimCisCountries;
+
+// custom-resolvers/queries/get-APIM-CIS-countries/index.ts
+var getApimCisCountriesQuery = async () => {
+  try {
+    console.info('Getting CIS countries from APIM');
+    const response = await get_APIM_CIS_countries_default.get();
+    return response;
+  } catch (error) {
+    console.error('Error Getting CIS countries from APIM %o', error);
+    throw new Error(`Getting CIS countries from APIM ${error}`);
+  }
+};
+var get_APIM_CIS_countries_default2 = getApimCisCountriesQuery;
 
 // helpers/map-currencies/index.ts
 var { CIS: CIS5 } = EXTERNAL_API_DEFINITIONS;
@@ -9086,10 +9105,10 @@ var mapCurrencies = (currencies, alternativeCurrencies) => {
 };
 var map_currencies_default = mapCurrencies;
 
-// custom-resolvers/queries/get-APIM-currencies/index.ts
-var getApimCurrencies = async () => {
+// helpers/get-APIM-currencies/index.ts
+var get2 = async () => {
   try {
-    console.info('Getting and mapping currencies from APIM');
+    console.info('Getting and mapping currencies from APIM (apimCurrencies helper)');
     const response = await APIM_default.getCurrencies();
     if (response.data) {
       const supportedCurrencies = map_currencies_default(response.data, false);
@@ -9103,11 +9122,27 @@ var getApimCurrencies = async () => {
     }
     return { success: false };
   } catch (error) {
+    console.error('Error Getting and mapping currencies from APIM (apimCurrencies helper) %o', error);
+    throw new Error(`Getting and mapping currencies from APIM (apimCurrencies helper) ${error}`);
+  }
+};
+var apimCurrencies = {
+  get: get2,
+};
+var get_APIM_currencies_default = apimCurrencies;
+
+// custom-resolvers/queries/get-APIM-currencies/index.ts
+var getApimCurrencies = async () => {
+  try {
+    console.info('Getting and mapping currencies from APIM');
+    const response = await get_APIM_currencies_default.get();
+    return response;
+  } catch (error) {
     console.error('Error Getting and mapping currencies from APIM %o', error);
     throw new Error(`Getting and mapping currencies from APIM ${error}`);
   }
 };
-var get_APIM_currencies_default = getApimCurrencies;
+var get_APIM_currencies_default2 = getApimCurrencies;
 
 // helpers/remove-white-space/index.ts
 var removeWhiteSpace = (string) => string.replace(' ', '');
@@ -9482,8 +9517,8 @@ var customResolvers = {
   },
   Query: {
     getAccountPasswordResetToken: get_account_password_reset_token_default,
-    getApimCisCountries: get_APIM_CIS_countries_default,
-    getApimCurrencies: get_APIM_currencies_default,
+    getApimCisCountries: get_APIM_CIS_countries_default2,
+    getApimCurrencies: get_APIM_currencies_default2,
     getCompaniesHouseInformation: get_companies_house_information_default,
     getApplicationByReferenceNumber: get_application_by_reference_number_default2,
     getOrdnanceSurveyAddress: get_ordnance_survey_address_default,
