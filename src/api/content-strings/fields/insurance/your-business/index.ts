@@ -12,7 +12,7 @@ const {
   HAS_CREDIT_CONTROL,
 } = EXPORTER_BUSINESS;
 
-export const FIELDS = {
+export const EXPORTER_BUSINESS_FIELDS = {
   COMPANY_DETAILS: {
     [COMPANY_NUMBER]: {
       SUMMARY: {

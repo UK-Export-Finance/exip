@@ -1,5 +1,5 @@
 import { FORM_TITLES } from '../../../../content-strings/form-titles';
-import { FIELDS } from '../../../../content-strings/fields/insurance';
+import { EXPORTER_BUSINESS_FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
@@ -25,6 +25,8 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
+const { COMPANY_DETAILS } = EXPORTER_BUSINESS_FIELDS;
+
 /**
  * generateYourCompanyFields
  * Create all Your company fields and values for the Insurance - Company details govukSummaryList
@@ -41,7 +43,7 @@ const generateYourCompanyFields = (answers: ApplicationCompany, referenceNumber:
   const fields = [
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS.COMPANY_DETAILS, HAS_DIFFERENT_TRADING_NAME),
+        field: getFieldById(COMPANY_DETAILS, HAS_DIFFERENT_TRADING_NAME),
         data: answers,
         href: generateChangeLink(
           COMPANY_DETAILS_CHANGE,
@@ -56,7 +58,7 @@ const generateYourCompanyFields = (answers: ApplicationCompany, referenceNumber:
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS.COMPANY_DETAILS, HAS_DIFFERENT_TRADING_ADDRESS),
+        field: getFieldById(COMPANY_DETAILS, HAS_DIFFERENT_TRADING_ADDRESS),
         data: answers,
         href: generateChangeLink(
           COMPANY_DETAILS_CHANGE,
@@ -70,13 +72,13 @@ const generateYourCompanyFields = (answers: ApplicationCompany, referenceNumber:
       mapYesAlternateField(answers[HAS_DIFFERENT_TRADING_ADDRESS], addressHtmlString),
     ),
     fieldGroupItem({
-      field: getFieldById(FIELDS.COMPANY_DETAILS, WEBSITE),
+      field: getFieldById(COMPANY_DETAILS, WEBSITE),
       data: answers,
       href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${WEBSITE}-label`, referenceNumber, checkAndChange),
       renderChangeLink: true,
     }),
     fieldGroupItem({
-      field: getFieldById(FIELDS.COMPANY_DETAILS, PHONE_NUMBER),
+      field: getFieldById(COMPANY_DETAILS, PHONE_NUMBER),
       data: answers,
       href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${PHONE_NUMBER}-label`, referenceNumber, checkAndChange),
       renderChangeLink: true,

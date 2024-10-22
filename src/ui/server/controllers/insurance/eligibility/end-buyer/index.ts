@@ -1,5 +1,5 @@
 import { PAGES, END_BUYERS_DESCRIPTION, ERROR_MESSAGES } from '../../../../content-strings';
-import { FIELDS_ELIGIBILITY } from '../../../../content-strings/fields/insurance/eligibility';
+import { ELIGIBILITY_FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
 import { FIELD_IDS, TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
@@ -29,7 +29,7 @@ export const PAGE_VARIABLES = {
   },
   FIELD: {
     ID: FIELD_ID,
-    ...FIELDS_ELIGIBILITY[FIELD_ID],
+    ...ELIGIBILITY_FIELDS[FIELD_ID],
   },
 };
 
