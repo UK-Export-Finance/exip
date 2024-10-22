@@ -1,6 +1,6 @@
 import { Connection } from 'mysql2/promise';
 import getAllLossPayees from '../../get-all-loss-payees';
-import executeSqlQuery from '../../execute-sql-query';
+import executeSqlQuery from '../../../execute-sql-query';
 
 /**
  * createApplicationLossPayeeRelationship

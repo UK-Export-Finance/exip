@@ -630,25 +630,29 @@ var SUPPORTED_CURRENCIES = ['EUR', 'GBP', 'JPY', 'USD'];
 var GBP = 'GBP';
 
 // constants/application/versions/index.ts
-var VERSIONS = [
-  {
-    VERSION_NUMBER: '1',
-    OVER_500K_SUPPORT: false,
-    MAXIMUM_BUYER_CAN_OWE: 5e5,
-    TOTAL_VALUE_OF_CONTRACT: 5e5,
-    DEFAULT_FINAL_DESTINATION_KNOWN: true,
-    DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: false,
-    BROKER_ADDRESS_AS_MULTIPLE_FIELDS: true,
-  },
-  {
-    VERSION_NUMBER: '2',
-    OVER_500K_SUPPORT: true,
-    DEFAULT_FINAL_DESTINATION_KNOWN: null,
-    DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: null,
-    DEFAULT_CURRENCY: GBP,
-    BROKER_ADDRESS_AS_MULTIPLE_FIELDS: false,
-  },
-];
+var VERSION_1 = {
+  VERSION_NUMBER: '1',
+  OVER_500K_SUPPORT: false,
+  MAXIMUM_BUYER_CAN_OWE: 5e5,
+  TOTAL_VALUE_OF_CONTRACT: 5e5,
+  DEFAULT_FINAL_DESTINATION_KNOWN: true,
+  DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: false,
+  BROKER_ADDRESS_AS_MULTIPLE_FIELDS: true,
+};
+var VERSION_2 = {
+  VERSION_NUMBER: '2',
+  OVER_500K_SUPPORT: true,
+  DEFAULT_FINAL_DESTINATION_KNOWN: null,
+  DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: null,
+  DEFAULT_CURRENCY: GBP,
+  BROKER_ADDRESS_AS_MULTIPLE_FIELDS: false,
+};
+var VERSION_3 = {
+  ...VERSION_2,
+  VERSION_NUMBER: '3',
+  REQUESTED_CREDIT_LIMIT_REQUIRED: true,
+};
+var VERSIONS = [VERSION_1, VERSION_2, VERSION_3];
 var versions_default = VERSIONS;
 
 // constants/application/get-application-definition/index.ts
@@ -1791,6 +1795,7 @@ var lists = {
         validation: { isRequired: true },
         db: { nativeType: 'VarChar(4)' },
       }),
+      migratedV2toV3: nullable_checkbox_default(),
     },
     access: import_access.allowAll,
   },

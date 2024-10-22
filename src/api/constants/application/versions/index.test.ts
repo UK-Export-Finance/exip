@@ -21,6 +21,15 @@ describe('api/constants/application/versions', () => {
         DEFAULT_CURRENCY: GBP,
         BROKER_ADDRESS_AS_MULTIPLE_FIELDS: false,
       },
+      {
+        VERSION_NUMBER: '3',
+        OVER_500K_SUPPORT: true,
+        DEFAULT_FINAL_DESTINATION_KNOWN: null,
+        DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: null,
+        DEFAULT_CURRENCY: GBP,
+        BROKER_ADDRESS_AS_MULTIPLE_FIELDS: false,
+        REQUESTED_CREDIT_LIMIT_REQUIRED: true,
+      },
     ];
 
     expect(VERSIONS).toEqual(expected);

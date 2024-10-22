@@ -1,6 +1,6 @@
 import { Connection } from 'mysql2/promise';
 import { APPLICATION } from '../../../constants';
-import executeSqlQuery from '../execute-sql-query';
+import executeSqlQuery from '../../execute-sql-query';
 
 const { STATUS, LATEST_VERSION_NUMBER, VERSIONS } = APPLICATION;
 
