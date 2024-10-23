@@ -66,9 +66,7 @@ export const get = async (req: Request, res: Response) => {
 
     const checkAndChange = true;
 
-    const countries = await api.keystone.countries.getAll();
-
-    const { allCurrencies } = await api.keystone.APIM.getCurrencies();
+    const { allCurrencies, countries } = await api.keystone.getCountriesAndCurrencies();
 
     if (!isPopulatedArray(countries) || !isPopulatedArray(allCurrencies)) {
       return res.redirect(PROBLEM_WITH_SERVICE);

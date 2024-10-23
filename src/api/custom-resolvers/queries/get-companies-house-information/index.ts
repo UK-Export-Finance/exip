@@ -9,7 +9,6 @@ import { GetCompaniesHouseInformationVariables } from '../../../types';
  * Get companies house information
  * @param {Object} root: GraphQL root variables
  * @param {Object} variables: GraphQL variables for the GetCompaniesHouseInformation mutation
- * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag and mapped companies house response
  */
 const getCompaniesHouseInformation = async (root: any, variables: GetCompaniesHouseInformationVariables) => {

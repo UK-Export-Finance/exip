@@ -9,5 +9,5 @@ export interface ConnectObj {
 }
 
 export interface SuccessResponse {
-  success: boolean;
+  success?: boolean;
 }
