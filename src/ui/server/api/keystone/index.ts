@@ -6,7 +6,6 @@ import countries from './countries';
 import getCountriesAndCurrencies from './get-countries-and-currencies';
 import getCompaniesHouseInformation from './get-companies-house-information';
 import getOrdnanceSurveyAddress from './get-ordnance-survey-address';
-import page from './page';
 import feedback from './feedback';
 
 const keystone = {
@@ -18,7 +17,6 @@ const keystone = {
   getCountriesAndCurrencies,
   getCompaniesHouseInformation,
   getOrdnanceSurveyAddress,
-  page,
   feedback,
 };
 
