@@ -2,6 +2,8 @@ import { ApolloResponse } from '../../../../types';
 import apollo from '../../../graphql/apollo';
 import pageQuery from '../../../graphql/queries/page';
 
+// TODO - can delete this now.
+
 const page = {
   get: async (pageId: string) => {
     try {
