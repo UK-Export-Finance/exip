@@ -19,9 +19,12 @@ describe('helpers/get-APIM-CIS-countries', () => {
     it('should return mapped countries', async () => {
       const response = await apimCisCountries.get();
 
-      const mapped = mapCisCountries(mockCisCountries);
+      const expected = {
+        success: true,
+        countries: mapCisCountries(mockCisCountries),
+      };
 
-      expect(response).toEqual(mapped);
+      expect(response).toEqual(expected);
     });
   });
 
@@ -62,7 +65,7 @@ describe('helpers/get-APIM-CIS-countries', () => {
       try {
         await apimCisCountries.get();
       } catch (error) {
-        const expected = new Error(`Getting and mapping CIS countries from APIM ${new Error(mockErrorMessage)}`);
+        const expected = new Error(`Getting and mapping CIS countries from APIM (apimCisCountries helper) ${new Error(mockErrorMessage)}`);
 
         expect(error).toEqual(expected);
       }
