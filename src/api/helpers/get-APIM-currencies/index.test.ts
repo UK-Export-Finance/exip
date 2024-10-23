@@ -5,7 +5,7 @@ import mockApimCurrenciesResponse from '../../test-mocks/mock-APIM-currencies-re
 import { mockCurrencies, mockErrorMessage, mockSpyPromiseRejection } from '../../test-mocks';
 
 describe('custom-resolvers/get-APIM-currencies', () => {
-  jest.mock('../../../integrations/APIM');
+  jest.mock('../../integrations/APIM');
 
   afterAll(() => {
     jest.resetAllMocks();
@@ -70,7 +70,7 @@ describe('custom-resolvers/get-APIM-currencies', () => {
       try {
         await apimCurrencies.get();
       } catch (error) {
-        const expected = new Error(`Getting and mapping currencies from APIM ${new Error(mockErrorMessage)}`);
+        const expected = new Error(`Getting and mapping currencies from APIM (apimCurrencies helper) ${new Error(mockErrorMessage)}`);
 
         expect(error).toEqual(expected);
       }
