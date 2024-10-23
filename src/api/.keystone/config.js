@@ -578,7 +578,6 @@ var DEFAULT_RESOLVERS = [
   'updateAccount',
   // misc
   'countries',
-  'page',
 ];
 var CUSTOM_RESOLVERS = [
   // account
@@ -606,8 +605,10 @@ var CUSTOM_RESOLVERS = [
   'submitApplication',
   // feedback
   'createFeedbackAndSendEmail',
+  // countries and currencies
   'getApimCisCountries',
   'getApimCurrencies',
+  'getCountriesAndCurrencies',
 ];
 if (isDevEnvironment) {
   CUSTOM_RESOLVERS.push(

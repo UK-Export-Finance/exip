@@ -1,4 +1,3 @@
-import { Currency } from '../currency';
 import { SuccessResponse } from '../generic';
 import { Relationship } from '../relationship';
 
@@ -40,21 +39,10 @@ export interface MappedCisCountry {
   noInsuranceSupport: boolean;
 }
 
-// TODO: clean up / move to another directory?
 export interface GetApimCisCountriesResponse extends SuccessResponse {
   data?: [CisCountry];
 }
 
-export interface GetApimCurrenciesResponse extends SuccessResponse {
-  data?: [Currency];
-}
-
 export interface GetApimCisCountriesHelperResponse extends SuccessResponse {
   countries?: [MappedCisCountry];
-}
-
-export interface GetApimCurrenciesHelperResponse extends SuccessResponse {
-  supportedCurrencies?: [Currency];
-  alternativeCurrencies?: [Currency];
-  allCurrencies?: [Currency];
 }
