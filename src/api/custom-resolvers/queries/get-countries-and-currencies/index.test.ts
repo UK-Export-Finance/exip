@@ -2,7 +2,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
 import getCountriesAndCurrencies from '.';
 import apimCurrencies from '../../../helpers/get-APIM-currencies';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
-import { mockCurrencies, mockApimCurrenciesGetHelperResponse } from '../../../test-mocks';
+import { mockCurrencies, mockApimCurrenciesGetHelperResponse, mockErrorMessage, mockSpyPromiseRejection } from '../../../test-mocks';
 
 describe('custom-resolvers/get-countries-and-currencies', () => {
   jest.mock('../../../helpers/get-APIM-currencies');
@@ -44,5 +44,19 @@ describe('custom-resolvers/get-countries-and-currencies', () => {
     });
   });
 
-  // TODO promise rejection tests
+  describe('when there is an error', () => {
+    beforeEach(() => {
+      apimCurrencies.get = mockSpyPromiseRejection;
+    });
+
+    it('should throw an error', async () => {
+      try {
+        await getCountriesAndCurrencies(context);
+      } catch (error) {
+        const expected = new Error(`Getting countries and currencies (getCountriesAndCurrencies helper) ${new Error(mockErrorMessage)}`);
+
+        expect(error).toEqual(expected);
+      }
+    });
+  });
 });
