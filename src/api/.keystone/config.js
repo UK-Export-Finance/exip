@@ -9088,7 +9088,10 @@ var getApimCisCountriesQuery = async () => {
   try {
     console.info('Getting CIS countries from APIM');
     const response = await get_APIM_CIS_countries_default.get();
-    return response;
+    if (response.success) {
+      return response.countries;
+    }
+    return [];
   } catch (error) {
     console.error('Error Getting CIS countries from APIM %o', error);
     throw new Error(`Getting CIS countries from APIM ${error}`);
@@ -9146,17 +9149,20 @@ var apimCurrencies = {
 var get_APIM_currencies_default = apimCurrencies;
 
 // custom-resolvers/queries/get-APIM-currencies/index.ts
-var getApimCurrencies = async () => {
+var getApimCurrenciesQuery = async () => {
   try {
     console.info('Getting and mapping currencies from APIM');
     const response = await get_APIM_currencies_default.get();
-    return response;
+    if (response.success) {
+      return response;
+    }
+    return {};
   } catch (error) {
     console.error('Error Getting and mapping currencies from APIM %o', error);
     throw new Error(`Getting and mapping currencies from APIM ${error}`);
   }
 };
-var get_APIM_currencies_default2 = getApimCurrencies;
+var get_APIM_currencies_default2 = getApimCurrenciesQuery;
 
 // custom-resolvers/queries/get-countries-and-currencies/index.ts
 var getCountriesAndCurrencies = async (root, variables, context) => {

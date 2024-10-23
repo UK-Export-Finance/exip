@@ -15,12 +15,24 @@ describe('custom-resolvers/get-APIM-currencies', () => {
     jest.resetAllMocks();
   });
 
-  it('should return the result of apimCisCurrencies.get', async () => {
+  it('should return currencies from the result of apimCisCurrencies.get', async () => {
     const response = await getApimCurrencies();
 
-    const expected = await apimCisCurrencies.get();
+    const { success, ...currenciesResponse } = await apimCisCurrencies.get();
+
+    const expected = currenciesResponse;
 
     expect(response).toEqual(expected);
+  });
+
+  describe('when apimCisCurrencies.get returns success=false', () => {
+    it('should return an empty object', async () => {
+      apimCisCurrencies.get = jest.fn(() => Promise.resolve({ ...mockApimCurrenciesResponse, success: false }));
+
+      const response = await getApimCurrencies();
+
+      expect(response).toEqual({});
+    });
   });
 
   describe('when there is an error', () => {

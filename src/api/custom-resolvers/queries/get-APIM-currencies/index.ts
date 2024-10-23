@@ -1,17 +1,22 @@
 import apimCisCurrencies from '../../../helpers/get-APIM-currencies';
+import { GetApimCurrenciesQueryResponse } from '../../../types';
 
 /**
- * getApimCurrencies
+ * getApimCurrenciesQuery
  * Get currencies from APIM
  * @returns {Promise<Array<Currency>>} APIM response data
  */
-const getApimCurrencies = async () => {
+const getApimCurrenciesQuery = async (): Promise<GetApimCurrenciesQueryResponse> => {
   try {
     console.info('Getting and mapping currencies from APIM');
 
     const response = await apimCisCurrencies.get();
 
-    return response;
+    if (response.success) {
+      return response;
+    }
+
+    return {};
   } catch (error) {
     console.error('Error Getting and mapping currencies from APIM %o', error);
 
@@ -19,4 +24,4 @@ const getApimCurrencies = async () => {
   }
 };
 
-export default getApimCurrencies;
+export default getApimCurrenciesQuery;

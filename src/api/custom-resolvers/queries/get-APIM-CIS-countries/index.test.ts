@@ -14,12 +14,24 @@ describe('custom-resolvers/get-APIM-CIS-countries', () => {
     jest.resetAllMocks();
   });
 
-  it('should return the result of apimCisCountries.get', async () => {
+  it('should return countries from the result of apimCisCountries.get', async () => {
     const response = await getApimCisCountriesQuery();
 
-    const expected = await apimCisCountries.get();
+    const countriesResponse = await apimCisCountries.get();
+
+    const expected = countriesResponse.countries;
 
     expect(response).toEqual(expected);
+  });
+
+  describe('when apimCisCountries.get returns success=false', () => {
+    it('should return an empty array', async () => {
+      apimCisCountries.get = jest.fn(() => Promise.resolve({ ...mockCisCountriesResponse, success: false }));
+
+      const response = await getApimCisCountriesQuery();
+
+      expect(response).toEqual([]);
+    });
   });
 
   describe('when there is an error', () => {

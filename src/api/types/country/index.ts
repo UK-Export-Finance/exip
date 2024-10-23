@@ -44,5 +44,5 @@ export interface GetApimCisCountriesResponse extends SuccessResponse {
 }
 
 export interface GetApimCisCountriesHelperResponse extends SuccessResponse {
-  countries?: [MappedCisCountry];
+  countries: [MappedCisCountry];
 }

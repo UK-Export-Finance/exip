@@ -14,3 +14,9 @@ export interface GetApimCurrenciesHelperResponse extends SuccessResponse {
   alternativeCurrencies?: [Currency];
   allCurrencies?: [Currency];
 }
+
+export interface GetApimCurrenciesQueryResponse {
+  supportedCurrencies?: [Currency];
+  alternativeCurrencies?: [Currency];
+  allCurrencies?: [Currency];
+}
