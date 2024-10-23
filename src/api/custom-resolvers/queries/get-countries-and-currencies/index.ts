@@ -6,10 +6,12 @@ import { Context } from '../../../types';
  * getCountriesAndCurrencies
  * - Get countries from our DB.
  * - Get and map currencies from APIM.
+ * @param {Object} root: GraphQL root variables
+ * @param {Object} variables: GraphQL variables for the getCountriesAndCurrencies query
  * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} APIM countries and currencies
  */
-const getCountriesAndCurrencies = async (context: Context) => {
+const getCountriesAndCurrencies = async (root: any, variables: object, context: Context) => {
   try {
     console.info('Getting countries and currencies (getCountriesAndCurrencies helper)');
 

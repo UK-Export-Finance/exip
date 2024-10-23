@@ -16,8 +16,8 @@ const getCountriesAndCurrencies = async () => {
       console.error('GraphQL network error getting countries and currencies %o', response.networkError.result.errors);
     }
 
-    if (response?.data?.countries) {
-      return response.data.countries[0];
+    if (response?.data?.getCountriesAndCurrencies) {
+      return response.data.getCountriesAndCurrencies;
     }
 
     console.error('Error with GraphQL getCountriesAndCurrenciesQuery %o', response);

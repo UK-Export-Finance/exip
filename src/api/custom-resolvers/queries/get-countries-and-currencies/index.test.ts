@@ -20,7 +20,7 @@ describe('custom-resolvers/get-countries-and-currencies', () => {
   });
 
   it('should return countries and mapped currencies', async () => {
-    const response = await getCountriesAndCurrencies(context);
+    const response = await getCountriesAndCurrencies({}, {}, context);
 
     const expectedCountries = await context.db.Country.findMany();
 
@@ -40,7 +40,7 @@ describe('custom-resolvers/get-countries-and-currencies', () => {
     });
 
     it('should throw an error', async () => {
-      await expect(getCountriesAndCurrencies(context)).rejects.toThrow('Getting currencies (getCountriesAndCurrencies helper)');
+      await expect(getCountriesAndCurrencies({}, {}, context)).rejects.toThrow('Getting currencies (getCountriesAndCurrencies helper)');
     });
   });
 
@@ -51,7 +51,7 @@ describe('custom-resolvers/get-countries-and-currencies', () => {
 
     it('should throw an error', async () => {
       try {
-        await getCountriesAndCurrencies(context);
+        await getCountriesAndCurrencies({}, {}, context);
       } catch (error) {
         const expected = new Error(`Getting countries and currencies (getCountriesAndCurrencies helper) ${new Error(mockErrorMessage)}`);
 

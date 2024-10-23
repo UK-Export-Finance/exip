@@ -23,6 +23,7 @@ describe('custom-resolvers/get-APIM-currencies', () => {
       const mappedAlternative = mapCurrencies(mockCurrencies, true);
 
       const expected = {
+        success: true,
         supportedCurrencies: mappedSupported,
         alternativeCurrencies: mappedAlternative,
         allCurrencies: [...mappedSupported, ...mappedAlternative],

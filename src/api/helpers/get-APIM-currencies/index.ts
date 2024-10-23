@@ -5,7 +5,7 @@ import { GetApimCurrenciesHelperResponse } from '../../types';
 /**
  * get
  * Get and map currencies from APIM
- * @returns {Promise<Object>} APIM response data
+ * @returns {Promise<GetApimCurrenciesHelperResponse>} APIM response data
  */
 const get = async (): Promise<GetApimCurrenciesHelperResponse> => {
   try {
@@ -19,6 +19,7 @@ const get = async (): Promise<GetApimCurrenciesHelperResponse> => {
       const allCurrencies = [...supportedCurrencies, ...alternativeCurrencies];
 
       return {
+        success: true,
         supportedCurrencies,
         alternativeCurrencies,
         allCurrencies,

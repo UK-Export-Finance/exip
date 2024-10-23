@@ -3,7 +3,7 @@ import apimCisCurrencies from '../../../helpers/get-APIM-currencies';
 /**
  * getApimCurrencies
  * Get currencies from APIM
- * @returns {Promise<Object>} APIM response data
+ * @returns {Promise<Array<Currency>>} APIM response data
  */
 const getApimCurrencies = async () => {
   try {

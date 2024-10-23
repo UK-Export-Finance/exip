@@ -4,7 +4,7 @@ import { MappedCisCountry, SuccessResponse } from '../../../types';
 /**
  * getApimCisCountriesQuery
  * Get countries from APIM
- * @returns {Promise<Object>} APIM response data
+ * @returns {Promise<Array<MappedCisCountry>>} APIM response data
  */
 const getApimCisCountriesQuery = async (): Promise<Array<MappedCisCountry> | Promise<SuccessResponse>> => {
   try {

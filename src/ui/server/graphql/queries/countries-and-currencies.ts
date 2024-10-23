@@ -6,29 +6,18 @@ const getCountriesAndCurrencies = gql`
       countries {
         isoCode
         name
-        riskCategory
-        canGetAQuoteOnline
-        canGetAQuoteOffline
-        canGetAQuoteByEmail
-        cannotGetAQuote
-        cannotApply
-        canApplyForInsuranceOnline
-        noInsuranceSupport
-        shortTermCover
       }
-      currencies {
-        supportedCurrencies {
-          isoCode
-          name
-        }
-        alternativeCurrencies {
-          isoCode
-          name
-        }
-        allCurrencies {
-          isoCode
-          name
-        }
+      supportedCurrencies {
+        isoCode
+        name
+      }
+      alternativeCurrencies {
+        isoCode
+        name
+      }
+      allCurrencies {
+        isoCode
+        name
       }
     }
   }
