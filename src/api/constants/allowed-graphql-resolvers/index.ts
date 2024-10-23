@@ -38,7 +38,6 @@ const DEFAULT_RESOLVERS = [
 
   // misc
   'countries',
-  'page',
 ];
 
 /**
