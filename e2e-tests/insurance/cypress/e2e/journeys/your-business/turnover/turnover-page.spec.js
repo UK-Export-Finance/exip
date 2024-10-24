@@ -1,4 +1,4 @@
-import partials from '../../../../../../partials';
+import { headingCaption } from '../../../../../../partials';
 import { field as fieldSelector } from '../../../../../../pages/shared';
 import { turnoverPage } from '../../../../../../pages/your-business';
 import { PAGES } from '../../../../../../content-strings';
@@ -71,7 +71,7 @@ context(
       });
 
       it('renders a heading caption', () => {
-        cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+        cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
       it(`should display ${FINANCIAL_YEAR_END_DATE} section`, () => {

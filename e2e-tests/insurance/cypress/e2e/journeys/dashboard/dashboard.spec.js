@@ -1,5 +1,5 @@
 import dashboardPage from '../../../../../pages/insurance/dashboard';
-import partials from '../../../../../partials';
+import { startNewApplicationButton } from '../../../../../partials';
 import { DEFAULT, PAGES, BUTTONS } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../constants/field-ids/insurance';
@@ -168,7 +168,7 @@ context(
             text: BUTTONS.START_A_NEW_APPLICATION,
           };
 
-          cy.checkLink(partials.startNewApplicationButton(), expected.href, expected.text);
+          cy.checkLink(startNewApplicationButton(), expected.href, expected.text);
         });
       });
 

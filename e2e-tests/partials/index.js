@@ -1,34 +1,16 @@
-import contactDetails from './contactDetails';
-import cookieBanner from './cookieBanner';
-import creditPeriodWithBuyer from './creditPeriodWithBuyer';
-import footer from './footer';
-import header from './header';
-import insurancePartials from './insurance';
-import pagination from './pagination';
-import phaseBanner from './phaseBanner';
-import privateMarketWhyDescription from './privateMarketWhyDescription';
-import ukGoodsOrServicesCalculateDescription from './ukGoodsOrServicesCalculateDescription';
-import ukGoodsOrServicesDescription from './ukGoodsAndServicesDescription';
-
-const partials = {
-  contactDetails,
-  cookieBanner,
-  creditPeriodWithBuyer,
-  errorSummaryListHeading: () => cy.get('.govuk-error-summary h2'),
-  errorSummaryListItems: () => cy.get('.govuk-error-summary li'),
-  errorSummaryListItemLinks: () => cy.get('.govuk-error-summary li a'),
-  footer,
-  header,
-  headingCaption: () => cy.get('[data-cy="heading-caption'),
-  insurancePartials,
-  html: (id) => cy.get(`[data-cy="${id}-html"]`),
-  pagination,
-  phaseBanner,
-  privateMarketWhyDescription,
-  skipLink: () => cy.get('[data-cy="skip-link"]'),
-  startNewApplicationButton: () => cy.get('[data-cy="start-new-application-button"]'),
-  ukGoodsOrServicesCalculateDescription,
-  ukGoodsOrServicesDescription,
-};
-
-export default partials;
+export * from './contactDetails';
+export * from './cookieBanner';
+export * from './creditPeriodWithBuyer';
+export * from './errorSummaryList';
+export * from './footer';
+export * from './header';
+export * from './headingCaption';
+export * from './html';
+export * from './insurance';
+export * from './pagination';
+export * from './phaseBanner';
+export * from './privateMarketWhyDescription';
+export * from './skipLink';
+export * from './startNewApplicationButton';
+export * from './ukGoodsOrServicesCalculateDescription';
+export * from './ukGoodsAndServicesDescription';

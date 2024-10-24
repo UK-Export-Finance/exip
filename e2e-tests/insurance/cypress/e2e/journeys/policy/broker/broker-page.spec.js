@@ -1,5 +1,5 @@
 import { brokerPage } from '../../../../../../pages/insurance/policy';
-import partials from '../../../../../../partials';
+import { headingCaption } from '../../../../../../partials';
 import { field as fieldSelector, yesRadio, noRadio, noRadioInput } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES, LINKS } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
@@ -78,7 +78,7 @@ context(
       });
 
       it('renders a heading caption', () => {
-        cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+        cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
       describe(`${FIELD_ID} label and input`, () => {
