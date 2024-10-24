@@ -1,3 +1,4 @@
+import { MINIMUM_CHARACTERS } from '../../../../../../constants';
 import YOUR_BUYER_FIELD_IDS from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import numberAboveMinimumValidation from '../../../../../../shared-validation/number-above-minimum';
@@ -11,7 +12,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-export const MINIMUM = 1;
+const MINIMUM = MINIMUM_CHARACTERS.BUYER.AMOUNT_OVERDUE;
 
 /**
  * amountOverdueRules

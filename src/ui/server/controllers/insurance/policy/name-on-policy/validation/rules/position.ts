@@ -1,6 +1,6 @@
+import { MAXIMUM_CHARACTERS } from '../../../../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import { POLICY_FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import nameValidation from '../../../../../../shared-validation/name';
 import { RequestBody } from '../../../../../../../types';
 
@@ -16,9 +16,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-const { NAME_ON_POLICY } = POLICY_FIELDS;
-
-const MAXIMUM = Number(NAME_ON_POLICY[FIELD_ID].MAXIMUM);
+const MAXIMUM = MAXIMUM_CHARACTERS.NAME_ON_POLICY_POSITION;
 
 /**
  * positionRule
