@@ -8,7 +8,6 @@ export const MINIMUM_CHARACTERS = {
     EMPLOYEES_UK: 1,
   },
   BUYER: {
-    AMOUNT_OVERDUE: 1,
     TOTAL_OUSTANDING: 1,
   },
   IBAN: 16,
