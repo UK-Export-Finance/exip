@@ -1,4 +1,4 @@
-import header from '../../../../partials/header';
+import { header } from '../../../../partials';
 import { HEADER } from '../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../constants/field-ids/insurance';
