@@ -13,7 +13,6 @@ const { UI_PORT, API_PORT, API_KEY, GOV_NOTIFY_EMAIL_RECIPIENT_1, GOV_NOTIFY_EMA
  * Cypress configuration
  */
 const cypressConfig = defineConfig({
-  video: true,
   numTestsKeptInMemory: 1,
   viewportWidth: 1920,
   viewportHeight: 1080,

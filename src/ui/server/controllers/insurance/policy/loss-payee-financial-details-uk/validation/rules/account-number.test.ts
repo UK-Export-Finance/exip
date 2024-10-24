@@ -1,4 +1,5 @@
-import accountNumberRules, { MINIMUM, MAXIMUM } from './account-number';
+import accountNumberRules from './account-number';
+import { MINIMUM_CHARACTERS, MAXIMUM_CHARACTERS } from '../../../../../../constants';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import numberMinimumMaximumLength from '../../../../../../shared-validation/number-minimum-maximum-length';
@@ -24,8 +25,8 @@ describe('controllers/insurance/policy/loss-payee-financial-details-uk/validatio
       fieldId: FIELD_ID,
       errorMessage: ERROR_MESSAGES_OBJECT,
       errors: mockErrors,
-      minimum: MINIMUM,
-      maximum: MAXIMUM,
+      minimum: MINIMUM_CHARACTERS.ACCOUNT_NUMBER,
+      maximum: MAXIMUM_CHARACTERS.ACCOUNT_NUMBER,
     });
 
     expect(result).toEqual(expected);

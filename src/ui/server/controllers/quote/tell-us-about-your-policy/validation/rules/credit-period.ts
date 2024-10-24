@@ -1,4 +1,4 @@
-import { FIELD_IDS } from '../../../../../constants';
+import { FIELD_IDS, MINIMUM_CHARACTERS, MAXIMUM_CHARACTERS } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { isMultiplePolicyType } from '../../../../../helpers/policy-type';
@@ -10,8 +10,8 @@ const {
   POLICY_TYPE,
 } = FIELD_IDS;
 
-const MINIMUM = 1;
-const MAXIMUM = 2;
+const MINIMUM = MINIMUM_CHARACTERS.QUOTE.CREDIT_PERIOD;
+const MAXIMUM = MAXIMUM_CHARACTERS.QUOTE.CREDIT_PERIOD;
 
 const creditPeriodRules = (formBody: RequestBody, errors: object) => {
   let updatedErrors = errors;

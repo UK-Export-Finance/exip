@@ -1,5 +1,5 @@
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import { FIELD_IDS } from '../../../../../../constants';
+import { FIELD_IDS, MINIMUM_CHARACTERS } from '../../../../../../constants';
 import { RequestBody } from '../../../../../../../types';
 import numberValidation from '../../../../../../helpers/number-validation';
 import { objectHasProperty } from '../../../../../../helpers/object';
@@ -15,7 +15,7 @@ const {
   EXPORTER_BUSINESS: { [FIELD_ID]: ERROR_MESSAGE },
 } = ERROR_MESSAGES.INSURANCE;
 
-const MINIMUM = 1;
+const MINIMUM = MINIMUM_CHARACTERS.BUSINESS.EMPLOYEES_UK;
 
 /**
  * validates number of uk employees input

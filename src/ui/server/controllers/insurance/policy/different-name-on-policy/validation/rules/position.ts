@@ -1,6 +1,6 @@
+import { MAXIMUM_CHARACTERS } from '../../../../../../constants';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import { POLICY_FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import alphaCharactersAndMaxLengthValidation from '../../../../../../shared-validation/alpha-characters-and-max-length';
 import { RequestBody } from '../../../../../../../types';
 
@@ -12,9 +12,7 @@ const {
   DIFFERENT_NAME_ON_POLICY: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
 } = ERROR_MESSAGES.INSURANCE.POLICY;
 
-const { DIFFERENT_NAME_ON_POLICY } = POLICY_FIELDS;
-
-export const MAXIMUM = Number(DIFFERENT_NAME_ON_POLICY[FIELD_ID].MAXIMUM);
+const MAXIMUM = MAXIMUM_CHARACTERS.DIFFERENT_NAME_ON_POLICY_POSITION;
 
 /**
  * validates position field

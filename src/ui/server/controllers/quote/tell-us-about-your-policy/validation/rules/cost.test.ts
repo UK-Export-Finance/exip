@@ -1,5 +1,5 @@
 import { hasDisallowedCharacters, costRules } from './cost';
-import { FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
+import { FIELD_IDS, FIELD_VALUES, MINIMUM_CHARACTERS } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import generateValidationErrors from '../../../../../helpers/validation';
 
@@ -98,7 +98,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
         it('should return a validation error', () => {
           const mockSubmittedData = {
             [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-            [CONTRACT_VALUE]: '0',
+            [CONTRACT_VALUE]: String(MINIMUM_CHARACTERS.POLICY.COST - 1),
           };
 
           const result = costRules(mockSubmittedData, mockErrors);

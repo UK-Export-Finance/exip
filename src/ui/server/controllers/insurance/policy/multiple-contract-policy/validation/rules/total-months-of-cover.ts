@@ -23,8 +23,9 @@ const {
   },
 } = ERROR_MESSAGES;
 
-const MINIMUM = 1;
-export const MAXIMUM = APPLICATION.POLICY.TOTAL_MONTHS_OF_COVER;
+const {
+  TOTAL_MONTHS_OF_COVER: { MINIMUM, MAXIMUM },
+} = APPLICATION.POLICY;
 
 /**
  * totalMonthsOfCoverRules

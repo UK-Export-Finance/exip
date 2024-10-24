@@ -84,7 +84,7 @@ context(
         cy.checkText(fieldSelector(COMPANY_ADDRESS).heading(), REGISTERED_OFFICE_ADDRESS_HEADING);
       });
 
-      it('renders a registered office address heading', () => {
+      it('renders a registered office address hint', () => {
         cy.checkText(fieldSelector(COMPANY_ADDRESS).hint(), REGISTERED_OFFICE_ADDRESS_HINT);
       });
 

@@ -1,6 +1,6 @@
 import employeesUK from './employees-uk';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import { FIELD_IDS } from '../../../../../../constants';
+import { FIELD_IDS, MINIMUM_CHARACTERS } from '../../../../../../constants';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import { RequestBody } from '../../../../../../../types';
 import { mockErrors } from '../../../../../../test-mocks';
@@ -65,9 +65,9 @@ describe('controllers/insurance/business/nature-of-business/validation/rules/emp
     });
   });
 
-  describe(`when the ${FIELD_ID} input is below 0`, () => {
+  describe(`when the ${FIELD_ID} input is below the minimum`, () => {
     it('should return a validation error', () => {
-      mockBody[FIELD_ID] = '-1';
+      mockBody[FIELD_ID] = String(MINIMUM_CHARACTERS.BUSINESS.EMPLOYEES_UK - 1);
       const response = employeesUK(mockBody, mockErrors);
 
       const errorMessage = ERROR_MESSAGE.BELOW_MINIMUM;
@@ -77,9 +77,9 @@ describe('controllers/insurance/business/nature-of-business/validation/rules/emp
     });
   });
 
-  describe(`when the ${FIELD_ID} input is 0`, () => {
+  describe(`when the ${FIELD_ID} input is below 0`, () => {
     it('should return a validation error', () => {
-      mockBody[FIELD_ID] = '0';
+      mockBody[FIELD_ID] = '-1';
       const response = employeesUK(mockBody, mockErrors);
 
       const errorMessage = ERROR_MESSAGE.BELOW_MINIMUM;

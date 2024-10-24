@@ -1,4 +1,4 @@
-import { FIELD_IDS } from '../../../../../constants';
+import { FIELD_IDS, MINIMUM_CHARACTERS } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import { isSinglePolicyType, isMultiplePolicyType } from '../../../../../helpers/policy-type';
 import generateValidationErrors from '../../../../../helpers/validation';
@@ -7,7 +7,7 @@ import { numberHasDecimal } from '../../../../../helpers/number';
 import { stripCommas } from '../../../../../helpers/string';
 import { RequestBody } from '../../../../../../types';
 
-const MINIMUM = 1;
+const MINIMUM = MINIMUM_CHARACTERS.POLICY.COST;
 
 const {
   ELIGIBILITY: { CONTRACT_VALUE, MAX_AMOUNT_OWED },

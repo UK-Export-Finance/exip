@@ -1,5 +1,5 @@
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import { FIELD_IDS } from '../../../../../../constants';
+import { FIELD_IDS, MAXIMUM_CHARACTERS } from '../../../../../../constants';
 import { RequestBody } from '../../../../../../../types';
 import maxLengthValidation from '../../../../../../shared-validation/max-length';
 import { objectHasProperty } from '../../../../../../helpers/object';
@@ -10,7 +10,7 @@ const {
 
 const { [FIELD_ID]: ERROR_MESSAGE } = ERROR_MESSAGES;
 
-export const MAXIMUM = 1200;
+const MAXIMUM = MAXIMUM_CHARACTERS.FEEDBACK.OTHER_COMMENTS;
 
 /**
  * validates other comments field
