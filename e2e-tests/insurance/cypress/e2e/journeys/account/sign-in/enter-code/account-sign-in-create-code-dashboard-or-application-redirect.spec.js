@@ -1,4 +1,4 @@
-import header from '../../../../../../../partials/header';
+import { header } from '../../../../../../../partials';
 
 context(
   'Insurance - Account - Sign in - I want to go straight to my application if there is exactly one application in progress or the dashboard otherwise',

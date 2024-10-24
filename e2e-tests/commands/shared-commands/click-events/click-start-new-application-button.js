@@ -1,11 +1,11 @@
-import partials from '../../../partials';
+import { startNewApplicationButton } from '../../../partials';
 
 /**
  * clickStartNewApplicationButton
  * Click the "start new application" button
  */
 const clickStartNewApplicationButton = () => {
-  partials.startNewApplicationButton().click();
+  startNewApplicationButton().click();
 };
 
 export default clickStartNewApplicationButton;

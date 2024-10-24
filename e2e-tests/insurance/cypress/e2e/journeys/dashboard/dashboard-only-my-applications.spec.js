@@ -1,5 +1,5 @@
 import dashboardPage from '../../../../../pages/insurance/dashboard';
-import header from '../../../../../partials/header';
+import { header } from '../../../../../partials';
 import { ROUTES } from '../../../../../constants';
 
 const { table } = dashboardPage;

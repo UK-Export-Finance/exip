@@ -1,4 +1,4 @@
-const cookieBanner = {
+export const cookieBanner = {
   heading: () => cy.get('[data-cy="cookies-banner-heading"]'),
   hideButton: () => cy.get('[data-cy="cookies-banner-hide-button"]'),
   cookiesLink: () => cy.get('[data-cy="cookies-banner-cookies-link"]'),
@@ -14,5 +14,3 @@ const cookieBanner = {
     copy: () => cy.get('[data-cy="cookies-rejected-banner-copy"]'),
   },
 };
-
-export default cookieBanner;

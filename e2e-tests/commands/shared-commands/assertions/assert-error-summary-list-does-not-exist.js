@@ -1,11 +1,11 @@
-import partials from '../../../partials';
+import { errorSummaryListItems } from '../../../partials';
 
 /**
  * assertErrorSummaryListDoesNotExist
  * Assert the error summary list does not exist
  */
 const assertErrorSummaryListDoesNotExist = () => {
-  partials.errorSummaryListItems().should('not.exist');
+  errorSummaryListItems().should('not.exist');
 };
 
 export default assertErrorSummaryListDoesNotExist;

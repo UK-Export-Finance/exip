@@ -2,7 +2,7 @@ import { TASKS } from '../../content-strings';
 
 const { INITIAL_CHECKS, PREPARE_APPLICATION, SUBMIT_APPLICATION } = TASKS.LIST;
 
-const taskList = {
+export const taskList = {
   initialChecks: {
     groupHeading: () => cy.get(`[data-cy="task-list-group-heading-${INITIAL_CHECKS.HEADING}"]`),
     tasks: {
@@ -51,5 +51,3 @@ const taskList = {
     },
   },
 };
-
-export default taskList;

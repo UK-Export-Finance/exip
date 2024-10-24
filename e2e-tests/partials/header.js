@@ -1,6 +1,6 @@
 const container = () => cy.get('[data-cy="header"]');
 
-const header = {
+export const header = {
   govHomeLink: () => container().find('a').eq(0),
   serviceName: () => container().find('a').eq(1),
   navigation: {
@@ -9,5 +9,3 @@ const header = {
     signOut: () => cy.get('[data-cy="header-navigation-link-sign-out"]'),
   },
 };
-
-export default header;

@@ -1,5 +1,5 @@
 import { enterCodePage } from '../../../../../../pages/insurance/account/sign-in';
-import passwordField from '../../../../../../partials/insurance/passwordField';
+import { passwordField } from '../../../../../../partials/insurance';
 import { field } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';

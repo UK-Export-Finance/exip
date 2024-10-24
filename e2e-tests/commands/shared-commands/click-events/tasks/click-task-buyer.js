@@ -1,4 +1,4 @@
-import taskList from '../../../../partials/insurance/taskList';
+import { taskList } from '../../../../partials/insurance';
 
 /**
  * clickTaskBuyer

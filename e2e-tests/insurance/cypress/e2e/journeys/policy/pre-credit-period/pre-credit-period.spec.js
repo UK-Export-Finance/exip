@@ -1,13 +1,11 @@
 import { headingCaption, yesRadio, noRadio, field as fieldSelector } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
+import { creditPeriodWithBuyer } from '../../../../../../partials';
 import { PAGES, CREDIT_PERIOD_WITH_BUYER as CREDIT_PERIOD_WITH_BUYER_STRINGS } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS as FIELD_STRINGS } from '../../../../../../content-strings/fields/insurance/policy';
 import mockApplication from '../../../../../../fixtures/application';
-
-const { creditPeriodWithBuyer } = partials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.PRE_CREDIT_PERIOD;
 

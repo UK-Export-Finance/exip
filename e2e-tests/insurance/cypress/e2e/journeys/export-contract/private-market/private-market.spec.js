@@ -1,11 +1,9 @@
 import { field as fieldSelector, headingCaption, noRadio, noRadioInput, yesRadio } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
+import { privateMarketWhyDescription } from '../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { ERROR_MESSAGES, PAGES, PRIVATE_MARKET_WHY_DESCRIPTION } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-
-const { privateMarketWhyDescription } = partials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.PRIVATE_MARKET;
 

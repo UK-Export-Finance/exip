@@ -1,5 +1,5 @@
 import { field as fieldSelector } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
+import { errorSummaryListItems, errorSummaryListItemLinks } from '../../../../../../partials';
 import { tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
@@ -40,41 +40,41 @@ context('Tell us about the multiple policy you need - form validation', () => {
       cy.assertErrorSummaryListLength(TOTAL_REQUIRED_FIELDS);
 
       // currency
-      cy.checkText(partials.errorSummaryListItems().eq(0), ERROR_MESSAGES.ELIGIBILITY[CURRENCY].IS_EMPTY);
+      cy.checkText(errorSummaryListItems().eq(0), ERROR_MESSAGES.ELIGIBILITY[CURRENCY].IS_EMPTY);
 
       cy.checkText(fieldSelector(CURRENCY).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[CURRENCY].IS_EMPTY}`);
 
       // max amount owed
-      cy.checkText(partials.errorSummaryListItems().eq(1), ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].IS_EMPTY);
+      cy.checkText(errorSummaryListItems().eq(1), ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].IS_EMPTY);
 
       cy.checkText(fieldSelector(MAX_AMOUNT_OWED).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].IS_EMPTY}`);
 
       // percentage of cover
-      cy.checkText(partials.errorSummaryListItems().eq(2), ERROR_MESSAGES.ELIGIBILITY[PERCENTAGE_OF_COVER].IS_EMPTY);
+      cy.checkText(errorSummaryListItems().eq(2), ERROR_MESSAGES.ELIGIBILITY[PERCENTAGE_OF_COVER].IS_EMPTY);
 
       cy.checkText(fieldSelector(PERCENTAGE_OF_COVER).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[PERCENTAGE_OF_COVER].IS_EMPTY}`);
 
       // credit period
-      cy.checkText(partials.errorSummaryListItems().eq(3), ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY);
+      cy.checkText(errorSummaryListItems().eq(3), ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY);
 
       cy.checkText(tellUsAboutYourPolicyPage[CREDIT_PERIOD].errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY}`);
     });
 
     it('should focus on inputs when clicking summary error message', () => {
       // currency
-      partials.errorSummaryListItemLinks().eq(0).click();
+      errorSummaryListItemLinks().eq(0).click();
       fieldSelector(CURRENCY).input().should('have.focus');
 
       // max amount owed
-      partials.errorSummaryListItemLinks().eq(1).click();
+      errorSummaryListItemLinks().eq(1).click();
       fieldSelector(MAX_AMOUNT_OWED).input().should('have.focus');
 
       // perecentage of cover
-      partials.errorSummaryListItemLinks().eq(2).click();
+      errorSummaryListItemLinks().eq(2).click();
       fieldSelector(PERCENTAGE_OF_COVER).input().should('have.focus');
 
       // credit period
-      partials.errorSummaryListItemLinks().eq(3).click();
+      errorSummaryListItemLinks().eq(3).click();
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().should('have.focus');
     });
   });
@@ -86,7 +86,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
       cy.keyboardInput(fieldSelector(MAX_AMOUNT_OWED).input(), 'a');
       cy.clickSubmitButton();
 
-      cy.checkText(partials.errorSummaryListItems().eq(1), ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_NUMBER);
+      cy.checkText(errorSummaryListItems().eq(1), ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_NUMBER);
 
       cy.checkText(fieldSelector(MAX_AMOUNT_OWED).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_NUMBER}`);
     });
@@ -99,7 +99,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
       cy.keyboardInput(fieldSelector(MAX_AMOUNT_OWED).input(), '1234.56');
       cy.clickSubmitButton();
 
-      cy.checkText(partials.errorSummaryListItems().eq(1), ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_WHOLE_NUMBER);
+      cy.checkText(errorSummaryListItems().eq(1), ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_WHOLE_NUMBER);
 
       cy.checkText(fieldSelector(MAX_AMOUNT_OWED).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_WHOLE_NUMBER}`);
     });
@@ -112,7 +112,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
       cy.keyboardInput(fieldSelector(MAX_AMOUNT_OWED).input(), '0');
       cy.clickSubmitButton();
 
-      cy.checkText(partials.errorSummaryListItems().eq(1), ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].BELOW_MINIMUM);
+      cy.checkText(errorSummaryListItems().eq(1), ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].BELOW_MINIMUM);
 
       cy.checkText(fieldSelector(MAX_AMOUNT_OWED).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].BELOW_MINIMUM}`);
     });
@@ -124,7 +124,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
 
       cy.clickSubmitButton();
 
-      cy.checkText(partials.errorSummaryListItems().eq(3), ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY);
+      cy.checkText(errorSummaryListItems().eq(3), ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY);
 
       cy.checkText(tellUsAboutYourPolicyPage[CREDIT_PERIOD].errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY}`);
     });

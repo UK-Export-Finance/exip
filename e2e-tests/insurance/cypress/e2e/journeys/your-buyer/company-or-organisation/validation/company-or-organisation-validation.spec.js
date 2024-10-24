@@ -1,4 +1,4 @@
-import partials from '../../../../../../../partials';
+import { errorSummaryListItems } from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES } from '../../../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
@@ -47,8 +47,8 @@ context('Insurance - Your buyer - Company or organisation page - form validation
     const TOTAL_REQUIRED_FIELDS = 2;
     cy.assertErrorSummaryListLength(TOTAL_REQUIRED_FIELDS);
 
-    cy.checkText(partials.errorSummaryListItems().eq(0), COMPANY_OR_ORG_ERROR_MESSAGES[NAME].IS_EMPTY);
+    cy.checkText(errorSummaryListItems().eq(0), COMPANY_OR_ORG_ERROR_MESSAGES[NAME].IS_EMPTY);
 
-    cy.checkText(partials.errorSummaryListItems().eq(1), COMPANY_OR_ORG_ERROR_MESSAGES[ADDRESS].IS_EMPTY);
+    cy.checkText(errorSummaryListItems().eq(1), COMPANY_OR_ORG_ERROR_MESSAGES[ADDRESS].IS_EMPTY);
   });
 });

@@ -1,4 +1,4 @@
-import partials from '../../partials';
+import { cookieBanner } from '../../partials';
 import { ROUTES } from '../../constants';
 
 import { COOKIES_CONSENT } from '../../content-strings';
@@ -9,17 +9,17 @@ import { COOKIES_CONSENT } from '../../content-strings';
  * @param {Boolean} isInsurancePage: Current page is an "insurance" page.
  */
 const checkCookiesConsentBannerIsVisible = ({ isInsurancePage }) => {
-  partials.cookieBanner.heading().should('exist');
+  cookieBanner.heading().should('exist');
 
-  cy.checkText(partials.cookieBanner.question.copy(), COOKIES_CONSENT.QUESTION.COPY);
+  cy.checkText(cookieBanner.question.copy(), COOKIES_CONSENT.QUESTION.COPY);
 
-  cy.checkText(partials.cookieBanner.question.acceptButton(), COOKIES_CONSENT.QUESTION.ACCEPT_BUTTON);
+  cy.checkText(cookieBanner.question.acceptButton(), COOKIES_CONSENT.QUESTION.ACCEPT_BUTTON);
 
-  cy.checkText(partials.cookieBanner.question.rejectButton(), COOKIES_CONSENT.QUESTION.REJECT_BUTTON);
+  cy.checkText(cookieBanner.question.rejectButton(), COOKIES_CONSENT.QUESTION.REJECT_BUTTON);
 
   const expectedLink = isInsurancePage ? ROUTES.INSURANCE.COOKIES : ROUTES.COOKIES;
 
-  cy.checkLink(partials.cookieBanner.cookiesLink(), expectedLink, COOKIES_CONSENT.QUESTION.VIEW_COOKIES);
+  cy.checkLink(cookieBanner.cookiesLink(), expectedLink, COOKIES_CONSENT.QUESTION.VIEW_COOKIES);
 };
 
 export default checkCookiesConsentBannerIsVisible;

@@ -1,4 +1,4 @@
-import partials from '../../../partials';
+import { errorSummaryListItems, errorSummaryListItemLinks } from '../../../partials';
 
 /**
  * assertFieldErrors
@@ -14,10 +14,10 @@ const assertFieldErrors = ({ field, errorIndex, errorSummaryLength, errorMessage
 
   cy.assertErrorSummaryListLength(errorSummaryLength);
 
-  cy.checkText(partials.errorSummaryListItems().eq(errorIndex), errorMessage);
+  cy.checkText(errorSummaryListItems().eq(errorIndex), errorMessage);
 
   if (fieldShouldGainFocus) {
-    partials.errorSummaryListItemLinks().eq(errorIndex).click();
+    errorSummaryListItemLinks().eq(errorIndex).click();
     field.input().should('have.focus');
   }
 

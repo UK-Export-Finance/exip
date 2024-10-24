@@ -1,15 +1,15 @@
-import field from '../../../partials/insurance/passwordField';
+import { passwordField } from '../../../partials/insurance';
 
 const assertPasswordLabelHintAndInput = (fieldStrings) => {
-  cy.checkText(field.label(), fieldStrings.LABEL);
+  cy.checkText(passwordField.label(), fieldStrings.LABEL);
 
-  cy.checkText(field.hint.intro(), fieldStrings.HINT.INTRO);
-  cy.checkText(field.hint.listItem1(), fieldStrings.HINT.RULES[0]);
-  cy.checkText(field.hint.listItem2(), fieldStrings.HINT.RULES[1]);
-  cy.checkText(field.hint.listItem3(), fieldStrings.HINT.RULES[2]);
-  cy.checkText(field.hint.listItem4(), fieldStrings.HINT.RULES[3]);
+  cy.checkText(passwordField.hint.intro(), fieldStrings.HINT.INTRO);
+  cy.checkText(passwordField.hint.listItem1(), fieldStrings.HINT.RULES[0]);
+  cy.checkText(passwordField.hint.listItem2(), fieldStrings.HINT.RULES[1]);
+  cy.checkText(passwordField.hint.listItem3(), fieldStrings.HINT.RULES[2]);
+  cy.checkText(passwordField.hint.listItem4(), fieldStrings.HINT.RULES[3]);
 
-  field.input().should('exist');
+  passwordField.input().should('exist');
 };
 
 export default assertPasswordLabelHintAndInput;

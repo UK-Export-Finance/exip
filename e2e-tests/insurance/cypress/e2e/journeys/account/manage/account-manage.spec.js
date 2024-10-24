@@ -1,4 +1,4 @@
-import partials from '../../../../../../partials';
+import { header } from '../../../../../../partials';
 import { emailPrefix, emailLink, field, intro } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -64,7 +64,7 @@ context(
 
           cy.clickSubmitButton();
 
-          partials.header.navigation.manageAccount().click();
+          header.navigation.manageAccount().click();
         });
       });
 
@@ -76,7 +76,7 @@ context(
         beforeEach(() => {
           cy.navigateToDashboardUrl();
 
-          partials.header.navigation.manageAccount().click();
+          header.navigation.manageAccount().click();
         });
 
         it('renders core page elements', () => {

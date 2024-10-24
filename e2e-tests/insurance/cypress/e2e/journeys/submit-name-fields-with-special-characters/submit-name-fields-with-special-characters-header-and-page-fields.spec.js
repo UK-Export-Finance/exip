@@ -1,6 +1,6 @@
 import { INSURANCE_FIELD_IDS } from '../../../../../constants/field-ids/insurance';
 import { field } from '../../../../../pages/shared';
-import partials from '../../../../../partials';
+import { header } from '../../../../../partials';
 import mockAccount from '../../../../../fixtures/account';
 import mockNameWithSpecialCharacters from '../../../../../fixtures/name-with-special-characters';
 
@@ -62,6 +62,6 @@ context('Insurance - Name fields - Header and page fields should render special 
   it("should render special characters in the header's user name/'manage account' link", () => {
     const expected = `${mockAccountSpecialCharacters[FIRST_NAME]} ${mockAccountSpecialCharacters[LAST_NAME]}`;
 
-    cy.checkText(partials.header.navigation.manageAccount(), expected);
+    cy.checkText(header.navigation.manageAccount(), expected);
   });
 });

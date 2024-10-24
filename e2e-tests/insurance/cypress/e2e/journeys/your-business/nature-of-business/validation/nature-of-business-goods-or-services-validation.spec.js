@@ -1,4 +1,4 @@
-import partials from '../../../../../../../partials';
+import { errorSummaryListItemLinks } from '../../../../../../../partials';
 import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { MAXIMUM_CHARACTERS } from '../../../../../../../constants';
@@ -63,7 +63,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     it(`should focus to the ${FIELD_ID} section when clicking the error`, () => {
       cy.clickSubmitButton();
 
-      partials.errorSummaryListItemLinks().first().click();
+      errorSummaryListItemLinks().first().click();
       field.textarea().should('have.focus');
     });
   });

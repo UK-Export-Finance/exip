@@ -1,4 +1,4 @@
-import pagination from '../../partials/pagination';
+import { pagination } from '../../partials';
 
 /**
  * assertPaginationDoesNotExist

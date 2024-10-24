@@ -1,4 +1,4 @@
-import partials from '../../../partials';
+import { errorSummaryListItems } from '../../../partials';
 
 /**
  * assertErrorSummaryListLength
@@ -6,7 +6,7 @@ import partials from '../../../partials';
  * @param {Integer} expectedLength: Expected amount
  */
 const assertErrorSummaryListLength = (expectedLength) => {
-  cy.assertLength(partials.errorSummaryListItems(), expectedLength);
+  cy.assertLength(errorSummaryListItems(), expectedLength);
 };
 
 export default assertErrorSummaryListLength;

@@ -1,9 +1,9 @@
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { field as fieldSelector, radios, autoCompleteField } from '../../pages/shared';
-import { EUR, GBP, JPY, USD, NON_STANDARD_CURRENCY_CODE, NON_STANDARD_CURRENCY_NAME } from '../../fixtures/currencies';
+import { errorSummaryListItems } from '../../partials';
 import { checkAutocompleteInput } from '../autocomplete-assertions';
+import { EUR, GBP, JPY, USD, NON_STANDARD_CURRENCY_CODE, NON_STANDARD_CURRENCY_NAME } from '../../fixtures/currencies';
 import { DZA } from '../../fixtures/countries';
-import partials from '../../partials';
 
 const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
@@ -120,7 +120,7 @@ const assertCurrencyFormFields = ({
       cy.clickSubmitButton();
     }
 
-    cy.checkText(partials.errorSummaryListItems().eq(errorIndex), errors[alternativeCurrencyFieldId].IS_EMPTY);
+    cy.checkText(errorSummaryListItems().eq(errorIndex), errors[alternativeCurrencyFieldId].IS_EMPTY);
 
     cy.checkText(fieldSelector(alternativeCurrencyFieldId).errorMessage(), `Error: ${errors[alternativeCurrencyFieldId].IS_EMPTY}`);
   },

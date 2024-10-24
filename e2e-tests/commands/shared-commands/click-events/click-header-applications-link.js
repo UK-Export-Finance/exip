@@ -1,4 +1,4 @@
-import header from '../../../partials/header';
+import { header } from '../../../partials';
 
 /**
  * clickHeaderApplicationsLink

@@ -2,11 +2,9 @@ import { POLICY as POLICY_FIELD_IDS } from '../constants/field-ids/insurance/pol
 
 const { NEED_PRE_CREDIT_PERIOD } = POLICY_FIELD_IDS;
 
-const creditPeriodWithBuyer = {
+export const creditPeriodWithBuyer = {
   summary: () => cy.get(`[data-cy="${NEED_PRE_CREDIT_PERIOD}-description"] summary`),
   details: () => cy.get(`[data-cy="${NEED_PRE_CREDIT_PERIOD}-description"]`),
   protectsYou: () => cy.get(`[data-cy="${NEED_PRE_CREDIT_PERIOD}-description-protects-you"]`),
   insuresYou: () => cy.get(`[data-cy="${NEED_PRE_CREDIT_PERIOD}-description-insures-you"]`),
 };
-
-export default creditPeriodWithBuyer;

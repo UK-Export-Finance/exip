@@ -1,5 +1,5 @@
 import { emailLink, emailPrefix } from '../../../pages/shared';
-import contactDetails from '../../../partials/contactDetails';
+import { contactDetails } from '../../../partials';
 import { CONTACT_DETAILS } from '../../../content-strings';
 
 const { PHONE, EMAIL, OPENING_TIMES } = CONTACT_DETAILS;

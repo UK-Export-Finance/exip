@@ -1,4 +1,4 @@
-const footer = {
+export const footer = {
   supportLinks: {
     heading: () => cy.get('[data-cy="support-links-heading"]'),
     accessibilityStatement: () => cy.get('[data-cy="accessibility-statement"]'),
@@ -11,5 +11,3 @@ const footer = {
     copyright: () => cy.get('[data-cy="copyright"]'),
   },
 };
-
-export default footer;
