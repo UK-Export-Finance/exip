@@ -71,7 +71,7 @@ context(
 
         cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT);
 
-        cy.checkText(field.prefix(), SYMBOLS.GBP);
+        cy.assertPrefix({ fieldId, value: SYMBOLS.GBP });
 
         field.input().should('exist');
       });
@@ -82,7 +82,7 @@ context(
 
         cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT);
 
-        cy.checkText(field.prefix(), SYMBOLS.GBP);
+        cy.assertPrefix({ fieldId, value: SYMBOLS.GBP });
 
         field.input().should('exist');
       });

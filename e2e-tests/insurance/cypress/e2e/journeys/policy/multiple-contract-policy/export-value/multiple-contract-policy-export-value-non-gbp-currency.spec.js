@@ -67,11 +67,11 @@ context('Insurance - Policy - Multiple contract policy - Export value page - Non
     });
 
     it(`should render a ${TOTAL_SALES_TO_BUYER} ${USD.name} prefix`, () => {
-      cy.checkText(field(TOTAL_SALES_TO_BUYER).prefix(), SYMBOLS.USD);
+      cy.assertPrefix({ fieldId: TOTAL_SALES_TO_BUYER, value: SYMBOLS.USD });
     });
 
     it(`should render a ${MAXIMUM_BUYER_WILL_OWE} ${USD.name} prefix`, () => {
-      cy.checkText(field(MAXIMUM_BUYER_WILL_OWE).prefix(), SYMBOLS.USD);
+      cy.assertPrefix({ fieldId: MAXIMUM_BUYER_WILL_OWE, value: SYMBOLS.USD });
     });
 
     it('should prepopulate the radio on the multiple contract value page', () => {

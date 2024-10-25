@@ -59,7 +59,7 @@ context('Insurance - Your buyer - Outstanding or overdue payments - Alternative 
       });
 
       it('should NOT render a prefix', () => {
-        field(TOTAL_OUTSTANDING_PAYMENTS).prefix().should('not.exist');
+        cy.assertPrefix({ fieldId: TOTAL_OUTSTANDING_PAYMENTS });
       });
     });
 
@@ -73,7 +73,7 @@ context('Insurance - Your buyer - Outstanding or overdue payments - Alternative 
       });
 
       it('should NOT render a prefix', () => {
-        field(TOTAL_AMOUNT_OVERDUE).prefix().should('not.exist');
+        cy.assertPrefix({ fieldId: TOTAL_AMOUNT_OVERDUE });
       });
     });
   });
