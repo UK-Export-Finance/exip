@@ -25,6 +25,10 @@ export const assertCountryAutocompleteInput = ({ fieldId }) => {
     assertions.rendersNoResultsMessage(field, 'test');
   });
 
+  it('renders `no results` message for invalid/filtered out CIS countries', () => {
+    assertions.doesNotRenderFilteredCisCountries(field);
+  });
+
   it('renders a single country result after searching', () => {
     assertions.rendersSingleResult(field, 'Alg');
   });
