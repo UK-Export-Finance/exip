@@ -67,7 +67,7 @@ context(
 
           const { HINT } = FIELD_STRINGS[CONNECTION_WITH_BUYER];
 
-          cy.checkText(field.hint.intro(), HINT.INTRO);
+          cy.checkText(field(CONNECTION_WITH_BUYER).hintIntro(), HINT.INTRO);
 
           cy.checkText(field.hint.list.item1(), HINT.LIST[0]);
           cy.checkText(field.hint.list.item2(), HINT.LIST[1]);

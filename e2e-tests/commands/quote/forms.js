@@ -1,5 +1,5 @@
 import { field } from '../../pages/shared';
-import { policyTypePage, tellUsAboutYourPolicyPage } from '../../pages/quote';
+import { policyTypePage } from '../../pages/quote';
 import { FIELD_IDS } from '../../constants';
 import { GBP_CURRENCY_CODE } from '../../fixtures/currencies';
 
@@ -57,6 +57,6 @@ export const completeAndSubmitTellUsAboutYourMultiPolicyForm = () => {
   field(CURRENCY).input().select(GBP_CURRENCY_CODE);
   cy.keyboardInput(field(MAX_AMOUNT_OWED).input(), '150000');
   field(PERCENTAGE_OF_COVER).input().select('90');
-  tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
+  field[CREDIT_PERIOD].input().select('1');
   cy.clickSubmitButton();
 };

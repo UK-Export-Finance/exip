@@ -163,7 +163,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
       cy.keyboardInput(fieldSelector(MAX_AMOUNT_OWED).input(), '100');
       fieldSelector(CURRENCY).input().select(GBP.isoCode);
       fieldSelector(PERCENTAGE_OF_COVER).input().select('90');
-      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
+      fieldSelector[CREDIT_PERIOD].input().select('1');
 
       cy.clickSubmitButton();
 

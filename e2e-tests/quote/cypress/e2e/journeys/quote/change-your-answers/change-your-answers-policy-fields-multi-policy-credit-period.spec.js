@@ -1,5 +1,4 @@
-import { backLink, summaryList } from '../../../../../../pages/shared';
-import { tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
+import { backLink, field, summaryList } from '../../../../../../pages/shared';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import { LINKS } from '../../../../../../content-strings';
 
@@ -44,15 +43,15 @@ context('Change your answers (policy credit period field) - as an exporter, I wa
   });
 
   it('has originally submitted answer', () => {
-    const firstOption = tellUsAboutYourPolicyPage[CREDIT_PERIOD].inputOption().eq(0);
+    const firstOption = field(CREDIT_PERIOD).inputOption().eq(0);
     firstOption.should('have.attr', 'selected', 'selected');
 
-    const secondOption = tellUsAboutYourPolicyPage[CREDIT_PERIOD].inputOption().eq(1);
+    const secondOption = field(CREDIT_PERIOD).inputOption().eq(1);
     secondOption.should('not.have.attr', 'selected');
   });
 
   it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-    tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('2');
+    field(CREDIT_PERIOD).input().select('2');
 
     cy.clickSubmitButton();
 
