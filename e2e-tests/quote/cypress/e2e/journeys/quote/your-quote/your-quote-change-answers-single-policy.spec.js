@@ -1,5 +1,5 @@
 import { backLink, autoCompleteField, field, summaryList } from '../../../../../../pages/shared';
-import { policyTypePage, tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
+import { policyTypePage } from '../../../../../../pages/quote';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { LINKS } from '../../../../../../content-strings';
 
@@ -136,7 +136,7 @@ context('Your quote page - change answers (single policy type to multiple policy
 
       // max amount owed and credit period fields are now required because it's a multiple policy
       cy.keyboardInput(field(MAX_AMOUNT_OWED).input(), '120000');
-      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
+      field(CREDIT_PERIOD).input().select('1');
 
       // go through 2 get a quote forms.
       cy.clickSubmitButtonMultipleTimes({ count: 2 });

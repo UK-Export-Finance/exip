@@ -6,7 +6,6 @@ const { PASSWORD } = ACCOUNT;
 const passwordField = {
   ...field(PASSWORD),
   hint: {
-    intro: () => cy.get(`[data-cy="${PASSWORD}-hint-intro"]`),
     listItem1: () => cy.get(`[data-cy="${PASSWORD}-hint-list-item-1"]`),
     listItem2: () => cy.get(`[data-cy="${PASSWORD}-hint-list-item-2"]`),
     listItem3: () => cy.get(`[data-cy="${PASSWORD}-hint-list-item-3"]`),

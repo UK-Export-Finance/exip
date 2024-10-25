@@ -38,10 +38,6 @@ const VERSION_3 = {
  * - Version number 4: Payments integration
  * @returns {Array<ApplicationVersion>} All application versions
  */
-const VERSIONS = [
-  VERSION_1,
-  VERSION_2,
-  VERSION_3,
-] as Array<ApplicationVersion>;
+const VERSIONS = [VERSION_1, VERSION_2, VERSION_3] as Array<ApplicationVersion>;
 
 export default VERSIONS;
