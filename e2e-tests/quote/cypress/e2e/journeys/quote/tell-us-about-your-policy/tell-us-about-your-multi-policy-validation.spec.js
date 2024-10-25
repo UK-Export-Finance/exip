@@ -1,6 +1,5 @@
 import { field as fieldSelector } from '../../../../../../pages/shared';
 import { errorSummaryListItems, errorSummaryListItemLinks } from '../../../../../../partials';
-import { tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import { GBP_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
@@ -57,7 +56,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
       // credit period
       cy.checkText(errorSummaryListItems().eq(3), ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY);
 
-      cy.checkText(tellUsAboutYourPolicyPage[CREDIT_PERIOD].errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY}`);
+      cy.checkText(fieldSelector(CREDIT_PERIOD).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY}`);
     });
 
     it('should focus on inputs when clicking summary error message', () => {
@@ -75,7 +74,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
 
       // credit period
       errorSummaryListItemLinks().eq(3).click();
-      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().should('have.focus');
+      fieldSelector(CREDIT_PERIOD).input().should('have.focus');
     });
   });
 
@@ -126,7 +125,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
 
       cy.checkText(errorSummaryListItems().eq(3), ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY);
 
-      cy.checkText(tellUsAboutYourPolicyPage[CREDIT_PERIOD].errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY}`);
+      cy.checkText(fieldSelector(CREDIT_PERIOD).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY}`);
     });
   });
 

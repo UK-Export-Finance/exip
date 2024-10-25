@@ -1,4 +1,5 @@
-import { policyTypePage, tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
+import { field as fieldSelector } from '../../../../../../pages/shared';
+import { policyTypePage } from '../../../../../../pages/quote';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 
 const {
@@ -55,9 +56,7 @@ context(
       policyTypePage[POLICY_TYPE].multiple.label().click();
       cy.clickSubmitButton();
 
-      const field = tellUsAboutYourPolicyPage[CREDIT_PERIOD];
-
-      field.input().should('exist');
+      fieldSelector(CREDIT_PERIOD).input().should('exist');
     });
 
     context('change for a second time - policy type from multiple to single', () => {
@@ -79,7 +78,7 @@ context(
       });
 
       it('does NOT render credit period field in the `tell us about your policy` page', () => {
-        const field = tellUsAboutYourPolicyPage[CREDIT_PERIOD];
+        const field = fieldSelector(CREDIT_PERIOD);
 
         field.label().should('not.exist');
         field.hint().should('not.exist');
@@ -117,9 +116,7 @@ context(
       });
 
       it('renders credit period field in the `tell us about your policy` page', () => {
-        const field = tellUsAboutYourPolicyPage[CREDIT_PERIOD];
-
-        field.input().should('exist');
+        fieldSelector(CREDIT_PERIOD).input().should('exist');
       });
     });
   },

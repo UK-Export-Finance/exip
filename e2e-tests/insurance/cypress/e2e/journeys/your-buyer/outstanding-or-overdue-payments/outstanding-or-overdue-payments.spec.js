@@ -86,7 +86,7 @@ context(
         });
 
         it('should render a prefix', () => {
-          cy.checkText(field(TOTAL_OUTSTANDING_PAYMENTS).prefix(), SYMBOLS.GBP);
+          cy.assertPrefix({ fieldId: TOTAL_OUTSTANDING_PAYMENTS, value: SYMBOLS.GBP });
         });
       });
 
@@ -108,7 +108,7 @@ context(
         });
 
         it('should render a prefix', () => {
-          cy.checkText(field(TOTAL_AMOUNT_OVERDUE).prefix(), SYMBOLS.GBP);
+          cy.assertPrefix({ fieldId: TOTAL_AMOUNT_OVERDUE, value: SYMBOLS.GBP });
         });
       });
     });
@@ -147,8 +147,7 @@ context(
             it(`should have the submitted values and have removed data from ${TOTAL_OUTSTANDING_PAYMENTS} and ${TOTAL_AMOUNT_OVERDUE}`, () => {
               cy.navigateToUrl(url);
 
-              cy.checkValue(field(TOTAL_OUTSTANDING_PAYMENTS), '');
-              cy.checkValue(field(TOTAL_AMOUNT_OVERDUE), '');
+              cy.assertEmptyOverdueOrOutstandingFieldValues();
             });
           });
         });

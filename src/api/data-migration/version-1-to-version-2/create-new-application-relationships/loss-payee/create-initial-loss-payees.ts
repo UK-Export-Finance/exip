@@ -1,6 +1,6 @@
 import { Connection } from 'mysql2/promise';
 import createCuid from '../../create-cuid';
-import executeSqlQuery from '../../execute-sql-query';
+import executeSqlQuery from '../../../execute-sql-query';
 import { Application } from '../../../../types';
 
 /**
@@ -34,7 +34,7 @@ const createInitialLossPayees = async (connection: Connection, applications: Arr
 
     return Promise.all(initialAgentsPromises);
   } catch (error) {
-    console.error('🚨 error %s %o', loggingMessage, error);
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

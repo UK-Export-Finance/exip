@@ -1,6 +1,5 @@
 import { headingCaption } from '../../../../../../partials';
 import { field as fieldSelector, noRadio, noRadioInput, yesRadio } from '../../../../../../pages/shared';
-import { lossPayeePage } from '../../../../../../pages/insurance/policy';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -79,8 +78,8 @@ context(
           },
         } = FIELD_STRINGS;
 
-        cy.checkText(lossPayeePage.radioHint(FIELD_ID).intro(), INTRO);
-        cy.checkText(lossPayeePage.radioHint(FIELD_ID).outro(), OUTRO);
+        cy.checkText(fieldSelector(FIELD_ID).hintIntro(), INTRO);
+        cy.checkText(fieldSelector(FIELD_ID).hintOutro(), OUTRO);
       });
 
       it('renders a `no` radio button', () => {

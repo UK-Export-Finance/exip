@@ -1,4 +1,4 @@
-import { headingCaption, yesRadio, noRadio } from '../../../../../../../pages/shared';
+import { field, headingCaption, yesRadio, noRadio } from '../../../../../../../pages/shared';
 import { codeOfConductPage } from '../../../../../../../pages/insurance/declarations';
 import { PAGES, LINKS, ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES } from '../../../../../../../constants';
@@ -61,9 +61,9 @@ context(
       });
 
       it('renders a hint', () => {
-        cy.checkText(codeOfConductPage.hint.intro(), CONTENT_STRINGS.HINT.INTRO);
+        cy.checkText(field(FIELD_ID).hintIntro(), CONTENT_STRINGS.HINT.INTRO);
 
-        cy.checkLink(codeOfConductPage.hint.link(), LINKS.EXTERNAL.BRIBERY_ACT_2010_GUIDANCE, CONTENT_STRINGS.HINT.LINK.TEXT);
+        cy.checkLink(field(FIELD_ID).hintLink(), LINKS.EXTERNAL.BRIBERY_ACT_2010_GUIDANCE, CONTENT_STRINGS.HINT.LINK.TEXT);
       });
 
       it('renders `yes` radio button', () => {

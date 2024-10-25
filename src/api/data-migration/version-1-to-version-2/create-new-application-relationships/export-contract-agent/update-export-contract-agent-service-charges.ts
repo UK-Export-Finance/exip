@@ -1,7 +1,7 @@
 import { Connection } from 'mysql2/promise';
 import getAllExportContractAgentServices from '../../get-all-export-contract-agent-services';
 import getAllExportContractAgentServiceCharges from '../../get-all-export-contract-agent-service-charges';
-import executeSqlQuery from '../../execute-sql-query';
+import executeSqlQuery from '../../../execute-sql-query';
 
 /**
  * updateExportContractAgentServiceCharges
@@ -39,7 +39,7 @@ const updateExportContractAgentServiceCharges = async (connection: Connection) =
 
     return Promise.all(promises);
   } catch (error) {
-    console.error('🚨 error %s %o', loggingMessage, error);
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

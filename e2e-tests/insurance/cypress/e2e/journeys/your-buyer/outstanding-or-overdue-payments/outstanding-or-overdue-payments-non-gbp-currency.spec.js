@@ -59,7 +59,7 @@ context('Insurance - Your buyer - Outstanding or overdue payments - Non-GBP (sup
       });
 
       it('should render a prefix', () => {
-        cy.checkText(field(TOTAL_OUTSTANDING_PAYMENTS).prefix(), SYMBOLS.USD);
+        cy.assertPrefix({ fieldId: TOTAL_OUTSTANDING_PAYMENTS, value: SYMBOLS.USD });
       });
     });
 
@@ -73,7 +73,7 @@ context('Insurance - Your buyer - Outstanding or overdue payments - Non-GBP (sup
       });
 
       it('should render a prefix', () => {
-        cy.checkText(field(TOTAL_AMOUNT_OVERDUE).prefix(), SYMBOLS.USD);
+        cy.assertPrefix({ fieldId: TOTAL_AMOUNT_OVERDUE, value: SYMBOLS.USD });
       });
     });
   });

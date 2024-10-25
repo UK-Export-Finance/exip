@@ -2,7 +2,7 @@ import { Connection } from 'mysql2/promise';
 import { DECLARATIONS } from '../../../../constants';
 import getAllNonSubmittedApplications from '../../get-all-non-submitted-applications';
 import createCuid from '../../create-cuid';
-import executeSqlQuery from '../../execute-sql-query';
+import executeSqlQuery from '../../../execute-sql-query';
 import { Application } from '../../../../types';
 
 const { ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT, CONFIDENTIALITY, CONFIRMATION_AND_ACKNOWLEDGEMENTS } =
@@ -53,7 +53,7 @@ const createDeclarationVersionRelationshipNotSubmittedApplications = async (conn
 
     return Promise.all(declarationPromises);
   } catch (error) {
-    console.error('🚨 error %s %o', loggingMessage, error);
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

@@ -71,7 +71,7 @@ context(
 
         cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT);
 
-        cy.checkText(field.prefix(), SYMBOLS.GBP);
+        cy.assertPrefix({ fieldId, value: SYMBOLS.GBP });
 
         field.input().should('exist');
       });
@@ -80,9 +80,10 @@ context(
         const fieldId = REQUESTED_CREDIT_LIMIT;
         const field = fieldSelector(fieldId);
 
-        cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT);
+        cy.checkText(field.hintIntro(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT.INTRO);
+        cy.checkText(field.hintOutro(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT.OUTRO);
 
-        cy.checkText(field.prefix(), SYMBOLS.GBP);
+        cy.assertPrefix({ fieldId, value: SYMBOLS.GBP });
 
         field.input().should('exist');
       });
