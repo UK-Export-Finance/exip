@@ -1,6 +1,6 @@
 import { Connection } from 'mysql2/promise';
 import createCuid from '../../create-cuid';
-import executeSqlQuery from '../../execute-sql-query';
+import executeSqlQuery from '../../../execute-sql-query';
 import { Application } from '../../../../types';
 
 /**
@@ -33,7 +33,7 @@ const lossPayeeFinancialInternationalVector = async (connection: Connection, app
 
     return Promise.all(vectorPromises);
   } catch (error) {
-    console.error('🚨 error %s %o', loggingMessage, error);
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

@@ -1,5 +1,5 @@
 import { Connection } from 'mysql2/promise';
-import executeSqlQuery from '../execute-sql-query';
+import executeSqlQuery from '../../execute-sql-query';
 
 /**
  * createExportContractAwardMethodTable
@@ -57,7 +57,7 @@ const createExportContractAwardMethodTable = async (connection: Connection) => {
 
     return Promise.all(awardMethodPromises);
   } catch (error) {
-    console.error('🚨 error %s %o', loggingMessage, error);
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

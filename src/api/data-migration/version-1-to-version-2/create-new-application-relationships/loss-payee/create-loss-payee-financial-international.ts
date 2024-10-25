@@ -1,7 +1,7 @@
 import { Connection } from 'mysql2/promise';
 import getAllLossPayees from '../../get-all-loss-payees';
 import createCuid from '../../create-cuid';
-import executeSqlQuery from '../../execute-sql-query';
+import executeSqlQuery from '../../../execute-sql-query';
 
 /**
  * lossPayeeFinancialInternational
@@ -35,7 +35,7 @@ const lossPayeeFinancialInternational = async (connection: Connection) => {
 
     return Promise.all(financialInternationalPromises);
   } catch (error) {
-    console.error('🚨 error %s %o', loggingMessage, error);
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
