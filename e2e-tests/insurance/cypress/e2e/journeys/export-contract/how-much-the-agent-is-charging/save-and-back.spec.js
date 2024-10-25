@@ -47,8 +47,6 @@ context('Insurance - Export contract - How much the agent is charging - Save and
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeHowMuchTheAgentIsChargingForm({ fixedSumAmount: '' });
-
       cy.clickSaveAndBackButton();
     });
 
@@ -66,6 +64,8 @@ context('Insurance - Export contract - How much the agent is charging - Save and
 
     beforeEach(() => {
       cy.navigateToUrl(url);
+
+      cy.completeHowMuchTheAgentIsChargingForm({ fixedSumAmount });
 
       cy.clickSaveAndBackButton();
     });
