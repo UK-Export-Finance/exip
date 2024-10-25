@@ -3,8 +3,6 @@ import { ROUTES } from '../../../constants';
 
 import { get as getYourBusiness } from '../../../controllers/insurance/business';
 
-import { get as getEnterCompaniesHouseNumber, post as postEnterCompaniesHouseNumber } from '../../../controllers/insurance/business/companies-house-search';
-
 import { get as getCompanyDetails, post as postCompanyDetails } from '../../../controllers/insurance/business/company-details';
 
 import { post as postCompanyDetailsSaveAndBack } from '../../../controllers/insurance/business/company-details/save-and-back';
@@ -40,13 +38,10 @@ describe('routes/insurance/your-business', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(28);
-    expect(post).toHaveBeenCalledTimes(33);
+    expect(get).toHaveBeenCalledTimes(27);
+    expect(post).toHaveBeenCalledTimes(32);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.ROOT, getYourBusiness);
-
-    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.ENTER_COMPANIES_HOUSE_NUMBER, getEnterCompaniesHouseNumber);
-    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.ENTER_COMPANIES_HOUSE_NUMBER, postEnterCompaniesHouseNumber);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS, getCompanyDetails);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS_SAVE_AND_BACK, postCompanyDetailsSaveAndBack);

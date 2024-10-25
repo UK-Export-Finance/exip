@@ -21,6 +21,7 @@ context('404 Page not found', () => {
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
       assertServiceHeading: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

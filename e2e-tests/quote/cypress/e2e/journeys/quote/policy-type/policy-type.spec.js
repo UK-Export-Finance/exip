@@ -33,6 +33,7 @@ context('Policy type page - as an exporter, I want to get UKEF credit insurance 
       backLink: UK_GOODS_OR_SERVICES,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       lightHouseThresholds: {
         // accessibility threshold is reduced here because
         // the radio component from design system has an invalid aria attribute.

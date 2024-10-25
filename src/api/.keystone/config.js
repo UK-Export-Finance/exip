@@ -395,7 +395,7 @@ var EXPORTER_BUSINESS = {
   },
   YOUR_COMPANY: {
     YOUR_BUSINESS: 'yourBusiness',
-    TRADING_ADDRESS: 'hasDifferentTradingAddress',
+    HAS_DIFFERENT_TRADING_ADDRESS: 'hasDifferentTradingAddress',
     HAS_DIFFERENT_TRADING_NAME: 'hasDifferentTradingName',
     DIFFERENT_TRADING_NAME: 'differentTradingName',
     WEBSITE: 'companyWebsite',
@@ -529,7 +529,6 @@ var INSURANCE_FIELD_IDS = {
     ALTERNATIVE_CURRENCY_CODE: 'alternativeCurrencyCode',
   },
   SUBMISSION_DEADLINE: 'submissionDeadline',
-  MIGRATED_FROM_V1_TO_V2: 'migratedV1toV2',
   ACCOUNT: account_default,
   POLICY: policy_default,
   EXPORTER_BUSINESS: business_default,
@@ -605,7 +604,6 @@ var CUSTOM_RESOLVERS = [
   'getCompaniesHouseInformation',
   'getApplicationByReferenceNumber',
   'submitApplication',
-  'updateCompanyPostDataMigration',
   // feedback
   'createFeedbackAndSendEmail',
   'getApimCisCountries',
@@ -1793,7 +1791,6 @@ var lists = {
         validation: { isRequired: true },
         db: { nativeType: 'VarChar(4)' },
       }),
-      migratedV1toV2: nullable_checkbox_default(),
     },
     access: import_access.allowAll,
   },
@@ -3010,12 +3007,6 @@ var typeDefs = `
       bankAddress: String
       iban: String
       bicSwiftCode: String
-    ): SuccessResponse
-
-    """ update a company (post data migration) """
-    updateCompanyPostDataMigration(
-      id: String
-      company: CompanyInput
     ): SuccessResponse
   }
 
@@ -6797,7 +6788,7 @@ var {
   EXPORTER_BUSINESS: EXPORTER_BUSINESS2,
 } = insurance_default;
 var {
-  YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, PHONE_NUMBER, WEBSITE },
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, PHONE_NUMBER, WEBSITE },
   ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS: FULL_ADDRESS2 },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
@@ -6840,7 +6831,7 @@ var FIELDS = {
         TITLE: 'Different trading name',
       },
     },
-    [TRADING_ADDRESS]: {
+    [HAS_DIFFERENT_TRADING_ADDRESS]: {
       SUMMARY: {
         TITLE: 'Different trading address',
       },
@@ -7100,7 +7091,7 @@ var {
       HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME2,
       DIFFERENT_TRADING_NAME,
       PHONE_NUMBER: PHONE_NUMBER2,
-      TRADING_ADDRESS: TRADING_ADDRESS2,
+      HAS_DIFFERENT_TRADING_ADDRESS: HAS_DIFFERENT_TRADING_ADDRESS2,
       WEBSITE: WEBSITE2,
     },
   },
@@ -7234,7 +7225,7 @@ var XLSX = {
     [TOTAL_MONTHS_OF_COVER2]: 'Requested length of insurance',
     [TOTAL_OUTSTANDING_PAYMENTS2]: 'Total outstanding payments',
     [TOTAL_SALES_TO_BUYER]: 'Total sales estimate',
-    [TRADING_ADDRESS2]: 'Different trading address?',
+    [HAS_DIFFERENT_TRADING_ADDRESS2]: 'Different trading address?',
     [TRADED_WITH_BUYER2]: 'Has the exporter traded with this buyer before?',
     [USING_BROKER2]: 'Using a broker for this insurance?',
     [WEBSITE2]: 'Exporter Company website (optional)',
@@ -7334,7 +7325,7 @@ var {
   },
 } = insurance_default;
 var mapEligibility = (application2) => {
-  const { company, eligibility, migratedV1toV2 } = application2;
+  const { company, eligibility } = application2;
   let mapped = [
     xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default({ answer: eligibility[VALID_EXPORTER_LOCATION2] })),
     xlsx_row_default(
@@ -7344,21 +7335,18 @@ var mapEligibility = (application2) => {
     xlsx_row_default(String(FIELDS4[COMPANIES_HOUSE_NUMBER3]), company[COMPANIES_HOUSE_NUMBER3]),
     xlsx_row_default(String(FIELDS4[BUYER_COUNTRY3]), eligibility[BUYER_COUNTRY3].name),
   ];
-  const totalContractValueAnswer = migratedV1toV2 ? null : eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID;
+  const totalContractValueAnswer = eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID;
   mapped = [
     ...mapped,
     xlsx_row_default(String(FIELDS4[MORE_THAN_250K2.VALUE]), map_yes_no_field_default({ answer: totalContractValueAnswer })),
     xlsx_row_default(String(FIELDS4[COVER_PERIOD3]), eligibility[COVER_PERIOD_ELIGIBILITY].value),
     xlsx_row_default(String(FIELDS4[HAS_MINIMUM_UK_GOODS_OR_SERVICES3]), map_yes_no_field_default({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES3] })),
   ];
-  const endBuyerAnswer = migratedV1toV2 ? null : eligibility[HAS_END_BUYER3];
-  const partyToConsortiumAnswer = migratedV1toV2 ? null : eligibility[IS_PARTY_TO_CONSORTIUM2];
-  const memberOfGroupAnswer = migratedV1toV2 ? null : eligibility[IS_PARTY_TO_CONSORTIUM2];
   mapped = [
     ...mapped,
-    xlsx_row_default(String(FIELDS4[HAS_END_BUYER3]), map_yes_no_field_default({ answer: endBuyerAnswer })),
-    xlsx_row_default(String(FIELDS4[IS_PARTY_TO_CONSORTIUM2]), map_yes_no_field_default({ answer: partyToConsortiumAnswer })),
-    xlsx_row_default(String(FIELDS4[IS_MEMBER_OF_A_GROUP2]), map_yes_no_field_default({ answer: memberOfGroupAnswer })),
+    xlsx_row_default(String(FIELDS4[HAS_END_BUYER3]), map_yes_no_field_default({ answer: eligibility[HAS_END_BUYER3] })),
+    xlsx_row_default(String(FIELDS4[IS_PARTY_TO_CONSORTIUM2]), map_yes_no_field_default({ answer: eligibility[IS_PARTY_TO_CONSORTIUM2] })),
+    xlsx_row_default(String(FIELDS4[IS_MEMBER_OF_A_GROUP2]), map_yes_no_field_default({ answer: eligibility[IS_PARTY_TO_CONSORTIUM2] })),
   ];
   return mapped;
 };
@@ -7847,7 +7835,12 @@ var {
     COMPANY_SIC: COMPANY_SIC2,
     FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE3,
   },
-  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME4, TRADING_ADDRESS: TRADING_ADDRESS3, PHONE_NUMBER: PHONE_NUMBER3, WEBSITE: WEBSITE3 },
+  YOUR_COMPANY: {
+    HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME4,
+    HAS_DIFFERENT_TRADING_ADDRESS: HAS_DIFFERENT_TRADING_ADDRESS3,
+    PHONE_NUMBER: PHONE_NUMBER3,
+    WEBSITE: WEBSITE3,
+  },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3 },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2, TURNOVER_CURRENCY_CODE },
   HAS_CREDIT_CONTROL: HAS_CREDIT_CONTROL3,
@@ -7860,7 +7853,7 @@ var mapExporterBusiness = (application2) => {
     xlsx_row_default(String(FIELDS19[COMPANY_SIC2]), map_sic_codes_default2(companySicCodes)),
     xlsx_row_default(String(FIELDS19[HAS_DIFFERENT_TRADING_NAME4]), map_yes_no_field_default({ answer: company[HAS_DIFFERENT_TRADING_NAME4] })),
     map_different_trading_name_default(company),
-    xlsx_row_default(String(FIELDS19[TRADING_ADDRESS3]), map_yes_no_field_default({ answer: company[TRADING_ADDRESS3] })),
+    xlsx_row_default(String(FIELDS19[HAS_DIFFERENT_TRADING_ADDRESS3]), map_yes_no_field_default({ answer: company[HAS_DIFFERENT_TRADING_ADDRESS3] })),
     map_different_trading_address_default(company),
     xlsx_row_default(String(FIELDS19[WEBSITE3]), company[WEBSITE3]),
     xlsx_row_default(String(FIELDS19[PHONE_NUMBER3]), company[PHONE_NUMBER3]),
@@ -7942,10 +7935,9 @@ var { FIELDS: FIELDS23 } = XLSX;
 var mapPreviousCoverWithBuyer = (application2) => {
   const {
     buyer: { relationship: relationship2 },
-    migratedV1toV2,
     totalContractValueOverThreshold,
   } = application2;
-  if (totalContractValueOverThreshold || migratedV1toV2) {
+  if (totalContractValueOverThreshold) {
     const answer = relationship2[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3];
     const mapped = [xlsx_row_default(String(FIELDS23[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), map_yes_no_field_default({ answer }))];
     if (answer === true) {
@@ -8038,10 +8030,9 @@ var {
 var mapPrivateMarket = (application2) => {
   const {
     exportContract: { privateMarket },
-    migratedV1toV2,
     totalContractValueOverThreshold,
   } = application2;
-  if (totalContractValueOverThreshold || migratedV1toV2) {
+  if (totalContractValueOverThreshold) {
     const attempedPrivateMarketAnswer = privateMarket[ATTEMPTED];
     const mapped = [xlsx_row_default(String(FIELDS26.EXPORT_CONTRACT[ATTEMPTED]), map_yes_no_field_default({ answer: attempedPrivateMarketAnswer }))];
     if (attempedPrivateMarketAnswer) {
@@ -8601,42 +8592,6 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
   }
 };
 var verify_account_reactivation_token_default = verifyAccountReactivationToken;
-
-// custom-resolvers/mutations/update-company-post-data-migration/index.ts
-var updateCompanyPostDataMigration = async (root, variables, context) => {
-  try {
-    console.info('Updating company (post data migration) %s', variables.id);
-    const { id, company } = variables;
-    const { registeredOfficeAddress, industrySectorNames: industrySectorNames2, sicCodes, ...otherFields } = company;
-    const updatedCompany = await context.db.Company.updateOne({
-      where: {
-        id,
-      },
-      data: otherFields,
-    });
-    const { id: addressId, ...addressFields } = registeredOfficeAddress;
-    if (!updatedCompany.registeredOfficeAddressId) {
-      console.error('Unable to update company address - does not exist (post data migration) %o', id);
-      throw new Error(`Unable to update company address - does not exist (post data migration) ${id}`);
-    }
-    await context.db.CompanyAddress.updateOne({
-      where: {
-        id: updatedCompany.registeredOfficeAddressId,
-      },
-      data: addressFields,
-    });
-    if (sicCodes) {
-      await create_company_sic_codes_default(context, updatedCompany.id, sicCodes, industrySectorNames2);
-    }
-    return {
-      success: true,
-    };
-  } catch (error) {
-    console.error('Error updating company (post data migration) %o', error);
-    throw new Error(`Updating company (post data migration) ${error}`);
-  }
-};
-var update_company_post_data_migration_default = updateCompanyPostDataMigration;
 
 // helpers/encrypt/index.ts
 var import_crypto12 = __toESM(require('crypto'));
@@ -9522,7 +9477,6 @@ var customResolvers = {
     submitApplication: submit_application_default,
     createFeedbackAndSendEmail: create_feedback_default,
     verifyAccountReactivationToken: verify_account_reactivation_token_default,
-    updateCompanyPostDataMigration: update_company_post_data_migration_default,
     updateLossPayeeFinancialDetailsUk: update_loss_payee_financial_details_uk_default,
     updateLossPayeeFinancialDetailsInternational: update_loss_payee_financial_details_international_default,
   },

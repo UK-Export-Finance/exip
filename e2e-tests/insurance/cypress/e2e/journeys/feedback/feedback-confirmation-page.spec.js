@@ -29,6 +29,7 @@ context('Insurance - Feedback Confirmation page', () => {
       assertAuthenticatedHeader: false,
       assertBackLink: false,
       submitButtonCopy: BUTTONS.BACK_TO_SERVICE,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

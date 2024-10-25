@@ -39,6 +39,7 @@ context(
         backLink: END_BUYER,
         assertAuthenticatedHeader: false,
         hasAForm: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

@@ -43,6 +43,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
       backLink: POLICY_TYPE,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

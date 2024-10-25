@@ -44,6 +44,7 @@ context('Cookies page - Quote', () => {
       submitButtonCopy: BUTTONS.SAVE_CHANGES,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

@@ -46,6 +46,7 @@ context(
         currentHref: `${ROOT}/${referenceNumber}${EXPORT_CONTRACT_ROOT}`,
         backLink: `${ROOT}/${referenceNumber}${ALL_SECTIONS}`,
         hasAForm: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

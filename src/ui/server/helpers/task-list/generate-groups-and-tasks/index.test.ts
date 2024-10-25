@@ -29,7 +29,6 @@ describe('server/helpers/task-list/generate-groups-and-tasks', () => {
       },
       awardMethod: { id: awardMethodId },
     },
-    migratedV1toV2,
     nominatedLossPayee: {
       isAppointed: isAppointingLossPayee,
       isLocatedInUk: lossPayeeIsLocatedInUk,
@@ -62,7 +61,6 @@ describe('server/helpers/task-list/generate-groups-and-tasks', () => {
       agentIsCharging,
       agentChargeMethod,
       awardMethodId,
-      migratedV1toV2,
     );
 
     const initialChecks = {

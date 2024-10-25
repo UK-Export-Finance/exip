@@ -41,6 +41,7 @@ context('Cookies saved page - Quote', () => {
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
       assertCookies: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

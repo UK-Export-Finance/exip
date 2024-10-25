@@ -50,6 +50,7 @@ context('Insurance - no access to application when application is submitted', ()
         currentHref: NO_ACCESS_APPLICATION_SUBMITTED,
         hasAForm: false,
         backLink: expectedUrl,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 
