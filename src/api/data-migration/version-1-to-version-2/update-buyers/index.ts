@@ -33,7 +33,7 @@ const updateBuyers = async (connection: Connection, buyers: Array<ApplicationBuy
 
     return updated;
   } catch (error) {
-    console.error('🚨 error %s %o', loggingMessage, error);
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

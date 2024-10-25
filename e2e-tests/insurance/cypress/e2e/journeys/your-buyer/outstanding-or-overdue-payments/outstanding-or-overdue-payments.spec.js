@@ -147,8 +147,7 @@ context(
             it(`should have the submitted values and have removed data from ${TOTAL_OUTSTANDING_PAYMENTS} and ${TOTAL_AMOUNT_OVERDUE}`, () => {
               cy.navigateToUrl(url);
 
-              cy.checkValue(field(TOTAL_OUTSTANDING_PAYMENTS), '');
-              cy.checkValue(field(TOTAL_AMOUNT_OVERDUE), '');
+              cy.assertEmptyOverdueOrOutstandingFieldValues();
             });
           });
         });

@@ -54,6 +54,7 @@ context(
         currentHref: DASHBOARD,
         hasAForm: false,
         assertBackLink: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

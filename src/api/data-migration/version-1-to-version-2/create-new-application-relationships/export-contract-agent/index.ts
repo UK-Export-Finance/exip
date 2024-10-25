@@ -37,7 +37,7 @@ const createExportContractAgent = async (connection: Connection, applications: A
 
     return promises;
   } catch (error) {
-    console.error('🚨 error %s %o', loggingMessage, error);
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

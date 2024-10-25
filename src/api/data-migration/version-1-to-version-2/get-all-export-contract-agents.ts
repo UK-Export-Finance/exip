@@ -1,5 +1,5 @@
 import { Connection } from 'mysql2/promise';
-import executeSqlQuery from './execute-sql-query';
+import executeSqlQuery from '../execute-sql-query';
 
 /**
  * getAllExportContractAgents
@@ -19,7 +19,7 @@ const getAllExportContractAgents = async (connection: Connection) => {
 
     return agents;
   } catch (error) {
-    console.error('🚨 error %s %o', loggingMessage, error);
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

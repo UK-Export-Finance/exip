@@ -279,13 +279,13 @@ interface Application extends ApplicationCore {
   sectionReview: ApplicationSectionReview;
   declaration: ApplicationDeclaration;
   totalContractValueOverThreshold: boolean;
-  migratedV1toV2: boolean;
+  migratedV2toV3?: boolean;
 }
 
 interface ApplicationFlatCore extends ApplicationCore, InsuranceEligibilityCore, ApplicationOwner {
   buyerCountry: string;
   totalContractValueOverThreshold?: boolean;
-  migratedV1toV2: boolean;
+  migratedV2toV3?: boolean;
 }
 
 type ApplicationFlat = ApplicationFlatCore & ApplicationPolicy & ApplicationBroker & ApplicationCompany & ApplicationDeclaration;

@@ -51,6 +51,7 @@ context('Insurance - no access to application page - signed out', () => {
         hasAForm: false,
         assertBackLink: false,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

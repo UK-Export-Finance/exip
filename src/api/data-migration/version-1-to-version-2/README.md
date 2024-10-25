@@ -54,7 +54,7 @@ Note - there are 2 new fields that are created with a default currency code (GBP
 
 ## Prerequisites :gear:
 
-To set up and run the API locally, you'll need the following prerequisites:
+To set up and run the API locally to test this data migration, you'll need the following prerequisites:
 
 - Node.js version 16.17.0 or higher along with the corresponding `npm` package manager.
 - A MySQL database with the version 1 (MVP) data structure.
@@ -63,7 +63,7 @@ To set up and run the API locally, you'll need the following prerequisites:
 - The local `DATABASE_USER` environment variable
 - The local `DATABASE_PASSWORD` environment variable
 - The local `CUID_FINGERPRINT` environment variable
-- `mysql2` NPM package installed as an API dependency.
+- `mysql2` and `@paralleldrive/cuid2` installed as API NPM package dependencies.
 - `ts-node` NPM package installed locally.
 
 ## Running Locally :computer:

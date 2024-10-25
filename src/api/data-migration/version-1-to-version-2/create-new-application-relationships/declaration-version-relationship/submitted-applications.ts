@@ -2,7 +2,7 @@ import { Connection } from 'mysql2/promise';
 import { DECLARATIONS } from '../../../../constants';
 import getAllSubmittedApplications from '../../get-all-submitted-applications';
 import createCuid from '../../create-cuid';
-import executeSqlQuery from '../../execute-sql-query';
+import executeSqlQuery from '../../../execute-sql-query';
 import { Application } from '../../../../types';
 
 const {
@@ -59,7 +59,7 @@ const createDeclarationVersionRelationshipSubmittedApplications = async (connect
 
     return Promise.all(declarationPromises);
   } catch (error) {
-    console.error('🚨 error %s %o', loggingMessage, error);
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

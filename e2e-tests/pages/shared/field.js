@@ -4,6 +4,7 @@ const field = (id) => ({
   heading: () => cy.get(`[data-cy="${id}-heading"]`),
   hint: () => cy.get(`[data-cy="${id}-hint"]`),
   hintIntro: () => cy.get(`[data-cy="${id}-hint-intro"]`),
+  hintLink: () => cy.get(`[data-cy="${id}-hint-link"]`),
   hintOutro: () => cy.get(`[data-cy="${id}-hint-outro"]`),
   input: () => cy.get(`[data-cy="${id}-input"]`),
   textarea: () => cy.get(`[data-cy="${id}"]`),
