@@ -75,9 +75,11 @@ context(
 
         cy.checkText(fieldSelector(FIELD_ID).hintIntro(), HINT.INTRO);
 
-        cy.checkText(field.hint.list.item1(), HINT.LIST[0]);
-        cy.checkText(field.hint.list.item2(), HINT.LIST[1]);
-        cy.checkText(field.hint.list.item3(), HINT.LIST[2]);
+        const { hint } = field;
+
+        cy.checkText(hint.list.item1(), HINT.LIST[0]);
+        cy.checkText(hint.list.item2(), HINT.LIST[1]);
+        cy.checkText(hint.list.item3(), HINT.LIST[2]);
 
         cy.checkText(fieldSelector(FIELD_ID).hintOutro(), HINT.OUTRO);
 

@@ -70,15 +70,15 @@ context(
 
       it(`renders ${DESCRIPTION} label, hint and input`, () => {
         const fieldId = DESCRIPTION;
-        const field = aboutGoodsOrServicesPage[fieldId];
-
         const { HINT, LABEL, MAXIMUM } = FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId];
 
         cy.checkText(fieldSelector(fieldId).hintIntro(), HINT.INTRO);
 
-        cy.checkText(field.hint.list.item1(), HINT.LIST[0]);
-        cy.checkText(field.hint.list.item2(), HINT.LIST[1]);
-        cy.checkText(field.hint.list.item3(), HINT.LIST[2]);
+        const { hint } = aboutGoodsOrServicesPage[fieldId];
+
+        cy.checkText(hint.list.item1(), HINT.LIST[0]);
+        cy.checkText(hint.list.item2(), HINT.LIST[1]);
+        cy.checkText(hint.list.item3(), HINT.LIST[2]);
 
         cy.checkText(fieldSelector(fieldId).hintOutro(), HINT.OUTRO);
 

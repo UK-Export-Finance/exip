@@ -63,14 +63,14 @@ context(
 
       describe(CONNECTION_WITH_BUYER, () => {
         it('renders a hint', () => {
-          const field = connectionWithBuyerPage[CONNECTION_WITH_BUYER];
+          const { hint } = connectionWithBuyerPage[CONNECTION_WITH_BUYER];
 
           const { HINT } = FIELD_STRINGS[CONNECTION_WITH_BUYER];
 
-          cy.checkText(field(CONNECTION_WITH_BUYER).hintIntro(), HINT.INTRO);
+          cy.checkText(fieldSelector(CONNECTION_WITH_BUYER).hintIntro(), HINT.INTRO);
 
-          cy.checkText(field.hint.list.item1(), HINT.LIST[0]);
-          cy.checkText(field.hint.list.item2(), HINT.LIST[1]);
+          cy.checkText(hint.list.item1(), HINT.LIST[0]);
+          cy.checkText(hint.list.item2(), HINT.LIST[1]);
         });
 
         it('renders `yes` and `no` radio buttons in the correct order', () => {
