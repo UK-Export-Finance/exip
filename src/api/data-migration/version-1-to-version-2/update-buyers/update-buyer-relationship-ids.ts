@@ -68,7 +68,7 @@ const updateBuyerRelationshipIds = async ({ connection, buyers }: CreateBuyerRel
 
     return Promise.all(buyerPromises);
   } catch (error) {
-    console.error('🚨 error %s %o', loggingMessage, error);
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

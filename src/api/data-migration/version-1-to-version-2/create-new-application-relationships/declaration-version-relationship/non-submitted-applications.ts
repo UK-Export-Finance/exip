@@ -53,7 +53,7 @@ const createDeclarationVersionRelationshipNotSubmittedApplications = async (conn
 
     return Promise.all(declarationPromises);
   } catch (error) {
-    console.error('🚨 error %s %o', loggingMessage, error);
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

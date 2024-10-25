@@ -37,7 +37,7 @@ const createAgentServiceCharges = async (connection: Connection, applications: A
 
     return Promise.all(servicesPromises);
   } catch (error) {
-    console.error('🚨 error %s %o', loggingMessage, error);
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

@@ -19,7 +19,7 @@ const getAllCompanies = async (connection: Connection) => {
 
     return companies;
   } catch (error) {
-    console.error('🚨 error %s %o', loggingMessage, error);
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

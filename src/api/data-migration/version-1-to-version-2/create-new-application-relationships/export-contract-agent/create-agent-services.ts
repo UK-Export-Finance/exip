@@ -37,7 +37,7 @@ const createAgentServices = async (connection: Connection, applications: Array<A
 
     return Promise.all(servicesPromises);
   } catch (error) {
-    console.error('🚨 error %s %o', loggingMessage, error);
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
