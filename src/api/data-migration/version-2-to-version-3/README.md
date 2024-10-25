@@ -43,20 +43,6 @@ The migration should successfully do the following:
 1. All applications should be aligned with the version 3 data model (listed above)
 2. In the UI, all existing applications with a status of "in progress" can be progressed and successfully submitted.
 
-# TODO
-
-## Might not need this section anymore.
-
-:warning: After running the migration script, `npm run dev` in the API will fail. `npm run start` should be used instead.
-
-This is because, during `npm run dev`, KeystoneJS/prisma checks the schema against the database. It will then attempt to automatically build the database, with the latest schema. After running the migration script, this will fail because KeystoneJS/prisma attempts to create foreign key constraints that already exist.
-
-We manage our own data migration, so we do not need these checks to run.
-
-To run `npm run dev` after running the migration script, it can be achieved by adding a `--no-db-push` to the `package.json` `dev` script. However, this should only be used for debugging purposes in development environments only.
-
-In a data migration scenario outside of a development environment, `npm run start` should be used.
-
 ## What happens to applications that are in progress :microscope:
 
 Due to the nature of GraphQL and KeystoneJS - the version 2 and version 3 data models are essentially "out of sync".
