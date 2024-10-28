@@ -9,12 +9,12 @@
  * - CILC
  * - Refer
  * - Unlisted
- * @param {Boolean} shortTermCover: Boolean value of shortTermCover.
+ * @param {Boolean} shortTermCover: Short term cover flag.
  * @param {String} riskCategory: Country risk category.
  * @returns {Boolean}
  */
-export const canApplyForInsuranceOnline = (shortTermCover: boolean, riskCategory?: string) => {
-  if (riskCategory && shortTermCover) {
+const canApplyForInsuranceOnline = (shortTermCover: boolean, riskCategory?: string | null) => {
+  if (shortTermCover && riskCategory) {
     return true;
   }
 

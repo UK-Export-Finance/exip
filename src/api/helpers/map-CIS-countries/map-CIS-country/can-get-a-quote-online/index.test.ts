@@ -1,62 +1,50 @@
 import canGetAQuoteOnline from '.';
 import { EXTERNAL_API_MAPPINGS } from '../../../../constants';
-import mockCountries from '../../../../test-mocks/mock-countries';
-import { MappedCisCountry } from '../../../../types';
 
 const {
   CIS: { RISK },
 } = EXTERNAL_API_MAPPINGS;
 
-const validMockCountry = {
-  ...mockCountries[0],
-  riskCategory: RISK.STANDARD,
-  shortTermCover: true,
-  nbiIssueAvailable: true,
-} as MappedCisCountry;
+const mockShortTermCover = true;
+const mockNbiIssueAvailable = true;
+const mockRiskCategory = RISK.STANDARD;
 
 describe('helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-online', () => {
-  describe('when a country has true riskCategory, shortTermCover and nbiIssueAvailable', () => {
+  describe('when a country has shortTermCover=true, nbiIssueAvailable=true and has a riskCategory', () => {
     it('should return true', () => {
-      const result = canGetAQuoteOnline(validMockCountry);
+      const result = canGetAQuoteOnline(mockShortTermCover, mockNbiIssueAvailable, mockRiskCategory);
 
       expect(result).toEqual(true);
     });
   });
 
-  describe('when a country does not have riskCategory', () => {
+  describe('when riskCategory is null', () => {
     it('should return false', () => {
-      const mockCountry = {
-        ...validMockCountry,
-        riskCategory: undefined,
-      } as MappedCisCountry;
-
-      const result = canGetAQuoteOnline(mockCountry);
+      const result = canGetAQuoteOnline(mockShortTermCover, mockNbiIssueAvailable, null);
 
       expect(result).toEqual(false);
     });
   });
 
-  describe('when a country does not have shortTermCover', () => {
+  describe('when riskCategory is an empty string', () => {
     it('should return false', () => {
-      const mockCountry = {
-        ...validMockCountry,
-        shortTermCover: false,
-      } as MappedCisCountry;
-
-      const result = canGetAQuoteOnline(mockCountry);
+      const result = canGetAQuoteOnline(mockShortTermCover, mockNbiIssueAvailable, '');
 
       expect(result).toEqual(false);
     });
   });
 
-  describe('when a country does not have nbiIssueAvailable', () => {
+  describe('when shortTermCover=false', () => {
     it('should return false', () => {
-      const mockCountry = {
-        ...validMockCountry,
-        nbiIssueAvailable: false,
-      } as MappedCisCountry;
+      const result = canGetAQuoteOnline(false, mockNbiIssueAvailable, mockRiskCategory);
 
-      const result = canGetAQuoteOnline(mockCountry);
+      expect(result).toEqual(false);
+    });
+  });
+
+  describe('when nbiIssueAvailable=false', () => {
+    it('should return false', () => {
+      const result = canGetAQuoteOnline(mockShortTermCover, false, mockRiskCategory);
 
       expect(result).toEqual(false);
     });

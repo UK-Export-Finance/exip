@@ -7,7 +7,7 @@ const { CIS } = EXTERNAL_API_DEFINITIONS;
  * @param {String} Risk category
  * @returns {String} Consistent risk category
  */
-export const mapRiskCategory = (str: string) => {
+const mapRiskCategory = (str: string) => {
   if (str === CIS.RISK.STANDARD) {
     return EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD;
   }

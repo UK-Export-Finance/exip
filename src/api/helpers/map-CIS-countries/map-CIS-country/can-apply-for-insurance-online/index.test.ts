@@ -10,7 +10,7 @@ const {
 const mockRiskCategory = VERY_HIGH;
 
 describe('helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online', () => {
-  describe('when a country has a riskCategory and shortTermCover of true', () => {
+  describe('when shortTermCover=true and has a riskCategory', () => {
     it('should return true', () => {
       const shortTermCover = true;
 
@@ -20,31 +20,33 @@ describe('helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-onli
     });
   });
 
-  describe('when a country has a riskCategory and shortTermCover is false', () => {
+  describe('when shortTermCover=false and riskCategory is null', () => {
     it('should return false', () => {
-      const shortTermCover = false;
-
-      const result = canApplyForInsuranceOnline(shortTermCover, mockRiskCategory);
+      const result = canApplyForInsuranceOnline(false, null);
 
       expect(result).toEqual(false);
     });
   });
 
-  describe('when a country does not have a riskCategory and shortTermCover of true', () => {
+  describe('when shortTermCover=false and riskCategory is an empty string', () => {
     it('should return false', () => {
-      const shortTermCover = true;
-
-      const result = canApplyForInsuranceOnline(shortTermCover);
+      const result = canApplyForInsuranceOnline(false, '');
 
       expect(result).toEqual(false);
     });
   });
 
-  describe('when a country does not have a riskCategory and shortTermCover is false', () => {
+  describe('when shortTermCover=true and riskCategory is null', () => {
     it('should return false', () => {
-      const shortTermCover = false;
+      const result = canApplyForInsuranceOnline(true, null);
 
-      const result = canApplyForInsuranceOnline(shortTermCover);
+      expect(result).toEqual(false);
+    });
+  });
+
+  describe('when shortTermCover=true and riskCategory is an empty string', () => {
+    it('should return false', () => {
+      const result = canApplyForInsuranceOnline(true, '');
 
       expect(result).toEqual(false);
     });

@@ -1,13 +1,13 @@
-import { MappedCisCountry } from '../../../../types';
-
 /**
  * canGetAQuoteByEmail
  * Check if a country is able to get a quote by email
- * @param {MappedCisCountry} Mapped CIS Country
+ * @param {Boolean} shortTermCover: Short term cover flag.
+ * @param {Boolean} nbiIssueAvailable: NBI flag.
+ * @param {String} riskCategory: Country risk category.
  * @returns {Boolean}
  */
-export const canGetAQuoteByEmail = (country: MappedCisCountry) => {
-  if (country.riskCategory && country.shortTermCover && !country.nbiIssueAvailable) {
+const canGetAQuoteByEmail = (shortTermCover: boolean, nbiIssueAvailable: boolean, riskCategory?: string | null) => {
+  if (shortTermCover && !nbiIssueAvailable && riskCategory) {
     return true;
   }
 

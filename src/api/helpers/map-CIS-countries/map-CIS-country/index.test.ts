@@ -5,7 +5,7 @@ import mapNbiIssueAvailable from './map-NBI-issue-available';
 import canGetAQuoteOnline from './can-get-a-quote-online';
 import canGetAQuoteByEmail from './can-get-a-quote-by-email';
 import cannotGetAQuote from './cannot-get-a-quote';
-import applyForInsuranceOnline from './can-apply-for-insurance-online';
+import canApplyForInsuranceOnline from './can-apply-for-insurance-online';
 import canApplyOffline from './can-apply-offline';
 import noInsuranceSupportAvailable from './no-insurance-support';
 import { EXTERNAL_API_DEFINITIONS, EXTERNAL_API_MAPPINGS } from '../../../constants';
@@ -29,12 +29,16 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
   it('should return an object', () => {
     const result = mapCisCountry(mockCountryBase);
 
+    const riskCategory = mapRiskCategory(mockCountryBase.ESRAClassificationDesc);
+    const shortTermCover = mapShortTermCoverAvailable(mockCountryBase.shortTermCoverAvailabilityDesc);
+    const nbiIssueAvailable = mapNbiIssueAvailable(mockCountryBase.NBIIssue);
+
     const mapped = {
       name: mockCountryBase.marketName,
       isoCode: mockCountryBase.isoCode,
-      riskCategory: mapRiskCategory(mockCountryBase.ESRAClassificationDesc),
-      shortTermCover: mapShortTermCoverAvailable(mockCountryBase.shortTermCoverAvailabilityDesc),
-      nbiIssueAvailable: mapNbiIssueAvailable(mockCountryBase.NBIIssue),
+      riskCategory,
+      shortTermCover,
+      nbiIssueAvailable,
       canGetAQuoteOnline: false,
       canGetAQuoteOffline: false,
       canGetAQuoteByEmail: false,
@@ -43,12 +47,12 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
       noInsuranceSupport: false,
     } as MappedCisCountry;
 
-    mapped.canGetAQuoteOnline = canGetAQuoteOnline(mapped);
+    mapped.canGetAQuoteOnline = canGetAQuoteOnline(shortTermCover, nbiIssueAvailable, riskCategory);
     mapped.canGetAQuoteOffline = canApplyOffline(mockCountryBase.shortTermCoverAvailabilityDesc);
     mapped.canGetAQuoteByEmail = canGetAQuoteByEmail(mapped);
     mapped.cannotGetAQuote = cannotGetAQuote(mapped);
 
-    mapped.canApplyForInsuranceOnline = applyForInsuranceOnline(mapped.shortTermCover);
+    mapped.canApplyForInsuranceOnline = canApplyForInsuranceOnline(mapped.shortTermCover);
 
     mapped.noInsuranceSupport = noInsuranceSupportAvailable(mockCountryBase.marketRiskAppetitePublicDesc);
 
