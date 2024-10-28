@@ -5,46 +5,44 @@ const {
   CIS: { RISK },
 } = EXTERNAL_API_MAPPINGS;
 
-const mockShortTermCover = true;
-const mockNbiIssueAvailable = false;
 const mockRiskCategory = RISK.STANDARD;
 
 describe('helpers/map-cis-countries/map-cis-country/can-get-a-quote-by-email', () => {
-  describe('when a country has shortTermCover=true, nbiIssueAvailable=false and has a riskCategory', () => {
+  describe('when shortTermCover=true, nbiIssueAvailable=false, riskCategory is provided', () => {
     it('should return true', () => {
-      const result = canGetAQuoteByEmail(mockShortTermCover, mockNbiIssueAvailable, mockRiskCategory);
+      const result = canGetAQuoteByEmail(true, false, mockRiskCategory);
 
       expect(result).toEqual(true);
     });
   });
 
-  describe('when riskCategory is null', () => {
+  describe('when shortTermCover=true, nbiIssueAvailable=false, riskCategory is null', () => {
     it('should return false', () => {
-      const result = canGetAQuoteByEmail(mockShortTermCover, mockNbiIssueAvailable, null);
+      const result = canGetAQuoteByEmail(true, false, null);
 
       expect(result).toEqual(false);
     });
   });
 
-  describe('when riskCategory is an empty string', () => {
+  describe('when shortTermCover=true, nbiIssueAvailable=false, riskCategory is an empty string', () => {
     it('should return false', () => {
-      const result = canGetAQuoteByEmail(mockShortTermCover, mockNbiIssueAvailable, '');
+      const result = canGetAQuoteByEmail(true, false, '');
 
       expect(result).toEqual(false);
     });
   });
 
-  describe('when shortTermCover=false', () => {
+  describe('when shortTermCover=false, nbiIssueAvailable=false, riskCategory is provided', () => {
     it('should return false', () => {
-      const result = canGetAQuoteByEmail(false, mockNbiIssueAvailable, mockRiskCategory);
+      const result = canGetAQuoteByEmail(false, false, mockRiskCategory);
 
       expect(result).toEqual(false);
     });
   });
 
-  describe('when nbiIssueAvailable=true', () => {
+  describe('when shortTermCover=true, nbiIssueAvailable=true, riskCategory is provided', () => {
     it('should return false', () => {
-      const result = canGetAQuoteByEmail(mockShortTermCover, true, mockRiskCategory);
+      const result = canGetAQuoteByEmail(true, true, mockRiskCategory);
 
       expect(result).toEqual(false);
     });
