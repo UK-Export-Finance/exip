@@ -78,8 +78,7 @@ context('Insurance - Your buyer - Credit insurance cover - Save and back - Yes',
 
       cy.assertYesRadioOptionIsChecked();
 
-      const textArea = field(PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER).textarea();
-      cy.checkText(textArea, '');
+      cy.assertEmptyTextareaFieldValue(PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER);
     });
   });
 

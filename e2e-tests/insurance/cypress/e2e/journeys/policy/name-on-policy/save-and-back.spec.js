@@ -101,7 +101,7 @@ context('Insurance - Policy - Name on policy - Save and go back', () => {
 
       cy.assertRadioOptionIsChecked(field(SAME_NAME).input());
 
-      cy.checkValue(field(POSITION), '');
+      cy.assertEmptyFieldValue(POSITION);
     });
   });
 

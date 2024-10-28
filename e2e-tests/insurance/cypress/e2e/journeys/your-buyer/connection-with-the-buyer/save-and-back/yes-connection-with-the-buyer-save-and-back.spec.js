@@ -79,7 +79,8 @@ context('Insurance - Your buyer - Connection with the buyer - Has connection to 
       cy.clickSubmitButton();
 
       cy.assertYesRadioOptionIsChecked();
-      cy.checkText(field(CONNECTION_WITH_BUYER_DESCRIPTION).textarea(), '');
+
+      cy.assertEmptyTextareaFieldValue(CONNECTION_WITH_BUYER_DESCRIPTION);
     });
   });
 

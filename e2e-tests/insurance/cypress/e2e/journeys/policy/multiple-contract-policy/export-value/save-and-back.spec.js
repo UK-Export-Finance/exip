@@ -94,7 +94,7 @@ context('Insurance - Policy - Multiple contract policy Export value page - Save 
       });
 
       it('should NOT have saved the submitted value', () => {
-        cy.checkValue(field, '');
+        cy.assertEmptyFieldValue(TOTAL_SALES_TO_BUYER);
       });
     });
   });
