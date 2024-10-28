@@ -30,10 +30,13 @@ export const mapCisCountry = (cisCountry: CisCountry): MappedCisCountry => {
     nbiIssueAvailable,
   } as MappedCisCountry;
 
-  mapped.canGetAQuoteOnline = canGetAQuoteOnline(shortTermCover, nbiIssueAvailable, riskCategory);
+  mapped.canGetAQuoteOnline = canGetAQuoteOnline({ shortTermCover, nbiIssueAvailable, riskCategory });
+
   mapped.canGetAQuoteOffline = canApplyOffline(cisCountry.shortTermCoverAvailabilityDesc);
-  mapped.canGetAQuoteByEmail = canGetAQuoteByEmail(shortTermCover, nbiIssueAvailable, riskCategory);
-  mapped.cannotGetAQuote = cannotGetAQuote(shortTermCover, nbiIssueAvailable, riskCategory);
+
+  mapped.canGetAQuoteByEmail = canGetAQuoteByEmail({ shortTermCover, nbiIssueAvailable, riskCategory });
+
+  mapped.cannotGetAQuote = cannotGetAQuote({ shortTermCover, nbiIssueAvailable, riskCategory });
 
   mapped.canApplyForInsuranceOnline = canApplyForInsuranceOnline(shortTermCover, riskCategory);
 

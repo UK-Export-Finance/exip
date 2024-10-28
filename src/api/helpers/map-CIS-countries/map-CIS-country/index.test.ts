@@ -47,10 +47,10 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
       noInsuranceSupport: false,
     } as MappedCisCountry;
 
-    mapped.canGetAQuoteOnline = canGetAQuoteOnline(shortTermCover, nbiIssueAvailable, riskCategory);
+    mapped.canGetAQuoteOnline = canGetAQuoteOnline({ shortTermCover, nbiIssueAvailable, riskCategory });
     mapped.canGetAQuoteOffline = canApplyOffline(mockCountryBase.shortTermCoverAvailabilityDesc);
-    mapped.canGetAQuoteByEmail = canGetAQuoteByEmail(mapped);
-    mapped.cannotGetAQuote = cannotGetAQuote(mapped);
+    mapped.canGetAQuoteByEmail = canGetAQuoteByEmail({ shortTermCover, nbiIssueAvailable, riskCategory });
+    mapped.cannotGetAQuote = cannotGetAQuote({ shortTermCover, nbiIssueAvailable, riskCategory });
 
     mapped.canApplyForInsuranceOnline = canApplyForInsuranceOnline(mapped.shortTermCover);
 

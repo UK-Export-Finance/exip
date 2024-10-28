@@ -8427,7 +8427,7 @@ var mapNbiIssueAvailable = (str) => {
 var map_NBI_issue_available_default = mapNbiIssueAvailable;
 
 // helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-online/index.ts
-var canGetAQuoteOnline = (shortTermCover, nbiIssueAvailable, riskCategory) => {
+var canGetAQuoteOnline = ({ shortTermCover, nbiIssueAvailable, riskCategory }) => {
   if (riskCategory && shortTermCover && nbiIssueAvailable) {
     return true;
   }
@@ -8436,7 +8436,7 @@ var canGetAQuoteOnline = (shortTermCover, nbiIssueAvailable, riskCategory) => {
 var can_get_a_quote_online_default = canGetAQuoteOnline;
 
 // helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-by-email/index.ts
-var canGetAQuoteByEmail = (shortTermCover, nbiIssueAvailable, riskCategory) => {
+var canGetAQuoteByEmail = ({ shortTermCover, nbiIssueAvailable, riskCategory }) => {
   if (shortTermCover && !nbiIssueAvailable && riskCategory) {
     return true;
   }
@@ -8445,7 +8445,7 @@ var canGetAQuoteByEmail = (shortTermCover, nbiIssueAvailable, riskCategory) => {
 var can_get_a_quote_by_email_default = canGetAQuoteByEmail;
 
 // helpers/map-CIS-countries/map-CIS-country/cannot-get-a-quote/index.ts
-var cannotGetAQuote = (shortTermCover, nbiIssueAvailable, riskCategory) => {
+var cannotGetAQuote = ({ shortTermCover, nbiIssueAvailable, riskCategory }) => {
   if (!riskCategory || (!shortTermCover && !nbiIssueAvailable)) {
     return true;
   }
@@ -8496,10 +8496,10 @@ var mapCisCountry = (cisCountry) => {
     shortTermCover,
     nbiIssueAvailable,
   };
-  mapped.canGetAQuoteOnline = can_get_a_quote_online_default(shortTermCover, nbiIssueAvailable, riskCategory);
+  mapped.canGetAQuoteOnline = can_get_a_quote_online_default({ shortTermCover, nbiIssueAvailable, riskCategory });
   mapped.canGetAQuoteOffline = can_apply_offline_default(cisCountry.shortTermCoverAvailabilityDesc);
-  mapped.canGetAQuoteByEmail = can_get_a_quote_by_email_default(shortTermCover, nbiIssueAvailable, riskCategory);
-  mapped.cannotGetAQuote = cannot_get_a_quote_default(shortTermCover, nbiIssueAvailable, riskCategory);
+  mapped.canGetAQuoteByEmail = can_get_a_quote_by_email_default({ shortTermCover, nbiIssueAvailable, riskCategory });
+  mapped.cannotGetAQuote = cannot_get_a_quote_default({ shortTermCover, nbiIssueAvailable, riskCategory });
   mapped.canApplyForInsuranceOnline = can_apply_for_insurance_online_default(shortTermCover, riskCategory);
   mapped.noInsuranceSupport = no_insurance_support_default(cisCountry.marketRiskAppetitePublicDesc);
   return mapped;
