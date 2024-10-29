@@ -12,7 +12,7 @@ import {
 } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
-import { FIELDS_ELIGIBILITY } from '../../../../../../../content-strings/fields/insurance/eligibility';
+import { ELIGIBILITY_FIELDS } from '../../../../../../../content-strings/fields/insurance/eligibility';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER;
 
@@ -26,7 +26,7 @@ const {
   ELIGIBILITY: { COMPANIES_HOUSE_NUMBER: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
-const FIELD_STRINGS = FIELDS_ELIGIBILITY[FIELD_ID];
+const FIELD_STRINGS = ELIGIBILITY_FIELDS[FIELD_ID];
 
 const field = fieldSelector(FIELD_ID);
 
