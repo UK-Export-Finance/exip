@@ -1,5 +1,5 @@
 import { Connection } from 'mysql2/promise';
-import executeSqlQuery from './execute-sql-query';
+import executeSqlQuery from '../execute-sql-query';
 
 /**
  * getAllLossPayeeFinancialUk
@@ -19,7 +19,7 @@ const getAllLossPayeeFinancialUk = async (connection: Connection) => {
 
     return financials;
   } catch (error) {
-    console.error('🚨 error %s %o', loggingMessage, error);
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

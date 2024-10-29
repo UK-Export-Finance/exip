@@ -1,5 +1,5 @@
 import { Connection } from 'mysql2/promise';
-import executeSqlQuery from './execute-sql-query';
+import executeSqlQuery from '../execute-sql-query';
 
 /**
  * removeDeclarationKeys
@@ -35,7 +35,7 @@ const removeDeclarationKeys = async (connection: Connection) => {
 
     return queries;
   } catch (error) {
-    console.error('🚨 error %s %o', loggingMessage, error);
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
@@ -75,7 +75,7 @@ const removeDeclarationConstraints = async (connection: Connection) => {
 
     return queries;
   } catch (error) {
-    console.error('🚨 error %s %o', loggingMessage, error);
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
@@ -119,7 +119,7 @@ const removeDeclarationFields = async (connection: Connection) => {
 
     return queries;
   } catch (error) {
-    console.error('🚨 error %s %o', loggingMessage, error);
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

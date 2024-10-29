@@ -1,7 +1,7 @@
 import { Connection } from 'mysql2/promise';
 import getAllLossPayeeFinancialUk from '../../get-all-loss-payee-financial-uks';
 import getAllLossPayeeFinancialUkVectors from '../../get-all-loss-payee-financial-uk-vectors';
-import executeSqlQuery from '../../execute-sql-query';
+import executeSqlQuery from '../../../execute-sql-query';
 
 /**
  * updateLossPayeeFinancialUkVector
@@ -48,7 +48,7 @@ const updateLossPayeeFinancialUkVector = async (connection: Connection) => {
 
     return Promise.all(promises);
   } catch (error) {
-    console.error('🚨 error %s %o', loggingMessage, error);
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

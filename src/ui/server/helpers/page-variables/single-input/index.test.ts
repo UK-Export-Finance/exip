@@ -1,7 +1,7 @@
 import singleInputPageVariables from '.';
 import corePageVariables from '../core';
 import { FIELDS } from '../../../content-strings';
-import { FIELDS_ELIGIBILITY as FIELDS_INSURANCE_ELIGIBILITY } from '../../../content-strings/fields/insurance/eligibility';
+import { ELIGIBILITY_FIELDS as FIELDS_INSURANCE_ELIGIBILITY } from '../../../content-strings/fields/insurance/eligibility';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 
 const { FEEDBACK: feedbackRoute } = ROUTES.INSURANCE;

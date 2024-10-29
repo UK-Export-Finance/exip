@@ -2,7 +2,7 @@ import { Connection } from 'mysql2/promise';
 import getAllBuyerContacts from '../get-all-buyer-contacts';
 import getAllBuyerRelationships from '../get-all-buyer-relationships';
 import getAllBuyerTradingHistories from '../get-all-buyer-trading-histories';
-import executeSqlQuery from '../execute-sql-query';
+import executeSqlQuery from '../../execute-sql-query';
 import { ApplicationBuyerMvp } from '../../../types';
 
 /**
@@ -68,7 +68,7 @@ const updateBuyerRelationshipIds = async ({ connection, buyers }: CreateBuyerRel
 
     return Promise.all(buyerPromises);
   } catch (error) {
-    console.error('🚨 error %s %o', loggingMessage, error);
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
     throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }

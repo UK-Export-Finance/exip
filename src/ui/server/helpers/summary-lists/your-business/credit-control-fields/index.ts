@@ -1,5 +1,5 @@
 import { FORM_TITLES } from '../../../../content-strings/form-titles';
-import { FIELDS } from '../../../../content-strings/fields/insurance';
+import { EXPORTER_BUSINESS_FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
@@ -32,7 +32,7 @@ const generateCreditControlFields = (answers: ApplicationBusiness, referenceNumb
   const fields = [
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS, HAS_CREDIT_CONTROL),
+        field: getFieldById(EXPORTER_BUSINESS_FIELDS, HAS_CREDIT_CONTROL),
         data: answers,
         href: generateChangeLink(CREDIT_CONTROL_CHANGE, CREDIT_CONTROL_CHECK_AND_CHANGE, `#${HAS_CREDIT_CONTROL}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
