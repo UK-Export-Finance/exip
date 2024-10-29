@@ -1,3 +1,4 @@
+import { MINIMUM_CHARACTERS } from '../../../../../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import numberAboveMinimumValidation from '../../../../../../../shared-validation/number-above-minimum';
@@ -19,7 +20,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-export const MINIMUM = 1;
+const MINIMUM = MINIMUM_CHARACTERS.POLICY.MAXIMUM_BUYER_WILL_OWE;
 
 /**
  * maximumBuyerWillOweRules

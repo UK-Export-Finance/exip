@@ -1,5 +1,5 @@
 import rule from './credit-period';
-import { FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
+import { FIELD_IDS, FIELD_VALUES, MINIMUM_CHARACTERS, MAXIMUM_CHARACTERS } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { mockErrors } from '../../../../../test-mocks';
@@ -30,7 +30,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/credit-pe
       it('should return a validation error', () => {
         const mockSubmittedData = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
-          [CREDIT_PERIOD]: '0',
+          [CREDIT_PERIOD]: String(MINIMUM_CHARACTERS.QUOTE.CREDIT_PERIOD - 1),
         };
 
         const result = rule(mockSubmittedData, mockErrors);
@@ -45,7 +45,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/credit-pe
       it('should return a validation error', () => {
         const mockSubmittedData = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
-          [CREDIT_PERIOD]: '3',
+          [CREDIT_PERIOD]: String(MAXIMUM_CHARACTERS.QUOTE.CREDIT_PERIOD + 1),
         };
 
         const result = rule(mockSubmittedData, mockErrors);

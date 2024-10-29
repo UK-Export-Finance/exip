@@ -1,5 +1,5 @@
 import rule from './policy-length';
-import { FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
+import { ELIGIBILITY, FIELD_IDS, FIELD_VALUES, MINIMUM_CHARACTERS } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { mockErrors } from '../../../../../test-mocks';
@@ -56,7 +56,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/policy-le
 
     describe(`when ${FIELD_ID} is below the minimum`, () => {
       it('should return a validation error', () => {
-        mockBody[FIELD_ID] = '0';
+        mockBody[FIELD_ID] = String(MINIMUM_CHARACTERS.QUOTE.POLICY_LENGTH - 1);
 
         const result = rule(mockBody, mockErrors);
 
@@ -68,7 +68,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/policy-le
 
     describe(`when ${FIELD_ID} is above the maximum`, () => {
       it('should return a validation error', () => {
-        mockBody[FIELD_ID] = '25';
+        mockBody[FIELD_ID] = String(ELIGIBILITY.MAX_COVER_PERIOD_MONTHS + 1);
 
         const result = rule(mockBody, mockErrors);
 

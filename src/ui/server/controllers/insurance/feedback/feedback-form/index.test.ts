@@ -1,6 +1,6 @@
-import { FIELD_IDS, TEMPLATE, pageVariables, MAXIMUM, get, post } from '.';
+import { FIELD_IDS, TEMPLATE, pageVariables, get, post } from '.';
 import { PAGES, FIELDS } from '../../../../content-strings';
-import { TEMPLATES, ROUTES, APPLY, SERVICE_NAME } from '../../../../constants';
+import { TEMPLATES, ROUTES, APPLY, SERVICE_NAME, MAXIMUM_CHARACTERS } from '../../../../constants';
 import { FEEDBACK_FIELD_IDS } from '../../../../constants/field-ids/feedback';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -66,7 +66,6 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
             ...FIELDS[OTHER_COMMENTS],
           },
         },
-        MAXIMUM,
       };
 
       expect(result).toEqual(expected);
@@ -172,7 +171,7 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
     describe('when there are validation errors', () => {
       const body = {
         [SATISFACTION]: '',
-        [IMPROVEMENT]: 'a'.repeat(MAXIMUM + 1),
+        [IMPROVEMENT]: 'a'.repeat(MAXIMUM_CHARACTERS.FEEDBACK.IMPROVEMENT + 1),
         [OTHER_COMMENTS]: '',
       };
 
