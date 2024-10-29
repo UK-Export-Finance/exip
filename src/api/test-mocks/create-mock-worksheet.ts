@@ -7,6 +7,11 @@ import mockCountries from './mock-countries';
 
 const { APPLICATION_INFORMATION } = SECTION_NAMES;
 
+/**
+ * createMockWorksheet
+ * Create a mock ExcelJS worksheet
+ * @returns {ExcelJS.Worksheet}
+ */
 export const createMockWorksheet = () => {
   const workbook = new ExcelJS.Workbook();
 
