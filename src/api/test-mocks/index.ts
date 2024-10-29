@@ -8,6 +8,7 @@ import currencies from './mock-currencies';
 import company, { companyScenarios } from './mock-company';
 import companySicCode from './mock-company-sic-code';
 import nominatedLossPayee from './mock-nominated-loss-payee';
+export * from './create-mock-worksheet';
 import { Account } from '../types';
 
 const {

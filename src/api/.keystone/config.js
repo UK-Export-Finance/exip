@@ -6536,7 +6536,10 @@ var POLICY_FIELDS = {
       },
       [CONTRACT_POLICY.SINGLE.REQUESTED_CREDIT_LIMIT]: {
         LABEL: 'What credit limit do you require?',
-        HINT: 'For example, your total contract maybe \xA3250,000 but the amount you want to insure is \xA3100,000.',
+        HINT: {
+          INTRO: 'For example, your total contract maybe \xA3250,000 but the amount you want to insure is \xA3100,000.',
+          OUTRO: 'Enter a whole number. Do not enter decimals.',
+        },
         SUMMARY: {
           TITLE: 'Credit limit',
           FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
@@ -8384,14 +8387,47 @@ var XLSX_ROW_INDEXES = {
 };
 var INDEXES_default = XLSX_ROW_INDEXES;
 
-// generate-xlsx/styled-columns/index.ts
-var { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, FONT_SIZE } = XLSX_CONFIG;
+// generate-xlsx/styled-columns/is-title-row/index.ts
 var { APPLICATION_INFORMATION: APPLICATION_INFORMATION2 } = SECTION_NAMES_default;
-var worksheetRowHeights = (rowIndexes, worksheet, sheetName) => {
+var isTitleRow = (sheetName, rowNumber) => {
+  const isInfoSheet = sheetName === APPLICATION_INFORMATION2;
+  const isInfoTitleOne = isInfoSheet && rowNumber === 8;
+  const isInfoTitleTwo = isInfoSheet && rowNumber === 13;
+  const isInfoTitle = isInfoTitleOne || isInfoTitleTwo;
+  const result = rowNumber === 1 || isInfoTitle;
+  return result;
+};
+var is_title_row_default = isTitleRow;
+
+// generate-xlsx/styled-columns/modify-row-styles/index.ts
+var { FONT_SIZE } = XLSX_CONFIG;
+var modifyRowStyles = (worksheet, sheetName) => {
+  worksheet.eachRow((row, rowNumber) => {
+    row.eachCell((cell, colNumber) => {
+      const modifiedRow = row;
+      modifiedRow.getCell(colNumber).alignment = {
+        vertical: 'top',
+        wrapText: true,
+      };
+      const isATitleRow = is_title_row_default(sheetName, rowNumber);
+      modifiedRow.getCell(colNumber).font = {
+        bold: Boolean(isATitleRow),
+        size: isATitleRow ? FONT_SIZE.TITLE : FONT_SIZE.DEFAULT,
+      };
+    });
+  });
+  return worksheet;
+};
+var modify_row_styles_default = modifyRowStyles;
+
+// generate-xlsx/styled-columns/modify-row-heights/index.ts
+var { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT } = XLSX_CONFIG;
+var { APPLICATION_INFORMATION: APPLICATION_INFORMATION3 } = SECTION_NAMES_default;
+var modifyRowHeights = (rowIndexes, worksheet, sheetName) => {
   const modifiedWorksheet = worksheet;
   modifiedWorksheet.getRow(1).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
-  const isInformationSheet = sheetName === APPLICATION_INFORMATION2;
-  if (isInformationSheet) {
+  const isInfoSheet = sheetName === APPLICATION_INFORMATION3;
+  if (isInfoSheet) {
     modifiedWorksheet.getRow(8).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
     modifiedWorksheet.getRow(13).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
   }
@@ -8400,33 +8436,22 @@ var worksheetRowHeights = (rowIndexes, worksheet, sheetName) => {
   });
   return modifiedWorksheet;
 };
-var styledColumns = (application2, worksheet, sheetName) => {
-  let modifiedWorksheet = worksheet;
-  modifiedWorksheet.eachRow((row, rowNumber) => {
-    row.eachCell((cell, colNumber) => {
-      const modifiedRow = row;
-      modifiedRow.getCell(colNumber).alignment = {
-        vertical: 'top',
-        wrapText: true,
-      };
-      const isInformationSheet = sheetName === APPLICATION_INFORMATION2;
-      const isInformationTitleOne = isInformationSheet && rowNumber === 8;
-      const isInformationTitleTwo = isInformationSheet && rowNumber === 13;
-      const isInformationTitle = isInformationTitleOne || isInformationTitleTwo;
-      const isTitleRow = rowNumber === 1 || isInformationTitle;
-      modifiedRow.getCell(colNumber).font = {
-        bold: Boolean(isTitleRow),
-        size: isTitleRow ? FONT_SIZE.TITLE : FONT_SIZE.DEFAULT,
-      };
-    });
-  });
+var modify_row_heights_default = modifyRowHeights;
+
+// generate-xlsx/styled-columns/index.ts
+var getRowIndexes = (application2, sheetName) => {
   let INDEXES = [];
   if (INDEXES_default[sheetName]) {
     const sheetIndexes = INDEXES_default[sheetName](application2);
     INDEXES = Object.values(sheetIndexes);
   }
-  modifiedWorksheet = worksheetRowHeights(INDEXES, modifiedWorksheet, sheetName);
-  return modifiedWorksheet;
+  return INDEXES;
+};
+var styledColumns = (application2, worksheet, sheetName) => {
+  const withRowStyles = modify_row_styles_default(worksheet, sheetName);
+  const indexes = getRowIndexes(application2, sheetName);
+  const withRowHeights = modify_row_heights_default(indexes, withRowStyles, sheetName);
+  return withRowHeights;
 };
 var styled_columns_default = styledColumns;
 

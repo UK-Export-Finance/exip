@@ -1,56 +1,20 @@
-import ExcelJS from 'exceljs';
-import styledColumns, { worksheetRowHeights } from '.';
-import { XLSX_CONFIG } from '../../constants';
-import { mockApplicationMinimalBrokerBuyerAndCompany as mockApplication } from '../../test-mocks';
-
-const { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, FONT_SIZE } = XLSX_CONFIG;
+import styledColumns, { getRowIndexes } from '.';
+import modifyRowStyles from './modify-row-styles';
+import modifyRowHeights from './modify-row-heights';
+import { mockApplicationMinimalBrokerBuyerAndCompany as mockApplication, createMockWorksheet } from '../../test-mocks';
 
 describe('api/generate-xlsx/styled-columns/index', () => {
-  const mockSheetName = 'mock sheet name';
+  const { mockWorksheet, mockSheetName } = createMockWorksheet();
 
-  const workbook = new ExcelJS.Workbook();
+  it('should return a modified worksheet', async () => {
+    const result = styledColumns(mockApplication, mockWorksheet, mockSheetName);
 
-  const worksheet = workbook.addWorksheet(mockSheetName);
+    const modifiedRowStyles = modifyRowStyles(mockWorksheet, mockSheetName);
 
-  describe('worksheetRowHeights', () => {
-    it('should add column heights to particular columns', async () => {
-      const mockIndexes = [5, 6];
+    const indexes = getRowIndexes(mockApplication, mockSheetName);
 
-      const result = worksheetRowHeights(mockIndexes, worksheet);
+    const expected = modifyRowHeights(indexes, modifiedRowStyles, mockSheetName);
 
-      result.eachRow((row, rowNumber) => {
-        if (rowNumber === 1) {
-          expect(row.height).toEqual(ADDITIONAL_TITLE_COLUMN_HEIGHT);
-        } else if (mockIndexes.includes(rowNumber)) {
-          expect(row.height).toEqual(LARGE_ADDITIONAL_COLUMN_HEIGHT);
-        }
-      });
-    });
-  });
-
-  describe('styledColumns', () => {
-    it('should add custom `alignment` and font size properties to each column', async () => {
-      const result = styledColumns(mockApplication, worksheet, mockSheetName);
-
-      result.eachRow((row, rowNumber) => {
-        const isHeaderRow = rowNumber === 1;
-
-        if (isHeaderRow) {
-          row.eachCell((cell, colNumber) => {
-            const cellData = row.getCell(colNumber);
-
-            expect(cellData.font.bold).toEqual(true);
-            expect(cellData.font.size).toEqual(FONT_SIZE.TITLE);
-          });
-        } else {
-          row.eachCell((cell, colNumber) => {
-            const cellData = row.getCell(colNumber);
-
-            expect(cellData.font.bold).toEqual(false);
-            expect(cellData.font.size).toEqual(FONT_SIZE.DEFAULT);
-          });
-        }
-      });
-    });
+    expect(result).toEqual(expected);
   });
 });

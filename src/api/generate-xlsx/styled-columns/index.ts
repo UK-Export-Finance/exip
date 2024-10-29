@@ -1,38 +1,19 @@
-import { Row, Worksheet } from 'exceljs';
-import { XLSX_CONFIG } from '../../constants';
+import { Worksheet } from 'exceljs';
 import XLSX_ROW_INDEXES from '../../constants/XLSX-CONFIG/INDEXES';
-import SECTION_NAMES from '../../constants/XLSX-CONFIG/SECTION_NAMES';
+import modifyRowStyles from './modify-row-styles';
+import modifyRowHeights from './modify-row-heights';
 import { Application } from '../../types';
 
-const { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, FONT_SIZE } = XLSX_CONFIG;
+export const getRowIndexes = (application: Application, sheetName: string) => {
+  let INDEXES = [] as Array<number>;
 
-const { APPLICATION_INFORMATION } = SECTION_NAMES;
+  if (XLSX_ROW_INDEXES[sheetName]) {
+    const sheetIndexes = XLSX_ROW_INDEXES[sheetName](application);
 
-/**
- * worksheetRowHeights
- * Add custom heights to certain worksheet cells
- * @param {Array<number>} rowIndexes: Row indexes
- * @param {ExcelJS.Worksheet} worksheet: ExcelJS worksheet
- * @param {String} ExcelJS sheetName: worksheet name
- * @returns {ExcelJS.Worksheet} ExcelJS worksheet
- */
-export const worksheetRowHeights = (rowIndexes: Array<number>, worksheet: Worksheet, sheetName: string) => {
-  const modifiedWorksheet = worksheet;
-
-  modifiedWorksheet.getRow(1).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
-
-  const isInformationSheet = sheetName === APPLICATION_INFORMATION;
-
-  if (isInformationSheet) {
-    modifiedWorksheet.getRow(8).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
-    modifiedWorksheet.getRow(13).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+    INDEXES = Object.values(sheetIndexes);
   }
 
-  rowIndexes.forEach((rowIndex) => {
-    modifiedWorksheet.getRow(rowIndex).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
-  });
-
-  return modifiedWorksheet;
+  return INDEXES;
 };
 
 /**
@@ -44,43 +25,13 @@ export const worksheetRowHeights = (rowIndexes: Array<number>, worksheet: Worksh
  * @returns {ExcelJS.Worksheet} ExcelJS worksheet
  */
 const styledColumns = (application: Application, worksheet: Worksheet, sheetName: string) => {
-  let modifiedWorksheet = worksheet;
+  const withRowStyles = modifyRowStyles(worksheet, sheetName);
 
-  modifiedWorksheet.eachRow((row: Row, rowNumber: number) => {
-    row.eachCell((cell, colNumber) => {
-      const modifiedRow = row;
+  const indexes = getRowIndexes(application, sheetName);
 
-      modifiedRow.getCell(colNumber).alignment = {
-        vertical: 'top',
-        wrapText: true,
-      };
+  const withRowHeights = modifyRowHeights(indexes, withRowStyles, sheetName);
 
-      const isInformationSheet = sheetName === APPLICATION_INFORMATION;
-      const isInformationTitleOne = isInformationSheet && rowNumber === 8;
-      const isInformationTitleTwo = isInformationSheet && rowNumber === 13;
-
-      const isInformationTitle = isInformationTitleOne || isInformationTitleTwo;
-
-      const isTitleRow = rowNumber === 1 || isInformationTitle;
-
-      modifiedRow.getCell(colNumber).font = {
-        bold: Boolean(isTitleRow),
-        size: isTitleRow ? FONT_SIZE.TITLE : FONT_SIZE.DEFAULT,
-      };
-    });
-  });
-
-  let INDEXES = [] as Array<number>;
-
-  if (XLSX_ROW_INDEXES[sheetName]) {
-    const sheetIndexes = XLSX_ROW_INDEXES[sheetName](application);
-
-    INDEXES = Object.values(sheetIndexes);
-  }
-
-  modifiedWorksheet = worksheetRowHeights(INDEXES, modifiedWorksheet, sheetName);
-
-  return modifiedWorksheet;
+  return withRowHeights;
 };
 
 export default styledColumns;
