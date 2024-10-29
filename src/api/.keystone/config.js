@@ -6549,7 +6549,10 @@ var POLICY_FIELDS = {
       },
       [CONTRACT_POLICY.SINGLE.REQUESTED_CREDIT_LIMIT]: {
         LABEL: 'What credit limit do you require?',
-        HINT: 'For example, your total contract maybe \xA3250,000 but the amount you want to insure is \xA3100,000.',
+        HINT: {
+          INTRO: 'For example, your total contract maybe \xA3250,000 but the amount you want to insure is \xA3100,000.',
+          OUTRO: 'Enter a whole number. Do not enter decimals.',
+        },
         SUMMARY: {
           TITLE: 'Credit limit',
           FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
@@ -9178,10 +9181,10 @@ var get_APIM_currencies_default2 = getApimCurrenciesQuery;
 // custom-resolvers/queries/get-countries-and-currencies/index.ts
 var getCountriesAndCurrencies = async (root, variables, context) => {
   try {
-    console.info('Getting countries and currencies (getCountriesAndCurrencies helper)');
+    console.info('Getting countries and currencies (getCountriesAndCurrencies resolver)');
     const [countries, currenciesResponse] = await Promise.all([await get_countries_default(context), await get_APIM_currencies_default.get()]);
     if (!currenciesResponse.success) {
-      throw new Error('Getting currencies (getCountriesAndCurrencies helper)');
+      throw new Error('Getting currencies (getCountriesAndCurrencies resolver)');
     }
     const { allCurrencies, alternativeCurrencies, supportedCurrencies } = currenciesResponse;
     return {
@@ -9191,8 +9194,8 @@ var getCountriesAndCurrencies = async (root, variables, context) => {
       supportedCurrencies,
     };
   } catch (error) {
-    console.error('Error getting countries and currencies (getCountriesAndCurrencies helper) %o', error);
-    throw new Error(`Getting countries and currencies (getCountriesAndCurrencies helper) ${error}`);
+    console.error('Error getting countries and currencies (getCountriesAndCurrencies resolver) %o', error);
+    throw new Error(`Getting countries and currencies (getCountriesAndCurrencies resolver) ${error}`);
   }
 };
 var get_countries_and_currencies_default = getCountriesAndCurrencies;

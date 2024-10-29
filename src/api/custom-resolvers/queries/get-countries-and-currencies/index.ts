@@ -13,12 +13,12 @@ import { Context } from '../../../types';
  */
 const getCountriesAndCurrencies = async (root: any, variables: object, context: Context) => {
   try {
-    console.info('Getting countries and currencies (getCountriesAndCurrencies helper)');
+    console.info('Getting countries and currencies (getCountriesAndCurrencies resolver)');
 
     const [countries, currenciesResponse] = await Promise.all([await getCountries(context), await apimCurrencies.get()]);
 
     if (!currenciesResponse.success) {
-      throw new Error('Getting currencies (getCountriesAndCurrencies helper)');
+      throw new Error('Getting currencies (getCountriesAndCurrencies resolver)');
     }
 
     const { allCurrencies, alternativeCurrencies, supportedCurrencies } = currenciesResponse;
@@ -30,9 +30,9 @@ const getCountriesAndCurrencies = async (root: any, variables: object, context: 
       supportedCurrencies,
     };
   } catch (error) {
-    console.error('Error getting countries and currencies (getCountriesAndCurrencies helper) %o', error);
+    console.error('Error getting countries and currencies (getCountriesAndCurrencies resolver) %o', error);
 
-    throw new Error(`Getting countries and currencies (getCountriesAndCurrencies helper) ${error}`);
+    throw new Error(`Getting countries and currencies (getCountriesAndCurrencies resolver) ${error}`);
   }
 };
 
