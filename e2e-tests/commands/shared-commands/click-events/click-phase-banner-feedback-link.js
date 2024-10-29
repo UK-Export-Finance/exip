@@ -1,11 +1,11 @@
-import partials from '../../../partials';
+import { phaseBanner } from '../../../partials';
 
 /**
  * clickPhaseBannerFeedbackLink
  * Click the phase banner's "feedback" link.
  */
 const clickPhaseBannerFeedbackLink = () => {
-  partials.phaseBanner.feedbackLink().click();
+  phaseBanner.feedbackLink().click();
 };
 
 export default clickPhaseBannerFeedbackLink;

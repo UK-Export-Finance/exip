@@ -1,5 +1,5 @@
 import { autoCompleteField } from '../../../pages/shared';
-import partials from '../../../partials';
+import { errorSummaryListItemLinks } from '../../../partials';
 import { ERROR_MESSAGES, FIELDS } from '../../../content-strings';
 import { FIELD_IDS } from '../../../constants';
 
@@ -26,7 +26,7 @@ export const checkBuyerCountryFocusAfterSummaryErrorClick = () => {
   // we have to wait to ensure that client side js has been executed.
   cy.wait(8000); // eslint-disable-line cypress/no-unnecessary-waiting
 
-  partials.errorSummaryListItemLinks().eq(0).click();
+  errorSummaryListItemLinks().eq(0).click();
 
   const expectedClass = 'autocomplete__input autocomplete__input--default autocomplete__input--focused';
 

@@ -1,9 +1,9 @@
 import numberHyphenSpacesOnlyValidation from '.';
-import { mockErrorMessagesObject, mockErrors } from '../../test-mocks';
-import { RequestBody } from '../../../types';
+import { REGEX } from '../../constants';
 import generateValidationErrors from '../../helpers/validation';
 import regexValidation from '../regex-validation';
-import { REGEX } from '../../constants';
+import { RequestBody } from '../../../types';
+import { mockErrorMessagesObject, mockErrors } from '../../test-mocks';
 
 describe('shared-validation/number-hyphen-and-spaces-only', () => {
   const FIELD_ID = 'FIELD_ID';

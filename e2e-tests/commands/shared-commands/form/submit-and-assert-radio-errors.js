@@ -1,4 +1,4 @@
-import partials from '../../../partials';
+import { errorSummaryListItems, errorSummaryListItemLinks } from '../../../partials';
 
 /**
  * @param {Object} field: Cypress selector.
@@ -13,9 +13,9 @@ const submitAndAssertRadioErrors = ({ field, errorIndex = 0, expectedErrorsCount
 
   cy.assertErrorSummaryListLength(expectedErrorsCount);
 
-  cy.checkText(partials.errorSummaryListItems().eq(errorIndex), expectedErrorMessage);
+  cy.checkText(errorSummaryListItems().eq(errorIndex), expectedErrorMessage);
 
-  partials.errorSummaryListItemLinks().eq(errorIndex).click();
+  errorSummaryListItemLinks().eq(errorIndex).click();
 
   field.input().should('have.focus');
 

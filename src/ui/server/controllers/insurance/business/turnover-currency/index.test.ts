@@ -3,7 +3,7 @@ import { PAGES } from '../../../../content-strings';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { FIELDS } from '../../../../content-strings/fields/insurance';
+import { EXPORTER_BUSINESS_FIELDS } from '../../../../content-strings/fields/insurance';
 import api from '../../../../api';
 import mapRadioAndSelectOptions from '../../../../helpers/mappings/map-currencies/radio-and-select-options';
 import constructPayload from '../../../../helpers/construct-payload';
@@ -64,7 +64,7 @@ describe('controllers/insurance/business/turnover-currency', () => {
         FIELDS: {
           CURRENCY_CODE: {
             ID: CURRENCY_CODE,
-            ...FIELDS[CURRENCY_CODE],
+            ...EXPORTER_BUSINESS_FIELDS[CURRENCY_CODE],
           },
           ALTERNATIVE_CURRENCY_CODE: {
             ID: ALTERNATIVE_CURRENCY_CODE,

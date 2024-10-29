@@ -1,7 +1,7 @@
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
-import { FIELDS_ELIGIBILITY as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
+import { ELIGIBILITY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';

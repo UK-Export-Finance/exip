@@ -25,7 +25,10 @@ export const APPLICATION = {
     },
   },
   POLICY: {
-    TOTAL_MONTHS_OF_COVER: 12,
+    TOTAL_MONTHS_OF_COVER: {
+      MINIMUM: 1,
+      MAXIMUM: 12,
+    },
   },
   EXPORT_CONTRACT: {
     AGENT_SERVICE_CHARGE: {

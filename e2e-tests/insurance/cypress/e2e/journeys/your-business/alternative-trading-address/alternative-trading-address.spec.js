@@ -1,4 +1,4 @@
-import partials from '../../../../../../partials';
+import { headingCaption, html } from '../../../../../../partials';
 import { field as fieldSelector } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELD_STRINGS } from '../../../../../../content-strings/fields/insurance/business';
@@ -77,20 +77,20 @@ context(
       });
 
       it('renders a heading caption', () => {
-        cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+        cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
       it('renders a registered office address heading', () => {
         cy.checkText(fieldSelector(COMPANY_ADDRESS).heading(), REGISTERED_OFFICE_ADDRESS_HEADING);
       });
 
-      it('renders a registered office address heading', () => {
+      it('renders a registered office address hint', () => {
         cy.checkText(fieldSelector(COMPANY_ADDRESS).hint(), REGISTERED_OFFICE_ADDRESS_HINT);
       });
 
       it('renders a registered office address', () => {
         const addressText = `${address.addressLine1}${address.locality}${address.region}${address.postalCode}`;
-        cy.checkText(partials.html(COMPANY_ADDRESS), addressText);
+        cy.checkText(html(COMPANY_ADDRESS), addressText);
       });
 
       it(`should display ${FULL_ADDRESS} textarea`, () => {

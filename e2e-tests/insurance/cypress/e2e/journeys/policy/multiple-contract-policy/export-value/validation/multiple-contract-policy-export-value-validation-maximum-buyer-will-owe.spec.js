@@ -1,5 +1,5 @@
 import { multipleContractPolicyExportValuePage } from '../../../../../../../../pages/insurance/policy';
-import partials from '../../../../../../../../partials';
+import { errorSummaryListItems } from '../../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
@@ -59,7 +59,7 @@ context('Insurance - Policy - Multiple contract policy - Export value page - for
   it('should render a validation error when maximum buyer will owe is not provided', () => {
     cy.clickSubmitButton();
 
-    cy.checkText(partials.errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT);
+    cy.checkText(errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT);
 
     cy.checkText(field.errorMessage(), `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`);
   });
@@ -68,7 +68,7 @@ context('Insurance - Policy - Multiple contract policy - Export value page - for
     cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), 'ten!');
     cy.clickSubmitButton();
 
-    cy.checkText(partials.errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT);
+    cy.checkText(errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT);
 
     cy.checkText(field.errorMessage(), `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`);
   });
@@ -77,7 +77,7 @@ context('Insurance - Policy - Multiple contract policy - Export value page - for
     cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), '1.2');
     cy.clickSubmitButton();
 
-    cy.checkText(partials.errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT);
+    cy.checkText(errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT);
 
     cy.checkText(field.errorMessage(), `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`);
   });
@@ -86,7 +86,7 @@ context('Insurance - Policy - Multiple contract policy - Export value page - for
     cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), '1,234.56');
     cy.clickSubmitButton();
 
-    cy.checkText(partials.errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT);
+    cy.checkText(errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT);
 
     cy.checkText(field.errorMessage(), `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`);
   });
@@ -95,7 +95,7 @@ context('Insurance - Policy - Multiple contract policy - Export value page - for
     cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), '0');
     cy.clickSubmitButton();
 
-    cy.checkText(partials.errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].BELOW_MINIMUM);
+    cy.checkText(errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].BELOW_MINIMUM);
 
     cy.checkText(field.errorMessage(), `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].BELOW_MINIMUM}`);
   });

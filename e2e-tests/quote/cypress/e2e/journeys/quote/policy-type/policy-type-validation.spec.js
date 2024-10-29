@@ -1,5 +1,5 @@
 import { policyTypePage } from '../../../../../../pages/quote';
-import partials from '../../../../../../partials';
+import { errorSummaryListItems, errorSummaryListItemLinks } from '../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 
@@ -40,9 +40,9 @@ context('Policy type page - policy type & length validation - single policy type
 
       const expectedErrorMessage = ERROR_MESSAGES.ELIGIBILITY[POLICY_TYPE];
 
-      cy.checkText(partials.errorSummaryListItems().first(), expectedErrorMessage);
+      cy.checkText(errorSummaryListItems().first(), expectedErrorMessage);
 
-      partials.errorSummaryListItemLinks().first().click();
+      errorSummaryListItemLinks().first().click();
 
       const singlePolicyTypeField = policyTypePage[POLICY_TYPE].single;
       singlePolicyTypeField.input().should('have.focus');
