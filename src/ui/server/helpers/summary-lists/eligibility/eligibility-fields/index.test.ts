@@ -1,5 +1,5 @@
 import generateEligibilityFields from '.';
-import { FIELDS_ELIGIBILITY } from '../../../../content-strings/fields/insurance';
+import { ELIGIBILITY_FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
@@ -53,7 +53,7 @@ describe('server/helpers/summary-lists/eligibility/eligibility-fields', () => {
   const expectedBase = [
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, VALID_EXPORTER_LOCATION),
+        field: getFieldById(ELIGIBILITY_FIELDS, VALID_EXPORTER_LOCATION),
         data: mockApplication,
         href: generateChangeLink(
           EXPORTER_LOCATION_CHANGE,
@@ -69,7 +69,7 @@ describe('server/helpers/summary-lists/eligibility/eligibility-fields', () => {
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, HAS_COMPANIES_HOUSE_NUMBER),
+        field: getFieldById(ELIGIBILITY_FIELDS, HAS_COMPANIES_HOUSE_NUMBER),
         data: mockAnswers,
         href: generateChangeLink(
           COMPANIES_HOUSE_NUMBER_CHANGE,
@@ -85,7 +85,7 @@ describe('server/helpers/summary-lists/eligibility/eligibility-fields', () => {
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, COMPANY_NUMBER),
+        field: getFieldById(ELIGIBILITY_FIELDS, COMPANY_NUMBER),
         data: mockAnswers,
         href: generateChangeLink(
           ENTER_COMPANIES_HOUSE_NUMBER_CHANGE,
@@ -101,7 +101,7 @@ describe('server/helpers/summary-lists/eligibility/eligibility-fields', () => {
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, COMPANY_NAME),
+        field: getFieldById(ELIGIBILITY_FIELDS, COMPANY_NAME),
         data: mockAnswers,
         renderChangeLink: false,
       },
@@ -109,7 +109,7 @@ describe('server/helpers/summary-lists/eligibility/eligibility-fields', () => {
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, BUYER_COUNTRY),
+        field: getFieldById(ELIGIBILITY_FIELDS, BUYER_COUNTRY),
         data: mockAnswers,
         href: generateChangeLink(BUYER_COUNTRY_CHANGE, checkAndChangeLink, `#${BUYER_COUNTRY}-label`, referenceNumber, isCheckAndChange, isEligibility),
         renderChangeLink: true,
@@ -118,7 +118,7 @@ describe('server/helpers/summary-lists/eligibility/eligibility-fields', () => {
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, TOTAL_CONTRACT_VALUE),
+        field: getFieldById(ELIGIBILITY_FIELDS, TOTAL_CONTRACT_VALUE),
         data: mockAnswers,
         href: generateChangeLink(
           TOTAL_VALUE_INSURED_CHANGE,
@@ -134,7 +134,7 @@ describe('server/helpers/summary-lists/eligibility/eligibility-fields', () => {
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, COVER_PERIOD),
+        field: getFieldById(ELIGIBILITY_FIELDS, COVER_PERIOD),
         data: mockAnswers,
         href: generateChangeLink(COVER_PERIOD_CHANGE, checkAndChangeLink, `#${COVER_PERIOD}-label`, referenceNumber, isCheckAndChange, isEligibility),
         renderChangeLink: true,
@@ -143,7 +143,7 @@ describe('server/helpers/summary-lists/eligibility/eligibility-fields', () => {
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, HAS_MINIMUM_UK_GOODS_OR_SERVICES),
+        field: getFieldById(ELIGIBILITY_FIELDS, HAS_MINIMUM_UK_GOODS_OR_SERVICES),
         data: mockAnswers,
         href: generateChangeLink(
           UK_GOODS_OR_SERVICES_CHANGE,
@@ -155,11 +155,11 @@ describe('server/helpers/summary-lists/eligibility/eligibility-fields', () => {
         ),
         renderChangeLink: true,
       },
-      FIELDS_ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES].ANSWER,
+      ELIGIBILITY_FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES].ANSWER,
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, HAS_END_BUYER),
+        field: getFieldById(ELIGIBILITY_FIELDS, HAS_END_BUYER),
         data: mockAnswers,
         href: generateChangeLink(END_BUYER_CHANGE, checkAndChangeLink, `#${HAS_END_BUYER}-label`, referenceNumber, isCheckAndChange, isEligibility),
         renderChangeLink: true,
@@ -168,7 +168,7 @@ describe('server/helpers/summary-lists/eligibility/eligibility-fields', () => {
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, IS_PARTY_TO_CONSORTIUM),
+        field: getFieldById(ELIGIBILITY_FIELDS, IS_PARTY_TO_CONSORTIUM),
         data: mockAnswers,
         href: generateChangeLink(
           PARTY_TO_CONSORTIUM_CHANGE,
@@ -184,7 +184,7 @@ describe('server/helpers/summary-lists/eligibility/eligibility-fields', () => {
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, IS_MEMBER_OF_A_GROUP),
+        field: getFieldById(ELIGIBILITY_FIELDS, IS_MEMBER_OF_A_GROUP),
         data: mockAnswers,
         href: generateChangeLink(
           MEMBER_OF_A_GROUP_CHANGE,
