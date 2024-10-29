@@ -1,4 +1,4 @@
-const ukGoodsOrServicesDescription = {
+export const ukGoodsOrServicesDescription = {
   summary: () => cy.get('[data-cy="goods-services"] summary'),
   details: () => cy.get('[data-cy="goods-services"]'),
   includes: {
@@ -34,5 +34,3 @@ const ukGoodsOrServicesDescription = {
     detailsLink: () => cy.get('[data-cy="goods-services-not-sure-link"]'),
   },
 };
-
-export default ukGoodsOrServicesDescription;

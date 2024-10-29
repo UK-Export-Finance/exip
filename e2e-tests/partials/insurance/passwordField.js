@@ -3,7 +3,7 @@ import { ACCOUNT } from '../../constants/field-ids/insurance/account';
 
 const { PASSWORD } = ACCOUNT;
 
-const passwordField = {
+export const passwordField = {
   ...field(PASSWORD),
   hint: {
     listItem1: () => cy.get(`[data-cy="${PASSWORD}-hint-list-item-1"]`),
@@ -13,5 +13,3 @@ const passwordField = {
   },
   revealButton: () => cy.get('.govuk-js-password-input-toggle'),
 };
-
-export default passwordField;

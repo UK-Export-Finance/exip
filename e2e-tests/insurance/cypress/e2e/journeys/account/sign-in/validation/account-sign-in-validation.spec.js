@@ -1,5 +1,5 @@
 import { field } from '../../../../../../../pages/shared';
-import passwordField from '../../../../../../../partials/insurance/passwordField';
+import { passwordField } from '../../../../../../../partials/insurance';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
