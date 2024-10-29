@@ -40,7 +40,7 @@ describe('custom-resolvers/get-countries-and-currencies', () => {
     });
 
     it('should throw an error', async () => {
-      await expect(getCountriesAndCurrencies({}, {}, context)).rejects.toThrow('Getting currencies (getCountriesAndCurrencies helper)');
+      await expect(getCountriesAndCurrencies({}, {}, context)).rejects.toThrow('Getting currencies (getCountriesAndCurrencies resolver)');
     });
   });
 
@@ -50,13 +50,9 @@ describe('custom-resolvers/get-countries-and-currencies', () => {
     });
 
     it('should throw an error', async () => {
-      try {
-        await getCountriesAndCurrencies({}, {}, context);
-      } catch (error) {
-        const expected = new Error(`Getting countries and currencies (getCountriesAndCurrencies helper) ${new Error(mockErrorMessage)}`);
-
-        expect(error).toEqual(expected);
-      }
+      await expect(getCountriesAndCurrencies({}, {}, context)).rejects.toThrow(
+        `Getting countries and currencies (getCountriesAndCurrencies resolver) ${new Error(mockErrorMessage)}`,
+      );
     });
   });
 });
