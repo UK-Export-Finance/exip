@@ -4,7 +4,17 @@ import modifyRowStyles from './modify-row-styles';
 import modifyRowHeights from './modify-row-heights';
 import { Application } from '../../types';
 
-export const getRowIndexes = (application: Application, sheetName: string) => {
+// TODO: unit test for getAdditionalRowHeightIndexes
+
+/**
+ * getAdditionalRowHeightIndexes
+ * Get some specific row indexes for the XLSX.
+ * These indexes are then used for styling purposes.
+ * @param {Application} application
+ * @param {String} sheetName: ExcelJS worksheet name
+ * @returns {Array<number>} Row indexes
+ */
+export const getAdditionalRowHeightIndexes = (application: Application, sheetName: string) => {
   let INDEXES = [] as Array<number>;
 
   if (XLSX_ROW_INDEXES[sheetName]) {
@@ -27,7 +37,7 @@ export const getRowIndexes = (application: Application, sheetName: string) => {
 const styledColumns = (application: Application, worksheet: Worksheet, sheetName: string) => {
   const withRowStyles = modifyRowStyles(worksheet, sheetName);
 
-  const indexes = getRowIndexes(application, sheetName);
+  const indexes = getAdditionalRowHeightIndexes(application, sheetName);
 
   const withRowHeights = modifyRowHeights(indexes, withRowStyles, sheetName);
 

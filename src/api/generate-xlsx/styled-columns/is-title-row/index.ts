@@ -1,6 +1,8 @@
 import SECTION_NAMES from '../../../constants/XLSX-CONFIG/SECTION_NAMES';
+import APPLICATION_INFORMATION_INDEXES from '../../../constants/XLSX-CONFIG/INDEXES/APPLICATION_INFORMATION';
 
 const { APPLICATION_INFORMATION } = SECTION_NAMES;
+const { EXPORTER_CONTACT_DETAILS, KEY_INFORMATION } = APPLICATION_INFORMATION_INDEXES;
 
 /**
  * isTitleRow
@@ -11,10 +13,8 @@ const { APPLICATION_INFORMATION } = SECTION_NAMES;
  */
 const isTitleRow = (sheetName: string, rowNumber: number) => {
   const isInfoSheet = sheetName === APPLICATION_INFORMATION;
-  const isInfoTitleOne = isInfoSheet && rowNumber === 8;
-  const isInfoTitleTwo = isInfoSheet && rowNumber === 13;
 
-  const isInfoTitle = isInfoTitleOne || isInfoTitleTwo;
+  const isInfoTitle = isInfoSheet && (rowNumber === EXPORTER_CONTACT_DETAILS || rowNumber === KEY_INFORMATION);
 
   const result = rowNumber === 1 || isInfoTitle;
 

@@ -24,7 +24,7 @@ const modifyRowStyles = (worksheet: Worksheet, sheetName: string) => {
       const isATitleRow = isTitleRow(sheetName, rowNumber);
 
       modifiedRow.getCell(colNumber).font = {
-        bold: Boolean(isATitleRow),
+        bold: isATitleRow,
         size: isATitleRow ? FONT_SIZE.TITLE : FONT_SIZE.DEFAULT,
       };
     });

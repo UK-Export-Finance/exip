@@ -8403,13 +8403,19 @@ var XLSX_ROW_INDEXES = {
 };
 var INDEXES_default = XLSX_ROW_INDEXES;
 
+// constants/XLSX-CONFIG/INDEXES/APPLICATION_INFORMATION/index.ts
+var APPLICATION_INFORMATION_INDEXES = {
+  EXPORTER_CONTACT_DETAILS: 8,
+  KEY_INFORMATION: 13,
+};
+var APPLICATION_INFORMATION_default = APPLICATION_INFORMATION_INDEXES;
+
 // generate-xlsx/styled-columns/is-title-row/index.ts
 var { APPLICATION_INFORMATION: APPLICATION_INFORMATION2 } = SECTION_NAMES_default;
+var { EXPORTER_CONTACT_DETAILS, KEY_INFORMATION } = APPLICATION_INFORMATION_default;
 var isTitleRow = (sheetName, rowNumber) => {
   const isInfoSheet = sheetName === APPLICATION_INFORMATION2;
-  const isInfoTitleOne = isInfoSheet && rowNumber === 8;
-  const isInfoTitleTwo = isInfoSheet && rowNumber === 13;
-  const isInfoTitle = isInfoTitleOne || isInfoTitleTwo;
+  const isInfoTitle = isInfoSheet && (rowNumber === EXPORTER_CONTACT_DETAILS || rowNumber === KEY_INFORMATION);
   const result = rowNumber === 1 || isInfoTitle;
   return result;
 };
@@ -8427,7 +8433,7 @@ var modifyRowStyles = (worksheet, sheetName) => {
       };
       const isATitleRow = is_title_row_default(sheetName, rowNumber);
       modifiedRow.getCell(colNumber).font = {
-        bold: Boolean(isATitleRow),
+        bold: isATitleRow,
         size: isATitleRow ? FONT_SIZE.TITLE : FONT_SIZE.DEFAULT,
       };
     });
@@ -8439,13 +8445,13 @@ var modify_row_styles_default = modifyRowStyles;
 // generate-xlsx/styled-columns/modify-row-heights/index.ts
 var { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT } = XLSX_CONFIG;
 var { APPLICATION_INFORMATION: APPLICATION_INFORMATION3 } = SECTION_NAMES_default;
+var { EXPORTER_CONTACT_DETAILS: EXPORTER_CONTACT_DETAILS2, KEY_INFORMATION: KEY_INFORMATION2 } = APPLICATION_INFORMATION_default;
 var modifyRowHeights = (rowIndexes, worksheet, sheetName) => {
   const modifiedWorksheet = worksheet;
   modifiedWorksheet.getRow(1).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
-  const isInfoSheet = sheetName === APPLICATION_INFORMATION3;
-  if (isInfoSheet) {
-    modifiedWorksheet.getRow(8).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
-    modifiedWorksheet.getRow(13).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+  if (sheetName === APPLICATION_INFORMATION3) {
+    modifiedWorksheet.getRow(EXPORTER_CONTACT_DETAILS2).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+    modifiedWorksheet.getRow(KEY_INFORMATION2).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
   }
   rowIndexes.forEach((rowIndex) => {
     modifiedWorksheet.getRow(rowIndex).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
@@ -8455,7 +8461,7 @@ var modifyRowHeights = (rowIndexes, worksheet, sheetName) => {
 var modify_row_heights_default = modifyRowHeights;
 
 // generate-xlsx/styled-columns/index.ts
-var getRowIndexes = (application2, sheetName) => {
+var getAdditionalRowHeightIndexes = (application2, sheetName) => {
   let INDEXES = [];
   if (INDEXES_default[sheetName]) {
     const sheetIndexes = INDEXES_default[sheetName](application2);
@@ -8465,7 +8471,7 @@ var getRowIndexes = (application2, sheetName) => {
 };
 var styledColumns = (application2, worksheet, sheetName) => {
   const withRowStyles = modify_row_styles_default(worksheet, sheetName);
-  const indexes = getRowIndexes(application2, sheetName);
+  const indexes = getAdditionalRowHeightIndexes(application2, sheetName);
   const withRowHeights = modify_row_heights_default(indexes, withRowStyles, sheetName);
   return withRowHeights;
 };

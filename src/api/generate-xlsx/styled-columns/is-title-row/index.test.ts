@@ -1,23 +1,25 @@
 import isTitleRow from '.';
 import SECTION_NAMES from '../../../constants/XLSX-CONFIG/SECTION_NAMES';
+import APPLICATION_INFORMATION_INDEXES from '../../../constants/XLSX-CONFIG/INDEXES/APPLICATION_INFORMATION';
 
 const { APPLICATION_INFORMATION } = SECTION_NAMES;
+const { EXPORTER_CONTACT_DETAILS, KEY_INFORMATION } = APPLICATION_INFORMATION_INDEXES;
 
 describe('api/generate-xlsx/styled-columns/is-title-row', () => {
   describe(`when the sheetName is ${APPLICATION_INFORMATION}`, () => {
     const mockSheetName = APPLICATION_INFORMATION;
 
-    describe('when rowNumber=8', () => {
+    describe(`when rowNumber=${EXPORTER_CONTACT_DETAILS}`, () => {
       it('should return true', () => {
-        const result = isTitleRow(mockSheetName, 8);
+        const result = isTitleRow(mockSheetName, EXPORTER_CONTACT_DETAILS);
 
         expect(result).toEqual(true);
       });
     });
 
-    describe('when rowNumber=13', () => {
+    describe(`when rowNumber=${KEY_INFORMATION}`, () => {
       it('should return true', () => {
-        const result = isTitleRow(mockSheetName, 13);
+        const result = isTitleRow(mockSheetName, KEY_INFORMATION);
 
         expect(result).toEqual(true);
       });
