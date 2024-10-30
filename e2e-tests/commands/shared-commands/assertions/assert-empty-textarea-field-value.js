@@ -6,7 +6,7 @@ import { field } from '../../../pages/shared';
  * @param {String} fieldId: Field ID
  */
 const assertEmptyTextareaFieldValue = (fieldId) => {
-  cy.checkValue(field(fieldId).textarea(), '');
+  field(fieldId).textarea().should('have.value', '');
 };
 
 export default assertEmptyTextareaFieldValue;
