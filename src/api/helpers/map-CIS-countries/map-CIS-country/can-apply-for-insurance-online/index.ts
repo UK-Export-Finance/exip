@@ -10,11 +10,11 @@
  * - Refer
  * - Unlisted
  * @param {Boolean} shortTermCover: Short term cover flag.
- * @param {String} riskCategory: Country risk category.
+ * @param {String} esraClassification: ESRA classification.
  * @returns {Boolean}
  */
-const canApplyForInsuranceOnline = (shortTermCover: boolean, riskCategory?: string | null) => {
-  if (shortTermCover && riskCategory) {
+const canApplyForInsuranceOnline = (shortTermCover: boolean, esraClassification?: string | null) => {
+  if (shortTermCover && esraClassification) {
     return true;
   }
 

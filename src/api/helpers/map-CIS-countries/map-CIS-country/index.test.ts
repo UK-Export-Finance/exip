@@ -1,5 +1,5 @@
 import mapCisCountry from '.';
-import mapRiskCategory from './map-risk-category';
+import mapEsraClassification from './map-esra-classification';
 import mapShortTermCoverAvailable from './map-short-term-cover-available';
 import mapNbiIssueAvailable from './map-NBI-issue-available';
 import canGetAQuoteOnline from './can-get-a-quote-online';
@@ -20,7 +20,7 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
   const mockCountryBase = {
     ...initialMockCountry,
     marketName: initialMockCountry.marketName,
-    riskCategory: EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD,
+    esraClassification: EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD,
     isoCode: initialMockCountry.isoCode,
     shortTermCoverAvailabilityDesc: CIS.SHORT_TERM_COVER_AVAILABLE.ILC,
     marketRiskAppetitePublicDesc: CIS.NO_COVER,
@@ -29,14 +29,14 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
   it('should return an object', () => {
     const result = mapCisCountry(mockCountryBase);
 
-    const riskCategory = mapRiskCategory(mockCountryBase.ESRAClassificationDesc);
+    const esraClassification = mapEsraClassification(mockCountryBase.ESRAClassificationDesc);
     const shortTermCover = mapShortTermCoverAvailable(mockCountryBase.shortTermCoverAvailabilityDesc);
     const nbiIssueAvailable = mapNbiIssueAvailable(mockCountryBase.NBIIssue);
 
     const mapped = {
       name: mockCountryBase.marketName,
       isoCode: mockCountryBase.isoCode,
-      riskCategory,
+      esraClassification,
       shortTermCover,
       nbiIssueAvailable,
       canGetAQuoteOnline: false,
@@ -47,10 +47,10 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
       noInsuranceSupport: false,
     } as MappedCisCountry;
 
-    mapped.canGetAQuoteOnline = canGetAQuoteOnline({ shortTermCover, nbiIssueAvailable, riskCategory });
+    mapped.canGetAQuoteOnline = canGetAQuoteOnline({ shortTermCover, nbiIssueAvailable, esraClassification });
     mapped.canGetAQuoteOffline = canApplyOffline(mockCountryBase.shortTermCoverAvailabilityDesc);
-    mapped.canGetAQuoteByEmail = canGetAQuoteByEmail({ shortTermCover, nbiIssueAvailable, riskCategory });
-    mapped.cannotGetAQuote = cannotGetAQuote({ shortTermCover, nbiIssueAvailable, riskCategory });
+    mapped.canGetAQuoteByEmail = canGetAQuoteByEmail({ shortTermCover, nbiIssueAvailable, esraClassification });
+    mapped.cannotGetAQuote = cannotGetAQuote({ shortTermCover, nbiIssueAvailable, esraClassification });
 
     mapped.canApplyForInsuranceOnline = canApplyForInsuranceOnline(mapped.shortTermCover);
 

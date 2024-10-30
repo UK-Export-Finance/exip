@@ -1,4 +1,4 @@
-import mapRiskCategory from './map-risk-category';
+import mapEsraClassification from './map-esra-classification';
 import mapShortTermCoverAvailable from './map-short-term-cover-available';
 import mapNbiIssueAvailable from './map-NBI-issue-available';
 import canGetAQuoteOnline from './can-get-a-quote-online';
@@ -18,27 +18,27 @@ import { CisCountry, MappedCisCountry } from '../../../types';
 export const mapCisCountry = (cisCountry: CisCountry): MappedCisCountry => {
   const { marketName, isoCode } = cisCountry;
 
-  const riskCategory = mapRiskCategory(cisCountry.ESRAClassificationDesc);
+  const esraClassification = mapEsraClassification(cisCountry.ESRAClassificationDesc);
   const shortTermCover = mapShortTermCoverAvailable(cisCountry.shortTermCoverAvailabilityDesc);
   const nbiIssueAvailable = mapNbiIssueAvailable(cisCountry.NBIIssue);
 
   const mapped = {
     name: marketName,
     isoCode,
-    riskCategory,
+    esraClassification,
     shortTermCover,
     nbiIssueAvailable,
   } as MappedCisCountry;
 
-  mapped.canGetAQuoteOnline = canGetAQuoteOnline({ shortTermCover, nbiIssueAvailable, riskCategory });
+  mapped.canGetAQuoteOnline = canGetAQuoteOnline({ shortTermCover, nbiIssueAvailable, esraClassification });
 
   mapped.canGetAQuoteOffline = canApplyOffline(cisCountry.shortTermCoverAvailabilityDesc);
 
-  mapped.canGetAQuoteByEmail = canGetAQuoteByEmail({ shortTermCover, nbiIssueAvailable, riskCategory });
+  mapped.canGetAQuoteByEmail = canGetAQuoteByEmail({ shortTermCover, nbiIssueAvailable, esraClassification });
 
-  mapped.cannotGetAQuote = cannotGetAQuote({ shortTermCover, nbiIssueAvailable, riskCategory });
+  mapped.cannotGetAQuote = cannotGetAQuote({ shortTermCover, nbiIssueAvailable, esraClassification });
 
-  mapped.canApplyForInsuranceOnline = canApplyForInsuranceOnline(shortTermCover, riskCategory);
+  mapped.canApplyForInsuranceOnline = canApplyForInsuranceOnline(shortTermCover, esraClassification);
 
   mapped.noInsuranceSupport = noInsuranceSupportAvailable(cisCountry.marketRiskAppetitePublicDesc);
 

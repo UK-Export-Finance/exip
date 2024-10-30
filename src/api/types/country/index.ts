@@ -39,7 +39,7 @@ export interface MappedCisCountry {
   name: string;
   isoCode: string;
   shortTermCover: boolean;
-  riskCategory?: string;
+  esraClassification?: string;
   nbiIssueAvailable: boolean;
   canGetAQuoteOnline: boolean;
   canGetAQuoteOffline: boolean;

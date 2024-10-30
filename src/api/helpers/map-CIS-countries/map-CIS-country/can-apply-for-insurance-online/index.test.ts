@@ -7,18 +7,18 @@ const {
   },
 } = EXTERNAL_API_DEFINITIONS;
 
-const mockRiskCategory = VERY_HIGH;
+const mockEsraClassification = VERY_HIGH;
 
 describe('helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online', () => {
-  describe('when shortTermCover=true, riskCategory is provided', () => {
+  describe('when shortTermCover=true, esraClassification is provided', () => {
     it('should return true', () => {
-      const result = canApplyForInsuranceOnline(true, mockRiskCategory);
+      const result = canApplyForInsuranceOnline(true, mockEsraClassification);
 
       expect(result).toEqual(true);
     });
   });
 
-  describe('when shortTermCover=false, riskCategory is null', () => {
+  describe('when shortTermCover=false, esraClassification is null', () => {
     it('should return false', () => {
       const result = canApplyForInsuranceOnline(false, null);
 
@@ -26,7 +26,7 @@ describe('helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-onli
     });
   });
 
-  describe('when shortTermCover=false, riskCategory is an empty string', () => {
+  describe('when shortTermCover=false, esraClassification is an empty string', () => {
     it('should return false', () => {
       const result = canApplyForInsuranceOnline(false, '');
 
@@ -34,7 +34,7 @@ describe('helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-onli
     });
   });
 
-  describe('when shortTermCover=true, riskCategory is null', () => {
+  describe('when shortTermCover=true, esraClassification is null', () => {
     it('should return false', () => {
       const result = canApplyForInsuranceOnline(true, null);
 
@@ -42,7 +42,7 @@ describe('helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-onli
     });
   });
 
-  describe('when shortTermCover=true, riskCategory is an empty string', () => {
+  describe('when shortTermCover=true, esraClassification is an empty string', () => {
     it('should return false', () => {
       const result = canApplyForInsuranceOnline(true, '');
 

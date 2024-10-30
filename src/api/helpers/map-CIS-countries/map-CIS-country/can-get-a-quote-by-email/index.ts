@@ -6,11 +6,11 @@ import { MapCisCountryParams } from '../../../../types';
  * @param {MapCisCountryParams}
  * @param {Boolean} shortTermCover: Short term cover flag.
  * @param {Boolean} nbiIssueAvailable: NBI flag.
- * @param {String} riskCategory: Country risk category.
+ * @param {String} esraClassification: ESRA classification.
  * @returns {Boolean}
  */
-const canGetAQuoteByEmail = ({ shortTermCover, nbiIssueAvailable, riskCategory }: MapCisCountryParams) => {
-  if (shortTermCover && !nbiIssueAvailable && riskCategory) {
+const canGetAQuoteByEmail = ({ shortTermCover, nbiIssueAvailable, esraClassification }: MapCisCountryParams) => {
+  if (shortTermCover && !nbiIssueAvailable && esraClassification) {
     return true;
   }
 
