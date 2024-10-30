@@ -15,14 +15,12 @@ describe('custom-resolvers/get-APIM-currencies', () => {
     jest.resetAllMocks();
   });
 
-  it('should return currencies from the result of apimCisCurrencies.get', async () => {
+  it('should return the result of apimCisCurrencies.get', async () => {
     const response = await getApimCurrencies();
 
-    const { success, ...currenciesResponse } = await apimCisCurrencies.get();
+    const currenciesResponse = await apimCisCurrencies.get();
 
-    const expected = currenciesResponse;
-
-    expect(response).toEqual(expected);
+    expect(response).toEqual(currenciesResponse);
   });
 
   describe('when apimCisCurrencies.get returns success=false', () => {
