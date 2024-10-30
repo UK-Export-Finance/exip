@@ -1,4 +1,4 @@
-import partials from '../../partials';
+import { errorSummaryListItems } from '../../partials';
 
 /**
  * checkValidation
@@ -275,8 +275,7 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, fieldId, e
 
       cy.clickSubmitButton();
 
-      partials
-        .errorSummaryListItems()
+      errorSummaryListItems()
         .eq(0)
         .invoke('text')
         .then((text) => {

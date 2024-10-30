@@ -1,5 +1,5 @@
 import { FORM_TITLES } from '../../../../content-strings/form-titles';
-import { FIELDS } from '../../../../content-strings/fields/insurance';
+import { EXPORTER_BUSINESS_FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
@@ -23,6 +23,8 @@ const {
   TURNOVER: { PERCENTAGE_TURNOVER, ESTIMATED_ANNUAL_TURNOVER, TURNOVER_CURRENCY_CODE },
 } = FIELD_IDS;
 
+const { TURNOVER } = EXPORTER_BUSINESS_FIELDS;
+
 /**
  * generateTurnover
  * Create all your Turnover fields and values for the Insurance - Turnover govukSummaryList
@@ -34,7 +36,7 @@ const {
 const generateTurnoverFields = (answers: ApplicationBusiness, referenceNumber: number, checkAndChange?: boolean): SummaryListGroupData => {
   const fields = [
     fieldGroupItem({
-      field: getFieldById(FIELDS.TURNOVER, TURNOVER_CURRENCY_CODE),
+      field: getFieldById(TURNOVER, TURNOVER_CURRENCY_CODE),
       data: answers,
       href: generateChangeLink(
         TURNOVER_CURRENCY_CHANGE,
@@ -47,7 +49,7 @@ const generateTurnoverFields = (answers: ApplicationBusiness, referenceNumber: n
     }),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS.TURNOVER, ESTIMATED_ANNUAL_TURNOVER),
+        field: getFieldById(TURNOVER, ESTIMATED_ANNUAL_TURNOVER),
         data: answers,
         href: generateChangeLink(TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE, `#${ESTIMATED_ANNUAL_TURNOVER}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
@@ -56,7 +58,7 @@ const generateTurnoverFields = (answers: ApplicationBusiness, referenceNumber: n
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS.TURNOVER, PERCENTAGE_TURNOVER),
+        field: getFieldById(TURNOVER, PERCENTAGE_TURNOVER),
         data: answers,
         href: generateChangeLink(TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE, `#${PERCENTAGE_TURNOVER}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,

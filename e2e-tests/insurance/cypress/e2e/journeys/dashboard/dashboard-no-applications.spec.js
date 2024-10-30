@@ -1,5 +1,5 @@
 import dashboardPage from '../../../../../pages/insurance/dashboard';
-import partials from '../../../../../partials';
+import { startNewApplicationButton } from '../../../../../partials';
 import { PAGES } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
@@ -49,7 +49,7 @@ context('Insurance - Dashboard - no applications', () => {
         copy: CONTENT_STRINGS.START_NEW_APPLICATION.TEXT,
       };
 
-      cy.checkLink(partials.startNewApplicationButton(), expected.href, expected.copy);
+      cy.checkLink(startNewApplicationButton(), expected.href, expected.copy);
     });
 
     it(`should redirect to ${ELIGIBILITY.EXPORTER_LOCATION}`, () => {

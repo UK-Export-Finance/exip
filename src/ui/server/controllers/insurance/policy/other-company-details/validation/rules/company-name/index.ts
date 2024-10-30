@@ -1,6 +1,6 @@
+import { MAXIMUM_CHARACTERS } from '../../../../../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { POLICY_FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
 import providedAndMaxLength from '../../../../../../../shared-validation/provided-and-max-length';
 import { RequestBody } from '../../../../../../../../types';
 
@@ -12,7 +12,7 @@ const {
   REQUESTED_JOINTLY_INSURED_PARTY: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
 } = ERROR_MESSAGES.INSURANCE.POLICY;
 
-export const MAXIMUM = Number(POLICY_FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[FIELD_ID].MAXIMUM);
+const MAXIMUM = MAXIMUM_CHARACTERS.REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NAME;
 
 /**
  * validate the "company name" in other company details response body

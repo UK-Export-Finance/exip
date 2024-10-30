@@ -21,8 +21,6 @@ export const TEMPLATE = FEEDBACK_TEMPLATE;
 
 export const FIELD_IDS = [SATISFACTION, IMPROVEMENT, OTHER_COMMENTS];
 
-export const MAXIMUM = 1200;
-
 const pageVariables = () => ({
   FIELDS: {
     SATISFACTION: {
@@ -39,7 +37,6 @@ const pageVariables = () => ({
       ...FIELDS[OTHER_COMMENTS],
     },
   },
-  MAXIMUM,
 });
 
 /**

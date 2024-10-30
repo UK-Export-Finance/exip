@@ -2,7 +2,7 @@ import { PAGES } from '../../../../content-strings';
 import { pageVariables, get, TEMPLATE, post, FIELD_IDS } from '.';
 import { TEMPLATES, ROUTES } from '../../../../constants';
 import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
-import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
+import { EXPORTER_BUSINESS_FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
@@ -33,9 +33,7 @@ const {
   NATURE_OF_BUSINESS_CHECK_AND_CHANGE,
 } = EXPORTER_BUSINESS_ROUTES;
 
-const { NATURE_OF_YOUR_BUSINESS: NATURE_OF_YOUR_BUSINESS_FIELDS } = FIELDS;
-
-const MAXIMUM = 1000;
+const { NATURE_OF_YOUR_BUSINESS: NATURE_OF_YOUR_BUSINESS_FIELDS } = EXPORTER_BUSINESS_FIELDS;
 
 jest.mock('../map-and-save/business');
 
@@ -73,7 +71,6 @@ describe('controllers/insurance/business/nature-of-business', () => {
           GOODS_OR_SERVICES: {
             ID: GOODS_OR_SERVICES,
             ...NATURE_OF_YOUR_BUSINESS_FIELDS[GOODS_OR_SERVICES],
-            MAXIMUM,
           },
           YEARS_EXPORTING: {
             ID: YEARS_EXPORTING,

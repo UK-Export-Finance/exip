@@ -1,4 +1,4 @@
-import pagination from '../../../../../../partials/pagination';
+import { pagination } from '../../../../../../partials';
 import { MAX_APPLICATIONS_PER_PAGE } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 

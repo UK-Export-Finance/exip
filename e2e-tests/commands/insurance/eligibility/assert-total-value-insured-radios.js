@@ -1,12 +1,12 @@
 import { field } from '../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
-import { FIELDS_ELIGIBILITY } from '../../../content-strings/fields/insurance/eligibility';
+import { ELIGIBILITY_FIELDS } from '../../../content-strings/fields/insurance/eligibility';
 
 const {
   ELIGIBILITY: { TOTAL_CONTRACT_VALUE },
 } = INSURANCE_FIELD_IDS;
 
-const { ABOVE, BELOW } = FIELDS_ELIGIBILITY[TOTAL_CONTRACT_VALUE].OPTIONS;
+const { ABOVE, BELOW } = ELIGIBILITY_FIELDS[TOTAL_CONTRACT_VALUE].OPTIONS;
 
 /**
  * assertTotalValueInsuredRadios

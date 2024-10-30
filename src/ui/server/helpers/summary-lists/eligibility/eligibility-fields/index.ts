@@ -1,4 +1,4 @@
-import { FIELDS_ELIGIBILITY } from '../../../../content-strings/fields/insurance';
+import { ELIGIBILITY_FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
@@ -61,7 +61,7 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
   const fields = [
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, VALID_EXPORTER_LOCATION),
+        field: getFieldById(ELIGIBILITY_FIELDS, VALID_EXPORTER_LOCATION),
         data: answers,
         href: generateChangeLink(
           EXPORTER_LOCATION_CHANGE,
@@ -77,7 +77,7 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, HAS_COMPANIES_HOUSE_NUMBER),
+        field: getFieldById(ELIGIBILITY_FIELDS, HAS_COMPANIES_HOUSE_NUMBER),
         data: answers,
         href: generateChangeLink(
           COMPANIES_HOUSE_NUMBER_CHANGE,
@@ -93,7 +93,7 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, COMPANY_NUMBER),
+        field: getFieldById(ELIGIBILITY_FIELDS, COMPANY_NUMBER),
         data: answers,
         href: generateChangeLink(
           ENTER_COMPANIES_HOUSE_NUMBER_CHANGE,
@@ -109,7 +109,7 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, COMPANY_NAME),
+        field: getFieldById(ELIGIBILITY_FIELDS, COMPANY_NAME),
         data: answers,
         renderChangeLink: false,
       },
@@ -117,7 +117,7 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, BUYER_COUNTRY),
+        field: getFieldById(ELIGIBILITY_FIELDS, BUYER_COUNTRY),
         data: answers,
         href: generateChangeLink(
           BUYER_COUNTRY_CHANGE,
@@ -133,7 +133,7 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, TOTAL_CONTRACT_VALUE),
+        field: getFieldById(ELIGIBILITY_FIELDS, TOTAL_CONTRACT_VALUE),
         data: answers,
         href: generateChangeLink(
           TOTAL_VALUE_INSURED_CHANGE,
@@ -149,7 +149,7 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, COVER_PERIOD),
+        field: getFieldById(ELIGIBILITY_FIELDS, COVER_PERIOD),
         data: answers,
         href: generateChangeLink(COVER_PERIOD_CHANGE, checkAndChangeLink, `#${COVER_PERIOD}-label`, referenceNumber, isCheckAndChange, isInsuranceEligibility),
         renderChangeLink: true,
@@ -158,7 +158,7 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, HAS_MINIMUM_UK_GOODS_OR_SERVICES),
+        field: getFieldById(ELIGIBILITY_FIELDS, HAS_MINIMUM_UK_GOODS_OR_SERVICES),
         data: answers,
         href: generateChangeLink(
           UK_GOODS_OR_SERVICES_CHANGE,
@@ -170,11 +170,11 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
         ),
         renderChangeLink: true,
       },
-      FIELDS_ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES].ANSWER,
+      ELIGIBILITY_FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES].ANSWER,
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, HAS_END_BUYER),
+        field: getFieldById(ELIGIBILITY_FIELDS, HAS_END_BUYER),
         data: answers,
         href: generateChangeLink(END_BUYER_CHANGE, checkAndChangeLink, `#${HAS_END_BUYER}-label`, referenceNumber, isCheckAndChange, isInsuranceEligibility),
         renderChangeLink: true,
@@ -183,7 +183,7 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, IS_PARTY_TO_CONSORTIUM),
+        field: getFieldById(ELIGIBILITY_FIELDS, IS_PARTY_TO_CONSORTIUM),
         data: answers,
         href: generateChangeLink(
           PARTY_TO_CONSORTIUM_CHANGE,
@@ -199,7 +199,7 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, IS_MEMBER_OF_A_GROUP),
+        field: getFieldById(ELIGIBILITY_FIELDS, IS_MEMBER_OF_A_GROUP),
         data: answers,
         href: generateChangeLink(
           MEMBER_OF_A_GROUP_CHANGE,

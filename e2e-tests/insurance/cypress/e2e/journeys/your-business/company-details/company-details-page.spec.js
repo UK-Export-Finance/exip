@@ -1,5 +1,5 @@
 import { companyDetails } from '../../../../../../pages/your-business';
-import partials from '../../../../../../partials';
+import { headingCaption } from '../../../../../../partials';
 import { body, field, yesRadioInput, noRadioInput } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -64,7 +64,7 @@ context(
       });
 
       it('renders a heading caption', () => {
-        cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+        cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
       it('should render body text', () => {
