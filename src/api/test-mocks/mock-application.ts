@@ -94,7 +94,6 @@ export const mockExportContract = {
   finalDestinationKnown: false,
   finalDestinationCountryCode: mockCountries[0].isoCode,
   paymentTermsDescription: 'Mock payment terms description',
-  agent: mockExportContractAgentFullyPopulated,
 };
 
 export const mockAccount = {

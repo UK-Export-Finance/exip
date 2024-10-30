@@ -1,7 +1,7 @@
 import modifyRowStyles from '.';
 import { XLSX_CONFIG } from '../../../constants';
 import isTitleRow from '../is-title-row';
-import { createMockWorksheet } from '../../../test-mocks';
+import createMockWorksheet from '../../../test-mocks/create-mock-worksheet';
 
 const { FONT_SIZE } = XLSX_CONFIG;
 

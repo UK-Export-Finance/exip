@@ -1,7 +1,7 @@
 import modifyRowHeights from '.';
 import { XLSX_CONFIG } from '../../../constants';
 import APPLICATION_INFORMATION_INDEXES from '../../../constants/XLSX-CONFIG/INDEXES/APPLICATION_INFORMATION';
-import { createMockWorksheet } from '../../../test-mocks';
+import createMockWorksheet from '../../../test-mocks/create-mock-worksheet';
 
 const { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT } = XLSX_CONFIG;
 

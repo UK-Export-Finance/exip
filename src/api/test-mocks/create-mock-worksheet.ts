@@ -2,10 +2,10 @@ import ExcelJS, { Worksheet } from 'exceljs';
 import SECTION_NAMES from '../constants/XLSX-CONFIG/SECTION_NAMES';
 import HEADER_COLUMNS from '../generate-xlsx/header-columns';
 import mapApplicationToXLSX from '../generate-xlsx/map-application-to-XLSX';
-import mockApplication from './mock-application';
+import { mockApplicationMinimalBrokerBuyerAndCompany as mockApplication } from '.';
 import mockCountries from './mock-countries';
 
-const { APPLICATION_INFORMATION } = SECTION_NAMES;
+const { EXPORTER_BUSINESS } = SECTION_NAMES;
 
 /**
  * createMockWorksheet
@@ -34,7 +34,7 @@ export const createMockWorksheet = () => {
   });
 
   const [mockWorksheet] = mockWorksheets;
-  const mockSheetName = APPLICATION_INFORMATION;
+  const mockSheetName = EXPORTER_BUSINESS;
 
   return {
     mockWorksheet,
