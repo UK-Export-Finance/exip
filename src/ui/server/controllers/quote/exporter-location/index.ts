@@ -55,12 +55,12 @@ export const post = (req: Request, res: Response) => {
   if (answer === 'false') {
     req.flash('previousRoute', ROUTES.QUOTE.EXPORTER_LOCATION);
 
-    const { CANNOT_APPLY } = PAGES;
-    const { REASON } = CANNOT_APPLY;
+    const { CANNOT_APPLY_EXIT } = PAGES;
+    const { REASON } = CANNOT_APPLY_EXIT;
 
     req.flash('exitReason', REASON.UNSUPPORTED_COMPANY_COUNTRY);
 
-    return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
+    return res.redirect(ROUTES.QUOTE.CANNOT_APPLY_EXIT);
   }
 
   if (isChangeRoute(req.originalUrl)) {

@@ -12,7 +12,7 @@ import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -48,10 +48,9 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
   });
 
   describe('PAGE_CONTENT_STRINGS', () => {
-    it('should have the correct properties', () => {
+    it('should have the correct strings', () => {
       const expected = {
         ...PAGES.INSURANCE.POLICY.PRE_CREDIT_PERIOD,
-        HINT: FIELDS[NEED_PRE_CREDIT_PERIOD].HINT,
         CREDIT_PERIOD_WITH_BUYER: CREDIT_PERIOD_WITH_BUYER_STRINGS,
       };
 
@@ -65,7 +64,6 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
 
       const expected = {
         FIELD_ID: NEED_PRE_CREDIT_PERIOD,
-        FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
         FIELDS: {
           NEED_PRE_CREDIT_PERIOD: {
             ID: NEED_PRE_CREDIT_PERIOD,
@@ -263,7 +261,7 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
 
         describe('when there is an error', () => {
           beforeEach(() => {
-            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+            const mapAndSaveSpy = mockSpyPromiseRejection;
 
             mapAndSave.policy = mapAndSaveSpy;
           });

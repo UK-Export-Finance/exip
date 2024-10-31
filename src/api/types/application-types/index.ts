@@ -1,6 +1,14 @@
+import Context from '@keystone-6/core/types';
 import { SuccessResponse } from '../generic';
 import { Country } from '../country';
 import { Relationship } from '../relationship';
+
+export interface ApplicationBroker extends Relationship {
+  isUsingBroker?: boolean;
+  name?: string;
+  fullAddress?: string;
+  email?: string;
+}
 
 export interface ApplicationBusiness extends Relationship {
   application: Relationship;
@@ -27,6 +35,13 @@ export interface ApplicationBuyerRelationship extends Relationship {
   exporterHasPreviousCreditInsuranceWithBuyer?: boolean;
   exporterHasBuyerFinancialAccounts?: boolean;
   previousCreditInsuranceWithBuyerDescription?: string;
+}
+
+export interface ApplicationBuyerTradingHistory extends Relationship {
+  exporterHasTradedWithBuyer?: boolean;
+  currencyCode?: string;
+  outstandingPayments?: boolean;
+  failedPayments?: boolean;
 }
 
 export interface ApplicationBuyer extends Relationship {
@@ -282,13 +297,14 @@ export interface Application {
   companySicCodes: Array<ApplicationCompanySicCode>;
   companyAddress: ApplicationCompanyAddress;
   declaration: ApplicationDeclaration;
-  migratedV1toV2?: boolean;
   nominatedLossPayee: ApplicationNominatedLossPayee;
   owner: ApplicationOwner;
   policy: ApplicationPolicy;
   policyContact: ApplicationPolicyContact;
   sectionReview: Relationship;
+  totalContractValueOverThreshold: boolean;
   version: number;
+  migratedV2toV3?: boolean;
 }
 
 export interface ApplicationSubmissionEmailVariables {
@@ -302,12 +318,13 @@ export interface ApplicationSubmissionEmailVariables {
 export interface ApplicationVersion {
   VERSION_NUMBER: string;
   OVER_500K_SUPPORT: boolean;
-  MAXIMUM_BUYER_CAN_OWE: number;
-  TOTAL_VALUE_OF_CONTRACT: number;
-  DEFAULT_FINAL_DESTINATION_KNOWN: boolean;
-  DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: boolean;
+  MAXIMUM_BUYER_CAN_OWE?: number;
+  TOTAL_VALUE_OF_CONTRACT?: number;
+  DEFAULT_FINAL_DESTINATION_KNOWN: boolean | null;
+  DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: boolean | null;
   DEFAULT_CURRENCY?: string;
   BROKER_ADDRESS_AS_MULTIPLE_FIELDS: boolean;
+  REQUESTED_CREDIT_LIMIT_REQUIRED?: boolean;
 }
 
 export interface SectionReview extends Relationship {
@@ -323,6 +340,25 @@ export interface CreateAnApplicationVariables {
   company: ApplicationCompanyCore;
   sectionReview: SectionReview;
   status?: string;
+}
+
+export interface CreateManyApplicationsVariables {
+  accountId: string;
+  count: number;
+}
+
+export interface CreateInitialApplicationParams {
+  context: Context;
+  accountId: string;
+  status?: string;
+}
+
+export interface CreateApplicationRelationshipParams {
+  context: Context;
+  applicationId: string;
+  companyData: ApplicationCompanyCore;
+  eligibilityAnswers: ApplicationEligibility;
+  sectionReviewData: SectionReview;
 }
 
 export interface CreateExportContractAgentResponse {
@@ -361,7 +397,19 @@ export interface SubmitApplicationVariables {
   applicationId: string;
 }
 
-export interface UpdateCompanyPostDataMigrationVariables extends Relationship {
-  id: string;
-  company: ApplicationCompanyCore;
+export interface UpdateApplicationRelationshipParams {
+  context: Context;
+  applicationId: string;
+  brokerId: string;
+  businessId: string;
+  buyerId: string;
+  companyId: string;
+  declarationId: string;
+  eligibilityId: string;
+  exportContractId: string;
+  nominatedLossPayeeId: string;
+  policyId: string;
+  policyContactId: string;
+  referenceNumber: string;
+  sectionReviewId: string;
 }

@@ -20,6 +20,7 @@ const get = (req: Request, res: Response) => {
 
   if (!validUrl) {
     console.error('Invalid original URL detected in "redirects" controller: %s', originalUrl);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 

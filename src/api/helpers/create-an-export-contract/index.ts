@@ -6,12 +6,12 @@ import { Context, CreateExportContractResponse } from '../../types';
 /**
  * createAnExportContract
  * Create an export contract with an application relationship.
- * @param {Context} KeystoneJS context API
- * @param {String} Application ID
+ * @param {Context} context: KeystoneJS context API
+ * @param {String} applicationId: Application ID
  * @returns {Promise<Object>} Created export contract
  */
 const createAnExportContract = async (context: Context, applicationId: string): Promise<CreateExportContractResponse> => {
-  console.info('Creating an export contract for ', applicationId);
+  console.info('Creating an export contract for %s', applicationId);
 
   try {
     const exportContract = await context.db.ExportContract.createOne({
@@ -27,15 +27,15 @@ const createAnExportContract = async (context: Context, applicationId: string): 
     const { agent, agentService } = await createAnExportContractAgent(context, exportContract.id);
 
     return {
-      exportContract,
+      ...exportContract,
       privateMarket,
       agent,
       agentService,
     };
-  } catch (err) {
-    console.error('Error creating an export contract %O', err);
+  } catch (error) {
+    console.error('Error creating an export contract %o', error);
 
-    throw new Error(`Creating an export contract ${err}`);
+    throw new Error(`Creating an export contract ${error}`);
   }
 };
 

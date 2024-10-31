@@ -6,7 +6,7 @@ import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/policy-contact';
 import generateValidationErrors from '../validation';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockContact, referenceNumber } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockContact, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 
 const {
   INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE },
@@ -96,7 +96,7 @@ describe('controllers/insurance/policy/different-name-on-policy/save-and-back', 
 
     describe('when the mapAndSave call fails', () => {
       beforeEach(() => {
-        mockMapAndSave = jest.fn(() => Promise.reject(new Error('Mock error')));
+        mockMapAndSave = mockSpyPromiseRejection;
 
         mapAndSave.policyContact = mockMapAndSave;
       });

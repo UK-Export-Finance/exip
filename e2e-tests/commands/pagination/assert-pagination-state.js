@@ -1,5 +1,5 @@
 import assertUrl from '../shared-commands/assertions/assert-url';
-import pagination from '../../partials/pagination';
+import { pagination } from '../../partials';
 import assertActivePaginationLink from './assert-active-pagination-link';
 import assertPaginationNextLink from './assert-pagination-next-link';
 import assertPaginationPreviousLink from './assert-pagination-previous-link';

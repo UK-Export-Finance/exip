@@ -1,4 +1,3 @@
-import partials from '../../../../../partials';
 import { BUTTONS, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 
@@ -16,7 +15,8 @@ context('Insurance - Feedback Page - Signed in', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       dashboardUrl = `${baseUrl}${ROOT}/${refNumber}${ALL_SECTIONS}`;
     });
-    partials.phaseBanner.feedbackLink().click();
+
+    cy.clickPhaseBannerFeedbackLink();
   });
 
   beforeEach(() => {
@@ -30,6 +30,7 @@ context('Insurance - Feedback Page - Signed in', () => {
       backLink: dashboardUrl,
       submitButtonCopy: BUTTONS.SEND_FEEDBACK,
       assertAuthenticatedHeader: true,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 });

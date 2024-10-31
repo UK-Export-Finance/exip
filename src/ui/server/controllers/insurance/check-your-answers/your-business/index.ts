@@ -26,7 +26,7 @@ const {
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
@@ -52,11 +52,11 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber, company, business } = application;
+    const { business, company, referenceNumber } = application;
 
     const checkAndChange = true;
 
-    const summaryList = yourBusinessSummaryLists(company, business, referenceNumber, checkAndChange);
+    const summaryList = yourBusinessSummaryLists({ business, company, referenceNumber, checkAndChange });
 
     const businessFields = requiredFields(company.hasDifferentTradingName);
 
@@ -72,8 +72,9 @@ export const get = async (req: Request, res: Response) => {
       SUMMARY_LISTS: summaryList,
       ...pageVariables(referenceNumber),
     });
-  } catch (err) {
-    console.error('Error getting Check your answers - Your business %O', err);
+  } catch (error) {
+    console.error('Error getting Check your answers - Your business %o', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -105,8 +106,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER}`);
-  } catch (err) {
-    console.error('Error updating Check your answers - Your business %O', err);
+  } catch (error) {
+    console.error('Error updating Check your answers - Your business %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

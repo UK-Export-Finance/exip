@@ -1,4 +1,4 @@
-import { UKEF_CONTACT_DETAILS, GBP_CURRENCY_CODE, TOTAL_CONTRACT_VALUE } from '../../../../constants';
+import { UKEF_CONTACT_DETAILS, GBP_CURRENCY_CODE, TOTAL_CONTRACT_VALUE, APPLICATION } from '../../../../constants';
 import { ACTIONS } from '../../../actions';
 import { LINKS } from '../../../links';
 import formatCurrency from '../../../../helpers/format-currency';
@@ -12,7 +12,7 @@ const CHECK_IF_ELIGIBLE = {
     "your buyer's location",
     'how long you want your contract to last',
     'the value of your contract',
-    'whether you are, or will be, a party to any consortium',
+    "if you're part of a consortium",
     'relevant group members',
   ],
   WILL_NEED_COMPANIES_HOUSE_NUMBER: "You'll need to provide your Companies House registration number.",
@@ -52,7 +52,7 @@ const PDF_EXIT = {
   },
 };
 
-const LONG_TERM_COVER = {
+const LONG_TERM_COVER_EXIT = {
   INTRO: "Currently, this service doesn't provide credit insurance for contracts that are longer than two years.",
   ...PDF_EXIT,
 };
@@ -75,7 +75,7 @@ const COMPANIES_HOUSE_NUMBER = {
   PAGE_TITLE: 'Enter your Companies House number',
 };
 
-const NO_COMPANIES_HOUSE_NUMBER = {
+const NO_COMPANIES_HOUSE_NUMBER_EXIT = {
   PAGE_TITLE: 'You cannot apply for credit insurance',
   ACTIONS: {
     ELIGIBILITY: ACTIONS.ELIGIBILITY,
@@ -92,7 +92,7 @@ const NO_COMPANIES_HOUSE_NUMBER = {
   BODY: "This is because you do not have a UK Companies House registration number for a company that's actively trading.",
 };
 
-const COMPANIES_HOUSE_UNAVAILABLE = {
+const COMPANIES_HOUSE_UNAVAILABLE_EXIT = {
   PAGE_TITLE: 'You cannot search for your Companies House registration number right now',
   ERROR_REASON: 'This is due to technical issues with the Companies House search.',
   TRY_AGAIN_PREFIX: 'You can',
@@ -103,7 +103,7 @@ const COMPANIES_HOUSE_UNAVAILABLE = {
   INFORMATION: '(You may lose any information you entered on the previous page.)',
 };
 
-const COMPANY_NOT_ACTIVE = {
+const COMPANY_NOT_ACTIVE_EXIT = {
   PAGE_TITLE: 'You need to speak with an export finance manager',
   BODY: 'This is because the company you entered is no longer active on Companies House and we cannot process your application.',
   ACTIONS: {
@@ -119,10 +119,10 @@ const COMPANY_DETAILS = {
 };
 
 const END_BUYER = {
-  PAGE_TITLE: 'Does your buyer need to be paid by someone else before they can pay you?',
+  PAGE_TITLE: "Does your export contract say you'll only get paid once your buyer gets paid?",
 };
 
-const CANNOT_APPLY_MULTIPLE_RISKS = {
+const CANNOT_APPLY_MULTIPLE_RISKS_EXIT = {
   PAGE_TITLE: 'You cannot apply for credit insurance',
   INTRO: 'We can only provide cover for a single risk. As your buyer is reliant on an end buyer, it means that we would have to cover two risks:',
   LIST: ['your buyer not paying you', 'your buyer not being paid by their end buyer'],
@@ -150,6 +150,17 @@ const ELIGIBLE_TO_APPLY_ONLINE = {
   PAGE_TITLE: "You're eligible to apply for insurance",
   INSET: 'This does not automatically guarantee cover.',
   BODY: 'You now need to fill in the application so we can assess the risks around your exports and your buyer.',
+  PRIVACY: {
+    INTRO: "We're committed to protecting the privacy and security of the personal information we hold. Read our",
+    PRIVACY_NOTICE: {
+      LINK: {
+        TEXT: 'privacy notice',
+        HREF: LINKS.EXTERNAL.PRIVACY,
+      },
+      TEXT: 'for more details.',
+    },
+  },
+  CONTINUE_SUBMIT: `Once you continue your application you will have ${APPLICATION.SUBMISSION_DEADLINE_IN_DAYS} days to submit it.`,
   SUBMIT_BUTTON: 'Continue to application',
 };
 
@@ -157,18 +168,16 @@ const HAVE_AN_ACCOUNT = {
   PAGE_TITLE: 'Do you have an account with us?',
 };
 
-const CONTRACT_TOO_SHORT = {
+const CONTRACT_TOO_SHORT_EXIT = {
   PAGE_TITLE: 'Talk to an export finance manager',
-  INTRO: "We don't offer short term cover for the country you've selected.",
-  CAN_STILL_APPLY:
-    "You can still apply for credit insurance through UKEF, but you'll need to speak to an export finance manager instead of using this digital application service.",
+  INTRO: "We do not normally offer short term cover for the country you've selected.",
   CONTACT_EFM: {
-    INTRO: 'Contact',
+    INTRO: 'You might still be able to apply for credit insurance through UKEF - contact',
     LINK: {
       TEXT: 'your nearest export finance manager',
       HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
     },
-    TEXT: `to learn more about your options. If you have any questions, get in touch with our team at ${UKEF_CONTACT_DETAILS.EMAIL.UNDERWRITING}.`,
+    TEXT: `to learn more about your options.`,
   },
 };
 
@@ -185,19 +194,19 @@ export default {
   CHECK_IF_ELIGIBLE,
   TOTAL_VALUE_INSURED,
   COVER_PERIOD,
-  LONG_TERM_COVER,
+  LONG_TERM_COVER_EXIT,
   HAS_COMPANIES_HOUSE_NUMBER,
   COMPANIES_HOUSE_NUMBER,
-  NO_COMPANIES_HOUSE_NUMBER,
-  COMPANIES_HOUSE_UNAVAILABLE,
-  COMPANY_NOT_ACTIVE,
+  NO_COMPANIES_HOUSE_NUMBER_EXIT,
+  COMPANIES_HOUSE_UNAVAILABLE_EXIT,
+  COMPANY_NOT_ACTIVE_EXIT,
   COMPANY_DETAILS,
   END_BUYER,
-  CANNOT_APPLY_MULTIPLE_RISKS,
+  CANNOT_APPLY_MULTIPLE_RISKS_EXIT,
   CHECK_YOUR_ANSWERS,
   ELIGIBLE_TO_APPLY_ONLINE,
   HAVE_AN_ACCOUNT,
-  CONTRACT_TOO_SHORT,
+  CONTRACT_TOO_SHORT_EXIT,
   PARTY_TO_CONSORTIUM,
   MEMBER_OF_A_GROUP,
   MEMBER_OF_A_GROUP_EXIT,

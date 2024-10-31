@@ -1,18 +1,19 @@
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { summaryList } from '../../../../../../pages/shared';
+import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
+import { field, summaryList } from '../../../../../../pages/shared';
 import application from '../../../../../../fixtures/application';
 import formatCurrency from '../../../../../../helpers/format-currency';
-import { EUR_CURRENCY_CODE, NON_STANDARD_CURRENCY_CODE, SYMBOLS } from '../../../../../../fixtures/currencies';
+import { EUR_CURRENCY_CODE, NON_STANDARD_CURRENCY_CODE, NON_STANDARD_CURRENCY_NAME, SYMBOLS } from '../../../../../../fixtures/currencies';
 
 const {
   CURRENCY: { CURRENCY_CODE },
-  YOUR_BUYER: { OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE, TOTAL_OUTSTANDING_PAYMENTS },
+  YOUR_BUYER: { TOTAL_AMOUNT_OVERDUE, TOTAL_OUTSTANDING_PAYMENTS },
 } = INSURANCE_FIELD_IDS;
 
 const {
   ROOT,
-  YOUR_BUYER: { ALTERNATIVE_CURRENCY_CHANGE, CHECK_YOUR_ANSWERS },
+  YOUR_BUYER: { CURRENCY_OF_LATE_PAYMENTS_CHANGE, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -20,18 +21,13 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Your buyer - Change your answers - Alternative currency - As an exporter, I want to change my answers to an alternative currency', () => {
   let referenceNumber;
   let url;
+  const currencyFieldId = CURRENCY_CODE;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsuranceYourBuyerSection({});
-
-      cy.completeAndSubmitCompanyOrOrganisationForm({});
-      cy.completeAndSubmitConnectionWithTheBuyerForm({});
-      cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
-      cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
-      cy.completeAndSubmitBuyerFinancialInformationForm({});
+      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'buyerFinancialInformation', exporterHasTradedWithBuyer: true, outstandingPayments: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
@@ -46,17 +42,15 @@ context('Insurance - Your buyer - Change your answers - Alternative currency - A
   });
 
   describe(`changing ${CURRENCY_CODE} to ${SYMBOLS.EUR}`, () => {
-    const fieldId = OUTSTANDING_PAYMENTS;
     const currencyCode = EUR_CURRENCY_CODE;
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${ALTERNATIVE_CURRENCY_CHANGE}`, () => {
+      it(`should redirect to ${CURRENCY_OF_LATE_PAYMENTS_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList.field(fieldId).changeLink().click();
-        cy.clickProvideAlternativeCurrencyLink();
+        summaryList.field(currencyFieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: ALTERNATIVE_CURRENCY_CHANGE });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CURRENCY_OF_LATE_PAYMENTS_CHANGE, fieldId: currencyFieldId });
       });
     });
 
@@ -64,16 +58,20 @@ context('Insurance - Your buyer - Change your answers - Alternative currency - A
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList.field(fieldId).changeLink().click();
+        summaryList.field(currencyFieldId).changeLink().click();
 
-        cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: EUR_CURRENCY_CODE });
-
-        // submit TRADING_HISTORY form
+        cy.completeAndSubmitCurrencyForm({ isoCode: EUR_CURRENCY_CODE });
         cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId: currencyFieldId });
+      });
+
+      it(`should render the new answer for ${CURRENCY_CODE} including ${SYMBOLS.EUR}`, () => {
+        const row = summaryList.field(CURRENCY_CODE);
+
+        cy.checkText(row.value(), currencyCode);
       });
 
       it(`should render the new answer for ${TOTAL_AMOUNT_OVERDUE} including ${SYMBOLS.EUR}`, () => {
@@ -93,17 +91,15 @@ context('Insurance - Your buyer - Change your answers - Alternative currency - A
   });
 
   describe(`changing ${CURRENCY_CODE} to an alternative currency`, () => {
-    const fieldId = OUTSTANDING_PAYMENTS;
     const currencyCode = NON_STANDARD_CURRENCY_CODE;
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${ALTERNATIVE_CURRENCY_CHANGE}`, () => {
+      it(`should redirect to ${CURRENCY_OF_LATE_PAYMENTS_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList.field(fieldId).changeLink().click();
-        cy.clickProvideAlternativeCurrencyLink();
+        summaryList.field(currencyFieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: ALTERNATIVE_CURRENCY_CHANGE });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CURRENCY_OF_LATE_PAYMENTS_CHANGE, fieldId: currencyFieldId });
       });
     });
 
@@ -111,16 +107,20 @@ context('Insurance - Your buyer - Change your answers - Alternative currency - A
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList.field(fieldId).changeLink().click();
+        summaryList.field(currencyFieldId).changeLink().click();
 
-        cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true });
-
-        // submit TRADING_HISTORY form
+        cy.completeAndSubmitCurrencyForm({ alternativeCurrency: true });
         cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId: currencyFieldId });
+      });
+
+      it(`should render the new answer for ${CURRENCY_CODE}`, () => {
+        const row = summaryList.field(CURRENCY_CODE);
+
+        cy.checkText(row.value(), currencyCode);
       });
 
       it(`should render the new answer for ${TOTAL_AMOUNT_OVERDUE}`, () => {
@@ -135,6 +135,30 @@ context('Insurance - Your buyer - Change your answers - Alternative currency - A
         const expected = formatCurrency(application.BUYER[TOTAL_OUTSTANDING_PAYMENTS], currencyCode);
 
         cy.checkText(row.value(), expected);
+      });
+
+      it(`should render the ${TOTAL_AMOUNT_OVERDUE} answer with the alternative currency on the outstanding or overdue payments page`, () => {
+        const fieldId = TOTAL_AMOUNT_OVERDUE;
+
+        summaryList.field(fieldId).changeLink().click();
+
+        cy.assertCopyWithCurrencyName({
+          expectedCopy: FIELDS[fieldId].LABEL,
+          currencyName: NON_STANDARD_CURRENCY_NAME,
+          selector: field(fieldId).label(),
+        });
+      });
+
+      it(`should render the ${TOTAL_OUTSTANDING_PAYMENTS} answer with the alternative currency on the outstanding or overdue payments page`, () => {
+        const fieldId = TOTAL_OUTSTANDING_PAYMENTS;
+
+        summaryList.field(fieldId).changeLink().click();
+
+        cy.assertCopyWithCurrencyName({
+          expectedCopy: FIELDS[fieldId].LABEL,
+          currencyName: NON_STANDARD_CURRENCY_NAME,
+          selector: field(fieldId).label(),
+        });
       });
     });
   });

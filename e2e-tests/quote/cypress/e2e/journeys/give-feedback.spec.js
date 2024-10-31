@@ -1,10 +1,8 @@
-import partials from '../../../../partials';
-
 context('Give feedback link - As an exporter, I want to provide feedback about this service', () => {
   before(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
-    partials.phaseBanner.feedbackLink().click();
+    cy.clickPhaseBannerFeedbackLink();
   });
 
   it('redirects to a microsoft forms page', () => {

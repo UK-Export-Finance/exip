@@ -20,6 +20,7 @@ const applicationByReferenceNumberQuery = gql`
         submissionType
         submissionDate
         status
+        totalContractValueOverThreshold
         eligibility {
           id
           buyerCountry {
@@ -71,6 +72,7 @@ const applicationByReferenceNumberQuery = gql`
           requestedStartDate
           contractCompletionDate
           totalValueOfContract
+          requestedCreditLimit
           creditPeriodWithBuyer
           policyCurrencyCode
           totalMonthsOfCover
@@ -122,6 +124,7 @@ const applicationByReferenceNumberQuery = gql`
                 id
                 percentageCharge
                 fixedSumAmount
+                fixedSumCurrencyCode
                 method
                 payableCountryCode
               }

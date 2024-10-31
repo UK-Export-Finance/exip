@@ -43,8 +43,8 @@ export const get = (req: Request, res: Response) => {
       }),
       userName: getUserNameFromSession(req.session.user),
     });
-  } catch (err) {
-    console.error("Error rendering 'verify email expired link' page %O", err);
+  } catch (error) {
+    console.error("Error rendering 'verify email expired link' page %o", error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -80,8 +80,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(PROBLEM_WITH_SERVICE);
-  } catch (err) {
-    console.error('Error sending email confirm email address - verify-email-expired-link %O', err);
+  } catch (error) {
+    console.error('Error sending email confirm email address - verify-email-expired-link %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

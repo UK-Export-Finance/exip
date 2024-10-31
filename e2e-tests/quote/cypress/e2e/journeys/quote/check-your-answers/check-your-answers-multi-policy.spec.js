@@ -37,7 +37,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
   const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
   before(() => {
-    cy.login();
+    cy.navigateToRootUrl();
     cy.submitQuoteAnswersHappyPathMultiplePolicy();
     cy.assertUrl(url);
   });

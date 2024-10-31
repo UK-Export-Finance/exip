@@ -1,10 +1,7 @@
 import { headingCaption, singleInputField, declarationPage } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
-import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
+import { BUTTONS, PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-
-const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS.VERSIONS[0];
 
@@ -33,17 +30,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
-
-        cy.completeAndSubmitCheckYourAnswers();
-
-        // go to the page we want to test.
-        taskList.submitApplication.tasks.declarationsAndSubmit.link().click();
-
-        cy.completeAndSubmitDeclarationConfidentiality();
-        cy.completeAndSubmitDeclarationAntiBribery();
-        cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct();
-        cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct();
+        cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'exportingWithCodeOfConduct', referenceNumber });
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
@@ -64,7 +51,7 @@ context(
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: `${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`,
         backLink: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`,
-        assertBackLink: false,
+        submitButtonCopy: BUTTONS.SUBMIT_APPLICATION,
       });
     });
 
@@ -109,7 +96,7 @@ context(
       });
 
       it('renders a submit button and `save and back` button', () => {
-        cy.assertSubmitAndSaveButtons();
+        cy.assertSubmitAndSaveButtons(BUTTONS.SUBMIT_APPLICATION);
       });
     });
 
@@ -126,6 +113,20 @@ context(
             field,
             expectedErrorsCount,
             expectedErrorMessage: ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
+          });
+        });
+
+        describe('when going back to the all sections page', () => {
+          beforeEach(() => {
+            cy.navigateToAllSectionsUrl(referenceNumber);
+          });
+
+          it('should retain the status of task `check your answers` as `completed`', () => {
+            cy.checkTaskCheckAnswersStatusIsComplete();
+          });
+
+          it('should retain the status of task `declarations and submit` as `in progress`', () => {
+            cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
           });
         });
       });

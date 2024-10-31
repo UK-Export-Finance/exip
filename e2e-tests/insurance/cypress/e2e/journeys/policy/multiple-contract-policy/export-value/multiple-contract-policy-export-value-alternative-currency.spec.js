@@ -36,10 +36,9 @@ context('Insurance - Policy - Multiple contract policy - Export value page - Alt
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm({ policyType });
-
-      cy.completeAndSubmitMultipleContractPolicyForm({
+      cy.completeAndSubmitPolicyForms({
+        formToStopAt: 'multipleContractPolicy',
+        policyType,
         isoCode: NON_STANDARD_CURRENCY_CODE,
         alternativeCurrency: true,
       });
@@ -73,11 +72,11 @@ context('Insurance - Policy - Multiple contract policy - Export value page - Alt
     });
 
     it(`should NOT render a ${TOTAL_SALES_TO_BUYER} prefix`, () => {
-      field(TOTAL_SALES_TO_BUYER).prefix().should('not.exist');
+      cy.assertPrefix({ fieldId: TOTAL_SALES_TO_BUYER });
     });
 
     it(`should NOT render a ${MAXIMUM_BUYER_WILL_OWE} prefix`, () => {
-      field(MAXIMUM_BUYER_WILL_OWE).prefix().should('not.exist');
+      cy.assertPrefix({ fieldId: MAXIMUM_BUYER_WILL_OWE });
     });
 
     it('should prepopulate the radio on the single contract value page', () => {

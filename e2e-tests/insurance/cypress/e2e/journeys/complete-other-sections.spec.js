@@ -41,6 +41,7 @@ context('Insurance - Complete other sections page', () => {
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${COMPLETE_OTHER_SECTIONS}`,
       hasAForm: false,
       assertBackLink: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

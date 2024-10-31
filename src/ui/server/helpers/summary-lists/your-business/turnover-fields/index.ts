@@ -1,5 +1,5 @@
 import { FORM_TITLES } from '../../../../content-strings/form-titles';
-import { FIELDS } from '../../../../content-strings/fields/insurance';
+import { EXPORTER_BUSINESS_FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
@@ -16,26 +16,40 @@ const {
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
 const {
-  EXPORTER_BUSINESS: { TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE },
+  EXPORTER_BUSINESS: { TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE, TURNOVER_CURRENCY_CHANGE, TURNOVER_CURRENCY_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {
   TURNOVER: { PERCENTAGE_TURNOVER, ESTIMATED_ANNUAL_TURNOVER, TURNOVER_CURRENCY_CODE },
 } = FIELD_IDS;
 
+const { TURNOVER } = EXPORTER_BUSINESS_FIELDS;
+
 /**
  * generateTurnover
  * Create all your Turnover fields and values for the Insurance - Turnover govukSummaryList
  * @param {ApplicationBusiness} answers: Turnover answers
  * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange True if coming from check your answers section in submit application section
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} All Turnover fields and values in an object structure for GOVUK summary list structure
  */
-const generateTurnoverFields = (answers: ApplicationBusiness, referenceNumber: number, checkAndChange: boolean): SummaryListGroupData => {
+const generateTurnoverFields = (answers: ApplicationBusiness, referenceNumber: number, checkAndChange?: boolean): SummaryListGroupData => {
   const fields = [
+    fieldGroupItem({
+      field: getFieldById(TURNOVER, TURNOVER_CURRENCY_CODE),
+      data: answers,
+      href: generateChangeLink(
+        TURNOVER_CURRENCY_CHANGE,
+        TURNOVER_CURRENCY_CHECK_AND_CHANGE,
+        `#${TURNOVER_CURRENCY_CODE}-label`,
+        referenceNumber,
+        checkAndChange,
+      ),
+      renderChangeLink: true,
+    }),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS.TURNOVER, ESTIMATED_ANNUAL_TURNOVER),
+        field: getFieldById(TURNOVER, ESTIMATED_ANNUAL_TURNOVER),
         data: answers,
         href: generateChangeLink(TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE, `#${ESTIMATED_ANNUAL_TURNOVER}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
@@ -44,7 +58,7 @@ const generateTurnoverFields = (answers: ApplicationBusiness, referenceNumber: n
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS.TURNOVER, PERCENTAGE_TURNOVER),
+        field: getFieldById(TURNOVER, PERCENTAGE_TURNOVER),
         data: answers,
         href: generateChangeLink(TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE, `#${PERCENTAGE_TURNOVER}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,

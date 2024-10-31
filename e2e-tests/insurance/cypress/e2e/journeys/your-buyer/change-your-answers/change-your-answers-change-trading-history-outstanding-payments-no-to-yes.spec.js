@@ -4,10 +4,11 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { summaryList } from '../../../../../../pages/shared';
 import application from '../../../../../../fixtures/application';
 import formatCurrency from '../../../../../../helpers/format-currency';
+import checkSummaryList from '../../../../../../commands/insurance/check-your-buyer-summary-list';
 
 const {
   CURRENCY: { CURRENCY_CODE },
-  YOUR_BUYER: { OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS },
+  YOUR_BUYER: { OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE },
 } = INSURANCE_FIELD_IDS;
 
 const {
@@ -30,12 +31,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.startInsuranceYourBuyerSection({});
-
-        cy.completeAndSubmitCompanyOrOrganisationForm({});
-        cy.completeAndSubmitConnectionWithTheBuyerForm({});
-        cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
-        cy.completeAndSubmitBuyerFinancialInformationForm({});
+        cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'buyerFinancialInformation', exporterHasTradedWithBuyer: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       });
@@ -66,6 +62,8 @@ context(
         summaryList.field(fieldId).changeLink().click();
 
         cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
+        cy.completeAndSubmitCurrencyForm({});
+        cy.completeAndSubmitOutstandingOrOverduePaymentsForm({});
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -79,6 +77,18 @@ context(
         const expected = formatCurrency(application.BUYER[TOTAL_OUTSTANDING_PAYMENTS], currency);
 
         row.value().contains(expected);
+      });
+
+      it(`should render the new answer for ${OUTSTANDING_PAYMENTS}`, () => {
+        checkSummaryList[OUTSTANDING_PAYMENTS]({ shouldRender: true, isYes: true });
+      });
+
+      it(`should render the new answer for ${CURRENCY_CODE}`, () => {
+        checkSummaryList[CURRENCY_CODE]({ shouldRender: true });
+      });
+
+      it(`should render the new answer for ${TOTAL_AMOUNT_OVERDUE}`, () => {
+        checkSummaryList[TOTAL_AMOUNT_OVERDUE]({ shouldRender: true });
       });
     });
   },

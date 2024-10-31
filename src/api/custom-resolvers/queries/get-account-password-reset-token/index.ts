@@ -7,9 +7,9 @@ import { Account, AccountPasswordResetTokenResponse, Context, GetAccountPassword
  * - Get an account's reset password token and return in the response.
  * - NOTE: this is used for E2E testing purposes only.
  * - The alternative approach is to have email inbox testing capabilities which can be risky/flaky.
- * @param {Object} GraphQL root variables
- * @param {Object} GraphQL variables for the GetAccountPasswordResetToken mutation
- * @param {Context} KeystoneJS context API
+ * @param {Object} root: GraphQL root variables
+ * @param {Object} variables: GraphQL variables for the GetAccountPasswordResetToken mutation
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag and Password reset token
  */
 const getAccountPasswordResetToken = async (
@@ -44,9 +44,10 @@ const getAccountPasswordResetToken = async (
     console.info('Unable to get account password reset token - reset hash does not exist');
 
     return { success: false };
-  } catch (err) {
-    console.error('Error getting account password reset token %O', err);
-    throw new Error(`Getting account password reset token ${err}`);
+  } catch (error) {
+    console.error('Error getting account password reset token %o', error);
+
+    throw new Error(`Getting account password reset token ${error}`);
   }
 };
 

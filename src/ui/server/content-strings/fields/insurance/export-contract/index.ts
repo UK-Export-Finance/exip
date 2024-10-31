@@ -181,6 +181,7 @@ export const EXPORT_CONTRACT_FIELDS = {
     },
     [FIXED_SUM_AMOUNT]: {
       LABEL: 'How much are they charging in',
+      HINT: 'Enter a whole number. Do not enter decimals.',
       SUMMARY: {
         TITLE: 'How much they are charging',
         FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
@@ -197,12 +198,16 @@ export const EXPORT_CONTRACT_FIELDS = {
     [PAYABLE_COUNTRY_CODE]: {
       LABEL: 'Country where charges are payable',
       SUMMARY: {
-        TITLE: 'Country that commission is payable',
+        TITLE: 'Country where commission is payable',
         FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
       },
     },
     [CURRENCY_CODE]: {
       LEGEND: 'What currency is the agent charging you in?',
+      SUMMARY: {
+        TITLE: "Currency of the agent's charge",
+        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
+      },
     },
   },
 };

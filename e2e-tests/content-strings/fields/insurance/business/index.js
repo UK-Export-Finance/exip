@@ -5,10 +5,10 @@ import { FORM_TITLES } from '../../../form-titles';
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, PHONE_NUMBER, WEBSITE },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, PHONE_NUMBER, WEBSITE },
     ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
-    TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+    TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER, TURNOVER_CURRENCY_CODE },
     HAS_CREDIT_CONTROL,
   },
   CURRENCY: { CURRENCY_CODE },
@@ -31,7 +31,7 @@ export const EXPORTER_BUSINESS_FIELDS = {
         FORM_TITLE: COMPANY_DETAILS,
       },
     },
-    [TRADING_ADDRESS]: {
+    [HAS_DIFFERENT_TRADING_ADDRESS]: {
       SUMMARY: {
         TITLE: 'Different trading address',
         FORM_TITLE: COMPANY_DETAILS,
@@ -97,6 +97,12 @@ export const EXPORTER_BUSINESS_FIELDS = {
         FORM_TITLE: NATURE_OF_BUSINESS,
       },
     },
+    [TURNOVER_CURRENCY_CODE]: {
+      SUMMARY: {
+        TITLE: 'Turnover currency',
+        FORM_TITLE: TURNOVER,
+      },
+    },
     [ESTIMATED_ANNUAL_TURNOVER]: {
       LEGEND: 'Estimated annual turnover for this current financial year in',
       PREFIX: SYMBOLS.GBP,
@@ -115,7 +121,7 @@ export const EXPORTER_BUSINESS_FIELDS = {
     },
   },
   [CURRENCY_CODE]: {
-    LEGEND: 'What currency is your turnover in?',
+    LEGEND: 'Which currency do you calculate your turnover in?',
   },
   [HAS_CREDIT_CONTROL]: {
     HINT: 'These are often called credit control processes. They may be managed by your legal or financial team.',

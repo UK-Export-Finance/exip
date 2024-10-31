@@ -49,7 +49,7 @@ const {
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
@@ -85,8 +85,6 @@ export const FIELD_IDS = [
   ALTERNATIVE_CURRENCY_CODE,
 ];
 
-export const totalMonthsOfCoverOptions = FIELDS.CONTRACT_POLICY.MULTIPLE[TOTAL_MONTHS_OF_COVER].OPTIONS as Array<number>;
-
 /**
  * get
  * Render the Multiple contract policy page
@@ -120,8 +118,8 @@ export const get = async (req: Request, res: Response) => {
       application: mapApplicationToFormFields(application),
       ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, currencyAnswer),
     });
-  } catch (err) {
-    console.error('Error getting currencies %O', err);
+  } catch (error) {
+    console.error('Error getting currencies %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -171,8 +169,8 @@ export const post = async (req: Request, res: Response) => {
         ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, currencyAnswer),
         validationErrors,
       });
-    } catch (err) {
-      console.error('Error getting currencies %O', err);
+    } catch (error) {
+      console.error('Error getting currencies %o', error);
 
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
@@ -217,8 +215,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`);
-  } catch (err) {
-    console.error('Error updating application - policy - multiple contract policy %O', err);
+  } catch (error) {
+    console.error('Error updating application - policy - multiple contract policy %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

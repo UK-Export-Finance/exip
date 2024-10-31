@@ -39,7 +39,7 @@ describe('controllers/insurance/business/company-details/validation/company-deta
     });
   });
 
-  describe(`${WEBSITE} is the correct format`, () => {
+  describe(`when ${WEBSITE} is the correct format`, () => {
     it('should not return a validation error', () => {
       mockBody[WEBSITE] = 'www.gov.uk';
 
@@ -49,7 +49,7 @@ describe('controllers/insurance/business/company-details/validation/company-deta
     });
   });
 
-  describe(`${WEBSITE} is an empty string`, () => {
+  describe(`when ${WEBSITE} is an empty string`, () => {
     it('should not return a validation error', () => {
       mockBody[WEBSITE] = '';
 

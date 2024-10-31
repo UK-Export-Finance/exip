@@ -31,7 +31,7 @@ export interface TestHelperAccountStatusCreate extends TestHelperCreate {
 }
 
 export interface TestHelperApplicationCreate extends TestHelperCreate {
-  data: ApplicationCreateInput;
+  data?: ApplicationCreateInput;
 }
 
 export interface TestHelperApplicationGet {
@@ -50,7 +50,7 @@ export interface TestHelperBuyerCreate extends TestHelperCreate {
 }
 
 export interface TestHelperPolicyCreate extends TestHelperCreate {
-  data: PolicyCreateInput;
+  data?: PolicyCreateInput;
 }
 
 export interface TestHelperPolicyUpdate extends TestHelperCreate {

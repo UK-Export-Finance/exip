@@ -4,7 +4,7 @@ import sendEmail from '../../../emails';
 import confirmEmailAddressEmail from '../../../helpers/send-email-confirm-email-address';
 import accounts from '../../../test-helpers/accounts';
 import accountStatus from '../../../test-helpers/account-status';
-import { mockAccount, mockSendEmailResponse } from '../../../test-mocks';
+import { mockAccount, mockSendEmailResponse, mockSpyPromiseRejection } from '../../../test-mocks';
 import { Account, Context } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 import sendEmailReactivateAccountLinkHelper from '../../../helpers/send-email-reactivate-account-link';
@@ -206,8 +206,6 @@ describe('custom-resolvers/create-an-account - account exists and blocked', () =
   });
 
   describe('when sendEmailReactivateAccountLinkHelper.send errors', () => {
-    const mockError = 'mock error';
-
     beforeEach(async () => {
       jest.resetAllMocks();
 
@@ -241,7 +239,7 @@ describe('custom-resolvers/create-an-account - account exists and blocked', () =
       sendConfirmEmailAddressEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
       confirmEmailAddressEmail.send = sendConfirmEmailAddressEmailSpy;
 
-      sendEmailReactivateAccountLinkSpy = jest.fn(() => Promise.reject(new Error(mockError)));
+      sendEmailReactivateAccountLinkSpy = mockSpyPromiseRejection;
       sendEmailReactivateAccountLinkHelper.send = sendEmailReactivateAccountLinkSpy;
     });
 

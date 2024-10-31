@@ -1,8 +1,6 @@
 import { yesRadio, noRadio } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm } from '../../../../../../commands/quote/forms';
 import {
   checkCalculateDescriptionSummaryText,
   checkCalculateDescriptionSummaryClickRevealsContent,
@@ -33,10 +31,10 @@ context('UK goods or services page - as an exporter, I want to check if my expor
   const url = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
 
   before(() => {
-    cy.login();
-    completeAndSubmitBuyerCountryForm({});
-    completeAndSubmitBuyerBodyForm();
-    completeAndSubmitExporterLocationForm();
+    cy.navigateToRootUrl();
+    cy.completeAndSubmitBuyerCountryForm({});
+    cy.completeAndSubmitBuyerBodyForm();
+    cy.completeAndSubmitExporterLocationForm();
 
     cy.assertUrl(url);
   });
@@ -52,6 +50,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
       backLink: EXPORTER_LOCATION,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

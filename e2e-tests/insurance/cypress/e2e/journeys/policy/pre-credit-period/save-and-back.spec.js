@@ -1,4 +1,3 @@
-import { field as fieldSelector } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
@@ -15,8 +14,6 @@ const {
   [CREDIT_PERIOD_WITH_BUYER]: { MAXIMUM },
 } = FIELDS;
 
-const descriptionField = fieldSelector(CREDIT_PERIOD_WITH_BUYER);
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Pre-credit period page - Save and go back', () => {
@@ -27,11 +24,7 @@ context('Insurance - Policy - Pre-credit period page - Save and go back', () => 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm({});
-      cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitTotalContractValueForm({});
-      cy.completeAndSubmitNameOnPolicyForm({});
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'nameOnPolicy' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`;
 
@@ -113,7 +106,11 @@ context('Insurance - Policy - Pre-credit period page - Save and go back', () => 
       cy.clickSubmitButtonMultipleTimes({ count: 4 });
 
       cy.assertYesRadioOptionIsChecked();
-      descriptionField.textarea().should('have.value', '');
+
+      cy.checkTextareaValue({
+        fieldId: CREDIT_PERIOD_WITH_BUYER,
+        expectedValue: '',
+      });
     });
   });
 
@@ -139,7 +136,11 @@ context('Insurance - Policy - Pre-credit period page - Save and go back', () => 
       cy.clickSubmitButtonMultipleTimes({ count: 4 });
 
       cy.assertYesRadioOptionIsChecked();
-      descriptionField.textarea().should('have.value', mockApplication.POLICY[CREDIT_PERIOD_WITH_BUYER]);
+
+      cy.checkTextareaValue({
+        fieldId: CREDIT_PERIOD_WITH_BUYER,
+        expectedValue: mockApplication.POLICY[CREDIT_PERIOD_WITH_BUYER],
+      });
     });
   });
 });

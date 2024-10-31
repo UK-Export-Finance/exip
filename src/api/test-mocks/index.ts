@@ -74,7 +74,9 @@ export const mockApplicationMinimalBrokerBuyerAndCompany = {
 };
 
 export const mockApplicationSinglePolicyTotalContractValueOverThreshold = {
+  ...mockApplication,
   ...mockApplicationMinimalBrokerBuyerAndCompany,
+  totalContractValueOverThreshold: true,
   policy: {
     ...mockApplicationMinimalBrokerBuyerAndCompany.policy,
     [POLICY_TYPE]: APPLICATION.POLICY_TYPE.SINGLE,
@@ -88,6 +90,7 @@ export const mockApplicationSinglePolicyTotalContractValueOverThreshold = {
 };
 
 export const mockApplicationEligibilityTotalContractValueBelowThreshold = {
+  ...mockApplication,
   ...mockApplicationSinglePolicyTotalContractValueOverThreshold.eligibility,
   [TOTAL_CONTRACT_VALUE_FIELD_ID]: {
     value: TOTAL_CONTRACT_VALUE.LESS_THAN_250K.VALUE,
@@ -96,6 +99,7 @@ export const mockApplicationEligibilityTotalContractValueBelowThreshold = {
 
 export const mockApplicationMultiplePolicyTotalContractValueOverThreshold = {
   ...mockApplicationMinimalBrokerBuyerAndCompany,
+  totalContractValueOverThreshold: true,
   policy: {
     ...mockApplicationMinimalBrokerBuyerAndCompany.policy,
     [POLICY_TYPE]: APPLICATION.POLICY_TYPE.MULTIPLE,
@@ -204,4 +208,10 @@ export const mockRes = () => {
   return res;
 };
 
+export const mockErrorMessage = 'Mock error';
+
+export const mockInvalidId = 'invalid-id';
+
 export const mockSpyPromise = () => jest.fn().mockResolvedValue({});
+
+export const mockSpyPromiseRejection = jest.fn().mockRejectedValue(new Error(mockErrorMessage));

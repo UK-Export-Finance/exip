@@ -43,7 +43,7 @@ export const HTML_FLAGS = {
 
 /**
  * pageVariables
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object} with FIELD_ID, PAGE_CONTENT_STRINGS, save and back url and FIELD_HINT
  */
 export const pageVariables = (referenceNumber: number) => ({
@@ -161,8 +161,9 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
-  } catch (err) {
-    console.error('Error updating application - policy - nominated loss payee %O', err);
+  } catch (error) {
+    console.error('Error updating application - policy - nominated loss payee %o', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

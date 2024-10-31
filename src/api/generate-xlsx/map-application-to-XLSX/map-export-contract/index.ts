@@ -17,17 +17,14 @@ const {
 /**
  * mapExportContract
  * Map an application's export contract fields into an array of objects for XLSX generation
- * @param {Application} application: Application
+ * @param {Application} application
  * @param {Array<Country>} countries: Array of countries
  * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapExportContract = (application: Application, countries: Array<Country>) => {
-  const {
-    eligibility: { totalContractValue },
-    exportContract,
-  } = application;
+  const { exportContract } = application;
 
-  const { agent, privateMarket } = exportContract;
+  const { agent } = exportContract;
 
   const mapped = [
     xlsxRow(String(FIELDS.EXPORT_CONTRACT[DESCRIPTION]), exportContract[DESCRIPTION]),
@@ -38,7 +35,7 @@ const mapExportContract = (application: Application, countries: Array<Country>) 
 
     xlsxRow(String(FIELDS.EXPORT_CONTRACT[PAYMENT_TERMS_DESCRIPTION]), exportContract[PAYMENT_TERMS_DESCRIPTION]),
 
-    ...mapPrivateMarket(privateMarket, totalContractValue),
+    ...mapPrivateMarket(application),
 
     ...mapAgent(agent, countries),
   ];

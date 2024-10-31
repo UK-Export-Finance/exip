@@ -1,16 +1,15 @@
 import { listItem } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.CANNOT_APPLY_MULTIPLE_RISKS;
+const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.CANNOT_APPLY_MULTIPLE_RISKS_EXIT;
 
 const {
   ACTIONS: { CONTACT_EFM },
 } = CONTENT_STRINGS;
 
 const {
-  ELIGIBILITY: { END_BUYER, CANNOT_APPLY_MULTIPLE_RISKS },
+  ELIGIBILITY: { END_BUYER, CANNOT_APPLY_MULTIPLE_RISKS_EXIT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -18,19 +17,10 @@ const baseUrl = Cypress.config('baseUrl');
 context(
   'Insurance - Cannot apply - multiple risks page - as an exporter, I want to confirm if payment by the buyer of my export depends on payment from an end buyer, So that I can UKEF have clarity of my export transaction',
   () => {
-    const url = `${baseUrl}${CANNOT_APPLY_MULTIPLE_RISKS}`;
+    const url = `${baseUrl}${CANNOT_APPLY_MULTIPLE_RISKS_EXIT}`;
 
     before(() => {
-      cy.navigateToCheckIfEligibleUrl();
-      cy.completeCheckIfEligibleForm();
-      cy.completeExporterLocationForm();
-      cy.completeCompaniesHouseNumberForm();
-      cy.completeAndSubmitCompaniesHouseSearchForm({});
-      cy.completeEligibilityCompanyDetailsForm();
-      completeAndSubmitBuyerCountryForm({});
-      cy.completeAndSubmitTotalValueInsuredForm({});
-      cy.completeCoverPeriodForm({});
-      cy.completeUkGoodsAndServicesForm();
+      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'ukGoodsAndServices' });
 
       cy.clickYesRadioInput();
       cy.clickSubmitButton();
@@ -45,10 +35,11 @@ context(
     it('renders core page elements', () => {
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-        currentHref: CANNOT_APPLY_MULTIPLE_RISKS,
+        currentHref: CANNOT_APPLY_MULTIPLE_RISKS_EXIT,
         backLink: END_BUYER,
         assertAuthenticatedHeader: false,
         hasAForm: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

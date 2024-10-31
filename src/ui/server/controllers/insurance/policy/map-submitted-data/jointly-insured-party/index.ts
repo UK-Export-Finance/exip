@@ -8,7 +8,7 @@ const {
 /**
  * mapSubmittedData
  * if REQUESTED is false, wipe "other company"/"jointly insured party" data.
- * @param {Express.Request.body} Form data
+ * @param {Express.Request.body} formBody
  * @returns {Object} Page variables
  */
 const mapSubmittedData = (formBody: RequestBody): object => {

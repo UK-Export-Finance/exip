@@ -1,13 +1,11 @@
 import { backLink, cannotApplyPage } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import { completeAndSubmitBuyerBodyForm } from '../../../../../../commands/quote/forms';
 
-const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
+const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY_EXIT;
 
 const {
-  QUOTE: { EXPORTER_LOCATION, CANNOT_APPLY },
+  QUOTE: { EXPORTER_LOCATION, CANNOT_APPLY_EXIT },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -18,9 +16,9 @@ context(
     const url = `${baseUrl}${EXPORTER_LOCATION}`;
 
     before(() => {
-      cy.login();
-      completeAndSubmitBuyerCountryForm({});
-      completeAndSubmitBuyerBodyForm();
+      cy.navigateToRootUrl();
+      cy.completeAndSubmitBuyerCountryForm({});
+      cy.completeAndSubmitBuyerBodyForm();
 
       cy.assertUrl(url);
     });
@@ -35,7 +33,7 @@ context(
     });
 
     it('redirects to exit page', () => {
-      const expectedUrl = `${baseUrl}${CANNOT_APPLY}`;
+      const expectedUrl = `${baseUrl}${CANNOT_APPLY_EXIT}`;
 
       cy.assertUrl(expectedUrl);
     });

@@ -24,9 +24,10 @@ const updateLossPayeeFinancialInternationalVector = async (
     });
 
     return updated;
-  } catch (err) {
-    console.error('Error updating loss payee financial international vector (helper) %O', err);
-    throw new Error(`Updating loss payee financial international vector (helper) ${err}`);
+  } catch (error) {
+    console.error('Error updating loss payee financial international vector (helper) %o', error);
+
+    throw new Error(`Updating loss payee financial international vector (helper) ${error}`);
   }
 };
 

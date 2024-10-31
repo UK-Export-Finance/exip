@@ -1,7 +1,7 @@
 import { TOTAL_CONTRACT_VALUE } from '../../../constants/total-contract-value';
 import { XLSX } from '../../../content-strings';
 import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
-import { FIELDS_ELIGIBILITY as CONTENT_STRINGS } from '../../../content-strings/fields/insurance/eligibility';
+import { ELIGIBILITY_FIELDS as CONTENT_STRINGS } from '../../../content-strings/fields/insurance/eligibility';
 import xlsxRow from '../helpers/xlsx-row';
 import mapYesNoField from '../helpers/map-yes-no-field';
 import { Application } from '../../../types';
@@ -39,7 +39,7 @@ const {
  * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapEligibility = (application: Application) => {
-  const { company, eligibility, migratedV1toV2 } = application;
+  const { company, eligibility } = application;
 
   let mapped = [
     xlsxRow(CONTENT_STRINGS[VALID_EXPORTER_LOCATION].SUMMARY?.TITLE, mapYesNoField({ answer: eligibility[VALID_EXPORTER_LOCATION] })),
@@ -50,7 +50,7 @@ const mapEligibility = (application: Application) => {
     xlsxRow(String(FIELDS[BUYER_COUNTRY]), eligibility[BUYER_COUNTRY].name),
   ];
 
-  const totalContractValueAnswer = migratedV1toV2 ? null : eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID].valueId === MORE_THAN_250K.DB_ID;
+  const totalContractValueAnswer = eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID].valueId === MORE_THAN_250K.DB_ID;
 
   mapped = [
     ...mapped,
@@ -59,17 +59,12 @@ const mapEligibility = (application: Application) => {
     xlsxRow(String(FIELDS[COVER_PERIOD]), eligibility[COVER_PERIOD_ELIGIBILITY].value),
 
     xlsxRow(String(FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES]), mapYesNoField({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES] })),
-  ];
 
-  const endBuyerAnswer = migratedV1toV2 ? null : eligibility[HAS_END_BUYER];
-  const partyToConsortiumAnswer = migratedV1toV2 ? null : eligibility[IS_PARTY_TO_CONSORTIUM];
-  const memberOfGroupAnswer = migratedV1toV2 ? null : eligibility[IS_PARTY_TO_CONSORTIUM];
+    xlsxRow(String(FIELDS[HAS_END_BUYER]), mapYesNoField({ answer: eligibility[HAS_END_BUYER] })),
 
-  mapped = [
-    ...mapped,
-    xlsxRow(String(FIELDS[HAS_END_BUYER]), mapYesNoField({ answer: endBuyerAnswer })),
-    xlsxRow(String(FIELDS[IS_PARTY_TO_CONSORTIUM]), mapYesNoField({ answer: partyToConsortiumAnswer })),
-    xlsxRow(String(FIELDS[IS_MEMBER_OF_A_GROUP]), mapYesNoField({ answer: memberOfGroupAnswer })),
+    xlsxRow(String(FIELDS[IS_PARTY_TO_CONSORTIUM]), mapYesNoField({ answer: eligibility[IS_PARTY_TO_CONSORTIUM] })),
+
+    xlsxRow(String(FIELDS[IS_MEMBER_OF_A_GROUP]), mapYesNoField({ answer: eligibility[IS_PARTY_TO_CONSORTIUM] })),
   ];
 
   return mapped;

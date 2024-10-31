@@ -4,7 +4,7 @@ import { ROUTES } from '../../../../../constants/routes';
 import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/jointly-insured-party';
 import generateValidationErrors from '../validation';
-import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 import { Request, Response } from '../../../../../../types';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
@@ -17,7 +17,7 @@ describe('controllers/insurance/policy/other-company-details/save-and-back', () 
 
   const updateMapAndSaveSuccess = jest.fn(() => Promise.resolve(true));
   const updateMapAndSaveFalse = jest.fn(() => Promise.resolve(false));
-  const updateMapAndSaveError = jest.fn(() => Promise.reject(new Error('mock')));
+  const updateMapAndSaveError = mockSpyPromiseRejection;
 
   beforeEach(() => {
     req = mockReq();
@@ -44,7 +44,7 @@ describe('controllers/insurance/policy/other-company-details/save-and-back', () 
     });
 
     it('should redirect to all sections page', () => {
-      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should call mapAndSave.jointlyInsuredParty once with data from constructPayload function', () => {
@@ -70,7 +70,7 @@ describe('controllers/insurance/policy/other-company-details/save-and-back', () 
     });
 
     it('should redirect to all sections page', () => {
-      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should call mapAndSave.jointlyInsuredParty once with data from constructPayload function and validation errors', () => {

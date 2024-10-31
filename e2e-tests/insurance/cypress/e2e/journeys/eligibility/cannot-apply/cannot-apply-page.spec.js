@@ -4,11 +4,11 @@ import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { COUNTRY_APPLICATION_SUPPORT } from '../../../../../../fixtures/countries';
 
-const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
+const CONTENT_STRINGS = PAGES.CANNOT_APPLY_EXIT;
 const { REASON } = CONTENT_STRINGS;
 
 const {
-  ELIGIBILITY: { BUYER_COUNTRY, CANNOT_APPLY },
+  ELIGIBILITY: { BUYER_COUNTRY, CANNOT_APPLY_EXIT },
 } = INSURANCE_ROUTES;
 
 const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
@@ -25,11 +25,7 @@ context(
 
       cy.navigateToCheckIfEligibleUrl();
 
-      cy.completeCheckIfEligibleForm();
-      cy.completeExporterLocationForm();
-      cy.completeCompaniesHouseNumberForm();
-      cy.completeAndSubmitCompaniesHouseSearchForm({});
-      cy.completeEligibilityCompanyDetailsForm();
+      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'companyDetails' });
 
       cy.keyboardInput(autoCompleteField(FIELD_ID).input(), COUNTRY_NAME);
 
@@ -40,7 +36,7 @@ context(
     });
 
     it('redirects to `cannot apply` exit page', () => {
-      const expectedUrl = `${baseUrl}${CANNOT_APPLY}`;
+      const expectedUrl = `${baseUrl}${CANNOT_APPLY_EXIT}`;
 
       cy.assertUrl(expectedUrl);
     });
@@ -63,9 +59,12 @@ context(
 
       const expectedValue = COUNTRY_NAME;
 
-      cy.checkValue(autoCompleteField(FIELD_ID), expectedValue);
-
-      cy.checkText(autoCompleteField(FIELD_ID).results(), expectedValue);
+      cy.checkTextAndValue({
+        textSelector: autoCompleteField(FIELD_ID).results(),
+        expectedText: expectedValue,
+        valueSelector: autoCompleteField(FIELD_ID),
+        expectedValue,
+      });
     });
   },
 );

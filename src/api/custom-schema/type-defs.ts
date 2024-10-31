@@ -208,6 +208,16 @@ const typeDefs = `
     referenceNumber: Int
   }
 
+  type ApplicationResponse {
+    id: String
+    referenceNumber: Int
+  }
+
+  type CreateManyApplicationsResponse {
+    success: Boolean!
+    applications: [ApplicationResponse]
+  }
+
   type CreateAnAbandonedApplicationResponse {
     success: Boolean!
     id: String
@@ -283,6 +293,7 @@ const typeDefs = `
     submissionDate: DateTime
     referenceNumber: Int
     status: String!
+    totalContractValueOverThreshold: Boolean
     eligibility: Eligibility
     exportContract: ExportContract
     policy: Policy
@@ -319,6 +330,12 @@ const typeDefs = `
       company: CompanyInput!
       sectionReview: SectionReviewInput!
     ): CreateAnApplicationResponse
+
+     """ create many applications """
+    createManyApplications(
+      accountId: String!
+      count: Int!
+    ): CreateManyApplicationsResponse
 
     """ create an application """
     createAnAbandonedApplication(
@@ -426,12 +443,6 @@ const typeDefs = `
       bankAddress: String
       iban: String
       bicSwiftCode: String
-    ): SuccessResponse
-
-    """ update a company (post data migration) """
-    updateCompanyPostDataMigration(
-      id: String
-      company: CompanyInput
     ): SuccessResponse
   }
 

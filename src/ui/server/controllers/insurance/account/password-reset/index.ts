@@ -112,8 +112,8 @@ export const post = async (req: Request, res: Response) => {
       submittedValues: payload,
       validationErrors,
     });
-  } catch (err) {
-    console.error('Error posting account password reset form %O', err);
+  } catch (error) {
+    console.error('Error posting account password reset form %o', error);
     return res.redirect(ROUTES.INSURANCE.PROBLEM_WITH_SERVICE);
   }
 };

@@ -1,5 +1,5 @@
 import { FORM_TITLES } from '../../../../content-strings/form-titles';
-import { FIELDS } from '../../../../content-strings/fields/insurance';
+import { EXPORTER_BUSINESS_FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
@@ -17,21 +17,35 @@ const {
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
 const {
-  EXPORTER_BUSINESS: { TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE },
+  EXPORTER_BUSINESS: { TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE, TURNOVER_CURRENCY_CHANGE, TURNOVER_CURRENCY_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {
   TURNOVER: { PERCENTAGE_TURNOVER, ESTIMATED_ANNUAL_TURNOVER, TURNOVER_CURRENCY_CODE },
 } = FIELD_IDS;
 
+const { TURNOVER } = EXPORTER_BUSINESS_FIELDS;
+
 describe('server/helpers/summary-lists/your-business/turnover-fields', () => {
   const mockAnswers = mockBusiness;
   const checkAndChange = false;
 
   const expectedFields = [
+    fieldGroupItem({
+      field: getFieldById(TURNOVER, TURNOVER_CURRENCY_CODE),
+      data: mockAnswers,
+      href: generateChangeLink(
+        TURNOVER_CURRENCY_CHANGE,
+        TURNOVER_CURRENCY_CHECK_AND_CHANGE,
+        `#${TURNOVER_CURRENCY_CODE}-label`,
+        referenceNumber,
+        checkAndChange,
+      ),
+      renderChangeLink: true,
+    }),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS.TURNOVER, ESTIMATED_ANNUAL_TURNOVER),
+        field: getFieldById(TURNOVER, ESTIMATED_ANNUAL_TURNOVER),
         data: mockAnswers,
         href: generateChangeLink(TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE, `#${ESTIMATED_ANNUAL_TURNOVER}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
@@ -40,7 +54,7 @@ describe('server/helpers/summary-lists/your-business/turnover-fields', () => {
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS.TURNOVER, PERCENTAGE_TURNOVER),
+        field: getFieldById(TURNOVER, PERCENTAGE_TURNOVER),
         data: mockAnswers,
         href: generateChangeLink(TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE, `#${PERCENTAGE_TURNOVER}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,

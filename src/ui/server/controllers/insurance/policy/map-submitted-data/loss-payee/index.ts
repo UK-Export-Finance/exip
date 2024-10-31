@@ -13,7 +13,7 @@ const {
  * if IS_APPOINTED is provided, sanitise the value.
  * if IS_APPOINTED has a value of false, wipe IS_APPOINTED related data.
  * if LOCATION, is provided, map LOCATION related data.
- * @param {Express.Request.body} Form data
+ * @param {Express.Request.body} formBody
  * @returns {Object} populated data
  */
 const mapSubmittedData = (formBody: RequestBody): object => {

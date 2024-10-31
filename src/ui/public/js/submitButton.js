@@ -1,6 +1,6 @@
 var EXIP;
 !(function () {
-  var t = document.getElementById('form'),
+  const t = document.getElementById('form'),
     e = document.getElementById('submit-button');
   t &&
     t.addEventListener('submit', function () {

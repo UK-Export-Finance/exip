@@ -1,5 +1,5 @@
 import { field } from '../../../../../../pages/shared';
-import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
 
@@ -11,10 +11,8 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
-    NAME_ON_POLICY: { POSITION, SAME_NAME, OTHER_NAME },
-  },
-} = INSURANCE_FIELD_IDS;
+  NAME_ON_POLICY: { POSITION, SAME_NAME, OTHER_NAME },
+} = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -26,10 +24,7 @@ context('Insurance - Policy - Name on policy - Save and go back', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm({});
-      cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitTotalContractValueForm({});
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'totalContractValue' });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
 

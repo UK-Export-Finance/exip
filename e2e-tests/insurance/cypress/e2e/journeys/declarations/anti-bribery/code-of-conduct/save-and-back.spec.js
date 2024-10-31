@@ -1,8 +1,5 @@
-import partials from '../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-
-const { taskList } = partials.insurancePartials;
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -11,12 +8,10 @@ const {
   },
 } = INSURANCE_ROUTES;
 
-const task = taskList.submitApplication.tasks.declarationsAndSubmit;
-
 const baseUrl = Cypress.config('baseUrl');
 
 const navigateBackToPage = () => {
-  task.link().click();
+  cy.clickTaskDeclarationsAndSubmit();
 
   // go through the first 2 declaration forms.
   cy.clickSubmitButtonMultipleTimes({ count: 2 });
@@ -30,13 +25,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
-
-      // go to the page we want to test.
-      task.link().click();
-
-      cy.completeAndSubmitDeclarationConfidentiality();
-      cy.completeAndSubmitDeclarationAntiBribery();
+      cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'antiBribery', referenceNumber });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`;
 
@@ -63,7 +52,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the status of task `declarations` as `in progress`', () => {
+    it('should retain the status of task `declarations and submit` as `in progress`', () => {
       cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
   });
@@ -81,7 +70,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the status of task `declarations` as `in progress`', () => {
+    it('should retain the status of task `declarations and submit` as `in progress`', () => {
       cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
 
@@ -89,6 +78,20 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
       navigateBackToPage();
 
       cy.assertYesRadioOptionIsChecked();
+    });
+
+    describe('when going back to the all sections page', () => {
+      beforeEach(() => {
+        cy.navigateToAllSectionsUrl(referenceNumber);
+      });
+
+      it('should retain the status of task `check your answers` as `completed`', () => {
+        cy.checkTaskCheckAnswersStatusIsComplete();
+      });
+
+      it('should retain the status of task `declarations and submit` as `in progress`', () => {
+        cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
+      });
     });
   });
 
@@ -105,7 +108,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the status of task `declarations` as `in progress`', () => {
+    it('should retain the status of task `declarations and submit` as `in progress`', () => {
       cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
 
@@ -113,6 +116,20 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
       navigateBackToPage();
 
       cy.assertNoRadioOptionIsChecked();
+    });
+
+    describe('when going back to the all sections page', () => {
+      beforeEach(() => {
+        cy.navigateToAllSectionsUrl(referenceNumber);
+      });
+
+      it('should retain the status of task `check your answers` as `completed`', () => {
+        cy.checkTaskCheckAnswersStatusIsComplete();
+      });
+
+      it('should retain the status of task `declarations and submit` as `in progress`', () => {
+        cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
+      });
     });
   });
 });

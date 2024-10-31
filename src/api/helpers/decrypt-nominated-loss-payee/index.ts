@@ -53,9 +53,10 @@ const decryptNominatedLossPayee = (
     }
 
     return mapped;
-  } catch (err) {
-    console.error('Error decrypting nominated loss payee %O', err);
-    throw new Error(`Error decrypting nominated loss payee ${err}`);
+  } catch (error) {
+    console.error('Error decrypting nominated loss payee %o', error);
+
+    throw new Error(`Error decrypting nominated loss payee ${error}`);
   }
 };
 

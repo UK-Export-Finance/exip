@@ -15,7 +15,7 @@ const { FIELDS } = XLSX;
 /**
  * mapExporterContactDetails
  * Map an application's exporter/policy contact details fields into an array of objects for XLSX generation
- * @param {Application}
+ * @param {Application} application
  * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapExporterContactDetails = (application: Application) => {

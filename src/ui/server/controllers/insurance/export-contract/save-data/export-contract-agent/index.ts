@@ -7,9 +7,9 @@ import { Application, RequestBody } from '../../../../../../types';
  * exportContractAgent
  * Strip invalid fields from submitted form data and update the application.
  * This is used for any save functionality in the "Export contract agent" section of the application.
- * @param {Application}
- * @param {Express.Request.body} Form data
- * @param {Object} Field error list
+ * @param {Application} application
+ * @param {Express.Request.body} formBody
+ * @param {Object} errorList: Field error list
  * @returns {Promise<Object>} Saved data
  */
 const exportContractAgent = async (application: Application, formBody: RequestBody, errorList?: object) => {
@@ -24,7 +24,7 @@ const exportContractAgent = async (application: Application, formBody: RequestBo
     const saveResponse = await api.keystone.application.update.exportContractAgent(exportContractAgentId, sanitisedData);
 
     return saveResponse;
-  } catch (err) {
+  } catch (error) {
     throw new Error("Updating application's exportContractAgent");
   }
 };

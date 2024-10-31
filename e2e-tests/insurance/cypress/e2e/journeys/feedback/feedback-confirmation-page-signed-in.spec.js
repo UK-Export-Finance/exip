@@ -1,4 +1,3 @@
-import partials from '../../../../../partials';
 import { BUTTONS, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 
@@ -11,7 +10,8 @@ context('Insurance - Feedback confirmation page - Signed in', () => {
 
   before(() => {
     cy.completeSignInAndGoToApplication({});
-    partials.phaseBanner.feedbackLink().click();
+    cy.clickPhaseBannerFeedbackLink();
+
     // to reach confirmation page
     cy.clickSubmitButton();
   });
@@ -28,6 +28,7 @@ context('Insurance - Feedback confirmation page - Signed in', () => {
       assertAuthenticatedHeader: true,
       assertBackLink: false,
       submitButtonCopy: BUTTONS.BACK_TO_SERVICE,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 });

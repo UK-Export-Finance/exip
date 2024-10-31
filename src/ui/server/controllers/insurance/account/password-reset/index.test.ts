@@ -9,7 +9,7 @@ import generateValidationErrors from './validation';
 import api from '../../../../api';
 import accountDoesNotExistValidation from './validation/account-does-not-exist';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockAccount } from '../../../../test-mocks';
+import { mockReq, mockRes, mockAccount, mockSpyPromiseRejection } from '../../../../test-mocks';
 
 const {
   ACCOUNT: { EMAIL },
@@ -183,7 +183,7 @@ describe('controllers/insurance/account/password-reset', () => {
           beforeEach(() => {
             req.body = validBody;
 
-            sendEmailPasswordResetLinkSpy = jest.fn(() => Promise.reject(new Error('mock')));
+            sendEmailPasswordResetLinkSpy = mockSpyPromiseRejection;
             api.keystone.account.sendEmailPasswordResetLink = sendEmailPasswordResetLinkSpy;
           });
 

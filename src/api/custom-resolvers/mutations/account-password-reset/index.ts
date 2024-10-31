@@ -137,10 +137,10 @@ const accountPasswordReset = async (root: any, variables: AccountPasswordResetVa
     return {
       success: true,
     };
-  } catch (err) {
-    console.error('Error resetting account password %O', err);
+  } catch (error) {
+    console.error('Error resetting account password %o', error);
 
-    throw new Error(`Resetting account password ${err}`);
+    throw new Error(`Resetting account password ${error}`);
   }
 };
 

@@ -33,7 +33,7 @@ describe('server/helpers/summary-lists/policy/other-company-fields', () => {
   describe('optionalOtherCompanyFields', () => {
     const checkAndChange = false;
 
-    describe(`${REQUESTED} is true`, () => {
+    describe(`when ${REQUESTED} is true`, () => {
       it('should return fields from the submitted data/answers', () => {
         mockJointlyInsuredParty[REQUESTED] = true;
 
@@ -85,7 +85,7 @@ describe('server/helpers/summary-lists/policy/other-company-fields', () => {
       });
     });
 
-    describe(`${REQUESTED} is false`, () => {
+    describe(`when ${REQUESTED} is false`, () => {
       it('should return an empty array', () => {
         mockJointlyInsuredParty[REQUESTED] = false;
 

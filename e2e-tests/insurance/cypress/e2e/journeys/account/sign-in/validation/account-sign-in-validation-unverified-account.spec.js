@@ -1,4 +1,4 @@
-import { yourDetailsPage, confirmEmailPage } from '../../../../../../../pages/insurance/account/create';
+import { confirmEmailPage } from '../../../../../../../pages/insurance/account/create';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import { PAGES } from '../../../../../../../content-strings';
 
@@ -29,7 +29,7 @@ context('Insurance - Account - Sign in - Validation - unverified account', () =>
 
     cy.clickBackLink();
 
-    yourDetailsPage.signInButtonLink().click();
+    cy.clickSignInButtonLink();
 
     const expectedUrl = `${baseUrl}${SIGN_IN_ROOT}`;
     cy.assertUrl(expectedUrl);

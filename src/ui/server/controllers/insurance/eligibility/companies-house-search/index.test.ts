@@ -1,6 +1,6 @@
 import { FIELD_ID, PAGE_VARIABLES, PAGE_CONTENT_STRINGS, TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
-import { FIELDS_ELIGIBILITY as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
+import { ELIGIBILITY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
 import { ERROR_MESSAGES } from '../../../../content-strings/error-messages';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
@@ -13,7 +13,7 @@ import companiesHouse from '../../../../helpers/companies-house-search';
 import mapCompaniesHouseData from '../../../../helpers/mappings/map-companies-house-data';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { CompaniesHouseResponse, Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockCompaniesHouseResponse, mockCompany } from '../../../../test-mocks';
+import { mockReq, mockRes, mockCompaniesHouseResponse, mockCompany, mockSpyPromiseRejection } from '../../../../test-mocks';
 
 const {
   ELIGIBILITY: { COMPANIES_HOUSE_NUMBER },
@@ -22,7 +22,7 @@ const {
 const {
   INSURANCE: {
     PROBLEM_WITH_SERVICE,
-    ELIGIBILITY: { COMPANIES_HOUSE_NUMBER_CHANGE, COMPANY_DETAILS, COMPANY_NOT_ACTIVE, COMPANIES_HOUSE_UNAVAILABLE, COMPANY_DETAILS_CHANGE },
+    ELIGIBILITY: { COMPANIES_HOUSE_NUMBER_CHANGE, COMPANY_DETAILS, COMPANY_NOT_ACTIVE_EXIT, COMPANIES_HOUSE_UNAVAILABLE_EXIT, COMPANY_DETAILS_CHANGE },
   },
 } = ROUTES;
 
@@ -57,7 +57,7 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
   });
 
   describe('PAGE_CONTENT_STRINGS', () => {
-    it('should have the correct template defined', () => {
+    it('should have the correct strings', () => {
       expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER);
     });
   });
@@ -177,7 +177,7 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
       });
 
       describe('when companiesHouse.search returns isActive=false', () => {
-        it(`should redirect to ${COMPANY_NOT_ACTIVE}`, async () => {
+        it(`should redirect to ${COMPANY_NOT_ACTIVE_EXIT}`, async () => {
           req.body = validBody;
 
           const mockResponse = {
@@ -190,7 +190,7 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
 
           await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(COMPANY_NOT_ACTIVE);
+          expect(res.redirect).toHaveBeenCalledWith(COMPANY_NOT_ACTIVE_EXIT);
         });
       });
     });
@@ -227,7 +227,7 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
       });
 
       describe('when companiesHouse.search returns apiError=true', () => {
-        it(`should redirect to ${COMPANIES_HOUSE_UNAVAILABLE}`, async () => {
+        it(`should redirect to ${COMPANIES_HOUSE_UNAVAILABLE_EXIT}`, async () => {
           req.body = validBody;
 
           const mockResponse = {
@@ -239,13 +239,13 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
 
           await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(COMPANIES_HOUSE_UNAVAILABLE);
+          expect(res.redirect).toHaveBeenCalledWith(COMPANIES_HOUSE_UNAVAILABLE_EXIT);
         });
       });
 
       describe('when there is an error', () => {
         beforeEach(() => {
-          companiesHouse.search = jest.fn(() => Promise.reject(new Error('mock')));
+          companiesHouse.search = mockSpyPromiseRejection;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

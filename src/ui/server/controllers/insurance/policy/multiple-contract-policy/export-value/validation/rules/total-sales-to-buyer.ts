@@ -1,15 +1,14 @@
-import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
+import { MINIMUM_CHARACTERS } from '../../../../../../../constants';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import numberAboveMinimumValidation from '../../../../../../../shared-validation/number-above-minimum';
 import { RequestBody } from '../../../../../../../../types';
 
 const {
-  POLICY: {
-    EXPORT_VALUE: {
-      MULTIPLE: { TOTAL_SALES_TO_BUYER: FIELD_ID },
-    },
+  EXPORT_VALUE: {
+    MULTIPLE: { TOTAL_SALES_TO_BUYER: FIELD_ID },
   },
-} = INSURANCE_FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 const {
   INSURANCE: {
@@ -21,14 +20,14 @@ const {
   },
 } = ERROR_MESSAGES;
 
-export const MINIMUM = 1;
+const MINIMUM = MINIMUM_CHARACTERS.POLICY.TOTAL_SALES_TO_BUYER;
 
 /**
  * totalSalesToBuyerRules
  * Check submitted form data for errors with the total sales to buyer field
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
- * @param {Object} Errors object from previous validation errors
+ * @param {Object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const totalSalesToBuyerRules = (formBody: RequestBody, errors: object) =>

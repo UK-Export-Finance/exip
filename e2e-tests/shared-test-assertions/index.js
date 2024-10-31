@@ -5,5 +5,6 @@ export * from './currency-form-fields';
 export * from './email-field-validation';
 export * from './financial-address-field-validation';
 export * from './iban-field-validation';
+export * from './monetary-field-validation';
 export * from './percentage-field-validation';
 export * from './summary-lists';

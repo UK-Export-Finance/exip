@@ -1,7 +1,7 @@
 import save from '.';
 import api from '../../../../../api';
 import { FIELD_IDS } from '../../../../../constants';
-import { mockApplication } from '../../../../../test-mocks';
+import { mockApplication, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const {
   EXPORTER_BUSINESS: {
@@ -25,16 +25,16 @@ describe('controllers/insurance/business/save-data/business - API error', () => 
 
   describe('when there is an error', () => {
     beforeEach(() => {
-      updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+      updateApplicationSpy = mockSpyPromiseRejection;
       api.keystone.application.update.business = updateApplicationSpy;
     });
 
     it('should throw an error', async () => {
       try {
         await save.business(mockApplication, mockFormBody);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error("Updating application's business");
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

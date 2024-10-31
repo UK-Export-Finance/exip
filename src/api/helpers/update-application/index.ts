@@ -3,8 +3,8 @@ import { Context } from '../../types';
 /**
  * timestamp
  * Update an application's "updated" timestamp
- * @param {Context} KeystoneJS context API
- * @param {String} Application ID
+ * @param {Context} context: KeystoneJS context API
+ * @param {String} applicationId: Application ID
  * @returns {Promise<Object>} Application
  */
 const timestamp = async (context: Context, applicationId: string) => {
@@ -23,10 +23,10 @@ const timestamp = async (context: Context, applicationId: string) => {
     });
 
     return application;
-  } catch (err) {
-    console.error('Error updating application updatedAt timestamp %O', err);
+  } catch (error) {
+    console.error('Error updating application updatedAt timestamp %o', error);
 
-    throw new Error(`Updating application updatedAt timestamp ${err}`);
+    throw new Error(`Updating application updatedAt timestamp ${error}`);
   }
 };
 

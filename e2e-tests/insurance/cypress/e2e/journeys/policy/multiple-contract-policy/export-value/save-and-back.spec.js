@@ -1,7 +1,7 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import application from '../../../../../../../fixtures/application';
 
 const {
@@ -10,12 +10,10 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
-    EXPORT_VALUE: {
-      MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
-    },
+  EXPORT_VALUE: {
+    MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
   },
-} = INSURANCE_FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 const policyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
@@ -29,9 +27,7 @@ context('Insurance - Policy - Multiple contract policy Export value page - Save 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm({ policyType });
-      cy.completeAndSubmitMultipleContractPolicyForm({});
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'multipleContractPolicy', policyType });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`;
 
@@ -98,7 +94,7 @@ context('Insurance - Policy - Multiple contract policy Export value page - Save 
       });
 
       it('should NOT have saved the submitted value', () => {
-        field.input().should('have.value', '');
+        cy.checkValue(field, '');
       });
     });
   });
@@ -128,7 +124,7 @@ context('Insurance - Policy - Multiple contract policy Export value page - Save 
       });
 
       it('should have the submitted value', () => {
-        fieldSelector(TOTAL_SALES_TO_BUYER).input().should('have.value', application.POLICY[TOTAL_SALES_TO_BUYER]);
+        cy.checkValue(fieldSelector(TOTAL_SALES_TO_BUYER), application.POLICY[TOTAL_SALES_TO_BUYER]);
       });
     });
   });
@@ -147,8 +143,8 @@ context('Insurance - Policy - Multiple contract policy Export value page - Save 
       });
 
       it('should render all submitted values', () => {
-        fieldSelector(TOTAL_SALES_TO_BUYER).input().should('have.value', application.POLICY[TOTAL_SALES_TO_BUYER]);
-        fieldSelector(MAXIMUM_BUYER_WILL_OWE).input().should('have.value', application.POLICY[MAXIMUM_BUYER_WILL_OWE]);
+        cy.checkValue(fieldSelector(TOTAL_SALES_TO_BUYER), application.POLICY[TOTAL_SALES_TO_BUYER]);
+        cy.checkValue(fieldSelector(MAXIMUM_BUYER_WILL_OWE), application.POLICY[MAXIMUM_BUYER_WILL_OWE]);
       });
     });
   });

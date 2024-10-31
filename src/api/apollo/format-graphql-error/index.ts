@@ -10,14 +10,14 @@ import { ValidationError } from 'apollo-server-express';
  * @param {GraphQLFormattedError} GraphQL error
  * @returns {ValidationError}
  */
-export const formatGraphQlError = (err: GraphQLFormattedError): GraphQLFormattedError => {
+export const formatGraphQlError = (error: GraphQLFormattedError): GraphQLFormattedError => {
   const isDevEnvironment = process.env.NODE_ENV === 'development';
 
   if (!isDevEnvironment) {
     return new ValidationError('Invalid request');
   }
 
-  return err;
+  return error;
 };
 
 export default formatGraphQlError;

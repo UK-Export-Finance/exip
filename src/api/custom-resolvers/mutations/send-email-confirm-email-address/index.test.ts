@@ -58,10 +58,10 @@ describe('custom-resolvers/send-email-confirm-email-address', () => {
     test('should throw an error', async () => {
       try {
         await sendEmailConfirmEmailAddressMutation({}, variables, context);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error('Sending email verification for account creation (sendEmailConfirmEmailAddress mutation)');
 
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

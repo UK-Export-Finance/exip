@@ -70,7 +70,6 @@ const CUSTOM_RESOLVERS = [
   'getCompaniesHouseInformation',
   'getApplicationByReferenceNumber',
   'submitApplication',
-  'updateCompanyPostDataMigration',
 
   // feedback
   'createFeedbackAndSendEmail',
@@ -89,6 +88,7 @@ if (isDevEnvironment) {
     'addAndGetOTP',
     'createApplications',
     'createAnAbandonedApplication',
+    'createManyApplications',
     'createBuyer',
     'deleteAnAccount',
     'deleteApplications',

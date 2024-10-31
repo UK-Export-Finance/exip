@@ -8,7 +8,7 @@ export const TEMPLATES = {
   COOKIES: 'cookies.njk',
   COOKIES_SAVED: 'cookies-saved.njk',
   PROBLEM_WITH_SERVICE: 'problem-with-service.njk',
-  CANNOT_APPLY: 'cannot-apply.njk',
+  CANNOT_APPLY_EXIT: 'cannot-apply.njk',
   CONTACT_US: 'contact-us.njk',
   QUOTE: QUOTE_TEMPLATES,
   INSURANCE: INSURANCE_TEMPLATES,

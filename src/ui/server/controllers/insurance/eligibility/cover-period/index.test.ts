@@ -2,7 +2,7 @@ import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { COVER_PERIOD, FIELD_IDS, TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
-import { FIELDS_ELIGIBILITY as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
+import { ELIGIBILITY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
@@ -12,7 +12,7 @@ import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
 
 const {
-  ELIGIBILITY: { COVER_PERIOD_CHANGE, UK_GOODS_OR_SERVICES, LONG_TERM_COVER, CHECK_YOUR_ANSWERS },
+  ELIGIBILITY: { COVER_PERIOD_CHANGE, UK_GOODS_OR_SERVICES, LONG_TERM_COVER_EXIT, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 describe('controllers/insurance/eligibility/cover-period', () => {
@@ -89,10 +89,10 @@ describe('controllers/insurance/eligibility/cover-period', () => {
         };
       });
 
-      it(`should redirect to ${LONG_TERM_COVER}`, async () => {
+      it(`should redirect to ${LONG_TERM_COVER_EXIT}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(LONG_TERM_COVER);
+        expect(res.redirect).toHaveBeenCalledWith(LONG_TERM_COVER_EXIT);
       });
     });
 

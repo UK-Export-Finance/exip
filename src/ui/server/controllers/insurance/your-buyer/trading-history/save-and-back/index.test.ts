@@ -1,4 +1,4 @@
-import { FIELD_IDS } from '..';
+import { FIELD_ID } from '..';
 import { post } from '.';
 import { ROUTES } from '../../../../../constants';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
@@ -6,7 +6,7 @@ import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/buyer-trading-history';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 
 const { OUTSTANDING_PAYMENTS, FAILED_PAYMENTS, TOTAL_AMOUNT_OVERDUE } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
@@ -40,7 +40,7 @@ describe('controllers/insurance/your-buyer/trading-history/save-and-back', () =>
 
       await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should call mapAndSave.buyerTradingHistory once with data from constructPayload function', async () => {
@@ -50,7 +50,7 @@ describe('controllers/insurance/your-buyer/trading-history/save-and-back', () =>
 
       expect(updateMapAndSave).toHaveBeenCalledTimes(1);
 
-      const payload = constructPayload(req.body, FIELD_IDS);
+      const payload = constructPayload(req.body, [FIELD_ID]);
       const validationErrors = generateValidationErrors(payload);
 
       expect(updateMapAndSave).toHaveBeenCalledWith(payload, res.locals.application, validationErrors);
@@ -63,7 +63,7 @@ describe('controllers/insurance/your-buyer/trading-history/save-and-back', () =>
 
       await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should call mapAndSave.yourBuyer once with data from constructPayload function', async () => {
@@ -76,7 +76,7 @@ describe('controllers/insurance/your-buyer/trading-history/save-and-back', () =>
 
       expect(updateMapAndSave).toHaveBeenCalledTimes(1);
 
-      const payload = constructPayload(req.body, FIELD_IDS);
+      const payload = constructPayload(req.body, [FIELD_ID]);
       const validationErrors = generateValidationErrors(payload);
 
       expect(updateMapAndSave).toHaveBeenCalledWith(payload, res.locals.application, validationErrors);
@@ -112,7 +112,7 @@ describe('controllers/insurance/your-buyer/trading-history/save-and-back', () =>
   describe('when mapAndSave.buyerTradingHistory fails', () => {
     beforeEach(() => {
       res.locals = mockRes().locals;
-      updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
+      updateMapAndSave = mockSpyPromiseRejection;
       mapAndSave.buyerTradingHistory = updateMapAndSave;
     });
 

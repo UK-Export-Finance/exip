@@ -12,7 +12,18 @@ import sectionStatus from '../../../../helpers/section-status';
 import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, referenceNumber, mockApplication, mockCountries, mockSpyPromise } from '../../../../test-mocks';
+import {
+  mockReq,
+  mockRes,
+  referenceNumber,
+  mockApplication,
+  mockCountries,
+  mockCurrencies,
+  mockCurrenciesEmptyResponse,
+  mockCurrenciesResponse,
+  mockSpyPromise,
+  mockSpyPromiseRejection,
+} from '../../../../test-mocks';
 
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
@@ -20,7 +31,7 @@ const {
   INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE },
 } = ROUTES;
 
-const { exportContract, migratedV1toV2, totalContractValueOverThreshold } = mockApplication;
+const { exportContract, totalContractValueOverThreshold } = mockApplication;
 
 const {
   finalDestinationKnown,
@@ -46,12 +57,14 @@ describe('controllers/insurance/check-your-answers/export-contract', () => {
   let res: Response;
 
   let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
+  let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
 
     api.keystone.countries.getAll = getCountriesSpy;
+    api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
 
   describe('FIELD_ID', () => {
@@ -89,19 +102,25 @@ describe('controllers/insurance/check-your-answers/export-contract', () => {
       expect(getCountriesSpy).toHaveBeenCalledTimes(1);
     });
 
+    it('should call api.keystone.APIM.getCurrencies', async () => {
+      await get(req, res);
+
+      expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
+    });
+
     it('should render template', async () => {
       await get(req, res);
 
       const checkAndChange = true;
 
-      const summaryList = exportContractSummaryLists(
+      const summaryList = exportContractSummaryLists({
         exportContract,
         totalContractValueOverThreshold,
-        migratedV1toV2,
         referenceNumber,
-        mockCountries,
+        countries: mockCountries,
+        currencies: mockCurrencies,
         checkAndChange,
-      );
+      });
 
       const exportContractFields = requiredFields({
         totalContractValueOverThreshold,
@@ -143,7 +162,7 @@ describe('controllers/insurance/check-your-answers/export-contract', () => {
 
     describe('when the get countries API call fails', () => {
       beforeEach(() => {
-        getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        getCountriesSpy = mockSpyPromiseRejection;
         api.keystone.countries.getAll = getCountriesSpy;
       });
 
@@ -158,6 +177,32 @@ describe('controllers/insurance/check-your-answers/export-contract', () => {
       beforeEach(() => {
         getCountriesSpy = jest.fn(() => Promise.resolve([]));
         api.keystone.countries.getAll = getCountriesSpy;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('when the get currencies API call fails', () => {
+      beforeEach(() => {
+        getCurrenciesSpy = mockSpyPromiseRejection;
+        api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('when the get currencies response does not return a populated array', () => {
+      beforeEach(() => {
+        getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
+        api.keystone.APIM.getCurrencies = getCurrenciesSpy;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -224,7 +269,7 @@ describe('controllers/insurance/check-your-answers/export-contract', () => {
 
       describe('when the save data API call fails', () => {
         beforeEach(() => {
-          mockSaveSectionReview = jest.fn(() => Promise.reject(new Error('mock')));
+          mockSaveSectionReview = mockSpyPromiseRejection;
           save.sectionReview = mockSaveSectionReview;
 
           req.body = mockBody;

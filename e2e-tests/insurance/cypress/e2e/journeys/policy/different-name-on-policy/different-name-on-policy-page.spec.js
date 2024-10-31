@@ -35,11 +35,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.startInsurancePolicySection({});
-        cy.completeAndSubmitPolicyTypeForm({});
-        cy.completeAndSubmitSingleContractPolicyForm({});
-        cy.completeAndSubmitTotalContractValueForm({});
-        cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
+        cy.completeAndSubmitPolicyForms({ formToStopAt: 'nameOnPolicy', sameName: false });
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
 
@@ -110,10 +106,6 @@ context(
         field.input().should('exist');
 
         cy.checkText(field.label(), FIELDS.DIFFERENT_NAME_ON_POLICY[fieldId].LABEL);
-      });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
       });
     });
 

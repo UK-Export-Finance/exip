@@ -6,7 +6,7 @@ import applicationCronSchedulerJobs from './application';
 /**
  * cronJobs
  * Runs cron jobs
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  */
 const cronJobs = (context: Context) => {
   console.info('Running cron jobs');

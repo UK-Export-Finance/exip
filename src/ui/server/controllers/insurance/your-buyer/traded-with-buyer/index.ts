@@ -32,6 +32,12 @@ export const FIELD_ID = TRADED_WITH_BUYER;
 
 export const FIELD_IDS = [FIELD_ID];
 
+/**
+ * pageVariables
+ * Page fields and "save and go back" URL
+ * @param {Number} referenceNumber: Application reference number
+ * @returns {Object} Page variables
+ */
 export const pageVariables = (referenceNumber: number) => ({
   FIELD_ID,
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER_SAVE_AND_BACK}`,
@@ -75,8 +81,8 @@ export const get = async (req: Request, res: Response) => {
       ...pageVariables(application.referenceNumber),
       submittedValues: application.buyer.buyerTradingHistory,
     });
-  } catch (err) {
-    console.error('Error getting insurance - your buyer - traded with buyer %O', err);
+  } catch (error) {
+    console.error('Error getting insurance - your buyer - traded with buyer %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -176,8 +182,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`);
-  } catch (err) {
-    console.error('Error posting insurance - your buyer - traded with buyer %O', err);
+  } catch (error) {
+    console.error('Error posting insurance - your buyer - traded with buyer %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

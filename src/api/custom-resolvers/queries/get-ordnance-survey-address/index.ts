@@ -9,9 +9,9 @@ import removeWhiteSpace from '../../../helpers/remove-white-space';
  * Checks postcode is valid
  * Calls Ordnance Survey API with postcode
  * Finds address by house name/number
- * @param {Object} GraphQL root variables
- * @param {Object} GraphQL variables for the getOrdnanceSurveyAddress mutation - postcode and houseNameOrNumber
- * @param {Context} KeystoneJS context API
+ * @param {Object} root: GraphQL root variables
+ * @param {Object} variables: GraphQL variables for the getOrdnanceSurveyAddress mutation - postcode and houseNameOrNumber
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag and addresses in an array
  */
 const getOrdnanceSurveyAddress = async (root: any, variables: OrdnanceSurveyVariables) => {
@@ -25,6 +25,7 @@ const getOrdnanceSurveyAddress = async (root: any, variables: OrdnanceSurveyVari
     // if not valid postcode then returns success false and additional flag
     if (!isValidPostcode(noWhitespacePostcode)) {
       console.error('Invalid postcode: %s', postcode);
+
       return {
         success: false,
         invalidPostcode: true,
@@ -33,7 +34,7 @@ const getOrdnanceSurveyAddress = async (root: any, variables: OrdnanceSurveyVari
 
     const response = await ordnanceSurvey.get(postcode);
 
-    // if no data in response or status is not 200 then return blank object
+    // if no data in response or status is not 200 then return an empty object
     if (!response.success || !response.data) {
       return {
         success: false,
@@ -55,8 +56,9 @@ const getOrdnanceSurveyAddress = async (root: any, variables: OrdnanceSurveyVari
       addresses: mappedAddresses,
       success: true,
     };
-  } catch (err) {
-    console.error('Error getting Ordnance Survey address results %O', err);
+  } catch (error) {
+    console.error('Error getting Ordnance Survey address results %o', error);
+
     return {
       apiError: true,
       success: false,

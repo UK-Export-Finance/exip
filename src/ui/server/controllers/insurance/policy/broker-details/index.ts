@@ -34,7 +34,7 @@ export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.BROKER_DETAILS;
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
@@ -78,8 +78,9 @@ export const get = (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
     });
-  } catch (err) {
-    console.error('Error getting broker details %O', err);
+  } catch (error) {
+    console.error('Error getting broker details %o', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -135,8 +136,9 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`);
-  } catch (err) {
-    console.error('Error updating application - policy - broker details %O', err);
+  } catch (error) {
+    console.error('Error updating application - policy - broker details %o', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

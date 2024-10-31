@@ -1,4 +1,4 @@
-import partials from '../../../../../../partials';
+import { headingCaption } from '../../../../../../partials';
 import { field as fieldSelector } from '../../../../../../pages/shared';
 import { turnoverPage } from '../../../../../../pages/your-business';
 import { PAGES } from '../../../../../../content-strings';
@@ -17,7 +17,7 @@ const {
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_ALTERNATIVE_CURRENCY, NATURE_OF_BUSINESS_ROOT, CREDIT_CONTROL },
+  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_CURRENCY_ROOT, CREDIT_CONTROL },
 } = INSURANCE_ROUTES;
 
 const financialYearEnd = {
@@ -40,10 +40,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.startYourBusinessSection({});
-
-        cy.completeAndSubmitCompanyDetails({});
-        cy.completeAndSubmitNatureOfYourBusiness();
+        cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'turnoverCurrency' });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
         creditControlUrl = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
@@ -64,7 +61,7 @@ context(
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: `${ROOT}/${referenceNumber}${TURNOVER_ROOT}`,
-        backLink: `${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`,
+        backLink: `${ROOT}/${referenceNumber}${TURNOVER_CURRENCY_ROOT}`,
       });
     });
 
@@ -74,7 +71,7 @@ context(
       });
 
       it('renders a heading caption', () => {
-        cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+        cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
       it(`should display ${FINANCIAL_YEAR_END_DATE} section`, () => {
@@ -101,7 +98,7 @@ context(
           withQuestionMark: true,
         });
 
-        cy.checkText(field.prefix(), FIELDS.TURNOVER[fieldId].PREFIX);
+        cy.assertPrefix({ fieldId, value: FIELDS.TURNOVER[fieldId].PREFIX });
       });
 
       it(`should render ${PERCENTAGE_TURNOVER} section`, () => {
@@ -114,25 +111,13 @@ context(
 
         cy.assertSuffix({ fieldId, value: FIELDS.TURNOVER[fieldId].SUFFIX });
       });
-
-      it('should render a `provide alternative currency` link', () => {
-        cy.checkLink(
-          partials.provideAlternativeCurrencyLink(),
-          `${ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY}`,
-          CONTENT_STRINGS.PROVIDE_ALTERNATIVE_CURRENCY,
-        );
-      });
-
-      it('should render save and go back button', () => {
-        cy.assertSaveAndBackButton();
-      });
     });
 
     describe('form submission', () => {
       it(`should redirect to ${CREDIT_CONTROL}`, () => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitTurnoverForm({});
+        cy.completeAndSubmitTurnoverForm();
 
         cy.assertUrl(creditControlUrl);
       });
@@ -144,9 +129,9 @@ context(
 
         cy.checkText(turnoverPage[FINANCIAL_YEAR_END_DATE](), financialYearEnd.expectedValue);
 
-        fieldSelector(ESTIMATED_ANNUAL_TURNOVER).input().should('have.value', application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
+        cy.checkValue(fieldSelector(ESTIMATED_ANNUAL_TURNOVER), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
 
-        fieldSelector(PERCENTAGE_TURNOVER).input().should('have.value', application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
+        cy.checkValue(fieldSelector(PERCENTAGE_TURNOVER), application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
       });
     });
   },

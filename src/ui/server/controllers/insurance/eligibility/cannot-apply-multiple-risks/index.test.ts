@@ -17,7 +17,7 @@ describe('controllers/insurance/eligibility/cannot-apply-multiple-risks', () => 
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.CANNOT_APPLY_MULTIPLE_RISKS);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.CANNOT_APPLY_MULTIPLE_RISKS_EXIT);
     });
   });
 
@@ -27,7 +27,7 @@ describe('controllers/insurance/eligibility/cannot-apply-multiple-risks', () => 
 
       const expectedVariables = {
         ...corePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.CANNOT_APPLY_MULTIPLE_RISKS,
+          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.CANNOT_APPLY_MULTIPLE_RISKS_EXIT,
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),

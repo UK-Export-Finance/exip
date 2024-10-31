@@ -29,7 +29,6 @@ export const INSURANCE_FIELD_IDS = {
     ALTERNATIVE_CURRENCY_CODE: 'alternativeCurrencyCode',
   },
   SUBMISSION_DEADLINE: 'submissionDeadline',
-  MIGRATED_FROM_V1_TO_V2: 'migratedV1toV2',
   ACCOUNT,
   POLICY,
   EXPORTER_BUSINESS,

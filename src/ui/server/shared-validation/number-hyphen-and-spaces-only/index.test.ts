@@ -1,7 +1,9 @@
 import numberHyphenSpacesOnlyValidation from '.';
-import { mockErrorMessagesObject, mockErrors } from '../../test-mocks';
-import { RequestBody } from '../../../types';
+import { REGEX } from '../../constants';
 import generateValidationErrors from '../../helpers/validation';
+import regexValidation from '../regex-validation';
+import { RequestBody } from '../../../types';
+import { mockErrorMessagesObject, mockErrors } from '../../test-mocks';
 
 describe('shared-validation/number-hyphen-and-spaces-only', () => {
   const FIELD_ID = 'FIELD_ID';
@@ -26,48 +28,18 @@ describe('shared-validation/number-hyphen-and-spaces-only', () => {
     });
 
     describe('when the provided value has a letter', () => {
-      it('should return a validation errors"', () => {
+      it('should return the result of regexValidation"', () => {
         mockBody[FIELD_ID] = '11-22-3E';
 
         const result = numberHyphenSpacesOnlyValidation(mockBody, FIELD_ID, mockErrorMessagesObject, mockErrors, MINIMUM, MAXIMUM);
 
-        const expected = generateValidationErrors(FIELD_ID, mockErrorMessagesObject.INCORRECT_FORMAT, mockErrors);
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when the provided value has a special character', () => {
-      it('should return a validation errors"', () => {
-        mockBody[FIELD_ID] = '11-22-3!';
-
-        const result = numberHyphenSpacesOnlyValidation(mockBody, FIELD_ID, mockErrorMessagesObject, mockErrors, MINIMUM, MAXIMUM);
-
-        const expected = generateValidationErrors(FIELD_ID, mockErrorMessagesObject.INCORRECT_FORMAT, mockErrors);
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when the provided value is below minimum length', () => {
-      it('should return a validation errors', () => {
-        mockBody[FIELD_ID] = '11-22';
-
-        const result = numberHyphenSpacesOnlyValidation(mockBody, FIELD_ID, mockErrorMessagesObject, mockErrors, MINIMUM, MAXIMUM);
-
-        const expected = generateValidationErrors(FIELD_ID, mockErrorMessagesObject.BELOW_MINIMUM, mockErrors);
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when the provided value is above maximum length', () => {
-      it('should return a validation errors', () => {
-        mockBody[FIELD_ID] = '11-22-33-44';
-
-        const result = numberHyphenSpacesOnlyValidation(mockBody, FIELD_ID, mockErrorMessagesObject, mockErrors, MINIMUM, MAXIMUM);
-
-        const expected = generateValidationErrors(FIELD_ID, mockErrorMessagesObject.ABOVE_MAXIMUM, mockErrors);
+        const expected = regexValidation(
+          mockBody[FIELD_ID],
+          FIELD_ID,
+          REGEX.ALPHA_CHARACTERS_AND_SPACE_HYPHEN_APOSTROPHE,
+          mockErrorMessagesObject.INCORRECT_FORMAT,
+          mockErrors,
+        );
 
         expect(result).toEqual(expected);
       });

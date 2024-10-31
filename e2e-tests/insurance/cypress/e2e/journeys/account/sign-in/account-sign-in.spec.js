@@ -1,6 +1,5 @@
 import { signInPage } from '../../../../../../pages/insurance/account/sign-in';
-import { yourDetailsPage } from '../../../../../../pages/insurance/account/create';
-import passwordField from '../../../../../../partials/insurance/passwordField';
+import { passwordField } from '../../../../../../partials/insurance';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { ACCOUNT_FIELDS } from '../../../../../../content-strings/fields/insurance/account';
@@ -40,7 +39,7 @@ context(
       cy.go('back');
 
       // navigate to sign in page
-      yourDetailsPage.signInButtonLink().click();
+      cy.clickSignInButtonLink();
 
       url = `${baseUrl}${SIGN_IN_ROOT}`;
 
@@ -57,6 +56,7 @@ context(
         currentHref: SIGN_IN_ROOT,
         backLink: YOUR_DETAILS,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
         lightHouseThresholds: {
           performance: 70,
         },

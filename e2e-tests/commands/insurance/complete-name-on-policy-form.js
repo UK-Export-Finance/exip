@@ -1,12 +1,10 @@
-import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../constants/field-ids/insurance/policy';
 import { field } from '../../pages/shared';
 import application from '../../fixtures/application';
 
 const {
-  POLICY: {
-    NAME_ON_POLICY: { POSITION, SAME_NAME, OTHER_NAME },
-  },
-} = INSURANCE_FIELD_IDS;
+  NAME_ON_POLICY: { POSITION, SAME_NAME, OTHER_NAME },
+} = POLICY_FIELD_IDS;
 
 const { POLICY_CONTACT } = application;
 

@@ -1,7 +1,4 @@
-import partials from '../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-
-const { taskList } = partials.insurancePartials;
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -22,13 +19,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
-
-        // go to the page we want to test.
-        taskList.submitApplication.tasks.declarationsAndSubmit.link().click();
-
-        cy.completeAndSubmitDeclarationConfidentiality();
-        cy.completeAndSubmitDeclarationAntiBribery();
+        cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'antiBribery', referenceNumber });
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`;
 
@@ -59,6 +50,20 @@ context(
       cy.clickBackLink();
 
       cy.assertYesRadioOptionIsChecked();
+    });
+
+    describe('when going back to the all sections page', () => {
+      beforeEach(() => {
+        cy.navigateToAllSectionsUrl(referenceNumber);
+      });
+
+      it('should retain the status of task `check your answers` as `completed`', () => {
+        cy.checkTaskCheckAnswersStatusIsComplete();
+      });
+
+      it('should retain the status of task `declarations and submit` as `in progress`', () => {
+        cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
+      });
     });
   },
 );

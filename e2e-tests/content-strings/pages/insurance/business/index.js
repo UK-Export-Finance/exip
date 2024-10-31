@@ -12,31 +12,17 @@ export const ROOT = {
   OUTRO: 'It should only take a few minutes to complete.',
 };
 
-export const ENTER_COMPANIES_HOUSE_NUMBER = {
-  ...SHARED,
-  PAGE_TITLE: 'Enter your Companies House registration number (CRN)',
-};
-
 export const COMPANY_DETAILS = {
   ...SHARED,
   PAGE_TITLE: 'Your company details',
   BODY: 'This information comes from Companies House.',
   HAS_DIFFERENT_TRADING_NAME: 'Do you use a different trading name for this company?',
-  TRADING_ADDRESS: 'Do you trade from a different address to your registered office address for this company?',
+  HAS_DIFFERENT_TRADING_ADDRESS: 'Do you trade from a different address to your registered office address for this company?',
   WEBSITE: 'Enter your company website, if you have one (optional)',
   PHONE_NUMBER: 'Your UK telephone number (optional)',
   PHONE_NUMBER_HINT: 'We may need to contact you about your application',
   DIFFERENT_TRADING_NAME: "What's your organisation's alternative trading name?",
   DIFFERENT_TRADING_NAME_HINT: 'Your official trading name will still be on the policy.',
-};
-
-export const CONTACT = {
-  ...SHARED,
-  PAGE_TITLE: 'Your contact details',
-  CONTACT_DETAILS: {
-    LEGEND: 'Contact details',
-    HINT: 'This will be the name on the contract policy',
-  },
 };
 
 export const ALTERNATIVE_TRADING_ADDRESS = {
@@ -55,9 +41,9 @@ export const TURNOVER = {
   PROVIDE_ALTERNATIVE_CURRENCY: 'Use a different currency for your turnover',
 };
 
-export const TURNOVER_ALTERNATIVE_CURRENCY = {
+export const TURNOVER_CURRENCY = {
   ...SHARED,
-  PAGE_TITLE: 'What currency is your turnover in?',
+  PAGE_TITLE: 'Which currency do you calculate your turnover in?',
 };
 
 export const CREDIT_CONTROL = {

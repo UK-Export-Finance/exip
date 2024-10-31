@@ -3,7 +3,7 @@ import api from '../../../../../api';
 import generateValidationErrors from '../../../policy/type-of-policy/validation';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
-import { mockApplication } from '../../../../../test-mocks';
+import { mockApplication, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const {
   EXPORT_CONTRACT: {
@@ -68,16 +68,16 @@ describe('controllers/insurance/export-contract/save-data/export-contract', () =
 
   describe('api error handling', () => {
     beforeEach(() => {
-      updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+      updateApplicationSpy = mockSpyPromiseRejection;
       api.keystone.application.update.exportContract = updateApplicationSpy;
     });
 
     it('should throw an error', async () => {
       try {
         await save.exportContract(mockApplication, mockFormBody.valid);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error("Updating application's exportContract");
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

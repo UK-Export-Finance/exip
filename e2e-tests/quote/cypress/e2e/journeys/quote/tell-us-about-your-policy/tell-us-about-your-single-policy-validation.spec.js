@@ -1,12 +1,5 @@
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import {
-  completeAndSubmitBuyerBodyForm,
-  completeAndSubmitExporterLocationForm,
-  completeAndSubmitUkContentForm,
-  completeAndSubmitPolicyTypeSingleForm,
-} from '../../../../../../commands/quote/forms';
 import { field as fieldSelector } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
+import { errorSummaryListItems, errorSummaryListItemLinks } from '../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import { GBP_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
@@ -25,13 +18,13 @@ context('Tell us about the policy you need page - form validation', () => {
 
   describe('when submitting an empty form', () => {
     before(() => {
-      cy.login();
+      cy.navigateToRootUrl();
 
-      completeAndSubmitBuyerCountryForm({});
-      completeAndSubmitBuyerBodyForm();
-      completeAndSubmitExporterLocationForm();
-      completeAndSubmitUkContentForm();
-      completeAndSubmitPolicyTypeSingleForm();
+      cy.completeAndSubmitBuyerCountryForm({});
+      cy.completeAndSubmitBuyerBodyForm();
+      cy.completeAndSubmitExporterLocationForm();
+      cy.completeAndSubmitUkContentForm();
+      cy.completeAndSubmitPolicyTypeSingleForm();
     });
 
     beforeEach(() => {
@@ -47,41 +40,41 @@ context('Tell us about the policy you need page - form validation', () => {
       cy.assertErrorSummaryListLength(TOTAL_REQUIRED_FIELDS);
 
       // policy length
-      cy.checkText(partials.errorSummaryListItems().eq(0), ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].IS_EMPTY);
+      cy.checkText(errorSummaryListItems().eq(0), ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].IS_EMPTY);
 
       cy.checkText(fieldSelector(POLICY_LENGTH).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].IS_EMPTY}`);
 
       // currency
-      cy.checkText(partials.errorSummaryListItems().eq(1), ERROR_MESSAGES.ELIGIBILITY[CURRENCY].IS_EMPTY);
+      cy.checkText(errorSummaryListItems().eq(1), ERROR_MESSAGES.ELIGIBILITY[CURRENCY].IS_EMPTY);
 
       cy.checkText(fieldSelector(CURRENCY).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[CURRENCY].IS_EMPTY}`);
 
       // contract value
-      cy.checkText(partials.errorSummaryListItems().eq(2), ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].IS_EMPTY);
+      cy.checkText(errorSummaryListItems().eq(2), ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].IS_EMPTY);
 
       cy.checkText(fieldSelector(CONTRACT_VALUE).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].IS_EMPTY}`);
 
       // percentage of cover
-      cy.checkText(partials.errorSummaryListItems().eq(3), ERROR_MESSAGES.ELIGIBILITY[PERCENTAGE_OF_COVER].IS_EMPTY);
+      cy.checkText(errorSummaryListItems().eq(3), ERROR_MESSAGES.ELIGIBILITY[PERCENTAGE_OF_COVER].IS_EMPTY);
 
       cy.checkText(fieldSelector(PERCENTAGE_OF_COVER).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[PERCENTAGE_OF_COVER].IS_EMPTY}`);
     });
 
     it('should focus on inputs when clicking summary error message', () => {
       // policy length
-      partials.errorSummaryListItemLinks().eq(0).click();
+      errorSummaryListItemLinks().eq(0).click();
       fieldSelector(POLICY_LENGTH).input().should('have.focus');
 
       // currency
-      partials.errorSummaryListItemLinks().eq(1).click();
+      errorSummaryListItemLinks().eq(1).click();
       fieldSelector(CURRENCY).input().should('have.focus');
 
       // contract value
-      partials.errorSummaryListItemLinks().eq(2).click();
+      errorSummaryListItemLinks().eq(2).click();
       fieldSelector(CONTRACT_VALUE).input().should('have.focus');
 
       // perecentage of cover
-      partials.errorSummaryListItemLinks().eq(3).click();
+      errorSummaryListItemLinks().eq(3).click();
       fieldSelector(PERCENTAGE_OF_COVER).input().should('have.focus');
     });
   });
@@ -93,7 +86,7 @@ context('Tell us about the policy you need page - form validation', () => {
       cy.keyboardInput(fieldSelector(POLICY_LENGTH).input(), 'a');
       cy.clickSubmitButton();
 
-      cy.checkText(partials.errorSummaryListItems().eq(0), ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].NOT_A_NUMBER);
+      cy.checkText(errorSummaryListItems().eq(0), ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].NOT_A_NUMBER);
 
       cy.checkText(fieldSelector(POLICY_LENGTH).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].NOT_A_NUMBER}`);
     });
@@ -106,7 +99,7 @@ context('Tell us about the policy you need page - form validation', () => {
       cy.keyboardInput(fieldSelector(POLICY_LENGTH).input(), '1.2');
       cy.clickSubmitButton();
 
-      cy.checkText(partials.errorSummaryListItems().eq(0), ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].NOT_A_WHOLE_NUMBER);
+      cy.checkText(errorSummaryListItems().eq(0), ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].NOT_A_WHOLE_NUMBER);
 
       cy.checkText(fieldSelector(POLICY_LENGTH).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].NOT_A_WHOLE_NUMBER}`);
     });
@@ -119,7 +112,7 @@ context('Tell us about the policy you need page - form validation', () => {
       cy.keyboardInput(fieldSelector(POLICY_LENGTH).input(), '0');
       cy.clickSubmitButton();
 
-      cy.checkText(partials.errorSummaryListItems().eq(0), ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].BELOW_MINIMUM);
+      cy.checkText(errorSummaryListItems().eq(0), ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].BELOW_MINIMUM);
 
       cy.checkText(fieldSelector(POLICY_LENGTH).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].BELOW_MINIMUM}`);
     });
@@ -132,7 +125,7 @@ context('Tell us about the policy you need page - form validation', () => {
       cy.keyboardInput(fieldSelector(POLICY_LENGTH).input(), '23');
       cy.clickSubmitButton();
 
-      cy.checkText(partials.errorSummaryListItems().eq(0), ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].ABOVE_MAXIMUM);
+      cy.checkText(errorSummaryListItems().eq(0), ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].ABOVE_MAXIMUM);
 
       cy.checkText(fieldSelector(POLICY_LENGTH).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].ABOVE_MAXIMUM}`);
     });
@@ -146,7 +139,7 @@ context('Tell us about the policy you need page - form validation', () => {
 
       cy.clickSubmitButton();
 
-      cy.checkText(partials.errorSummaryListItems().eq(2), ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].NOT_A_NUMBER);
+      cy.checkText(errorSummaryListItems().eq(2), ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].NOT_A_NUMBER);
 
       cy.checkText(fieldSelector(CONTRACT_VALUE).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].NOT_A_NUMBER}`);
     });
@@ -160,7 +153,7 @@ context('Tell us about the policy you need page - form validation', () => {
 
       cy.clickSubmitButton();
 
-      cy.checkText(partials.errorSummaryListItems().eq(2), ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].NOT_A_WHOLE_NUMBER);
+      cy.checkText(errorSummaryListItems().eq(2), ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].NOT_A_WHOLE_NUMBER);
 
       cy.checkText(fieldSelector(CONTRACT_VALUE).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].NOT_A_WHOLE_NUMBER}`);
     });
@@ -174,7 +167,7 @@ context('Tell us about the policy you need page - form validation', () => {
 
       cy.clickSubmitButton();
 
-      cy.checkText(partials.errorSummaryListItems().eq(2), ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].BELOW_MINIMUM);
+      cy.checkText(errorSummaryListItems().eq(2), ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].BELOW_MINIMUM);
 
       cy.checkText(fieldSelector(CONTRACT_VALUE).errorMessage(), `Error: ${ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].BELOW_MINIMUM}`);
     });

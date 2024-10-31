@@ -4,10 +4,10 @@ import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { FIELD_IDS } from '../../../../../constants';
 import { COUNTRY_APPLICATION_SUPPORT } from '../../../../../fixtures/countries';
 
-const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
+const CONTENT_STRINGS = PAGES.CANNOT_APPLY_EXIT;
 
 const {
-  ELIGIBILITY: { BUYER_COUNTRY, CANNOT_APPLY },
+  ELIGIBILITY: { BUYER_COUNTRY, CANNOT_APPLY_EXIT },
 } = INSURANCE_ROUTES;
 
 const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
@@ -18,12 +18,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance Eligibility - Cannot apply exit page', () => {
   beforeEach(() => {
-    cy.navigateToCheckIfEligibleUrl();
-    cy.completeCheckIfEligibleForm();
-    cy.completeExporterLocationForm();
-    cy.completeCompaniesHouseNumberForm();
-    cy.completeAndSubmitCompaniesHouseSearchForm({});
-    cy.completeEligibilityCompanyDetailsForm();
+    cy.completeAndSubmitEligibilityForms({ formToStopAt: 'companyDetails' });
 
     cy.keyboardInput(autoCompleteField(FIELD_ID).input(), COUNTRY_NAME_UNSUPPORTED);
     const results = autoCompleteField(FIELD_ID).results();
@@ -31,7 +26,7 @@ context('Insurance Eligibility - Cannot apply exit page', () => {
 
     cy.clickSubmitButton();
 
-    const expectedUrl = `${baseUrl}${CANNOT_APPLY}`;
+    const expectedUrl = `${baseUrl}${CANNOT_APPLY_EXIT}`;
 
     cy.assertUrl(expectedUrl);
   });
@@ -39,10 +34,11 @@ context('Insurance Eligibility - Cannot apply exit page', () => {
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: CANNOT_APPLY,
+      currentHref: CANNOT_APPLY_EXIT,
       backLink: BUYER_COUNTRY,
       hasAForm: false,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

@@ -3,7 +3,7 @@ import api from '../../../../../api';
 import generateValidationErrors from '../../name-on-policy/validation';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
-import { mockApplication } from '../../../../../test-mocks';
+import { mockApplication, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const {
   NAME_ON_POLICY: { POSITION, IS_SAME_AS_OWNER },
@@ -66,16 +66,16 @@ describe('controllers/insurance/policy/save-data/policy-contact', () => {
 
   describe('when there is an error calling the API', () => {
     beforeEach(() => {
-      updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+      updateApplicationSpy = mockSpyPromiseRejection;
       api.keystone.application.update.policyContact = updateApplicationSpy;
     });
 
     it('should throw an error', async () => {
       try {
         await save.policyContact(mockApplication, mockFormBody.valid);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error("Updating application's policy contact");
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

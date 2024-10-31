@@ -1,23 +1,24 @@
-import { SectionReview, TestHelperCreate } from '../types';
+import { Context } from '.keystone/types'; // eslint-disable-line
 
 /**
  * create sectionReview test helper
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Object} Created sectionReview
  */
-const create = async ({ context }: TestHelperCreate) => {
+const create = async (context: Context) => {
   try {
     console.info('Creating a section review (test helpers)');
 
-    const sectionReview = (await context.query.SectionReview.createOne({
+    const sectionReview = await context.query.SectionReview.createOne({
       data: {},
       query: 'id',
-    })) as SectionReview;
+    });
 
     return sectionReview;
-  } catch (err) {
-    console.error('Error creating section review (test helpers) %O', err);
-    return err;
+  } catch (error) {
+    console.error('Error creating section review (test helpers) %o', error);
+
+    return error;
   }
 };
 

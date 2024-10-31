@@ -1,13 +1,12 @@
 import createAPrivateMarket from '.';
 import createAnExportContract from '../create-an-export-contract';
 import { Application, ApplicationExportContract, Context } from '../../types';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
 
-const invalidId = 'invalid-id';
-
-const assertError = (err) => {
-  const errorString = String(err);
+const assertError = (error) => {
+  const errorString = String(error);
 
   expect(errorString.includes('Creating a private market')).toEqual(true);
 };
@@ -20,12 +19,11 @@ describe('helpers/create-a-private-market', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await applications.create({ context, data: {} })) as Application;
+    application = (await applications.create({ context })) as Application;
+
     const createdExportContract = await createAnExportContract(context, application.id);
 
-    const { exportContract } = createdExportContract;
-
-    applicationExportContract = exportContract;
+    applicationExportContract = createdExportContract;
   });
 
   test('it should return a privateMarket with ID', async () => {
@@ -46,9 +44,9 @@ describe('helpers/create-a-private-market', () => {
   describe('when an invalid exportContract ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createAPrivateMarket(context, invalidId);
-      } catch (err) {
-        assertError(err);
+        await createAPrivateMarket(context, mockInvalidId);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -58,8 +56,8 @@ describe('helpers/create-a-private-market', () => {
       try {
         // pass empty context object to force an error
         await createAPrivateMarket({}, applicationExportContract.id);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

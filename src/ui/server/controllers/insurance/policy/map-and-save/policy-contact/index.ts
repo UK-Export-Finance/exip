@@ -7,8 +7,8 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
  * mapAndSave policyContact
  * Map and save any valid policyContact fields
  * @param {RequestBody} formBody: Form body
- * @param {Application}
- * @param {Object} Validation errors
+ * @param {Application} application
+ * @param {Object} validationErrors: Validation errors
  * @returns {Boolean}
  */
 const policyContact = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
@@ -32,8 +32,8 @@ const policyContact = async (formBody: RequestBody, application: Application, va
     }
 
     return true;
-  } catch (err) {
-    console.error('Error mapping and saving application - policy - contact %O', err);
+  } catch (error) {
+    console.error('Error mapping and saving application - policy - contact %o', error);
 
     return false;
   }

@@ -1,4 +1,4 @@
-import partials from '../../partials';
+import { errorSummaryListItems } from '../../partials';
 
 /**
  * checkValidation
@@ -15,9 +15,10 @@ import partials from '../../partials';
  * @param {Number} errorSummaryLength: The number of expected errors in the summary list
  * @param {Number} errorIndex: Index of summary list error
  * @param {String} field: Cypress field selector
+ * @param {String} fieldId: Field ID
  * @param {Object} errorMessages: Error messages
  */
-const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, errorMessages }) => {
+const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, fieldId, errorMessages }) => {
   const assertFieldErrorsParams = {
     field,
     errorIndex,
@@ -26,7 +27,7 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, errorMessa
   };
 
   return {
-    day: {
+    dayAssertions: {
       /**
        * Submit a date without a day.
        * Check validation errors.
@@ -36,9 +37,7 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, errorMessa
         const month = date.getMonth() + 1;
         const year = date.getFullYear();
 
-        field.dayInput().clear();
-        cy.keyboardInput(field.monthInput(), month);
-        cy.keyboardInput(field.yearInput(), year);
+        cy.completeDateFormFields({ idPrefix: fieldId, day: null, month, year });
 
         cy.clickSubmitButton();
 
@@ -54,9 +53,8 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, errorMessa
        * Check validation errors.
        */
       providedWithoutOtherFields: () => {
-        cy.keyboardInput(field.dayInput(), '1');
-        field.monthInput().clear();
-        field.yearInput().clear();
+        cy.completeDateFormFields({ idPrefix: fieldId, day: '1', month: null, year: null });
+
         cy.clickSubmitButton();
 
         const errorMessage = errorMessages.MISSING_MONTH_AND_YEAR;
@@ -71,7 +69,8 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, errorMessa
        * Check validation errors.
        */
       notANumber: () => {
-        cy.keyboardInput(field.dayInput().clear(), 'Test');
+        cy.completeDateFormFields({ idPrefix: fieldId, day: 'Test', month: null, year: null });
+
         cy.clickSubmitButton();
 
         const errorMessage = errorMessages.INCORRECT_FORMAT;
@@ -94,9 +93,7 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, errorMessa
 
         const invalidMonthDay = daysInMonth + 1;
 
-        cy.keyboardInput(field.dayInput().clear(), invalidMonthDay);
-        cy.keyboardInput(field.monthInput().clear(), month);
-        cy.keyboardInput(field.yearInput().clear(), year);
+        cy.completeDateFormFields({ idPrefix: fieldId, day: invalidMonthDay, month, year });
 
         cy.clickSubmitButton();
 
@@ -108,15 +105,14 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, errorMessa
         });
       },
     },
-    month: {
+    monthAssertions: {
       /**
        * Submit a date without a month.
        * Check validation errors.
        */
       notProvided: () => {
-        cy.keyboardInput(field.dayInput(), '1');
-        field.monthInput().clear();
-        cy.keyboardInput(field.yearInput(), '2023');
+        cy.completeDateFormFields({ idPrefix: fieldId, day: '1', month: null, year: '2023' });
+
         cy.clickSubmitButton();
 
         const errorMessage = errorMessages.INVALID_MONTH;
@@ -131,9 +127,8 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, errorMessa
        * Check validation errors.
        */
       providedWithoutOtherFields: () => {
-        field.dayInput().clear();
-        cy.keyboardInput(field.monthInput(), '1');
-        field.yearInput().clear();
+        cy.completeDateFormFields({ idPrefix: fieldId, day: null, month: '1', year: null });
+
         cy.clickSubmitButton();
 
         const errorMessage = errorMessages.MISSING_DAY_AND_YEAR;
@@ -148,8 +143,8 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, errorMessa
        * Check validation errors.
        */
       notANumber: () => {
-        field.dayInput().clear();
-        cy.keyboardInput(field.monthInput(), 'One');
+        cy.completeDateFormFields({ idPrefix: fieldId, day: null, month: 'One', year: null });
+
         cy.clickSubmitButton();
 
         const errorMessage = errorMessages.INCORRECT_FORMAT;
@@ -160,15 +155,14 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, errorMessa
         });
       },
     },
-    year: {
+    yearAssertions: {
       /**
        * Submit a date without a year.
        * Check validation errors.
        */
       notProvided: () => {
-        cy.keyboardInput(field.dayInput(), '1');
-        cy.keyboardInput(field.monthInput(), '2');
-        field.yearInput().clear();
+        cy.completeDateFormFields({ idPrefix: fieldId, day: '1', month: '2', year: null });
+
         cy.clickSubmitButton();
 
         const errorMessage = errorMessages.INVALID_YEAR;
@@ -183,9 +177,8 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, errorMessa
        * Check validation errors.
        */
       providedWithoutOtherFields: () => {
-        field.dayInput().clear();
-        field.monthInput().clear();
-        cy.keyboardInput(field.yearInput(), '2023');
+        cy.completeDateFormFields({ idPrefix: fieldId, day: null, month: null, year: '2023' });
+
         cy.clickSubmitButton();
 
         const errorMessage = errorMessages.MISSING_DAY_AND_MONTH;
@@ -200,9 +193,8 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, errorMessa
        * Check validation errors.
        */
       notEnoughDigits: () => {
-        cy.keyboardInput(field.dayInput(), '1');
-        cy.keyboardInput(field.monthInput(), '2');
-        cy.keyboardInput(field.yearInput(), '202');
+        cy.completeDateFormFields({ idPrefix: fieldId, day: '1', month: '2', year: '202' });
+
         cy.clickSubmitButton();
 
         const errorMessage = errorMessages.INVALID_YEAR_DIGITS;
@@ -217,9 +209,8 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, errorMessa
        * Check validation errors.
        */
       notANumber: () => {
-        field.dayInput().clear();
-        field.monthInput().clear();
-        cy.keyboardInput(field.yearInput(), 'One');
+        cy.completeDateFormFields({ idPrefix: fieldId, day: null, month: null, year: 'One' });
+
         cy.clickSubmitButton();
 
         const errorMessage = errorMessages.INCORRECT_FORMAT;
@@ -241,9 +232,8 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, errorMessa
       const yesterday = new Date(now.setDate(day - 1));
       const month = yesterday.getMonth() + 1;
 
-      cy.keyboardInput(field.dayInput(), yesterday.getDate());
-      cy.keyboardInput(field.monthInput(), month);
-      cy.keyboardInput(field.yearInput(), yesterday.getFullYear());
+      cy.completeDateFormFields({ idPrefix: fieldId, day: yesterday.getDate(), month, year: yesterday.getFullYear() });
+
       cy.clickSubmitButton();
 
       const errorMessage = errorMessages.BEFORE_EARLIEST;
@@ -263,9 +253,8 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, errorMessa
 
       const futureDate = new Date(now.setDate(day + 1));
 
-      cy.keyboardInput(field.dayInput(), day);
-      cy.keyboardInput(field.monthInput(), '24');
-      cy.keyboardInput(field.yearInput(), futureDate.getFullYear());
+      cy.completeDateFormFields({ idPrefix: fieldId, day, month: '24', year: futureDate.getFullYear() });
+
       cy.clickSubmitButton();
 
       const errorMessage = errorMessages.INVALID_DATE;
@@ -282,14 +271,11 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, errorMessa
     isToday: () => {
       const now = new Date();
 
-      cy.keyboardInput(field.dayInput(), now.getDate());
-      cy.keyboardInput(field.monthInput(), now.getMonth() + 1);
-      cy.keyboardInput(field.yearInput(), now.getFullYear());
+      cy.completeDateFormFields({ idPrefix: fieldId, day: now.getDate(), month: now.getMonth() + 1, year: now.getFullYear() });
 
       cy.clickSubmitButton();
 
-      partials
-        .errorSummaryListItems()
+      errorSummaryListItems()
         .eq(0)
         .invoke('text')
         .then((text) => {
@@ -312,13 +298,8 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, errorMessa
         const month = dateValue.getMonth() + 1;
         const year = dateValue.getFullYear();
 
-        cy.keyboardInput(fieldA.dayInput(), day);
-        cy.keyboardInput(fieldA.monthInput(), month);
-        cy.keyboardInput(fieldA.yearInput(), year);
-
-        cy.keyboardInput(fieldB.dayInput(), day);
-        cy.keyboardInput(fieldB.monthInput(), month);
-        cy.keyboardInput(fieldB.yearInput(), year);
+        cy.completeDateFormFields({ idPrefix: fieldA.id, day, month, year });
+        cy.completeDateFormFields({ idPrefix: fieldB.id, day, month, year });
 
         cy.clickSubmitButton();
 
@@ -340,9 +321,7 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, errorMessa
         const month = dateValue.getMonth() + 1;
         const year = dateValue.getFullYear();
 
-        cy.keyboardInput(fieldB.dayInput(), day);
-        cy.keyboardInput(fieldB.monthInput(), month);
-        cy.keyboardInput(fieldB.yearInput(), year);
+        cy.completeDateFormFields({ idPrefix: fieldB.id, day, month, year });
 
         cy.clickSubmitButton();
 
@@ -364,9 +343,7 @@ const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, errorMessa
         const month = dateValue.getMonth() + 1;
         const year = dateValue.getFullYear();
 
-        cy.keyboardInput(fieldB.dayInput(), day);
-        cy.keyboardInput(fieldB.monthInput(), month);
-        cy.keyboardInput(fieldB.yearInput(), year);
+        cy.completeDateFormFields({ idPrefix: fieldB.id, day, month, year });
 
         cy.clickSubmitButton();
 

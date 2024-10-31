@@ -47,6 +47,7 @@ context(
         backLink: MEMBER_OF_A_GROUP,
         assertAuthenticatedHeader: false,
         submitButtonCopy: BUTTONS.CONFIRM_AND_CONTINUE,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

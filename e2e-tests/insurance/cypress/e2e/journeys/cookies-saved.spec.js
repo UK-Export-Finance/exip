@@ -1,6 +1,5 @@
 import { FIELD_IDS, ROUTES } from '../../../../constants';
 import { cookiesPage, cookiesSavedPage } from '../../../../pages';
-import partials from '../../../../partials';
 import { body } from '../../../../pages/shared';
 import { PAGES, BUTTONS } from '../../../../content-strings';
 
@@ -21,11 +20,11 @@ context('Cookies saved page - Insurance', () => {
   const url = `${baseUrl}${COOKIES_SAVED}`;
 
   beforeEach(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
     cy.navigateToCheckIfEligibleUrl();
 
-    partials.footer.supportLinks.cookies().click();
+    cy.clickFooterCookiesLink();
 
     cy.saveSession();
 
@@ -43,6 +42,7 @@ context('Cookies saved page - Insurance', () => {
       backLink: COOKIES,
       hasAForm: false,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       isInsurancePage: true,
       assertCookies: false,
     });

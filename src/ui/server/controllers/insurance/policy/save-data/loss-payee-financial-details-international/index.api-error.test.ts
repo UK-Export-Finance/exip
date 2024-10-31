@@ -1,6 +1,6 @@
 import save from '.';
 import api from '../../../../../api';
-import { mockApplication, mockLossPayeeFinancialDetailsInternational } from '../../../../../test-mocks';
+import { mockApplication, mockLossPayeeFinancialDetailsInternational, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 describe('controllers/insurance/policy/save-data/loss-payee-financial-details-international - API error', () => {
   const mockUpdateApplicationResponse = mockApplication;
@@ -13,16 +13,16 @@ describe('controllers/insurance/policy/save-data/loss-payee-financial-details-in
 
   describe('when there is an error', () => {
     beforeEach(() => {
-      updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+      updateApplicationSpy = mockSpyPromiseRejection;
       api.keystone.application.update.updateLossPayeeFinancialDetailsInternational = updateApplicationSpy;
     });
 
     it('should throw an error', async () => {
       try {
         await save.lossPayeeFinancialDetailsInternational(mockApplication, mockFormBody);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error("Updating application's loss payee financial details international");
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -6,89 +6,91 @@ var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
+  for (var name in all) __defProp(target, name, { get: all[name], enumerable: true });
 };
 var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
+  if ((from && typeof from === 'object') || typeof from === 'function') {
     for (let key2 of __getOwnPropNames(from))
       if (!__hasOwnProp.call(to, key2) && key2 !== except)
         __defProp(to, key2, { get: () => from[key2], enumerable: !(desc = __getOwnPropDesc(from, key2)) || desc.enumerable });
   }
   return to;
 };
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  // If the importer is in node compatibility mode or this is not an ESM
-  // file that has been converted to a CommonJS file using a Babel-
-  // compatible transform (i.e. "__esModule" has not been set), then set
-  // "default" to the CommonJS "module.exports" for node compatibility.
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-  mod
-));
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+var __toESM = (mod, isNodeMode, target) => (
+  (target = mod != null ? __create(__getProtoOf(mod)) : {}),
+  __copyProps(
+    // If the importer is in node compatibility mode or this is not an ESM
+    // file that has been converted to a CommonJS file using a Babel-
+    // compatible transform (i.e. "__esModule" has not been set), then set
+    // "default" to the CommonJS "module.exports" for node compatibility.
+    isNodeMode || !mod || !mod.__esModule ? __defProp(target, 'default', { value: mod, enumerable: true }) : target,
+    mod,
+  )
+);
+var __toCommonJS = (mod) => __copyProps(__defProp({}, '__esModule', { value: true }), mod);
 
 // keystone.ts
 var keystone_exports = {};
 __export(keystone_exports, {
-  default: () => keystone_default
+  default: () => keystone_default,
 });
 module.exports = __toCommonJS(keystone_exports);
-var import_config5 = require("dotenv/config");
-var import_core3 = require("@keystone-6/core");
-var import_overload_protection = __toESM(require("overload-protection"));
+var import_config5 = require('dotenv/config');
+var import_core3 = require('@keystone-6/core');
+var import_overload_protection = __toESM(require('overload-protection'));
 
 // middleware/headers/security/index.ts
 var security = (req, res, next) => {
-  res.setHeader("Strict-Transport-Security", "max-age=15552000; includeSubDomains; preload");
-  res.setHeader("X-Frame-Options", "deny");
-  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader('Strict-Transport-Security', 'max-age=15552000; includeSubDomains; preload');
+  res.setHeader('X-Frame-Options', 'deny');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader(
-    "Content-Security-Policy",
-    "default-src 'none';connect-src 'self';base-uri 'self';font-src 'self' data:;form-action 'self';frame-ancestors 'self';img-src 'self';object-src 'none';script-src 'self';script-src-attr 'self';style-src 'self';upgrade-insecure-requests"
+    'Content-Security-Policy',
+    "default-src 'none';connect-src 'self';base-uri 'self';font-src 'self' data:;form-action 'self';frame-ancestors 'self';img-src 'self';object-src 'none';script-src 'self';script-src-attr 'self';style-src 'self';upgrade-insecure-requests",
   );
-  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate, max-age=604800");
-  res.setHeader("Referrer-Policy", "same-origin");
-  res.setHeader("X-Download-Options", "noopen");
-  res.setHeader("X-DNS-Prefetch-Control", "on");
-  res.setHeader("Expect-CT", "max-age=0,enforce");
-  res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
-  res.setHeader("Cross-Origin-Resource-Policy", "same-origin");
-  res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=604800');
+  res.setHeader('Referrer-Policy', 'same-origin');
+  res.setHeader('X-Download-Options', 'noopen');
+  res.setHeader('X-DNS-Prefetch-Control', 'on');
+  res.setHeader('Expect-CT', 'max-age=0,enforce');
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  res.setHeader('Cross-Origin-Resource-Policy', 'same-origin');
+  res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
   res.setHeader(
-    "Permissions-Policy",
-    "fullscreen=(self),microphone=(),camera=(),payment=(),geolocation=(),display-capture=(),battery=(),autoplay=(),gyroscope=(),accelerometer=(),web-share=(),usb=(),gamepad=(),magnetometer=(),midi=(),picture-in-picture=(),xr-spatial-tracking=()"
+    'Permissions-Policy',
+    'fullscreen=(self),microphone=(),camera=(),payment=(),geolocation=(),display-capture=(),battery=(),autoplay=(),gyroscope=(),accelerometer=(),web-share=(),usb=(),gamepad=(),magnetometer=(),midi=(),picture-in-picture=(),xr-spatial-tracking=()',
   );
-  res.removeHeader("X-Powered-By");
+  res.removeHeader('X-Powered-By');
   next();
 };
 var security_default = security;
 
 // middleware/headers/check-api-key/index.ts
-var import_config = require("dotenv/config");
+var import_config = require('dotenv/config');
 var { API_KEY } = process.env;
 var checkApiKey = (req, res, next) => {
-  const { "x-api-key": xApiKey } = req.headers;
+  const { 'x-api-key': xApiKey } = req.headers;
   if (!xApiKey || xApiKey !== API_KEY) {
-    return res.status(401).json({ message: "Unauthorised" });
+    return res.status(401).json({ message: 'Unauthorised' });
   }
   next();
 };
 var check_api_key_default = checkApiKey;
 
 // middleware/rate-limiter/index.js
-var import_express_rate_limit = __toESM(require("express-rate-limit"));
+var import_express_rate_limit = __toESM(require('express-rate-limit'));
 var rateLimiter = (0, import_express_rate_limit.default)({
   windowMs: 1 * 60 * 1e3,
   // 1 minute
   max: 1e3,
   // 1K requests / 1 window
   standardHeaders: false,
-  legacyHeaders: false
+  legacyHeaders: false,
 });
 var rate_limiter_default = rateLimiter;
 
 // cron/cron-job-scheduler.ts
-var cron = __toESM(require("node-cron"));
+var cron = __toESM(require('node-cron'));
 
 // helpers/cron/scheduler.ts
 var asyncTaskToSyncTask = (task, context) => (now2) => {
@@ -114,29 +116,32 @@ var cronJobScheduler = (jobs, context) => {
       return;
     }
     console.info("Adding scheduled job '%s' on schedule '%s'", description, cronExpression);
-    cron.schedule(cronExpression, asyncTaskToSyncTask(taskWithErrorLogging(description, task, context), context)).on("error", (error) => console.error("An error occurred scheduling job '%s' %o", description, error));
+    cron
+      .schedule(cronExpression, asyncTaskToSyncTask(taskWithErrorLogging(description, task, context), context))
+      .on('error', (error) => console.error("An error occurred scheduling job '%s' %o", description, error));
   });
 };
 var cron_job_scheduler_default = cronJobScheduler;
 
 // cron/account/unverified-account-cron-job.ts
-var import_dotenv2 = __toESM(require("dotenv"));
+var import_dotenv2 = __toESM(require('dotenv'));
 
 // helpers/get-unverified-accounts/index.ts
 var now = /* @__PURE__ */ new Date();
 var getUnverifiedAccounts = async (context) => {
   try {
-    console.info("Getting unverified accounts - getUnverifiedAccounts (helper)");
+    console.info('Getting unverified accounts - getUnverifiedAccounts (helper)');
     const accounts = await context.query.Account.findMany({
       where: {
-        AND: [{ verificationExpiry: { lt: now } }, { status: { isVerified: { equals: false } } }, { status: { isInactive: { equals: false } } }]
+        AND: [{ verificationExpiry: { lt: now } }, { status: { isVerified: { equals: false } } }, { status: { isInactive: { equals: false } } }],
       },
-      query: "id firstName lastName email otpSalt otpHash otpExpiry salt hash passwordResetHash passwordResetExpiry verificationHash verificationExpiry reactivationHash reactivationExpiry updatedAt status { id isBlocked isVerified isInactive updatedAt }"
+      query:
+        'id firstName lastName email otpSalt otpHash otpExpiry salt hash passwordResetHash passwordResetExpiry verificationHash verificationExpiry reactivationHash reactivationExpiry updatedAt status { id isBlocked isVerified isInactive updatedAt }',
     });
     return accounts;
-  } catch (err) {
-    console.error("Error getting unverified accounts (getUnverifiedAccounts helper) %O", err);
-    throw new Error(`Error getting unverified accounts (getUnverifiedAccounts helper) ${err}`);
+  } catch (error) {
+    console.error('Error getting unverified accounts (getUnverifiedAccounts helper) %o', error);
+    throw new Error(`Error getting unverified accounts (getUnverifiedAccounts helper) ${error}`);
   }
 };
 var get_unverified_accounts_default = getUnverifiedAccounts;
@@ -148,8 +153,8 @@ var mapUnverifiedAccounts = (accounts) => {
       where: { id: account2.status.id },
       data: {
         isInactive: true,
-        updatedAt: /* @__PURE__ */ new Date()
-      }
+        updatedAt: /* @__PURE__ */ new Date(),
+      },
     };
     return mapped;
   });
@@ -158,15 +163,15 @@ var mapUnverifiedAccounts = (accounts) => {
       where: { id: account2.id },
       data: {
         updatedAt: /* @__PURE__ */ new Date(),
-        verificationHash: "",
-        verificationExpiry: null
-      }
+        verificationHash: '',
+        verificationExpiry: null,
+      },
     };
     return mapped;
   });
   return {
     accountStatus: mappedAccountStatusArray,
-    account: mappedAccountArray
+    account: mappedAccountArray,
   };
 };
 var map_unverified_accounts_default = mapUnverifiedAccounts;
@@ -174,17 +179,17 @@ var map_unverified_accounts_default = mapUnverifiedAccounts;
 // helpers/map-and-update-unverified-accounts/index.ts
 var mapAndUpdateUnverifiedAccounts = async (accounts, context) => {
   try {
-    console.info("Mapping and updating unverified accounts - mapAndUpdateUnverifiedAccounts");
+    console.info('Mapping and updating unverified accounts - mapAndUpdateUnverifiedAccounts');
     const { account: account2, accountStatus: accountStatus2 } = map_unverified_accounts_default(accounts);
     await context.db.Account.updateMany({
-      data: account2
+      data: account2,
     });
     await context.db.AccountStatus.updateMany({
-      data: accountStatus2
+      data: accountStatus2,
     });
-  } catch (err) {
-    console.error("Error mapping and updating unverified accounts %O", err);
-    throw new Error(`Error mapping and updating unverified accounts ${err}`);
+  } catch (error) {
+    console.error('Error mapping and updating unverified accounts %o', error);
+    throw new Error(`Error mapping and updating unverified accounts ${error}`);
   }
 };
 var map_and_update_unverified_accounts_default = mapAndUpdateUnverifiedAccounts;
@@ -192,110 +197,110 @@ var map_and_update_unverified_accounts_default = mapAndUpdateUnverifiedAccounts;
 // helpers/update-unverified-accounts/index.ts
 var updateUnverifiedAccounts = async (context) => {
   try {
-    console.info("Getting and updating unverified accounts");
+    console.info('Getting and updating unverified accounts');
     const accounts = await get_unverified_accounts_default(context);
     if (accounts.length) {
       await map_and_update_unverified_accounts_default(accounts, context);
       return {
-        success: true
+        success: true,
       };
     }
-    console.info("No unverified accounts found - updateUnverifiedAccounts");
+    console.info('No unverified accounts found - updateUnverifiedAccounts');
     return {
-      success: true
+      success: true,
     };
-  } catch (err) {
-    console.error("Error getting and updating unverified accounts %O", err);
-    throw new Error(`Error getting and updating unverified accounts ${err}`);
+  } catch (error) {
+    console.error('Error getting and updating unverified accounts %o', error);
+    throw new Error(`Error getting and updating unverified accounts ${error}`);
   }
 };
 var update_unverified_accounts_default = updateUnverifiedAccounts;
 
 // constants/index.ts
-var import_dotenv = __toESM(require("dotenv"));
+var import_dotenv = __toESM(require('dotenv'));
 
 // constants/field-ids/shared/index.ts
 var SHARED = {
-  POLICY_TYPE: "policyType",
-  SINGLE_POLICY_TYPE: "singlePolicyType",
-  MULTIPLE_POLICY_TYPE: "multiplePolicyType",
-  POLICY_LENGTH: "policyLength",
-  NAME: "name",
-  EMAIL: "email"
+  POLICY_TYPE: 'policyType',
+  SINGLE_POLICY_TYPE: 'singlePolicyType',
+  MULTIPLE_POLICY_TYPE: 'multiplePolicyType',
+  POLICY_LENGTH: 'policyLength',
+  NAME: 'name',
+  EMAIL: 'email',
 };
 var shared_default = SHARED;
 
 // constants/field-ids/shared-eligibility/index.ts
 var SHARED_ELIGIBILITY = {
-  BUYER_COUNTRY: "buyerCountry",
-  BUYER_COUNTRY_ISO_CODE: "buyerCountryIsoCode",
-  HAS_MINIMUM_UK_GOODS_OR_SERVICES: "hasMinimumUkGoodsOrServices",
-  VALID_EXPORTER_LOCATION: "validExporterLocation"
+  BUYER_COUNTRY: 'buyerCountry',
+  BUYER_COUNTRY_ISO_CODE: 'buyerCountryIsoCode',
+  HAS_MINIMUM_UK_GOODS_OR_SERVICES: 'hasMinimumUkGoodsOrServices',
+  VALID_EXPORTER_LOCATION: 'validExporterLocation',
 };
 var shared_eligibility_default = SHARED_ELIGIBILITY;
 
 // constants/field-ids/insurance/shared/index.ts
 var SHARED_FIELD_IDS = {
-  COMPANY: "company",
+  COMPANY: 'company',
   COMPANIES_HOUSE: {
-    COMPANY_NAME: "companyName",
-    COMPANY_ADDRESS: "registeredOfficeAddress",
-    COMPANY_NUMBER: "companyNumber",
-    COMPANY_INCORPORATED: "dateOfCreation",
-    SIC_CODE: "sicCode",
-    COMPANY_SIC: "sicCodes",
-    INDUSTRY_SECTOR_NAME: "industrySectorName",
-    INDUSTRY_SECTOR_NAMES: "industrySectorNames",
-    FINANCIAL_YEAR_END_DATE: "financialYearEndDate",
+    COMPANY_NAME: 'companyName',
+    COMPANY_ADDRESS: 'registeredOfficeAddress',
+    COMPANY_NUMBER: 'companyNumber',
+    COMPANY_INCORPORATED: 'dateOfCreation',
+    SIC_CODE: 'sicCode',
+    COMPANY_SIC: 'sicCodes',
+    INDUSTRY_SECTOR_NAME: 'industrySectorName',
+    INDUSTRY_SECTOR_NAMES: 'industrySectorNames',
+    FINANCIAL_YEAR_END_DATE: 'financialYearEndDate',
     REGISTED_OFFICE_ADDRESS: {
-      ADDRESS_LINE_1: "addressLine1",
-      ADDRESS_LINE_2: "addressLine2",
-      CARE_OF: "careOf",
-      LOCALITY: "locality",
-      REGION: "region",
-      POSTAL_CODE: "postalCode",
-      COUNTRY: "country",
-      PREMISES: "premises"
-    }
-  }
+      ADDRESS_LINE_1: 'addressLine1',
+      ADDRESS_LINE_2: 'addressLine2',
+      CARE_OF: 'careOf',
+      LOCALITY: 'locality',
+      REGION: 'region',
+      POSTAL_CODE: 'postalCode',
+      COUNTRY: 'country',
+      PREMISES: 'premises',
+    },
+  },
 };
 var shared_default2 = SHARED_FIELD_IDS;
 
 // constants/field-ids/insurance/account/index.ts
 var ACCOUNT = {
-  ID: "id",
-  FIRST_NAME: "firstName",
-  LAST_NAME: "lastName",
-  EMAIL: "email",
-  PASSWORD: "password",
-  SALT: "salt",
-  HASH: "hash",
-  ACCESS_CODE: "securityCode",
-  IS_VERIFIED: "isVerified",
-  IS_BLOCKED: "isBlocked",
-  PASSWORD_RESET_HASH: "passwordResetHash",
-  PASSWORD_RESET_EXPIRY: "passwordResetExpiry",
-  REACTIVATION_HASH: "reactivationHash",
-  REACTIVATION_EXPIRY: "reactivationExpiry",
-  VERIFICATION_HASH: "verificationHash",
-  VERIFICATION_EXPIRY: "verificationExpiry"
+  ID: 'id',
+  FIRST_NAME: 'firstName',
+  LAST_NAME: 'lastName',
+  EMAIL: 'email',
+  PASSWORD: 'password',
+  SALT: 'salt',
+  HASH: 'hash',
+  ACCESS_CODE: 'securityCode',
+  IS_VERIFIED: 'isVerified',
+  IS_BLOCKED: 'isBlocked',
+  PASSWORD_RESET_HASH: 'passwordResetHash',
+  PASSWORD_RESET_EXPIRY: 'passwordResetExpiry',
+  REACTIVATION_HASH: 'reactivationHash',
+  REACTIVATION_EXPIRY: 'reactivationExpiry',
+  VERIFICATION_HASH: 'verificationHash',
+  VERIFICATION_EXPIRY: 'verificationExpiry',
 };
 var account_default = ACCOUNT;
 
 // constants/field-ids/insurance/policy/index.ts
-var REQUESTED_START_DATE = "requestedStartDate";
-var CONTRACT_COMPLETION_DATE = "contractCompletionDate";
+var REQUESTED_START_DATE = 'requestedStartDate';
+var CONTRACT_COMPLETION_DATE = 'contractCompletionDate';
 var SHARED_CONTRACT_POLICY = {
   REQUESTED_START_DATE,
   REQUESTED_START_DATE_DAY: `${REQUESTED_START_DATE}-day`,
   REQUESTED_START_DATE_MONTH: `${REQUESTED_START_DATE}-month`,
   REQUESTED_START_DATE_YEAR: `${REQUESTED_START_DATE}-year`,
-  POLICY_CURRENCY_CODE: "policyCurrencyCode"
+  POLICY_CURRENCY_CODE: 'policyCurrencyCode',
 };
 var POLICY = {
   ...shared_default,
   TYPE_OF_POLICY: {
-    POLICY_TYPE: shared_default.POLICY_TYPE
+    POLICY_TYPE: shared_default.POLICY_TYPE,
   },
   CONTRACT_POLICY: {
     ...SHARED_CONTRACT_POLICY,
@@ -304,113 +309,114 @@ var POLICY = {
       CONTRACT_COMPLETION_DATE_DAY: `${CONTRACT_COMPLETION_DATE}-day`,
       CONTRACT_COMPLETION_DATE_MONTH: `${CONTRACT_COMPLETION_DATE}-month`,
       CONTRACT_COMPLETION_DATE_YEAR: `${CONTRACT_COMPLETION_DATE}-year`,
-      TOTAL_CONTRACT_VALUE: "totalValueOfContract"
+      TOTAL_CONTRACT_VALUE: 'totalValueOfContract',
+      REQUESTED_CREDIT_LIMIT: 'requestedCreditLimit',
     },
     MULTIPLE: {
-      TOTAL_MONTHS_OF_COVER: "totalMonthsOfCover"
-    }
+      TOTAL_MONTHS_OF_COVER: 'totalMonthsOfCover',
+    },
   },
   EXPORT_VALUE: {
     MULTIPLE: {
-      TOTAL_SALES_TO_BUYER: "totalSalesToBuyer",
-      MAXIMUM_BUYER_WILL_OWE: "maximumBuyerWillOwe"
-    }
+      TOTAL_SALES_TO_BUYER: 'totalSalesToBuyer',
+      MAXIMUM_BUYER_WILL_OWE: 'maximumBuyerWillOwe',
+    },
   },
   NAME_ON_POLICY: {
-    NAME: "nameOnPolicy",
-    IS_SAME_AS_OWNER: "isSameAsOwner",
-    SAME_NAME: "sameName",
-    OTHER_NAME: "otherName",
-    POSITION: "position",
-    POLICY_CONTACT_EMAIL: "policyContact.email"
+    NAME: 'nameOnPolicy',
+    IS_SAME_AS_OWNER: 'isSameAsOwner',
+    SAME_NAME: 'sameName',
+    OTHER_NAME: 'otherName',
+    POSITION: 'position',
+    POLICY_CONTACT_EMAIL: 'policyContact.email',
   },
   DIFFERENT_NAME_ON_POLICY: {
-    POLICY_CONTACT_DETAIL: "policyContactDetail",
-    POSITION: "position"
+    POLICY_CONTACT_DETAIL: 'policyContactDetail',
+    POSITION: 'position',
   },
-  NEED_PRE_CREDIT_PERIOD: "needPreCreditPeriodCover",
-  CREDIT_PERIOD_WITH_BUYER: "creditPeriodWithBuyer",
+  NEED_PRE_CREDIT_PERIOD: 'needPreCreditPeriodCover',
+  CREDIT_PERIOD_WITH_BUYER: 'creditPeriodWithBuyer',
   REQUESTED_JOINTLY_INSURED_PARTY: {
-    REQUESTED: "requested",
-    COMPANY_NAME: "companyName",
-    COMPANY_NUMBER: "companyNumber",
-    COUNTRY_CODE: "countryCode"
+    REQUESTED: 'requested',
+    COMPANY_NAME: 'companyName',
+    COMPANY_NUMBER: 'companyNumber',
+    COUNTRY_CODE: 'countryCode',
   },
-  USING_BROKER: "isUsingBroker",
+  USING_BROKER: 'isUsingBroker',
   BROKER_DETAILS: {
-    NAME: "name",
+    NAME: 'name',
     EMAIL: shared_default.EMAIL,
-    BROKER_EMAIL: "broker.email",
-    FULL_ADDRESS: "fullAddress"
+    BROKER_EMAIL: 'broker.email',
+    FULL_ADDRESS: 'fullAddress',
   },
   LOSS_PAYEE: {
-    IS_APPOINTED: "isAppointed"
+    IS_APPOINTED: 'isAppointed',
   },
   LOSS_PAYEE_DETAILS: {
-    NAME: "name",
-    LOSS_PAYEE_NAME: "lossPayee.name",
-    LOCATION: "location",
-    IS_LOCATED_IN_UK: "isLocatedInUk",
-    IS_LOCATED_INTERNATIONALLY: "isLocatedInternationally"
+    NAME: 'name',
+    LOSS_PAYEE_NAME: 'lossPayee.name',
+    LOCATION: 'location',
+    IS_LOCATED_IN_UK: 'isLocatedInUk',
+    IS_LOCATED_INTERNATIONALLY: 'isLocatedInternationally',
   },
   LOSS_PAYEE_FINANCIAL_UK: {
-    SORT_CODE: "sortCode",
-    ACCOUNT_NUMBER: "accountNumber"
+    SORT_CODE: 'sortCode',
+    ACCOUNT_NUMBER: 'accountNumber',
   },
   LOSS_PAYEE_FINANCIAL_INTERNATIONAL: {
-    BIC_SWIFT_CODE: "bicSwiftCode",
-    IBAN: "iban"
+    BIC_SWIFT_CODE: 'bicSwiftCode',
+    IBAN: 'iban',
   },
-  FINANCIAL_ADDRESS: "bankAddress",
-  LOSS_PAYEE_FINANCIAL_ADDRESS: "lossPayee.bankAddress"
+  FINANCIAL_ADDRESS: 'bankAddress',
+  LOSS_PAYEE_FINANCIAL_ADDRESS: 'lossPayee.bankAddress',
 };
 var policy_default = POLICY;
 
 // constants/field-ids/insurance/business/index.ts
 var EXPORTER_BUSINESS = {
   COMPANIES_HOUSE: {
-    INPUT: "companiesHouseNumber",
-    COMPANY_NAME: "companyName",
-    COMPANY_ADDRESS: "registeredOfficeAddress",
-    COMPANY_NUMBER: "companyNumber",
-    COMPANY_INCORPORATED: "dateOfCreation",
-    COMPANY_SIC: "sicCodes",
-    FINANCIAL_YEAR_END_DATE: "financialYearEndDate",
+    INPUT: 'companiesHouseNumber',
+    COMPANY_NAME: 'companyName',
+    COMPANY_ADDRESS: 'registeredOfficeAddress',
+    COMPANY_NUMBER: 'companyNumber',
+    COMPANY_INCORPORATED: 'dateOfCreation',
+    COMPANY_SIC: 'sicCodes',
+    FINANCIAL_YEAR_END_DATE: 'financialYearEndDate',
     REGISTED_OFFICE_ADDRESS: {
-      ADDRESS_LINE_1: "addressLine1",
-      ADDRESS_LINE_2: "addressLine2",
-      CARE_OF: "careOf",
-      LOCALITY: "locality",
-      REGION: "region",
-      POSTAL_CODE: "postalCode",
-      COUNTRY: "country",
-      PREMISES: "premises"
-    }
+      ADDRESS_LINE_1: 'addressLine1',
+      ADDRESS_LINE_2: 'addressLine2',
+      CARE_OF: 'careOf',
+      LOCALITY: 'locality',
+      REGION: 'region',
+      POSTAL_CODE: 'postalCode',
+      COUNTRY: 'country',
+      PREMISES: 'premises',
+    },
   },
   YOUR_COMPANY: {
-    YOUR_BUSINESS: "yourBusiness",
-    TRADING_ADDRESS: "hasDifferentTradingAddress",
-    HAS_DIFFERENT_TRADING_NAME: "hasDifferentTradingName",
-    DIFFERENT_TRADING_NAME: "differentTradingName",
-    WEBSITE: "companyWebsite",
-    PHONE_NUMBER: "phoneNumber"
+    YOUR_BUSINESS: 'yourBusiness',
+    HAS_DIFFERENT_TRADING_ADDRESS: 'hasDifferentTradingAddress',
+    HAS_DIFFERENT_TRADING_NAME: 'hasDifferentTradingName',
+    DIFFERENT_TRADING_NAME: 'differentTradingName',
+    WEBSITE: 'companyWebsite',
+    PHONE_NUMBER: 'phoneNumber',
   },
   ALTERNATIVE_TRADING_ADDRESS: {
-    FULL_ADDRESS: "fullAddress",
-    FULL_ADDRESS_DOT_NOTATION: "alternativeTrading.fullAddress"
+    FULL_ADDRESS: 'fullAddress',
+    FULL_ADDRESS_DOT_NOTATION: 'alternativeTrading.fullAddress',
   },
   NATURE_OF_YOUR_BUSINESS: {
-    GOODS_OR_SERVICES: "goodsOrServicesSupplied",
-    YEARS_EXPORTING: "totalYearsExporting",
-    EMPLOYEES_UK: "totalEmployeesUK"
+    GOODS_OR_SERVICES: 'goodsOrServicesSupplied',
+    YEARS_EXPORTING: 'totalYearsExporting',
+    EMPLOYEES_UK: 'totalEmployeesUK',
   },
   TURNOVER: {
-    FINANCIAL_YEAR_END_DATE: "financialYearEndDate",
-    ESTIMATED_ANNUAL_TURNOVER: "estimatedAnnualTurnover",
-    PERCENTAGE_TURNOVER: "exportsTurnoverPercentage",
-    TURNOVER_CURRENCY_CODE: "turnoverCurrencyCode"
+    FINANCIAL_YEAR_END_DATE: 'financialYearEndDate',
+    ESTIMATED_ANNUAL_TURNOVER: 'estimatedAnnualTurnover',
+    PERCENTAGE_TURNOVER: 'exportsTurnoverPercentage',
+    TURNOVER_CURRENCY_CODE: 'turnoverCurrencyCode',
   },
-  HAS_CREDIT_CONTROL: "hasCreditControlProcess"
+  HAS_CREDIT_CONTROL: 'hasCreditControlProcess',
 };
 var business_default = EXPORTER_BUSINESS;
 
@@ -418,85 +424,85 @@ var business_default = EXPORTER_BUSINESS;
 var EXPORT_CONTRACT = {
   ...shared_default,
   HOW_WAS_THE_CONTRACT_AWARDED: {
-    AWARD_METHOD: "awardMethod",
-    OTHER_AWARD_METHOD: "otherAwardMethod"
+    AWARD_METHOD: 'awardMethod',
+    OTHER_AWARD_METHOD: 'otherAwardMethod',
   },
   ABOUT_GOODS_OR_SERVICES: {
-    DESCRIPTION: "goodsOrServicesDescription",
-    FINAL_DESTINATION_KNOWN: "finalDestinationKnown",
-    FINAL_DESTINATION: "finalDestinationCountryCode"
+    DESCRIPTION: 'goodsOrServicesDescription',
+    FINAL_DESTINATION_KNOWN: 'finalDestinationKnown',
+    FINAL_DESTINATION: 'finalDestinationCountryCode',
   },
   HOW_WILL_YOU_GET_PAID: {
-    PAYMENT_TERMS_DESCRIPTION: "paymentTermsDescription"
+    PAYMENT_TERMS_DESCRIPTION: 'paymentTermsDescription',
   },
   PRIVATE_MARKET: {
-    ATTEMPTED: "attempted",
-    DECLINED_DESCRIPTION: "declinedDescription"
+    ATTEMPTED: 'attempted',
+    DECLINED_DESCRIPTION: 'declinedDescription',
   },
-  USING_AGENT: "isUsingAgent",
+  USING_AGENT: 'isUsingAgent',
   AGENT_DETAILS: {
-    NAME: "name",
-    AGENT_NAME: "agent.name",
-    FULL_ADDRESS: "fullAddress",
-    AGENT_FULL_ADDRESS: "agent.fullAddress",
-    COUNTRY_CODE: "countryCode",
-    AGENT_COUNTRY_CODE: "agent.countryCode"
+    NAME: 'name',
+    AGENT_NAME: 'agent.name',
+    FULL_ADDRESS: 'fullAddress',
+    AGENT_FULL_ADDRESS: 'agent.fullAddress',
+    COUNTRY_CODE: 'countryCode',
+    AGENT_COUNTRY_CODE: 'agent.countryCode',
   },
   AGENT_SERVICE: {
-    IS_CHARGING: "agentIsCharging",
-    SERVICE_DESCRIPTION: "serviceDescription"
+    IS_CHARGING: 'agentIsCharging',
+    SERVICE_DESCRIPTION: 'serviceDescription',
   },
   AGENT_CHARGES: {
-    METHOD: "method",
-    PAYABLE_COUNTRY_CODE: "payableCountryCode",
-    FIXED_SUM: "fixedSum",
-    FIXED_SUM_AMOUNT: "fixedSumAmount",
-    FIXED_SUM_CURRENCY_CODE: "fixedSumCurrencyCode",
-    PERCENTAGE: "percentage",
-    PERCENTAGE_CHARGE: "percentageCharge"
-  }
+    METHOD: 'method',
+    PAYABLE_COUNTRY_CODE: 'payableCountryCode',
+    FIXED_SUM: 'fixedSum',
+    FIXED_SUM_AMOUNT: 'fixedSumAmount',
+    FIXED_SUM_CURRENCY_CODE: 'fixedSumCurrencyCode',
+    PERCENTAGE: 'percentage',
+    PERCENTAGE_CHARGE: 'percentageCharge',
+  },
 };
 var export_contract_default = EXPORT_CONTRACT;
 
 // constants/field-ids/insurance/your-buyer/index.ts
 var YOUR_BUYER = {
   COMPANY_OR_ORGANISATION: {
-    NAME: "companyOrOrganisationName",
-    ADDRESS: "address",
-    COUNTRY: "country",
-    REGISTRATION_NUMBER: "registrationNumber",
-    WEBSITE: "website"
+    NAME: 'companyOrOrganisationName',
+    ADDRESS: 'address',
+    COUNTRY: 'country',
+    REGISTRATION_NUMBER: 'registrationNumber',
+    WEBSITE: 'website',
   },
-  CONNECTION_WITH_BUYER: "exporterIsConnectedWithBuyer",
-  CONNECTION_WITH_BUYER_DESCRIPTION: "connectionWithBuyerDescription",
-  TRADED_WITH_BUYER: "exporterHasTradedWithBuyer",
-  OUTSTANDING_PAYMENTS: "outstandingPayments",
-  TOTAL_OUTSTANDING_PAYMENTS: "totalOutstandingPayments",
-  TOTAL_AMOUNT_OVERDUE: "totalOverduePayments",
-  FAILED_PAYMENTS: "failedPayments",
-  HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: "exporterHasPreviousCreditInsuranceWithBuyer",
-  PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: "previousCreditInsuranceWithBuyerDescription",
-  HAS_BUYER_FINANCIAL_ACCOUNTS: "exporterHasBuyerFinancialAccounts"
+  CONNECTION_WITH_BUYER: 'exporterIsConnectedWithBuyer',
+  CONNECTION_WITH_BUYER_DESCRIPTION: 'connectionWithBuyerDescription',
+  TRADED_WITH_BUYER: 'exporterHasTradedWithBuyer',
+  OUTSTANDING_PAYMENTS: 'outstandingPayments',
+  TOTAL_OUTSTANDING_PAYMENTS: 'totalOutstandingPayments',
+  TOTAL_AMOUNT_OVERDUE: 'totalOverduePayments',
+  FAILED_PAYMENTS: 'failedPayments',
+  HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: 'exporterHasPreviousCreditInsuranceWithBuyer',
+  PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: 'previousCreditInsuranceWithBuyerDescription',
+  HAS_BUYER_FINANCIAL_ACCOUNTS: 'exporterHasBuyerFinancialAccounts',
 };
 var your_buyer_default = YOUR_BUYER;
 
 // constants/field-ids/insurance/declarations/index.ts
 var DECLARATIONS = {
-  AGREE_CONFIDENTIALITY: "agreeToConfidentiality",
-  AGREE_ANTI_BRIBERY: "agreeToAntiBribery",
-  HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: "hasAntiBriberyCodeOfConduct",
-  WILL_EXPORT_WITH_CODE_OF_CONDUCT: "willExportWithAntiBriberyCodeOfConduct",
-  AGREE_CONFIRMATION_ACKNOWLEDGEMENTS: "agreeToConfirmationAndAcknowledgements"
+  AGREE_CONFIDENTIALITY: 'agreeToConfidentiality',
+  AGREE_ANTI_BRIBERY: 'agreeToAntiBribery',
+  HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: 'hasAntiBriberyCodeOfConduct',
+  WILL_EXPORT_WITH_CODE_OF_CONDUCT: 'willExportWithAntiBriberyCodeOfConduct',
+  AGREE_CONFIRMATION_ACKNOWLEDGEMENTS: 'agreeToConfirmationAndAcknowledgements',
 };
 var declarations_default = DECLARATIONS;
 
 // constants/field-ids/insurance/check-your-answers/index.ts
 var CHECK_YOUR_ANSWERS = {
-  ELIGIBILITY: "eligibility",
-  EXPORTER_BUSINESS: "business",
-  BUYER: "buyer",
-  POLICY: "policy",
-  EXPORT_CONTRACT: "exportContract"
+  ELIGIBILITY: 'eligibility',
+  EXPORTER_BUSINESS: 'business',
+  BUYER: 'buyer',
+  POLICY: 'policy',
+  EXPORT_CONTRACT: 'exportContract',
 };
 var check_your_answers_default = CHECK_YOUR_ANSWERS;
 
@@ -505,32 +511,31 @@ var INSURANCE_FIELD_IDS = {
   ELIGIBILITY: {
     ...shared_eligibility_default,
     ...shared_default2,
-    HAS_COMPANIES_HOUSE_NUMBER: "hasCompaniesHouseNumber",
-    COMPANIES_HOUSE_NUMBER: "companyNumber",
-    TOTAL_CONTRACT_VALUE: "totalContractValue",
-    TOTAL_CONTRACT_VALUE_ID: "totalContractValueId",
-    COVER_PERIOD: "coverPeriod",
-    COVER_PERIOD_ID: "coverPeriodId",
-    HAS_END_BUYER: "hasEndBuyer",
-    HAVE_AN_ACCOUNT: "haveAnAccount",
-    HAS_REVIEWED_ELIGIBILITY: "hasReviewedEligibility",
-    IS_PARTY_TO_CONSORTIUM: "isPartyToConsortium",
-    IS_MEMBER_OF_A_GROUP: "isMemberOfAGroup"
+    HAS_COMPANIES_HOUSE_NUMBER: 'hasCompaniesHouseNumber',
+    COMPANIES_HOUSE_NUMBER: 'companyNumber',
+    TOTAL_CONTRACT_VALUE: 'totalContractValue',
+    TOTAL_CONTRACT_VALUE_ID: 'totalContractValueId',
+    COVER_PERIOD: 'coverPeriod',
+    COVER_PERIOD_ID: 'coverPeriodId',
+    HAS_END_BUYER: 'hasEndBuyer',
+    HAVE_AN_ACCOUNT: 'haveAnAccount',
+    HAS_REVIEWED_ELIGIBILITY: 'hasReviewedEligibility',
+    IS_PARTY_TO_CONSORTIUM: 'isPartyToConsortium',
+    IS_MEMBER_OF_A_GROUP: 'isMemberOfAGroup',
   },
   ...shared_default2,
   CURRENCY: {
-    CURRENCY_CODE: "currencyCode",
-    ALTERNATIVE_CURRENCY_CODE: "alternativeCurrencyCode"
+    CURRENCY_CODE: 'currencyCode',
+    ALTERNATIVE_CURRENCY_CODE: 'alternativeCurrencyCode',
   },
-  SUBMISSION_DEADLINE: "submissionDeadline",
-  MIGRATED_FROM_V1_TO_V2: "migratedV1toV2",
+  SUBMISSION_DEADLINE: 'submissionDeadline',
   ACCOUNT: account_default,
   POLICY: policy_default,
   EXPORTER_BUSINESS: business_default,
   EXPORT_CONTRACT: export_contract_default,
   YOUR_BUYER: your_buyer_default,
   DECLARATIONS: declarations_default,
-  CHECK_YOUR_ANSWERS: check_your_answers_default
+  CHECK_YOUR_ANSWERS: check_your_answers_default,
 };
 var insurance_default = INSURANCE_FIELD_IDS;
 
@@ -538,112 +543,116 @@ var insurance_default = INSURANCE_FIELD_IDS;
 var FIELD_IDS = {
   ...shared_default,
   ...shared_eligibility_default,
-  INSURANCE: insurance_default
+  INSURANCE: insurance_default,
 };
 
 // constants/allowed-graphql-resolvers/index.ts
-var import_config2 = require("dotenv/config");
+var import_config2 = require('dotenv/config');
 var { NODE_ENV } = process.env;
-var isDevEnvironment = NODE_ENV === "development";
+var isDevEnvironment = NODE_ENV === 'development';
 var DEFAULT_RESOLVERS = [
   // application
-  "updateBroker",
-  "updateBusiness",
-  "updateBuyer",
-  "updateBuyerRelationship",
-  "updateBuyerTradingHistory",
-  "updateCompany",
-  "updateDeclaration",
-  "updateNominatedLossPayee",
-  "updateJointlyInsuredParty",
-  "updatePolicy",
-  "updatePolicyContact",
-  "updateExportContract",
-  "updateExportContractAgent",
-  "updateExportContractAgentService",
-  "updateExportContractAgentServiceCharge",
-  "updatePrivateMarket",
-  "updateSectionReview",
-  "updateEligibility",
-  "updateCompanyDifferentTradingAddress",
-  "referenceNumber",
-  "applications",
+  'updateBroker',
+  'updateBusiness',
+  'updateBuyer',
+  'updateBuyerRelationship',
+  'updateBuyerTradingHistory',
+  'updateCompany',
+  'updateDeclaration',
+  'updateNominatedLossPayee',
+  'updateJointlyInsuredParty',
+  'updatePolicy',
+  'updatePolicyContact',
+  'updateExportContract',
+  'updateExportContractAgent',
+  'updateExportContractAgentService',
+  'updateExportContractAgentServiceCharge',
+  'updatePrivateMarket',
+  'updateSectionReview',
+  'updateEligibility',
+  'updateCompanyDifferentTradingAddress',
+  'referenceNumber',
+  'applications',
   // account
-  "account",
-  "updateAccount",
+  'account',
+  'updateAccount',
   // misc
-  "countries",
-  "page"
+  'countries',
+  'page',
 ];
 var CUSTOM_RESOLVERS = [
   // account
-  "accountPasswordReset",
-  "accountSignIn",
-  "accountSignInSendNewCode",
-  "createAnAccount",
-  "sendEmailConfirmEmailAddress",
-  "sendEmailPasswordResetLink",
-  "sendEmailReactivateAccountLink",
-  "updateLossPayeeFinancialDetailsUk",
-  "updateLossPayeeFinancialDetailsInternational",
-  "verifyAccountEmailAddress",
-  "verifyAccountPasswordResetToken",
-  "verifyAccountReactivationToken",
-  "verifyAccountSignInCode",
+  'accountPasswordReset',
+  'accountSignIn',
+  'accountSignInSendNewCode',
+  'createAnAccount',
+  'sendEmailConfirmEmailAddress',
+  'sendEmailPasswordResetLink',
+  'sendEmailReactivateAccountLink',
+  'updateLossPayeeFinancialDetailsUk',
+  'updateLossPayeeFinancialDetailsInternational',
+  'verifyAccountEmailAddress',
+  'verifyAccountPasswordResetToken',
+  'verifyAccountReactivationToken',
+  'verifyAccountSignInCode',
   // application
-  "createAnApplication",
-  "declarationAntiBriberies",
-  "declarationConfirmationAndAcknowledgements",
-  "declarationHowDataWillBeUseds",
-  "deleteApplicationByReferenceNumber",
-  "getCompaniesHouseInformation",
-  "getApplicationByReferenceNumber",
-  "submitApplication",
-  "updateCompanyPostDataMigration",
+  'createAnApplication',
+  'declarationAntiBriberies',
+  'declarationConfirmationAndAcknowledgements',
+  'declarationHowDataWillBeUseds',
+  'deleteApplicationByReferenceNumber',
+  'getCompaniesHouseInformation',
+  'getApplicationByReferenceNumber',
+  'submitApplication',
   // feedback
-  "createFeedbackAndSendEmail",
-  "getApimCisCountries",
-  "getApimCurrencies"
+  'createFeedbackAndSendEmail',
+  'getApimCisCountries',
+  'getApimCurrencies',
 ];
 if (isDevEnvironment) {
   CUSTOM_RESOLVERS.push(
-    "accounts",
-    "addAndGetOTP",
-    "createApplications",
-    "createAnAbandonedApplication",
-    "createBuyer",
-    "deleteAnAccount",
-    "deleteApplications",
-    "getAccountPasswordResetToken",
-    "updateAccountStatus"
+    'accounts',
+    'addAndGetOTP',
+    'createApplications',
+    'createAnAbandonedApplication',
+    'createManyApplications',
+    'createBuyer',
+    'deleteAnAccount',
+    'deleteApplications',
+    'getAccountPasswordResetToken',
+    'updateAccountStatus',
   );
 }
 var ALLOWED_GRAPHQL_RESOLVERS = [...DEFAULT_RESOLVERS, ...CUSTOM_RESOLVERS];
 
 // constants/supported-currencies/index.ts
-var SUPPORTED_CURRENCIES = ["EUR", "GBP", "JPY", "USD"];
-var GBP = "GBP";
+var SUPPORTED_CURRENCIES = ['EUR', 'GBP', 'JPY', 'USD'];
+var GBP = 'GBP';
 
 // constants/application/versions/index.ts
-var VERSIONS = [
-  {
-    VERSION_NUMBER: "1",
-    OVER_500K_SUPPORT: false,
-    MAXIMUM_BUYER_CAN_OWE: 5e5,
-    TOTAL_VALUE_OF_CONTRACT: 5e5,
-    DEFAULT_FINAL_DESTINATION_KNOWN: true,
-    DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: false,
-    BROKER_ADDRESS_AS_MULTIPLE_FIELDS: true
-  },
-  {
-    VERSION_NUMBER: "2",
-    OVER_500K_SUPPORT: true,
-    DEFAULT_FINAL_DESTINATION_KNOWN: null,
-    DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: null,
-    DEFAULT_CURRENCY: GBP,
-    BROKER_ADDRESS_AS_MULTIPLE_FIELDS: false
-  }
-];
+var VERSION_1 = {
+  VERSION_NUMBER: '1',
+  OVER_500K_SUPPORT: false,
+  MAXIMUM_BUYER_CAN_OWE: 5e5,
+  TOTAL_VALUE_OF_CONTRACT: 5e5,
+  DEFAULT_FINAL_DESTINATION_KNOWN: true,
+  DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: false,
+  BROKER_ADDRESS_AS_MULTIPLE_FIELDS: true,
+};
+var VERSION_2 = {
+  VERSION_NUMBER: '2',
+  OVER_500K_SUPPORT: true,
+  DEFAULT_FINAL_DESTINATION_KNOWN: null,
+  DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: null,
+  DEFAULT_CURRENCY: GBP,
+  BROKER_ADDRESS_AS_MULTIPLE_FIELDS: false,
+};
+var VERSION_3 = {
+  ...VERSION_2,
+  VERSION_NUMBER: '3',
+  REQUESTED_CREDIT_LIMIT_REQUIRED: true,
+};
+var VERSIONS = [VERSION_1, VERSION_2, VERSION_3];
 var versions_default = VERSIONS;
 
 // constants/application/get-application-definition/index.ts
@@ -652,8 +661,8 @@ var getApplicationDefinition = (versionNumber) => {
   if (applicationDefinition) {
     return applicationDefinition;
   }
-  console.error("Unable to find latest application version");
-  throw new Error("Unable to find latest application version");
+  console.error('Unable to find latest application version');
+  throw new Error('Unable to find latest application version');
 };
 var get_application_definition_default = getApplicationDefinition;
 
@@ -666,10 +675,11 @@ var LATEST_VERSION = get_application_definition_default(latest_default);
 var APPLICATION = {
   LATEST_VERSION,
   LATEST_VERSION_NUMBER: latest_default,
-  DEAL_TYPE: "EXIP",
+  DEAL_TYPE: 'EXIP',
   SUBMISSION_COUNT_DEFAULT: 0,
   SUBMISSION_DEADLINE_IN_MONTHS: 1,
-  ALL_SECTIONS_ROUTE: "/all-sections",
+  SUBMISSION_DEADLINE_IN_DAYS: 30,
+  ALL_SECTIONS_ROUTE: '/all-sections',
   SUBMISSION_DEADLINE_EMAIL: {
     REMINDER_DAYS: 2,
     START_TIME_LIMIT_HOURS: 0,
@@ -679,31 +689,34 @@ var APPLICATION = {
     END_TIME_LIMIT_HOURS: 23,
     END_TIME_LIMIT_MINUTES: 59,
     END_TIME_LIMIT_SECONDS: 59,
-    END_TIME_LIMIT_MS: 999
+    END_TIME_LIMIT_MS: 999,
   },
   SUBMISSION_TYPE: {
-    MIA: "Manual Inclusion Application"
+    MIA: 'Manual Inclusion Application',
   },
   POLICY_TYPE: {
-    SINGLE: "Single contract policy",
-    MULTIPLE: "Multiple contract policy",
+    SINGLE: 'Single contract policy',
+    MULTIPLE: 'Multiple contract policy',
     ABBREVIATED: {
-      SINGLE: "Single",
-      MULTIPLE: "Multiple"
-    }
+      SINGLE: 'Single',
+      MULTIPLE: 'Multiple',
+    },
   },
   POLICY: {
     TOTAL_VALUE_OF_CONTRACT: {
       MINIMUM: 1,
-      MAXIMUM: LATEST_VERSION.TOTAL_VALUE_OF_CONTRACT
+      MAXIMUM: LATEST_VERSION.TOTAL_VALUE_OF_CONTRACT,
     },
-    TOTAL_MONTHS_OF_COVER: 12,
-    MAXIMUM_BUYER_CAN_OWE: LATEST_VERSION.MAXIMUM_BUYER_CAN_OWE
+    TOTAL_MONTHS_OF_COVER: {
+      MINIMUM: 1,
+      MAXIMUM: 12,
+    },
+    MAXIMUM_BUYER_CAN_OWE: LATEST_VERSION.MAXIMUM_BUYER_CAN_OWE,
   },
   STATUS: {
-    IN_PROGRESS: "In progress",
-    SUBMITTED: "Submitted to UKEF",
-    ABANDONED: "Abandoned"
+    IN_PROGRESS: 'In progress',
+    SUBMITTED: 'Submitted to UKEF',
+    ABANDONED: 'Abandoned',
   },
   DEFAULT_FINAL_DESTINATION_KNOWN: LATEST_VERSION.DEFAULT_FINAL_DESTINATION_KNOWN,
   DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: LATEST_VERSION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER,
@@ -711,13 +724,14 @@ var APPLICATION = {
   EXPORT_CONTRACT: {
     AGENT_SERVICE_CHARGE: {
       METHOD: {
-        FIXED_SUM: "Fixed sum",
-        PERCENTAGE: "Percentage"
-      }
-    }
+        FIXED_SUM: 'Fixed sum',
+        PERCENTAGE: 'Percentage',
+      },
+    },
   },
-  GET_QUERY: "id eligibility { id } buyer { id companyOrOrganisationName } company { id } declaration { id } exportContract { id } nominatedLossPayee { id } policy { id } sectionReview { id } owner { id email firstName lastName } referenceNumber submissionDeadline status ",
-  VERSIONS: versions_default
+  GET_QUERY:
+    'id eligibility { id } buyer { id companyOrOrganisationName } company { id } declaration { id } exportContract { id } nominatedLossPayee { id } policy { id } sectionReview { id } owner { id email firstName lastName } referenceNumber submissionDeadline status ',
+  VERSIONS: versions_default,
 };
 var application_default = APPLICATION;
 
@@ -725,44 +739,44 @@ var application_default = APPLICATION;
 var COVER_PERIOD = {
   LESS_THAN_2_YEARS: {
     DB_ID: 1,
-    VALUE: "1 to 24 months"
+    VALUE: '1 to 24 months',
   },
   MORE_THAN_2_YEARS: {
     DB_ID: 2,
-    VALUE: "More than 2 years"
-  }
+    VALUE: 'More than 2 years',
+  },
 };
 
 // constants/cron/index.ts
-var CRON_DESCRIPTION_ACCOUNT_UPDATE_UNVERIFIED = "Update unverified accounts (over 24hrs) to isInactive";
-var CRON_DESCRIPTION_APPLICATION_UPDATE_INACTIVE = "Update inactive applications (over 30 days) to Abandoned";
-var CRON_DESCRIPTION_APPLICATION_SUBMISSION_DEADLINE_EMAIL = "Email application submission deadline reminder";
+var CRON_DESCRIPTION_ACCOUNT_UPDATE_UNVERIFIED = 'Update unverified accounts (over 24hrs) to isInactive';
+var CRON_DESCRIPTION_APPLICATION_UPDATE_INACTIVE = `Update inactive applications (over ${APPLICATION.SUBMISSION_DEADLINE_IN_DAYS}) to Abandoned`;
+var CRON_DESCRIPTION_APPLICATION_SUBMISSION_DEADLINE_EMAIL = 'Email application submission deadline reminder';
 
 // constants/date-format.ts
 var DATE_FORMAT = {
-  DEFAULT: "d MMMM yyyy",
-  HOURS_AND_MINUTES: "HH:mm",
-  SHORT_MONTH: "d MMM yyyy",
-  XLSX: "dd-MMM-yy"
+  DEFAULT: 'd MMMM yyyy',
+  HOURS_AND_MINUTES: 'HH:mm',
+  SHORT_MONTH: 'd MMM yyyy',
+  XLSX: 'dd-MMM-yy',
 };
 
 // constants/declarations/versions/index.ts
 var DECLARATION_VERSIONS = [
   {
-    ANTI_BRIBERY: "1",
-    ANTI_BRIBERY_CODE_OF_CONDUCT: "1",
-    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: "1",
-    CONFIDENTIALITY: "1",
-    CONFIRMATION_AND_ACKNOWLEDGEMENTS: "1",
-    HOW_YOUR_DATA_WILL_BE_USED: "1"
+    ANTI_BRIBERY: '1',
+    ANTI_BRIBERY_CODE_OF_CONDUCT: '1',
+    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: '1',
+    CONFIDENTIALITY: '1',
+    CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
+    HOW_YOUR_DATA_WILL_BE_USED: '1',
   },
   {
-    ANTI_BRIBERY: "2",
-    ANTI_BRIBERY_CODE_OF_CONDUCT: "2",
-    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: "1",
-    CONFIDENTIALITY: "1",
-    CONFIRMATION_AND_ACKNOWLEDGEMENTS: "1"
-  }
+    ANTI_BRIBERY: '2',
+    ANTI_BRIBERY_CODE_OF_CONDUCT: '2',
+    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: '1',
+    CONFIDENTIALITY: '1',
+    CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
+  },
 ];
 var versions_default2 = DECLARATION_VERSIONS;
 
@@ -770,7 +784,7 @@ var versions_default2 = DECLARATION_VERSIONS;
 var DECLARATIONS2 = {
   VERSIONS: versions_default2,
   V1_DECLARATIONS: versions_default2[0],
-  LATEST_DECLARATIONS: versions_default2[versions_default2.length - 1]
+  LATEST_DECLARATIONS: versions_default2[versions_default2.length - 1],
 };
 var declarations_default2 = DECLARATIONS2;
 
@@ -778,175 +792,196 @@ var declarations_default2 = DECLARATIONS2;
 var ELIGIBILITY = {
   MAX_COVER_AMOUNT_IN_GBP: 5e5,
   MAX_COVER_PERIOD_MONTHS: 24,
-  MAX_COVER_PERIOD_YEARS: 2
+  MAX_COVER_PERIOD_YEARS: 2,
 };
 
 // constants/export-contract-award-method/index.ts
 var EXPORT_CONTRACT_AWARD_METHOD = {
   OPEN_TENDER: {
-    DB_ID: "eg9qxlqw4edxa8b5mwbybsrfp",
-    VALUE: "Open tender"
+    DB_ID: 'eg9qxlqw4edxa8b5mwbybsrfp',
+    VALUE: 'Open tender',
   },
   NEGOTIATED_CONTRACT: {
-    DB_ID: "mzwp337piamg1mei7fqh1o73s",
-    VALUE: "Negotiated contract"
+    DB_ID: 'mzwp337piamg1mei7fqh1o73s',
+    VALUE: 'Negotiated contract',
   },
   DIRECT_AWARD: {
-    DB_ID: "qnqrle4xwsj5go8pchj31sat4",
-    VALUE: "Direct award"
+    DB_ID: 'qnqrle4xwsj5go8pchj31sat4',
+    VALUE: 'Direct award',
   },
   COMPETITIVE_BIDDING: {
-    DB_ID: "qw2hp8khykctdic2z58z70ru8",
-    VALUE: "Competitive bidding"
+    DB_ID: 'qw2hp8khykctdic2z58z70ru8',
+    VALUE: 'Competitive bidding',
   },
   OTHER: {
-    DB_ID: "tn8k8lot1bvirmztmmgq2u8hn",
-    VALUE: "Other"
-  }
+    DB_ID: 'tn8k8lot1bvirmztmmgq2u8hn',
+    VALUE: 'Other',
+  },
 };
 
 // constants/external-apis.ts
 var EXTERNAL_API_DEFINITIONS = {
   CIS: {
     RISK: {
-      VERY_HIGH: "Very High",
-      HIGH: "High",
-      STANDARD: "Standard Risk"
+      VERY_HIGH: 'Very High',
+      HIGH: 'High',
+      STANDARD: 'Standard Risk',
     },
     SHORT_TERM_COVER_AVAILABLE: {
-      YES: "Yes",
-      NO: "No",
-      ILC: "ILC Only",
-      CILC: "CILC Only",
-      REFER: "Refer",
-      UNLISTED: "Unlisted"
+      YES: 'Yes',
+      NO: 'No',
+      ILC: 'ILC Only',
+      CILC: 'CILC Only',
+      REFER: 'Refer',
+      UNLISTED: 'Unlisted',
     },
     NBI_ISSUE_AVAILABLE: {
-      YES: "Y",
-      NO: "N"
+      YES: 'Y',
+      NO: 'N',
     },
-    NO_COVER: "Off cover",
-    INVALID_COUNTRIES: ["EC Market n/k", "Non EC Market n/k", "Non UK", "Third Country", "Eastern and Southern African Trade and Development Bank"],
-    INVALID_CURRENCIES: ["Gold"]
+    NO_COVER: 'Off cover',
+    INVALID_COUNTRIES: [
+      'CABEI',
+      'Cor Andino Fom',
+      'Eastern and Southern African Trade and Development Bank',
+      'EC Market n/k',
+      'Non EC Market n/k',
+      'Non UK',
+      'Third Country',
+    ],
+    INVALID_CURRENCIES: ['Gold'],
   },
   COMPANIES_HOUSE: {
     COMPANY_STATUS: {
-      ACTIVE: "active"
-    }
-  }
+      ACTIVE: 'active',
+    },
+  },
 };
 var EXTERNAL_API_MAPPINGS = {
   CIS: {
     RISK: {
-      VERY_HIGH: "Very High",
-      HIGH: "High",
-      STANDARD: "Standard"
-    }
-  }
+      VERY_HIGH: 'Very High',
+      HIGH: 'High',
+      STANDARD: 'Standard',
+    },
+  },
 };
 var EXTERNAL_API_ENDPOINTS = {
   APIM_MDM: {
-    CURRENCY: "/currencies",
-    INDUSTRY_SECTORS: "/sector-industries",
-    MARKETS: "/markets"
-  }
+    CURRENCY: '/currencies',
+    INDUSTRY_SECTORS: '/sector-industries',
+    MARKETS: '/markets',
+  },
 };
 
 // constants/field-values/index.ts
 var { POLICY_TYPE, POLICY: POLICY2 } = application_default;
 var FIELD_VALUES = {
   OPTIONAL_COOKIES: {
-    ACCEPT: "accept",
-    REJECT: "reject"
+    ACCEPT: 'accept',
+    REJECT: 'reject',
   },
   POLICY_TYPE: {
     SINGLE: POLICY_TYPE.SINGLE,
-    MULTIPLE: POLICY_TYPE.MULTIPLE
+    MULTIPLE: POLICY_TYPE.MULTIPLE,
   },
   POLICY_LENGTH: {
     // default multiple policy length in months
-    MULTIPLE: 12
+    MULTIPLE: 12,
   },
-  TOTAL_MONTHS_OF_COVER: Array.from(Array(POLICY2.TOTAL_MONTHS_OF_COVER).keys()),
-  YES: "Yes",
-  NO: "No"
+  TOTAL_MONTHS_OF_COVER: Array.from(Array(POLICY2.TOTAL_MONTHS_OF_COVER.MAXIMUM).keys()),
+  YES: 'Yes',
+  NO: 'No',
 };
 
 // constants/total-contract-value/index.ts
 var TOTAL_CONTRACT_VALUE = {
   LESS_THAN_500K: {
     DB_ID: 1,
-    VALUE: "Less than 500k"
+    VALUE: 'Less than 500k',
   },
   MORE_THAN_500K: {
     DB_ID: 2,
-    VALUE: "More than 500k"
+    VALUE: 'More than 500k',
   },
   LESS_THAN_250K: {
     DB_ID: 3,
-    VALUE: "Less than 250k"
+    VALUE: 'Less than 250k',
   },
   MORE_THAN_250K: {
     DB_ID: 4,
-    VALUE: "More than 250k"
+    VALUE: 'More than 250k',
   },
-  AMOUNT_250K: 25e4
+  AMOUNT_250K: 25e4,
 };
 
 // constants/XLSX-CONFIG/index.ts
 var XLSX_CONFIG = {
-  KEY: "field",
-  VALUE: "answer",
+  KEY: 'field',
+  VALUE: 'answer',
   COLUMN_WIDTH: 85,
   ADDITIONAL_TITLE_COLUMN_HEIGHT: 25,
   ADDITIONAL_COLUMN_HEIGHT: 50,
   LARGE_ADDITIONAL_COLUMN_HEIGHT: 50 * 2,
   FONT_SIZE: {
     DEFAULT: 11,
-    TITLE: 14
-  }
+    TITLE: 14,
+  },
 };
 
 // constants/validation.ts
 var MAXIMUM_CHARACTERS = {
   ABOUT_GOODS_OR_SERVICES_DESCRIPTION: 1e3,
   ACCOUNT_NUMBER: 8,
+  ACCOUNT: {
+    NAME: 400,
+  },
   AGENT_NAME: 800,
   AGENT_SERVICE_DESCRIPTION: 1e3,
   BIC_SWIFT_CODE: 11,
   BROKER_NAME: 800,
   BUSINESS: {
-    GOODS_OR_SERVICES_DESCRIPTION: 1e3
+    GOODS_OR_SERVICES_DESCRIPTION: 1e3,
   },
   BUYER: {
     COMPANY_OR_ORGANISATION: 200,
     REGISTRATION_NUMBER: 200,
-    PREVIOUS_CREDIT_INSURANCE_COVER: 1e3
+    PREVIOUS_CREDIT_INSURANCE_COVER: 1e3,
   },
   COMPANY_DIFFERENT_TRADING_NAME: 200,
   CONNECTION_WITH_BUYER_DESCRIPTION: 1e3,
   CREDIT_PERIOD_WITH_BUYER: 1e3,
   DECLINED_BY_PRIVATE_MARKET_DESCRIPTION: 1e3,
+  DIFFERENT_NAME_ON_POLICY_POSITION: 50,
+  DIFFERENT_NAME_ON_POLICY: 50,
   EMAIL: 300,
   EXPORT_CONTRACT: {
-    OTHER_AWARD_METHOD: 200
+    OTHER_AWARD_METHOD: 200,
   },
   FEEDBACK: {
     IMPROVEMENT: 1200,
-    OTHER_COMMENTS: 1200
+    OTHER_COMMENTS: 1200,
   },
   FULL_ADDRESS: 500,
   IBAN: 34,
   LOSS_PAYEE_NAME: 200,
+  NAME_ON_POLICY_POSITION: 50,
   PAYMENT_TERMS_DESCRIPTION: 1e3,
   PERCENTAGE: 100,
   POLICY_CONTACT_NAME: 400,
-  SORT_CODE: 6
+  QUOTE: {
+    CREDIT_PERIOD: 2,
+  },
+  REQUESTED_JOINTLY_INSURED_PARTY: {
+    COMPANY_NAME: 200,
+    COMPANY_NUMBER: 100,
+  },
+  SORT_CODE: 6,
 };
 
 // constants/index.ts
 import_dotenv.default.config();
-var GBP_CURRENCY_CODE = "GBP";
+var GBP_CURRENCY_CODE = 'GBP';
 var DATE_24_HOURS_FROM_NOW = () => {
   const now2 = /* @__PURE__ */ new Date();
   const day = now2.getDate();
@@ -968,43 +1003,43 @@ var DATE_30_MINUTES_FROM_NOW = () => {
 };
 var ACCOUNT2 = {
   EMAIL: {
-    VERIFICATION_EXPIRY: DATE_24_HOURS_FROM_NOW
+    VERIFICATION_EXPIRY: DATE_24_HOURS_FROM_NOW,
   },
   ENCRYPTION: {
     RANDOM_BYTES_SIZE: 32,
-    STRING_TYPE: "hex",
+    STRING_TYPE: 'hex',
     PBKDF2: {
       ITERATIONS: 1e4,
-      DIGEST_ALGORITHM: "sha512"
+      DIGEST_ALGORITHM: 'sha512',
     },
     PASSWORD: {
       PBKDF2: {
-        KEY_LENGTH: 64
-      }
+        KEY_LENGTH: 64,
+      },
     },
     OTP: {
       PBKDF2: {
-        KEY_LENGTH: 128
-      }
-    }
+        KEY_LENGTH: 128,
+      },
+    },
   },
   PASSWORD_RESET_EXPIRY: DATE_30_MINUTES_FROM_NOW,
   // One time password
   OTP: {
     DIGITS: 6,
-    VERIFICATION_EXPIRY: DATE_30_MINUTES_FROM_NOW
+    VERIFICATION_EXPIRY: DATE_30_MINUTES_FROM_NOW,
   },
   REACTIVATION_EXPIRY: DATE_24_HOURS_FROM_NOW,
   // JSON web token
   JWT: {
     KEY: {
       SIGNATURE: String(process.env.JWT_SIGNING_KEY),
-      ENCODING: "base64",
-      STRING_ENCODING: "ascii"
+      ENCODING: 'base64',
+      STRING_ENCODING: 'ascii',
     },
     TOKEN: {
-      EXPIRY: "12h",
-      ALGORITHM: "RS256"
+      EXPIRY: '12h',
+      ALGORITHM: 'RS256',
     },
     SESSION_EXPIRY: () => {
       const now2 = /* @__PURE__ */ new Date();
@@ -1012,7 +1047,7 @@ var ACCOUNT2 = {
       const seconds = 60 * 60 * 1e3;
       const future = new Date(now2.getTime() + hours * seconds);
       return future;
-    }
+    },
   },
   MAX_AUTH_RETRIES: 6,
   /**
@@ -1020,80 +1055,80 @@ var ACCOUNT2 = {
    * Generate a date that is 24 hours ago from now
    * To be safe, we use time rather than subtracting a day.
    */
-  MAX_AUTH_RETRIES_TIMEFRAME: DATE_24_HOURS_IN_THE_PAST()
+  MAX_AUTH_RETRIES_TIMEFRAME: DATE_24_HOURS_IN_THE_PAST(),
 };
 var DEFAULT_ENCRYPTION_SAVE_OBJECT = {
-  value: "",
-  iv: ""
+  value: '',
+  iv: '',
 };
 var FINANCIAL_DETAILS = {
   ENCRYPTION: {
     CIPHER: {
-      ENCODING: "hex",
-      STRING_ENCODING: "base64",
-      ENCRYPTION_METHOD: "aes-256-cbc",
-      OUTPUT_ENCODING: "utf-8"
+      ENCODING: 'hex',
+      STRING_ENCODING: 'base64',
+      ENCRYPTION_METHOD: 'aes-256-cbc',
+      OUTPUT_ENCODING: 'utf-8',
     },
     KEY: {
-      ALGORITHM: "sha512",
+      ALGORITHM: 'sha512',
       SIGNATURE: String(process.env.LOSS_PAYEE_ENCRYPTION_KEY),
       SUBSTRING_INDEX_START: 0,
-      SUBSTRING_INDEX_END: 32
+      SUBSTRING_INDEX_END: 32,
     },
     IV: {
       BYTES_SIZE: 16,
-      ENCODING: "base64",
+      ENCODING: 'base64',
       SLICE_INDEX_START: 0,
-      SLICE_INDEX_END: 16
-    }
-  }
+      SLICE_INDEX_END: 16,
+    },
+  },
 };
 var EMAIL_TEMPLATE_IDS = {
   ACCOUNT: {
-    CONFIRM_EMAIL: "24022e94-171c-4044-b0ee-d22418116575",
-    ACCESS_CODE: "b92650d1-9187-4510-ace2-5eec7ca7e626",
-    PASSWORD_RESET: "86d5f582-e1d3-4b55-b103-50141401fd13",
-    REACTIVATE_ACCOUNT_CONFIRM_EMAIL: "2abf173a-52fc-4ec8-b28c-d7a862b8cf37"
+    CONFIRM_EMAIL: '24022e94-171c-4044-b0ee-d22418116575',
+    ACCESS_CODE: 'b92650d1-9187-4510-ace2-5eec7ca7e626',
+    PASSWORD_RESET: '86d5f582-e1d3-4b55-b103-50141401fd13',
+    REACTIVATE_ACCOUNT_CONFIRM_EMAIL: '2abf173a-52fc-4ec8-b28c-d7a862b8cf37',
   },
   APPLICATION: {
     SUBMISSION: {
       EXPORTER: {
-        CONFIRMATION: "2e9084e2-d871-4be7-85d0-0ccc1961b148",
+        CONFIRMATION: '2e9084e2-d871-4be7-85d0-0ccc1961b148',
         SEND_DOCUMENTS: {
-          TRADING_HISTORY: "1ae4d77e-58d6-460e-99c0-b62bf08d8c52",
-          ANTI_BRIBERY: "002e43e3-ca78-4b9c-932f-6833014bb1e4",
-          ANTI_BRIBERY_AND_TRADING_HISTORY: "49753c34-24b5-4cad-a7c5-1ab32d711dfe"
-        }
+          TRADING_HISTORY: '1ae4d77e-58d6-460e-99c0-b62bf08d8c52',
+          ANTI_BRIBERY: '002e43e3-ca78-4b9c-932f-6833014bb1e4',
+          ANTI_BRIBERY_AND_TRADING_HISTORY: '49753c34-24b5-4cad-a7c5-1ab32d711dfe',
+        },
       },
       UNDERWRITING_TEAM: {
-        NOTIFICATION_TRADING_HISTORY: "34457439-bf9c-46e3-bd05-b8732ed682fb",
-        NOTIFICATION_ANTI_BRIBERY: "8be12c98-b2c7-4992-8920-925aa37b6391",
-        NOTIFICATION_ANTI_BRIBERY_AND_TRADING_HISTORY: "7f0541dd-1dae-4d51-9ebc-87d2a624f8d2",
-        NO_DOCUMENTS: "65b517c6-ae86-470b-9448-194ae5ac44bb"
+        NOTIFICATION_TRADING_HISTORY: '34457439-bf9c-46e3-bd05-b8732ed682fb',
+        NOTIFICATION_ANTI_BRIBERY: '8be12c98-b2c7-4992-8920-925aa37b6391',
+        NOTIFICATION_ANTI_BRIBERY_AND_TRADING_HISTORY: '7f0541dd-1dae-4d51-9ebc-87d2a624f8d2',
+        NO_DOCUMENTS: '65b517c6-ae86-470b-9448-194ae5ac44bb',
       },
-      DEADLINE_REMINDER: "e8e5ba73-96da-46f1-b96e-2b1909be6f3d"
-    }
+      DEADLINE_REMINDER: 'e8e5ba73-96da-46f1-b96e-2b1909be6f3d',
+    },
   },
   FEEDBACK: {
-    INSURANCE: "4d3d7944-e894-4527-aee6-692038c84107"
-  }
+    INSURANCE: '4d3d7944-e894-4527-aee6-692038c84107',
+  },
 };
 var FEEDBACK = {
-  VERY_SATISFIED: "verySatisfied",
-  SATISFIED: "satisfied",
-  NEITHER: "neither",
-  DISSATISFIED: "dissatisfied",
-  VERY_DISSATISIFED: "veryDissatisfied",
+  VERY_SATISFIED: 'verySatisfied',
+  SATISFIED: 'satisfied',
+  NEITHER: 'neither',
+  DISSATISFIED: 'dissatisfied',
+  VERY_DISSATISIFED: 'veryDissatisfied',
   EMAIL_TEXT: {
-    verySatisfied: "Very satisfied",
-    satisfied: "Satisfied",
-    neither: "Neither satisfied or dissatisfied",
-    dissatisfied: "Dissatisfied",
-    veryDissatisfied: "Very dissatisfied"
-  }
+    verySatisfied: 'Very satisfied',
+    satisfied: 'Satisfied',
+    neither: 'Neither satisfied or dissatisfied',
+    dissatisfied: 'Dissatisfied',
+    veryDissatisfied: 'Very dissatisfied',
+  },
 };
-var ACCEPTED_FILE_TYPES = [".xlsx"];
-var ORDNANCE_SURVEY_QUERY_URL = "/search/places/v1/postcode?postcode=";
+var ACCEPTED_FILE_TYPES = ['.xlsx'];
+var ORDNANCE_SURVEY_QUERY_URL = '/search/places/v1/postcode?postcode=';
 
 // cron/account/unverified-account-cron-job.ts
 import_dotenv2.default.config();
@@ -1101,7 +1136,7 @@ var { CRON_SCHEDULE_UNVERIFIED_ACCOUNT } = process.env;
 var updateUnverifiedAccountsJob = {
   cronExpression: String(CRON_SCHEDULE_UNVERIFIED_ACCOUNT),
   description: CRON_DESCRIPTION_ACCOUNT_UPDATE_UNVERIFIED,
-  task: update_unverified_accounts_default
+  task: update_unverified_accounts_default,
 };
 var unverified_account_cron_job_default = updateUnverifiedAccountsJob;
 
@@ -1110,23 +1145,23 @@ var accountCronSchedulerJobs = [unverified_account_cron_job_default];
 var account_default2 = accountCronSchedulerJobs;
 
 // cron/application/inactive-application-cron-job.ts
-var import_dotenv3 = __toESM(require("dotenv"));
+var import_dotenv3 = __toESM(require('dotenv'));
 
 // helpers/get-inactive-applications/index.ts
 var { IN_PROGRESS } = APPLICATION.STATUS;
 var getInactiveApplications = async (context) => {
   try {
-    console.info("Getting inactive applications - getInactiveApplications helper");
+    console.info('Getting inactive applications - getInactiveApplications helper');
     const applications = await context.query.Application.findMany({
       where: {
-        AND: [{ status: { in: [IN_PROGRESS] } }, { submissionDeadline: { lt: /* @__PURE__ */ new Date() } }]
+        AND: [{ status: { in: [IN_PROGRESS] } }, { submissionDeadline: { lt: /* @__PURE__ */ new Date() } }],
       },
-      query: "id status"
+      query: 'id status',
     });
     return applications;
-  } catch (err) {
-    console.error("Error getting inactive applications (getInactiveApplications helper) %O", err);
-    throw new Error(`Error getting inactive applications (getInactiveApplications helper) ${err}`);
+  } catch (error) {
+    console.error('Error getting inactive applications (getInactiveApplications helper) %o', error);
+    throw new Error(`Error getting inactive applications (getInactiveApplications helper) ${error}`);
   }
 };
 var get_inactive_applications_default = getInactiveApplications;
@@ -1139,8 +1174,8 @@ var mapInactiveApplications = (applications) => {
       data: {
         status: APPLICATION.STATUS.ABANDONED,
         previousStatus: application2.status,
-        updatedAt: /* @__PURE__ */ new Date()
-      }
+        updatedAt: /* @__PURE__ */ new Date(),
+      },
     };
     return mapped;
   });
@@ -1151,14 +1186,14 @@ var map_inactive_applications_default = mapInactiveApplications;
 // helpers/map-and-update-inactive-applications/index.ts
 var mapAndUpdateInactiveApplications = async (applications, context) => {
   try {
-    console.info("Mapping and updating inactive applications - mapAndUpdateInactiveApplications");
+    console.info('Mapping and updating inactive applications - mapAndUpdateInactiveApplications');
     const updateData = map_inactive_applications_default(applications);
     await context.db.Application.updateMany({
-      data: updateData
+      data: updateData,
     });
-  } catch (err) {
-    console.error("Error mapping and updating inactive applications %O", err);
-    throw new Error(`Error mapping and updating inactive applications ${err}`);
+  } catch (error) {
+    console.error('Error mapping and updating inactive applications %o', error);
+    throw new Error(`Error mapping and updating inactive applications ${error}`);
   }
 };
 var map_and_update_inactive_applications_default = mapAndUpdateInactiveApplications;
@@ -1166,17 +1201,17 @@ var map_and_update_inactive_applications_default = mapAndUpdateInactiveApplicati
 // helpers/update-inactive-applications/index.ts
 var updateInactiveApplications = async (context) => {
   try {
-    console.info("Getting and updating inactive applications");
+    console.info('Getting and updating inactive applications');
     const applications = await get_inactive_applications_default(context);
     if (applications.length) {
       await map_and_update_inactive_applications_default(applications, context);
     }
     return {
-      success: true
+      success: true,
     };
-  } catch (err) {
-    console.error("Error getting and updating inactive applications %O", err);
-    throw new Error(`Error getting and updating inactive applications ${err}`);
+  } catch (error) {
+    console.error('Error getting and updating inactive applications %o', error);
+    throw new Error(`Error getting and updating inactive applications ${error}`);
   }
 };
 var update_inactive_applications_default = updateInactiveApplications;
@@ -1187,12 +1222,12 @@ var { CRON_SCHEDULE_INACTIVE_APPLICATION } = process.env;
 var updateInactiveApplicationsJob = {
   cronExpression: String(CRON_SCHEDULE_INACTIVE_APPLICATION),
   description: CRON_DESCRIPTION_APPLICATION_UPDATE_INACTIVE,
-  task: update_inactive_applications_default
+  task: update_inactive_applications_default,
 };
 var inactive_application_cron_job_default = updateInactiveApplicationsJob;
 
 // cron/application/email-submission-deadline-reminder-cron-job.ts
-var import_dotenv8 = __toESM(require("dotenv"));
+var import_dotenv8 = __toESM(require('dotenv'));
 
 // helpers/get-start-and-end-time-of-date/index.ts
 var {
@@ -1203,20 +1238,20 @@ var {
   END_TIME_LIMIT_HOURS,
   END_TIME_LIMIT_MINUTES,
   END_TIME_LIMIT_MS,
-  END_TIME_LIMIT_SECONDS
+  END_TIME_LIMIT_SECONDS,
 } = APPLICATION.SUBMISSION_DEADLINE_EMAIL;
 var getStartAndEndTimeOfDate = (date) => {
   const startSet = date.setHours(START_TIME_LIMIT_HOURS, START_TIME_LIMIT_MINUTES, START_TIME_LIMIT_SECONDS, START_TIME_LIMIT_MS);
   const endSet = date.setHours(END_TIME_LIMIT_HOURS, END_TIME_LIMIT_MINUTES, END_TIME_LIMIT_SECONDS, END_TIME_LIMIT_MS);
   return {
     startTime: new Date(startSet),
-    endTime: new Date(endSet)
+    endTime: new Date(endSet),
   };
 };
 var get_start_and_end_time_of_date_default = getStartAndEndTimeOfDate;
 
 // helpers/date/index.ts
-var import_date_fns = require("date-fns");
+var import_date_fns = require('date-fns');
 var dateIsInThePast = (targetDate) => {
   const now2 = /* @__PURE__ */ new Date();
   return (0, import_date_fns.isAfter)(now2, targetDate);
@@ -1228,31 +1263,31 @@ var { IN_PROGRESS: IN_PROGRESS2 } = APPLICATION.STATUS;
 var { REMINDER_DAYS } = APPLICATION.SUBMISSION_DEADLINE_EMAIL;
 var getExpiringApplications = async (context) => {
   try {
-    console.info("Getting expiring applications - getExpiringApplications helper");
+    console.info('Getting expiring applications - getExpiringApplications helper');
     const today = /* @__PURE__ */ new Date();
     const reminderDays = dateInTheFutureByDays(today, REMINDER_DAYS);
     const { startTime, endTime } = get_start_and_end_time_of_date_default(reminderDays);
     const applications = await context.query.Application.findMany({
       where: {
-        AND: [{ status: { in: [IN_PROGRESS2] } }, { submissionDeadline: { gte: startTime, lte: endTime } }]
+        AND: [{ status: { in: [IN_PROGRESS2] } }, { submissionDeadline: { gte: startTime, lte: endTime } }],
       },
-      query: APPLICATION.GET_QUERY
+      query: APPLICATION.GET_QUERY,
     });
     return applications;
-  } catch (err) {
-    console.error("Error getting expiring applications (getExpiringApplications helper) %O", err);
-    throw new Error(`Error getting expiring applications (getExpiringApplications helper) ${err}`);
+  } catch (error) {
+    console.error('Error getting expiring applications (getExpiringApplications helper) %o', error);
+    throw new Error(`Error getting expiring applications (getExpiringApplications helper) ${error}`);
   }
 };
 var get_expiring_applications_default = getExpiringApplications;
 
 // helpers/format-date/index.ts
-var import_date_fns2 = require("date-fns");
+var import_date_fns2 = require('date-fns');
 var formatDate = (timestamp3, dateFormat = DATE_FORMAT.DEFAULT) => (0, import_date_fns2.format)(new Date(timestamp3), dateFormat);
 var format_date_default = formatDate;
 
 // helpers/generate-application-url/index.ts
-var import_dotenv4 = __toESM(require("dotenv"));
+var import_dotenv4 = __toESM(require('dotenv'));
 import_dotenv4.default.config();
 var baseUrl = String(process.env.APPLICATION_URL);
 var generateApplicationUrl = (referenceNumber) => `${baseUrl}/${referenceNumber}${APPLICATION.ALL_SECTIONS_ROUTE}`;
@@ -1268,18 +1303,18 @@ var mapApplicationSubmissionDeadlineVariables = (application2) => {
     name: `${firstName} ${lastName}`,
     referenceNumber: String(referenceNumber),
     applicationUrl: generate_application_url_default(referenceNumber),
-    buyerName: application2.buyer.companyOrOrganisationName ? String(companyOrOrganisationName) : "",
-    submissionDeadline: format_date_default(new Date(submissionDeadline))
+    buyerName: application2.buyer.companyOrOrganisationName ? String(companyOrOrganisationName) : '',
+    submissionDeadline: format_date_default(new Date(submissionDeadline)),
   };
 };
 var map_application_submission_deadline_variables_default = mapApplicationSubmissionDeadlineVariables;
 
 // emails/index.ts
-var import_dotenv7 = __toESM(require("dotenv"));
+var import_dotenv7 = __toESM(require('dotenv'));
 
 // integrations/notify/index.ts
-var import_dotenv5 = __toESM(require("dotenv"));
-var import_notifications_node_client = require("notifications-node-client");
+var import_dotenv5 = __toESM(require('dotenv'));
+var import_notifications_node_client = require('notifications-node-client');
 import_dotenv5.default.config();
 var notifyKey = process.env.GOV_NOTIFY_API_KEY;
 var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
@@ -1295,24 +1330,24 @@ var notify = {
    */
   sendEmail: async (templateId, sendToEmailAddress, variables, file) => {
     try {
-      console.info("Calling Notify API. templateId: %s", templateId);
+      console.info('Calling Notify API. templateId: %s', templateId);
       const personalisation = variables;
       if (file) {
         personalisation.linkToFile = await notifyClient.prepareUpload(file, { confirmEmailBeforeDownload: true });
       }
       await notifyClient.sendEmail(templateId, sendToEmailAddress, {
         personalisation,
-        reference: null
+        reference: null,
       });
       return {
         success: true,
-        emailRecipient: sendToEmailAddress
+        emailRecipient: sendToEmailAddress,
       };
-    } catch (err) {
-      console.error("Error calling Notify API. Unable to send email %O", err);
-      throw new Error(`Calling Notify API. Unable to send email ${err}`);
+    } catch (error) {
+      console.error('Error calling Notify API. Unable to send email %o', error);
+      throw new Error(`Calling Notify API. Unable to send email ${error}`);
     }
-  }
+  },
 };
 var notify_default = notify;
 
@@ -1329,71 +1364,71 @@ var callNotify = async (templateId, emailAddress, variables, file) => {
       return emailResponse;
     }
     throw new Error(`Sending email ${emailResponse}`);
-  } catch (err) {
-    console.error("Error sending email %O", err);
-    throw new Error(`Sending email ${err}`);
+  } catch (error) {
+    console.error('Error sending email %o', error);
+    throw new Error(`Sending email ${error}`);
   }
 };
 
 // emails/confirm-email-address/index.ts
 var confirmEmailAddress = async (emailAddress, urlOrigin, name, verificationHash, id) => {
   try {
-    console.info("Sending confirm email address email");
+    console.info('Sending confirm email address email');
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
     const variables = { urlOrigin, name, confirmToken: verificationHash, id };
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
-  } catch (err) {
-    console.error("Error sending confirm email address email %O", err);
-    throw new Error(`Sending confirm email address email ${err}`);
+  } catch (error) {
+    console.error('Error sending confirm email address email %o', error);
+    throw new Error(`Sending confirm email address email ${error}`);
   }
 };
 
 // emails/access-code-email/index.ts
 var accessCodeEmail = async (emailAddress, name, securityCode) => {
   try {
-    console.info("Sending access code email for account sign in");
+    console.info('Sending access code email for account sign in');
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.ACCESS_CODE;
     const variables = { name, securityCode };
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
-  } catch (err) {
-    console.error("Error sending access code email for account sign in %O", err);
-    throw new Error(`Sending access code email for account sign in ${err}`);
+  } catch (error) {
+    console.error('Error sending access code email for account sign in %o', error);
+    throw new Error(`Sending access code email for account sign in ${error}`);
   }
 };
 
 // emails/password-reset-link/index.ts
 var passwordResetLink = async (urlOrigin, emailAddress, name, passwordResetHash) => {
   try {
-    console.info("Sending email for account password reset");
+    console.info('Sending email for account password reset');
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.PASSWORD_RESET;
     const variables = { urlOrigin, name, passwordResetToken: passwordResetHash };
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
-  } catch (err) {
-    console.error("Error sending email for account password reset %O", err);
-    throw new Error(`Sending email for account password reset ${err}`);
+  } catch (error) {
+    console.error('Error sending email for account password reset %o', error);
+    throw new Error(`Sending email for account password reset ${error}`);
   }
 };
 
 // emails/reactivate-account-link/index.ts
 var reactivateAccountLink = async (urlOrigin, emailAddress, name, reactivationHash) => {
   try {
-    console.info("Sending email for account reactivation");
+    console.info('Sending email for account reactivation');
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.REACTIVATE_ACCOUNT_CONFIRM_EMAIL;
     const variables = { urlOrigin, name, reactivationToken: reactivationHash };
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
-  } catch (err) {
-    console.error("Error sending email for account reactivation %O", err);
-    throw new Error(`Sending email for account reactivation ${err}`);
+  } catch (error) {
+    console.error('Error sending email for account reactivation %o', error);
+    throw new Error(`Sending email for account reactivation ${error}`);
   }
 };
 
 // file-system/index.ts
-var import_fs = require("fs");
-var import_path = __toESM(require("path"));
+var import_fs = require('fs');
+var import_path = __toESM(require('path'));
 var fileExists = (filePath) => {
   const fileBuffer = Buffer.from(filePath);
   if (fileBuffer.length) {
@@ -1410,35 +1445,35 @@ var isAcceptedFileType = (filePath) => {
 };
 var readFile = async (filePath) => {
   try {
-    console.info("Reading file %s", filePath);
+    console.info('Reading file %s', filePath);
     const file = await import_fs.promises.readFile(filePath);
     if (fileExists(file) && isAcceptedFileType(filePath)) {
       return file;
     }
-    throw new Error("Reading file - does not exist or is unaccepted file type");
-  } catch (err) {
-    console.error("Error reading file %O", err);
-    throw new Error(`Reading file ${err}`);
+    throw new Error('Reading file - does not exist or is unaccepted file type');
+  } catch (error) {
+    console.error('Error reading file %o', error);
+    throw new Error(`Reading file ${error}`);
   }
 };
 var unlink = async (filePath) => {
   try {
-    console.info("Deleting file %s", filePath);
+    console.info('Deleting file %s', filePath);
     const file = await readFile(filePath);
     if (file) {
       await import_fs.promises.unlink(filePath);
     }
     return false;
-  } catch (err) {
-    console.error("Error deleting file %O", err);
-    throw new Error(`Deleting file ${err}`);
+  } catch (error) {
+    console.error('Error deleting file %o', error);
+    throw new Error(`Deleting file ${error}`);
   }
 };
 var fileSystem = {
   fileExists,
   isAcceptedFileType,
   readFile,
-  unlink
+  unlink,
 };
 var file_system_default = fileSystem;
 
@@ -1452,14 +1487,14 @@ var application = {
    */
   submittedEmail: async (variables) => {
     try {
-      console.info("Sending application submitted email to application owner or provided business contact");
+      console.info('Sending application submitted email to application owner or provided business contact');
       const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
       const { emailAddress } = variables;
       const response = await callNotify(templateId, emailAddress, variables);
       return response;
-    } catch (err) {
-      console.error("Error sending application submitted email to to application owner or provided business contact %O", err);
-      throw new Error(`Sending application submitted email to to application owner or provided business contact ${err}`);
+    } catch (error) {
+      console.error('Error sending application submitted email to to application owner or provided business contact %o', error);
+      throw new Error(`Sending application submitted email to to application owner or provided business contact ${error}`);
     }
   },
   /**
@@ -1472,7 +1507,7 @@ var application = {
    */
   underwritingTeam: async (variables, filePath, templateId) => {
     try {
-      console.info("Sending application submitted email to underwriting team");
+      console.info('Sending application submitted email to underwriting team');
       const emailAddress = String(process.env.UNDERWRITING_TEAM_EMAIL);
       const file = await file_system_default.readFile(filePath);
       if (file) {
@@ -1481,30 +1516,30 @@ var application = {
         await file_system_default.unlink(filePath);
         return response;
       }
-      throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
-    } catch (err) {
-      console.error("Error sending application submitted email to underwriting team %O", err);
-      throw new Error(`Sending application submitted email to underwriting team ${err}`);
+      throw new Error('Sending application submitted email to underwriting team - invalid file / file not found');
+    } catch (error) {
+      console.error('Error sending application submitted email to underwriting team %o', error);
+      throw new Error(`Sending application submitted email to underwriting team ${error}`);
     }
-  }
+  },
 };
 var application_default2 = application;
 
 // emails/documents/index.ts
 var documentsEmail = async (variables, templateId) => {
   try {
-    console.info("Sending documents email");
+    console.info('Sending documents email');
     const { emailAddress } = variables;
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
-  } catch (err) {
-    console.error("Error sending documents email %O", err);
-    throw new Error(`Sending documents email ${err}`);
+  } catch (error) {
+    console.error('Error sending documents email %o', error);
+    throw new Error(`Sending documents email ${error}`);
   }
 };
 
 // emails/insurance-feedback-email/index.ts
-var import_dotenv6 = __toESM(require("dotenv"));
+var import_dotenv6 = __toESM(require('dotenv'));
 
 // helpers/map-feedback-satisfaction/index.ts
 var mapFeedbackSatisfaction = (satisfaction) => FEEDBACK.EMAIL_TEXT[satisfaction];
@@ -1514,37 +1549,37 @@ var map_feedback_satisfaction_default = mapFeedbackSatisfaction;
 import_dotenv6.default.config();
 var insuranceFeedbackEmail = async (variables) => {
   try {
-    console.info("Sending insurance feedback email");
+    console.info('Sending insurance feedback email');
     const templateId = EMAIL_TEMPLATE_IDS.FEEDBACK.INSURANCE;
     const emailAddress = process.env.FEEDBACK_EMAIL_RECIPIENT;
     const emailVariables = variables;
-    emailVariables.time = "";
-    emailVariables.date = "";
+    emailVariables.time = '';
+    emailVariables.date = '';
     if (variables.createdAt) {
       emailVariables.date = format_date_default(variables.createdAt);
-      emailVariables.time = format_date_default(variables.createdAt, "HH:mm:ss");
+      emailVariables.time = format_date_default(variables.createdAt, 'HH:mm:ss');
     }
     if (variables.satisfaction) {
       emailVariables.satisfaction = map_feedback_satisfaction_default(variables.satisfaction);
     }
     const response = await callNotify(templateId, emailAddress, emailVariables);
     return response;
-  } catch (err) {
-    console.error("Error sending insurance feedback email %O", err);
-    throw new Error(`Sending insurance feedback email ${err}`);
+  } catch (error) {
+    console.error('Error sending insurance feedback email %o', error);
+    throw new Error(`Sending insurance feedback email ${error}`);
   }
 };
 
 // emails/submission-deadline/index.ts
 var submissionDeadlineEmail = async (emailAddress, submissionDeadlineEmailVariables) => {
   try {
-    console.info("Sending submission deadline reminder email for %s", submissionDeadlineEmailVariables.referenceNumber);
+    console.info('Sending submission deadline reminder email for %s', submissionDeadlineEmailVariables.referenceNumber);
     const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.DEADLINE_REMINDER;
     const response = await callNotify(templateId, emailAddress, submissionDeadlineEmailVariables);
     return response;
-  } catch (err) {
-    console.error("Error sending submission deadline email for applicationId %s - %O", submissionDeadlineEmailVariables.referenceNumber, err);
-    throw new Error(`Sending submission deadline email for ${submissionDeadlineEmailVariables.referenceNumber} - ${err}`);
+  } catch (error) {
+    console.error('Error sending submission deadline email for applicationId %s - %o', submissionDeadlineEmailVariables.referenceNumber, error);
+    throw new Error(`Sending submission deadline email for ${submissionDeadlineEmailVariables.referenceNumber} - ${error}`);
   }
 };
 
@@ -1558,52 +1593,53 @@ var sendEmail = {
   application: application_default2,
   documentsEmail,
   insuranceFeedbackEmail,
-  submissionDeadlineEmail
+  submissionDeadlineEmail,
 };
 var emails_default = sendEmail;
 
 // helpers/send-email-application-submission-deadline/send-email/index.ts
 var send = async (applications) => {
   try {
-    console.info("Sending application submission deadline emails - send helper");
+    console.info('Sending application submission deadline emails - send helper');
     const mapped = applications.map(async (application2) => {
       const variables = map_application_submission_deadline_variables_default(application2);
-      return emails_default.submissionDeadlineEmail(variables.email, variables);
+      const response = await emails_default.submissionDeadlineEmail(variables.email, variables);
+      return response;
     });
     const promises = await Promise.all(mapped);
     return promises;
-  } catch (err) {
-    console.error("Error sending application submission deadline email (send helper) %O", err);
-    throw new Error(`Sending application submission deadline email (send helper) ${err}`);
+  } catch (error) {
+    console.error('Error sending application submission deadline email (send helper) %o', error);
+    throw new Error(`Sending application submission deadline email (send helper) ${error}`);
   }
 };
 var applicationSubmissionDeadineEmail = {
-  send
+  send,
 };
 var send_email_default = applicationSubmissionDeadineEmail;
 
 // helpers/send-email-application-submission-deadline/index.ts
 var applicationSubmissionDeadlineEmail = async (context) => {
   try {
-    console.info("Sending application submission deadline email");
+    console.info('Sending application submission deadline email');
     const applications = await get_expiring_applications_default(context);
     if (applications.length) {
       const sentEmails = await send_email_default.send(applications);
       if (sentEmails.length === applications.length) {
         return {
-          success: true
+          success: true,
         };
       }
       return {
-        success: false
+        success: false,
       };
     }
     return {
-      success: true
+      success: true,
     };
-  } catch (err) {
-    console.error("Error sending application submission deadline email (emailApplicationSubmissionDeadlineEmail helper) %O", err);
-    throw new Error(`Sending application submission deadline email (emailApplicationSubmissionDeadlineEmail helper) ${err}`);
+  } catch (error) {
+    console.error('Error sending application submission deadline email (emailApplicationSubmissionDeadlineEmail helper) %o', error);
+    throw new Error(`Sending application submission deadline email (emailApplicationSubmissionDeadlineEmail helper) ${error}`);
   }
 };
 var send_email_application_submission_deadline_default = applicationSubmissionDeadlineEmail;
@@ -1614,7 +1650,7 @@ var { CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL } = process.env;
 var sendEmailApplicationSubmissionDeadlineJob = {
   cronExpression: String(CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL),
   description: CRON_DESCRIPTION_APPLICATION_SUBMISSION_DEADLINE_EMAIL,
-  task: send_email_application_submission_deadline_default
+  task: send_email_application_submission_deadline_default,
 };
 var email_submission_deadline_reminder_cron_job_default = sendEmailApplicationSubmissionDeadlineJob;
 
@@ -1624,55 +1660,54 @@ var application_default3 = applicationCronSchedulerJobs;
 
 // cron/index.ts
 var cronJobs = (context) => {
-  console.info("Running cron jobs");
+  console.info('Running cron jobs');
   cron_job_scheduler_default(account_default2, context);
   cron_job_scheduler_default(application_default3, context);
 };
 var cron_default = cronJobs;
 
 // schema.ts
-var import_core2 = require("@keystone-6/core");
-var import_access = require("@keystone-6/core/access");
-var import_fields = require("@keystone-6/core/fields");
-var import_fields_document = require("@keystone-6/fields-document");
-var import_date_fns3 = require("date-fns");
+var import_core2 = require('@keystone-6/core');
+var import_access = require('@keystone-6/core/access');
+var import_fields = require('@keystone-6/core/fields');
+var import_fields_document = require('@keystone-6/fields-document');
 
 // helpers/update-application/index.ts
 var timestamp = async (context, applicationId) => {
   try {
-    console.info("Updating application updatedAt timestamp");
+    console.info('Updating application updatedAt timestamp');
     const now2 = /* @__PURE__ */ new Date();
     const application2 = await context.db.Application.updateOne({
       where: {
-        id: applicationId
+        id: applicationId,
       },
       data: {
-        updatedAt: now2
-      }
+        updatedAt: now2,
+      },
     });
     return application2;
-  } catch (err) {
-    console.error("Error updating application updatedAt timestamp %O", err);
-    throw new Error(`Updating application updatedAt timestamp ${err}`);
+  } catch (error) {
+    console.error('Error updating application updatedAt timestamp %o', error);
+    throw new Error(`Updating application updatedAt timestamp ${error}`);
   }
 };
 var updateApplication = {
-  timestamp
+  timestamp,
 };
 var update_application_default = updateApplication;
 
 // nullable-checkbox/index.ts
-var import_types = require("@keystone-6/core/types");
-var import_core = require("@keystone-6/core");
-var nullableCheckboxConfig = (defaultValue) => (
+var import_types = require('@keystone-6/core/types');
+var import_core = require('@keystone-6/core');
+var nullableCheckboxConfig = (defaultValue) =>
   /**
    * Database/GraphQL config.
    * This defines the field as an optional boolean with a default value of null.
    */
   (0, import_types.fieldType)({
-    kind: "scalar",
-    mode: "optional",
-    scalar: "Boolean"
+    kind: 'scalar',
+    mode: 'optional',
+    scalar: 'Boolean',
   })({
     /**
      * Input/output config.
@@ -1689,456 +1724,345 @@ var nullableCheckboxConfig = (defaultValue) => (
             return value;
           }
           return null;
-        }
+        },
       },
       update: {
         arg: import_core.graphql.arg({ type: import_core.graphql.Boolean }),
         resolve(value) {
           return value;
-        }
-      }
+        },
+      },
     },
     output: import_core.graphql.field({
       type: import_core.graphql.Boolean,
       resolve({ value }) {
         return value;
-      }
+      },
     }),
     /**
      * Keystone admin UI/CMS config for this field.
      * Since we do not use the UI/CMS, this can be empty.
      */
-    views: "./nullable-checkbox/views",
+    views: './nullable-checkbox/views',
     getAdminMeta() {
       return {};
-    }
-  })
-);
+    },
+  });
 var nullableCheckbox = (defaultValue) => () => nullableCheckboxConfig(defaultValue);
 var nullable_checkbox_default = nullableCheckbox;
 
 // schema.ts
 var {
-  DEAL_TYPE,
   DEFAULT_CURRENCY,
   DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER,
   EXPORT_CONTRACT: { AGENT_SERVICE_CHARGE },
-  LATEST_VERSION: LATEST_VERSION2,
   POLICY: POLICY3,
   POLICY_TYPE: POLICY_TYPE2,
-  SUBMISSION_COUNT_DEFAULT,
-  SUBMISSION_DEADLINE_IN_MONTHS,
   SUBMISSION_TYPE,
-  STATUS
 } = APPLICATION;
 var lists = {
   ReferenceNumber: {
     db: {
-      idField: { kind: "autoincrement" }
+      idField: { kind: 'autoincrement' },
     },
     fields: {
-      application: (0, import_fields.relationship)({ ref: "Application" })
+      application: (0, import_fields.relationship)({ ref: 'Application' }),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   },
   Application: {
     fields: {
       createdAt: (0, import_fields.timestamp)(),
       updatedAt: (0, import_fields.timestamp)(),
-      eligibility: (0, import_fields.relationship)({ ref: "Eligibility" }),
+      eligibility: (0, import_fields.relationship)({ ref: 'Eligibility' }),
       referenceNumber: (0, import_fields.integer)({
-        isIndexed: true
+        isIndexed: true,
       }),
       submissionCount: (0, import_fields.integer)({
-        defaultValue: SUBMISSION_COUNT_DEFAULT,
-        validation: { isRequired: true }
+        validation: { isRequired: true },
       }),
       submissionDate: (0, import_fields.timestamp)(),
       submissionDeadline: (0, import_fields.timestamp)(),
       submissionType: (0, import_fields.select)({
         options: [{ label: SUBMISSION_TYPE.MIA, value: SUBMISSION_TYPE.MIA }],
-        defaultValue: SUBMISSION_TYPE.MIA
       }),
       status: (0, import_fields.text)({
-        validation: { isRequired: true }
+        validation: { isRequired: true },
       }),
       previousStatus: (0, import_fields.text)(),
-      policy: (0, import_fields.relationship)({ ref: "Policy" }),
-      exportContract: (0, import_fields.relationship)({ ref: "ExportContract" }),
+      policy: (0, import_fields.relationship)({ ref: 'Policy' }),
+      exportContract: (0, import_fields.relationship)({ ref: 'ExportContract' }),
       owner: (0, import_fields.relationship)({
-        ref: "Account",
-        many: false
+        ref: 'Account',
+        many: false,
       }),
-      business: (0, import_fields.relationship)({ ref: "Business" }),
-      broker: (0, import_fields.relationship)({ ref: "Broker" }),
-      buyer: (0, import_fields.relationship)({ ref: "Buyer" }),
-      company: (0, import_fields.relationship)({ ref: "Company" }),
-      declaration: (0, import_fields.relationship)({ ref: "Declaration" }),
-      nominatedLossPayee: (0, import_fields.relationship)({ ref: "NominatedLossPayee" }),
-      policyContact: (0, import_fields.relationship)({ ref: "PolicyContact" }),
-      sectionReview: (0, import_fields.relationship)({ ref: "SectionReview" }),
+      business: (0, import_fields.relationship)({ ref: 'Business' }),
+      broker: (0, import_fields.relationship)({ ref: 'Broker' }),
+      buyer: (0, import_fields.relationship)({ ref: 'Buyer' }),
+      company: (0, import_fields.relationship)({ ref: 'Company' }),
+      declaration: (0, import_fields.relationship)({ ref: 'Declaration' }),
+      nominatedLossPayee: (0, import_fields.relationship)({ ref: 'NominatedLossPayee' }),
+      policyContact: (0, import_fields.relationship)({ ref: 'PolicyContact' }),
+      sectionReview: (0, import_fields.relationship)({ ref: 'SectionReview' }),
       version: (0, import_fields.text)({
-        defaultValue: LATEST_VERSION2.VERSION_NUMBER,
-        validation: { isRequired: true }
+        validation: { isRequired: true },
       }),
       dealType: (0, import_fields.text)({
-        defaultValue: DEAL_TYPE,
         validation: { isRequired: true },
-        db: { nativeType: "VarChar(4)" }
+        db: { nativeType: 'VarChar(4)' },
       }),
-      migratedV1toV2: nullable_checkbox_default()
+      migratedV2toV3: nullable_checkbox_default(),
     },
-    hooks: {
-      resolveInput: async ({ operation, resolvedData, context }) => {
-        if (operation === "create") {
-          try {
-            console.info("Creating new application - adding default data to a new application");
-            const modifiedData = resolvedData;
-            const { id: newReferenceNumber } = await context.db.ReferenceNumber.createOne({
-              data: {}
-            });
-            modifiedData.referenceNumber = newReferenceNumber;
-            const { id: businessId } = await context.db.Business.createOne({
-              data: {}
-            });
-            modifiedData.business = {
-              connect: {
-                id: businessId
-              }
-            };
-            const { id: policyContactId } = await context.db.PolicyContact.createOne({
-              data: {}
-            });
-            modifiedData.policyContact = {
-              connect: {
-                id: policyContactId
-              }
-            };
-            const { id: brokerId } = await context.db.Broker.createOne({
-              data: {}
-            });
-            modifiedData.broker = {
-              connect: {
-                id: brokerId
-              }
-            };
-            const now2 = /* @__PURE__ */ new Date();
-            modifiedData.createdAt = now2;
-            modifiedData.updatedAt = now2;
-            modifiedData.submissionDeadline = (0, import_date_fns3.addMonths)(new Date(now2), SUBMISSION_DEADLINE_IN_MONTHS);
-            modifiedData.submissionType = SUBMISSION_TYPE.MIA;
-            modifiedData.status = STATUS.IN_PROGRESS;
-            return modifiedData;
-          } catch (err) {
-            console.error("Error adding default data to a new application. %O", err);
-            return false;
-          }
-        }
-        return resolvedData;
-      },
-      afterOperation: async ({ operation, item, context }) => {
-        if (operation === "create") {
-          try {
-            console.info("Adding application ID to relationships");
-            const applicationId = item.id;
-            const { referenceNumber } = item;
-            const { policyContactId, businessId, brokerId } = item;
-            await context.db.ReferenceNumber.updateOne({
-              where: { id: String(referenceNumber) },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                }
-              }
-            });
-            await context.db.PolicyContact.updateOne({
-              where: { id: policyContactId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                }
-              }
-            });
-            await context.db.Business.updateOne({
-              where: { id: businessId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                }
-              }
-            });
-            await context.db.Broker.updateOne({
-              where: { id: brokerId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                }
-              }
-            });
-          } catch (err) {
-            console.error("Error adding an application ID to relationships %O", err);
-            return false;
-          }
-        }
-      }
-    },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   },
   TotalContractValue: (0, import_core2.list)({
     fields: {
       valueId: (0, import_fields.integer)(),
       value: (0, import_fields.text)({
-        db: { nativeType: "VarChar(70)" }
-      })
+        db: { nativeType: 'VarChar(70)' },
+      }),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   CoverPeriod: (0, import_core2.list)({
     fields: {
       valueId: (0, import_fields.integer)(),
       value: (0, import_fields.text)({
-        db: { nativeType: "VarChar(70)" }
-      })
+        db: { nativeType: 'VarChar(70)' },
+      }),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   LossPayeeFinancialInternational: {
     fields: {
-      lossPayee: (0, import_fields.relationship)({ ref: "NominatedLossPayee.financialInternational" }),
-      vector: (0, import_fields.relationship)({ ref: "LossPayeeFinancialInternationalVector.financialInternational" }),
+      lossPayee: (0, import_fields.relationship)({ ref: 'NominatedLossPayee.financialInternational' }),
+      vector: (0, import_fields.relationship)({ ref: 'LossPayeeFinancialInternationalVector.financialInternational' }),
       bankAddress: (0, import_fields.text)({
-        db: { nativeType: "VarChar(500)" }
+        db: { nativeType: 'VarChar(500)' },
       }),
       bicSwiftCode: (0, import_fields.text)(),
-      iban: (0, import_fields.text)()
+      iban: (0, import_fields.text)(),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   },
   LossPayeeFinancialInternationalVector: {
     fields: {
-      financialInternational: (0, import_fields.relationship)({ ref: "LossPayeeFinancialInternational.vector" }),
+      financialInternational: (0, import_fields.relationship)({ ref: 'LossPayeeFinancialInternational.vector' }),
       bicSwiftCodeVector: (0, import_fields.text)(),
-      ibanVector: (0, import_fields.text)()
+      ibanVector: (0, import_fields.text)(),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   },
   LossPayeeFinancialUk: {
     fields: {
-      lossPayee: (0, import_fields.relationship)({ ref: "NominatedLossPayee.financialUk" }),
-      vector: (0, import_fields.relationship)({ ref: "LossPayeeFinancialUkVector.financialUk" }),
+      lossPayee: (0, import_fields.relationship)({ ref: 'NominatedLossPayee.financialUk' }),
+      vector: (0, import_fields.relationship)({ ref: 'LossPayeeFinancialUkVector.financialUk' }),
       accountNumber: (0, import_fields.text)(),
       bankAddress: (0, import_fields.text)({
-        db: { nativeType: "VarChar(500)" }
+        db: { nativeType: 'VarChar(500)' },
       }),
-      sortCode: (0, import_fields.text)()
+      sortCode: (0, import_fields.text)(),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   },
   LossPayeeFinancialUkVector: {
     fields: {
-      financialUk: (0, import_fields.relationship)({ ref: "LossPayeeFinancialUk.vector" }),
+      financialUk: (0, import_fields.relationship)({ ref: 'LossPayeeFinancialUk.vector' }),
       accountNumberVector: (0, import_fields.text)(),
-      sortCodeVector: (0, import_fields.text)()
+      sortCodeVector: (0, import_fields.text)(),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   },
   NominatedLossPayee: (0, import_core2.list)({
     fields: {
-      application: (0, import_fields.relationship)({ ref: "Application" }),
-      financialUk: (0, import_fields.relationship)({ ref: "LossPayeeFinancialUk.lossPayee" }),
-      financialInternational: (0, import_fields.relationship)({ ref: "LossPayeeFinancialInternational.lossPayee" }),
+      application: (0, import_fields.relationship)({ ref: 'Application' }),
+      financialUk: (0, import_fields.relationship)({ ref: 'LossPayeeFinancialUk.lossPayee' }),
+      financialInternational: (0, import_fields.relationship)({ ref: 'LossPayeeFinancialInternational.lossPayee' }),
       isAppointed: nullable_checkbox_default(),
       isLocatedInUk: nullable_checkbox_default(),
       isLocatedInternationally: nullable_checkbox_default(),
       name: (0, import_fields.text)({
-        db: { nativeType: "VarChar(200)" }
-      })
+        db: { nativeType: 'VarChar(200)' },
+      }),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   Policy: {
     fields: {
-      application: (0, import_fields.relationship)({ ref: "Application" }),
-      jointlyInsuredParty: (0, import_fields.relationship)({ ref: "JointlyInsuredParty.policy" }),
+      application: (0, import_fields.relationship)({ ref: 'Application' }),
+      jointlyInsuredParty: (0, import_fields.relationship)({ ref: 'JointlyInsuredParty.policy' }),
       needPreCreditPeriodCover: nullable_checkbox_default(DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER),
       policyType: (0, import_fields.select)({
         options: [
           { label: POLICY_TYPE2.SINGLE, value: POLICY_TYPE2.SINGLE },
-          { label: POLICY_TYPE2.MULTIPLE, value: POLICY_TYPE2.MULTIPLE }
-        ]
+          { label: POLICY_TYPE2.MULTIPLE, value: POLICY_TYPE2.MULTIPLE },
+        ],
       }),
       requestedStartDate: (0, import_fields.timestamp)(),
       contractCompletionDate: (0, import_fields.timestamp)(),
       totalValueOfContract: (0, import_fields.integer)({
         validation: {
           min: POLICY3.TOTAL_VALUE_OF_CONTRACT.MINIMUM,
-          max: POLICY3.TOTAL_VALUE_OF_CONTRACT.MAXIMUM
-        }
+          max: POLICY3.TOTAL_VALUE_OF_CONTRACT.MAXIMUM,
+        },
       }),
       creditPeriodWithBuyer: (0, import_fields.text)({
-        db: { nativeType: "VarChar(1000)" }
+        db: { nativeType: 'VarChar(1000)' },
       }),
       policyCurrencyCode: (0, import_fields.text)({
-        db: { nativeType: "VarChar(3)" }
+        db: { nativeType: 'VarChar(3)' },
       }),
       totalMonthsOfCover: (0, import_fields.integer)(),
       totalSalesToBuyer: (0, import_fields.integer)(),
-      maximumBuyerWillOwe: (0, import_fields.integer)()
+      maximumBuyerWillOwe: (0, import_fields.integer)(),
+      requestedCreditLimit: (0, import_fields.integer)(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
         if (item?.applicationId) {
           await update_application_default.timestamp(context, item.applicationId);
         }
-      }
+      },
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   },
   PolicyContact: (0, import_core2.list)({
     fields: {
-      application: (0, import_fields.relationship)({ ref: "Application" }),
+      application: (0, import_fields.relationship)({ ref: 'Application' }),
       firstName: (0, import_fields.text)({
-        db: { nativeType: "VarChar(400)" }
+        db: { nativeType: 'VarChar(400)' },
       }),
       lastName: (0, import_fields.text)({
-        db: { nativeType: "VarChar(400)" }
+        db: { nativeType: 'VarChar(400)' },
       }),
       email: (0, import_fields.text)({
-        db: { nativeType: "VarChar(300)" }
+        db: { nativeType: 'VarChar(300)' },
       }),
       position: (0, import_fields.text)({
-        db: { nativeType: "VarChar(50)" }
+        db: { nativeType: 'VarChar(50)' },
       }),
-      isSameAsOwner: nullable_checkbox_default()
+      isSameAsOwner: nullable_checkbox_default(),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   JointlyInsuredParty: (0, import_core2.list)({
     fields: {
-      policy: (0, import_fields.relationship)({ ref: "Policy.jointlyInsuredParty" }),
+      policy: (0, import_fields.relationship)({ ref: 'Policy.jointlyInsuredParty' }),
       requested: nullable_checkbox_default(),
       companyName: (0, import_fields.text)({
-        db: { nativeType: "VarChar(200)" }
+        db: { nativeType: 'VarChar(200)' },
       }),
       companyNumber: (0, import_fields.text)({
-        db: { nativeType: "VarChar(100)" }
+        db: { nativeType: 'VarChar(100)' },
       }),
       countryCode: (0, import_fields.text)({
-        db: { nativeType: "VarChar(3)" }
-      })
+        db: { nativeType: 'VarChar(3)' },
+      }),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   ExportContract: {
     fields: {
-      application: (0, import_fields.relationship)({ ref: "Application" }),
-      agent: (0, import_fields.relationship)({ ref: "ExportContractAgent.exportContract" }),
-      privateMarket: (0, import_fields.relationship)({ ref: "PrivateMarket.exportContract" }),
-      awardMethod: (0, import_fields.relationship)({ ref: "ExportContractAwardMethod" }),
+      application: (0, import_fields.relationship)({ ref: 'Application' }),
+      agent: (0, import_fields.relationship)({ ref: 'ExportContractAgent.exportContract' }),
+      privateMarket: (0, import_fields.relationship)({ ref: 'PrivateMarket.exportContract' }),
+      awardMethod: (0, import_fields.relationship)({ ref: 'ExportContractAwardMethod' }),
       otherAwardMethod: (0, import_fields.text)({
-        db: { nativeType: "VarChar(200)" }
+        db: { nativeType: 'VarChar(200)' },
       }),
       finalDestinationKnown: nullable_checkbox_default(),
       finalDestinationCountryCode: (0, import_fields.text)({
-        db: { nativeType: "VarChar(3)" }
+        db: { nativeType: 'VarChar(3)' },
       }),
       goodsOrServicesDescription: (0, import_fields.text)({
-        db: { nativeType: "VarChar(1000)" }
+        db: { nativeType: 'VarChar(1000)' },
       }),
       paymentTermsDescription: (0, import_fields.text)({
-        db: { nativeType: "VarChar(1000)" }
-      })
+        db: { nativeType: 'VarChar(1000)' },
+      }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
         if (item?.applicationId) {
           await update_application_default.timestamp(context, item.applicationId);
         }
-      }
+      },
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   },
   ExportContractAgent: (0, import_core2.list)({
     fields: {
-      exportContract: (0, import_fields.relationship)({ ref: "ExportContract.agent" }),
-      service: (0, import_fields.relationship)({ ref: "ExportContractAgentService.agent" }),
+      exportContract: (0, import_fields.relationship)({ ref: 'ExportContract.agent' }),
+      service: (0, import_fields.relationship)({ ref: 'ExportContractAgentService.agent' }),
       countryCode: (0, import_fields.text)({
-        db: { nativeType: "VarChar(3)" }
+        db: { nativeType: 'VarChar(3)' },
       }),
       fullAddress: (0, import_fields.text)({
-        db: { nativeType: "VarChar(500)" }
+        db: { nativeType: 'VarChar(500)' },
       }),
       isUsingAgent: nullable_checkbox_default(),
       name: (0, import_fields.text)({
-        db: { nativeType: "VarChar(800)" }
-      })
+        db: { nativeType: 'VarChar(800)' },
+      }),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   ExportContractAgentService: {
     fields: {
-      agent: (0, import_fields.relationship)({ ref: "ExportContractAgent.service" }),
-      charge: (0, import_fields.relationship)({ ref: "ExportContractAgentServiceCharge.service" }),
+      agent: (0, import_fields.relationship)({ ref: 'ExportContractAgent.service' }),
+      charge: (0, import_fields.relationship)({ ref: 'ExportContractAgentServiceCharge.service' }),
       agentIsCharging: nullable_checkbox_default(),
       serviceDescription: (0, import_fields.text)({
-        db: { nativeType: "VarChar(1000)" }
-      })
+        db: { nativeType: 'VarChar(1000)' },
+      }),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   },
   ExportContractAgentServiceCharge: {
     fields: {
-      service: (0, import_fields.relationship)({ ref: "ExportContractAgentService.charge" }),
+      service: (0, import_fields.relationship)({ ref: 'ExportContractAgentService.charge' }),
       percentageCharge: (0, import_fields.integer)(),
       fixedSumAmount: (0, import_fields.decimal)({ scale: 2 }),
       fixedSumCurrencyCode: (0, import_fields.text)({
-        db: { nativeType: "VarChar(3)" },
-        defaultValue: DEFAULT_CURRENCY
+        db: { nativeType: 'VarChar(3)' },
+        defaultValue: DEFAULT_CURRENCY,
       }),
       method: (0, import_fields.select)({
         options: [
           { label: AGENT_SERVICE_CHARGE.METHOD.FIXED_SUM, value: AGENT_SERVICE_CHARGE.METHOD.FIXED_SUM },
-          { label: AGENT_SERVICE_CHARGE.METHOD.PERCENTAGE, value: AGENT_SERVICE_CHARGE.METHOD.PERCENTAGE }
-        ]
+          { label: AGENT_SERVICE_CHARGE.METHOD.PERCENTAGE, value: AGENT_SERVICE_CHARGE.METHOD.PERCENTAGE },
+        ],
       }),
       payableCountryCode: (0, import_fields.text)({
-        db: { nativeType: "VarChar(3)" }
-      })
+        db: { nativeType: 'VarChar(3)' },
+      }),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   },
   ExportContractAwardMethod: (0, import_core2.list)({
     fields: {
       value: (0, import_fields.text)({
-        db: { nativeType: "VarChar(50)" }
-      })
+        db: { nativeType: 'VarChar(50)' },
+      }),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   PrivateMarket: (0, import_core2.list)({
     fields: {
-      exportContract: (0, import_fields.relationship)({ ref: "ExportContract.privateMarket" }),
+      exportContract: (0, import_fields.relationship)({ ref: 'ExportContract.privateMarket' }),
       attempted: nullable_checkbox_default(),
       declinedDescription: (0, import_fields.text)({
-        db: { nativeType: "VarChar(1000)" }
-      })
+        db: { nativeType: 'VarChar(1000)' },
+      }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
         if (item?.applicationId) {
           await update_application_default.timestamp(context, item.applicationId);
         }
-      }
+      },
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   Account: (0, import_core2.list)({
     fields: {
@@ -2146,15 +2070,15 @@ var lists = {
       updatedAt: (0, import_fields.timestamp)(),
       firstName: (0, import_fields.text)({
         validation: { isRequired: true },
-        db: { nativeType: "VarChar(400)" }
+        db: { nativeType: 'VarChar(400)' },
       }),
       lastName: (0, import_fields.text)({
         validation: { isRequired: true },
-        db: { nativeType: "VarChar(400)" }
+        db: { nativeType: 'VarChar(400)' },
       }),
       email: (0, import_fields.text)({
         validation: { isRequired: true },
-        db: { nativeType: "VarChar(300)" }
+        db: { nativeType: 'VarChar(300)' },
       }),
       salt: (0, import_fields.text)({ validation: { isRequired: true } }),
       hash: (0, import_fields.text)({ validation: { isRequired: true } }),
@@ -2163,7 +2087,7 @@ var lists = {
       verificationExpiry: (0, import_fields.timestamp)(),
       otpSalt: (0, import_fields.text)(),
       otpHash: (0, import_fields.text)({
-        db: { nativeType: "VarChar(256)" }
+        db: { nativeType: 'VarChar(256)' },
       }),
       otpExpiry: (0, import_fields.timestamp)(),
       sessionExpiry: (0, import_fields.timestamp)(),
@@ -2171,24 +2095,24 @@ var lists = {
       passwordResetHash: (0, import_fields.text)({ validation: { isRequired: false } }),
       passwordResetExpiry: (0, import_fields.timestamp)({ validation: { isRequired: false } }),
       authentication: (0, import_fields.relationship)({
-        ref: "Authentication"
+        ref: 'Authentication',
       }),
       authenticationRetry: (0, import_fields.relationship)({
-        ref: "AuthenticationRetry"
+        ref: 'AuthenticationRetry',
       }),
       reactivationHash: (0, import_fields.text)({ validation: { isRequired: false } }),
       reactivationExpiry: (0, import_fields.timestamp)({ validation: { isRequired: false } }),
       applications: (0, import_fields.relationship)({
-        ref: "Application",
-        many: true
+        ref: 'Application',
+        many: true,
       }),
-      status: (0, import_fields.relationship)({ ref: "AccountStatus.account" })
+      status: (0, import_fields.relationship)({ ref: 'AccountStatus.account' }),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   AccountStatus: {
     fields: {
-      account: (0, import_fields.relationship)({ ref: "Account.status" }),
+      account: (0, import_fields.relationship)({ ref: 'Account.status' }),
       isVerified: (0, import_fields.checkbox)({ defaultValue: false }),
       /**
        * isBlocked flag will only be true if the account has:
@@ -2197,37 +2121,37 @@ var lists = {
        */
       isBlocked: (0, import_fields.checkbox)({ defaultValue: false }),
       isInactive: (0, import_fields.checkbox)({ defaultValue: false }),
-      updatedAt: (0, import_fields.timestamp)()
+      updatedAt: (0, import_fields.timestamp)(),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   },
   AuthenticationRetry: (0, import_core2.list)({
     fields: {
       account: (0, import_fields.relationship)({
-        ref: "Account",
-        many: true
+        ref: 'Account',
+        many: true,
       }),
-      createdAt: (0, import_fields.timestamp)({ validation: { isRequired: true } })
+      createdAt: (0, import_fields.timestamp)({ validation: { isRequired: true } }),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   Authentication: (0, import_core2.list)({
     fields: {
       account: (0, import_fields.relationship)({
-        ref: "Account",
-        many: true
+        ref: 'Account',
+        many: true,
       }),
       createdAt: (0, import_fields.timestamp)(),
       salt: (0, import_fields.text)({ validation: { isRequired: true } }),
-      hash: (0, import_fields.text)({ validation: { isRequired: true } })
+      hash: (0, import_fields.text)({ validation: { isRequired: true } }),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   Business: (0, import_core2.list)({
     fields: {
-      application: (0, import_fields.relationship)({ ref: "Application" }),
+      application: (0, import_fields.relationship)({ ref: 'Application' }),
       goodsOrServicesSupplied: (0, import_fields.text)({
-        db: { nativeType: "VarChar(1000)" }
+        db: { nativeType: 'VarChar(1000)' },
       }),
       totalYearsExporting: (0, import_fields.integer)(),
       totalEmployeesUK: (0, import_fields.integer)(),
@@ -2235,26 +2159,26 @@ var lists = {
       estimatedAnnualTurnover: (0, import_fields.integer)(),
       exportsTurnoverPercentage: (0, import_fields.integer)(),
       turnoverCurrencyCode: (0, import_fields.text)({
-        db: { nativeType: "VarChar(3)" },
-        defaultValue: DEFAULT_CURRENCY
+        db: { nativeType: 'VarChar(3)' },
+        defaultValue: DEFAULT_CURRENCY,
       }),
-      hasCreditControlProcess: nullable_checkbox_default()
+      hasCreditControlProcess: nullable_checkbox_default(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
         if (item?.applicationId) {
           await update_application_default.timestamp(context, item.applicationId);
         }
-      }
+      },
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   Broker: (0, import_core2.list)({
     fields: {
-      application: (0, import_fields.relationship)({ ref: "Application" }),
+      application: (0, import_fields.relationship)({ ref: 'Application' }),
       isUsingBroker: nullable_checkbox_default(),
       name: (0, import_fields.text)({
-        db: { nativeType: "VarChar(800)" }
+        db: { nativeType: 'VarChar(800)' },
       }),
       addressLine1: (0, import_fields.text)(),
       addressLine2: (0, import_fields.text)(),
@@ -2262,24 +2186,24 @@ var lists = {
       county: (0, import_fields.text)(),
       postcode: (0, import_fields.text)(),
       fullAddress: (0, import_fields.text)({
-        db: { nativeType: "VarChar(500)" }
+        db: { nativeType: 'VarChar(500)' },
       }),
       email: (0, import_fields.text)({
-        db: { nativeType: "VarChar(300)" }
-      })
+        db: { nativeType: 'VarChar(300)' },
+      }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
         if (item?.applicationId) {
           await update_application_default.timestamp(context, item.applicationId);
         }
-      }
+      },
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   CompanyAddress: (0, import_core2.list)({
     fields: {
-      company: (0, import_fields.relationship)({ ref: "Company.registeredOfficeAddress" }),
+      company: (0, import_fields.relationship)({ ref: 'Company.registeredOfficeAddress' }),
       addressLine1: (0, import_fields.text)(),
       addressLine2: (0, import_fields.text)(),
       careOf: (0, import_fields.text)(),
@@ -2287,282 +2211,282 @@ var lists = {
       region: (0, import_fields.text)(),
       postalCode: (0, import_fields.text)(),
       country: (0, import_fields.text)(),
-      premises: (0, import_fields.text)()
+      premises: (0, import_fields.text)(),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   Company: (0, import_core2.list)({
     fields: {
-      application: (0, import_fields.relationship)({ ref: "Application" }),
-      registeredOfficeAddress: (0, import_fields.relationship)({ ref: "CompanyAddress.company" }),
-      differentTradingAddress: (0, import_fields.relationship)({ ref: "CompanyDifferentTradingAddress.company" }),
+      application: (0, import_fields.relationship)({ ref: 'Application' }),
+      registeredOfficeAddress: (0, import_fields.relationship)({ ref: 'CompanyAddress.company' }),
+      differentTradingAddress: (0, import_fields.relationship)({ ref: 'CompanyDifferentTradingAddress.company' }),
       sicCodes: (0, import_fields.relationship)({
-        ref: "CompanySicCode.company",
-        many: true
+        ref: 'CompanySicCode.company',
+        many: true,
       }),
       companyName: (0, import_fields.text)({
-        db: { nativeType: "VarChar(200)" }
+        db: { nativeType: 'VarChar(200)' },
       }),
       companyNumber: (0, import_fields.text)(),
       dateOfCreation: (0, import_fields.timestamp)(),
       hasDifferentTradingAddress: nullable_checkbox_default(),
       differentTradingName: (0, import_fields.text)({
-        db: { nativeType: "VarChar(200)" }
+        db: { nativeType: 'VarChar(200)' },
       }),
       hasDifferentTradingName: nullable_checkbox_default(),
       companyWebsite: (0, import_fields.text)(),
       phoneNumber: (0, import_fields.text)(),
-      financialYearEndDate: (0, import_fields.timestamp)()
+      financialYearEndDate: (0, import_fields.timestamp)(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
         if (item?.applicationId) {
           await update_application_default.timestamp(context, item.applicationId);
         }
-      }
+      },
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   CompanyDifferentTradingAddress: (0, import_core2.list)({
     fields: {
-      company: (0, import_fields.relationship)({ ref: "Company.differentTradingAddress" }),
+      company: (0, import_fields.relationship)({ ref: 'Company.differentTradingAddress' }),
       fullAddress: (0, import_fields.text)({
-        db: { nativeType: "VarChar(500)" }
-      })
+        db: { nativeType: 'VarChar(500)' },
+      }),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   CompanySicCode: (0, import_core2.list)({
     fields: {
-      company: (0, import_fields.relationship)({ ref: "Company.sicCodes" }),
+      company: (0, import_fields.relationship)({ ref: 'Company.sicCodes' }),
       sicCode: (0, import_fields.text)(),
-      industrySectorName: (0, import_fields.text)()
+      industrySectorName: (0, import_fields.text)(),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   Buyer: (0, import_core2.list)({
     fields: {
-      application: (0, import_fields.relationship)({ ref: "Application" }),
+      application: (0, import_fields.relationship)({ ref: 'Application' }),
       companyOrOrganisationName: (0, import_fields.text)({
-        db: { nativeType: "VarChar(200)" }
+        db: { nativeType: 'VarChar(200)' },
       }),
       address: (0, import_fields.text)({
-        db: { nativeType: "VarChar(500)" }
+        db: { nativeType: 'VarChar(500)' },
       }),
-      country: (0, import_fields.relationship)({ ref: "Country" }),
+      country: (0, import_fields.relationship)({ ref: 'Country' }),
       registrationNumber: (0, import_fields.text)({
-        db: { nativeType: "VarChar(200)" }
+        db: { nativeType: 'VarChar(200)' },
       }),
       website: (0, import_fields.text)(),
-      buyerTradingHistory: (0, import_fields.relationship)({ ref: "BuyerTradingHistory.buyer" }),
-      contact: (0, import_fields.relationship)({ ref: "BuyerContact.buyer" }),
-      relationship: (0, import_fields.relationship)({ ref: "BuyerRelationship.buyer" })
+      buyerTradingHistory: (0, import_fields.relationship)({ ref: 'BuyerTradingHistory.buyer' }),
+      contact: (0, import_fields.relationship)({ ref: 'BuyerContact.buyer' }),
+      relationship: (0, import_fields.relationship)({ ref: 'BuyerRelationship.buyer' }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
         if (item?.applicationId) {
           await update_application_default.timestamp(context, item.applicationId);
         }
-      }
+      },
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   BuyerContact: {
     fields: {
-      application: (0, import_fields.relationship)({ ref: "Application" }),
-      buyer: (0, import_fields.relationship)({ ref: "Buyer.contact" }),
+      application: (0, import_fields.relationship)({ ref: 'Application' }),
+      buyer: (0, import_fields.relationship)({ ref: 'Buyer.contact' }),
       contactFirstName: (0, import_fields.text)({
-        db: { nativeType: "VarChar(200)" }
+        db: { nativeType: 'VarChar(200)' },
       }),
       contactLastName: (0, import_fields.text)({
-        db: { nativeType: "VarChar(200)" }
+        db: { nativeType: 'VarChar(200)' },
       }),
       contactPosition: (0, import_fields.text)(),
       contactEmail: (0, import_fields.text)({
-        db: { nativeType: "VarChar(300)" }
+        db: { nativeType: 'VarChar(300)' },
       }),
-      canContactBuyer: nullable_checkbox_default()
+      canContactBuyer: nullable_checkbox_default(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
         if (item?.applicationId) {
           await update_application_default.timestamp(context, item.applicationId);
         }
-      }
+      },
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   },
   BuyerRelationship: {
     fields: {
-      application: (0, import_fields.relationship)({ ref: "Application" }),
-      buyer: (0, import_fields.relationship)({ ref: "Buyer.relationship" }),
+      application: (0, import_fields.relationship)({ ref: 'Application' }),
+      buyer: (0, import_fields.relationship)({ ref: 'Buyer.relationship' }),
       exporterIsConnectedWithBuyer: nullable_checkbox_default(),
       connectionWithBuyerDescription: (0, import_fields.text)({
-        db: { nativeType: "VarChar(1000)" }
+        db: { nativeType: 'VarChar(1000)' },
       }),
       exporterHasPreviousCreditInsuranceWithBuyer: nullable_checkbox_default(),
       exporterHasBuyerFinancialAccounts: nullable_checkbox_default(),
       previousCreditInsuranceWithBuyerDescription: (0, import_fields.text)({
-        db: { nativeType: "VarChar(1000)" }
-      })
+        db: { nativeType: 'VarChar(1000)' },
+      }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
         if (item?.applicationId) {
           await update_application_default.timestamp(context, item.applicationId);
         }
-      }
+      },
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   },
   BuyerTradingHistory: (0, import_core2.list)({
     fields: {
-      application: (0, import_fields.relationship)({ ref: "Application" }),
-      buyer: (0, import_fields.relationship)({ ref: "Buyer.buyerTradingHistory" }),
+      application: (0, import_fields.relationship)({ ref: 'Application' }),
+      buyer: (0, import_fields.relationship)({ ref: 'Buyer.buyerTradingHistory' }),
       currencyCode: (0, import_fields.text)({
-        db: { nativeType: "VarChar(3)" }
+        db: { nativeType: 'VarChar(3)' },
       }),
       outstandingPayments: nullable_checkbox_default(),
       failedPayments: nullable_checkbox_default(),
       exporterHasTradedWithBuyer: nullable_checkbox_default(),
       totalOutstandingPayments: (0, import_fields.integer)(),
-      totalOverduePayments: (0, import_fields.integer)()
+      totalOverduePayments: (0, import_fields.integer)(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
         if (item?.applicationId) {
           await update_application_default.timestamp(context, item.applicationId);
         }
-      }
+      },
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   Country: (0, import_core2.list)({
     fields: {
       isoCode: (0, import_fields.text)({
-        validation: { isRequired: true }
+        validation: { isRequired: true },
       }),
       name: (0, import_fields.text)({
-        validation: { isRequired: true }
-      })
+        validation: { isRequired: true },
+      }),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   Eligibility: (0, import_core2.list)({
     fields: {
-      application: (0, import_fields.relationship)({ ref: "Application" }),
-      buyerCountry: (0, import_fields.relationship)({ ref: "Country" }),
-      coverPeriod: (0, import_fields.relationship)({ ref: "CoverPeriod" }),
+      application: (0, import_fields.relationship)({ ref: 'Application' }),
+      buyerCountry: (0, import_fields.relationship)({ ref: 'Country' }),
+      coverPeriod: (0, import_fields.relationship)({ ref: 'CoverPeriod' }),
       hasEndBuyer: (0, import_fields.checkbox)(),
       hasMinimumUkGoodsOrServices: (0, import_fields.checkbox)(),
       hasCompaniesHouseNumber: (0, import_fields.checkbox)(),
       otherPartiesInvolved: (0, import_fields.checkbox)(),
       paidByLetterOfCredit: (0, import_fields.checkbox)(),
-      totalContractValue: (0, import_fields.relationship)({ ref: "TotalContractValue" }),
+      totalContractValue: (0, import_fields.relationship)({ ref: 'TotalContractValue' }),
       validExporterLocation: (0, import_fields.checkbox)(),
       isPartyToConsortium: (0, import_fields.checkbox)(),
-      isMemberOfAGroup: (0, import_fields.checkbox)()
+      isMemberOfAGroup: (0, import_fields.checkbox)(),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   SectionReview: (0, import_core2.list)({
     fields: {
-      application: (0, import_fields.relationship)({ ref: "Application" }),
+      application: (0, import_fields.relationship)({ ref: 'Application' }),
       eligibility: nullable_checkbox_default(),
       business: nullable_checkbox_default(),
       buyer: nullable_checkbox_default(),
       exportContract: nullable_checkbox_default(),
-      policy: nullable_checkbox_default()
+      policy: nullable_checkbox_default(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
         if (item?.applicationId) {
           await update_application_default.timestamp(context, item.applicationId);
         }
-      }
+      },
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   Declaration: (0, import_core2.list)({
     fields: {
-      application: (0, import_fields.relationship)({ ref: "Application" }),
-      version: (0, import_fields.relationship)({ ref: "DeclarationVersion" }),
+      application: (0, import_fields.relationship)({ ref: 'Application' }),
+      version: (0, import_fields.relationship)({ ref: 'DeclarationVersion' }),
       agreeHowDataWillBeUsed: nullable_checkbox_default(),
       agreeToAntiBribery: nullable_checkbox_default(),
       agreeToConfidentiality: nullable_checkbox_default(),
       agreeToConfirmationAndAcknowledgements: nullable_checkbox_default(),
       hasAntiBriberyCodeOfConduct: nullable_checkbox_default(),
-      willExportWithAntiBriberyCodeOfConduct: nullable_checkbox_default()
+      willExportWithAntiBriberyCodeOfConduct: nullable_checkbox_default(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
         if (item?.applicationId) {
           await update_application_default.timestamp(context, item.applicationId);
         }
-      }
+      },
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   DeclarationVersion: (0, import_core2.list)({
     fields: {
-      declaration: (0, import_fields.relationship)({ ref: "Declaration" }),
+      declaration: (0, import_fields.relationship)({ ref: 'Declaration' }),
       agreeToConfidentiality: (0, import_fields.text)({
-        db: { nativeType: "VarChar(3)" }
+        db: { nativeType: 'VarChar(3)' },
       }),
       agreeToAntiBribery: (0, import_fields.text)({
-        db: { nativeType: "VarChar(3)" }
+        db: { nativeType: 'VarChar(3)' },
       }),
       hasAntiBriberyCodeOfConduct: (0, import_fields.text)({
-        db: { nativeType: "VarChar(3)" }
+        db: { nativeType: 'VarChar(3)' },
       }),
       willExportWithAntiBriberyCodeOfConduct: (0, import_fields.text)({
-        db: { nativeType: "VarChar(3)" }
+        db: { nativeType: 'VarChar(3)' },
       }),
       agreeToConfirmationAndAcknowledgements: (0, import_fields.text)({
-        db: { nativeType: "VarChar(3)" }
+        db: { nativeType: 'VarChar(3)' },
       }),
       agreeHowDataWillBeUsed: (0, import_fields.text)({
-        db: { nativeType: "VarChar(3)" }
-      })
+        db: { nativeType: 'VarChar(3)' },
+      }),
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   Page: (0, import_core2.list)({
     fields: {
       heading: (0, import_fields.text)({
-        label: "Page heading"
+        label: 'Page heading',
       }),
       metaTitle: (0, import_fields.text)({
-        label: "Meta title"
+        label: 'Meta title',
       }),
       content: (0, import_fields_document.document)({
         formatting: true,
         dividers: true,
-        links: true
-      })
+        links: true,
+      }),
     },
     ui: {
       listView: {
-        initialColumns: ["heading", "id"]
-      }
+        initialColumns: ['heading', 'id'],
+      },
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   User: (0, import_core2.list)({
     fields: {
       name: (0, import_fields.text)({ validation: { isRequired: true } }),
       email: (0, import_fields.text)({
         validation: { isRequired: true },
-        isIndexed: "unique"
+        isIndexed: 'unique',
       }),
-      password: (0, import_fields.password)({ validation: { isRequired: true } })
+      password: (0, import_fields.password)({ validation: { isRequired: true } }),
     },
     ui: {
       listView: {
-        initialColumns: ["name", "email"]
-      }
+        initialColumns: ['name', 'email'],
+      },
     },
-    access: import_access.allowAll
+    access: import_access.allowAll,
   }),
   Feedback: (0, import_core2.list)({
     fields: {
@@ -2574,54 +2498,54 @@ var lists = {
           { label: FEEDBACK.NEITHER, value: FEEDBACK.NEITHER },
           { label: FEEDBACK.DISSATISFIED, value: FEEDBACK.DISSATISFIED },
           { label: FEEDBACK.VERY_DISSATISIFED, value: FEEDBACK.VERY_DISSATISIFED },
-          { label: "", value: "" }
+          { label: '', value: '' },
         ],
-        db: { isNullable: true }
+        db: { isNullable: true },
       }),
       improvement: (0, import_fields.text)({
-        db: { nativeType: "VarChar(1200)" }
+        db: { nativeType: 'VarChar(1200)' },
       }),
       otherComments: (0, import_fields.text)({
-        db: { nativeType: "VarChar(1200)" }
+        db: { nativeType: 'VarChar(1200)' },
       }),
       referralUrl: (0, import_fields.text)({
-        db: { nativeType: "VarChar(500)" }
+        db: { nativeType: 'VarChar(500)' },
       }),
       product: (0, import_fields.text)(),
-      createdAt: (0, import_fields.timestamp)()
+      createdAt: (0, import_fields.timestamp)(),
     },
-    access: import_access.allowAll
-  })
+    access: import_access.allowAll,
+  }),
 };
 
 // auth.ts
-var import_config3 = require("dotenv/config");
-var import_auth = require("@keystone-6/auth");
-var import_session = require("@keystone-6/core/session");
+var import_config3 = require('dotenv/config');
+var import_auth = require('@keystone-6/auth');
+var import_session = require('@keystone-6/core/session');
 var sessionSecret = String(process.env.SESSION_SECRET);
 if (!sessionSecret) {
-  if (process.env.NODE_ENV === "production") {
-    throw new Error("SESSION_SECRET environment variable must be set in production");
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('SESSION_SECRET environment variable must be set in production');
   }
 }
 var { withAuth } = (0, import_auth.createAuth)({
-  listKey: "User",
-  identityField: "email",
-  sessionData: "name",
-  secretField: "password",
+  listKey: 'User',
+  identityField: 'email',
+  sessionData: 'name',
+  secretField: 'password',
   initFirstItem: {
     /**
      * Ensure that if there are no items in the database,
      * keystone admin UI will ask you to create
      * a new user, with the following fields.
      */
-    fields: ["name", "email", "password"]
-  }
+    fields: ['name', 'email', 'password'],
+  },
 });
 var sessionMaxAge = 60 * 60 * 24 * 30;
 var session = (0, import_session.statelessSessions)({
   maxAge: sessionMaxAge,
-  secret: sessionSecret
+  secret: sessionSecret,
 });
 
 // apollo/plugins/index.ts
@@ -2637,23 +2561,23 @@ var requestDidStart = () => ({
    * via an explicit list of allowed resolvers.
    */
   didResolveOperation({ request }) {
-    if (!request.operationName || request.operationName && !ALLOWED_GRAPHQL_RESOLVERS.includes(request.operationName)) {
-      throw new Error("Operation not permitted");
+    if (!request.operationName || (request.operationName && !ALLOWED_GRAPHQL_RESOLVERS.includes(request.operationName))) {
+      throw new Error('Operation not permitted');
     }
-  }
+  },
 });
 var apolloPlugins = [{ requestDidStart }];
 var plugins_default = apolloPlugins;
 
 // apollo/format-graphql-error/index.ts
-var import_config4 = require("dotenv/config");
-var import_apollo_server_express = require("apollo-server-express");
-var formatGraphQlError = (err) => {
-  const isDevEnvironment3 = process.env.NODE_ENV === "development";
+var import_config4 = require('dotenv/config');
+var import_apollo_server_express = require('apollo-server-express');
+var formatGraphQlError = (error) => {
+  const isDevEnvironment3 = process.env.NODE_ENV === 'development';
   if (!isDevEnvironment3) {
-    return new import_apollo_server_express.ValidationError("Invalid request");
+    return new import_apollo_server_express.ValidationError('Invalid request');
   }
-  return err;
+  return error;
 };
 var format_graphql_error_default = formatGraphQlError;
 
@@ -2662,7 +2586,7 @@ var apolloPlugins2 = plugins_default;
 var formatGraphQlError2 = format_graphql_error_default;
 
 // custom-schema/index.ts
-var import_schema = require("@graphql-tools/schema");
+var import_schema = require('@graphql-tools/schema');
 
 // custom-schema/type-defs.ts
 var typeDefs = `
@@ -2869,6 +2793,16 @@ var typeDefs = `
     referenceNumber: Int
   }
 
+  type ApplicationResponse {
+    id: String
+    referenceNumber: Int
+  }
+
+  type CreateManyApplicationsResponse {
+    success: Boolean!
+    applications: [ApplicationResponse]
+  }
+
   type CreateAnAbandonedApplicationResponse {
     success: Boolean!
     id: String
@@ -2944,6 +2878,7 @@ var typeDefs = `
     submissionDate: DateTime
     referenceNumber: Int
     status: String!
+    totalContractValueOverThreshold: Boolean
     eligibility: Eligibility
     exportContract: ExportContract
     policy: Policy
@@ -2980,6 +2915,12 @@ var typeDefs = `
       company: CompanyInput!
       sectionReview: SectionReviewInput!
     ): CreateAnApplicationResponse
+
+     """ create many applications """
+    createManyApplications(
+      accountId: String!
+      count: Int!
+    ): CreateManyApplicationsResponse
 
     """ create an application """
     createAnAbandonedApplication(
@@ -3088,12 +3029,6 @@ var typeDefs = `
       iban: String
       bicSwiftCode: String
     ): SuccessResponse
-
-    """ update a company (post data migration) """
-    updateCompanyPostDataMigration(
-      id: String
-      company: CompanyInput
-    ): SuccessResponse
   }
 
   type Query {
@@ -3145,15 +3080,15 @@ var type_defs_default = typeDefs;
 // helpers/get-account-status-by-id/index.ts
 var getAccountStatusById = async (context, id) => {
   try {
-    console.info("Getting account status by ID  %s", id);
+    console.info('Getting account status by ID  %s', id);
     const accountStatus2 = await context.query.AccountStatus.findOne({
       where: { id },
-      query: "id isVerified isBlocked isInactive"
+      query: 'id isVerified isBlocked isInactive',
     });
     return accountStatus2;
-  } catch (err) {
-    console.error("Error getting account status by ID %O", err);
-    throw new Error(`Getting account status by ID ${err}`);
+  } catch (error) {
+    console.error('Error getting account status by ID %o', error);
+    throw new Error(`Getting account status by ID ${error}`);
   }
 };
 var get_account_status_by_id_default = getAccountStatusById;
@@ -3161,40 +3096,40 @@ var get_account_status_by_id_default = getAccountStatusById;
 // helpers/get-account-by-field/index.ts
 var getAccountByField = async (context, field, value) => {
   try {
-    console.info("Getting account by field/value $s", `${field}, ${value}`);
+    console.info('Getting account by field/value $s', `${field}, ${value}`);
     const accountsArray = await context.db.Account.findMany({
       where: {
-        [field]: { equals: value }
+        [field]: { equals: value },
       },
-      take: 1
+      take: 1,
     });
     if (!accountsArray?.length || !accountsArray[0]) {
-      console.info("Getting account by field - no account exists with the provided field/value");
+      console.info('Getting account by field - no account exists with the provided field/value');
       return false;
     }
     const account2 = accountsArray[0];
     const accountStatus2 = await get_account_status_by_id_default(context, account2.statusId);
     const populatedAccount = {
       ...account2,
-      status: accountStatus2
+      status: accountStatus2,
     };
     return populatedAccount;
-  } catch (err) {
-    console.error("Error getting account by field/value %O", err);
-    throw new Error(`Getting account by field/value ${err}`);
+  } catch (error) {
+    console.error('Error getting account by field/value %o', error);
+    throw new Error(`Getting account by field/value ${error}`);
   }
 };
 var get_account_by_field_default = getAccountByField;
 
 // helpers/get-password-hash/index.ts
-var import_crypto = __toESM(require("crypto"));
+var import_crypto = __toESM(require('crypto'));
 var { ENCRYPTION } = ACCOUNT2;
 var {
   STRING_TYPE,
   PBKDF2: { ITERATIONS, DIGEST_ALGORITHM },
   PASSWORD: {
-    PBKDF2: { KEY_LENGTH }
-  }
+    PBKDF2: { KEY_LENGTH },
+  },
 } = ENCRYPTION;
 var getPasswordHash = (password2, salt) => {
   const hash = import_crypto.default.pbkdf2Sync(password2, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
@@ -3204,54 +3139,54 @@ var get_password_hash_default = getPasswordHash;
 
 // helpers/is-valid-account-password/index.ts
 var isValidAccountPassword = (password2, salt, hash) => {
-  console.info("Validating account password");
+  console.info('Validating account password');
   const hashVerify = get_password_hash_default(password2, salt);
   if (hash === hashVerify) {
-    console.info("Valid account password");
+    console.info('Valid account password');
     return true;
   }
-  console.info("Invalid account password");
+  console.info('Invalid account password');
   return false;
 };
 var is_valid_account_password_default = isValidAccountPassword;
 
 // helpers/encrypt-password/index.ts
-var import_crypto2 = __toESM(require("crypto"));
+var import_crypto2 = __toESM(require('crypto'));
 var { ENCRYPTION: ENCRYPTION2 } = ACCOUNT2;
 var {
   RANDOM_BYTES_SIZE,
   STRING_TYPE: STRING_TYPE2,
   PBKDF2: { ITERATIONS: ITERATIONS2, DIGEST_ALGORITHM: DIGEST_ALGORITHM2 },
   PASSWORD: {
-    PBKDF2: { KEY_LENGTH: KEY_LENGTH2 }
-  }
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH2 },
+  },
 } = ENCRYPTION2;
 var encryptPassword = (password2) => {
   const salt = import_crypto2.default.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE2);
   const hash = import_crypto2.default.pbkdf2Sync(password2, salt, ITERATIONS2, KEY_LENGTH2, DIGEST_ALGORITHM2).toString(STRING_TYPE2);
   return {
     salt,
-    hash
+    hash,
   };
 };
 var encrypt_password_default = encryptPassword;
 
 // helpers/get-account-verification-hash/index.ts
-var import_crypto3 = __toESM(require("crypto"));
+var import_crypto3 = __toESM(require('crypto'));
 var { EMAIL, ENCRYPTION: ENCRYPTION3 } = ACCOUNT2;
 var {
   STRING_TYPE: STRING_TYPE3,
   PBKDF2: { ITERATIONS: ITERATIONS3, DIGEST_ALGORITHM: DIGEST_ALGORITHM3 },
   PASSWORD: {
-    PBKDF2: { KEY_LENGTH: KEY_LENGTH3 }
-  }
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH3 },
+  },
 } = ENCRYPTION3;
 var generateAccountVerificationHash = (email, salt) => {
   const verificationHash = import_crypto3.default.pbkdf2Sync(email, salt, ITERATIONS3, KEY_LENGTH3, DIGEST_ALGORITHM3).toString(STRING_TYPE3);
   const verificationExpiry = EMAIL.VERIFICATION_EXPIRY();
   return {
     verificationHash,
-    verificationExpiry
+    verificationExpiry,
   };
 };
 var get_account_verification_hash_default = generateAccountVerificationHash;
@@ -3267,16 +3202,16 @@ var get_full_name_string_default = getFullNameString;
 // helpers/get-account-by-id/index.ts
 var getAccountById = async (context, accountId) => {
   try {
-    console.info("Getting account by ID");
+    console.info('Getting account by ID');
     const account2 = await context.db.Account.findOne({
       where: {
-        id: accountId
-      }
+        id: accountId,
+      },
     });
     return account2;
-  } catch (err) {
-    console.error("Error getting account by ID %O", err);
-    throw new Error(`Getting account by ID ${err}`);
+  } catch (error) {
+    console.error('Error getting account by ID %o', error);
+    throw new Error(`Getting account by ID ${error}`);
   }
 };
 var get_account_by_id_default = getAccountById;
@@ -3284,55 +3219,55 @@ var get_account_by_id_default = getAccountById;
 // helpers/update-account/index.ts
 var account = async (context, accountId, updateData) => {
   try {
-    console.info("Updating account");
+    console.info('Updating account');
     const updatedAccount = await context.db.Account.updateOne({
       where: {
-        id: accountId
+        id: accountId,
       },
-      data: updateData
+      data: updateData,
     });
     return updatedAccount;
-  } catch (err) {
-    console.error("Error updating account %O", err);
-    throw new Error(`Updating account ${err}`);
+  } catch (error) {
+    console.error('Error updating account %o', error);
+    throw new Error(`Updating account ${error}`);
   }
 };
 var accountStatus = async (context, accountStatusId, updateData) => {
   try {
-    console.info("Updating account");
+    console.info('Updating account');
     const updatedAccountStatus = await context.db.AccountStatus.updateOne({
       where: {
-        id: accountStatusId
+        id: accountStatusId,
       },
       data: {
         ...updateData,
-        updatedAt: /* @__PURE__ */ new Date()
-      }
+        updatedAt: /* @__PURE__ */ new Date(),
+      },
     });
     return updatedAccountStatus;
-  } catch (err) {
-    console.error("Error updating account status %O", err);
-    throw new Error(`Updating account status ${err}`);
+  } catch (error) {
+    console.error('Error updating account status %o', error);
+    throw new Error(`Updating account status ${error}`);
   }
 };
 var update = {
   account,
-  accountStatus
+  accountStatus,
 };
 var update_account_default = update;
 
 // helpers/send-email-confirm-email-address/index.ts
 var send2 = async (context, urlOrigin, accountId) => {
   try {
-    console.info("Sending email verification %s %s", urlOrigin, accountId);
+    console.info('Sending email verification %s %s', urlOrigin, accountId);
     const account2 = await get_account_by_id_default(context, accountId);
     if (!account2) {
-      console.info("Sending email verification - no account exists with the provided account ID");
+      console.info('Sending email verification - no account exists with the provided account ID');
       return {
-        success: false
+        success: false,
       };
     }
-    let latestVerificationHash = "";
+    let latestVerificationHash = '';
     let verificationHasExpired = false;
     if (account2.verificationExpiry) {
       verificationHasExpired = dateIsInThePast(account2.verificationExpiry);
@@ -3349,88 +3284,88 @@ var send2 = async (context, urlOrigin, accountId) => {
     const { email, id } = account2;
     const name = get_full_name_string_default(account2);
     const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, latestVerificationHash, id);
-    if (emailResponse.success) {
+    if (emailResponse?.success) {
       return emailResponse;
     }
     throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${emailResponse}`);
-  } catch (err) {
-    console.error("Error sending email verification (sendEmailConfirmEmailAddress helper) %O", err);
-    throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${err}`);
+  } catch (error) {
+    console.error('Error sending email verification (sendEmailConfirmEmailAddress helper) %o', error);
+    throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${error}`);
   }
 };
 var confirmEmailAddressEmail = {
-  send: send2
+  send: send2,
 };
 var send_email_confirm_email_address_default = confirmEmailAddressEmail;
 
 // helpers/send-email-reactivate-account-link/index.ts
-var import_crypto4 = __toESM(require("crypto"));
+var import_crypto4 = __toESM(require('crypto'));
 var {
   ENCRYPTION: {
     STRING_TYPE: STRING_TYPE4,
     PBKDF2: { ITERATIONS: ITERATIONS4, DIGEST_ALGORITHM: DIGEST_ALGORITHM4 },
     PASSWORD: {
-      PBKDF2: { KEY_LENGTH: KEY_LENGTH4 }
-    }
-  }
+      PBKDF2: { KEY_LENGTH: KEY_LENGTH4 },
+    },
+  },
 } = ACCOUNT2;
 var send3 = async (variables, context) => {
   try {
-    console.info("Received a request to send reactivate account email/link - checking account - sendEmailReactivateAccountLinkHelper");
+    console.info('Received a request to send reactivate account email/link - checking account - sendEmailReactivateAccountLinkHelper');
     const { urlOrigin, accountId } = variables;
     const account2 = await get_account_by_id_default(context, accountId);
     if (!account2) {
-      console.info("Unable to check account and send reactivate account email/link - no account found");
+      console.info('Unable to check account and send reactivate account email/link - no account found');
       return { success: false };
     }
     const { email } = account2;
-    console.info("Generating hash for account reactivation");
+    console.info('Generating hash for account reactivation');
     const reactivationHash = import_crypto4.default.pbkdf2Sync(email, account2.salt, ITERATIONS4, KEY_LENGTH4, DIGEST_ALGORITHM4).toString(STRING_TYPE4);
     const accountUpdate = {
       reactivationHash,
-      reactivationExpiry: ACCOUNT2.REACTIVATION_EXPIRY()
+      reactivationExpiry: ACCOUNT2.REACTIVATION_EXPIRY(),
     };
-    console.info("Updating account for reactivation");
+    console.info('Updating account for reactivation');
     await update_account_default.account(context, accountId, accountUpdate);
-    console.info("Sending reactivate account email/link");
+    console.info('Sending reactivate account email/link');
     const name = get_full_name_string_default(account2);
     const emailResponse = await emails_default.reactivateAccountLink(urlOrigin, email, name, reactivationHash);
     if (emailResponse.success) {
       return {
         ...emailResponse,
         email,
-        accountId
+        accountId,
       };
     }
     return { accountId, email, success: false };
-  } catch (err) {
-    console.error("Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper) %O", err);
-    throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper) ${err}`);
+  } catch (error) {
+    console.error('Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper) %o', error);
+    throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper) ${error}`);
   }
 };
 var sendEmailReactivateAccountLinkHelper = {
-  send: send3
+  send: send3,
 };
 var send_email_reactivate_account_link_default = sendEmailReactivateAccountLinkHelper;
 
 // custom-resolvers/mutations/create-an-account/index.ts
 var createAnAccount = async (root, variables, context) => {
-  console.info("Account creation - %s", variables.email);
+  console.info('Account creation - %s', variables.email);
   try {
     const { urlOrigin, firstName, lastName, email, password: password2 } = variables;
     const account2 = await get_account_by_field_default(context, account_default.EMAIL, email);
     if (account2) {
-      console.info("Account creation - account already exists %s", email);
+      console.info('Account creation - account already exists %s', email);
       if (is_valid_account_password_default(password2, account2.salt, account2.hash)) {
-        console.info("Account creation - account already exists - valid credentials provided %s", email);
+        console.info('Account creation - account already exists - valid credentials provided %s', email);
         if (account2.status.isBlocked) {
-          console.info("Account creation - unable to create a new account - account already exists and is blocked %s", email);
+          console.info('Account creation - unable to create a new account - account already exists and is blocked %s', email);
           const { id: accountId } = account2;
           const reactivateAccountVariables = {
             accountId,
-            urlOrigin
+            urlOrigin,
           };
-          console.info("Account creation - resending an email for reactivation %s", email);
+          console.info('Account creation - resending an email for reactivation %s', email);
           const emailResponse2 = await send_email_reactivate_account_link_default.send(reactivateAccountVariables, context);
           if (emailResponse2.success) {
             return {
@@ -3438,43 +3373,43 @@ var createAnAccount = async (root, variables, context) => {
               success: true,
               alreadyExists: true,
               isVerified: false,
-              isBlocked: true
+              isBlocked: true,
             };
           }
           return {
             success: false,
-            alreadyExists: true
+            alreadyExists: true,
           };
         }
         if (!account2.status.isVerified) {
-          console.info("Account creation - unable to create a new account - account already exists and is not verified %s", email);
+          console.info('Account creation - unable to create a new account - account already exists and is not verified %s', email);
           const { id: accountId } = account2;
-          console.info("Account creation - resending an email verification for %s", email);
+          console.info('Account creation - resending an email verification for %s', email);
           const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
           if (emailResponse2.success) {
             return {
               id: accountId,
               success: true,
               alreadyExists: true,
-              isVerified: false
+              isVerified: false,
             };
           }
         }
-        console.info("Account creation - unable to create a new account - account already exists and is verified %s", email);
+        console.info('Account creation - unable to create a new account - account already exists and is verified %s', email);
         return {
           success: false,
           alreadyExists: true,
-          isVerified: true
+          isVerified: true,
         };
       }
-      console.info("Account creation - account already exists - invalid credentials provided %s", email);
+      console.info('Account creation - account already exists - invalid credentials provided %s', email);
       return { success: false };
     }
-    console.info("Account creation - no existing account found. Generating an encrypted password %s", email);
+    console.info('Account creation - no existing account found. Generating an encrypted password %s', email);
     const { salt, hash } = encrypt_password_default(password2);
     const now2 = /* @__PURE__ */ new Date();
     const { verificationHash, verificationExpiry } = get_account_verification_hash_default(email, salt);
-    console.info("Account creation - constructing account data %s", email);
+    console.info('Account creation - constructing account data %s', email);
     const accountData = {
       firstName,
       lastName,
@@ -3484,149 +3419,156 @@ var createAnAccount = async (root, variables, context) => {
       verificationHash,
       verificationExpiry,
       createdAt: now2,
-      updatedAt: now2
+      updatedAt: now2,
     };
-    console.info("Account creation - creating account %s", email);
+    console.info('Account creation - creating account %s', email);
     const creationResponse = await context.db.Account.createOne({
-      data: accountData
+      data: accountData,
     });
-    console.info("Account creation - creating account status relationship %s", email);
+    console.info('Account creation - creating account status relationship %s', email);
     await context.db.AccountStatus.createOne({
       data: {
         account: {
           connect: {
-            id: creationResponse.id
-          }
-        }
-      }
+            id: creationResponse.id,
+          },
+        },
+      },
     });
-    console.info("Account creation - sending an email verification for %s", email);
+    console.info('Account creation - sending an email verification for %s', email);
     const name = get_full_name_string_default(creationResponse);
     const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, verificationHash, creationResponse.id);
     if (emailResponse.success) {
       return {
         id: creationResponse.id,
         verificationHash,
-        success: true
+        success: true,
       };
     }
     throw new Error(`Account creation - sending email verification for account creation ${emailResponse}`);
-  } catch (err) {
-    console.error("Error Account creation - creating account %O", err);
-    throw new Error(`Account creation - creating account ${err}`);
+  } catch (error) {
+    console.error('Error Account creation - creating account %o', error);
+    throw new Error(`Account creation - creating account ${error}`);
   }
 };
 var create_an_account_default = createAnAccount;
 
 // helpers/get-authentication-retries-by-account-id/index.ts
 var getAuthenticationRetriesByAccountId = async (context, accountId) => {
-  console.info("Getting authentication retries by account ID");
+  console.info('Getting authentication retries by account ID');
   try {
     const retries = await context.db.AuthenticationRetry.findMany({
       where: {
         account: {
           every: {
-            id: { equals: accountId }
-          }
-        }
-      }
+            id: { equals: accountId },
+          },
+        },
+      },
     });
     return retries;
-  } catch (err) {
-    console.error("Error getting authentication retries by account ID %O", err);
-    throw new Error(`Getting authentication retries by account ID ${err}`);
+  } catch (error) {
+    console.error('Error getting authentication retries by account ID %o', error);
+    throw new Error(`Getting authentication retries by account ID ${error}`);
   }
 };
 var get_authentication_retries_by_account_id_default = getAuthenticationRetriesByAccountId;
 
 // custom-resolvers/mutations/delete-an-account/index.ts
 var deleteAnAccount = async (root, variables, context) => {
-  console.info("Deleting account ", variables.email);
+  console.info('Deleting account ', variables.email);
   try {
     const { email } = variables;
-    const account2 = await get_account_by_field_default(context, "email", email);
+    const account2 = await get_account_by_field_default(context, 'email', email);
     if (!account2) {
       console.info(`Unable to delete account - account not found`);
       return { success: false };
     }
     const { id: accountId } = account2;
-    console.info("Checking authentication retry entries");
+    console.info('Checking authentication retry entries');
     const retries = await get_authentication_retries_by_account_id_default(context, accountId);
     if (retries.length) {
-      console.info("Deleting authentication retry entries");
+      console.info('Deleting authentication retry entries');
       const retriesArray = retries.map((retry) => ({
-        id: retry.id
+        id: retry.id,
       }));
       await context.db.AuthenticationRetry.deleteMany({
-        where: retriesArray
+        where: retriesArray,
       });
     }
-    console.info("Deleting account %s", accountId);
+    console.info('Deleting account %s', accountId);
     await context.db.Account.deleteOne({
       where: {
-        id: accountId
-      }
+        id: accountId,
+      },
     });
     return {
-      success: true
+      success: true,
     };
-  } catch (err) {
-    console.error("Error deleting account %O", err);
-    throw new Error(`Deleting account ${err}`);
+  } catch (error) {
+    console.error('Error deleting account %o', error);
+    throw new Error(`Deleting account ${error}`);
   }
 };
 var delete_an_account_default = deleteAnAccount;
 
 // custom-resolvers/mutations/verify-account-email-address/index.ts
-var import_date_fns4 = require("date-fns");
+var import_date_fns3 = require('date-fns');
 var { ID, EMAIL: EMAIL2, VERIFICATION_EXPIRY } = account_default;
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
-    console.info("Verifying account email address");
+    console.info('Verifying account email address');
     const account2 = await get_account_by_field_default(context, ID, variables.id);
     if (!account2) {
-      console.info("Unable to verify account email address - account does not exist");
+      console.info('Unable to verify account email address - account does not exist');
       return {
         success: false,
-        invalid: true
+        invalid: true,
+      };
+    }
+    if (account2.verificationHash !== variables.token) {
+      console.info('Unable to verify account email address - token does not match hash');
+      return {
+        success: false,
+        invalid: true,
       };
     }
     if (account2.status.isVerified) {
-      console.info("Account email address is already verified");
+      console.info('Account email address is already verified');
       return {
-        success: true
+        success: true,
       };
     }
     const { id } = account2;
     const { id: statusId } = account2.status;
     const now2 = /* @__PURE__ */ new Date();
-    const canActivateAccount = (0, import_date_fns4.isBefore)(now2, account2[VERIFICATION_EXPIRY]);
+    const canActivateAccount = (0, import_date_fns3.isBefore)(now2, account2[VERIFICATION_EXPIRY]);
     if (!canActivateAccount) {
-      console.info("Unable to verify account email address - verification period has expired");
+      console.info('Unable to verify account email address - verification period has expired');
       return {
         expired: true,
         success: false,
-        accountId: id
+        accountId: id,
       };
     }
-    console.info("Verified account email address - updating account to be verified");
+    console.info('Verified account email address - updating account to be verified');
     const accountUpdate = {
-      verificationHash: "",
-      verificationExpiry: null
+      verificationHash: '',
+      verificationExpiry: null,
     };
     const statusUpdate = {
-      isVerified: true
+      isVerified: true,
     };
     await update_account_default.account(context, id, accountUpdate);
     await update_account_default.accountStatus(context, statusId, statusUpdate);
     return {
       success: true,
       accountId: id,
-      emailRecipient: account2[EMAIL2]
+      emailRecipient: account2[EMAIL2],
     };
-  } catch (err) {
-    console.error("Error verifying account email address %O", err);
-    throw new Error(`Verifying account email address ${err}`);
+  } catch (error) {
+    console.error('Error verifying account email address %o', error);
+    throw new Error(`Verifying account email address ${error}`);
   }
 };
 var verify_account_email_address_default = verifyAccountEmailAddress;
@@ -3634,15 +3576,15 @@ var verify_account_email_address_default = verifyAccountEmailAddress;
 // custom-resolvers/mutations/send-email-confirm-email-address/index.ts
 var sendEmailConfirmEmailAddressMutation = async (root, variables, context) => {
   try {
-    console.info("Sending email verification for account creation");
+    console.info('Sending email verification for account creation');
     const emailResponse = await send_email_confirm_email_address_default.send(context, variables.urlOrigin, variables.accountId);
     if (emailResponse.success) {
       return emailResponse;
     }
     throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${emailResponse}`);
-  } catch (err) {
-    console.error("Error sending email verification for account creation (sendEmailConfirmEmailAddress mutation) %O", err);
-    throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${err}`);
+  } catch (error) {
+    console.error('Error sending email verification for account creation (sendEmailConfirmEmailAddress mutation) %o', error);
+    throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${error}`);
   }
 };
 var send_email_confirm_email_address_default2 = sendEmailConfirmEmailAddressMutation;
@@ -3650,64 +3592,64 @@ var send_email_confirm_email_address_default2 = sendEmailConfirmEmailAddressMuta
 // helpers/create-authentication-retry-entry/index.ts
 var createAuthenticationRetryEntry = async (context, accountId) => {
   try {
-    console.info("Creating account authentication retry entry");
+    console.info('Creating account authentication retry entry');
     const now2 = /* @__PURE__ */ new Date();
     const response = await context.db.AuthenticationRetry.createOne({
       data: {
         account: {
           connect: {
-            id: accountId
-          }
+            id: accountId,
+          },
         },
-        createdAt: now2
-      }
+        createdAt: now2,
+      },
     });
     if (response.id) {
       return {
-        success: true
+        success: true,
       };
     }
     return {
-      success: false
+      success: false,
     };
-  } catch (err) {
-    console.error("Error creating account authentication retry entry %O", err);
-    throw new Error(`${err}`);
+  } catch (error) {
+    console.error('Error creating account authentication retry entry %o', error);
+    throw new Error(`${error}`);
   }
 };
 var create_authentication_retry_entry_default = createAuthenticationRetryEntry;
 
 // helpers/should-block-account/index.ts
-var import_date_fns5 = require("date-fns");
+var import_date_fns4 = require('date-fns');
 var { MAX_AUTH_RETRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT2;
 var shouldBlockAccount = async (context, accountId) => {
-  console.info("Checking account authentication retries %s", accountId);
+  console.info('Checking account authentication retries %s', accountId);
   try {
     const retries = await get_authentication_retries_by_account_id_default(context, accountId);
     const now2 = /* @__PURE__ */ new Date();
     const retriesInTimeframe = [];
     retries.forEach((retry) => {
       const retryDate = retry.createdAt;
-      const isWithinLast24Hours = (0, import_date_fns5.isAfter)(retryDate, MAX_AUTH_RETRIES_TIMEFRAME) && (0, import_date_fns5.isBefore)(retryDate, now2);
+      const isWithinLast24Hours = (0, import_date_fns4.isAfter)(retryDate, MAX_AUTH_RETRIES_TIMEFRAME) && (0, import_date_fns4.isBefore)(retryDate, now2);
       if (isWithinLast24Hours) {
         retriesInTimeframe.push(retry.id);
       }
     });
     if (retriesInTimeframe.length >= MAX_AUTH_RETRIES) {
-      console.info("Account authentication retries exceeds the threshold %s", accountId);
+      console.info('Account authentication retries exceeds the threshold %s', accountId);
       return true;
     }
     return false;
-  } catch (err) {
-    console.error("Error checking account authentication retries %O", err);
-    throw new Error(`Checking account authentication retries  ${err}`);
+  } catch (error) {
+    console.error('Error checking account authentication retries %o', error);
+    throw new Error(`Checking account authentication retries  ${error}`);
   }
 };
 var should_block_account_default = shouldBlockAccount;
 
 // helpers/block-account/index.ts
 var blockAccount = async (context, statusId) => {
-  console.info("Blocking account %s", statusId);
+  console.info('Blocking account %s', statusId);
   try {
     const statusUpdate = { isBlocked: true };
     const result = await update_account_default.accountStatus(context, statusId, statusUpdate);
@@ -3715,28 +3657,28 @@ var blockAccount = async (context, statusId) => {
       return true;
     }
     return false;
-  } catch (err) {
-    console.error("Error blocking account %O", err);
-    throw new Error(`Blocking account ${err}`);
+  } catch (error) {
+    console.error('Error blocking account %o', error);
+    throw new Error(`Blocking account ${error}`);
   }
 };
 var block_account_default = blockAccount;
 
 // helpers/generate-otp/index.ts
-var import_crypto5 = __toESM(require("crypto"));
-var import_otplib = require("otplib");
+var import_crypto5 = __toESM(require('crypto'));
+var import_otplib = require('otplib');
 var { ENCRYPTION: ENCRYPTION4, OTP } = ACCOUNT2;
 var {
   RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE2,
   STRING_TYPE: STRING_TYPE5,
   PBKDF2: { ITERATIONS: ITERATIONS5, DIGEST_ALGORITHM: DIGEST_ALGORITHM5 },
   OTP: {
-    PBKDF2: { KEY_LENGTH: KEY_LENGTH5 }
-  }
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH5 },
+  },
 } = ENCRYPTION4;
 var generateOtp = () => {
   try {
-    console.info("Generating OTP");
+    console.info('Generating OTP');
     const salt = import_crypto5.default.randomBytes(RANDOM_BYTES_SIZE2).toString(STRING_TYPE5);
     import_otplib.authenticator.options = { digits: OTP.DIGITS };
     const securityCode = import_otplib.authenticator.generate(salt);
@@ -3746,39 +3688,39 @@ var generateOtp = () => {
       securityCode,
       salt,
       hash,
-      expiry
+      expiry,
     };
-  } catch (err) {
-    console.error("Error generating OTP %O", err);
-    throw new Error(`Error generating OTP ${err}`);
+  } catch (error) {
+    console.error('Error generating OTP %o', error);
+    throw new Error(`Error generating OTP ${error}`);
   }
 };
 var generate = {
-  otp: generateOtp
+  otp: generateOtp,
 };
 var generate_otp_default = generate;
 
 // helpers/generate-otp-and-update-account/index.ts
 var generateOTPAndUpdateAccount = async (context, accountId) => {
   try {
-    console.info("Adding OTP to an account");
+    console.info('Adding OTP to an account');
     const otp = generate_otp_default.otp();
     const { securityCode, salt, hash, expiry } = otp;
     const accountUpdate = {
       otpSalt: salt,
       otpHash: hash,
-      otpExpiry: expiry
+      otpExpiry: expiry,
     };
     const updatedAccount = await update_account_default.account(context, accountId, accountUpdate);
     const accountStatusUpdate = { isInactive: false };
     await update_account_default.accountStatus(context, String(updatedAccount.statusId), accountStatusUpdate);
     return {
       success: true,
-      securityCode
+      securityCode,
     };
-  } catch (err) {
-    console.error("Error adding OTP to an account %O", err);
-    throw new Error(`Adding OTP to an account ${err}`);
+  } catch (error) {
+    console.error('Error adding OTP to an account %o', error);
+    throw new Error(`Adding OTP to an account ${error}`);
   }
 };
 var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
@@ -3786,36 +3728,36 @@ var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
 // custom-resolvers/mutations/account-sign-in/account-sign-in-checks/index.ts
 var accountSignInChecks = async (context, account2, urlOrigin) => {
   try {
-    console.info("Signing in account - checking account");
+    console.info('Signing in account - checking account');
     const { id: accountId, email } = account2;
     if (!account2.status.isVerified) {
-      console.info("Unable to sign in account - account has not been verified yet. Sending a new email verification");
+      console.info('Unable to sign in account - account has not been verified yet. Sending a new email verification');
       const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
       if (emailResponse2?.success) {
         return {
           success: false,
           resentVerificationEmail: true,
-          accountId
+          accountId,
         };
       }
       return { success: false, accountId };
     }
-    console.info("Signing in account - account is verified. Generating and sending an OTP");
+    console.info('Signing in account - account is verified. Generating and sending an OTP');
     const { securityCode } = await generate_otp_and_update_account_default(context, accountId);
     const name = get_full_name_string_default(account2);
     const emailResponse = await emails_default.accessCodeEmail(email, name, String(securityCode));
     if (emailResponse?.success) {
       return {
         ...emailResponse,
-        accountId
+        accountId,
       };
     }
     return {
-      success: false
+      success: false,
     };
-  } catch (err) {
-    console.error("Error validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) %O", err);
-    throw new Error(`Validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) ${err}`);
+  } catch (error) {
+    console.error('Error validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) %o', error);
+    throw new Error(`Validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) ${error}`);
   }
 };
 var account_sign_in_checks_default = accountSignInChecks;
@@ -3823,26 +3765,26 @@ var account_sign_in_checks_default = accountSignInChecks;
 // custom-resolvers/mutations/account-sign-in/index.ts
 var accountSignIn = async (root, variables, context) => {
   try {
-    console.info("Signing in account");
+    console.info('Signing in account');
     const { urlOrigin, email, password: password2 } = variables;
     const accountData = await get_account_by_field_default(context, account_default.EMAIL, email);
     if (!accountData) {
-      console.info("Unable to validate account - no account found");
+      console.info('Unable to validate account - no account found');
       return { success: false };
     }
     const account2 = accountData;
     const { id: accountId } = account2;
-    console.info("Signing in account - account found %s", accountId);
+    console.info('Signing in account - account found %s', accountId);
     const { isBlocked } = account2.status;
     if (isBlocked) {
-      console.info("Unable to sign in account - account is blocked");
+      console.info('Unable to sign in account - account is blocked');
       return { success: false, isBlocked: true, accountId };
     }
     if (is_valid_account_password_default(password2, account2.salt, account2.hash)) {
-      console.info("Signing in account - valid credentials provided");
+      console.info('Signing in account - valid credentials provided');
       return account_sign_in_checks_default(context, account2, urlOrigin);
     }
-    console.info("Signing in account - invalid credentials provided");
+    console.info('Signing in account - invalid credentials provided');
     const newRetriesEntry = await create_authentication_retry_entry_default(context, accountId);
     if (!newRetriesEntry.success) {
       return { success: false };
@@ -3854,15 +3796,15 @@ var accountSignIn = async (root, variables, context) => {
         return {
           success: false,
           isBlocked: true,
-          accountId
+          accountId,
         };
       }
       return { success: false };
     }
     return { success: false };
-  } catch (err) {
-    console.error("Error signing into account %O", err);
-    throw new Error(`Signing in account (accountSignIn mutation) ${err}`);
+  } catch (error) {
+    console.error('Error signing into account %o', error);
+    throw new Error(`Signing in account (accountSignIn mutation) ${error}`);
   }
 };
 var account_sign_in_default = accountSignIn;
@@ -3870,86 +3812,86 @@ var account_sign_in_default = accountSignIn;
 // custom-resolvers/mutations/account-sign-in-new-code/index.ts
 var accountSignInSendNewCode = async (root, variables, context) => {
   try {
-    console.info("Generating and sending new sign in code for account");
+    console.info('Generating and sending new sign in code for account');
     const { accountId } = variables;
     const account2 = await get_account_by_id_default(context, accountId);
     if (!account2) {
-      console.info("Unable to validate account - no account found");
+      console.info('Unable to validate account - no account found');
       return { success: false };
     }
     const { securityCode } = await generate_otp_and_update_account_default(context, account2.id);
     const { email } = account2;
     const name = get_full_name_string_default(account2);
     const emailResponse = await emails_default.accessCodeEmail(email, name, String(securityCode));
-    if (emailResponse.success) {
+    if (emailResponse?.success) {
       return {
         ...emailResponse,
-        accountId: account2.id
+        accountId: account2.id,
       };
     }
     return {
-      success: false
+      success: false,
     };
-  } catch (err) {
-    console.error("Error generating and sending new sign in code for account (accountSignInSendNewCode mutation) %O", err);
-    throw new Error(`Generating and sending new sign in code for account (accountSignInSendNewCode mutation) ${err}`);
+  } catch (error) {
+    console.error('Error generating and sending new sign in code for account (accountSignInSendNewCode mutation) %o', error);
+    throw new Error(`Generating and sending new sign in code for account (accountSignInSendNewCode mutation) ${error}`);
   }
 };
 var account_sign_in_new_code_default = accountSignInSendNewCode;
 
 // helpers/is-valid-otp/index.ts
-var import_crypto6 = __toESM(require("crypto"));
+var import_crypto6 = __toESM(require('crypto'));
 var { ENCRYPTION: ENCRYPTION5 } = ACCOUNT2;
 var {
   STRING_TYPE: STRING_TYPE6,
   PBKDF2: { ITERATIONS: ITERATIONS6, DIGEST_ALGORITHM: DIGEST_ALGORITHM6 },
   OTP: {
-    PBKDF2: { KEY_LENGTH: KEY_LENGTH6 }
-  }
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH6 },
+  },
 } = ENCRYPTION5;
 var isValidOTP = (securityCode, otpSalt, otpHash) => {
   try {
-    console.info("Validating OTP");
+    console.info('Validating OTP');
     const hashVerify = import_crypto6.default.pbkdf2Sync(securityCode, otpSalt, ITERATIONS6, KEY_LENGTH6, DIGEST_ALGORITHM6).toString(STRING_TYPE6);
     if (otpHash === hashVerify) {
       return true;
     }
     return false;
-  } catch (err) {
-    console.error("Error validating OTP %O", err);
-    throw new Error(`Error validating OTP ${err}`);
+  } catch (error) {
+    console.error('Error validating OTP %o', error);
+    throw new Error(`Error validating OTP ${error}`);
   }
 };
 var is_valid_otp_default = isValidOTP;
 
 // helpers/delete-authentication-retries/index.ts
 var deleteAuthenticationRetries = async (context, accountId) => {
-  console.info("Deleting authentication retries for account %s", accountId);
+  console.info('Deleting authentication retries for account %s', accountId);
   try {
     const retries = await get_authentication_retries_by_account_id_default(context, accountId);
     const retryIds = retries.map((obj) => ({
-      id: obj.id
+      id: obj.id,
     }));
     const result = await context.db.AuthenticationRetry.deleteMany({
-      where: retryIds
+      where: retryIds,
     });
     return result;
-  } catch (err) {
-    console.error("Error deleting authentication retries %O", err);
-    throw new Error(`Deleting authentication retries ${err}`);
+  } catch (error) {
+    console.error('Error deleting authentication retries %o', error);
+    throw new Error(`Deleting authentication retries ${error}`);
   }
 };
 var delete_authentication_retries_default = deleteAuthenticationRetries;
 
 // helpers/create-jwt/index.ts
-var import_crypto7 = __toESM(require("crypto"));
-var import_jsonwebtoken = __toESM(require("jsonwebtoken"));
+var import_crypto7 = __toESM(require('crypto'));
+var import_jsonwebtoken = __toESM(require('jsonwebtoken'));
 var {
   ENCRYPTION: { RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE3, STRING_TYPE: STRING_TYPE7 },
   JWT: {
     KEY: { SIGNATURE, ENCODING, STRING_ENCODING },
-    TOKEN: { EXPIRY, ALGORITHM }
-  }
+    TOKEN: { EXPIRY, ALGORITHM },
+  },
 } = ACCOUNT2;
 var PRIV_KEY = Buffer.from(SIGNATURE, ENCODING).toString(STRING_ENCODING);
 var createJWT = (accountId) => {
@@ -3957,62 +3899,62 @@ var createJWT = (accountId) => {
   const expiresIn = EXPIRY;
   const payload = {
     sub: accountId,
-    sessionIdentifier
+    sessionIdentifier,
   };
   const signedToken = import_jsonwebtoken.default.sign(payload, PRIV_KEY, { expiresIn, algorithm: ALGORITHM });
   return {
     token: `Bearer ${signedToken}`,
     expires: expiresIn,
-    sessionIdentifier
+    sessionIdentifier,
   };
 };
 var create = {
-  JWT: createJWT
+  JWT: createJWT,
 };
 var create_jwt_default = create;
 
 // custom-resolvers/mutations/verify-account-sign-in-code/index.ts
 var {
-  JWT: { SESSION_EXPIRY }
+  JWT: { SESSION_EXPIRY },
 } = ACCOUNT2;
 var verifyAccountSignInCode = async (root, variables, context) => {
   try {
-    console.info("Verifying account sign in code");
+    console.info('Verifying account sign in code');
     const { accountId, securityCode } = variables;
     const account2 = await get_account_by_id_default(context, accountId);
     if (!account2) {
-      console.info("Unable to verify account sign in code - no account exists with the provided ID");
+      console.info('Unable to verify account sign in code - no account exists with the provided ID');
       return {
-        success: false
+        success: false,
       };
     }
     if (!account2.otpSalt || !account2.otpHash || !account2.otpExpiry) {
-      console.info("Unable to verify account sign in code - no OTP available for this account");
+      console.info('Unable to verify account sign in code - no OTP available for this account');
       return {
-        success: false
+        success: false,
       };
     }
     const { otpSalt, otpHash, otpExpiry } = account2;
     const hasExpired = dateIsInThePast(otpExpiry);
     if (hasExpired) {
-      console.info("Unable to verify account sign in code - verification period has expired");
+      console.info('Unable to verify account sign in code - verification period has expired');
       return {
         success: false,
-        expired: true
+        expired: true,
       };
     }
     const isValid = otpSalt && otpHash && is_valid_otp_default(securityCode, otpSalt, otpHash);
     if (isValid) {
-      console.info("Verified account sign in code - creating JWT and updating account");
+      console.info('Verified account sign in code - creating JWT and updating account');
       await delete_authentication_retries_default(context, accountId);
       const jwt = create_jwt_default.JWT(accountId);
       const { sessionIdentifier } = jwt;
       const accountUpdate = {
         sessionIdentifier,
         sessionExpiry: SESSION_EXPIRY(),
-        otpSalt: "",
-        otpHash: "",
-        otpExpiry: null
+        otpSalt: '',
+        otpHash: '',
+        otpExpiry: null,
       };
       await update_account_default.account(context, accountId, accountUpdate);
       return {
@@ -4022,15 +3964,15 @@ var verifyAccountSignInCode = async (root, variables, context) => {
         firstName: account2.firstName,
         email: account2.email,
         ...jwt,
-        expires: accountUpdate.sessionExpiry
+        expires: accountUpdate.sessionExpiry,
       };
     }
     return {
-      success: false
+      success: false,
     };
-  } catch (err) {
-    console.error("Error verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) %O", err);
-    throw new Error(`Verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) ${err}`);
+  } catch (error) {
+    console.error('Error verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) %o', error);
+    throw new Error(`Verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) ${error}`);
   }
 };
 var verify_account_sign_in_code_default = verifyAccountSignInCode;
@@ -4038,49 +3980,49 @@ var verify_account_sign_in_code_default = verifyAccountSignInCode;
 // custom-resolvers/mutations/add-and-get-OTP/index.ts
 var addAndGetOTP = async (root, variables, context) => {
   try {
-    console.info("Adding OTP to an account");
+    console.info('Adding OTP to an account');
     const { email } = variables;
     const account2 = await get_account_by_field_default(context, account_default.EMAIL, email);
     if (!account2) {
-      console.info("Unable to generate and add OTP to an account - no account found");
+      console.info('Unable to generate and add OTP to an account - no account found');
       return { success: false };
     }
     const { securityCode } = await generate_otp_and_update_account_default(context, account2.id);
     return {
       success: true,
-      securityCode
+      securityCode,
     };
-  } catch (err) {
-    console.error("Error adding OTP to an account (addAndGetOTP mutation) %O", err);
-    throw new Error(`Adding OTP to an account (addAndGetOTP mutation) ${err}`);
+  } catch (error) {
+    console.error('Error adding OTP to an account (addAndGetOTP mutation) %o', error);
+    throw new Error(`Adding OTP to an account (addAndGetOTP mutation) ${error}`);
   }
 };
 var add_and_get_OTP_default = addAndGetOTP;
 
 // custom-resolvers/mutations/send-email-password-reset-link/index.ts
-var import_crypto8 = __toESM(require("crypto"));
+var import_crypto8 = __toESM(require('crypto'));
 var {
   ENCRYPTION: {
     STRING_TYPE: STRING_TYPE8,
     PBKDF2: { ITERATIONS: ITERATIONS7, DIGEST_ALGORITHM: DIGEST_ALGORITHM7 },
     PASSWORD: {
-      PBKDF2: { KEY_LENGTH: KEY_LENGTH7 }
-    }
-  }
+      PBKDF2: { KEY_LENGTH: KEY_LENGTH7 },
+    },
+  },
 } = ACCOUNT2;
 var sendEmailPasswordResetLink = async (root, variables, context) => {
   try {
-    console.info("Received a password reset request - checking account");
+    console.info('Received a password reset request - checking account');
     const { urlOrigin, email } = variables;
     const account2 = await get_account_by_field_default(context, account_default.EMAIL, email);
     if (!account2) {
-      console.info("Unable to check account and send password reset email - no account found");
+      console.info('Unable to check account and send password reset email - no account found');
       return { success: false };
     }
     const { id: accountId } = account2;
     const { id: statusId } = account2.status;
     const newRetriesEntry = await create_authentication_retry_entry_default(context, accountId);
-    if (!newRetriesEntry.success) {
+    if (!newRetriesEntry?.success) {
       return { success: false };
     }
     const needToBlockAccount = await should_block_account_default(context, accountId);
@@ -4091,49 +4033,49 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
           return {
             success: false,
             isBlocked: true,
-            accountId
+            accountId,
           };
         }
-      } catch (err) {
-        console.error("Error blocking account $O", err);
+      } catch (error) {
+        console.error('Error blocking account $O', error);
         return { success: false };
       }
     }
-    console.info("Generating password reset hash");
+    console.info('Generating password reset hash');
     const passwordResetHash = import_crypto8.default.pbkdf2Sync(email, account2.salt, ITERATIONS7, KEY_LENGTH7, DIGEST_ALGORITHM7).toString(STRING_TYPE8);
     const accountUpdate = {
       passwordResetHash,
-      passwordResetExpiry: ACCOUNT2.PASSWORD_RESET_EXPIRY()
+      passwordResetExpiry: ACCOUNT2.PASSWORD_RESET_EXPIRY(),
     };
-    console.info("Updating account for password reset");
+    console.info('Updating account for password reset');
     await update_account_default.account(context, accountId, accountUpdate);
-    console.info("Sending password reset email");
+    console.info('Sending password reset email');
     const name = get_full_name_string_default(account2);
     const emailResponse = await emails_default.passwordResetLink(urlOrigin, email, name, passwordResetHash);
-    if (emailResponse.success) {
+    if (emailResponse?.success) {
       return emailResponse;
     }
     return { success: false };
-  } catch (err) {
-    console.error("Error checking account and sending password reset email (sendEmailPasswordResetLink mutation) $O", err);
-    throw new Error(`Checking account and sending password reset email (sendEmailPasswordResetLink mutation) ${err}`);
+  } catch (error) {
+    console.error('Error checking account and sending password reset email (sendEmailPasswordResetLink mutation) $O', error);
+    throw new Error(`Checking account and sending password reset email (sendEmailPasswordResetLink mutation) ${error}`);
   }
 };
 var send_email_password_reset_link_default = sendEmailPasswordResetLink;
 
 // helpers/account-has-used-password-before/index.ts
 var hasAccountUsedPasswordBefore = async (context, accountId, newPassword) => {
-  console.info("Checking if an account has used a password before");
+  console.info('Checking if an account has used a password before');
   try {
     let usedBefore = false;
     const previousHashes = await context.db.Authentication.findMany({
       where: {
         account: {
           every: {
-            id: { equals: accountId }
-          }
-        }
-      }
+            id: { equals: accountId },
+          },
+        },
+      },
     });
     if (previousHashes.length) {
       previousHashes.forEach((previous) => {
@@ -4144,103 +4086,103 @@ var hasAccountUsedPasswordBefore = async (context, accountId, newPassword) => {
       });
     }
     return usedBefore;
-  } catch (err) {
-    console.error("Error checking if an account has used a password before %O", err);
-    throw new Error(`Checking if an account has used a password before ${err}`);
+  } catch (error) {
+    console.error('Error checking if an account has used a password before %o', error);
+    throw new Error(`Checking if an account has used a password before ${error}`);
   }
 };
 var account_has_used_password_before_default = hasAccountUsedPasswordBefore;
 
 // helpers/create-authentication-entry/index.ts
 var createAuthenticationEntry = async (context, entry) => {
-  console.info("Creating authentication entry");
+  console.info('Creating authentication entry');
   try {
     const result = await context.db.Authentication.createOne({
       data: {
         ...entry,
-        createdAt: /* @__PURE__ */ new Date()
-      }
+        createdAt: /* @__PURE__ */ new Date(),
+      },
     });
     return result;
-  } catch (err) {
-    console.error("Error creating authentication entry %O", err);
-    throw new Error(`Creating authentication entry ${err}`);
+  } catch (error) {
+    console.error('Error creating authentication entry %o', error);
+    throw new Error(`Creating authentication entry ${error}`);
   }
 };
 var create_authentication_entry_default = createAuthenticationEntry;
 
 // custom-resolvers/mutations/account-password-reset/index.ts
 var accountPasswordReset = async (root, variables, context) => {
-  console.info("Resetting account password");
+  console.info('Resetting account password');
   try {
     const { token, password: newPassword } = variables;
     const account2 = await get_account_by_field_default(context, account_default.PASSWORD_RESET_HASH, token);
     if (!account2) {
-      console.info("Unable to reset account password - account does not exist");
+      console.info('Unable to reset account password - account does not exist');
       return { success: false };
     }
     const {
-      status: { isBlocked }
+      status: { isBlocked },
     } = account2;
     if (isBlocked) {
-      console.info("Unable to reset account password - account is blocked");
+      console.info('Unable to reset account password - account is blocked');
       return { success: false };
     }
     const { id: accountId, passwordResetHash, passwordResetExpiry, salt: currentSalt, hash: currentHash } = account2;
     if (!passwordResetHash || !passwordResetExpiry) {
-      console.info("Unable to reset account password - reset hash or expiry does not exist");
+      console.info('Unable to reset account password - reset hash or expiry does not exist');
       return { success: false };
     }
     const hasExpired = dateIsInThePast(passwordResetExpiry);
     if (hasExpired) {
-      console.info("Unable to reset account password - verification period has expired");
+      console.info('Unable to reset account password - verification period has expired');
       return {
         success: false,
-        expired: true
+        expired: true,
       };
     }
     const newHashCurrentSalt = get_password_hash_default(newPassword, currentSalt);
     const passwordIsTheSame = newHashCurrentSalt === currentHash;
     if (passwordIsTheSame) {
-      console.info("Unable to reset account password - provided password is the same");
+      console.info('Unable to reset account password - provided password is the same');
       return {
         success: false,
-        hasBeenUsedBefore: true
+        hasBeenUsedBefore: true,
       };
     }
     const usedPasswordBefore = await account_has_used_password_before_default(context, accountId, newPassword);
     if (usedPasswordBefore) {
-      console.info("Unable to reset account password - provided password has been used before");
+      console.info('Unable to reset account password - provided password has been used before');
       return {
         success: false,
-        hasBeenUsedBefore: true
+        hasBeenUsedBefore: true,
       };
     }
     await delete_authentication_retries_default(context, accountId);
     const authEntry = {
       account: {
         connect: {
-          id: accountId
-        }
+          id: accountId,
+        },
       },
       salt: currentSalt,
-      hash: currentHash
+      hash: currentHash,
     };
     await create_authentication_entry_default(context, authEntry);
     const { salt: newSalt, hash: newHash } = encrypt_password_default(newPassword);
     const accountUpdate = {
       salt: newSalt,
       hash: newHash,
-      passwordResetHash: "",
-      passwordResetExpiry: null
+      passwordResetHash: '',
+      passwordResetExpiry: null,
     };
     await update_account_default.account(context, accountId, accountUpdate);
     return {
-      success: true
+      success: true,
     };
-  } catch (err) {
-    console.error("Error resetting account password %O", err);
-    throw new Error(`Resetting account password ${err}`);
+  } catch (error) {
+    console.error('Error resetting account password %o', error);
+    throw new Error(`Resetting account password ${error}`);
   }
 };
 var account_password_reset_default = accountPasswordReset;
@@ -4248,35 +4190,79 @@ var account_password_reset_default = accountPasswordReset;
 // custom-resolvers/mutations/send-email-reactivate-account-link/index.ts
 var sendEmailReactivateAccountLink = async (root, variables, context) => {
   try {
-    console.info("Received a request to send reactivate account email/link - checking account");
+    console.info('Received a request to send reactivate account email/link - checking account');
     const reactiveAccountResponse = await send_email_reactivate_account_link_default.send(variables, context);
     return reactiveAccountResponse;
-  } catch (err) {
-    console.error("Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) %O", err);
-    throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) ${err}`);
+  } catch (error) {
+    console.error('Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) %o', error);
+    throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) ${error}`);
   }
 };
 var send_email_reactivate_account_link_default2 = sendEmailReactivateAccountLink;
 
+// helpers/create-an-application/create-initial-application/index.ts
+var import_date_fns5 = require('date-fns');
+
+// constants/application/initial-application-data/index.ts
+var { STATUS, LATEST_VERSION_NUMBER: LATEST_VERSION_NUMBER2, DEAL_TYPE, SUBMISSION_COUNT_DEFAULT } = APPLICATION;
+var INITIAL_APPLICATION_DATA = {
+  status: STATUS.IN_PROGRESS,
+  version: LATEST_VERSION_NUMBER2,
+  dealType: DEAL_TYPE,
+  submissionCount: SUBMISSION_COUNT_DEFAULT,
+};
+var initial_application_data_default = INITIAL_APPLICATION_DATA;
+
+// helpers/create-an-application/create-initial-application/index.ts
+var { STATUS: STATUS2, SUBMISSION_DEADLINE_IN_MONTHS, SUBMISSION_TYPE: SUBMISSION_TYPE2 } = APPLICATION;
+var { status: inititalStatus, ...APPLICATION_FIELDS } = initial_application_data_default;
+var createInitialApplication = async ({ context, accountId, status = STATUS2.IN_PROGRESS }) => {
+  try {
+    console.info('Creating initial application (createInitialApplication helper) for user %s', accountId);
+    const now2 = /* @__PURE__ */ new Date();
+    const application2 = await context.db.Application.createOne({
+      data: {
+        owner: {
+          connect: { id: accountId },
+        },
+        createdAt: now2,
+        status,
+        submissionDeadline: (0, import_date_fns5.addMonths)(new Date(now2), SUBMISSION_DEADLINE_IN_MONTHS),
+        submissionType: SUBMISSION_TYPE2.MIA,
+        updatedAt: now2,
+        ...APPLICATION_FIELDS,
+      },
+    });
+    return application2;
+  } catch (error) {
+    console.error('Error creating initial application (createInitialApplication helper) for user %s %o', accountId, error);
+    throw new Error(`Creating initial application (createInitialApplication helper) for user ${accountId} ${error}`);
+  }
+};
+var initialApplication = {
+  create: createInitialApplication,
+};
+var create_initial_application_default = initialApplication;
+
 // helpers/get-country-by-field/index.ts
 var getCountryByField = async (context, field, value) => {
   try {
-    console.info("Getting country by field/value");
+    console.info('Getting country by field/value');
     const countriesArray = await context.db.Country.findMany({
       where: {
-        [field]: { equals: value }
+        [field]: { equals: value },
       },
-      take: 1
+      take: 1,
     });
     if (!countriesArray?.length || !countriesArray[0]) {
-      console.info("Getting country by field - no country exists with the provided field/value");
+      console.info('Getting country by field - no country exists with the provided field/value');
       return false;
     }
     const country = countriesArray[0];
     return country;
-  } catch (err) {
-    console.error("Error getting country by field/value %O", err);
-    throw new Error(`Getting country by field/value ${err}`);
+  } catch (error) {
+    console.error('Error getting country by field/value %o', error);
+    throw new Error(`Getting country by field/value ${error}`);
   }
 };
 var get_country_by_field_default = getCountryByField;
@@ -4284,22 +4270,22 @@ var get_country_by_field_default = getCountryByField;
 // helpers/get-cover-period-value-by-field/index.ts
 var getCoverPeriodValueByField = async (context, field, value) => {
   try {
-    console.info("Getting coverPeriod by field/value $s", `${field}, ${value}`);
+    console.info('Getting coverPeriod by field/value $s %s %d', field, value);
     const coverPeriodsArray = await context.db.CoverPeriod.findMany({
       where: {
-        [field]: { equals: value }
+        [field]: { equals: value },
       },
-      take: 1
+      take: 1,
     });
     if (!coverPeriodsArray?.length || !coverPeriodsArray[0]) {
-      console.info("Getting coverPeriod by field - no coverPeriod exists with the provided field/value");
+      console.info('Getting coverPeriod by field - no coverPeriod exists with the provided field/value');
       return false;
     }
     const [coverPeriod] = coverPeriodsArray;
     return coverPeriod;
-  } catch (err) {
-    console.error("Error getting coverPeriod by field/value %O", err);
-    throw new Error(`Getting coverPeriod by field/value ${err}`);
+  } catch (error) {
+    console.error('Error getting coverPeriod by field/value %o', error);
+    throw new Error(`Getting coverPeriod by field/value ${error}`);
   }
 };
 var get_cover_period_value_by_field_default = getCoverPeriodValueByField;
@@ -4307,354 +4293,431 @@ var get_cover_period_value_by_field_default = getCoverPeriodValueByField;
 // helpers/get-total-contract-value-by-field/index.ts
 var getTotalContractValueByField = async (context, field, value) => {
   try {
-    console.info("Getting totalContractValue by field/value $s", `${field}, ${value}`);
+    console.info('Getting totalContractValue by field/value $s %s, %s', field, value);
     const totalContractValuesArray = await context.db.TotalContractValue.findMany({
       where: {
-        [field]: { equals: value }
+        [field]: { equals: value },
       },
-      take: 1
+      take: 1,
     });
     if (!totalContractValuesArray?.length || !totalContractValuesArray[0]) {
-      console.info("Getting totalContractValue by field - no totalContractValue exists with the provided field/value");
+      console.info('Getting totalContractValue by field - no totalContractValue exists with the provided field/value');
       return false;
     }
     const [totalContractValue] = totalContractValuesArray;
     return totalContractValue;
-  } catch (err) {
-    console.error("Error getting totalContractValue by field/value %O", err);
-    throw new Error(`Getting totalContractValue by field/value ${err}`);
+  } catch (error) {
+    console.error('Error getting totalContractValue by field/value %o', error);
+    throw new Error(`Getting totalContractValue by field/value ${error}`);
   }
 };
 var get_total_contract_value_by_field_default = getTotalContractValueByField;
 
-// helpers/create-an-eligibility/index.ts
-var createAnEligibility = async (context, countryId, applicationId, coverPeriodId, totalContractValueId, data) => {
-  console.info("Creating an eligibility for ", applicationId);
+// helpers/create-a-reference-number/index.ts
+var createAReferenceNumber = async (context, applicationId) => {
+  console.info('Creating a reference number for %s', applicationId);
   try {
-    const eligibility = await context.db.Eligibility.createOne({
-      data: {
-        buyerCountry: {
-          connect: { id: countryId }
-        },
-        application: {
-          connect: { id: applicationId }
-        },
-        coverPeriod: {
-          connect: { id: coverPeriodId }
-        },
-        totalContractValue: {
-          connect: { id: totalContractValueId }
-        },
-        ...data
-      }
-    });
-    return eligibility;
-  } catch (err) {
-    console.error("Error creating an eligibility %O", err);
-    throw new Error(`Creating an eligibility ${err}`);
-  }
-};
-var create_an_eligibility_default = createAnEligibility;
-
-// helpers/create-a-declaration-version/index.ts
-var { ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT, CONFIDENTIALITY, CONFIRMATION_AND_ACKNOWLEDGEMENTS } = declarations_default2.LATEST_DECLARATIONS;
-var createADeclarationVersion = async (context, declarationId) => {
-  console.info("Creating an application declaration version for ", declarationId);
-  try {
-    const declaration = await context.db.DeclarationVersion.createOne({
-      data: {
-        declaration: {
-          connect: { id: declarationId }
-        },
-        agreeToAntiBribery: ANTI_BRIBERY,
-        agreeToConfidentiality: CONFIDENTIALITY,
-        agreeToConfirmationAndAcknowledgements: CONFIRMATION_AND_ACKNOWLEDGEMENTS,
-        hasAntiBriberyCodeOfConduct: ANTI_BRIBERY_CODE_OF_CONDUCT,
-        willExportWithAntiBriberyCodeOfConduct: ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT
-      }
-    });
-    return declaration;
-  } catch (err) {
-    console.error("Error creating an application declaration version %O", err);
-    throw new Error(`Creating an application declaration version ${err}`);
-  }
-};
-var create_a_declaration_version_default = createADeclarationVersion;
-
-// helpers/create-a-declaration/index.ts
-var createADeclaration = async (context, applicationId) => {
-  console.info("Creating a application declaration for ", applicationId);
-  try {
-    const declaration = await context.db.Declaration.createOne({
+    const created = await context.db.ReferenceNumber.createOne({
       data: {
         application: {
-          connect: { id: applicationId }
-        }
-      }
+          connect: {
+            id: applicationId,
+          },
+        },
+      },
     });
-    const declarationVersion = await create_a_declaration_version_default(context, declaration.id);
-    return {
-      ...declaration,
-      declarationVersion
-    };
-  } catch (err) {
-    console.error("Error creating an application declaration %O", err);
-    throw new Error(`Creating an application declaration ${err}`);
+    return created.id;
+  } catch (error) {
+    console.error('Error creating a reference number %o', error);
+    throw new Error(`Creating a reference number ${error}`);
   }
 };
-var create_a_declaration_default = createADeclaration;
+var create_a_reference_number_default = createAReferenceNumber;
+
+// helpers/create-a-broker/index.ts
+var createABroker = async (context, applicationId) => {
+  console.info('Creating a broker for %s', applicationId);
+  try {
+    const broker = await context.db.Broker.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId },
+        },
+      },
+    });
+    return broker;
+  } catch (error) {
+    console.error('Error creating a broker %o', error);
+    throw new Error(`Creating a broker ${error}`);
+  }
+};
+var create_a_broker_default = createABroker;
+
+// helpers/create-a-business/index.ts
+var createABusiness = async (context, applicationId) => {
+  console.info('Creating a business for %s', applicationId);
+  try {
+    const business = await context.db.Business.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId },
+        },
+      },
+    });
+    return business;
+  } catch (error) {
+    console.error('Error creating a business %o', error);
+    throw new Error(`Creating a business ${error}`);
+  }
+};
+var create_a_business_default = createABusiness;
 
 // helpers/create-a-buyer-trading-history/index.ts
 var createABuyerTradingHistory = async (context, buyerId, applicationId) => {
-  console.info("Creating a buyer trading history for ", buyerId);
+  console.info('Creating a buyer trading history for %s', buyerId);
   try {
     const buyerTradingHistory = await context.db.BuyerTradingHistory.createOne({
       data: {
         buyer: {
           connect: {
-            id: buyerId
-          }
+            id: buyerId,
+          },
         },
         application: {
           connect: {
-            id: applicationId
-          }
+            id: applicationId,
+          },
         },
-        currencyCode: APPLICATION.DEFAULT_CURRENCY
-      }
+        currencyCode: APPLICATION.DEFAULT_CURRENCY,
+      },
     });
     return buyerTradingHistory;
-  } catch (err) {
-    console.error("Error creating a buyer trading history %O", err);
-    throw new Error(`Creating a buyer trading history ${err}`);
+  } catch (error) {
+    console.error('Error creating a buyer trading history %o', error);
+    throw new Error(`Creating a buyer trading history ${error}`);
   }
 };
 var create_a_buyer_trading_history_default = createABuyerTradingHistory;
 
 // helpers/create-a-buyer-contact/index.ts
 var createABuyerContact = async (context, buyerId, applicationId) => {
-  console.info("Creating a buyer contact for ", buyerId);
+  console.info('Creating a buyer contact for %s', buyerId);
   try {
     const buyerContact = await context.db.BuyerContact.createOne({
       data: {
         buyer: {
           connect: {
-            id: buyerId
-          }
+            id: buyerId,
+          },
         },
         application: {
           connect: {
-            id: applicationId
-          }
-        }
-      }
+            id: applicationId,
+          },
+        },
+      },
     });
     return buyerContact;
-  } catch (err) {
-    console.error("Error creating a buyer contact %O", err);
-    throw new Error(`Creating a buyer contact ${err}`);
+  } catch (error) {
+    console.error('Error creating a buyer contact %o', error);
+    throw new Error(`Creating a buyer contact ${error}`);
   }
 };
 var create_a_buyer_contact_default = createABuyerContact;
 
 // helpers/create-a-buyer-relationship/index.ts
 var createABuyerRelationship = async (context, buyerId, applicationId) => {
-  console.info("Creating a buyer relationship for ", buyerId);
+  console.info('Creating a buyer relationship for %s', buyerId);
   try {
     const buyerRelationship = await context.db.BuyerRelationship.createOne({
       data: {
         buyer: {
           connect: {
-            id: buyerId
-          }
+            id: buyerId,
+          },
         },
         application: {
           connect: {
-            id: applicationId
-          }
-        }
-      }
+            id: applicationId,
+          },
+        },
+      },
     });
     return buyerRelationship;
-  } catch (err) {
-    console.error("Error creating a buyer relationship %O", err);
-    throw new Error(`Creating a buyer relationship ${err}`);
+  } catch (error) {
+    console.error('Error creating a buyer relationship %o', error);
+    throw new Error(`Creating a buyer relationship ${error}`);
   }
 };
 var create_a_buyer_relationship_default = createABuyerRelationship;
 
-// helpers/create-a-buyer/index.ts
-var createABuyer = async (context, countryId, applicationId) => {
-  console.info("Creating a buyer for ", applicationId);
+// helpers/create-a-populated-buyer/index.ts
+var createAPopulatedBuyer = async (context, countryId, applicationId) => {
+  console.info('Creating a buyer for %s', applicationId);
   try {
     const buyer = await context.db.Buyer.createOne({
       data: {
         country: {
-          connect: { id: countryId }
+          connect: { id: countryId },
         },
         application: {
-          connect: { id: applicationId }
-        }
-      }
+          connect: { id: applicationId },
+        },
+      },
     });
     const buyerTradingHistory = await create_a_buyer_trading_history_default(context, buyer.id, applicationId);
     const buyerRelationship = await create_a_buyer_relationship_default(context, buyer.id, applicationId);
     const buyerContact = await create_a_buyer_contact_default(context, buyer.id, applicationId);
     return {
-      buyer: {
-        ...buyer,
-        buyerTradingHistory,
-        relationship: buyerRelationship
-      },
-      buyerContact
+      ...buyer,
+      buyerTradingHistory,
+      relationship: buyerRelationship,
+      buyerContact,
     };
-  } catch (err) {
-    console.error("Error creating a buyer %O", err);
-    throw new Error(`Creating a buyer ${err}`);
+  } catch (error) {
+    console.error('Error creating a populated buyer %o', error);
+    throw new Error(`Creating a populated buyer ${error}`);
   }
 };
-var create_a_buyer_default = createABuyer;
+var create_a_populated_buyer_default = createAPopulatedBuyer;
+
+// helpers/create-a-declaration-version/index.ts
+var { ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT, CONFIDENTIALITY, CONFIRMATION_AND_ACKNOWLEDGEMENTS } =
+  declarations_default2.LATEST_DECLARATIONS;
+var createADeclarationVersion = async (context, declarationId) => {
+  console.info('Creating an application declaration version for %s', declarationId);
+  try {
+    const declaration = await context.db.DeclarationVersion.createOne({
+      data: {
+        declaration: {
+          connect: { id: declarationId },
+        },
+        agreeToAntiBribery: ANTI_BRIBERY,
+        agreeToConfidentiality: CONFIDENTIALITY,
+        agreeToConfirmationAndAcknowledgements: CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+        hasAntiBriberyCodeOfConduct: ANTI_BRIBERY_CODE_OF_CONDUCT,
+        willExportWithAntiBriberyCodeOfConduct: ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT,
+      },
+    });
+    return declaration;
+  } catch (error) {
+    console.error('Error creating an application declaration version %o', error);
+    throw new Error(`Creating an application declaration version ${error}`);
+  }
+};
+var create_a_declaration_version_default = createADeclarationVersion;
+
+// helpers/create-a-declaration/index.ts
+var createADeclaration = async (context, applicationId) => {
+  console.info('Creating an application declaration for %s', applicationId);
+  try {
+    const declaration = await context.db.Declaration.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId },
+        },
+      },
+    });
+    const declarationVersion = await create_a_declaration_version_default(context, declaration.id);
+    return {
+      ...declaration,
+      declarationVersion,
+    };
+  } catch (error) {
+    console.error('Error creating an application declaration %o', error);
+    throw new Error(`Creating an application declaration ${error}`);
+  }
+};
+var create_a_declaration_default = createADeclaration;
+
+// helpers/create-an-eligibility/index.ts
+var createAnEligibility = async (context, countryId, applicationId, coverPeriodId, totalContractValueId, eligibilityData) => {
+  console.info('Creating an eligibility for %s', applicationId);
+  try {
+    const eligibility = await context.db.Eligibility.createOne({
+      data: {
+        buyerCountry: {
+          connect: { id: countryId },
+        },
+        application: {
+          connect: { id: applicationId },
+        },
+        coverPeriod: {
+          connect: { id: coverPeriodId },
+        },
+        totalContractValue: {
+          connect: { id: totalContractValueId },
+        },
+        ...eligibilityData,
+      },
+    });
+    return eligibility;
+  } catch (error) {
+    console.error('Error creating an eligibility %o', error);
+    throw new Error(`Creating an eligibility ${error}`);
+  }
+};
+var create_an_eligibility_default = createAnEligibility;
 
 // helpers/create-a-jointly-insured-party/index.ts
 var createAJointlyInsuredParty = async (context, policyId) => {
-  console.info("Creating a jointly insured party for ", policyId);
+  console.info('Creating a jointly insured party for %s', policyId);
   try {
     const jointlyInsuredParty = await context.db.JointlyInsuredParty.createOne({
       data: {
         policy: {
-          connect: { id: policyId }
-        }
-      }
+          connect: { id: policyId },
+        },
+      },
     });
     return jointlyInsuredParty;
-  } catch (err) {
-    console.error("Error creating a jointly insured party %O", err);
-    throw new Error(`Creating a jointly insured party ${err}`);
+  } catch (error) {
+    console.error('Error creating a jointly insured party %o', error);
+    throw new Error(`Creating a jointly insured party ${error}`);
   }
 };
 var create_a_jointly_insured_party_default = createAJointlyInsuredParty;
 
 // helpers/create-a-policy/index.ts
 var createAPolicy = async (context, applicationId) => {
-  console.info("Creating a policy for ", applicationId);
+  console.info('Creating a policy for %s', applicationId);
   try {
     const policy = await context.db.Policy.createOne({
       data: {
         application: {
-          connect: { id: applicationId }
+          connect: { id: applicationId },
         },
-        needPreCreditPeriodCover: APPLICATION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER
-      }
+        needPreCreditPeriodCover: APPLICATION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER,
+      },
     });
     const jointlyInsuredParty = await create_a_jointly_insured_party_default(context, policy.id);
     return {
-      policy,
-      jointlyInsuredParty
+      ...policy,
+      jointlyInsuredParty,
     };
-  } catch (err) {
-    console.error("Error creating a policy %O", err);
-    throw new Error(`Creating a policy ${err}`);
+  } catch (error) {
+    console.error('Error creating a policy %o', error);
+    throw new Error(`Creating a policy ${error}`);
   }
 };
 var create_a_policy_default = createAPolicy;
 
+// helpers/create-a-policy-contact/index.ts
+var createAPolicyContact = async (context, applicationId) => {
+  console.info('Creating a policy contact for %s', applicationId);
+  try {
+    const policyContact = await context.db.PolicyContact.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId },
+        },
+      },
+    });
+    return policyContact;
+  } catch (error) {
+    console.error('Error creating a policy contact %o', error);
+    throw new Error(`Creating a policy contact ${error}`);
+  }
+};
+var create_a_policy_contact_default = createAPolicyContact;
+
 // helpers/create-a-loss-payee-financial-international/index.ts
 var createALossPayeeFinancialInternational = async (context, lossPayeeId) => {
-  console.info("Creating a loss payee financial (international) for ", lossPayeeId);
+  console.info('Creating a loss payee financial (international) for %s', lossPayeeId);
   try {
     const lossPayeeFinancialInternational = await context.db.LossPayeeFinancialInternational.createOne({
       data: {
         lossPayee: {
-          connect: { id: lossPayeeId }
-        }
-      }
+          connect: { id: lossPayeeId },
+        },
+      },
     });
     const vector = await context.db.LossPayeeFinancialInternationalVector.createOne({
       data: {
         financialInternational: {
-          connect: { id: lossPayeeFinancialInternational.id }
-        }
-      }
+          connect: { id: lossPayeeFinancialInternational.id },
+        },
+      },
     });
     return {
       ...lossPayeeFinancialInternational,
-      vector
+      vector,
     };
-  } catch (err) {
-    console.error("Error creating a loss payee financial (international) for %O", err);
-    throw new Error(`Creating a loss payee financial (international) for ${err}`);
+  } catch (error) {
+    console.error('Error creating a loss payee financial (international) for %o', error);
+    throw new Error(`Creating a loss payee financial (international) for ${error}`);
   }
 };
 var create_a_loss_payee_financial_international_default = createALossPayeeFinancialInternational;
 
 // helpers/create-a-loss-payee-financial-uk/index.ts
 var createALossPayeeFinancialUk = async (context, lossPayeeId) => {
-  console.info("Creating a loss payee financial (UK) for ", lossPayeeId);
+  console.info('Creating a loss payee financial (UK) for %s', lossPayeeId);
   try {
     const lossPayeeFinancialUk = await context.db.LossPayeeFinancialUk.createOne({
       data: {
         lossPayee: {
-          connect: { id: lossPayeeId }
-        }
-      }
+          connect: { id: lossPayeeId },
+        },
+      },
     });
     const vector = await context.db.LossPayeeFinancialUkVector.createOne({
       data: {
         financialUk: {
-          connect: { id: lossPayeeFinancialUk.id }
-        }
-      }
+          connect: { id: lossPayeeFinancialUk.id },
+        },
+      },
     });
     return {
       ...lossPayeeFinancialUk,
-      vector
+      vector,
     };
-  } catch (err) {
-    console.error("Error creating a loss payee financial (UK) for %O", err);
-    throw new Error(`Creating a loss payee financial (UK) for ${err}`);
+  } catch (error) {
+    console.error('Error creating a loss payee financial (UK) for %o', error);
+    throw new Error(`Creating a loss payee financial (UK) for ${error}`);
   }
 };
 var create_a_loss_payee_financial_uk_default = createALossPayeeFinancialUk;
 
 // helpers/create-a-nominated-loss-payee/index.ts
 var createANominatedLossPayee = async (context, applicationId) => {
-  console.info("Creating a nominated loss payee for ", applicationId);
+  console.info('Creating a nominated loss payee for %s', applicationId);
   try {
     const nominatedLossPayee = await context.db.NominatedLossPayee.createOne({
       data: {
         application: {
-          connect: { id: applicationId }
-        }
-      }
+          connect: { id: applicationId },
+        },
+      },
     });
     await create_a_loss_payee_financial_international_default(context, nominatedLossPayee.id);
     await create_a_loss_payee_financial_uk_default(context, nominatedLossPayee.id);
     return nominatedLossPayee;
-  } catch (err) {
-    console.error("Error creating a nominated loss payee for %O", err);
-    throw new Error(`Creating a nominated loss payee for ${err}`);
+  } catch (error) {
+    console.error('Error creating a nominated loss payee for %o', error);
+    throw new Error(`Creating a nominated loss payee for ${error}`);
   }
 };
 var create_a_nominated_loss_payee_default = createANominatedLossPayee;
 
 // helpers/create-a-company-address/index.ts
 var createACompanyAddress = async (context, addressData, companyId) => {
-  console.info("Creating a company address for ", companyId);
+  console.info('Creating a company address for %s', companyId);
   try {
     const companyAddress = await context.db.CompanyAddress.createOne({
       data: {
         company: {
           connect: {
-            id: companyId
-          }
+            id: companyId,
+          },
         },
-        ...addressData
-      }
+        ...addressData,
+      },
     });
     return companyAddress;
-  } catch (err) {
-    console.error("Error creating a company address %O", err);
-    throw new Error(`Creating a company address ${err}`);
+  } catch (error) {
+    console.error('Error creating a company address %o', error);
+    throw new Error(`Creating a company address ${error}`);
   }
 };
 var create_a_company_address_default = createACompanyAddress;
@@ -4666,8 +4729,8 @@ var mapSicCodes = (sicCodes, industrySectorNames2, companyId) => {
     return mapped;
   }
   sicCodes.forEach((code, index) => {
-    let industrySectorName = "";
-    if (industrySectorNames2 && industrySectorNames2[index]) {
+    let industrySectorName = '';
+    if (industrySectorNames2?.[index]) {
       industrySectorName = industrySectorNames2[index];
     }
     const mappedCode = {
@@ -4675,9 +4738,9 @@ var mapSicCodes = (sicCodes, industrySectorNames2, companyId) => {
       industrySectorName,
       company: {
         connect: {
-          id: companyId
-        }
-      }
+          id: companyId,
+        },
+      },
     };
     mapped.push(mappedCode);
   });
@@ -4686,327 +4749,553 @@ var mapSicCodes = (sicCodes, industrySectorNames2, companyId) => {
 var map_sic_codes_default = mapSicCodes;
 
 // helpers/create-company-sic-codes/index.ts
-var createCompanySicCodes = async (context, sicCodes, industrySectorNames2, companyId) => {
-  console.info("Creating company SIC codes for ", companyId);
+var createCompanySicCodes = async (context, companyId, sicCodes, industrySectorNames2) => {
+  console.info('Creating company SIC codes for %s', companyId);
   try {
-    if (sicCodes.length) {
+    if (sicCodes?.length) {
       const mappedSicCodes = map_sic_codes_default(sicCodes, industrySectorNames2, companyId);
       const createdSicCodes = await context.db.CompanySicCode.createMany({
-        data: mappedSicCodes
+        data: mappedSicCodes,
       });
       return createdSicCodes;
     }
     return [];
-  } catch (err) {
-    console.error("Error creating company SIC codes %O", err);
-    throw new Error(`Creating company SIC codes ${err}`);
+  } catch (error) {
+    console.error('Error creating company SIC codes for %s %o', companyId, error);
+    throw new Error(`Creating company SIC codes for ${companyId} ${error}`);
   }
 };
 var create_company_sic_codes_default = createCompanySicCodes;
 
 // helpers/create-a-company-different-trading-address/index.ts
 var createACompanyDifferentTradingAddress = async (context, companyId) => {
-  console.info("Creating a different trading address for ", companyId);
+  console.info('Creating a different trading address for %s', companyId);
   try {
     const differentTradingAddress = await context.db.CompanyDifferentTradingAddress.createOne({
       data: {
         company: {
           connect: {
-            id: companyId
-          }
-        }
-      }
+            id: companyId,
+          },
+        },
+      },
     });
     return differentTradingAddress;
-  } catch (err) {
-    console.error("Error creating a company different trading address %O", err);
-    throw new Error(`Creating a company different trading address ${err}`);
+  } catch (error) {
+    console.error('Error creating a company different trading address %o', error);
+    throw new Error(`Creating a company different trading address ${error}`);
   }
 };
 var create_a_company_different_trading_address_default = createACompanyDifferentTradingAddress;
 
 // helpers/create-a-company/index.ts
 var createACompany = async (context, applicationId, companyData) => {
-  console.info("Creating a company, address and SIC codes for ", applicationId);
+  console.info('Creating a company, address and SIC codes for %s', applicationId);
   try {
     const { registeredOfficeAddress, sicCodes, industrySectorNames: industrySectorNames2, ...companyFields } = companyData;
     const company = await context.db.Company.createOne({
       data: {
         application: {
-          connect: { id: applicationId }
+          connect: { id: applicationId },
         },
-        ...companyFields
-      }
+        ...companyFields,
+      },
     });
     const companyAddress = await create_a_company_address_default(context, registeredOfficeAddress, company.id);
-    const createdSicCodes = await create_company_sic_codes_default(context, sicCodes, industrySectorNames2, company.id);
+    const createdSicCodes = await create_company_sic_codes_default(context, company.id, sicCodes, industrySectorNames2);
     const createdDifferentTradingAddress = await create_a_company_different_trading_address_default(context, company.id);
     return {
       ...company,
       registeredOfficeAddress: companyAddress,
       sicCodes: createdSicCodes,
-      differentTradingAddress: createdDifferentTradingAddress
+      differentTradingAddress: createdDifferentTradingAddress,
     };
-  } catch (err) {
-    console.error("Error creating a company, address, SIC codes and company different trading address %O", err);
-    throw new Error(`Creating a company, address, SIC codes and company different trading address ${err}`);
+  } catch (error) {
+    console.error('Error creating a company, address, SIC codes and company different trading address %o', error);
+    throw new Error(`Creating a company, address, SIC codes and company different trading address ${error}`);
   }
 };
 var create_a_company_default = createACompany;
 
 // helpers/create-a-private-market/index.ts
 var createAPrivateMarket = async (context, exportContractId) => {
-  console.info("Creating a private market for ", exportContractId);
+  console.info('Creating a private market for %s', exportContractId);
   try {
     const privateMarket = await context.db.PrivateMarket.createOne({
       data: {
         exportContract: {
-          connect: { id: exportContractId }
-        }
-      }
+          connect: { id: exportContractId },
+        },
+      },
     });
     return privateMarket;
-  } catch (err) {
-    console.error("Error creating a private market %O", err);
-    throw new Error(`Creating a private market ${err}`);
+  } catch (error) {
+    console.error('Error creating a private market %o', error);
+    throw new Error(`Creating a private market ${error}`);
   }
 };
 var create_a_private_market_default = createAPrivateMarket;
 
 // helpers/create-an-export-contract-agent-service/index.ts
 var createAnExportContractAgentService = async (context, agentId) => {
-  console.info("Creating an export contract agent service for ", agentId);
+  console.info('Creating an export contract agent service for %s', agentId);
   try {
     const agentService = await context.db.ExportContractAgentService.createOne({
       data: {
         agent: {
-          connect: { id: agentId }
-        }
-      }
+          connect: { id: agentId },
+        },
+      },
     });
     return agentService;
-  } catch (err) {
-    console.error("Error creating an export contract agent service %O", err);
-    throw new Error(`Creating an export contract agent service ${err}`);
+  } catch (error) {
+    console.error('Error creating an export contract agent service %o', error);
+    throw new Error(`Creating an export contract agent service ${error}`);
   }
 };
 var create_an_export_contract_agent_service_default = createAnExportContractAgentService;
 
 // helpers/create-an-export-contract-agent-service-charge/index.ts
 var createAnExportContractAgentServiceCharge = async (context, agentServiceId) => {
-  console.info("Creating an export contract agent service charge for ", agentServiceId);
+  console.info('Creating an export contract agent service charge for %s', agentServiceId);
   try {
     const agentService = await context.db.ExportContractAgentServiceCharge.createOne({
       data: {
         service: {
-          connect: { id: agentServiceId }
-        }
-      }
+          connect: { id: agentServiceId },
+        },
+      },
     });
     return agentService;
-  } catch (err) {
-    console.error("Error creating an export contract agent service charge %O", err);
-    throw new Error(`Creating an export contract agent service charge ${err}`);
+  } catch (error) {
+    console.error('Error creating an export contract agent service charge %o', error);
+    throw new Error(`Creating an export contract agent service charge ${error}`);
   }
 };
 var create_an_export_contract_agent_service_charge_default = createAnExportContractAgentServiceCharge;
 
 // helpers/create-an-export-contract-agent/index.ts
 var createAnExportContractAgent = async (context, exportContractId) => {
-  console.info("Creating an export contract agent for ", exportContractId);
+  console.info('Creating an export contract agent for %s', exportContractId);
   try {
     const agent = await context.db.ExportContractAgent.createOne({
       data: {
         exportContract: {
-          connect: { id: exportContractId }
-        }
-      }
+          connect: { id: exportContractId },
+        },
+      },
     });
     const agentService = await create_an_export_contract_agent_service_default(context, agent.id);
     const agentServiceCharge = await create_an_export_contract_agent_service_charge_default(context, agentService.id);
     return {
       agent,
       agentService,
-      agentServiceCharge
+      agentServiceCharge,
     };
-  } catch (err) {
-    console.error("Error creating an export contract agent %O", err);
-    throw new Error(`Creating an export contract agent ${err}`);
+  } catch (error) {
+    console.error('Error creating an export contract agent %o', error);
+    throw new Error(`Creating an export contract agent ${error}`);
   }
 };
 var create_an_export_contract_agent_default = createAnExportContractAgent;
 
 // helpers/create-an-export-contract/index.ts
 var createAnExportContract = async (context, applicationId) => {
-  console.info("Creating an export contract for ", applicationId);
+  console.info('Creating an export contract for %s', applicationId);
   try {
     const exportContract = await context.db.ExportContract.createOne({
       data: {
         application: {
-          connect: { id: applicationId }
+          connect: { id: applicationId },
         },
-        finalDestinationKnown: APPLICATION.DEFAULT_FINAL_DESTINATION_KNOWN
-      }
+        finalDestinationKnown: APPLICATION.DEFAULT_FINAL_DESTINATION_KNOWN,
+      },
     });
     const privateMarket = await create_a_private_market_default(context, exportContract.id);
     const { agent, agentService } = await create_an_export_contract_agent_default(context, exportContract.id);
     return {
-      exportContract,
+      ...exportContract,
       privateMarket,
       agent,
-      agentService
+      agentService,
     };
-  } catch (err) {
-    console.error("Error creating an export contract %O", err);
-    throw new Error(`Creating an export contract ${err}`);
+  } catch (error) {
+    console.error('Error creating an export contract %o', error);
+    throw new Error(`Creating an export contract ${error}`);
   }
 };
 var create_an_export_contract_default = createAnExportContract;
 
 // helpers/create-a-section-review/index.ts
 var createASectionReview = async (context, applicationId, sectionReviewData) => {
-  console.info("Creating a section review for ", applicationId);
+  console.info('Creating a section review for %s', applicationId);
   try {
     const sectionReview = await context.db.SectionReview.createOne({
       data: {
         application: {
-          connect: { id: applicationId }
+          connect: { id: applicationId },
         },
-        ...sectionReviewData
-      }
+        ...sectionReviewData,
+      },
     });
     return sectionReview;
-  } catch (err) {
-    console.error("Error creating a section review %O", err);
-    throw new Error(`Creating a section review ${err}`);
+  } catch (error) {
+    console.error('Error creating a section review %o', error);
+    throw new Error(`Creating a section review ${error}`);
   }
 };
 var create_a_section_review_default = createASectionReview;
 
+// helpers/create-an-application/create-application-relationships/index.ts
+var createApplicationRelationships = async ({ context, applicationId, companyData, eligibilityAnswers, sectionReviewData }) => {
+  try {
+    console.info('Creating application relationships (createApplicationRelationships helper) for application %s', applicationId);
+    const { buyerCountryIsoCode, totalContractValueId, coverPeriodId, ...otherEligibilityAnswers } = eligibilityAnswers;
+    const country = await get_country_by_field_default(context, 'isoCode', buyerCountryIsoCode);
+    if (!country) {
+      console.error(
+        'Unable to create application relationships - buyer country not found (createApplicationRelationships helper) for application %s',
+        applicationId,
+      );
+      throw new Error(
+        `Unable to create application relationships - buyer country not found (createApplicationRelationships helper) for application ${applicationId}`,
+      );
+    }
+    const coverPeriod = await get_cover_period_value_by_field_default(context, 'valueId', coverPeriodId);
+    const totalContractValue = await get_total_contract_value_by_field_default(context, 'valueId', totalContractValueId);
+    const referenceNumber = await create_a_reference_number_default(context, applicationId);
+    const createdRelationships = await Promise.all([
+      create_a_broker_default(context, applicationId),
+      create_a_business_default(context, applicationId),
+      create_a_populated_buyer_default(context, country.id, applicationId),
+      create_a_declaration_default(context, applicationId),
+      create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
+      create_an_export_contract_default(context, applicationId),
+      create_a_policy_default(context, applicationId),
+      create_a_policy_contact_default(context, applicationId),
+      create_a_nominated_loss_payee_default(context, applicationId),
+      create_a_company_default(context, applicationId, companyData),
+      create_a_section_review_default(context, applicationId, sectionReviewData),
+    ]);
+    const [broker, business, buyer, declaration, eligibility, exportContract, policy, policyContact, nominatedLossPayee, company, sectionReview] =
+      createdRelationships;
+    const relationshipIds = {
+      brokerId: broker.id,
+      businessId: business.id,
+      buyerId: buyer.id,
+      companyId: company.id,
+      declarationId: declaration.id,
+      eligibilityId: eligibility.id,
+      exportContractId: exportContract.id,
+      nominatedLossPayeeId: nominatedLossPayee.id,
+      policyId: policy.id,
+      policyContactId: policyContact.id,
+      referenceNumber,
+      sectionReviewId: sectionReview.id,
+    };
+    return relationshipIds;
+  } catch (error) {
+    console.error('Error creating application relationships (createApplicationRelationships helper) for application %s %o', applicationId, error);
+    throw new Error(`Creating application relationships (createApplicationRelationships helper) for application ${applicationId} ${error}`);
+  }
+};
+var applicationRelationships = {
+  create: createApplicationRelationships,
+};
+var create_application_relationships_default = applicationRelationships;
+
+// helpers/create-an-application/update-application-columns/index.ts
+var updateApplicationColumns = async ({
+  context,
+  applicationId,
+  brokerId,
+  businessId,
+  buyerId,
+  companyId,
+  declarationId,
+  eligibilityId,
+  exportContractId,
+  nominatedLossPayeeId,
+  policyId,
+  policyContactId,
+  referenceNumber,
+  sectionReviewId,
+}) => {
+  try {
+    console.info('Updating application relationship columns (updateApplicationColumns helper) for application %s', applicationId);
+    const updatedApplication = await context.db.Application.updateOne({
+      where: {
+        id: applicationId,
+      },
+      data: {
+        broker: {
+          connect: { id: brokerId },
+        },
+        business: {
+          connect: { id: businessId },
+        },
+        buyer: {
+          connect: { id: buyerId },
+        },
+        company: {
+          connect: { id: companyId },
+        },
+        declaration: {
+          connect: { id: declarationId },
+        },
+        eligibility: {
+          connect: { id: eligibilityId },
+        },
+        exportContract: {
+          connect: { id: exportContractId },
+        },
+        nominatedLossPayee: {
+          connect: { id: nominatedLossPayeeId },
+        },
+        policy: {
+          connect: { id: policyId },
+        },
+        policyContact: {
+          connect: { id: policyContactId },
+        },
+        referenceNumber,
+        sectionReview: {
+          connect: { id: sectionReviewId },
+        },
+      },
+    });
+    return updatedApplication;
+  } catch (error) {
+    console.error('Error updating application relationship columns (updateApplicationColumns helper) for application %s %o', applicationId, error);
+    throw new Error(`Updating application relationship columns (updateApplicationColumns helper) for application ${applicationId} ${error}`);
+  }
+};
+var applicationColumns = {
+  update: updateApplicationColumns,
+};
+var update_application_columns_default = applicationColumns;
+
 // helpers/create-an-application/index.ts
-var { SUBMISSION_TYPE: SUBMISSION_TYPE2 } = APPLICATION;
-var createAnApplication = async (root, variables, context) => {
-  console.info("Creating an application (createAnApplication helper)");
+var createAnApplicationHelper = async (variables, context) => {
+  console.info('Creating an application (createAnApplication helper) for user %s', variables.accountId);
   try {
     const { accountId, eligibilityAnswers, company: companyData, sectionReview: sectionReviewData, status } = variables;
     const account2 = await get_account_by_id_default(context, accountId);
     if (!account2) {
+      console.info('Rejecting application creation - no account found (createAnApplication helper)');
       return null;
     }
-    const { buyerCountryIsoCode, totalContractValueId, coverPeriodId, ...otherEligibilityAnswers } = eligibilityAnswers;
-    const country = await get_country_by_field_default(context, "isoCode", buyerCountryIsoCode);
-    const submissionType = SUBMISSION_TYPE2.MIA;
-    const application2 = await context.db.Application.createOne({
-      data: {
-        owner: {
-          connect: { id: accountId }
-        },
-        status,
-        submissionType
-      }
+    const application2 = await create_initial_application_default.create({
+      context,
+      accountId,
+      status,
     });
     const { id: applicationId } = application2;
-    const { buyer } = await create_a_buyer_default(context, country.id, applicationId);
-    const declarations = await create_a_declaration_default(context, applicationId);
-    const totalContractValue = await get_total_contract_value_by_field_default(context, "valueId", totalContractValueId);
-    const coverPeriod = await get_cover_period_value_by_field_default(context, "valueId", coverPeriodId);
-    const eligibility = await create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers);
-    const { exportContract } = await create_an_export_contract_default(context, applicationId);
-    const { policy } = await create_a_policy_default(context, applicationId);
-    const nominatedLossPayee = await create_a_nominated_loss_payee_default(context, applicationId);
-    const company = await create_a_company_default(context, applicationId, companyData);
-    const sectionReview = await create_a_section_review_default(context, applicationId, sectionReviewData);
-    const updatedApplication = await context.db.Application.updateOne({
-      where: {
-        id: applicationId
-      },
-      data: {
-        buyer: {
-          connect: { id: buyer.id }
-        },
-        company: {
-          connect: { id: company.id }
-        },
-        declaration: {
-          connect: { id: declarations.id }
-        },
-        eligibility: {
-          connect: { id: eligibility.id }
-        },
-        exportContract: {
-          connect: { id: exportContract.id }
-        },
-        nominatedLossPayee: {
-          connect: { id: nominatedLossPayee.id }
-        },
-        policy: {
-          connect: { id: policy.id }
-        },
-        sectionReview: {
-          connect: { id: sectionReview.id }
-        }
-      }
+    const {
+      brokerId,
+      businessId,
+      buyerId,
+      companyId,
+      declarationId,
+      eligibilityId,
+      exportContractId,
+      nominatedLossPayeeId,
+      policyId,
+      policyContactId,
+      referenceNumber,
+      sectionReviewId,
+    } = await create_application_relationships_default.create({
+      context,
+      applicationId,
+      companyData,
+      eligibilityAnswers,
+      sectionReviewData,
+    });
+    const updatedApplication = await update_application_columns_default.update({
+      context,
+      applicationId,
+      brokerId,
+      businessId,
+      buyerId,
+      companyId,
+      declarationId,
+      eligibilityId,
+      exportContractId,
+      nominatedLossPayeeId,
+      policyId,
+      policyContactId,
+      referenceNumber,
+      sectionReviewId,
     });
     return updatedApplication;
-  } catch (err) {
-    console.error("Error creating an application (createAnApplication helper) %O", err);
-    throw new Error(`Creating an application (createAnApplication helper) ${err}`);
+  } catch (error) {
+    console.error('Error creating an application (createAnApplication helper) for user %s %o', variables.accountId, error);
+    throw new Error(`Creating an application (createAnApplication helper) for user ${variables.accountId} ${error}`);
   }
 };
-var create_an_application_default = createAnApplication;
+var create_an_application_default = createAnApplicationHelper;
 
 // custom-resolvers/mutations/create-an-application/index.ts
-var { STATUS: STATUS2 } = APPLICATION;
-var createAnApplication2 = async (root, variables, context) => {
-  console.info("Creating application for ", variables.accountId);
-  const updatedVariables = variables;
-  updatedVariables.status = STATUS2.IN_PROGRESS;
+var createAnApplication = async (root, variables, context) => {
+  console.info('Creating application for user %s', variables.accountId);
   try {
-    const updatedApplication = await create_an_application_default(root, updatedVariables, context);
-    if (updatedApplication) {
+    const application2 = await create_an_application_default(variables, context);
+    if (application2) {
       return {
-        ...updatedApplication,
-        success: true
+        ...application2,
+        success: true,
       };
     }
     return {
-      success: false
+      success: false,
     };
-  } catch (err) {
-    console.error("Error creating application %O", err);
-    throw new Error(`Creating application ${err}`);
+  } catch (error) {
+    console.error('Error creating application for user %s %o', variables.accountId, error);
+    throw new Error(`Creating application for user ${variables.accountId} ${error}`);
   }
 };
-var create_an_application_default2 = createAnApplication2;
+var create_an_application_default2 = createAnApplication;
+
+// helpers/get-countries/index.ts
+var getCountries = async (context) => {
+  console.info('Getting countries');
+  try {
+    const countries = await context.db.Country.findMany();
+    return countries;
+  } catch (error) {
+    console.error('Error getting countries %o', error);
+    throw new Error(`Getting countries ${error}`);
+  }
+};
+var get_countries_default = getCountries;
+
+// helpers/create-a-buyer/index.ts
+var createABuyer = async (context, countryId) => {
+  console.info('Creating a buyer');
+  try {
+    const buyer = await context.db.Buyer.createOne({
+      data: {
+        country: {
+          connect: {
+            id: countryId,
+          },
+        },
+      },
+    });
+    return buyer;
+  } catch (error) {
+    console.error('Error creating a buyer %o', error);
+    throw new Error(`Creating a buyer ${error}`);
+  }
+};
+var create_a_buyer_default = createABuyer;
+
+// helpers/create-many-applications-and-reference-numbers/index.ts
+var createManyApplicationsAndReferenceNumbers = async (context, applicationData) => {
+  console.info('Creating many applications and reference numbers');
+  try {
+    const applications = await context.db.Application.createMany({
+      data: applicationData,
+    });
+    const referenceNumbersData = applications.map((application2) => ({
+      application: {
+        connect: {
+          id: application2.id,
+        },
+      },
+    }));
+    const referenceNumbers = await context.db.ReferenceNumber.createMany({ data: referenceNumbersData });
+    return {
+      applications,
+      referenceNumbers,
+    };
+  } catch (error) {
+    console.error('Error creating many applications and reference numbers - helper %o', error);
+    throw new Error(`Creating many applications and reference numbers - helper ${error}`);
+  }
+};
+var create_many_applications_and_reference_numbers_default = createManyApplicationsAndReferenceNumbers;
+
+// helpers/update-applications-data/index.ts
+var updateApplicationsData = async (context, updateData) => {
+  console.info('Updating many applications');
+  try {
+    const updatedApplications = await context.db.Application.updateMany({
+      data: updateData,
+    });
+    return updatedApplications;
+  } catch (error) {
+    console.error('Error updating many applications - helper %o', error);
+    throw new Error(`Updating many applications - helper ${error}`);
+  }
+};
+var update_applications_data_default = updateApplicationsData;
+
+// custom-resolvers/mutations/create-many-applications/index.ts
+var createManyApplications = async (root, variables, context) => {
+  console.info('Creating many applications');
+  try {
+    const emptyArray = new Array(variables.count).fill({});
+    const countries = await get_countries_default(context);
+    const buyer = await create_a_buyer_default(context, countries[0].id);
+    const mockApplicationsData = emptyArray.map(() => ({
+      owner: {
+        connect: {
+          id: variables.accountId,
+        },
+      },
+      buyer: {
+        connect: {
+          id: buyer.id,
+        },
+      },
+      ...initial_application_data_default,
+    }));
+    const { referenceNumbers } = await create_many_applications_and_reference_numbers_default(context, mockApplicationsData);
+    const updateApplicationReferenceNumbers = referenceNumbers.map((referenceNumber) => ({
+      where: { id: referenceNumber.applicationId },
+      data: { referenceNumber: referenceNumber.id },
+    }));
+    await update_applications_data_default(context, updateApplicationReferenceNumbers);
+    const allApplications = await context.query.Application.findMany({
+      query: 'id referenceNumber',
+    });
+    if (allApplications.length) {
+      return {
+        applications: allApplications,
+        success: true,
+      };
+    }
+    return {
+      success: false,
+    };
+  } catch (error) {
+    console.error('Error creating many applications %o', error);
+    throw new Error(`Creating many applications ${error}`);
+  }
+};
+var create_many_applications_default = createManyApplications;
 
 // custom-resolvers/mutations/create-an-abandoned-application/index.ts
 var { STATUS: STATUS3 } = APPLICATION;
 var createAnAbandonedApplication = async (root, variables, context) => {
-  console.info("Creating an abandoned application for ", variables.accountId);
+  console.info('Creating an abandoned application for %s', variables.accountId);
   const abandonedApplicationVariables = variables;
   abandonedApplicationVariables.status = STATUS3.ABANDONED;
   try {
-    const createdApplication = await create_an_application_default(root, abandonedApplicationVariables, context);
+    const createdApplication = await create_an_application_default(abandonedApplicationVariables, context);
     if (createdApplication) {
-      const updatedApplication = await context.db.Application.updateOne({
-        where: {
-          id: createdApplication.id
-        },
-        data: {
-          status: STATUS3.ABANDONED
-        }
-      });
       return {
-        ...updatedApplication,
-        success: true
+        ...createdApplication,
+        success: true,
       };
     }
     return {
-      success: false
+      success: false,
     };
-  } catch (err) {
-    console.error("Error creating an abandoned application %O", err);
-    throw new Error(`Creating an abandoned application ${err}`);
+  } catch (error) {
+    console.error('Error creating an abandoned application %o', error);
+    throw new Error(`Creating an abandoned application ${error}`);
   }
 };
 var create_an_abandoned_application_default = createAnAbandonedApplication;
@@ -5014,20 +5303,20 @@ var create_an_abandoned_application_default = createAnAbandonedApplication;
 // helpers/get-application-by-reference-number/index.ts
 var getApplicationByReferenceNumber = async (referenceNumber, context) => {
   try {
-    console.info("Getting application by reference number - getApplicationByReferenceNumber helper %s", referenceNumber);
+    console.info('Getting application by reference number - getApplicationByReferenceNumber helper %s', referenceNumber);
     const applications = await context.db.Application.findMany({
       where: {
-        referenceNumber: { equals: referenceNumber }
-      }
+        referenceNumber: { equals: referenceNumber },
+      },
     });
     if (applications?.length) {
       const [application2] = applications;
       return application2;
     }
     return null;
-  } catch (err) {
-    console.error("Error getting application by reference number %O", err);
-    throw new Error(`Error getting application by reference number ${err}`);
+  } catch (error) {
+    console.error('Error getting application by reference number %o', error);
+    throw new Error(`Error getting application by reference number ${error}`);
   }
 };
 var get_application_by_reference_number_default = getApplicationByReferenceNumber;
@@ -5035,62 +5324,148 @@ var get_application_by_reference_number_default = getApplicationByReferenceNumbe
 // custom-resolvers/mutations/delete-application-by-reference-number/index.ts
 var deleteApplicationByReferenceNumber = async (root, variables, context) => {
   try {
-    console.info("Deleting application by reference number");
+    console.info('Deleting application by reference number');
     const { referenceNumber } = variables;
     const application2 = await get_application_by_reference_number_default(referenceNumber, context);
     if (application2) {
       const { id } = application2;
       const deleteResponse = await context.db.Application.deleteOne({
         where: {
-          id
-        }
+          id,
+        },
       });
       if (deleteResponse?.id) {
         return {
-          success: true
+          success: true,
         };
       }
     }
     return {
-      success: false
+      success: false,
     };
-  } catch (err) {
-    console.error("Error deleting application by reference number (DeleteApplicationByReferenceNumber mutation) %O", err);
-    throw new Error(`Deleting application by reference number (DeleteApplicationByReferenceNumber mutation) ${err}`);
+  } catch (error) {
+    console.error('Error deleting application by reference number (DeleteApplicationByReferenceNumber mutation) %o', error);
+    throw new Error(`Deleting application by reference number (DeleteApplicationByReferenceNumber mutation) ${error}`);
   }
 };
 var delete_application_by_reference_number_default = deleteApplicationByReferenceNumber;
 
 // custom-resolvers/mutations/submit-application/index.ts
-var import_date_fns6 = require("date-fns");
+var import_date_fns6 = require('date-fns');
 
-// helpers/get-populated-application/map-policy/index.ts
-var mapPolicy = (policy) => {
-  const { requestedStartDate, contractCompletionDate } = policy;
-  const mappedPolicy = {
-    ...policy,
-    requestedStartDate: requestedStartDate ? new Date(requestedStartDate) : null,
-    contractCompletionDate: contractCompletionDate ? new Date(contractCompletionDate) : null
-  };
-  return mappedPolicy;
+// helpers/get-eligibility-by-id/index.ts
+var getEligibilityById = async (context, id) => {
+  try {
+    console.info('Getting eligibility by ID %s', id);
+    const eligibility = await context.db.Eligibility.findOne({
+      where: { id },
+    });
+    return eligibility;
+  } catch (error) {
+    console.error('Getting eligibility by ID %s %o', id, error);
+    throw new Error(`Error Getting eligibility by ID ${id} ${error}`);
+  }
 };
-var map_policy_default = mapPolicy;
+var get_eligibility_by_id_default = getEligibilityById;
+
+// helpers/get-cover-period-by-id/index.ts
+var getCoverPeriodById = async (context, id) => {
+  try {
+    console.info('Getting coverPeriod by ID %s', id);
+    const coverPeriod = await context.db.CoverPeriod.findOne({
+      where: { id },
+    });
+    return coverPeriod;
+  } catch (error) {
+    console.error('Getting coverPeriod by ID %s %o', id, error);
+    throw new Error(`Error Getting coverPeriod by ID ${id} ${error}`);
+  }
+};
+var get_cover_period_by_id_default = getCoverPeriodById;
+
+// helpers/get-total-contract-value-by-id/index.ts
+var getTotalContractValueById = async (context, id) => {
+  try {
+    console.info('Getting totalContractValue by ID %s', id);
+    const totalContractValue = await context.db.TotalContractValue.findOne({
+      where: { id },
+    });
+    return totalContractValue;
+  } catch (error) {
+    console.error('Getting totalContractValue by ID %s %o', id, error);
+    throw new Error(`Error Getting totalContractValue by ID ${id} ${error}`);
+  }
+};
+var get_total_contract_value_by_id_default = getTotalContractValueById;
+
+// helpers/get-populated-eligibility/index.ts
+var getPopulatedEligibility = async (context, id, buyerCountry) => {
+  try {
+    console.info('Getting populated eligibility %s', id);
+    const eligibility = await get_eligibility_by_id_default(context, id);
+    const coverPeriod = await get_cover_period_by_id_default(context, eligibility.coverPeriodId);
+    const totalContractValue = await get_total_contract_value_by_id_default(context, eligibility.totalContractValueId);
+    const populatedEligibility = {
+      ...eligibility,
+      buyerCountry,
+      coverPeriod,
+      totalContractValue,
+    };
+    return populatedEligibility;
+  } catch (error) {
+    console.error('Getting populated eligibility %s %o', id, error);
+    throw new Error(`Error Getting populated eligibility ${id} ${error}`);
+  }
+};
+var get_populated_eligibility_default = getPopulatedEligibility;
+
+// helpers/get-policy-by-id/index.ts
+var getPolicyById = async (context, id) => {
+  try {
+    console.info('Getting policy by ID %s', id);
+    const policy = await context.query.Policy.findOne({
+      where: { id },
+      query:
+        'id policyType requestedStartDate contractCompletionDate requestedCreditLimit totalValueOfContract creditPeriodWithBuyer policyCurrencyCode totalMonthsOfCover totalSalesToBuyer maximumBuyerWillOwe needPreCreditPeriodCover jointlyInsuredParty { id companyName companyNumber countryCode requested }',
+    });
+    return policy;
+  } catch (error) {
+    console.error('Getting policy by ID %s %o', id, error);
+    throw new Error(`Error Getting policy by ID ${id} ${error}`);
+  }
+};
+var get_policy_by_id_default = getPolicyById;
+
+// helpers/get-policy-contact-by-id/index.ts
+var getPolicyContactById = async (context, id) => {
+  try {
+    console.info('Getting policyContact by ID %s', id);
+    const policyContact = await context.db.PolicyContact.findOne({
+      where: { id },
+    });
+    return policyContact;
+  } catch (error) {
+    console.error('Getting policyContact by ID %s %o', id, error);
+    throw new Error(`Error Getting policyContact by ID ${id} ${error}`);
+  }
+};
+var get_policy_contact_by_id_default = getPolicyContactById;
 
 // helpers/encrypt/generate-key/index.ts
-var import_crypto9 = __toESM(require("crypto"));
+var import_crypto9 = __toESM(require('crypto'));
 var { ALGORITHM: ALGORITHM2, SIGNATURE: SIGNATURE2, SUBSTRING_INDEX_START, SUBSTRING_INDEX_END } = FINANCIAL_DETAILS.ENCRYPTION.KEY;
-var generateKey = () => import_crypto9.default.createHash(ALGORITHM2).update(SIGNATURE2).digest("hex").substring(SUBSTRING_INDEX_START, SUBSTRING_INDEX_END);
+var generateKey = () => import_crypto9.default.createHash(ALGORITHM2).update(SIGNATURE2).digest('hex').substring(SUBSTRING_INDEX_START, SUBSTRING_INDEX_END);
 var generate_key_default = generateKey;
 
 // helpers/decrypt/generate-decipher/index.ts
-var import_crypto10 = __toESM(require("crypto"));
+var import_crypto10 = __toESM(require('crypto'));
 var { ENCRYPTION_METHOD } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
 var generateDecipher = (key2, iv) => {
   try {
     return import_crypto10.default.createDecipheriv(ENCRYPTION_METHOD, key2, iv);
-  } catch (err) {
-    console.error("Error generating decipher %O", err);
-    throw new Error(`Error generating decipher ${err}`);
+  } catch (error) {
+    console.error('Error generating decipher %o', error);
+    throw new Error(`Error generating decipher ${error}`);
   }
 };
 var generate_decipher_default = generateDecipher;
@@ -5100,9 +5475,9 @@ var { STRING_ENCODING: STRING_ENCODING2, OUTPUT_ENCODING } = FINANCIAL_DETAILS.E
 var generateBufferInStringFormat = (value) => {
   try {
     return Buffer.from(value, STRING_ENCODING2).toString(OUTPUT_ENCODING);
-  } catch (err) {
-    console.error("Error generating buffer %O", err);
-    throw new Error(`Error generating buffer ${err}`);
+  } catch (error) {
+    console.error('Error generating buffer %o', error);
+    throw new Error(`Error generating buffer ${error}`);
   }
 };
 var generate_buffer_default = generateBufferInStringFormat;
@@ -5112,35 +5487,35 @@ var { ENCODING: ENCODING2, OUTPUT_ENCODING: OUTPUT_ENCODING2 } = FINANCIAL_DETAI
 var key = generate_key_default();
 var decryptData = (dataToDecrypt) => {
   try {
-    console.info("Decrypting data");
+    console.info('Decrypting data');
     const { value, iv } = dataToDecrypt;
     const buffer = generate_buffer_default(value);
     const decipher = generate_decipher_default(key, iv);
     const decipherUpdate = decipher.update(buffer, ENCODING2, OUTPUT_ENCODING2);
     const decipherFinal = decipher.final(OUTPUT_ENCODING2);
     return decipherUpdate.concat(decipherFinal);
-  } catch (err) {
-    console.error("Error decrypting data %O", err);
-    throw new Error(`Error decrypting data ${err}`);
+  } catch (error) {
+    console.error('Error decrypting data %o', error);
+    throw new Error(`Error decrypting data ${error}`);
   }
 };
 var decrypt = {
-  decrypt: decryptData
+  decrypt: decryptData,
 };
 var decrypt_default = decrypt;
 
 // helpers/decrypt-financial-uk/index.ts
 var decryptFinancialUk = (applicationFinancialUk) => {
   try {
-    console.info("Decrypting financial uk");
+    console.info('Decrypting financial uk');
     const mapped = applicationFinancialUk;
     const {
       accountNumber,
       sortCode,
-      vector: { accountNumberVector, sortCodeVector }
+      vector: { accountNumberVector, sortCodeVector },
     } = applicationFinancialUk;
-    let decryptedAccountNumber = "";
-    let decryptedSortCode = "";
+    let decryptedAccountNumber = '';
+    let decryptedSortCode = '';
     if (accountNumber && accountNumberVector) {
       decryptedAccountNumber = decrypt_default.decrypt({ value: accountNumber, iv: accountNumberVector });
     }
@@ -5150,9 +5525,9 @@ var decryptFinancialUk = (applicationFinancialUk) => {
     mapped.accountNumber = decryptedAccountNumber;
     mapped.sortCode = decryptedSortCode;
     return mapped;
-  } catch (err) {
-    console.error("Error decrypting financial uk %O", err);
-    throw new Error(`Error decrypting financial uk ${err}`);
+  } catch (error) {
+    console.error('Error decrypting financial uk %o', error);
+    throw new Error(`Error decrypting financial uk ${error}`);
   }
 };
 var decrypt_financial_uk_default = decryptFinancialUk;
@@ -5160,15 +5535,15 @@ var decrypt_financial_uk_default = decryptFinancialUk;
 // helpers/decrypt-financial-international/index.ts
 var decryptFinancialInternational = (applicationFinancialInternational) => {
   try {
-    console.info("Decrypting financial international");
+    console.info('Decrypting financial international');
     const mapped = applicationFinancialInternational;
     const {
       bicSwiftCode,
       iban,
-      vector: { bicSwiftCodeVector, ibanVector }
+      vector: { bicSwiftCodeVector, ibanVector },
     } = applicationFinancialInternational;
-    let decryptedIban = "";
-    let decryptedBicSwiftCode = "";
+    let decryptedIban = '';
+    let decryptedBicSwiftCode = '';
     if (bicSwiftCode && bicSwiftCodeVector) {
       decryptedBicSwiftCode = decrypt_default.decrypt({ value: bicSwiftCode, iv: bicSwiftCodeVector });
     }
@@ -5178,9 +5553,9 @@ var decryptFinancialInternational = (applicationFinancialInternational) => {
     mapped.bicSwiftCode = decryptedBicSwiftCode;
     mapped.iban = decryptedIban;
     return mapped;
-  } catch (err) {
-    console.error("Error decrypting international uk %O", err);
-    throw new Error(`Error decrypting international uk ${err}`);
+  } catch (error) {
+    console.error('Error decrypting international uk %o', error);
+    throw new Error(`Error decrypting international uk ${error}`);
   }
 };
 var decrypt_financial_international_default = decryptFinancialInternational;
@@ -5188,27 +5563,27 @@ var decrypt_financial_international_default = decryptFinancialInternational;
 // helpers/decrypt-nominated-loss-payee/index.ts
 var decryptNominatedLossPayee = (nominatedLossPayee, decryptFinancialUk2, decryptFinancialInternational2) => {
   try {
-    console.info("Decrypting nominated loss payee %s", nominatedLossPayee.id);
+    console.info('Decrypting nominated loss payee %s', nominatedLossPayee.id);
     const mapped = {
       ...nominatedLossPayee,
       financialUk: {},
-      financialInternational: {}
+      financialInternational: {},
     };
     const { financialUk, financialInternational } = nominatedLossPayee;
     if (decryptFinancialUk2) {
-      console.info("Decrypting nominated loss payee - financial - UK data %s", nominatedLossPayee.id);
+      console.info('Decrypting nominated loss payee - financial - UK data %s', nominatedLossPayee.id);
       const mappedFinancialUk = decrypt_financial_uk_default(financialUk);
       mapped.financialUk = mappedFinancialUk;
     }
     if (decryptFinancialInternational2) {
-      console.info("Decrypting nominated loss payee - financial - international data %s", nominatedLossPayee.id);
+      console.info('Decrypting nominated loss payee - financial - international data %s', nominatedLossPayee.id);
       const mappedFinancialInternational = decrypt_financial_international_default(financialInternational);
       mapped.financialInternational = mappedFinancialInternational;
     }
     return mapped;
-  } catch (err) {
-    console.error("Error decrypting nominated loss payee %O", err);
-    throw new Error(`Error decrypting nominated loss payee ${err}`);
+  } catch (error) {
+    console.error('Error decrypting nominated loss payee %o', error);
+    throw new Error(`Error decrypting nominated loss payee ${error}`);
   }
 };
 var decrypt_nominated_loss_payee_default = decryptNominatedLossPayee;
@@ -5216,274 +5591,478 @@ var decrypt_nominated_loss_payee_default = decryptNominatedLossPayee;
 // helpers/get-populated-application/nominated-loss-payee/index.ts
 var getNominatedLossPayee = async (context, lossPayeeId, decryptFinancialUk2, decryptFinancialInternational2) => {
   try {
-    console.info(`Getting nominated loss payee ${lossPayeeId}`);
+    console.info('Getting nominated loss payee %s', lossPayeeId);
     const nominatedLossPayee = await context.query.NominatedLossPayee.findOne({
       where: { id: lossPayeeId },
-      query: "id isAppointed isLocatedInUk isLocatedInternationally name financialUk { id accountNumber sortCode bankAddress vector { accountNumberVector sortCodeVector } } financialInternational { id iban bicSwiftCode bankAddress vector { bicSwiftCodeVector ibanVector } }"
+      query:
+        'id isAppointed isLocatedInUk isLocatedInternationally name financialUk { id accountNumber sortCode bankAddress vector { accountNumberVector sortCodeVector } } financialInternational { id iban bicSwiftCode bankAddress vector { bicSwiftCodeVector ibanVector } }',
     });
     if (decryptFinancialUk2 || decryptFinancialInternational2) {
       const decryptedNominatedLossPayee = decrypt_nominated_loss_payee_default(nominatedLossPayee, decryptFinancialUk2, decryptFinancialInternational2);
       return decryptedNominatedLossPayee;
     }
     return nominatedLossPayee;
-  } catch (err) {
-    console.error("Error getting nominated loss payee (getNominatedLossPayee helper) %O", err);
-    throw new Error(`Error getting nominated loss payee (getNominatedLossPayee helper) ${err}`);
+  } catch (error) {
+    console.error('Error getting nominated loss payee (getNominatedLossPayee helper) %o', error);
+    throw new Error(`Error getting nominated loss payee (getNominatedLossPayee helper) ${error}`);
   }
 };
 var nominated_loss_payee_default = getNominatedLossPayee;
 
+// helpers/get-export-contract-by-id/index.ts
+var getExportContractById = async (context, id) => {
+  try {
+    console.info('Getting exportContract by ID %s', id);
+    const exportContract = await context.db.ExportContract.findOne({
+      where: { id },
+    });
+    return exportContract;
+  } catch (error) {
+    console.error('Getting exportContract by ID %s %o', id, error);
+    throw new Error(`Error Getting exportContract by ID ${id} ${error}`);
+  }
+};
+var get_export_contract_by_id_default = getExportContractById;
+
+// helpers/get-export-contract-agent-by-id/index.ts
+var getExportContractAgentById = async (context, id) => {
+  try {
+    console.info('Getting exportContractAgent by ID %s', id);
+    const exportContractAgent = await context.db.ExportContractAgent.findOne({
+      where: { id },
+    });
+    return exportContractAgent;
+  } catch (error) {
+    console.error('Getting exportContractAgent by ID %s %o', id, error);
+    throw new Error(`Error Getting exportContractAgent by ID ${id} ${error}`);
+  }
+};
+var get_export_contract_agent_by_id_default = getExportContractAgentById;
+
+// helpers/get-export-contract-agent-service-by-id/index.ts
+var getExportContractAgentServiceById = async (context, id) => {
+  try {
+    console.info('Getting exportContractAgentService by ID %s', id);
+    const exportContractAgentService = await context.db.ExportContractAgentService.findOne({
+      where: { id },
+    });
+    return exportContractAgentService;
+  } catch (error) {
+    console.error('Getting exportContractAgentService by ID %s %o', id, error);
+    throw new Error(`Error Getting exportContractAgentService by ID ${id} ${error}`);
+  }
+};
+var get_export_contract_agent_service_by_id_default = getExportContractAgentServiceById;
+
+// helpers/get-export-contract-agent-service-charge-by-id/index.ts
+var getExportContractAgentServiceChargeById = async (context, id) => {
+  try {
+    console.info('Getting exportContractAgentServiceCharge by ID %s', id);
+    const exportContractAgentServiceCharge = await context.db.ExportContractAgentServiceCharge.findOne({
+      where: { id },
+    });
+    return exportContractAgentServiceCharge;
+  } catch (error) {
+    console.error('Getting exportContractAgentServiceCharge by ID %s %o', id, error);
+    throw new Error(`Error Getting exportContractAgentServiceCharge by ID ${id} ${error}`);
+  }
+};
+var get_export_contract_agent_service_charge_by_id_default = getExportContractAgentServiceChargeById;
+
+// helpers/get-populated-export-contract/get-populated-agent/index.ts
+var getPopulatedAgent = async (context, id) => {
+  try {
+    console.info('Getting populated exportContract agent %s', id);
+    const exportContractAgent = await get_export_contract_agent_by_id_default(context, id);
+    const exportContractAgentService = await get_export_contract_agent_service_by_id_default(context, exportContractAgent.serviceId);
+    const exportContractAgentServiceCharge = await get_export_contract_agent_service_charge_by_id_default(context, exportContractAgentService.chargeId);
+    const populatedAgent = {
+      ...exportContractAgent,
+      service: {
+        ...exportContractAgentService,
+        charge: exportContractAgentServiceCharge,
+      },
+    };
+    return populatedAgent;
+  } catch (error) {
+    console.error('Getting populated exportContract agent %s %o', id, error);
+    throw new Error(`Error Getting populated exportContract agent ${id} ${error}`);
+  }
+};
+var get_populated_agent_default = getPopulatedAgent;
+
+// helpers/get-private-market-by-id/index.ts
+var getPrivateMarketById = async (context, id) => {
+  try {
+    console.info('Getting privateMarket by ID %s', id);
+    const privateMarket = await context.db.PrivateMarket.findOne({
+      where: { id },
+    });
+    return privateMarket;
+  } catch (error) {
+    console.error('Getting privateMarket by ID %s %o', id, error);
+    throw new Error(`Error Getting privateMarket by ID ${id} ${error}`);
+  }
+};
+var get_private_market_by_id_default = getPrivateMarketById;
+
+// helpers/get-populated-export-contract/index.ts
+var getPopulatedExportContract = async (context, id) => {
+  try {
+    console.info('Getting populated exportContract %s', id);
+    const exportContract = await get_export_contract_by_id_default(context, id);
+    const exportContractAgent = await get_populated_agent_default(context, exportContract.agentId);
+    const privateMarket = await get_private_market_by_id_default(context, exportContract.privateMarketId);
+    const finalDestinationCountry = await get_country_by_field_default(context, 'isoCode', exportContract.finalDestinationCountryCode);
+    const populatedExportContract = {
+      ...exportContract,
+      agent: exportContractAgent,
+      finalDestinationCountry,
+      privateMarket,
+    };
+    return populatedExportContract;
+  } catch (error) {
+    console.error('Getting populated exportContract %s %o', id, error);
+    throw new Error(`Error Getting populated exportContract ${id} ${error}`);
+  }
+};
+var get_populated_export_contract_default = getPopulatedExportContract;
+
+// helpers/get-company-by-id/index.ts
+var getCompanyById = async (context, id) => {
+  try {
+    console.info('Getting company by ID %s', id);
+    const company = await context.db.Company.findOne({
+      where: { id },
+    });
+    return company;
+  } catch (error) {
+    console.error('Getting company by ID %s %o', id, error);
+    throw new Error(`Error Getting company by ID ${id} ${error}`);
+  }
+};
+var get_company_by_id_default = getCompanyById;
+
+// helpers/get-company-address-by-id/index.ts
+var getCompanyAddressById = async (context, id) => {
+  try {
+    console.info('Getting company address by ID %s', id);
+    const companyAddress = await context.db.CompanyAddress.findOne({
+      where: { id },
+    });
+    return companyAddress;
+  } catch (error) {
+    console.error('Getting company address by ID %s %o', id, error);
+    throw new Error(`Error Getting company address by ID ${id} ${error}`);
+  }
+};
+var get_company_address_by_id_default = getCompanyAddressById;
+
+// helpers/get-company-sic-codes-by-company-id/index.ts
+var getCompanySicCodesByCompanyId = async (context, id) => {
+  try {
+    console.info('Getting company SIC codes by company ID %s', id);
+    const companySicCodes = await context.db.CompanySicCode.findMany({
+      where: {
+        company: {
+          id: { equals: id },
+        },
+      },
+    });
+    return companySicCodes;
+  } catch (error) {
+    console.error('Getting company SIC codes by company ID %s %o', id, error);
+    throw new Error(`Error Getting company SIC codes by company ID ${id} ${error}`);
+  }
+};
+var get_company_sic_codes_by_company_id_default = getCompanySicCodesByCompanyId;
+
+// helpers/get-company-different-trading-address-by-id/index.ts
+var getCompanyDifferentTradingAddressById = async (context, id) => {
+  try {
+    console.info('Getting company different trading address by ID %s', id);
+    const differentTradingAddress = await context.db.CompanyDifferentTradingAddress.findOne({
+      where: { id },
+    });
+    return differentTradingAddress;
+  } catch (error) {
+    console.error('Getting company different trading address by ID %s %o', id, error);
+    throw new Error(`Error Getting company different trading address by ID ${id} ${error}`);
+  }
+};
+var get_company_different_trading_address_by_id_default = getCompanyDifferentTradingAddressById;
+
+// helpers/get-populated-company/index.ts
+var getPopulatedCompany = async (context, id) => {
+  try {
+    console.info('Getting populated company %s', id);
+    const company = await get_company_by_id_default(context, id);
+    const companyAddress = await get_company_address_by_id_default(context, company.registeredOfficeAddressId);
+    const companySicCodes = await get_company_sic_codes_by_company_id_default(context, company.id);
+    const differentTradingAddress = await get_company_different_trading_address_by_id_default(context, company.differentTradingAddressId);
+    const populatedCompany = {
+      ...company,
+      companySicCodes,
+      registeredOfficeAddress: companyAddress,
+      differentTradingAddress,
+    };
+    return populatedCompany;
+  } catch (error) {
+    console.error('Getting populated company %s %o', id, error);
+    throw new Error(`Error Getting populated company ${id} ${error}`);
+  }
+};
+var get_populated_company_default = getPopulatedCompany;
+
+// helpers/get-business-by-id/index.ts
+var getBusinessById = async (context, id) => {
+  try {
+    console.info('Getting business by ID %s', id);
+    const business = await context.db.Business.findOne({
+      where: { id },
+    });
+    return business;
+  } catch (error) {
+    console.error('Getting business by ID %s %o', id, error);
+    throw new Error(`Error Getting business by ID ${id} ${error}`);
+  }
+};
+var get_business_by_id_default = getBusinessById;
+
+// helpers/get-broker-by-id/index.ts
+var getBrokerById = async (context, id) => {
+  try {
+    console.info('Getting broker by ID %s', id);
+    const broker = await context.db.Broker.findOne({
+      where: { id },
+    });
+    return broker;
+  } catch (error) {
+    console.error('Getting broker by ID %s %o', id, error);
+    throw new Error(`Error Getting broker by ID ${id} ${error}`);
+  }
+};
+var get_broker_by_id_default = getBrokerById;
+
+// helpers/get-buyer-by-id/index.ts
+var getBuyerById = async (context, id) => {
+  try {
+    console.info('Getting buyer by ID %s', id);
+    const buyer = await context.db.Buyer.findOne({
+      where: { id },
+    });
+    return buyer;
+  } catch (error) {
+    console.error('Getting buyer by ID %s %o', id, error);
+    throw new Error(`Error Getting buyer by ID ${id} ${error}`);
+  }
+};
+var get_buyer_by_id_default = getBuyerById;
+
+// helpers/get-country-by-id/index.ts
+var getCountryById = async (context, id) => {
+  try {
+    console.info('Getting country by ID %s', id);
+    const country = await context.db.Country.findOne({
+      where: { id },
+    });
+    return country;
+  } catch (error) {
+    console.error('Getting country by ID %s %o', id, error);
+    throw new Error(`Error Getting country by ID ${id} ${error}`);
+  }
+};
+var get_country_by_id_default = getCountryById;
+
+// helpers/get-buyer-relationship-by-id/index.ts
+var getBuyerRelationshipById = async (context, id) => {
+  try {
+    console.info('Getting buyer relationship by ID %s', id);
+    const buyerRelationship = await context.db.BuyerRelationship.findOne({
+      where: { id },
+    });
+    return buyerRelationship;
+  } catch (error) {
+    console.error('Getting buyer relationship by ID %s %o', id, error);
+    throw new Error(`Error Getting buyer relationship by ID ${id} ${error}`);
+  }
+};
+var get_buyer_relationship_by_id_default = getBuyerRelationshipById;
+
+// helpers/get-buyer-trading-history-by-id/index.ts
+var getBuyerTradingHistoryById = async (context, id) => {
+  try {
+    console.info('Getting buyer trading history by ID %s', id);
+    const buyerTradingHistory = await context.db.BuyerTradingHistory.findOne({
+      where: { id },
+    });
+    return buyerTradingHistory;
+  } catch (error) {
+    console.error('Getting buyer trading history by ID %s %o', id, error);
+    throw new Error(`Error Getting buyer trading history by ID ${id} ${error}`);
+  }
+};
+var get_buyer_trading_history_by_id_default = getBuyerTradingHistoryById;
+
+// helpers/get-populated-buyer/index.ts
+var getPopulatedBuyer = async (context, id) => {
+  try {
+    console.info('Getting populated buyer %s', id);
+    const buyer = await get_buyer_by_id_default(context, id);
+    const buyerCountry = await get_country_by_id_default(context, buyer.countryId);
+    const buyerRelationship = await get_buyer_relationship_by_id_default(context, buyer.relationshipId);
+    const buyerTradingHistory = await get_buyer_trading_history_by_id_default(context, buyer.buyerTradingHistoryId);
+    const populatedBuyer = {
+      ...buyer,
+      country: buyerCountry,
+      relationship: buyerRelationship,
+      buyerTradingHistory,
+    };
+    return populatedBuyer;
+  } catch (error) {
+    console.error('Getting populated buyer %s %o', id, error);
+    throw new Error(`Error Getting populated buyer ${id} ${error}`);
+  }
+};
+var get_populated_buyer_default = getPopulatedBuyer;
+
+// helpers/get-declaration-by-id/index.ts
+var getDeclarationById = async (context, id) => {
+  try {
+    console.info('Getting declaration by ID %s', id);
+    const declaration = await context.db.Declaration.findOne({
+      where: { id },
+    });
+    return declaration;
+  } catch (error) {
+    console.error('Getting declaration by ID %s %o', id, error);
+    throw new Error(`Error Getting declaration by ID ${id} ${error}`);
+  }
+};
+var get_declaration_by_id_default = getDeclarationById;
+
+// helpers/get-section-review-by-id/index.ts
+var getSectionReviewById = async (context, id) => {
+  try {
+    console.info('Getting sectionReview by ID %s', id);
+    const sectionReview = await context.db.SectionReview.findOne({
+      where: { id },
+    });
+    return sectionReview;
+  } catch (error) {
+    console.error('Getting sectionReview by ID %s %o', id, error);
+    throw new Error(`Error Getting sectionReview by ID ${id} ${error}`);
+  }
+};
+var get_section_review_by_id_default = getSectionReviewById;
+
+// helpers/map-total-contract-value-over-threshold/index.ts
+var mapTotalContractValueOverThreshold = (eligibility) => eligibility.totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
+var map_total_contract_value_over_threshold_default = mapTotalContractValueOverThreshold;
+
+// helpers/get-populated-application/map-policy/index.ts
+var mapPolicy = (policy) => {
+  const { requestedStartDate, contractCompletionDate } = policy;
+  const mappedPolicy = {
+    ...policy,
+    requestedStartDate: requestedStartDate ? new Date(requestedStartDate) : null,
+    contractCompletionDate: contractCompletionDate ? new Date(contractCompletionDate) : null,
+  };
+  return mappedPolicy;
+};
+var map_policy_default = mapPolicy;
+
 // helpers/get-populated-application/index.ts
-var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
 var getPopulatedApplication = async ({
   context,
   application: application2,
   decryptFinancialUk: decryptFinancialUk2 = false,
-  decryptFinancialInternational: decryptFinancialInternational2 = false
+  decryptFinancialInternational: decryptFinancialInternational2 = false,
 }) => {
-  console.info(`Getting populated application (helper) ${application2.id}`);
-  const {
-    eligibilityId,
-    ownerId,
-    policyId,
-    policyContactId,
-    exportContractId,
-    companyId,
-    businessId,
-    brokerId,
-    buyerId,
-    declarationId,
-    nominatedLossPayeeId,
-    sectionReviewId
-  } = application2;
-  const eligibility = await context.db.Eligibility.findOne({
-    where: { id: eligibilityId }
-  });
-  if (!eligibility) {
-    throw new Error(generateErrorMessage("eligibility", application2.id));
+  try {
+    console.info('Getting populated application (helper) %s', application2.id);
+    const {
+      eligibilityId,
+      ownerId,
+      policyId,
+      policyContactId,
+      exportContractId,
+      companyId,
+      businessId,
+      brokerId,
+      buyerId,
+      declarationId,
+      nominatedLossPayeeId,
+      sectionReviewId,
+    } = application2;
+    const populatedBuyer = await get_populated_buyer_default(context, buyerId);
+    const populatedEligibility = await get_populated_eligibility_default(context, eligibilityId, populatedBuyer.country);
+    const account2 = await get_account_by_id_default(context, ownerId);
+    const policy = await get_policy_by_id_default(context, policyId);
+    const policyContact = await get_policy_contact_by_id_default(context, policyContactId);
+    const nominatedLossPayee = await nominated_loss_payee_default(context, nominatedLossPayeeId, decryptFinancialUk2, decryptFinancialInternational2);
+    const populatedExportContract = await get_populated_export_contract_default(context, exportContractId);
+    const { companySicCodes, ...populatedCompany } = await get_populated_company_default(context, companyId);
+    const business = await get_business_by_id_default(context, businessId);
+    const broker = await get_broker_by_id_default(context, brokerId);
+    const declaration = await get_declaration_by_id_default(context, declarationId);
+    const sectionReview = await get_section_review_by_id_default(context, sectionReviewId);
+    const totalContractValueOverThreshold = map_total_contract_value_over_threshold_default(populatedEligibility);
+    const populatedApplication2 = {
+      ...application2,
+      eligibility: populatedEligibility,
+      broker,
+      business,
+      buyer: populatedBuyer,
+      company: populatedCompany,
+      companySicCodes,
+      declaration,
+      exportContract: populatedExportContract,
+      owner: account2,
+      policy: map_policy_default(policy),
+      policyContact,
+      nominatedLossPayee,
+      sectionReview,
+      totalContractValueOverThreshold,
+    };
+    return populatedApplication2;
+  } catch (error) {
+    console.error('Getting populated application (helper) %s %o', application2.id, error);
+    throw new Error(`Error Getting populated application (helper) ${application2.id} ${error}`);
   }
-  const coverPeriod = await context.db.CoverPeriod.findOne({
-    where: { id: eligibility.coverPeriodId }
-  });
-  if (!coverPeriod) {
-    throw new Error(generateErrorMessage("coverPeriod", application2.id));
-  }
-  const totalContractValue = await context.db.TotalContractValue.findOne({
-    where: { id: eligibility.totalContractValueId }
-  });
-  if (!totalContractValue) {
-    throw new Error(generateErrorMessage("totalContractValue", application2.id));
-  }
-  const account2 = await get_account_by_id_default(context, ownerId);
-  if (!account2) {
-    throw new Error(generateErrorMessage("account", application2.id));
-  }
-  const policy = await context.query.Policy.findOne({
-    where: { id: policyId },
-    query: "id policyType requestedStartDate contractCompletionDate totalValueOfContract creditPeriodWithBuyer policyCurrencyCode totalMonthsOfCover totalSalesToBuyer maximumBuyerWillOwe needPreCreditPeriodCover jointlyInsuredParty { id companyName companyNumber countryCode requested }"
-  });
-  if (!policy) {
-    throw new Error(generateErrorMessage("policy", application2.id));
-  }
-  const policyContact = await context.db.PolicyContact.findOne({
-    where: { id: policyContactId }
-  });
-  if (!policyContact) {
-    throw new Error(generateErrorMessage("policyContact", application2.id));
-  }
-  const nominatedLossPayee = await nominated_loss_payee_default(context, nominatedLossPayeeId, decryptFinancialUk2, decryptFinancialInternational2);
-  const populatedPolicy = map_policy_default(policy);
-  const exportContract = await context.db.ExportContract.findOne({
-    where: { id: exportContractId }
-  });
-  if (!exportContract) {
-    throw new Error(generateErrorMessage("exportContract", application2.id));
-  }
-  const exportContractAgent = await context.db.ExportContractAgent.findOne({
-    where: { id: exportContract.agentId }
-  });
-  if (!exportContractAgent) {
-    throw new Error(generateErrorMessage("exportContractAgent", application2.id));
-  }
-  const exportContractAgentService = await context.db.ExportContractAgentService.findOne({
-    where: { id: exportContractAgent.serviceId }
-  });
-  if (!exportContractAgentService) {
-    throw new Error(generateErrorMessage("exportContractAgentService", application2.id));
-  }
-  const exportContractAgentServiceCharge = await context.db.ExportContractAgentServiceCharge.findOne({
-    where: { id: exportContractAgentService.chargeId }
-  });
-  if (!exportContractAgentServiceCharge) {
-    throw new Error(generateErrorMessage("exportContractAgentServiceCharge", application2.id));
-  }
-  const privateMarket = await context.db.PrivateMarket.findOne({
-    where: { id: exportContract.privateMarketId }
-  });
-  if (!privateMarket) {
-    throw new Error(generateErrorMessage("privateMarket", application2.id));
-  }
-  const finalDestinationCountry = await get_country_by_field_default(context, "isoCode", exportContract.finalDestinationCountryCode);
-  const populatedExportContract = {
-    ...exportContract,
-    agent: {
-      ...exportContractAgent,
-      service: {
-        ...exportContractAgentService,
-        charge: exportContractAgentServiceCharge
-      }
-    },
-    finalDestinationCountry,
-    privateMarket
-  };
-  const company = await context.db.Company.findOne({
-    where: { id: companyId }
-  });
-  if (!company) {
-    throw new Error(generateErrorMessage("company", application2.id));
-  }
-  const companySicCodes = await context.db.CompanySicCode.findMany({
-    where: {
-      company: {
-        id: { equals: company.id }
-      }
-    }
-  });
-  if (!company) {
-    throw new Error(generateErrorMessage("companySicCode", application2.id));
-  }
-  const companyAddress = await context.db.CompanyAddress.findOne({
-    where: { id: company.registeredOfficeAddressId }
-  });
-  if (!companyAddress) {
-    throw new Error(generateErrorMessage("companyAddress", application2.id));
-  }
-  const differentTradingAddress = await context.db.CompanyDifferentTradingAddress.findOne({
-    where: { id: company.differentTradingAddressId }
-  });
-  if (!differentTradingAddress) {
-    throw new Error(generateErrorMessage("differentTradingAddress", application2.id));
-  }
-  const populatedCompany = {
-    ...company,
-    registeredOfficeAddress: companyAddress,
-    differentTradingAddress
-  };
-  const business = await context.db.Business.findOne({
-    where: { id: businessId }
-  });
-  if (!business) {
-    throw new Error(generateErrorMessage("business", application2.id));
-  }
-  const broker = await context.db.Broker.findOne({
-    where: { id: brokerId }
-  });
-  if (!broker) {
-    throw new Error(generateErrorMessage("broker", application2.id));
-  }
-  const buyer = await context.db.Buyer.findOne({
-    where: { id: buyerId }
-  });
-  if (!buyer) {
-    throw new Error(generateErrorMessage("buyer", application2.id));
-  }
-  const buyerRelationship = await context.db.BuyerRelationship.findOne({
-    where: { id: buyer.relationshipId }
-  });
-  if (!buyerRelationship) {
-    throw new Error(generateErrorMessage("buyerRelationship", application2.id));
-  }
-  const buyerTradingHistory = await context.db.BuyerTradingHistory.findOne({
-    where: { id: buyer.buyerTradingHistoryId }
-  });
-  if (!buyerTradingHistory) {
-    throw new Error(generateErrorMessage("buyerTradingHistory", application2.id));
-  }
-  const buyerCountry = await context.db.Country.findOne({
-    where: { id: buyer.countryId }
-  });
-  if (!buyerCountry) {
-    throw new Error(generateErrorMessage("populated buyer", application2.id));
-  }
-  const populatedEligibility = {
-    ...eligibility,
-    buyerCountry,
-    coverPeriod,
-    totalContractValue
-  };
-  const populatedBuyer = {
-    ...buyer,
-    country: buyerCountry,
-    relationship: buyerRelationship,
-    buyerTradingHistory
-  };
-  const declaration = await context.db.Declaration.findOne({
-    where: { id: declarationId }
-  });
-  if (!declaration) {
-    throw new Error(generateErrorMessage("declaration", application2.id));
-  }
-  const sectionReview = await context.db.SectionReview.findOne({
-    where: { id: sectionReviewId }
-  });
-  if (!sectionReview) {
-    throw new Error(generateErrorMessage("sectionReview", application2.id));
-  }
-  const populatedApplication2 = {
-    ...application2,
-    eligibility: populatedEligibility,
-    broker,
-    business,
-    buyer: populatedBuyer,
-    company: populatedCompany,
-    companySicCodes,
-    declaration,
-    exportContract: populatedExportContract,
-    owner: account2,
-    policy: populatedPolicy,
-    policyContact,
-    nominatedLossPayee,
-    sectionReview
-  };
-  return populatedApplication2;
 };
 var populatedApplication = {
-  get: getPopulatedApplication
+  get: getPopulatedApplication,
 };
 var get_populated_application_default = populatedApplication;
 
-// helpers/get-countries/index.ts
-var getCountries = async (context) => {
-  console.info("Getting countries");
-  try {
-    const countries = await context.db.Country.findMany();
-    return countries;
-  } catch (err) {
-    console.error("Error getting countries %O", err);
-    throw new Error(`Getting countries ${err}`);
-  }
-};
-var get_countries_default = getCountries;
-
 // helpers/replace-character-codes-with-characters/index.ts
-var replaceCharacterCodesWithCharacters = (str) => str.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#x27;/g, "'").replace(/&#x2F;/g, "/").replace(/&#42;/g, "*").replace(/&amp;/g, "&");
+var replaceCharacterCodesWithCharacters = (str) =>
+  str
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#x27;/g, "'")
+    .replace(/&#x2F;/g, '/')
+    .replace(/&#42;/g, '*')
+    .replace(/&amp;/g, '&');
 var replace_character_codes_with_characters_default = replaceCharacterCodesWithCharacters;
 
 // helpers/get-application-submitted-email-template-ids/index.ts
 var {
   APPLICATION: {
-    SUBMISSION: { EXPORTER, UNDERWRITING_TEAM }
-  }
+    SUBMISSION: { EXPORTER, UNDERWRITING_TEAM },
+  },
 } = EMAIL_TEMPLATE_IDS;
 var getApplicationSubmittedEmailTemplateIds = (application2) => {
   const { buyer, declaration } = application2;
   const templateIds = {
-    underwritingTeam: "",
-    account: ""
+    underwritingTeam: '',
+    account: '',
   };
   const { hasAntiBriberyCodeOfConduct } = declaration;
   const {
-    buyerTradingHistory: { exporterHasTradedWithBuyer }
+    buyerTradingHistory: { exporterHasTradedWithBuyer },
   } = buyer;
   if (!hasAntiBriberyCodeOfConduct && !exporterHasTradedWithBuyer) {
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NO_DOCUMENTS;
@@ -5515,45 +6094,45 @@ var send4 = async (application2, xlsxPath) => {
       buyerName: replace_character_codes_with_characters_default(String(buyer.companyOrOrganisationName)),
       buyerLocation: buyer.country?.name,
       companyName: replace_character_codes_with_characters_default(company.companyName),
-      requestedStartDate: format_date_default(policy.requestedStartDate)
+      requestedStartDate: format_date_default(policy.requestedStartDate),
     };
     const sendOwnerEmailVars = {
       ...sharedEmailVars,
       buyerName: replace_character_codes_with_characters_default(String(buyer.companyOrOrganisationName)),
       name: replace_character_codes_with_characters_default(get_full_name_string_default(owner)),
-      emailAddress: email
+      emailAddress: email,
     };
     const sendContactEmailVars = {
       ...sharedEmailVars,
       buyerName: replace_character_codes_with_characters_default(String(buyer.companyOrOrganisationName)),
       name: replace_character_codes_with_characters_default(get_full_name_string_default(policyContact)),
-      emailAddress: policyContact.email
+      emailAddress: policyContact.email,
     };
-    console.info("Sending application submitted email to application account owner: %s", sendOwnerEmailVars.emailAddress);
+    console.info('Sending application submitted email to application account owner: %s', sendOwnerEmailVars.emailAddress);
     const accountSubmittedResponse = await emails_default.application.submittedEmail(sendOwnerEmailVars);
-    if (!accountSubmittedResponse.success) {
-      throw new Error("Sending application submitted email to owner/account");
+    if (!accountSubmittedResponse?.success) {
+      throw new Error('Sending application submitted email to owner/account');
     }
     if (!policyContact.isSameAsOwner) {
-      console.info("Sending application submitted email to policy contact email: %s", sendContactEmailVars.emailAddress);
+      console.info('Sending application submitted email to policy contact email: %s', sendContactEmailVars.emailAddress);
       const contactSubmittedResponse = await emails_default.application.submittedEmail(sendContactEmailVars);
-      if (!contactSubmittedResponse.success) {
-        throw new Error("Sending application submitted email to contact");
+      if (!contactSubmittedResponse?.success) {
+        throw new Error('Sending application submitted email to contact');
       }
     }
     const templateIds = get_application_submitted_email_template_ids_default(application2);
     const underwritingTeamSubmittedResponse = await emails_default.application.underwritingTeam(sendOwnerEmailVars, xlsxPath, templateIds.underwritingTeam);
     if (!underwritingTeamSubmittedResponse.success) {
-      throw new Error("Sending application submitted email to underwriting team");
+      throw new Error('Sending application submitted email to underwriting team');
     }
     if (templateIds.account) {
-      console.info("Sending documents email to application owner: %s", sendOwnerEmailVars.emailAddress);
+      console.info('Sending documents email to application owner: %s', sendOwnerEmailVars.emailAddress);
       const documentsResponse = await emails_default.documentsEmail(sendOwnerEmailVars, templateIds.account);
       if (!documentsResponse.success) {
         throw new Error(`Sending application documents emails ${documentsResponse}`);
       }
       if (!policyContact.isSameAsOwner) {
-        console.info("Sending documents email to policy contact: %s", sendContactEmailVars.emailAddress);
+        console.info('Sending documents email to policy contact: %s', sendContactEmailVars.emailAddress);
         const contactDocumentsResponse = await emails_default.documentsEmail(sendContactEmailVars, templateIds.account);
         if (!contactDocumentsResponse.success) {
           throw new Error(`Sending application documents emails to contact ${documentsResponse}`);
@@ -5561,31 +6140,31 @@ var send4 = async (application2, xlsxPath) => {
       }
     }
     return {
-      success: true
+      success: true,
     };
-  } catch (err) {
-    console.error("Error sending application submitted emails %O", err);
-    throw new Error(`Sending application submitted emails ${err}`);
+  } catch (error) {
+    console.error('Error sending application submitted emails %o', error);
+    throw new Error(`Sending application submitted emails ${error}`);
   }
 };
 var applicationSubmittedEmails = {
-  send: send4
+  send: send4,
 };
 var send_application_submitted_emails_default = applicationSubmittedEmails;
 
 // generate-xlsx/index.ts
-var import_dotenv9 = __toESM(require("dotenv"));
-var import_exceljs = __toESM(require("exceljs"));
+var import_dotenv9 = __toESM(require('dotenv'));
+var import_exceljs = __toESM(require('exceljs'));
 
 // constants/XLSX-CONFIG/SECTION_NAMES/index.ts
 var SECTION_NAMES = {
-  APPLICATION_INFORMATION: "Application Information",
-  ELIGIBILITY: "Eligibility",
-  EXPORTER_BUSINESS: "The Business",
-  BUYER: "The Buyer",
-  POLICY: "Insurance Policy",
-  EXPORT_CONTRACT: "Export Contract",
-  DECLARATIONS: "Declarations"
+  APPLICATION_INFORMATION: 'Application Information',
+  ELIGIBILITY: 'Eligibility',
+  EXPORTER_BUSINESS: 'The Business',
+  BUYER: 'The Buyer',
+  POLICY: 'Insurance Policy',
+  EXPORT_CONTRACT: 'Export Contract',
+  DECLARATIONS: 'Declarations',
 };
 var SECTION_NAMES_default = SECTION_NAMES;
 
@@ -5596,66 +6175,69 @@ var {
     AGREE_ANTI_BRIBERY,
     HAS_ANTI_BRIBERY_CODE_OF_CONDUCT,
     AGREE_CONFIRMATION_ACKNOWLEDGEMENTS,
-    WILL_EXPORT_WITH_CODE_OF_CONDUCT
-  }
+    WILL_EXPORT_WITH_CODE_OF_CONDUCT,
+  },
 } = insurance_default;
 var DECLARATIONS_FIELDS = {
   [AGREE_CONFIDENTIALITY]: {
     SUMMARY: {
-      TITLE: "Confidentiality"
-    }
+      TITLE: 'Confidentiality',
+    },
   },
   [AGREE_ANTI_BRIBERY]: {
     SUMMARY: {
-      TITLE: "Anti-bribery and corruption"
-    }
+      TITLE: 'Anti-bribery and corruption',
+    },
   },
   [HAS_ANTI_BRIBERY_CODE_OF_CONDUCT]: {
     SUMMARY: {
-      TITLE: "Do you have a code of conduct?"
-    }
+      TITLE: 'Do you have a code of conduct?',
+    },
   },
   [WILL_EXPORT_WITH_CODE_OF_CONDUCT]: {
     SUMMARY: {
-      TITLE: "Will you export using your code of conduct?"
-    }
+      TITLE: 'Will you export using your code of conduct?',
+    },
   },
   [AGREE_CONFIRMATION_ACKNOWLEDGEMENTS]: {
     SUMMARY: {
-      TITLE: "Confirmation and acknowledgements"
-    }
-  }
+      TITLE: 'Confirmation and acknowledgements',
+    },
+  },
 };
 
 // content-strings/links.ts
 var LINKS = {
   EXTERNAL: {
-    GUIDANCE: "https://www.gov.uk/guidance/credit-insurance-policy#eligibility",
-    BEFORE_YOU_START: "https://www.gov.uk/guidance/get-a-quote-for-ukef-credit-insurance",
-    PRIVACY: "https://www.gov.uk/government/publications/ukef-privacy-notice/ukef-privacy-notice--2",
-    FEEDBACK: "https://forms.office.com/r/TacytrRCgJ",
-    RESEARCH: "https://forms.office.com/pages/responsepage.aspx?id=jhOEgACUnkCm2ka1KB4LCkj8OKxLpCpDmTbrMyQ3j2JUOUFHNUc0QUhUOFdLNkJXWkRUS0wyMUZFNiQlQCN0PWcu",
-    EXPORT_FINANCE_MANAGERS: "https://www.gov.uk/government/publications/find-an-export-finance-manager",
-    APPROVED_BROKER_LIST: "https://www.gov.uk/government/publications/uk-export-finance-insurance-list-of-approved-brokers/export-insurance-approved-brokers",
-    PROPOSAL_FORM: "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1075267/10489_UKEF_Export_Insurance_Proposal_Form_20220513-fillable.pdf",
-    NBI_FORM: "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1041659/export-insurance-non-binding-indication-request-form_20170609.pdf",
-    FULL_APPLICATION: "https://www.gov.uk/guidance/apply-for-ukef-credit-insurance",
-    ABILITY_NET: "https://mcmw.abilityNet.org.uk",
-    EQUALITY_ADVISORY_SERVICE: "https://www.equalityadvisoryservice.com",
-    ACCESSIBILITY_GUIDLINES: "https://www.w3.org/TR/WCAG21",
-    BRIBERY_ACT_2010_GUIDANCE: "https://www.justice.gov.uk/downloads/legislation/bribery-act-2010-guidance.pdf",
-    ICO_MAKE_A_COMPLAINT: "https://ico.org.uk/make-a-complaint",
-    COMPANIES_HOUSE: "https://find-and-update.company-information.service.gov.uk"
-  }
+    GUIDANCE: 'https://www.gov.uk/guidance/credit-insurance-policy#eligibility',
+    BEFORE_YOU_START: 'https://www.gov.uk/guidance/get-a-quote-for-ukef-credit-insurance',
+    PRIVACY: 'https://www.gov.uk/government/publications/ukef-privacy-notice/ukef-privacy-notice--2',
+    FEEDBACK: 'https://forms.office.com/r/TacytrRCgJ',
+    RESEARCH: 'https://forms.office.com/pages/responsepage.aspx?id=jhOEgACUnkCm2ka1KB4LCkj8OKxLpCpDmTbrMyQ3j2JUOUFHNUc0QUhUOFdLNkJXWkRUS0wyMUZFNiQlQCN0PWcu',
+    EXPORT_FINANCE_MANAGERS: 'https://www.gov.uk/government/publications/find-an-export-finance-manager',
+    APPROVED_BROKER_LIST: 'https://www.gov.uk/government/publications/uk-export-finance-insurance-list-of-approved-brokers/export-insurance-approved-brokers',
+    PROPOSAL_FORM:
+      'https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1075267/10489_UKEF_Export_Insurance_Proposal_Form_20220513-fillable.pdf',
+    NBI_FORM:
+      'https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1041659/export-insurance-non-binding-indication-request-form_20170609.pdf',
+    FULL_APPLICATION: 'https://www.gov.uk/guidance/apply-for-ukef-credit-insurance',
+    ABILITY_NET: 'https://mcmw.abilityNet.org.uk',
+    EQUALITY_ADVISORY_SERVICE: 'https://www.equalityadvisoryservice.com',
+    ACCESSIBILITY_GUIDLINES: 'https://www.w3.org/TR/WCAG21',
+    BRIBERY_ACT_2010_GUIDANCE: 'https://www.justice.gov.uk/downloads/legislation/bribery-act-2010-guidance.pdf',
+    ICO_MAKE_A_COMPLAINT: 'https://ico.org.uk/make-a-complaint',
+    COMPANIES_HOUSE: 'https://find-and-update.company-information.service.gov.uk',
+  },
 };
 
 // helpers/format-currency/index.ts
-var formatCurrency = (number, currencyCode, decimalPlaces) => number.toLocaleString("en", {
-  style: "currency",
-  currency: currencyCode,
-  minimumFractionDigits: decimalPlaces ?? 0,
-  maximumFractionDigits: decimalPlaces ?? 0
-});
+var formatCurrency = (number, currencyCode, decimalPlaces) =>
+  number.toLocaleString('en', {
+    style: 'currency',
+    currency: currencyCode,
+    minimumFractionDigits: decimalPlaces ?? 0,
+    maximumFractionDigits: decimalPlaces ?? 0,
+  });
 var format_currency_default = formatCurrency;
 
 // content-strings/fields/insurance/eligibility/index.ts
@@ -5667,85 +6249,91 @@ var {
   COMPANIES_HOUSE_NUMBER,
   TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID,
   HAS_END_BUYER,
-  HAS_COMPANIES_HOUSE_NUMBER
+  HAS_COMPANIES_HOUSE_NUMBER,
 } = insurance_default.ELIGIBILITY;
 var { COMPANY_NAME } = insurance_default.COMPANIES_HOUSE;
 var THRESHOLD = format_currency_default(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
-var FIELDS_ELIGIBILITY = {
+var ELIGIBILITY_FIELDS = {
   [BUYER_COUNTRY]: {
     SUMMARY: {
-      TITLE: "Buyer location"
-    }
+      TITLE: 'Buyer location',
+    },
   },
   [VALID_EXPORTER_LOCATION]: {
     SUMMARY: {
-      TITLE: "In UK, Channel Islands or Isle of Man"
-    }
+      TITLE: 'In UK, Channel Islands or Isle of Man',
+    },
   },
   [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
     SUMMARY: {
-      TITLE: "UK goods or services"
+      TITLE: 'UK goods or services',
     },
-    ANSWER: "At least 20%"
+    ANSWER: 'At least 20%',
   },
   [HAS_END_BUYER]: {
     HINT: "Sometimes, exporters supply goods to a client in an overseas market who will then sell them on. The exporter will not get paid by the buyer until they have been paid by this third party. We call this third party an 'end buyer'.",
     SUMMARY: {
-      TITLE: "End buyer"
-    }
+      TITLE: 'End buyer',
+    },
   },
   [COVER_PERIOD_FIELD_ID]: {
     OPTIONS: {
       BELOW: {
         ID: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
         VALUE: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
-        TEXT: COVER_PERIOD.LESS_THAN_2_YEARS.VALUE
+        TEXT: COVER_PERIOD.LESS_THAN_2_YEARS.VALUE,
       },
       ABOVE: {
         ID: COVER_PERIOD.MORE_THAN_2_YEARS.DB_ID,
         VALUE: COVER_PERIOD.MORE_THAN_2_YEARS.DB_ID,
-        TEXT: COVER_PERIOD.MORE_THAN_2_YEARS.VALUE
-      }
+        TEXT: COVER_PERIOD.MORE_THAN_2_YEARS.VALUE,
+      },
     },
     SUMMARY: {
-      TITLE: "Length of policy"
-    }
+      TITLE: 'Length of policy',
+    },
   },
   [COMPANIES_HOUSE_NUMBER]: {
-    HINT: `<p>For example, 8989898 or SC907816. You'll find it on your incorporation certificate or on the <a class="govuk-link" href="${LINKS.EXTERNAL.COMPANIES_HOUSE}">Companies House website</a>.</p>`,
+    HINT: {
+      INTRO: "For example, 8989898 or SC907816. You'll find it on your incorporation certificate or on the",
+      LINK: {
+        TEXT: 'Companies House website',
+        HREF: LINKS.EXTERNAL.COMPANIES_HOUSE,
+      },
+    },
     SUMMARY: {
-      TITLE: "UK Companies House number"
-    }
+      TITLE: 'UK Companies House number',
+    },
   },
   [HAS_COMPANIES_HOUSE_NUMBER]: {
     SUMMARY: {
-      TITLE: "UK Companies House registration number and actively trading"
-    }
+      TITLE: 'UK Companies House registration number and actively trading',
+    },
   },
   [COMPANY_NAME]: {
     SUMMARY: {
-      TITLE: "Company name"
-    }
+      TITLE: 'Company name',
+    },
   },
   [TOTAL_CONTRACT_VALUE_FIELD_ID]: {
     OPTIONS: {
       ABOVE: {
         ID: TOTAL_CONTRACT_VALUE.MORE_THAN_250K.DB_ID,
         VALUE: TOTAL_CONTRACT_VALUE.MORE_THAN_250K.DB_ID,
-        TEXT: `${THRESHOLD} and above`
+        TEXT: `${THRESHOLD} and above`,
       },
       BELOW: {
         ID: TOTAL_CONTRACT_VALUE.LESS_THAN_250K.DB_ID,
         VALUE: TOTAL_CONTRACT_VALUE.LESS_THAN_250K.DB_ID,
-        TEXT: `Less than ${THRESHOLD}`
-      }
+        TEXT: `Less than ${THRESHOLD}`,
+      },
     },
     SUMMARY: {
-      TITLE: "Total value to insure",
+      TITLE: 'Total value to insure',
       ABOVE: `Above ${THRESHOLD}`,
-      BELOW: `Below ${THRESHOLD}`
-    }
-  }
+      BELOW: `Below ${THRESHOLD}`,
+    },
+  },
 };
 
 // content-strings/fields/insurance/export-contract/index.ts
@@ -5754,114 +6342,114 @@ var {
   HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD },
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
   HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
-  PRIVATE_MARKET: { DECLINED_DESCRIPTION }
+  PRIVATE_MARKET: { DECLINED_DESCRIPTION },
 } = export_contract_default;
 var EXPORT_CONTRACT_FIELDS = {
   HOW_WAS_THE_CONTRACT_AWARDED: {
     [AWARD_METHOD]: {
-      LEGEND: "How was the contract awarded?",
+      LEGEND: 'How was the contract awarded?',
       OPTIONS: {
         OPEN_TENDER: {
           ID: OPEN_TENDER.DB_ID,
           VALUE: OPEN_TENDER.DB_ID,
-          TEXT: OPEN_TENDER.VALUE
+          TEXT: OPEN_TENDER.VALUE,
         },
         NEGOTIATED_CONTRACT: {
           ID: NEGOTIATED_CONTRACT.DB_ID,
           VALUE: NEGOTIATED_CONTRACT.DB_ID,
-          TEXT: NEGOTIATED_CONTRACT.VALUE
+          TEXT: NEGOTIATED_CONTRACT.VALUE,
         },
         DIRECT_AWARD: {
           ID: DIRECT_AWARD.DB_ID,
           VALUE: DIRECT_AWARD.DB_ID,
-          TEXT: DIRECT_AWARD.VALUE
+          TEXT: DIRECT_AWARD.VALUE,
         },
         COMPETITIVE_BIDDING: {
           ID: COMPETITIVE_BIDDING.DB_ID,
           VALUE: COMPETITIVE_BIDDING.DB_ID,
-          TEXT: COMPETITIVE_BIDDING.VALUE
+          TEXT: COMPETITIVE_BIDDING.VALUE,
         },
         OTHER: {
           ID: OTHER.DB_ID,
           VALUE: OTHER.DB_ID,
-          TEXT: OTHER.VALUE
-        }
+          TEXT: OTHER.VALUE,
+        },
       },
       SUMMARY: {
-        TITLE: "How was the contract awarded"
-      }
-    }
+        TITLE: 'How was the contract awarded',
+      },
+    },
   },
   ABOUT_GOODS_OR_SERVICES: {
     [DESCRIPTION]: {
       LABEL: "Describe the goods or services you're exporting and explain how they'll be used by the buyer",
       HINT: {
-        INTRO: "For example:",
+        INTRO: 'For example:',
         LIST: [
-          "fast moving consumer goods, like vegan protein bars",
-          "construction materials to build commercial property",
-          "educational services such as teacher training"
+          'fast moving consumer goods, like vegan protein bars',
+          'construction materials to build commercial property',
+          'educational services such as teacher training',
         ],
-        OUTRO: "We may contact you to get more information if you're exporting goods or services that might have an impact on the environment."
+        OUTRO: "We may contact you to get more information if you're exporting goods or services that might have an impact on the environment.",
       },
       MAXIMUM: 1e3,
       SUMMARY: {
-        TITLE: "Goods or services you're exporting"
-      }
+        TITLE: "Goods or services you're exporting",
+      },
     },
     [FINAL_DESTINATION_KNOWN]: {
-      LABEL: "Do you know the final destination of the goods or services?"
+      LABEL: 'Do you know the final destination of the goods or services?',
     },
     [FINAL_DESTINATION]: {
       LABEL: "What's the final destination of the goods or services?",
       SUMMARY: {
-        TITLE: "Final destination of goods or services"
-      }
-    }
+        TITLE: 'Final destination of goods or services',
+      },
+    },
   },
   HOW_WILL_YOU_GET_PAID: {
     [PAYMENT_TERMS_DESCRIPTION]: {
       HINT: {
-        INTRO: "Types of payment terms include:",
-        LIST: ["payments that are due within 60 days from date of invoice", "payments collected by a letter of credit", "staged payments"],
-        OUTRO: "If you use staged payments, explain their structure and whether they're monthly, in advance or something else."
-      }
-    }
+        INTRO: 'Types of payment terms include:',
+        LIST: ['payments that are due within 60 days from date of invoice', 'payments collected by a letter of credit', 'staged payments'],
+        OUTRO: "If you use staged payments, explain their structure and whether they're monthly, in advance or something else.",
+      },
+    },
   },
   PRIVATE_MARKET: {
     [DECLINED_DESCRIPTION]: {
-      HINT: "Tell us about the best quote you received and why you were unable to use it. For example, your current policy might not cover the country you're exporting to."
-    }
-  }
+      HINT: "Tell us about the best quote you received and why you were unable to use it. For example, your current policy might not cover the country you're exporting to.",
+    },
+  },
 };
 
 // content-strings/form-titles.ts
 var FORM_TITLES = {
   YOUR_BUSINESS: {
-    COMPANY_DETAILS: "Company details",
-    NATURE_OF_BUSINESS: "Nature of your business",
-    TURNOVER: "Turnover",
-    CREDIT_CONTROL: "Credit control"
+    COMPANY_DETAILS: 'Company details',
+    NATURE_OF_BUSINESS: 'Nature of your business',
+    TURNOVER: 'Turnover',
+    CREDIT_CONTROL: 'Credit control',
   },
   YOUR_BUYER: {
-    COMPANY_DETAILS: "Company details",
-    CONNECTION_TO_BUYER: "Connection to the buyer",
-    TRADING_HISTORY: "Trading history",
-    CREDIT_INSURANCE_HISTORY: "Credit insurance history",
-    FINANCIAL_ACCOUNTS: "Financial accounts"
+    COMPANY_DETAILS: 'Company details',
+    CONNECTION_TO_BUYER: 'Connection to the buyer',
+    TRADING_HISTORY: 'Trading history',
+    CREDIT_INSURANCE_HISTORY: 'Credit insurance history',
+    FINANCIAL_ACCOUNTS: 'Financial accounts',
   },
   POLICY: {
-    CONTRACT_POLICY: "Requested insurance policy",
-    NAME_ON_POLICY: "Named person on the policy",
-    BROKER: "Broker",
-    OTHER_COMPANY: "Other company to be insured",
-    LOSS_PAYEE: "Loss payee"
+    CONTRACT_POLICY: 'Requested insurance policy',
+    NAME_ON_POLICY: 'Named person on the policy',
+    BROKER: 'Broker',
+    OTHER_COMPANY: 'Other company to be insured',
+    LOSS_PAYEE: 'Loss payee',
   },
   EXPORT_CONTRACT: {
-    ABOUT_THE_EXPORT: "About the export",
-    PRIVATE_MARKET: "Private insurance market",
-    AGENT: "Agent"
-  }
+    ABOUT_THE_EXPORT: 'About the export',
+    PRIVATE_MARKET: 'Private insurance market',
+    AGENT: 'Agent',
+  },
 };
 
 // content-strings/fields/insurance/policy/index.ts
@@ -5885,12 +6473,12 @@ var {
     LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY },
     LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
     LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
-    FINANCIAL_ADDRESS
-  }
+    FINANCIAL_ADDRESS,
+  },
 } = insurance_default;
 var { MAX_COVER_PERIOD_MONTHS } = ELIGIBILITY;
 var {
-  POLICY: { TOTAL_MONTHS_OF_COVER }
+  POLICY: { TOTAL_MONTHS_OF_COVER },
 } = APPLICATION;
 var { POLICY: POLICY_FORM_TITLES } = FORM_TITLES;
 var POLICY_FIELDS = {
@@ -5900,412 +6488,432 @@ var POLICY_FIELDS = {
       SINGLE: {
         ID: SINGLE_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.SINGLE,
-        TEXT: "Single contract policy",
+        TEXT: 'Single contract policy',
         HINT_LIST: [
-          "Covers a single contract with a buyer, for one or more shipments",
+          'Covers a single contract with a buyer, for one or more shipments',
           `Cover for up to ${MAX_COVER_PERIOD_MONTHS} months`,
-          "Best for a one off- project, when you know the exact value of your export contract now",
-          "You pay for the insurance before the policy starts"
-        ]
+          'Best for a one off- project, when you know the exact value of your export contract now',
+          'You pay for the insurance before the policy starts',
+        ],
       },
       MULTIPLE: {
         ID: MULTIPLE_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
-        TEXT: "Multiple contract policy (revolving credit)",
+        TEXT: 'Multiple contract policy (Revolving credit)',
         HINT_LIST: [
           `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER} months`,
           "Best if you'll have an ongoing relationship with the buyer but you're not sure yet how many contracts or sales you'll have",
-          "You only pay for your insurance each time you declare a new contract or sale - no need to pay before the policy starts"
-        ]
-      }
+          'You only pay for your insurance each time you declare a new contract or sale - no need to pay before the policy starts',
+        ],
+      },
     },
     SUMMARY: {
-      TITLE: "Policy type",
-      FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
-    }
+      TITLE: 'Policy type',
+      FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
+    },
   },
   CONTRACT_POLICY: {
     [CONTRACT_POLICY.REQUESTED_START_DATE]: {
-      LABEL: "When do you want your policy to start?",
-      HINT: "For example, 06 11 2023",
+      LABEL: 'When do you want your policy to start?',
+      HINT: 'For example, 06 11 2023',
       SUMMARY: {
-        TITLE: "Policy start date",
-        FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
-      }
+        TITLE: 'Policy start date',
+        FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
+      },
     },
     [CURRENCY_CODE]: {
       LEGEND: "Select currency you'd like your policy to be issued in",
-      HINT: "This is the currency your policy will be issued in",
+      HINT: 'This is the currency your policy will be issued in',
       SUMMARY: {
-        TITLE: "Policy currency",
-        FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
+        TITLE: 'Policy currency',
+        FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
       },
       [ALTERNATIVE_CURRENCY_CODE]: {
         ID: ALTERNATIVE_CURRENCY_CODE,
-        VALUE: ALTERNATIVE_CURRENCY_CODE
-      }
+        VALUE: ALTERNATIVE_CURRENCY_CODE,
+      },
     },
     SINGLE: {
       [CONTRACT_POLICY.SINGLE.CONTRACT_COMPLETION_DATE]: {
-        LABEL: "When do you expect to complete the export contract?",
-        HINT: "For example, 06 11 2024",
+        LABEL: 'When do you expect to complete the export contract?',
+        HINT: 'For example, 06 11 2024',
         SUMMARY: {
-          TITLE: "Date you expect it to complete",
-          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
-        }
+          TITLE: 'Date you expect it to complete',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
+        },
       },
       [CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
-        HINT: "Enter a whole number. Do not enter decimals.",
+        LABEL: "What's the total value of the contract you want to insure?",
+        HINT: 'Enter a whole number. Do not enter decimals.',
         SUMMARY: {
-          TITLE: "Contract value",
-          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
-        }
-      }
+          TITLE: 'Contract value',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
+        },
+      },
+      [CONTRACT_POLICY.SINGLE.REQUESTED_CREDIT_LIMIT]: {
+        LABEL: 'What credit limit do you require?',
+        HINT: {
+          INTRO: 'For example, your total contract maybe \xA3250,000 but the amount you want to insure is \xA3100,000.',
+          OUTRO: 'Enter a whole number. Do not enter decimals.',
+        },
+        SUMMARY: {
+          TITLE: 'Credit limit',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
+        },
+      },
     },
     MULTIPLE: {
       [CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
-        LABEL: "How many months do you want to be insured for?",
+        LABEL: 'How many months do you want to be insured for?',
         HINT: `The maximum is ${TOTAL_MONTHS_OF_COVER} months.`,
         OPTIONS: FIELD_VALUES.TOTAL_MONTHS_OF_COVER,
         SUMMARY: {
-          TITLE: "How many months you want to be insured for",
-          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
-        }
-      }
-    }
+          TITLE: 'How many months you want to be insured for',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
+        },
+      },
+    },
   },
   EXPORT_VALUE: {
     MULTIPLE: {
       [EXPORT_VALUE.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
-        LABEL: "Estimate total sales to your buyer during this time",
-        HINT: "Enter a whole number. Do not enter decimals.",
+        LABEL: 'Estimate total sales to your buyer during this time',
+        HINT: 'Enter a whole number. Do not enter decimals.',
         SUMMARY: {
-          TITLE: "Estimated total sales to the buyer",
-          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
-        }
+          TITLE: 'Estimated total sales to the buyer',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
+        },
       },
       [EXPORT_VALUE.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
-        LABEL: "Estimate the maximum amount your buyer will owe you at any single point during this time",
+        LABEL: 'Estimate the maximum amount your buyer will owe you at any single point during this time',
         HINT: {
-          FOR_EXAMPLE: "For example, your total sales might be \xA3250,000 but the maximum the buyer will owe you at any single point is \xA3100,000.",
-          NO_DECIMALS: "Enter a whole number. Do not enter decimals."
+          FOR_EXAMPLE: 'For example, your total sales might be \xA3250,000 but the maximum the buyer will owe you at any single point is \xA3100,000.',
+          NO_DECIMALS: 'Enter a whole number. Do not enter decimals.',
         },
         SUMMARY: {
-          TITLE: "Estimated maximum amount owed by the buyer",
-          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
-        }
-      }
-    }
+          TITLE: 'Estimated maximum amount owed by the buyer',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
+        },
+      },
+    },
   },
   NAME_ON_POLICY: {
     OPTIONS: {
       SAME_NAME: {
         ID: NAME_ON_POLICY.SAME_NAME,
-        VALUE: NAME_ON_POLICY.SAME_NAME
+        VALUE: NAME_ON_POLICY.SAME_NAME,
       },
       OTHER_NAME: {
         ID: NAME_ON_POLICY.OTHER_NAME,
         VALUE: NAME_ON_POLICY.OTHER_NAME,
-        TEXT: "Someone else"
-      }
+        TEXT: 'Someone else',
+      },
     },
     [NAME_ON_POLICY.POSITION]: {
       LABEL: "What's your position at the company?",
-      MAXIMUM: 50,
+      MAXIMUM: MAXIMUM_CHARACTERS.NAME_ON_POLICY_POSITION,
       SUMMARY: {
-        TITLE: "Position at company",
-        FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY
-      }
+        TITLE: 'Position at company',
+        FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY,
+      },
     },
     [NAME_ON_POLICY.NAME]: {
       SUMMARY: {
-        TITLE: "Contact name",
-        FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY
-      }
-    }
+        TITLE: 'Contact name',
+        FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY,
+      },
+    },
   },
   DIFFERENT_NAME_ON_POLICY: {
     [DIFFERENT_NAME_ON_POLICY.POSITION]: {
-      LABEL: "Position at company",
-      MAXIMUM: 50
+      LABEL: 'Position at company',
+      MAXIMUM: MAXIMUM_CHARACTERS.DIFFERENT_NAME_ON_POLICY,
     },
     [EMAIL3]: {
       SUMMARY: {
-        TITLE: "Contact email",
-        FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY
-      }
-    }
+        TITLE: 'Contact email',
+        FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY,
+      },
+    },
   },
   [NEED_PRE_CREDIT_PERIOD]: {
-    HINT: "This is known as the pre-credit period",
+    HINT: 'This is known as the pre-credit period',
     SUMMARY: {
-      TITLE: "Pre-credit period",
-      FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
-    }
+      TITLE: 'Pre-credit period',
+      FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
+    },
   },
   [CREDIT_PERIOD_WITH_BUYER]: {
-    LABEL: "What period of pre-credit cover do you require?",
+    LABEL: 'How long do you need pre-credit cover for?',
     SUMMARY: {
-      TITLE: "Period of pre-credit cover",
-      FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
+      TITLE: 'Period of pre-credit cover',
+      FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
     },
-    MAXIMUM: MAXIMUM_CHARACTERS.CREDIT_PERIOD_WITH_BUYER
+    MAXIMUM: MAXIMUM_CHARACTERS.CREDIT_PERIOD_WITH_BUYER,
   },
   REQUESTED_JOINTLY_INSURED_PARTY: {
     [REQUESTED]: {
-      HINT: "This could be a parent company, subsidiary or a subcontractor.",
+      HINT: 'This could be a parent company, subsidiary or a subcontractor.',
       SUMMARY: {
-        TITLE: "Another company to be insured"
-      }
+        TITLE: 'Another company to be insured',
+      },
     },
     [COMPANY_NAME2]: {
-      LABEL: "Name of the other company",
-      MAXIMUM: 200,
+      LABEL: 'Name of the other company',
+      MAXIMUM: MAXIMUM_CHARACTERS.REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NAME,
       SUMMARY: {
-        TITLE: "Name of the other company"
-      }
+        TITLE: 'Name of the other company',
+      },
     },
     [COMPANY_NUMBER]: {
-      LABEL: "Registration number of the other company (optional)",
-      MAXIMUM: 100,
+      LABEL: 'Registration number of the other company (optional)',
+      MAXIMUM: MAXIMUM_CHARACTERS.REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NUMBER,
       SUMMARY: {
-        TITLE: "Registration number of the other company"
-      }
+        TITLE: 'Registration number of the other company',
+      },
     },
     [COUNTRY_CODE]: {
-      LABEL: "What country is the other company based in?",
+      LABEL: 'What country is the other company based in?',
       SUMMARY: {
-        TITLE: "Country of the company"
-      }
-    }
+        TITLE: 'Country of the company',
+      },
+    },
   },
   BROKER: {
     [USING_BROKER]: {
-      LABEL: "Are you using a broker to get this insurance?",
+      LABEL: 'Are you using a broker to get this insurance?',
       SUMMARY: {
-        TITLE: "Using a broker",
-        FORM_TITLE: POLICY_FORM_TITLES.BROKER
-      }
-    }
+        TITLE: 'Using a broker',
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
+      },
+    },
   },
   BROKER_DETAILS: {
     [NAME]: {
-      LABEL: "Name of broker or company",
-      MAXIMUM: 300,
+      LABEL: 'Name of broker or company',
+      MAXIMUM: MAXIMUM_CHARACTERS.BROKER_NAME,
       SUMMARY: {
         TITLE: "Broker's name or company",
-        FORM_TITLE: POLICY_FORM_TITLES.BROKER
-      }
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
+      },
     },
     [EMAIL3]: {
-      LABEL: "Email address",
+      LABEL: 'Email address',
       SUMMARY: {
         TITLE: "Broker's email",
-        FORM_TITLE: POLICY_FORM_TITLES.BROKER
-      }
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
+      },
     },
     [FULL_ADDRESS]: {
       LABEL: "Broker's address",
       SUMMARY: {
         TITLE: "Broker's address",
-        FORM_TITLE: POLICY_FORM_TITLES.BROKER
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
-      MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS
-    }
+      MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
+    },
   },
   LOSS_PAYEE: {
     [IS_APPOINTED]: {
       HINT: {
-        INTRO: "A loss payee is a financial organisation, like a bank or a lender, who will be paid in the event of a valid claim.  A loss payee could also be a parent company or subsidiary of your business.",
-        OUTRO: "Not every policy has a loss payee. If you don't, select 'No' and you will be listed as the default claimant."
+        INTRO:
+          'A loss payee is a financial organisation, like a bank or a lender, who will be paid in the event of a valid claim.  A loss payee could also be a parent company or subsidiary of your business.',
+        OUTRO: "Not every policy has a loss payee. If you don't, select 'No' and you will be listed as the default claimant.",
       },
       SUMMARY: {
-        TITLE: "Appointed a loss payee",
-        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
-      }
-    }
+        TITLE: 'Appointed a loss payee',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
+    },
   },
   LOSS_PAYEE_DETAILS: {
     [LOSS_PAYEE_NAME]: {
-      LABEL: "Name of the loss payee",
+      LABEL: 'Name of the loss payee',
       MAXIMUM: MAXIMUM_CHARACTERS.LOSS_PAYEE_NAME,
       SUMMARY: {
-        TITLE: "Name of the loss payee",
-        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
-      }
+        TITLE: 'Name of the loss payee',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
     },
     [LOCATION]: {
-      LABEL: "Where is the loss payee located?",
+      LABEL: 'Where is the loss payee located?',
       OPTIONS: {
         UK: {
           ID: IS_LOCATED_IN_UK,
           VALUE: IS_LOCATED_IN_UK,
-          TEXT: "United Kingdom"
+          TEXT: 'United Kingdom',
         },
         INTERNATIONALLY: {
           ID: IS_LOCATED_INTERNATIONALLY,
           VALUE: IS_LOCATED_INTERNATIONALLY,
-          TEXT: "International"
-        }
-      }
-    }
+          TEXT: 'International',
+        },
+      },
+    },
   },
   LOSS_PAYEE_FINANCIAL_UK: {
     [SORT_CODE]: {
-      LABEL: "Sort code",
-      HINT: "Must be 6 digits long",
+      LABEL: 'Sort code',
+      HINT: 'Must be 6 digits long',
       SUMMARY: {
-        TITLE: "Sort code",
-        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
-      }
+        TITLE: 'Sort code',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
     },
     [ACCOUNT_NUMBER]: {
-      LABEL: "Account number",
-      HINT: "Must be between 6 and 8 digits long",
+      LABEL: 'Account number',
+      HINT: 'Must be between 6 and 8 digits long',
       SUMMARY: {
-        TITLE: "Account number",
-        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
-      }
+        TITLE: 'Account number',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
     },
     [FINANCIAL_ADDRESS]: {
       SUMMARY: {
         TITLE: "Loss payee's bank based in the UK",
-        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
-      }
-    }
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
+    },
   },
   LOSS_PAYEE_FINANCIAL_INTERNATIONAL: {
     [BIC_SWIFT_CODE]: {
-      LABEL: "BIC or SWIFT code",
-      HINT: "Must be between 8 and 11 characters long",
+      LABEL: 'BIC or SWIFT code',
+      HINT: 'Must be between 8 and 11 characters long',
       SUMMARY: {
-        TITLE: "BIC or SWIFT code",
-        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
-      }
+        TITLE: 'BIC or SWIFT code',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
     },
     [IBAN]: {
-      LABEL: "IBAN",
-      HINT: "Must be between 16 and 34 characters long",
+      LABEL: 'IBAN',
+      HINT: 'Must be between 16 and 34 characters long',
       SUMMARY: {
-        TITLE: "IBAN",
-        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
-      }
+        TITLE: 'IBAN',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
     },
     [FINANCIAL_ADDRESS]: {
       SUMMARY: {
         TITLE: "Loss payee's bank based internationally",
-        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
-      }
-    }
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
+    },
   },
   FINANCIAL_ADDRESS: {
-    LABEL: "Bank address",
-    MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS
-  }
+    LABEL: 'Bank address',
+    MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
+  },
 };
 
 // content-strings/fields/insurance/your-business/index.ts
 var {
-  COMPANIES_HOUSE: { COMPANY_NAME: COMPANY_NAME3, COMPANY_NUMBER: COMPANY_NUMBER2, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS, FINANCIAL_YEAR_END_DATE },
-  EXPORTER_BUSINESS: EXPORTER_BUSINESS2
+  COMPANIES_HOUSE: {
+    COMPANY_NAME: COMPANY_NAME3,
+    COMPANY_NUMBER: COMPANY_NUMBER2,
+    COMPANY_INCORPORATED,
+    COMPANY_SIC,
+    COMPANY_ADDRESS,
+    FINANCIAL_YEAR_END_DATE,
+  },
+  EXPORTER_BUSINESS: EXPORTER_BUSINESS2,
 } = insurance_default;
 var {
-  YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, PHONE_NUMBER, WEBSITE },
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, PHONE_NUMBER, WEBSITE },
   ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS: FULL_ADDRESS2 },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
-  HAS_CREDIT_CONTROL
+  HAS_CREDIT_CONTROL,
 } = EXPORTER_BUSINESS2;
-var FIELDS = {
+var EXPORTER_BUSINESS_FIELDS = {
   COMPANY_DETAILS: {
     [COMPANY_NUMBER2]: {
       SUMMARY: {
-        TITLE: "Companies House registration number"
-      }
+        TITLE: 'Companies House registration number',
+      },
     },
     [COMPANY_NAME3]: {
       SUMMARY: {
-        TITLE: "Company name"
-      }
+        TITLE: 'Company name',
+      },
     },
     [COMPANY_ADDRESS]: {
       SUMMARY: {
-        TITLE: "Registered office address"
-      }
+        TITLE: 'Registered office address',
+      },
     },
     [COMPANY_INCORPORATED]: {
       SUMMARY: {
-        TITLE: "Date incorporated"
-      }
+        TITLE: 'Date incorporated',
+      },
     },
     [COMPANY_SIC]: {
       SUMMARY: {
-        TITLE: "Standard industry classification (SIC) codes and nature of business"
-      }
+        TITLE: 'Standard industry classification (SIC) codes and nature of business',
+      },
     },
     [FINANCIAL_YEAR_END_DATE]: {
       SUMMARY: {
-        TITLE: "Financial year end date"
-      }
+        TITLE: 'Financial year end date',
+      },
     },
     [HAS_DIFFERENT_TRADING_NAME]: {
       SUMMARY: {
-        TITLE: "Different trading name"
-      }
+        TITLE: 'Different trading name',
+      },
     },
-    [TRADING_ADDRESS]: {
+    [HAS_DIFFERENT_TRADING_ADDRESS]: {
       SUMMARY: {
-        TITLE: "Different trading address"
-      }
+        TITLE: 'Different trading address',
+      },
     },
     [WEBSITE]: {
       SUMMARY: {
-        TITLE: "Company website (optional)"
-      }
+        TITLE: 'Company website (optional)',
+      },
     },
     [PHONE_NUMBER]: {
       SUMMARY: {
-        TITLE: "UK telephone number (optional)"
-      }
-    }
+        TITLE: 'UK telephone number (optional)',
+      },
+    },
   },
   [FULL_ADDRESS2]: {
-    LABEL: "What's your alternative trading address?"
+    LABEL: "What's your alternative trading address?",
   },
   NATURE_OF_YOUR_BUSINESS: {
     [GOODS_OR_SERVICES]: {
       SUMMARY: {
-        TITLE: "Goods or services your business supplies"
-      }
+        TITLE: 'Goods or services your business supplies',
+      },
     },
     [YEARS_EXPORTING]: {
       SUMMARY: {
-        TITLE: "Years exporting"
-      }
+        TITLE: 'Years exporting',
+      },
     },
     [EMPLOYEES_UK]: {
       SUMMARY: {
-        TITLE: "Number of UK employees"
-      }
-    }
+        TITLE: 'Number of UK employees',
+      },
+    },
   },
   TURNOVER: {
     [ESTIMATED_ANNUAL_TURNOVER]: {
       SUMMARY: {
-        TITLE: "Estimated turnover this current financial year"
-      }
+        TITLE: 'Estimated turnover this current financial year',
+      },
     },
     [PERCENTAGE_TURNOVER]: {
       SUMMARY: {
-        TITLE: "Percentage of turnover from exports"
-      }
-    }
+        TITLE: 'Percentage of turnover from exports',
+      },
+    },
   },
   [HAS_CREDIT_CONTROL]: {
     SUMMARY: {
-      TITLE: "Process for managing late payments"
-    }
-  }
+      TITLE: 'Process for managing late payments',
+    },
+  },
 };
 
 // content-strings/fields/insurance/your-buyer/index.ts
@@ -6321,158 +6929,163 @@ var {
     PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
     TOTAL_OUTSTANDING_PAYMENTS,
     TOTAL_AMOUNT_OVERDUE,
-    HAS_BUYER_FINANCIAL_ACCOUNTS
+    HAS_BUYER_FINANCIAL_ACCOUNTS,
   },
-  CURRENCY: { CURRENCY_CODE: CURRENCY_CODE2 }
+  CURRENCY: { CURRENCY_CODE: CURRENCY_CODE2 },
 } = FIELD_IDS.INSURANCE;
 var {
-  YOUR_BUYER: { COMPANY_DETAILS, TRADING_HISTORY, CONNECTION_TO_BUYER, CREDIT_INSURANCE_HISTORY, FINANCIAL_ACCOUNTS }
+  YOUR_BUYER: { COMPANY_DETAILS, TRADING_HISTORY, CONNECTION_TO_BUYER, CREDIT_INSURANCE_HISTORY, FINANCIAL_ACCOUNTS },
 } = FORM_TITLES;
 var YOUR_BUYER_FIELDS = {
   COMPANY_OR_ORGANISATION: {
     [COMPANY_OR_ORGANISATION.NAME]: {
       LABEL: "Buyer's company or organisation name",
       SUMMARY: {
-        TITLE: "Company or organisation name",
-        FORM_TITLE: COMPANY_DETAILS
-      }
+        TITLE: 'Company or organisation name',
+        FORM_TITLE: COMPANY_DETAILS,
+      },
     },
     [COMPANY_OR_ORGANISATION.ADDRESS]: {
-      LABEL: "Company address",
+      LABEL: 'Company address',
       SUMMARY: {
-        TITLE: "Buyer address",
-        FORM_TITLE: COMPANY_DETAILS
+        TITLE: 'Buyer address',
+        FORM_TITLE: COMPANY_DETAILS,
       },
-      MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS
+      MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
     },
     [COMPANY_OR_ORGANISATION.COUNTRY]: {
-      LABEL: "Buyer country",
+      LABEL: 'Buyer country',
       SUMMARY: {
-        TITLE: "Buyer country"
-      }
+        TITLE: 'Buyer country',
+      },
     },
     [COMPANY_OR_ORGANISATION.REGISTRATION_NUMBER]: {
-      LABEL: "Company registration number (optional)",
+      LABEL: 'Company registration number (optional)',
       SUMMARY: {
-        TITLE: "Registration number (optional)",
-        FORM_TITLE: COMPANY_DETAILS
+        TITLE: 'Registration number (optional)',
+        FORM_TITLE: COMPANY_DETAILS,
       },
-      MAXIMUM: MAXIMUM_CHARACTERS.BUYER.REGISTRATION_NUMBER
+      MAXIMUM: MAXIMUM_CHARACTERS.BUYER.REGISTRATION_NUMBER,
     },
     [COMPANY_OR_ORGANISATION.WEBSITE]: {
-      LABEL: "Enter their website (optional)",
+      LABEL: 'Enter their website (optional)',
       SUMMARY: {
-        TITLE: "Buyer website (optional)",
-        FORM_TITLE: COMPANY_DETAILS
-      }
-    }
+        TITLE: 'Buyer website (optional)',
+        FORM_TITLE: COMPANY_DETAILS,
+      },
+    },
   },
   [CONNECTION_WITH_BUYER]: {
-    LABEL: "Are you connected with the buyer in any way?",
+    LABEL: 'Are you connected with the buyer in any way?',
     HINT: {
-      INTRO: "For example:",
+      INTRO: 'For example:',
       LIST: [
         "someone in your company is a shareholder or director of the buyer's company",
-        "someone in the buyer's company is a shareholder or director of your company"
-      ]
+        "someone in the buyer's company is a shareholder or director of your company",
+      ],
     },
     SUMMARY: {
-      TITLE: "Connected with the buyer",
-      FORM_TITLE: CONNECTION_TO_BUYER
-    }
+      TITLE: 'Connected with the buyer',
+      FORM_TITLE: CONNECTION_TO_BUYER,
+    },
   },
   [CONNECTION_WITH_BUYER_DESCRIPTION]: {
-    LABEL: "Describe the connection with the buyer",
+    LABEL: 'Describe the connection with the buyer',
     MAXIMUM: MAXIMUM_CHARACTERS.CONNECTION_WITH_BUYER_DESCRIPTION,
     SUMMARY: {
-      TITLE: "Details of connection",
-      FORM_TITLE: CONNECTION_TO_BUYER
-    }
+      TITLE: 'Details of connection',
+      FORM_TITLE: CONNECTION_TO_BUYER,
+    },
   },
   [TRADED_WITH_BUYER]: {
-    LABEL: "Have you traded with this buyer before?",
-    HINT: "If yes, we will request a copy of your trading history once the application has been submitted.",
+    LABEL: 'Have you traded with this buyer before?',
+    HINT: 'If yes, we will request a copy of your trading history once the application has been submitted.',
     SUMMARY: {
-      TITLE: "Trading history",
-      FORM_TITLE: TRADING_HISTORY
-    }
+      TITLE: 'Trading history',
+      FORM_TITLE: TRADING_HISTORY,
+    },
   },
   [OUTSTANDING_PAYMENTS]: {
-    LABEL: "Do you currently have any outstanding or overdue payments from the buyer?",
+    LABEL: 'Do you currently have any outstanding or overdue payments from the buyer?',
     SUMMARY: {
-      TITLE: "Outstanding or overdue payments",
-      FORM_TITLE: TRADING_HISTORY
-    }
+      TITLE: 'Outstanding or overdue payments',
+      FORM_TITLE: TRADING_HISTORY,
+    },
   },
   [FAILED_PAYMENTS]: {
-    LABEL: "Has the buyer ever failed to pay you on time?",
+    HINT: 'This is when an invoice has still not been paid 30 days or more after the agreed payment date.',
     SUMMARY: {
-      TITLE: "Buyer failed to pay on time?",
-      FORM_TITLE: TRADING_HISTORY
-    }
+      TITLE: 'Buyer failed to pay on time?',
+      FORM_TITLE: TRADING_HISTORY,
+    },
   },
   [CURRENCY_CODE2]: {
-    LEGEND: "What currency are the outstanding or overdue payments in?"
+    LEGEND: 'What is the currency the outstanding or overdue payments are in?',
+    SUMMARY: {
+      TITLE: 'Outstanding payments currency',
+      FORM_TITLE: TRADING_HISTORY,
+    },
   },
   [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
-    LABEL: "Have you in the past held credit insurance cover on the buyer?",
+    LABEL: 'Have you in the past held credit insurance cover on the buyer?',
     SUMMARY: {
-      TITLE: "Credit insurance previously held for the buyer",
-      FORM_TITLE: CREDIT_INSURANCE_HISTORY
-    }
+      TITLE: 'Credit insurance previously held for the buyer',
+      FORM_TITLE: CREDIT_INSURANCE_HISTORY,
+    },
   },
   [PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
-    LABEL: "Tell us about the credit insurance cover you had on the buyer",
-    HINT: "Include the name of the insurer(s) and the credit limit.",
+    LABEL: 'Tell us about the credit insurance cover you had on the buyer',
+    HINT: 'Include the name of the insurer(s) and the credit limit.',
     SUMMARY: {
-      TITLE: "Details of credit insurance",
-      FORM_TITLE: CREDIT_INSURANCE_HISTORY
+      TITLE: 'Details of credit insurance',
+      FORM_TITLE: CREDIT_INSURANCE_HISTORY,
     },
-    MAXIMUM: MAXIMUM_CHARACTERS.BUYER.PREVIOUS_CREDIT_INSURANCE_COVER
+    MAXIMUM: MAXIMUM_CHARACTERS.BUYER.PREVIOUS_CREDIT_INSURANCE_COVER,
   },
   [TOTAL_OUTSTANDING_PAYMENTS]: {
-    HEADING: "Tell us about the outstanding or overdue payments",
-    LABEL: "Total outstanding, including overdue",
+    LABEL: 'Total outstanding, including overdue in',
+    HINT: 'Enter a whole number. Do not enter decimals.',
     SUMMARY: {
-      TITLE: "Total outstanding including overdue",
-      FORM_TITLE: TRADING_HISTORY
-    }
+      TITLE: 'Total outstanding including overdue',
+      FORM_TITLE: TRADING_HISTORY,
+    },
   },
   [TOTAL_AMOUNT_OVERDUE]: {
-    LABEL: "Amount overdue",
+    LABEL: 'Amount overdue in',
+    HINT: 'Enter a whole number. Do not enter decimals.',
     SUMMARY: {
-      TITLE: "Amount overdue",
-      FORM_TITLE: TRADING_HISTORY
-    }
+      TITLE: 'Amount overdue',
+      FORM_TITLE: TRADING_HISTORY,
+    },
   },
   [HAS_BUYER_FINANCIAL_ACCOUNTS]: {
     SUMMARY: {
-      TITLE: "Financial accounts relating to the buyer",
-      FORM_TITLE: FINANCIAL_ACCOUNTS
-    }
-  }
+      TITLE: 'Financial accounts relating to the buyer',
+      FORM_TITLE: FINANCIAL_ACCOUNTS,
+    },
+  },
 };
 
 // content-strings/fields/insurance/index.ts
 var REFERENCE_NUMBER = {
   SUMMARY: {
-    TITLE: "Application reference number"
-  }
+    TITLE: 'Application reference number',
+  },
 };
 var DATE_SUBMITTED = {
   SUMMARY: {
-    TITLE: "Date submitted"
-  }
+    TITLE: 'Date submitted',
+  },
 };
 var TIME_SUBMITTED = {
   SUMMARY: {
-    TITLE: "Time submitted"
-  }
+    TITLE: 'Time submitted',
+  },
 };
 
 // content-strings/default.ts
 var DEFAULT = {
-  EMPTY: "-"
+  EMPTY: '-',
 };
 
 // content-strings/XLSX.ts
@@ -6487,7 +7100,7 @@ var {
     HAS_END_BUYER: HAS_END_BUYER2,
     HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2,
     IS_MEMBER_OF_A_GROUP,
-    IS_PARTY_TO_CONSORTIUM
+    IS_PARTY_TO_CONSORTIUM,
   },
   EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION: DESCRIPTION2, FINAL_DESTINATION_KNOWN: FINAL_DESTINATION_KNOWN2 },
@@ -6496,7 +7109,7 @@ var {
     AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
     HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION: PAYMENT_TERMS_DESCRIPTION2 },
     PRIVATE_MARKET: { ATTEMPTED: ATTEMPTED_PRIVATE_MARKET, DECLINED_DESCRIPTION: DECLINED_DESCRIPTION2 },
-    USING_AGENT
+    USING_AGENT,
   },
   EXPORTER_BUSINESS: {
     ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS_DOT_NOTATION },
@@ -6504,17 +7117,23 @@ var {
     HAS_CREDIT_CONTROL: HAS_CREDIT_CONTROL2,
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2 },
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2 },
-    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME2, DIFFERENT_TRADING_NAME, PHONE_NUMBER: PHONE_NUMBER2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE2 }
+    YOUR_COMPANY: {
+      HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME2,
+      DIFFERENT_TRADING_NAME,
+      PHONE_NUMBER: PHONE_NUMBER2,
+      HAS_DIFFERENT_TRADING_ADDRESS: HAS_DIFFERENT_TRADING_ADDRESS2,
+      WEBSITE: WEBSITE2,
+    },
   },
   POLICY: {
     BROKER_DETAILS: { NAME: BROKER_NAME, EMAIL: BROKER_EMAIL, FULL_ADDRESS: BROKER_ADDRESS },
     CONTRACT_POLICY: {
       REQUESTED_START_DATE: REQUESTED_START_DATE2,
       SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE2, TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_ID },
-      MULTIPLE: { TOTAL_MONTHS_OF_COVER: TOTAL_MONTHS_OF_COVER2 }
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER: TOTAL_MONTHS_OF_COVER2 },
     },
     EXPORT_VALUE: {
-      MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE }
+      MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
     },
     FINANCIAL_ADDRESS: FINANCIAL_ADDRESS2,
     LOSS_PAYEE: { IS_APPOINTED: IS_APPOINTED2 },
@@ -6525,7 +7144,7 @@ var {
     CREDIT_PERIOD_WITH_BUYER: CREDIT_PERIOD_WITH_BUYER2,
     REQUESTED_JOINTLY_INSURED_PARTY,
     TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE4 },
-    USING_BROKER: USING_BROKER2
+    USING_BROKER: USING_BROKER2,
   },
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER },
@@ -6537,126 +7156,126 @@ var {
     OUTSTANDING_PAYMENTS: OUTSTANDING_PAYMENTS2,
     PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER2,
     TOTAL_OUTSTANDING_PAYMENTS: TOTAL_OUTSTANDING_PAYMENTS2,
-    TRADED_WITH_BUYER: TRADED_WITH_BUYER2
-  }
+    TRADED_WITH_BUYER: TRADED_WITH_BUYER2,
+  },
 } = insurance_default;
 var XLSX = {
-  AGREED: "Agreed",
+  AGREED: 'Agreed',
   FIELDS: {
-    [ACCOUNT_NUMBER2]: "Loss payee account number",
+    [ACCOUNT_NUMBER2]: 'Loss payee account number',
     AGENT: {
-      [AGENT_NAME]: "Name of the agent",
-      [AGENT_ADDRESS]: "Address of the agent",
-      [AGENT_COUNTRY_CODE]: "Country the agent is based in"
+      [AGENT_NAME]: 'Name of the agent',
+      [AGENT_ADDRESS]: 'Address of the agent',
+      [AGENT_COUNTRY_CODE]: 'Country the agent is based in',
     },
     AGENT_CHARGES: {
-      [FIXED_SUM_AMOUNT]: "How much is the agent charging?",
-      [PAYABLE_COUNTRY_CODE]: "Country where the charges are payable",
-      [PERCENTAGE_CHARGE]: "How much is the agent charging?"
+      [FIXED_SUM_AMOUNT]: 'How much is the agent charging?',
+      [PAYABLE_COUNTRY_CODE]: 'Country where the charges are payable',
+      [PERCENTAGE_CHARGE]: 'How much is the agent charging?',
     },
     AGENT_SERVICE: {
-      [IS_CHARGING]: "Is the agent charging for their support in the export contract?",
-      [SERVICE_DESCRIPTION]: "Service the agent is providing"
+      [IS_CHARGING]: 'Is the agent charging for their support in the export contract?',
+      [SERVICE_DESCRIPTION]: 'Service the agent is providing',
     },
-    APPLICANT_EMAIL_ADDRESS: "Applicant email address",
-    [BIC_SWIFT_CODE2]: "Loss payee BIC or SWIFT code",
-    [BROKER_NAME]: "Name of broker or company",
-    [BROKER_ADDRESS]: "Broker address",
+    APPLICANT_EMAIL_ADDRESS: 'Applicant email address',
+    [BIC_SWIFT_CODE2]: 'Loss payee BIC or SWIFT code',
+    [BROKER_NAME]: 'Name of broker or company',
+    [BROKER_ADDRESS]: 'Broker address',
     [BROKER_EMAIL]: "Broker's email address",
-    [BUYER_COMPANY_NAME]: "Buyer company name or organisation",
-    BUYER_CONTACT_DETAILS: "Buyer contact details",
-    [BUYER_COUNTRY2]: "Where is your buyer based?",
-    [BUYER_REGISTRATION_NUMBER]: "Buyer registration number (optional)",
-    [COMPANIES_HOUSE_NUMBER2]: "Companies house number",
-    [CONNECTION_WITH_BUYER2]: "Is the exporter connected with the buyer in any way?",
-    [CONNECTION_WITH_BUYER_DESCRIPTION2]: "Describe connection to the buyer",
-    [CONTRACT_COMPLETION_DATE2]: "Expected contract completion date",
-    [COUNTRY]: "Buyer location",
-    [COVER_PERIOD2]: "Length of cover",
-    [DIFFERENT_TRADING_NAME]: "Alternative trading name",
-    [EMPLOYEES_UK2]: "Number of UK Employees",
-    [ESTIMATED_ANNUAL_TURNOVER2]: "Exporter estimated turnover this current financial year",
-    [EXPORTER_COMPANY_ADDRESS]: "Exporter registered office address",
-    [EXPORTER_COMPANY_NAME]: "Exporter company name",
-    [EXPORTER_COMPANY_SIC]: "Exporter standard industry classification (SIC) code(s)",
+    [BUYER_COMPANY_NAME]: 'Buyer company name or organisation',
+    BUYER_CONTACT_DETAILS: 'Buyer contact details',
+    [BUYER_COUNTRY2]: 'Where is your buyer based?',
+    [BUYER_REGISTRATION_NUMBER]: 'Buyer registration number (optional)',
+    [COMPANIES_HOUSE_NUMBER2]: 'Companies house number',
+    [CONNECTION_WITH_BUYER2]: 'Is the exporter connected with the buyer in any way?',
+    [CONNECTION_WITH_BUYER_DESCRIPTION2]: 'Describe connection to the buyer',
+    [CONTRACT_COMPLETION_DATE2]: 'Expected contract completion date',
+    [COUNTRY]: 'Buyer location',
+    [COVER_PERIOD2]: 'Length of cover',
+    [DIFFERENT_TRADING_NAME]: 'Alternative trading name',
+    [EMPLOYEES_UK2]: 'Number of UK Employees',
+    [ESTIMATED_ANNUAL_TURNOVER2]: 'Exporter estimated turnover this current financial year',
+    [EXPORTER_COMPANY_ADDRESS]: 'Exporter registered office address',
+    [EXPORTER_COMPANY_NAME]: 'Exporter company name',
+    [EXPORTER_COMPANY_SIC]: 'Exporter standard industry classification (SIC) code(s)',
     EXPORTER_CONTACT: {
-      TITLE: "Exporter contact details",
-      [FIRST_NAME]: "Exporter first name",
-      [LAST_NAME]: "Exporter last name",
-      EXPORTER_CONTACT_EMAIL: "Exporter email address",
-      EXPORTER_CONTACT_POSITION: "Exporter's role"
+      TITLE: 'Exporter contact details',
+      [FIRST_NAME]: 'Exporter first name',
+      [LAST_NAME]: 'Exporter last name',
+      EXPORTER_CONTACT_EMAIL: 'Exporter email address',
+      EXPORTER_CONTACT_POSITION: "Exporter's role",
     },
     EXPORT_CONTRACT: {
       [DESCRIPTION2]: "About the exporter's goods or services",
-      [FINAL_DESTINATION_KNOWN2]: "Does the exporter know the final destination of the goods or services?",
-      [PAYMENT_TERMS_DESCRIPTION2]: "How the exporter will be paid for their export",
-      [ATTEMPTED_PRIVATE_MARKET]: "Did the exporter try to insure through the private market?",
-      [DECLINED_DESCRIPTION2]: "Why could they not get insurance through the private market? ",
-      [USING_AGENT]: "Did the exporter use an agent?"
+      [FINAL_DESTINATION_KNOWN2]: 'Does the exporter know the final destination of the goods or services?',
+      [PAYMENT_TERMS_DESCRIPTION2]: 'How the exporter will be paid for their export',
+      [ATTEMPTED_PRIVATE_MARKET]: 'Did the exporter try to insure through the private market?',
+      [DECLINED_DESCRIPTION2]: 'Why could they not get insurance through the private market? ',
+      [USING_AGENT]: 'Did the exporter use an agent?',
     },
-    [FAILED_PAYMENTS2]: "Has the buyer ever failed to pay the exporter on time?",
-    [FINANCIAL_ADDRESS2]: "Bank address of the loss payee",
-    [FIRST_NAME]: "Applicant first name",
-    [FULL_ADDRESS_DOT_NOTATION]: "Alternative trading address",
-    [GOODS_OR_SERVICES2]: "Goods or services the business supplies",
-    [HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2]: "Does the exporter have a code of conduct?",
-    [HAS_BUYER_FINANCIAL_ACCOUNTS2]: "Does the exporter hold any financial accounts in relation to the buyer?",
-    [HAS_CREDIT_CONTROL2]: "Do you have a process for dealing with late payments?",
-    [HAS_DIFFERENT_TRADING_NAME2]: "Different trading name?",
-    [HAS_END_BUYER2]: "Is there an end buyer?",
-    [HAS_MINIMUM_UK_GOODS_OR_SERVICES2]: "Is at least 20% of the contract value made up from UK goods or services?",
-    [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER2]: "Has the exporter previously held credit insurance cover on the buyer?",
-    [IBAN2]: "Loss payee IBAN number",
-    [IS_APPOINTED2]: "Using a loss payee?",
+    [FAILED_PAYMENTS2]: 'Has the buyer ever failed to pay the exporter on time?',
+    [FINANCIAL_ADDRESS2]: 'Bank address of the loss payee',
+    [FIRST_NAME]: 'Applicant first name',
+    [FULL_ADDRESS_DOT_NOTATION]: 'Alternative trading address',
+    [GOODS_OR_SERVICES2]: 'Goods or services the business supplies',
+    [HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2]: 'Does the exporter have a code of conduct?',
+    [HAS_BUYER_FINANCIAL_ACCOUNTS2]: 'Does the exporter hold any financial accounts in relation to the buyer?',
+    [HAS_CREDIT_CONTROL2]: 'Do you have a process for dealing with late payments?',
+    [HAS_DIFFERENT_TRADING_NAME2]: 'Different trading name?',
+    [HAS_END_BUYER2]: 'Is there an end buyer?',
+    [HAS_MINIMUM_UK_GOODS_OR_SERVICES2]: 'Is at least 20% of the contract value made up from UK goods or services?',
+    [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER2]: 'Has the exporter previously held credit insurance cover on the buyer?',
+    [IBAN2]: 'Loss payee IBAN number',
+    [IS_APPOINTED2]: 'Using a loss payee?',
     JOINTLY_INSURED_PARTY: {
-      [REQUESTED_JOINTLY_INSURED_PARTY.REQUESTED]: "Is there another company that needs to be insured on the policy?",
-      [REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NAME]: "Name of the company",
-      [REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NUMBER]: "Registration number of the other company (optional)",
-      [REQUESTED_JOINTLY_INSURED_PARTY.COUNTRY_CODE]: "The country the other company is based in"
+      [REQUESTED_JOINTLY_INSURED_PARTY.REQUESTED]: 'Is there another company that needs to be insured on the policy?',
+      [REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NAME]: 'Name of the company',
+      [REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NUMBER]: 'Registration number of the other company (optional)',
+      [REQUESTED_JOINTLY_INSURED_PARTY.COUNTRY_CODE]: 'The country the other company is based in',
     },
-    KEY_INFORMATION_TITLE: "Key information",
-    [LAST_NAME]: "Applicant last name",
-    [MAXIMUM_BUYER_WILL_OWE]: "Maximum buyer will owe exporter",
+    KEY_INFORMATION_TITLE: 'Key information',
+    [LAST_NAME]: 'Applicant last name',
+    [MAXIMUM_BUYER_WILL_OWE]: 'Maximum buyer will owe exporter',
     [MORE_THAN_250K.VALUE]: `Contract value of ${format_currency_default(AMOUNT_250K, GBP_CURRENCY_CODE)} or more?`,
     NAME_ON_POLICY: {
-      [NAME_ON_POLICY2.NAME]: "Name on the policy",
-      [NAME_ON_POLICY2.POSITION]: "Position at the company"
+      [NAME_ON_POLICY2.NAME]: 'Name on the policy',
+      [NAME_ON_POLICY2.POSITION]: 'Position at the company',
     },
-    [NEED_PRE_CREDIT_PERIOD2]: "Is there a pre-credit period?",
-    [CREDIT_PERIOD_WITH_BUYER2]: "The period of pre-credit cover required",
-    NO_FINANCIAL_YEAR_END_DATE: "No data from Companies House",
-    [OUTSTANDING_PAYMENTS2]: "Does the exporter currently have any outstanding or overdue payments from the buyer?",
-    [PHONE_NUMBER2]: "Exporter UK telephone number (optional)",
-    [POLICY_TYPE4]: "Type of policy",
-    [PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER2]: "Details of credit insurance cover held on the buyer",
-    [REQUESTED_START_DATE2]: "Requested policy start date",
-    SOMEONE_ELSE: "Someone else",
-    [SORT_CODE2]: "Loss payee sort code",
-    [TOTAL_CONTRACT_VALUE_ID]: "Total value of the contract",
-    [TOTAL_MONTHS_OF_COVER2]: "Requested length of insurance",
-    [TOTAL_OUTSTANDING_PAYMENTS2]: "Total outstanding payments",
-    [TOTAL_SALES_TO_BUYER]: "Total sales estimate",
-    [TRADING_ADDRESS2]: "Different trading address?",
-    [TRADED_WITH_BUYER2]: "Has the exporter traded with this buyer before?",
-    [USING_BROKER2]: "Using a broker for this insurance?",
-    [WEBSITE2]: "Exporter Company website (optional)",
-    [WILL_EXPORT_WITH_CODE_OF_CONDUCT2]: "Will the exporter export using their code of conduct?",
-    [YEARS_EXPORTING2]: "How long the business has been exporting for",
-    [IS_PARTY_TO_CONSORTIUM]: "Party to any consortium in connection with the export contract(s)?",
-    [IS_MEMBER_OF_A_GROUP]: "Member of a group which may have a part in negotiating the contract(s)?"
-  }
+    [NEED_PRE_CREDIT_PERIOD2]: 'Is there a pre-credit period?',
+    [CREDIT_PERIOD_WITH_BUYER2]: 'The period of pre-credit cover required',
+    NO_FINANCIAL_YEAR_END_DATE: 'No data from Companies House',
+    [OUTSTANDING_PAYMENTS2]: 'Does the exporter currently have any outstanding or overdue payments from the buyer?',
+    [PHONE_NUMBER2]: 'Exporter UK telephone number (optional)',
+    [POLICY_TYPE4]: 'Type of policy',
+    [PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER2]: 'Details of credit insurance cover held on the buyer',
+    [REQUESTED_START_DATE2]: 'Requested policy start date',
+    SOMEONE_ELSE: 'Someone else',
+    [SORT_CODE2]: 'Loss payee sort code',
+    [TOTAL_CONTRACT_VALUE_ID]: 'Total value of the contract',
+    [TOTAL_MONTHS_OF_COVER2]: 'Requested length of insurance',
+    [TOTAL_OUTSTANDING_PAYMENTS2]: 'Total outstanding payments',
+    [TOTAL_SALES_TO_BUYER]: 'Total sales estimate',
+    [HAS_DIFFERENT_TRADING_ADDRESS2]: 'Different trading address?',
+    [TRADED_WITH_BUYER2]: 'Has the exporter traded with this buyer before?',
+    [USING_BROKER2]: 'Using a broker for this insurance?',
+    [WEBSITE2]: 'Exporter Company website (optional)',
+    [WILL_EXPORT_WITH_CODE_OF_CONDUCT2]: 'Will the exporter export using their code of conduct?',
+    [YEARS_EXPORTING2]: 'How long the business has been exporting for',
+    [IS_PARTY_TO_CONSORTIUM]: 'Party to any consortium in connection with the export contract(s)?',
+    [IS_MEMBER_OF_A_GROUP]: 'Member of a group which may have a part in negotiating the contract(s)?',
+  },
 };
 
 // generate-xlsx/map-application-to-XLSX/helpers/xlsx-row/index.ts
 var { KEY, VALUE } = XLSX_CONFIG;
 var xlsxRow = (fieldName, answer) => {
   if (fieldName) {
-    console.info("Mapping XLSX row %s", fieldName);
-    const value = answer || answer === 0 ? answer : "";
+    console.info('Mapping XLSX row %s', fieldName);
+    const value = answer || answer === 0 ? answer : '';
     const cleanValue = replace_character_codes_with_characters_default(String(value));
     const row = {
       [KEY]: fieldName,
-      [VALUE]: cleanValue
+      [VALUE]: cleanValue,
     };
     return row;
   }
@@ -6668,16 +7287,16 @@ var formatTimeOfDay = (date) => format_date_default(date, DATE_FORMAT.HOURS_AND_
 var format_time_of_day_default = formatTimeOfDay;
 
 // generate-xlsx/map-application-to-XLSX/map-introduction/index.ts
-var { FIELDS: FIELDS2 } = XLSX;
+var { FIELDS } = XLSX;
 var { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL4 } = account_default;
 var mapIntroduction = (application2) => {
   const mapped = [
     xlsx_row_default(REFERENCE_NUMBER.SUMMARY.TITLE, application2.referenceNumber),
     xlsx_row_default(DATE_SUBMITTED.SUMMARY.TITLE, format_date_default(application2.submissionDate, DATE_FORMAT.XLSX)),
     xlsx_row_default(TIME_SUBMITTED.SUMMARY.TITLE, format_time_of_day_default(application2.submissionDate)),
-    xlsx_row_default(String(FIELDS2[FIRST_NAME2]), application2.owner[FIRST_NAME2]),
-    xlsx_row_default(String(FIELDS2[LAST_NAME2]), application2.owner[LAST_NAME2]),
-    xlsx_row_default(FIELDS2.APPLICANT_EMAIL_ADDRESS, application2.owner[EMAIL4])
+    xlsx_row_default(String(FIELDS[FIRST_NAME2]), application2.owner[FIRST_NAME2]),
+    xlsx_row_default(String(FIELDS[LAST_NAME2]), application2.owner[LAST_NAME2]),
+    xlsx_row_default(FIELDS.APPLICANT_EMAIL_ADDRESS, application2.owner[EMAIL4]),
   ];
   return mapped;
 };
@@ -6687,18 +7306,18 @@ var map_introduction_default = mapIntroduction;
 var {
   ACCOUNT: { FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, EMAIL: EMAIL5 },
   POLICY: {
-    NAME_ON_POLICY: { POSITION }
-  }
+    NAME_ON_POLICY: { POSITION },
+  },
 } = insurance_default;
-var { FIELDS: FIELDS3 } = XLSX;
+var { FIELDS: FIELDS2 } = XLSX;
 var mapExporterContactDetails = (application2) => {
   const { policyContact } = application2;
   const mapped = [
-    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.TITLE),
-    xlsx_row_default(FIELDS3.EXPORTER_CONTACT[FIRST_NAME3], policyContact[FIRST_NAME3]),
-    xlsx_row_default(FIELDS3.EXPORTER_CONTACT[LAST_NAME3], policyContact[LAST_NAME3]),
-    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, policyContact[EMAIL5]),
-    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_POSITION, policyContact[POSITION])
+    xlsx_row_default(FIELDS2.EXPORTER_CONTACT.TITLE),
+    xlsx_row_default(FIELDS2.EXPORTER_CONTACT[FIRST_NAME3], policyContact[FIRST_NAME3]),
+    xlsx_row_default(FIELDS2.EXPORTER_CONTACT[LAST_NAME3], policyContact[LAST_NAME3]),
+    xlsx_row_default(FIELDS2.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, policyContact[EMAIL5]),
+    xlsx_row_default(FIELDS2.EXPORTER_CONTACT.EXPORTER_CONTACT_POSITION, policyContact[POSITION]),
   ];
   return mapped;
 };
@@ -6706,15 +7325,12 @@ var map_exporter_contact_details_default = mapExporterContactDetails;
 
 // generate-xlsx/map-application-to-XLSX/helpers/map-yes-no-field/index.ts
 var { YES, NO } = FIELD_VALUES;
-var mapYesNoField = ({ answer, defaultValue }) => {
+var mapYesNoField = ({ answer }) => {
   if (answer === false) {
     return NO;
   }
   if (answer === true) {
     return YES;
-  }
-  if (defaultValue) {
-    return defaultValue;
   }
   return DEFAULT.EMPTY;
 };
@@ -6722,7 +7338,7 @@ var map_yes_no_field_default = mapYesNoField;
 
 // generate-xlsx/map-application-to-XLSX/map-eligibility/index.ts
 var { MORE_THAN_250K: MORE_THAN_250K2 } = TOTAL_CONTRACT_VALUE;
-var { FIELDS: FIELDS4 } = XLSX;
+var { FIELDS: FIELDS3 } = XLSX;
 var {
   ELIGIBILITY: {
     BUYER_COUNTRY: BUYER_COUNTRY3,
@@ -6735,61 +7351,58 @@ var {
     COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER3,
     HAS_END_BUYER: HAS_END_BUYER3,
     IS_PARTY_TO_CONSORTIUM: IS_PARTY_TO_CONSORTIUM2,
-    IS_MEMBER_OF_A_GROUP: IS_MEMBER_OF_A_GROUP2
-  }
+    IS_MEMBER_OF_A_GROUP: IS_MEMBER_OF_A_GROUP2,
+  },
 } = insurance_default;
 var mapEligibility = (application2) => {
-  const { company, eligibility, migratedV1toV2 } = application2;
+  const { company, eligibility } = application2;
   let mapped = [
-    xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default({ answer: eligibility[VALID_EXPORTER_LOCATION2] })),
-    xlsx_row_default(FIELDS_ELIGIBILITY[HAS_COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE, map_yes_no_field_default({ answer: eligibility[HAS_COMPANIES_HOUSE_NUMBER2] })),
-    xlsx_row_default(String(FIELDS4[COMPANIES_HOUSE_NUMBER3]), company[COMPANIES_HOUSE_NUMBER3]),
-    xlsx_row_default(String(FIELDS4[BUYER_COUNTRY3]), eligibility[BUYER_COUNTRY3].name)
+    xlsx_row_default(ELIGIBILITY_FIELDS[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default({ answer: eligibility[VALID_EXPORTER_LOCATION2] })),
+    xlsx_row_default(
+      ELIGIBILITY_FIELDS[HAS_COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE,
+      map_yes_no_field_default({ answer: eligibility[HAS_COMPANIES_HOUSE_NUMBER2] }),
+    ),
+    xlsx_row_default(String(FIELDS3[COMPANIES_HOUSE_NUMBER3]), company[COMPANIES_HOUSE_NUMBER3]),
+    xlsx_row_default(String(FIELDS3[BUYER_COUNTRY3]), eligibility[BUYER_COUNTRY3].name),
   ];
-  const totalContractValueAnswer = migratedV1toV2 ? null : eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID;
+  const totalContractValueAnswer = eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID;
   mapped = [
     ...mapped,
-    xlsx_row_default(String(FIELDS4[MORE_THAN_250K2.VALUE]), map_yes_no_field_default({ answer: totalContractValueAnswer })),
-    xlsx_row_default(String(FIELDS4[COVER_PERIOD3]), eligibility[COVER_PERIOD_ELIGIBILITY].value),
-    xlsx_row_default(String(FIELDS4[HAS_MINIMUM_UK_GOODS_OR_SERVICES3]), map_yes_no_field_default({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES3] }))
-  ];
-  const endBuyerAnswer = migratedV1toV2 ? null : eligibility[HAS_END_BUYER3];
-  const partyToConsortiumAnswer = migratedV1toV2 ? null : eligibility[IS_PARTY_TO_CONSORTIUM2];
-  const memberOfGroupAnswer = migratedV1toV2 ? null : eligibility[IS_PARTY_TO_CONSORTIUM2];
-  mapped = [
-    ...mapped,
-    xlsx_row_default(String(FIELDS4[HAS_END_BUYER3]), map_yes_no_field_default({ answer: endBuyerAnswer })),
-    xlsx_row_default(String(FIELDS4[IS_PARTY_TO_CONSORTIUM2]), map_yes_no_field_default({ answer: partyToConsortiumAnswer })),
-    xlsx_row_default(String(FIELDS4[IS_MEMBER_OF_A_GROUP2]), map_yes_no_field_default({ answer: memberOfGroupAnswer }))
+    xlsx_row_default(String(FIELDS3[MORE_THAN_250K2.VALUE]), map_yes_no_field_default({ answer: totalContractValueAnswer })),
+    xlsx_row_default(String(FIELDS3[COVER_PERIOD3]), eligibility[COVER_PERIOD_ELIGIBILITY].value),
+    xlsx_row_default(String(FIELDS3[HAS_MINIMUM_UK_GOODS_OR_SERVICES3]), map_yes_no_field_default({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES3] })),
+    xlsx_row_default(String(FIELDS3[HAS_END_BUYER3]), map_yes_no_field_default({ answer: eligibility[HAS_END_BUYER3] })),
+    xlsx_row_default(String(FIELDS3[IS_PARTY_TO_CONSORTIUM2]), map_yes_no_field_default({ answer: eligibility[IS_PARTY_TO_CONSORTIUM2] })),
+    xlsx_row_default(String(FIELDS3[IS_MEMBER_OF_A_GROUP2]), map_yes_no_field_default({ answer: eligibility[IS_PARTY_TO_CONSORTIUM2] })),
   ];
   return mapped;
 };
 var map_eligibility_default = mapEligibility;
 
 // generate-xlsx/map-application-to-XLSX/map-key-information/index.ts
-var { FIELDS: FIELDS5 } = XLSX;
+var { FIELDS: FIELDS4 } = XLSX;
 var CONTENT_STRINGS = {
-  ...POLICY_FIELDS
+  ...POLICY_FIELDS,
 };
 var {
   EXPORTER_BUSINESS: {
-    COMPANIES_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME2 }
+    COMPANIES_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME2 },
   },
   YOUR_BUYER: {
-    COMPANY_OR_ORGANISATION: { COUNTRY: COUNTRY2, NAME: BUYER_COMPANY_NAME2 }
+    COMPANY_OR_ORGANISATION: { COUNTRY: COUNTRY2, NAME: BUYER_COMPANY_NAME2 },
   },
   POLICY: {
-    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE5 }
-  }
+    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE5 },
+  },
 } = insurance_default;
 var mapKeyInformation = (application2) => {
   const { policy } = application2;
   const mapped = [
-    xlsx_row_default(FIELDS5.KEY_INFORMATION_TITLE),
-    xlsx_row_default(String(FIELDS5[EXPORTER_COMPANY_NAME2]), replace_character_codes_with_characters_default(application2.company[EXPORTER_COMPANY_NAME2])),
-    xlsx_row_default(String(FIELDS5[COUNTRY2]), application2.buyer[COUNTRY2].name),
-    xlsx_row_default(String(FIELDS5[BUYER_COMPANY_NAME2]), replace_character_codes_with_characters_default(application2.buyer[BUYER_COMPANY_NAME2])),
-    xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE5].SUMMARY?.TITLE), policy[POLICY_TYPE5])
+    xlsx_row_default(FIELDS4.KEY_INFORMATION_TITLE),
+    xlsx_row_default(String(FIELDS4[EXPORTER_COMPANY_NAME2]), replace_character_codes_with_characters_default(application2.company[EXPORTER_COMPANY_NAME2])),
+    xlsx_row_default(String(FIELDS4[COUNTRY2]), application2.buyer[COUNTRY2].name),
+    xlsx_row_default(String(FIELDS4[BUYER_COMPANY_NAME2]), replace_character_codes_with_characters_default(application2.buyer[BUYER_COMPANY_NAME2])),
+    xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE5].SUMMARY?.TITLE), policy[POLICY_TYPE5]),
   ];
   return mapped;
 };
@@ -6801,7 +7414,7 @@ var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TY
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-intro/map-policy-type/index.ts
 var {
-  POLICY_TYPE: { ABBREVIATED }
+  POLICY_TYPE: { ABBREVIATED },
 } = APPLICATION;
 var mapPolicyType = (policyType) => {
   if (isSinglePolicyType(policyType)) {
@@ -6814,15 +7427,15 @@ var mapPolicyType = (policyType) => {
 var map_policy_type_default = mapPolicyType;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-intro/index.ts
-var { FIELDS: FIELDS6 } = XLSX;
+var { FIELDS: FIELDS5 } = XLSX;
 var {
   POLICY_TYPE: POLICY_TYPE6,
-  CONTRACT_POLICY: { REQUESTED_START_DATE: REQUESTED_START_DATE3 }
+  CONTRACT_POLICY: { REQUESTED_START_DATE: REQUESTED_START_DATE3 },
 } = policy_default;
 var mapIntro = (policy) => {
   const mapped = [
-    xlsx_row_default(String(FIELDS6[POLICY_TYPE6]), map_policy_type_default(policy[POLICY_TYPE6])),
-    xlsx_row_default(String(FIELDS6[REQUESTED_START_DATE3]), format_date_default(policy[REQUESTED_START_DATE3], DATE_FORMAT.XLSX))
+    xlsx_row_default(String(FIELDS5[POLICY_TYPE6]), map_policy_type_default(policy[POLICY_TYPE6])),
+    xlsx_row_default(String(FIELDS5[REQUESTED_START_DATE3]), format_date_default(policy[REQUESTED_START_DATE3], DATE_FORMAT.XLSX)),
   ];
   return mapped;
 };
@@ -6832,107 +7445,111 @@ var map_intro_default = mapIntro;
 var { ACCOUNT: ACCOUNT3 } = FIELD_IDS.INSURANCE;
 var { FIRST_NAME: FIRST_NAME4, LAST_NAME: LAST_NAME4, EMAIL: EMAIL6, PASSWORD, ACCESS_CODE } = ACCOUNT3;
 var PASSWORD_HINT = {
-  INTRO: "Your password must contain at least 14 characters and have:",
-  RULES: ["an uppercase letter", "a lowercase letter", "a number", "a special character (for example @%!?*)"]
+  INTRO: 'Your password must contain at least 14 characters and have:',
+  RULES: ['an uppercase letter', 'a lowercase letter', 'a number', 'a special character (for example @%!?*)'],
 };
 var ACCOUNT_FIELDS = {
   MAXIMUM: {
     NAME: {
-      CHARACTERS: 100
-    }
+      CHARACTERS: 100,
+    },
   },
   [FIRST_NAME4]: {
-    LABEL: "First name"
+    LABEL: 'First name',
   },
   [LAST_NAME4]: {
-    LABEL: "Last name"
+    LABEL: 'Last name',
   },
   [EMAIL6]: {
-    LABEL: "Email address"
+    LABEL: 'Email address',
   },
   [PASSWORD]: {
     REVEAL: {
-      SHOW: "Show",
-      HIDE: "Hide"
-    }
+      SHOW: 'Show',
+      HIDE: 'Hide',
+    },
   },
   [ACCESS_CODE]: {
-    LABEL: "Access code"
+    LABEL: 'Access code',
   },
   CREATE: {
     YOUR_DETAILS: {
       [FIRST_NAME4]: {
-        LABEL: "First name"
+        LABEL: 'First name',
       },
       [LAST_NAME4]: {
-        LABEL: "Last name"
+        LABEL: 'Last name',
       },
       [PASSWORD]: {
-        LABEL: "Create a password",
-        HINT: PASSWORD_HINT
-      }
-    }
+        LABEL: 'Create a password',
+        HINT: PASSWORD_HINT,
+      },
+    },
   },
   SIGN_IN: {
     [PASSWORD]: {
-      LABEL: "Password"
-    }
+      LABEL: 'Password',
+    },
   },
   PASSWORD_RESET: {
     [EMAIL6]: {
-      LABEL: "Email address",
-      HINT: "Enter the email address associated with your credit insurance application(s)."
-    }
+      LABEL: 'Email address',
+      HINT: 'Enter the email address associated with your credit insurance application(s).',
+    },
   },
   NEW_PASSWORD: {
     [PASSWORD]: {
-      LABEL: "Create a password",
-      HINT: PASSWORD_HINT
-    }
-  }
+      LABEL: 'Create a password',
+      HINT: PASSWORD_HINT,
+    },
+  },
 };
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-name-on-policy/index.ts
-var { FIELDS: FIELDS7 } = XLSX;
+var { FIELDS: FIELDS6 } = XLSX;
 var {
   ACCOUNT: { FIRST_NAME: FIRST_NAME5, LAST_NAME: LAST_NAME5, EMAIL: EMAIL7 },
   POLICY: {
-    NAME_ON_POLICY: { IS_SAME_AS_OWNER, NAME: NAME2, POSITION: POSITION2 }
-  }
+    NAME_ON_POLICY: { IS_SAME_AS_OWNER, NAME: NAME2, POSITION: POSITION2 },
+  },
 } = insurance_default;
 var mapNameOnPolicy = (policyContact) => {
   let mapped = [];
   if (policyContact[IS_SAME_AS_OWNER]) {
     const nameOnPolicy = `${policyContact[FIRST_NAME5]} ${policyContact[LAST_NAME5]} (${policyContact[EMAIL7]})`;
-    mapped = [xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[NAME2]), nameOnPolicy), xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[POSITION2]), policyContact[POSITION2])];
+    mapped = [
+      xlsx_row_default(String(FIELDS6.NAME_ON_POLICY[NAME2]), nameOnPolicy),
+      xlsx_row_default(String(FIELDS6.NAME_ON_POLICY[POSITION2]), policyContact[POSITION2]),
+    ];
     return mapped;
   }
   mapped = [
-    xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[NAME2]), FIELDS7.SOMEONE_ELSE),
+    xlsx_row_default(String(FIELDS6.NAME_ON_POLICY[NAME2]), FIELDS6.SOMEONE_ELSE),
     xlsx_row_default(String(ACCOUNT_FIELDS[FIRST_NAME5].LABEL), policyContact[FIRST_NAME5]),
     xlsx_row_default(String(ACCOUNT_FIELDS[LAST_NAME5].LABEL), policyContact[LAST_NAME5]),
     xlsx_row_default(String(ACCOUNT_FIELDS[EMAIL7].LABEL), policyContact[EMAIL7]),
-    xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[POSITION2]), policyContact[POSITION2])
+    xlsx_row_default(String(FIELDS6.NAME_ON_POLICY[POSITION2]), policyContact[POSITION2]),
   ];
   return mapped;
 };
 var map_name_on_policy_default = mapNameOnPolicy;
 
 // generate-xlsx/map-application-to-XLSX/helpers/format-currency/index.ts
-var formatCurrency2 = (number, currencyCode, decimalPlaces) => number.toLocaleString("en", {
-  style: "currency",
-  currency: currencyCode,
-  minimumFractionDigits: decimalPlaces ?? 0,
-  maximumFractionDigits: decimalPlaces ?? 0
-});
+var formatCurrency2 = (number, currencyCode, decimalPlaces) =>
+  number.toLocaleString('en', {
+    style: 'currency',
+    currency: currencyCode,
+    minimumFractionDigits: decimalPlaces ?? 0,
+    maximumFractionDigits: decimalPlaces ?? 0,
+  });
 var format_currency_default2 = formatCurrency2;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-single-contract-policy/index.ts
-var { FIELDS: FIELDS8 } = XLSX;
+var { FIELDS: FIELDS7 } = XLSX;
 var CONTENT_STRINGS2 = {
   ...POLICY_FIELDS,
   ...POLICY_FIELDS.CONTRACT_POLICY,
-  ...POLICY_FIELDS.CONTRACT_POLICY.SINGLE
+  ...POLICY_FIELDS.CONTRACT_POLICY.SINGLE,
 };
 var {
   CURRENCY: { CURRENCY_CODE: CURRENCY_CODE3 },
@@ -6940,60 +7557,64 @@ var {
     CONTRACT_POLICY: {
       SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE3 },
       POLICY_CURRENCY_CODE,
-      SINGLE: { TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE2 }
-    }
-  }
+      SINGLE: { REQUESTED_CREDIT_LIMIT, TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE2 },
+    },
+  },
 } = insurance_default;
 var mapSingleContractPolicy = (policy) => {
   const mapped = [
-    xlsx_row_default(String(FIELDS8[CONTRACT_COMPLETION_DATE3]), format_date_default(policy[CONTRACT_COMPLETION_DATE3], DATE_FORMAT.XLSX)),
+    xlsx_row_default(String(FIELDS7[CONTRACT_COMPLETION_DATE3]), format_date_default(policy[CONTRACT_COMPLETION_DATE3], DATE_FORMAT.XLSX)),
     xlsx_row_default(String(CONTENT_STRINGS2[CURRENCY_CODE3].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
-    xlsx_row_default(String(FIELDS8[TOTAL_CONTRACT_VALUE2]), format_currency_default2(policy[TOTAL_CONTRACT_VALUE2], policy[POLICY_CURRENCY_CODE]))
+    xlsx_row_default(String(FIELDS7[TOTAL_CONTRACT_VALUE2]), format_currency_default2(policy[TOTAL_CONTRACT_VALUE2], policy[POLICY_CURRENCY_CODE])),
+    xlsx_row_default(
+      String(CONTENT_STRINGS2[REQUESTED_CREDIT_LIMIT].SUMMARY?.TITLE),
+      format_currency_default2(policy[REQUESTED_CREDIT_LIMIT], policy[POLICY_CURRENCY_CODE]),
+    ),
   ];
   return mapped;
 };
 var map_single_contract_policy_default = mapSingleContractPolicy;
 
 // generate-xlsx/map-application-to-XLSX/helpers/map-month-string/index.ts
-var mapMonthString = (answer) => answer === 1 ? `${answer} month` : `${answer} months`;
+var mapMonthString = (answer) => (answer === 1 ? `${answer} month` : `${answer} months`);
 var map_month_string_default = mapMonthString;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-multiple-contract-policy/index.ts
-var { FIELDS: FIELDS9 } = XLSX;
+var { FIELDS: FIELDS8 } = XLSX;
 var CONTENT_STRINGS3 = {
   ...POLICY_FIELDS,
   ...POLICY_FIELDS.CONTRACT_POLICY,
   ...POLICY_FIELDS.CONTRACT_POLICY.MULTIPLE,
-  ...POLICY_FIELDS.EXPORT_VALUE.MULTIPLE
+  ...POLICY_FIELDS.EXPORT_VALUE.MULTIPLE,
 };
 var {
   CURRENCY: { CURRENCY_CODE: CURRENCY_CODE4 },
   POLICY: {
     CONTRACT_POLICY: {
       POLICY_CURRENCY_CODE: POLICY_CURRENCY_CODE2,
-      MULTIPLE: { TOTAL_MONTHS_OF_COVER: TOTAL_MONTHS_OF_COVER3 }
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER: TOTAL_MONTHS_OF_COVER3 },
     },
     EXPORT_VALUE: {
-      MULTIPLE: { TOTAL_SALES_TO_BUYER: TOTAL_SALES_TO_BUYER2, MAXIMUM_BUYER_WILL_OWE: MAXIMUM_BUYER_WILL_OWE2 }
-    }
-  }
+      MULTIPLE: { TOTAL_SALES_TO_BUYER: TOTAL_SALES_TO_BUYER2, MAXIMUM_BUYER_WILL_OWE: MAXIMUM_BUYER_WILL_OWE2 },
+    },
+  },
 } = insurance_default;
 var mapMultipleContractPolicy = (policy) => [
-  xlsx_row_default(String(FIELDS9[TOTAL_MONTHS_OF_COVER3]), map_month_string_default(policy[TOTAL_MONTHS_OF_COVER3])),
+  xlsx_row_default(String(FIELDS8[TOTAL_MONTHS_OF_COVER3]), map_month_string_default(policy[TOTAL_MONTHS_OF_COVER3])),
   xlsx_row_default(String(CONTENT_STRINGS3[CURRENCY_CODE4].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE2]),
-  xlsx_row_default(String(FIELDS9[TOTAL_SALES_TO_BUYER2]), format_currency_default2(policy[TOTAL_SALES_TO_BUYER2], policy[POLICY_CURRENCY_CODE2])),
-  xlsx_row_default(String(FIELDS9[MAXIMUM_BUYER_WILL_OWE2]), format_currency_default2(policy[MAXIMUM_BUYER_WILL_OWE2], policy[POLICY_CURRENCY_CODE2]))
+  xlsx_row_default(String(FIELDS8[TOTAL_SALES_TO_BUYER2]), format_currency_default2(policy[TOTAL_SALES_TO_BUYER2], policy[POLICY_CURRENCY_CODE2])),
+  xlsx_row_default(String(FIELDS8[MAXIMUM_BUYER_WILL_OWE2]), format_currency_default2(policy[MAXIMUM_BUYER_WILL_OWE2], policy[POLICY_CURRENCY_CODE2])),
 ];
 var map_multiple_contract_policy_default = mapMultipleContractPolicy;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-credit-period/index.ts
-var { FIELDS: FIELDS10 } = XLSX;
+var { FIELDS: FIELDS9 } = XLSX;
 var { NEED_PRE_CREDIT_PERIOD: NEED_PRE_CREDIT_PERIOD3, CREDIT_PERIOD_WITH_BUYER: CREDIT_PERIOD_WITH_BUYER3 } = policy_default;
 var mapCreditPeriod = (policy) => {
   const needPreCreditPeriod = policy[NEED_PRE_CREDIT_PERIOD3];
-  let mapped = [xlsx_row_default(String(FIELDS10[NEED_PRE_CREDIT_PERIOD3]), map_yes_no_field_default({ answer: needPreCreditPeriod }))];
+  let mapped = [xlsx_row_default(String(FIELDS9[NEED_PRE_CREDIT_PERIOD3]), map_yes_no_field_default({ answer: needPreCreditPeriod }))];
   if (needPreCreditPeriod) {
-    mapped = [...mapped, xlsx_row_default(String(FIELDS10[CREDIT_PERIOD_WITH_BUYER3]), policy[CREDIT_PERIOD_WITH_BUYER3])];
+    mapped = [...mapped, xlsx_row_default(String(FIELDS9[CREDIT_PERIOD_WITH_BUYER3]), policy[CREDIT_PERIOD_WITH_BUYER3])];
   }
   return mapped;
 };
@@ -7007,20 +7628,20 @@ var getCountryByIsoCode = (countries, isoCode) => {
 var get_country_by_iso_code_default = getCountryByIsoCode;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-jointly-insured-party/index.ts
-var { FIELDS: FIELDS11 } = XLSX;
+var { FIELDS: FIELDS10 } = XLSX;
 var {
-  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED: REQUESTED2, COMPANY_NAME: COMPANY_NAME4, COMPANY_NUMBER: COMPANY_NUMBER3, COUNTRY_CODE: COUNTRY_CODE2 }
+  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED: REQUESTED2, COMPANY_NAME: COMPANY_NAME4, COMPANY_NUMBER: COMPANY_NUMBER3, COUNTRY_CODE: COUNTRY_CODE2 },
 } = policy_default;
 var mapJointlyInsuredParty = (party, countries) => {
   const requestedParty = party[REQUESTED2];
-  let mapped = [xlsx_row_default(String(FIELDS11.JOINTLY_INSURED_PARTY[REQUESTED2]), map_yes_no_field_default({ answer: requestedParty }))];
+  let mapped = [xlsx_row_default(String(FIELDS10.JOINTLY_INSURED_PARTY[REQUESTED2]), map_yes_no_field_default({ answer: requestedParty }))];
   const country = get_country_by_iso_code_default(countries, party[COUNTRY_CODE2]);
   if (requestedParty) {
     mapped = [
       ...mapped,
-      xlsx_row_default(String(FIELDS11.JOINTLY_INSURED_PARTY[COMPANY_NAME4]), party[COMPANY_NAME4]),
-      xlsx_row_default(String(FIELDS11.JOINTLY_INSURED_PARTY[COUNTRY_CODE2]), country.name),
-      xlsx_row_default(String(FIELDS11.JOINTLY_INSURED_PARTY[COMPANY_NUMBER3]), party[COMPANY_NUMBER3])
+      xlsx_row_default(String(FIELDS10.JOINTLY_INSURED_PARTY[COMPANY_NAME4]), party[COMPANY_NAME4]),
+      xlsx_row_default(String(FIELDS10.JOINTLY_INSURED_PARTY[COUNTRY_CODE2]), country.name),
+      xlsx_row_default(String(FIELDS10.JOINTLY_INSURED_PARTY[COMPANY_NUMBER3]), party[COMPANY_NUMBER3]),
     ];
   }
   return mapped;
@@ -7030,18 +7651,18 @@ var map_jointly_insured_party_default = mapJointlyInsuredParty;
 // generate-xlsx/map-application-to-XLSX/map-policy/map-broker/index.ts
 var {
   USING_BROKER: USING_BROKER3,
-  BROKER_DETAILS: { NAME: BROKER_NAME2, EMAIL: EMAIL8, FULL_ADDRESS: FULL_ADDRESS3 }
+  BROKER_DETAILS: { NAME: BROKER_NAME2, EMAIL: EMAIL8, FULL_ADDRESS: FULL_ADDRESS3 },
 } = POLICY;
-var { FIELDS: FIELDS12 } = XLSX;
+var { FIELDS: FIELDS11 } = XLSX;
 var mapBroker = (application2) => {
   const { broker } = application2;
-  let mapped = [xlsx_row_default(String(FIELDS12[USING_BROKER3]), map_yes_no_field_default({ answer: broker[USING_BROKER3] }))];
+  let mapped = [xlsx_row_default(String(FIELDS11[USING_BROKER3]), map_yes_no_field_default({ answer: broker[USING_BROKER3] }))];
   if (broker[USING_BROKER3]) {
     mapped = [
       ...mapped,
-      xlsx_row_default(String(FIELDS12[BROKER_NAME2]), broker[BROKER_NAME2]),
-      xlsx_row_default(String(FIELDS12[EMAIL8]), broker[EMAIL8]),
-      xlsx_row_default(String(FIELDS12[FULL_ADDRESS3]), broker[FULL_ADDRESS3])
+      xlsx_row_default(String(FIELDS11[BROKER_NAME2]), broker[BROKER_NAME2]),
+      xlsx_row_default(String(FIELDS11[EMAIL8]), broker[EMAIL8]),
+      xlsx_row_default(String(FIELDS11[FULL_ADDRESS3]), broker[FULL_ADDRESS3]),
     ];
   }
   return mapped;
@@ -7050,7 +7671,7 @@ var map_broker_default = mapBroker;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/map-appointed-loss-payee/map-location/index.ts
 var {
-  LOSS_PAYEE_DETAILS: { IS_LOCATED_INTERNATIONALLY: IS_LOCATED_INTERNATIONALLY2, IS_LOCATED_IN_UK: IS_LOCATED_IN_UK2, LOCATION: LOCATION2 }
+  LOSS_PAYEE_DETAILS: { IS_LOCATED_INTERNATIONALLY: IS_LOCATED_INTERNATIONALLY2, IS_LOCATED_IN_UK: IS_LOCATED_IN_UK2, LOCATION: LOCATION2 },
 } = policy_default;
 var CONTENT_STRINGS4 = POLICY_FIELDS.LOSS_PAYEE_DETAILS[LOCATION2].OPTIONS;
 var mapLossPayeeLocation = (lossPayee) => {
@@ -7064,19 +7685,19 @@ var mapLossPayeeLocation = (lossPayee) => {
 var map_location_default = mapLossPayeeLocation;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/map-appointed-loss-payee/index.ts
-var { FIELDS: FIELDS13 } = XLSX;
+var { FIELDS: FIELDS12 } = XLSX;
 var CONTENT_STRINGS5 = POLICY_FIELDS.LOSS_PAYEE_DETAILS;
 var {
   LOSS_PAYEE: { IS_APPOINTED: IS_APPOINTED3 },
-  LOSS_PAYEE_DETAILS: { LOCATION: LOCATION3, NAME: LOSS_PAYEE_NAME2 }
+  LOSS_PAYEE_DETAILS: { LOCATION: LOCATION3, NAME: LOSS_PAYEE_NAME2 },
 } = policy_default;
 var mapAppointedLossPayee = (lossPayee) => {
-  let mapped = [xlsx_row_default(String(FIELDS13[IS_APPOINTED3]), map_yes_no_field_default({ answer: lossPayee[IS_APPOINTED3] }))];
+  let mapped = [xlsx_row_default(String(FIELDS12[IS_APPOINTED3]), map_yes_no_field_default({ answer: lossPayee[IS_APPOINTED3] }))];
   if (lossPayee[IS_APPOINTED3]) {
     mapped = [
       ...mapped,
       xlsx_row_default(String(CONTENT_STRINGS5[LOSS_PAYEE_NAME2].SUMMARY?.TITLE), lossPayee[LOSS_PAYEE_NAME2]),
-      xlsx_row_default(String(CONTENT_STRINGS5[LOCATION3].LABEL), map_location_default(lossPayee))
+      xlsx_row_default(String(CONTENT_STRINGS5[LOCATION3].LABEL), map_location_default(lossPayee)),
     ];
   }
   return mapped;
@@ -7084,18 +7705,18 @@ var mapAppointedLossPayee = (lossPayee) => {
 var map_appointed_loss_payee_default = mapAppointedLossPayee;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/map-financial-details-international/index.ts
-var { FIELDS: FIELDS14 } = XLSX;
+var { FIELDS: FIELDS13 } = XLSX;
 var {
   LOSS_PAYEE_DETAILS: { IS_LOCATED_INTERNATIONALLY: IS_LOCATED_INTERNATIONALLY3 },
   LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE: BIC_SWIFT_CODE3, IBAN: IBAN3 },
-  FINANCIAL_ADDRESS: FINANCIAL_ADDRESS3
+  FINANCIAL_ADDRESS: FINANCIAL_ADDRESS3,
 } = policy_default;
 var mapLossPayeeFinancialDetailsInternational = (lossPayee) => {
   if (lossPayee[IS_LOCATED_INTERNATIONALLY3]) {
     const mapped = [
-      xlsx_row_default(String(FIELDS14[BIC_SWIFT_CODE3]), lossPayee.financialInternational[BIC_SWIFT_CODE3]),
-      xlsx_row_default(String(FIELDS14[IBAN3]), lossPayee.financialInternational[IBAN3]),
-      xlsx_row_default(String(FIELDS14[FINANCIAL_ADDRESS3]), lossPayee.financialInternational[FINANCIAL_ADDRESS3])
+      xlsx_row_default(String(FIELDS13[BIC_SWIFT_CODE3]), lossPayee.financialInternational[BIC_SWIFT_CODE3]),
+      xlsx_row_default(String(FIELDS13[IBAN3]), lossPayee.financialInternational[IBAN3]),
+      xlsx_row_default(String(FIELDS13[FINANCIAL_ADDRESS3]), lossPayee.financialInternational[FINANCIAL_ADDRESS3]),
     ];
     return mapped;
   }
@@ -7104,18 +7725,18 @@ var mapLossPayeeFinancialDetailsInternational = (lossPayee) => {
 var map_financial_details_international_default = mapLossPayeeFinancialDetailsInternational;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/map-financial-details-uk/index.ts
-var { FIELDS: FIELDS15 } = XLSX;
+var { FIELDS: FIELDS14 } = XLSX;
 var {
   LOSS_PAYEE_DETAILS: { IS_LOCATED_IN_UK: IS_LOCATED_IN_UK3 },
   LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE: SORT_CODE3, ACCOUNT_NUMBER: ACCOUNT_NUMBER3 },
-  FINANCIAL_ADDRESS: FINANCIAL_ADDRESS4
+  FINANCIAL_ADDRESS: FINANCIAL_ADDRESS4,
 } = policy_default;
 var mapLossPayeeFinancialDetailsUk = (lossPayee) => {
   if (lossPayee[IS_LOCATED_IN_UK3]) {
     const mapped = [
-      xlsx_row_default(String(FIELDS15[SORT_CODE3]), lossPayee.financialUk[SORT_CODE3]),
-      xlsx_row_default(String(FIELDS15[ACCOUNT_NUMBER3]), lossPayee.financialUk[ACCOUNT_NUMBER3]),
-      xlsx_row_default(String(FIELDS15[FINANCIAL_ADDRESS4]), lossPayee.financialUk[FINANCIAL_ADDRESS4])
+      xlsx_row_default(String(FIELDS14[SORT_CODE3]), lossPayee.financialUk[SORT_CODE3]),
+      xlsx_row_default(String(FIELDS14[ACCOUNT_NUMBER3]), lossPayee.financialUk[ACCOUNT_NUMBER3]),
+      xlsx_row_default(String(FIELDS14[FINANCIAL_ADDRESS4]), lossPayee.financialUk[FINANCIAL_ADDRESS4]),
     ];
     return mapped;
   }
@@ -7125,14 +7746,18 @@ var map_financial_details_uk_default = mapLossPayeeFinancialDetailsUk;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/index.ts
 var mapLossPayee = (lossPayee) => {
-  const mapped = [...map_appointed_loss_payee_default(lossPayee), ...map_financial_details_uk_default(lossPayee), ...map_financial_details_international_default(lossPayee)];
+  const mapped = [
+    ...map_appointed_loss_payee_default(lossPayee),
+    ...map_financial_details_uk_default(lossPayee),
+    ...map_financial_details_international_default(lossPayee),
+  ];
   return mapped;
 };
 var map_loss_payee_default = mapLossPayee;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/index.ts
 var {
-  TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE7 }
+  TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE7 },
 } = policy_default;
 var mapPolicy2 = (application2, countries) => {
   const { nominatedLossPayee, policy, policyContact } = application2;
@@ -7150,7 +7775,7 @@ var mapPolicy2 = (application2, countries) => {
     ...map_credit_period_default(policy),
     ...map_jointly_insured_party_default(policy.jointlyInsuredParty, countries),
     ...map_broker_default(application2),
-    ...map_loss_payee_default(nominatedLossPayee)
+    ...map_loss_payee_default(nominatedLossPayee),
   ];
   return mapped;
 };
@@ -7158,39 +7783,39 @@ var map_policy_default2 = mapPolicy2;
 
 // generate-xlsx/map-application-to-XLSX/map-exporter-business/map-different-trading-name/index.ts
 var {
-  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME3, DIFFERENT_TRADING_NAME: DIFFERENT_TRADING_NAME2 }
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME3, DIFFERENT_TRADING_NAME: DIFFERENT_TRADING_NAME2 },
 } = business_default;
-var { FIELDS: FIELDS16 } = XLSX;
+var { FIELDS: FIELDS15 } = XLSX;
 var mapDifferentTradingName = (company) => {
   if (company[HAS_DIFFERENT_TRADING_NAME3]) {
-    return xlsx_row_default(String(FIELDS16[DIFFERENT_TRADING_NAME2]), company[DIFFERENT_TRADING_NAME2]);
+    return xlsx_row_default(String(FIELDS15[DIFFERENT_TRADING_NAME2]), company[DIFFERENT_TRADING_NAME2]);
   }
 };
 var map_different_trading_name_default = mapDifferentTradingName;
 
 // generate-xlsx/map-application-to-XLSX/map-exporter-business/map-different-trading-address/index.ts
 var {
-  ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS: FULL_ADDRESS4, FULL_ADDRESS_DOT_NOTATION: FULL_ADDRESS_DOT_NOTATION2 }
+  ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS: FULL_ADDRESS4, FULL_ADDRESS_DOT_NOTATION: FULL_ADDRESS_DOT_NOTATION2 },
 } = business_default;
-var { FIELDS: FIELDS17 } = XLSX;
+var { FIELDS: FIELDS16 } = XLSX;
 var mapDifferentTradingAddress = (company) => {
   const { differentTradingAddress } = company;
   const differentTradingAddressValue = differentTradingAddress[FULL_ADDRESS4];
   if (differentTradingAddressValue) {
-    return xlsx_row_default(String(FIELDS17[FULL_ADDRESS_DOT_NOTATION2]), differentTradingAddressValue);
+    return xlsx_row_default(String(FIELDS16[FULL_ADDRESS_DOT_NOTATION2]), differentTradingAddressValue);
   }
 };
 var map_different_trading_address_default = mapDifferentTradingAddress;
 
 // generate-xlsx/map-application-to-XLSX/helpers/xlsx-new-line/index.ts
-var NEW_LINE = "\r\n";
+var NEW_LINE = '\r\n';
 var xlsx_new_line_default = NEW_LINE;
 
 // generate-xlsx/map-application-to-XLSX/map-exporter-business/map-exporter-address/index.ts
 var mapExporterAddress = (address) => {
-  let addressString = "";
+  let addressString = '';
   Object.keys(address).forEach((field) => {
-    if (address[field] && field !== "id" && field !== "__typename") {
+    if (address[field] && field !== 'id' && field !== '__typename') {
       addressString += `${address[field]}${xlsx_new_line_default}`;
     }
   });
@@ -7200,20 +7825,20 @@ var map_exporter_address_default = mapExporterAddress;
 
 // generate-xlsx/map-application-to-XLSX/map-exporter-business/map-financial-year-end-date/index.ts
 var {
-  COMPANIES_HOUSE: { FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 }
+  COMPANIES_HOUSE: { FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 },
 } = business_default;
-var { FIELDS: FIELDS18 } = XLSX;
+var { FIELDS: FIELDS17 } = XLSX;
 var mapFinancialYearEndDate = (company) => {
   if (company[FINANCIAL_YEAR_END_DATE2]) {
     return format_date_default(company[FINANCIAL_YEAR_END_DATE2], DATE_FORMAT.XLSX);
   }
-  return FIELDS18.NO_FINANCIAL_YEAR_END_DATE;
+  return FIELDS17.NO_FINANCIAL_YEAR_END_DATE;
 };
 var map_financial_year_end_date_default = mapFinancialYearEndDate;
 
 // generate-xlsx/map-application-to-XLSX/map-exporter-business/map-sic-codes/index.ts
 var mapSicCodes2 = (sicCodes) => {
-  let mapped = "";
+  let mapped = '';
   sicCodes.forEach((sicCodeObj) => {
     const { sicCode, industrySectorName } = sicCodeObj;
     mapped += `${sicCode} - ${industrySectorName}${xlsx_new_line_default}`;
@@ -7223,39 +7848,52 @@ var mapSicCodes2 = (sicCodes) => {
 var map_sic_codes_default2 = mapSicCodes2;
 
 // generate-xlsx/map-application-to-XLSX/map-exporter-business/index.ts
-var { FIELDS: FIELDS19 } = XLSX;
+var { FIELDS: FIELDS18 } = XLSX;
 var CONTENT_STRINGS6 = {
-  ...FIELDS.COMPANY_DETAILS,
-  ...FIELDS.NATURE_OF_YOUR_BUSINESS,
-  ...FIELDS.TURNOVER,
-  ...FIELDS.BROKER
+  ...EXPORTER_BUSINESS_FIELDS.COMPANY_DETAILS,
+  ...EXPORTER_BUSINESS_FIELDS.NATURE_OF_YOUR_BUSINESS,
+  ...EXPORTER_BUSINESS_FIELDS.TURNOVER,
+  ...EXPORTER_BUSINESS_FIELDS.BROKER,
 };
 var {
-  COMPANIES_HOUSE: { COMPANY_ADDRESS: COMPANY_ADDRESS2, COMPANY_INCORPORATED: COMPANY_INCORPORATED2, COMPANY_SIC: COMPANY_SIC2, FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE3 },
-  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME4, TRADING_ADDRESS: TRADING_ADDRESS3, PHONE_NUMBER: PHONE_NUMBER3, WEBSITE: WEBSITE3 },
+  COMPANIES_HOUSE: {
+    COMPANY_ADDRESS: COMPANY_ADDRESS2,
+    COMPANY_INCORPORATED: COMPANY_INCORPORATED2,
+    COMPANY_SIC: COMPANY_SIC2,
+    FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE3,
+  },
+  YOUR_COMPANY: {
+    HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME4,
+    HAS_DIFFERENT_TRADING_ADDRESS: HAS_DIFFERENT_TRADING_ADDRESS3,
+    PHONE_NUMBER: PHONE_NUMBER3,
+    WEBSITE: WEBSITE3,
+  },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3 },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2, TURNOVER_CURRENCY_CODE },
-  HAS_CREDIT_CONTROL: HAS_CREDIT_CONTROL3
+  HAS_CREDIT_CONTROL: HAS_CREDIT_CONTROL3,
 } = business_default;
 var mapExporterBusiness = (application2) => {
   const { business, company, companySicCodes } = application2;
   const mapped = [
     xlsx_row_default(CONTENT_STRINGS6[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], DATE_FORMAT.XLSX)),
-    xlsx_row_default(String(FIELDS19[COMPANY_ADDRESS2]), map_exporter_address_default(company[COMPANY_ADDRESS2])),
-    xlsx_row_default(String(FIELDS19[COMPANY_SIC2]), map_sic_codes_default2(companySicCodes)),
-    xlsx_row_default(String(FIELDS19[HAS_DIFFERENT_TRADING_NAME4]), map_yes_no_field_default({ answer: company[HAS_DIFFERENT_TRADING_NAME4] })),
+    xlsx_row_default(String(FIELDS18[COMPANY_ADDRESS2]), map_exporter_address_default(company[COMPANY_ADDRESS2])),
+    xlsx_row_default(String(FIELDS18[COMPANY_SIC2]), map_sic_codes_default2(companySicCodes)),
+    xlsx_row_default(String(FIELDS18[HAS_DIFFERENT_TRADING_NAME4]), map_yes_no_field_default({ answer: company[HAS_DIFFERENT_TRADING_NAME4] })),
     map_different_trading_name_default(company),
-    xlsx_row_default(String(FIELDS19[TRADING_ADDRESS3]), map_yes_no_field_default({ answer: company[TRADING_ADDRESS3] })),
+    xlsx_row_default(String(FIELDS18[HAS_DIFFERENT_TRADING_ADDRESS3]), map_yes_no_field_default({ answer: company[HAS_DIFFERENT_TRADING_ADDRESS3] })),
     map_different_trading_address_default(company),
-    xlsx_row_default(String(FIELDS19[WEBSITE3]), company[WEBSITE3]),
-    xlsx_row_default(String(FIELDS19[PHONE_NUMBER3]), company[PHONE_NUMBER3]),
-    xlsx_row_default(String(FIELDS19[GOODS_OR_SERVICES3]), business[GOODS_OR_SERVICES3]),
-    xlsx_row_default(String(FIELDS19[YEARS_EXPORTING3]), business[YEARS_EXPORTING3]),
-    xlsx_row_default(String(FIELDS19[EMPLOYEES_UK3]), business[EMPLOYEES_UK3]),
+    xlsx_row_default(String(FIELDS18[WEBSITE3]), company[WEBSITE3]),
+    xlsx_row_default(String(FIELDS18[PHONE_NUMBER3]), company[PHONE_NUMBER3]),
+    xlsx_row_default(String(FIELDS18[GOODS_OR_SERVICES3]), business[GOODS_OR_SERVICES3]),
+    xlsx_row_default(String(FIELDS18[YEARS_EXPORTING3]), business[YEARS_EXPORTING3]),
+    xlsx_row_default(String(FIELDS18[EMPLOYEES_UK3]), business[EMPLOYEES_UK3]),
     xlsx_row_default(CONTENT_STRINGS6[FINANCIAL_YEAR_END_DATE3].SUMMARY?.TITLE, map_financial_year_end_date_default(company)),
-    xlsx_row_default(String(FIELDS19[ESTIMATED_ANNUAL_TURNOVER3]), format_currency_default2(business[ESTIMATED_ANNUAL_TURNOVER3], business[TURNOVER_CURRENCY_CODE])),
+    xlsx_row_default(
+      String(FIELDS18[ESTIMATED_ANNUAL_TURNOVER3]),
+      format_currency_default2(business[ESTIMATED_ANNUAL_TURNOVER3], business[TURNOVER_CURRENCY_CODE]),
+    ),
     xlsx_row_default(CONTENT_STRINGS6[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER2]}%`),
-    xlsx_row_default(String(FIELDS19[HAS_CREDIT_CONTROL3]), map_yes_no_field_default({ answer: business[HAS_CREDIT_CONTROL3] }))
+    xlsx_row_default(String(FIELDS18[HAS_CREDIT_CONTROL3]), map_yes_no_field_default({ answer: business[HAS_CREDIT_CONTROL3] })),
   ];
   return mapped;
 };
@@ -7263,10 +7901,10 @@ var map_exporter_business_default = mapExporterBusiness;
 
 // generate-xlsx/map-application-to-XLSX/map-buyer/map-connection-with-buyer/index.ts
 var { CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER3, CONNECTION_WITH_BUYER_DESCRIPTION: CONNECTION_WITH_BUYER_DESCRIPTION3 } = your_buyer_default;
-var { FIELDS: FIELDS20 } = XLSX;
+var { FIELDS: FIELDS19 } = XLSX;
 var mapConnectionWithBuyer = (relationship2) => {
   if (relationship2[CONNECTION_WITH_BUYER3]) {
-    return xlsx_row_default(String(FIELDS20[CONNECTION_WITH_BUYER_DESCRIPTION3]), relationship2[CONNECTION_WITH_BUYER_DESCRIPTION3]);
+    return xlsx_row_default(String(FIELDS19[CONNECTION_WITH_BUYER_DESCRIPTION3]), relationship2[CONNECTION_WITH_BUYER_DESCRIPTION3]);
   }
 };
 var map_connection_with_buyer_default = mapConnectionWithBuyer;
@@ -7274,18 +7912,24 @@ var map_connection_with_buyer_default = mapConnectionWithBuyer;
 // generate-xlsx/map-application-to-XLSX/map-buyer/map-outstanding-payments/index.ts
 var {
   CURRENCY: { CURRENCY_CODE: CURRENCY_CODE5 },
-  YOUR_BUYER: { OUTSTANDING_PAYMENTS: OUTSTANDING_PAYMENTS3, TOTAL_OUTSTANDING_PAYMENTS: TOTAL_OUTSTANDING_PAYMENTS3, TOTAL_AMOUNT_OVERDUE: TOTAL_AMOUNT_OVERDUE2 }
+  YOUR_BUYER: {
+    OUTSTANDING_PAYMENTS: OUTSTANDING_PAYMENTS3,
+    TOTAL_OUTSTANDING_PAYMENTS: TOTAL_OUTSTANDING_PAYMENTS3,
+    TOTAL_AMOUNT_OVERDUE: TOTAL_AMOUNT_OVERDUE2,
+  },
 } = insurance_default;
-var { FIELDS: FIELDS21 } = XLSX;
+var { FIELDS: FIELDS20 } = XLSX;
 var mapOutstandingPayments = (tradingHistory) => {
   if (tradingHistory[OUTSTANDING_PAYMENTS3]) {
     const values = {
+      currency: tradingHistory[CURRENCY_CODE5],
       totalOutstanding: format_currency_default(tradingHistory[TOTAL_OUTSTANDING_PAYMENTS3], tradingHistory[CURRENCY_CODE5]),
-      totalAmountOverdue: format_currency_default(tradingHistory[TOTAL_AMOUNT_OVERDUE2], tradingHistory[CURRENCY_CODE5])
+      totalAmountOverdue: format_currency_default(tradingHistory[TOTAL_AMOUNT_OVERDUE2], tradingHistory[CURRENCY_CODE5]),
     };
     const mapped = [
-      xlsx_row_default(String(FIELDS21[TOTAL_OUTSTANDING_PAYMENTS3]), values.totalOutstanding),
-      xlsx_row_default(String(YOUR_BUYER_FIELDS[TOTAL_AMOUNT_OVERDUE2].SUMMARY?.TITLE), values.totalAmountOverdue)
+      xlsx_row_default(String(FIELDS20[TOTAL_OUTSTANDING_PAYMENTS3]), values.totalOutstanding),
+      xlsx_row_default(String(YOUR_BUYER_FIELDS[CURRENCY_CODE5].SUMMARY?.TITLE), values.currency),
+      xlsx_row_default(String(YOUR_BUYER_FIELDS[TOTAL_AMOUNT_OVERDUE2].SUMMARY?.TITLE), values.totalAmountOverdue),
     ];
     return mapped;
   }
@@ -7295,13 +7939,13 @@ var map_outstanding_payments_default = mapOutstandingPayments;
 
 // generate-xlsx/map-application-to-XLSX/map-buyer/map-buyer-trading-history/index.ts
 var { FAILED_PAYMENTS: FAILED_PAYMENTS3, OUTSTANDING_PAYMENTS: OUTSTANDING_PAYMENTS4, TRADED_WITH_BUYER: TRADED_WITH_BUYER3 } = your_buyer_default;
-var { FIELDS: FIELDS22 } = XLSX;
+var { FIELDS: FIELDS21 } = XLSX;
 var mapBuyerTradingHistory = (tradingHistory) => {
   if (tradingHistory[TRADED_WITH_BUYER3]) {
     const mapped = [
-      xlsx_row_default(String(FIELDS22[OUTSTANDING_PAYMENTS4]), map_yes_no_field_default({ answer: tradingHistory[OUTSTANDING_PAYMENTS4] })),
+      xlsx_row_default(String(FIELDS21[OUTSTANDING_PAYMENTS4]), map_yes_no_field_default({ answer: tradingHistory[OUTSTANDING_PAYMENTS4] })),
       ...map_outstanding_payments_default(tradingHistory),
-      xlsx_row_default(String(FIELDS22[FAILED_PAYMENTS3]), map_yes_no_field_default({ answer: tradingHistory[FAILED_PAYMENTS3] }))
+      xlsx_row_default(String(FIELDS21[FAILED_PAYMENTS3]), map_yes_no_field_default({ answer: tradingHistory[FAILED_PAYMENTS3] })),
     ];
     return mapped;
   }
@@ -7310,15 +7954,21 @@ var mapBuyerTradingHistory = (tradingHistory) => {
 var map_buyer_trading_history_default = mapBuyerTradingHistory;
 
 // generate-xlsx/map-application-to-XLSX/map-buyer/map-previous-cover-with-buyer/index.ts
-var { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3 } = your_buyer_default;
-var { FIELDS: FIELDS23 } = XLSX;
-var mapPreviousCoverWithBuyer = (eligibility, relationship2, migratedV1toV2) => {
-  const totalContractValueOverThreshold = eligibility.totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
-  if (totalContractValueOverThreshold || migratedV1toV2) {
+var {
+  HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3,
+  PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3,
+} = your_buyer_default;
+var { FIELDS: FIELDS22 } = XLSX;
+var mapPreviousCoverWithBuyer = (application2) => {
+  const {
+    buyer: { relationship: relationship2 },
+    totalContractValueOverThreshold,
+  } = application2;
+  if (totalContractValueOverThreshold) {
     const answer = relationship2[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3];
-    const mapped = [xlsx_row_default(String(FIELDS23[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), map_yes_no_field_default({ answer }))];
+    const mapped = [xlsx_row_default(String(FIELDS22[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), map_yes_no_field_default({ answer }))];
     if (answer === true) {
-      mapped.push(xlsx_row_default(String(FIELDS23[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), relationship2[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]));
+      mapped.push(xlsx_row_default(String(FIELDS22[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), relationship2[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]));
     }
     return mapped;
   }
@@ -7329,29 +7979,29 @@ var map_previous_cover_with_buyer_default = mapPreviousCoverWithBuyer;
 // generate-xlsx/map-application-to-XLSX/map-buyer/index.ts
 var CONTENT_STRINGS7 = {
   ...YOUR_BUYER_FIELDS.COMPANY_OR_ORGANISATION,
-  ...YOUR_BUYER_FIELDS
+  ...YOUR_BUYER_FIELDS,
 };
 var {
   COMPANY_OR_ORGANISATION: { NAME: NAME3, ADDRESS, COUNTRY: COUNTRY3, REGISTRATION_NUMBER, WEBSITE: WEBSITE4 },
   CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER4,
   HAS_BUYER_FINANCIAL_ACCOUNTS: HAS_BUYER_FINANCIAL_ACCOUNTS3,
-  TRADED_WITH_BUYER: TRADED_WITH_BUYER4
+  TRADED_WITH_BUYER: TRADED_WITH_BUYER4,
 } = your_buyer_default;
-var { FIELDS: FIELDS24 } = XLSX;
+var { FIELDS: FIELDS23 } = XLSX;
 var mapBuyer = (application2) => {
-  const { buyer, eligibility, migratedV1toV2 } = application2;
+  const { buyer } = application2;
   const { buyerTradingHistory, relationship: relationship2 } = buyer;
   const mapped = [
-    xlsx_row_default(String(FIELDS24[NAME3]), buyer[NAME3]),
+    xlsx_row_default(String(FIELDS23[NAME3]), buyer[NAME3]),
     xlsx_row_default(String(CONTENT_STRINGS7[ADDRESS].SUMMARY?.TITLE), `${buyer[ADDRESS]} ${xlsx_new_line_default}${buyer[COUNTRY3].name}`),
-    xlsx_row_default(String(FIELDS24[REGISTRATION_NUMBER]), buyer[REGISTRATION_NUMBER]),
+    xlsx_row_default(String(FIELDS23[REGISTRATION_NUMBER]), buyer[REGISTRATION_NUMBER]),
     xlsx_row_default(String(CONTENT_STRINGS7[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
-    xlsx_row_default(String(FIELDS24[CONNECTION_WITH_BUYER4]), map_yes_no_field_default({ answer: relationship2[CONNECTION_WITH_BUYER4] })),
+    xlsx_row_default(String(FIELDS23[CONNECTION_WITH_BUYER4]), map_yes_no_field_default({ answer: relationship2[CONNECTION_WITH_BUYER4] })),
     map_connection_with_buyer_default(relationship2),
-    xlsx_row_default(String(FIELDS24[TRADED_WITH_BUYER4]), map_yes_no_field_default({ answer: buyerTradingHistory[TRADED_WITH_BUYER4] })),
+    xlsx_row_default(String(FIELDS23[TRADED_WITH_BUYER4]), map_yes_no_field_default({ answer: buyerTradingHistory[TRADED_WITH_BUYER4] })),
     ...map_buyer_trading_history_default(buyerTradingHistory),
-    ...map_previous_cover_with_buyer_default(eligibility, relationship2, migratedV1toV2),
-    xlsx_row_default(String(FIELDS24[HAS_BUYER_FINANCIAL_ACCOUNTS3]), map_yes_no_field_default({ answer: relationship2[HAS_BUYER_FINANCIAL_ACCOUNTS3] }))
+    ...map_previous_cover_with_buyer_default(application2),
+    xlsx_row_default(String(FIELDS23[HAS_BUYER_FINANCIAL_ACCOUNTS3]), map_yes_no_field_default({ answer: relationship2[HAS_BUYER_FINANCIAL_ACCOUNTS3] })),
   ];
   return mapped;
 };
@@ -7361,7 +8011,7 @@ var map_buyer_default = mapBuyer;
 var { OTHER: OTHER2 } = EXPORT_CONTRACT_AWARD_METHOD;
 var CONTENT_STRINGS8 = EXPORT_CONTRACT_FIELDS.HOW_WAS_THE_CONTRACT_AWARDED;
 var {
-  HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD: AWARD_METHOD2, OTHER_AWARD_METHOD }
+  HOW_WAS_THE_CONTRACT_AWARDED: { AWARD_METHOD: AWARD_METHOD2, OTHER_AWARD_METHOD },
 } = export_contract_default;
 var mapHowWasTheContractAwarded = (exportContract) => {
   const submittedMethodId = exportContract.awardMethodId;
@@ -7382,13 +8032,15 @@ var map_how_was_the_contract_awarded_default = mapHowWasTheContractAwarded;
 
 // generate-xlsx/map-application-to-XLSX/map-export-contract/map-final-destination/index.ts
 var CONTENT_STRINGS9 = EXPORT_CONTRACT_FIELDS.ABOUT_GOODS_OR_SERVICES;
-var { FIELDS: FIELDS25 } = XLSX;
+var { FIELDS: FIELDS24 } = XLSX;
 var {
-  ABOUT_GOODS_OR_SERVICES: { FINAL_DESTINATION: FINAL_DESTINATION2, FINAL_DESTINATION_KNOWN: FINAL_DESTINATION_KNOWN3 }
+  ABOUT_GOODS_OR_SERVICES: { FINAL_DESTINATION: FINAL_DESTINATION2, FINAL_DESTINATION_KNOWN: FINAL_DESTINATION_KNOWN3 },
 } = export_contract_default;
 var mapFinalDestination = (exportContract, countries) => {
   const finalDestinationKnownAnswer = exportContract[FINAL_DESTINATION_KNOWN3];
-  const mapped = [xlsx_row_default(String(FIELDS25.EXPORT_CONTRACT[FINAL_DESTINATION_KNOWN3]), map_yes_no_field_default({ answer: finalDestinationKnownAnswer }))];
+  const mapped = [
+    xlsx_row_default(String(FIELDS24.EXPORT_CONTRACT[FINAL_DESTINATION_KNOWN3]), map_yes_no_field_default({ answer: finalDestinationKnownAnswer })),
+  ];
   if (finalDestinationKnownAnswer) {
     const country = get_country_by_iso_code_default(countries, exportContract[FINAL_DESTINATION2]);
     mapped.push(xlsx_row_default(String(CONTENT_STRINGS9[FINAL_DESTINATION2].SUMMARY?.TITLE), country.name));
@@ -7398,17 +8050,20 @@ var mapFinalDestination = (exportContract, countries) => {
 var map_final_destination_default = mapFinalDestination;
 
 // generate-xlsx/map-application-to-XLSX/map-export-contract/map-private-market/index.ts
-var { FIELDS: FIELDS26 } = XLSX;
+var { FIELDS: FIELDS25 } = XLSX;
 var {
-  PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION: DECLINED_DESCRIPTION3 }
+  PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION: DECLINED_DESCRIPTION3 },
 } = export_contract_default;
-var mapPrivateMarket = (privateMarket, totalContractValue, migratedV1toV2) => {
-  const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
-  if (totalContractValueOverThreshold || migratedV1toV2) {
+var mapPrivateMarket = (application2) => {
+  const {
+    exportContract: { privateMarket },
+    totalContractValueOverThreshold,
+  } = application2;
+  if (totalContractValueOverThreshold) {
     const attempedPrivateMarketAnswer = privateMarket[ATTEMPTED];
-    const mapped = [xlsx_row_default(String(FIELDS26.EXPORT_CONTRACT[ATTEMPTED]), map_yes_no_field_default({ answer: attempedPrivateMarketAnswer }))];
+    const mapped = [xlsx_row_default(String(FIELDS25.EXPORT_CONTRACT[ATTEMPTED]), map_yes_no_field_default({ answer: attempedPrivateMarketAnswer }))];
     if (attempedPrivateMarketAnswer) {
-      mapped.push(xlsx_row_default(String(FIELDS26.EXPORT_CONTRACT[DECLINED_DESCRIPTION3]), privateMarket[DECLINED_DESCRIPTION3]));
+      mapped.push(xlsx_row_default(String(FIELDS25.EXPORT_CONTRACT[DECLINED_DESCRIPTION3]), privateMarket[DECLINED_DESCRIPTION3]));
     }
     return mapped;
   }
@@ -7417,20 +8072,25 @@ var mapPrivateMarket = (privateMarket, totalContractValue, migratedV1toV2) => {
 var map_private_market_default = mapPrivateMarket;
 
 // generate-xlsx/map-application-to-XLSX/map-export-contract/map-agent/map-agent-charge/map-agent-charge-amount/index.ts
-var { FIELDS: FIELDS27 } = XLSX;
+var { FIELDS: FIELDS26 } = XLSX;
 var {
-  AGENT_CHARGES: { FIXED_SUM_AMOUNT: FIXED_SUM_AMOUNT2, FIXED_SUM_CURRENCY_CODE, PAYABLE_COUNTRY_CODE: PAYABLE_COUNTRY_CODE2, PERCENTAGE_CHARGE: PERCENTAGE_CHARGE2 }
+  AGENT_CHARGES: {
+    FIXED_SUM_AMOUNT: FIXED_SUM_AMOUNT2,
+    FIXED_SUM_CURRENCY_CODE,
+    PAYABLE_COUNTRY_CODE: PAYABLE_COUNTRY_CODE2,
+    PERCENTAGE_CHARGE: PERCENTAGE_CHARGE2,
+  },
 } = export_contract_default;
 var mapAgentChargeAmount = (charge, countries) => {
   const country = get_country_by_iso_code_default(countries, charge[PAYABLE_COUNTRY_CODE2]);
-  const payableCountryRow = xlsx_row_default(String(FIELDS27.AGENT_CHARGES[PAYABLE_COUNTRY_CODE2]), country.name);
+  const payableCountryRow = xlsx_row_default(String(FIELDS26.AGENT_CHARGES[PAYABLE_COUNTRY_CODE2]), country.name);
   if (charge[FIXED_SUM_AMOUNT2]) {
     const currencyValue = format_currency_default2(Number(charge[FIXED_SUM_AMOUNT2]), charge[FIXED_SUM_CURRENCY_CODE]);
-    const mapped = [xlsx_row_default(String(FIELDS27.AGENT_CHARGES[FIXED_SUM_AMOUNT2]), currencyValue), payableCountryRow];
+    const mapped = [xlsx_row_default(String(FIELDS26.AGENT_CHARGES[FIXED_SUM_AMOUNT2]), currencyValue), payableCountryRow];
     return mapped;
   }
   if (charge[PERCENTAGE_CHARGE2]) {
-    const mapped = [xlsx_row_default(String(FIELDS27.AGENT_CHARGES[PERCENTAGE_CHARGE2]), `${charge[PERCENTAGE_CHARGE2]}%`), payableCountryRow];
+    const mapped = [xlsx_row_default(String(FIELDS26.AGENT_CHARGES[PERCENTAGE_CHARGE2]), `${charge[PERCENTAGE_CHARGE2]}%`), payableCountryRow];
     return mapped;
   }
   return [];
@@ -7438,14 +8098,14 @@ var mapAgentChargeAmount = (charge, countries) => {
 var map_agent_charge_amount_default = mapAgentChargeAmount;
 
 // generate-xlsx/map-application-to-XLSX/map-export-contract/map-agent/map-agent-charge/index.ts
-var { FIELDS: FIELDS28 } = XLSX;
+var { FIELDS: FIELDS27 } = XLSX;
 var {
-  AGENT_SERVICE: { IS_CHARGING: IS_CHARGING2 }
+  AGENT_SERVICE: { IS_CHARGING: IS_CHARGING2 },
 } = export_contract_default;
 var mapAgentCharge = (service, countries) => {
   const { charge } = service;
   const chargingAnswer = service[IS_CHARGING2];
-  let mapped = [xlsx_row_default(String(FIELDS28.AGENT_SERVICE[IS_CHARGING2]), map_yes_no_field_default({ answer: chargingAnswer }))];
+  let mapped = [xlsx_row_default(String(FIELDS27.AGENT_SERVICE[IS_CHARGING2]), map_yes_no_field_default({ answer: chargingAnswer }))];
   if (chargingAnswer) {
     mapped = [...mapped, ...map_agent_charge_amount_default(charge, countries)];
   }
@@ -7454,25 +8114,25 @@ var mapAgentCharge = (service, countries) => {
 var map_agent_charge_default = mapAgentCharge;
 
 // generate-xlsx/map-application-to-XLSX/map-export-contract/map-agent/index.ts
-var { FIELDS: FIELDS29 } = XLSX;
+var { FIELDS: FIELDS28 } = XLSX;
 var {
   AGENT_DETAILS: { NAME: NAME4, FULL_ADDRESS: FULL_ADDRESS5, COUNTRY_CODE: COUNTRY_CODE3 },
   AGENT_SERVICE: { SERVICE_DESCRIPTION: SERVICE_DESCRIPTION2 },
-  USING_AGENT: USING_AGENT2
+  USING_AGENT: USING_AGENT2,
 } = export_contract_default;
 var mapAgent = (agent, countries) => {
   const usingAgentAnswer = agent[USING_AGENT2];
-  let mapped = [xlsx_row_default(String(FIELDS29.EXPORT_CONTRACT[USING_AGENT2]), map_yes_no_field_default({ answer: usingAgentAnswer }))];
+  let mapped = [xlsx_row_default(String(FIELDS28.EXPORT_CONTRACT[USING_AGENT2]), map_yes_no_field_default({ answer: usingAgentAnswer }))];
   if (usingAgentAnswer) {
     const { service } = agent;
     const country = get_country_by_iso_code_default(countries, agent[COUNTRY_CODE3]);
     mapped = [
       ...mapped,
-      xlsx_row_default(String(FIELDS29.AGENT[NAME4]), agent[NAME4]),
-      xlsx_row_default(String(FIELDS29.AGENT[FULL_ADDRESS5]), agent[FULL_ADDRESS5]),
-      xlsx_row_default(String(FIELDS29.AGENT[COUNTRY_CODE3]), country.name),
-      xlsx_row_default(String(FIELDS29.AGENT_SERVICE[SERVICE_DESCRIPTION2]), service[SERVICE_DESCRIPTION2]),
-      ...map_agent_charge_default(service, countries)
+      xlsx_row_default(String(FIELDS28.AGENT[NAME4]), agent[NAME4]),
+      xlsx_row_default(String(FIELDS28.AGENT[FULL_ADDRESS5]), agent[FULL_ADDRESS5]),
+      xlsx_row_default(String(FIELDS28.AGENT[COUNTRY_CODE3]), country.name),
+      xlsx_row_default(String(FIELDS28.AGENT_SERVICE[SERVICE_DESCRIPTION2]), service[SERVICE_DESCRIPTION2]),
+      ...map_agent_charge_default(service, countries),
     ];
   }
   return mapped;
@@ -7480,24 +8140,21 @@ var mapAgent = (agent, countries) => {
 var map_agent_default = mapAgent;
 
 // generate-xlsx/map-application-to-XLSX/map-export-contract/index.ts
-var { FIELDS: FIELDS30 } = XLSX;
+var { FIELDS: FIELDS29 } = XLSX;
 var {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION: DESCRIPTION3 },
-  HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION: PAYMENT_TERMS_DESCRIPTION3 }
+  HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION: PAYMENT_TERMS_DESCRIPTION3 },
 } = export_contract_default;
 var mapExportContract = (application2, countries) => {
-  const {
-    eligibility: { totalContractValue },
-    exportContract
-  } = application2;
-  const { agent, privateMarket } = exportContract;
+  const { exportContract } = application2;
+  const { agent } = exportContract;
   const mapped = [
-    xlsx_row_default(String(FIELDS30.EXPORT_CONTRACT[DESCRIPTION3]), exportContract[DESCRIPTION3]),
+    xlsx_row_default(String(FIELDS29.EXPORT_CONTRACT[DESCRIPTION3]), exportContract[DESCRIPTION3]),
     map_how_was_the_contract_awarded_default(exportContract),
     ...map_final_destination_default(exportContract, countries),
-    xlsx_row_default(String(FIELDS30.EXPORT_CONTRACT[PAYMENT_TERMS_DESCRIPTION3]), exportContract[PAYMENT_TERMS_DESCRIPTION3]),
-    ...map_private_market_default(privateMarket, totalContractValue),
-    ...map_agent_default(agent, countries)
+    xlsx_row_default(String(FIELDS29.EXPORT_CONTRACT[PAYMENT_TERMS_DESCRIPTION3]), exportContract[PAYMENT_TERMS_DESCRIPTION3]),
+    ...map_private_market_default(application2),
+    ...map_agent_default(agent, countries),
   ];
   return mapped;
 };
@@ -7513,24 +8170,27 @@ var mapAgreedField = (answer) => {
 var map_agreed_field_default = mapAgreedField;
 
 // generate-xlsx/map-application-to-XLSX/map-declarations/index.ts
-var { FIELDS: FIELDS31 } = XLSX;
+var { FIELDS: FIELDS30 } = XLSX;
 var {
   DECLARATIONS: {
     AGREE_CONFIDENTIALITY: AGREE_CONFIDENTIALITY2,
     AGREE_ANTI_BRIBERY: AGREE_ANTI_BRIBERY2,
     HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3,
     WILL_EXPORT_WITH_CODE_OF_CONDUCT: WILL_EXPORT_WITH_CODE_OF_CONDUCT3,
-    AGREE_CONFIRMATION_ACKNOWLEDGEMENTS: AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2
-  }
+    AGREE_CONFIRMATION_ACKNOWLEDGEMENTS: AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2,
+  },
 } = insurance_default;
 var mapDeclarations = (application2) => {
   const { declaration } = application2;
   const mapped = [
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIDENTIALITY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIDENTIALITY2])),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_ANTI_BRIBERY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_ANTI_BRIBERY2])),
-    xlsx_row_default(String(FIELDS31[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3] })),
-    xlsx_row_default(String(FIELDS31[WILL_EXPORT_WITH_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT3] })),
-    xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2]))
+    xlsx_row_default(String(FIELDS30[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3] })),
+    xlsx_row_default(String(FIELDS30[WILL_EXPORT_WITH_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT3] })),
+    xlsx_row_default(
+      DECLARATIONS_FIELDS[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2].SUMMARY.TITLE,
+      map_agreed_field_default(declaration[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2]),
+    ),
   ];
   return mapped;
 };
@@ -7544,7 +8204,7 @@ var {
   POLICY: POLICY4,
   BUYER,
   EXPORT_CONTRACT: EXPORT_CONTRACT2,
-  DECLARATIONS: DECLARATIONS3
+  DECLARATIONS: DECLARATIONS3,
 } = SECTION_NAMES_default;
 var mapApplicationToXLSX = (application2, countries) => {
   try {
@@ -7552,19 +8212,19 @@ var mapApplicationToXLSX = (application2, countries) => {
       [APPLICATION_INFORMATION]: [
         ...map_introduction_default(application2),
         ...map_exporter_contact_details_default(application2),
-        ...map_key_information_default(application2)
+        ...map_key_information_default(application2),
       ],
       [ELIGIBILITY2]: map_eligibility_default(application2),
       [EXPORTER_BUSINESS3]: map_exporter_business_default(application2),
       [POLICY4]: map_policy_default2(application2, countries),
       [BUYER]: map_buyer_default(application2),
       [EXPORT_CONTRACT2]: map_export_contract_default(application2, countries),
-      [DECLARATIONS3]: map_declarations_default(application2)
+      [DECLARATIONS3]: map_declarations_default(application2),
     };
     return mapped;
-  } catch (err) {
-    console.error("Error mapping application to XLSX %O", err);
-    throw new Error(`Mapping application to XLSX ${err}`);
+  } catch (error) {
+    console.error('Error mapping application to XLSX %o', error);
+    throw new Error(`Mapping application to XLSX ${error}`);
   }
 };
 var map_application_to_XLSX_default = mapApplicationToXLSX;
@@ -7573,7 +8233,7 @@ var map_application_to_XLSX_default = mapApplicationToXLSX;
 var { KEY: KEY2, VALUE: VALUE2, COLUMN_WIDTH } = XLSX_CONFIG;
 var XLSX_HEADER_COLUMNS = (sheetName) => [
   { key: KEY2, header: sheetName, width: COLUMN_WIDTH },
-  { key: VALUE2, width: COLUMN_WIDTH }
+  { key: VALUE2, width: COLUMN_WIDTH },
 ];
 var header_columns_default = XLSX_HEADER_COLUMNS;
 
@@ -7581,14 +8241,14 @@ var header_columns_default = XLSX_HEADER_COLUMNS;
 var DEFAULT_INDEXES = () => ({
   REGISTERED_OFFICE_ADDRESS: 3,
   COMPANY_SIC_CODES: 4,
-  ALTERNATIVE_TRADING_ADDRESS: 0
+  ALTERNATIVE_TRADING_ADDRESS: 0,
 });
 var EXPORTER_BUSINESS_INDEXES = (application2) => {
   const {
     company: {
       differentTradingAddress: { fullAddress: hasDifferentTradingAddress },
-      hasDifferentTradingName
-    }
+      hasDifferentTradingName,
+    },
   } = application2;
   const INDEXES = DEFAULT_INDEXES();
   if (hasDifferentTradingAddress) {
@@ -7608,9 +8268,9 @@ var BROKER_CONDITIONS = (application2, INDEXES) => {
     broker,
     policy: {
       jointlyInsuredParty: { requested: requestedJointlyInsuredParty },
-      needPreCreditPeriodCover
+      needPreCreditPeriodCover,
     },
-    policyContact: { isSameAsOwner: policyContactIsSameAsOwner }
+    policyContact: { isSameAsOwner: policyContactIsSameAsOwner },
   } = application2;
   const MODIFIED_INDEXES = INDEXES;
   if (broker[USING_BROKER4]) {
@@ -7636,9 +8296,9 @@ var LOSS_PAYEE_CONDITIONS = (application2, INDEXES) => {
     nominatedLossPayee: { isAppointed: nominatedLossPayeeAppointed },
     policy: {
       jointlyInsuredParty: { requested: requestedJointlyInsuredParty },
-      needPreCreditPeriodCover
+      needPreCreditPeriodCover,
     },
-    policyContact: { isSameAsOwner: policyContactIsSameAsOwner }
+    policyContact: { isSameAsOwner: policyContactIsSameAsOwner },
   } = application2;
   const MODIFIED_INDEXES = INDEXES;
   if (nominatedLossPayeeAppointed) {
@@ -7663,18 +8323,18 @@ var LOSS_PAYEE_CONDITIONS_default = LOSS_PAYEE_CONDITIONS;
 var {
   TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE8 },
   USING_BROKER: USING_BROKER6,
-  NAME_ON_POLICY: { IS_SAME_AS_OWNER: IS_SAME_AS_OWNER2 }
+  NAME_ON_POLICY: { IS_SAME_AS_OWNER: IS_SAME_AS_OWNER2 },
 } = policy_default;
 var DEFAULT_INDEXES2 = {
   BROKER_ADDRESS: 0,
-  LOSS_PAYEE_ADDRESS: 0
+  LOSS_PAYEE_ADDRESS: 0,
 };
 var POLICY_INDEXES = (application2) => {
   const {
     broker,
     nominatedLossPayee: { isAppointed: nominatedLossPayeeAppointed },
     policy,
-    policyContact
+    policyContact,
   } = application2;
   const isMultiplePolicy = isMultiplePolicyType(policy[POLICY_TYPE8]);
   let INDEXES = DEFAULT_INDEXES2;
@@ -7697,7 +8357,7 @@ var POLICY_INDEXES = (application2) => {
   INDEXES = {
     ...INDEXES,
     ...BROKER_CONDITIONS_default(application2, INDEXES),
-    ...LOSS_PAYEE_CONDITIONS_default(application2, INDEXES)
+    ...LOSS_PAYEE_CONDITIONS_default(application2, INDEXES),
   };
   return INDEXES;
 };
@@ -7705,13 +8365,13 @@ var POLICY_default = POLICY_INDEXES;
 
 // constants/XLSX-CONFIG/INDEXES/BUYER/index.ts
 var BUYER_INDEXES = () => ({
-  BUYER_ADDRESS: 3
+  BUYER_ADDRESS: 3,
 });
 var BUYER_default = BUYER_INDEXES;
 
 // constants/XLSX-CONFIG/INDEXES/EXPORT_CONTRACT/index.ts
 var DEFAULT_INDEXES3 = () => ({
-  AGENT_ADDRESS: 0
+  AGENT_ADDRESS: 0,
 });
 var EXPORT_CONTRACT_INDEXES = (application2) => {
   const { exportContract } = application2;
@@ -7736,7 +8396,7 @@ var XLSX_ROW_INDEXES = {
   [EXPORTER_BUSINESS4]: (application2) => EXPORTER_BUSINESS_default(application2),
   [POLICY5]: (application2) => POLICY_default(application2),
   [BUYER2]: () => BUYER_default(),
-  [EXPORT_CONTRACT3]: (application2) => EXPORT_CONTRACT_default(application2)
+  [EXPORT_CONTRACT3]: (application2) => EXPORT_CONTRACT_default(application2),
 };
 var INDEXES_default = XLSX_ROW_INDEXES;
 
@@ -7762,8 +8422,8 @@ var styledColumns = (application2, worksheet, sheetName) => {
     row.eachCell((cell, colNumber) => {
       const modifiedRow = row;
       modifiedRow.getCell(colNumber).alignment = {
-        vertical: "top",
-        wrapText: true
+        vertical: 'top',
+        wrapText: true,
       };
       const isInformationSheet = sheetName === APPLICATION_INFORMATION2;
       const isInformationTitleOne = isInformationSheet && rowNumber === 8;
@@ -7772,7 +8432,7 @@ var styledColumns = (application2, worksheet, sheetName) => {
       const isTitleRow = rowNumber === 1 || isInformationTitle;
       modifiedRow.getCell(colNumber).font = {
         bold: Boolean(isTitleRow),
-        size: isTitleRow ? FONT_SIZE.TITLE : FONT_SIZE.DEFAULT
+        size: isTitleRow ? FONT_SIZE.TITLE : FONT_SIZE.DEFAULT,
       };
     });
   });
@@ -7791,51 +8451,51 @@ import_dotenv9.default.config();
 var { EXCELJS_PROTECTION_PASSWORD } = process.env;
 var XLSX2 = (application2, countries) => {
   try {
-    console.info("Generating XLSX file for application %s", application2.id);
+    console.info('Generating XLSX file for application %s', application2.id);
     const { referenceNumber } = application2;
     const refNumber = String(referenceNumber);
     return new Promise((resolve) => {
       const filePath = `XLSX/${refNumber}.xlsx`;
       const xlsxData = map_application_to_XLSX_default(application2, countries);
-      console.info("Generating XLSX file - creating a new workbook");
+      console.info('Generating XLSX file - creating a new workbook');
       const workbook = new import_exceljs.default.Workbook();
-      console.info("Generating XLSX file - adding worksheets to workbook");
+      console.info('Generating XLSX file - adding worksheets to workbook');
       const sheetNames = Object.values(SECTION_NAMES_default);
       sheetNames.forEach((sheetName) => {
-        console.info(`Generating XLSX file - adding ${sheetName} worksheet`);
+        console.info('Generating XLSX file - adding %s worksheet', sheetName);
         let worksheet = workbook.addWorksheet(sheetName);
-        console.info(`Generating XLSX file - protecting ${sheetName} worksheet from modification`);
+        console.info('Generating XLSX file - protecting %s worksheet from modification', sheetName);
         worksheet.protect(String(EXCELJS_PROTECTION_PASSWORD), {});
-        console.info(`Generating XLSX file - adding ${sheetName} worksheet header columns`);
+        console.info('Generating XLSX file - adding %s worksheet header columns', sheetName);
         worksheet.columns = header_columns_default(sheetName);
         xlsxData[sheetName].forEach((row) => {
-          console.info(`Generating XLSX file - adding rows to ${sheetName} worksheeet`);
+          console.info('Generating XLSX file - adding rows to %s worksheeet', sheetName);
           if (row) {
             worksheet.addRow(row);
           }
         });
-        console.info(`Generating XLSX file - adding custom styles to ${sheetName} worksheet`);
+        console.info('Generating XLSX file - adding custom styles to %s worksheet', sheetName);
         worksheet = styled_columns_default(application2, worksheet, sheetName);
       });
-      console.info("Generating XLSX file - writing file");
+      console.info('Generating XLSX file - writing file');
       workbook.xlsx.writeFile(filePath).then(() => resolve(filePath));
     });
-  } catch (err) {
-    console.error("Error generating XLSX file %O", err);
-    throw new Error(`Generating XLSX file ${err}`);
+  } catch (error) {
+    console.error('Error generating XLSX file %o', error);
+    throw new Error(`Generating XLSX file ${error}`);
   }
 };
 var generate2 = {
-  XLSX: XLSX2
+  XLSX: XLSX2,
 };
 var generate_xlsx_default = generate2;
 
 // custom-resolvers/mutations/submit-application/index.ts
 var submitApplication = async (root, variables, context) => {
   try {
-    console.info("Submitting application %s", variables.applicationId);
+    console.info('Submitting application %s', variables.applicationId);
     const application2 = await context.db.Application.findOne({
-      where: { id: variables.applicationId }
+      where: { id: variables.applicationId },
     });
     if (application2) {
       const { status, submissionDeadline, submissionCount } = application2;
@@ -7845,182 +8505,151 @@ var submitApplication = async (root, variables, context) => {
       const isFirstSubmission = submissionCount === 0;
       const canSubmit = isInProgress && validSubmissionDate && isFirstSubmission;
       if (canSubmit) {
-        console.info("Submitting application - updating status, submission date and count %s", variables.applicationId);
+        console.info('Submitting application - updating status, submission date and count %s', variables.applicationId);
         const update2 = {
           status: APPLICATION.STATUS.SUBMITTED,
           previousStatus: APPLICATION.STATUS.IN_PROGRESS,
           submissionDate: now2,
-          submissionCount: submissionCount + 1
+          submissionCount: submissionCount + 1,
         };
         const updatedApplication = await context.db.Application.updateOne({
           where: { id: application2.id },
-          data: update2
+          data: update2,
         });
-        console.info("Submitting application - getting populated application %s", variables.applicationId);
+        console.info('Submitting application - getting populated application %s', variables.applicationId);
         const populatedApplication2 = await get_populated_application_default.get({
           context,
           application: updatedApplication,
           decryptFinancialUk: true,
-          decryptFinancialInternational: true
+          decryptFinancialInternational: true,
         });
         const countries = await get_countries_default(context);
         const xlsxPath = await generate_xlsx_default.XLSX(populatedApplication2, countries);
         await send_application_submitted_emails_default.send(populatedApplication2, xlsxPath);
         return {
-          success: true
+          success: true,
         };
       }
-      console.error("Unable to submit application - application already submitted");
+      console.error('Unable to submit application - application already submitted');
     }
-    console.error("Unable to submit application - no application found");
+    console.error('Unable to submit application - no application found');
     return {
-      success: false
+      success: false,
     };
-  } catch (err) {
-    console.error("Error submitting application %O", err);
-    throw new Error(`Submitting application ${err}`);
+  } catch (error) {
+    console.error('Error submitting application %o', error);
+    throw new Error(`Submitting application ${error}`);
   }
 };
 var submit_application_default = submitApplication;
 
 // custom-resolvers/mutations/create-feedback/index.ts
 var createFeedback = async (root, variables, context) => {
-  console.info("Creating feedback");
+  console.info('Creating feedback');
   try {
     const feedback = {
       ...variables,
-      createdAt: /* @__PURE__ */ new Date()
+      createdAt: /* @__PURE__ */ new Date(),
     };
     const response = await context.db.Feedback.createOne({
-      data: feedback
+      data: feedback,
     });
     const emailResponse = await emails_default.insuranceFeedbackEmail(feedback);
     if (response && emailResponse?.success) {
       return {
         ...response,
-        success: true
+        success: true,
       };
     }
     return { success: false };
-  } catch (err) {
-    console.error("Error creating feedback %O", err);
-    throw new Error(`Creating feedback: ${err}`);
+  } catch (error) {
+    console.error('Error creating feedback %o', error);
+    throw new Error(`Creating feedback: ${error}`);
   }
 };
 var create_feedback_default = createFeedback;
 
 // custom-resolvers/mutations/verify-account-reactivation-token/index.ts
-var import_date_fns7 = require("date-fns");
+var import_date_fns7 = require('date-fns');
 var {
   INSURANCE: {
-    ACCOUNT: { REACTIVATION_HASH, REACTIVATION_EXPIRY }
-  }
+    ACCOUNT: { REACTIVATION_HASH, REACTIVATION_EXPIRY },
+  },
 } = FIELD_IDS;
 var verifyAccountReactivationToken = async (root, variables, context) => {
   try {
-    console.info("Received a request to reactivate account - checking account");
+    console.info('Received a request to reactivate account - checking account');
     const account2 = await get_account_by_field_default(context, REACTIVATION_HASH, variables.token);
     if (account2) {
-      console.info("Received a request to reactivate account - found account %s", account2.id);
+      console.info('Received a request to reactivate account - found account %s', account2.id);
       const now2 = /* @__PURE__ */ new Date();
       const canReactivateAccount = (0, import_date_fns7.isBefore)(now2, account2[REACTIVATION_EXPIRY]);
       if (!canReactivateAccount) {
-        console.info("Unable to reactivate account - reactivation period has expired");
+        console.info('Unable to reactivate account - reactivation period has expired');
         return {
           expired: true,
           success: false,
-          accountId: account2.id
+          accountId: account2.id,
         };
       }
-      console.info("Reactivating account %s", account2.id);
+      console.info('Reactivating account %s', account2.id);
       const accountUpdate = {
-        reactivationHash: "",
-        reactivationExpiry: null
+        reactivationHash: '',
+        reactivationExpiry: null,
       };
       const statusUpdate = {
         isBlocked: false,
-        isVerified: true
+        isVerified: true,
       };
       await update_account_default.account(context, account2.id, accountUpdate);
       await update_account_default.accountStatus(context, account2.status.id, statusUpdate);
       await delete_authentication_retries_default(context, account2.id);
       return {
-        success: true
+        success: true,
       };
     }
-    console.info("Unable to reactivate account - no account found from the provided %s", REACTIVATION_HASH);
+    console.info('Unable to reactivate account - no account found from the provided %s', REACTIVATION_HASH);
     return {
       success: false,
-      invalid: true
+      invalid: true,
     };
-  } catch (err) {
-    console.error("Error checking account and reactivating account(verifyAccountReactivationToken mutation) %O", err);
-    throw new Error(`Checking account and reactivating account(verifyAccountReactivationToken mutation) ${err}`);
+  } catch (error) {
+    console.error('Error checking account and reactivating account(verifyAccountReactivationToken mutation) %o', error);
+    throw new Error(`Checking account and reactivating account(verifyAccountReactivationToken mutation) ${error}`);
   }
 };
 var verify_account_reactivation_token_default = verifyAccountReactivationToken;
 
-// custom-resolvers/mutations/update-company-post-data-migration/index.ts
-var updateCompanyPostDataMigration = async (root, variables, context) => {
-  try {
-    console.info("Updating company (post data migration) %s", variables.id);
-    const { id, company } = variables;
-    const { registeredOfficeAddress, industrySectorNames: industrySectorNames2, sicCodes, ...otherFields } = company;
-    const updatedCompany = await context.db.Company.updateOne({
-      where: {
-        id
-      },
-      data: otherFields
-    });
-    const { id: addressId, ...addressFields } = registeredOfficeAddress;
-    if (!updatedCompany.registeredOfficeAddressId) {
-      console.error("Unable to update company address - does not exist (post data migration) %O", id);
-      throw new Error(`Unable to update company address - does not exist (post data migration) ${id}`);
-    }
-    await context.db.CompanyAddress.updateOne({
-      where: {
-        id: updatedCompany.registeredOfficeAddressId
-      },
-      data: addressFields
-    });
-    if (sicCodes) {
-      await create_company_sic_codes_default(context, sicCodes, industrySectorNames2, updatedCompany.id);
-    }
-    return {
-      success: true
-    };
-  } catch (err) {
-    console.error("Error updating company (post data migration) %O", err);
-    throw new Error(`Updating company (post data migration) ${err}`);
-  }
-};
-var update_company_post_data_migration_default = updateCompanyPostDataMigration;
-
 // helpers/encrypt/index.ts
-var import_crypto12 = __toESM(require("crypto"));
+var import_crypto12 = __toESM(require('crypto'));
 
 // helpers/encrypt/generate-initialisation-vector/index.ts
-var import_crypto11 = __toESM(require("crypto"));
+var import_crypto11 = __toESM(require('crypto'));
 var { BYTES_SIZE, ENCODING: ENCODING3, SLICE_INDEX_START, SLICE_INDEX_END } = FINANCIAL_DETAILS.ENCRYPTION.IV;
 var generateInitialisationVector = () => import_crypto11.default.randomBytes(BYTES_SIZE).toString(ENCODING3).slice(SLICE_INDEX_START, SLICE_INDEX_END);
 var generate_initialisation_vector_default = generateInitialisationVector;
 
 // helpers/encrypt/index.ts
-var { ENCRYPTION_METHOD: ENCRYPTION_METHOD2, ENCODING: ENCODING4, STRING_ENCODING: STRING_ENCODING3, OUTPUT_ENCODING: OUTPUT_ENCODING3 } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
+var {
+  ENCRYPTION_METHOD: ENCRYPTION_METHOD2,
+  ENCODING: ENCODING4,
+  STRING_ENCODING: STRING_ENCODING3,
+  OUTPUT_ENCODING: OUTPUT_ENCODING3,
+} = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
 var encrypt = (dataToEncrypt) => {
   try {
-    console.info("Encrypting data");
+    console.info('Encrypting data');
     const key2 = generate_key_default();
     const iv = generate_initialisation_vector_default();
     const cipher = import_crypto12.default.createCipheriv(ENCRYPTION_METHOD2, key2, iv);
     const value = Buffer.from(cipher.update(dataToEncrypt, OUTPUT_ENCODING3, ENCODING4).concat(cipher.final(ENCODING4))).toString(STRING_ENCODING3);
     return {
       value,
-      iv
+      iv,
     };
-  } catch (err) {
-    console.error("Error encrypting data %O", err);
-    throw new Error(`Error encrypting data ${err}`);
+  } catch (error) {
+    console.error('Error encrypting data %o', error);
+    throw new Error(`Error encrypting data ${error}`);
   }
 };
 var encrypt_default = encrypt;
@@ -8028,7 +8657,7 @@ var encrypt_default = encrypt;
 // helpers/map-loss-payee-financial-details-uk/index.ts
 var mapLossPayeeFinancialDetailsUk2 = (variables) => {
   try {
-    console.info("Mapping loss payee financial UK");
+    console.info('Mapping loss payee financial UK');
     const { accountNumber, sortCode, bankAddress } = variables;
     let accountNumberData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
     let sortCodeData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
@@ -8042,17 +8671,17 @@ var mapLossPayeeFinancialDetailsUk2 = (variables) => {
       uk: {
         accountNumber: accountNumberData.value,
         sortCode: sortCodeData.value,
-        bankAddress
+        bankAddress,
       },
       vectors: {
         accountNumberVector: accountNumberData.iv,
-        sortCodeVector: sortCodeData.iv
-      }
+        sortCodeVector: sortCodeData.iv,
+      },
     };
     return updateData;
-  } catch (err) {
-    console.error("Error mapping loss payee financial UK %O", err);
-    throw new Error(`Error mapping loss payee financial UK ${err}`);
+  } catch (error) {
+    console.error('Error mapping loss payee financial UK %o', error);
+    throw new Error(`Error mapping loss payee financial UK ${error}`);
   }
 };
 var map_loss_payee_financial_details_uk_default = mapLossPayeeFinancialDetailsUk2;
@@ -8060,17 +8689,17 @@ var map_loss_payee_financial_details_uk_default = mapLossPayeeFinancialDetailsUk
 // helpers/update-loss-payee-financial-uk/index.ts
 var updateLossPayeeFinancialInternationalUk = async (context, id, data) => {
   try {
-    console.info("Updating loss payee financial uk (helper) %s", id);
+    console.info('Updating loss payee financial uk (helper) %s', id);
     const updated = await context.db.LossPayeeFinancialUk.updateOne({
       where: {
-        id
+        id,
       },
-      data
+      data,
     });
     return updated;
-  } catch (err) {
-    console.error("Error updating loss payee financial uk (helper) %O", err);
-    throw new Error(`Updating loss payee financial uk (helper) ${err}`);
+  } catch (error) {
+    console.error('Error updating loss payee financial uk (helper) %o', error);
+    throw new Error(`Updating loss payee financial uk (helper) ${error}`);
   }
 };
 var update_loss_payee_financial_uk_default = updateLossPayeeFinancialInternationalUk;
@@ -8078,17 +8707,17 @@ var update_loss_payee_financial_uk_default = updateLossPayeeFinancialInternation
 // helpers/update-loss-payee-financial-uk-vector/index.ts
 var updateLossPayeeFinancialUkVector = async (context, id, data) => {
   try {
-    console.info("Updating loss payee financial uk vector (helper) %s", id);
+    console.info('Updating loss payee financial uk vector (helper) %s', id);
     const updated = await context.db.LossPayeeFinancialUkVector.updateOne({
       where: {
-        id
+        id,
       },
-      data
+      data,
     });
     return updated;
-  } catch (err) {
-    console.error("Error updating loss payee financial uk vector (helper) %O", err);
-    throw new Error(`Updating loss payee financial uk vector (helper) ${err}`);
+  } catch (error) {
+    console.error('Error updating loss payee financial uk vector (helper) %o', error);
+    throw new Error(`Updating loss payee financial uk vector (helper) ${error}`);
   }
 };
 var update_loss_payee_financial_uk_vector_default = updateLossPayeeFinancialUkVector;
@@ -8096,22 +8725,22 @@ var update_loss_payee_financial_uk_vector_default = updateLossPayeeFinancialUkVe
 // custom-resolvers/mutations/update-loss-payee-financial-details-uk/index.ts
 var updateLossPayeeFinancialDetailsUk = async (root, variables, context) => {
   try {
-    console.info("Updating loss payee financial UK %s", variables.id);
+    console.info('Updating loss payee financial UK %s', variables.id);
     const { id } = variables;
     const mappedData = map_loss_payee_financial_details_uk_default(variables);
     const uk = await update_loss_payee_financial_uk_default(context, id, mappedData.uk);
     const vector = await update_loss_payee_financial_uk_vector_default(context, String(uk.vectorId), mappedData.vectors);
     if (uk && vector) {
       return {
-        success: true
+        success: true,
       };
     }
     return {
-      success: false
+      success: false,
     };
-  } catch (err) {
-    console.error("Error updating loss payee financial UK %O", err);
-    throw new Error(`Updating loss payee financial UK ${err}`);
+  } catch (error) {
+    console.error('Error updating loss payee financial UK %o', error);
+    throw new Error(`Updating loss payee financial UK ${error}`);
   }
 };
 var update_loss_payee_financial_details_uk_default = updateLossPayeeFinancialDetailsUk;
@@ -8132,17 +8761,17 @@ var mapLossPayeeFinancialDetailsInternational2 = (variables) => {
       international: {
         iban: ibanData.value,
         bicSwiftCode: bicSwiftCodeData.value,
-        bankAddress
+        bankAddress,
       },
       vectors: {
         ibanVector: ibanData.iv,
-        bicSwiftCodeVector: bicSwiftCodeData.iv
-      }
+        bicSwiftCodeVector: bicSwiftCodeData.iv,
+      },
     };
     return updateData;
-  } catch (err) {
-    console.error("Error mapping loss payee financial international %O", err);
-    throw new Error(`Error mapping loss payee financial international ${err}`);
+  } catch (error) {
+    console.error('Error mapping loss payee financial international %o', error);
+    throw new Error(`Error mapping loss payee financial international ${error}`);
   }
 };
 var map_loss_payee_financial_details_international_default = mapLossPayeeFinancialDetailsInternational2;
@@ -8150,17 +8779,17 @@ var map_loss_payee_financial_details_international_default = mapLossPayeeFinanci
 // helpers/update-loss-payee-financial-international/index.ts
 var updateLossPayeeFinancialInternational = async (context, id, data) => {
   try {
-    console.info("Updating loss payee financial international (helper) %s", id);
+    console.info('Updating loss payee financial international (helper) %s', id);
     const updated = await context.db.LossPayeeFinancialInternational.updateOne({
       where: {
-        id
+        id,
       },
-      data
+      data,
     });
     return updated;
-  } catch (err) {
-    console.error("Error updating loss payee financial international (helper) %O", err);
-    throw new Error(`Updating loss payee financial international (helper) ${err}`);
+  } catch (error) {
+    console.error('Error updating loss payee financial international (helper) %o', error);
+    throw new Error(`Updating loss payee financial international (helper) ${error}`);
   }
 };
 var update_loss_payee_financial_international_default = updateLossPayeeFinancialInternational;
@@ -8168,17 +8797,17 @@ var update_loss_payee_financial_international_default = updateLossPayeeFinancial
 // helpers/update-loss-payee-financial-international-vector/index.ts
 var updateLossPayeeFinancialInternationalVector = async (context, id, data) => {
   try {
-    console.info("Updating loss payee financial international vector (helper) %s", id);
+    console.info('Updating loss payee financial international vector (helper) %s', id);
     const updated = await context.db.LossPayeeFinancialInternationalVector.updateOne({
       where: {
-        id
+        id,
       },
-      data
+      data,
     });
     return updated;
-  } catch (err) {
-    console.error("Error updating loss payee financial international vector (helper) %O", err);
-    throw new Error(`Updating loss payee financial international vector (helper) ${err}`);
+  } catch (error) {
+    console.error('Error updating loss payee financial international vector (helper) %o', error);
+    throw new Error(`Updating loss payee financial international vector (helper) ${error}`);
   }
 };
 var update_loss_payee_financial_international_vector_default = updateLossPayeeFinancialInternationalVector;
@@ -8186,116 +8815,116 @@ var update_loss_payee_financial_international_vector_default = updateLossPayeeFi
 // custom-resolvers/mutations/update-loss-payee-financial-details-international/index.ts
 var updateLossPayeeFinancialDetailsInternational = async (root, variables, context) => {
   try {
-    console.info("Updating loss payee financial international %s", variables.id);
+    console.info('Updating loss payee financial international %s', variables.id);
     const { id } = variables;
     const mappedData = map_loss_payee_financial_details_international_default(variables);
     const international = await update_loss_payee_financial_international_default(context, id, mappedData.international);
     const vector = await update_loss_payee_financial_international_vector_default(context, String(international.vectorId), mappedData.vectors);
     if (international && vector) {
       return {
-        success: true
+        success: true,
       };
     }
     return {
-      success: false
+      success: false,
     };
-  } catch (err) {
-    console.error("Error updating loss payee financial international %O", err);
-    throw new Error(`Updating loss payee financial international ${err}`);
+  } catch (error) {
+    console.error('Error updating loss payee financial international %o', error);
+    throw new Error(`Updating loss payee financial international ${error}`);
   }
 };
 var update_loss_payee_financial_details_international_default = updateLossPayeeFinancialDetailsInternational;
 
 // custom-resolvers/queries/get-account-password-reset-token/index.ts
 var getAccountPasswordResetToken = async (root, variables, context) => {
-  console.info("Getting account password reset token");
+  console.info('Getting account password reset token');
   try {
     const { email } = variables;
     const account2 = await get_account_by_field_default(context, account_default.EMAIL, email);
     if (!account2) {
-      console.info("Unable to get account password reset token - account does not exist");
+      console.info('Unable to get account password reset token - account does not exist');
       return { success: false };
     }
     if (account2.passwordResetHash) {
       return {
         success: true,
-        token: account2.passwordResetHash
+        token: account2.passwordResetHash,
       };
     }
-    console.info("Unable to get account password reset token - reset hash does not exist");
+    console.info('Unable to get account password reset token - reset hash does not exist');
     return { success: false };
-  } catch (err) {
-    console.error("Error getting account password reset token %O", err);
-    throw new Error(`Getting account password reset token ${err}`);
+  } catch (error) {
+    console.error('Error getting account password reset token %o', error);
+    throw new Error(`Getting account password reset token ${error}`);
   }
 };
 var get_account_password_reset_token_default = getAccountPasswordResetToken;
 
 // integrations/APIM/index.ts
-var import_axios = __toESM(require("axios"));
-var import_dotenv10 = __toESM(require("dotenv"));
+var import_axios = __toESM(require('axios'));
+var import_dotenv10 = __toESM(require('dotenv'));
 import_dotenv10.default.config();
 var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
 var { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
 var APIM = {
   getCisCountries: async () => {
     try {
-      console.info("Calling APIM - CIS countries");
+      console.info('Calling APIM - CIS countries');
       const response = await (0, import_axios.default)({
-        method: "get",
+        method: 'get',
         url: `${APIM_MDM_URL}${APIM_MDM.MARKETS}`,
         headers: {
-          "Content-Type": "application/json",
-          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE
+          'Content-Type': 'application/json',
+          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
         },
         validateStatus(status) {
           const acceptableStatus = [200];
           return acceptableStatus.includes(status);
-        }
+        },
       });
       if (response.data && response.status === 200) {
         return {
           success: true,
-          data: response.data
+          data: response.data,
         };
       }
       return {
-        success: false
+        success: false,
       };
-    } catch (err) {
-      console.error("Error calling APIM - CIS countries %O", err);
-      throw new Error(`Calling APIM - CIS countries ${err}`);
+    } catch (error) {
+      console.error('Error calling APIM - CIS countries %o', error);
+      throw new Error(`Calling APIM - CIS countries ${error}`);
     }
   },
   getCurrencies: async () => {
     try {
-      console.info("Calling APIM - currencies");
+      console.info('Calling APIM - currencies');
       const response = await (0, import_axios.default)({
-        method: "get",
+        method: 'get',
         url: `${APIM_MDM_URL}${APIM_MDM.CURRENCY}`,
         headers: {
-          "Content-Type": "application/json",
-          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE
+          'Content-Type': 'application/json',
+          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
         },
         validateStatus(status) {
           const acceptableStatus = [200];
           return acceptableStatus.includes(status);
-        }
+        },
       });
       if (response.data && response.status === 200) {
         return {
           success: true,
-          data: response.data
+          data: response.data,
         };
       }
       return {
-        success: false
+        success: false,
       };
-    } catch (err) {
-      console.error("Error calling APIM - currencies %O", err);
-      throw new Error(`Calling APIM - currencies ${err}`);
+    } catch (error) {
+      console.error('Error calling APIM - currencies %o', error);
+      throw new Error(`Calling APIM - currencies ${error}`);
     }
-  }
+  },
 };
 var APIM_default = APIM;
 
@@ -8324,7 +8953,7 @@ var map_risk_category_default = mapRiskCategory;
 
 // helpers/map-CIS-countries/map-CIS-country/map-short-term-cover-available/index.ts
 var {
-  CIS: { SHORT_TERM_COVER_AVAILABLE }
+  CIS: { SHORT_TERM_COVER_AVAILABLE },
 } = EXTERNAL_API_DEFINITIONS;
 var mapShortTermCoverAvailable = (str) => {
   switch (str) {
@@ -8372,7 +9001,7 @@ var can_get_a_quote_by_email_default = canGetAQuoteByEmail;
 
 // helpers/map-CIS-countries/map-CIS-country/cannot-get-a-quote/index.ts
 var cannotGetAQuote = (country) => {
-  if (!country.riskCategory || !country.shortTermCover && !country.nbiIssueAvailable) {
+  if (!country.riskCategory || (!country.shortTermCover && !country.nbiIssueAvailable)) {
     return true;
   }
   return false;
@@ -8416,7 +9045,7 @@ var mapCisCountry = (country) => {
     isoCode: country.isoCode,
     riskCategory: map_risk_category_default(country.ESRAClassificationDesc),
     shortTermCover: map_short_term_cover_available_default(country.shortTermCoverAvailabilityDesc),
-    nbiIssueAvailable: map_NBI_issue_available_default(country.NBIIssue)
+    nbiIssueAvailable: map_NBI_issue_available_default(country.NBIIssue),
   };
   mapped.canGetAQuoteOnline = can_get_a_quote_online_default(mapped);
   mapped.canGetAQuoteOffline = can_apply_offline_default(country.shortTermCoverAvailabilityDesc);
@@ -8429,15 +9058,18 @@ var mapCisCountry = (country) => {
 var map_CIS_country_default = mapCisCountry;
 
 // helpers/sort-array-alphabetically/index.ts
-var sortArrayAlphabetically = (arr, field) => arr.sort((a, b) => a[field].localeCompare(b[field]));
+var sortArrayAlphabetically = (arr, field) => {
+  const alphabetical = arr.sort((a, b) => a[field].localeCompare(b[field]));
+  return alphabetical;
+};
 var sort_array_alphabetically_default = sortArrayAlphabetically;
 
 // helpers/map-CIS-countries/index.ts
 var { CIS: CIS4 } = EXTERNAL_API_DEFINITIONS;
 var mapCisCountries = (countries) => {
-  const filteredCountries = filter_cis_entries_default(countries, CIS4.INVALID_COUNTRIES, "marketName");
+  const filteredCountries = filter_cis_entries_default(countries, CIS4.INVALID_COUNTRIES, 'marketName');
   const mapped = filteredCountries.map((country) => map_CIS_country_default(country));
-  const sorted = sort_array_alphabetically_default(mapped, "name");
+  const sorted = sort_array_alphabetically_default(mapped, 'name');
   return sorted;
 };
 var map_CIS_countries_default = mapCisCountries;
@@ -8445,16 +9077,16 @@ var map_CIS_countries_default = mapCisCountries;
 // custom-resolvers/queries/get-APIM-CIS-countries/index.ts
 var getApimCisCountries = async () => {
   try {
-    console.info("Getting and mapping CIS countries from APIM");
+    console.info('Getting and mapping CIS countries from APIM');
     const response = await APIM_default.getCisCountries();
     if (response.data) {
       const mapped = map_CIS_countries_default(response.data);
       return mapped;
     }
     return { success: false };
-  } catch (err) {
-    console.error("Error Getting and mapping CIS countries from APIM %O", err);
-    throw new Error(`Getting and mapping CIS countries from APIM ${err}`);
+  } catch (error) {
+    console.error('Error Getting and mapping CIS countries from APIM %o', error);
+    throw new Error(`Getting and mapping CIS countries from APIM ${error}`);
   }
 };
 var get_APIM_CIS_countries_default = getApimCisCountries;
@@ -8470,7 +9102,7 @@ var getAlternativeCurrencies = (currencies) => {
   return alternate;
 };
 var mapCurrencies = (currencies, alternativeCurrencies) => {
-  let currenciesArray = filter_cis_entries_default(currencies, CIS5.INVALID_CURRENCIES, "name");
+  let currenciesArray = filter_cis_entries_default(currencies, CIS5.INVALID_CURRENCIES, 'name');
   if (!alternativeCurrencies) {
     currenciesArray = getSupportedCurrencies(currenciesArray);
   } else {
@@ -8484,7 +9116,7 @@ var map_currencies_default = mapCurrencies;
 // custom-resolvers/queries/get-APIM-currencies/index.ts
 var getApimCurrencies = async () => {
   try {
-    console.info("Getting and mapping currencies from APIM");
+    console.info('Getting and mapping currencies from APIM');
     const response = await APIM_default.getCurrencies();
     if (response.data) {
       const supportedCurrencies = map_currencies_default(response.data, false);
@@ -8493,28 +9125,28 @@ var getApimCurrencies = async () => {
       return {
         supportedCurrencies,
         alternativeCurrencies,
-        allCurrencies
+        allCurrencies,
       };
     }
     return { success: false };
-  } catch (err) {
-    console.error("Error Getting and mapping currencies from APIM %O", err);
-    throw new Error(`Getting and mapping currencies from APIM ${err}`);
+  } catch (error) {
+    console.error('Error Getting and mapping currencies from APIM %o', error);
+    throw new Error(`Getting and mapping currencies from APIM ${error}`);
   }
 };
 var get_APIM_currencies_default = getApimCurrencies;
 
 // helpers/remove-white-space/index.ts
-var removeWhiteSpace = (string) => string.replace(" ", "");
+var removeWhiteSpace = (string) => string.replace(' ', '');
 var remove_white_space_default = removeWhiteSpace;
 
 // helpers/sanitise-companies-house-number/index.ts
-var sanitiseCompaniesHouseNumber = (companyNumber) => remove_white_space_default(companyNumber).toUpperCase().padStart(8, "0");
+var sanitiseCompaniesHouseNumber = (companyNumber) => remove_white_space_default(companyNumber).toUpperCase().padStart(8, '0');
 var sanitise_companies_house_number_default = sanitiseCompaniesHouseNumber;
 
 // integrations/companies-house/index.ts
-var import_axios2 = __toESM(require("axios"));
-var import_dotenv11 = __toESM(require("dotenv"));
+var import_axios2 = __toESM(require('axios'));
+var import_dotenv11 = __toESM(require('dotenv'));
 import_dotenv11.default.config();
 var username = String(process.env.COMPANIES_HOUSE_API_KEY);
 var companiesHouseURL = String(process.env.COMPANIES_HOUSE_API_URL);
@@ -8522,84 +9154,84 @@ var companiesHouse = {
   get: async (companyNumber) => {
     try {
       const response = await (0, import_axios2.default)({
-        method: "get",
+        method: 'get',
         url: `${companiesHouseURL}/company/${companyNumber}`,
-        auth: { username, password: "" },
+        auth: { username, password: '' },
         validateStatus(status) {
           const acceptableStatus = [200, 404];
           return acceptableStatus.includes(status);
-        }
+        },
       });
       if (response.status === 404) {
         return {
           success: false,
-          notFound: true
+          notFound: true,
         };
       }
       if (!response.data || response.status !== 200) {
         return {
-          success: false
+          success: false,
         };
       }
       return {
         success: true,
-        data: response.data
+        data: response.data,
       };
-    } catch (err) {
-      console.error("Error calling Companies House API %O", err);
-      throw new Error(`Calling Companies House API. Unable to search for company ${err}`);
+    } catch (error) {
+      console.error('Error calling Companies House API %o', error);
+      throw new Error(`Calling Companies House API. Unable to search for company ${error}`);
     }
-  }
+  },
 };
 var companies_house_default = companiesHouse;
 
 // integrations/industry-sector/index.ts
-var import_axios3 = __toESM(require("axios"));
-var import_dotenv12 = __toESM(require("dotenv"));
+var import_axios3 = __toESM(require('axios'));
+var import_dotenv12 = __toESM(require('dotenv'));
 import_dotenv12.default.config();
 var { APIM_MDM_URL: APIM_MDM_URL2, APIM_MDM_KEY: APIM_MDM_KEY2, APIM_MDM_VALUE: APIM_MDM_VALUE2 } = process.env;
 var { APIM_MDM: APIM_MDM2 } = EXTERNAL_API_ENDPOINTS;
 var headers = {
-  "Content-Type": "application/json",
-  [String(APIM_MDM_KEY2)]: APIM_MDM_VALUE2
+  'Content-Type': 'application/json',
+  [String(APIM_MDM_KEY2)]: APIM_MDM_VALUE2,
 };
 var industrySectorNames = {
   get: async () => {
     try {
-      console.info("Calling industry sector API");
+      console.info('Calling industry sector API');
       const response = await (0, import_axios3.default)({
-        method: "get",
+        method: 'get',
         url: `${APIM_MDM_URL2}${APIM_MDM2.INDUSTRY_SECTORS}`,
         headers,
         validateStatus(status) {
           const acceptableStatus = [200, 404];
           return acceptableStatus.includes(status);
-        }
+        },
       });
       if (!response.data || response.status !== 200) {
         return {
-          success: false
+          success: false,
         };
       }
       return {
         success: true,
-        data: response.data
+        data: response.data,
       };
-    } catch (err) {
-      console.error("Error calling industry sector API %O", err);
+    } catch (error) {
+      console.error('Error calling industry sector API %o', error);
       return {
         success: false,
-        apiError: true
+        apiError: true,
       };
     }
-  }
+  },
 };
 var industry_sector_default = industrySectorNames;
 
 // helpers/create-full-timestamp-from-day-month/index.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
   if (day && month) {
-    return /* @__PURE__ */ new Date(`${(/* @__PURE__ */ new Date()).getFullYear()}-${month}-${day}`);
+    return /* @__PURE__ */ new Date(`${/* @__PURE__ */ new Date().getFullYear()}-${month}-${day}`);
   }
   return null;
 };
@@ -8621,7 +9253,7 @@ var map_sic_code_descriptions_default = mapSicCodeDescriptions;
 
 // helpers/map-companies-house-fields/index.ts
 var {
-  COMPANIES_HOUSE: { COMPANY_STATUS }
+  COMPANIES_HOUSE: { COMPANY_STATUS },
 } = EXTERNAL_API_DEFINITIONS;
 var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => ({
   companyName: companiesHouseResponse.company_name,
@@ -8633,7 +9265,7 @@ var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => ({
     locality: companiesHouseResponse.registered_office_address.locality,
     region: companiesHouseResponse.registered_office_address.region,
     postalCode: companiesHouseResponse.registered_office_address.postal_code,
-    country: companiesHouseResponse.registered_office_address.country
+    country: companiesHouseResponse.registered_office_address.country,
   },
   companyNumber: companiesHouseResponse.company_number,
   dateOfCreation: companiesHouseResponse.date_of_creation,
@@ -8645,41 +9277,41 @@ var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => ({
    */
   financialYearEndDate: create_full_timestamp_from_day_month_default(
     companiesHouseResponse.accounts?.accounting_reference_date?.day,
-    companiesHouseResponse.accounts?.accounting_reference_date?.month
+    companiesHouseResponse.accounts?.accounting_reference_date?.month,
   ),
-  isActive: companiesHouseResponse.company_status === COMPANY_STATUS.ACTIVE
+  isActive: companiesHouseResponse.company_status === COMPANY_STATUS.ACTIVE,
 });
 
 // custom-resolvers/queries/get-companies-house-information/index.ts
 var getCompaniesHouseInformation = async (root, variables) => {
   try {
     const { companiesHouseNumber } = variables;
-    console.info("Getting Companies House information for %s", companiesHouseNumber);
+    console.info('Getting Companies House information for %s', companiesHouseNumber);
     const sanitisedNumber = sanitise_companies_house_number_default(companiesHouseNumber);
     const response = await companies_house_default.get(sanitisedNumber);
     if (!response.success || !response.data) {
       return {
         success: false,
-        notFound: response.notFound
+        notFound: response.notFound,
       };
     }
     const industrySectors = await industry_sector_default.get();
     if (!industrySectors.success || industrySectors.apiError) {
       return {
         apiError: true,
-        success: false
+        success: false,
       };
     }
     const mappedResponse = mapCompaniesHouseFields(response.data, industrySectors.data);
     return {
       ...mappedResponse,
-      success: true
+      success: true,
     };
-  } catch (err) {
-    console.error("Error getting companies house information %O", err);
+  } catch (error) {
+    console.error('Error getting companies house information %o', error);
     return {
       apiError: true,
-      success: false
+      success: false,
     };
   }
 };
@@ -8688,7 +9320,7 @@ var get_companies_house_information_default = getCompaniesHouseInformation;
 // custom-resolvers/queries/get-application-by-reference-number/index.ts
 var getApplicationByReferenceNumberQuery = async (root, variables, context) => {
   try {
-    console.info("Getting application by reference number %s", variables.referenceNumber);
+    console.info('Getting application by reference number %s', variables.referenceNumber);
     const { referenceNumber, decryptFinancialUk: decryptFinancialUk2, decryptFinancialInternational: decryptFinancialInternational2 } = variables;
     const application2 = await get_application_by_reference_number_default(referenceNumber, context);
     if (application2) {
@@ -8696,73 +9328,75 @@ var getApplicationByReferenceNumberQuery = async (root, variables, context) => {
         context,
         application: application2,
         decryptFinancialUk: decryptFinancialUk2,
-        decryptFinancialInternational: decryptFinancialInternational2
+        decryptFinancialInternational: decryptFinancialInternational2,
       });
       return {
         success: true,
-        application: populatedApplication2
+        application: populatedApplication2,
       };
     }
     return {
-      success: false
+      success: false,
     };
-  } catch (err) {
-    console.error("Error getting application by reference number (GetApplicationByReferenceNumber mutation) %O", err);
-    throw new Error(`Get application by reference number (GetApplicationByReferenceNumber mutation) ${err}`);
+  } catch (error) {
+    console.error('Error getting application by reference number (GetApplicationByReferenceNumber query) %o', error);
+    throw new Error(`Get application by reference number (GetApplicationByReferenceNumber query) ${error}`);
   }
 };
 var get_application_by_reference_number_default2 = getApplicationByReferenceNumberQuery;
 
 // integrations/ordnance-survey/index.ts
-var import_axios4 = __toESM(require("axios"));
-var import_dotenv13 = __toESM(require("dotenv"));
+var import_axios4 = __toESM(require('axios'));
+var import_dotenv13 = __toESM(require('dotenv'));
 import_dotenv13.default.config();
 var { ORDNANCE_SURVEY_API_KEY, ORDNANCE_SURVEY_API_URL } = process.env;
 var ordnanceSurvey = {
   get: async (postcode) => {
     try {
       const response = await (0, import_axios4.default)({
-        method: "get",
+        method: 'get',
         url: `${ORDNANCE_SURVEY_API_URL}${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ORDNANCE_SURVEY_API_KEY}`,
         validateStatus(status) {
           const acceptableStatus = [200, 404];
           return acceptableStatus.includes(status);
-        }
+        },
       });
       if (!response?.data?.results || response.status !== 200) {
         return {
-          success: false
+          success: false,
         };
       }
       return {
         success: true,
-        data: response.data.results
+        data: response.data.results,
       };
-    } catch (err) {
-      console.error("Error calling Ordnance Survey API %O", err);
-      throw new Error(`Calling Ordnance Survey API. Unable to search for address ${err}`);
+    } catch (error) {
+      console.error('Error calling Ordnance Survey API %o', error);
+      throw new Error(`Calling Ordnance Survey API. Unable to search for address ${error}`);
     }
-  }
+  },
 };
 var ordnance_survey_default = ordnanceSurvey;
 
 // helpers/is-valid-postcode/index.ts
-var import_postcode_validator = require("postcode-validator");
-var isValidPostcode = (postcode) => (0, import_postcode_validator.postcodeValidator)(postcode, "GB");
+var import_postcode_validator = require('postcode-validator');
+var isValidPostcode = (postcode) => (0, import_postcode_validator.postcodeValidator)(postcode, 'GB');
 
 // helpers/map-address/index.ts
 var mapAddress = (address) => ({
-  addressLine1: `${address.DPA.ORGANISATION_NAME ?? ""} ${address.DPA.BUILDING_NAME ?? ""} ${address.DPA.BUILDING_NUMBER ?? ""} ${address.DPA.THOROUGHFARE_NAME ?? ""}`.trim(),
+  addressLine1: `${address.DPA.ORGANISATION_NAME ?? ''} ${address.DPA.BUILDING_NAME ?? ''} ${address.DPA.BUILDING_NUMBER ?? ''} ${
+    address.DPA.THOROUGHFARE_NAME ?? ''
+  }`.trim(),
   addressLine2: address.DPA.DEPENDENT_LOCALITY,
   town: address.DPA.POST_TOWN,
-  postalCode: address.DPA.POSTCODE
+  postalCode: address.DPA.POSTCODE,
 });
 var map_address_default = mapAddress;
 
 // helpers/map-and-filter-address/index.ts
 var mapAndFilterAddress = (houseNameOrNumber, ordnanceSurveyResponse) => {
   const filtered = ordnanceSurveyResponse.filter(
-    (eachAddress) => eachAddress.DPA.BUILDING_NUMBER === houseNameOrNumber || eachAddress.DPA.BUILDING_NAME === houseNameOrNumber
+    (eachAddress) => eachAddress.DPA.BUILDING_NUMBER === houseNameOrNumber || eachAddress.DPA.BUILDING_NAME === houseNameOrNumber,
   );
   if (!filtered.length) {
     return [];
@@ -8779,37 +9413,37 @@ var map_and_filter_address_default = mapAndFilterAddress;
 var getOrdnanceSurveyAddress = async (root, variables) => {
   try {
     const { postcode, houseNameOrNumber } = variables;
-    console.info("Getting Ordnance Survey address for postcode: %s, houseNameOrNumber: %s", postcode, houseNameOrNumber);
+    console.info('Getting Ordnance Survey address for postcode: %s, houseNameOrNumber: %s', postcode, houseNameOrNumber);
     const noWhitespacePostcode = remove_white_space_default(postcode);
     if (!isValidPostcode(noWhitespacePostcode)) {
-      console.error("Invalid postcode: %s", postcode);
+      console.error('Invalid postcode: %s', postcode);
       return {
         success: false,
-        invalidPostcode: true
+        invalidPostcode: true,
       };
     }
     const response = await ordnance_survey_default.get(postcode);
     if (!response.success || !response.data) {
       return {
-        success: false
+        success: false,
       };
     }
     const mappedAddresses = map_and_filter_address_default(houseNameOrNumber, response.data);
     if (!mappedAddresses.length) {
       return {
         success: false,
-        noAddressesFound: true
+        noAddressesFound: true,
       };
     }
     return {
       addresses: mappedAddresses,
-      success: true
+      success: true,
     };
-  } catch (err) {
-    console.error("Error getting Ordnance Survey address results %O", err);
+  } catch (error) {
+    console.error('Error getting Ordnance Survey address results %o', error);
     return {
       apiError: true,
-      success: false
+      success: false,
     };
   }
 };
@@ -8818,33 +9452,33 @@ var get_ordnance_survey_address_default = getOrdnanceSurveyAddress;
 // custom-resolvers/queries/verify-account-password-reset-token/index.ts
 var { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY } = account_default;
 var verifyAccountPasswordResetToken = async (root, variables, context) => {
-  console.info("Verifying account password reset token");
+  console.info('Verifying account password reset token');
   try {
     const { token } = variables;
     const account2 = await get_account_by_field_default(context, PASSWORD_RESET_HASH, token);
     if (account2) {
       const hasExpired = dateIsInThePast(account2[PASSWORD_RESET_EXPIRY]);
       if (hasExpired) {
-        console.info("Unable to verify account password reset token - token has expired");
+        console.info('Unable to verify account password reset token - token has expired');
         return {
           success: false,
           expired: true,
-          accountId: account2.id
+          accountId: account2.id,
         };
       }
-      console.info("Successfully verified account password reset token");
+      console.info('Successfully verified account password reset token');
       return {
-        success: true
+        success: true,
       };
     }
-    console.info("Unable to verify account password reset token - no account found from the provided %s", PASSWORD_RESET_HASH);
+    console.info('Unable to verify account password reset token - no account found from the provided %s', PASSWORD_RESET_HASH);
     return {
       success: false,
-      invalid: true
+      invalid: true,
     };
-  } catch (err) {
-    console.error("Error verifying account password reset token %O", err);
-    throw new Error(`Verifying account password reset token ${err}`);
+  } catch (error) {
+    console.error('Error verifying account password reset token %o', error);
+    throw new Error(`Verifying account password reset token ${error}`);
   }
 };
 var verify_account_password_reset_token_default = verifyAccountPasswordResetToken;
@@ -8864,14 +9498,14 @@ var customResolvers = {
     sendEmailPasswordResetLink: send_email_password_reset_link_default,
     sendEmailReactivateAccountLink: send_email_reactivate_account_link_default2,
     createAnApplication: create_an_application_default2,
+    createManyApplications: create_many_applications_default,
     createAnAbandonedApplication: create_an_abandoned_application_default,
     deleteApplicationByReferenceNumber: delete_application_by_reference_number_default,
     submitApplication: submit_application_default,
     createFeedbackAndSendEmail: create_feedback_default,
     verifyAccountReactivationToken: verify_account_reactivation_token_default,
-    updateCompanyPostDataMigration: update_company_post_data_migration_default,
     updateLossPayeeFinancialDetailsUk: update_loss_payee_financial_details_uk_default,
-    updateLossPayeeFinancialDetailsInternational: update_loss_payee_financial_details_international_default
+    updateLossPayeeFinancialDetailsInternational: update_loss_payee_financial_details_international_default,
   },
   Query: {
     getAccountPasswordResetToken: get_account_password_reset_token_default,
@@ -8880,28 +9514,29 @@ var customResolvers = {
     getCompaniesHouseInformation: get_companies_house_information_default,
     getApplicationByReferenceNumber: get_application_by_reference_number_default2,
     getOrdnanceSurveyAddress: get_ordnance_survey_address_default,
-    verifyAccountPasswordResetToken: verify_account_password_reset_token_default
-  }
+    verifyAccountPasswordResetToken: verify_account_password_reset_token_default,
+  },
 };
 var custom_resolvers_default = customResolvers;
 
 // custom-schema/index.ts
-var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
-  schemas: [schema],
-  typeDefs: type_defs_default,
-  resolvers: custom_resolvers_default
-});
+var extendGraphqlSchema = (schema) =>
+  (0, import_schema.mergeSchemas)({
+    schemas: [schema],
+    typeDefs: type_defs_default,
+    resolvers: custom_resolvers_default,
+  });
 
 // keystone.ts
 var { NODE_ENV: NODE_ENV2, PORT, DATABASE_URL } = process.env;
-var isDevEnvironment2 = NODE_ENV2 === "development";
-var isProdEnvironment = NODE_ENV2 === "production";
+var isDevEnvironment2 = NODE_ENV2 === 'development';
+var isProdEnvironment = NODE_ENV2 === 'production';
 var keystone_default = withAuth(
   (0, import_core3.config)({
     server: {
       port: Number(PORT),
       extendExpressApp: (app) => {
-        app.use((0, import_overload_protection.default)("express"));
+        app.use((0, import_overload_protection.default)('express'));
         app.use(security_default);
         app.use(check_api_key_default);
         if (isProdEnvironment) {
@@ -8910,25 +9545,25 @@ var keystone_default = withAuth(
       },
       extendHttpServer: (httpServer, context) => {
         cron_default(context);
-      }
+      },
     },
     db: {
-      provider: "mysql",
+      provider: 'mysql',
       url: String(DATABASE_URL),
-      enableLogging: isDevEnvironment2
+      enableLogging: isDevEnvironment2,
     },
     graphql: {
       playground: isDevEnvironment2,
       apolloConfig: {
         introspection: isDevEnvironment2,
         plugins: apolloPlugins2,
-        formatError: formatGraphQlError2
-      }
+        formatError: formatGraphQlError2,
+      },
     },
     lists,
     session,
     extendGraphqlSchema,
-    telemetry: false
-  })
+    telemetry: false,
+  }),
 );
 //# sourceMappingURL=config.js.map

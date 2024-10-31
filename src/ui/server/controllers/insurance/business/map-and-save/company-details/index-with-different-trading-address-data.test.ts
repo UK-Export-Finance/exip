@@ -6,17 +6,17 @@ import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { TRADING_ADDRESS },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_ADDRESS },
   },
 } = INSURANCE_FIELD_IDS;
 
-describe('controllers/insurance/business/map-and-save/company-details - with TRADING_ADDRESS=false, has FULL_ADDRESS', () => {
+describe('controllers/insurance/business/map-and-save/company-details - with HAS_DIFFERENT_TRADING_ADDRESS=false, has FULL_ADDRESS', () => {
   jest.mock('../../save-data/company-details');
   jest.mock('../../save-data/company-different-trading-address');
 
   const mockFormBody = {
     _csrf: '1234',
-    [TRADING_ADDRESS]: 'false',
+    [HAS_DIFFERENT_TRADING_ADDRESS]: 'false',
   };
 
   const mockSaveCompanyDetails = mockSpyPromise();

@@ -1,10 +1,10 @@
 import confirmEmailAddressEmail from '.';
 import getFullNameString from '../get-full-name-string';
 import sendEmail from '../../emails';
+import { DATE_24_HOURS_IN_THE_PAST, DATE_24_HOURS_FROM_NOW } from '../../constants';
 import accounts from '../../test-helpers/accounts';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
-import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../test-mocks';
-import { DATE_24_HOURS_IN_THE_PAST, DATE_24_HOURS_FROM_NOW } from '../../constants';
+import { mockAccount, mockUrlOrigin, mockSendEmailResponse, mockSpyPromiseRejection } from '../../test-mocks';
 import { Account, Context } from '../../types';
 
 describe('helpers/send-email-confirm-email-address', () => {
@@ -116,17 +116,13 @@ describe('helpers/send-email-confirm-email-address', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      sendEmail.confirmEmailAddress = jest.fn(() => Promise.reject(mockSendEmailResponse));
+      sendEmail.confirmEmailAddress = jest.fn(() => Promise.reject(mockSpyPromiseRejection));
     });
 
     test('should throw an error', async () => {
-      try {
-        await confirmEmailAddressEmail.send(context, mockUrlOrigin, account.id);
-      } catch (err) {
-        const expected = new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${mockSendEmailResponse}`);
-
-        expect(err).toEqual(expected);
-      }
+      await expect(confirmEmailAddressEmail.send(context, mockUrlOrigin, account.id)).rejects.toThrow(
+        'Sending email verification (sendEmailConfirmEmailAddress helper)',
+      );
     });
   });
 });

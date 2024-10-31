@@ -16,7 +16,7 @@ export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.PDF_EXIT;
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {
     ...corePageVariables({
-      PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.LONG_TERM_COVER,
+      PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.LONG_TERM_COVER_EXIT,
       BACK_LINK: req.headers.referer,
     }),
     userName: getUserNameFromSession(req.session.user),

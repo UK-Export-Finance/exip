@@ -8,9 +8,9 @@ import { AccountSignInSendNewCodeVariables, AccountSignInResponse, Context } fro
  * accountSignInSendNewCode
  * - Generate a new OTP, save in the database
  * - Send the user an email with security code
- * @param {Object} GraphQL root variables
- * @param {Object} GraphQL variables for the AccountSignInNewCode mutation
- * @param {Context} KeystoneJS context API
+ * @param {Object} root: GraphQL root variables
+ * @param {Object} variables: GraphQL variables for the AccountSignInNewCode mutation
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag
  */
 const accountSignInSendNewCode = async (root: any, variables: AccountSignInSendNewCodeVariables, context: Context): Promise<AccountSignInResponse> => {
@@ -38,7 +38,7 @@ const accountSignInSendNewCode = async (root: any, variables: AccountSignInSendN
 
     const emailResponse = await sendEmail.accessCodeEmail(email, name, String(securityCode));
 
-    if (emailResponse.success) {
+    if (emailResponse?.success) {
       return {
         ...emailResponse,
         accountId: account.id,
@@ -48,9 +48,10 @@ const accountSignInSendNewCode = async (root: any, variables: AccountSignInSendN
     return {
       success: false,
     };
-  } catch (err) {
-    console.error('Error generating and sending new sign in code for account (accountSignInSendNewCode mutation) %O', err);
-    throw new Error(`Generating and sending new sign in code for account (accountSignInSendNewCode mutation) ${err}`);
+  } catch (error) {
+    console.error('Error generating and sending new sign in code for account (accountSignInSendNewCode mutation) %o', error);
+
+    throw new Error(`Generating and sending new sign in code for account (accountSignInSendNewCode mutation) ${error}`);
   }
 };
 

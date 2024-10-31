@@ -8,7 +8,7 @@ import { field as fieldSelector } from '../../pages/shared';
  * @param {Integer} errorIndex: Index of the summary list error
  * @param {Object} errorMessages: Percentage error messages
  * @param {Integer} totalExpectedErrors: Total expected errors in the form
- * @param {Integer} totalExpectedOtherErrorsWithValidPercentage: Total expected errors in the form when a percentage is valid.
+ * @param {Integer} totalExpectedOtherErrorsWithValidPercentage: Total expected errors in the form when the percentage field is valid.
  * @param {Boolean} minimum: Minimum allowed percentage.
  * @returns {Function} Mocha describe block with assertions.
  */
@@ -20,17 +20,19 @@ export const percentageFieldValidation = ({
   totalExpectedOtherErrorsWithValidPercentage = 0,
   minimum = MINIMUM_CHARACTERS.ZERO,
 }) => {
+  const field = fieldSelector(fieldId);
+
   const assertions = {
-    field: fieldSelector(fieldId),
+    field,
     errorIndex,
     expectedErrorsCount: totalExpectedErrors,
   };
 
-  it('should display validation errors when percentage is left empty', () => {
+  it(`should display validation errors when ${fieldId} percentage field is left empty`, () => {
     cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: errorMessages.IS_EMPTY });
   });
 
-  it('should display validation errors when percentage is a decimal place number', () => {
+  it(`should display validation errors when ${fieldId} percentage field is a decimal place number`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: '5.5',
@@ -38,7 +40,7 @@ export const percentageFieldValidation = ({
     });
   });
 
-  it('should display validation errors when percentage has a comma', () => {
+  it(`should display validation errors when ${fieldId} percentage has a comma`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: '4,4',
@@ -46,7 +48,7 @@ export const percentageFieldValidation = ({
     });
   });
 
-  it('should display validation errors when percentage has special characters', () => {
+  it(`should display validation errors when ${fieldId} percentage has special characters`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: '50!',
@@ -54,7 +56,15 @@ export const percentageFieldValidation = ({
     });
   });
 
-  it('should display validation errors when percentage is over 100', () => {
+  it(`should display validation errors when ${fieldId} percentage has letters`, () => {
+    cy.submitAndAssertFieldErrors({
+      ...assertions,
+      value: 'one',
+      expectedErrorMessage: errorMessages.INCORRECT_FORMAT,
+    });
+  });
+
+  it(`should display validation errors when ${fieldId} percentage field is over 100`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: '101',
@@ -62,7 +72,7 @@ export const percentageFieldValidation = ({
     });
   });
 
-  it(`should display validation errors when percentage is below ${minimum}`, () => {
+  it(`should display validation errors when ${fieldId} percentage field is below ${minimum}`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: `${minimum - 1}`,
@@ -70,9 +80,7 @@ export const percentageFieldValidation = ({
     });
   });
 
-  it(`should NOT display validation errors when ${fieldId} is correctly entered as a whole number`, () => {
-    const field = fieldSelector(fieldId);
-
+  it(`should NOT display validation errors when ${fieldId} percentage field is correctly entered as a whole number`, () => {
     cy.keyboardInput(field.input(), '5');
 
     cy.clickSubmitButton();
@@ -80,9 +88,7 @@ export const percentageFieldValidation = ({
     cy.assertErrorSummaryListLength(totalExpectedOtherErrorsWithValidPercentage);
   });
 
-  it(`should NOT display validation errors when ${fieldId} is correctly entered as ${minimum}`, () => {
-    const field = fieldSelector(fieldId);
-
+  it(`should NOT display validation errors when ${fieldId} percentage field is correctly entered as ${minimum}`, () => {
     cy.keyboardInput(field.input(), minimum);
 
     cy.clickSubmitButton();

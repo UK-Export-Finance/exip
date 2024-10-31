@@ -1,11 +1,9 @@
 import { addMonths, format } from 'date-fns';
 import insurance from '../../../../pages/insurance';
-import partials from '../../../../partials';
+import { taskList } from '../../../../partials/insurance';
 import { PAGES, TASKS } from '../../../../content-strings';
 import { APPLICATION, DATE_FORMAT } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
-
-const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ALL_SECTIONS;
 
@@ -42,6 +40,7 @@ context('Insurance - All sections - new application', () => {
       backLink: ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE,
       hasAForm: false,
       assertBackLink: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 
@@ -149,25 +148,11 @@ context('Insurance - All sections - new application', () => {
           cy.navigateToUrl(url);
         });
 
-        it('should render a `check answers` task with no link and `cannot start` status', () => {
-          const task = taskList.submitApplication.tasks.checkAnswers;
-
-          const expectedText = TASKS.LIST.SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS;
-          cy.checkText(task.text(), expectedText);
-
-          task.link().should('not.exist');
-
+        it('should render a `check answers` task with a `cannot start` status', () => {
           cy.checkTaskCheckAnswersStatusIsCannotStart();
         });
 
-        it('should render a `declarations and submit` task with no link and `cannot start yet` status', () => {
-          const task = taskList.submitApplication.tasks.declarationsAndSubmit;
-
-          const expectedText = TASKS.LIST.SUBMIT_APPLICATION.TASKS.DECLARATIONS_AND_SUBMIT;
-          cy.checkText(task.text(), expectedText);
-
-          task.link().should('not.exist');
-
+        it('should render a `declarations and submit` task with a `cannot start` status', () => {
           cy.checkTaskDeclarationsAndSubmitStatusIsCannotStart();
         });
       });

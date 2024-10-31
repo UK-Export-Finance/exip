@@ -38,10 +38,10 @@ const generateOtp = () => {
       hash,
       expiry,
     };
-  } catch (err) {
-    console.error('Error generating OTP %O', err);
+  } catch (error) {
+    console.error('Error generating OTP %o', error);
 
-    throw new Error(`Error generating OTP ${err}`);
+    throw new Error(`Error generating OTP ${error}`);
   }
 };
 

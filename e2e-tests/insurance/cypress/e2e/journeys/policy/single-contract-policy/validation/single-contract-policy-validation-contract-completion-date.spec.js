@@ -1,18 +1,16 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ELIGIBILITY } from '../../../../../../../constants';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import dateField from '../../../../../../../commands/insurance/date-field';
 
 const {
-  POLICY: {
-    CONTRACT_POLICY: {
-      REQUESTED_START_DATE,
-      SINGLE: { CONTRACT_COMPLETION_DATE },
-    },
+  CONTRACT_POLICY: {
+    REQUESTED_START_DATE,
+    SINGLE: { CONTRACT_COMPLETION_DATE },
   },
-} = INSURANCE_FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 const {
   ROOT,
@@ -35,7 +33,7 @@ context('Insurance - Policy - Single contract policy page - form validation - co
 
   const field = fieldSelector(CONTRACT_COMPLETION_DATE);
 
-  const { day, month, year, notInTheFuture, invalidFormat, isToday, withTwoDateFields } = dateField.checkValidation({
+  const { dayAssertions, monthAssertions, yearAssertions, notInTheFuture, invalidFormat, isToday, withTwoDateFields } = dateField.checkValidation({
     errorSummaryLength: 3,
     errorIndex: 1,
     field,
@@ -47,8 +45,7 @@ context('Insurance - Policy - Single contract policy page - form validation - co
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm({});
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'policyType' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 
@@ -67,47 +64,47 @@ context('Insurance - Policy - Single contract policy page - form validation - co
   });
 
   it('when the day is not provided', () => {
-    day.notProvided();
+    dayAssertions.notProvided();
   });
 
   it('when the month is not provided', () => {
-    month.notProvided();
+    monthAssertions.notProvided();
   });
 
   it('when the year is not provided', () => {
-    year.notProvided();
+    yearAssertions.notProvided();
   });
 
   it('when the day is provided, but month and year are not', () => {
-    day.providedWithoutOtherFields();
+    dayAssertions.providedWithoutOtherFields();
   });
 
   it('when the month is provided, but day and year are not', () => {
-    month.providedWithoutOtherFields();
+    monthAssertions.providedWithoutOtherFields();
   });
 
   it('when the year is provided, but day and month are not', () => {
-    year.providedWithoutOtherFields();
+    yearAssertions.providedWithoutOtherFields();
   });
 
   it('when the day is not a number', () => {
-    day.notANumber();
+    dayAssertions.notANumber();
   });
 
   it('when the month is not a number', () => {
-    month.notANumber();
+    monthAssertions.notANumber();
   });
 
   it('when the year is not a number', () => {
-    year.notANumber();
+    yearAssertions.notANumber();
   });
 
   it('when the day is greater than the last day of month', () => {
-    day.isGreaterThanLastDayOfMonth();
+    dayAssertions.isGreaterThanLastDayOfMonth();
   });
 
   it('when the year does not have enough digits', () => {
-    year.notEnoughDigits();
+    yearAssertions.notEnoughDigits();
   });
 
   it('when the the date is not in the future', () => {
@@ -127,14 +124,21 @@ context('Insurance - Policy - Single contract policy page - form validation - co
     const initYear = date.getFullYear();
     const startDate = new Date(date.setFullYear(initYear + 1));
 
-    const startDateObj = {
+    const { day, month, year } = {
       day: startDate.getDate(),
       month: startDate.getMonth() + 1,
       year: startDate.getFullYear(),
     };
 
-    const fieldA = fieldSelector(REQUESTED_START_DATE);
-    const fieldB = fieldSelector(CONTRACT_COMPLETION_DATE);
+    const fieldA = {
+      ...fieldSelector(REQUESTED_START_DATE),
+      id: REQUESTED_START_DATE,
+    };
+
+    const fieldB = {
+      ...fieldSelector(CONTRACT_COMPLETION_DATE),
+      id: CONTRACT_COMPLETION_DATE,
+    };
 
     const { cannotBeTheSame, cannotBeBefore, cannotBeAfter } = withTwoDateFields({
       fieldA,
@@ -146,9 +150,7 @@ context('Insurance - Policy - Single contract policy page - form validation - co
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(fieldSelector(REQUESTED_START_DATE).dayInput(), startDateObj.day);
-      cy.keyboardInput(fieldSelector(REQUESTED_START_DATE).monthInput(), startDateObj.month);
-      cy.keyboardInput(fieldSelector(REQUESTED_START_DATE).yearInput(), startDateObj.year);
+      cy.completeDateFormFields({ idPrefix: REQUESTED_START_DATE, day, month, year });
     });
 
     it(`should render a validation error when the date is the same as ${REQUESTED_START_DATE}`, () => {
@@ -156,13 +158,13 @@ context('Insurance - Policy - Single contract policy page - form validation - co
     });
 
     it(`should render a validation error when the date is before the ${REQUESTED_START_DATE}`, () => {
-      const yesterday = new Date(date.setDate(startDateObj.day - 1));
+      const yesterday = new Date(date.setDate(day - 1));
 
       cannotBeBefore(yesterday);
     });
 
     it(`should render a validation error when the date is over the maximum years allowed after ${REQUESTED_START_DATE}`, () => {
-      const additionalYears = startDateObj.year + ELIGIBILITY.MAX_COVER_PERIOD_YEARS;
+      const additionalYears = year + ELIGIBILITY.MAX_COVER_PERIOD_YEARS;
 
       const futureDate = new Date(startDate.setFullYear(additionalYears));
 

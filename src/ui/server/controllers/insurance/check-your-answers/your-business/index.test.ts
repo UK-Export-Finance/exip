@@ -11,7 +11,7 @@ import sectionStatus from '../../../../helpers/section-status';
 import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockSpyPromise, referenceNumber } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromise, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const { company, business } = mockApplication;
 
@@ -74,7 +74,7 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
     it('should render template', async () => {
       await get(req, res);
       const checkAndChange = true;
-      const summaryList = yourBusinessSummaryLists(company, business, referenceNumber, checkAndChange);
+      const summaryList = yourBusinessSummaryLists({ business, company, referenceNumber, checkAndChange });
 
       const businessFields = requiredFields(company.hasDifferentTradingName);
 
@@ -163,7 +163,7 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
 
       describe('when the save data API call fails', () => {
         beforeEach(() => {
-          mockSaveSectionReview = jest.fn(() => Promise.reject(new Error('mock')));
+          mockSaveSectionReview = mockSpyPromiseRejection;
           save.sectionReview = mockSaveSectionReview;
 
           req.body = mockBody;

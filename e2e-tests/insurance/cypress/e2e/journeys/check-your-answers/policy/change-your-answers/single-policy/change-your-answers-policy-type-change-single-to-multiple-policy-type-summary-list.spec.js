@@ -1,7 +1,6 @@
-import partials from '../../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
 import { summaryList } from '../../../../../../../../pages/shared';
 import formatCurrency from '../../../../../../../../helpers/format-currency';
 import application from '../../../../../../../../fixtures/application';
@@ -13,20 +12,14 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
-    TYPE_OF_POLICY: { POLICY_TYPE },
-    CONTRACT_POLICY: {
-      MULTIPLE: { TOTAL_MONTHS_OF_COVER },
-    },
-    EXPORT_VALUE: {
-      MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
-    },
+  TYPE_OF_POLICY: { POLICY_TYPE },
+  CONTRACT_POLICY: {
+    MULTIPLE: { TOTAL_MONTHS_OF_COVER },
   },
-} = INSURANCE_FIELD_IDS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
+  EXPORT_VALUE: {
+    MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
+  },
+} = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -40,7 +33,7 @@ context('Insurance - Change your answers - Policy - Change single to multiple po
       referenceNumber = refNumber;
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       // To get past previous "Check your answers" pages
       cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });

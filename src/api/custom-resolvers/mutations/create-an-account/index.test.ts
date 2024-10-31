@@ -46,28 +46,34 @@ describe('custom-resolvers/create-an-account', () => {
     jest.resetAllMocks();
   });
 
+  const setupTests = async () => {
+    jest.resetAllMocks();
+
+    sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+
+    sendEmail.confirmEmailAddress = sendEmailConfirmEmailAddressSpy;
+
+    sendConfirmEmailAddressEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+
+    confirmEmailAddressEmail.send = sendConfirmEmailAddressEmailSpy;
+
+    await accounts.deleteAll(context);
+
+    // create an account
+    account = (await createAnAccount({}, variables, context)) as Account;
+
+    /**
+     * Get the fully created account.
+     * note: the response only returns some specific fields.
+     */
+    createdAccount = await accounts.get(context, account.id);
+
+    return createdAccount;
+  };
+
   describe('when an account with the provided email does NOT already exist', () => {
     beforeEach(async () => {
-      jest.resetAllMocks();
-
-      sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
-
-      sendEmail.confirmEmailAddress = sendEmailConfirmEmailAddressSpy;
-
-      sendConfirmEmailAddressEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
-
-      confirmEmailAddressEmail.send = sendConfirmEmailAddressEmailSpy;
-
-      await accounts.deleteAll(context);
-
-      // create an account
-      account = (await createAnAccount({}, variables, context)) as Account;
-
-      /**
-       * Get the fully created account.
-       * note: the response only returns some specific fields.
-       */
-      createdAccount = await accounts.get(context, account.id);
+      createdAccount = await setupTests();
     });
 
     it('should generate a created account with added salt and hashes', () => {
@@ -125,20 +131,10 @@ describe('custom-resolvers/create-an-account', () => {
 
     describe('when an account with the provided email already exists, provided password is valid, account is unverified and confirmEmailAddressEmail.send does not return success=true', () => {
       beforeAll(async () => {
-        jest.resetAllMocks();
-
-        sendConfirmEmailAddressEmailSpy = jest.fn(() => Promise.resolve(emailFailureResponse));
-        confirmEmailAddressEmail.send = sendConfirmEmailAddressEmailSpy;
-
-        sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
-        sendEmail.confirmEmailAddress = sendEmailConfirmEmailAddressSpy;
-
-        await accounts.deleteAll(context);
-
-        account = (await createAnAccount({}, variables, context)) as Account;
+        createdAccount = await setupTests();
 
         // get the account's status ID.
-        const { status } = await accounts.get(context, account.id);
+        const { status } = await accounts.get(context, createdAccount.id);
 
         // update the account to be unverified
         const statusUpdate = {
@@ -151,11 +147,11 @@ describe('custom-resolvers/create-an-account', () => {
       test('should throw an error', async () => {
         try {
           await createAnAccount({}, variables, context);
-        } catch (err) {
+        } catch (error) {
           const expected = new Error(
             `Account creation - creating account Error: Account creation - sending email verification for account creation ${emailFailureResponse}`,
           );
-          expect(err).toEqual(expected);
+          expect(error).toEqual(expected);
         }
       });
     });
@@ -170,11 +166,11 @@ describe('custom-resolvers/create-an-account', () => {
       test('should throw an error', async () => {
         try {
           await createAnAccount({}, variables, context);
-        } catch (err) {
+        } catch (error) {
           const expected = new Error(
             `Account creation - creating account Error: Account creation - sending email verification for account creation ${emailFailureResponse}`,
           );
-          expect(err).toEqual(expected);
+          expect(error).toEqual(expected);
         }
       });
     });

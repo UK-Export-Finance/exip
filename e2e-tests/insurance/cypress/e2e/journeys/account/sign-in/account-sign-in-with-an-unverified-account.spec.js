@@ -1,4 +1,3 @@
-import { yourDetailsPage } from '../../../../../../pages/insurance/account/create';
 import { ACCOUNT as ROUTES } from '../../../../../../constants/routes/insurance/account';
 
 const {
@@ -30,9 +29,9 @@ context('Insurance - Account - Sign in - unverified account', () => {
 
     /**
      * navigate to the sign in page,
-     * without a verified  account.
+     * without a verified account.
      */
-    yourDetailsPage.signInButtonLink().click();
+    cy.clickSignInButtonLink();
 
     cy.assertUrl(signInUrl);
   });
@@ -52,9 +51,7 @@ context('Insurance - Account - Sign in - unverified account', () => {
     });
 
     it(`should redirect to ${CONFIRM_EMAIL_RESENT}`, () => {
-      cy.navigateToUrl(signInUrl);
-
-      cy.completeAndSubmitSignInAccountForm({ assertRedirectUrl: false });
+      cy.navigateToSignInAndSubmitForm();
 
       const expectedUrl = `${confirmEmailResentUrl}?id=${account.id}`;
 

@@ -4,7 +4,7 @@ import { ROUTES } from '../../../../../constants';
 import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
 import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/turnover';
-import { mockReq, mockRes, mockApplication, mockBusinessTurnover } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockBusinessTurnover, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 import { Request, Response } from '../../../../../../types';
 
 const {
@@ -37,7 +37,7 @@ describe('controllers/insurance/business/turnover/save-and-back', () => {
 
       await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should call mapAndSave.turnover once with the data from constructPayload function', async () => {
@@ -65,7 +65,7 @@ describe('controllers/insurance/business/turnover/save-and-back', () => {
 
       await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should call mapAndSave.turnover once', async () => {
@@ -112,7 +112,7 @@ describe('controllers/insurance/business/turnover/save-and-back', () => {
       beforeEach(() => {
         req.body = validBody;
         res.locals = mockRes().locals;
-        updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
+        updateMapAndSave = mockSpyPromiseRejection;
         mapAndSave.turnover = updateMapAndSave;
       });
 

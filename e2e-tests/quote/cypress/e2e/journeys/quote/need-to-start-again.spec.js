@@ -1,10 +1,8 @@
 import { needToStartAgainPage } from '../../../../../pages/shared';
 import { LINKS, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../commands/forms';
-import { completeAndSubmitBuyerBodyForm } from '../../../../../commands/quote/forms';
 
-const CONTENT_STRINGS = PAGES.NEED_TO_START_AGAIN_PAGE;
+const CONTENT_STRINGS = PAGES.NEED_TO_START_AGAIN_EXIT;
 
 const {
   QUOTE: { TELL_US_ABOUT_YOUR_POLICY, NEED_TO_START_AGAIN, BUYER_COUNTRY },
@@ -14,9 +12,9 @@ const baseUrl = Cypress.config('baseUrl');
 
 context('Get a Quote - Need to start again exit page', () => {
   beforeEach(() => {
-    cy.login();
-    completeAndSubmitBuyerCountryForm({});
-    completeAndSubmitBuyerBodyForm();
+    cy.navigateToRootUrl();
+    cy.completeAndSubmitBuyerCountryForm({});
+    cy.completeAndSubmitBuyerBodyForm();
 
     cy.navigateToUrl(TELL_US_ABOUT_YOUR_POLICY);
 
@@ -35,6 +33,7 @@ context('Get a Quote - Need to start again exit page', () => {
       assertBackLink: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

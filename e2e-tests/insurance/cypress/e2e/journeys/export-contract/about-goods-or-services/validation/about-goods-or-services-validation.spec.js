@@ -50,8 +50,7 @@ context('Insurance - Export contract - About goods or services page - form valid
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.startInsuranceExportContractSection({});
-      cy.completeAndSubmitHowWasTheContractAwardedForm({});
+      cy.completeAndSubmitExportContractForms({ formToStopAt: 'howWasTheContractAwarded' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
 
@@ -125,7 +124,10 @@ context('Insurance - Export contract - About goods or services page - form valid
         includeFinalDestination: true,
       });
 
-      descriptionField.textarea().should('have.value', descriptionOverMaximum);
+      cy.checkTextareaValue({
+        fieldId: DESCRIPTION,
+        expectedValue: descriptionOverMaximum,
+      });
 
       cy.assertYesRadioOptionIsChecked();
 
@@ -142,7 +144,10 @@ context('Insurance - Export contract - About goods or services page - form valid
         description: descriptionOverMaximum,
       });
 
-      descriptionField.textarea().should('have.value', descriptionOverMaximum);
+      cy.checkTextareaValue({
+        fieldId: DESCRIPTION,
+        expectedValue: descriptionOverMaximum,
+      });
 
       cy.assertNoRadioOptionIsChecked();
     });

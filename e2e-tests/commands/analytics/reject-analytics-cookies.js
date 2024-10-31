@@ -1,4 +1,4 @@
-import partials from '../../partials';
+import { cookieBanner } from '../../partials';
 import checkCookiesConsentBannerIsNotVisible from './check-cookies-consent-banner-is-not-visible';
 import { COOKIE } from '../../constants';
 
@@ -13,8 +13,8 @@ const refreshPage = () => {
 };
 
 const reject = () => {
-  partials.cookieBanner.question.rejectButton().click();
-  partials.cookieBanner.hideButton().click();
+  cookieBanner.question.rejectButton().click();
+  cookieBanner.hideButton().click();
 };
 
 const rejectAnalyticsCookies = () => {
@@ -23,8 +23,8 @@ const rejectAnalyticsCookies = () => {
   reject();
 
   checkCookiesConsentBannerIsNotVisible();
-  partials.cookieBanner.accepted.copy().should('not.exist');
-  partials.cookieBanner.rejected.copy().should('not.be.visible');
+  cookieBanner.accepted.copy().should('not.exist');
+  cookieBanner.rejected.copy().should('not.be.visible');
 };
 
 export default rejectAnalyticsCookies;

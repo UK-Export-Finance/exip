@@ -4,7 +4,7 @@ import { ROUTES, TEMPLATES } from '../../../constants';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
-import { mockReq, mockRes } from '../../../test-mocks';
+import { mockReq, mockRes, referenceNumber } from '../../../test-mocks';
 
 const {
   INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS },
@@ -35,7 +35,7 @@ describe('controllers/insurance/all-sections', () => {
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),
-        TASK_LIST_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`,
+        TASK_LIST_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

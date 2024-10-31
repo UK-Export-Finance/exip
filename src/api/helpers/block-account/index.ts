@@ -4,7 +4,7 @@ import { Context } from '../../types';
 /**
  * blockAccount
  * Update an account to have a true isBlocked property/flag
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} AccountStatus ID
  * @returns {Promise<Boolean>}
  */
@@ -21,10 +21,10 @@ const blockAccount = async (context: Context, statusId: string): Promise<boolean
     }
 
     return false;
-  } catch (err) {
-    console.error('Error blocking account %O', err);
+  } catch (error) {
+    console.error('Error blocking account %o', error);
 
-    throw new Error(`Blocking account ${err}`);
+    throw new Error(`Blocking account ${error}`);
   }
 };
 

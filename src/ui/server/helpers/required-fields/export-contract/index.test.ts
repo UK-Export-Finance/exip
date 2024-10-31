@@ -15,7 +15,7 @@ const {
   USING_AGENT,
   AGENT_DETAILS: { AGENT_NAME, AGENT_FULL_ADDRESS, AGENT_COUNTRY_CODE },
   AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
-  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE_CHARGE },
+  AGENT_CHARGES: { FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, METHOD, PAYABLE_COUNTRY_CODE, PERCENTAGE_CHARGE },
 } = FIELD_IDS;
 
 describe('server/helpers/required-fields/export-contract', () => {
@@ -53,10 +53,10 @@ describe('server/helpers/required-fields/export-contract', () => {
   });
 
   describe('privateCoverTasks', () => {
-    describe('when totalContractValueOverThreshold=false, migratedV1toV2=true', () => {
+    describe('when totalContractValueOverThreshold=true', () => {
       describe('when attemptedPrivateMarketCover=true', () => {
         it(`should return an array with ${DECLINED_DESCRIPTION} field ID`, () => {
-          const result = privateCoverTasks({ totalContractValueOverThreshold: false, migratedV1toV2: true, attemptedPrivateMarketCover: true });
+          const result = privateCoverTasks({ totalContractValueOverThreshold: false, attemptedPrivateMarketCover: true });
 
           expect(result).toEqual([DECLINED_DESCRIPTION]);
         });
@@ -64,25 +64,7 @@ describe('server/helpers/required-fields/export-contract', () => {
 
       describe('when attemptedPrivateMarketCover=false', () => {
         it(`should return an array with ${DECLINED_DESCRIPTION} field ID`, () => {
-          const result = privateCoverTasks({ totalContractValueOverThreshold: false, migratedV1toV2: true, attemptedPrivateMarketCover: false });
-
-          expect(result).toEqual([ATTEMPTED]);
-        });
-      });
-    });
-
-    describe('when totalContractValueOverThreshold=true, migratedV1toV2=false', () => {
-      describe('when attemptedPrivateMarketCover=true', () => {
-        it(`should return an array with ${DECLINED_DESCRIPTION} field ID`, () => {
-          const result = privateCoverTasks({ totalContractValueOverThreshold: true, migratedV1toV2: false, attemptedPrivateMarketCover: true });
-
-          expect(result).toEqual([DECLINED_DESCRIPTION]);
-        });
-      });
-
-      describe('when attemptedPrivateMarketCover=false', () => {
-        it(`should return an array with ${DECLINED_DESCRIPTION} field ID`, () => {
-          const result = privateCoverTasks({ totalContractValueOverThreshold: true, migratedV1toV2: false, attemptedPrivateMarketCover: false });
+          const result = privateCoverTasks({ totalContractValueOverThreshold: true, attemptedPrivateMarketCover: false });
 
           expect(result).toEqual([ATTEMPTED]);
         });
@@ -91,7 +73,7 @@ describe('server/helpers/required-fields/export-contract', () => {
   });
 
   describe('agentServiceChargeTasks', () => {
-    describe(`when agentIsCharging is true and agentChargeMethod is ${AGENT_SERVICE_CHARGE_METHOD.FIXED_SUM}`, () => {
+    describe(`when agentIsCharging is true and ${METHOD} is ${AGENT_SERVICE_CHARGE_METHOD.FIXED_SUM}`, () => {
       it('should return an array with required agent service charge field IDs', () => {
         const result = agentServiceChargeTasks({
           agentIsCharging: true,
@@ -104,7 +86,7 @@ describe('server/helpers/required-fields/export-contract', () => {
       });
     });
 
-    describe(`when agentIsCharging is true and agentChargeMethod is ${AGENT_SERVICE_CHARGE_METHOD.PERCENTAGE}`, () => {
+    describe(`when agentIsCharging is true and ${METHOD} is ${AGENT_SERVICE_CHARGE_METHOD.PERCENTAGE}`, () => {
       it('should return an array with required agent service charge field IDs', () => {
         const result = agentServiceChargeTasks({
           agentIsCharging: true,
@@ -117,7 +99,7 @@ describe('server/helpers/required-fields/export-contract', () => {
       });
     });
 
-    describe('when agentIsCharging is false and agentChargeMethod is NOT provided', () => {
+    describe(`when agentIsCharging is false and ${METHOD} is NOT provided`, () => {
       it('should return an array with required agent service charge field IDs', () => {
         const result = agentServiceChargeTasks({ agentIsCharging: true });
 
@@ -187,7 +169,6 @@ describe('server/helpers/required-fields/export-contract', () => {
         finalDestinationKnown,
         attemptedPrivateMarketCover,
         isUsingAgent,
-        migratedV1toV2: false,
       });
 
       const expected = [
@@ -196,7 +177,6 @@ describe('server/helpers/required-fields/export-contract', () => {
         ...privateCoverTasks({
           totalContractValueOverThreshold: true,
           attemptedPrivateMarketCover,
-          migratedV1toV2: false,
         }),
         ...agentTasks({ isUsingAgent }),
         ...awardMethodTasks(awardMethodId),

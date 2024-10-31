@@ -1,6 +1,6 @@
 import { contactUsPage } from '../../../../pages';
 import { intro } from '../../../../pages/shared';
-import footer from '../../../../partials/footer';
+import { footer } from '../../../../partials';
 import { PAGES } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 
@@ -34,6 +34,7 @@ context('Contact us page - Insurance', () => {
       backLink: ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE,
       hasAForm: false,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       isInsurancePage: true,
     });
   });

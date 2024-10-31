@@ -1,5 +1,5 @@
 import { field as fieldSelector } from '../../../../../../pages/shared';
-import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
@@ -8,10 +8,8 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
-    CONTRACT_POLICY: { REQUESTED_START_DATE },
-  },
-} = INSURANCE_FIELD_IDS;
+  CONTRACT_POLICY: { REQUESTED_START_DATE },
+} = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -27,8 +25,7 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm({});
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'policyType' });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 
@@ -92,9 +89,7 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
       cy.startInsurancePolicySection({});
       cy.clickSubmitButton();
 
-      field.dayInput().should('have.value', '');
-      field.monthInput().should('have.value', '');
-      field.yearInput().should('have.value', '');
+      cy.assertEmptyRequestedStartDateFieldValues({});
     });
   });
 
@@ -124,9 +119,12 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
       cy.startInsurancePolicySection({});
       cy.clickSubmitButton();
 
-      field.dayInput().should('have.value', '1');
-      field.monthInput().should('have.value', month);
-      field.yearInput().should('have.value', new Date(futureDate).getFullYear());
+      cy.checkDateFieldValues({
+        selector: field,
+        day: '1',
+        month,
+        year: new Date(futureDate).getFullYear(),
+      });
     });
   });
 });

@@ -3,8 +3,7 @@ import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { COVER_PERIOD } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import { FIELDS_ELIGIBILITY } from '../../../../../../content-strings/fields/insurance/eligibility';
+import { ELIGIBILITY_FIELDS } from '../../../../../../content-strings/fields/insurance/eligibility';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COVER_PERIOD;
 
@@ -13,12 +12,12 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 const {
-  ELIGIBILITY: { COVER_PERIOD: COVER_PERIOD_ROUTE, LONG_TERM_COVER, TOTAL_VALUE_INSURED, UK_GOODS_OR_SERVICES },
+  ELIGIBILITY: { COVER_PERIOD: COVER_PERIOD_ROUTE, LONG_TERM_COVER_EXIT, TOTAL_VALUE_INSURED, UK_GOODS_OR_SERVICES },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-const { ABOVE, BELOW } = FIELDS_ELIGIBILITY[FIELD_ID].OPTIONS;
+const { ABOVE, BELOW } = ELIGIBILITY_FIELDS[FIELD_ID].OPTIONS;
 
 context(
   'Insurance - Cover period page - I want to enter the length of my export contract, So that I can cover my exposure for the period of the contract',
@@ -26,14 +25,7 @@ context(
     let url;
 
     before(() => {
-      cy.navigateToCheckIfEligibleUrl();
-      cy.completeCheckIfEligibleForm();
-      cy.completeExporterLocationForm();
-      cy.completeCompaniesHouseNumberForm();
-      cy.completeAndSubmitCompaniesHouseSearchForm({});
-      cy.completeEligibilityCompanyDetailsForm();
-      completeAndSubmitBuyerCountryForm({});
-      cy.completeAndSubmitTotalValueInsuredForm({});
+      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'totalValueInsured' });
 
       url = `${baseUrl}${COVER_PERIOD_ROUTE}`;
 
@@ -50,6 +42,7 @@ context(
         currentHref: COVER_PERIOD_ROUTE,
         backLink: TOTAL_VALUE_INSURED,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 
@@ -127,8 +120,8 @@ context(
           cy.completeCoverPeriodForm({ underThreshold: false });
         });
 
-        it(`should redirect to ${LONG_TERM_COVER}`, () => {
-          const expected = `${baseUrl}${LONG_TERM_COVER}`;
+        it(`should redirect to ${LONG_TERM_COVER_EXIT}`, () => {
+          const expected = `${baseUrl}${LONG_TERM_COVER_EXIT}`;
 
           cy.assertUrl(expected);
         });

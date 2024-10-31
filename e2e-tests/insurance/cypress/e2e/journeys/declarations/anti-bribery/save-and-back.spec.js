@@ -1,9 +1,6 @@
 import { singleInputField } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-
-const { taskList } = partials.insurancePartials;
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -13,8 +10,6 @@ const {
 } = INSURANCE_ROUTES;
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_ANTI_BRIBERY;
-
-const task = taskList.submitApplication.tasks.declarationsAndSubmit;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -28,12 +23,7 @@ context('Insurance - Declarations - Anti-bribery page - Save and go back', () =>
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
-
-      // go to the page we want to test.
-      task.link().click();
-
-      cy.completeAndSubmitDeclarationConfidentiality();
+      cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'confidentiality', referenceNumber });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
 
@@ -60,7 +50,7 @@ context('Insurance - Declarations - Anti-bribery page - Save and go back', () =>
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the status of task `declarations` as `in progress`', () => {
+    it('should update the status of task `declarations and submit` to `in progress`', () => {
       cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
   });
@@ -78,12 +68,16 @@ context('Insurance - Declarations - Anti-bribery page - Save and go back', () =>
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the status of task `declarations` as `in progress`', () => {
+    it('should retain the status of task `check your answers` as `completed`', () => {
+      cy.checkTaskCheckAnswersStatusIsComplete();
+    });
+
+    it('should retain the status of task `declarations and submit` as `in progress`', () => {
       cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
 
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
-      task.link().click();
+      cy.clickTaskDeclarationsAndSubmit();
 
       // go to the page
       cy.clickSubmitButton();

@@ -13,7 +13,7 @@ const {
   USING_AGENT,
   AGENT_DETAILS: { AGENT_NAME, AGENT_FULL_ADDRESS, AGENT_COUNTRY_CODE },
   AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
-  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE_CHARGE },
+  AGENT_CHARGES: { FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, METHOD, PAYABLE_COUNTRY_CODE, PERCENTAGE_CHARGE },
 } = FIELD_IDS;
 
 /**
@@ -37,18 +37,16 @@ interface RequiredFields {
   agentIsCharging?: boolean;
   agentChargeMethod?: string;
   awardMethodId?: string;
-  migratedV1toV2?: boolean;
 }
 
 /**
  * privateCoverTasks
  * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * @param {Boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
- * @param {Boolean} migratedV1toV2: Application has been migrated from V1 to V2
  * @returns {Array} Array of tasks
  */
-export const privateCoverTasks = ({ totalContractValueOverThreshold, attemptedPrivateMarketCover, migratedV1toV2 }: RequiredFields): Array<string> => {
-  if (totalContractValueOverThreshold || migratedV1toV2) {
+export const privateCoverTasks = ({ totalContractValueOverThreshold, attemptedPrivateMarketCover }: RequiredFields): Array<string> => {
+  if (totalContractValueOverThreshold) {
     if (attemptedPrivateMarketCover) {
       return [DECLINED_DESCRIPTION];
     }
@@ -130,7 +128,6 @@ export const awardMethodTasks = (awardMethodId?: string): Array<string> => {
  * @param {Boolean} agentChargeMethod: Agent charge method
  * @param {String} awardMethodId: Export contract award method ID
  * @param {Boolean} agentChargeMethod: Agent charge method
- * @param {Boolean} migratedV1toV2: Application has been migrated from V1 to V2
  * @returns {Array} Required field IDs
  */
 const requiredFields = ({
@@ -141,11 +138,10 @@ const requiredFields = ({
   agentIsCharging,
   agentChargeMethod,
   awardMethodId,
-  migratedV1toV2,
 }: RequiredFields): Array<string> => [
   PAYMENT_TERMS_DESCRIPTION,
   ...getAboutGoodsOrServicesTasks(finalDestinationKnown),
-  ...privateCoverTasks({ totalContractValueOverThreshold, attemptedPrivateMarketCover, migratedV1toV2 }),
+  ...privateCoverTasks({ totalContractValueOverThreshold, attemptedPrivateMarketCover }),
   ...agentTasks({ isUsingAgent, agentIsCharging, agentChargeMethod }),
   ...awardMethodTasks(awardMethodId),
 ];

@@ -1,7 +1,7 @@
 import nullify from '.';
 import saveAddress from '../../save-data/company-different-trading-address';
 import nullifyCompanyDifferentTradingAddress from '../../../../../helpers/nullify-company-different-trading-address-data';
-import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
+import { mockApplication, mockSpyPromise, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 describe('controllers/insurance/business/map-and-save/nullify-company-different-address', () => {
   jest.mock('../../save-data/company-different-trading-address');
@@ -37,7 +37,7 @@ describe('controllers/insurance/business/map-and-save/nullify-company-different-
 
   describe('when save saveAddress.companyDifferentTradingAddress call fails', () => {
     beforeEach(() => {
-      saveAddress.companyDifferentTradingAddress = jest.fn(() => Promise.reject(new Error('mock')));
+      saveAddress.companyDifferentTradingAddress = mockSpyPromiseRejection;
     });
 
     it('should return false', async () => {

@@ -1,7 +1,7 @@
 import { Connection } from 'mysql2/promise';
 import getAllExportContracts from '../get-all-export-contracts';
 import getAllPrivateMarkets from '../get-all-private-markets';
-import executeSqlQuery from '../execute-sql-query';
+import executeSqlQuery from '../../execute-sql-query';
 
 /**
  * updateExportContractPrivateMarket
@@ -15,7 +15,7 @@ import executeSqlQuery from '../execute-sql-query';
 const updateExportContractPrivateMarket = async (connection: Connection) => {
   const loggingMessage = 'Updating exportContract privateMarket columns';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const exportContracts = await getAllExportContracts(connection);
@@ -38,10 +38,10 @@ const updateExportContractPrivateMarket = async (connection: Connection) => {
     });
 
     return Promise.all(accountPromises);
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

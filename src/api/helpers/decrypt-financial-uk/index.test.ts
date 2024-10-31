@@ -155,8 +155,8 @@ describe('api/helpers/decrypt-financial-uk', () => {
     it('should throw an error', async () => {
       try {
         decryptFinancialUk({ id: '1', vector: emptyVectorObj });
-      } catch (err) {
-        const errorString = String(err);
+      } catch (error) {
+        const errorString = String(error);
 
         expect(errorString.includes('Error decrypting financial uk')).toEqual(true);
       }

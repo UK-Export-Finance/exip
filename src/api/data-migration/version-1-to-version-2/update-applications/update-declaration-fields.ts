@@ -1,6 +1,6 @@
 import { Connection } from 'mysql2/promise';
 import getAllNonSubmittedApplications from '../get-all-non-submitted-applications';
-import executeSqlQuery from '../execute-sql-query';
+import executeSqlQuery from '../../execute-sql-query';
 import { Application } from '../../../types';
 
 /**
@@ -15,7 +15,7 @@ import { Application } from '../../../types';
 const updateDeclarationFields = async (connection: Connection) => {
   const loggingMessage = 'Updating all declarations FIELDS';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const nonSubmittedApplications = await getAllNonSubmittedApplications(connection);
@@ -71,10 +71,10 @@ const updateDeclarationFields = async (connection: Connection) => {
     });
 
     return Promise.all(promises);
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

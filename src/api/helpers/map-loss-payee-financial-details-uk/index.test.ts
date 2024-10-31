@@ -47,8 +47,8 @@ describe('api/helpers/map-loss-payee-financial-details-uk', () => {
     it('should throw an error', async () => {
       try {
         mapLossPayeeFinancialDetailsUk({ id: '1', vector: { id: '1' } });
-      } catch (err) {
-        const errorString = String(err);
+      } catch (error) {
+        const errorString = String(error);
 
         expect(errorString.includes('Error mapping loss payee financial UK')).toEqual(true);
       }

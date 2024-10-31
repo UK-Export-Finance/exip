@@ -202,6 +202,69 @@ jobs:
         spec:
           [
             '/*.spec.js',
+            'cannot-skip-flow/**/*.spec.js',
+            'cookies-consent/**/*.spec.js',
+            'dashboard/**/*.spec.js',
+            'feedback/**/*.spec.js',
+            'no-access-application-submitted/**/*.spec.js',
+            'no-access-to-application/**/*.spec.js',
+            'redirects/*.spec.js',
+            'submit-name-fields-with-special-characters/**/*.spec.js',
+            'submit-textarea-fields-with-new-line-characters/**/*.spec.js',
+            'submit-textarea-fields-with-special-characters/**/*.spec.js',
+            'submit-textarea-fields-with-a-pure-number/**/*.spec.js',
+            'task-list/**/*.spec.js',
+          ]
+
+    concurrency:
+      group: e2e-tests-insurance-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Timezone
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Dependencies
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
+
+      - name: Docker
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
+
+      - name: Wait
+        run: sleep 30s
+
+      - name: Execute
+        working-directory: ./e2e-tests/insurance
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+
+   # 5. E2E - Insurance - Account
+  e2e-tests-insurance-account:
+    name: E2E Insurance - Account 👷
+    needs: [setup]
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      # Do not cancel in-progress jobs upon failure
+      fail-fast: false
+      # Single dimension matrix
+      matrix:
+        spec:
+          [
             'account/create/**/*.spec.js',
             'account/manage/**/*.spec.js',
             'account/password-reset/**/*.spec.js',
@@ -209,6 +272,57 @@ jobs:
             'account/sign-in/**/*.spec.js',
             'account/sign-out/**/*.spec.js',
             'account/suspended/**/*.spec.js',
+          ]
+
+    concurrency:
+      group: e2e-tests-insurance-account-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Timezone
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Dependencies
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
+  
+      - name: Docker
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
+
+      - name: Wait
+        run: sleep 30s
+
+      - name: Execute
+        working-directory: ./e2e-tests/insurance
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+
+  # 6. E2E - Insurance - Application submission
+  e2e-tests-insurance-application-submission:
+    name: E2E Insurance - Application Submission 👷
+    needs: [setup]
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      # Do not cancel in-progress jobs upon failure
+      fail-fast: false
+      # Single dimension matrix
+      matrix:
+        spec:
+          [
             'application-submission/*.spec.js',
             'application-submission/multiple-policy-type/*.spec.js',
             'application-submission/multiple-policy-type/business-conditions/*.spec.js',
@@ -224,7 +338,57 @@ jobs:
             'application-submission/single-policy-type/declarations-conditions/*.spec.js',
             'application-submission/single-policy-type/export-contract-conditions/*.spec.js',
             'application-submission/single-policy-type/policy-conditions/*.spec.js',
-            'cannot-skip-flow/**/*.spec.js',
+          ]
+
+    concurrency:
+      group: e2e-tests-insurance-application-submission-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Timezone
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Dependencies
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
+  
+      - name: Docker
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
+
+      - name: Wait
+        run: sleep 30s
+
+      - name: Execute
+        working-directory: ./e2e-tests/insurance
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+  
+  # 7. E2E - Insurance - Check your answers
+  e2e-tests-insurance-check-your-answers:
+    name: E2E Insurance - Check Your Answers 👷
+    needs: [setup]
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      # Do not cancel in-progress jobs upon failure
+      fail-fast: false
+      # Single dimension matrix
+      matrix:
+        spec:
+          [
             'check-your-answers/export-contract/*.spec.js',
             'check-your-answers/export-contract/change-your-answers/about-goods-or-services/*.spec.js',
             'check-your-answers/export-contract/change-your-answers/agent/*.spec.js',
@@ -247,11 +411,111 @@ jobs:
             'check-your-answers/policy/summary-list/single-policy/*.spec.js',
             'check-your-answers/your-business/**/*.spec.js',
             'check-your-answers/your-buyer/**/*.spec.js',
-            'cookies-consent/**/*.spec.js',
-            'dashboard/**/*.spec.js',
+          ]
+
+    concurrency:
+      group: e2e-tests-insurance-check-your-answers-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Timezone
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Dependencies
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
+    
+      - name: Docker
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
+
+      - name: Wait
+        run: sleep 30s
+
+      - name: Execute
+        working-directory: ./e2e-tests/insurance
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+  
+  # 8. E2E - Insurance - Declarations
+  e2e-tests-insurance-declarations:
+    name: E2E Insurance - Declarations 👷
+    needs: [setup]
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      # Do not cancel in-progress jobs upon failure
+      fail-fast: false
+      # Single dimension matrix
+      matrix:
+        spec:
+          [
             'declarations/anti-bribery/**/*.spec.js',
             'declarations/confidentiality/**/*.spec.js',
             'declarations/confirmation-and-acknowledgements/**/*.spec.js',
+          ]
+
+    concurrency:
+      group: e2e-tests-insurance-declarations-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Timezone
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Dependencies
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
+  
+      - name: Docker
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
+
+      - name: Wait
+        run: sleep 30s
+
+      - name: Execute
+        working-directory: ./e2e-tests/insurance
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+  
+  # 9. E2E - Insurance - Eligibility
+  e2e-tests-insurance-eligibility:
+    name: E2E Insurance - Eligibility 👷
+    needs: [setup]
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      # Do not cancel in-progress jobs upon failure
+      fail-fast: false
+      # Single dimension matrix
+      matrix:
+        spec:
+          [
             'eligibility/*.spec.js',
             'eligibility/buyer-country/**/*.spec.js',
             'eligibility/cannot-apply/**/*.spec.js',
@@ -273,6 +537,57 @@ jobs:
             'eligibility/party-to-consortium/**/*.spec.js',
             'eligibility/total-value-insured/**/*.spec.js',
             'eligibility/uk-goods-or-services/**/*.spec.js',
+          ]
+
+    concurrency:
+      group: e2e-tests-insurance-eligibility-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Timezone
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Dependencies
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
+  
+      - name: Docker
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
+
+      - name: Wait
+        run: sleep 30s
+
+      - name: Execute
+        working-directory: ./e2e-tests/insurance
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+
+  # 10. E2E - Insurance - Export contract
+  e2e-tests-insurance-export-contract:
+    name: E2E Insurance - Export Contract 👷
+    needs: [setup]
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      # Do not cancel in-progress jobs upon failure
+      fail-fast: false
+      # Single dimension matrix
+      matrix:
+        spec:
+          [
             'export-contract/how-was-the-contract-awarded/**/*.spec.js',
             'export-contract/about-goods-or-services/**/*.spec.js',
             'export-contract/how-will-you-get-paid/**/*.spec.js',
@@ -282,6 +597,8 @@ jobs:
             'export-contract/agent-details/**/*.spec.js',
             'export-contract/agent-service/**/*.spec.js',
             'export-contract/agent-charges/**/*.spec.js',
+            'export-contract/currency-of-agent-charges/*.spec.js',
+            'export-contract/how-much-the-agent-is-charging/**/*.spec.js',
             'export-contract/change-your-answers/about-goods-or-services/*.spec.js',
             'export-contract/change-your-answers/agent/*.spec.js',
             'export-contract/change-your-answers/agent-charges/*.spec.js',
@@ -291,9 +608,57 @@ jobs:
             'export-contract/change-your-answers/private-market/*.spec.js',
             'export-contract/check-your-answers/**/*.spec.js',
             'export-contract/root/**/*.spec.js',
-            'feedback/**/*.spec.js',
-            'no-access-application-submitted/**/*.spec.js',
-            'no-access-to-application/**/*.spec.js',
+          ]
+
+    concurrency:
+      group: e2e-tests-insurance-export-contract-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Timezone
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Dependencies
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
+  
+      - name: Docker
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
+
+      - name: Wait
+        run: sleep 30s
+
+      - name: Execute
+        working-directory: ./e2e-tests/insurance
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+
+  # 11. E2E - Insurance - Policy
+  e2e-tests-insurance-policy:
+    name: E2E Insurance - Policy 👷
+    needs: [setup]
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      # Do not cancel in-progress jobs upon failure
+      fail-fast: false
+      # Single dimension matrix
+      matrix:
+        spec:
+          [
             'policy/*.spec.js',
             'policy/another-company/**/*.spec.js',
             'policy/broker/**/*.spec.js',
@@ -320,35 +685,10 @@ jobs:
             'policy/root/**/*.spec.js',
             'policy/single-contract-policy/**/*.spec.js',
             'policy/type-of-policy/**/*.spec.js',
-            'redirects/*.spec.js',
-            'submit-name-fields-with-special-characters/**/*.spec.js',
-            'submit-textarea-fields-with-new-line-characters/**/*.spec.js',
-            'submit-textarea-fields-with-special-characters/**/*.spec.js',
-            'submit-textarea-fields-with-a-pure-number/**/*.spec.js',
-            'task-list/**/*.spec.js',
-            'your-business/alternative-trading-address/**/*.spec.js',
-            'your-business/change-your-answers/**/*.spec.js',
-            'your-business/check-your-answers/**/*.spec.js',
-            'your-business/companies-house-number/*.spec.js',
-            'your-business/company-details/**/*.spec.js',
-            'your-business/credit-control/**/*.spec.js',
-            'your-business/nature-of-business/**/*.spec.js',
-            'your-business/root/**/*.spec.js',
-            'your-business/turnover/**/*.spec.js',
-            'your-buyer/alternative-currency/**/*.spec.js',
-            'your-buyer/buyer-financial-information/**/*.spec.js',
-            'your-buyer/change-your-answers/**/*.spec.js',
-            'your-buyer/check-your-answers/**/*.spec.js',
-            'your-buyer/company-or-organisation/**/*.spec.js',
-            'your-buyer/connection-with-the-buyer/**/*.spec.js',
-            'your-buyer/credit-insurance-cover/**/*.spec.js',
-            'your-buyer/root/**/*.spec.js',
-            'your-buyer/traded-with-buyer/**/*.spec.js',
-            'your-buyer/trading-history/**/*.spec.js',
           ]
 
     concurrency:
-      group: e2e-tests-insurance-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
+      group: e2e-tests-insurance-policy-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
       cancel-in-progress: true
 
     steps:
@@ -365,11 +705,14 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
-
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
+  
       - name: Docker
-        run: docker compose up --build -d
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -378,12 +721,128 @@ jobs:
         working-directory: ./e2e-tests/insurance
         run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
 
-      - name: Coverage
-        uses: codecov/codecov-action@v4
+  # 11. E2E - Insurance - Your business
+  e2e-tests-insurance-your-business:
+    name: E2E Insurance - Your Business 👷
+    needs: [setup]
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      # Do not cancel in-progress jobs upon failure
+      fail-fast: false
+      # Single dimension matrix
+      matrix:
+        spec:
+          [
+            'your-business/alternative-trading-address/**/*.spec.js',
+            'your-business/change-your-answers/**/*.spec.js',
+            'your-business/check-your-answers/**/*.spec.js',
+            'your-business/company-details/**/*.spec.js',
+            'your-business/credit-control/**/*.spec.js',
+            'your-business/nature-of-business/**/*.spec.js',
+            'your-business/root/**/*.spec.js',
+            'your-business/turnover/**/*.spec.js',
+            'your-business/turnover-currency/**/*.spec.js',
+          ]
+
+    concurrency:
+      group: e2e-tests-insurance-your-business-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Timezone
+        uses: szenius/set-timezone@v2.0
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          flags: e2e-test
-          verbose: true
+          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Dependencies
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
+  
+      - name: Docker
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
+
+      - name: Wait
+        run: sleep 30s
+
+      - name: Execute
+        working-directory: ./e2e-tests/insurance
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+
+  # 12. E2E - Insurance - Your buyer
+  e2e-tests-insurance-your-buyer:
+    name: E2E Insurance - Your Buyer 👷
+    needs: [setup]
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      # Do not cancel in-progress jobs upon failure
+      fail-fast: false
+      # Single dimension matrix
+      matrix:
+        spec:
+          [
+            'your-buyer/buyer-financial-information/**/*.spec.js',
+            'your-buyer/change-your-answers/**/*.spec.js',
+            'your-buyer/check-your-answers/**/*.spec.js',
+            'your-buyer/company-or-organisation/**/*.spec.js',
+            'your-buyer/connection-with-the-buyer/**/*.spec.js',
+            'your-buyer/credit-insurance-cover/**/*.spec.js',
+            'your-buyer/currency-of-late-payments/**/*.spec.js',
+            'your-buyer/failed-to-pay-on-time/**/*.spec.js',
+            'your-buyer/outstanding-or-overdue-payments/**/*.spec.js',
+            'your-buyer/root/**/*.spec.js',
+            'your-buyer/traded-with-buyer/**/*.spec.js',
+            'your-buyer/trading-history/**/*.spec.js',
+          ]
+
+    concurrency:
+      group: e2e-tests-insurance-your-buyer-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Timezone
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Dependencies
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
+  
+      - name: Docker
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
+
+      - name: Wait
+        run: sleep 30s
+
+      - name: Execute
+        working-directory: ./e2e-tests/insurance
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
 
   # 5. E2E - Quote
   e2e-tests-quote:
@@ -433,11 +892,14 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
-
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
+  
       - name: Docker
-        run: docker compose up --build -d
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -445,13 +907,6 @@ jobs:
       - name: Execute
         working-directory: ./e2e-tests/quote
         run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
-
-      - name: Coverage
-        uses: codecov/codecov-action@v4
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          flags: e2e-test
-          verbose: true
 
   # 6. E2E - Switch
   e2e-tests-switch:
@@ -486,11 +941,14 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
-
+        uses: ./.github/modules/retry
+        with:
+          command: npm run ci:all
+  
       - name: Docker
-        run: docker compose up --build -d
+        uses: ./.github/modules/retry
+        with:
+          command: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -499,9 +957,3 @@ jobs:
         working-directory: ./e2e-tests/switch-between-services
         run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser electron --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
 
-      - name: Coverage
-        uses: codecov/codecov-action@v4
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          flags: e2e-test
-          verbose: true

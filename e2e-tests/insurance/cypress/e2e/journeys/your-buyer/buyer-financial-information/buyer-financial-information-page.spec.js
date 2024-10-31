@@ -35,10 +35,7 @@ context(
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
         checkYourAnswersUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
-        cy.startInsuranceYourBuyerSection({});
-        cy.completeAndSubmitCompanyOrOrganisationForm({});
-        cy.completeAndSubmitConnectionWithTheBuyerForm({});
-        cy.completeAndSubmitTradedWithBuyerForm({});
+        cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'tradedWithBuyer' });
 
         cy.assertUrl(url);
       });
@@ -100,10 +97,6 @@ context(
           cy.checkText(buyerFinancialInformationPage.line1(), CONTENT_STRINGS.LOOK_INTO_BUYER);
           cy.checkText(buyerFinancialInformationPage.line2(), CONTENT_STRINGS.SHARING);
         });
-      });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
       });
     });
 

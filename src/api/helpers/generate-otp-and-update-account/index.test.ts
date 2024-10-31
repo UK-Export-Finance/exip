@@ -61,9 +61,9 @@ describe('helpers/generate-otp-and-update-account', () => {
     test('should throw an error', async () => {
       try {
         await generateOTPAndUpdateAccount(context, account.id);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error(`Adding OTP to an account Error: ${mockOTPError}`);
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

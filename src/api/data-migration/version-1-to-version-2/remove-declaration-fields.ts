@@ -1,5 +1,5 @@
 import { Connection } from 'mysql2/promise';
-import executeSqlQuery from './execute-sql-query';
+import executeSqlQuery from '../execute-sql-query';
 
 /**
  * removeDeclarationKeys
@@ -10,7 +10,7 @@ import executeSqlQuery from './execute-sql-query';
 const removeDeclarationKeys = async (connection: Connection) => {
   const loggingMessage = 'Removing KEYS declarations';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const queries = await Promise.all([
@@ -34,10 +34,10 @@ const removeDeclarationKeys = async (connection: Connection) => {
     ]);
 
     return queries;
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 
@@ -50,7 +50,7 @@ const removeDeclarationKeys = async (connection: Connection) => {
 const removeDeclarationConstraints = async (connection: Connection) => {
   const loggingMessage = 'Removing CONSTRAINTS declarations';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const queries = await Promise.all([
@@ -74,10 +74,10 @@ const removeDeclarationConstraints = async (connection: Connection) => {
     ]);
 
     return queries;
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 
@@ -90,7 +90,7 @@ const removeDeclarationConstraints = async (connection: Connection) => {
 const removeDeclarationFields = async (connection: Connection) => {
   const loggingMessage = 'Removing FIELDS declarations';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const queries = await Promise.all([
@@ -118,10 +118,10 @@ const removeDeclarationFields = async (connection: Connection) => {
     ]);
 
     return queries;
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

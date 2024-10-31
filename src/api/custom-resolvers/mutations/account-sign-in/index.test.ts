@@ -7,7 +7,7 @@ import accountChecks from './account-sign-in-checks';
 import accounts from '../../../test-helpers/accounts';
 import accountStatusHelper from '../../../test-helpers/account-status';
 import authRetries from '../../../test-helpers/auth-retries';
-import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin } from '../../../test-mocks';
+import { mockAccount, mockOTP, mockUrlOrigin, mockErrorMessage, mockSpyPromiseRejection } from '../../../test-mocks';
 import { Account, AccountSignInResponse, Context } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
@@ -197,17 +197,17 @@ describe('custom-resolvers/account-sign-in', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      sendEmail.accessCodeEmail = jest.fn(() => Promise.reject(mockSendEmailResponse));
+      sendEmail.accessCodeEmail = mockSpyPromiseRejection;
     });
 
     test('should throw an error', async () => {
       try {
         await accountSignIn({}, variables, context);
-      } catch (err) {
+      } catch (error) {
         expect(accessCodeEmailSpy).toHaveBeenCalledTimes(1);
 
-        const expected = new Error(`Validating password or sending email for account sign in (accountSignIn mutation) ${mockSendEmailResponse}`);
-        expect(err).toEqual(expected);
+        const expected = new Error(`Validating password or sending email for account sign in (accountSignIn mutation) ${new Error(mockErrorMessage)}`);
+        expect(error).toEqual(expected);
       }
     });
   });

@@ -1,9 +1,6 @@
 import { singleInputField } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-
-const { taskList } = partials.insurancePartials;
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -11,8 +8,6 @@ const {
 } = INSURANCE_ROUTES;
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIDENTIALITY;
-
-const task = taskList.submitApplication.tasks.declarationsAndSubmit;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -25,9 +20,10 @@ context('Insurance - Declarations - Confidentiality page - Save and go back', ()
       referenceNumber = refNumber;
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+      cy.completeAndSubmitCheckYourAnswers();
 
       // go to the page we want to test.
-      task.link().click();
+      cy.clickTaskDeclarationsAndSubmit();
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`;
 
@@ -54,7 +50,7 @@ context('Insurance - Declarations - Confidentiality page - Save and go back', ()
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the status of task `declarations` as `not started yet`', () => {
+    it('should retain the status of task `declarations and submit` as `not started yet`', () => {
       cy.checkTaskDeclarationsAndSubmitStatusIsNotStartedYet();
     });
   });
@@ -72,12 +68,16 @@ context('Insurance - Declarations - Confidentiality page - Save and go back', ()
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should update the status of task `declarations` to `in progress`', () => {
+    it('should retain the status of task `check your answers` as `completed`', () => {
+      cy.checkTaskCheckAnswersStatusIsComplete();
+    });
+
+    it('should retain the status of task `declarations and submit` as `in progress`', () => {
       cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
 
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
-      task.link().click();
+      cy.clickTaskDeclarationsAndSubmit();
 
       cy.assertRadioOptionIsChecked(singleInputField(FIELD_ID).input());
     });

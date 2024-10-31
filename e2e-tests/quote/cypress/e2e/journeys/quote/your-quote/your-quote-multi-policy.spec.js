@@ -24,7 +24,7 @@ context('Get a quote/your quote page (multiple policy) - as an exporter, I want 
   const url = `${baseUrl}${YOUR_QUOTE}`;
 
   before(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
     cy.submitQuoteAnswersHappyPathMultiplePolicy();
     cy.clickSubmitButton();

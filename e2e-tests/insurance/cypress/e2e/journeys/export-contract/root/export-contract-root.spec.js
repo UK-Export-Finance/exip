@@ -1,4 +1,3 @@
-import partials from '../../../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import assertSectionStartContent from '../../../../../../commands/shared-commands/assertions/assert-section-start-content';
@@ -10,10 +9,6 @@ const {
   ALL_SECTIONS,
   EXPORT_CONTRACT: { ROOT: EXPORT_CONTRACT_ROOT, HOW_WAS_THE_CONTRACT_AWARDED },
 } = INSURANCE_ROUTES;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.exportContract;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -28,7 +23,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        task.link().click();
+        cy.clickTaskExportContract();
 
         exportContractRootUrl = `${baseUrl}${ROOT}/${referenceNumber}${EXPORT_CONTRACT_ROOT}`;
         allSectionsUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
@@ -51,6 +46,7 @@ context(
         currentHref: `${ROOT}/${referenceNumber}${EXPORT_CONTRACT_ROOT}`,
         backLink: `${ROOT}/${referenceNumber}${ALL_SECTIONS}`,
         hasAForm: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

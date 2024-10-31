@@ -1,13 +1,12 @@
 import createAJointlyInsuredParty from '.';
 import createAPolicy from '../create-a-policy';
 import { Application, ApplicationPolicy, Context } from '../../types';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
 
-const invalidId = 'invalid-id';
-
-const assertError = (err) => {
-  const errorString = String(err);
+const assertError = (error) => {
+  const errorString = String(error);
 
   expect(errorString.includes('Creating a jointly insured party')).toEqual(true);
 };
@@ -20,12 +19,10 @@ describe('helpers/create-a-jointly-insured-party', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await applications.create({ context, data: {} })) as Application;
+    application = (await applications.create({ context })) as Application;
     const createdPolicy = await createAPolicy(context, application.id);
 
-    const { policy } = createdPolicy;
-
-    applicationPolicy = policy;
+    applicationPolicy = createdPolicy;
   });
 
   test('it should return a jointlyInsuredParty with ID', async () => {
@@ -49,9 +46,9 @@ describe('helpers/create-a-jointly-insured-party', () => {
   describe('when an invalid policy ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createAJointlyInsuredParty(context, invalidId);
-      } catch (err) {
-        assertError(err);
+        await createAJointlyInsuredParty(context, mockInvalidId);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -61,8 +58,8 @@ describe('helpers/create-a-jointly-insured-party', () => {
       try {
         // pass empty context object to force an error
         await createAJointlyInsuredParty({}, applicationPolicy.id);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

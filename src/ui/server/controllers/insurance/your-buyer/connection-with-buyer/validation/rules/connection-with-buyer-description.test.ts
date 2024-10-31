@@ -23,7 +23,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer/validation/rule
     [CONNECTION_WITH_BUYER]: true,
   } as RequestBody;
 
-  describe(`${CONNECTION_WITH_BUYER} is false`, () => {
+  describe(`when ${CONNECTION_WITH_BUYER} is false`, () => {
     it(`should return "mockErrors" when ${CONNECTION_WITH_BUYER} is false`, () => {
       mockBody[CONNECTION_WITH_BUYER] = false;
 
@@ -33,7 +33,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer/validation/rule
     });
   });
 
-  describe(`${CONNECTION_WITH_BUYER} is true`, () => {
+  describe(`when ${CONNECTION_WITH_BUYER} is true`, () => {
     it('should return the result of providedAndMaxLength', () => {
       mockBody[CONNECTION_WITH_BUYER] = 'true';
 

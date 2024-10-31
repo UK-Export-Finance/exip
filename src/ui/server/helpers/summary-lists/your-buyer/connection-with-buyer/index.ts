@@ -28,7 +28,7 @@ const { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION } = FIELD_IDS;
  * if CONNECTION_WITH_BUYER is true, then renders extra row in summary list
  * @param {ApplicationBuyerRelationship} answers: Buyer answers
  * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>} Array including or excluding CONNECTION_WITH_BUYER_DESCRIPTION in an object structure for GOVUK summary list structure
  */
 export const optionalFields = (answers: ApplicationBuyerRelationship, referenceNumber: number, checkAndChange?: boolean) => {

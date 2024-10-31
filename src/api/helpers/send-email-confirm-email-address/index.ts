@@ -8,7 +8,7 @@ import { Context, SuccessResponse } from '../../types';
 
 /**
  * confirmEmailAddressEmail.send
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} Account ID
  * @returns {Promise<Object>} Object with success flag and emailRecipient
  */
@@ -66,14 +66,15 @@ const send = async (context: Context, urlOrigin: string, accountId: string): Pro
 
     const emailResponse = await sendEmail.confirmEmailAddress(email, urlOrigin, name, latestVerificationHash, id);
 
-    if (emailResponse.success) {
+    if (emailResponse?.success) {
       return emailResponse;
     }
 
     throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${emailResponse}`);
-  } catch (err) {
-    console.error('Error sending email verification (sendEmailConfirmEmailAddress helper) %O', err);
-    throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${err}`);
+  } catch (error) {
+    console.error('Error sending email verification (sendEmailConfirmEmailAddress helper) %o', error);
+
+    throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${error}`);
   }
 };
 

@@ -11,7 +11,7 @@ import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
 
 const {
-  ELIGIBILITY: { UK_GOODS_OR_SERVICES_CHANGE, CANNOT_APPLY, END_BUYER, CHECK_YOUR_ANSWERS },
+  ELIGIBILITY: { UK_GOODS_OR_SERVICES_CHANGE, CANNOT_APPLY_EXIT, END_BUYER, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -101,16 +101,16 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
         };
       });
 
-      it(`should redirect to ${CANNOT_APPLY}`, async () => {
+      it(`should redirect to ${CANNOT_APPLY_EXIT}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(CANNOT_APPLY);
+        expect(res.redirect).toHaveBeenCalledWith(CANNOT_APPLY_EXIT);
       });
 
       it('should add exitReason to req.flash', async () => {
         await post(req, res);
 
-        const expectedReason = PAGES.CANNOT_APPLY.REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES;
+        const expectedReason = PAGES.CANNOT_APPLY_EXIT.REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES;
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });
     });

@@ -1,4 +1,4 @@
-import { headingCaption, yesRadio, noRadio, autoCompleteField } from '../../../../../../pages/shared';
+import { autoCompleteField, field as fieldSelector, headingCaption, yesRadio, noRadio } from '../../../../../../pages/shared';
 import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/export-contract';
 import { PAGES } from '../../../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/export-contract';
@@ -35,8 +35,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.startInsuranceExportContractSection({});
-        cy.completeAndSubmitHowWasTheContractAwardedForm({});
+        cy.completeAndSubmitExportContractForms({ formToStopAt: 'howWasTheContractAwarded' });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
 
@@ -71,22 +70,22 @@ context(
 
       it(`renders ${DESCRIPTION} label, hint and input`, () => {
         const fieldId = DESCRIPTION;
-        const field = aboutGoodsOrServicesPage[fieldId];
+        const { HINT, LABEL, MAXIMUM } = FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId];
 
-        const fieldStrings = FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId];
+        cy.checkText(fieldSelector(fieldId).hintIntro(), HINT.INTRO);
 
-        cy.checkText(field.hint.intro(), fieldStrings.HINT.INTRO);
+        const { hint } = aboutGoodsOrServicesPage[fieldId];
 
-        cy.checkText(field.hint.list.item1(), fieldStrings.HINT.LIST[0]);
-        cy.checkText(field.hint.list.item2(), fieldStrings.HINT.LIST[1]);
-        cy.checkText(field.hint.list.item3(), fieldStrings.HINT.LIST[2]);
+        cy.checkText(hint.list.item1(), HINT.LIST[0]);
+        cy.checkText(hint.list.item2(), HINT.LIST[1]);
+        cy.checkText(hint.list.item3(), HINT.LIST[2]);
 
-        cy.checkText(field.hint.outro(), fieldStrings.HINT.OUTRO);
+        cy.checkText(fieldSelector(fieldId).hintOutro(), HINT.OUTRO);
 
         cy.assertTextareaRendering({
           fieldId,
-          expectedLabel: fieldStrings.LABEL,
-          maximumCharacters: fieldStrings.MAXIMUM,
+          expectedLabel: LABEL,
+          maximumCharacters: MAXIMUM,
         });
       });
 
@@ -139,10 +138,6 @@ context(
           assertCountryAutocompleteInput({ fieldId });
         });
       });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
-      });
     });
 
     describe('form submission', () => {
@@ -171,7 +166,10 @@ context(
         it('should have the submitted values', () => {
           cy.navigateToUrl(url);
 
-          aboutGoodsOrServicesPage[DESCRIPTION].textarea().should('have.value', application.EXPORT_CONTRACT[DESCRIPTION]);
+          cy.checkTextareaValue({
+            fieldId: DESCRIPTION,
+            expectedValue: application.EXPORT_CONTRACT[DESCRIPTION],
+          });
 
           cy.assertYesRadioOptionIsChecked();
 
@@ -204,7 +202,10 @@ context(
         it('should retain the submitted value when going back to the page', () => {
           cy.clickBackLink();
 
-          descriptionField.textarea().should('have.value', submittedValue);
+          cy.checkTextareaValue({
+            fieldId: DESCRIPTION,
+            expectedValue: submittedValue,
+          });
         });
       });
     });

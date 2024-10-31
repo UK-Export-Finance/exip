@@ -17,10 +17,7 @@ context(
     const url = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
 
     before(() => {
-      cy.navigateToCheckIfEligibleUrl();
-
-      cy.completeCheckIfEligibleForm();
-      cy.completeExporterLocationForm();
+      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'exporterLocation' });
 
       cy.assertUrl(url);
     });
@@ -35,6 +32,7 @@ context(
         currentHref: ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER,
         backLink: ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

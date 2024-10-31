@@ -1,5 +1,5 @@
 import creatAnEligibility from '.';
-import { mockCountries } from '../../test-mocks';
+import { mockCountries, mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import getCountryByField from '../get-country-by-field';
 import coverPeriodTestHelper from '../../test-helpers/cover-period';
@@ -7,10 +7,8 @@ import totalContractValueTestHelper from '../../test-helpers/total-contract-valu
 import applications from '../../test-helpers/applications';
 import { Application, Context, CoverPeriod, TotalContractValue } from '../../types';
 
-const invalidId = 'invalid-id';
-
-const assertError = (err) => {
-  const errorString = String(err);
+const assertError = (error) => {
+  const errorString = String(error);
 
   expect(errorString.includes('Creating an eligibility')).toEqual(true);
 };
@@ -25,15 +23,15 @@ describe('helpers/create-an-eligibility', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await applications.create({ context, data: {} })) as Application;
+    application = (await applications.create({ context })) as Application;
 
     const countryIsCode = mockCountries[0].isoCode;
 
     country = await getCountryByField(context, 'isoCode', countryIsCode);
 
-    coverPeriod = await coverPeriodTestHelper.create({ context });
+    coverPeriod = await coverPeriodTestHelper.create(context);
 
-    totalContractValue = await totalContractValueTestHelper.create({ context });
+    totalContractValue = await totalContractValueTestHelper.create(context);
   });
 
   test('it should return a eligibility with ID', async () => {
@@ -62,9 +60,9 @@ describe('helpers/create-an-eligibility', () => {
   describe('when an invalid country ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await creatAnEligibility(context, invalidId, application.id, coverPeriod.id, totalContractValue.id);
-      } catch (err) {
-        assertError(err);
+        await creatAnEligibility(context, mockInvalidId, application.id, coverPeriod.id, totalContractValue.id);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -72,9 +70,9 @@ describe('helpers/create-an-eligibility', () => {
   describe('when an invalid application ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await creatAnEligibility(context, country.id, invalidId, coverPeriod.id, totalContractValue.id);
-      } catch (err) {
-        assertError(err);
+        await creatAnEligibility(context, country.id, mockInvalidId, coverPeriod.id, totalContractValue.id);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -82,9 +80,9 @@ describe('helpers/create-an-eligibility', () => {
   describe('when an invalid coverPeriod ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await creatAnEligibility(context, country.id, application.id, invalidId, totalContractValue.id);
-      } catch (err) {
-        assertError(err);
+        await creatAnEligibility(context, country.id, application.id, mockInvalidId, totalContractValue.id);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -92,9 +90,9 @@ describe('helpers/create-an-eligibility', () => {
   describe('when an invalid totalContractValue ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await creatAnEligibility(context, country.id, application.id, coverPeriod.id, invalidId);
-      } catch (err) {
-        assertError(err);
+        await creatAnEligibility(context, country.id, application.id, coverPeriod.id, mockInvalidId);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -104,8 +102,8 @@ describe('helpers/create-an-eligibility', () => {
       try {
         // pass empty context object to force an error
         await creatAnEligibility({}, country.id, application.id, coverPeriod.id, totalContractValue.id);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

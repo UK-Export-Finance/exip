@@ -26,7 +26,7 @@ const {
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
@@ -52,18 +52,11 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { migratedV1toV2, referenceNumber, totalContractValueOverThreshold } = application;
+    const { referenceNumber, totalContractValueOverThreshold } = application;
 
     const checkAndChange = true;
 
-    const summaryList = yourBuyerSummaryList(
-      application.buyer,
-      application.eligibility,
-      referenceNumber,
-      totalContractValueOverThreshold,
-      migratedV1toV2,
-      checkAndChange,
-    );
+    const summaryList = yourBuyerSummaryList(application.buyer, application.eligibility, referenceNumber, totalContractValueOverThreshold, checkAndChange);
 
     const fields = requiredFields({});
 
@@ -79,8 +72,9 @@ export const get = async (req: Request, res: Response) => {
       SUMMARY_LISTS: summaryList,
       ...pageVariables(referenceNumber),
     });
-  } catch (err) {
-    console.error('Error getting Check your answers - Your buyer %O', err);
+  } catch (error) {
+    console.error('Error getting Check your answers - Your buyer %o', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -112,8 +106,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`);
-  } catch (err) {
-    console.error('Error updating Check your answers - Your buyer %O', err);
+  } catch (error) {
+    console.error('Error updating Check your answers - Your buyer %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

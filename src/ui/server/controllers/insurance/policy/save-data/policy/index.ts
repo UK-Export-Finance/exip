@@ -8,8 +8,8 @@ import { Application, RequestBody } from '../../../../../../types';
  * Strip invalid fields from submitted form data and update the application.
  * This is used for any save functionality in the Policy section of the application.
  * @param {Application} Application
- * @param {Express.Request.body} Form data
- * @param {Object} Field error list
+ * @param {Express.Request.body} formBody
+ * @param {Object} errorList: Field error list
  * @returns {Promise<Object>} Saved data
  */
 const policy = async (application: Application, formBody: RequestBody, errorList?: object) => {
@@ -23,7 +23,7 @@ const policy = async (application: Application, formBody: RequestBody, errorList
     const saveResponse = await api.keystone.application.update.policy(policyId, sanitisedData);
 
     return saveResponse;
-  } catch (err) {
+  } catch (error) {
     throw new Error("Updating application's policy");
   }
 };

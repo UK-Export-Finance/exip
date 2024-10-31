@@ -21,13 +21,7 @@ context(`Insurance - Export contract - Agent charges - Save and go back - ${METH
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.startInsuranceExportContractSection({});
-      cy.completeAndSubmitHowWasTheContractAwardedForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm({});
-      cy.completeAndSubmitHowYouWillGetPaidForm({});
-      cy.completeAndSubmitAgentForm({ isUsingAgent: true });
-      cy.completeAndSubmitAgentDetailsForm({});
-      cy.completeAndSubmitAgentServiceForm({ agentIsCharging: true });
+      cy.completeAndSubmitExportContractForms({ formToStopAt: 'agentService', isUsingAgent: true, agentIsCharging: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES}`;
 
@@ -74,7 +68,7 @@ context(`Insurance - Export contract - Agent charges - Save and go back - ${METH
   });
 
   describe('when all fields are provided', () => {
-    it('should update the `export contract` task status to `completed`', () => {
+    it('should retain the status of task `export contract` as `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.completeAgentChargesForm({ fixedSumMethod: true });
@@ -83,7 +77,7 @@ context(`Insurance - Export contract - Agent charges - Save and go back - ${METH
 
       cy.navigateToAllSectionsUrl(referenceNumber);
 
-      cy.checkTaskExportContractStatusIsComplete();
+      cy.checkTaskExportContractStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {

@@ -28,6 +28,7 @@ context('Problem with service page - Quote', () => {
       assertBackLink: false,
       isInsurancePage: false,
       assertCookies: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

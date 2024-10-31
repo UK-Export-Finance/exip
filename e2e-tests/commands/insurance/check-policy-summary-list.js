@@ -19,7 +19,7 @@ const {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
       POLICY_CURRENCY_CODE,
-      SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
+      SINGLE: { CONTRACT_COMPLETION_DATE, REQUESTED_CREDIT_LIMIT, TOTAL_CONTRACT_VALUE },
       MULTIPLE: { TOTAL_MONTHS_OF_COVER },
     },
     EXPORT_VALUE: {
@@ -119,6 +119,15 @@ const checkPolicySummaryList = {
     },
     [TOTAL_CONTRACT_VALUE]: (currencyCode) => {
       const fieldId = TOTAL_CONTRACT_VALUE;
+
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, CONTRACT_POLICY.SINGLE);
+
+      const expectedValue = formatCurrency(application.POLICY[fieldId], currencyCode);
+
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    },
+    [REQUESTED_CREDIT_LIMIT]: (currencyCode) => {
+      const fieldId = REQUESTED_CREDIT_LIMIT;
 
       const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, CONTRACT_POLICY.SINGLE);
 

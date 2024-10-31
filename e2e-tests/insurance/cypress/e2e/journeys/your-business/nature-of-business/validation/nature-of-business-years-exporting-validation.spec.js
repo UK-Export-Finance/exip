@@ -1,4 +1,4 @@
-import partials from '../../../../../../../partials';
+import { errorSummaryListItemLinks } from '../../../../../../../partials';
 import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
@@ -27,9 +27,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startYourBusinessSection({});
-
-      cy.completeAndSubmitCompanyDetails({});
+      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'companyDetails' });
 
       url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS_ROOT}`;
 
@@ -61,7 +59,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       it(`should focus to the ${FIELD_ID} section when clicking the error`, () => {
         cy.clickSubmitButton();
 
-        partials.errorSummaryListItemLinks().eq(1).click();
+        errorSummaryListItemLinks().eq(1).click();
         field.input().should('have.focus');
       });
     });
@@ -89,6 +87,20 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         cy.submitAndAssertFieldErrors({
           ...assertions,
           value: '5!',
+          expectedErrorMessage: NATURE_OF_BUSINESS_ERRORS[FIELD_ID].INCORRECT_FORMAT,
+        });
+      });
+    });
+
+    describe(`when ${FIELD_ID} has letters`, () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
+      it(`should display validation errors for ${FIELD_ID}`, () => {
+        cy.submitAndAssertFieldErrors({
+          ...assertions,
+          value: 'one',
           expectedErrorMessage: NATURE_OF_BUSINESS_ERRORS[FIELD_ID].INCORRECT_FORMAT,
         });
       });

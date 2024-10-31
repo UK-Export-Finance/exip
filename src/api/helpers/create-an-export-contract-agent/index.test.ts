@@ -1,13 +1,12 @@
 import createAnExportContractAgent from '.';
 import createAnExportContract from '../create-an-export-contract';
 import { Application, ApplicationExportContract, Context } from '../../types';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
 
-const invalidId = 'invalid-id';
-
-const assertError = (err) => {
-  const errorString = String(err);
+const assertError = (error) => {
+  const errorString = String(error);
 
   expect(errorString.includes('Creating an export contract agent')).toEqual(true);
 };
@@ -20,10 +19,8 @@ describe('helpers/create-an-export-contract-agent', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await applications.create({ context, data: {} })) as Application;
-    const { exportContract } = await createAnExportContract(context, application.id);
-
-    applicationExportContract = exportContract;
+    application = (await applications.create({ context })) as Application;
+    applicationExportContract = await createAnExportContract(context, application.id);
   });
 
   test('it should return an agent ID', async () => {
@@ -78,9 +75,9 @@ describe('helpers/create-an-export-contract-agent', () => {
   describe('when an invalid exportContract ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createAnExportContractAgent(context, invalidId);
-      } catch (err) {
-        assertError(err);
+        await createAnExportContractAgent(context, mockInvalidId);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -89,9 +86,9 @@ describe('helpers/create-an-export-contract-agent', () => {
     test('it should throw an error', async () => {
       try {
         // pass empty context object to force an error
-        await createAnExportContractAgent({}, invalidId);
-      } catch (err) {
-        assertError(err);
+        await createAnExportContractAgent({}, mockInvalidId);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

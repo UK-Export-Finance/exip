@@ -23,7 +23,7 @@ const companyDetails = async (application: Application, formBody: RequestBody, e
     // send the form data to the API for database update.
     const saveResponse = await api.keystone.application.update.company(companyId, sanitisedData);
     return saveResponse;
-  } catch (err) {
+  } catch (error) {
     throw new Error("Updating application's company details");
   }
 };

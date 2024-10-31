@@ -1,13 +1,12 @@
 import createABuyerRelationship from '.';
 import { Context, Application, ApplicationBuyer } from '../../types';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applicationHelpers from '../../test-helpers/applications';
-import buyerHelpers from '../../test-helpers/buyers';
+import buyerHelpers from '../../test-helpers/buyer';
 
-const invalidId = 'invalid-id';
-
-const assertError = (err) => {
-  const errorString = String(err);
+const assertError = (error) => {
+  const errorString = String(error);
 
   expect(errorString.includes('Creating a buyer relationship')).toEqual(true);
 };
@@ -24,7 +23,7 @@ describe('helpers/create-a-buyer-relationship', () => {
 
     applicationId = application.id;
 
-    buyer = (await buyerHelpers.create({ context, data: {} })) as ApplicationBuyer;
+    buyer = (await buyerHelpers.create(context)) as ApplicationBuyer;
   });
 
   test('it should return a buyer relationship with respective IDs', async () => {
@@ -48,9 +47,9 @@ describe('helpers/create-a-buyer-relationship', () => {
   describe('when an invalid buyer ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createABuyerRelationship(context, invalidId, applicationId);
-      } catch (err) {
-        assertError(err);
+        await createABuyerRelationship(context, mockInvalidId, applicationId);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -58,9 +57,9 @@ describe('helpers/create-a-buyer-relationship', () => {
   describe('when an invalid application ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createABuyerRelationship(context, buyer.id, invalidId);
-      } catch (err) {
-        assertError(err);
+        await createABuyerRelationship(context, buyer.id, mockInvalidId);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -70,8 +69,8 @@ describe('helpers/create-a-buyer-relationship', () => {
       try {
         // pass empty context object to force an error
         await createABuyerRelationship({}, buyer.id, applicationId);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

@@ -6,11 +6,7 @@ import sanitiseArrayOfStrings from './sanitise-array-of-strings';
 import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
 import sanitiseValue from './sanitise-value';
 export * from './sanitise-value';
-import { RequestBody } from '../../../types';
-
-type ObjectType = {
-  [key: string]: any;
-};
+import { RequestBody, ObjectType } from '../../../types';
 
 const {
   EXPORTER_BUSINESS: {
@@ -22,7 +18,7 @@ const {
   },
   POLICY: {
     CONTRACT_POLICY: {
-      SINGLE: { TOTAL_CONTRACT_VALUE },
+      SINGLE: { TOTAL_CONTRACT_VALUE, REQUESTED_CREDIT_LIMIT },
       MULTIPLE: { TOTAL_MONTHS_OF_COVER },
     },
     EXPORT_VALUE: {
@@ -38,16 +34,17 @@ const {
  * @returns {Array} Field IDs
  */
 export const NUMBER_FIELDS = [
+  REQUESTED_CREDIT_LIMIT,
+  EMPLOYEES_UK,
+  ESTIMATED_ANNUAL_TURNOVER,
+  FIXED_SUM_AMOUNT,
+  MAXIMUM_BUYER_WILL_OWE,
+  PERCENTAGE_TURNOVER,
+  PERCENTAGE_CHARGE,
   TOTAL_CONTRACT_VALUE,
   TOTAL_MONTHS_OF_COVER,
   TOTAL_SALES_TO_BUYER,
-  MAXIMUM_BUYER_WILL_OWE,
   YEARS_EXPORTING,
-  EMPLOYEES_UK,
-  ESTIMATED_ANNUAL_TURNOVER,
-  PERCENTAGE_TURNOVER,
-  PERCENTAGE_CHARGE,
-  FIXED_SUM_AMOUNT,
 ];
 
 /**
@@ -146,7 +143,7 @@ export const sanitiseData = (formBody: RequestBody) => {
     delete formData._csrf;
   }
 
-  const sanitised = {};
+  const sanitised = {} as ObjectType;
 
   const keys = Object.keys(formData);
 

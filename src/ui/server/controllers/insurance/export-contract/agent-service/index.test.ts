@@ -12,7 +12,7 @@ import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/export-contract-agent-service';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -32,8 +32,6 @@ const {
 const {
   AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
 } = EXPORT_CONTRACT_FIELD_IDS;
-
-const { referenceNumber } = mockApplication;
 
 describe('controllers/insurance/export-contract/agent-service', () => {
   let req: Request;
@@ -221,7 +219,7 @@ describe('controllers/insurance/export-contract/agent-service', () => {
 
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${AGENT_CHARGES}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
@@ -325,7 +323,7 @@ describe('controllers/insurance/export-contract/agent-service', () => {
     describe('when mapAndSave.exportContractAgentService returns an error', () => {
       beforeEach(() => {
         req.body = validBody;
-        const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        const mapAndSaveSpy = mockSpyPromiseRejection;
 
         mapAndSave.exportContractAgentService = mapAndSaveSpy;
       });

@@ -56,10 +56,10 @@ describe('integrations/APIM', () => {
 
       try {
         await APIM.getCisCountries();
-      } catch (err) {
+      } catch (error) {
         const expected = 'Calling APIM - CIS countries';
 
-        const errorAssertion = String(err).includes(expected);
+        const errorAssertion = String(error).includes(expected);
 
         expect(errorAssertion).toEqual(true);
       }

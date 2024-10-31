@@ -45,6 +45,7 @@ import { RadioOption } from './radio-option';
 import { SelectOption } from './select-option';
 import { SicCode } from './sic-code';
 import {
+  CanCreateApplicationEligibilityFlags,
   SubmittedDataQuoteEligibility,
   InsuranceEligibility,
   InsuranceEligibilityCore,
@@ -59,6 +60,9 @@ import {
   SummaryListItemDataFieldSummary,
   SummaryListGroup,
   SummaryListGroupData,
+  SummaryListParamsBusiness,
+  SummaryListParamsExportContract,
+  SummaryListParamsPolicy,
 } from './summary-list';
 import { CreatePrepareApplicationTasksParams, TaskList, TaskListData, TaskListDataTask, TaskListDataGroup, TaskListGroup, TaskListTask } from './task-list';
 import {
@@ -119,6 +123,7 @@ export {
   ApplicationByReferenceNumberVariables,
   ApolloResponse,
   ApplicationOwner,
+  CanCreateApplicationEligibilityFlags,
   Company,
   CompaniesHouseResponse,
   Connect,
@@ -174,6 +179,9 @@ export {
   SummaryListItem,
   SummaryListGroup,
   SummaryListGroupData,
+  SummaryListParamsBusiness,
+  SummaryListParamsExportContract,
+  SummaryListParamsPolicy,
   TaskList,
   TaskListData,
   TaskListDataTask,

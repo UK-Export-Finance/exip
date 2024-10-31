@@ -1,5 +1,5 @@
 import { POLICY_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance';
-import FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import fieldGroupItem from '../../../generate-field-group-item';
 import getFieldById from '../../../../get-field-by-id';
@@ -16,7 +16,7 @@ const {
   EXPORT_VALUE: {
     MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
   },
-} = FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 const {
   POLICY: {
@@ -34,7 +34,7 @@ const {
  * @param {Boolean} checkAndChange true if coming application level check your answers (/check-and-change)
  * @returns {Object} All Multiple contract policy fields and values in an object structure for GOVUK summary list structure
  */
-const generateMultipleContractPolicyFields = (answers: ApplicationPolicy, referenceNumber: number, checkAndChange: boolean) => {
+const generateMultipleContractPolicyFields = (answers: ApplicationPolicy, referenceNumber: number, checkAndChange?: boolean) => {
   const fields = [
     fieldGroupItem(
       {

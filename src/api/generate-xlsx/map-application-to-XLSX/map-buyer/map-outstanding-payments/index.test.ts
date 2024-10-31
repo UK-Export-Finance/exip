@@ -24,12 +24,14 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-outstanding-payments', (
       const result = mapOutstandingPayments(mockTradingHistory);
 
       const expectedValues = {
+        currency: mockTradingHistory[CURRENCY_CODE],
         totalOutstanding: formatCurrency(mockTradingHistory[TOTAL_OUTSTANDING_PAYMENTS], mockTradingHistory[CURRENCY_CODE]),
         totalAmountOverdue: formatCurrency(mockTradingHistory[TOTAL_AMOUNT_OVERDUE], mockTradingHistory[CURRENCY_CODE]),
       };
 
       const expected = [
         xlsxRow(String(FIELDS[TOTAL_OUTSTANDING_PAYMENTS]), expectedValues.totalOutstanding),
+        xlsxRow(String(CONTENT_STRINGS[CURRENCY_CODE].SUMMARY?.TITLE), expectedValues.currency),
         xlsxRow(String(CONTENT_STRINGS[TOTAL_AMOUNT_OVERDUE].SUMMARY?.TITLE), expectedValues.totalAmountOverdue),
       ];
 

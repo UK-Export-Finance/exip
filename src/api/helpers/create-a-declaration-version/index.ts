@@ -12,7 +12,7 @@ const { ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBERY_EXPORTING_WITH_
  * @returns {Promise<ApplicationDeclarationVersions>}  Created declaration version
  */
 const createADeclarationVersion = async (context: Context, declarationId: string) => {
-  console.info('Creating an application declaration version for ', declarationId);
+  console.info('Creating an application declaration version for %s', declarationId);
 
   try {
     const declaration = await context.db.DeclarationVersion.createOne({
@@ -29,10 +29,10 @@ const createADeclarationVersion = async (context: Context, declarationId: string
     });
 
     return declaration;
-  } catch (err) {
-    console.error('Error creating an application declaration version %O', err);
+  } catch (error) {
+    console.error('Error creating an application declaration version %o', error);
 
-    throw new Error(`Creating an application declaration version ${err}`);
+    throw new Error(`Creating an application declaration version ${error}`);
   }
 };
 

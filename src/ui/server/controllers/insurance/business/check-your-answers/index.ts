@@ -28,9 +28,9 @@ const get = (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber } = application;
+    const { company, business, referenceNumber } = application;
 
-    const summaryLists = yourBusinessSummaryLists(application.company, application.business, referenceNumber);
+    const summaryLists = yourBusinessSummaryLists({ business, company, referenceNumber });
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -42,8 +42,9 @@ const get = (req: Request, res: Response) => {
       SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
       SUMMARY_LISTS: summaryLists,
     });
-  } catch (err) {
-    console.error('Error getting check your answers %O', err);
+  } catch (error) {
+    console.error('Error getting check your answers %o', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

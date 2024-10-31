@@ -1,5 +1,6 @@
 import { PAGES } from '../../../../../content-strings';
-import { ROUTES, TEMPLATES } from '../../../../../constants';
+import { TEMPLATES } from '../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import ACCOUNT_FIELD_IDS from '../../../../../constants/field-ids/insurance/account';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
@@ -10,24 +11,20 @@ import generateAccountAlreadyExistsValidation from './validation/account-already
 import accountAlreadyExistsAlreadyVerifiedValidation from './validation/account-already-exists/already-verified';
 import saveData from './save-data';
 import canCreateAnApplication from '../../../../../helpers/can-create-an-application';
-import { sanitiseData } from '../../../../../helpers/sanitise-data';
-import mapEligibilityAnswers from '../../../../../helpers/map-eligibility-answers';
-import api from '../../../../../api';
+import application from '../../../../../helpers/create-an-application';
 import { Request, Response } from '../../../../../../types';
 
 const { FIRST_NAME, LAST_NAME, EMAIL, PASSWORD } = ACCOUNT_FIELD_IDS;
 
 const {
-  INSURANCE: {
-    ACCOUNT: {
-      CREATE: { CONFIRM_EMAIL },
-      SIGN_IN,
-      SUSPENDED: { EMAIL_SENT },
-    },
-    DASHBOARD,
-    PROBLEM_WITH_SERVICE,
+  ACCOUNT: {
+    CREATE: { CONFIRM_EMAIL },
+    SIGN_IN,
+    SUSPENDED: { EMAIL_SENT },
   },
-} = ROUTES;
+  DASHBOARD,
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 export const FIELD_IDS = [FIRST_NAME, LAST_NAME, EMAIL, PASSWORD];
 
@@ -156,23 +153,21 @@ export const post = async (req: Request, res: Response) => {
 
     /**
      * If there are eligibility answers in the session:
-     * 1) Sanitise and store eligibility answers.
-     * 2) Remove eligibility answers from the session.
-     * 3) Create an application
-     * 4) Redirect to the next part of the flow - "confirm email"
+     * 1) Create an application
+     * 2) Redirect to the next part of the flow - CONFIRM_EMAIL
      */
     if (canCreateAnApplication(req.session)) {
-      const sanitisedData = sanitiseData(req.session.submittedData.insuranceEligibility);
+      console.info('Account - your details - can create an application for user %s', accountId);
 
-      const eligibilityAnswers = mapEligibilityAnswers(sanitisedData);
+      const createdApplication = await application.create(req.session.submittedData.insuranceEligibility, accountId);
 
-      req.session.submittedData.insuranceEligibility = {};
-
-      const application = await api.keystone.application.create(eligibilityAnswers, accountId);
-
-      if (!application) {
+      if (!createdApplication.success) {
         console.error('Error creating application');
         return res.redirect(PROBLEM_WITH_SERVICE);
+      }
+
+      if (createdApplication.success) {
+        req.session.submittedData.insuranceEligibility = {};
       }
     }
 
@@ -181,8 +176,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(CONFIRM_EMAIL);
-  } catch (err) {
-    console.error('Error creating account %O', err);
+  } catch (error) {
+    console.error('Error creating account %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

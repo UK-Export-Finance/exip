@@ -1,55 +1,38 @@
 import { PAGES } from '../../../../content-strings';
-import { ATTRIBUTES, TEMPLATES } from '../../../../constants';
+import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import YOUR_BUYER_FIELD_IDS from '../../../../constants/field-ids/insurance/your-buyer';
-import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
-import { Request, Response, Currency } from '../../../../../types';
+import { Request, Response } from '../../../../../types';
 import constructPayload from '../../../../helpers/construct-payload';
-import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import mapAndSave from '../map-and-save/buyer-trading-history';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
-import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
-import api from '../../../../api';
 
 const {
   INSURANCE_ROOT,
   YOUR_BUYER: {
     TRADING_HISTORY_SAVE_AND_BACK: SAVE_AND_BACK,
     CHECK_YOUR_ANSWERS,
-    ALTERNATIVE_CURRENCY,
-    ALTERNATIVE_CURRENCY_CHANGE,
-    ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE,
-    BUYER_FINANCIAL_INFORMATION,
-    CREDIT_INSURANCE_COVER,
+    CURRENCY_OF_LATE_PAYMENTS,
+    FAILED_TO_PAY,
+    CURRENCY_OF_LATE_PAYMENTS_CHANGE,
+    CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE,
+    FAILED_TO_PAY_CHANGE,
+    FAILED_TO_PAY_CHECK_AND_CHANGE,
   },
   CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-const {
-  PARTIALS: {
-    INSURANCE: { BUYER },
-  },
-} = TEMPLATES;
+const { OUTSTANDING_PAYMENTS, FAILED_PAYMENTS } = YOUR_BUYER_FIELD_IDS;
 
-const {
-  CLASSES: { LEGEND, FONT_WEIGHT },
-} = ATTRIBUTES;
+export const FIELD_ID = OUTSTANDING_PAYMENTS;
 
-const {
-  CURRENCY: { CURRENCY_CODE },
-} = INSURANCE_FIELD_IDS;
-
-const { OUTSTANDING_PAYMENTS, FAILED_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE } = YOUR_BUYER_FIELD_IDS;
-
-export const FIELD_IDS = [OUTSTANDING_PAYMENTS, FAILED_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE];
-
-export const TEMPLATE = TEMPLATES.INSURANCE.YOUR_BUYER.TRADING_HISTORY;
+export const TEMPLATE = TEMPLATES.SHARED_PAGES.SINGLE_RADIO;
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.TRADING_HISTORY;
 
@@ -58,74 +41,21 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.TRADING_HISTORY;
  * Conditional flags for the nunjucks template to match design
  */
 export const HTML_FLAGS = {
-  CONDITIONAL_YES_HTML: BUYER.OUTSTANDING_PAYMENTS.CONDITIONAL_YES_HTML,
-  LEGEND_CLASS: `${LEGEND.S} ${FONT_WEIGHT.REGULAR}`,
+  HORIZONTAL_RADIOS: true,
+  NO_RADIO_AS_FIRST_OPTION: true,
 };
 
 /**
- * pageVariables for trading-history page
- * When is changeRoute, then alternative currency url should be ALTERNATIVE_CURRENCY_CHANGE
- * when is checkAndChangeRoute, then alternative currency url should be ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE
- * else should be ALTERNATIVE_CURRENCY
+ * pageVariables
+ * Page fields and "save and go back" URL
  * @param {Number} referenceNumber: Application reference number
- * @param {Array<Currency>} currencies: Array of currencies
- * @param {String} currencyCode: Provided currency code
- * @param {Boolean} changeRoute: req.originalUrl is a change route
- * @param {Boolean} checkAndChangeRoute: req.originalUrl is a check-and-change route
- * @returns {Object} pageVariables
+ * @returns {Object} Page variables
  */
-export const pageVariables = (
-  referenceNumber: number,
-  currencies: Array<Currency>,
-  currencyCode: string,
-  changeRoute?: boolean,
-  checkAndChangeRoute?: boolean,
-) => {
-  const currency = getCurrencyByCode(currencies, currencyCode);
-
-  let alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`;
-
-  /**
-   * If changeRoute,
-   * URL should be ALTERNATIVE_CURRENCY_CHANGE
-   */
-  if (changeRoute) {
-    alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY_CHANGE}`;
-  }
-
-  /**
-   * If checkAndChangeRoute,
-   * URL should be ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE
-   */
-  if (checkAndChangeRoute) {
-    alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`;
-  }
-
-  return {
-    FIELDS: {
-      OUTSTANDING_PAYMENTS: {
-        ID: OUTSTANDING_PAYMENTS,
-        ...FIELDS[OUTSTANDING_PAYMENTS],
-      },
-      FAILED_PAYMENTS: {
-        ID: FAILED_PAYMENTS,
-        ...FIELDS[FAILED_PAYMENTS],
-      },
-      TOTAL_OUTSTANDING_PAYMENTS: {
-        ID: TOTAL_OUTSTANDING_PAYMENTS,
-        ...FIELDS[TOTAL_OUTSTANDING_PAYMENTS],
-      },
-      TOTAL_AMOUNT_OVERDUE: {
-        ID: TOTAL_AMOUNT_OVERDUE,
-        ...FIELDS[TOTAL_AMOUNT_OVERDUE],
-      },
-    },
-    PAGE_CONTENT_STRINGS,
-    SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
-    PROVIDE_ALTERNATIVE_CURRENCY_URL: alternativeCurrencyUrl,
-    CURRENCY_PREFIX_SYMBOL: currency.symbol,
-  };
-};
+export const pageVariables = (referenceNumber: number) => ({
+  FIELD_ID,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
+  FIELD_HINT: FIELDS[OUTSTANDING_PAYMENTS].HINT,
+});
 
 /**
  * get
@@ -142,33 +72,7 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const {
-      referenceNumber,
-      buyer: { buyerTradingHistory },
-    } = application;
-
-    const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
-
-    let isChange;
-    let isCheckAndChange;
-
-    /**
-     * If is a change route
-     * set isChange to true
-     */
-    if (isChangeRoute(req.originalUrl)) {
-      isChange = true;
-    }
-
-    /**
-     * If is a check-and-change route
-     * set isCheckAndChange to true
-     */
-    if (isCheckAndChangeRoute(req.originalUrl)) {
-      isCheckAndChange = true;
-    }
-
-    const generatedPageVariables = pageVariables(referenceNumber, supportedCurrencies, String(buyerTradingHistory[CURRENCY_CODE]), isChange, isCheckAndChange);
+    const { referenceNumber } = application;
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -176,12 +80,13 @@ export const get = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
         HTML_FLAGS,
       }),
-      ...generatedPageVariables,
       userName: getUserNameFromSession(req.session.user),
-      application: mapApplicationToFormFields(application),
+      ...pageVariables(referenceNumber),
+      submittedValues: application.buyer.buyerTradingHistory,
     });
-  } catch (err) {
-    console.error('Error getting trading history with the buyer %O', err);
+  } catch (error) {
+    console.error('Error getting trading history with the buyer %o', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -204,54 +109,23 @@ export const post = async (req: Request, res: Response) => {
     const {
       referenceNumber,
       buyer: { buyerTradingHistory },
-      migratedV1toV2,
-      totalContractValueOverThreshold,
     } = application;
 
-    let isChange;
-    let isCheckAndChange;
-
-    /**
-     * If is a change route
-     * set isChange to true
-     */
-    if (isChangeRoute(req.originalUrl)) {
-      isChange = true;
-    }
-
-    /**
-     * If is a check-and-change route
-     * set isCheckAndChange to true
-     */
-    if (isCheckAndChangeRoute(req.originalUrl)) {
-      isCheckAndChange = true;
-    }
-
-    const payload = constructPayload(req.body, FIELD_IDS);
+    const payload = constructPayload(req.body, [FIELD_ID]);
 
     const validationErrors = generateValidationErrors(payload);
 
     if (validationErrors) {
-      const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
-
-      const generatedPageVariables = pageVariables(
-        referenceNumber,
-        supportedCurrencies,
-        String(buyerTradingHistory[CURRENCY_CODE]),
-        isChange,
-        isCheckAndChange,
-      );
-
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
           HTML_FLAGS,
         }),
-        ...generatedPageVariables,
         userName: getUserNameFromSession(req.session.user),
-        validationErrors,
+        ...pageVariables(referenceNumber),
         submittedValues: payload,
+        validationErrors,
       });
     }
 
@@ -261,34 +135,63 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
+    const answer = payload[FIELD_ID];
+
+    const hasTradingHistory = answer === 'true';
+    const hasNoFailedPayments = buyerTradingHistory[FAILED_PAYMENTS] === null;
+
     /**
-     * If is a change route
-     * redirect to CHECK_YOUR_ANSWERS
+     * If the route is a "change" route,
+     * the exporter has hasTradingHistory,
+     * redirect to CURRENCY_OF_LATE_PAYMENTS_CHANGE
+     * if the exporter has hasNoFailedPayments (FAILED_PAYMENTS has not yet been submitted)
+     * redirect to FAILED_TO_PAY_CHANGE
+     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
      */
-    if (isChange) {
+    if (isChangeRoute(req.originalUrl)) {
+      if (hasTradingHistory) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CURRENCY_OF_LATE_PAYMENTS_CHANGE}`);
+      }
+
+      if (hasNoFailedPayments) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${FAILED_TO_PAY_CHANGE}`);
+      }
+
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
     /**
-     * If is a check-and-change route
-     * redirect to CHECK_AND_CHANGE_ROUTE
+     * If the route is a "check-and-change" route,
+     * the exporter has hasTradingHistory,
+     * redirect to CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE
+     * if the exporter has hasNoFailedPayments (FAILED_PAYMENTS has not yet been submitted)
+     * redirect to FAILED_TO_PAY_CHECK_AND_CHANGE
+     * Otherwise, redirect to CHECK_AND_CHANGE_ROUTE.
      */
-    if (isCheckAndChange) {
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      if (hasTradingHistory) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE}`);
+      }
+
+      if (hasNoFailedPayments) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${FAILED_TO_PAY_CHECK_AND_CHANGE}`);
+      }
+
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
     /**
-     * if totalContractValue is over the threshold
-     * redirect to CREDIT_INSURANCE_COVER
-     * otherwise it should redirect to the BUYER_FINANCIAL_INFORMATION page
+     * if hasTradingHistory is true
+     * then should redirect to CURRENCY_OF_LATE_PAYMENTS
      */
-    if (totalContractValueOverThreshold || migratedV1toV2) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`);
+    if (hasTradingHistory) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CURRENCY_OF_LATE_PAYMENTS}`);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`);
-  } catch (err) {
-    console.error('Error posting trading history with the buyer %O', err);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${FAILED_TO_PAY}`);
+  } catch (error) {
+    console.error('Error posting trading history with the buyer %o', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

@@ -1,10 +1,3 @@
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import {
-  completeAndSubmitBuyerBodyForm,
-  completeAndSubmitExporterLocationForm,
-  completeAndSubmitUkContentForm,
-  completeAndSubmitPolicyTypeMultiForm,
-} from '../../../../../../commands/quote/forms';
 import { PAGES } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 
@@ -21,13 +14,13 @@ context('Tell us about your multiple policy page - Signed in', () => {
 
   before(() => {
     cy.completeSignInAndGoToApplication({ createApplicationViaApi: false });
-    cy.login();
+    cy.navigateToRootUrl();
 
-    completeAndSubmitBuyerCountryForm({});
-    completeAndSubmitBuyerBodyForm();
-    completeAndSubmitExporterLocationForm();
-    completeAndSubmitUkContentForm();
-    completeAndSubmitPolicyTypeMultiForm();
+    cy.completeAndSubmitBuyerCountryForm({});
+    cy.completeAndSubmitBuyerBodyForm();
+    cy.completeAndSubmitExporterLocationForm();
+    cy.completeAndSubmitUkContentForm();
+    cy.completeAndSubmitPolicyTypeMultiForm();
 
     cy.assertUrl(url);
   });
@@ -43,6 +36,7 @@ context('Tell us about your multiple policy page - Signed in', () => {
       backLink: POLICY_TYPE,
       assertAuthenticatedHeader: true,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       lightHouseThresholds: {
         // accessibility threshold is reduced here because
         // the radio component from design system has an invalid aria attribute.

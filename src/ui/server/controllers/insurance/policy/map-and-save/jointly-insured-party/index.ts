@@ -7,8 +7,8 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
  * mapAndSave jointlyInsuredParty
  * Map and save any valid jointlyInsuredParty fields
  * @param {RequestBody} formBody: Form body
- * @param {Application}
- * @param {Object} Validation errors
+ * @param {Application} application
+ * @param {Object} validationErrors: Validation errors
  * @returns {Boolean}
  */
 const jointlyInsuredParty = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
@@ -32,8 +32,8 @@ const jointlyInsuredParty = async (formBody: RequestBody, application: Applicati
     }
 
     return true;
-  } catch (err) {
-    console.error('Error mapping and saving application - policy - jointly insured party %O', err);
+  } catch (error) {
+    console.error('Error mapping and saving application - policy - jointly insured party %o', error);
 
     return false;
   }

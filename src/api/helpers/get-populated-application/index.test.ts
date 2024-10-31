@@ -1,17 +1,17 @@
 import { Application as KeystoneApplication } from '.keystone/types'; // eslint-disable-line
 import getPopulatedApplication from '.';
 import { createFullApplication, getKeystoneContext } from '../../test-helpers';
-import getCountryByField from '../get-country-by-field';
+import getPopulatedExportContract from '../get-populated-export-contract';
 import mapPolicy from './map-policy';
 import getNominatedLossPayee from './nominated-loss-payee';
 import mockCountries from '../../test-mocks/mock-countries';
-import { Application, Context } from '../../types';
-import mockApplication from '../../test-mocks/mock-application';
+import mapTotalContractValueOverThreshold from '../map-total-contract-value-over-threshold';
+import { Context } from '../../types';
 
 describe('api/helpers/get-populated-application', () => {
   let context: Context;
   let application: KeystoneApplication;
-  let fullApplication: Application;
+  let fullApplication;
 
   beforeAll(async () => {
     context = getKeystoneContext();
@@ -22,36 +22,36 @@ describe('api/helpers/get-populated-application', () => {
 
     application = {
       ...fullApplication,
-      companyId: fullApplication.company.id,
-      businessId: fullApplication.business.id,
-      brokerId: fullApplication.broker.id,
-      buyerId: fullApplication.buyer.id,
-      declarationId: fullApplication.declaration.id,
-      eligibilityId: fullApplication.eligibility.id,
-      exportContractId: fullApplication.exportContract.id,
+      companyId: fullApplication.companyId,
+      businessId: fullApplication.businessId,
+      brokerId: fullApplication.brokerId,
+      buyerId: fullApplication.buyerId,
+      declarationId: fullApplication.declarationId,
+      eligibilityId: fullApplication.eligibilityId,
+      exportContractId: fullApplication.exportContractId,
       id: fullApplication.id,
-      ownerId: fullApplication.owner.id,
-      policyId: fullApplication.policy.id,
-      policyContactId: fullApplication.policyContact.id,
-      nominatedLossPayeeId: fullApplication.nominatedLossPayee.id,
-      sectionReviewId: fullApplication.sectionReview.id,
+      ownerId: fullApplication.ownerId,
+      policyId: fullApplication.policyId,
+      policyContactId: fullApplication.policyContactId,
+      nominatedLossPayeeId: fullApplication.nominatedLossPayeeId,
+      sectionReviewId: fullApplication.sectionReviewId,
     };
   });
 
   it('should return an application with associated data', async () => {
     const result = await getPopulatedApplication.get({ context, application });
 
-    expect(result.business.id).toEqual(application.business.id);
-    expect(result.broker.id).toEqual(application.broker.id);
-    expect(result.declaration.id).toEqual(application.declaration.id);
-    expect(result.eligibility.id).toEqual(application.eligibility.id);
-    expect(result.eligibility.coverPeriod.id).toEqual(application.eligibility.coverPeriodId);
+    expect(result.business.id).toEqual(application.businessId);
+    expect(result.broker.id).toEqual(application.brokerId);
+    expect(result.declaration.id).toEqual(application.declarationId);
+    expect(result.eligibility.id).toEqual(application.eligibilityId);
+    expect(result.eligibility.coverPeriod.id).toEqual(fullApplication.eligibility.coverPeriodId);
     expect(result.eligibility.totalContractValue.id).toEqual(application.eligibility.totalContractValueId);
-    expect(result.exportContract.id).toEqual(application.exportContract.id);
-    expect(result.owner.id).toEqual(application.owner.id);
-    expect(result.policyContact.id).toEqual(application.policyContact.id);
-    expect(result.nominatedLossPayee.id).toEqual(application.nominatedLossPayee.id);
-    expect(result.sectionReview.id).toEqual(application.sectionReview.id);
+    expect(result.exportContract.id).toEqual(application.exportContractId);
+    expect(result.owner.id).toEqual(application.ownerId);
+    expect(result.policyContact.id).toEqual(application.policyContactId);
+    expect(result.nominatedLossPayee.id).toEqual(application.nominatedLossPayeeId);
+    expect(result.sectionReview.id).toEqual(application.sectionReviewId);
   });
 
   it('should return an application with populated buyer', async () => {
@@ -77,7 +77,7 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.companySicCodes[0].companyId).toEqual(application.company.id);
 
     expect(result.company.id).toEqual(application.company.id);
-    expect(result.company.registeredOfficeAddress).toEqual(application.company.registeredOfficeAddress);
+    expect(result.company.registeredOfficeAddress).toEqual(fullApplication.company.registeredOfficeAddress);
 
     expect(result.company.differentTradingAddress.id).toEqual(application.company.differentTradingAddress.id);
     expect(result.company.differentTradingAddress.fullAddress).toEqual('');
@@ -105,23 +105,27 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.policy).toEqual(expected);
   });
 
-  it('should return an application with populated answers and finalDestinationCountry object in exportContract', async () => {
+  it('should return an application with populated exportContract', async () => {
     const result = await getPopulatedApplication.get({ context, application });
 
-    const { exportContract } = mockApplication;
+    const { exportContract } = result;
 
-    const countryCode = String(exportContract.finalDestinationCountryCode);
+    const expected = await getPopulatedExportContract(context, exportContract.id);
 
-    const expectedCountry = await getCountryByField(context, 'isoCode', countryCode);
-
-    expect(result.exportContract.finalDestinationCountry).toEqual(expectedCountry);
-    expect(result.exportContract.finalDestinationCountryCode).toEqual(exportContract.finalDestinationCountryCode);
-    expect(result.exportContract.goodsOrServicesDescription).toEqual(exportContract.goodsOrServicesDescription);
+    expect(result.exportContract).toEqual(expected);
   });
 
   it('should return an application with populated sectionReview', async () => {
     const result = await getPopulatedApplication.get({ context, application });
 
     expect(result.sectionReview.id).toEqual(application.sectionReviewId);
+  });
+
+  it('should return an application with a totalContractValueOverThreshold flag', async () => {
+    const result = await getPopulatedApplication.get({ context, application });
+
+    const expected = mapTotalContractValueOverThreshold(result.eligibility);
+
+    expect(result.totalContractValueOverThreshold).toEqual(expected);
   });
 });

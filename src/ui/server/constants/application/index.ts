@@ -7,6 +7,7 @@ export const APPLICATION = {
   DEAL_TYPE: 'EXIP',
   SUBMISSION_COUNT_DEFAULT: 0,
   SUBMISSION_DEADLINE_IN_MONTHS: 1,
+  SUBMISSION_DEADLINE_IN_DAYS: 30,
   SUBMISSION_TYPE: {
     MIA: 'Manual Inclusion Application',
   },
@@ -24,10 +25,10 @@ export const APPLICATION = {
     },
   },
   POLICY: {
-    TOTAL_VALUE_OF_CONTRACT: {
+    TOTAL_MONTHS_OF_COVER: {
       MINIMUM: 1,
+      MAXIMUM: 12,
     },
-    TOTAL_MONTHS_OF_COVER: 12,
   },
   EXPORT_CONTRACT: {
     AGENT_SERVICE_CHARGE: {

@@ -1,5 +1,5 @@
 import { PAGES } from '../../../../content-strings';
-import { FIELDS_ELIGIBILITY as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
+import { ELIGIBILITY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
 import { ERROR_MESSAGES } from '../../../../content-strings/error-messages';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
@@ -23,7 +23,7 @@ const {
 const {
   INSURANCE: {
     PROBLEM_WITH_SERVICE,
-    ELIGIBILITY: { COMPANY_DETAILS, COMPANY_NOT_ACTIVE, COMPANIES_HOUSE_UNAVAILABLE },
+    ELIGIBILITY: { COMPANY_DETAILS, COMPANY_NOT_ACTIVE_EXIT, COMPANIES_HOUSE_UNAVAILABLE_EXIT },
   },
 } = ROUTES;
 
@@ -112,11 +112,11 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (response.apiError) {
-      return res.redirect(COMPANIES_HOUSE_UNAVAILABLE);
+      return res.redirect(COMPANIES_HOUSE_UNAVAILABLE_EXIT);
     }
 
     if (!response.isActive) {
-      return res.redirect(COMPANY_NOT_ACTIVE);
+      return res.redirect(COMPANY_NOT_ACTIVE_EXIT);
     }
 
     /**
@@ -139,8 +139,9 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(COMPANY_DETAILS);
-  } catch (err) {
-    console.error('Error calling companies house %O', err);
+  } catch (error) {
+    console.error('Error calling companies house %o', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
