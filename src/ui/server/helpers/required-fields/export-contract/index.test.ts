@@ -56,7 +56,7 @@ describe('server/helpers/required-fields/export-contract', () => {
     describe('when totalContractValueOverThreshold=true', () => {
       describe('when attemptedPrivateMarketCover=true', () => {
         it(`should return an array with ${DECLINED_DESCRIPTION} field ID`, () => {
-          const result = privateCoverTasks({ totalContractValueOverThreshold: false, attemptedPrivateMarketCover: true });
+          const result = privateCoverTasks({ totalContractValueOverThreshold: true, attemptedPrivateMarketCover: true });
 
           expect(result).toEqual([DECLINED_DESCRIPTION]);
         });
@@ -68,6 +68,14 @@ describe('server/helpers/required-fields/export-contract', () => {
 
           expect(result).toEqual([ATTEMPTED]);
         });
+      });
+    });
+
+    describe('when totalContractValueOverThreshold=false', () => {
+      it('should return an empty array', () => {
+        const result = privateCoverTasks({ totalContractValueOverThreshold: false });
+
+        expect(result).toEqual([]);
       });
     });
   });
