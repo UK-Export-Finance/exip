@@ -6565,7 +6565,7 @@ var POLICY_FIELDS = {
     MULTIPLE: {
       [CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
         LABEL: 'How many months do you want to be insured for?',
-        HINT: `The maximum is ${TOTAL_MONTHS_OF_COVER} months.`,
+        HINT: `The maximum is ${TOTAL_MONTHS_OF_COVER.MAXIMUM} months.`,
         OPTIONS: FIELD_VALUES.TOTAL_MONTHS_OF_COVER,
         SUMMARY: {
           TITLE: 'How many months you want to be insured for',
