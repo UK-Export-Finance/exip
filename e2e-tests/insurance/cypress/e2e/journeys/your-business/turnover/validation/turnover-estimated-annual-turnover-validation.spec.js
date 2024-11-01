@@ -25,10 +25,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startYourBusinessSection({});
-
-      cy.completeAndSubmitCompanyDetails({});
-      cy.completeAndSubmitNatureOfYourBusiness();
+      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'turnoverCurrency' });
 
       url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ROOT}`;
 
@@ -62,6 +59,14 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: '50!',
+      expectedErrorMessage: ERROR_MESSAGE.INCORRECT_FORMAT,
+    });
+  });
+
+  it(`should display validation errors when ${FIELD_ID} has letters`, () => {
+    cy.submitAndAssertFieldErrors({
+      ...assertions,
+      value: 'one',
       expectedErrorMessage: ERROR_MESSAGE.INCORRECT_FORMAT,
     });
   });

@@ -5,14 +5,14 @@ import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/
 import YOUR_BUYER_FIELD_IDS from '../../../../constants/field-ids/insurance/your-buyer';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import generateValidationErrors from './validation';
-import { Request, Response } from '../../../../../types';
-import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import generateValidationErrors from './validation';
+import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/buyer-relationship';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
+import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
@@ -38,6 +38,12 @@ export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER;
 
+/**
+ * pageVariables
+ * Page fields and "save and go back" URL
+ * @param {Number} referenceNumber: Application reference number
+ * @returns {Object} Page variables
+ */
 export const pageVariables = (referenceNumber: number) => ({
   FIELD_ID: CONNECTION_WITH_BUYER,
   FIELDS: {
@@ -94,8 +100,8 @@ export const get = (req: Request, res: Response) => {
       application: mapApplicationToFormFields(application),
       applicationAnswer: application.buyer.relationship[CONNECTION_WITH_BUYER],
     });
-  } catch (err) {
-    console.error('Error getting connection to the buyer %O', err);
+  } catch (error) {
+    console.error('Error getting connection to the buyer %o', error);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -158,8 +164,9 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`);
-  } catch (err) {
-    console.error('Error posting connection to the buyer %O', err);
+  } catch (error) {
+    console.error('Error posting connection to the buyer %o', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

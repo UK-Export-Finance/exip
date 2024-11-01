@@ -6,12 +6,12 @@ import { Context } from '../../types';
  * 1) A buyer country
  * 2) An application
  * 3) A total contract value
- * @param {Context} KeystoneJS context API
- * @param {String} Country ID
- * @param {String} Application ID
- * @param {String} Cover period value ID
- * @param {String} Total contract value ID
- * @param {Object} Optional eligibility data
+ * @param {Context} context: KeystoneJS context API
+ * @param {String} countryId: Country ID
+ * @param {String} applicationId: Application ID
+ * @param {String} coverPeriodId: Cover period value ID
+ * @param {String} totalContractValueId: Total contract value ID
+ * @param {Object} eligibilityData: Optional eligibility data
  * @returns {Promise<Object>} Created eligibility
  */
 const createAnEligibility = async (
@@ -20,9 +20,9 @@ const createAnEligibility = async (
   applicationId: string,
   coverPeriodId: string,
   totalContractValueId: string,
-  data?: object,
+  eligibilityData?: object,
 ) => {
-  console.info('Creating an eligibility for ', applicationId);
+  console.info('Creating an eligibility for %s', applicationId);
 
   try {
     const eligibility = await context.db.Eligibility.createOne({
@@ -39,15 +39,15 @@ const createAnEligibility = async (
         totalContractValue: {
           connect: { id: totalContractValueId },
         },
-        ...data,
+        ...eligibilityData,
       },
     });
 
     return eligibility;
-  } catch (err) {
-    console.error('Error creating an eligibility %O', err);
+  } catch (error) {
+    console.error('Error creating an eligibility %o', error);
 
-    throw new Error(`Creating an eligibility ${err}`);
+    throw new Error(`Creating an eligibility ${error}`);
   }
 };
 

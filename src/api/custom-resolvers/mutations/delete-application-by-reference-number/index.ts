@@ -7,9 +7,9 @@ import { DeleteApplicationByReferenceNumberVariables, SuccessResponse } from '..
  * Deletes an application by reference number.
  * 1) Check if the application exists.
  * 2) Delete the application.
- * @param {Object} GraphQL root variables
- * @param {Object} GraphQL variables for the DeleteApplicationByReferenceNumber mutation
- * @param {Context} KeystoneJS context API
+ * @param {Object} root: GraphQL root variables
+ * @param {Object} variables: GraphQL variables for the DeleteApplicationByReferenceNumber mutation
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag
  */
 const deleteApplicationByReferenceNumber = async (
@@ -44,9 +44,10 @@ const deleteApplicationByReferenceNumber = async (
     return {
       success: false,
     };
-  } catch (err) {
-    console.error('Error deleting application by reference number (DeleteApplicationByReferenceNumber mutation) %O', err);
-    throw new Error(`Deleting application by reference number (DeleteApplicationByReferenceNumber mutation) ${err}`);
+  } catch (error) {
+    console.error('Error deleting application by reference number (DeleteApplicationByReferenceNumber mutation) %o', error);
+
+    throw new Error(`Deleting application by reference number (DeleteApplicationByReferenceNumber mutation) ${error}`);
   }
 };
 

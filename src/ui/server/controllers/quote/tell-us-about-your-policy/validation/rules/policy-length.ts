@@ -1,4 +1,4 @@
-import { FIELD_IDS } from '../../../../../constants';
+import { ELIGIBILITY, FIELD_IDS, MINIMUM_CHARACTERS } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import { isSinglePolicyType } from '../../../../../helpers/policy-type';
 import generateValidationErrors from '../../../../../helpers/validation';
@@ -6,8 +6,8 @@ import { objectHasProperty } from '../../../../../helpers/object';
 import { isNumber, numberHasDecimal } from '../../../../../helpers/number';
 import { RequestBody } from '../../../../../../types';
 
-const MINIMUM = 1;
-const SINGLE_POLICY_MAX_MONTHS = 22;
+const MINIMUM = MINIMUM_CHARACTERS.QUOTE.POLICY_LENGTH;
+const SINGLE_POLICY_MAX_MONTHS = ELIGIBILITY.MAX_COVER_PERIOD_MONTHS;
 
 const { POLICY_TYPE, POLICY_LENGTH: FIELD_ID } = FIELD_IDS;
 

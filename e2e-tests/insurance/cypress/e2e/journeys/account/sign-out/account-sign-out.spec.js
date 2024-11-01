@@ -1,4 +1,4 @@
-import header from '../../../../../../partials/header';
+import { header } from '../../../../../../partials';
 import { backLink } from '../../../../../../pages/shared';
 import { signInPage } from '../../../../../../pages/insurance/account/sign-in';
 import { PAGES } from '../../../../../../content-strings';

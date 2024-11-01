@@ -3,9 +3,9 @@ import constructPayload from '../../../../../helpers/construct-payload';
 import { FIELD_IDS } from '..';
 import { ROUTES } from '../../../../../constants';
 import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
-import { mockReq, mockRes, mockApplication, mockBusinessNatureOfBusiness } from '../../../../../test-mocks';
 import mapAndSave from '../../map-and-save/business';
 import { Request, Response } from '../../../../../../types';
+import { mockReq, mockRes, mockApplication, mockBusinessNatureOfBusiness, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 
 const {
   NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING, EMPLOYEES_UK },
@@ -38,7 +38,7 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
 
       await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should call mapAndSave.business once with data from constructPayload', async () => {
@@ -66,7 +66,7 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
 
       await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should call mapAndSave.business once', async () => {
@@ -112,7 +112,7 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
     describe('when mapAndSave.business fails', () => {
       beforeEach(() => {
         res.locals = mockRes().locals;
-        updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
+        updateMapAndSave = mockSpyPromiseRejection;
         mapAndSave.business = updateMapAndSave;
       });
 

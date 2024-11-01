@@ -19,6 +19,7 @@ import {
   mockCurrenciesResponse,
   mockCurrenciesEmptyResponse,
   mockNominatedLossPayee,
+  mockSpyPromiseRejection,
   referenceNumber,
 } from '../../../../test-mocks';
 import { mockBroker } from '../../../../test-mocks/mock-application';
@@ -68,6 +69,12 @@ describe('controllers/insurance/policy/check-your-answers', () => {
   });
 
   describe('get', () => {
+    it('should call api.keystone.countries.getAll', async () => {
+      await get(req, res);
+
+      expect(getCountriesSpy).toHaveBeenCalledTimes(1);
+    });
+
     it('should call api.keystone.APIM.getCurrencies', async () => {
       await get(req, res);
 
@@ -82,7 +89,15 @@ describe('controllers/insurance/policy/check-your-answers', () => {
         ...exportContract,
       };
 
-      const summaryLists = policySummaryLists(answers, mockContact, mockBroker, mockNominatedLossPayee, referenceNumber, mockCurrencies, mockCountries);
+      const summaryLists = policySummaryLists({
+        policy: answers,
+        policyContact: mockContact,
+        broker: mockBroker,
+        nominatedLossPayee: mockNominatedLossPayee,
+        referenceNumber,
+        currencies: mockCurrencies,
+        countries: mockCountries,
+      });
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
@@ -96,18 +111,6 @@ describe('controllers/insurance/policy/check-your-answers', () => {
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    it('should call api.keystone.countries.getAll', async () => {
-      await get(req, res);
-
-      expect(getCountriesSpy).toHaveBeenCalledTimes(1);
-    });
-
-    it('should call api.keystone.APIM.getCurrencies', async () => {
-      await get(req, res);
-
-      expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
     });
 
     describe('when there is no application', () => {
@@ -125,7 +128,7 @@ describe('controllers/insurance/policy/check-your-answers', () => {
     describe('api error handling', () => {
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          getCurrenciesSpy = mockSpyPromiseRejection;
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
@@ -151,7 +154,7 @@ describe('controllers/insurance/policy/check-your-answers', () => {
 
       describe('when the get countries API call fails', () => {
         beforeEach(() => {
-          getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          getCountriesSpy = mockSpyPromiseRejection;
           api.keystone.countries.getAll = getCountriesSpy;
         });
 

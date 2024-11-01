@@ -34,6 +34,8 @@ const {
   },
 } = ERROR_MESSAGES;
 
+const { MULTIPLE } = APPLICATION.POLICY_TYPE;
+
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Multiple contract policy page - As an exporter, I want to enter the type of policy I need for my export contract', () => {
@@ -44,9 +46,7 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection({});
-
-      cy.completeAndSubmitPolicyTypeForm({ policyType: APPLICATION.POLICY_TYPE.MULTIPLE });
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'policyType', policyType: MULTIPLE });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 
@@ -100,10 +100,6 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
       cy.checkText(field.hint(), CONTRACT_POLICY.MULTIPLE[fieldId].HINT);
       field.input().should('exist');
     });
-
-    it('renders a `save and back` button', () => {
-      cy.assertSaveAndBackButton();
-    });
   });
 
   describe('currency form fields', () => {
@@ -115,18 +111,14 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
       legend: CONTRACT_POLICY[CURRENCY_CODE].LEGEND,
       hint: CONTRACT_POLICY[CURRENCY_CODE].HINT,
       errors: CONTRACT_ERROR_MESSAGES,
+      errorIndex: 2,
+      expectedRedirectUrl: MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
+      completeNonCurrencyFieldsFunction: () => cy.completeMultipleContractPolicyForm({ chooseCurrency: false }),
     });
 
     rendering();
 
-    formSubmission().selectAltRadioButNoAltCurrency({ errorIndex: 2 });
-
-    formSubmission().submitASupportedCurrency({
-      url: MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
-      completeNonCurrencyFields: () => cy.completeMultipleContractPolicyForm({ chooseCurrency: false }),
-    });
-
-    formSubmission().submitAlternativeCurrency({ url: MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE });
+    formSubmission({}).executeTests();
   });
 
   describe('form submission', () => {
@@ -151,11 +143,16 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
       it('should have the submitted values', () => {
         cy.navigateToUrl(url);
 
-        fieldSelector(REQUESTED_START_DATE).dayInput().should('have.value', application.POLICY[REQUESTED_START_DATE].day);
-        fieldSelector(REQUESTED_START_DATE).monthInput().should('have.value', application.POLICY[REQUESTED_START_DATE].month);
-        fieldSelector(REQUESTED_START_DATE).yearInput().should('have.value', application.POLICY[REQUESTED_START_DATE].year);
+        const { day, month, year } = application.POLICY[REQUESTED_START_DATE];
 
-        fieldSelector(TOTAL_MONTHS_OF_COVER).input().should('have.value', application.POLICY[TOTAL_MONTHS_OF_COVER]);
+        cy.checkDateFieldValues({
+          selector: fieldSelector(REQUESTED_START_DATE),
+          day,
+          month,
+          year,
+        });
+
+        cy.checkValue(fieldSelector(TOTAL_MONTHS_OF_COVER), application.POLICY[TOTAL_MONTHS_OF_COVER]);
 
         const isoCode = application.POLICY[POLICY_CURRENCY_CODE];
 

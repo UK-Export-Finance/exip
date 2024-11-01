@@ -1,7 +1,7 @@
 import mapExporterBusiness from '.';
 import FIELD_IDS from '../../../constants/field-ids/insurance/business';
 import { XLSX } from '../../../content-strings';
-import { FIELDS as YOUR_BUSINESS_FIELDS } from '../../../content-strings/fields/insurance/your-business';
+import { EXPORTER_BUSINESS_FIELDS } from '../../../content-strings/fields/insurance/your-business';
 import { DATE_FORMAT } from '../../../constants';
 import xlsxRow from '../helpers/xlsx-row';
 import mapDifferentTradingName from './map-different-trading-name';
@@ -15,16 +15,16 @@ import { mockApplication } from '../../../test-mocks';
 import mapYesNoField from '../helpers/map-yes-no-field';
 
 const CONTENT_STRINGS = {
-  ...YOUR_BUSINESS_FIELDS.COMPANY_DETAILS,
-  ...YOUR_BUSINESS_FIELDS.NATURE_OF_YOUR_BUSINESS,
-  ...YOUR_BUSINESS_FIELDS.TURNOVER,
-  ...YOUR_BUSINESS_FIELDS.BROKER,
-  ...YOUR_BUSINESS_FIELDS.BROKER_DETAILS,
+  ...EXPORTER_BUSINESS_FIELDS.COMPANY_DETAILS,
+  ...EXPORTER_BUSINESS_FIELDS.NATURE_OF_YOUR_BUSINESS,
+  ...EXPORTER_BUSINESS_FIELDS.TURNOVER,
+  ...EXPORTER_BUSINESS_FIELDS.BROKER,
+  ...EXPORTER_BUSINESS_FIELDS.BROKER_DETAILS,
 };
 
 const {
   COMPANIES_HOUSE: { COMPANY_ADDRESS, COMPANY_INCORPORATED, COMPANY_SIC, FINANCIAL_YEAR_END_DATE },
-  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER, WEBSITE },
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, HAS_DIFFERENT_TRADING_ADDRESS, PHONE_NUMBER, WEBSITE },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER, TURNOVER_CURRENCY_CODE },
   HAS_CREDIT_CONTROL,
@@ -46,7 +46,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-exporter-business', () =
       xlsxRow(String(FIELDS[HAS_DIFFERENT_TRADING_NAME]), mapYesNoField({ answer: company[HAS_DIFFERENT_TRADING_NAME] })),
       mapDifferentTradingName(company),
 
-      xlsxRow(String(FIELDS[TRADING_ADDRESS]), mapYesNoField({ answer: company[TRADING_ADDRESS] })),
+      xlsxRow(String(FIELDS[HAS_DIFFERENT_TRADING_ADDRESS]), mapYesNoField({ answer: company[HAS_DIFFERENT_TRADING_ADDRESS] })),
       mapDifferentTradingAddress(company),
 
       xlsxRow(String(FIELDS[WEBSITE]), company[WEBSITE]),

@@ -2,10 +2,10 @@ import { companiesHouseUnavailablePage } from '../../../../../../../pages/insura
 import { PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_UNAVAILABLE;
+const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_UNAVAILABLE_EXIT;
 
 const {
-  ELIGIBILITY: { COMPANIES_HOUSE_UNAVAILABLE, ENTER_COMPANIES_HOUSE_NUMBER },
+  ELIGIBILITY: { COMPANIES_HOUSE_UNAVAILABLE_EXIT, ENTER_COMPANIES_HOUSE_NUMBER },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -13,7 +13,7 @@ const baseUrl = Cypress.config('baseUrl');
 context(
   'Insurance - Eligibility - Companies house number page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction if I have UK Companies House Registration Number',
   () => {
-    const url = `${COMPANIES_HOUSE_UNAVAILABLE}`;
+    const url = `${COMPANIES_HOUSE_UNAVAILABLE_EXIT}`;
 
     before(() => {
       cy.navigateToUrl(url);
@@ -31,6 +31,7 @@ context(
         currentHref: url,
         assertBackLink: false,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
         hasAForm: false,
       });
     });

@@ -8,9 +8,9 @@ const { ID, EMAIL, VERIFICATION_EXPIRY } = ACCOUNT_FIELD_IDS;
 
 /**
  * verifyAccountEmailAddress
- * @param {Object} GraphQL root variables
- * @param {Object} GraphQL variables for the VerifyEmailAddress mutation
- * @param {Context} KeystoneJS context API
+ * @param {Object} root: GraphQL root variables
+ * @param {Object} variables: GraphQL variables for the VerifyEmailAddress mutation
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success or expired flag.
  */
 const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddressVariables, context: Context): Promise<VerifyEmailAddressResponse> => {
@@ -22,6 +22,19 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
 
     if (!account) {
       console.info('Unable to verify account email address - account does not exist');
+
+      return {
+        success: false,
+        invalid: true,
+      };
+    }
+
+    /**
+     * if the verification hash from account does not match the token from variables,
+     * return success=false, invalid=true.
+     */
+    if (account.verificationHash !== variables.token) {
+      console.info('Unable to verify account email address - token does not match hash');
 
       return {
         success: false,
@@ -86,10 +99,10 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
       accountId: id,
       emailRecipient: account[EMAIL],
     };
-  } catch (err) {
-    console.error('Error verifying account email address %O', err);
+  } catch (error) {
+    console.error('Error verifying account email address %o', error);
 
-    throw new Error(`Verifying account email address ${err}`);
+    throw new Error(`Verifying account email address ${error}`);
   }
 };
 

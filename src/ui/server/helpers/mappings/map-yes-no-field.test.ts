@@ -23,7 +23,7 @@ describe('server/helpers/mappings/mapYesNoField', () => {
     });
   });
 
-  describe('when value is "undefined"', () => {
+  describe('when value is undefined', () => {
     it(`should return ${DEFAULT.EMPTY}`, () => {
       const response = mapYesNoField();
 

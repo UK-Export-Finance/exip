@@ -21,9 +21,9 @@ export const accessCodeEmail = async (emailAddress: string, name: string, securi
     const response = await callNotify(templateId, emailAddress, variables);
 
     return response;
-  } catch (err) {
-    console.error('Error sending access code email for account sign in %O', err);
+  } catch (error) {
+    console.error('Error sending access code email for account sign in %o', error);
 
-    throw new Error(`Sending access code email for account sign in ${err}`);
+    throw new Error(`Sending access code email for account sign in ${error}`);
   }
 };

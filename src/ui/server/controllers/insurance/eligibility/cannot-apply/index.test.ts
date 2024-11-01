@@ -26,7 +26,7 @@ describe('controllers/insurance/eligibility/cannot-apply', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.CANNOT_APPLY);
+      expect(TEMPLATE).toEqual(TEMPLATES.CANNOT_APPLY_EXIT);
     });
   });
 
@@ -36,7 +36,7 @@ describe('controllers/insurance/eligibility/cannot-apply', () => {
 
       const expectedVariables = {
         ...corePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.CANNOT_APPLY,
+          PAGE_CONTENT_STRINGS: PAGES.CANNOT_APPLY_EXIT,
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),

@@ -22,7 +22,7 @@ const postCodeValidation = (fieldId: string, postcode: string, errorMessageEmpty
     if (!postcodeValidator(postcode, 'GB')) {
       return generateValidationErrors(fieldId, errorMessageFormat, errors);
     }
-  } catch (err) {
+  } catch (error) {
     return errors;
   }
 

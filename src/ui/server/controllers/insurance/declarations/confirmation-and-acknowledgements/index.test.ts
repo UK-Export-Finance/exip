@@ -1,5 +1,5 @@
 import { FIELD_ID, pageVariables, TEMPLATE, get, post } from '.';
-import { ERROR_MESSAGES } from '../../../../content-strings';
+import { BUTTONS, ERROR_MESSAGES } from '../../../../content-strings';
 import { APPLICATION, FIELD_IDS, TEMPLATES, ROUTES, DECLARATIONS } from '../../../../constants';
 import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
@@ -9,7 +9,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockSpyPromise, referenceNumber } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromise, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -79,6 +79,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(res.locals.application),
+        SUBMIT_BUTTON_COPY: BUTTONS.SUBMIT_APPLICATION,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -163,6 +164,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
           ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           validationErrors: generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),
+          SUBMIT_BUTTON_COPY: BUTTONS.SUBMIT_APPLICATION,
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -200,7 +202,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
 
         describe('when the save data API call fails', () => {
           beforeEach(() => {
-            mockSaveDeclaration = jest.fn(() => Promise.reject(new Error('mock')));
+            mockSaveDeclaration = mockSpyPromiseRejection;
             save.declaration = mockSaveDeclaration;
 
             req.body = validBody;
@@ -232,7 +234,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
 
         describe('when the submit application API call fails', () => {
           beforeEach(() => {
-            submitApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+            submitApplicationSpy = mockSpyPromiseRejection;
             api.keystone.application.submit = submitApplicationSpy;
 
             req.body = validBody;

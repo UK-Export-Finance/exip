@@ -21,21 +21,23 @@ const updateExportContract = async (id: string, update: object) => {
     const response = (await apollo('POST', updateApplicationExportContractMutation, variables)) as ApolloResponse;
 
     if (response.errors) {
-      console.error('GraphQL error updating application export contract %O', response.errors);
+      console.error('GraphQL error updating application export contract %o', response.errors);
     }
 
     if (response?.networkError?.result?.errors) {
-      console.error('GraphQL network error updating application export contract %O', response.networkError.result.errors);
+      console.error('GraphQL network error updating application export contract %o', response.networkError.result.errors);
     }
 
     if (response?.data?.updateExportContract) {
       return response.data.updateExportContract;
     }
 
-    console.error('Error with GraphQL updateApplicationExportContractMutation %O', response);
+    console.error('Error with GraphQL updateApplicationExportContractMutation %o', response);
+
     throw new Error('Updating application export contract');
-  } catch (err) {
-    console.error('Error updating application export contract %O', err);
+  } catch (error) {
+    console.error('Error updating application export contract %o', error);
+
     throw new Error('Updating application export contract');
   }
 };

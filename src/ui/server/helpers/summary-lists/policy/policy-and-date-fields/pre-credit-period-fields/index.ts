@@ -1,5 +1,5 @@
 import { POLICY_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance';
-import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import fieldGroupItem from '../../../generate-field-group-item';
 import getFieldById from '../../../../get-field-by-id';
@@ -18,10 +18,10 @@ const {
  * if yes is selected for NEED_PRE_CREDIT_PERIOD, populates additional CREDIT_PERIOD_WITH_BUYER field.
  * @param {ApplicationPolicy} answers: Application policy answers
  * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>}
  */
-const generatePreCreditPeriodFields = (answers: ApplicationPolicy, referenceNumber: number, checkAndChange: boolean) => {
+const generatePreCreditPeriodFields = (answers: ApplicationPolicy, referenceNumber: number, checkAndChange?: boolean) => {
   const fields = [
     fieldGroupItem(
       {

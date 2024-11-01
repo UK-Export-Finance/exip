@@ -1,5 +1,4 @@
 import { field, status, summaryList } from '../../../../../../../../pages/shared';
-import partials from '../../../../../../../../partials';
 import FIELD_IDS from '../../../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import application from '../../../../../../../../fixtures/application';
@@ -14,10 +13,6 @@ const {
 const {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
 } = FIELD_IDS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const getFieldVariables = (fieldId, referenceNumber) => ({
   changeLink: summaryList.field(fieldId).changeLink,
@@ -46,7 +41,7 @@ context('Insurance - Change your answers - Export contract - Summary list - Abou
         finalDestinationKnown: true,
       });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       // To get past previous "Check your answers" pages
       cy.completeAndSubmitMultipleCheckYourAnswers({ count: 3 });

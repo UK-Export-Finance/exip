@@ -7,8 +7,8 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
  * mapAndSave
  * Map and save any valid "export contract agent service charge" fields
  * @param {RequestBody} formBody: Form body
- * @param {Application}
- * @param {Object} Validation errors
+ * @param {Application} application
+ * @param {Object} validationErrors: Validation errors
  * @returns {Promise<Boolean>}
  */
 const exportContractAgentServiceCharge = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
@@ -32,8 +32,8 @@ const exportContractAgentServiceCharge = async (formBody: RequestBody, applicati
     }
 
     return true;
-  } catch (err) {
-    console.error('Error mapping and saving application %O', err);
+  } catch (error) {
+    console.error('Error mapping and saving application %o', error);
 
     return false;
   }

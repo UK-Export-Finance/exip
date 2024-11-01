@@ -1,15 +1,13 @@
 import mapAndSave from '.';
-import { FIELD_IDS } from '../../../../../constants';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
 import mapSubmittedData from '../../map-submitted-data/policy';
 import save from '../../save-data/policy';
 import generateValidationErrors from '../../single-contract-policy/validation';
 import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
-  POLICY: {
-    CONTRACT_POLICY: { POLICY_CURRENCY_CODE },
-  },
-} = FIELD_IDS.INSURANCE;
+  CONTRACT_POLICY: { POLICY_CURRENCY_CODE },
+} = POLICY_FIELD_IDS;
 
 describe('controllers/insurance/policy/map-and-save/policy', () => {
   jest.mock('../../save-data/policy');

@@ -1,7 +1,7 @@
 import { Connection } from 'mysql2/promise';
 import getAllLossPayeeFinancialUk from '../../get-all-loss-payee-financial-uks';
 import getAllLossPayeeFinancialUkVectors from '../../get-all-loss-payee-financial-uk-vectors';
-import executeSqlQuery from '../../execute-sql-query';
+import executeSqlQuery from '../../../execute-sql-query';
 
 /**
  * updateLossPayeeFinancialUkVector
@@ -12,7 +12,7 @@ import executeSqlQuery from '../../execute-sql-query';
 const updateLossPayeeFinancialUkVector = async (connection: Connection) => {
   const loggingMessage = 'Updating vector columns in LossPayeeFinancialUk entries';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const financialUks = await getAllLossPayeeFinancialUk(connection);
@@ -47,10 +47,10 @@ const updateLossPayeeFinancialUkVector = async (connection: Connection) => {
     });
 
     return Promise.all(promises);
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

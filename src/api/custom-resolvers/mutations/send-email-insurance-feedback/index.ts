@@ -4,8 +4,8 @@ import { InsuranceFeedbackVariables, SuccessResponse } from '../../../types';
 /**
  * sendEmailInsuranceFeedback
  * - Sends email with feedback from insurance tool
- * @param {Object} GraphQL root variables
- * @param {Object} GraphQL variables for the insurance feedback
+ * @param {Object} root: GraphQL root variables
+ * @param {Object} variables: GraphQL variables for the insurance feedback
  * @returns {Promise<Object>} Object with success flag
  */
 const sendEmailInsuranceFeedback = async (root: any, variables: InsuranceFeedbackVariables): Promise<SuccessResponse> => {
@@ -14,7 +14,7 @@ const sendEmailInsuranceFeedback = async (root: any, variables: InsuranceFeedbac
 
     const emailResponse = await sendEmail.insuranceFeedbackEmail(variables);
 
-    if (emailResponse.success) {
+    if (emailResponse?.success) {
       return {
         ...emailResponse,
       };
@@ -23,9 +23,10 @@ const sendEmailInsuranceFeedback = async (root: any, variables: InsuranceFeedbac
     return {
       success: false,
     };
-  } catch (err) {
-    console.error('Error generating and sending email for insurance feedback %O', err);
-    throw new Error(`Generating and sending email for insurance feedback ${err}`);
+  } catch (error) {
+    console.error('Error generating and sending email for insurance feedback %o', error);
+
+    throw new Error(`Generating and sending email for insurance feedback ${error}`);
   }
 };
 

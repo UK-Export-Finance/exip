@@ -2,10 +2,10 @@ import { backLink, cannotApplyPage } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
-const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
+const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY_EXIT;
 
 const {
-  ELIGIBILITY: { EXPORTER_LOCATION, CANNOT_APPLY },
+  ELIGIBILITY: { EXPORTER_LOCATION, CANNOT_APPLY_EXIT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -16,8 +16,7 @@ context(
     const url = `${baseUrl}${EXPORTER_LOCATION}`;
 
     before(() => {
-      cy.navigateToCheckIfEligibleUrl();
-      cy.completeCheckIfEligibleForm();
+      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'checkIfEligible' });
 
       cy.assertUrl(url);
     });
@@ -32,7 +31,7 @@ context(
     });
 
     it('redirects to exit page', () => {
-      const expectedUrl = `${baseUrl}${CANNOT_APPLY}`;
+      const expectedUrl = `${baseUrl}${CANNOT_APPLY_EXIT}`;
 
       cy.assertUrl(expectedUrl);
     });

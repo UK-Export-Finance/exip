@@ -20,7 +20,7 @@ context('Your quote page - change answers (policy type and length from multiple 
   const url = `${baseUrl}${YOUR_QUOTE}`;
 
   before(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
     cy.submitQuoteAnswersHappyPathMultiplePolicy();
     cy.clickSubmitButton();

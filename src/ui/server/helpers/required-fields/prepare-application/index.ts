@@ -16,7 +16,6 @@ const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME },
   },
-  MIGRATED_FROM_V1_TO_V2,
   POLICY: {
     TYPE_OF_POLICY: { POLICY_TYPE },
     USING_BROKER,
@@ -26,10 +25,11 @@ const {
 
 /**
  * Required fields for the insurance - check your answers section
- * @returns {Array} Required field IDs
+ * @param {ApplicationFlat} application
+ * @returns {Array<string>} Required field IDs
  */
 const requiredFields = (application: ApplicationFlat): Array<string> => [
-  ...requiredEligibilityFields(application.migratedV1toV2),
+  ...requiredEligibilityFields(),
   ...requiredPolicyFields({
     policyType: application[POLICY_TYPE],
     isUsingBroker: application[USING_BROKER],
@@ -40,7 +40,6 @@ const requiredFields = (application: ApplicationFlat): Array<string> => [
     attemptedPrivateMarketCover: application[ATTEMPTED],
     isUsingAgent: application[USING_AGENT],
     awardMethodId: application[AWARD_METHOD]?.id,
-    migratedV1toV2: application[MIGRATED_FROM_V1_TO_V2],
   }),
   ...requiredBusinessFields(application[HAS_DIFFERENT_TRADING_NAME]),
   ...requiredYourBuyerFields({

@@ -8,10 +8,10 @@ import application from '../../fixtures/application';
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, HAS_DIFFERENT_TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
     ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
     NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING, GOODS_OR_SERVICES, EMPLOYEES_UK },
-    TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+    TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER, TURNOVER_CURRENCY_CODE },
     HAS_CREDIT_CONTROL,
   },
 } = INSURANCE_FIELD_IDS;
@@ -27,8 +27,8 @@ const checkYourBusinessSummaryList = {
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
-  [TRADING_ADDRESS]: ({ differentTradingAddress = false }) => {
-    const fieldId = TRADING_ADDRESS;
+  [HAS_DIFFERENT_TRADING_ADDRESS]: ({ differentTradingAddress = false }) => {
+    const fieldId = HAS_DIFFERENT_TRADING_ADDRESS;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.COMPANY_DETAILS);
 
@@ -72,6 +72,14 @@ const checkYourBusinessSummaryList = {
     const fieldId = EMPLOYEES_UK;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.NATURE_OF_YOUR_BUSINESS);
+    const expectedValue = application.EXPORTER_BUSINESS[fieldId];
+
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+  },
+  [TURNOVER_CURRENCY_CODE]: () => {
+    const fieldId = TURNOVER_CURRENCY_CODE;
+
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.TURNOVER);
     const expectedValue = application.EXPORTER_BUSINESS[fieldId];
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);

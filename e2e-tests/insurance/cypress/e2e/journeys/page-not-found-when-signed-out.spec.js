@@ -21,6 +21,7 @@ context('Insurance - page not found - signed out', () => {
       hasAForm: false,
       assertBackLink: false,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

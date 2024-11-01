@@ -26,8 +26,9 @@ const get = (req: Request, res: Response) => {
       BACK_TO_SERVICE_URL: req.flash('serviceOriginUrl'),
       userName: getUserNameFromSession(req.session.user),
     });
-  } catch (err) {
-    console.error('Error getting insurance feedback page %O', err);
+  } catch (error) {
+    console.error('Error getting insurance feedback page %o', error);
+
     return res.redirect(ROUTES.INSURANCE.PROBLEM_WITH_SERVICE);
   }
 };

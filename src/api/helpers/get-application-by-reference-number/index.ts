@@ -4,8 +4,8 @@ import { Application, Context } from '.keystone/types'; // eslint-disable-line
  * getApplicationByReferenceNumber
  * get ids of application sections by reference number
  * returns application section ids or if not found, returns null
- * @param {Number} referenceNumber
- * @param {Context} context
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Context} context: KeystoneJS context API
  * @returns {Application} application section ids or null
  */
 const getApplicationByReferenceNumber = async (referenceNumber: number, context: Context): Promise<Application | null> => {
@@ -24,10 +24,10 @@ const getApplicationByReferenceNumber = async (referenceNumber: number, context:
     }
 
     return null;
-  } catch (err) {
-    console.error('Error getting application by reference number %O', err);
+  } catch (error) {
+    console.error('Error getting application by reference number %o', error);
 
-    throw new Error(`Error getting application by reference number ${err}`);
+    throw new Error(`Error getting application by reference number ${error}`);
   }
 };
 

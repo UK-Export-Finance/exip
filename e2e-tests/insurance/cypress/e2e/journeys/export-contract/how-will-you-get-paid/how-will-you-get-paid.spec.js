@@ -1,4 +1,4 @@
-import { headingCaption } from '../../../../../../pages/shared';
+import { field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
 import { howWillYouGetPaidPage } from '../../../../../../pages/insurance/export-contract';
 import { EXPECTED_MULTI_LINE_STRING, MAXIMUM_CHARACTERS } from '../../../../../../constants';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
@@ -39,9 +39,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.startInsuranceExportContractSection({});
-        cy.completeAndSubmitHowWasTheContractAwardedForm({});
-        cy.completeAndSubmitAboutGoodsOrServicesForm({});
+        cy.completeAndSubmitExportContractForms({ formToStopAt: 'aboutGoodsOrServices' });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
       });
@@ -75,22 +73,20 @@ context(
       it(`renders ${FIELD_ID} hint and textarea`, () => {
         const { HINT } = FIELD_STRINGS.HOW_WILL_YOU_GET_PAID[FIELD_ID];
 
-        cy.checkText(field.hint.intro(), HINT.INTRO);
+        cy.checkText(fieldSelector(FIELD_ID).hintIntro(), HINT.INTRO);
 
-        cy.checkText(field.hint.list.item1(), HINT.LIST[0]);
-        cy.checkText(field.hint.list.item2(), HINT.LIST[1]);
-        cy.checkText(field.hint.list.item3(), HINT.LIST[2]);
+        const { hint } = field;
 
-        cy.checkText(field.hint.outro(), HINT.OUTRO);
+        cy.checkText(hint.list.item1(), HINT.LIST[0]);
+        cy.checkText(hint.list.item2(), HINT.LIST[1]);
+        cy.checkText(hint.list.item3(), HINT.LIST[2]);
+
+        cy.checkText(fieldSelector(FIELD_ID).hintOutro(), HINT.OUTRO);
 
         cy.assertTextareaRendering({
           fieldId: FIELD_ID,
           maximumCharacters: MAXIMUM_CHARACTERS.PAYMENT_TERMS_DESCRIPTION,
         });
-      });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
       });
     });
 

@@ -10,15 +10,7 @@ import mapExportContract from './map-export-contract';
 import mapDeclarations from './map-declarations';
 import { Application, Country } from '../../types';
 
-const {
-  APPLICATION_INFORMATION,
-  ELIGIBILITY,
-  EXPORTER_BUSINESS,
-  POLICY,
-  BUYER,
-  EXPORT_CONTRACT,
-  DECLARATIONS,
-} = SECTION_NAMES;
+const { APPLICATION_INFORMATION, ELIGIBILITY, EXPORTER_BUSINESS, POLICY, BUYER, EXPORT_CONTRACT, DECLARATIONS } = SECTION_NAMES;
 
 /**
  * mapApplicationToXLSX
@@ -30,11 +22,7 @@ const {
 const mapApplicationToXLSX = (application: Application, countries: Array<Country>) => {
   try {
     const mapped = {
-      [APPLICATION_INFORMATION]: [
-        ...mapIntroduction(application),
-        ...mapExporterContactDetails(application),
-        ...mapKeyInformation(application),
-      ],
+      [APPLICATION_INFORMATION]: [...mapIntroduction(application), ...mapExporterContactDetails(application), ...mapKeyInformation(application)],
       [ELIGIBILITY]: mapEligibility(application),
       [EXPORTER_BUSINESS]: mapExporterBusiness(application),
       [POLICY]: mapPolicy(application, countries),
@@ -44,10 +32,10 @@ const mapApplicationToXLSX = (application: Application, countries: Array<Country
     };
 
     return mapped;
-  } catch (err) {
-    console.error('Error mapping application to XLSX %O', err);
+  } catch (error) {
+    console.error('Error mapping application to XLSX %o', error);
 
-    throw new Error(`Mapping application to XLSX ${err}`);
+    throw new Error(`Mapping application to XLSX ${error}`);
   }
 };
 

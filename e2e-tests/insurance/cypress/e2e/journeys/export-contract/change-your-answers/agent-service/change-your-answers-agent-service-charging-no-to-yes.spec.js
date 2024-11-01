@@ -62,7 +62,7 @@ context(
           cy.navigateToUrl(checkYourAnswersUrl);
         });
 
-        it(`should redirect to ${AGENT_CHARGES_CHANGE} and then ${CHECK_YOUR_ANSWERS} after completing (now required) ${AGENT_CHARGES_CHANGE} fields`, () => {
+        it(`should redirect to ${AGENT_SERVICE_CHANGE} and then ${CHECK_YOUR_ANSWERS} after completing (now required) agent charges related forms`, () => {
           summaryList.field(FIELD_ID).changeLink().click();
 
           cy.completeAndSubmitAgentServiceForm({
@@ -74,7 +74,12 @@ context(
 
           cy.completeAndSubmitAgentChargesForm({
             fixedSumMethod: true,
+            percentageMethod: false,
           });
+
+          cy.completeAndSubmitCurrencyForm({});
+
+          cy.completeAndSubmitHowMuchTheAgentIsChargingForm({});
 
           cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId: FIELD_ID });
         });

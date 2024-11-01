@@ -3,6 +3,7 @@ import { MAXIMUM_CHARACTERS } from '../../../../../../../constants';
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
+import assertNameFieldValidation from '../../../../../../../shared-test-assertions/name-field-validation';
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -32,11 +33,7 @@ context('Insurance - Export contract - Agent details page - form validation', ()
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.startInsuranceExportContractSection({});
-      cy.completeAndSubmitHowWasTheContractAwardedForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm({});
-      cy.completeAndSubmitHowYouWillGetPaidForm({});
-      cy.completeAndSubmitAgentForm({ isUsingAgent: true });
+      cy.completeAndSubmitExportContractForms({ formToStopAt: 'agent', isUsingAgent: true });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${AGENT_DETAILS}`;
     });
@@ -51,40 +48,19 @@ context('Insurance - Export contract - Agent details page - form validation', ()
   });
 
   describe(NAME, () => {
-    const assertions = {
-      field: fieldSelector(NAME),
-      errorIndex: 0,
-      expectedErrorsCount,
-    };
-
     const ERROR_MESSAGES_OBJECT = AGENT_DETAILS_ERROR_MESSAGES[NAME];
 
     beforeEach(() => {
       cy.navigateToUrl(url);
     });
 
-    it(`should render validation errors when ${NAME} is over ${MAXIMUM_CHARACTERS.AGENT_NAME} characters`, () => {
-      const value = 'a'.repeat(MAXIMUM_CHARACTERS.AGENT_NAME + 1);
-
-      cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR_MESSAGES_OBJECT.ABOVE_MAXIMUM });
-    });
-
-    it(`should render validation errors when ${NAME} contains a special character`, () => {
-      const value = 'a!';
-
-      cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR_MESSAGES_OBJECT.INCORRECT_FORMAT });
-    });
-
-    it(`should render validation errors when ${NAME} contains a number`, () => {
-      const value = 'a1';
-
-      cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR_MESSAGES_OBJECT.INCORRECT_FORMAT });
-    });
-
-    it(`should render validation errors when ${NAME} contains a number and special character`, () => {
-      const value = 'a1!';
-
-      cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR_MESSAGES_OBJECT.INCORRECT_FORMAT });
+    assertNameFieldValidation({
+      fieldId: NAME,
+      errorIndex: 0,
+      maximum: 'a'.repeat(MAXIMUM_CHARACTERS.AGENT_NAME + 1),
+      errorMessages: ERROR_MESSAGES_OBJECT,
+      totalExpectedErrors: expectedErrorsCount,
+      totalExpectedOtherErrorsWithValidName: 2,
     });
 
     it('should retain all submitted values', () => {

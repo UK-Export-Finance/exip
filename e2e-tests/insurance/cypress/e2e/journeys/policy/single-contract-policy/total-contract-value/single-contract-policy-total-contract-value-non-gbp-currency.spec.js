@@ -14,7 +14,7 @@ const {
 
 const {
   CONTRACT_POLICY: {
-    SINGLE: { TOTAL_CONTRACT_VALUE },
+    SINGLE: { TOTAL_CONTRACT_VALUE, REQUESTED_CREDIT_LIMIT },
   },
 } = POLICY_FIELD_IDS;
 
@@ -33,11 +33,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm({});
-      cy.completeAndSubmitSingleContractPolicyForm({
-        isoCode: USD.isoCode,
-      });
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'singleContractPolicy', isoCode: USD.isoCode });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`;
       singleContractPolicyUrl = `${baseUrl}${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
@@ -69,7 +65,11 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     });
 
     it(`should render a ${TOTAL_CONTRACT_VALUE} ${USD.name} prefix`, () => {
-      cy.checkText(field(TOTAL_CONTRACT_VALUE).prefix(), SYMBOLS.USD);
+      cy.assertPrefix({ fieldId: TOTAL_CONTRACT_VALUE, value: SYMBOLS.USD });
+    });
+
+    it(`should render a ${REQUESTED_CREDIT_LIMIT} ${USD.name} prefix`, () => {
+      cy.assertPrefix({ fieldId: REQUESTED_CREDIT_LIMIT, value: SYMBOLS.USD });
     });
 
     it('should prepopulate the radio on the single contract value page', () => {

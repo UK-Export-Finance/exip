@@ -4,8 +4,8 @@ import { ApplicationNominatedLossPayee, ApplicationLossPayeeFinancialUk, Applica
 
 /**
  * create a nominated loss payee financial uk helper
- * Creates a blank ApplicationLossPayeeFinancialUk.
- * @param {Context} KeystoneJS context API
+ * Create an empty ApplicationLossPayeeFinancialUk.
+ * @param {Context} context: KeystoneJS context API
  * @returns {Object} Created ApplicationNominatedLossPayee
  */
 const createNominatedLossPayee = async ({ context }: TestHelperCreate) => {
@@ -39,9 +39,10 @@ const createNominatedLossPayee = async ({ context }: TestHelperCreate) => {
     };
 
     return created;
-  } catch (err) {
-    console.error('Error creating a nominated loss payee (test helpers) %O', err);
-    return err;
+  } catch (error) {
+    console.error('Error creating a nominated loss payee (test helpers) %o', error);
+
+    return error;
   }
 };
 

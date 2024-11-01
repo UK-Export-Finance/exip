@@ -43,7 +43,7 @@ export const FIELD_IDS = [AWARD_METHOD, OTHER_AWARD_METHOD];
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
@@ -161,8 +161,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`);
-  } catch (err) {
-    console.error('Error updating application - export contract - how was the contract awarded %O', err);
+  } catch (error) {
+    console.error('Error updating application - export contract - how was the contract awarded %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

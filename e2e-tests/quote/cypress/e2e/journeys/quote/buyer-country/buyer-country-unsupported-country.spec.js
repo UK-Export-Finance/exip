@@ -3,10 +3,10 @@ import { PAGES, LINKS } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { COUNTRY_QUOTE_SUPPORT } from '../../../../../../fixtures/countries';
 
-const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
+const CONTENT_STRINGS = PAGES.CANNOT_APPLY_EXIT;
 
 const {
-  QUOTE: { BUYER_COUNTRY, CANNOT_APPLY },
+  QUOTE: { BUYER_COUNTRY, CANNOT_APPLY_EXIT },
 } = ROUTES;
 
 const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
@@ -39,7 +39,7 @@ context(
     });
 
     it('redirects to `cannot obtain cover` exit page', () => {
-      const expectedUrl = `${baseUrl}${CANNOT_APPLY}`;
+      const expectedUrl = `${baseUrl}${CANNOT_APPLY_EXIT}`;
 
       cy.assertUrl(expectedUrl);
     });
@@ -59,9 +59,12 @@ context(
 
       const expectedValue = NEW_COUNTRY_INPUT;
 
-      cy.checkValue(autoCompleteField(FIELD_ID), expectedValue);
-
-      cy.checkText(autoCompleteField(FIELD_ID).results(), expectedValue);
+      cy.checkTextAndValue({
+        textSelector: autoCompleteField(FIELD_ID).results(),
+        expectedText: expectedValue,
+        valueSelector: autoCompleteField(FIELD_ID),
+        expectedValue,
+      });
     });
   },
 );

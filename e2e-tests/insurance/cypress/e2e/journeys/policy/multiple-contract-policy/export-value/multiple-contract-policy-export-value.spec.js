@@ -38,10 +38,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.startInsurancePolicySection({});
-
-        cy.completeAndSubmitPolicyTypeForm({ policyType });
-        cy.completeAndSubmitMultipleContractPolicyForm({});
+        cy.completeAndSubmitPolicyForms({ formToStopAt: 'multipleContractPolicy', policyType });
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`;
 
@@ -82,7 +79,7 @@ context(
 
         cy.checkText(field.hint(), EXPORT_VALUE.MULTIPLE[fieldId].HINT);
 
-        cy.checkText(field.prefix(), SYMBOLS.GBP);
+        cy.assertPrefix({ fieldId: TOTAL_SALES_TO_BUYER, value: SYMBOLS.GBP });
 
         field.input().should('exist');
       });
@@ -94,17 +91,13 @@ context(
 
         cy.checkText(field.label(), EXPORT_VALUE.MULTIPLE[fieldId].LABEL);
 
-        cy.checkText(field.prefix(), SYMBOLS.GBP);
+        cy.assertPrefix({ fieldId, value: SYMBOLS.GBP });
 
         cy.checkText(field.hint.forExample(), HINT.FOR_EXAMPLE);
 
         cy.checkText(field.hint.noDecimals(), HINT.NO_DECIMALS);
 
         field.input().should('exist');
-      });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
       });
     });
 
@@ -130,8 +123,8 @@ context(
         it('should have the submitted values', () => {
           cy.navigateToUrl(url);
 
-          fieldSelector(TOTAL_SALES_TO_BUYER).input().should('have.value', application.POLICY[TOTAL_SALES_TO_BUYER]);
-          fieldSelector(MAXIMUM_BUYER_WILL_OWE).input().should('have.value', application.POLICY[MAXIMUM_BUYER_WILL_OWE]);
+          cy.checkValue(fieldSelector(TOTAL_SALES_TO_BUYER), application.POLICY[TOTAL_SALES_TO_BUYER]);
+          cy.checkValue(fieldSelector(MAXIMUM_BUYER_WILL_OWE), application.POLICY[MAXIMUM_BUYER_WILL_OWE]);
         });
       });
     });

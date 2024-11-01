@@ -4,7 +4,7 @@ import { Request, Response } from '../../../../../types';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 
-export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.COMPANY_NOT_ACTIVE;
+export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.COMPANY_NOT_ACTIVE_EXIT;
 
 /**
  * get
@@ -16,7 +16,7 @@ export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.COMPANY_NOT_ACTIVE;
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {
     ...corePageVariables({
-      PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.COMPANY_NOT_ACTIVE,
+      PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.COMPANY_NOT_ACTIVE_EXIT,
       BACK_LINK: req.headers.referer,
     }),
     userName: getUserNameFromSession(req.session.user),

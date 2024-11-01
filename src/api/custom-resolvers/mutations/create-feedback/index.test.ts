@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import createInsuranceFeedbackAndEmail from '.';
 import sendEmail from '../../../emails';
-import { mockInsuranceFeedback, mockSendEmailResponse, mockSpyPromise } from '../../../test-mocks';
+import { mockInsuranceFeedback, mockSendEmailResponse, mockSpyPromise, mockErrorMessage, mockSpyPromiseRejection } from '../../../test-mocks';
 import { Context, Feedback } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
@@ -72,11 +72,9 @@ describe('custom-resolvers/create-feedback', () => {
   });
 
   describe('when the feedback email call fails', () => {
-    const mockErrorMessage = 'Mock error';
-
     beforeEach(async () => {
       jest.resetAllMocks();
-      sendInsuranceFeedbackEmailSpy = jest.fn(() => Promise.reject(mockErrorMessage));
+      sendInsuranceFeedbackEmailSpy = mockSpyPromiseRejection;
 
       sendEmail.insuranceFeedbackEmail = sendInsuranceFeedbackEmailSpy;
     });
@@ -84,9 +82,9 @@ describe('custom-resolvers/create-feedback', () => {
     test('should throw an error', async () => {
       try {
         feedbackResponse = (await createInsuranceFeedbackAndEmail({}, variables, context)) as Feedback;
-      } catch (err) {
-        const expected = new Error(`Creating feedback: ${mockErrorMessage}`);
-        expect(err).toEqual(expected);
+      } catch (error) {
+        const expected = new Error(`Creating feedback: ${new Error(mockErrorMessage)}`);
+        expect(error).toEqual(expected);
       }
     });
   });

@@ -4,7 +4,7 @@ import { RequestBody } from '../../../types';
 /**
  * hasFormData
  * Checks if form data has values
- * @param {Express.Request.body} Form data
+ * @param {Express.Request.body} formBody
  * @returns {Boolean}
  */
 const hasFormData = (formBody: RequestBody) => {

@@ -17,9 +17,10 @@ const getAccountStatusById = async (context: Context, id: string): Promise<Accou
     })) as AccountStatus;
 
     return accountStatus;
-  } catch (err) {
-    console.error('Error getting account status by ID %O', err);
-    throw new Error(`Getting account status by ID ${err}`);
+  } catch (error) {
+    console.error('Error getting account status by ID %o', error);
+
+    throw new Error(`Getting account status by ID ${error}`);
   }
 };
 

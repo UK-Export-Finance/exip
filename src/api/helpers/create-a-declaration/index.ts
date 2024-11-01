@@ -9,7 +9,7 @@ import { Context } from '../../types';
  * @returns {Promise<ApplicationDeclaration>}  Created declaration
  */
 const createADeclaration = async (context: Context, applicationId: string) => {
-  console.info('Creating a application declaration for ', applicationId);
+  console.info('Creating an application declaration for %s', applicationId);
 
   try {
     const declaration = await context.db.Declaration.createOne({
@@ -26,10 +26,10 @@ const createADeclaration = async (context: Context, applicationId: string) => {
       ...declaration,
       declarationVersion,
     };
-  } catch (err) {
-    console.error('Error creating an application declaration %O', err);
+  } catch (error) {
+    console.error('Error creating an application declaration %o', error);
 
-    throw new Error(`Creating an application declaration ${err}`);
+    throw new Error(`Creating an application declaration ${error}`);
   }
 };
 

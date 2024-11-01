@@ -46,8 +46,8 @@ context('Insurance - Complete `prepare your application` tasks', () => {
       cy.checkTaskCheckAnswersStatusIsNotStartedYet();
     });
 
-    it('renders a `declarations` task with a status of `not started yet`', () => {
-      cy.checkTaskCheckAnswersStatusIsNotStartedYet();
+    it('renders a `declarations and submit` task with a status of `cannot start`', () => {
+      cy.checkTaskDeclarationsAndSubmitStatusIsCannotStart();
     });
   });
 });

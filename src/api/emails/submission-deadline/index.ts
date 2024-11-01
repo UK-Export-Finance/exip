@@ -21,9 +21,9 @@ export const submissionDeadlineEmail = async (
     const response = await callNotify(templateId, emailAddress, submissionDeadlineEmailVariables);
 
     return response;
-  } catch (err) {
-    console.error('Error sending submission deadline email for applicationId %s - %O', submissionDeadlineEmailVariables.referenceNumber, err);
+  } catch (error) {
+    console.error('Error sending submission deadline email for applicationId %s - %o', submissionDeadlineEmailVariables.referenceNumber, error);
 
-    throw new Error(`Sending submission deadline email for ${submissionDeadlineEmailVariables.referenceNumber} - ${err}`);
+    throw new Error(`Sending submission deadline email for ${submissionDeadlineEmailVariables.referenceNumber} - ${error}`);
   }
 };

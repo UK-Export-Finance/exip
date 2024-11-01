@@ -20,21 +20,23 @@ const getOrdnanceSurveyAddress = async (postcode: string, houseNameOrNumber: str
     const response = (await apollo('GET', ordnanceSurveyAddressQuery, queryParams)) as ApolloResponse;
 
     if (response.errors) {
-      console.error('GraphQL network error querying Ordnance Survey address %O', response.errors);
+      console.error('GraphQL network error querying Ordnance Survey address %o', response.errors);
     }
 
     if (response?.networkError?.result?.errors) {
-      console.error('GraphQL network error querying Ordnance Survey address %O', response.networkError.result.errors);
+      console.error('GraphQL network error querying Ordnance Survey address %o', response.networkError.result.errors);
     }
 
     if (response?.data?.getOrdnanceSurveyAddress) {
       return response.data.getOrdnanceSurveyAddress;
     }
 
-    console.error('Error with GraphQL getOrdnanceSurveyAddress %O', response);
+    console.error('Error with GraphQL getOrdnanceSurveyAddress %o', response);
+
     throw new Error('Getting Ordnance Survey address');
-  } catch (err) {
-    console.error('Error getting Ordnance Survey address %O', err);
+  } catch (error) {
+    console.error('Error getting Ordnance Survey address %o', error);
+
     throw new Error('Getting Ordnance Survey address');
   }
 };

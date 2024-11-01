@@ -1,4 +1,5 @@
-import goodsOrServicesDescriptionRules, { MAXIMUM } from './description';
+import goodsOrServicesDescriptionRules from './description';
+import { MAXIMUM_CHARACTERS } from '../../../../../../constants';
 import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../helpers/validation';
@@ -34,7 +35,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services/validati
   describe('when total contract is above the maximum', () => {
     it('should return a validation error', () => {
       const mockSubmittedData = {
-        [FIELD_ID]: 'a'.repeat(MAXIMUM + 1),
+        [FIELD_ID]: 'a'.repeat(MAXIMUM_CHARACTERS.ABOUT_GOODS_OR_SERVICES_DESCRIPTION + 1),
       };
 
       const result = goodsOrServicesDescriptionRules(mockSubmittedData, mockErrors);

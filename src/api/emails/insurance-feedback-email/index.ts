@@ -22,7 +22,7 @@ export const insuranceFeedbackEmail = async (variables: InsuranceFeedbackVariabl
     const emailAddress = process.env.FEEDBACK_EMAIL_RECIPIENT as string;
 
     const emailVariables = variables;
-    // blank variables for date and time (used if createdAt is not populated)
+    // empty variables for date and time (used if createdAt is not populated)
     emailVariables.time = '';
     emailVariables.date = '';
 
@@ -40,9 +40,9 @@ export const insuranceFeedbackEmail = async (variables: InsuranceFeedbackVariabl
     const response = await callNotify(templateId, emailAddress, emailVariables);
 
     return response;
-  } catch (err) {
-    console.error('Error sending insurance feedback email %O', err);
+  } catch (error) {
+    console.error('Error sending insurance feedback email %o', error);
 
-    throw new Error(`Sending insurance feedback email ${err}`);
+    throw new Error(`Sending insurance feedback email ${error}`);
   }
 };

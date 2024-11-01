@@ -6,7 +6,7 @@ const { table } = dashboardPage;
 /**
  * assertDashboardApplicationSubmittedStatus
  * Assert that an application has a "submitted" status in the dashboard.
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  */
 const assertDashboardApplicationSubmittedStatus = (referenceNumber) => {
   const cell = table.body.row(referenceNumber).status();

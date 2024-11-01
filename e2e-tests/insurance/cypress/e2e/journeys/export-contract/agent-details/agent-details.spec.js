@@ -32,11 +32,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.startInsuranceExportContractSection({});
-        cy.completeAndSubmitHowWasTheContractAwardedForm({});
-        cy.completeAndSubmitAboutGoodsOrServicesForm({});
-        cy.completeAndSubmitHowYouWillGetPaidForm({});
-        cy.completeAndSubmitAgentForm({ isUsingAgent: true });
+        cy.completeAndSubmitExportContractForms({ formToStopAt: 'agent', isUsingAgent: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_DETAILS}`;
         agentServiceUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_SERVICE}`;
@@ -91,10 +87,6 @@ context(
 
       describe(`searchable autocomplete input (${COUNTRY_CODE})`, () => {
         assertCountryAutocompleteInput({ fieldId: COUNTRY_CODE });
-      });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
       });
     });
 

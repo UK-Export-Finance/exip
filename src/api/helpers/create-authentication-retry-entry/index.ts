@@ -3,7 +3,7 @@ import { Context } from '../../types';
 /**
  * createAuthenticationRetryEntry
  * Create a new entry in the AuthenticationRetry table
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} Account ID
  * @returns {Promise<Object>} Object with success flag
  */
@@ -33,10 +33,10 @@ const createAuthenticationRetryEntry = async (context: Context, accountId: strin
     return {
       success: false,
     };
-  } catch (err) {
-    console.error('Error creating account authentication retry entry %O', err);
+  } catch (error) {
+    console.error('Error creating account authentication retry entry %o', error);
 
-    throw new Error(`${err}`);
+    throw new Error(`${error}`);
   }
 };
 

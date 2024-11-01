@@ -3,7 +3,7 @@ import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contr
 import api from '../../../../../api';
 import generateValidationErrors from '../../../policy/type-of-policy/validation';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
-import { mockApplication } from '../../../../../test-mocks';
+import { mockApplication, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const {
   AGENT_CHARGES: { PERCENTAGE_CHARGE, FIXED_SUM_AMOUNT, METHOD, PAYABLE_COUNTRY_CODE },
@@ -72,16 +72,16 @@ describe('controllers/insurance/export-contract/save-data/export-contract-agent-
 
   describe('when there is an error calling the API', () => {
     beforeEach(() => {
-      updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+      updateApplicationSpy = mockSpyPromiseRejection;
       api.keystone.application.update.exportContractAgentServiceCharge = updateApplicationSpy;
     });
 
     it('should throw an error', async () => {
       try {
         await save.exportContractAgentServiceCharge(mockApplication, mockFormBody.valid);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error("Updating application's exportContractAgentServiceCharge");
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

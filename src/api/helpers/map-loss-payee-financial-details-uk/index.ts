@@ -44,10 +44,10 @@ const mapLossPayeeFinancialDetailsUk = (variables: ApplicationLossPayeeFinancial
     };
 
     return updateData;
-  } catch (err) {
-    console.error('Error mapping loss payee financial UK %O', err);
+  } catch (error) {
+    console.error('Error mapping loss payee financial UK %o', error);
 
-    throw new Error(`Error mapping loss payee financial UK ${err}`);
+    throw new Error(`Error mapping loss payee financial UK ${error}`);
   }
 };
 

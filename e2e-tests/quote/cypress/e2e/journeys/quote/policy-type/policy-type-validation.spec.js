@@ -1,9 +1,7 @@
 import { policyTypePage } from '../../../../../../pages/quote';
-import partials from '../../../../../../partials';
+import { errorSummaryListItems, errorSummaryListItemLinks } from '../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm, completeAndSubmitUkContentForm } from '../../../../../../commands/quote/forms';
 
 const { POLICY_TYPE } = FIELD_IDS;
 
@@ -17,11 +15,11 @@ context('Policy type page - policy type & length validation - single policy type
   const url = `${baseUrl}${POLICY_TYPE_ROUTE}`;
 
   before(() => {
-    cy.login();
-    completeAndSubmitBuyerCountryForm({});
-    completeAndSubmitBuyerBodyForm();
-    completeAndSubmitExporterLocationForm();
-    completeAndSubmitUkContentForm();
+    cy.navigateToRootUrl();
+    cy.completeAndSubmitBuyerCountryForm({});
+    cy.completeAndSubmitBuyerBodyForm();
+    cy.completeAndSubmitExporterLocationForm();
+    cy.completeAndSubmitUkContentForm();
 
     cy.assertUrl(url);
   });
@@ -42,9 +40,9 @@ context('Policy type page - policy type & length validation - single policy type
 
       const expectedErrorMessage = ERROR_MESSAGES.ELIGIBILITY[POLICY_TYPE];
 
-      cy.checkText(partials.errorSummaryListItems().first(), expectedErrorMessage);
+      cy.checkText(errorSummaryListItems().first(), expectedErrorMessage);
 
-      partials.errorSummaryListItemLinks().first().click();
+      errorSummaryListItemLinks().first().click();
 
       const singlePolicyTypeField = policyTypePage[POLICY_TYPE].single;
       singlePolicyTypeField.input().should('have.focus');

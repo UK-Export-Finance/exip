@@ -24,7 +24,7 @@ describe('helpers/get-cover-period-value-by-field', () => {
     }
 
     // create a new coverPeriod
-    coverPeriod = await coverPeriodTestHelper.create({ context });
+    coverPeriod = await coverPeriodTestHelper.create(context);
   });
 
   it('should return a coverPeriod by ID', async () => {
@@ -39,13 +39,13 @@ describe('helpers/get-cover-period-value-by-field', () => {
     it('should throw an error', async () => {
       try {
         await getCoverPeriodValueByField(context, field, 123456);
-      } catch (err) {
+      } catch (error) {
         const errorMessage = 'Getting coverPeriod by field/value';
 
         const newError = new Error(errorMessage);
 
         const expected = new Error(`${errorMessage} ${newError}`);
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

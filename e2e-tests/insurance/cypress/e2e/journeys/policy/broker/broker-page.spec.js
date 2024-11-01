@@ -1,5 +1,5 @@
 import { brokerPage } from '../../../../../../pages/insurance/policy';
-import partials from '../../../../../../partials';
+import { headingCaption } from '../../../../../../partials';
 import { field as fieldSelector, yesRadio, noRadio, noRadioInput } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES, LINKS } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
@@ -40,14 +40,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.startInsurancePolicySection({});
-
-        cy.completeAndSubmitPolicyTypeForm({});
-        cy.completeAndSubmitSingleContractPolicyForm({});
-        cy.completeAndSubmitTotalContractValueForm({});
-        cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
-        cy.completeAndSubmitPreCreditPeriodForm({});
-        cy.completeAndSubmitAnotherCompanyForm({});
+        cy.completeAndSubmitPolicyForms({ formToStopAt: 'anotherCompany' });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
         lossPayeeUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
@@ -85,12 +78,41 @@ context(
       });
 
       it('renders a heading caption', () => {
-        cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+        cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
       describe(`${FIELD_ID} label and input`, () => {
         it('renders `yes` and `no` radio buttons in the correct order', () => {
           cy.assertYesNoRadiosOrder({ noRadioFirst: true });
+        });
+
+        it('renders `no` radio button', () => {
+          cy.checkText(noRadio().label(), FIELD_VALUES.NO);
+
+          cy.checkRadioInputNoAriaLabel(FIELDS.BROKER[FIELD_ID].LABEL);
+        });
+
+        it('renders `yes` radio button', () => {
+          yesRadio().input().should('exist');
+
+          cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
+
+          cy.checkRadioInputYesAriaLabel(FIELDS.BROKER[FIELD_ID].LABEL);
+        });
+      });
+
+      describe('when clicking the summary text', () => {
+        it('should expand the collapsed `details` content', () => {
+          brokerPage.summary().click();
+
+          brokerPage.details().should('have.attr', 'open');
+
+          cy.checkText(brokerPage.line1(), CONTENT_STRINGS.LINE_1);
+          cy.checkText(brokerPage.line2(), `${CONTENT_STRINGS.LINE_2} ${CONTENT_STRINGS.LINK_TEXT}`);
+          cy.checkText(brokerPage.line3(), CONTENT_STRINGS.LINE_3);
+          cy.checkText(brokerPage.line4(), CONTENT_STRINGS.LINE_4);
+
+          cy.checkLink(brokerPage.link(), APPROVED_BROKER_LIST, CONTENT_STRINGS.LINK_TEXT);
         });
 
         it('renders `no` radio button', () => {

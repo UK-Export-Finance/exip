@@ -19,12 +19,9 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-export-contract', () => 
   it('should return an array of mapped export contract fields', () => {
     const result = mapExportContract(mockApplication, mockCountries);
 
-    const {
-      eligibility: { totalContractValue },
-      exportContract,
-    } = mockApplication;
+    const { exportContract } = mockApplication;
 
-    const { agent, privateMarket } = exportContract;
+    const { agent } = exportContract;
 
     const expected = [
       xlsxRow(String(FIELDS.EXPORT_CONTRACT[DESCRIPTION]), exportContract[DESCRIPTION]),
@@ -35,7 +32,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-export-contract', () => 
 
       xlsxRow(String(FIELDS.EXPORT_CONTRACT[PAYMENT_TERMS_DESCRIPTION]), exportContract[PAYMENT_TERMS_DESCRIPTION]),
 
-      ...mapPrivateMarket(privateMarket, totalContractValue),
+      ...mapPrivateMarket(mockApplication),
 
       ...mapAgent(agent, mockCountries),
     ];

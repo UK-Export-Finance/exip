@@ -1,6 +1,6 @@
 import mapAndSave from '.';
 import save from '../../save-data/buyer-relationship';
-import { mockApplication } from '../../../../../test-mocks';
+import { mockApplication, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 describe('controllers/insurance/business/map-and-save/buyer-relationship - api errors', () => {
   jest.mock('../../save-data/buyer-relationship');
@@ -24,7 +24,7 @@ describe('controllers/insurance/business/map-and-save/buyer-relationship - api e
 
   describe('when save application buyerRelationship call fails', () => {
     beforeEach(() => {
-      save.buyerRelationship = jest.fn(() => Promise.reject(new Error('mock')));
+      save.buyerRelationship = mockSpyPromiseRejection;
     });
 
     it('should return false', async () => {

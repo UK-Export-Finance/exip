@@ -24,9 +24,10 @@ const updateLossPayeeFinancialUkVector = async (
     });
 
     return updated;
-  } catch (err) {
-    console.error('Error updating loss payee financial uk vector (helper) %O', err);
-    throw new Error(`Updating loss payee financial uk vector (helper) ${err}`);
+  } catch (error) {
+    console.error('Error updating loss payee financial uk vector (helper) %o', error);
+
+    throw new Error(`Updating loss payee financial uk vector (helper) ${error}`);
   }
 };
 

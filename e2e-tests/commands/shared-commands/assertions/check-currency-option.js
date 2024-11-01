@@ -4,8 +4,14 @@
  * @param {Object} currency
  */
 const checkCurrencyOption = (selector, currency) => {
-  cy.checkText(selector.label(), `${currency.name} (${currency.isoCode})`);
-  cy.checkValue(selector, currency.isoCode);
+  const textValue = `${currency.name} (${currency.isoCode})`;
+
+  cy.checkTextAndValue({
+    textSelector: selector.label(),
+    expectedText: textValue,
+    valueSelector: selector,
+    expectedValue: currency.isoCode,
+  });
 };
 
 export default checkCurrencyOption;

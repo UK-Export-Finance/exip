@@ -24,7 +24,7 @@ describe('helpers/get-total-contract-value-by-field', () => {
     }
 
     // create a new totalContractValue
-    totalContractValue = await totalContractValueTestHelper.create({ context });
+    totalContractValue = await totalContractValueTestHelper.create(context);
   });
 
   it('should return a totalContractValue by ID', async () => {
@@ -39,13 +39,13 @@ describe('helpers/get-total-contract-value-by-field', () => {
     it('should throw an error', async () => {
       try {
         await getTotalContractValueByField(context, field, 123456);
-      } catch (err) {
+      } catch (error) {
         const errorMessage = 'Getting totalContractValue by field/value';
 
         const newError = new Error(errorMessage);
 
         const expected = new Error(`${errorMessage} ${newError}`);
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

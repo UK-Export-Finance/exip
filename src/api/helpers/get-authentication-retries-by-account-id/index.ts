@@ -3,7 +3,7 @@ import { Context } from '../../types';
 /**
  * getAuthenticationRetriesByAccountId
  * Get Authentication retry table entries by account ID
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} Account ID
  * @returns {Promise<Boolean>}
  */
@@ -22,10 +22,10 @@ const getAuthenticationRetriesByAccountId = async (context: Context, accountId: 
     });
 
     return retries;
-  } catch (err) {
-    console.error('Error getting authentication retries by account ID %O', err);
+  } catch (error) {
+    console.error('Error getting authentication retries by account ID %o', error);
 
-    throw new Error(`Getting authentication retries by account ID ${err}`);
+    throw new Error(`Getting authentication retries by account ID ${error}`);
   }
 };
 

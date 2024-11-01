@@ -1,4 +1,4 @@
-import { pageVariables, TEMPLATE, FIELD_IDS, totalMonthsOfCoverOptions, get, post } from '.';
+import { pageVariables, TEMPLATE, FIELD_IDS, get, post } from '.';
 import { GBP_CURRENCY_CODE, TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
@@ -13,7 +13,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockCurrenciesResponse, mockCurrenciesEmptyResponse } from '../../../../test-mocks';
+import { mockReq, mockRes, mockCurrenciesResponse, mockCurrenciesEmptyResponse, mockSpyPromiseRejection } from '../../../../test-mocks';
 import {
   mockApplicationMultiplePolicy as mockApplication,
   mockApplicationMultiplePolicyWithoutCurrencyCode,
@@ -129,14 +129,6 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
     });
   });
 
-  describe('totalMonthsOfCoverOptions', () => {
-    it('should have the correct array of months', () => {
-      const expected = FIELDS.CONTRACT_POLICY.MULTIPLE[TOTAL_MONTHS_OF_COVER].OPTIONS;
-
-      expect(totalMonthsOfCoverOptions).toEqual(expected);
-    });
-  });
-
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
       const expected = [
@@ -194,7 +186,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
     describe('api error handling', () => {
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          getCurrenciesSpy = mockSpyPromiseRejection;
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
@@ -239,6 +231,12 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
     describe('when there are no validation errors', () => {
       beforeEach(() => {
         req.body = validBody;
+      });
+
+      it('should NOT call api.keystone.APIM.getCurrencies', async () => {
+        await post(req, res);
+
+        expect(getCurrenciesSpy).toHaveBeenCalledTimes(0);
       });
 
       it('should call mapAndSave.policy with data from constructPayload function and application', async () => {
@@ -394,7 +392,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
       describe('get currencies call', () => {
         describe('when the get currencies API call fails', () => {
           beforeEach(() => {
-            getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+            getCurrenciesSpy = mockSpyPromiseRejection;
             api.keystone.APIM.getCurrencies = getCurrenciesSpy;
           });
 
@@ -440,7 +438,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
 
         describe('when there is an error', () => {
           beforeEach(() => {
-            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+            const mapAndSaveSpy = mockSpyPromiseRejection;
 
             mapAndSave.policy = mapAndSaveSpy;
           });

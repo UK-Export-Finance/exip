@@ -19,9 +19,9 @@ import { Account, AccountSignInVariables, AccountSignInResponse, Context } from 
  * 5) If the provided credentials are invalid:
  *   5.1) Create a new retry entry for the account.
  *   5.2) Check if the account should be blocked. If so, block the account.
- * @param {Object} GraphQL root variables
- * @param {Object} GraphQL variables for the AccountSignIn mutation
- * @param {Context} KeystoneJS context API
+ * @param {Object} root: GraphQL root variables
+ * @param {Object} variables: GraphQL variables for the AccountSignIn mutation
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag
  */
 const accountSignIn = async (root: any, variables: AccountSignInVariables, context: Context): Promise<AccountSignInResponse> => {
@@ -108,10 +108,10 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
     }
 
     return { success: false };
-  } catch (err) {
-    console.error('Error signing into account %O', err);
+  } catch (error) {
+    console.error('Error signing into account %o', error);
 
-    throw new Error(`Signing in account (accountSignIn mutation) ${err}`);
+    throw new Error(`Signing in account (accountSignIn mutation) ${error}`);
   }
 };
 

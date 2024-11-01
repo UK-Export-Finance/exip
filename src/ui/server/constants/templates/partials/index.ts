@@ -14,9 +14,6 @@ export const PARTIALS = {
         CONDITIONAL_YES_HTML: 'partials/insurance/connection-with-the-buyer-conditional-yes-html.njk',
         HINT_HTML: 'partials/insurance/connection-with-the-buyer-hint.njk',
       },
-      OUTSTANDING_PAYMENTS: {
-        CONDITIONAL_YES_HTML: 'partials/insurance/buyer-outstanding-payment-conditional-yes-html.njk',
-      },
       BUYER_FINANCIAL_INFORMATION: {
         CUSTOM_CONTENT_HTML: 'partials/insurance/buyer-financial-information-details.njk',
       },
@@ -53,7 +50,6 @@ export const PARTIALS = {
         CUSTOM_CONTENT_HTML: 'partials/insurance/private-market-why-description.njk',
       },
       AGENT_CHARGES: {
-        CONDITIONAL_FIXED_SUM_HTML: 'partials/insurance/export-contract-agent-charges-conditional-fixed-sum-html.njk',
         CONDITIONAL_PERCENTAGE_HTML: 'partials/insurance/export-contract-agent-charges-conditional-percentage-html.njk',
       },
     },

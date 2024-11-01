@@ -1,4 +1,4 @@
-import partials from '../../../../../../partials';
+import { headingCaption } from '../../../../../../partials';
 import { yesNoRadioHint, yesRadio, noRadio } from '../../../../../../pages/shared';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
@@ -28,10 +28,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.startYourBusinessSection({});
-        cy.completeAndSubmitCompanyDetails({});
-        cy.completeAndSubmitNatureOfYourBusiness();
-        cy.completeAndSubmitTurnoverForm({});
+        cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'turnover' });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
         checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
@@ -62,7 +59,7 @@ context(
       });
 
       it('renders a heading caption', () => {
-        cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+        cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
       it('renders a `yes` radio button with a hint', () => {
@@ -78,10 +75,6 @@ context(
         cy.checkText(noRadio().label(), FIELD_VALUES.NO);
 
         cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
-      });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
       });
     });
 

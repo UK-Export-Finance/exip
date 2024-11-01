@@ -1,5 +1,5 @@
 import { PAGES, END_BUYERS_DESCRIPTION, ERROR_MESSAGES } from '../../../../content-strings';
-import { FIELDS_ELIGIBILITY } from '../../../../content-strings/fields/insurance/eligibility';
+import { ELIGIBILITY_FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
 import { FIELD_IDS, TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
@@ -10,7 +10,7 @@ import { updateSubmittedData } from '../../../../helpers/update-submitted-data/i
 import isChangeRoute from '../../../../helpers/is-change-route';
 import { Request, Response } from '../../../../../types';
 
-const { CANNOT_APPLY_MULTIPLE_RISKS, CHECK_YOUR_ANSWERS, PARTY_TO_CONSORTIUM } = INSURANCE_ROUTES.ELIGIBILITY;
+const { CANNOT_APPLY_MULTIPLE_RISKS_EXIT, CHECK_YOUR_ANSWERS, PARTY_TO_CONSORTIUM } = INSURANCE_ROUTES.ELIGIBILITY;
 
 const {
   SHARED_PAGES,
@@ -29,7 +29,7 @@ export const PAGE_VARIABLES = {
   },
   FIELD: {
     ID: FIELD_ID,
-    ...FIELDS_ELIGIBILITY[FIELD_ID],
+    ...ELIGIBILITY_FIELDS[FIELD_ID],
   },
 };
 
@@ -84,7 +84,7 @@ export const post = (req: Request, res: Response) => {
   const answer = payload[FIELD_ID];
 
   if (answer === 'true') {
-    return res.redirect(CANNOT_APPLY_MULTIPLE_RISKS);
+    return res.redirect(CANNOT_APPLY_MULTIPLE_RISKS_EXIT);
   }
 
   req.session.submittedData = {

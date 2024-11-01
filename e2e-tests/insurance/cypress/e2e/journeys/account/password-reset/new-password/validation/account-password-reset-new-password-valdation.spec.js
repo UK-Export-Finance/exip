@@ -1,4 +1,4 @@
-import passwordField from '../../../../../../../../partials/insurance/passwordField';
+import { passwordField } from '../../../../../../../../partials/insurance';
 import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
 import { INVALID_PASSWORDS } from '../../../../../../../../constants/examples';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';

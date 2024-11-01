@@ -106,8 +106,8 @@ export const mapNominatedLossPayee = (nominatedLossPayee: ApplicationNominatedLo
 /**
  * flattenApplicationData
  * Transform an application into a single level object
- * @param {Application}
- * @returns {Object} Application as a single level object
+ * @param {Application} application
+ * @returns {ApplicationFlat} Application as a single level object
  */
 const flattenApplicationData = (application: Application): ApplicationFlat => {
   try {
@@ -123,7 +123,6 @@ const flattenApplicationData = (application: Application): ApplicationFlat => {
       createdAt: application.createdAt,
       updatedAt: application.updatedAt,
       dealType: application.dealType,
-      migratedV1toV2: application.migratedV1toV2,
       submissionCount: application.submissionCount,
       submissionDeadline: application.submissionDeadline,
       submissionType: application.submissionType,
@@ -155,10 +154,10 @@ const flattenApplicationData = (application: Application): ApplicationFlat => {
     };
 
     return flattened;
-  } catch (err) {
-    console.error('Error flattening application data %O', err);
+  } catch (error) {
+    console.error('Error flattening application data %o', error);
 
-    throw new Error(`Error flattening application data ${err}`);
+    throw new Error(`Error flattening application data ${error}`);
   }
 };
 

@@ -30,10 +30,10 @@ const encrypt = (dataToEncrypt: string): EncryptedData => {
       value,
       iv,
     };
-  } catch (err) {
-    console.error('Error encrypting data %O', err);
+  } catch (error) {
+    console.error('Error encrypting data %o', error);
 
-    throw new Error(`Error encrypting data ${err}`);
+    throw new Error(`Error encrypting data ${error}`);
   }
 };
 

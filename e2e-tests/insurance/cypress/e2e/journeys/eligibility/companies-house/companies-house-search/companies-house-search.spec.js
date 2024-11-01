@@ -12,6 +12,7 @@ import {
 } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { ELIGIBILITY_FIELDS } from '../../../../../../../content-strings/fields/insurance/eligibility';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER;
 
@@ -25,6 +26,8 @@ const {
   ELIGIBILITY: { COMPANIES_HOUSE_NUMBER: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
+const FIELD_STRINGS = ELIGIBILITY_FIELDS[FIELD_ID];
+
 const field = fieldSelector(FIELD_ID);
 
 const baseUrl = Cypress.config('baseUrl');
@@ -34,11 +37,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
   let companyNumber;
 
   before(() => {
-    cy.navigateToCheckIfEligibleUrl();
-
-    cy.completeCheckIfEligibleForm();
-    cy.completeExporterLocationForm();
-    cy.completeCompaniesHouseNumberForm();
+    cy.completeAndSubmitEligibilityForms({ formToStopAt: 'companiesHouseNumber' });
 
     cy.assertUrl(url);
   });
@@ -53,6 +52,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
       currentHref: ENTER_COMPANIES_HOUSE_NUMBER,
       backLink: COMPANIES_HOUSE_NUMBER,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 
@@ -61,8 +61,12 @@ context('Insurance - Eligibility - Companies house search page - I want to check
       cy.navigateToUrl(url);
     });
 
-    it(`should render a ${FIELD_ID} input`, () => {
+    it(`should render a ${FIELD_ID} hint and input`, () => {
       field.input().should('exist');
+
+      cy.checkText(field.hintIntro(), FIELD_STRINGS.HINT.INTRO);
+
+      cy.checkLink(field.hintLink(), FIELD_STRINGS.HINT.LINK.HREF, FIELD_STRINGS.HINT.LINK.TEXT);
     });
   });
 
@@ -81,7 +85,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
       });
     });
 
-    describe('when the companies house number is blank', () => {
+    describe('when the companies house number is empty', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
 

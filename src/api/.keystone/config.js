@@ -139,9 +139,9 @@ var getUnverifiedAccounts = async (context) => {
         'id firstName lastName email otpSalt otpHash otpExpiry salt hash passwordResetHash passwordResetExpiry verificationHash verificationExpiry reactivationHash reactivationExpiry updatedAt status { id isBlocked isVerified isInactive updatedAt }',
     });
     return accounts;
-  } catch (err) {
-    console.error('Error getting unverified accounts (getUnverifiedAccounts helper) %O', err);
-    throw new Error(`Error getting unverified accounts (getUnverifiedAccounts helper) ${err}`);
+  } catch (error) {
+    console.error('Error getting unverified accounts (getUnverifiedAccounts helper) %o', error);
+    throw new Error(`Error getting unverified accounts (getUnverifiedAccounts helper) ${error}`);
   }
 };
 var get_unverified_accounts_default = getUnverifiedAccounts;
@@ -187,9 +187,9 @@ var mapAndUpdateUnverifiedAccounts = async (accounts, context) => {
     await context.db.AccountStatus.updateMany({
       data: accountStatus2,
     });
-  } catch (err) {
-    console.error('Error mapping and updating unverified accounts %O', err);
-    throw new Error(`Error mapping and updating unverified accounts ${err}`);
+  } catch (error) {
+    console.error('Error mapping and updating unverified accounts %o', error);
+    throw new Error(`Error mapping and updating unverified accounts ${error}`);
   }
 };
 var map_and_update_unverified_accounts_default = mapAndUpdateUnverifiedAccounts;
@@ -209,9 +209,9 @@ var updateUnverifiedAccounts = async (context) => {
     return {
       success: true,
     };
-  } catch (err) {
-    console.error('Error getting and updating unverified accounts %O', err);
-    throw new Error(`Error getting and updating unverified accounts ${err}`);
+  } catch (error) {
+    console.error('Error getting and updating unverified accounts %o', error);
+    throw new Error(`Error getting and updating unverified accounts ${error}`);
   }
 };
 var update_unverified_accounts_default = updateUnverifiedAccounts;
@@ -310,6 +310,7 @@ var POLICY = {
       CONTRACT_COMPLETION_DATE_MONTH: `${CONTRACT_COMPLETION_DATE}-month`,
       CONTRACT_COMPLETION_DATE_YEAR: `${CONTRACT_COMPLETION_DATE}-year`,
       TOTAL_CONTRACT_VALUE: 'totalValueOfContract',
+      REQUESTED_CREDIT_LIMIT: 'requestedCreditLimit',
     },
     MULTIPLE: {
       TOTAL_MONTHS_OF_COVER: 'totalMonthsOfCover',
@@ -394,7 +395,7 @@ var EXPORTER_BUSINESS = {
   },
   YOUR_COMPANY: {
     YOUR_BUSINESS: 'yourBusiness',
-    TRADING_ADDRESS: 'hasDifferentTradingAddress',
+    HAS_DIFFERENT_TRADING_ADDRESS: 'hasDifferentTradingAddress',
     HAS_DIFFERENT_TRADING_NAME: 'hasDifferentTradingName',
     DIFFERENT_TRADING_NAME: 'differentTradingName',
     WEBSITE: 'companyWebsite',
@@ -528,7 +529,6 @@ var INSURANCE_FIELD_IDS = {
     ALTERNATIVE_CURRENCY_CODE: 'alternativeCurrencyCode',
   },
   SUBMISSION_DEADLINE: 'submissionDeadline',
-  MIGRATED_FROM_V1_TO_V2: 'migratedV1toV2',
   ACCOUNT: account_default,
   POLICY: policy_default,
   EXPORTER_BUSINESS: business_default,
@@ -604,7 +604,6 @@ var CUSTOM_RESOLVERS = [
   'getCompaniesHouseInformation',
   'getApplicationByReferenceNumber',
   'submitApplication',
-  'updateCompanyPostDataMigration',
   // feedback
   'createFeedbackAndSendEmail',
   'getApimCisCountries',
@@ -616,6 +615,7 @@ if (isDevEnvironment) {
     'addAndGetOTP',
     'createApplications',
     'createAnAbandonedApplication',
+    'createManyApplications',
     'createBuyer',
     'deleteAnAccount',
     'deleteApplications',
@@ -630,25 +630,29 @@ var SUPPORTED_CURRENCIES = ['EUR', 'GBP', 'JPY', 'USD'];
 var GBP = 'GBP';
 
 // constants/application/versions/index.ts
-var VERSIONS = [
-  {
-    VERSION_NUMBER: '1',
-    OVER_500K_SUPPORT: false,
-    MAXIMUM_BUYER_CAN_OWE: 5e5,
-    TOTAL_VALUE_OF_CONTRACT: 5e5,
-    DEFAULT_FINAL_DESTINATION_KNOWN: true,
-    DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: false,
-    BROKER_ADDRESS_AS_MULTIPLE_FIELDS: true,
-  },
-  {
-    VERSION_NUMBER: '2',
-    OVER_500K_SUPPORT: true,
-    DEFAULT_FINAL_DESTINATION_KNOWN: null,
-    DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: null,
-    DEFAULT_CURRENCY: GBP,
-    BROKER_ADDRESS_AS_MULTIPLE_FIELDS: false,
-  },
-];
+var VERSION_1 = {
+  VERSION_NUMBER: '1',
+  OVER_500K_SUPPORT: false,
+  MAXIMUM_BUYER_CAN_OWE: 5e5,
+  TOTAL_VALUE_OF_CONTRACT: 5e5,
+  DEFAULT_FINAL_DESTINATION_KNOWN: true,
+  DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: false,
+  BROKER_ADDRESS_AS_MULTIPLE_FIELDS: true,
+};
+var VERSION_2 = {
+  VERSION_NUMBER: '2',
+  OVER_500K_SUPPORT: true,
+  DEFAULT_FINAL_DESTINATION_KNOWN: null,
+  DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: null,
+  DEFAULT_CURRENCY: GBP,
+  BROKER_ADDRESS_AS_MULTIPLE_FIELDS: false,
+};
+var VERSION_3 = {
+  ...VERSION_2,
+  VERSION_NUMBER: '3',
+  REQUESTED_CREDIT_LIMIT_REQUIRED: true,
+};
+var VERSIONS = [VERSION_1, VERSION_2, VERSION_3];
 var versions_default = VERSIONS;
 
 // constants/application/get-application-definition/index.ts
@@ -674,6 +678,7 @@ var APPLICATION = {
   DEAL_TYPE: 'EXIP',
   SUBMISSION_COUNT_DEFAULT: 0,
   SUBMISSION_DEADLINE_IN_MONTHS: 1,
+  SUBMISSION_DEADLINE_IN_DAYS: 30,
   ALL_SECTIONS_ROUTE: '/all-sections',
   SUBMISSION_DEADLINE_EMAIL: {
     REMINDER_DAYS: 2,
@@ -702,7 +707,10 @@ var APPLICATION = {
       MINIMUM: 1,
       MAXIMUM: LATEST_VERSION.TOTAL_VALUE_OF_CONTRACT,
     },
-    TOTAL_MONTHS_OF_COVER: 12,
+    TOTAL_MONTHS_OF_COVER: {
+      MINIMUM: 1,
+      MAXIMUM: 12,
+    },
     MAXIMUM_BUYER_CAN_OWE: LATEST_VERSION.MAXIMUM_BUYER_CAN_OWE,
   },
   STATUS: {
@@ -741,7 +749,7 @@ var COVER_PERIOD = {
 
 // constants/cron/index.ts
 var CRON_DESCRIPTION_ACCOUNT_UPDATE_UNVERIFIED = 'Update unverified accounts (over 24hrs) to isInactive';
-var CRON_DESCRIPTION_APPLICATION_UPDATE_INACTIVE = 'Update inactive applications (over 30 days) to Abandoned';
+var CRON_DESCRIPTION_APPLICATION_UPDATE_INACTIVE = `Update inactive applications (over ${APPLICATION.SUBMISSION_DEADLINE_IN_DAYS}) to Abandoned`;
 var CRON_DESCRIPTION_APPLICATION_SUBMISSION_DEADLINE_EMAIL = 'Email application submission deadline reminder';
 
 // constants/date-format.ts
@@ -832,7 +840,15 @@ var EXTERNAL_API_DEFINITIONS = {
       NO: 'N',
     },
     NO_COVER: 'Off cover',
-    INVALID_COUNTRIES: ['EC Market n/k', 'Non EC Market n/k', 'Non UK', 'Third Country', 'Eastern and Southern African Trade and Development Bank'],
+    INVALID_COUNTRIES: [
+      'CABEI',
+      'Cor Andino Fom',
+      'Eastern and Southern African Trade and Development Bank',
+      'EC Market n/k',
+      'Non EC Market n/k',
+      'Non UK',
+      'Third Country',
+    ],
     INVALID_CURRENCIES: ['Gold'],
   },
   COMPANIES_HOUSE: {
@@ -873,7 +889,7 @@ var FIELD_VALUES = {
     // default multiple policy length in months
     MULTIPLE: 12,
   },
-  TOTAL_MONTHS_OF_COVER: Array.from(Array(POLICY2.TOTAL_MONTHS_OF_COVER).keys()),
+  TOTAL_MONTHS_OF_COVER: Array.from(Array(POLICY2.TOTAL_MONTHS_OF_COVER.MAXIMUM).keys()),
   YES: 'Yes',
   NO: 'No',
 };
@@ -917,6 +933,9 @@ var XLSX_CONFIG = {
 var MAXIMUM_CHARACTERS = {
   ABOUT_GOODS_OR_SERVICES_DESCRIPTION: 1e3,
   ACCOUNT_NUMBER: 8,
+  ACCOUNT: {
+    NAME: 400,
+  },
   AGENT_NAME: 800,
   AGENT_SERVICE_DESCRIPTION: 1e3,
   BIC_SWIFT_CODE: 11,
@@ -933,6 +952,8 @@ var MAXIMUM_CHARACTERS = {
   CONNECTION_WITH_BUYER_DESCRIPTION: 1e3,
   CREDIT_PERIOD_WITH_BUYER: 1e3,
   DECLINED_BY_PRIVATE_MARKET_DESCRIPTION: 1e3,
+  DIFFERENT_NAME_ON_POLICY_POSITION: 50,
+  DIFFERENT_NAME_ON_POLICY: 50,
   EMAIL: 300,
   EXPORT_CONTRACT: {
     OTHER_AWARD_METHOD: 200,
@@ -944,9 +965,17 @@ var MAXIMUM_CHARACTERS = {
   FULL_ADDRESS: 500,
   IBAN: 34,
   LOSS_PAYEE_NAME: 200,
+  NAME_ON_POLICY_POSITION: 50,
   PAYMENT_TERMS_DESCRIPTION: 1e3,
   PERCENTAGE: 100,
   POLICY_CONTACT_NAME: 400,
+  QUOTE: {
+    CREDIT_PERIOD: 2,
+  },
+  REQUESTED_JOINTLY_INSURED_PARTY: {
+    COMPANY_NAME: 200,
+    COMPANY_NUMBER: 100,
+  },
   SORT_CODE: 6,
 };
 
@@ -1130,9 +1159,9 @@ var getInactiveApplications = async (context) => {
       query: 'id status',
     });
     return applications;
-  } catch (err) {
-    console.error('Error getting inactive applications (getInactiveApplications helper) %O', err);
-    throw new Error(`Error getting inactive applications (getInactiveApplications helper) ${err}`);
+  } catch (error) {
+    console.error('Error getting inactive applications (getInactiveApplications helper) %o', error);
+    throw new Error(`Error getting inactive applications (getInactiveApplications helper) ${error}`);
   }
 };
 var get_inactive_applications_default = getInactiveApplications;
@@ -1162,9 +1191,9 @@ var mapAndUpdateInactiveApplications = async (applications, context) => {
     await context.db.Application.updateMany({
       data: updateData,
     });
-  } catch (err) {
-    console.error('Error mapping and updating inactive applications %O', err);
-    throw new Error(`Error mapping and updating inactive applications ${err}`);
+  } catch (error) {
+    console.error('Error mapping and updating inactive applications %o', error);
+    throw new Error(`Error mapping and updating inactive applications ${error}`);
   }
 };
 var map_and_update_inactive_applications_default = mapAndUpdateInactiveApplications;
@@ -1180,9 +1209,9 @@ var updateInactiveApplications = async (context) => {
     return {
       success: true,
     };
-  } catch (err) {
-    console.error('Error getting and updating inactive applications %O', err);
-    throw new Error(`Error getting and updating inactive applications ${err}`);
+  } catch (error) {
+    console.error('Error getting and updating inactive applications %o', error);
+    throw new Error(`Error getting and updating inactive applications ${error}`);
   }
 };
 var update_inactive_applications_default = updateInactiveApplications;
@@ -1245,9 +1274,9 @@ var getExpiringApplications = async (context) => {
       query: APPLICATION.GET_QUERY,
     });
     return applications;
-  } catch (err) {
-    console.error('Error getting expiring applications (getExpiringApplications helper) %O', err);
-    throw new Error(`Error getting expiring applications (getExpiringApplications helper) ${err}`);
+  } catch (error) {
+    console.error('Error getting expiring applications (getExpiringApplications helper) %o', error);
+    throw new Error(`Error getting expiring applications (getExpiringApplications helper) ${error}`);
   }
 };
 var get_expiring_applications_default = getExpiringApplications;
@@ -1314,9 +1343,9 @@ var notify = {
         success: true,
         emailRecipient: sendToEmailAddress,
       };
-    } catch (err) {
-      console.error('Error calling Notify API. Unable to send email %O', err);
-      throw new Error(`Calling Notify API. Unable to send email ${err}`);
+    } catch (error) {
+      console.error('Error calling Notify API. Unable to send email %o', error);
+      throw new Error(`Calling Notify API. Unable to send email ${error}`);
     }
   },
 };
@@ -1335,9 +1364,9 @@ var callNotify = async (templateId, emailAddress, variables, file) => {
       return emailResponse;
     }
     throw new Error(`Sending email ${emailResponse}`);
-  } catch (err) {
-    console.error('Error sending email %O', err);
-    throw new Error(`Sending email ${err}`);
+  } catch (error) {
+    console.error('Error sending email %o', error);
+    throw new Error(`Sending email ${error}`);
   }
 };
 
@@ -1349,9 +1378,9 @@ var confirmEmailAddress = async (emailAddress, urlOrigin, name, verificationHash
     const variables = { urlOrigin, name, confirmToken: verificationHash, id };
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
-  } catch (err) {
-    console.error('Error sending confirm email address email %O', err);
-    throw new Error(`Sending confirm email address email ${err}`);
+  } catch (error) {
+    console.error('Error sending confirm email address email %o', error);
+    throw new Error(`Sending confirm email address email ${error}`);
   }
 };
 
@@ -1363,9 +1392,9 @@ var accessCodeEmail = async (emailAddress, name, securityCode) => {
     const variables = { name, securityCode };
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
-  } catch (err) {
-    console.error('Error sending access code email for account sign in %O', err);
-    throw new Error(`Sending access code email for account sign in ${err}`);
+  } catch (error) {
+    console.error('Error sending access code email for account sign in %o', error);
+    throw new Error(`Sending access code email for account sign in ${error}`);
   }
 };
 
@@ -1377,9 +1406,9 @@ var passwordResetLink = async (urlOrigin, emailAddress, name, passwordResetHash)
     const variables = { urlOrigin, name, passwordResetToken: passwordResetHash };
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
-  } catch (err) {
-    console.error('Error sending email for account password reset %O', err);
-    throw new Error(`Sending email for account password reset ${err}`);
+  } catch (error) {
+    console.error('Error sending email for account password reset %o', error);
+    throw new Error(`Sending email for account password reset ${error}`);
   }
 };
 
@@ -1391,9 +1420,9 @@ var reactivateAccountLink = async (urlOrigin, emailAddress, name, reactivationHa
     const variables = { urlOrigin, name, reactivationToken: reactivationHash };
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
-  } catch (err) {
-    console.error('Error sending email for account reactivation %O', err);
-    throw new Error(`Sending email for account reactivation ${err}`);
+  } catch (error) {
+    console.error('Error sending email for account reactivation %o', error);
+    throw new Error(`Sending email for account reactivation ${error}`);
   }
 };
 
@@ -1422,9 +1451,9 @@ var readFile = async (filePath) => {
       return file;
     }
     throw new Error('Reading file - does not exist or is unaccepted file type');
-  } catch (err) {
-    console.error('Error reading file %O', err);
-    throw new Error(`Reading file ${err}`);
+  } catch (error) {
+    console.error('Error reading file %o', error);
+    throw new Error(`Reading file ${error}`);
   }
 };
 var unlink = async (filePath) => {
@@ -1435,9 +1464,9 @@ var unlink = async (filePath) => {
       await import_fs.promises.unlink(filePath);
     }
     return false;
-  } catch (err) {
-    console.error('Error deleting file %O', err);
-    throw new Error(`Deleting file ${err}`);
+  } catch (error) {
+    console.error('Error deleting file %o', error);
+    throw new Error(`Deleting file ${error}`);
   }
 };
 var fileSystem = {
@@ -1463,9 +1492,9 @@ var application = {
       const { emailAddress } = variables;
       const response = await callNotify(templateId, emailAddress, variables);
       return response;
-    } catch (err) {
-      console.error('Error sending application submitted email to to application owner or provided business contact %O', err);
-      throw new Error(`Sending application submitted email to to application owner or provided business contact ${err}`);
+    } catch (error) {
+      console.error('Error sending application submitted email to to application owner or provided business contact %o', error);
+      throw new Error(`Sending application submitted email to to application owner or provided business contact ${error}`);
     }
   },
   /**
@@ -1488,9 +1517,9 @@ var application = {
         return response;
       }
       throw new Error('Sending application submitted email to underwriting team - invalid file / file not found');
-    } catch (err) {
-      console.error('Error sending application submitted email to underwriting team %O', err);
-      throw new Error(`Sending application submitted email to underwriting team ${err}`);
+    } catch (error) {
+      console.error('Error sending application submitted email to underwriting team %o', error);
+      throw new Error(`Sending application submitted email to underwriting team ${error}`);
     }
   },
 };
@@ -1503,9 +1532,9 @@ var documentsEmail = async (variables, templateId) => {
     const { emailAddress } = variables;
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
-  } catch (err) {
-    console.error('Error sending documents email %O', err);
-    throw new Error(`Sending documents email ${err}`);
+  } catch (error) {
+    console.error('Error sending documents email %o', error);
+    throw new Error(`Sending documents email ${error}`);
   }
 };
 
@@ -1535,9 +1564,9 @@ var insuranceFeedbackEmail = async (variables) => {
     }
     const response = await callNotify(templateId, emailAddress, emailVariables);
     return response;
-  } catch (err) {
-    console.error('Error sending insurance feedback email %O', err);
-    throw new Error(`Sending insurance feedback email ${err}`);
+  } catch (error) {
+    console.error('Error sending insurance feedback email %o', error);
+    throw new Error(`Sending insurance feedback email ${error}`);
   }
 };
 
@@ -1548,9 +1577,9 @@ var submissionDeadlineEmail = async (emailAddress, submissionDeadlineEmailVariab
     const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.DEADLINE_REMINDER;
     const response = await callNotify(templateId, emailAddress, submissionDeadlineEmailVariables);
     return response;
-  } catch (err) {
-    console.error('Error sending submission deadline email for applicationId %s - %O', submissionDeadlineEmailVariables.referenceNumber, err);
-    throw new Error(`Sending submission deadline email for ${submissionDeadlineEmailVariables.referenceNumber} - ${err}`);
+  } catch (error) {
+    console.error('Error sending submission deadline email for applicationId %s - %o', submissionDeadlineEmailVariables.referenceNumber, error);
+    throw new Error(`Sending submission deadline email for ${submissionDeadlineEmailVariables.referenceNumber} - ${error}`);
   }
 };
 
@@ -1574,13 +1603,14 @@ var send = async (applications) => {
     console.info('Sending application submission deadline emails - send helper');
     const mapped = applications.map(async (application2) => {
       const variables = map_application_submission_deadline_variables_default(application2);
-      return emails_default.submissionDeadlineEmail(variables.email, variables);
+      const response = await emails_default.submissionDeadlineEmail(variables.email, variables);
+      return response;
     });
     const promises = await Promise.all(mapped);
     return promises;
-  } catch (err) {
-    console.error('Error sending application submission deadline email (send helper) %O', err);
-    throw new Error(`Sending application submission deadline email (send helper) ${err}`);
+  } catch (error) {
+    console.error('Error sending application submission deadline email (send helper) %o', error);
+    throw new Error(`Sending application submission deadline email (send helper) ${error}`);
   }
 };
 var applicationSubmissionDeadineEmail = {
@@ -1607,9 +1637,9 @@ var applicationSubmissionDeadlineEmail = async (context) => {
     return {
       success: true,
     };
-  } catch (err) {
-    console.error('Error sending application submission deadline email (emailApplicationSubmissionDeadlineEmail helper) %O', err);
-    throw new Error(`Sending application submission deadline email (emailApplicationSubmissionDeadlineEmail helper) ${err}`);
+  } catch (error) {
+    console.error('Error sending application submission deadline email (emailApplicationSubmissionDeadlineEmail helper) %o', error);
+    throw new Error(`Sending application submission deadline email (emailApplicationSubmissionDeadlineEmail helper) ${error}`);
   }
 };
 var send_email_application_submission_deadline_default = applicationSubmissionDeadlineEmail;
@@ -1641,7 +1671,6 @@ var import_core2 = require('@keystone-6/core');
 var import_access = require('@keystone-6/core/access');
 var import_fields = require('@keystone-6/core/fields');
 var import_fields_document = require('@keystone-6/fields-document');
-var import_date_fns3 = require('date-fns');
 
 // helpers/update-application/index.ts
 var timestamp = async (context, applicationId) => {
@@ -1657,9 +1686,9 @@ var timestamp = async (context, applicationId) => {
       },
     });
     return application2;
-  } catch (err) {
-    console.error('Error updating application updatedAt timestamp %O', err);
-    throw new Error(`Updating application updatedAt timestamp ${err}`);
+  } catch (error) {
+    console.error('Error updating application updatedAt timestamp %o', error);
+    throw new Error(`Updating application updatedAt timestamp ${error}`);
   }
 };
 var updateApplication = {
@@ -1724,17 +1753,12 @@ var nullable_checkbox_default = nullableCheckbox;
 
 // schema.ts
 var {
-  DEAL_TYPE,
   DEFAULT_CURRENCY,
   DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER,
   EXPORT_CONTRACT: { AGENT_SERVICE_CHARGE },
-  LATEST_VERSION: LATEST_VERSION2,
   POLICY: POLICY3,
   POLICY_TYPE: POLICY_TYPE2,
-  SUBMISSION_COUNT_DEFAULT,
-  SUBMISSION_DEADLINE_IN_MONTHS,
   SUBMISSION_TYPE,
-  STATUS,
 } = APPLICATION;
 var lists = {
   ReferenceNumber: {
@@ -1755,14 +1779,12 @@ var lists = {
         isIndexed: true,
       }),
       submissionCount: (0, import_fields.integer)({
-        defaultValue: SUBMISSION_COUNT_DEFAULT,
         validation: { isRequired: true },
       }),
       submissionDate: (0, import_fields.timestamp)(),
       submissionDeadline: (0, import_fields.timestamp)(),
       submissionType: (0, import_fields.select)({
         options: [{ label: SUBMISSION_TYPE.MIA, value: SUBMISSION_TYPE.MIA }],
-        defaultValue: SUBMISSION_TYPE.MIA,
       }),
       status: (0, import_fields.text)({
         validation: { isRequired: true },
@@ -1783,117 +1805,13 @@ var lists = {
       policyContact: (0, import_fields.relationship)({ ref: 'PolicyContact' }),
       sectionReview: (0, import_fields.relationship)({ ref: 'SectionReview' }),
       version: (0, import_fields.text)({
-        defaultValue: LATEST_VERSION2.VERSION_NUMBER,
         validation: { isRequired: true },
       }),
       dealType: (0, import_fields.text)({
-        defaultValue: DEAL_TYPE,
         validation: { isRequired: true },
         db: { nativeType: 'VarChar(4)' },
       }),
-      migratedV1toV2: nullable_checkbox_default(),
-    },
-    hooks: {
-      resolveInput: async ({ operation, resolvedData, context }) => {
-        if (operation === 'create') {
-          try {
-            console.info('Creating new application - adding default data to a new application');
-            const modifiedData = resolvedData;
-            const { id: newReferenceNumber } = await context.db.ReferenceNumber.createOne({
-              data: {},
-            });
-            modifiedData.referenceNumber = newReferenceNumber;
-            const { id: businessId } = await context.db.Business.createOne({
-              data: {},
-            });
-            modifiedData.business = {
-              connect: {
-                id: businessId,
-              },
-            };
-            const { id: policyContactId } = await context.db.PolicyContact.createOne({
-              data: {},
-            });
-            modifiedData.policyContact = {
-              connect: {
-                id: policyContactId,
-              },
-            };
-            const { id: brokerId } = await context.db.Broker.createOne({
-              data: {},
-            });
-            modifiedData.broker = {
-              connect: {
-                id: brokerId,
-              },
-            };
-            const now2 = /* @__PURE__ */ new Date();
-            modifiedData.createdAt = now2;
-            modifiedData.updatedAt = now2;
-            modifiedData.submissionDeadline = (0, import_date_fns3.addMonths)(new Date(now2), SUBMISSION_DEADLINE_IN_MONTHS);
-            modifiedData.submissionType = SUBMISSION_TYPE.MIA;
-            modifiedData.status = STATUS.IN_PROGRESS;
-            return modifiedData;
-          } catch (err) {
-            console.error('Error adding default data to a new application. %O', err);
-            return false;
-          }
-        }
-        return resolvedData;
-      },
-      afterOperation: async ({ operation, item, context }) => {
-        if (operation === 'create') {
-          try {
-            console.info('Adding application ID to relationships');
-            const applicationId = item.id;
-            const { referenceNumber } = item;
-            const { policyContactId, businessId, brokerId } = item;
-            await context.db.ReferenceNumber.updateOne({
-              where: { id: String(referenceNumber) },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId,
-                  },
-                },
-              },
-            });
-            await context.db.PolicyContact.updateOne({
-              where: { id: policyContactId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId,
-                  },
-                },
-              },
-            });
-            await context.db.Business.updateOne({
-              where: { id: businessId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId,
-                  },
-                },
-              },
-            });
-            await context.db.Broker.updateOne({
-              where: { id: brokerId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId,
-                  },
-                },
-              },
-            });
-          } catch (err) {
-            console.error('Error adding an application ID to relationships %O', err);
-            return false;
-          }
-        }
-      },
+      migratedV2toV3: nullable_checkbox_default(),
     },
     access: import_access.allowAll,
   },
@@ -1997,6 +1915,7 @@ var lists = {
       totalMonthsOfCover: (0, import_fields.integer)(),
       totalSalesToBuyer: (0, import_fields.integer)(),
       maximumBuyerWillOwe: (0, import_fields.integer)(),
+      requestedCreditLimit: (0, import_fields.integer)(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -2653,12 +2572,12 @@ var plugins_default = apolloPlugins;
 // apollo/format-graphql-error/index.ts
 var import_config4 = require('dotenv/config');
 var import_apollo_server_express = require('apollo-server-express');
-var formatGraphQlError = (err) => {
+var formatGraphQlError = (error) => {
   const isDevEnvironment3 = process.env.NODE_ENV === 'development';
   if (!isDevEnvironment3) {
     return new import_apollo_server_express.ValidationError('Invalid request');
   }
-  return err;
+  return error;
 };
 var format_graphql_error_default = formatGraphQlError;
 
@@ -2874,6 +2793,16 @@ var typeDefs = `
     referenceNumber: Int
   }
 
+  type ApplicationResponse {
+    id: String
+    referenceNumber: Int
+  }
+
+  type CreateManyApplicationsResponse {
+    success: Boolean!
+    applications: [ApplicationResponse]
+  }
+
   type CreateAnAbandonedApplicationResponse {
     success: Boolean!
     id: String
@@ -2949,6 +2878,7 @@ var typeDefs = `
     submissionDate: DateTime
     referenceNumber: Int
     status: String!
+    totalContractValueOverThreshold: Boolean
     eligibility: Eligibility
     exportContract: ExportContract
     policy: Policy
@@ -2985,6 +2915,12 @@ var typeDefs = `
       company: CompanyInput!
       sectionReview: SectionReviewInput!
     ): CreateAnApplicationResponse
+
+     """ create many applications """
+    createManyApplications(
+      accountId: String!
+      count: Int!
+    ): CreateManyApplicationsResponse
 
     """ create an application """
     createAnAbandonedApplication(
@@ -3093,12 +3029,6 @@ var typeDefs = `
       iban: String
       bicSwiftCode: String
     ): SuccessResponse
-
-    """ update a company (post data migration) """
-    updateCompanyPostDataMigration(
-      id: String
-      company: CompanyInput
-    ): SuccessResponse
   }
 
   type Query {
@@ -3156,9 +3086,9 @@ var getAccountStatusById = async (context, id) => {
       query: 'id isVerified isBlocked isInactive',
     });
     return accountStatus2;
-  } catch (err) {
-    console.error('Error getting account status by ID %O', err);
-    throw new Error(`Getting account status by ID ${err}`);
+  } catch (error) {
+    console.error('Error getting account status by ID %o', error);
+    throw new Error(`Getting account status by ID ${error}`);
   }
 };
 var get_account_status_by_id_default = getAccountStatusById;
@@ -3184,9 +3114,9 @@ var getAccountByField = async (context, field, value) => {
       status: accountStatus2,
     };
     return populatedAccount;
-  } catch (err) {
-    console.error('Error getting account by field/value %O', err);
-    throw new Error(`Getting account by field/value ${err}`);
+  } catch (error) {
+    console.error('Error getting account by field/value %o', error);
+    throw new Error(`Getting account by field/value ${error}`);
   }
 };
 var get_account_by_field_default = getAccountByField;
@@ -3279,9 +3209,9 @@ var getAccountById = async (context, accountId) => {
       },
     });
     return account2;
-  } catch (err) {
-    console.error('Error getting account by ID %O', err);
-    throw new Error(`Getting account by ID ${err}`);
+  } catch (error) {
+    console.error('Error getting account by ID %o', error);
+    throw new Error(`Getting account by ID ${error}`);
   }
 };
 var get_account_by_id_default = getAccountById;
@@ -3297,9 +3227,9 @@ var account = async (context, accountId, updateData) => {
       data: updateData,
     });
     return updatedAccount;
-  } catch (err) {
-    console.error('Error updating account %O', err);
-    throw new Error(`Updating account ${err}`);
+  } catch (error) {
+    console.error('Error updating account %o', error);
+    throw new Error(`Updating account ${error}`);
   }
 };
 var accountStatus = async (context, accountStatusId, updateData) => {
@@ -3315,9 +3245,9 @@ var accountStatus = async (context, accountStatusId, updateData) => {
       },
     });
     return updatedAccountStatus;
-  } catch (err) {
-    console.error('Error updating account status %O', err);
-    throw new Error(`Updating account status ${err}`);
+  } catch (error) {
+    console.error('Error updating account status %o', error);
+    throw new Error(`Updating account status ${error}`);
   }
 };
 var update = {
@@ -3354,13 +3284,13 @@ var send2 = async (context, urlOrigin, accountId) => {
     const { email, id } = account2;
     const name = get_full_name_string_default(account2);
     const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, latestVerificationHash, id);
-    if (emailResponse.success) {
+    if (emailResponse?.success) {
       return emailResponse;
     }
     throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${emailResponse}`);
-  } catch (err) {
-    console.error('Error sending email verification (sendEmailConfirmEmailAddress helper) %O', err);
-    throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${err}`);
+  } catch (error) {
+    console.error('Error sending email verification (sendEmailConfirmEmailAddress helper) %o', error);
+    throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${error}`);
   }
 };
 var confirmEmailAddressEmail = {
@@ -3408,9 +3338,9 @@ var send3 = async (variables, context) => {
       };
     }
     return { accountId, email, success: false };
-  } catch (err) {
-    console.error('Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper) %O', err);
-    throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper) ${err}`);
+  } catch (error) {
+    console.error('Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper) %o', error);
+    throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper) ${error}`);
   }
 };
 var sendEmailReactivateAccountLinkHelper = {
@@ -3516,9 +3446,9 @@ var createAnAccount = async (root, variables, context) => {
       };
     }
     throw new Error(`Account creation - sending email verification for account creation ${emailResponse}`);
-  } catch (err) {
-    console.error('Error Account creation - creating account %O', err);
-    throw new Error(`Account creation - creating account ${err}`);
+  } catch (error) {
+    console.error('Error Account creation - creating account %o', error);
+    throw new Error(`Account creation - creating account ${error}`);
   }
 };
 var create_an_account_default = createAnAccount;
@@ -3537,9 +3467,9 @@ var getAuthenticationRetriesByAccountId = async (context, accountId) => {
       },
     });
     return retries;
-  } catch (err) {
-    console.error('Error getting authentication retries by account ID %O', err);
-    throw new Error(`Getting authentication retries by account ID ${err}`);
+  } catch (error) {
+    console.error('Error getting authentication retries by account ID %o', error);
+    throw new Error(`Getting authentication retries by account ID ${error}`);
   }
 };
 var get_authentication_retries_by_account_id_default = getAuthenticationRetriesByAccountId;
@@ -3575,15 +3505,15 @@ var deleteAnAccount = async (root, variables, context) => {
     return {
       success: true,
     };
-  } catch (err) {
-    console.error('Error deleting account %O', err);
-    throw new Error(`Deleting account ${err}`);
+  } catch (error) {
+    console.error('Error deleting account %o', error);
+    throw new Error(`Deleting account ${error}`);
   }
 };
 var delete_an_account_default = deleteAnAccount;
 
 // custom-resolvers/mutations/verify-account-email-address/index.ts
-var import_date_fns4 = require('date-fns');
+var import_date_fns3 = require('date-fns');
 var { ID, EMAIL: EMAIL2, VERIFICATION_EXPIRY } = account_default;
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
@@ -3591,6 +3521,13 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
     const account2 = await get_account_by_field_default(context, ID, variables.id);
     if (!account2) {
       console.info('Unable to verify account email address - account does not exist');
+      return {
+        success: false,
+        invalid: true,
+      };
+    }
+    if (account2.verificationHash !== variables.token) {
+      console.info('Unable to verify account email address - token does not match hash');
       return {
         success: false,
         invalid: true,
@@ -3605,7 +3542,7 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
     const { id } = account2;
     const { id: statusId } = account2.status;
     const now2 = /* @__PURE__ */ new Date();
-    const canActivateAccount = (0, import_date_fns4.isBefore)(now2, account2[VERIFICATION_EXPIRY]);
+    const canActivateAccount = (0, import_date_fns3.isBefore)(now2, account2[VERIFICATION_EXPIRY]);
     if (!canActivateAccount) {
       console.info('Unable to verify account email address - verification period has expired');
       return {
@@ -3629,9 +3566,9 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
       accountId: id,
       emailRecipient: account2[EMAIL2],
     };
-  } catch (err) {
-    console.error('Error verifying account email address %O', err);
-    throw new Error(`Verifying account email address ${err}`);
+  } catch (error) {
+    console.error('Error verifying account email address %o', error);
+    throw new Error(`Verifying account email address ${error}`);
   }
 };
 var verify_account_email_address_default = verifyAccountEmailAddress;
@@ -3645,9 +3582,9 @@ var sendEmailConfirmEmailAddressMutation = async (root, variables, context) => {
       return emailResponse;
     }
     throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${emailResponse}`);
-  } catch (err) {
-    console.error('Error sending email verification for account creation (sendEmailConfirmEmailAddress mutation) %O', err);
-    throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${err}`);
+  } catch (error) {
+    console.error('Error sending email verification for account creation (sendEmailConfirmEmailAddress mutation) %o', error);
+    throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${error}`);
   }
 };
 var send_email_confirm_email_address_default2 = sendEmailConfirmEmailAddressMutation;
@@ -3675,15 +3612,15 @@ var createAuthenticationRetryEntry = async (context, accountId) => {
     return {
       success: false,
     };
-  } catch (err) {
-    console.error('Error creating account authentication retry entry %O', err);
-    throw new Error(`${err}`);
+  } catch (error) {
+    console.error('Error creating account authentication retry entry %o', error);
+    throw new Error(`${error}`);
   }
 };
 var create_authentication_retry_entry_default = createAuthenticationRetryEntry;
 
 // helpers/should-block-account/index.ts
-var import_date_fns5 = require('date-fns');
+var import_date_fns4 = require('date-fns');
 var { MAX_AUTH_RETRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT2;
 var shouldBlockAccount = async (context, accountId) => {
   console.info('Checking account authentication retries %s', accountId);
@@ -3693,7 +3630,7 @@ var shouldBlockAccount = async (context, accountId) => {
     const retriesInTimeframe = [];
     retries.forEach((retry) => {
       const retryDate = retry.createdAt;
-      const isWithinLast24Hours = (0, import_date_fns5.isAfter)(retryDate, MAX_AUTH_RETRIES_TIMEFRAME) && (0, import_date_fns5.isBefore)(retryDate, now2);
+      const isWithinLast24Hours = (0, import_date_fns4.isAfter)(retryDate, MAX_AUTH_RETRIES_TIMEFRAME) && (0, import_date_fns4.isBefore)(retryDate, now2);
       if (isWithinLast24Hours) {
         retriesInTimeframe.push(retry.id);
       }
@@ -3703,9 +3640,9 @@ var shouldBlockAccount = async (context, accountId) => {
       return true;
     }
     return false;
-  } catch (err) {
-    console.error('Error checking account authentication retries %O', err);
-    throw new Error(`Checking account authentication retries  ${err}`);
+  } catch (error) {
+    console.error('Error checking account authentication retries %o', error);
+    throw new Error(`Checking account authentication retries  ${error}`);
   }
 };
 var should_block_account_default = shouldBlockAccount;
@@ -3720,9 +3657,9 @@ var blockAccount = async (context, statusId) => {
       return true;
     }
     return false;
-  } catch (err) {
-    console.error('Error blocking account %O', err);
-    throw new Error(`Blocking account ${err}`);
+  } catch (error) {
+    console.error('Error blocking account %o', error);
+    throw new Error(`Blocking account ${error}`);
   }
 };
 var block_account_default = blockAccount;
@@ -3753,9 +3690,9 @@ var generateOtp = () => {
       hash,
       expiry,
     };
-  } catch (err) {
-    console.error('Error generating OTP %O', err);
-    throw new Error(`Error generating OTP ${err}`);
+  } catch (error) {
+    console.error('Error generating OTP %o', error);
+    throw new Error(`Error generating OTP ${error}`);
   }
 };
 var generate = {
@@ -3781,9 +3718,9 @@ var generateOTPAndUpdateAccount = async (context, accountId) => {
       success: true,
       securityCode,
     };
-  } catch (err) {
-    console.error('Error adding OTP to an account %O', err);
-    throw new Error(`Adding OTP to an account ${err}`);
+  } catch (error) {
+    console.error('Error adding OTP to an account %o', error);
+    throw new Error(`Adding OTP to an account ${error}`);
   }
 };
 var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
@@ -3818,9 +3755,9 @@ var accountSignInChecks = async (context, account2, urlOrigin) => {
     return {
       success: false,
     };
-  } catch (err) {
-    console.error('Error validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) %O', err);
-    throw new Error(`Validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) ${err}`);
+  } catch (error) {
+    console.error('Error validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) %o', error);
+    throw new Error(`Validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) ${error}`);
   }
 };
 var account_sign_in_checks_default = accountSignInChecks;
@@ -3865,9 +3802,9 @@ var accountSignIn = async (root, variables, context) => {
       return { success: false };
     }
     return { success: false };
-  } catch (err) {
-    console.error('Error signing into account %O', err);
-    throw new Error(`Signing in account (accountSignIn mutation) ${err}`);
+  } catch (error) {
+    console.error('Error signing into account %o', error);
+    throw new Error(`Signing in account (accountSignIn mutation) ${error}`);
   }
 };
 var account_sign_in_default = accountSignIn;
@@ -3886,7 +3823,7 @@ var accountSignInSendNewCode = async (root, variables, context) => {
     const { email } = account2;
     const name = get_full_name_string_default(account2);
     const emailResponse = await emails_default.accessCodeEmail(email, name, String(securityCode));
-    if (emailResponse.success) {
+    if (emailResponse?.success) {
       return {
         ...emailResponse,
         accountId: account2.id,
@@ -3895,9 +3832,9 @@ var accountSignInSendNewCode = async (root, variables, context) => {
     return {
       success: false,
     };
-  } catch (err) {
-    console.error('Error generating and sending new sign in code for account (accountSignInSendNewCode mutation) %O', err);
-    throw new Error(`Generating and sending new sign in code for account (accountSignInSendNewCode mutation) ${err}`);
+  } catch (error) {
+    console.error('Error generating and sending new sign in code for account (accountSignInSendNewCode mutation) %o', error);
+    throw new Error(`Generating and sending new sign in code for account (accountSignInSendNewCode mutation) ${error}`);
   }
 };
 var account_sign_in_new_code_default = accountSignInSendNewCode;
@@ -3920,9 +3857,9 @@ var isValidOTP = (securityCode, otpSalt, otpHash) => {
       return true;
     }
     return false;
-  } catch (err) {
-    console.error('Error validating OTP %O', err);
-    throw new Error(`Error validating OTP ${err}`);
+  } catch (error) {
+    console.error('Error validating OTP %o', error);
+    throw new Error(`Error validating OTP ${error}`);
   }
 };
 var is_valid_otp_default = isValidOTP;
@@ -3939,9 +3876,9 @@ var deleteAuthenticationRetries = async (context, accountId) => {
       where: retryIds,
     });
     return result;
-  } catch (err) {
-    console.error('Error deleting authentication retries %O', err);
-    throw new Error(`Deleting authentication retries ${err}`);
+  } catch (error) {
+    console.error('Error deleting authentication retries %o', error);
+    throw new Error(`Deleting authentication retries ${error}`);
   }
 };
 var delete_authentication_retries_default = deleteAuthenticationRetries;
@@ -4033,9 +3970,9 @@ var verifyAccountSignInCode = async (root, variables, context) => {
     return {
       success: false,
     };
-  } catch (err) {
-    console.error('Error verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) %O', err);
-    throw new Error(`Verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) ${err}`);
+  } catch (error) {
+    console.error('Error verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) %o', error);
+    throw new Error(`Verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) ${error}`);
   }
 };
 var verify_account_sign_in_code_default = verifyAccountSignInCode;
@@ -4055,9 +3992,9 @@ var addAndGetOTP = async (root, variables, context) => {
       success: true,
       securityCode,
     };
-  } catch (err) {
-    console.error('Error adding OTP to an account (addAndGetOTP mutation) %O', err);
-    throw new Error(`Adding OTP to an account (addAndGetOTP mutation) ${err}`);
+  } catch (error) {
+    console.error('Error adding OTP to an account (addAndGetOTP mutation) %o', error);
+    throw new Error(`Adding OTP to an account (addAndGetOTP mutation) ${error}`);
   }
 };
 var add_and_get_OTP_default = addAndGetOTP;
@@ -4085,7 +4022,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
     const { id: accountId } = account2;
     const { id: statusId } = account2.status;
     const newRetriesEntry = await create_authentication_retry_entry_default(context, accountId);
-    if (!newRetriesEntry.success) {
+    if (!newRetriesEntry?.success) {
       return { success: false };
     }
     const needToBlockAccount = await should_block_account_default(context, accountId);
@@ -4099,8 +4036,8 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
             accountId,
           };
         }
-      } catch (err) {
-        console.error('Error blocking account $O', err);
+      } catch (error) {
+        console.error('Error blocking account $O', error);
         return { success: false };
       }
     }
@@ -4115,13 +4052,13 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
     console.info('Sending password reset email');
     const name = get_full_name_string_default(account2);
     const emailResponse = await emails_default.passwordResetLink(urlOrigin, email, name, passwordResetHash);
-    if (emailResponse.success) {
+    if (emailResponse?.success) {
       return emailResponse;
     }
     return { success: false };
-  } catch (err) {
-    console.error('Error checking account and sending password reset email (sendEmailPasswordResetLink mutation) $O', err);
-    throw new Error(`Checking account and sending password reset email (sendEmailPasswordResetLink mutation) ${err}`);
+  } catch (error) {
+    console.error('Error checking account and sending password reset email (sendEmailPasswordResetLink mutation) $O', error);
+    throw new Error(`Checking account and sending password reset email (sendEmailPasswordResetLink mutation) ${error}`);
   }
 };
 var send_email_password_reset_link_default = sendEmailPasswordResetLink;
@@ -4149,9 +4086,9 @@ var hasAccountUsedPasswordBefore = async (context, accountId, newPassword) => {
       });
     }
     return usedBefore;
-  } catch (err) {
-    console.error('Error checking if an account has used a password before %O', err);
-    throw new Error(`Checking if an account has used a password before ${err}`);
+  } catch (error) {
+    console.error('Error checking if an account has used a password before %o', error);
+    throw new Error(`Checking if an account has used a password before ${error}`);
   }
 };
 var account_has_used_password_before_default = hasAccountUsedPasswordBefore;
@@ -4167,9 +4104,9 @@ var createAuthenticationEntry = async (context, entry) => {
       },
     });
     return result;
-  } catch (err) {
-    console.error('Error creating authentication entry %O', err);
-    throw new Error(`Creating authentication entry ${err}`);
+  } catch (error) {
+    console.error('Error creating authentication entry %o', error);
+    throw new Error(`Creating authentication entry ${error}`);
   }
 };
 var create_authentication_entry_default = createAuthenticationEntry;
@@ -4243,9 +4180,9 @@ var accountPasswordReset = async (root, variables, context) => {
     return {
       success: true,
     };
-  } catch (err) {
-    console.error('Error resetting account password %O', err);
-    throw new Error(`Resetting account password ${err}`);
+  } catch (error) {
+    console.error('Error resetting account password %o', error);
+    throw new Error(`Resetting account password ${error}`);
   }
 };
 var account_password_reset_default = accountPasswordReset;
@@ -4256,12 +4193,56 @@ var sendEmailReactivateAccountLink = async (root, variables, context) => {
     console.info('Received a request to send reactivate account email/link - checking account');
     const reactiveAccountResponse = await send_email_reactivate_account_link_default.send(variables, context);
     return reactiveAccountResponse;
-  } catch (err) {
-    console.error('Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) %O', err);
-    throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) ${err}`);
+  } catch (error) {
+    console.error('Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) %o', error);
+    throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) ${error}`);
   }
 };
 var send_email_reactivate_account_link_default2 = sendEmailReactivateAccountLink;
+
+// helpers/create-an-application/create-initial-application/index.ts
+var import_date_fns5 = require('date-fns');
+
+// constants/application/initial-application-data/index.ts
+var { STATUS, LATEST_VERSION_NUMBER: LATEST_VERSION_NUMBER2, DEAL_TYPE, SUBMISSION_COUNT_DEFAULT } = APPLICATION;
+var INITIAL_APPLICATION_DATA = {
+  status: STATUS.IN_PROGRESS,
+  version: LATEST_VERSION_NUMBER2,
+  dealType: DEAL_TYPE,
+  submissionCount: SUBMISSION_COUNT_DEFAULT,
+};
+var initial_application_data_default = INITIAL_APPLICATION_DATA;
+
+// helpers/create-an-application/create-initial-application/index.ts
+var { STATUS: STATUS2, SUBMISSION_DEADLINE_IN_MONTHS, SUBMISSION_TYPE: SUBMISSION_TYPE2 } = APPLICATION;
+var { status: inititalStatus, ...APPLICATION_FIELDS } = initial_application_data_default;
+var createInitialApplication = async ({ context, accountId, status = STATUS2.IN_PROGRESS }) => {
+  try {
+    console.info('Creating initial application (createInitialApplication helper) for user %s', accountId);
+    const now2 = /* @__PURE__ */ new Date();
+    const application2 = await context.db.Application.createOne({
+      data: {
+        owner: {
+          connect: { id: accountId },
+        },
+        createdAt: now2,
+        status,
+        submissionDeadline: (0, import_date_fns5.addMonths)(new Date(now2), SUBMISSION_DEADLINE_IN_MONTHS),
+        submissionType: SUBMISSION_TYPE2.MIA,
+        updatedAt: now2,
+        ...APPLICATION_FIELDS,
+      },
+    });
+    return application2;
+  } catch (error) {
+    console.error('Error creating initial application (createInitialApplication helper) for user %s %o', accountId, error);
+    throw new Error(`Creating initial application (createInitialApplication helper) for user ${accountId} ${error}`);
+  }
+};
+var initialApplication = {
+  create: createInitialApplication,
+};
+var create_initial_application_default = initialApplication;
 
 // helpers/get-country-by-field/index.ts
 var getCountryByField = async (context, field, value) => {
@@ -4279,9 +4260,9 @@ var getCountryByField = async (context, field, value) => {
     }
     const country = countriesArray[0];
     return country;
-  } catch (err) {
-    console.error('Error getting country by field/value %O', err);
-    throw new Error(`Getting country by field/value ${err}`);
+  } catch (error) {
+    console.error('Error getting country by field/value %o', error);
+    throw new Error(`Getting country by field/value ${error}`);
   }
 };
 var get_country_by_field_default = getCountryByField;
@@ -4289,7 +4270,7 @@ var get_country_by_field_default = getCountryByField;
 // helpers/get-cover-period-value-by-field/index.ts
 var getCoverPeriodValueByField = async (context, field, value) => {
   try {
-    console.info('Getting coverPeriod by field/value $s', `${field}, ${value}`);
+    console.info('Getting coverPeriod by field/value $s %s %d', field, value);
     const coverPeriodsArray = await context.db.CoverPeriod.findMany({
       where: {
         [field]: { equals: value },
@@ -4302,9 +4283,9 @@ var getCoverPeriodValueByField = async (context, field, value) => {
     }
     const [coverPeriod] = coverPeriodsArray;
     return coverPeriod;
-  } catch (err) {
-    console.error('Error getting coverPeriod by field/value %O', err);
-    throw new Error(`Getting coverPeriod by field/value ${err}`);
+  } catch (error) {
+    console.error('Error getting coverPeriod by field/value %o', error);
+    throw new Error(`Getting coverPeriod by field/value ${error}`);
   }
 };
 var get_cover_period_value_by_field_default = getCoverPeriodValueByField;
@@ -4312,7 +4293,7 @@ var get_cover_period_value_by_field_default = getCoverPeriodValueByField;
 // helpers/get-total-contract-value-by-field/index.ts
 var getTotalContractValueByField = async (context, field, value) => {
   try {
-    console.info('Getting totalContractValue by field/value $s', `${field}, ${value}`);
+    console.info('Getting totalContractValue by field/value $s %s, %s', field, value);
     const totalContractValuesArray = await context.db.TotalContractValue.findMany({
       where: {
         [field]: { equals: value },
@@ -4325,94 +4306,75 @@ var getTotalContractValueByField = async (context, field, value) => {
     }
     const [totalContractValue] = totalContractValuesArray;
     return totalContractValue;
-  } catch (err) {
-    console.error('Error getting totalContractValue by field/value %O', err);
-    throw new Error(`Getting totalContractValue by field/value ${err}`);
+  } catch (error) {
+    console.error('Error getting totalContractValue by field/value %o', error);
+    throw new Error(`Getting totalContractValue by field/value ${error}`);
   }
 };
 var get_total_contract_value_by_field_default = getTotalContractValueByField;
 
-// helpers/create-an-eligibility/index.ts
-var createAnEligibility = async (context, countryId, applicationId, coverPeriodId, totalContractValueId, data) => {
-  console.info('Creating an eligibility for ', applicationId);
+// helpers/create-a-reference-number/index.ts
+var createAReferenceNumber = async (context, applicationId) => {
+  console.info('Creating a reference number for %s', applicationId);
   try {
-    const eligibility = await context.db.Eligibility.createOne({
+    const created = await context.db.ReferenceNumber.createOne({
       data: {
-        buyerCountry: {
-          connect: { id: countryId },
-        },
         application: {
-          connect: { id: applicationId },
+          connect: {
+            id: applicationId,
+          },
         },
-        coverPeriod: {
-          connect: { id: coverPeriodId },
-        },
-        totalContractValue: {
-          connect: { id: totalContractValueId },
-        },
-        ...data,
       },
     });
-    return eligibility;
-  } catch (err) {
-    console.error('Error creating an eligibility %O', err);
-    throw new Error(`Creating an eligibility ${err}`);
+    return created.id;
+  } catch (error) {
+    console.error('Error creating a reference number %o', error);
+    throw new Error(`Creating a reference number ${error}`);
   }
 };
-var create_an_eligibility_default = createAnEligibility;
+var create_a_reference_number_default = createAReferenceNumber;
 
-// helpers/create-a-declaration-version/index.ts
-var { ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT, CONFIDENTIALITY, CONFIRMATION_AND_ACKNOWLEDGEMENTS } =
-  declarations_default2.LATEST_DECLARATIONS;
-var createADeclarationVersion = async (context, declarationId) => {
-  console.info('Creating an application declaration version for ', declarationId);
+// helpers/create-a-broker/index.ts
+var createABroker = async (context, applicationId) => {
+  console.info('Creating a broker for %s', applicationId);
   try {
-    const declaration = await context.db.DeclarationVersion.createOne({
-      data: {
-        declaration: {
-          connect: { id: declarationId },
-        },
-        agreeToAntiBribery: ANTI_BRIBERY,
-        agreeToConfidentiality: CONFIDENTIALITY,
-        agreeToConfirmationAndAcknowledgements: CONFIRMATION_AND_ACKNOWLEDGEMENTS,
-        hasAntiBriberyCodeOfConduct: ANTI_BRIBERY_CODE_OF_CONDUCT,
-        willExportWithAntiBriberyCodeOfConduct: ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT,
-      },
-    });
-    return declaration;
-  } catch (err) {
-    console.error('Error creating an application declaration version %O', err);
-    throw new Error(`Creating an application declaration version ${err}`);
-  }
-};
-var create_a_declaration_version_default = createADeclarationVersion;
-
-// helpers/create-a-declaration/index.ts
-var createADeclaration = async (context, applicationId) => {
-  console.info('Creating a application declaration for ', applicationId);
-  try {
-    const declaration = await context.db.Declaration.createOne({
+    const broker = await context.db.Broker.createOne({
       data: {
         application: {
           connect: { id: applicationId },
         },
       },
     });
-    const declarationVersion = await create_a_declaration_version_default(context, declaration.id);
-    return {
-      ...declaration,
-      declarationVersion,
-    };
-  } catch (err) {
-    console.error('Error creating an application declaration %O', err);
-    throw new Error(`Creating an application declaration ${err}`);
+    return broker;
+  } catch (error) {
+    console.error('Error creating a broker %o', error);
+    throw new Error(`Creating a broker ${error}`);
   }
 };
-var create_a_declaration_default = createADeclaration;
+var create_a_broker_default = createABroker;
+
+// helpers/create-a-business/index.ts
+var createABusiness = async (context, applicationId) => {
+  console.info('Creating a business for %s', applicationId);
+  try {
+    const business = await context.db.Business.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId },
+        },
+      },
+    });
+    return business;
+  } catch (error) {
+    console.error('Error creating a business %o', error);
+    throw new Error(`Creating a business ${error}`);
+  }
+};
+var create_a_business_default = createABusiness;
 
 // helpers/create-a-buyer-trading-history/index.ts
 var createABuyerTradingHistory = async (context, buyerId, applicationId) => {
-  console.info('Creating a buyer trading history for ', buyerId);
+  console.info('Creating a buyer trading history for %s', buyerId);
   try {
     const buyerTradingHistory = await context.db.BuyerTradingHistory.createOne({
       data: {
@@ -4430,16 +4392,16 @@ var createABuyerTradingHistory = async (context, buyerId, applicationId) => {
       },
     });
     return buyerTradingHistory;
-  } catch (err) {
-    console.error('Error creating a buyer trading history %O', err);
-    throw new Error(`Creating a buyer trading history ${err}`);
+  } catch (error) {
+    console.error('Error creating a buyer trading history %o', error);
+    throw new Error(`Creating a buyer trading history ${error}`);
   }
 };
 var create_a_buyer_trading_history_default = createABuyerTradingHistory;
 
 // helpers/create-a-buyer-contact/index.ts
 var createABuyerContact = async (context, buyerId, applicationId) => {
-  console.info('Creating a buyer contact for ', buyerId);
+  console.info('Creating a buyer contact for %s', buyerId);
   try {
     const buyerContact = await context.db.BuyerContact.createOne({
       data: {
@@ -4456,16 +4418,16 @@ var createABuyerContact = async (context, buyerId, applicationId) => {
       },
     });
     return buyerContact;
-  } catch (err) {
-    console.error('Error creating a buyer contact %O', err);
-    throw new Error(`Creating a buyer contact ${err}`);
+  } catch (error) {
+    console.error('Error creating a buyer contact %o', error);
+    throw new Error(`Creating a buyer contact ${error}`);
   }
 };
 var create_a_buyer_contact_default = createABuyerContact;
 
 // helpers/create-a-buyer-relationship/index.ts
 var createABuyerRelationship = async (context, buyerId, applicationId) => {
-  console.info('Creating a buyer relationship for ', buyerId);
+  console.info('Creating a buyer relationship for %s', buyerId);
   try {
     const buyerRelationship = await context.db.BuyerRelationship.createOne({
       data: {
@@ -4482,16 +4444,16 @@ var createABuyerRelationship = async (context, buyerId, applicationId) => {
       },
     });
     return buyerRelationship;
-  } catch (err) {
-    console.error('Error creating a buyer relationship %O', err);
-    throw new Error(`Creating a buyer relationship ${err}`);
+  } catch (error) {
+    console.error('Error creating a buyer relationship %o', error);
+    throw new Error(`Creating a buyer relationship ${error}`);
   }
 };
 var create_a_buyer_relationship_default = createABuyerRelationship;
 
-// helpers/create-a-buyer/index.ts
-var createABuyer = async (context, countryId, applicationId) => {
-  console.info('Creating a buyer for ', applicationId);
+// helpers/create-a-populated-buyer/index.ts
+var createAPopulatedBuyer = async (context, countryId, applicationId) => {
+  console.info('Creating a buyer for %s', applicationId);
   try {
     const buyer = await context.db.Buyer.createOne({
       data: {
@@ -4507,23 +4469,99 @@ var createABuyer = async (context, countryId, applicationId) => {
     const buyerRelationship = await create_a_buyer_relationship_default(context, buyer.id, applicationId);
     const buyerContact = await create_a_buyer_contact_default(context, buyer.id, applicationId);
     return {
-      buyer: {
-        ...buyer,
-        buyerTradingHistory,
-        relationship: buyerRelationship,
-      },
+      ...buyer,
+      buyerTradingHistory,
+      relationship: buyerRelationship,
       buyerContact,
     };
-  } catch (err) {
-    console.error('Error creating a buyer %O', err);
-    throw new Error(`Creating a buyer ${err}`);
+  } catch (error) {
+    console.error('Error creating a populated buyer %o', error);
+    throw new Error(`Creating a populated buyer ${error}`);
   }
 };
-var create_a_buyer_default = createABuyer;
+var create_a_populated_buyer_default = createAPopulatedBuyer;
+
+// helpers/create-a-declaration-version/index.ts
+var { ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT, CONFIDENTIALITY, CONFIRMATION_AND_ACKNOWLEDGEMENTS } =
+  declarations_default2.LATEST_DECLARATIONS;
+var createADeclarationVersion = async (context, declarationId) => {
+  console.info('Creating an application declaration version for %s', declarationId);
+  try {
+    const declaration = await context.db.DeclarationVersion.createOne({
+      data: {
+        declaration: {
+          connect: { id: declarationId },
+        },
+        agreeToAntiBribery: ANTI_BRIBERY,
+        agreeToConfidentiality: CONFIDENTIALITY,
+        agreeToConfirmationAndAcknowledgements: CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+        hasAntiBriberyCodeOfConduct: ANTI_BRIBERY_CODE_OF_CONDUCT,
+        willExportWithAntiBriberyCodeOfConduct: ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT,
+      },
+    });
+    return declaration;
+  } catch (error) {
+    console.error('Error creating an application declaration version %o', error);
+    throw new Error(`Creating an application declaration version ${error}`);
+  }
+};
+var create_a_declaration_version_default = createADeclarationVersion;
+
+// helpers/create-a-declaration/index.ts
+var createADeclaration = async (context, applicationId) => {
+  console.info('Creating an application declaration for %s', applicationId);
+  try {
+    const declaration = await context.db.Declaration.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId },
+        },
+      },
+    });
+    const declarationVersion = await create_a_declaration_version_default(context, declaration.id);
+    return {
+      ...declaration,
+      declarationVersion,
+    };
+  } catch (error) {
+    console.error('Error creating an application declaration %o', error);
+    throw new Error(`Creating an application declaration ${error}`);
+  }
+};
+var create_a_declaration_default = createADeclaration;
+
+// helpers/create-an-eligibility/index.ts
+var createAnEligibility = async (context, countryId, applicationId, coverPeriodId, totalContractValueId, eligibilityData) => {
+  console.info('Creating an eligibility for %s', applicationId);
+  try {
+    const eligibility = await context.db.Eligibility.createOne({
+      data: {
+        buyerCountry: {
+          connect: { id: countryId },
+        },
+        application: {
+          connect: { id: applicationId },
+        },
+        coverPeriod: {
+          connect: { id: coverPeriodId },
+        },
+        totalContractValue: {
+          connect: { id: totalContractValueId },
+        },
+        ...eligibilityData,
+      },
+    });
+    return eligibility;
+  } catch (error) {
+    console.error('Error creating an eligibility %o', error);
+    throw new Error(`Creating an eligibility ${error}`);
+  }
+};
+var create_an_eligibility_default = createAnEligibility;
 
 // helpers/create-a-jointly-insured-party/index.ts
 var createAJointlyInsuredParty = async (context, policyId) => {
-  console.info('Creating a jointly insured party for ', policyId);
+  console.info('Creating a jointly insured party for %s', policyId);
   try {
     const jointlyInsuredParty = await context.db.JointlyInsuredParty.createOne({
       data: {
@@ -4533,16 +4571,16 @@ var createAJointlyInsuredParty = async (context, policyId) => {
       },
     });
     return jointlyInsuredParty;
-  } catch (err) {
-    console.error('Error creating a jointly insured party %O', err);
-    throw new Error(`Creating a jointly insured party ${err}`);
+  } catch (error) {
+    console.error('Error creating a jointly insured party %o', error);
+    throw new Error(`Creating a jointly insured party ${error}`);
   }
 };
 var create_a_jointly_insured_party_default = createAJointlyInsuredParty;
 
 // helpers/create-a-policy/index.ts
 var createAPolicy = async (context, applicationId) => {
-  console.info('Creating a policy for ', applicationId);
+  console.info('Creating a policy for %s', applicationId);
   try {
     const policy = await context.db.Policy.createOne({
       data: {
@@ -4554,19 +4592,38 @@ var createAPolicy = async (context, applicationId) => {
     });
     const jointlyInsuredParty = await create_a_jointly_insured_party_default(context, policy.id);
     return {
-      policy,
+      ...policy,
       jointlyInsuredParty,
     };
-  } catch (err) {
-    console.error('Error creating a policy %O', err);
-    throw new Error(`Creating a policy ${err}`);
+  } catch (error) {
+    console.error('Error creating a policy %o', error);
+    throw new Error(`Creating a policy ${error}`);
   }
 };
 var create_a_policy_default = createAPolicy;
 
+// helpers/create-a-policy-contact/index.ts
+var createAPolicyContact = async (context, applicationId) => {
+  console.info('Creating a policy contact for %s', applicationId);
+  try {
+    const policyContact = await context.db.PolicyContact.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId },
+        },
+      },
+    });
+    return policyContact;
+  } catch (error) {
+    console.error('Error creating a policy contact %o', error);
+    throw new Error(`Creating a policy contact ${error}`);
+  }
+};
+var create_a_policy_contact_default = createAPolicyContact;
+
 // helpers/create-a-loss-payee-financial-international/index.ts
 var createALossPayeeFinancialInternational = async (context, lossPayeeId) => {
-  console.info('Creating a loss payee financial (international) for ', lossPayeeId);
+  console.info('Creating a loss payee financial (international) for %s', lossPayeeId);
   try {
     const lossPayeeFinancialInternational = await context.db.LossPayeeFinancialInternational.createOne({
       data: {
@@ -4586,16 +4643,16 @@ var createALossPayeeFinancialInternational = async (context, lossPayeeId) => {
       ...lossPayeeFinancialInternational,
       vector,
     };
-  } catch (err) {
-    console.error('Error creating a loss payee financial (international) for %O', err);
-    throw new Error(`Creating a loss payee financial (international) for ${err}`);
+  } catch (error) {
+    console.error('Error creating a loss payee financial (international) for %o', error);
+    throw new Error(`Creating a loss payee financial (international) for ${error}`);
   }
 };
 var create_a_loss_payee_financial_international_default = createALossPayeeFinancialInternational;
 
 // helpers/create-a-loss-payee-financial-uk/index.ts
 var createALossPayeeFinancialUk = async (context, lossPayeeId) => {
-  console.info('Creating a loss payee financial (UK) for ', lossPayeeId);
+  console.info('Creating a loss payee financial (UK) for %s', lossPayeeId);
   try {
     const lossPayeeFinancialUk = await context.db.LossPayeeFinancialUk.createOne({
       data: {
@@ -4615,16 +4672,16 @@ var createALossPayeeFinancialUk = async (context, lossPayeeId) => {
       ...lossPayeeFinancialUk,
       vector,
     };
-  } catch (err) {
-    console.error('Error creating a loss payee financial (UK) for %O', err);
-    throw new Error(`Creating a loss payee financial (UK) for ${err}`);
+  } catch (error) {
+    console.error('Error creating a loss payee financial (UK) for %o', error);
+    throw new Error(`Creating a loss payee financial (UK) for ${error}`);
   }
 };
 var create_a_loss_payee_financial_uk_default = createALossPayeeFinancialUk;
 
 // helpers/create-a-nominated-loss-payee/index.ts
 var createANominatedLossPayee = async (context, applicationId) => {
-  console.info('Creating a nominated loss payee for ', applicationId);
+  console.info('Creating a nominated loss payee for %s', applicationId);
   try {
     const nominatedLossPayee = await context.db.NominatedLossPayee.createOne({
       data: {
@@ -4636,16 +4693,16 @@ var createANominatedLossPayee = async (context, applicationId) => {
     await create_a_loss_payee_financial_international_default(context, nominatedLossPayee.id);
     await create_a_loss_payee_financial_uk_default(context, nominatedLossPayee.id);
     return nominatedLossPayee;
-  } catch (err) {
-    console.error('Error creating a nominated loss payee for %O', err);
-    throw new Error(`Creating a nominated loss payee for ${err}`);
+  } catch (error) {
+    console.error('Error creating a nominated loss payee for %o', error);
+    throw new Error(`Creating a nominated loss payee for ${error}`);
   }
 };
 var create_a_nominated_loss_payee_default = createANominatedLossPayee;
 
 // helpers/create-a-company-address/index.ts
 var createACompanyAddress = async (context, addressData, companyId) => {
-  console.info('Creating a company address for ', companyId);
+  console.info('Creating a company address for %s', companyId);
   try {
     const companyAddress = await context.db.CompanyAddress.createOne({
       data: {
@@ -4658,9 +4715,9 @@ var createACompanyAddress = async (context, addressData, companyId) => {
       },
     });
     return companyAddress;
-  } catch (err) {
-    console.error('Error creating a company address %O', err);
-    throw new Error(`Creating a company address ${err}`);
+  } catch (error) {
+    console.error('Error creating a company address %o', error);
+    throw new Error(`Creating a company address ${error}`);
   }
 };
 var create_a_company_address_default = createACompanyAddress;
@@ -4673,7 +4730,7 @@ var mapSicCodes = (sicCodes, industrySectorNames2, companyId) => {
   }
   sicCodes.forEach((code, index) => {
     let industrySectorName = '';
-    if (industrySectorNames2 && industrySectorNames2[index]) {
+    if (industrySectorNames2?.[index]) {
       industrySectorName = industrySectorNames2[index];
     }
     const mappedCode = {
@@ -4692,10 +4749,10 @@ var mapSicCodes = (sicCodes, industrySectorNames2, companyId) => {
 var map_sic_codes_default = mapSicCodes;
 
 // helpers/create-company-sic-codes/index.ts
-var createCompanySicCodes = async (context, sicCodes, industrySectorNames2, companyId) => {
-  console.info('Creating company SIC codes for ', companyId);
+var createCompanySicCodes = async (context, companyId, sicCodes, industrySectorNames2) => {
+  console.info('Creating company SIC codes for %s', companyId);
   try {
-    if (sicCodes.length) {
+    if (sicCodes?.length) {
       const mappedSicCodes = map_sic_codes_default(sicCodes, industrySectorNames2, companyId);
       const createdSicCodes = await context.db.CompanySicCode.createMany({
         data: mappedSicCodes,
@@ -4703,16 +4760,16 @@ var createCompanySicCodes = async (context, sicCodes, industrySectorNames2, comp
       return createdSicCodes;
     }
     return [];
-  } catch (err) {
-    console.error('Error creating company SIC codes %O', err);
-    throw new Error(`Creating company SIC codes ${err}`);
+  } catch (error) {
+    console.error('Error creating company SIC codes for %s %o', companyId, error);
+    throw new Error(`Creating company SIC codes for ${companyId} ${error}`);
   }
 };
 var create_company_sic_codes_default = createCompanySicCodes;
 
 // helpers/create-a-company-different-trading-address/index.ts
 var createACompanyDifferentTradingAddress = async (context, companyId) => {
-  console.info('Creating a different trading address for ', companyId);
+  console.info('Creating a different trading address for %s', companyId);
   try {
     const differentTradingAddress = await context.db.CompanyDifferentTradingAddress.createOne({
       data: {
@@ -4724,16 +4781,16 @@ var createACompanyDifferentTradingAddress = async (context, companyId) => {
       },
     });
     return differentTradingAddress;
-  } catch (err) {
-    console.error('Error creating a company different trading address %O', err);
-    throw new Error(`Creating a company different trading address ${err}`);
+  } catch (error) {
+    console.error('Error creating a company different trading address %o', error);
+    throw new Error(`Creating a company different trading address ${error}`);
   }
 };
 var create_a_company_different_trading_address_default = createACompanyDifferentTradingAddress;
 
 // helpers/create-a-company/index.ts
 var createACompany = async (context, applicationId, companyData) => {
-  console.info('Creating a company, address and SIC codes for ', applicationId);
+  console.info('Creating a company, address and SIC codes for %s', applicationId);
   try {
     const { registeredOfficeAddress, sicCodes, industrySectorNames: industrySectorNames2, ...companyFields } = companyData;
     const company = await context.db.Company.createOne({
@@ -4745,7 +4802,7 @@ var createACompany = async (context, applicationId, companyData) => {
       },
     });
     const companyAddress = await create_a_company_address_default(context, registeredOfficeAddress, company.id);
-    const createdSicCodes = await create_company_sic_codes_default(context, sicCodes, industrySectorNames2, company.id);
+    const createdSicCodes = await create_company_sic_codes_default(context, company.id, sicCodes, industrySectorNames2);
     const createdDifferentTradingAddress = await create_a_company_different_trading_address_default(context, company.id);
     return {
       ...company,
@@ -4753,16 +4810,16 @@ var createACompany = async (context, applicationId, companyData) => {
       sicCodes: createdSicCodes,
       differentTradingAddress: createdDifferentTradingAddress,
     };
-  } catch (err) {
-    console.error('Error creating a company, address, SIC codes and company different trading address %O', err);
-    throw new Error(`Creating a company, address, SIC codes and company different trading address ${err}`);
+  } catch (error) {
+    console.error('Error creating a company, address, SIC codes and company different trading address %o', error);
+    throw new Error(`Creating a company, address, SIC codes and company different trading address ${error}`);
   }
 };
 var create_a_company_default = createACompany;
 
 // helpers/create-a-private-market/index.ts
 var createAPrivateMarket = async (context, exportContractId) => {
-  console.info('Creating a private market for ', exportContractId);
+  console.info('Creating a private market for %s', exportContractId);
   try {
     const privateMarket = await context.db.PrivateMarket.createOne({
       data: {
@@ -4772,16 +4829,16 @@ var createAPrivateMarket = async (context, exportContractId) => {
       },
     });
     return privateMarket;
-  } catch (err) {
-    console.error('Error creating a private market %O', err);
-    throw new Error(`Creating a private market ${err}`);
+  } catch (error) {
+    console.error('Error creating a private market %o', error);
+    throw new Error(`Creating a private market ${error}`);
   }
 };
 var create_a_private_market_default = createAPrivateMarket;
 
 // helpers/create-an-export-contract-agent-service/index.ts
 var createAnExportContractAgentService = async (context, agentId) => {
-  console.info('Creating an export contract agent service for ', agentId);
+  console.info('Creating an export contract agent service for %s', agentId);
   try {
     const agentService = await context.db.ExportContractAgentService.createOne({
       data: {
@@ -4791,16 +4848,16 @@ var createAnExportContractAgentService = async (context, agentId) => {
       },
     });
     return agentService;
-  } catch (err) {
-    console.error('Error creating an export contract agent service %O', err);
-    throw new Error(`Creating an export contract agent service ${err}`);
+  } catch (error) {
+    console.error('Error creating an export contract agent service %o', error);
+    throw new Error(`Creating an export contract agent service ${error}`);
   }
 };
 var create_an_export_contract_agent_service_default = createAnExportContractAgentService;
 
 // helpers/create-an-export-contract-agent-service-charge/index.ts
 var createAnExportContractAgentServiceCharge = async (context, agentServiceId) => {
-  console.info('Creating an export contract agent service charge for ', agentServiceId);
+  console.info('Creating an export contract agent service charge for %s', agentServiceId);
   try {
     const agentService = await context.db.ExportContractAgentServiceCharge.createOne({
       data: {
@@ -4810,16 +4867,16 @@ var createAnExportContractAgentServiceCharge = async (context, agentServiceId) =
       },
     });
     return agentService;
-  } catch (err) {
-    console.error('Error creating an export contract agent service charge %O', err);
-    throw new Error(`Creating an export contract agent service charge ${err}`);
+  } catch (error) {
+    console.error('Error creating an export contract agent service charge %o', error);
+    throw new Error(`Creating an export contract agent service charge ${error}`);
   }
 };
 var create_an_export_contract_agent_service_charge_default = createAnExportContractAgentServiceCharge;
 
 // helpers/create-an-export-contract-agent/index.ts
 var createAnExportContractAgent = async (context, exportContractId) => {
-  console.info('Creating an export contract agent for ', exportContractId);
+  console.info('Creating an export contract agent for %s', exportContractId);
   try {
     const agent = await context.db.ExportContractAgent.createOne({
       data: {
@@ -4835,16 +4892,16 @@ var createAnExportContractAgent = async (context, exportContractId) => {
       agentService,
       agentServiceCharge,
     };
-  } catch (err) {
-    console.error('Error creating an export contract agent %O', err);
-    throw new Error(`Creating an export contract agent ${err}`);
+  } catch (error) {
+    console.error('Error creating an export contract agent %o', error);
+    throw new Error(`Creating an export contract agent ${error}`);
   }
 };
 var create_an_export_contract_agent_default = createAnExportContractAgent;
 
 // helpers/create-an-export-contract/index.ts
 var createAnExportContract = async (context, applicationId) => {
-  console.info('Creating an export contract for ', applicationId);
+  console.info('Creating an export contract for %s', applicationId);
   try {
     const exportContract = await context.db.ExportContract.createOne({
       data: {
@@ -4857,21 +4914,21 @@ var createAnExportContract = async (context, applicationId) => {
     const privateMarket = await create_a_private_market_default(context, exportContract.id);
     const { agent, agentService } = await create_an_export_contract_agent_default(context, exportContract.id);
     return {
-      exportContract,
+      ...exportContract,
       privateMarket,
       agent,
       agentService,
     };
-  } catch (err) {
-    console.error('Error creating an export contract %O', err);
-    throw new Error(`Creating an export contract ${err}`);
+  } catch (error) {
+    console.error('Error creating an export contract %o', error);
+    throw new Error(`Creating an export contract ${error}`);
   }
 };
 var create_an_export_contract_default = createAnExportContract;
 
 // helpers/create-a-section-review/index.ts
 var createASectionReview = async (context, applicationId, sectionReviewData) => {
-  console.info('Creating a section review for ', applicationId);
+  console.info('Creating a section review for %s', applicationId);
   try {
     const sectionReview = await context.db.SectionReview.createOne({
       data: {
@@ -4882,137 +4939,363 @@ var createASectionReview = async (context, applicationId, sectionReviewData) => 
       },
     });
     return sectionReview;
-  } catch (err) {
-    console.error('Error creating a section review %O', err);
-    throw new Error(`Creating a section review ${err}`);
+  } catch (error) {
+    console.error('Error creating a section review %o', error);
+    throw new Error(`Creating a section review ${error}`);
   }
 };
 var create_a_section_review_default = createASectionReview;
 
-// helpers/create-an-application/index.ts
-var { SUBMISSION_TYPE: SUBMISSION_TYPE2 } = APPLICATION;
-var createAnApplication = async (root, variables, context) => {
-  console.info('Creating an application (createAnApplication helper)');
+// helpers/create-an-application/create-application-relationships/index.ts
+var createApplicationRelationships = async ({ context, applicationId, companyData, eligibilityAnswers, sectionReviewData }) => {
   try {
-    const { accountId, eligibilityAnswers, company: companyData, sectionReview: sectionReviewData, status } = variables;
-    const account2 = await get_account_by_id_default(context, accountId);
-    if (!account2) {
-      return null;
-    }
+    console.info('Creating application relationships (createApplicationRelationships helper) for application %s', applicationId);
     const { buyerCountryIsoCode, totalContractValueId, coverPeriodId, ...otherEligibilityAnswers } = eligibilityAnswers;
     const country = await get_country_by_field_default(context, 'isoCode', buyerCountryIsoCode);
-    const submissionType = SUBMISSION_TYPE2.MIA;
-    const application2 = await context.db.Application.createOne({
-      data: {
-        owner: {
-          connect: { id: accountId },
-        },
-        status,
-        submissionType,
-      },
-    });
-    const { id: applicationId } = application2;
-    const { buyer } = await create_a_buyer_default(context, country.id, applicationId);
-    const declarations = await create_a_declaration_default(context, applicationId);
-    const totalContractValue = await get_total_contract_value_by_field_default(context, 'valueId', totalContractValueId);
+    if (!country) {
+      console.error(
+        'Unable to create application relationships - buyer country not found (createApplicationRelationships helper) for application %s',
+        applicationId,
+      );
+      throw new Error(
+        `Unable to create application relationships - buyer country not found (createApplicationRelationships helper) for application ${applicationId}`,
+      );
+    }
     const coverPeriod = await get_cover_period_value_by_field_default(context, 'valueId', coverPeriodId);
-    const eligibility = await create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers);
-    const { exportContract } = await create_an_export_contract_default(context, applicationId);
-    const { policy } = await create_a_policy_default(context, applicationId);
-    const nominatedLossPayee = await create_a_nominated_loss_payee_default(context, applicationId);
-    const company = await create_a_company_default(context, applicationId, companyData);
-    const sectionReview = await create_a_section_review_default(context, applicationId, sectionReviewData);
+    const totalContractValue = await get_total_contract_value_by_field_default(context, 'valueId', totalContractValueId);
+    const referenceNumber = await create_a_reference_number_default(context, applicationId);
+    const createdRelationships = await Promise.all([
+      create_a_broker_default(context, applicationId),
+      create_a_business_default(context, applicationId),
+      create_a_populated_buyer_default(context, country.id, applicationId),
+      create_a_declaration_default(context, applicationId),
+      create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers),
+      create_an_export_contract_default(context, applicationId),
+      create_a_policy_default(context, applicationId),
+      create_a_policy_contact_default(context, applicationId),
+      create_a_nominated_loss_payee_default(context, applicationId),
+      create_a_company_default(context, applicationId, companyData),
+      create_a_section_review_default(context, applicationId, sectionReviewData),
+    ]);
+    const [broker, business, buyer, declaration, eligibility, exportContract, policy, policyContact, nominatedLossPayee, company, sectionReview] =
+      createdRelationships;
+    const relationshipIds = {
+      brokerId: broker.id,
+      businessId: business.id,
+      buyerId: buyer.id,
+      companyId: company.id,
+      declarationId: declaration.id,
+      eligibilityId: eligibility.id,
+      exportContractId: exportContract.id,
+      nominatedLossPayeeId: nominatedLossPayee.id,
+      policyId: policy.id,
+      policyContactId: policyContact.id,
+      referenceNumber,
+      sectionReviewId: sectionReview.id,
+    };
+    return relationshipIds;
+  } catch (error) {
+    console.error('Error creating application relationships (createApplicationRelationships helper) for application %s %o', applicationId, error);
+    throw new Error(`Creating application relationships (createApplicationRelationships helper) for application ${applicationId} ${error}`);
+  }
+};
+var applicationRelationships = {
+  create: createApplicationRelationships,
+};
+var create_application_relationships_default = applicationRelationships;
+
+// helpers/create-an-application/update-application-columns/index.ts
+var updateApplicationColumns = async ({
+  context,
+  applicationId,
+  brokerId,
+  businessId,
+  buyerId,
+  companyId,
+  declarationId,
+  eligibilityId,
+  exportContractId,
+  nominatedLossPayeeId,
+  policyId,
+  policyContactId,
+  referenceNumber,
+  sectionReviewId,
+}) => {
+  try {
+    console.info('Updating application relationship columns (updateApplicationColumns helper) for application %s', applicationId);
     const updatedApplication = await context.db.Application.updateOne({
       where: {
         id: applicationId,
       },
       data: {
+        broker: {
+          connect: { id: brokerId },
+        },
+        business: {
+          connect: { id: businessId },
+        },
         buyer: {
-          connect: { id: buyer.id },
+          connect: { id: buyerId },
         },
         company: {
-          connect: { id: company.id },
+          connect: { id: companyId },
         },
         declaration: {
-          connect: { id: declarations.id },
+          connect: { id: declarationId },
         },
         eligibility: {
-          connect: { id: eligibility.id },
+          connect: { id: eligibilityId },
         },
         exportContract: {
-          connect: { id: exportContract.id },
+          connect: { id: exportContractId },
         },
         nominatedLossPayee: {
-          connect: { id: nominatedLossPayee.id },
+          connect: { id: nominatedLossPayeeId },
         },
         policy: {
-          connect: { id: policy.id },
+          connect: { id: policyId },
         },
+        policyContact: {
+          connect: { id: policyContactId },
+        },
+        referenceNumber,
         sectionReview: {
-          connect: { id: sectionReview.id },
+          connect: { id: sectionReviewId },
         },
       },
     });
     return updatedApplication;
-  } catch (err) {
-    console.error('Error creating an application (createAnApplication helper) %O', err);
-    throw new Error(`Creating an application (createAnApplication helper) ${err}`);
+  } catch (error) {
+    console.error('Error updating application relationship columns (updateApplicationColumns helper) for application %s %o', applicationId, error);
+    throw new Error(`Updating application relationship columns (updateApplicationColumns helper) for application ${applicationId} ${error}`);
   }
 };
-var create_an_application_default = createAnApplication;
+var applicationColumns = {
+  update: updateApplicationColumns,
+};
+var update_application_columns_default = applicationColumns;
+
+// helpers/create-an-application/index.ts
+var createAnApplicationHelper = async (variables, context) => {
+  console.info('Creating an application (createAnApplication helper) for user %s', variables.accountId);
+  try {
+    const { accountId, eligibilityAnswers, company: companyData, sectionReview: sectionReviewData, status } = variables;
+    const account2 = await get_account_by_id_default(context, accountId);
+    if (!account2) {
+      console.info('Rejecting application creation - no account found (createAnApplication helper)');
+      return null;
+    }
+    const application2 = await create_initial_application_default.create({
+      context,
+      accountId,
+      status,
+    });
+    const { id: applicationId } = application2;
+    const {
+      brokerId,
+      businessId,
+      buyerId,
+      companyId,
+      declarationId,
+      eligibilityId,
+      exportContractId,
+      nominatedLossPayeeId,
+      policyId,
+      policyContactId,
+      referenceNumber,
+      sectionReviewId,
+    } = await create_application_relationships_default.create({
+      context,
+      applicationId,
+      companyData,
+      eligibilityAnswers,
+      sectionReviewData,
+    });
+    const updatedApplication = await update_application_columns_default.update({
+      context,
+      applicationId,
+      brokerId,
+      businessId,
+      buyerId,
+      companyId,
+      declarationId,
+      eligibilityId,
+      exportContractId,
+      nominatedLossPayeeId,
+      policyId,
+      policyContactId,
+      referenceNumber,
+      sectionReviewId,
+    });
+    return updatedApplication;
+  } catch (error) {
+    console.error('Error creating an application (createAnApplication helper) for user %s %o', variables.accountId, error);
+    throw new Error(`Creating an application (createAnApplication helper) for user ${variables.accountId} ${error}`);
+  }
+};
+var create_an_application_default = createAnApplicationHelper;
 
 // custom-resolvers/mutations/create-an-application/index.ts
-var { STATUS: STATUS2 } = APPLICATION;
-var createAnApplication2 = async (root, variables, context) => {
-  console.info('Creating application for ', variables.accountId);
-  const updatedVariables = variables;
-  updatedVariables.status = STATUS2.IN_PROGRESS;
+var createAnApplication = async (root, variables, context) => {
+  console.info('Creating application for user %s', variables.accountId);
   try {
-    const updatedApplication = await create_an_application_default(root, updatedVariables, context);
-    if (updatedApplication) {
+    const application2 = await create_an_application_default(variables, context);
+    if (application2) {
       return {
-        ...updatedApplication,
+        ...application2,
         success: true,
       };
     }
     return {
       success: false,
     };
-  } catch (err) {
-    console.error('Error creating application %O', err);
-    throw new Error(`Creating application ${err}`);
+  } catch (error) {
+    console.error('Error creating application for user %s %o', variables.accountId, error);
+    throw new Error(`Creating application for user ${variables.accountId} ${error}`);
   }
 };
-var create_an_application_default2 = createAnApplication2;
+var create_an_application_default2 = createAnApplication;
+
+// helpers/get-countries/index.ts
+var getCountries = async (context) => {
+  console.info('Getting countries');
+  try {
+    const countries = await context.db.Country.findMany();
+    return countries;
+  } catch (error) {
+    console.error('Error getting countries %o', error);
+    throw new Error(`Getting countries ${error}`);
+  }
+};
+var get_countries_default = getCountries;
+
+// helpers/create-a-buyer/index.ts
+var createABuyer = async (context, countryId) => {
+  console.info('Creating a buyer');
+  try {
+    const buyer = await context.db.Buyer.createOne({
+      data: {
+        country: {
+          connect: {
+            id: countryId,
+          },
+        },
+      },
+    });
+    return buyer;
+  } catch (error) {
+    console.error('Error creating a buyer %o', error);
+    throw new Error(`Creating a buyer ${error}`);
+  }
+};
+var create_a_buyer_default = createABuyer;
+
+// helpers/create-many-applications-and-reference-numbers/index.ts
+var createManyApplicationsAndReferenceNumbers = async (context, applicationData) => {
+  console.info('Creating many applications and reference numbers');
+  try {
+    const applications = await context.db.Application.createMany({
+      data: applicationData,
+    });
+    const referenceNumbersData = applications.map((application2) => ({
+      application: {
+        connect: {
+          id: application2.id,
+        },
+      },
+    }));
+    const referenceNumbers = await context.db.ReferenceNumber.createMany({ data: referenceNumbersData });
+    return {
+      applications,
+      referenceNumbers,
+    };
+  } catch (error) {
+    console.error('Error creating many applications and reference numbers - helper %o', error);
+    throw new Error(`Creating many applications and reference numbers - helper ${error}`);
+  }
+};
+var create_many_applications_and_reference_numbers_default = createManyApplicationsAndReferenceNumbers;
+
+// helpers/update-applications-data/index.ts
+var updateApplicationsData = async (context, updateData) => {
+  console.info('Updating many applications');
+  try {
+    const updatedApplications = await context.db.Application.updateMany({
+      data: updateData,
+    });
+    return updatedApplications;
+  } catch (error) {
+    console.error('Error updating many applications - helper %o', error);
+    throw new Error(`Updating many applications - helper ${error}`);
+  }
+};
+var update_applications_data_default = updateApplicationsData;
+
+// custom-resolvers/mutations/create-many-applications/index.ts
+var createManyApplications = async (root, variables, context) => {
+  console.info('Creating many applications');
+  try {
+    const emptyArray = new Array(variables.count).fill({});
+    const countries = await get_countries_default(context);
+    const buyer = await create_a_buyer_default(context, countries[0].id);
+    const mockApplicationsData = emptyArray.map(() => ({
+      owner: {
+        connect: {
+          id: variables.accountId,
+        },
+      },
+      buyer: {
+        connect: {
+          id: buyer.id,
+        },
+      },
+      ...initial_application_data_default,
+    }));
+    const { referenceNumbers } = await create_many_applications_and_reference_numbers_default(context, mockApplicationsData);
+    const updateApplicationReferenceNumbers = referenceNumbers.map((referenceNumber) => ({
+      where: { id: referenceNumber.applicationId },
+      data: { referenceNumber: referenceNumber.id },
+    }));
+    await update_applications_data_default(context, updateApplicationReferenceNumbers);
+    const allApplications = await context.query.Application.findMany({
+      query: 'id referenceNumber',
+    });
+    if (allApplications.length) {
+      return {
+        applications: allApplications,
+        success: true,
+      };
+    }
+    return {
+      success: false,
+    };
+  } catch (error) {
+    console.error('Error creating many applications %o', error);
+    throw new Error(`Creating many applications ${error}`);
+  }
+};
+var create_many_applications_default = createManyApplications;
 
 // custom-resolvers/mutations/create-an-abandoned-application/index.ts
 var { STATUS: STATUS3 } = APPLICATION;
 var createAnAbandonedApplication = async (root, variables, context) => {
-  console.info('Creating an abandoned application for ', variables.accountId);
+  console.info('Creating an abandoned application for %s', variables.accountId);
   const abandonedApplicationVariables = variables;
   abandonedApplicationVariables.status = STATUS3.ABANDONED;
   try {
-    const createdApplication = await create_an_application_default(root, abandonedApplicationVariables, context);
+    const createdApplication = await create_an_application_default(abandonedApplicationVariables, context);
     if (createdApplication) {
-      const updatedApplication = await context.db.Application.updateOne({
-        where: {
-          id: createdApplication.id,
-        },
-        data: {
-          status: STATUS3.ABANDONED,
-        },
-      });
       return {
-        ...updatedApplication,
+        ...createdApplication,
         success: true,
       };
     }
     return {
       success: false,
     };
-  } catch (err) {
-    console.error('Error creating an abandoned application %O', err);
-    throw new Error(`Creating an abandoned application ${err}`);
+  } catch (error) {
+    console.error('Error creating an abandoned application %o', error);
+    throw new Error(`Creating an abandoned application ${error}`);
   }
 };
 var create_an_abandoned_application_default = createAnAbandonedApplication;
@@ -5031,9 +5314,9 @@ var getApplicationByReferenceNumber = async (referenceNumber, context) => {
       return application2;
     }
     return null;
-  } catch (err) {
-    console.error('Error getting application by reference number %O', err);
-    throw new Error(`Error getting application by reference number ${err}`);
+  } catch (error) {
+    console.error('Error getting application by reference number %o', error);
+    throw new Error(`Error getting application by reference number ${error}`);
   }
 };
 var get_application_by_reference_number_default = getApplicationByReferenceNumber;
@@ -5060,9 +5343,9 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
     return {
       success: false,
     };
-  } catch (err) {
-    console.error('Error deleting application by reference number (DeleteApplicationByReferenceNumber mutation) %O', err);
-    throw new Error(`Deleting application by reference number (DeleteApplicationByReferenceNumber mutation) ${err}`);
+  } catch (error) {
+    console.error('Error deleting application by reference number (DeleteApplicationByReferenceNumber mutation) %o', error);
+    throw new Error(`Deleting application by reference number (DeleteApplicationByReferenceNumber mutation) ${error}`);
   }
 };
 var delete_application_by_reference_number_default = deleteApplicationByReferenceNumber;
@@ -5070,17 +5353,103 @@ var delete_application_by_reference_number_default = deleteApplicationByReferenc
 // custom-resolvers/mutations/submit-application/index.ts
 var import_date_fns6 = require('date-fns');
 
-// helpers/get-populated-application/map-policy/index.ts
-var mapPolicy = (policy) => {
-  const { requestedStartDate, contractCompletionDate } = policy;
-  const mappedPolicy = {
-    ...policy,
-    requestedStartDate: requestedStartDate ? new Date(requestedStartDate) : null,
-    contractCompletionDate: contractCompletionDate ? new Date(contractCompletionDate) : null,
-  };
-  return mappedPolicy;
+// helpers/get-eligibility-by-id/index.ts
+var getEligibilityById = async (context, id) => {
+  try {
+    console.info('Getting eligibility by ID %s', id);
+    const eligibility = await context.db.Eligibility.findOne({
+      where: { id },
+    });
+    return eligibility;
+  } catch (error) {
+    console.error('Getting eligibility by ID %s %o', id, error);
+    throw new Error(`Error Getting eligibility by ID ${id} ${error}`);
+  }
 };
-var map_policy_default = mapPolicy;
+var get_eligibility_by_id_default = getEligibilityById;
+
+// helpers/get-cover-period-by-id/index.ts
+var getCoverPeriodById = async (context, id) => {
+  try {
+    console.info('Getting coverPeriod by ID %s', id);
+    const coverPeriod = await context.db.CoverPeriod.findOne({
+      where: { id },
+    });
+    return coverPeriod;
+  } catch (error) {
+    console.error('Getting coverPeriod by ID %s %o', id, error);
+    throw new Error(`Error Getting coverPeriod by ID ${id} ${error}`);
+  }
+};
+var get_cover_period_by_id_default = getCoverPeriodById;
+
+// helpers/get-total-contract-value-by-id/index.ts
+var getTotalContractValueById = async (context, id) => {
+  try {
+    console.info('Getting totalContractValue by ID %s', id);
+    const totalContractValue = await context.db.TotalContractValue.findOne({
+      where: { id },
+    });
+    return totalContractValue;
+  } catch (error) {
+    console.error('Getting totalContractValue by ID %s %o', id, error);
+    throw new Error(`Error Getting totalContractValue by ID ${id} ${error}`);
+  }
+};
+var get_total_contract_value_by_id_default = getTotalContractValueById;
+
+// helpers/get-populated-eligibility/index.ts
+var getPopulatedEligibility = async (context, id, buyerCountry) => {
+  try {
+    console.info('Getting populated eligibility %s', id);
+    const eligibility = await get_eligibility_by_id_default(context, id);
+    const coverPeriod = await get_cover_period_by_id_default(context, eligibility.coverPeriodId);
+    const totalContractValue = await get_total_contract_value_by_id_default(context, eligibility.totalContractValueId);
+    const populatedEligibility = {
+      ...eligibility,
+      buyerCountry,
+      coverPeriod,
+      totalContractValue,
+    };
+    return populatedEligibility;
+  } catch (error) {
+    console.error('Getting populated eligibility %s %o', id, error);
+    throw new Error(`Error Getting populated eligibility ${id} ${error}`);
+  }
+};
+var get_populated_eligibility_default = getPopulatedEligibility;
+
+// helpers/get-policy-by-id/index.ts
+var getPolicyById = async (context, id) => {
+  try {
+    console.info('Getting policy by ID %s', id);
+    const policy = await context.query.Policy.findOne({
+      where: { id },
+      query:
+        'id policyType requestedStartDate contractCompletionDate requestedCreditLimit totalValueOfContract creditPeriodWithBuyer policyCurrencyCode totalMonthsOfCover totalSalesToBuyer maximumBuyerWillOwe needPreCreditPeriodCover jointlyInsuredParty { id companyName companyNumber countryCode requested }',
+    });
+    return policy;
+  } catch (error) {
+    console.error('Getting policy by ID %s %o', id, error);
+    throw new Error(`Error Getting policy by ID ${id} ${error}`);
+  }
+};
+var get_policy_by_id_default = getPolicyById;
+
+// helpers/get-policy-contact-by-id/index.ts
+var getPolicyContactById = async (context, id) => {
+  try {
+    console.info('Getting policyContact by ID %s', id);
+    const policyContact = await context.db.PolicyContact.findOne({
+      where: { id },
+    });
+    return policyContact;
+  } catch (error) {
+    console.error('Getting policyContact by ID %s %o', id, error);
+    throw new Error(`Error Getting policyContact by ID ${id} ${error}`);
+  }
+};
+var get_policy_contact_by_id_default = getPolicyContactById;
 
 // helpers/encrypt/generate-key/index.ts
 var import_crypto9 = __toESM(require('crypto'));
@@ -5094,9 +5463,9 @@ var { ENCRYPTION_METHOD } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
 var generateDecipher = (key2, iv) => {
   try {
     return import_crypto10.default.createDecipheriv(ENCRYPTION_METHOD, key2, iv);
-  } catch (err) {
-    console.error('Error generating decipher %O', err);
-    throw new Error(`Error generating decipher ${err}`);
+  } catch (error) {
+    console.error('Error generating decipher %o', error);
+    throw new Error(`Error generating decipher ${error}`);
   }
 };
 var generate_decipher_default = generateDecipher;
@@ -5106,9 +5475,9 @@ var { STRING_ENCODING: STRING_ENCODING2, OUTPUT_ENCODING } = FINANCIAL_DETAILS.E
 var generateBufferInStringFormat = (value) => {
   try {
     return Buffer.from(value, STRING_ENCODING2).toString(OUTPUT_ENCODING);
-  } catch (err) {
-    console.error('Error generating buffer %O', err);
-    throw new Error(`Error generating buffer ${err}`);
+  } catch (error) {
+    console.error('Error generating buffer %o', error);
+    throw new Error(`Error generating buffer ${error}`);
   }
 };
 var generate_buffer_default = generateBufferInStringFormat;
@@ -5125,9 +5494,9 @@ var decryptData = (dataToDecrypt) => {
     const decipherUpdate = decipher.update(buffer, ENCODING2, OUTPUT_ENCODING2);
     const decipherFinal = decipher.final(OUTPUT_ENCODING2);
     return decipherUpdate.concat(decipherFinal);
-  } catch (err) {
-    console.error('Error decrypting data %O', err);
-    throw new Error(`Error decrypting data ${err}`);
+  } catch (error) {
+    console.error('Error decrypting data %o', error);
+    throw new Error(`Error decrypting data ${error}`);
   }
 };
 var decrypt = {
@@ -5156,9 +5525,9 @@ var decryptFinancialUk = (applicationFinancialUk) => {
     mapped.accountNumber = decryptedAccountNumber;
     mapped.sortCode = decryptedSortCode;
     return mapped;
-  } catch (err) {
-    console.error('Error decrypting financial uk %O', err);
-    throw new Error(`Error decrypting financial uk ${err}`);
+  } catch (error) {
+    console.error('Error decrypting financial uk %o', error);
+    throw new Error(`Error decrypting financial uk ${error}`);
   }
 };
 var decrypt_financial_uk_default = decryptFinancialUk;
@@ -5184,9 +5553,9 @@ var decryptFinancialInternational = (applicationFinancialInternational) => {
     mapped.bicSwiftCode = decryptedBicSwiftCode;
     mapped.iban = decryptedIban;
     return mapped;
-  } catch (err) {
-    console.error('Error decrypting international uk %O', err);
-    throw new Error(`Error decrypting international uk ${err}`);
+  } catch (error) {
+    console.error('Error decrypting international uk %o', error);
+    throw new Error(`Error decrypting international uk ${error}`);
   }
 };
 var decrypt_financial_international_default = decryptFinancialInternational;
@@ -5212,9 +5581,9 @@ var decryptNominatedLossPayee = (nominatedLossPayee, decryptFinancialUk2, decryp
       mapped.financialInternational = mappedFinancialInternational;
     }
     return mapped;
-  } catch (err) {
-    console.error('Error decrypting nominated loss payee %O', err);
-    throw new Error(`Error decrypting nominated loss payee ${err}`);
+  } catch (error) {
+    console.error('Error decrypting nominated loss payee %o', error);
+    throw new Error(`Error decrypting nominated loss payee ${error}`);
   }
 };
 var decrypt_nominated_loss_payee_default = decryptNominatedLossPayee;
@@ -5222,7 +5591,7 @@ var decrypt_nominated_loss_payee_default = decryptNominatedLossPayee;
 // helpers/get-populated-application/nominated-loss-payee/index.ts
 var getNominatedLossPayee = async (context, lossPayeeId, decryptFinancialUk2, decryptFinancialInternational2) => {
   try {
-    console.info(`Getting nominated loss payee ${lossPayeeId}`);
+    console.info('Getting nominated loss payee %s', lossPayeeId);
     const nominatedLossPayee = await context.query.NominatedLossPayee.findOne({
       where: { id: lossPayeeId },
       query:
@@ -5233,245 +5602,439 @@ var getNominatedLossPayee = async (context, lossPayeeId, decryptFinancialUk2, de
       return decryptedNominatedLossPayee;
     }
     return nominatedLossPayee;
-  } catch (err) {
-    console.error('Error getting nominated loss payee (getNominatedLossPayee helper) %O', err);
-    throw new Error(`Error getting nominated loss payee (getNominatedLossPayee helper) ${err}`);
+  } catch (error) {
+    console.error('Error getting nominated loss payee (getNominatedLossPayee helper) %o', error);
+    throw new Error(`Error getting nominated loss payee (getNominatedLossPayee helper) ${error}`);
   }
 };
 var nominated_loss_payee_default = getNominatedLossPayee;
 
+// helpers/get-export-contract-by-id/index.ts
+var getExportContractById = async (context, id) => {
+  try {
+    console.info('Getting exportContract by ID %s', id);
+    const exportContract = await context.db.ExportContract.findOne({
+      where: { id },
+    });
+    return exportContract;
+  } catch (error) {
+    console.error('Getting exportContract by ID %s %o', id, error);
+    throw new Error(`Error Getting exportContract by ID ${id} ${error}`);
+  }
+};
+var get_export_contract_by_id_default = getExportContractById;
+
+// helpers/get-export-contract-agent-by-id/index.ts
+var getExportContractAgentById = async (context, id) => {
+  try {
+    console.info('Getting exportContractAgent by ID %s', id);
+    const exportContractAgent = await context.db.ExportContractAgent.findOne({
+      where: { id },
+    });
+    return exportContractAgent;
+  } catch (error) {
+    console.error('Getting exportContractAgent by ID %s %o', id, error);
+    throw new Error(`Error Getting exportContractAgent by ID ${id} ${error}`);
+  }
+};
+var get_export_contract_agent_by_id_default = getExportContractAgentById;
+
+// helpers/get-export-contract-agent-service-by-id/index.ts
+var getExportContractAgentServiceById = async (context, id) => {
+  try {
+    console.info('Getting exportContractAgentService by ID %s', id);
+    const exportContractAgentService = await context.db.ExportContractAgentService.findOne({
+      where: { id },
+    });
+    return exportContractAgentService;
+  } catch (error) {
+    console.error('Getting exportContractAgentService by ID %s %o', id, error);
+    throw new Error(`Error Getting exportContractAgentService by ID ${id} ${error}`);
+  }
+};
+var get_export_contract_agent_service_by_id_default = getExportContractAgentServiceById;
+
+// helpers/get-export-contract-agent-service-charge-by-id/index.ts
+var getExportContractAgentServiceChargeById = async (context, id) => {
+  try {
+    console.info('Getting exportContractAgentServiceCharge by ID %s', id);
+    const exportContractAgentServiceCharge = await context.db.ExportContractAgentServiceCharge.findOne({
+      where: { id },
+    });
+    return exportContractAgentServiceCharge;
+  } catch (error) {
+    console.error('Getting exportContractAgentServiceCharge by ID %s %o', id, error);
+    throw new Error(`Error Getting exportContractAgentServiceCharge by ID ${id} ${error}`);
+  }
+};
+var get_export_contract_agent_service_charge_by_id_default = getExportContractAgentServiceChargeById;
+
+// helpers/get-populated-export-contract/get-populated-agent/index.ts
+var getPopulatedAgent = async (context, id) => {
+  try {
+    console.info('Getting populated exportContract agent %s', id);
+    const exportContractAgent = await get_export_contract_agent_by_id_default(context, id);
+    const exportContractAgentService = await get_export_contract_agent_service_by_id_default(context, exportContractAgent.serviceId);
+    const exportContractAgentServiceCharge = await get_export_contract_agent_service_charge_by_id_default(context, exportContractAgentService.chargeId);
+    const populatedAgent = {
+      ...exportContractAgent,
+      service: {
+        ...exportContractAgentService,
+        charge: exportContractAgentServiceCharge,
+      },
+    };
+    return populatedAgent;
+  } catch (error) {
+    console.error('Getting populated exportContract agent %s %o', id, error);
+    throw new Error(`Error Getting populated exportContract agent ${id} ${error}`);
+  }
+};
+var get_populated_agent_default = getPopulatedAgent;
+
+// helpers/get-private-market-by-id/index.ts
+var getPrivateMarketById = async (context, id) => {
+  try {
+    console.info('Getting privateMarket by ID %s', id);
+    const privateMarket = await context.db.PrivateMarket.findOne({
+      where: { id },
+    });
+    return privateMarket;
+  } catch (error) {
+    console.error('Getting privateMarket by ID %s %o', id, error);
+    throw new Error(`Error Getting privateMarket by ID ${id} ${error}`);
+  }
+};
+var get_private_market_by_id_default = getPrivateMarketById;
+
+// helpers/get-populated-export-contract/index.ts
+var getPopulatedExportContract = async (context, id) => {
+  try {
+    console.info('Getting populated exportContract %s', id);
+    const exportContract = await get_export_contract_by_id_default(context, id);
+    const exportContractAgent = await get_populated_agent_default(context, exportContract.agentId);
+    const privateMarket = await get_private_market_by_id_default(context, exportContract.privateMarketId);
+    const finalDestinationCountry = await get_country_by_field_default(context, 'isoCode', exportContract.finalDestinationCountryCode);
+    const populatedExportContract = {
+      ...exportContract,
+      agent: exportContractAgent,
+      finalDestinationCountry,
+      privateMarket,
+    };
+    return populatedExportContract;
+  } catch (error) {
+    console.error('Getting populated exportContract %s %o', id, error);
+    throw new Error(`Error Getting populated exportContract ${id} ${error}`);
+  }
+};
+var get_populated_export_contract_default = getPopulatedExportContract;
+
+// helpers/get-company-by-id/index.ts
+var getCompanyById = async (context, id) => {
+  try {
+    console.info('Getting company by ID %s', id);
+    const company = await context.db.Company.findOne({
+      where: { id },
+    });
+    return company;
+  } catch (error) {
+    console.error('Getting company by ID %s %o', id, error);
+    throw new Error(`Error Getting company by ID ${id} ${error}`);
+  }
+};
+var get_company_by_id_default = getCompanyById;
+
+// helpers/get-company-address-by-id/index.ts
+var getCompanyAddressById = async (context, id) => {
+  try {
+    console.info('Getting company address by ID %s', id);
+    const companyAddress = await context.db.CompanyAddress.findOne({
+      where: { id },
+    });
+    return companyAddress;
+  } catch (error) {
+    console.error('Getting company address by ID %s %o', id, error);
+    throw new Error(`Error Getting company address by ID ${id} ${error}`);
+  }
+};
+var get_company_address_by_id_default = getCompanyAddressById;
+
+// helpers/get-company-sic-codes-by-company-id/index.ts
+var getCompanySicCodesByCompanyId = async (context, id) => {
+  try {
+    console.info('Getting company SIC codes by company ID %s', id);
+    const companySicCodes = await context.db.CompanySicCode.findMany({
+      where: {
+        company: {
+          id: { equals: id },
+        },
+      },
+    });
+    return companySicCodes;
+  } catch (error) {
+    console.error('Getting company SIC codes by company ID %s %o', id, error);
+    throw new Error(`Error Getting company SIC codes by company ID ${id} ${error}`);
+  }
+};
+var get_company_sic_codes_by_company_id_default = getCompanySicCodesByCompanyId;
+
+// helpers/get-company-different-trading-address-by-id/index.ts
+var getCompanyDifferentTradingAddressById = async (context, id) => {
+  try {
+    console.info('Getting company different trading address by ID %s', id);
+    const differentTradingAddress = await context.db.CompanyDifferentTradingAddress.findOne({
+      where: { id },
+    });
+    return differentTradingAddress;
+  } catch (error) {
+    console.error('Getting company different trading address by ID %s %o', id, error);
+    throw new Error(`Error Getting company different trading address by ID ${id} ${error}`);
+  }
+};
+var get_company_different_trading_address_by_id_default = getCompanyDifferentTradingAddressById;
+
+// helpers/get-populated-company/index.ts
+var getPopulatedCompany = async (context, id) => {
+  try {
+    console.info('Getting populated company %s', id);
+    const company = await get_company_by_id_default(context, id);
+    const companyAddress = await get_company_address_by_id_default(context, company.registeredOfficeAddressId);
+    const companySicCodes = await get_company_sic_codes_by_company_id_default(context, company.id);
+    const differentTradingAddress = await get_company_different_trading_address_by_id_default(context, company.differentTradingAddressId);
+    const populatedCompany = {
+      ...company,
+      companySicCodes,
+      registeredOfficeAddress: companyAddress,
+      differentTradingAddress,
+    };
+    return populatedCompany;
+  } catch (error) {
+    console.error('Getting populated company %s %o', id, error);
+    throw new Error(`Error Getting populated company ${id} ${error}`);
+  }
+};
+var get_populated_company_default = getPopulatedCompany;
+
+// helpers/get-business-by-id/index.ts
+var getBusinessById = async (context, id) => {
+  try {
+    console.info('Getting business by ID %s', id);
+    const business = await context.db.Business.findOne({
+      where: { id },
+    });
+    return business;
+  } catch (error) {
+    console.error('Getting business by ID %s %o', id, error);
+    throw new Error(`Error Getting business by ID ${id} ${error}`);
+  }
+};
+var get_business_by_id_default = getBusinessById;
+
+// helpers/get-broker-by-id/index.ts
+var getBrokerById = async (context, id) => {
+  try {
+    console.info('Getting broker by ID %s', id);
+    const broker = await context.db.Broker.findOne({
+      where: { id },
+    });
+    return broker;
+  } catch (error) {
+    console.error('Getting broker by ID %s %o', id, error);
+    throw new Error(`Error Getting broker by ID ${id} ${error}`);
+  }
+};
+var get_broker_by_id_default = getBrokerById;
+
+// helpers/get-buyer-by-id/index.ts
+var getBuyerById = async (context, id) => {
+  try {
+    console.info('Getting buyer by ID %s', id);
+    const buyer = await context.db.Buyer.findOne({
+      where: { id },
+    });
+    return buyer;
+  } catch (error) {
+    console.error('Getting buyer by ID %s %o', id, error);
+    throw new Error(`Error Getting buyer by ID ${id} ${error}`);
+  }
+};
+var get_buyer_by_id_default = getBuyerById;
+
+// helpers/get-country-by-id/index.ts
+var getCountryById = async (context, id) => {
+  try {
+    console.info('Getting country by ID %s', id);
+    const country = await context.db.Country.findOne({
+      where: { id },
+    });
+    return country;
+  } catch (error) {
+    console.error('Getting country by ID %s %o', id, error);
+    throw new Error(`Error Getting country by ID ${id} ${error}`);
+  }
+};
+var get_country_by_id_default = getCountryById;
+
+// helpers/get-buyer-relationship-by-id/index.ts
+var getBuyerRelationshipById = async (context, id) => {
+  try {
+    console.info('Getting buyer relationship by ID %s', id);
+    const buyerRelationship = await context.db.BuyerRelationship.findOne({
+      where: { id },
+    });
+    return buyerRelationship;
+  } catch (error) {
+    console.error('Getting buyer relationship by ID %s %o', id, error);
+    throw new Error(`Error Getting buyer relationship by ID ${id} ${error}`);
+  }
+};
+var get_buyer_relationship_by_id_default = getBuyerRelationshipById;
+
+// helpers/get-buyer-trading-history-by-id/index.ts
+var getBuyerTradingHistoryById = async (context, id) => {
+  try {
+    console.info('Getting buyer trading history by ID %s', id);
+    const buyerTradingHistory = await context.db.BuyerTradingHistory.findOne({
+      where: { id },
+    });
+    return buyerTradingHistory;
+  } catch (error) {
+    console.error('Getting buyer trading history by ID %s %o', id, error);
+    throw new Error(`Error Getting buyer trading history by ID ${id} ${error}`);
+  }
+};
+var get_buyer_trading_history_by_id_default = getBuyerTradingHistoryById;
+
+// helpers/get-populated-buyer/index.ts
+var getPopulatedBuyer = async (context, id) => {
+  try {
+    console.info('Getting populated buyer %s', id);
+    const buyer = await get_buyer_by_id_default(context, id);
+    const buyerCountry = await get_country_by_id_default(context, buyer.countryId);
+    const buyerRelationship = await get_buyer_relationship_by_id_default(context, buyer.relationshipId);
+    const buyerTradingHistory = await get_buyer_trading_history_by_id_default(context, buyer.buyerTradingHistoryId);
+    const populatedBuyer = {
+      ...buyer,
+      country: buyerCountry,
+      relationship: buyerRelationship,
+      buyerTradingHistory,
+    };
+    return populatedBuyer;
+  } catch (error) {
+    console.error('Getting populated buyer %s %o', id, error);
+    throw new Error(`Error Getting populated buyer ${id} ${error}`);
+  }
+};
+var get_populated_buyer_default = getPopulatedBuyer;
+
+// helpers/get-declaration-by-id/index.ts
+var getDeclarationById = async (context, id) => {
+  try {
+    console.info('Getting declaration by ID %s', id);
+    const declaration = await context.db.Declaration.findOne({
+      where: { id },
+    });
+    return declaration;
+  } catch (error) {
+    console.error('Getting declaration by ID %s %o', id, error);
+    throw new Error(`Error Getting declaration by ID ${id} ${error}`);
+  }
+};
+var get_declaration_by_id_default = getDeclarationById;
+
+// helpers/get-section-review-by-id/index.ts
+var getSectionReviewById = async (context, id) => {
+  try {
+    console.info('Getting sectionReview by ID %s', id);
+    const sectionReview = await context.db.SectionReview.findOne({
+      where: { id },
+    });
+    return sectionReview;
+  } catch (error) {
+    console.error('Getting sectionReview by ID %s %o', id, error);
+    throw new Error(`Error Getting sectionReview by ID ${id} ${error}`);
+  }
+};
+var get_section_review_by_id_default = getSectionReviewById;
+
+// helpers/map-total-contract-value-over-threshold/index.ts
+var mapTotalContractValueOverThreshold = (eligibility) => eligibility.totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
+var map_total_contract_value_over_threshold_default = mapTotalContractValueOverThreshold;
+
+// helpers/get-populated-application/map-policy/index.ts
+var mapPolicy = (policy) => {
+  const { requestedStartDate, contractCompletionDate } = policy;
+  const mappedPolicy = {
+    ...policy,
+    requestedStartDate: requestedStartDate ? new Date(requestedStartDate) : null,
+    contractCompletionDate: contractCompletionDate ? new Date(contractCompletionDate) : null,
+  };
+  return mappedPolicy;
+};
+var map_policy_default = mapPolicy;
+
 // helpers/get-populated-application/index.ts
-var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
 var getPopulatedApplication = async ({
   context,
   application: application2,
   decryptFinancialUk: decryptFinancialUk2 = false,
   decryptFinancialInternational: decryptFinancialInternational2 = false,
 }) => {
-  console.info(`Getting populated application (helper) ${application2.id}`);
-  const {
-    eligibilityId,
-    ownerId,
-    policyId,
-    policyContactId,
-    exportContractId,
-    companyId,
-    businessId,
-    brokerId,
-    buyerId,
-    declarationId,
-    nominatedLossPayeeId,
-    sectionReviewId,
-  } = application2;
-  const eligibility = await context.db.Eligibility.findOne({
-    where: { id: eligibilityId },
-  });
-  if (!eligibility) {
-    throw new Error(generateErrorMessage('eligibility', application2.id));
+  try {
+    console.info('Getting populated application (helper) %s', application2.id);
+    const {
+      eligibilityId,
+      ownerId,
+      policyId,
+      policyContactId,
+      exportContractId,
+      companyId,
+      businessId,
+      brokerId,
+      buyerId,
+      declarationId,
+      nominatedLossPayeeId,
+      sectionReviewId,
+    } = application2;
+    const populatedBuyer = await get_populated_buyer_default(context, buyerId);
+    const populatedEligibility = await get_populated_eligibility_default(context, eligibilityId, populatedBuyer.country);
+    const account2 = await get_account_by_id_default(context, ownerId);
+    const policy = await get_policy_by_id_default(context, policyId);
+    const policyContact = await get_policy_contact_by_id_default(context, policyContactId);
+    const nominatedLossPayee = await nominated_loss_payee_default(context, nominatedLossPayeeId, decryptFinancialUk2, decryptFinancialInternational2);
+    const populatedExportContract = await get_populated_export_contract_default(context, exportContractId);
+    const { companySicCodes, ...populatedCompany } = await get_populated_company_default(context, companyId);
+    const business = await get_business_by_id_default(context, businessId);
+    const broker = await get_broker_by_id_default(context, brokerId);
+    const declaration = await get_declaration_by_id_default(context, declarationId);
+    const sectionReview = await get_section_review_by_id_default(context, sectionReviewId);
+    const totalContractValueOverThreshold = map_total_contract_value_over_threshold_default(populatedEligibility);
+    const populatedApplication2 = {
+      ...application2,
+      eligibility: populatedEligibility,
+      broker,
+      business,
+      buyer: populatedBuyer,
+      company: populatedCompany,
+      companySicCodes,
+      declaration,
+      exportContract: populatedExportContract,
+      owner: account2,
+      policy: map_policy_default(policy),
+      policyContact,
+      nominatedLossPayee,
+      sectionReview,
+      totalContractValueOverThreshold,
+    };
+    return populatedApplication2;
+  } catch (error) {
+    console.error('Getting populated application (helper) %s %o', application2.id, error);
+    throw new Error(`Error Getting populated application (helper) ${application2.id} ${error}`);
   }
-  const coverPeriod = await context.db.CoverPeriod.findOne({
-    where: { id: eligibility.coverPeriodId },
-  });
-  if (!coverPeriod) {
-    throw new Error(generateErrorMessage('coverPeriod', application2.id));
-  }
-  const totalContractValue = await context.db.TotalContractValue.findOne({
-    where: { id: eligibility.totalContractValueId },
-  });
-  if (!totalContractValue) {
-    throw new Error(generateErrorMessage('totalContractValue', application2.id));
-  }
-  const account2 = await get_account_by_id_default(context, ownerId);
-  if (!account2) {
-    throw new Error(generateErrorMessage('account', application2.id));
-  }
-  const policy = await context.query.Policy.findOne({
-    where: { id: policyId },
-    query:
-      'id policyType requestedStartDate contractCompletionDate totalValueOfContract creditPeriodWithBuyer policyCurrencyCode totalMonthsOfCover totalSalesToBuyer maximumBuyerWillOwe needPreCreditPeriodCover jointlyInsuredParty { id companyName companyNumber countryCode requested }',
-  });
-  if (!policy) {
-    throw new Error(generateErrorMessage('policy', application2.id));
-  }
-  const policyContact = await context.db.PolicyContact.findOne({
-    where: { id: policyContactId },
-  });
-  if (!policyContact) {
-    throw new Error(generateErrorMessage('policyContact', application2.id));
-  }
-  const nominatedLossPayee = await nominated_loss_payee_default(context, nominatedLossPayeeId, decryptFinancialUk2, decryptFinancialInternational2);
-  const populatedPolicy = map_policy_default(policy);
-  const exportContract = await context.db.ExportContract.findOne({
-    where: { id: exportContractId },
-  });
-  if (!exportContract) {
-    throw new Error(generateErrorMessage('exportContract', application2.id));
-  }
-  const exportContractAgent = await context.db.ExportContractAgent.findOne({
-    where: { id: exportContract.agentId },
-  });
-  if (!exportContractAgent) {
-    throw new Error(generateErrorMessage('exportContractAgent', application2.id));
-  }
-  const exportContractAgentService = await context.db.ExportContractAgentService.findOne({
-    where: { id: exportContractAgent.serviceId },
-  });
-  if (!exportContractAgentService) {
-    throw new Error(generateErrorMessage('exportContractAgentService', application2.id));
-  }
-  const exportContractAgentServiceCharge = await context.db.ExportContractAgentServiceCharge.findOne({
-    where: { id: exportContractAgentService.chargeId },
-  });
-  if (!exportContractAgentServiceCharge) {
-    throw new Error(generateErrorMessage('exportContractAgentServiceCharge', application2.id));
-  }
-  const privateMarket = await context.db.PrivateMarket.findOne({
-    where: { id: exportContract.privateMarketId },
-  });
-  if (!privateMarket) {
-    throw new Error(generateErrorMessage('privateMarket', application2.id));
-  }
-  const finalDestinationCountry = await get_country_by_field_default(context, 'isoCode', exportContract.finalDestinationCountryCode);
-  const populatedExportContract = {
-    ...exportContract,
-    agent: {
-      ...exportContractAgent,
-      service: {
-        ...exportContractAgentService,
-        charge: exportContractAgentServiceCharge,
-      },
-    },
-    finalDestinationCountry,
-    privateMarket,
-  };
-  const company = await context.db.Company.findOne({
-    where: { id: companyId },
-  });
-  if (!company) {
-    throw new Error(generateErrorMessage('company', application2.id));
-  }
-  const companySicCodes = await context.db.CompanySicCode.findMany({
-    where: {
-      company: {
-        id: { equals: company.id },
-      },
-    },
-  });
-  if (!company) {
-    throw new Error(generateErrorMessage('companySicCode', application2.id));
-  }
-  const companyAddress = await context.db.CompanyAddress.findOne({
-    where: { id: company.registeredOfficeAddressId },
-  });
-  if (!companyAddress) {
-    throw new Error(generateErrorMessage('companyAddress', application2.id));
-  }
-  const differentTradingAddress = await context.db.CompanyDifferentTradingAddress.findOne({
-    where: { id: company.differentTradingAddressId },
-  });
-  if (!differentTradingAddress) {
-    throw new Error(generateErrorMessage('differentTradingAddress', application2.id));
-  }
-  const populatedCompany = {
-    ...company,
-    registeredOfficeAddress: companyAddress,
-    differentTradingAddress,
-  };
-  const business = await context.db.Business.findOne({
-    where: { id: businessId },
-  });
-  if (!business) {
-    throw new Error(generateErrorMessage('business', application2.id));
-  }
-  const broker = await context.db.Broker.findOne({
-    where: { id: brokerId },
-  });
-  if (!broker) {
-    throw new Error(generateErrorMessage('broker', application2.id));
-  }
-  const buyer = await context.db.Buyer.findOne({
-    where: { id: buyerId },
-  });
-  if (!buyer) {
-    throw new Error(generateErrorMessage('buyer', application2.id));
-  }
-  const buyerRelationship = await context.db.BuyerRelationship.findOne({
-    where: { id: buyer.relationshipId },
-  });
-  if (!buyerRelationship) {
-    throw new Error(generateErrorMessage('buyerRelationship', application2.id));
-  }
-  const buyerTradingHistory = await context.db.BuyerTradingHistory.findOne({
-    where: { id: buyer.buyerTradingHistoryId },
-  });
-  if (!buyerTradingHistory) {
-    throw new Error(generateErrorMessage('buyerTradingHistory', application2.id));
-  }
-  const buyerCountry = await context.db.Country.findOne({
-    where: { id: buyer.countryId },
-  });
-  if (!buyerCountry) {
-    throw new Error(generateErrorMessage('populated buyer', application2.id));
-  }
-  const populatedEligibility = {
-    ...eligibility,
-    buyerCountry,
-    coverPeriod,
-    totalContractValue,
-  };
-  const populatedBuyer = {
-    ...buyer,
-    country: buyerCountry,
-    relationship: buyerRelationship,
-    buyerTradingHistory,
-  };
-  const declaration = await context.db.Declaration.findOne({
-    where: { id: declarationId },
-  });
-  if (!declaration) {
-    throw new Error(generateErrorMessage('declaration', application2.id));
-  }
-  const sectionReview = await context.db.SectionReview.findOne({
-    where: { id: sectionReviewId },
-  });
-  if (!sectionReview) {
-    throw new Error(generateErrorMessage('sectionReview', application2.id));
-  }
-  const populatedApplication2 = {
-    ...application2,
-    eligibility: populatedEligibility,
-    broker,
-    business,
-    buyer: populatedBuyer,
-    company: populatedCompany,
-    companySicCodes,
-    declaration,
-    exportContract: populatedExportContract,
-    owner: account2,
-    policy: populatedPolicy,
-    policyContact,
-    nominatedLossPayee,
-    sectionReview,
-  };
-  return populatedApplication2;
 };
 var populatedApplication = {
   get: getPopulatedApplication,
 };
 var get_populated_application_default = populatedApplication;
-
-// helpers/get-countries/index.ts
-var getCountries = async (context) => {
-  console.info('Getting countries');
-  try {
-    const countries = await context.db.Country.findMany();
-    return countries;
-  } catch (err) {
-    console.error('Error getting countries %O', err);
-    throw new Error(`Getting countries ${err}`);
-  }
-};
-var get_countries_default = getCountries;
 
 // helpers/replace-character-codes-with-characters/index.ts
 var replaceCharacterCodesWithCharacters = (str) =>
@@ -5547,13 +6110,13 @@ var send4 = async (application2, xlsxPath) => {
     };
     console.info('Sending application submitted email to application account owner: %s', sendOwnerEmailVars.emailAddress);
     const accountSubmittedResponse = await emails_default.application.submittedEmail(sendOwnerEmailVars);
-    if (!accountSubmittedResponse.success) {
+    if (!accountSubmittedResponse?.success) {
       throw new Error('Sending application submitted email to owner/account');
     }
     if (!policyContact.isSameAsOwner) {
       console.info('Sending application submitted email to policy contact email: %s', sendContactEmailVars.emailAddress);
       const contactSubmittedResponse = await emails_default.application.submittedEmail(sendContactEmailVars);
-      if (!contactSubmittedResponse.success) {
+      if (!contactSubmittedResponse?.success) {
         throw new Error('Sending application submitted email to contact');
       }
     }
@@ -5579,9 +6142,9 @@ var send4 = async (application2, xlsxPath) => {
     return {
       success: true,
     };
-  } catch (err) {
-    console.error('Error sending application submitted emails %O', err);
-    throw new Error(`Sending application submitted emails ${err}`);
+  } catch (error) {
+    console.error('Error sending application submitted emails %o', error);
+    throw new Error(`Sending application submitted emails ${error}`);
   }
 };
 var applicationSubmittedEmails = {
@@ -5690,7 +6253,7 @@ var {
 } = insurance_default.ELIGIBILITY;
 var { COMPANY_NAME } = insurance_default.COMPANIES_HOUSE;
 var THRESHOLD = format_currency_default(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
-var FIELDS_ELIGIBILITY = {
+var ELIGIBILITY_FIELDS = {
   [BUYER_COUNTRY]: {
     SUMMARY: {
       TITLE: 'Buyer location',
@@ -5731,7 +6294,13 @@ var FIELDS_ELIGIBILITY = {
     },
   },
   [COMPANIES_HOUSE_NUMBER]: {
-    HINT: `<p>For example, 8989898 or SC907816. You'll find it on your incorporation certificate or on the <a class="govuk-link" href="${LINKS.EXTERNAL.COMPANIES_HOUSE}">Companies House website</a>.</p>`,
+    HINT: {
+      INTRO: "For example, 8989898 or SC907816. You'll find it on your incorporation certificate or on the",
+      LINK: {
+        TEXT: 'Companies House website',
+        HREF: LINKS.EXTERNAL.COMPANIES_HOUSE,
+      },
+    },
     SUMMARY: {
       TITLE: 'UK Companies House number',
     },
@@ -5930,7 +6499,7 @@ var POLICY_FIELDS = {
       MULTIPLE: {
         ID: MULTIPLE_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
-        TEXT: 'Multiple contract policy (revolving credit)',
+        TEXT: 'Multiple contract policy (Revolving credit)',
         HINT_LIST: [
           `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER} months`,
           "Best if you'll have an ongoing relationship with the buyer but you're not sure yet how many contracts or sales you'll have",
@@ -5974,9 +6543,21 @@ var POLICY_FIELDS = {
         },
       },
       [CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
+        LABEL: "What's the total value of the contract you want to insure?",
         HINT: 'Enter a whole number. Do not enter decimals.',
         SUMMARY: {
           TITLE: 'Contract value',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
+        },
+      },
+      [CONTRACT_POLICY.SINGLE.REQUESTED_CREDIT_LIMIT]: {
+        LABEL: 'What credit limit do you require?',
+        HINT: {
+          INTRO: 'For example, your total contract maybe \xA3250,000 but the amount you want to insure is \xA3100,000.',
+          OUTRO: 'Enter a whole number. Do not enter decimals.',
+        },
+        SUMMARY: {
+          TITLE: 'Credit limit',
           FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
         },
       },
@@ -5984,7 +6565,7 @@ var POLICY_FIELDS = {
     MULTIPLE: {
       [CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
         LABEL: 'How many months do you want to be insured for?',
-        HINT: `The maximum is ${TOTAL_MONTHS_OF_COVER} months.`,
+        HINT: `The maximum is ${TOTAL_MONTHS_OF_COVER.MAXIMUM} months.`,
         OPTIONS: FIELD_VALUES.TOTAL_MONTHS_OF_COVER,
         SUMMARY: {
           TITLE: 'How many months you want to be insured for',
@@ -6030,7 +6611,7 @@ var POLICY_FIELDS = {
     },
     [NAME_ON_POLICY.POSITION]: {
       LABEL: "What's your position at the company?",
-      MAXIMUM: 50,
+      MAXIMUM: MAXIMUM_CHARACTERS.NAME_ON_POLICY_POSITION,
       SUMMARY: {
         TITLE: 'Position at company',
         FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY,
@@ -6046,7 +6627,7 @@ var POLICY_FIELDS = {
   DIFFERENT_NAME_ON_POLICY: {
     [DIFFERENT_NAME_ON_POLICY.POSITION]: {
       LABEL: 'Position at company',
-      MAXIMUM: 50,
+      MAXIMUM: MAXIMUM_CHARACTERS.DIFFERENT_NAME_ON_POLICY,
     },
     [EMAIL3]: {
       SUMMARY: {
@@ -6063,7 +6644,7 @@ var POLICY_FIELDS = {
     },
   },
   [CREDIT_PERIOD_WITH_BUYER]: {
-    LABEL: 'What period of pre-credit cover do you require?',
+    LABEL: 'How long do you need pre-credit cover for?',
     SUMMARY: {
       TITLE: 'Period of pre-credit cover',
       FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
@@ -6079,14 +6660,14 @@ var POLICY_FIELDS = {
     },
     [COMPANY_NAME2]: {
       LABEL: 'Name of the other company',
-      MAXIMUM: 200,
+      MAXIMUM: MAXIMUM_CHARACTERS.REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NAME,
       SUMMARY: {
         TITLE: 'Name of the other company',
       },
     },
     [COMPANY_NUMBER]: {
       LABEL: 'Registration number of the other company (optional)',
-      MAXIMUM: 100,
+      MAXIMUM: MAXIMUM_CHARACTERS.REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NUMBER,
       SUMMARY: {
         TITLE: 'Registration number of the other company',
       },
@@ -6110,7 +6691,7 @@ var POLICY_FIELDS = {
   BROKER_DETAILS: {
     [NAME]: {
       LABEL: 'Name of broker or company',
-      MAXIMUM: 300,
+      MAXIMUM: MAXIMUM_CHARACTERS.BROKER_NAME,
       SUMMARY: {
         TITLE: "Broker's name or company",
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
@@ -6237,13 +6818,13 @@ var {
   EXPORTER_BUSINESS: EXPORTER_BUSINESS2,
 } = insurance_default;
 var {
-  YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, PHONE_NUMBER, WEBSITE },
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, PHONE_NUMBER, WEBSITE },
   ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS: FULL_ADDRESS2 },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
   HAS_CREDIT_CONTROL,
 } = EXPORTER_BUSINESS2;
-var FIELDS = {
+var EXPORTER_BUSINESS_FIELDS = {
   COMPANY_DETAILS: {
     [COMPANY_NUMBER2]: {
       SUMMARY: {
@@ -6280,7 +6861,7 @@ var FIELDS = {
         TITLE: 'Different trading name',
       },
     },
-    [TRADING_ADDRESS]: {
+    [HAS_DIFFERENT_TRADING_ADDRESS]: {
       SUMMARY: {
         TITLE: 'Different trading address',
       },
@@ -6432,14 +7013,18 @@ var YOUR_BUYER_FIELDS = {
     },
   },
   [FAILED_PAYMENTS]: {
-    LABEL: 'Has the buyer ever failed to pay you on time?',
+    HINT: 'This is when an invoice has still not been paid 30 days or more after the agreed payment date.',
     SUMMARY: {
       TITLE: 'Buyer failed to pay on time?',
       FORM_TITLE: TRADING_HISTORY,
     },
   },
   [CURRENCY_CODE2]: {
-    LEGEND: 'What currency are the outstanding or overdue payments in?',
+    LEGEND: 'What is the currency the outstanding or overdue payments are in?',
+    SUMMARY: {
+      TITLE: 'Outstanding payments currency',
+      FORM_TITLE: TRADING_HISTORY,
+    },
   },
   [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
     LABEL: 'Have you in the past held credit insurance cover on the buyer?',
@@ -6458,15 +7043,16 @@ var YOUR_BUYER_FIELDS = {
     MAXIMUM: MAXIMUM_CHARACTERS.BUYER.PREVIOUS_CREDIT_INSURANCE_COVER,
   },
   [TOTAL_OUTSTANDING_PAYMENTS]: {
-    HEADING: 'Tell us about the outstanding or overdue payments',
-    LABEL: 'Total outstanding, including overdue',
+    LABEL: 'Total outstanding, including overdue in',
+    HINT: 'Enter a whole number. Do not enter decimals.',
     SUMMARY: {
       TITLE: 'Total outstanding including overdue',
       FORM_TITLE: TRADING_HISTORY,
     },
   },
   [TOTAL_AMOUNT_OVERDUE]: {
-    LABEL: 'Amount overdue',
+    LABEL: 'Amount overdue in',
+    HINT: 'Enter a whole number. Do not enter decimals.',
     SUMMARY: {
       TITLE: 'Amount overdue',
       FORM_TITLE: TRADING_HISTORY,
@@ -6535,7 +7121,7 @@ var {
       HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME2,
       DIFFERENT_TRADING_NAME,
       PHONE_NUMBER: PHONE_NUMBER2,
-      TRADING_ADDRESS: TRADING_ADDRESS2,
+      HAS_DIFFERENT_TRADING_ADDRESS: HAS_DIFFERENT_TRADING_ADDRESS2,
       WEBSITE: WEBSITE2,
     },
   },
@@ -6669,7 +7255,7 @@ var XLSX = {
     [TOTAL_MONTHS_OF_COVER2]: 'Requested length of insurance',
     [TOTAL_OUTSTANDING_PAYMENTS2]: 'Total outstanding payments',
     [TOTAL_SALES_TO_BUYER]: 'Total sales estimate',
-    [TRADING_ADDRESS2]: 'Different trading address?',
+    [HAS_DIFFERENT_TRADING_ADDRESS2]: 'Different trading address?',
     [TRADED_WITH_BUYER2]: 'Has the exporter traded with this buyer before?',
     [USING_BROKER2]: 'Using a broker for this insurance?',
     [WEBSITE2]: 'Exporter Company website (optional)',
@@ -6701,16 +7287,16 @@ var formatTimeOfDay = (date) => format_date_default(date, DATE_FORMAT.HOURS_AND_
 var format_time_of_day_default = formatTimeOfDay;
 
 // generate-xlsx/map-application-to-XLSX/map-introduction/index.ts
-var { FIELDS: FIELDS2 } = XLSX;
+var { FIELDS } = XLSX;
 var { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL4 } = account_default;
 var mapIntroduction = (application2) => {
   const mapped = [
     xlsx_row_default(REFERENCE_NUMBER.SUMMARY.TITLE, application2.referenceNumber),
     xlsx_row_default(DATE_SUBMITTED.SUMMARY.TITLE, format_date_default(application2.submissionDate, DATE_FORMAT.XLSX)),
     xlsx_row_default(TIME_SUBMITTED.SUMMARY.TITLE, format_time_of_day_default(application2.submissionDate)),
-    xlsx_row_default(String(FIELDS2[FIRST_NAME2]), application2.owner[FIRST_NAME2]),
-    xlsx_row_default(String(FIELDS2[LAST_NAME2]), application2.owner[LAST_NAME2]),
-    xlsx_row_default(FIELDS2.APPLICANT_EMAIL_ADDRESS, application2.owner[EMAIL4]),
+    xlsx_row_default(String(FIELDS[FIRST_NAME2]), application2.owner[FIRST_NAME2]),
+    xlsx_row_default(String(FIELDS[LAST_NAME2]), application2.owner[LAST_NAME2]),
+    xlsx_row_default(FIELDS.APPLICANT_EMAIL_ADDRESS, application2.owner[EMAIL4]),
   ];
   return mapped;
 };
@@ -6723,15 +7309,15 @@ var {
     NAME_ON_POLICY: { POSITION },
   },
 } = insurance_default;
-var { FIELDS: FIELDS3 } = XLSX;
+var { FIELDS: FIELDS2 } = XLSX;
 var mapExporterContactDetails = (application2) => {
   const { policyContact } = application2;
   const mapped = [
-    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.TITLE),
-    xlsx_row_default(FIELDS3.EXPORTER_CONTACT[FIRST_NAME3], policyContact[FIRST_NAME3]),
-    xlsx_row_default(FIELDS3.EXPORTER_CONTACT[LAST_NAME3], policyContact[LAST_NAME3]),
-    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, policyContact[EMAIL5]),
-    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_POSITION, policyContact[POSITION]),
+    xlsx_row_default(FIELDS2.EXPORTER_CONTACT.TITLE),
+    xlsx_row_default(FIELDS2.EXPORTER_CONTACT[FIRST_NAME3], policyContact[FIRST_NAME3]),
+    xlsx_row_default(FIELDS2.EXPORTER_CONTACT[LAST_NAME3], policyContact[LAST_NAME3]),
+    xlsx_row_default(FIELDS2.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, policyContact[EMAIL5]),
+    xlsx_row_default(FIELDS2.EXPORTER_CONTACT.EXPORTER_CONTACT_POSITION, policyContact[POSITION]),
   ];
   return mapped;
 };
@@ -6739,15 +7325,12 @@ var map_exporter_contact_details_default = mapExporterContactDetails;
 
 // generate-xlsx/map-application-to-XLSX/helpers/map-yes-no-field/index.ts
 var { YES, NO } = FIELD_VALUES;
-var mapYesNoField = ({ answer, defaultValue }) => {
+var mapYesNoField = ({ answer }) => {
   if (answer === false) {
     return NO;
   }
   if (answer === true) {
     return YES;
-  }
-  if (defaultValue) {
-    return defaultValue;
   }
   return DEFAULT.EMPTY;
 };
@@ -6755,7 +7338,7 @@ var map_yes_no_field_default = mapYesNoField;
 
 // generate-xlsx/map-application-to-XLSX/map-eligibility/index.ts
 var { MORE_THAN_250K: MORE_THAN_250K2 } = TOTAL_CONTRACT_VALUE;
-var { FIELDS: FIELDS4 } = XLSX;
+var { FIELDS: FIELDS3 } = XLSX;
 var {
   ELIGIBILITY: {
     BUYER_COUNTRY: BUYER_COUNTRY3,
@@ -6772,38 +7355,32 @@ var {
   },
 } = insurance_default;
 var mapEligibility = (application2) => {
-  const { company, eligibility, migratedV1toV2 } = application2;
+  const { company, eligibility } = application2;
   let mapped = [
-    xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default({ answer: eligibility[VALID_EXPORTER_LOCATION2] })),
+    xlsx_row_default(ELIGIBILITY_FIELDS[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default({ answer: eligibility[VALID_EXPORTER_LOCATION2] })),
     xlsx_row_default(
-      FIELDS_ELIGIBILITY[HAS_COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE,
+      ELIGIBILITY_FIELDS[HAS_COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE,
       map_yes_no_field_default({ answer: eligibility[HAS_COMPANIES_HOUSE_NUMBER2] }),
     ),
-    xlsx_row_default(String(FIELDS4[COMPANIES_HOUSE_NUMBER3]), company[COMPANIES_HOUSE_NUMBER3]),
-    xlsx_row_default(String(FIELDS4[BUYER_COUNTRY3]), eligibility[BUYER_COUNTRY3].name),
+    xlsx_row_default(String(FIELDS3[COMPANIES_HOUSE_NUMBER3]), company[COMPANIES_HOUSE_NUMBER3]),
+    xlsx_row_default(String(FIELDS3[BUYER_COUNTRY3]), eligibility[BUYER_COUNTRY3].name),
   ];
-  const totalContractValueAnswer = migratedV1toV2 ? null : eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID;
+  const totalContractValueAnswer = eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID;
   mapped = [
     ...mapped,
-    xlsx_row_default(String(FIELDS4[MORE_THAN_250K2.VALUE]), map_yes_no_field_default({ answer: totalContractValueAnswer })),
-    xlsx_row_default(String(FIELDS4[COVER_PERIOD3]), eligibility[COVER_PERIOD_ELIGIBILITY].value),
-    xlsx_row_default(String(FIELDS4[HAS_MINIMUM_UK_GOODS_OR_SERVICES3]), map_yes_no_field_default({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES3] })),
-  ];
-  const endBuyerAnswer = migratedV1toV2 ? null : eligibility[HAS_END_BUYER3];
-  const partyToConsortiumAnswer = migratedV1toV2 ? null : eligibility[IS_PARTY_TO_CONSORTIUM2];
-  const memberOfGroupAnswer = migratedV1toV2 ? null : eligibility[IS_PARTY_TO_CONSORTIUM2];
-  mapped = [
-    ...mapped,
-    xlsx_row_default(String(FIELDS4[HAS_END_BUYER3]), map_yes_no_field_default({ answer: endBuyerAnswer })),
-    xlsx_row_default(String(FIELDS4[IS_PARTY_TO_CONSORTIUM2]), map_yes_no_field_default({ answer: partyToConsortiumAnswer })),
-    xlsx_row_default(String(FIELDS4[IS_MEMBER_OF_A_GROUP2]), map_yes_no_field_default({ answer: memberOfGroupAnswer })),
+    xlsx_row_default(String(FIELDS3[MORE_THAN_250K2.VALUE]), map_yes_no_field_default({ answer: totalContractValueAnswer })),
+    xlsx_row_default(String(FIELDS3[COVER_PERIOD3]), eligibility[COVER_PERIOD_ELIGIBILITY].value),
+    xlsx_row_default(String(FIELDS3[HAS_MINIMUM_UK_GOODS_OR_SERVICES3]), map_yes_no_field_default({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES3] })),
+    xlsx_row_default(String(FIELDS3[HAS_END_BUYER3]), map_yes_no_field_default({ answer: eligibility[HAS_END_BUYER3] })),
+    xlsx_row_default(String(FIELDS3[IS_PARTY_TO_CONSORTIUM2]), map_yes_no_field_default({ answer: eligibility[IS_PARTY_TO_CONSORTIUM2] })),
+    xlsx_row_default(String(FIELDS3[IS_MEMBER_OF_A_GROUP2]), map_yes_no_field_default({ answer: eligibility[IS_PARTY_TO_CONSORTIUM2] })),
   ];
   return mapped;
 };
 var map_eligibility_default = mapEligibility;
 
 // generate-xlsx/map-application-to-XLSX/map-key-information/index.ts
-var { FIELDS: FIELDS5 } = XLSX;
+var { FIELDS: FIELDS4 } = XLSX;
 var CONTENT_STRINGS = {
   ...POLICY_FIELDS,
 };
@@ -6821,10 +7398,10 @@ var {
 var mapKeyInformation = (application2) => {
   const { policy } = application2;
   const mapped = [
-    xlsx_row_default(FIELDS5.KEY_INFORMATION_TITLE),
-    xlsx_row_default(String(FIELDS5[EXPORTER_COMPANY_NAME2]), replace_character_codes_with_characters_default(application2.company[EXPORTER_COMPANY_NAME2])),
-    xlsx_row_default(String(FIELDS5[COUNTRY2]), application2.buyer[COUNTRY2].name),
-    xlsx_row_default(String(FIELDS5[BUYER_COMPANY_NAME2]), replace_character_codes_with_characters_default(application2.buyer[BUYER_COMPANY_NAME2])),
+    xlsx_row_default(FIELDS4.KEY_INFORMATION_TITLE),
+    xlsx_row_default(String(FIELDS4[EXPORTER_COMPANY_NAME2]), replace_character_codes_with_characters_default(application2.company[EXPORTER_COMPANY_NAME2])),
+    xlsx_row_default(String(FIELDS4[COUNTRY2]), application2.buyer[COUNTRY2].name),
+    xlsx_row_default(String(FIELDS4[BUYER_COMPANY_NAME2]), replace_character_codes_with_characters_default(application2.buyer[BUYER_COMPANY_NAME2])),
     xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE5].SUMMARY?.TITLE), policy[POLICY_TYPE5]),
   ];
   return mapped;
@@ -6850,15 +7427,15 @@ var mapPolicyType = (policyType) => {
 var map_policy_type_default = mapPolicyType;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-intro/index.ts
-var { FIELDS: FIELDS6 } = XLSX;
+var { FIELDS: FIELDS5 } = XLSX;
 var {
   POLICY_TYPE: POLICY_TYPE6,
   CONTRACT_POLICY: { REQUESTED_START_DATE: REQUESTED_START_DATE3 },
 } = policy_default;
 var mapIntro = (policy) => {
   const mapped = [
-    xlsx_row_default(String(FIELDS6[POLICY_TYPE6]), map_policy_type_default(policy[POLICY_TYPE6])),
-    xlsx_row_default(String(FIELDS6[REQUESTED_START_DATE3]), format_date_default(policy[REQUESTED_START_DATE3], DATE_FORMAT.XLSX)),
+    xlsx_row_default(String(FIELDS5[POLICY_TYPE6]), map_policy_type_default(policy[POLICY_TYPE6])),
+    xlsx_row_default(String(FIELDS5[REQUESTED_START_DATE3]), format_date_default(policy[REQUESTED_START_DATE3], DATE_FORMAT.XLSX)),
   ];
   return mapped;
 };
@@ -6929,7 +7506,7 @@ var ACCOUNT_FIELDS = {
 };
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-name-on-policy/index.ts
-var { FIELDS: FIELDS7 } = XLSX;
+var { FIELDS: FIELDS6 } = XLSX;
 var {
   ACCOUNT: { FIRST_NAME: FIRST_NAME5, LAST_NAME: LAST_NAME5, EMAIL: EMAIL7 },
   POLICY: {
@@ -6941,17 +7518,17 @@ var mapNameOnPolicy = (policyContact) => {
   if (policyContact[IS_SAME_AS_OWNER]) {
     const nameOnPolicy = `${policyContact[FIRST_NAME5]} ${policyContact[LAST_NAME5]} (${policyContact[EMAIL7]})`;
     mapped = [
-      xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[NAME2]), nameOnPolicy),
-      xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[POSITION2]), policyContact[POSITION2]),
+      xlsx_row_default(String(FIELDS6.NAME_ON_POLICY[NAME2]), nameOnPolicy),
+      xlsx_row_default(String(FIELDS6.NAME_ON_POLICY[POSITION2]), policyContact[POSITION2]),
     ];
     return mapped;
   }
   mapped = [
-    xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[NAME2]), FIELDS7.SOMEONE_ELSE),
+    xlsx_row_default(String(FIELDS6.NAME_ON_POLICY[NAME2]), FIELDS6.SOMEONE_ELSE),
     xlsx_row_default(String(ACCOUNT_FIELDS[FIRST_NAME5].LABEL), policyContact[FIRST_NAME5]),
     xlsx_row_default(String(ACCOUNT_FIELDS[LAST_NAME5].LABEL), policyContact[LAST_NAME5]),
     xlsx_row_default(String(ACCOUNT_FIELDS[EMAIL7].LABEL), policyContact[EMAIL7]),
-    xlsx_row_default(String(FIELDS7.NAME_ON_POLICY[POSITION2]), policyContact[POSITION2]),
+    xlsx_row_default(String(FIELDS6.NAME_ON_POLICY[POSITION2]), policyContact[POSITION2]),
   ];
   return mapped;
 };
@@ -6968,7 +7545,7 @@ var formatCurrency2 = (number, currencyCode, decimalPlaces) =>
 var format_currency_default2 = formatCurrency2;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-single-contract-policy/index.ts
-var { FIELDS: FIELDS8 } = XLSX;
+var { FIELDS: FIELDS7 } = XLSX;
 var CONTENT_STRINGS2 = {
   ...POLICY_FIELDS,
   ...POLICY_FIELDS.CONTRACT_POLICY,
@@ -6980,15 +7557,19 @@ var {
     CONTRACT_POLICY: {
       SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE3 },
       POLICY_CURRENCY_CODE,
-      SINGLE: { TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE2 },
+      SINGLE: { REQUESTED_CREDIT_LIMIT, TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE2 },
     },
   },
 } = insurance_default;
 var mapSingleContractPolicy = (policy) => {
   const mapped = [
-    xlsx_row_default(String(FIELDS8[CONTRACT_COMPLETION_DATE3]), format_date_default(policy[CONTRACT_COMPLETION_DATE3], DATE_FORMAT.XLSX)),
+    xlsx_row_default(String(FIELDS7[CONTRACT_COMPLETION_DATE3]), format_date_default(policy[CONTRACT_COMPLETION_DATE3], DATE_FORMAT.XLSX)),
     xlsx_row_default(String(CONTENT_STRINGS2[CURRENCY_CODE3].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
-    xlsx_row_default(String(FIELDS8[TOTAL_CONTRACT_VALUE2]), format_currency_default2(policy[TOTAL_CONTRACT_VALUE2], policy[POLICY_CURRENCY_CODE])),
+    xlsx_row_default(String(FIELDS7[TOTAL_CONTRACT_VALUE2]), format_currency_default2(policy[TOTAL_CONTRACT_VALUE2], policy[POLICY_CURRENCY_CODE])),
+    xlsx_row_default(
+      String(CONTENT_STRINGS2[REQUESTED_CREDIT_LIMIT].SUMMARY?.TITLE),
+      format_currency_default2(policy[REQUESTED_CREDIT_LIMIT], policy[POLICY_CURRENCY_CODE]),
+    ),
   ];
   return mapped;
 };
@@ -6999,7 +7580,7 @@ var mapMonthString = (answer) => (answer === 1 ? `${answer} month` : `${answer} 
 var map_month_string_default = mapMonthString;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-multiple-contract-policy/index.ts
-var { FIELDS: FIELDS9 } = XLSX;
+var { FIELDS: FIELDS8 } = XLSX;
 var CONTENT_STRINGS3 = {
   ...POLICY_FIELDS,
   ...POLICY_FIELDS.CONTRACT_POLICY,
@@ -7019,21 +7600,21 @@ var {
   },
 } = insurance_default;
 var mapMultipleContractPolicy = (policy) => [
-  xlsx_row_default(String(FIELDS9[TOTAL_MONTHS_OF_COVER3]), map_month_string_default(policy[TOTAL_MONTHS_OF_COVER3])),
+  xlsx_row_default(String(FIELDS8[TOTAL_MONTHS_OF_COVER3]), map_month_string_default(policy[TOTAL_MONTHS_OF_COVER3])),
   xlsx_row_default(String(CONTENT_STRINGS3[CURRENCY_CODE4].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE2]),
-  xlsx_row_default(String(FIELDS9[TOTAL_SALES_TO_BUYER2]), format_currency_default2(policy[TOTAL_SALES_TO_BUYER2], policy[POLICY_CURRENCY_CODE2])),
-  xlsx_row_default(String(FIELDS9[MAXIMUM_BUYER_WILL_OWE2]), format_currency_default2(policy[MAXIMUM_BUYER_WILL_OWE2], policy[POLICY_CURRENCY_CODE2])),
+  xlsx_row_default(String(FIELDS8[TOTAL_SALES_TO_BUYER2]), format_currency_default2(policy[TOTAL_SALES_TO_BUYER2], policy[POLICY_CURRENCY_CODE2])),
+  xlsx_row_default(String(FIELDS8[MAXIMUM_BUYER_WILL_OWE2]), format_currency_default2(policy[MAXIMUM_BUYER_WILL_OWE2], policy[POLICY_CURRENCY_CODE2])),
 ];
 var map_multiple_contract_policy_default = mapMultipleContractPolicy;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-credit-period/index.ts
-var { FIELDS: FIELDS10 } = XLSX;
+var { FIELDS: FIELDS9 } = XLSX;
 var { NEED_PRE_CREDIT_PERIOD: NEED_PRE_CREDIT_PERIOD3, CREDIT_PERIOD_WITH_BUYER: CREDIT_PERIOD_WITH_BUYER3 } = policy_default;
 var mapCreditPeriod = (policy) => {
   const needPreCreditPeriod = policy[NEED_PRE_CREDIT_PERIOD3];
-  let mapped = [xlsx_row_default(String(FIELDS10[NEED_PRE_CREDIT_PERIOD3]), map_yes_no_field_default({ answer: needPreCreditPeriod }))];
+  let mapped = [xlsx_row_default(String(FIELDS9[NEED_PRE_CREDIT_PERIOD3]), map_yes_no_field_default({ answer: needPreCreditPeriod }))];
   if (needPreCreditPeriod) {
-    mapped = [...mapped, xlsx_row_default(String(FIELDS10[CREDIT_PERIOD_WITH_BUYER3]), policy[CREDIT_PERIOD_WITH_BUYER3])];
+    mapped = [...mapped, xlsx_row_default(String(FIELDS9[CREDIT_PERIOD_WITH_BUYER3]), policy[CREDIT_PERIOD_WITH_BUYER3])];
   }
   return mapped;
 };
@@ -7047,20 +7628,20 @@ var getCountryByIsoCode = (countries, isoCode) => {
 var get_country_by_iso_code_default = getCountryByIsoCode;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-jointly-insured-party/index.ts
-var { FIELDS: FIELDS11 } = XLSX;
+var { FIELDS: FIELDS10 } = XLSX;
 var {
   REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED: REQUESTED2, COMPANY_NAME: COMPANY_NAME4, COMPANY_NUMBER: COMPANY_NUMBER3, COUNTRY_CODE: COUNTRY_CODE2 },
 } = policy_default;
 var mapJointlyInsuredParty = (party, countries) => {
   const requestedParty = party[REQUESTED2];
-  let mapped = [xlsx_row_default(String(FIELDS11.JOINTLY_INSURED_PARTY[REQUESTED2]), map_yes_no_field_default({ answer: requestedParty }))];
+  let mapped = [xlsx_row_default(String(FIELDS10.JOINTLY_INSURED_PARTY[REQUESTED2]), map_yes_no_field_default({ answer: requestedParty }))];
   const country = get_country_by_iso_code_default(countries, party[COUNTRY_CODE2]);
   if (requestedParty) {
     mapped = [
       ...mapped,
-      xlsx_row_default(String(FIELDS11.JOINTLY_INSURED_PARTY[COMPANY_NAME4]), party[COMPANY_NAME4]),
-      xlsx_row_default(String(FIELDS11.JOINTLY_INSURED_PARTY[COUNTRY_CODE2]), country.name),
-      xlsx_row_default(String(FIELDS11.JOINTLY_INSURED_PARTY[COMPANY_NUMBER3]), party[COMPANY_NUMBER3]),
+      xlsx_row_default(String(FIELDS10.JOINTLY_INSURED_PARTY[COMPANY_NAME4]), party[COMPANY_NAME4]),
+      xlsx_row_default(String(FIELDS10.JOINTLY_INSURED_PARTY[COUNTRY_CODE2]), country.name),
+      xlsx_row_default(String(FIELDS10.JOINTLY_INSURED_PARTY[COMPANY_NUMBER3]), party[COMPANY_NUMBER3]),
     ];
   }
   return mapped;
@@ -7072,16 +7653,16 @@ var {
   USING_BROKER: USING_BROKER3,
   BROKER_DETAILS: { NAME: BROKER_NAME2, EMAIL: EMAIL8, FULL_ADDRESS: FULL_ADDRESS3 },
 } = POLICY;
-var { FIELDS: FIELDS12 } = XLSX;
+var { FIELDS: FIELDS11 } = XLSX;
 var mapBroker = (application2) => {
   const { broker } = application2;
-  let mapped = [xlsx_row_default(String(FIELDS12[USING_BROKER3]), map_yes_no_field_default({ answer: broker[USING_BROKER3] }))];
+  let mapped = [xlsx_row_default(String(FIELDS11[USING_BROKER3]), map_yes_no_field_default({ answer: broker[USING_BROKER3] }))];
   if (broker[USING_BROKER3]) {
     mapped = [
       ...mapped,
-      xlsx_row_default(String(FIELDS12[BROKER_NAME2]), broker[BROKER_NAME2]),
-      xlsx_row_default(String(FIELDS12[EMAIL8]), broker[EMAIL8]),
-      xlsx_row_default(String(FIELDS12[FULL_ADDRESS3]), broker[FULL_ADDRESS3]),
+      xlsx_row_default(String(FIELDS11[BROKER_NAME2]), broker[BROKER_NAME2]),
+      xlsx_row_default(String(FIELDS11[EMAIL8]), broker[EMAIL8]),
+      xlsx_row_default(String(FIELDS11[FULL_ADDRESS3]), broker[FULL_ADDRESS3]),
     ];
   }
   return mapped;
@@ -7104,14 +7685,14 @@ var mapLossPayeeLocation = (lossPayee) => {
 var map_location_default = mapLossPayeeLocation;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/map-appointed-loss-payee/index.ts
-var { FIELDS: FIELDS13 } = XLSX;
+var { FIELDS: FIELDS12 } = XLSX;
 var CONTENT_STRINGS5 = POLICY_FIELDS.LOSS_PAYEE_DETAILS;
 var {
   LOSS_PAYEE: { IS_APPOINTED: IS_APPOINTED3 },
   LOSS_PAYEE_DETAILS: { LOCATION: LOCATION3, NAME: LOSS_PAYEE_NAME2 },
 } = policy_default;
 var mapAppointedLossPayee = (lossPayee) => {
-  let mapped = [xlsx_row_default(String(FIELDS13[IS_APPOINTED3]), map_yes_no_field_default({ answer: lossPayee[IS_APPOINTED3] }))];
+  let mapped = [xlsx_row_default(String(FIELDS12[IS_APPOINTED3]), map_yes_no_field_default({ answer: lossPayee[IS_APPOINTED3] }))];
   if (lossPayee[IS_APPOINTED3]) {
     mapped = [
       ...mapped,
@@ -7124,7 +7705,7 @@ var mapAppointedLossPayee = (lossPayee) => {
 var map_appointed_loss_payee_default = mapAppointedLossPayee;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/map-financial-details-international/index.ts
-var { FIELDS: FIELDS14 } = XLSX;
+var { FIELDS: FIELDS13 } = XLSX;
 var {
   LOSS_PAYEE_DETAILS: { IS_LOCATED_INTERNATIONALLY: IS_LOCATED_INTERNATIONALLY3 },
   LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE: BIC_SWIFT_CODE3, IBAN: IBAN3 },
@@ -7133,9 +7714,9 @@ var {
 var mapLossPayeeFinancialDetailsInternational = (lossPayee) => {
   if (lossPayee[IS_LOCATED_INTERNATIONALLY3]) {
     const mapped = [
-      xlsx_row_default(String(FIELDS14[BIC_SWIFT_CODE3]), lossPayee.financialInternational[BIC_SWIFT_CODE3]),
-      xlsx_row_default(String(FIELDS14[IBAN3]), lossPayee.financialInternational[IBAN3]),
-      xlsx_row_default(String(FIELDS14[FINANCIAL_ADDRESS3]), lossPayee.financialInternational[FINANCIAL_ADDRESS3]),
+      xlsx_row_default(String(FIELDS13[BIC_SWIFT_CODE3]), lossPayee.financialInternational[BIC_SWIFT_CODE3]),
+      xlsx_row_default(String(FIELDS13[IBAN3]), lossPayee.financialInternational[IBAN3]),
+      xlsx_row_default(String(FIELDS13[FINANCIAL_ADDRESS3]), lossPayee.financialInternational[FINANCIAL_ADDRESS3]),
     ];
     return mapped;
   }
@@ -7144,7 +7725,7 @@ var mapLossPayeeFinancialDetailsInternational = (lossPayee) => {
 var map_financial_details_international_default = mapLossPayeeFinancialDetailsInternational;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/map-financial-details-uk/index.ts
-var { FIELDS: FIELDS15 } = XLSX;
+var { FIELDS: FIELDS14 } = XLSX;
 var {
   LOSS_PAYEE_DETAILS: { IS_LOCATED_IN_UK: IS_LOCATED_IN_UK3 },
   LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE: SORT_CODE3, ACCOUNT_NUMBER: ACCOUNT_NUMBER3 },
@@ -7153,9 +7734,9 @@ var {
 var mapLossPayeeFinancialDetailsUk = (lossPayee) => {
   if (lossPayee[IS_LOCATED_IN_UK3]) {
     const mapped = [
-      xlsx_row_default(String(FIELDS15[SORT_CODE3]), lossPayee.financialUk[SORT_CODE3]),
-      xlsx_row_default(String(FIELDS15[ACCOUNT_NUMBER3]), lossPayee.financialUk[ACCOUNT_NUMBER3]),
-      xlsx_row_default(String(FIELDS15[FINANCIAL_ADDRESS4]), lossPayee.financialUk[FINANCIAL_ADDRESS4]),
+      xlsx_row_default(String(FIELDS14[SORT_CODE3]), lossPayee.financialUk[SORT_CODE3]),
+      xlsx_row_default(String(FIELDS14[ACCOUNT_NUMBER3]), lossPayee.financialUk[ACCOUNT_NUMBER3]),
+      xlsx_row_default(String(FIELDS14[FINANCIAL_ADDRESS4]), lossPayee.financialUk[FINANCIAL_ADDRESS4]),
     ];
     return mapped;
   }
@@ -7204,10 +7785,10 @@ var map_policy_default2 = mapPolicy2;
 var {
   YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME3, DIFFERENT_TRADING_NAME: DIFFERENT_TRADING_NAME2 },
 } = business_default;
-var { FIELDS: FIELDS16 } = XLSX;
+var { FIELDS: FIELDS15 } = XLSX;
 var mapDifferentTradingName = (company) => {
   if (company[HAS_DIFFERENT_TRADING_NAME3]) {
-    return xlsx_row_default(String(FIELDS16[DIFFERENT_TRADING_NAME2]), company[DIFFERENT_TRADING_NAME2]);
+    return xlsx_row_default(String(FIELDS15[DIFFERENT_TRADING_NAME2]), company[DIFFERENT_TRADING_NAME2]);
   }
 };
 var map_different_trading_name_default = mapDifferentTradingName;
@@ -7216,12 +7797,12 @@ var map_different_trading_name_default = mapDifferentTradingName;
 var {
   ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS: FULL_ADDRESS4, FULL_ADDRESS_DOT_NOTATION: FULL_ADDRESS_DOT_NOTATION2 },
 } = business_default;
-var { FIELDS: FIELDS17 } = XLSX;
+var { FIELDS: FIELDS16 } = XLSX;
 var mapDifferentTradingAddress = (company) => {
   const { differentTradingAddress } = company;
   const differentTradingAddressValue = differentTradingAddress[FULL_ADDRESS4];
   if (differentTradingAddressValue) {
-    return xlsx_row_default(String(FIELDS17[FULL_ADDRESS_DOT_NOTATION2]), differentTradingAddressValue);
+    return xlsx_row_default(String(FIELDS16[FULL_ADDRESS_DOT_NOTATION2]), differentTradingAddressValue);
   }
 };
 var map_different_trading_address_default = mapDifferentTradingAddress;
@@ -7246,12 +7827,12 @@ var map_exporter_address_default = mapExporterAddress;
 var {
   COMPANIES_HOUSE: { FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 },
 } = business_default;
-var { FIELDS: FIELDS18 } = XLSX;
+var { FIELDS: FIELDS17 } = XLSX;
 var mapFinancialYearEndDate = (company) => {
   if (company[FINANCIAL_YEAR_END_DATE2]) {
     return format_date_default(company[FINANCIAL_YEAR_END_DATE2], DATE_FORMAT.XLSX);
   }
-  return FIELDS18.NO_FINANCIAL_YEAR_END_DATE;
+  return FIELDS17.NO_FINANCIAL_YEAR_END_DATE;
 };
 var map_financial_year_end_date_default = mapFinancialYearEndDate;
 
@@ -7267,12 +7848,12 @@ var mapSicCodes2 = (sicCodes) => {
 var map_sic_codes_default2 = mapSicCodes2;
 
 // generate-xlsx/map-application-to-XLSX/map-exporter-business/index.ts
-var { FIELDS: FIELDS19 } = XLSX;
+var { FIELDS: FIELDS18 } = XLSX;
 var CONTENT_STRINGS6 = {
-  ...FIELDS.COMPANY_DETAILS,
-  ...FIELDS.NATURE_OF_YOUR_BUSINESS,
-  ...FIELDS.TURNOVER,
-  ...FIELDS.BROKER,
+  ...EXPORTER_BUSINESS_FIELDS.COMPANY_DETAILS,
+  ...EXPORTER_BUSINESS_FIELDS.NATURE_OF_YOUR_BUSINESS,
+  ...EXPORTER_BUSINESS_FIELDS.TURNOVER,
+  ...EXPORTER_BUSINESS_FIELDS.BROKER,
 };
 var {
   COMPANIES_HOUSE: {
@@ -7281,7 +7862,12 @@ var {
     COMPANY_SIC: COMPANY_SIC2,
     FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE3,
   },
-  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME4, TRADING_ADDRESS: TRADING_ADDRESS3, PHONE_NUMBER: PHONE_NUMBER3, WEBSITE: WEBSITE3 },
+  YOUR_COMPANY: {
+    HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME4,
+    HAS_DIFFERENT_TRADING_ADDRESS: HAS_DIFFERENT_TRADING_ADDRESS3,
+    PHONE_NUMBER: PHONE_NUMBER3,
+    WEBSITE: WEBSITE3,
+  },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3 },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2, TURNOVER_CURRENCY_CODE },
   HAS_CREDIT_CONTROL: HAS_CREDIT_CONTROL3,
@@ -7290,24 +7876,24 @@ var mapExporterBusiness = (application2) => {
   const { business, company, companySicCodes } = application2;
   const mapped = [
     xlsx_row_default(CONTENT_STRINGS6[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], DATE_FORMAT.XLSX)),
-    xlsx_row_default(String(FIELDS19[COMPANY_ADDRESS2]), map_exporter_address_default(company[COMPANY_ADDRESS2])),
-    xlsx_row_default(String(FIELDS19[COMPANY_SIC2]), map_sic_codes_default2(companySicCodes)),
-    xlsx_row_default(String(FIELDS19[HAS_DIFFERENT_TRADING_NAME4]), map_yes_no_field_default({ answer: company[HAS_DIFFERENT_TRADING_NAME4] })),
+    xlsx_row_default(String(FIELDS18[COMPANY_ADDRESS2]), map_exporter_address_default(company[COMPANY_ADDRESS2])),
+    xlsx_row_default(String(FIELDS18[COMPANY_SIC2]), map_sic_codes_default2(companySicCodes)),
+    xlsx_row_default(String(FIELDS18[HAS_DIFFERENT_TRADING_NAME4]), map_yes_no_field_default({ answer: company[HAS_DIFFERENT_TRADING_NAME4] })),
     map_different_trading_name_default(company),
-    xlsx_row_default(String(FIELDS19[TRADING_ADDRESS3]), map_yes_no_field_default({ answer: company[TRADING_ADDRESS3] })),
+    xlsx_row_default(String(FIELDS18[HAS_DIFFERENT_TRADING_ADDRESS3]), map_yes_no_field_default({ answer: company[HAS_DIFFERENT_TRADING_ADDRESS3] })),
     map_different_trading_address_default(company),
-    xlsx_row_default(String(FIELDS19[WEBSITE3]), company[WEBSITE3]),
-    xlsx_row_default(String(FIELDS19[PHONE_NUMBER3]), company[PHONE_NUMBER3]),
-    xlsx_row_default(String(FIELDS19[GOODS_OR_SERVICES3]), business[GOODS_OR_SERVICES3]),
-    xlsx_row_default(String(FIELDS19[YEARS_EXPORTING3]), business[YEARS_EXPORTING3]),
-    xlsx_row_default(String(FIELDS19[EMPLOYEES_UK3]), business[EMPLOYEES_UK3]),
+    xlsx_row_default(String(FIELDS18[WEBSITE3]), company[WEBSITE3]),
+    xlsx_row_default(String(FIELDS18[PHONE_NUMBER3]), company[PHONE_NUMBER3]),
+    xlsx_row_default(String(FIELDS18[GOODS_OR_SERVICES3]), business[GOODS_OR_SERVICES3]),
+    xlsx_row_default(String(FIELDS18[YEARS_EXPORTING3]), business[YEARS_EXPORTING3]),
+    xlsx_row_default(String(FIELDS18[EMPLOYEES_UK3]), business[EMPLOYEES_UK3]),
     xlsx_row_default(CONTENT_STRINGS6[FINANCIAL_YEAR_END_DATE3].SUMMARY?.TITLE, map_financial_year_end_date_default(company)),
     xlsx_row_default(
-      String(FIELDS19[ESTIMATED_ANNUAL_TURNOVER3]),
+      String(FIELDS18[ESTIMATED_ANNUAL_TURNOVER3]),
       format_currency_default2(business[ESTIMATED_ANNUAL_TURNOVER3], business[TURNOVER_CURRENCY_CODE]),
     ),
     xlsx_row_default(CONTENT_STRINGS6[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER2]}%`),
-    xlsx_row_default(String(FIELDS19[HAS_CREDIT_CONTROL3]), map_yes_no_field_default({ answer: business[HAS_CREDIT_CONTROL3] })),
+    xlsx_row_default(String(FIELDS18[HAS_CREDIT_CONTROL3]), map_yes_no_field_default({ answer: business[HAS_CREDIT_CONTROL3] })),
   ];
   return mapped;
 };
@@ -7315,10 +7901,10 @@ var map_exporter_business_default = mapExporterBusiness;
 
 // generate-xlsx/map-application-to-XLSX/map-buyer/map-connection-with-buyer/index.ts
 var { CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER3, CONNECTION_WITH_BUYER_DESCRIPTION: CONNECTION_WITH_BUYER_DESCRIPTION3 } = your_buyer_default;
-var { FIELDS: FIELDS20 } = XLSX;
+var { FIELDS: FIELDS19 } = XLSX;
 var mapConnectionWithBuyer = (relationship2) => {
   if (relationship2[CONNECTION_WITH_BUYER3]) {
-    return xlsx_row_default(String(FIELDS20[CONNECTION_WITH_BUYER_DESCRIPTION3]), relationship2[CONNECTION_WITH_BUYER_DESCRIPTION3]);
+    return xlsx_row_default(String(FIELDS19[CONNECTION_WITH_BUYER_DESCRIPTION3]), relationship2[CONNECTION_WITH_BUYER_DESCRIPTION3]);
   }
 };
 var map_connection_with_buyer_default = mapConnectionWithBuyer;
@@ -7332,15 +7918,17 @@ var {
     TOTAL_AMOUNT_OVERDUE: TOTAL_AMOUNT_OVERDUE2,
   },
 } = insurance_default;
-var { FIELDS: FIELDS21 } = XLSX;
+var { FIELDS: FIELDS20 } = XLSX;
 var mapOutstandingPayments = (tradingHistory) => {
   if (tradingHistory[OUTSTANDING_PAYMENTS3]) {
     const values = {
+      currency: tradingHistory[CURRENCY_CODE5],
       totalOutstanding: format_currency_default(tradingHistory[TOTAL_OUTSTANDING_PAYMENTS3], tradingHistory[CURRENCY_CODE5]),
       totalAmountOverdue: format_currency_default(tradingHistory[TOTAL_AMOUNT_OVERDUE2], tradingHistory[CURRENCY_CODE5]),
     };
     const mapped = [
-      xlsx_row_default(String(FIELDS21[TOTAL_OUTSTANDING_PAYMENTS3]), values.totalOutstanding),
+      xlsx_row_default(String(FIELDS20[TOTAL_OUTSTANDING_PAYMENTS3]), values.totalOutstanding),
+      xlsx_row_default(String(YOUR_BUYER_FIELDS[CURRENCY_CODE5].SUMMARY?.TITLE), values.currency),
       xlsx_row_default(String(YOUR_BUYER_FIELDS[TOTAL_AMOUNT_OVERDUE2].SUMMARY?.TITLE), values.totalAmountOverdue),
     ];
     return mapped;
@@ -7351,13 +7939,13 @@ var map_outstanding_payments_default = mapOutstandingPayments;
 
 // generate-xlsx/map-application-to-XLSX/map-buyer/map-buyer-trading-history/index.ts
 var { FAILED_PAYMENTS: FAILED_PAYMENTS3, OUTSTANDING_PAYMENTS: OUTSTANDING_PAYMENTS4, TRADED_WITH_BUYER: TRADED_WITH_BUYER3 } = your_buyer_default;
-var { FIELDS: FIELDS22 } = XLSX;
+var { FIELDS: FIELDS21 } = XLSX;
 var mapBuyerTradingHistory = (tradingHistory) => {
   if (tradingHistory[TRADED_WITH_BUYER3]) {
     const mapped = [
-      xlsx_row_default(String(FIELDS22[OUTSTANDING_PAYMENTS4]), map_yes_no_field_default({ answer: tradingHistory[OUTSTANDING_PAYMENTS4] })),
+      xlsx_row_default(String(FIELDS21[OUTSTANDING_PAYMENTS4]), map_yes_no_field_default({ answer: tradingHistory[OUTSTANDING_PAYMENTS4] })),
       ...map_outstanding_payments_default(tradingHistory),
-      xlsx_row_default(String(FIELDS22[FAILED_PAYMENTS3]), map_yes_no_field_default({ answer: tradingHistory[FAILED_PAYMENTS3] })),
+      xlsx_row_default(String(FIELDS21[FAILED_PAYMENTS3]), map_yes_no_field_default({ answer: tradingHistory[FAILED_PAYMENTS3] })),
     ];
     return mapped;
   }
@@ -7370,14 +7958,17 @@ var {
   HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3,
   PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3,
 } = your_buyer_default;
-var { FIELDS: FIELDS23 } = XLSX;
-var mapPreviousCoverWithBuyer = (eligibility, relationship2, migratedV1toV2) => {
-  const totalContractValueOverThreshold = eligibility.totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
-  if (totalContractValueOverThreshold || migratedV1toV2) {
+var { FIELDS: FIELDS22 } = XLSX;
+var mapPreviousCoverWithBuyer = (application2) => {
+  const {
+    buyer: { relationship: relationship2 },
+    totalContractValueOverThreshold,
+  } = application2;
+  if (totalContractValueOverThreshold) {
     const answer = relationship2[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3];
-    const mapped = [xlsx_row_default(String(FIELDS23[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), map_yes_no_field_default({ answer }))];
+    const mapped = [xlsx_row_default(String(FIELDS22[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), map_yes_no_field_default({ answer }))];
     if (answer === true) {
-      mapped.push(xlsx_row_default(String(FIELDS23[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), relationship2[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]));
+      mapped.push(xlsx_row_default(String(FIELDS22[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), relationship2[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]));
     }
     return mapped;
   }
@@ -7396,21 +7987,21 @@ var {
   HAS_BUYER_FINANCIAL_ACCOUNTS: HAS_BUYER_FINANCIAL_ACCOUNTS3,
   TRADED_WITH_BUYER: TRADED_WITH_BUYER4,
 } = your_buyer_default;
-var { FIELDS: FIELDS24 } = XLSX;
+var { FIELDS: FIELDS23 } = XLSX;
 var mapBuyer = (application2) => {
-  const { buyer, eligibility, migratedV1toV2 } = application2;
+  const { buyer } = application2;
   const { buyerTradingHistory, relationship: relationship2 } = buyer;
   const mapped = [
-    xlsx_row_default(String(FIELDS24[NAME3]), buyer[NAME3]),
+    xlsx_row_default(String(FIELDS23[NAME3]), buyer[NAME3]),
     xlsx_row_default(String(CONTENT_STRINGS7[ADDRESS].SUMMARY?.TITLE), `${buyer[ADDRESS]} ${xlsx_new_line_default}${buyer[COUNTRY3].name}`),
-    xlsx_row_default(String(FIELDS24[REGISTRATION_NUMBER]), buyer[REGISTRATION_NUMBER]),
+    xlsx_row_default(String(FIELDS23[REGISTRATION_NUMBER]), buyer[REGISTRATION_NUMBER]),
     xlsx_row_default(String(CONTENT_STRINGS7[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
-    xlsx_row_default(String(FIELDS24[CONNECTION_WITH_BUYER4]), map_yes_no_field_default({ answer: relationship2[CONNECTION_WITH_BUYER4] })),
+    xlsx_row_default(String(FIELDS23[CONNECTION_WITH_BUYER4]), map_yes_no_field_default({ answer: relationship2[CONNECTION_WITH_BUYER4] })),
     map_connection_with_buyer_default(relationship2),
-    xlsx_row_default(String(FIELDS24[TRADED_WITH_BUYER4]), map_yes_no_field_default({ answer: buyerTradingHistory[TRADED_WITH_BUYER4] })),
+    xlsx_row_default(String(FIELDS23[TRADED_WITH_BUYER4]), map_yes_no_field_default({ answer: buyerTradingHistory[TRADED_WITH_BUYER4] })),
     ...map_buyer_trading_history_default(buyerTradingHistory),
-    ...map_previous_cover_with_buyer_default(eligibility, relationship2, migratedV1toV2),
-    xlsx_row_default(String(FIELDS24[HAS_BUYER_FINANCIAL_ACCOUNTS3]), map_yes_no_field_default({ answer: relationship2[HAS_BUYER_FINANCIAL_ACCOUNTS3] })),
+    ...map_previous_cover_with_buyer_default(application2),
+    xlsx_row_default(String(FIELDS23[HAS_BUYER_FINANCIAL_ACCOUNTS3]), map_yes_no_field_default({ answer: relationship2[HAS_BUYER_FINANCIAL_ACCOUNTS3] })),
   ];
   return mapped;
 };
@@ -7441,14 +8032,14 @@ var map_how_was_the_contract_awarded_default = mapHowWasTheContractAwarded;
 
 // generate-xlsx/map-application-to-XLSX/map-export-contract/map-final-destination/index.ts
 var CONTENT_STRINGS9 = EXPORT_CONTRACT_FIELDS.ABOUT_GOODS_OR_SERVICES;
-var { FIELDS: FIELDS25 } = XLSX;
+var { FIELDS: FIELDS24 } = XLSX;
 var {
   ABOUT_GOODS_OR_SERVICES: { FINAL_DESTINATION: FINAL_DESTINATION2, FINAL_DESTINATION_KNOWN: FINAL_DESTINATION_KNOWN3 },
 } = export_contract_default;
 var mapFinalDestination = (exportContract, countries) => {
   const finalDestinationKnownAnswer = exportContract[FINAL_DESTINATION_KNOWN3];
   const mapped = [
-    xlsx_row_default(String(FIELDS25.EXPORT_CONTRACT[FINAL_DESTINATION_KNOWN3]), map_yes_no_field_default({ answer: finalDestinationKnownAnswer })),
+    xlsx_row_default(String(FIELDS24.EXPORT_CONTRACT[FINAL_DESTINATION_KNOWN3]), map_yes_no_field_default({ answer: finalDestinationKnownAnswer })),
   ];
   if (finalDestinationKnownAnswer) {
     const country = get_country_by_iso_code_default(countries, exportContract[FINAL_DESTINATION2]);
@@ -7459,17 +8050,20 @@ var mapFinalDestination = (exportContract, countries) => {
 var map_final_destination_default = mapFinalDestination;
 
 // generate-xlsx/map-application-to-XLSX/map-export-contract/map-private-market/index.ts
-var { FIELDS: FIELDS26 } = XLSX;
+var { FIELDS: FIELDS25 } = XLSX;
 var {
   PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION: DECLINED_DESCRIPTION3 },
 } = export_contract_default;
-var mapPrivateMarket = (privateMarket, totalContractValue, migratedV1toV2) => {
-  const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
-  if (totalContractValueOverThreshold || migratedV1toV2) {
+var mapPrivateMarket = (application2) => {
+  const {
+    exportContract: { privateMarket },
+    totalContractValueOverThreshold,
+  } = application2;
+  if (totalContractValueOverThreshold) {
     const attempedPrivateMarketAnswer = privateMarket[ATTEMPTED];
-    const mapped = [xlsx_row_default(String(FIELDS26.EXPORT_CONTRACT[ATTEMPTED]), map_yes_no_field_default({ answer: attempedPrivateMarketAnswer }))];
+    const mapped = [xlsx_row_default(String(FIELDS25.EXPORT_CONTRACT[ATTEMPTED]), map_yes_no_field_default({ answer: attempedPrivateMarketAnswer }))];
     if (attempedPrivateMarketAnswer) {
-      mapped.push(xlsx_row_default(String(FIELDS26.EXPORT_CONTRACT[DECLINED_DESCRIPTION3]), privateMarket[DECLINED_DESCRIPTION3]));
+      mapped.push(xlsx_row_default(String(FIELDS25.EXPORT_CONTRACT[DECLINED_DESCRIPTION3]), privateMarket[DECLINED_DESCRIPTION3]));
     }
     return mapped;
   }
@@ -7478,7 +8072,7 @@ var mapPrivateMarket = (privateMarket, totalContractValue, migratedV1toV2) => {
 var map_private_market_default = mapPrivateMarket;
 
 // generate-xlsx/map-application-to-XLSX/map-export-contract/map-agent/map-agent-charge/map-agent-charge-amount/index.ts
-var { FIELDS: FIELDS27 } = XLSX;
+var { FIELDS: FIELDS26 } = XLSX;
 var {
   AGENT_CHARGES: {
     FIXED_SUM_AMOUNT: FIXED_SUM_AMOUNT2,
@@ -7489,14 +8083,14 @@ var {
 } = export_contract_default;
 var mapAgentChargeAmount = (charge, countries) => {
   const country = get_country_by_iso_code_default(countries, charge[PAYABLE_COUNTRY_CODE2]);
-  const payableCountryRow = xlsx_row_default(String(FIELDS27.AGENT_CHARGES[PAYABLE_COUNTRY_CODE2]), country.name);
+  const payableCountryRow = xlsx_row_default(String(FIELDS26.AGENT_CHARGES[PAYABLE_COUNTRY_CODE2]), country.name);
   if (charge[FIXED_SUM_AMOUNT2]) {
     const currencyValue = format_currency_default2(Number(charge[FIXED_SUM_AMOUNT2]), charge[FIXED_SUM_CURRENCY_CODE]);
-    const mapped = [xlsx_row_default(String(FIELDS27.AGENT_CHARGES[FIXED_SUM_AMOUNT2]), currencyValue), payableCountryRow];
+    const mapped = [xlsx_row_default(String(FIELDS26.AGENT_CHARGES[FIXED_SUM_AMOUNT2]), currencyValue), payableCountryRow];
     return mapped;
   }
   if (charge[PERCENTAGE_CHARGE2]) {
-    const mapped = [xlsx_row_default(String(FIELDS27.AGENT_CHARGES[PERCENTAGE_CHARGE2]), `${charge[PERCENTAGE_CHARGE2]}%`), payableCountryRow];
+    const mapped = [xlsx_row_default(String(FIELDS26.AGENT_CHARGES[PERCENTAGE_CHARGE2]), `${charge[PERCENTAGE_CHARGE2]}%`), payableCountryRow];
     return mapped;
   }
   return [];
@@ -7504,14 +8098,14 @@ var mapAgentChargeAmount = (charge, countries) => {
 var map_agent_charge_amount_default = mapAgentChargeAmount;
 
 // generate-xlsx/map-application-to-XLSX/map-export-contract/map-agent/map-agent-charge/index.ts
-var { FIELDS: FIELDS28 } = XLSX;
+var { FIELDS: FIELDS27 } = XLSX;
 var {
   AGENT_SERVICE: { IS_CHARGING: IS_CHARGING2 },
 } = export_contract_default;
 var mapAgentCharge = (service, countries) => {
   const { charge } = service;
   const chargingAnswer = service[IS_CHARGING2];
-  let mapped = [xlsx_row_default(String(FIELDS28.AGENT_SERVICE[IS_CHARGING2]), map_yes_no_field_default({ answer: chargingAnswer }))];
+  let mapped = [xlsx_row_default(String(FIELDS27.AGENT_SERVICE[IS_CHARGING2]), map_yes_no_field_default({ answer: chargingAnswer }))];
   if (chargingAnswer) {
     mapped = [...mapped, ...map_agent_charge_amount_default(charge, countries)];
   }
@@ -7520,7 +8114,7 @@ var mapAgentCharge = (service, countries) => {
 var map_agent_charge_default = mapAgentCharge;
 
 // generate-xlsx/map-application-to-XLSX/map-export-contract/map-agent/index.ts
-var { FIELDS: FIELDS29 } = XLSX;
+var { FIELDS: FIELDS28 } = XLSX;
 var {
   AGENT_DETAILS: { NAME: NAME4, FULL_ADDRESS: FULL_ADDRESS5, COUNTRY_CODE: COUNTRY_CODE3 },
   AGENT_SERVICE: { SERVICE_DESCRIPTION: SERVICE_DESCRIPTION2 },
@@ -7528,16 +8122,16 @@ var {
 } = export_contract_default;
 var mapAgent = (agent, countries) => {
   const usingAgentAnswer = agent[USING_AGENT2];
-  let mapped = [xlsx_row_default(String(FIELDS29.EXPORT_CONTRACT[USING_AGENT2]), map_yes_no_field_default({ answer: usingAgentAnswer }))];
+  let mapped = [xlsx_row_default(String(FIELDS28.EXPORT_CONTRACT[USING_AGENT2]), map_yes_no_field_default({ answer: usingAgentAnswer }))];
   if (usingAgentAnswer) {
     const { service } = agent;
     const country = get_country_by_iso_code_default(countries, agent[COUNTRY_CODE3]);
     mapped = [
       ...mapped,
-      xlsx_row_default(String(FIELDS29.AGENT[NAME4]), agent[NAME4]),
-      xlsx_row_default(String(FIELDS29.AGENT[FULL_ADDRESS5]), agent[FULL_ADDRESS5]),
-      xlsx_row_default(String(FIELDS29.AGENT[COUNTRY_CODE3]), country.name),
-      xlsx_row_default(String(FIELDS29.AGENT_SERVICE[SERVICE_DESCRIPTION2]), service[SERVICE_DESCRIPTION2]),
+      xlsx_row_default(String(FIELDS28.AGENT[NAME4]), agent[NAME4]),
+      xlsx_row_default(String(FIELDS28.AGENT[FULL_ADDRESS5]), agent[FULL_ADDRESS5]),
+      xlsx_row_default(String(FIELDS28.AGENT[COUNTRY_CODE3]), country.name),
+      xlsx_row_default(String(FIELDS28.AGENT_SERVICE[SERVICE_DESCRIPTION2]), service[SERVICE_DESCRIPTION2]),
       ...map_agent_charge_default(service, countries),
     ];
   }
@@ -7546,23 +8140,20 @@ var mapAgent = (agent, countries) => {
 var map_agent_default = mapAgent;
 
 // generate-xlsx/map-application-to-XLSX/map-export-contract/index.ts
-var { FIELDS: FIELDS30 } = XLSX;
+var { FIELDS: FIELDS29 } = XLSX;
 var {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION: DESCRIPTION3 },
   HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION: PAYMENT_TERMS_DESCRIPTION3 },
 } = export_contract_default;
 var mapExportContract = (application2, countries) => {
-  const {
-    eligibility: { totalContractValue },
-    exportContract,
-  } = application2;
-  const { agent, privateMarket } = exportContract;
+  const { exportContract } = application2;
+  const { agent } = exportContract;
   const mapped = [
-    xlsx_row_default(String(FIELDS30.EXPORT_CONTRACT[DESCRIPTION3]), exportContract[DESCRIPTION3]),
+    xlsx_row_default(String(FIELDS29.EXPORT_CONTRACT[DESCRIPTION3]), exportContract[DESCRIPTION3]),
     map_how_was_the_contract_awarded_default(exportContract),
     ...map_final_destination_default(exportContract, countries),
-    xlsx_row_default(String(FIELDS30.EXPORT_CONTRACT[PAYMENT_TERMS_DESCRIPTION3]), exportContract[PAYMENT_TERMS_DESCRIPTION3]),
-    ...map_private_market_default(privateMarket, totalContractValue),
+    xlsx_row_default(String(FIELDS29.EXPORT_CONTRACT[PAYMENT_TERMS_DESCRIPTION3]), exportContract[PAYMENT_TERMS_DESCRIPTION3]),
+    ...map_private_market_default(application2),
     ...map_agent_default(agent, countries),
   ];
   return mapped;
@@ -7579,7 +8170,7 @@ var mapAgreedField = (answer) => {
 var map_agreed_field_default = mapAgreedField;
 
 // generate-xlsx/map-application-to-XLSX/map-declarations/index.ts
-var { FIELDS: FIELDS31 } = XLSX;
+var { FIELDS: FIELDS30 } = XLSX;
 var {
   DECLARATIONS: {
     AGREE_CONFIDENTIALITY: AGREE_CONFIDENTIALITY2,
@@ -7594,8 +8185,8 @@ var mapDeclarations = (application2) => {
   const mapped = [
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIDENTIALITY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIDENTIALITY2])),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_ANTI_BRIBERY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_ANTI_BRIBERY2])),
-    xlsx_row_default(String(FIELDS31[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3] })),
-    xlsx_row_default(String(FIELDS31[WILL_EXPORT_WITH_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT3] })),
+    xlsx_row_default(String(FIELDS30[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3] })),
+    xlsx_row_default(String(FIELDS30[WILL_EXPORT_WITH_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT3] })),
     xlsx_row_default(
       DECLARATIONS_FIELDS[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2].SUMMARY.TITLE,
       map_agreed_field_default(declaration[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2]),
@@ -7631,9 +8222,9 @@ var mapApplicationToXLSX = (application2, countries) => {
       [DECLARATIONS3]: map_declarations_default(application2),
     };
     return mapped;
-  } catch (err) {
-    console.error('Error mapping application to XLSX %O', err);
-    throw new Error(`Mapping application to XLSX ${err}`);
+  } catch (error) {
+    console.error('Error mapping application to XLSX %o', error);
+    throw new Error(`Mapping application to XLSX ${error}`);
   }
 };
 var map_application_to_XLSX_default = mapApplicationToXLSX;
@@ -7871,27 +8462,27 @@ var XLSX2 = (application2, countries) => {
       console.info('Generating XLSX file - adding worksheets to workbook');
       const sheetNames = Object.values(SECTION_NAMES_default);
       sheetNames.forEach((sheetName) => {
-        console.info(`Generating XLSX file - adding ${sheetName} worksheet`);
+        console.info('Generating XLSX file - adding %s worksheet', sheetName);
         let worksheet = workbook.addWorksheet(sheetName);
-        console.info(`Generating XLSX file - protecting ${sheetName} worksheet from modification`);
+        console.info('Generating XLSX file - protecting %s worksheet from modification', sheetName);
         worksheet.protect(String(EXCELJS_PROTECTION_PASSWORD), {});
-        console.info(`Generating XLSX file - adding ${sheetName} worksheet header columns`);
+        console.info('Generating XLSX file - adding %s worksheet header columns', sheetName);
         worksheet.columns = header_columns_default(sheetName);
         xlsxData[sheetName].forEach((row) => {
-          console.info(`Generating XLSX file - adding rows to ${sheetName} worksheeet`);
+          console.info('Generating XLSX file - adding rows to %s worksheeet', sheetName);
           if (row) {
             worksheet.addRow(row);
           }
         });
-        console.info(`Generating XLSX file - adding custom styles to ${sheetName} worksheet`);
+        console.info('Generating XLSX file - adding custom styles to %s worksheet', sheetName);
         worksheet = styled_columns_default(application2, worksheet, sheetName);
       });
       console.info('Generating XLSX file - writing file');
       workbook.xlsx.writeFile(filePath).then(() => resolve(filePath));
     });
-  } catch (err) {
-    console.error('Error generating XLSX file %O', err);
-    throw new Error(`Generating XLSX file ${err}`);
+  } catch (error) {
+    console.error('Error generating XLSX file %o', error);
+    throw new Error(`Generating XLSX file ${error}`);
   }
 };
 var generate2 = {
@@ -7945,9 +8536,9 @@ var submitApplication = async (root, variables, context) => {
     return {
       success: false,
     };
-  } catch (err) {
-    console.error('Error submitting application %O', err);
-    throw new Error(`Submitting application ${err}`);
+  } catch (error) {
+    console.error('Error submitting application %o', error);
+    throw new Error(`Submitting application ${error}`);
   }
 };
 var submit_application_default = submitApplication;
@@ -7971,9 +8562,9 @@ var createFeedback = async (root, variables, context) => {
       };
     }
     return { success: false };
-  } catch (err) {
-    console.error('Error creating feedback %O', err);
-    throw new Error(`Creating feedback: ${err}`);
+  } catch (error) {
+    console.error('Error creating feedback %o', error);
+    throw new Error(`Creating feedback: ${error}`);
   }
 };
 var create_feedback_default = createFeedback;
@@ -8022,48 +8613,12 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
       success: false,
       invalid: true,
     };
-  } catch (err) {
-    console.error('Error checking account and reactivating account(verifyAccountReactivationToken mutation) %O', err);
-    throw new Error(`Checking account and reactivating account(verifyAccountReactivationToken mutation) ${err}`);
+  } catch (error) {
+    console.error('Error checking account and reactivating account(verifyAccountReactivationToken mutation) %o', error);
+    throw new Error(`Checking account and reactivating account(verifyAccountReactivationToken mutation) ${error}`);
   }
 };
 var verify_account_reactivation_token_default = verifyAccountReactivationToken;
-
-// custom-resolvers/mutations/update-company-post-data-migration/index.ts
-var updateCompanyPostDataMigration = async (root, variables, context) => {
-  try {
-    console.info('Updating company (post data migration) %s', variables.id);
-    const { id, company } = variables;
-    const { registeredOfficeAddress, industrySectorNames: industrySectorNames2, sicCodes, ...otherFields } = company;
-    const updatedCompany = await context.db.Company.updateOne({
-      where: {
-        id,
-      },
-      data: otherFields,
-    });
-    const { id: addressId, ...addressFields } = registeredOfficeAddress;
-    if (!updatedCompany.registeredOfficeAddressId) {
-      console.error('Unable to update company address - does not exist (post data migration) %O', id);
-      throw new Error(`Unable to update company address - does not exist (post data migration) ${id}`);
-    }
-    await context.db.CompanyAddress.updateOne({
-      where: {
-        id: updatedCompany.registeredOfficeAddressId,
-      },
-      data: addressFields,
-    });
-    if (sicCodes) {
-      await create_company_sic_codes_default(context, sicCodes, industrySectorNames2, updatedCompany.id);
-    }
-    return {
-      success: true,
-    };
-  } catch (err) {
-    console.error('Error updating company (post data migration) %O', err);
-    throw new Error(`Updating company (post data migration) ${err}`);
-  }
-};
-var update_company_post_data_migration_default = updateCompanyPostDataMigration;
 
 // helpers/encrypt/index.ts
 var import_crypto12 = __toESM(require('crypto'));
@@ -8092,9 +8647,9 @@ var encrypt = (dataToEncrypt) => {
       value,
       iv,
     };
-  } catch (err) {
-    console.error('Error encrypting data %O', err);
-    throw new Error(`Error encrypting data ${err}`);
+  } catch (error) {
+    console.error('Error encrypting data %o', error);
+    throw new Error(`Error encrypting data ${error}`);
   }
 };
 var encrypt_default = encrypt;
@@ -8124,9 +8679,9 @@ var mapLossPayeeFinancialDetailsUk2 = (variables) => {
       },
     };
     return updateData;
-  } catch (err) {
-    console.error('Error mapping loss payee financial UK %O', err);
-    throw new Error(`Error mapping loss payee financial UK ${err}`);
+  } catch (error) {
+    console.error('Error mapping loss payee financial UK %o', error);
+    throw new Error(`Error mapping loss payee financial UK ${error}`);
   }
 };
 var map_loss_payee_financial_details_uk_default = mapLossPayeeFinancialDetailsUk2;
@@ -8142,9 +8697,9 @@ var updateLossPayeeFinancialInternationalUk = async (context, id, data) => {
       data,
     });
     return updated;
-  } catch (err) {
-    console.error('Error updating loss payee financial uk (helper) %O', err);
-    throw new Error(`Updating loss payee financial uk (helper) ${err}`);
+  } catch (error) {
+    console.error('Error updating loss payee financial uk (helper) %o', error);
+    throw new Error(`Updating loss payee financial uk (helper) ${error}`);
   }
 };
 var update_loss_payee_financial_uk_default = updateLossPayeeFinancialInternationalUk;
@@ -8160,9 +8715,9 @@ var updateLossPayeeFinancialUkVector = async (context, id, data) => {
       data,
     });
     return updated;
-  } catch (err) {
-    console.error('Error updating loss payee financial uk vector (helper) %O', err);
-    throw new Error(`Updating loss payee financial uk vector (helper) ${err}`);
+  } catch (error) {
+    console.error('Error updating loss payee financial uk vector (helper) %o', error);
+    throw new Error(`Updating loss payee financial uk vector (helper) ${error}`);
   }
 };
 var update_loss_payee_financial_uk_vector_default = updateLossPayeeFinancialUkVector;
@@ -8183,9 +8738,9 @@ var updateLossPayeeFinancialDetailsUk = async (root, variables, context) => {
     return {
       success: false,
     };
-  } catch (err) {
-    console.error('Error updating loss payee financial UK %O', err);
-    throw new Error(`Updating loss payee financial UK ${err}`);
+  } catch (error) {
+    console.error('Error updating loss payee financial UK %o', error);
+    throw new Error(`Updating loss payee financial UK ${error}`);
   }
 };
 var update_loss_payee_financial_details_uk_default = updateLossPayeeFinancialDetailsUk;
@@ -8214,9 +8769,9 @@ var mapLossPayeeFinancialDetailsInternational2 = (variables) => {
       },
     };
     return updateData;
-  } catch (err) {
-    console.error('Error mapping loss payee financial international %O', err);
-    throw new Error(`Error mapping loss payee financial international ${err}`);
+  } catch (error) {
+    console.error('Error mapping loss payee financial international %o', error);
+    throw new Error(`Error mapping loss payee financial international ${error}`);
   }
 };
 var map_loss_payee_financial_details_international_default = mapLossPayeeFinancialDetailsInternational2;
@@ -8232,9 +8787,9 @@ var updateLossPayeeFinancialInternational = async (context, id, data) => {
       data,
     });
     return updated;
-  } catch (err) {
-    console.error('Error updating loss payee financial international (helper) %O', err);
-    throw new Error(`Updating loss payee financial international (helper) ${err}`);
+  } catch (error) {
+    console.error('Error updating loss payee financial international (helper) %o', error);
+    throw new Error(`Updating loss payee financial international (helper) ${error}`);
   }
 };
 var update_loss_payee_financial_international_default = updateLossPayeeFinancialInternational;
@@ -8250,9 +8805,9 @@ var updateLossPayeeFinancialInternationalVector = async (context, id, data) => {
       data,
     });
     return updated;
-  } catch (err) {
-    console.error('Error updating loss payee financial international vector (helper) %O', err);
-    throw new Error(`Updating loss payee financial international vector (helper) ${err}`);
+  } catch (error) {
+    console.error('Error updating loss payee financial international vector (helper) %o', error);
+    throw new Error(`Updating loss payee financial international vector (helper) ${error}`);
   }
 };
 var update_loss_payee_financial_international_vector_default = updateLossPayeeFinancialInternationalVector;
@@ -8273,9 +8828,9 @@ var updateLossPayeeFinancialDetailsInternational = async (root, variables, conte
     return {
       success: false,
     };
-  } catch (err) {
-    console.error('Error updating loss payee financial international %O', err);
-    throw new Error(`Updating loss payee financial international ${err}`);
+  } catch (error) {
+    console.error('Error updating loss payee financial international %o', error);
+    throw new Error(`Updating loss payee financial international ${error}`);
   }
 };
 var update_loss_payee_financial_details_international_default = updateLossPayeeFinancialDetailsInternational;
@@ -8298,9 +8853,9 @@ var getAccountPasswordResetToken = async (root, variables, context) => {
     }
     console.info('Unable to get account password reset token - reset hash does not exist');
     return { success: false };
-  } catch (err) {
-    console.error('Error getting account password reset token %O', err);
-    throw new Error(`Getting account password reset token ${err}`);
+  } catch (error) {
+    console.error('Error getting account password reset token %o', error);
+    throw new Error(`Getting account password reset token ${error}`);
   }
 };
 var get_account_password_reset_token_default = getAccountPasswordResetToken;
@@ -8336,9 +8891,9 @@ var APIM = {
       return {
         success: false,
       };
-    } catch (err) {
-      console.error('Error calling APIM - CIS countries %O', err);
-      throw new Error(`Calling APIM - CIS countries ${err}`);
+    } catch (error) {
+      console.error('Error calling APIM - CIS countries %o', error);
+      throw new Error(`Calling APIM - CIS countries ${error}`);
     }
   },
   getCurrencies: async () => {
@@ -8365,9 +8920,9 @@ var APIM = {
       return {
         success: false,
       };
-    } catch (err) {
-      console.error('Error calling APIM - currencies %O', err);
-      throw new Error(`Calling APIM - currencies ${err}`);
+    } catch (error) {
+      console.error('Error calling APIM - currencies %o', error);
+      throw new Error(`Calling APIM - currencies ${error}`);
     }
   },
 };
@@ -8380,9 +8935,9 @@ var filterCisEntries = (arr, invalidEntries, entityPropertyName) => {
 };
 var filter_cis_entries_default = filterCisEntries;
 
-// helpers/map-CIS-countries/map-CIS-country/map-risk-category/index.ts
+// helpers/map-CIS-countries/map-CIS-country/map-esra-classification/index.ts
 var { CIS } = EXTERNAL_API_DEFINITIONS;
-var mapRiskCategory = (str) => {
+var mapEsraClassification = (str) => {
   if (str === CIS.RISK.STANDARD) {
     return EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD;
   }
@@ -8394,7 +8949,7 @@ var mapRiskCategory = (str) => {
   }
   return null;
 };
-var map_risk_category_default = mapRiskCategory;
+var map_esra_classification_default = mapEsraClassification;
 
 // helpers/map-CIS-countries/map-CIS-country/map-short-term-cover-available/index.ts
 var {
@@ -8427,8 +8982,8 @@ var mapNbiIssueAvailable = (str) => {
 var map_NBI_issue_available_default = mapNbiIssueAvailable;
 
 // helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-online/index.ts
-var canGetAQuoteOnline = ({ shortTermCover, nbiIssueAvailable, riskCategory }) => {
-  if (riskCategory && shortTermCover && nbiIssueAvailable) {
+var canGetAQuoteOnline = ({ shortTermCover, nbiIssueAvailable, esraClassification }) => {
+  if (esraClassification && shortTermCover && nbiIssueAvailable) {
     return true;
   }
   return false;
@@ -8436,8 +8991,8 @@ var canGetAQuoteOnline = ({ shortTermCover, nbiIssueAvailable, riskCategory }) =
 var can_get_a_quote_online_default = canGetAQuoteOnline;
 
 // helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-by-email/index.ts
-var canGetAQuoteByEmail = ({ shortTermCover, nbiIssueAvailable, riskCategory }) => {
-  if (shortTermCover && !nbiIssueAvailable && riskCategory) {
+var canGetAQuoteByEmail = ({ shortTermCover, nbiIssueAvailable, esraClassification }) => {
+  if (shortTermCover && !nbiIssueAvailable && esraClassification) {
     return true;
   }
   return false;
@@ -8445,8 +9000,8 @@ var canGetAQuoteByEmail = ({ shortTermCover, nbiIssueAvailable, riskCategory }) 
 var can_get_a_quote_by_email_default = canGetAQuoteByEmail;
 
 // helpers/map-CIS-countries/map-CIS-country/cannot-get-a-quote/index.ts
-var cannotGetAQuote = ({ shortTermCover, nbiIssueAvailable, riskCategory }) => {
-  if (!riskCategory || (!shortTermCover && !nbiIssueAvailable)) {
+var cannotGetAQuote = ({ shortTermCover, nbiIssueAvailable, esraClassification }) => {
+  if (!esraClassification || (!shortTermCover && !nbiIssueAvailable)) {
     return true;
   }
   return false;
@@ -8454,8 +9009,8 @@ var cannotGetAQuote = ({ shortTermCover, nbiIssueAvailable, riskCategory }) => {
 var cannot_get_a_quote_default = cannotGetAQuote;
 
 // helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/index.ts
-var canApplyForInsuranceOnline = (shortTermCover, riskCategory) => {
-  if (shortTermCover && riskCategory) {
+var canApplyForInsuranceOnline = (shortTermCover, esraClassification) => {
+  if (shortTermCover && esraClassification) {
     return true;
   }
   return false;
@@ -8486,28 +9041,31 @@ var no_insurance_support_default = noInsuranceSupportAvailable;
 // helpers/map-CIS-countries/map-CIS-country/index.ts
 var mapCisCountry = (cisCountry) => {
   const { marketName, isoCode } = cisCountry;
-  const riskCategory = map_risk_category_default(cisCountry.ESRAClassificationDesc);
+  const esraClassification = map_esra_classification_default(cisCountry.ESRAClassificationDesc);
   const shortTermCover = map_short_term_cover_available_default(cisCountry.shortTermCoverAvailabilityDesc);
   const nbiIssueAvailable = map_NBI_issue_available_default(cisCountry.NBIIssue);
   const mapped = {
     name: marketName,
     isoCode,
-    riskCategory,
+    esraClassification,
     shortTermCover,
     nbiIssueAvailable,
   };
-  mapped.canGetAQuoteOnline = can_get_a_quote_online_default({ shortTermCover, nbiIssueAvailable, riskCategory });
+  mapped.canGetAQuoteOnline = can_get_a_quote_online_default({ shortTermCover, nbiIssueAvailable, esraClassification });
   mapped.canGetAQuoteOffline = can_apply_offline_default(cisCountry.shortTermCoverAvailabilityDesc);
-  mapped.canGetAQuoteByEmail = can_get_a_quote_by_email_default({ shortTermCover, nbiIssueAvailable, riskCategory });
-  mapped.cannotGetAQuote = cannot_get_a_quote_default({ shortTermCover, nbiIssueAvailable, riskCategory });
-  mapped.canApplyForInsuranceOnline = can_apply_for_insurance_online_default(shortTermCover, riskCategory);
+  mapped.canGetAQuoteByEmail = can_get_a_quote_by_email_default({ shortTermCover, nbiIssueAvailable, esraClassification });
+  mapped.cannotGetAQuote = cannot_get_a_quote_default({ shortTermCover, nbiIssueAvailable, esraClassification });
+  mapped.canApplyForInsuranceOnline = can_apply_for_insurance_online_default(shortTermCover, esraClassification);
   mapped.noInsuranceSupport = no_insurance_support_default(cisCountry.marketRiskAppetitePublicDesc);
   return mapped;
 };
 var map_CIS_country_default = mapCisCountry;
 
 // helpers/sort-array-alphabetically/index.ts
-var sortArrayAlphabetically = (arr, field) => arr.sort((a, b) => a[field].localeCompare(b[field]));
+var sortArrayAlphabetically = (arr, field) => {
+  const alphabetical = arr.sort((a, b) => a[field].localeCompare(b[field]));
+  return alphabetical;
+};
 var sort_array_alphabetically_default = sortArrayAlphabetically;
 
 // helpers/map-CIS-countries/index.ts
@@ -8530,9 +9088,9 @@ var getApimCisCountries = async () => {
       return mapped;
     }
     return { success: false };
-  } catch (err) {
-    console.error('Error Getting and mapping CIS countries from APIM %O', err);
-    throw new Error(`Getting and mapping CIS countries from APIM ${err}`);
+  } catch (error) {
+    console.error('Error Getting and mapping CIS countries from APIM %o', error);
+    throw new Error(`Getting and mapping CIS countries from APIM ${error}`);
   }
 };
 var get_APIM_CIS_countries_default = getApimCisCountries;
@@ -8575,9 +9133,9 @@ var getApimCurrencies = async () => {
       };
     }
     return { success: false };
-  } catch (err) {
-    console.error('Error Getting and mapping currencies from APIM %O', err);
-    throw new Error(`Getting and mapping currencies from APIM ${err}`);
+  } catch (error) {
+    console.error('Error Getting and mapping currencies from APIM %o', error);
+    throw new Error(`Getting and mapping currencies from APIM ${error}`);
   }
 };
 var get_APIM_currencies_default = getApimCurrencies;
@@ -8623,9 +9181,9 @@ var companiesHouse = {
         success: true,
         data: response.data,
       };
-    } catch (err) {
-      console.error('Error calling Companies House API %O', err);
-      throw new Error(`Calling Companies House API. Unable to search for company ${err}`);
+    } catch (error) {
+      console.error('Error calling Companies House API %o', error);
+      throw new Error(`Calling Companies House API. Unable to search for company ${error}`);
     }
   },
 };
@@ -8663,8 +9221,8 @@ var industrySectorNames = {
         success: true,
         data: response.data,
       };
-    } catch (err) {
-      console.error('Error calling industry sector API %O', err);
+    } catch (error) {
+      console.error('Error calling industry sector API %o', error);
       return {
         success: false,
         apiError: true,
@@ -8753,8 +9311,8 @@ var getCompaniesHouseInformation = async (root, variables) => {
       ...mappedResponse,
       success: true,
     };
-  } catch (err) {
-    console.error('Error getting companies house information %O', err);
+  } catch (error) {
+    console.error('Error getting companies house information %o', error);
     return {
       apiError: true,
       success: false,
@@ -8784,9 +9342,9 @@ var getApplicationByReferenceNumberQuery = async (root, variables, context) => {
     return {
       success: false,
     };
-  } catch (err) {
-    console.error('Error getting application by reference number (GetApplicationByReferenceNumber mutation) %O', err);
-    throw new Error(`Get application by reference number (GetApplicationByReferenceNumber mutation) ${err}`);
+  } catch (error) {
+    console.error('Error getting application by reference number (GetApplicationByReferenceNumber query) %o', error);
+    throw new Error(`Get application by reference number (GetApplicationByReferenceNumber query) ${error}`);
   }
 };
 var get_application_by_reference_number_default2 = getApplicationByReferenceNumberQuery;
@@ -8816,9 +9374,9 @@ var ordnanceSurvey = {
         success: true,
         data: response.data.results,
       };
-    } catch (err) {
-      console.error('Error calling Ordnance Survey API %O', err);
-      throw new Error(`Calling Ordnance Survey API. Unable to search for address ${err}`);
+    } catch (error) {
+      console.error('Error calling Ordnance Survey API %o', error);
+      throw new Error(`Calling Ordnance Survey API. Unable to search for address ${error}`);
     }
   },
 };
@@ -8885,8 +9443,8 @@ var getOrdnanceSurveyAddress = async (root, variables) => {
       addresses: mappedAddresses,
       success: true,
     };
-  } catch (err) {
-    console.error('Error getting Ordnance Survey address results %O', err);
+  } catch (error) {
+    console.error('Error getting Ordnance Survey address results %o', error);
     return {
       apiError: true,
       success: false,
@@ -8922,9 +9480,9 @@ var verifyAccountPasswordResetToken = async (root, variables, context) => {
       success: false,
       invalid: true,
     };
-  } catch (err) {
-    console.error('Error verifying account password reset token %O', err);
-    throw new Error(`Verifying account password reset token ${err}`);
+  } catch (error) {
+    console.error('Error verifying account password reset token %o', error);
+    throw new Error(`Verifying account password reset token ${error}`);
   }
 };
 var verify_account_password_reset_token_default = verifyAccountPasswordResetToken;
@@ -8944,12 +9502,12 @@ var customResolvers = {
     sendEmailPasswordResetLink: send_email_password_reset_link_default,
     sendEmailReactivateAccountLink: send_email_reactivate_account_link_default2,
     createAnApplication: create_an_application_default2,
+    createManyApplications: create_many_applications_default,
     createAnAbandonedApplication: create_an_abandoned_application_default,
     deleteApplicationByReferenceNumber: delete_application_by_reference_number_default,
     submitApplication: submit_application_default,
     createFeedbackAndSendEmail: create_feedback_default,
     verifyAccountReactivationToken: verify_account_reactivation_token_default,
-    updateCompanyPostDataMigration: update_company_post_data_migration_default,
     updateLossPayeeFinancialDetailsUk: update_loss_payee_financial_details_uk_default,
     updateLossPayeeFinancialDetailsInternational: update_loss_payee_financial_details_international_default,
   },

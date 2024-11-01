@@ -6,6 +6,7 @@ import YOUR_BUYER_FIELD_IDS from '../../../../constants/field-ids/insurance/your
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
@@ -65,7 +66,7 @@ describe('controllers/insurance/your-buyer/credit-insurance-cover', () => {
   });
 
   describe('PAGE_CONTENT_STRINGS', () => {
-    it('should have the correct page content strings', () => {
+    it('should have the correct strings', () => {
       expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.YOUR_BUYER.CREDIT_INSURANCE_COVER);
     });
   });
@@ -123,6 +124,7 @@ describe('controllers/insurance/your-buyer/credit-insurance-cover', () => {
         }),
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
+        application: mapApplicationToFormFields(mockApplication),
         applicationAnswer: mockApplication.buyer.relationship[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER],
       };
 

@@ -1,8 +1,8 @@
 import numberMinimumMaximumLength from '.';
-import { mockErrorMessagesObject, mockErrors } from '../../test-mocks';
-import { RequestBody } from '../../../types';
 import generateValidationErrors from '../../helpers/validation';
 import numberValidation from '../../helpers/number-validation';
+import { RequestBody } from '../../../types';
+import { mockErrorMessagesObject, mockErrors } from '../../test-mocks';
 
 describe('shared-validation/whole-number-minimum-maximum-length', () => {
   const FIELD_ID = 'FIELD_ID';

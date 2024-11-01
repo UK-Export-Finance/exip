@@ -82,7 +82,7 @@ export const mockExportContractAgent = {
 export const mockExportContractAgentFullyPopulated = {
   finalDestinationCountryCode: mockCountries[0].isoCode,
   fullAddress: 'Mock export contract agent address',
-  name: 'Mock export contract agent name',
+  name: "Mock export contract agent name O'Neill",
   privateMarket: mockPrivateMarket,
   service: mockExportContractAgentService,
   agent: mockExportContractAgent,
@@ -104,16 +104,12 @@ export const mockCompany = {
   companyName: 'Test Name',
   companyNumber: '0123456',
   companyWebsite: '',
+  dateOfCreation: new Date(),
   differentTradingAddress: {},
+  financialYearEndDate: new Date(),
   hasDifferentTradingName: false,
   hasDifferentTradingAddress: false,
-  dateOfCreation: '2014-04-10T00:00:00.000Z',
-  sicCodes: [
-    {
-      id: 'clcyyxldc0634m8novkr94spo',
-      sicCode: '64999',
-    },
-  ],
+  industrySectorNames: ['64999', '64998'],
   registeredOfficeAddress: {
     id: 'claydona0158m8noaglyy94t',
     addressLine1: 'Line 1',
@@ -126,7 +122,12 @@ export const mockCompany = {
     premises: '',
     __typename: 'CompanyAddress',
   },
-  financialYearEndDate: new Date(),
+  sicCodes: [
+    {
+      id: 'clcyyxldc0634m8novkr94spo',
+      sicCode: '64999',
+    },
+  ],
   __typename: 'Company',
 };
 

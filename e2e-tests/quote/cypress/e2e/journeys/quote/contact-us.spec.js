@@ -1,6 +1,6 @@
 import { contactUsPage } from '../../../../../pages';
 import { intro } from '../../../../../pages/shared';
-import footer from '../../../../../partials/footer';
+import { footer } from '../../../../../partials';
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 
@@ -16,7 +16,7 @@ context('Contact us page - Quote', () => {
   const url = ROUTES.CONTACT_US;
 
   beforeEach(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
     // click on contact link in footer
     footer.supportLinks.contact().click();
@@ -36,6 +36,7 @@ context('Contact us page - Quote', () => {
       hasAForm: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

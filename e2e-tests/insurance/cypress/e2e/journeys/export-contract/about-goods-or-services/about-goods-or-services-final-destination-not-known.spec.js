@@ -1,5 +1,4 @@
 import { autoCompleteField } from '../../../../../../pages/shared';
-import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/export-contract';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
@@ -29,8 +28,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.startInsuranceExportContractSection({});
-        cy.completeAndSubmitHowWasTheContractAwardedForm({});
+        cy.completeAndSubmitExportContractForms({ formToStopAt: 'howWasTheContractAwarded' });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
       });
@@ -68,7 +66,10 @@ context(
         it('should have the submitted values', () => {
           cy.navigateToUrl(url);
 
-          aboutGoodsOrServicesPage[DESCRIPTION].textarea().should('have.value', application.EXPORT_CONTRACT[DESCRIPTION]);
+          cy.checkTextareaValue({
+            fieldId: DESCRIPTION,
+            expectedValue: application.EXPORT_CONTRACT[DESCRIPTION],
+          });
 
           cy.assertNoRadioOptionIsChecked();
         });

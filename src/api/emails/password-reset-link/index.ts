@@ -21,9 +21,9 @@ export const passwordResetLink = async (urlOrigin: string, emailAddress: string,
     const response = await callNotify(templateId, emailAddress, variables);
 
     return response;
-  } catch (err) {
-    console.error('Error sending email for account password reset %O', err);
+  } catch (error) {
+    console.error('Error sending email for account password reset %o', error);
 
-    throw new Error(`Sending email for account password reset ${err}`);
+    throw new Error(`Sending email for account password reset ${error}`);
   }
 };

@@ -6,7 +6,7 @@ import { Context } from '../../types';
  * Check if an account has used a given password before
  * 1) Get an account's previous hashes
  * 2) Check if the provided password matches any previous password
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} Account ID
  * @param {String} New password
  * @returns {Promise<Boolean>}
@@ -38,10 +38,10 @@ const hasAccountUsedPasswordBefore = async (context: Context, accountId: string,
     }
 
     return usedBefore;
-  } catch (err) {
-    console.error('Error checking if an account has used a password before %O', err);
+  } catch (error) {
+    console.error('Error checking if an account has used a password before %o', error);
 
-    throw new Error(`Checking if an account has used a password before ${err}`);
+    throw new Error(`Checking if an account has used a password before ${error}`);
   }
 };
 

@@ -1,4 +1,4 @@
-import passwordField from '../../../partials/insurance/passwordField';
+import { passwordField } from '../../../partials/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 import account from '../../../fixtures/account';
 

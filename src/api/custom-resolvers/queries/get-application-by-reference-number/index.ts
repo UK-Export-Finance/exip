@@ -7,9 +7,9 @@ import { GetApplicationByReferenceNumberResponse, GetApplicationByReferenceNumbe
  * getApplicationByReferenceNumberQuery
  * Get an application by reference number,
  * call getPopulatedApplication
- * @param {Object} GraphQL root variables
- * @param {Object} GraphQL variables for the getApplicationByReferenceNumberVariables query
- * @param {Context} KeystoneJS context API
+ * @param {Object} root: GraphQL root variables
+ * @param {Object} variables: GraphQL variables for the getApplicationByReferenceNumberVariables query
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<GetApplicationByReferenceNumberResponse>} Application with success flag
  */
 const getApplicationByReferenceNumberQuery = async (
@@ -50,9 +50,10 @@ const getApplicationByReferenceNumberQuery = async (
     return {
       success: false,
     };
-  } catch (err) {
-    console.error('Error getting application by reference number (GetApplicationByReferenceNumber mutation) %O', err);
-    throw new Error(`Get application by reference number (GetApplicationByReferenceNumber mutation) ${err}`);
+  } catch (error) {
+    console.error('Error getting application by reference number (GetApplicationByReferenceNumber query) %o', error);
+
+    throw new Error(`Get application by reference number (GetApplicationByReferenceNumber query) ${error}`);
   }
 };
 

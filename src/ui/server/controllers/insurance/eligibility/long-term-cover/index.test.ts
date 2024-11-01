@@ -27,7 +27,7 @@ describe('controllers/insurance/eligibility/long-term-cover', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...corePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.LONG_TERM_COVER,
+          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.LONG_TERM_COVER_EXIT,
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),

@@ -17,7 +17,7 @@ describe('controllers/insurance/eligibility/contract-too-short', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.CONTRACT_TOO_SHORT);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.CONTRACT_TOO_SHORT_EXIT);
     });
   });
 
@@ -27,7 +27,7 @@ describe('controllers/insurance/eligibility/contract-too-short', () => {
 
       const expectedVariables = {
         ...corePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.CONTRACT_TOO_SHORT,
+          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.CONTRACT_TOO_SHORT_EXIT,
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),

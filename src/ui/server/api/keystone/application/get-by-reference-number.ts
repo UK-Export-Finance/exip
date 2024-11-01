@@ -15,11 +15,11 @@ const getApplicationByReferenceNumber = async (variables: ApplicationByReference
     const response = (await apollo('GET', applicationByReferenceNumberQuery, variables)) as ApolloResponse;
 
     if (response.errors) {
-      console.error('GraphQL error getting application by referenceNumber %O', response.errors);
+      console.error('GraphQL error getting application by referenceNumber %o', response.errors);
     }
 
     if (response?.networkError?.result?.errors) {
-      console.error('GraphQL network error getting application by referenceNumber %O', response.networkError.result.errors);
+      console.error('GraphQL network error getting application by referenceNumber %o', response.networkError.result.errors);
     }
 
     if (response?.data?.getApplicationByReferenceNumber?.success && response?.data?.getApplicationByReferenceNumber?.application) {
@@ -28,10 +28,12 @@ const getApplicationByReferenceNumber = async (variables: ApplicationByReference
       return application;
     }
 
-    console.error('Error with GraphQL applicationByReferenceNumberQuery %O', response);
+    console.error('Error with GraphQL applicationByReferenceNumberQuery %o', response);
+
     throw new Error('Getting application by referenceNumber');
-  } catch (err) {
-    console.error('Error getting application by referenceNumber %O', err);
+  } catch (error) {
+    console.error('Error getting application by referenceNumber %o', error);
+
     throw new Error('Getting application by referenceNumber');
   }
 };

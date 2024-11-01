@@ -1,4 +1,4 @@
-import partials from '../../../../../../partials';
+import { headingCaption } from '../../../../../../partials';
 import { field as fieldSelector } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
@@ -16,7 +16,7 @@ const {
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: { TURNOVER_ROOT, NATURE_OF_BUSINESS_ROOT, COMPANY_DETAILS },
+  EXPORTER_BUSINESS: { TURNOVER_CURRENCY_ROOT, NATURE_OF_BUSINESS_ROOT, COMPANY_DETAILS },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -25,20 +25,18 @@ context(
   'Insurance - Your business - Nature of your business page - As an Exporter I want to enter the nature of my business So that UKEF can have clarity on the type of business that I do while processing my Export Insurance Application',
   () => {
     let referenceNumber;
-    let turnoverUrl;
+    let turnoverCurrencyUrl;
     let natureOfBusinessUrl;
 
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.startYourBusinessSection({});
-
-        cy.completeAndSubmitCompanyDetails({});
+        cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'companyDetails' });
 
         natureOfBusinessUrl = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
 
-        turnoverUrl = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
+        turnoverCurrencyUrl = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_CURRENCY_ROOT}`;
 
         cy.assertUrl(natureOfBusinessUrl);
       });
@@ -66,7 +64,7 @@ context(
       });
 
       it('renders a heading caption', () => {
-        cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+        cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
       it(`should display ${GOODS_OR_SERVICES} label, input and hint`, () => {
@@ -97,19 +95,15 @@ context(
         cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LEGEND);
         field.input().should('exist');
       });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
-      });
     });
 
     describe('form submission', () => {
-      it(`should redirect to ${TURNOVER_ROOT}`, () => {
+      it(`should redirect to ${TURNOVER_CURRENCY_ROOT}`, () => {
         cy.navigateToUrl(natureOfBusinessUrl);
 
         cy.completeAndSubmitNatureOfYourBusiness();
 
-        cy.assertUrl(turnoverUrl);
+        cy.assertUrl(turnoverCurrencyUrl);
       });
     });
 
@@ -117,9 +111,13 @@ context(
       it('should have the submitted values', () => {
         cy.navigateToUrl(natureOfBusinessUrl);
 
-        fieldSelector(GOODS_OR_SERVICES).textarea().should('have.value', application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
-        fieldSelector(YEARS_EXPORTING).input().should('have.value', application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
-        fieldSelector(EMPLOYEES_UK).input().should('have.value', application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
+        cy.checkTextareaValue({
+          fieldId: GOODS_OR_SERVICES,
+          expectedValue: application.EXPORTER_BUSINESS[GOODS_OR_SERVICES],
+        });
+
+        cy.checkValue(fieldSelector(YEARS_EXPORTING), application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
+        cy.checkValue(fieldSelector(EMPLOYEES_UK), application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
       });
     });
   },

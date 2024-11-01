@@ -55,7 +55,7 @@ export const ERROR_MESSAGE = IS_EMPTY;
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
@@ -185,8 +185,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
-  } catch (err) {
-    console.error('Error updating application - policy - another company %O', err);
+  } catch (error) {
+    console.error('Error updating application - policy - another company %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

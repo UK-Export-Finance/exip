@@ -96,10 +96,10 @@ describe('controllers/quote/uk-goods-or-services', () => {
         req.body[FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES] = 'false';
       });
 
-      it(`should redirect to ${ROUTES.QUOTE.CANNOT_APPLY}`, () => {
+      it(`should redirect to ${ROUTES.QUOTE.CANNOT_APPLY_EXIT}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_APPLY);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_APPLY_EXIT);
       });
 
       it('should add previousRoute and exitReason to req.flash', () => {
@@ -107,7 +107,7 @@ describe('controllers/quote/uk-goods-or-services', () => {
 
         expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
 
-        const expectedReason = PAGES.CANNOT_APPLY.REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES;
+        const expectedReason = PAGES.CANNOT_APPLY_EXIT.REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES;
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });
     });

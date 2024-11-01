@@ -1,7 +1,7 @@
 import mapAndSave from '.';
 import save from '../../save-data/company-different-trading-address';
 import { FIELD_IDS } from '../../../../../constants';
-import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
+import { mockApplication, mockSpyPromise, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const {
   ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
@@ -32,7 +32,7 @@ describe('controllers/insurance/business/map-and-save/company-different-trading-
 
   describe('when save application differentTradingAddress call fails', () => {
     beforeEach(() => {
-      save.companyDifferentTradingAddress = jest.fn(() => Promise.reject(new Error('mock')));
+      save.companyDifferentTradingAddress = mockSpyPromiseRejection;
     });
 
     it('should return false', async () => {

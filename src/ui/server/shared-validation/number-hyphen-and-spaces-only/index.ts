@@ -1,9 +1,9 @@
-import Joi from 'joi';
 import { REGEX } from '../../constants';
 import { objectHasProperty } from '../../helpers/object';
 import generateValidationErrors from '../../helpers/validation';
 import { isNumberAboveMaximum, isNumberBelowMinimum } from '../../helpers/number';
 import stripHyphensAndSpacesFromString from '../../helpers/strip-hyphens-and-spaces-from-string';
+import regexValidation from '../regex-validation';
 import { RequestBody, ErrorMessageObject } from '../../../types';
 
 /**
@@ -32,16 +32,12 @@ const numberHyphenSpacesOnlyValidation = (
 
   const fieldValue = formBody[fieldId];
 
-  const joiString = Joi.string();
-
   const regex = REGEX.NUMBER_HYPHEN_SPACE;
 
-  const schema = () => joiString.regex(regex).required();
+  const numberHyphenSpaceError = regexValidation(fieldValue, fieldId, regex, errorMessage.INCORRECT_FORMAT, errors);
 
-  const validation = schema().validate(fieldValue);
-
-  if (validation.error) {
-    return generateValidationErrors(fieldId, errorMessage.INCORRECT_FORMAT, errors);
+  if (numberHyphenSpaceError) {
+    return numberHyphenSpaceError;
   }
 
   // replaces and removes hyphens and spaces

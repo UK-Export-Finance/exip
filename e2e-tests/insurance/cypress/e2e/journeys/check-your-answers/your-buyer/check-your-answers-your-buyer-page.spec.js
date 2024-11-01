@@ -1,5 +1,4 @@
 import { headingCaption, status } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -9,10 +8,6 @@ const {
 } = INSURANCE_ROUTES;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUYER;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -28,7 +23,7 @@ context(
 
         cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-        task.link().click();
+        cy.clickTaskCheckAnswers();
 
         // To get past "Your business" check your answers page
         cy.completeAndSubmitMultipleCheckYourAnswers({ count: 1 });
@@ -69,10 +64,6 @@ context(
         cy.checkTaskStatusCompleted(status);
       });
 
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
-      });
-
       describe('form submission', () => {
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
           cy.navigateToUrl(url);
@@ -90,6 +81,10 @@ context(
 
           it('should retain the status of task `check your answers` as `in progress`', () => {
             cy.checkTaskCheckAnswersStatusIsInProgress();
+          });
+
+          it('should retain the status of task `declarations and submit` as `cannot start`', () => {
+            cy.checkTaskDeclarationsAndSubmitStatusIsCannotStart();
           });
         });
       });

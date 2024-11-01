@@ -36,7 +36,7 @@ describe('routes/insurance/eligibility', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(36);
+    expect(get).toHaveBeenCalledTimes(38);
     expect(post).toHaveBeenCalledTimes(27);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE, checkIfEligibleGet);
@@ -48,13 +48,13 @@ describe('routes/insurance/eligibility', () => {
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER, companiesHouseNumberGet);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER, companiesHouseNumberPost);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.NO_COMPANIES_HOUSE_NUMBER, noCompaniesHouseNumberGet);
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.NO_COMPANIES_HOUSE_NUMBER_EXIT, noCompaniesHouseNumberGet);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.ENTER_COMPANIES_HOUSE_NUMBER, companiesHouseSearchGet);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.ENTER_COMPANIES_HOUSE_NUMBER, companiesHouseSearchPost);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_UNAVAILABLE, companiesHouseUnavailableGet);
-    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.COMPANY_NOT_ACTIVE, companyNotActiveGet);
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_UNAVAILABLE_EXIT, companiesHouseUnavailableGet);
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.COMPANY_NOT_ACTIVE_EXIT, companyNotActiveGet);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.COMPANY_DETAILS, companyDetailsGet);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.COMPANY_DETAILS, companyDetailsPost);
@@ -68,7 +68,7 @@ describe('routes/insurance/eligibility', () => {
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD, coverPeriodGet);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD, coverPeriodPost);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.LONG_TERM_COVER, longTermCoverGet);
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.LONG_TERM_COVER_EXIT, longTermCoverGet);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, ukGoodsOrServicesGet);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, ukGoodsOrServicesPost);
@@ -86,7 +86,7 @@ describe('routes/insurance/eligibility', () => {
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP_CHANGE, memberOfAGroupGet);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP_CHANGE, memberOfAGroupPost);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY_MULTIPLE_RISKS, cannotApplyMultipleRisksGet);
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY_MULTIPLE_RISKS_EXIT, cannotApplyMultipleRisksGet);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CHECK_YOUR_ANSWERS, checkYourAnswersGet);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CHECK_YOUR_ANSWERS, checkYourAnswersPost);
@@ -97,12 +97,12 @@ describe('routes/insurance/eligibility', () => {
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT, haveAnAccountGet);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT, haveAnAccountPost);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY, cannotApplyGet);
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY_EXIT, cannotApplyGet);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN, needToStartAgainGet);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN, needToStartAgainPost);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CONTRACT_TOO_SHORT, contractTooShortGet);
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CONTRACT_TOO_SHORT_EXIT, contractTooShortGet);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM_EXIT, partyToConsortiumExitGet);
 

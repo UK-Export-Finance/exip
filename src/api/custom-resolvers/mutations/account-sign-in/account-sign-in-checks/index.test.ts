@@ -7,7 +7,7 @@ import sendEmail from '../../../../emails';
 import accounts from '../../../../test-helpers/accounts';
 import accountStatusHelper from '../../../../test-helpers/account-status';
 import getKeystoneContext from '../../../../test-helpers/get-keystone-context';
-import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin } from '../../../../test-mocks';
+import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin, mockErrorMessage, mockSpyPromiseRejection } from '../../../../test-mocks';
 import { Account, AccountSignInResponse, Context } from '../../../../types';
 
 dotenv.config();
@@ -135,20 +135,20 @@ describe('custom-resolvers/account-sign-in/account-sign-in-checks', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      sendEmail.accessCodeEmail = jest.fn(() => Promise.reject(mockSendEmailResponse));
+      sendEmail.accessCodeEmail = mockSpyPromiseRejection;
     });
 
     test('should throw an error', async () => {
       try {
         await accountSignInChecks(context, account, mockUrlOrigin);
-      } catch (err) {
+      } catch (error) {
         expect(accessCodeEmailSpy).toHaveBeenCalledTimes(1);
 
         const expected = new Error(
-          `Validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) ${mockSendEmailResponse}`,
+          `Validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) ${new Error(mockErrorMessage)}`,
         );
 
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

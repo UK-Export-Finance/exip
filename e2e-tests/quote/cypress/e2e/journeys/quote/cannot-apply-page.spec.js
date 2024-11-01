@@ -1,23 +1,21 @@
 import { actions, cannotApplyPage } from '../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../commands/forms';
-import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm } from '../../../../../commands/quote/forms';
 
-const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
+const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY_EXIT;
 
 const {
-  QUOTE: { UK_GOODS_OR_SERVICES, CANNOT_APPLY },
+  QUOTE: { UK_GOODS_OR_SERVICES, CANNOT_APPLY_EXIT },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
 context('Cannot apply exit page', () => {
   beforeEach(() => {
-    cy.login();
-    completeAndSubmitBuyerCountryForm({});
-    completeAndSubmitBuyerBodyForm();
-    completeAndSubmitExporterLocationForm();
+    cy.navigateToRootUrl();
+    cy.completeAndSubmitBuyerCountryForm({});
+    cy.completeAndSubmitBuyerBodyForm();
+    cy.completeAndSubmitExporterLocationForm();
 
     let expectedUrl = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
 
@@ -26,7 +24,7 @@ context('Cannot apply exit page', () => {
     cy.clickNoRadioInput();
     cy.clickSubmitButton();
 
-    expectedUrl = `${baseUrl}${CANNOT_APPLY}`;
+    expectedUrl = `${baseUrl}${CANNOT_APPLY_EXIT}`;
 
     cy.assertUrl(expectedUrl);
   });
@@ -34,11 +32,12 @@ context('Cannot apply exit page', () => {
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: CANNOT_APPLY,
+      currentHref: CANNOT_APPLY_EXIT,
       backLink: UK_GOODS_OR_SERVICES,
       hasAForm: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       lightHouseThresholds: {
         seo: 60,
       },

@@ -68,12 +68,12 @@ describe('integrations/companies-house', () => {
 
       try {
         await companiesHouse.get(companyNumber);
-      } catch (err) {
+      } catch (error) {
         const expectedError = 'Calling Companies House API. Unable to search for company Error: Request failed with status code 500';
 
         const expected = new Error(expectedError);
 
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

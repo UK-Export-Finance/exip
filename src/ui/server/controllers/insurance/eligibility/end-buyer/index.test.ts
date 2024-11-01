@@ -1,6 +1,6 @@
 import { FIELD_ID, PAGE_VARIABLES, HTML_FLAGS, TEMPLATE, get, post } from '.';
 import { PAGES, END_BUYERS_DESCRIPTION, ERROR_MESSAGES } from '../../../../content-strings';
-import { FIELDS_ELIGIBILITY } from '../../../../content-strings/fields/insurance/eligibility';
+import { ELIGIBILITY_FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
 import { FIELD_IDS, TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
@@ -11,7 +11,7 @@ import { updateSubmittedData } from '../../../../helpers/update-submitted-data/i
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
 
-const { CANNOT_APPLY_MULTIPLE_RISKS, CHECK_YOUR_ANSWERS, PARTY_TO_CONSORTIUM, END_BUYER_CHANGE } = INSURANCE_ROUTES.ELIGIBILITY;
+const { CANNOT_APPLY_MULTIPLE_RISKS_EXIT, CHECK_YOUR_ANSWERS, PARTY_TO_CONSORTIUM, END_BUYER_CHANGE } = INSURANCE_ROUTES.ELIGIBILITY;
 
 const {
   SHARED_PAGES,
@@ -47,7 +47,7 @@ describe('controllers/insurance/eligibility/end-buyer', () => {
         },
         FIELD: {
           ID: FIELD_ID,
-          ...FIELDS_ELIGIBILITY[FIELD_ID],
+          ...ELIGIBILITY_FIELDS[FIELD_ID],
         },
       };
 
@@ -105,10 +105,10 @@ describe('controllers/insurance/eligibility/end-buyer', () => {
         };
       });
 
-      it(`should redirect to ${CANNOT_APPLY_MULTIPLE_RISKS}`, () => {
+      it(`should redirect to ${CANNOT_APPLY_MULTIPLE_RISKS_EXIT}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(CANNOT_APPLY_MULTIPLE_RISKS);
+        expect(res.redirect).toHaveBeenCalledWith(CANNOT_APPLY_MULTIPLE_RISKS_EXIT);
       });
     });
 

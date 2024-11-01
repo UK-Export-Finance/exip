@@ -7,7 +7,7 @@ import mapAndSave from '../../map-and-save/export-contract';
 import generateValidationErrors from '../validation';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockCountries, mockReq, mockRes, referenceNumber } from '../../../../../test-mocks';
+import { mockCountries, mockReq, mockRes, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
@@ -160,7 +160,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services/save-and
 
     describe('when the mapAndSave call fails', () => {
       beforeEach(() => {
-        mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        mapAndSaveSpy = mockSpyPromiseRejection;
 
         mapAndSave.exportContract = mapAndSaveSpy;
       });

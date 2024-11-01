@@ -2,18 +2,18 @@ import { actions, body } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.NO_COMPANIES_HOUSE_NUMBER;
+const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.NO_COMPANIES_HOUSE_NUMBER_EXIT;
 
 const { ACTIONS } = CONTENT_STRINGS;
 
 const {
-  ELIGIBILITY: { NO_COMPANIES_HOUSE_NUMBER },
+  ELIGIBILITY: { NO_COMPANIES_HOUSE_NUMBER_EXIT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Eligibility - You cannot apply for credit insurance page (no companies house number)', () => {
-  const url = `${baseUrl}${NO_COMPANIES_HOUSE_NUMBER}`;
+  const url = `${baseUrl}${NO_COMPANIES_HOUSE_NUMBER_EXIT}`;
 
   before(() => {
     cy.navigateToUrl(url);
@@ -28,9 +28,10 @@ context('Insurance - Eligibility - You cannot apply for credit insurance page (n
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: NO_COMPANIES_HOUSE_NUMBER,
+      currentHref: NO_COMPANIES_HOUSE_NUMBER_EXIT,
       assertBackLink: false,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       hasAForm: false,
     });
   });

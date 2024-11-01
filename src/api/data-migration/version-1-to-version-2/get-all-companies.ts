@@ -1,5 +1,5 @@
 import { Connection } from 'mysql2/promise';
-import executeSqlQuery from './execute-sql-query';
+import executeSqlQuery from '../execute-sql-query';
 
 /**
  * getAllCompanies
@@ -10,7 +10,7 @@ import executeSqlQuery from './execute-sql-query';
 const getAllCompanies = async (connection: Connection) => {
   const loggingMessage = 'Getting all companies';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const query = 'SELECT * FROM Company';
@@ -18,10 +18,10 @@ const getAllCompanies = async (connection: Connection) => {
     const [companies] = await executeSqlQuery({ connection, query, loggingMessage });
 
     return companies;
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

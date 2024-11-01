@@ -1,5 +1,5 @@
 import { PRODUCT } from '../../../content-strings';
-import header from '../../../partials/header';
+import { header } from '../../../partials';
 import { ROUTES } from '../../../constants';
 
 const {

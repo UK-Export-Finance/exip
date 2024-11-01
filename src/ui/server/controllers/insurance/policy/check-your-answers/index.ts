@@ -14,6 +14,12 @@ const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 const { POLICY } = FIELD_IDS.INSURANCE;
 
+/**
+ * pageVariables
+ * Page fields and "save and go back" URL
+ * @param {Number} referenceNumber: Application reference number
+ * @returns {Object} Page variables
+ */
 export const pageVariables = (referenceNumber: number) => ({
   FIELD: FIELDS[POLICY.POLICY_TYPE],
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
@@ -50,7 +56,15 @@ export const get = async (req: Request, res: Response) => {
       ...exportContract,
     };
 
-    const summaryLists = policySummaryLists(answers, policyContact, broker, nominatedLossPayee, referenceNumber, allCurrencies, countries);
+    const summaryLists = policySummaryLists({
+      policy: answers,
+      policyContact,
+      broker,
+      nominatedLossPayee,
+      referenceNumber,
+      currencies: allCurrencies,
+      countries,
+    });
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -62,8 +76,8 @@ export const get = async (req: Request, res: Response) => {
       application: mapApplicationToFormFields(res.locals.application),
       SUMMARY_LISTS: summaryLists,
     });
-  } catch (err) {
-    console.error('Error getting currencies and/or countries %O', err);
+  } catch (error) {
+    console.error('Error getting currencies and/or countries %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

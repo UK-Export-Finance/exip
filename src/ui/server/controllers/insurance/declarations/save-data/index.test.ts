@@ -3,7 +3,7 @@ import api from '../../../../api';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import stripEmptyFormFields from '../../../../helpers/strip-empty-form-fields';
 import { FIELD_IDS } from '../../../../constants';
-import { mockApplication } from '../../../../test-mocks';
+import { mockApplication, mockSpyPromiseRejection } from '../../../../test-mocks';
 
 const {
   DECLARATIONS: { AGREE_CONFIDENTIALITY },
@@ -47,16 +47,16 @@ describe('controllers/insurance/declarations/save-data', () => {
 
   describe('when there is an error calling the API', () => {
     beforeEach(() => {
-      updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+      updateApplicationSpy = mockSpyPromiseRejection;
       api.keystone.application.update.declarations = updateApplicationSpy;
     });
 
     it('should throw an error', async () => {
       try {
         await save.declaration(mockApplication, mockFormBody);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error("Updating application's declarations");
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

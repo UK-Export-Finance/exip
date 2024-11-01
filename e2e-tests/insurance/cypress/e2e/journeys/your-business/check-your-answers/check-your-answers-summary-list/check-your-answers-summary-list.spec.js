@@ -9,9 +9,9 @@ const {
 const {
   INSURANCE: {
     EXPORTER_BUSINESS: {
-      YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER },
+      YOUR_COMPANY: { HAS_DIFFERENT_TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER },
       NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
-      TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+      TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER, TURNOVER_CURRENCY_CODE },
       HAS_CREDIT_CONTROL,
     },
   },
@@ -23,17 +23,12 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
   let referenceNumber;
   let url;
 
-  describe(`${TRADING_ADDRESS} as no`, () => {
+  describe(`when ${HAS_DIFFERENT_TRADING_ADDRESS} is 'no'`, () => {
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.startYourBusinessSection({});
-
-        cy.completeAndSubmitCompanyDetails({});
-        cy.completeAndSubmitNatureOfYourBusiness();
-        cy.completeAndSubmitTurnoverForm({});
-        cy.completeAndSubmitCreditControlForm({ hasCreditControlProcess: true });
+        cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'creditControl', hasCreditControlProcess: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       });
@@ -53,8 +48,8 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
       checkSummaryList[HAS_DIFFERENT_TRADING_NAME]({});
     });
 
-    it(`should render a ${TRADING_ADDRESS} summary list row`, () => {
-      checkSummaryList[TRADING_ADDRESS]({});
+    it(`should render a ${HAS_DIFFERENT_TRADING_ADDRESS} summary list row`, () => {
+      checkSummaryList[HAS_DIFFERENT_TRADING_ADDRESS]({});
     });
 
     it(`should render a ${WEBSITE} summary list row`, () => {
@@ -77,6 +72,10 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
       checkSummaryList[EMPLOYEES_UK]();
     });
 
+    it(`should render a ${TURNOVER_CURRENCY_CODE} summary list row`, () => {
+      checkSummaryList[TURNOVER_CURRENCY_CODE]();
+    });
+
     it(`should render a ${ESTIMATED_ANNUAL_TURNOVER} summary list row`, () => {
       checkSummaryList[ESTIMATED_ANNUAL_TURNOVER]();
     });
@@ -90,18 +89,12 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
     });
   });
 
-  describe(`${TRADING_ADDRESS} as yes`, () => {
+  describe(`when ${HAS_DIFFERENT_TRADING_ADDRESS} is 'yes'`, () => {
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.startYourBusinessSection({});
-
-        cy.completeAndSubmitCompanyDetails({ differentTradingAddress: true });
-        cy.completeAndSubmitAlternativeTradingAddressForm({});
-        cy.completeAndSubmitNatureOfYourBusiness();
-        cy.completeAndSubmitTurnoverForm({});
-        cy.completeAndSubmitCreditControlForm({});
+        cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'creditControl', differentTradingAddress: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       });
@@ -117,22 +110,17 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
       cy.deleteApplication(referenceNumber);
     });
 
-    it(`should render a ${TRADING_ADDRESS} summary list row with the full address`, () => {
-      checkSummaryList[TRADING_ADDRESS]({ differentTradingAddress: true });
+    it(`should render a ${HAS_DIFFERENT_TRADING_ADDRESS} summary list row with the full address`, () => {
+      checkSummaryList[HAS_DIFFERENT_TRADING_ADDRESS]({ differentTradingAddress: true });
     });
   });
 
-  describe(`${HAS_DIFFERENT_TRADING_NAME} as yes`, () => {
+  describe(`when ${HAS_DIFFERENT_TRADING_NAME} is 'yes'`, () => {
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.startYourBusinessSection({});
-
-        cy.completeAndSubmitCompanyDetails({ differentTradingName: true });
-        cy.completeAndSubmitNatureOfYourBusiness();
-        cy.completeAndSubmitTurnoverForm({});
-        cy.completeAndSubmitCreditControlForm({});
+        cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'creditControl', differentTradingName: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       });

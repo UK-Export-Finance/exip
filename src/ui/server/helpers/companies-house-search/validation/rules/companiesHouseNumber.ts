@@ -23,9 +23,9 @@ const schema = () => joiString.alphanum().trim().min(6).required();
 /**
  * validates companies house input
  * 1) Check if a value has been provided.
- * 2) Check if it follows JOI schema  - minimum length, no special characters or is blank
+ * 2) Check if it follows JOI schema  - minimum length, no special characters or is empty
  * @param formBody containing an object with the companies house input
- * @returns object containing errors or blank object
+ * @returns object containing errors or empty object
  */
 const companiesHouseNumber = (formBody: RequestBody, errors: ValidationErrors) => {
   let updatedErrors = errors;

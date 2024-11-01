@@ -26,7 +26,7 @@ export const FIELD_VALUES = {
     // default multiple policy length in months
     MULTIPLE: 12,
   },
-  TOTAL_MONTHS_OF_COVER: Array.from(Array(POLICY.TOTAL_MONTHS_OF_COVER).keys()),
+  TOTAL_MONTHS_OF_COVER: Array.from(Array(POLICY.TOTAL_MONTHS_OF_COVER.MAXIMUM).keys()),
   YES: 'Yes',
   NO: 'No',
 };

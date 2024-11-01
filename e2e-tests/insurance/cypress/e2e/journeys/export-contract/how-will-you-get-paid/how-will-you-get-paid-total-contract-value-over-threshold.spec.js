@@ -16,9 +16,7 @@ context('Insurance - Export contract - How will you get paid page - Submission w
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.startInsuranceExportContractSection({});
-      cy.completeAndSubmitHowWasTheContractAwardedForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm({});
+      cy.completeAndSubmitExportContractForms({ formToStopAt: 'aboutGoodsOrServices' });
 
       privateMarketUrl = `${baseUrl}${ROOT}/${referenceNumber}${PRIVATE_MARKET}`;
     });

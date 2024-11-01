@@ -33,7 +33,7 @@ export const getAntiBriberyCodeOfConductTasks = (hasAntiBriberyCodeOfConduct?: b
 
 /**
  * Required fields for the insurance - declarations section
- * @param {Array} Required field IDs
+ * @param {Array<string>} Required field IDs
  */
 const requiredFields = (hasAntiBriberyCodeOfConduct?: boolean | null): Array<string> => {
   const fields = [

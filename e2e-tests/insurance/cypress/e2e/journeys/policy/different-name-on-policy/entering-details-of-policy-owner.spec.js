@@ -30,12 +30,7 @@ context(`Insurance - Policy - Different name on Policy page - Entering name of p
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm({});
-      cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitTotalContractValueForm({});
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
-
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'nameOnPolicy', sameName: false });
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
 
       cy.assertUrl(url);

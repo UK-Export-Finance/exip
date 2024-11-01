@@ -26,11 +26,11 @@ const { FIELDS } = XLSX;
 /**
  * mapBuyer
  * Map an application's buyer fields into an array of objects for XLSX generation
- * @param {Application}
+ * @param {Application} application
  * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapBuyer = (application: Application) => {
-  const { buyer, eligibility, migratedV1toV2 } = application;
+  const { buyer } = application;
   const { buyerTradingHistory, relationship } = buyer;
 
   const mapped = [
@@ -46,7 +46,7 @@ const mapBuyer = (application: Application) => {
 
     ...mapBuyerTradingHistory(buyerTradingHistory),
 
-    ...mapPreviousCoverWithBuyer(eligibility, relationship, migratedV1toV2),
+    ...mapPreviousCoverWithBuyer(application),
 
     xlsxRow(String(FIELDS[HAS_BUYER_FINANCIAL_ACCOUNTS]), mapYesNoField({ answer: relationship[HAS_BUYER_FINANCIAL_ACCOUNTS] })),
   ];

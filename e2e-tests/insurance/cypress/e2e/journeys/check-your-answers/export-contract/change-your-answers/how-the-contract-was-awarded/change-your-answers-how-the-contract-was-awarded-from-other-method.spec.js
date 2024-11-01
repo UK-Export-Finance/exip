@@ -1,5 +1,4 @@
 import { summaryList, radios, field } from '../../../../../../../../pages/shared';
-import partials from '../../../../../../../../partials';
 import FIELD_IDS from '../../../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../../../content-strings/fields/insurance/export-contract';
@@ -17,10 +16,6 @@ const { DIRECT_AWARD, OTHER } = FIELDS.HOW_WAS_THE_CONTRACT_AWARDED[FIELD_ID].OP
 
 const baseUrl = Cypress.config('baseUrl');
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
-
 context(
   `Insurance - Export contract - Change your answers - How the contract was awarded - Changing from ${OTHER.TEXT} to ${DIRECT_AWARD.TEXT} and back to ${OTHER.TEXT}`,
   () => {
@@ -36,7 +31,7 @@ context(
           contractAwardedOtherMethod: true,
         });
 
-        task.link().click();
+        cy.clickTaskCheckAnswers();
 
         // To get past previous "Check your answers" pages
         cy.completeAndSubmitMultipleCheckYourAnswers({ count: 3 });

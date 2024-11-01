@@ -1,6 +1,5 @@
-import partials from '../../../../../../partials';
+import { headingCaption } from '../../../../../../partials';
 import { field as fieldSelector, noRadio, noRadioInput, yesRadio } from '../../../../../../pages/shared';
-import { lossPayeePage } from '../../../../../../pages/insurance/policy';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -37,15 +36,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.startInsurancePolicySection({});
-
-        cy.completeAndSubmitPolicyTypeForm({});
-        cy.completeAndSubmitSingleContractPolicyForm({});
-        cy.completeAndSubmitTotalContractValueForm({});
-        cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
-        cy.completeAndSubmitPreCreditPeriodForm({});
-        cy.completeAndSubmitAnotherCompanyForm({});
-        cy.completeAndSubmitBrokerForm({ usingBroker: false });
+        cy.completeAndSubmitPolicyForms({ formToStopAt: 'broker' });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
         checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
@@ -77,7 +68,7 @@ context(
       });
 
       it('renders a heading caption', () => {
-        cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+        cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
       it('renders a hint', () => {
@@ -87,8 +78,8 @@ context(
           },
         } = FIELD_STRINGS;
 
-        cy.checkText(lossPayeePage.radioHint(FIELD_ID).intro(), INTRO);
-        cy.checkText(lossPayeePage.radioHint(FIELD_ID).outro(), OUTRO);
+        cy.checkText(fieldSelector(FIELD_ID).hintIntro(), INTRO);
+        cy.checkText(fieldSelector(FIELD_ID).hintOutro(), OUTRO);
       });
 
       it('renders a `no` radio button', () => {
@@ -107,10 +98,6 @@ context(
 
       it('renders `yes` and `no` radio buttons in the correct order', () => {
         cy.assertYesNoRadiosOrder({ noRadioFirst: true });
-      });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
       });
     });
 

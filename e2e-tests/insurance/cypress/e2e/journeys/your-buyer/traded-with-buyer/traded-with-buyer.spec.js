@@ -30,10 +30,7 @@ context('Insurance - Your buyer - Traded with buyer page - As an exporter, I wan
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsuranceYourBuyerSection({});
-
-      cy.completeAndSubmitCompanyOrOrganisationForm({});
-      cy.completeAndSubmitConnectionWithTheBuyerForm({});
+      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'connectionWithTheBuyer' });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`;
       tradingHistoryUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY}`;
@@ -88,8 +85,8 @@ context('Insurance - Your buyer - Traded with buyer page - As an exporter, I wan
       cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
 
-    it('renders a `save and back` button', () => {
-      cy.assertSaveAndBackButton();
+    it('renders `yes` and `no` radio buttons in the correct order', () => {
+      cy.assertYesNoRadiosOrder({ noRadioFirst: true });
     });
   });
 

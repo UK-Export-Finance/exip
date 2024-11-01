@@ -8,33 +8,9 @@ const mockSpecialCharacters = '!@£$%^&*()?';
 
 describe('shared-validation/alpha-numerical-characters-only', () => {
   describe('invalid field values', () => {
-    describe('when a string has only letters', () => {
-      it('should return generateValidationErrors', () => {
-        const mockFieldValue = 'MOCK';
-
-        const result = alphaNumericalCharactersOnlyValidation(mockFieldValue, mockFieldId, mockErrorMessage, mockErrors);
-
-        const expected = generateValidationErrors(mockFieldId, mockErrorMessage, mockErrors);
-
-        expect(result).toEqual(expected);
-      });
-    });
-
     describe('when a string has only numbers', () => {
       it('should return generateValidationErrors', () => {
         const mockFieldValue = '1234';
-
-        const result = alphaNumericalCharactersOnlyValidation(mockFieldValue, mockFieldId, mockErrorMessage, mockErrors);
-
-        const expected = generateValidationErrors(mockFieldId, mockErrorMessage, mockErrors);
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when a string has only lowercase letters and numbers', () => {
-      it('should return generateValidationErrors', () => {
-        const mockFieldValue = 'mock123';
 
         const result = alphaNumericalCharactersOnlyValidation(mockFieldValue, mockFieldId, mockErrorMessage, mockErrors);
 
@@ -133,6 +109,26 @@ describe('shared-validation/alpha-numerical-characters-only', () => {
         const mockValidFieldValue = 'ABC123DEF456';
 
         const result = alphaNumericalCharactersOnlyValidation(mockValidFieldValue, mockFieldId, mockErrorMessage, mockErrors);
+
+        expect(result).toEqual(false);
+      });
+    });
+
+    describe('when a string has only lowercase letters and numbers', () => {
+      it('should return false', () => {
+        const mockFieldValue = 'mock123';
+
+        const result = alphaNumericalCharactersOnlyValidation(mockFieldValue, mockFieldId, mockErrorMessage, mockErrors);
+
+        expect(result).toEqual(false);
+      });
+    });
+
+    describe('when a string has only letters', () => {
+      it('should return false', () => {
+        const mockFieldValue = 'MOCK';
+
+        const result = alphaNumericalCharactersOnlyValidation(mockFieldValue, mockFieldId, mockErrorMessage, mockErrors);
 
         expect(result).toEqual(false);
       });

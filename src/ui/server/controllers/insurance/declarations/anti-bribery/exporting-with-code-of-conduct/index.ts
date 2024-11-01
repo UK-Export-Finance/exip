@@ -23,7 +23,7 @@ const { ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT } = DECLARATIONS.LATEST_DECL
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
@@ -96,8 +96,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`);
-  } catch (err) {
-    console.error('Error updating application - declarations - anti-bribery - exporting with code of conduct %O', err);
+  } catch (error) {
+    console.error('Error updating application - declarations - anti-bribery - exporting with code of conduct %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

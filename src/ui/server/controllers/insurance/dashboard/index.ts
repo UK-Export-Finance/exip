@@ -93,8 +93,8 @@ export const get = async (req: Request, res: Response) => {
       currentPageNumber,
       pages: paginationItems,
     });
-  } catch (err) {
-    console.error("Error getting applications and rendering 'dashboard' page %O", err);
+  } catch (error) {
+    console.error("Error getting applications and rendering 'dashboard' page %o", error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

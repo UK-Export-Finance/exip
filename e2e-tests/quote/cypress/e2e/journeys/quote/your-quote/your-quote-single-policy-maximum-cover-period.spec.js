@@ -35,7 +35,7 @@ context('Get a quote/your quote page (single policy) - maximum cover period - as
   const url = `${baseUrl}${YOUR_QUOTE}`;
 
   before(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
     cy.submitQuoteAnswersHappyPathSinglePolicy({ policyLength: MAX_COVER_PERIOD_MONTHS });
     submitButton().click();

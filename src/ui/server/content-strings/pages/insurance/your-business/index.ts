@@ -14,10 +14,6 @@ const EXPORTER_BUSINESS = {
     },
     OUTRO: 'It should only take a few minutes to complete.',
   },
-  ENTER_COMPANIES_HOUSE_NUMBER: {
-    ...SHARED,
-    PAGE_TITLE: 'Enter your Companies House registration number (CRN)',
-  },
   COMPANY_DETAILS: {
     ...SHARED,
     ...COMPANY_DETAILS,
@@ -35,9 +31,9 @@ const EXPORTER_BUSINESS = {
     PAGE_TITLE: 'Turnover',
     PROVIDE_ALTERNATIVE_CURRENCY: 'Use a different currency for your turnover',
   },
-  TURNOVER_ALTERNATIVE_CURRENCY: {
+  TURNOVER_CURRENCY: {
     ...SHARED,
-    PAGE_TITLE: 'What currency is your turnover in?',
+    PAGE_TITLE: 'Which currency do you calculate your turnover in?',
   },
   CREDIT_CONTROL: {
     ...SHARED,

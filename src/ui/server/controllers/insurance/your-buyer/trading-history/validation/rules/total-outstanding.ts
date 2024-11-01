@@ -1,3 +1,4 @@
+import { MINIMUM_CHARACTERS } from '../../../../../../constants';
 import YOUR_BUYER_FIELD_IDS from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { RequestBody } from '../../../../../../../types';
@@ -11,14 +12,14 @@ const {
   },
 } = ERROR_MESSAGES;
 
-export const MINIMUM = 1;
+const MINIMUM = MINIMUM_CHARACTERS.BUYER.TOTAL_OUSTANDING;
 
 /**
  * totalOutstandingRules
  * Check submitted form data for errors with the total outstanding field
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
- * @param {Object} Errors object from previous validation errors
+ * @param {Object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const totalOutstandingRules = (formBody: RequestBody, errors: object) => {

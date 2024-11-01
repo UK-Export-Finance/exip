@@ -1,11 +1,10 @@
 import { PAGES } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../commands/forms';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.LONG_TERM_COVER;
+const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.LONG_TERM_COVER_EXIT;
 
 const {
-  ELIGIBILITY: { COVER_PERIOD, LONG_TERM_COVER },
+  ELIGIBILITY: { COVER_PERIOD, LONG_TERM_COVER_EXIT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -16,18 +15,9 @@ context(
     let url;
 
     before(() => {
-      cy.navigateToCheckIfEligibleUrl();
-      cy.completeCheckIfEligibleForm();
+      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'coverPeriod', coverPeriodIsUnderThreshold: false });
 
-      cy.completeExporterLocationForm();
-      cy.completeCompaniesHouseNumberForm();
-      cy.completeAndSubmitCompaniesHouseSearchForm({});
-      cy.completeEligibilityCompanyDetailsForm();
-      completeAndSubmitBuyerCountryForm({});
-      cy.completeAndSubmitTotalValueInsuredForm({});
-      cy.completeCoverPeriodForm({ underThreshold: false });
-
-      url = `${baseUrl}${LONG_TERM_COVER}`;
+      url = `${baseUrl}${LONG_TERM_COVER_EXIT}`;
 
       cy.assertUrl(url);
     });
@@ -39,10 +29,11 @@ context(
     it('renders core page elements', () => {
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-        currentHref: LONG_TERM_COVER,
+        currentHref: LONG_TERM_COVER_EXIT,
         backLink: COVER_PERIOD,
         hasAForm: false,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

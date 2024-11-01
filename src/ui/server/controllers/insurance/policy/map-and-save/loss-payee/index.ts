@@ -16,8 +16,8 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
  * and if LOSS_PAYEE_FINANCIAL_UK data exists in the application, nullify all LOSS_PAYEE_FINANCIAL_UK data.
  * and if LOSS_PAYEE_FINANCIAL_INTERNATIONAL data exists in the application, nullify all LOSS_PAYEE_FINANCIAL_INTERNATIONAL data.
  * @param {RequestBody} formBody: Form body
- * @param {Application}
- * @param {Object} Validation errors
+ * @param {Application} application
+ * @param {Object} validationErrors: Validation errors
  * @returns {Boolean}
  */
 const lossPayee = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
@@ -79,8 +79,8 @@ const lossPayee = async (formBody: RequestBody, application: Application, valida
     }
 
     return true;
-  } catch (err) {
-    console.error('Error mapping and saving application - policy - loss payee %O', err);
+  } catch (error) {
+    console.error('Error mapping and saving application - policy - loss payee %o', error);
 
     return false;
   }

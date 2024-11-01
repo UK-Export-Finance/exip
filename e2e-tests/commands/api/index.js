@@ -52,10 +52,13 @@ const queryStrings = {
     }
   `,
   createApplications: () => gql`
-    mutation createApplications($data: [ApplicationCreateInput!]!) {
-      createApplications(data: $data) {
-        id
-        referenceNumber
+    mutation createManyApplications($accountId: String!, $count: Int!) {
+      createManyApplications(accountId: $accountId, count: $count) {
+        success
+        applications {
+          id
+          referenceNumber
+        }
       }
     }
   `,
@@ -252,19 +255,30 @@ const createAnAbandonedApplication = (accountId, eligibilityAnswers, company, se
 /**
  * createApplications
  * Create multiple applications
- * @param {Array} Array of applications
+ * @param {String} Account id
+ * @param {Number} Count of applications to create
  * @returns {Array} Created applications
  */
-const createApplications = (applications) =>
-  apollo
-    .query({
-      query: queryStrings.createApplications(),
-      variables: {
-        data: applications,
-      },
-      context: APOLLO_CONTEXT,
-    })
-    .then((response) => response.data.createApplications);
+const createApplications = (accountId, count) => {
+  try {
+    const responseBody = apollo
+      .query({
+        query: queryStrings.createApplications(),
+        variables: {
+          accountId,
+          count,
+        },
+        context: APOLLO_CONTEXT,
+      })
+      .then((response) => response.data.createManyApplications.applications);
+
+    return responseBody;
+  } catch (error) {
+    console.error('Creating applications', error);
+
+    throw new Error('Creating applications', { error });
+  }
+};
 
 /**
  * getAccountByEmail
@@ -289,10 +303,10 @@ const getAccountByEmail = async (email) => {
       .then((response) => response.data.accounts);
 
     return responseBody;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
-    throw new Error('Getting account by email', { err });
+    throw new Error('Getting account by email', { error });
   }
 };
 
@@ -316,10 +330,10 @@ const updateAccount = async (id, updateObj) => {
       .then((response) => response.data.updateAccount);
 
     return responseBody;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
-    throw new Error('Updating account', { err });
+    throw new Error('Updating account', { error });
   }
 };
 
@@ -343,10 +357,10 @@ const updateAccountStatus = async (id, updateObj) => {
       .then((response) => response.data.updateAccountStatus);
 
     return responseBody;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
-    throw new Error('Updating account status', { err });
+    throw new Error('Updating account status', { error });
   }
 };
 
@@ -367,10 +381,10 @@ const deleteAnAccount = async (email) => {
       .then((response) => response.data.deleteAnAccount);
 
     return responseBody.success;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
-    throw new Error('Deleting an account', { err });
+    throw new Error('Deleting an account', { error });
   }
 };
 
@@ -403,10 +417,10 @@ const addAndGetOTP = async (emailAddress) => {
       .then((response) => response.data.addAndGetOTP);
 
     return responseBody.securityCode;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
-    throw new Error('Adding and getting OTP ', { err });
+    throw new Error('Adding and getting OTP ', { error });
   }
 };
 
@@ -434,17 +448,17 @@ const getAccountPasswordResetToken = async () => {
       .then((response) => response.data.getAccountPasswordResetToken);
 
     return responseBody.token;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
-    throw new Error('Getting account password rest token ', { err });
+    throw new Error('Getting account password rest token ', { error });
   }
 };
 
 /**
  * getApplicationByReferenceNumber
  * Get's an application by reference number from the API
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object} Application
  */
 const getApplicationByReferenceNumber = async (referenceNumber) => {
@@ -457,17 +471,17 @@ const getApplicationByReferenceNumber = async (referenceNumber) => {
       .then((response) => response.data.applications[0]);
 
     return responseBody;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
-    throw new Error(`Getting application by reference number ${referenceNumber}`, { err });
+    throw new Error(`Getting application by reference number ${referenceNumber}`, { error });
   }
 };
 
 /**
  * deleteApplicationByReferenceNumber
  * Delete applications by Application reference number
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object}
  */
 const deleteApplicationByReferenceNumber = async (referenceNumber) => {
@@ -481,10 +495,10 @@ const deleteApplicationByReferenceNumber = async (referenceNumber) => {
       .then((response) => response.data);
 
     return responseBody;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
-    return err;
+    return error;
   }
 };
 
@@ -507,10 +521,10 @@ const deleteApplications = async (applications) => {
       .then((response) => response.data);
 
     return responseBody;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
-    return err;
+    return error;
   }
 };
 
@@ -529,10 +543,10 @@ const getACountry = async () => {
       .then((response) => response.data.countries[0]);
 
     return responseBody;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
-    throw new Error('Getting a country ', { err });
+    throw new Error('Getting a country ', { error });
   }
 };
 

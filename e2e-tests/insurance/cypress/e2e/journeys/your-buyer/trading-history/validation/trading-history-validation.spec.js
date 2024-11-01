@@ -8,7 +8,7 @@ const {
   YOUR_BUYER: { TRADING_HISTORY },
 } = INSURANCE_ROUTES;
 
-const { OUTSTANDING_PAYMENTS, FAILED_PAYMENTS } = FIELD_IDS;
+const { OUTSTANDING_PAYMENTS } = FIELD_IDS;
 
 const {
   INSURANCE: { YOUR_BUYER: ERRORS },
@@ -24,13 +24,9 @@ context('Insurance - Your buyer - Trading history page - Validation', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsuranceYourBuyerSection({});
-
       url = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
 
-      cy.completeAndSubmitCompanyOrOrganisationForm({});
-      cy.completeAndSubmitConnectionWithTheBuyerForm({});
-      cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
+      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'tradedWithBuyer', exporterHasTradedWithBuyer: true });
 
       cy.assertUrl(url);
     });
@@ -50,19 +46,10 @@ context('Insurance - Your buyer - Trading history page - Validation', () => {
     });
 
     it('should render validation errors', () => {
-      const expectedErrorsCount = 2;
-
       cy.submitAndAssertRadioErrors({
         field: noRadio(OUTSTANDING_PAYMENTS),
-        expectedErrorsCount,
+        expectedErrorsCount: 1,
         expectedErrorMessage: ERRORS[OUTSTANDING_PAYMENTS].IS_EMPTY,
-      });
-
-      cy.submitAndAssertRadioErrors({
-        field: noRadio(FAILED_PAYMENTS),
-        errorIndex: 1,
-        expectedErrorsCount,
-        expectedErrorMessage: ERRORS[FAILED_PAYMENTS].IS_EMPTY,
       });
     });
   });

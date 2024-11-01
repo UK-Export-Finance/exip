@@ -25,19 +25,19 @@ const {
 
 const {
   CONTRACT_POLICY: {
-    SINGLE: { TOTAL_CONTRACT_VALUE },
+    SINGLE: { TOTAL_CONTRACT_VALUE, REQUESTED_CREDIT_LIMIT },
   },
 } = POLICY_FIELD_IDS;
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE;
 
-export const FIELD_ID = TOTAL_CONTRACT_VALUE;
+export const FIELD_IDS = [TOTAL_CONTRACT_VALUE, REQUESTED_CREDIT_LIMIT];
 
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} Application reference number
- * @param {Array} currencies: Currencies
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Array<Currency>} currencies: Currencies
  * @param {String} policyCurrencyCode: Policy currency code
  * @returns {Object} Page variables
  */
@@ -45,9 +45,15 @@ export const pageVariables = (referenceNumber: number, currencies: Array<Currenc
   const currency = getCurrencyByCode(currencies, policyCurrencyCode);
 
   return {
-    FIELD: {
-      ID: FIELD_ID,
-      ...FIELDS.CONTRACT_POLICY.SINGLE[FIELD_ID],
+    FIELDS: {
+      TOTAL_CONTRACT_VALUE: {
+        ID: TOTAL_CONTRACT_VALUE,
+        ...FIELDS.CONTRACT_POLICY.SINGLE[TOTAL_CONTRACT_VALUE],
+      },
+      REQUESTED_CREDIT_LIMIT: {
+        ID: REQUESTED_CREDIT_LIMIT,
+        ...FIELDS.CONTRACT_POLICY.SINGLE[REQUESTED_CREDIT_LIMIT],
+      },
     },
     DYNAMIC_PAGE_TITLE: `${PAGE_CONTENT_STRINGS.PAGE_TITLE} ${currency.name}?`,
     CURRENCY_PREFIX_SYMBOL: currency.symbol,
@@ -99,8 +105,8 @@ export const get = async (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
     });
-  } catch (err) {
-    console.error('Error getting currencies %O', err);
+  } catch (error) {
+    console.error('Error getting currencies %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -125,7 +131,7 @@ export const post = async (req: Request, res: Response) => {
     policy: { policyCurrencyCode },
   } = application;
 
-  const payload = constructPayload(req.body, [TOTAL_CONTRACT_VALUE]);
+  const payload = constructPayload(req.body, FIELD_IDS);
 
   const validationErrors = generateValidationErrors(payload);
 
@@ -155,8 +161,8 @@ export const post = async (req: Request, res: Response) => {
         submittedValues: payload,
         validationErrors,
       });
-    } catch (err) {
-      console.error('Error getting currencies %O', err);
+    } catch (error) {
+      console.error('Error getting currencies %o', error);
 
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
@@ -179,8 +185,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`);
-  } catch (err) {
-    console.error('Error updating application - policy - single contract policy - total contract value %O', err);
+  } catch (error) {
+    console.error('Error updating application - policy - single contract policy - total contract value %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

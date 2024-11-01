@@ -16,12 +16,13 @@ const {
 /**
  * changeLink
  * Change link object depending on the policy type
- * @param {String} Policy type
- * @param {Number} Application reference number
- * @param {String} Field ID
+ * @param {String} policyType: Policy type
+ * @param {Number} referenceNumber: Application reference number
+ * @param {String} fieldId: Field ID
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} Link object
  */
-const changeLink = (policyType: string, referenceNumber: number, fieldId: string, checkAndChange: boolean) => {
+const changeLink = (policyType: string, referenceNumber: number, fieldId: string, checkAndChange?: boolean) => {
   if (isSinglePolicyType(policyType)) {
     return {
       renderChangeLink: true,

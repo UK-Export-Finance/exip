@@ -19,12 +19,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startYourBusinessSection({});
-
-      cy.completeAndSubmitCompanyDetails({});
-      cy.completeAndSubmitNatureOfYourBusiness();
-      cy.completeAndSubmitTurnoverForm({});
-      cy.completeAndSubmitCreditControlForm({});
+      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'creditControl' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
@@ -56,10 +51,6 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
 
     it('renders a heading caption', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
-    });
-
-    it('renders a `save and back` button', () => {
-      cy.assertSaveAndBackButton();
     });
   });
 

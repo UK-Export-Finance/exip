@@ -3,7 +3,7 @@ import { RequestBody } from '../../../types';
 
 const {
   CONTRACT_POLICY: {
-    SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
+    SINGLE: { CONTRACT_COMPLETION_DATE, REQUESTED_CREDIT_LIMIT, TOTAL_CONTRACT_VALUE },
   },
 } = FIELD_IDS;
 
@@ -15,6 +15,7 @@ const {
 const nullifySingleContractPolicyFields = (formBody: RequestBody) => ({
   ...formBody,
   [CONTRACT_COMPLETION_DATE]: null,
+  [REQUESTED_CREDIT_LIMIT]: null,
   [TOTAL_CONTRACT_VALUE]: null,
 });
 

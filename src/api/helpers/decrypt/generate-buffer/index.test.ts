@@ -17,8 +17,8 @@ describe('api/helpers/decrypt/generate-buffer', () => {
     it('should return an error', () => {
       try {
         generateBufferInStringFormat('');
-      } catch (err) {
-        const errorString = String(err);
+      } catch (error) {
+        const errorString = String(error);
 
         expect(errorString.includes('Error generating buffer')).toEqual(true);
       }

@@ -3,12 +3,12 @@ import { ApplicationLossPayeeFinancialInternational, Context } from '../../types
 /**
  * createALossPayeeFinancialInternational
  * Create a "Loss payee financial International" with a Loss payee relationship
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} Loss payee ID
  * @returns {Promise<Object>} Created loss payee financial international
  */
 const createALossPayeeFinancialInternational = async (context: Context, lossPayeeId: string): Promise<ApplicationLossPayeeFinancialInternational> => {
-  console.info('Creating a loss payee financial (international) for ', lossPayeeId);
+  console.info('Creating a loss payee financial (international) for %s', lossPayeeId);
 
   try {
     const lossPayeeFinancialInternational = await context.db.LossPayeeFinancialInternational.createOne({
@@ -31,10 +31,10 @@ const createALossPayeeFinancialInternational = async (context: Context, lossPaye
       ...lossPayeeFinancialInternational,
       vector,
     };
-  } catch (err) {
-    console.error('Error creating a loss payee financial (international) for %O', err);
+  } catch (error) {
+    console.error('Error creating a loss payee financial (international) for %o', error);
 
-    throw new Error(`Creating a loss payee financial (international) for ${err}`);
+    throw new Error(`Creating a loss payee financial (international) for ${error}`);
   }
 };
 

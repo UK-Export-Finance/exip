@@ -21,6 +21,7 @@ Cypress.Commands.add('assertLength', require('./assert-length'));
 Cypress.Commands.add('assertErrorSummaryListLength', require('./assert-error-summary-list-length'));
 Cypress.Commands.add('assertErrorSummaryListDoesNotExist', require('./assert-error-summary-list-does-not-exist'));
 Cypress.Commands.add('assertCurrencyFormFieldsAreEmpty', require('./assert-currency-form-fields-are-empty'));
+Cypress.Commands.add('assertNameEmailAndPositionFields', require('./assert-name-email-and-position-fields'));
 
 Cypress.Commands.add('assertCopyWithCurrencyName', require('./assert-copy-with-currency-name'));
 Cypress.Commands.add('assertPrefix', require('./assert-prefix'));
@@ -36,9 +37,11 @@ Cypress.Commands.add('checkEmailFieldRendering', require('./check-email-field-re
 Cypress.Commands.add('checkIntroText', require('./check-intro-text'));
 Cypress.Commands.add('checkLink', require('./check-link'));
 Cypress.Commands.add('checkText', require('./check-text'));
+Cypress.Commands.add('checkTextAndValue', require('./check-text-and-value'));
 Cypress.Commands.add('checkTextareaValue', require('./check-textarea-value'));
 Cypress.Commands.add('checkTypeAttribute', require('./check-type-attribute'));
 Cypress.Commands.add('checkValue', require('./check-value'));
+Cypress.Commands.add('checkDateFieldValues', require('./check-date-field-values'));
 
 Cypress.Commands.add('checkAuthenticatedHeader', require('./check-authenticated-header'));
 
@@ -62,7 +65,7 @@ Cypress.Commands.add('checkRadioInputNoAriaLabel', require('./check-radio-input-
 
 Cypress.Commands.add('assertConnectionWithBuyerFieldValues', require('./assert-connection-with-buyer-field-values'));
 
-Cypress.Commands.add('assertEmptyTradingHistoryFieldValues', require('./assert-empty-trading-history-field-values'));
+Cypress.Commands.add('assertEmptyOverdueOrOutstandingFieldValues', require('./assert-empty-overdue-or-outstanding-field-values'));
 
 Cypress.Commands.add('assertDifferentNameOnPolicyFieldValues', require('./assert-different-name-on-policy-field-values'));
 Cypress.Commands.add('assertOtherCompanyDetailsFieldValues', require('./assert-other-company-details-field-values'));

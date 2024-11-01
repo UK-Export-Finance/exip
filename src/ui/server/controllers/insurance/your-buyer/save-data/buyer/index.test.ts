@@ -3,7 +3,7 @@ import api from '../../../../../api';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import getDataToSave from '../../../../../helpers/get-data-to-save';
 import { FIELD_IDS } from '../../../../../constants';
-import { mockApplication, mockBuyer } from '../../../../../test-mocks';
+import { mockApplication, mockBuyer, mockSpyPromiseRejection } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 
 const {
@@ -62,16 +62,16 @@ describe('controllers/insurance/your-buyer/save-data/buyer', () => {
 
   describe('when there is an error calling the API', () => {
     beforeAll(() => {
-      updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+      updateApplicationSpy = mockSpyPromiseRejection;
       api.keystone.application.update.buyer = updateApplicationSpy;
     });
 
     it('should throw an error', async () => {
       try {
         await save.buyer(mockApplication, mockBuyer);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error("Updating application's buyer");
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

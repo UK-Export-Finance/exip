@@ -1,4 +1,4 @@
-import { FIELD_IDS } from '..';
+import { FIELD_ID } from '..';
 import { ROUTES } from '../../../../../constants';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
@@ -23,7 +23,7 @@ const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const payload = constructPayload(req.body, FIELD_IDS);
+    const payload = constructPayload(req.body, [FIELD_ID]);
 
     // run validation on inputs
     const validationErrors = generateValidationErrors(payload);
@@ -37,8 +37,8 @@ const post = async (req: Request, res: Response) => {
 
     // redirect to all sections page
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-  } catch (err) {
-    console.error('Error updating application - Your buyer - Trading history (save and back) %O', err);
+  } catch (error) {
+    console.error('Error updating application - Your buyer - Trading history (save and back) %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

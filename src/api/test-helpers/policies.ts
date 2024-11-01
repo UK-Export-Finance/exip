@@ -12,16 +12,16 @@ const update = async ({ context, data, policyId }: TestHelperPolicyUpdate) => {
   try {
     console.info('Updating a policy (test helpers)');
 
-    const policy = (await context.query.Policy.updateOne({
+    const policy = (await context.db.Policy.updateOne({
       where: { id: policyId },
       data,
-      query: 'id requestedStartDate contractCompletionDate',
     })) as ApplicationPolicy;
 
     return policy;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+
+    return error;
   }
 };
 
@@ -32,16 +32,17 @@ const update = async ({ context, data, policyId }: TestHelperPolicyUpdate) => {
  * @param {Object} data: Policy data
  * @returns {ApplicationPolicy} Created policy
  */
-const create = async ({ context, data }: TestHelperPolicyCreate) => {
+const create = async ({ context, data = {} }: TestHelperPolicyCreate) => {
   try {
     console.info('Creating a policy (test helpers)');
 
-    const policy = (await context.query.Policy.createOne({ data })) as ApplicationPolicy;
+    const policy = (await context.db.Policy.createOne({ data })) as ApplicationPolicy;
 
     return policy;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+
+    return error;
   }
 };
 

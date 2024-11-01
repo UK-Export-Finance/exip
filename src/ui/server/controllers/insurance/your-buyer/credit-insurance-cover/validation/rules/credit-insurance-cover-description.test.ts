@@ -19,7 +19,7 @@ describe('controllers/insurance/your-buyer/credit-insurance-cover/validation/rul
     [FIELD_ID]: '',
   } as RequestBody;
 
-  describe(`${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} is true`, () => {
+  describe(`when ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} is true`, () => {
     it('should return the result of providedAndMaxLength', () => {
       mockBody[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER] = 'true';
 
@@ -31,7 +31,7 @@ describe('controllers/insurance/your-buyer/credit-insurance-cover/validation/rul
     });
   });
 
-  describe(`${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} is false`, () => {
+  describe(`when ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} is false`, () => {
     it('should return the return the provided errors', () => {
       mockBody[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER] = 'false';
 

@@ -4,7 +4,7 @@ import { ApplicationLossPayeeFinancialInternational, TestHelperCreate } from '..
 /**
  * createLossPayeeFinancialDetailsInternational
  * create a nominated loss payee financial international helper
- * Creates a blank ApplicationLossPayeeFinancialInternational.
+ * Create an empty ApplicationLossPayeeFinancialInternational.
  * @param {Context} context: KeystoneJS context API
  * @returns {ApplicationLossPayeeFinancialInternational} Created ApplicationLossPayeeFinancialInternational
  */
@@ -26,9 +26,10 @@ const createLossPayeeFinancialDetailsInternational = async ({ context }: TestHel
     })) as ApplicationLossPayeeFinancialInternational;
 
     return lossPayeeFinancialDetailsInternational;
-  } catch (err) {
-    console.error('Error creating a loss payee financial international (test helpers) %O', err);
-    return err;
+  } catch (error) {
+    console.error('Error creating a loss payee financial international (test helpers) %o', error);
+
+    return error;
   }
 };
 

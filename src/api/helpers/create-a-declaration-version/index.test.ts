@@ -54,8 +54,8 @@ describe('helpers/create-a-declaration-version', () => {
     test('it should throw an error', async () => {
       try {
         await createADeclarationVersion(context, invalidId);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

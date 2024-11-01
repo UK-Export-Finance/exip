@@ -6,7 +6,7 @@ import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockBuyer } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockBuyer, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 
 const {
   COMPANY_OR_ORGANISATION: { NAME },
@@ -40,7 +40,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
 
       await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should call mapAndSave.yourBuyer once with data from constructPayload function', async () => {
@@ -65,7 +65,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
 
       await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should call mapAndSave.yourBuyer once with data from constructPayload function', async () => {
@@ -114,7 +114,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
     describe('when mapAndSave.yourBuyer fails', () => {
       beforeEach(() => {
         res.locals = mockRes().locals;
-        updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
+        updateMapAndSave = mockSpyPromiseRejection;
         mapAndSave.yourBuyer = updateMapAndSave;
       });
 

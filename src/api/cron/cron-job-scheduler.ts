@@ -7,7 +7,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  * cronJobScheduler
  * Validates and sets up cron jobs to run
  * @param {CronSchedulerJob[]} jobs: cron jobs to schedule to run
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  */
 const cronJobScheduler = (jobs: CronSchedulerJob[], context: Context) => {
   jobs.forEach((job) => {

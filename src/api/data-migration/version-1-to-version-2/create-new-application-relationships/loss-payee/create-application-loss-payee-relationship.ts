@@ -1,6 +1,6 @@
 import { Connection } from 'mysql2/promise';
 import getAllLossPayees from '../../get-all-loss-payees';
-import executeSqlQuery from '../../execute-sql-query';
+import executeSqlQuery from '../../../execute-sql-query';
 
 /**
  * createApplicationLossPayeeRelationship
@@ -11,7 +11,7 @@ import executeSqlQuery from '../../execute-sql-query';
 const createApplicationLossPayeeRelationship = async (connection: Connection) => {
   const loggingMessage = 'Updating applications to have loss payee relationships';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const lossPayees = await getAllLossPayees(connection);
@@ -31,10 +31,10 @@ const createApplicationLossPayeeRelationship = async (connection: Connection) =>
     });
 
     return Promise.all(promises);
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

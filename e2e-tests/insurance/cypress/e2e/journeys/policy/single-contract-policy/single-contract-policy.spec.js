@@ -43,8 +43,7 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm({});
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'policyType' });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 
@@ -102,10 +101,6 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
       field.monthInput().should('exist');
       field.yearInput().should('exist');
     });
-
-    it('renders a `save and back` button', () => {
-      cy.assertSaveAndBackButton();
-    });
   });
 
   describe('currency form fields', () => {
@@ -117,18 +112,14 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
       legend: CONTRACT_POLICY[CURRENCY_CODE].LEGEND,
       hint: CONTRACT_POLICY[CURRENCY_CODE].HINT,
       errors: CONTRACT_ERROR_MESSAGES,
+      errorIndex: 2,
+      expectedRedirectUrl: SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
+      completeNonCurrencyFieldsFunction: () => cy.completeSingleContractPolicyForm({ chooseCurrency: false }),
     });
 
     rendering();
 
-    formSubmission().selectAltRadioButNoAltCurrency({ errorIndex: 2 });
-
-    formSubmission().submitASupportedCurrency({
-      url: SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
-      completeNonCurrencyFields: () => cy.completeSingleContractPolicyForm({ chooseCurrency: false }),
-    });
-
-    formSubmission().submitAlternativeCurrency({ url: SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE });
+    formSubmission({}).executeTests();
   });
 
   describe('form submission', () => {
@@ -157,13 +148,21 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
 
         cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`);
 
-        fieldSelector(REQUESTED_START_DATE).dayInput().should('have.value', application.POLICY[REQUESTED_START_DATE].day);
-        fieldSelector(REQUESTED_START_DATE).monthInput().should('have.value', application.POLICY[REQUESTED_START_DATE].month);
-        fieldSelector(REQUESTED_START_DATE).yearInput().should('have.value', application.POLICY[REQUESTED_START_DATE].year);
+        const { POLICY } = application;
 
-        fieldSelector(CONTRACT_COMPLETION_DATE).dayInput().should('have.value', application.POLICY[CONTRACT_COMPLETION_DATE].day);
-        fieldSelector(CONTRACT_COMPLETION_DATE).monthInput().should('have.value', application.POLICY[CONTRACT_COMPLETION_DATE].month);
-        fieldSelector(CONTRACT_COMPLETION_DATE).yearInput().should('have.value', application.POLICY[CONTRACT_COMPLETION_DATE].year);
+        cy.checkDateFieldValues({
+          selector: fieldSelector(REQUESTED_START_DATE),
+          day: POLICY[REQUESTED_START_DATE].day,
+          month: POLICY[REQUESTED_START_DATE].month,
+          year: POLICY[REQUESTED_START_DATE].year,
+        });
+
+        cy.checkDateFieldValues({
+          selector: fieldSelector(CONTRACT_COMPLETION_DATE),
+          day: POLICY[CONTRACT_COMPLETION_DATE].day,
+          month: POLICY[CONTRACT_COMPLETION_DATE].month,
+          year: POLICY[CONTRACT_COMPLETION_DATE].year,
+        });
 
         const isoCode = application.POLICY[POLICY_CURRENCY_CODE];
 

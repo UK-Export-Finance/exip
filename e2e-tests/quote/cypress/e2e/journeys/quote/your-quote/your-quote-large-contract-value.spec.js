@@ -1,10 +1,3 @@
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import {
-  completeAndSubmitBuyerBodyForm,
-  completeAndSubmitExporterLocationForm,
-  completeAndSubmitUkContentForm,
-  completeAndSubmitPolicyTypeSingleForm,
-} from '../../../../../../commands/quote/forms';
 import { field, summaryList } from '../../../../../../pages/shared';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { GBP_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
@@ -23,13 +16,13 @@ const baseUrl = Cypress.config('baseUrl');
 
 context('Get a quote/your quote page (large contract value) - as an exporter, I want to get an Credit insurance quote', () => {
   before(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
-    completeAndSubmitBuyerCountryForm({});
-    completeAndSubmitBuyerBodyForm();
-    completeAndSubmitExporterLocationForm();
-    completeAndSubmitUkContentForm();
-    completeAndSubmitPolicyTypeSingleForm();
+    cy.completeAndSubmitBuyerCountryForm({});
+    cy.completeAndSubmitBuyerBodyForm();
+    cy.completeAndSubmitExporterLocationForm();
+    cy.completeAndSubmitUkContentForm();
+    cy.completeAndSubmitPolicyTypeSingleForm();
   });
 
   beforeEach(() => {

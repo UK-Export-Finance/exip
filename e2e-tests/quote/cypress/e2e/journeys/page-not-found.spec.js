@@ -1,4 +1,4 @@
-import header from '../../../../partials/header';
+import { header } from '../../../../partials';
 import { PAGES, PRODUCT } from '../../../../content-strings';
 
 const CONTENT_STRINGS = PAGES.PAGE_NOT_FOUND_PAGE;
@@ -21,6 +21,7 @@ context('404 Page not found', () => {
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
       assertServiceHeading: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

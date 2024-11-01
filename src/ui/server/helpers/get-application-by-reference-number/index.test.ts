@@ -1,7 +1,7 @@
 import getApplicationByReferenceNumber from '.';
 import getApplicationByReferenceNumberVariables from '../get-application-by-reference-number-variables';
 import api from '../../api';
-import { mockApplication, mockSpyPromise, referenceNumber } from '../../test-mocks';
+import { mockApplication, mockSpyPromise, mockSpyPromiseRejection, mockErrorMessage, referenceNumber } from '../../test-mocks';
 import LOSS_PAYEE_ROUTES from '../../constants/routes/insurance/policy/loss-payee';
 
 const { LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT } = LOSS_PAYEE_ROUTES;
@@ -35,7 +35,7 @@ describe('helpers/get-application-by-reference-number', () => {
   describe('when there is no application.id', () => {
     it('should return false', async () => {
       getApplicationSpy = mockSpyPromise();
-      api.keystone.application.get = getApplicationSpy;
+      api.keystone.application.getByReferenceNumber = getApplicationSpy;
 
       const result = await getApplicationByReferenceNumber(variables);
 
@@ -45,8 +45,7 @@ describe('helpers/get-application-by-reference-number', () => {
 
   describe('when the api call fails', () => {
     it('should return false', async () => {
-      const mockErrorMessage = 'Mock error';
-      getApplicationSpy = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
+      getApplicationSpy = mockSpyPromiseRejection;
       api.keystone.application.getByReferenceNumber = getApplicationSpy;
 
       await expect(getApplicationByReferenceNumber(variables)).rejects.toThrow(

@@ -33,7 +33,7 @@ const industrySectorNames = {
         },
       });
 
-      // if no data in response or status is not 200 then return blank object
+      // if no data in response or status is not 200 then return an empty object
       if (!response.data || response.status !== 200) {
         return {
           success: false,
@@ -44,8 +44,9 @@ const industrySectorNames = {
         success: true,
         data: response.data,
       };
-    } catch (err) {
-      console.error('Error calling industry sector API %O', err);
+    } catch (error) {
+      console.error('Error calling industry sector API %o', error);
+
       return {
         success: false,
         apiError: true,

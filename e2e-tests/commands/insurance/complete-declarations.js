@@ -1,9 +1,4 @@
-import partials from '../../partials';
 import { FIELD_VALUES } from '../../constants';
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.declarationsAndSubmit;
 
 /**
  * completeDeclarations
@@ -12,7 +7,7 @@ const task = taskList.submitApplication.tasks.declarationsAndSubmit;
  * - exportingWithCodeOfConduct: Should submit "yes" in the "exporting with code of conduct" form. Defaults to "yes".
  */
 const completeDeclarations = ({ hasAntiBriberyCodeOfConduct = true, exportingWithCodeOfConduct = true }) => {
-  task.link().click();
+  cy.clickTaskDeclarationsAndSubmit();
 
   cy.completeAndSubmitDeclarationConfidentiality();
 

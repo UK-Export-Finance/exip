@@ -5,7 +5,7 @@ import { RequestBody, Account } from '../../../../../../../types';
 /**
  * account
  * Sanitise form data for user account creation and save the data.
- * @param {Express.Request.body} Form data
+ * @param {Express.Request.body} formBody
  * @returns {Promise<Object>} Saved data
  */
 const account = async (urlOrigin: string, formBody: RequestBody) => {
@@ -15,7 +15,7 @@ const account = async (urlOrigin: string, formBody: RequestBody) => {
     const saveResponse = await api.keystone.account.create(urlOrigin, sanitisedData);
 
     return saveResponse;
-  } catch (err) {
+  } catch (error) {
     throw new Error('Creating account');
   }
 };

@@ -14,16 +14,16 @@ describe('server/helpers/summary-lists/policy', () => {
 
   describe('generateFields', () => {
     it('should return fields and values from the submitted data/answers', () => {
-      const result = generateFields(
-        mockAnswers,
-        mockContact,
-        mockBroker,
-        mockNominatedLossPayee,
+      const result = generateFields({
+        policy: mockAnswers,
+        policyContact: mockContact,
+        broker: mockBroker,
+        nominatedLossPayee: mockNominatedLossPayee,
         referenceNumber,
-        mockCurrencies,
-        mockCountries,
+        currencies: mockCurrencies,
+        countries: mockCountries,
         checkAndChange,
-      );
+      });
 
       const expected = [
         generatePolicyAndDateFields(mockAnswers, referenceNumber, mockCurrencies, checkAndChange),
@@ -39,18 +39,26 @@ describe('server/helpers/summary-lists/policy', () => {
 
   describe('policySummaryLists', () => {
     it('should return an array of summary list rows', () => {
-      const result = policySummaryLists(mockAnswers, mockContact, mockBroker, mockNominatedLossPayee, referenceNumber, mockCurrencies, mockCountries);
-
-      const fields = generateFields(
-        mockAnswers,
-        mockContact,
-        mockBroker,
-        mockNominatedLossPayee,
+      const result = policySummaryLists({
+        policy: mockAnswers,
+        policyContact: mockContact,
+        broker: mockBroker,
+        nominatedLossPayee: mockNominatedLossPayee,
         referenceNumber,
-        mockCurrencies,
-        mockCountries,
+        currencies: mockCurrencies,
+        countries: mockCountries,
+      });
+
+      const fields = generateFields({
+        policy: mockAnswers,
+        policyContact: mockContact,
+        broker: mockBroker,
+        nominatedLossPayee: mockNominatedLossPayee,
+        referenceNumber,
+        currencies: mockCurrencies,
+        countries: mockCountries,
         checkAndChange,
-      );
+      });
 
       const expected = generateGroupsOfSummaryLists(fields);
 

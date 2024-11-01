@@ -19,17 +19,17 @@ const applications = {
       const variables = {
         accountId,
         take: MAX_APPLICATIONS_PER_PAGE,
-        skip: skip || 0,
+        skip: skip ?? 0,
       };
 
       const response = (await apollo('GET', getApplicationsQuery, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error getting applications %O', response.errors);
+        console.error('GraphQL error getting applications %o', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error getting applications %O', response.networkError.result.errors);
+        console.error('GraphQL network error getting applications %o', response.networkError.result.errors);
       }
 
       if (response?.data?.applications) {
@@ -43,10 +43,12 @@ const applications = {
         return mappedResponse;
       }
 
-      console.error('Error with GraphQL getApplicationsQuery %O', response);
+      console.error('Error with GraphQL getApplicationsQuery %o', response);
+
       throw new Error('Getting applications');
-    } catch (err) {
-      console.error('Error getting applications %O', err);
+    } catch (error) {
+      console.error('Error getting applications %o', error);
+
       throw new Error('Getting applications');
     }
   },

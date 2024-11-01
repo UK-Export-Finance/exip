@@ -21,21 +21,23 @@ const updateNominatedLossPayee = async (id: string, update: object) => {
     const response = (await apollo('POST', updateApplicationNominatedLossPayeeMutation, variables)) as ApolloResponse;
 
     if (response.errors) {
-      console.error('GraphQL error updating application nominated loss payee %O', response.errors);
+      console.error('GraphQL error updating application nominated loss payee %o', response.errors);
     }
 
     if (response?.networkError?.result?.errors) {
-      console.error('GraphQL network error updating application nominated loss payee %O', response.networkError.result.errors);
+      console.error('GraphQL network error updating application nominated loss payee %o', response.networkError.result.errors);
     }
 
     if (response?.data?.updateNominatedLossPayee) {
       return response.data.updateNominatedLossPayee;
     }
 
-    console.error('Error with GraphQL updateApplicationNominatedLossPayeeMutation %O', response);
+    console.error('Error with GraphQL updateApplicationNominatedLossPayeeMutation %o', response);
+
     throw new Error('Updating application nominated loss payee');
-  } catch (err) {
-    console.error('Error updating application nominated loss payee %O', err);
+  } catch (error) {
+    console.error('Error updating application nominated loss payee %o', error);
+
     throw new Error('Updating application nominated loss payee');
   }
 };

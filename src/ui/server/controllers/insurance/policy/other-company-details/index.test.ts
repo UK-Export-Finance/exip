@@ -13,7 +13,7 @@ import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/jointly-insured-party';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockCountries, mockSpyPromiseRejection } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -51,7 +51,7 @@ describe('controllers/insurance/policy/other-company-details', () => {
   });
 
   describe('PAGE_CONTENT_STRINGS', () => {
-    it('should have the correct properties', () => {
+    it('should have the correct strings', () => {
       const expected = PAGES.INSURANCE.POLICY.OTHER_COMPANY_DETAILS;
 
       expect(PAGE_CONTENT_STRINGS).toEqual(expected);
@@ -137,7 +137,7 @@ describe('controllers/insurance/policy/other-company-details', () => {
     describe('api error handling', () => {
       describe('when the get countries API call fails', () => {
         beforeEach(() => {
-          getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          getCountriesSpy = mockSpyPromiseRejection;
           api.keystone.countries.getAll = getCountriesSpy;
         });
 
@@ -279,7 +279,7 @@ describe('controllers/insurance/policy/other-company-details', () => {
     describe('api error handling', () => {
       describe('when the get countries API call fails', () => {
         beforeEach(() => {
-          getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          getCountriesSpy = mockSpyPromiseRejection;
           api.keystone.countries.getAll = getCountriesSpy;
         });
 
@@ -324,7 +324,7 @@ describe('controllers/insurance/policy/other-company-details', () => {
 
         describe('when there is an error', () => {
           beforeEach(() => {
-            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+            const mapAndSaveSpy = mockSpyPromiseRejection;
 
             mapAndSave.jointlyInsuredParty = mapAndSaveSpy;
           });

@@ -8,7 +8,7 @@ import { Context, ApplicationExportContractAgentService } from '../../types';
  * @returns {Promise<Object>} Created export contract agent service
  */
 const createAnExportContractAgentService = async (context: Context, agentId: string): Promise<ApplicationExportContractAgentService> => {
-  console.info('Creating an export contract agent service for ', agentId);
+  console.info('Creating an export contract agent service for %s', agentId);
 
   try {
     const agentService = await context.db.ExportContractAgentService.createOne({
@@ -20,10 +20,10 @@ const createAnExportContractAgentService = async (context: Context, agentId: str
     });
 
     return agentService;
-  } catch (err) {
-    console.error('Error creating an export contract agent service %O', err);
+  } catch (error) {
+    console.error('Error creating an export contract agent service %o', error);
 
-    throw new Error(`Creating an export contract agent service ${err}`);
+    throw new Error(`Creating an export contract agent service ${error}`);
   }
 };
 

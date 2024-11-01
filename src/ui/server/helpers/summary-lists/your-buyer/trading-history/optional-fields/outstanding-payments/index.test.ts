@@ -8,8 +8,12 @@ import generateChangeLink from '../../../../../generate-change-link';
 import formatCurrency from '../../../../../format-currency';
 import { mockApplicationBuyer, referenceNumber } from '../../../../../../test-mocks/mock-application';
 
-const { TRADING_HISTORY_CHANGE, TRADING_HISTORY_CHECK_AND_CHANGE } = YOUR_BUYER_ROUTES;
-
+const {
+  OUTSTANDING_OR_OVERDUE_PAYMENTS_CHANGE,
+  OUTSTANDING_OR_OVERDUE_PAYMENTS_CHECK_AND_CHANGE,
+  CURRENCY_OF_LATE_PAYMENTS_CHANGE,
+  CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE,
+} = YOUR_BUYER_ROUTES;
 const {
   YOUR_BUYER: { OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE },
   CURRENCY: { CURRENCY_CODE },
@@ -24,13 +28,25 @@ describe('server/helpers/summary-lists/your-buyer/trading-history/optional-field
       const result = optionalOutstandingPaymentsFields(mockAnswers, referenceNumber, checkAndChange);
 
       const expected = [
+        fieldGroupItem({
+          field: getFieldById(FIELDS, CURRENCY_CODE),
+          data: mockAnswers,
+          href: generateChangeLink(
+            CURRENCY_OF_LATE_PAYMENTS_CHANGE,
+            CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE,
+            `#${CURRENCY_CODE}-label`,
+            referenceNumber,
+            checkAndChange,
+          ),
+          renderChangeLink: true,
+        }),
         fieldGroupItem(
           {
             field: getFieldById(FIELDS, TOTAL_OUTSTANDING_PAYMENTS),
             data: mockAnswers,
             href: generateChangeLink(
-              TRADING_HISTORY_CHANGE,
-              TRADING_HISTORY_CHECK_AND_CHANGE,
+              OUTSTANDING_OR_OVERDUE_PAYMENTS_CHANGE,
+              OUTSTANDING_OR_OVERDUE_PAYMENTS_CHECK_AND_CHANGE,
               `#${TOTAL_OUTSTANDING_PAYMENTS}-label`,
               referenceNumber,
               checkAndChange,
@@ -44,8 +60,8 @@ describe('server/helpers/summary-lists/your-buyer/trading-history/optional-field
             field: getFieldById(FIELDS, TOTAL_AMOUNT_OVERDUE),
             data: mockAnswers,
             href: generateChangeLink(
-              TRADING_HISTORY_CHANGE,
-              TRADING_HISTORY_CHECK_AND_CHANGE,
+              OUTSTANDING_OR_OVERDUE_PAYMENTS_CHANGE,
+              OUTSTANDING_OR_OVERDUE_PAYMENTS_CHECK_AND_CHANGE,
               `#${TOTAL_AMOUNT_OVERDUE}-label`,
               referenceNumber,
               checkAndChange,

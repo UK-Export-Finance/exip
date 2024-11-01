@@ -1,23 +1,20 @@
-import partials from '../../../../../../partials';
 import { field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
 import { agentChargesPage } from '../../../../../../pages/insurance/export-contract';
-import { SYMBOLS } from '../../../../../../constants';
 import { PAGES } from '../../../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/export-contract';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { assertCountryAutocompleteInput } from '../../../../../../shared-test-assertions';
-import { GBP } from '../../../../../../fixtures/currencies';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES;
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { AGENT_CHARGES, AGENT_SERVICE, AGENT_CHARGES_ALTERNATIVE_CURRENCY, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { AGENT_CHARGES, AGENT_CHARGES_CURRENCY, AGENT_SERVICE, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const {
-  AGENT_CHARGES: { METHOD, FIXED_SUM, PERCENTAGE, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE },
+  AGENT_CHARGES: { METHOD, FIXED_SUM, PERCENTAGE, PAYABLE_COUNTRY_CODE, PERCENTAGE_CHARGE },
 } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -27,7 +24,7 @@ context(
   () => {
     let referenceNumber;
     let url;
-    let agentChargesAlternativeCurrencyUrl;
+    let agentChargesCurrencyUrl;
     let checkYourAnswersUrl;
 
     before(() => {
@@ -35,16 +32,10 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.startInsuranceExportContractSection({});
-        cy.completeAndSubmitHowWasTheContractAwardedForm({});
-        cy.completeAndSubmitAboutGoodsOrServicesForm({});
-        cy.completeAndSubmitHowYouWillGetPaidForm({});
-        cy.completeAndSubmitAgentForm({ isUsingAgent: true });
-        cy.completeAndSubmitAgentDetailsForm({});
-        cy.completeAndSubmitAgentServiceForm({ agentIsCharging: true });
+        cy.completeAndSubmitExportContractForms({ formToStopAt: 'agentService', isUsingAgent: true, agentIsCharging: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES}`;
-        agentChargesAlternativeCurrencyUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`;
+        agentChargesCurrencyUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY}`;
         checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       });
     });
@@ -95,42 +86,8 @@ context(
           cy.checkText(field.label(), OPTIONS.PERCENTAGE.TEXT);
         });
 
-        it(`should NOT display conditional "${FIXED_SUM_AMOUNT}" field`, () => {
-          fieldSelector(FIXED_SUM_AMOUNT).input().should('not.be.visible');
-        });
-
         it(`should NOT display conditional "${PERCENTAGE_CHARGE}" field`, () => {
           fieldSelector(PERCENTAGE_CHARGE).input().should('not.be.visible');
-        });
-
-        it(`should display conditional "${FIXED_SUM_AMOUNT}" field and 'provide alternative currency' link when selecting the ${FIXED_SUM} radio`, () => {
-          agentChargesPage[METHOD][FIXED_SUM].label().click();
-
-          const fieldId = FIXED_SUM_AMOUNT;
-
-          const field = fieldSelector(fieldId);
-
-          field.input().should('be.visible');
-
-          const expectedLabel = `${FIELDS.AGENT_CHARGES[fieldId].LABEL} ${GBP.name}?`;
-
-          cy.checkText(field.label(), expectedLabel);
-
-          cy.assertPrefix({ fieldId, value: SYMBOLS.GBP });
-
-          cy.checkLink(
-            partials.provideAlternativeCurrencyLink(),
-            `${ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`,
-            CONTENT_STRINGS.PROVIDE_ALTERNATIVE_CURRENCY,
-          );
-        });
-
-        it(`should redirect to ${AGENT_CHARGES_ALTERNATIVE_CURRENCY} when clicking the 'provide alternative currency' link`, () => {
-          agentChargesPage[METHOD][FIXED_SUM].label().click();
-
-          cy.clickProvideAlternativeCurrencyLink();
-
-          cy.assertUrl(agentChargesAlternativeCurrencyUrl);
         });
 
         it(`should display conditional "${PERCENTAGE_CHARGE}" field when selecting the ${PERCENTAGE} radio`, () => {
@@ -149,10 +106,6 @@ context(
       describe(`searchable autocomplete input (${PAYABLE_COUNTRY_CODE})`, () => {
         assertCountryAutocompleteInput({ fieldId: PAYABLE_COUNTRY_CODE });
       });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
-      });
     });
 
     describe('form submission', () => {
@@ -161,16 +114,16 @@ context(
       });
 
       describe(`when submitting with ${METHOD} as ${FIXED_SUM}`, () => {
-        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        it(`should redirect to ${AGENT_CHARGES_CURRENCY}`, () => {
           cy.completeAndSubmitAgentChargesForm({ fixedSumMethod: true });
 
-          cy.assertUrl(checkYourAnswersUrl);
+          cy.assertUrl(agentChargesCurrencyUrl);
         });
 
-        it('should update the `export contract` task status to `completed`', () => {
+        it('should retain the `export contract` task status as `in progress`', () => {
           cy.navigateToAllSectionsUrl(referenceNumber);
 
-          cy.checkTaskExportContractStatusIsComplete();
+          cy.checkTaskExportContractStatusIsInProgress();
         });
 
         describe('when going back to the page', () => {
@@ -184,10 +137,6 @@ context(
 
           it(`should NOT display conditional "${PERCENTAGE_CHARGE}" field`, () => {
             fieldSelector(PERCENTAGE_CHARGE).input().should('not.be.visible');
-          });
-
-          it(`should display conditional "${FIXED_SUM_AMOUNT}" field`, () => {
-            fieldSelector(FIXED_SUM_AMOUNT).input().should('be.visible');
           });
         });
       });
@@ -212,10 +161,6 @@ context(
 
           it('should have the submitted values', () => {
             cy.assertAgentChargesFieldValues({ percentageMethod: true });
-          });
-
-          it(`should NOT display conditional "${FIXED_SUM_AMOUNT}" field`, () => {
-            fieldSelector(FIXED_SUM_AMOUNT).input().should('not.be.visible');
           });
 
           it(`should display conditional "${PERCENTAGE_CHARGE}" field`, () => {

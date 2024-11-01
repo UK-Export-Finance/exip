@@ -1,13 +1,11 @@
 import createACompany from '.';
-import { mockCompany } from '../../test-mocks';
+import { mockCompany, mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
 import { Application, Context } from '../../types';
 
-const invalidId = 'invalid-id';
-
-const assertError = (err) => {
-  const errorString = String(err);
+const assertError = (error) => {
+  const errorString = String(error);
 
   expect(errorString.includes('Creating a company, address, SIC codes and company different trading address')).toEqual(true);
 };
@@ -19,14 +17,16 @@ describe('helpers/create-a-company', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await applications.create({ context, data: {} })) as Application;
+    application = (await applications.create({ context })) as Application;
   });
 
-  test('it should return a company with address, SIC code and different trading address relationships', async () => {
+  test('it should return a company with an application relationship, address, SIC code, different trading address relationships', async () => {
     const result = await createACompany(context, application.id, mockCompany);
 
     expect(typeof result.id).toEqual('string');
     expect(result.id.length).toBeGreaterThan(0);
+
+    expect(result.applicationId).toEqual(application.id);
 
     expect(result.companyName).toEqual(mockCompany.companyName);
     expect(result.companyNumber).toEqual(mockCompany.companyNumber);
@@ -45,9 +45,9 @@ describe('helpers/create-a-company', () => {
   describe('when an invalid application ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createACompany(context, invalidId, mockCompany);
-      } catch (err) {
-        assertError(err);
+        await createACompany(context, mockInvalidId, mockCompany);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -57,8 +57,8 @@ describe('helpers/create-a-company', () => {
       try {
         // pass empty context object to force an error
         await createACompany({}, application.id, mockCompany);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

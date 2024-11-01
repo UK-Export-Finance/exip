@@ -162,19 +162,13 @@ describe('custom-resolvers/submit-application', () => {
        * create a new application,
        * so we can set submission deadline in the past.
        */
-
-      const oneMinuteInThePast = DATE_ONE_MINUTE_IN_THE_PAST();
-
-      const newApplication = (await context.query.Application.createOne({
-        query: 'id',
-        data: {},
-      })) as Application;
+      const newApplication = await applications.create({ context });
 
       // update the submission deadline
       await context.query.Application.updateOne({
         where: { id: newApplication.id },
         data: {
-          submissionDeadline: oneMinuteInThePast,
+          submissionDeadline: DATE_ONE_MINUTE_IN_THE_PAST(),
         },
       });
 
@@ -208,9 +202,9 @@ describe('custom-resolvers/submit-application', () => {
 
       try {
         await submitApplication({}, variables, context);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error(`Submitting application Input error: Only a cuid can be passed to id filters`);
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

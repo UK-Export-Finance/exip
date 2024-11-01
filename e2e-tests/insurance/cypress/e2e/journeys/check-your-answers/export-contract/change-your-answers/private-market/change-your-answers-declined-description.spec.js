@@ -1,5 +1,4 @@
 import { status, summaryList } from '../../../../../../../../pages/shared';
-import partials from '../../../../../../../../partials';
 import FIELD_IDS from '../../../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 
@@ -12,10 +11,6 @@ const {
 const {
   PRIVATE_MARKET: { DECLINED_DESCRIPTION: FIELD_ID },
 } = FIELD_IDS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const getFieldVariables = (referenceNumber) => ({
   route: DECLINED_BY_PRIVATE_MARKET_CHECK_AND_CHANGE,
@@ -43,7 +38,7 @@ context('Insurance - Change your answers - Export contract - Summary list - Decl
         attemptedPrivateMarketCover: true,
       });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       // To get past previous "Check your answers" pages
       cy.completeAndSubmitMultipleCheckYourAnswers({ count: 3 });

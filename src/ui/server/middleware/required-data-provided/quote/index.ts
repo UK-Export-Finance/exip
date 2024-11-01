@@ -8,14 +8,14 @@ const {
   BUYER_BODY,
   BUYER_COUNTRY,
   BUYER_COUNTRY_CHANGE,
-  CANNOT_APPLY,
+  CANNOT_APPLY_EXIT,
   CHECK_YOUR_ANSWERS,
   EXPORTER_LOCATION,
   EXPORTER_LOCATION_CHANGE,
   GET_A_QUOTE_BY_EMAIL,
   UK_GOODS_OR_SERVICES,
   UK_GOODS_OR_SERVICES_CHANGE,
-  NEED_TO_START_AGAIN,
+  NEED_TO_START_AGAIN_EXIT,
   POLICY_TYPE,
   POLICY_TYPE_CHANGE,
   TELL_US_ABOUT_YOUR_POLICY,
@@ -117,7 +117,7 @@ export const requiredQuoteEligibilityDataProvided = (req: Request, res: Response
   const routesArray = getRoutesAsArray(ROUTES.QUOTE);
 
   // array of routes that do not require any data checks.
-  const irrelevantRoutes = [BUYER_COUNTRY, CANNOT_APPLY, GET_A_QUOTE_BY_EMAIL, NEED_TO_START_AGAIN, START];
+  const irrelevantRoutes = [BUYER_COUNTRY, CANNOT_APPLY_EXIT, GET_A_QUOTE_BY_EMAIL, NEED_TO_START_AGAIN_EXIT, START];
 
   const isIrrelevantRoute = (route: string) => irrelevantRoutes.includes(route);
 
@@ -134,10 +134,10 @@ export const requiredQuoteEligibilityDataProvided = (req: Request, res: Response
     const requiredDataState = generateRequiredDataState(submittedData.quoteEligibility);
 
     if (!hasRequiredData(url, requiredDataState, submittedData.quoteEligibility)) {
-      return res.redirect(NEED_TO_START_AGAIN);
+      return res.redirect(NEED_TO_START_AGAIN_EXIT);
     }
   } else if (!hasRequiredData(url, generateRequiredDataState({}), {})) {
-    return res.redirect(NEED_TO_START_AGAIN);
+    return res.redirect(NEED_TO_START_AGAIN_EXIT);
   }
 
   return next();

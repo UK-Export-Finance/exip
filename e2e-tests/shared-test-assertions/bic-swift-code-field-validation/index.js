@@ -39,10 +39,6 @@ export const bicSwiftCodeFieldValidation = () => {
       runAssertion({ value: '', expectedErrorMessage: errorMessages.IS_EMPTY });
     });
 
-    it(`should render a validation error when ${FIELD_ID} contains only letters`, () => {
-      runAssertion({ value: 'LETTERSONLY' });
-    });
-
     it(`should render a validation error when ${FIELD_ID} contains only numbers`, () => {
       runAssertion({ value: '12345678' });
     });
@@ -85,6 +81,14 @@ export const bicSwiftCodeFieldValidation = () => {
 
     it(`should NOT render a validation error for ${FIELD_ID} when it is correctly entered with lowercase letters and numbers`, () => {
       cy.keyboardInput(fieldSelector(FIELD_ID).input(), mockBicSwiftCodeLowerCase);
+
+      cy.clickSubmitButton();
+
+      cy.assertErrorSummaryListLength(2);
+    });
+
+    it(`should NOT render a validation error for ${FIELD_ID} when it contains only letters`, () => {
+      cy.keyboardInput(fieldSelector(FIELD_ID).input(), 'LETTERSONLY');
 
       cy.clickSubmitButton();
 

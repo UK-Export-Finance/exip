@@ -21,10 +21,10 @@ const application = {
       const response = await callNotify(templateId, emailAddress, variables);
 
       return response;
-    } catch (err) {
-      console.error('Error sending application submitted email to to application owner or provided business contact %O', err);
+    } catch (error) {
+      console.error('Error sending application submitted email to to application owner or provided business contact %o', error);
 
-      throw new Error(`Sending application submitted email to to application owner or provided business contact ${err}`);
+      throw new Error(`Sending application submitted email to to application owner or provided business contact ${error}`);
     }
   },
   /**
@@ -60,10 +60,10 @@ const application = {
       }
 
       throw new Error('Sending application submitted email to underwriting team - invalid file / file not found');
-    } catch (err) {
-      console.error('Error sending application submitted email to underwriting team %O', err);
+    } catch (error) {
+      console.error('Error sending application submitted email to underwriting team %o', error);
 
-      throw new Error(`Sending application submitted email to underwriting team ${err}`);
+      throw new Error(`Sending application submitted email to underwriting team ${error}`);
     }
   },
 };

@@ -61,9 +61,9 @@ describe('custom-resolvers/add-and-get-OTP', () => {
     test('should throw an error', async () => {
       try {
         await addAndGetOTP({}, variables, context);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error(`Adding OTP to an account (addAndGetOTP mutation) Error: Adding OTP to an account Error: ${mockOTPError}`);
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

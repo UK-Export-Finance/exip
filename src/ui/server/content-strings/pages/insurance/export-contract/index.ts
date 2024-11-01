@@ -7,7 +7,7 @@ const ROOT = {
   PAGE_TITLE: 'Tell us about your export contract',
   LIST: {
     INTRO: "We'll ask you questions about:",
-    ITEMS: ['what goods and services you want to export', "how you'll get paid", 'your agent (if you have one)', 'your end buyer (if you have one)'],
+    ITEMS: ['what goods and services you want to export', "how you'll get paid", 'your agent (if you have one)'],
   },
   OUTRO:
     "We may also ask you if you've tried to get credit insurance through the private market. This is because we're not in competition with the private insurance market but are here to help when they cannot.",
@@ -31,7 +31,6 @@ const HOW_WILL_YOU_GET_PAID = {
 const PRIVATE_MARKET = {
   ...SHARED,
   PAGE_TITLE: 'Have you tried to insure this export through the private insurance market?',
-  HINT: 'We may ask for proof that you have been unable to insure the export through an alternative provider.',
 };
 
 const DECLINED_BY_PRIVATE_MARKET = {
@@ -62,9 +61,14 @@ const AGENT_CHARGES = {
   PROVIDE_ALTERNATIVE_CURRENCY: 'Use a different currency for agent fees',
 };
 
-const AGENT_CHARGES_ALTERNATIVE_CURRENCY = {
+const AGENT_CHARGES_CURRENCY = {
   ...SHARED,
   PAGE_TITLE: 'What currency is the agent charging you in?',
+};
+
+const HOW_MUCH_THE_AGENT_IS_CHARGING = {
+  ...SHARED,
+  PAGE_TITLE: 'How much is the agent charging in',
 };
 
 const CHECK_YOUR_ANSWERS = {
@@ -83,6 +87,7 @@ export default {
   AGENT_DETAILS,
   AGENT_SERVICE,
   AGENT_CHARGES,
-  AGENT_CHARGES_ALTERNATIVE_CURRENCY,
+  AGENT_CHARGES_CURRENCY,
+  HOW_MUCH_THE_AGENT_IS_CHARGING,
   CHECK_YOUR_ANSWERS,
 };

@@ -69,7 +69,7 @@ jobs:
     runs-on: [self-hosted, EXIP, infrastructure]
     steps:
       - name: Pre-production 💫
-        if: contains('["dev", "feature", "staging"]', env.TARGET)
+        if: contains('["dev", "staging"]', env.TARGET)
         run: |
           echo "TYPE=Preproduction"  >> $GITHUB_ENV
           echo "DB_SKU=${{ VARS.DB_NON_PROD_SKU }}"  >> $GITHUB_ENV
@@ -340,7 +340,7 @@ jobs:
     runs-on: [self-hosted, EXIP, infrastructure]
     steps:
       - name: Pre-production 💫
-        if: contains('["dev", "feature", "staging"]', env.TARGET)
+        if: contains('["dev", "staging"]', env.TARGET)
         run: echo "TYPE=Preproduction" >> $GITHUB_ENV
 
       - name: Production 💫
@@ -543,7 +543,7 @@ jobs:
             --policy-name waf${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}
 
       - name: VPN 🧱
-        if: contains('["dev", "feature", "staging"]', env.TARGET)
+        if: contains('["dev", "staging"]', env.TARGET)
         uses: azure/cli@v2
         with:
           inlineScript: |
@@ -593,7 +593,7 @@ jobs:
     runs-on: [self-hosted, EXIP, infrastructure]
     steps:
       - name: Pre-production 💫
-        if: contains('["dev", "feature", "staging"]', env.TARGET)
+        if: contains('["dev", "staging"]', env.TARGET)
         run: echo "TYPE=Preproduction" >> $GITHUB_ENV
 
       - name: Production 💫
@@ -731,7 +731,7 @@ jobs:
     runs-on: [self-hosted, EXIP, infrastructure]
     steps:
       - name: Pre-production 💫
-        if: contains('["dev", "feature", "staging"]', env.TARGET)
+        if: contains('["dev", "staging"]', env.TARGET)
         run: echo "TYPE=Preproduction" >> $GITHUB_ENV
 
       - name: Production 💫
@@ -887,7 +887,7 @@ jobs:
     runs-on: [self-hosted, EXIP, infrastructure]
     steps:
       - name: Pre-production 💫
-        if: contains('["dev", "feature", "staging"]', env.TARGET)
+        if: contains('["dev", "staging"]', env.TARGET)
         run: echo "TYPE=Preproduction" >> $GITHUB_ENV
 
       - name: Production 💫
@@ -1011,7 +1011,7 @@ jobs:
     runs-on: [self-hosted, EXIP, infrastructure]
     steps:
       - name: Pre-production 💫
-        if: contains('["dev", "feature", "staging"]', env.TARGET)
+        if: contains('["dev", "staging"]', env.TARGET)
         run: echo "TYPE=Preproduction" >> $GITHUB_ENV
 
       - name: Production 💫
@@ -1088,7 +1088,7 @@ jobs:
     runs-on: [self-hosted, EXIP, infrastructure]
     steps:
       - name: Pre-production 💫
-        if: contains('["dev", "feature", "staging"]', env.TARGET)
+        if: contains('["dev", "staging"]', env.TARGET)
         run: echo "TYPE=Preproduction" >> $GITHUB_ENV
 
       - name: Production 💫

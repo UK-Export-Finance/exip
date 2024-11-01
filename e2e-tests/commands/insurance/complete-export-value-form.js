@@ -1,15 +1,13 @@
-import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../constants/field-ids/insurance/policy';
 import { multipleContractPolicyExportValuePage } from '../../pages/insurance/policy';
 import { field } from '../../pages/shared';
 import application from '../../fixtures/application';
 
 const {
-  POLICY: {
-    EXPORT_VALUE: {
-      MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
-    },
+  EXPORT_VALUE: {
+    MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
   },
-} = INSURANCE_FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 /**
  * completeExportValueForm

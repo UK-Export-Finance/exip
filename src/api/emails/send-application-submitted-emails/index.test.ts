@@ -7,7 +7,7 @@ import getApplicationSubmittedEmailTemplateIds from '../../helpers/get-applicati
 import formatDate from '../../helpers/format-date';
 import { createFullApplication, getKeystoneContext } from '../../test-helpers';
 import { Application, ApplicationSubmissionEmailVariables, Context } from '../../types';
-import { mockSendEmailResponse } from '../../test-mocks';
+import { mockSendEmailResponse, mockSpyPromiseRejection } from '../../test-mocks';
 
 dotenv.config();
 
@@ -237,10 +237,10 @@ describe('emails/send-email-application-submitted', () => {
       test('should throw an error', async () => {
         try {
           await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
-        } catch (err) {
+        } catch (error) {
           const expected = new Error('Sending application submitted emails Error: Sending application submitted email to owner/account');
 
-          expect(err).toEqual(expected);
+          expect(error).toEqual(expected);
         }
       });
     });
@@ -258,10 +258,10 @@ describe('emails/send-email-application-submitted', () => {
       test('should throw an error', async () => {
         try {
           await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
-        } catch (err) {
+        } catch (error) {
           const expected = new Error('Sending application submitted emails Error: Sending application submitted email to underwriting team');
 
-          expect(err).toEqual(expected);
+          expect(error).toEqual(expected);
         }
       });
     });
@@ -279,26 +279,26 @@ describe('emails/send-email-application-submitted', () => {
       test('should throw an error', async () => {
         try {
           await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
-        } catch (err) {
+        } catch (error) {
           const expected = new Error(`Sending application submitted emails Error: Sending application documents emails ${mockSendEmailResponse}`);
 
-          expect(err).toEqual(expected);
+          expect(error).toEqual(expected);
         }
       });
     });
 
     describe('when sendEmail.application.submittedEmail fails', () => {
       beforeEach(() => {
-        sendEmail.application.submittedEmail = jest.fn(() => Promise.reject(mockSendEmailResponse));
+        sendEmail.application.submittedEmail = mockSpyPromiseRejection;
       });
 
       test('should throw an error', async () => {
         try {
           await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
-        } catch (err) {
-          const expected = new Error(`Sending application submitted emails ${mockSendEmailResponse}`);
+        } catch (error) {
+          const expected = new Error(`Sending application submitted emails ${new Error('Sending application submitted email to owner/account')}`);
 
-          expect(err).toEqual(expected);
+          expect(error).toEqual(expected);
         }
       });
     });

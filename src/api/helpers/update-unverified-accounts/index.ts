@@ -8,7 +8,7 @@ import mapAndUpdateUnverifiedAccounts from '../map-and-update-unverified-account
  * Gets accounts which have not been verified within 24hours
  * Sets inactive flag to true and updates updatedAta
  * returns success flag
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<SuccessResponse>} success flag
  */
 const updateUnverifiedAccounts = async (context: Context): Promise<SuccessResponse> => {
@@ -35,9 +35,10 @@ const updateUnverifiedAccounts = async (context: Context): Promise<SuccessRespon
     return {
       success: true,
     };
-  } catch (err) {
-    console.error('Error getting and updating unverified accounts %O', err);
-    throw new Error(`Error getting and updating unverified accounts ${err}`);
+  } catch (error) {
+    console.error('Error getting and updating unverified accounts %o', error);
+
+    throw new Error(`Error getting and updating unverified accounts ${error}`);
   }
 };
 

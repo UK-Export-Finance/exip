@@ -6,7 +6,7 @@ import { Account, Context, TestHelperAccountCreate, AccountCreationCore } from '
 /**
  * deleteAll test helper
  * Get all accounts and delete them.
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Array} Accounts that have been deleted
  */
 const deleteAll = async (context: Context) => {
@@ -27,16 +27,17 @@ const deleteAll = async (context: Context) => {
     }
 
     return [];
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Getting and deleting accounts (test helpers) ${err}`);
+  } catch (error) {
+    console.error(error);
+
+    throw new Error(`Getting and deleting accounts (test helpers) ${error}`);
   }
 };
 
 /**
  * get account test helper
  * Get an account by ID
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} Account ID
  * @returns {Object} Account
  */
@@ -51,16 +52,17 @@ const get = async (context: Context, accountId: string): Promise<Account> => {
     })) as Account;
 
     return account;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Getting an account by ID (test helpers) ${err}`);
+  } catch (error) {
+    console.error(error);
+
+    throw new Error(`Getting an account by ID (test helpers) ${error}`);
   }
 };
 
 /**
  * create account test helper
  * Create an account with mock account data and any provided custom account data.
- * @param {Context} KeystoneJS context API, account data, deleteAccounts flag
+ * @param {Context} context: KeystoneJS context API, account data, deleteAccounts flag
  * @returns {Object} Created account
  */
 const create = async ({ context, data, deleteAccounts = true }: TestHelperAccountCreate) => {
@@ -91,16 +93,17 @@ const create = async ({ context, data, deleteAccounts = true }: TestHelperAccoun
     const updatedAccount = await get(context, account.id);
 
     return updatedAccount;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+
+    return error;
   }
 };
 
 /**
  * update account test helper
  * updates an account by ID
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} Account ID
  * @param {AccountCreationCore} Account update data
  * @returns {Account} Account
@@ -115,9 +118,10 @@ const update = async (context: Context, accountId: string, data: AccountCreation
     })) as Account;
 
     return account;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Updating an account by ID (test helpers) ${err}`);
+  } catch (error) {
+    console.error(error);
+
+    throw new Error(`Updating an account by ID (test helpers) ${error}`);
   }
 };
 

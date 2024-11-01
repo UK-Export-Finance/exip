@@ -1,4 +1,4 @@
-import { field, summaryList } from '../../../../../../pages/shared';
+import { summaryList } from '../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -25,12 +25,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.startInsuranceYourBuyerSection({});
-
-        cy.completeAndSubmitCompanyOrOrganisationForm({});
-        cy.completeAndSubmitConnectionWithTheBuyerForm({});
-        cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
-        cy.completeAndSubmitBuyerFinancialInformationForm({});
+        cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'buyerFinancialInformation', exporterHasTradedWithBuyer: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
         tradingHistoryUrl = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
@@ -78,12 +73,10 @@ context(
         it(`should have the submitted 'no' value and empty ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS} values`, () => {
           cy.navigateToUrl(tradingHistoryUrl);
 
-          cy.assertNoRadioOptionIsChecked();
+          cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
+          cy.clickSubmitButton();
 
-          cy.clickYesRadioInput();
-
-          cy.checkValue(field(TOTAL_AMOUNT_OVERDUE), '');
-          cy.checkValue(field(TOTAL_OUTSTANDING_PAYMENTS), '');
+          cy.assertEmptyOverdueOrOutstandingFieldValues();
         });
       });
     });

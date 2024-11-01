@@ -1,4 +1,3 @@
-import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm, completeAndSubmitUkContentForm } from '../../../../../../commands/quote/forms';
 import { autoCompleteField, field, summaryList } from '../../../../../../pages/shared';
 import { policyTypePage } from '../../../../../../pages/quote';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
@@ -19,16 +18,16 @@ const baseUrl = Cypress.config('baseUrl');
 
 context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporter, I want to get an Credit insurance quote', () => {
   before(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
     cy.keyboardInput(autoCompleteField(BUYER_COUNTRY).input(), 'Kenya');
     const results = autoCompleteField(BUYER_COUNTRY).results();
     results.first().click();
     cy.clickSubmitButton();
 
-    completeAndSubmitBuyerBodyForm();
-    completeAndSubmitExporterLocationForm();
-    completeAndSubmitUkContentForm();
+    cy.completeAndSubmitBuyerBodyForm();
+    cy.completeAndSubmitExporterLocationForm();
+    cy.completeAndSubmitUkContentForm();
 
     policyTypePage[POLICY_TYPE].single.label().click();
 

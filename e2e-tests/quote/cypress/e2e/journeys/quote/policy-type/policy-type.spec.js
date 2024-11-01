@@ -1,6 +1,3 @@
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm, completeAndSubmitUkContentForm } from '../../../../../../commands/quote/forms';
-
 import { policyTypePage } from '../../../../../../pages/quote';
 import { FIELDS, PAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
@@ -19,12 +16,12 @@ context('Policy type page - as an exporter, I want to get UKEF credit insurance 
   const url = `${baseUrl}${POLICY_TYPE_ROUTE}`;
 
   before(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
-    completeAndSubmitBuyerCountryForm({});
-    completeAndSubmitBuyerBodyForm();
-    completeAndSubmitExporterLocationForm();
-    completeAndSubmitUkContentForm();
+    cy.completeAndSubmitBuyerCountryForm({});
+    cy.completeAndSubmitBuyerBodyForm();
+    cy.completeAndSubmitExporterLocationForm();
+    cy.completeAndSubmitUkContentForm();
 
     cy.assertUrl(url);
   });
@@ -36,6 +33,7 @@ context('Policy type page - as an exporter, I want to get UKEF credit insurance 
       backLink: UK_GOODS_OR_SERVICES,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       lightHouseThresholds: {
         // accessibility threshold is reduced here because
         // the radio component from design system has an invalid aria attribute.
