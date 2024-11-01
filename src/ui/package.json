@@ -45,7 +45,7 @@
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.7",
     "cross-fetch": "^4.0.0",
-    "css-minimizer-webpack-plugin": "^5.0.1",
+    "css-minimizer-webpack-plugin": "^7.0.0",
     "csurf": "^1.11.0",
     "date-fns": "^4.1.0",
     "dotenv": "^16.4.5",
