@@ -5,8 +5,8 @@ import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
 import { Application, Context } from '../../types';
 
-const assertError = (error) => {
-  const errorString = String(error);
+const assertError = (err) => {
+  const errorString = String(err);
 
   expect(errorString.includes('Creating an application declaration')).toEqual(true);
 };

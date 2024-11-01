@@ -10,7 +10,7 @@ import executeSqlQuery from '../../execute-sql-query';
 const addPolicyRequestedCreditLimitField = (connection: Connection) =>
   executeSqlQuery({
     connection,
-    query: `ALTER TABLE Policy ADD requestedCreditLimit tinyint(1) DEFAULT NULL`,
+    query: `ALTER TABLE Policy ADD requestedCreditLimit int DEFAULT NULL`,
     loggingMessage: 'Adding FIELD requestedCreditLimit to policy table',
   });
 
