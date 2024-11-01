@@ -1,11 +1,9 @@
 import { addMonths, format } from 'date-fns';
 import insurance from '../../../../pages/insurance';
-import partials from '../../../../partials';
+import { taskList } from '../../../../partials/insurance';
 import { PAGES, TASKS } from '../../../../content-strings';
 import { APPLICATION, DATE_FORMAT } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
-
-const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ALL_SECTIONS;
 

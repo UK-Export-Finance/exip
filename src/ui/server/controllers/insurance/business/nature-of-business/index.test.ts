@@ -35,8 +35,6 @@ const {
 
 const { NATURE_OF_YOUR_BUSINESS: NATURE_OF_YOUR_BUSINESS_FIELDS } = EXPORTER_BUSINESS_FIELDS;
 
-const MAXIMUM = 1000;
-
 jest.mock('../map-and-save/business');
 
 describe('controllers/insurance/business/nature-of-business', () => {
@@ -73,7 +71,6 @@ describe('controllers/insurance/business/nature-of-business', () => {
           GOODS_OR_SERVICES: {
             ID: GOODS_OR_SERVICES,
             ...NATURE_OF_YOUR_BUSINESS_FIELDS[GOODS_OR_SERVICES],
-            MAXIMUM,
           },
           YEARS_EXPORTING: {
             ID: YEARS_EXPORTING,

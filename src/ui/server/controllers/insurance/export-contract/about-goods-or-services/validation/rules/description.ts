@@ -1,3 +1,4 @@
+import { MAXIMUM_CHARACTERS } from '../../../../../../constants';
 import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../helpers/validation';
@@ -18,7 +19,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-export const MAXIMUM = 1000;
+const MAXIMUM = MAXIMUM_CHARACTERS.ABOUT_GOODS_OR_SERVICES_DESCRIPTION;
 
 /**
  * descriptionRules

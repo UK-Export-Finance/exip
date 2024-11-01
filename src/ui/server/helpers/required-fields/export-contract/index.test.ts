@@ -70,6 +70,14 @@ describe('server/helpers/required-fields/export-contract', () => {
         });
       });
     });
+
+    describe('when totalContractValueOverThreshold=false', () => {
+      it('should return an empty array', () => {
+        const result = privateCoverTasks({ totalContractValueOverThreshold: false });
+
+        expect(result).toEqual([]);
+      });
+    });
   });
 
   describe('agentServiceChargeTasks', () => {

@@ -9,8 +9,8 @@ const { CONFIDENTIALITY, ANTI_BRIBERY, ANTI_BRIBERY_CODE_OF_CONDUCT, ANTI_BRIBER
 
 const invalidId = 'invalid-id';
 
-const assertError = (error) => {
-  const errorString = String(error);
+const assertError = (err) => {
+  const errorString = String(err);
 
   expect(errorString.includes('Creating an application declaration version')).toEqual(true);
 };

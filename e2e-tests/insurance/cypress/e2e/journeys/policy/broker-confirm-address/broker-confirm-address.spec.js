@@ -1,4 +1,4 @@
-import partials from '../../../../../../partials';
+import { headingCaption } from '../../../../../../partials';
 import { insetTextHtml, insetTextHtmlLineBreak } from '../../../../../../pages/shared';
 import { brokerConfirmAddressPage } from '../../../../../../pages/insurance/policy';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
@@ -65,7 +65,7 @@ context(
       });
 
       it('renders a heading caption', () => {
-        cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+        cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
       it(`renders ${FULL_ADDRESS} exactly as they were submitted, with line break elements`, () => {

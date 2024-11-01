@@ -117,4 +117,8 @@ insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM_
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP_EXIT, memberOfAGroupExitGet);
 
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM_EXIT, partyToConsortiumExitGet);
+
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.MEMBER_OF_A_GROUP_EXIT, memberOfAGroupExitGet);
+
 export default insuranceEligibilityRouter;

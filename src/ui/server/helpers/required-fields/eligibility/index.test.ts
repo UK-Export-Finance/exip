@@ -37,15 +37,13 @@ describe('server/helpers/required-fields/eligibility', () => {
     });
   });
 
-  describe('requiredFields', () => {
-    it('should return array of required fields', () => {
-      const result = requiredFields();
+  it('should return array of required fields', () => {
+    const result = requiredFields();
 
-      const fieldIds = Object.values(FIELD_IDS);
+    const fieldIds = Object.values(FIELD_IDS);
 
-      const expected = fieldIds.filter((id) => !IRRELEVANT_FIELD_IDS.includes(id));
+    const expected = fieldIds.filter((id) => !IRRELEVANT_FIELD_IDS.includes(id));
 
-      expect(result).toEqual(expected);
-    });
+    expect(result).toEqual(expected);
   });
 });

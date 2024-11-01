@@ -1,4 +1,5 @@
-import companyNumber, { MAXIMUM } from '.';
+import companyNumber from '.';
+import { MAXIMUM_CHARACTERS } from '../../../../../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import maxLengthValidation from '../../../../../../../shared-validation/max-length';
@@ -23,7 +24,13 @@ describe('controllers/insurance/policy/other-company-details/validation/rules/co
     it('should return the result of providedAndMaxLength', () => {
       const result = companyNumber(mockBody, mockErrors);
 
-      const expected = maxLengthValidation(mockBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE, mockErrors, MAXIMUM);
+      const expected = maxLengthValidation(
+        mockBody[FIELD_ID],
+        FIELD_ID,
+        ERROR_MESSAGE,
+        mockErrors,
+        MAXIMUM_CHARACTERS.REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NUMBER,
+      );
 
       expect(result).toEqual(expected);
     });

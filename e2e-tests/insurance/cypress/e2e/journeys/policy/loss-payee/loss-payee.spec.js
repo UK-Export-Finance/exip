@@ -1,4 +1,4 @@
-import partials from '../../../../../../partials';
+import { headingCaption } from '../../../../../../partials';
 import { field as fieldSelector, noRadio, noRadioInput, yesRadio } from '../../../../../../pages/shared';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
@@ -68,7 +68,7 @@ context(
       });
 
       it('renders a heading caption', () => {
-        cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+        cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
       it('renders a hint', () => {

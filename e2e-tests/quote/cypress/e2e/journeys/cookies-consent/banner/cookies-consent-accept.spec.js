@@ -1,4 +1,4 @@
-import partials from '../../../../../../partials';
+import { cookieBanner } from '../../../../../../partials';
 import { COOKIES_CONSENT } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 
@@ -19,7 +19,7 @@ context('Cookies consent - accept', () => {
 
       cy.navigateToUrl(url);
 
-      partials.cookieBanner.question.acceptButton().click();
+      cookieBanner.question.acceptButton().click();
     });
 
     it('should remain on the same page', () => {
@@ -29,24 +29,24 @@ context('Cookies consent - accept', () => {
     });
 
     it('should not render the question banner', () => {
-      partials.cookieBanner.question.copy().should('not.exist');
-      partials.cookieBanner.question.acceptButton().should('not.exist');
-      partials.cookieBanner.question.rejectButton().should('not.exist');
+      cookieBanner.question.copy().should('not.exist');
+      cookieBanner.question.acceptButton().should('not.exist');
+      cookieBanner.question.rejectButton().should('not.exist');
     });
 
     it('should render `accepted` banner', () => {
-      partials.cookieBanner.heading().should('exist');
+      cookieBanner.heading().should('exist');
 
-      partials.cookieBanner.accepted.copy().should('exist');
+      cookieBanner.accepted.copy().should('exist');
 
       const { ACCEPTED } = COOKIES_CONSENT;
       const expected = `${ACCEPTED.COPY_1} ${COOKIES_CONSENT.COOKIES_LINK} ${ACCEPTED.COPY_2}`;
 
-      cy.checkText(partials.cookieBanner.accepted.copy(), expected);
+      cy.checkText(cookieBanner.accepted.copy(), expected);
 
-      cy.checkLink(partials.cookieBanner.cookiesLink(), ROUTES.COOKIES, COOKIES_CONSENT.COOKIES_LINK);
+      cy.checkLink(cookieBanner.cookiesLink(), ROUTES.COOKIES, COOKIES_CONSENT.COOKIES_LINK);
 
-      cy.checkText(partials.cookieBanner.hideButton(), COOKIES_CONSENT.HIDE_BUTTON);
+      cy.checkText(cookieBanner.hideButton(), COOKIES_CONSENT.HIDE_BUTTON);
     });
 
     it('should render a google analytics and google tag manager scripts', () => {
@@ -64,20 +64,20 @@ context('Cookies consent - accept', () => {
 
       cy.navigateToUrl(url);
 
-      partials.cookieBanner.question.acceptButton().click();
-      partials.cookieBanner.hideButton().click();
+      cookieBanner.question.acceptButton().click();
+      cookieBanner.hideButton().click();
     });
 
     it('should hide all banner elements', () => {
-      partials.cookieBanner.heading().should('not.be.visible');
-      partials.cookieBanner.hideButton().should('not.be.visible');
-      partials.cookieBanner.cookiesLink().should('not.be.visible');
+      cookieBanner.heading().should('not.be.visible');
+      cookieBanner.hideButton().should('not.be.visible');
+      cookieBanner.cookiesLink().should('not.be.visible');
 
-      partials.cookieBanner.question.copy().should('not.exist');
-      partials.cookieBanner.question.acceptButton().should('not.exist');
-      partials.cookieBanner.question.rejectButton().should('not.exist');
+      cookieBanner.question.copy().should('not.exist');
+      cookieBanner.question.acceptButton().should('not.exist');
+      cookieBanner.question.rejectButton().should('not.exist');
 
-      partials.cookieBanner.accepted.copy().should('not.be.visible');
+      cookieBanner.accepted.copy().should('not.be.visible');
     });
   });
 
@@ -87,21 +87,21 @@ context('Cookies consent - accept', () => {
 
       cy.navigateToUrl(url);
 
-      partials.cookieBanner.question.acceptButton().click();
-      partials.cookieBanner.hideButton().click();
+      cookieBanner.question.acceptButton().click();
+      cookieBanner.hideButton().click();
       cy.completeAndSubmitBuyerCountryForm({});
     });
 
     it('should not render any banner elements', () => {
-      partials.cookieBanner.heading().should('not.exist');
-      partials.cookieBanner.hideButton().should('not.exist');
-      partials.cookieBanner.cookiesLink().should('not.exist');
+      cookieBanner.heading().should('not.exist');
+      cookieBanner.hideButton().should('not.exist');
+      cookieBanner.cookiesLink().should('not.exist');
 
-      partials.cookieBanner.question.copy().should('not.exist');
-      partials.cookieBanner.question.acceptButton().should('not.exist');
-      partials.cookieBanner.question.rejectButton().should('not.exist');
+      cookieBanner.question.copy().should('not.exist');
+      cookieBanner.question.acceptButton().should('not.exist');
+      cookieBanner.question.rejectButton().should('not.exist');
 
-      partials.cookieBanner.accepted.copy().should('not.exist');
+      cookieBanner.accepted.copy().should('not.exist');
     });
 
     it('should render a google analytics and google tag manager scripts', () => {

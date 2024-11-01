@@ -1,11 +1,11 @@
-import partials from '../../../partials';
+import { footer } from '../../../partials';
 
 /**
  * clickFooterCookiesLink
  * Click the footer's "cookies" link.
  */
 const clickFooterCookiesLink = () => {
-  partials.footer.supportLinks.cookies().click();
+  footer.supportLinks.cookies().click();
 };
 
 export default clickFooterCookiesLink;

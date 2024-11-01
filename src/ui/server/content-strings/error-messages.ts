@@ -292,7 +292,7 @@ export const ERROR_MESSAGES = {
             INCORRECT_FORMAT: 'You must enter how many months you want to be insured for as a whole number. Do not use symbols or letters',
             IS_EMPTY: 'Enter how many months you want to be insured for',
             BELOW_MINIMUM: 'Your length of insurance must be 1 month or more',
-            ABOVE_MAXIMUM: `The maximum length of your insurance cannot be more than ${TOTAL_MONTHS_OF_COVER} months.`,
+            ABOVE_MAXIMUM: `The maximum length of your insurance cannot be more than ${TOTAL_MONTHS_OF_COVER.MAXIMUM} months.`,
           },
         },
       },

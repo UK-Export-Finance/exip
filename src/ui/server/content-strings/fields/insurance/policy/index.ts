@@ -117,7 +117,7 @@ export const POLICY_FIELDS = {
     MULTIPLE: {
       [CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
         LABEL: 'How many months do you want to be insured for?',
-        HINT: `The maximum is ${TOTAL_MONTHS_OF_COVER} months.`,
+        HINT: `The maximum is ${TOTAL_MONTHS_OF_COVER.MAXIMUM} months.`,
         OPTIONS: FIELD_VALUES.TOTAL_MONTHS_OF_COVER,
         SUMMARY: {
           TITLE: 'How many months you want to be insured for',
@@ -163,7 +163,7 @@ export const POLICY_FIELDS = {
     },
     [NAME_ON_POLICY.POSITION]: {
       LABEL: "What's your position at the company?",
-      MAXIMUM: 50,
+      MAXIMUM: MAXIMUM_CHARACTERS.NAME_ON_POLICY_POSITION,
       SUMMARY: {
         TITLE: 'Position at company',
         FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY,
@@ -179,7 +179,7 @@ export const POLICY_FIELDS = {
   DIFFERENT_NAME_ON_POLICY: {
     [DIFFERENT_NAME_ON_POLICY.POSITION]: {
       LABEL: 'Position at company',
-      MAXIMUM: 50,
+      MAXIMUM: MAXIMUM_CHARACTERS.DIFFERENT_NAME_ON_POLICY,
     },
     [EMAIL]: {
       SUMMARY: {
@@ -211,14 +211,14 @@ export const POLICY_FIELDS = {
     },
     [COMPANY_NAME]: {
       LABEL: 'Name of the other company',
-      MAXIMUM: 200,
+      MAXIMUM: MAXIMUM_CHARACTERS.REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NAME,
       SUMMARY: {
         TITLE: 'Name of the other company',
       },
     },
     [COMPANY_NUMBER]: {
       LABEL: 'Registration number of the other company (optional)',
-      MAXIMUM: 100,
+      MAXIMUM: MAXIMUM_CHARACTERS.REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NUMBER,
       SUMMARY: {
         TITLE: 'Registration number of the other company',
       },
@@ -242,7 +242,7 @@ export const POLICY_FIELDS = {
   BROKER_DETAILS: {
     [NAME]: {
       LABEL: 'Name of broker or company',
-      MAXIMUM: 300,
+      MAXIMUM: MAXIMUM_CHARACTERS.BROKER_NAME,
       SUMMARY: {
         TITLE: "Broker's name or company",
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,

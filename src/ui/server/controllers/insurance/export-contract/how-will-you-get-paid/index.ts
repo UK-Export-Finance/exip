@@ -117,6 +117,7 @@ export const post = async (req: Request, res: Response) => {
       /**
        * If the URL is a "change" route,
        * and totalContractValue is over the threshold,
+       * or the application has been migrated from V1 to V2,
        * redirect to PRIVATE_MARKET with /change in URL.
        * This ensures that the next page can consume /change in the URL
        * and therefore correctly redirect on submission.
@@ -132,6 +133,7 @@ export const post = async (req: Request, res: Response) => {
       /**
        * If the URL is a "check and change" route,
        * and totalContractValue is over the threshold,
+       * or the application has been migrated from V1 to V2,
        * redirect to PRIVATE_MARKET with /check-and-change in URL.
        * This ensures that the next page can consume /check-and-change in the URL
        * and therefore correctly redirect on submission.

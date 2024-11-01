@@ -1,11 +1,11 @@
-import partials from '../../../partials';
+import { footer } from '../../../partials';
 
 /**
  * clickFooterAccessibilityStatementLink
  * Click the footer's "accessibility statement" link.
  */
 const clickFooterAccessibilityStatementLink = () => {
-  partials.footer.supportLinks.accessibilityStatement().click();
+  footer.supportLinks.accessibilityStatement().click();
 };
 
 export default clickFooterAccessibilityStatementLink;

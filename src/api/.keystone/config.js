@@ -708,7 +708,10 @@ var APPLICATION = {
       MINIMUM: 1,
       MAXIMUM: LATEST_VERSION.TOTAL_VALUE_OF_CONTRACT,
     },
-    TOTAL_MONTHS_OF_COVER: 12,
+    TOTAL_MONTHS_OF_COVER: {
+      MINIMUM: 1,
+      MAXIMUM: 12,
+    },
     MAXIMUM_BUYER_CAN_OWE: LATEST_VERSION.MAXIMUM_BUYER_CAN_OWE,
   },
   STATUS: {
@@ -887,7 +890,7 @@ var FIELD_VALUES = {
     // default multiple policy length in months
     MULTIPLE: 12,
   },
-  TOTAL_MONTHS_OF_COVER: Array.from(Array(POLICY2.TOTAL_MONTHS_OF_COVER).keys()),
+  TOTAL_MONTHS_OF_COVER: Array.from(Array(POLICY2.TOTAL_MONTHS_OF_COVER.MAXIMUM).keys()),
   YES: 'Yes',
   NO: 'No',
 };
@@ -931,6 +934,9 @@ var XLSX_CONFIG = {
 var MAXIMUM_CHARACTERS = {
   ABOUT_GOODS_OR_SERVICES_DESCRIPTION: 1e3,
   ACCOUNT_NUMBER: 8,
+  ACCOUNT: {
+    NAME: 400,
+  },
   AGENT_NAME: 800,
   AGENT_SERVICE_DESCRIPTION: 1e3,
   BIC_SWIFT_CODE: 11,
@@ -947,6 +953,8 @@ var MAXIMUM_CHARACTERS = {
   CONNECTION_WITH_BUYER_DESCRIPTION: 1e3,
   CREDIT_PERIOD_WITH_BUYER: 1e3,
   DECLINED_BY_PRIVATE_MARKET_DESCRIPTION: 1e3,
+  DIFFERENT_NAME_ON_POLICY_POSITION: 50,
+  DIFFERENT_NAME_ON_POLICY: 50,
   EMAIL: 300,
   EXPORT_CONTRACT: {
     OTHER_AWARD_METHOD: 200,
@@ -958,9 +966,17 @@ var MAXIMUM_CHARACTERS = {
   FULL_ADDRESS: 500,
   IBAN: 34,
   LOSS_PAYEE_NAME: 200,
+  NAME_ON_POLICY_POSITION: 50,
   PAYMENT_TERMS_DESCRIPTION: 1e3,
   PERCENTAGE: 100,
   POLICY_CONTACT_NAME: 400,
+  QUOTE: {
+    CREDIT_PERIOD: 2,
+  },
+  REQUESTED_JOINTLY_INSURED_PARTY: {
+    COMPANY_NAME: 200,
+    COMPANY_NUMBER: 100,
+  },
   SORT_CODE: 6,
 };
 
@@ -6562,7 +6578,7 @@ var POLICY_FIELDS = {
     MULTIPLE: {
       [CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
         LABEL: 'How many months do you want to be insured for?',
-        HINT: `The maximum is ${TOTAL_MONTHS_OF_COVER} months.`,
+        HINT: `The maximum is ${TOTAL_MONTHS_OF_COVER.MAXIMUM} months.`,
         OPTIONS: FIELD_VALUES.TOTAL_MONTHS_OF_COVER,
         SUMMARY: {
           TITLE: 'How many months you want to be insured for',
@@ -6608,7 +6624,7 @@ var POLICY_FIELDS = {
     },
     [NAME_ON_POLICY.POSITION]: {
       LABEL: "What's your position at the company?",
-      MAXIMUM: 50,
+      MAXIMUM: MAXIMUM_CHARACTERS.NAME_ON_POLICY_POSITION,
       SUMMARY: {
         TITLE: 'Position at company',
         FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY,
@@ -6624,7 +6640,7 @@ var POLICY_FIELDS = {
   DIFFERENT_NAME_ON_POLICY: {
     [DIFFERENT_NAME_ON_POLICY.POSITION]: {
       LABEL: 'Position at company',
-      MAXIMUM: 50,
+      MAXIMUM: MAXIMUM_CHARACTERS.DIFFERENT_NAME_ON_POLICY,
     },
     [EMAIL3]: {
       SUMMARY: {
@@ -6657,14 +6673,14 @@ var POLICY_FIELDS = {
     },
     [COMPANY_NAME2]: {
       LABEL: 'Name of the other company',
-      MAXIMUM: 200,
+      MAXIMUM: MAXIMUM_CHARACTERS.REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NAME,
       SUMMARY: {
         TITLE: 'Name of the other company',
       },
     },
     [COMPANY_NUMBER]: {
       LABEL: 'Registration number of the other company (optional)',
-      MAXIMUM: 100,
+      MAXIMUM: MAXIMUM_CHARACTERS.REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NUMBER,
       SUMMARY: {
         TITLE: 'Registration number of the other company',
       },
@@ -6688,7 +6704,7 @@ var POLICY_FIELDS = {
   BROKER_DETAILS: {
     [NAME]: {
       LABEL: 'Name of broker or company',
-      MAXIMUM: 300,
+      MAXIMUM: MAXIMUM_CHARACTERS.BROKER_NAME,
       SUMMARY: {
         TITLE: "Broker's name or company",
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
@@ -7368,9 +7384,6 @@ var mapEligibility = (application2) => {
     xlsx_row_default(String(FIELDS3[MORE_THAN_250K2.VALUE]), map_yes_no_field_default({ answer: totalContractValueAnswer })),
     xlsx_row_default(String(FIELDS3[COVER_PERIOD3]), eligibility[COVER_PERIOD_ELIGIBILITY].value),
     xlsx_row_default(String(FIELDS3[HAS_MINIMUM_UK_GOODS_OR_SERVICES3]), map_yes_no_field_default({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES3] })),
-  ];
-  mapped = [
-    ...mapped,
     xlsx_row_default(String(FIELDS3[HAS_END_BUYER3]), map_yes_no_field_default({ answer: eligibility[HAS_END_BUYER3] })),
     xlsx_row_default(String(FIELDS3[IS_PARTY_TO_CONSORTIUM2]), map_yes_no_field_default({ answer: eligibility[IS_PARTY_TO_CONSORTIUM2] })),
     xlsx_row_default(String(FIELDS3[IS_MEMBER_OF_A_GROUP2]), map_yes_no_field_default({ answer: eligibility[IS_PARTY_TO_CONSORTIUM2] })),

@@ -29,6 +29,12 @@ const {
 /**
  * mapEligibility
  * Map an application's eligibility fields into an array of objects for XLSX generation
+ * If an application has been migrated from V1 to V2, the following fields/rows should have NULL answers:
+ * - MORE_THAN_250K
+ * - HAS_END_BUYER
+ * - IS_PARTY_TO_CONSORTIUM
+ * - IS_MEMBER_OF_A_GROUP
+ * This is because, V1 eligibility does not have these fields available and so, the user has not provided an answer.
  * @param {Application}
  * @returns {Array<object>} Array of objects for XLSX generation
  */
@@ -53,12 +59,11 @@ const mapEligibility = (application: Application) => {
     xlsxRow(String(FIELDS[COVER_PERIOD]), eligibility[COVER_PERIOD_ELIGIBILITY].value),
 
     xlsxRow(String(FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES]), mapYesNoField({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES] })),
-  ];
 
-  mapped = [
-    ...mapped,
     xlsxRow(String(FIELDS[HAS_END_BUYER]), mapYesNoField({ answer: eligibility[HAS_END_BUYER] })),
+
     xlsxRow(String(FIELDS[IS_PARTY_TO_CONSORTIUM]), mapYesNoField({ answer: eligibility[IS_PARTY_TO_CONSORTIUM] })),
+
     xlsxRow(String(FIELDS[IS_MEMBER_OF_A_GROUP]), mapYesNoField({ answer: eligibility[IS_PARTY_TO_CONSORTIUM] })),
   ];
 

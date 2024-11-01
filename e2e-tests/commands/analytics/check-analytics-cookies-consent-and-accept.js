@@ -1,10 +1,10 @@
-import partials from '../../partials';
+import { cookieBanner } from '../../partials';
 import checkCookiesConsentBannerIsVisible from './check-cookies-consent-banner-is-visible';
 import checkCookiesConsentBannerIsNotVisible from './check-cookies-consent-banner-is-not-visible';
 
 const accept = () => {
-  partials.cookieBanner.question.acceptButton().click();
-  partials.cookieBanner.hideButton().click();
+  cookieBanner.question.acceptButton().click();
+  cookieBanner.hideButton().click();
 };
 
 /**
@@ -17,8 +17,8 @@ const checkAnalyticsCookiesConsentAndAccept = ({ isInsurancePage }) => {
   accept();
   checkCookiesConsentBannerIsNotVisible();
 
-  partials.cookieBanner.rejected.copy().should('not.exist');
-  partials.cookieBanner.accepted.copy().should('not.be.visible');
+  cookieBanner.rejected.copy().should('not.exist');
+  cookieBanner.accepted.copy().should('not.be.visible');
 };
 
 export default checkAnalyticsCookiesConsentAndAccept;
