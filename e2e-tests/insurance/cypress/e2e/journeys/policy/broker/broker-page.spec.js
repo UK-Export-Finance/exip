@@ -114,6 +114,39 @@ context(
 
           cy.checkLink(brokerPage.link(), APPROVED_BROKER_LIST, CONTENT_STRINGS.LINK_TEXT);
         });
+
+        it('renders `no` radio button', () => {
+          cy.checkText(noRadio().label(), FIELD_VALUES.NO);
+
+          cy.checkRadioInputNoAriaLabel(FIELDS.BROKER[FIELD_ID].LABEL);
+        });
+
+        it('renders `yes` radio button', () => {
+          yesRadio().input().should('exist');
+
+          cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
+
+          cy.checkRadioInputYesAriaLabel(FIELDS.BROKER[FIELD_ID].LABEL);
+        });
+      });
+
+      describe('when clicking the summary text', () => {
+        it('should expand the collapsed `details` content', () => {
+          brokerPage.summary().click();
+
+          brokerPage.details().should('have.attr', 'open');
+
+          cy.checkText(brokerPage.line1(), CONTENT_STRINGS.LINE_1);
+          cy.checkText(brokerPage.line2(), `${CONTENT_STRINGS.LINE_2} ${CONTENT_STRINGS.LINK_TEXT}`);
+          cy.checkText(brokerPage.line3(), CONTENT_STRINGS.LINE_3);
+          cy.checkText(brokerPage.line4(), CONTENT_STRINGS.LINE_4);
+
+          cy.checkLink(brokerPage.link(), APPROVED_BROKER_LIST, CONTENT_STRINGS.LINK_TEXT);
+        });
+      });
+
+      it('renders a `save and back` button', () => {
+        cy.assertSaveAndBackButton();
       });
     });
 

@@ -5,7 +5,9 @@ import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
-  POLICY: { TOTAL_MONTHS_OF_COVER: MAXIMUM_MONTHS_OF_COVER },
+  POLICY: {
+    TOTAL_MONTHS_OF_COVER: { MAXIMUM: MAXIMUM_MONTHS_OF_COVER },
+  },
   POLICY_TYPE,
 } = APPLICATION;
 
