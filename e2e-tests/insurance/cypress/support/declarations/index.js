@@ -16,3 +16,5 @@ Cypress.Commands.add(
   require('../../../../commands/insurance/declarations/complete-and-submit-confirmation-and-acknowledgements-form'),
 );
 Cypress.Commands.add('completeAndSubmitDeclarations', require('../../../../commands/insurance/complete-declarations'));
+
+Cypress.Commands.add('completeAndSubmitDeclarationsForms', require('../../../../commands/insurance/declarations/complete-and-submit-declarations-forms'));

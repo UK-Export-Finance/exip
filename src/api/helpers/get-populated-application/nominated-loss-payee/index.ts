@@ -5,7 +5,7 @@ import { ApplicationNominatedLossPayee } from '../../../types';
 /**
  * getNominatedLossPayee
  * Get an application's nominated loss payee by ID
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} lossPayeeId: Loss payee ID
  * @param {Boolean} decryptFinancialUk: should financialUk data be decrypted
  * @param {Boolean} decryptFinancialInternational: should financialInternational data be decrypted
@@ -13,7 +13,7 @@ import { ApplicationNominatedLossPayee } from '../../../types';
  */
 const getNominatedLossPayee = async (context: Context, lossPayeeId: string, decryptFinancialUk?: boolean, decryptFinancialInternational?: boolean) => {
   try {
-    console.info(`Getting nominated loss payee ${lossPayeeId}`);
+    console.info('Getting nominated loss payee %s', lossPayeeId);
 
     const nominatedLossPayee = (await context.query.NominatedLossPayee.findOne({
       where: { id: lossPayeeId },
@@ -28,10 +28,10 @@ const getNominatedLossPayee = async (context: Context, lossPayeeId: string, decr
     }
 
     return nominatedLossPayee;
-  } catch (err) {
-    console.error('Error getting nominated loss payee (getNominatedLossPayee helper) %O', err);
+  } catch (error) {
+    console.error('Error getting nominated loss payee (getNominatedLossPayee helper) %o', error);
 
-    throw new Error(`Error getting nominated loss payee (getNominatedLossPayee helper) ${err}`);
+    throw new Error(`Error getting nominated loss payee (getNominatedLossPayee helper) ${error}`);
   }
 };
 

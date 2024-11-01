@@ -1,34 +1,25 @@
 import createAnApplicationHelper from '../../../helpers/create-an-application';
-import { APPLICATION } from '../../../constants';
 import { CreateAnApplicationVariables, Context } from '../../../types';
-
-const { STATUS } = APPLICATION;
 
 /**
  * createAnApplication
  * Create an application.
- * 1) Set status to In progress
- * 2) Create a new application with createAnApplicationHelper.
- * 3) Returns success flag and application
- * @param {Object} GraphQL root variables
+ * 1) Create a new application with createAnApplicationHelper.
+ * 2) Returns success flag and application
+ * @param {Object} root: GraphQL root variables
  * @param {CreateAnApplicationVariables} GraphQL variables for the createAnApplication mutation
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag and application
  */
 const createAnApplication = async (root: any, variables: CreateAnApplicationVariables, context: Context) => {
-  console.info('Creating application for ', variables.accountId);
-
-  const updatedVariables = variables;
-
-  // set status to in progress
-  updatedVariables.status = STATUS.IN_PROGRESS;
+  console.info('Creating application for user %s', variables.accountId);
 
   try {
-    const updatedApplication = await createAnApplicationHelper(root, updatedVariables, context);
+    const application = await createAnApplicationHelper(variables, context);
 
-    if (updatedApplication) {
+    if (application) {
       return {
-        ...updatedApplication,
+        ...application,
         success: true,
       };
     }
@@ -36,10 +27,10 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
     return {
       success: false,
     };
-  } catch (err) {
-    console.error('Error creating application %O', err);
+  } catch (error) {
+    console.error('Error creating application for user %s %o', variables.accountId, error);
 
-    throw new Error(`Creating application ${err}`);
+    throw new Error(`Creating application for user ${variables.accountId} ${error}`);
   }
 };
 

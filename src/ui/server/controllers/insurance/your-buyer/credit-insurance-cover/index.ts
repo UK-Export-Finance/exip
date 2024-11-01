@@ -5,13 +5,14 @@ import YOUR_BUYER_FIELD_IDS from '../../../../constants/field-ids/insurance/your
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import { Request, Response } from '../../../../../types';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/buyer-relationship';
+import { Request, Response } from '../../../../../types';
 
 const { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = YOUR_BUYER_FIELD_IDS;
 
@@ -38,7 +39,7 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CREDIT_INSURANCE_
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
@@ -90,6 +91,7 @@ export const get = (req: Request, res: Response) => {
     }),
     ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
+    application: mapApplicationToFormFields(application),
     applicationAnswer: application.buyer.relationship[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER],
   });
 };
@@ -152,8 +154,9 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`);
-  } catch (err) {
-    console.error('Error posting alternative currency %O', err);
+  } catch (error) {
+    console.error('Error posting alternative currency %o', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

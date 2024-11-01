@@ -7,7 +7,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE },
+  AGENT_CHARGES: { FIXED_SUM, PERCENTAGE, PERCENTAGE_CHARGE, METHOD, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -21,13 +21,7 @@ context(`Insurance - Export contract - Agent charges - Save and go back - empty 
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.startInsuranceExportContractSection({});
-      cy.completeAndSubmitHowWasTheContractAwardedForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm({});
-      cy.completeAndSubmitHowYouWillGetPaidForm({});
-      cy.completeAndSubmitAgentForm({ isUsingAgent: true });
-      cy.completeAndSubmitAgentDetailsForm({});
-      cy.completeAndSubmitAgentServiceForm({ agentIsCharging: true });
+      cy.completeAndSubmitExportContractForms({ formToStopAt: 'agentService', isUsingAgent: true, agentIsCharging: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES}`;
 
@@ -43,9 +37,6 @@ context(`Insurance - Export contract - Agent charges - Save and go back - empty 
     cy.deleteApplication(referenceNumber);
   });
 
-  // TODO: partially submitted - country, no method.
-  // should be populated when going back to the page.
-
   describe('when submitting an empty form via `save and go back` button', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
@@ -57,13 +48,12 @@ context(`Insurance - Export contract - Agent charges - Save and go back - empty 
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the status of task `export contract` as `in progress`', () => {
+    it('should retain the status of task `export contract` as ` in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.completeAgentChargesForm({
         fixedSumMethod: false,
         percentageMethod: false,
-        fixedSumAmount: '',
       });
 
       cy.clickSaveAndBackButton();
@@ -82,6 +72,64 @@ context(`Insurance - Export contract - Agent charges - Save and go back - empty 
     });
   });
 
+  describe(`when submitting only a ${METHOD} as ${FIXED_SUM} via 'save and go back' button`, () => {
+    it('should retain the status of task `export contract` as ` in progress`', () => {
+      cy.navigateToUrl(url);
+
+      cy.completeAgentChargesForm({
+        fixedSumMethod: true,
+        percentageMethod: false,
+        fixedSumAmount: '',
+      });
+
+      cy.clickSaveAndBackButton();
+
+      cy.assertAllSectionsUrl(referenceNumber);
+
+      cy.checkTaskExportContractStatusIsInProgress();
+    });
+
+    describe('when going back to the page', () => {
+      it('should have the submitted value', () => {
+        cy.navigateToUrl(url);
+
+        cy.assertAgentChargesFieldValues({
+          fixedSumMethod: true,
+          expectedFixedSumAmount: '',
+        });
+      });
+    });
+  });
+
+  describe(`when submitting only a ${METHOD} as ${PERCENTAGE}, without a ${PERCENTAGE_CHARGE} via 'save and go back' button`, () => {
+    it('should retain the status of task `export contract` as ` in progress`', () => {
+      cy.navigateToUrl(url);
+
+      cy.completeAgentChargesForm({
+        fixedSumMethod: false,
+        percentageMethod: true,
+        percentageCharge: '',
+      });
+
+      cy.clickSaveAndBackButton();
+
+      cy.assertAllSectionsUrl(referenceNumber);
+
+      cy.checkTaskExportContractStatusIsInProgress();
+    });
+
+    describe('when going back to the page', () => {
+      it('should have the submitted value', () => {
+        cy.navigateToUrl(url);
+
+        cy.assertAgentChargesFieldValues({
+          percentageMethod: true,
+          expectedPercentageCharge: '',
+        });
+      });
+    });
+  });
+
   describe(`when submitting only a ${PAYABLE_COUNTRY_CODE} via 'save and go back' button`, () => {
     it('should retain the status of task `export contract` as ` in progress`', () => {
       cy.navigateToUrl(url);
@@ -89,8 +137,6 @@ context(`Insurance - Export contract - Agent charges - Save and go back - empty 
       cy.completeAgentChargesForm({
         fixedSumMethod: false,
         percentageMethod: false,
-        fixedSumAmount: '',
-        percentageCharge: '',
       });
 
       cy.clickSaveAndBackButton();

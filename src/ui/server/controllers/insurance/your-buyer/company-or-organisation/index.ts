@@ -28,6 +28,12 @@ const { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE } = COMPANY_OR_ORGA
 
 export const FIELD_IDS = [NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE];
 
+/**
+ * pageVariables
+ * Page fields and "save and go back" URL
+ * @param {Number} referenceNumber: Application reference number
+ * @returns {Object} Page variables
+ */
 export const pageVariables = (referenceNumber: number) => ({
   FIELDS: {
     NAME: {
@@ -73,8 +79,8 @@ export const get = async (req: Request, res: Response) => {
       ...pageVariables(application.referenceNumber),
       application: mapApplicationToFormFields(application),
     });
-  } catch (err) {
-    console.error('Error getting insurance - your buyer - buyers company or organisation %O', err);
+  } catch (error) {
+    console.error('Error getting insurance - your buyer - buyers company or organisation %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -123,8 +129,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CONNECTION_WITH_BUYER}`);
-  } catch (err) {
-    console.error('Error posting insurance - your buyer - buyers company or organisation %O', err);
+  } catch (error) {
+    console.error('Error posting insurance - your buyer - buyers company or organisation %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

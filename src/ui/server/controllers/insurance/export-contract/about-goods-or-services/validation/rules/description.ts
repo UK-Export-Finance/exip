@@ -1,3 +1,4 @@
+import { MAXIMUM_CHARACTERS } from '../../../../../../constants';
 import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../helpers/validation';
@@ -18,14 +19,14 @@ const {
   },
 } = ERROR_MESSAGES;
 
-export const MAXIMUM = 1000;
+const MAXIMUM = MAXIMUM_CHARACTERS.ABOUT_GOODS_OR_SERVICES_DESCRIPTION;
 
 /**
  * descriptionRules
  * Check submitted form data for errors with the description field
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
- * @param {Object} Errors object from previous validation errors
+ * @param {Object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const descriptionRules = (formBody: RequestBody, errors: object) => {

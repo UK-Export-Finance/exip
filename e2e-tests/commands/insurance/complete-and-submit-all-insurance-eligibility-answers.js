@@ -1,4 +1,3 @@
-import completeAndSubmitBuyerCountryForm from '../forms';
 import { COMPANIES_HOUSE_NUMBER } from '../../constants/examples';
 
 /**
@@ -14,7 +13,7 @@ const completeAndSubmitAllInsuranceEligibilityAnswers = ({ companyNumber = COMPA
   cy.completeCompaniesHouseNumberForm();
   cy.completeAndSubmitCompaniesHouseSearchForm({ companyNumber });
   cy.completeEligibilityCompanyDetailsForm();
-  completeAndSubmitBuyerCountryForm({});
+  cy.completeAndSubmitBuyerCountryForm({});
   cy.completeAndSubmitTotalValueInsuredForm({});
   cy.completeCoverPeriodForm({});
   cy.completeUkGoodsAndServicesForm();

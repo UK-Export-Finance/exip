@@ -1,7 +1,7 @@
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES, ROUTES } from '../../../../constants';
 import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
-import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
+import { EXPORTER_BUSINESS_FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
@@ -32,16 +32,9 @@ const {
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
-const {
-  TURNOVER_ALTERNATIVE_CURRENCY,
-  TURNOVER_ALTERNATIVE_CURRENCY_CHANGE,
-  TURNOVER_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE,
-  TURNOVER_SAVE_AND_BACK,
-  CREDIT_CONTROL,
-  CHECK_YOUR_ANSWERS,
-} = EXPORTER_BUSINESS_ROUTES;
+const { TURNOVER_SAVE_AND_BACK, CREDIT_CONTROL, CHECK_YOUR_ANSWERS } = EXPORTER_BUSINESS_ROUTES;
 
-const { TURNOVER: TURNOVER_FIELDS } = FIELDS;
+const { TURNOVER: TURNOVER_FIELDS } = EXPORTER_BUSINESS_FIELDS;
 
 /**
  * pageVariables for turnover page
@@ -49,32 +42,14 @@ const { TURNOVER: TURNOVER_FIELDS } = FIELDS;
  * when is checkAndChangeRoute, then alternative currency url should be ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE
  * else should be ALTERNATIVE_CURRENCY
  * @param {Number} referenceNumber: Application reference number
- * @param {Array<Currency>} currencies: Array of currencies
+ * @param {Array<Currency>} currencies: Currencies
  * @param {String} currencyCode: Provided currency code
  * @param {Boolean} changeRoute: req.originalUrl is a change route
  * @param {Boolean} checkAndChangeRoute: req.originalUrl is a check-and-change route
  * @returns {Object} pageVariables
  */
-const pageVariables = (referenceNumber: number, currencies: Array<Currency>, currencyCode: string, changeRoute?: boolean, checkAndChangeRoute?: boolean) => {
+const pageVariables = (referenceNumber: number, currencies: Array<Currency>, currencyCode: string) => {
   const currency = getCurrencyByCode(currencies, currencyCode);
-
-  let alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY}`;
-
-  /**
-   * If changeRoute,
-   * URL should be ALTERNATIVE_CURRENCY_CHANGE
-   */
-  if (changeRoute) {
-    alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY_CHANGE}`;
-  }
-
-  /**
-   * If checkAndChangeRoute,
-   * URL should be ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE
-   */
-  if (checkAndChangeRoute) {
-    alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`;
-  }
 
   return {
     FIELDS: {
@@ -91,7 +66,6 @@ const pageVariables = (referenceNumber: number, currencies: Array<Currency>, cur
         ...TURNOVER_FIELDS[PERCENTAGE_TURNOVER],
       },
     },
-    PROVIDE_ALTERNATIVE_CURRENCY_URL: alternativeCurrencyUrl,
     SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_SAVE_AND_BACK}`,
     TURNOVER_LEGEND: `${TURNOVER_FIELDS[ESTIMATED_ANNUAL_TURNOVER].LEGEND} ${currency.name}?`,
     CURRENCY_PREFIX_SYMBOL: currency.symbol,
@@ -120,26 +94,7 @@ const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    let isChange;
-    let isCheckAndChange;
-
-    /**
-     * If is a change route
-     * set isChange to true
-     */
-    if (isChangeRoute(req.originalUrl)) {
-      isChange = true;
-    }
-
-    /**
-     * If is a check-and-change route
-     * set isCheckAndChange to true
-     */
-    if (isCheckAndChangeRoute(req.originalUrl)) {
-      isCheckAndChange = true;
-    }
-
-    const generatedPageVariables = pageVariables(referenceNumber, allCurrencies, String(business[TURNOVER_CURRENCY_CODE]), isChange, isCheckAndChange);
+    const generatedPageVariables = pageVariables(referenceNumber, allCurrencies, String(business[TURNOVER_CURRENCY_CODE]));
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -150,8 +105,9 @@ const get = async (req: Request, res: Response) => {
       application: mapApplicationToFormFields(application),
       ...generatedPageVariables,
     });
-  } catch (err) {
-    console.error('Error getting turnover %O', err);
+  } catch (error) {
+    console.error('Error getting turnover %o', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -207,13 +163,7 @@ const post = async (req: Request, res: Response) => {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
-      const generatedPageVariables = pageVariables(
-        applicationReferenceNumber,
-        allCurrencies,
-        String(business[TURNOVER_CURRENCY_CODE]),
-        isChange,
-        isCheckAndChange,
-      );
+      const generatedPageVariables = pageVariables(applicationReferenceNumber, allCurrencies, String(business[TURNOVER_CURRENCY_CODE]));
 
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
@@ -247,8 +197,9 @@ const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CREDIT_CONTROL}`);
-  } catch (err) {
-    console.error('Error updating application - your business - turnover %O', err);
+  } catch (error) {
+    console.error('Error updating application - your business - turnover %o', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

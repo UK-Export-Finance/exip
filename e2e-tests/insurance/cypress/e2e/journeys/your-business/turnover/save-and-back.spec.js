@@ -21,10 +21,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startYourBusinessSection({});
-
-      cy.completeAndSubmitCompanyDetails({});
-      cy.completeAndSubmitNatureOfYourBusiness();
+      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'turnoverCurrency' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
 
@@ -79,8 +76,8 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
       // go through 3 business forms.
       cy.clickSubmitButtonMultipleTimes({ count: 3 });
 
-      field(ESTIMATED_ANNUAL_TURNOVER).input().should('have.value', application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
-      field(PERCENTAGE_TURNOVER).input().should('have.value', '');
+      cy.checkValue(field(ESTIMATED_ANNUAL_TURNOVER), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
+      cy.checkValue(field(PERCENTAGE_TURNOVER), '');
     });
   });
 
@@ -106,10 +103,10 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
       cy.startYourBusinessSection({});
 
       // go through 2 business forms.
-      cy.clickSubmitButtonMultipleTimes({ count: 2 });
+      cy.clickSubmitButtonMultipleTimes({ count: 3 });
 
-      field(ESTIMATED_ANNUAL_TURNOVER).input().should('have.value', application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
-      field(PERCENTAGE_TURNOVER).input().should('have.value', application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
+      cy.checkValue(field(ESTIMATED_ANNUAL_TURNOVER), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
+      cy.checkValue(field(PERCENTAGE_TURNOVER), application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
     });
   });
 });

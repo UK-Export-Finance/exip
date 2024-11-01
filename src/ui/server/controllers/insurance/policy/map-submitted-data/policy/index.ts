@@ -34,9 +34,9 @@ const {
 const mapSubmittedData = (formBody: RequestBody, application: Application): object => {
   const { _csrf, ...otherFields } = formBody;
 
-  let populatedData = otherFields;
+  let populatedData = {} as RequestBody;
 
-  populatedData = mapDateFields(formBody);
+  populatedData = mapDateFields(otherFields);
 
   /**
    * If NEED_PRE_CREDIT_PERIOD is submitted as "no",

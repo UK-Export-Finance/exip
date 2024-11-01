@@ -3,7 +3,7 @@ import { Context } from '../types';
 /**
  * findAll test helper
  * Get all auth retries and delete them.
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Array} Auth retries
  */
 const findAll = async (context: Context) => {
@@ -13,16 +13,17 @@ const findAll = async (context: Context) => {
     const retries = await context.query.AuthenticationRetry.findMany();
 
     return retries;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Getting auth retries (test helpers) ${err}`);
+  } catch (error) {
+    console.error(error);
+
+    throw new Error(`Getting auth retries (test helpers) ${error}`);
   }
 };
 
 /**
  * deleteAll test helper
  * Delete all auth retries
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Array} Deleted auth retries
  */
 const deleteAll = async (context: Context) => {
@@ -36,9 +37,10 @@ const deleteAll = async (context: Context) => {
     });
 
     return deleted;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+
+    return error;
   }
 };
 

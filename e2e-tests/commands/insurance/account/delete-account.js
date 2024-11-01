@@ -13,10 +13,10 @@ const deleteAccount = (email = accountEmail) => {
     const deleteResponse = api.deleteAnAccount(email).then((success) => success);
 
     return deleteResponse;
-  } catch (err) {
-    console.error('Deleting account', err);
+  } catch (error) {
+    console.error('Deleting account', error);
 
-    return err;
+    return error;
   }
 };
 

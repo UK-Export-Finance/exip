@@ -1,5 +1,4 @@
 import { headingCaption, status } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -9,10 +8,6 @@ const {
 } = INSURANCE_ROUTES;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.CHECK_YOUR_ANSWERS.POLICY;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -26,7 +21,7 @@ context('Insurance - Check your answers - Policy - I want to confirm my selectio
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       // To get past previous "Check your answers" pages
       cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });
@@ -66,10 +61,6 @@ context('Insurance - Check your answers - Policy - I want to confirm my selectio
     it('renders a `completed` status tag', () => {
       cy.checkTaskStatusCompleted(status);
     });
-
-    it('renders a `save and back` button', () => {
-      cy.assertSaveAndBackButton();
-    });
   });
 
   describe('form submission', () => {
@@ -89,6 +80,10 @@ context('Insurance - Check your answers - Policy - I want to confirm my selectio
 
       it('should retain the status of task `check your answers` as `in progress`', () => {
         cy.checkTaskCheckAnswersStatusIsInProgress();
+      });
+
+      it('should retain the status of task `declarations and submit` as `cannot start`', () => {
+        cy.checkTaskDeclarationsAndSubmitStatusIsCannotStart();
       });
     });
   });

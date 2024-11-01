@@ -6,8 +6,8 @@ import { Application, RequestBody } from '../../../../../types';
  * sectionReview
  * Update an application's section review
  * This is used for any save functionality in the Check your answers section of an application
- * @param {Application}
- * @param {Express.Request.body} Form data
+ * @param {Application} application
+ * @param {Express.Request.body} formBody
  * @returns {Promise<Object>} Saved data
  */
 const sectionReview = async (application: Application, formBody: RequestBody) => {
@@ -20,8 +20,9 @@ const sectionReview = async (application: Application, formBody: RequestBody) =>
     const saveResponse = await api.keystone.application.update.sectionReview(sectionReviewId, sanitisedData);
 
     return saveResponse;
-  } catch (err) {
-    console.error("Error updating application's section review %O", err);
+  } catch (error) {
+    console.error("Error updating application's section review %o", error);
+
     throw new Error("Updating application's section review");
   }
 };

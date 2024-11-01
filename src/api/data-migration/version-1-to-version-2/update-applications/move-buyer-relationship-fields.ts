@@ -1,6 +1,6 @@
 import { Connection } from 'mysql2/promise';
 import createCuid from '../create-cuid';
-import executeSqlQuery from '../execute-sql-query';
+import executeSqlQuery from '../../execute-sql-query';
 import { ApplicationBuyerMvp } from '../../../types';
 
 /**

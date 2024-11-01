@@ -1,4 +1,3 @@
-import partials from '../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { assertFullyPopulatedExportContractSummaryListRows } from '../../../../../../../shared-test-assertions';
 
@@ -7,14 +6,10 @@ const {
   CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT },
 } = INSURANCE_ROUTES;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
-
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  'Insurance - Check your answers - Export contract - Summary list - total contract value threshold, private insurance attempt, using an agent, agent is chraging - fixed sum method with decimal places',
+  'Insurance - Check your answers - Export contract - Summary list - total contract value threshold, private insurance attempt, using an agent, agent is charging - fixed sum method with decimal places',
   () => {
     let referenceNumber;
     let url;
@@ -36,7 +31,7 @@ context(
           agentChargeFixedSumAmount: fixedSumAmount,
         });
 
-        task.link().click();
+        cy.clickTaskCheckAnswers();
 
         // To get past previous "Check your answers" pages
         cy.completeAndSubmitMultipleCheckYourAnswers({ count: 3 });

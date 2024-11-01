@@ -1,15 +1,13 @@
 import createACompanyAddress from '.';
-import { mockCompany } from '../../test-mocks';
+import { mockCompany, mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import companyHelpers from '../../test-helpers/company';
 import { Context } from '../../types';
 
 const { registeredOfficeAddress: mockAddress } = mockCompany;
 
-const invalidId = 'invalid-id';
-
-const assertError = (err) => {
-  const errorString = String(err);
+const assertError = (error) => {
+  const errorString = String(error);
 
   expect(errorString.includes('Creating a company address')).toEqual(true);
 };
@@ -21,7 +19,7 @@ describe('helpers/create-a-company-address', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    company = (await companyHelpers.createCompany({ context })) as object;
+    company = (await companyHelpers.createCompany(context)) as object;
   });
 
   test('it should return a company address with ID', async () => {
@@ -43,9 +41,9 @@ describe('helpers/create-a-company-address', () => {
   describe('when an invalid company ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createACompanyAddress(context, mockAddress, invalidId);
-      } catch (err) {
-        assertError(err);
+        await createACompanyAddress(context, mockAddress, mockInvalidId);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -55,8 +53,8 @@ describe('helpers/create-a-company-address', () => {
       try {
         // pass empty context object to force an error
         await createACompanyAddress({}, mockAddress, company.id);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

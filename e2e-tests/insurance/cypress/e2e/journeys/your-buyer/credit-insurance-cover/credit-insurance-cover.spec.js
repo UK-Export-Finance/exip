@@ -12,7 +12,7 @@ const { BUYER } = application;
 
 const {
   ROOT,
-  YOUR_BUYER: { CREDIT_INSURANCE_COVER, BUYER_FINANCIAL_INFORMATION, TRADING_HISTORY },
+  YOUR_BUYER: { CREDIT_INSURANCE_COVER, BUYER_FINANCIAL_INFORMATION, TRADED_WITH_BUYER },
 } = INSURANCE_ROUTES;
 
 const { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = FIELD_IDS;
@@ -30,15 +30,10 @@ context(
       cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.startInsuranceYourBuyerSection({});
-
         url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
         buyerFinancialInformationUrl = `${baseUrl}${ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
 
-        cy.completeAndSubmitCompanyOrOrganisationForm({});
-        cy.completeAndSubmitConnectionWithTheBuyerForm({});
-        cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
-        cy.completeAndSubmitTradingHistoryWithBuyerForm({});
+        cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'tradedWithBuyer' });
 
         cy.assertUrl(url);
       });
@@ -56,7 +51,7 @@ context(
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: `${ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`,
-        backLink: `${ROOT}/${referenceNumber}${TRADING_HISTORY}`,
+        backLink: `${ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`,
       });
     });
 
@@ -88,10 +83,6 @@ context(
           cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
 
           cy.checkRadioInputYesAriaLabel(FIELD_STRINGS[fieldId].LABEL);
-        });
-
-        it('renders a `save and back` button', () => {
-          cy.assertSaveAndBackButton();
         });
       });
 

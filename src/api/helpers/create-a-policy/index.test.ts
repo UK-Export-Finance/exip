@@ -1,13 +1,12 @@
 import createAPolicy from '.';
 import { APPLICATION } from '../../constants';
 import { Application, Context } from '../../types';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
 
-const invalidId = 'invalid-id';
-
-const assertError = (err) => {
-  const errorString = String(err);
+const assertError = (error) => {
+  const errorString = String(error);
 
   expect(errorString.includes('Creating a policy')).toEqual(true);
 };
@@ -19,31 +18,31 @@ describe('helpers/create-a-policy', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await applications.create({ context, data: {} })) as Application;
+    application = (await applications.create({ context })) as Application;
   });
 
   test('it should return a policy with ID and jointlyInsuredParty relationship', async () => {
-    const { policy } = await createAPolicy(context, application.id);
+    const result = await createAPolicy(context, application.id);
 
-    expect(policy.id).toBeDefined();
-    expect(typeof policy.id).toEqual('string');
-    expect(policy.id.length).toBeGreaterThan(0);
+    expect(result.id).toBeDefined();
+    expect(typeof result.id).toEqual('string');
+    expect(result.id.length).toBeGreaterThan(0);
   });
 
   test('it should return empty policy fields, default needPreCreditPeriodCover', async () => {
-    const { policy } = await createAPolicy(context, application.id);
+    const result = await createAPolicy(context, application.id);
 
-    expect(policy.applicationId).toEqual(application.id);
-    expect(policy.needPreCreditPeriodCover).toEqual(APPLICATION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER);
-    expect(policy.policyType).toBeNull();
-    expect(policy.requestedStartDate).toBeNull();
-    expect(policy.contractCompletionDate).toBeNull();
-    expect(policy.totalValueOfContract).toBeNull();
-    expect(policy.creditPeriodWithBuyer).toEqual('');
-    expect(policy.policyCurrencyCode).toEqual('');
-    expect(policy.totalMonthsOfCover).toBeNull();
-    expect(policy.totalSalesToBuyer).toBeNull();
-    expect(policy.maximumBuyerWillOwe).toBeNull();
+    expect(result.applicationId).toEqual(application.id);
+    expect(result.needPreCreditPeriodCover).toEqual(APPLICATION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER);
+    expect(result.policyType).toBeNull();
+    expect(result.requestedStartDate).toBeNull();
+    expect(result.contractCompletionDate).toBeNull();
+    expect(result.totalValueOfContract).toBeNull();
+    expect(result.creditPeriodWithBuyer).toEqual('');
+    expect(result.policyCurrencyCode).toEqual('');
+    expect(result.totalMonthsOfCover).toBeNull();
+    expect(result.totalSalesToBuyer).toBeNull();
+    expect(result.maximumBuyerWillOwe).toBeNull();
   });
 
   test('it should return empty jointlyInsuredParty fields', async () => {
@@ -58,9 +57,9 @@ describe('helpers/create-a-policy', () => {
   describe('when an invalid application ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createAPolicy(context, invalidId);
-      } catch (err) {
-        assertError(err);
+        await createAPolicy(context, mockInvalidId);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -70,8 +69,8 @@ describe('helpers/create-a-policy', () => {
       try {
         // pass empty context object to force an error
         await createAPolicy({}, application.id);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

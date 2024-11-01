@@ -1,6 +1,6 @@
 import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
-import { FIELDS_ELIGIBILITY as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
+import { ELIGIBILITY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
 import { FIELD_IDS, TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
@@ -12,7 +12,7 @@ import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
 
 const {
-  ELIGIBILITY: { EXPORTER_LOCATION_CHANGE, COMPANIES_HOUSE_NUMBER, CANNOT_APPLY, CHECK_YOUR_ANSWERS },
+  ELIGIBILITY: { EXPORTER_LOCATION_CHANGE, COMPANIES_HOUSE_NUMBER, CANNOT_APPLY_EXIT, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 describe('controllers/insurance/eligibility/exporter-location', () => {
@@ -120,16 +120,16 @@ describe('controllers/insurance/eligibility/exporter-location', () => {
         };
       });
 
-      it(`should redirect to ${CANNOT_APPLY}`, async () => {
+      it(`should redirect to ${CANNOT_APPLY_EXIT}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(CANNOT_APPLY);
+        expect(res.redirect).toHaveBeenCalledWith(CANNOT_APPLY_EXIT);
       });
 
       it('should add exitReason to req.flash', async () => {
         await post(req, res);
 
-        const expectedReason = PAGES.CANNOT_APPLY.REASON.UNSUPPORTED_COMPANY_COUNTRY;
+        const expectedReason = PAGES.CANNOT_APPLY_EXIT.REASON.UNSUPPORTED_COMPANY_COUNTRY;
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });
     });

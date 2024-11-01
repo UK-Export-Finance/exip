@@ -6,10 +6,10 @@ import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/company-details';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockApplication, mockPhoneNumbers, mockCompany } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockCompany, mockPhoneNumbers, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 
 const {
-  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER },
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, HAS_DIFFERENT_TRADING_ADDRESS, PHONE_NUMBER },
 } = BUSINESS_FIELD_IDS;
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
@@ -39,14 +39,14 @@ describe('controllers/insurance/business/companies-details', () => {
   describe('post', () => {
     const validBody = {
       [HAS_DIFFERENT_TRADING_NAME]: 'false',
-      [TRADING_ADDRESS]: 'false',
+      [HAS_DIFFERENT_TRADING_ADDRESS]: 'false',
       [PHONE_NUMBER]: VALID_PHONE_NUMBERS.MOBILE,
     };
 
     describe('when there are validation errors', () => {
       const body = {
         [HAS_DIFFERENT_TRADING_NAME]: 'false',
-        [TRADING_ADDRESS]: 'false',
+        [HAS_DIFFERENT_TRADING_ADDRESS]: 'false',
         [PHONE_NUMBER]: INVALID_PHONE_NUMBERS.TOO_SHORT_SPECIAL_CHAR,
       };
 
@@ -55,7 +55,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
       });
 
       it('should call mapAndSave.companyDetails once', async () => {
@@ -73,7 +73,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
       });
 
       it('should call mapAndSave.companyDetails once with the data from constructPayload function and company', async () => {
@@ -120,7 +120,7 @@ describe('controllers/insurance/business/companies-details', () => {
         beforeEach(() => {
           req.body = validBody;
           res.locals = mockRes().locals;
-          updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
+          updateMapAndSave = mockSpyPromiseRejection;
           mapAndSave.companyDetails = updateMapAndSave;
         });
 

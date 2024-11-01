@@ -1,6 +1,6 @@
 import { Connection } from 'mysql2/promise';
 import createCuid from '../../create-cuid';
-import executeSqlQuery from '../../execute-sql-query';
+import executeSqlQuery from '../../../execute-sql-query';
 import { Application } from '../../../../types';
 
 /**
@@ -16,7 +16,7 @@ import { Application } from '../../../../types';
 const createAgentServiceCharges = async (connection: Connection, applications: Array<Application>) => {
   const loggingMessage = 'Creating exportContract agent service charges';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const servicesPromises = applications.map(async (application: Application) => {
@@ -36,10 +36,10 @@ const createAgentServiceCharges = async (connection: Connection, applications: A
     });
 
     return Promise.all(servicesPromises);
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

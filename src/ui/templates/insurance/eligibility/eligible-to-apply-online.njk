@@ -31,6 +31,15 @@
 
       <p class="govuk-body" data-cy="body">{{ CONTENT_STRINGS.BODY }}</p>
 
+      <p class="govuk-body">
+        <span data-cy="privacy-intro">{{ CONTENT_STRINGS.PRIVACY.INTRO }}</span>
+        <span data-cy="privacy-notice">
+          <a class="govuk-link" data-cy="privacy-notice-link" href="{{ CONTENT_STRINGS.PRIVACY.PRIVACY_NOTICE.LINK.HREF }}">{{ CONTENT_STRINGS.PRIVACY.PRIVACY_NOTICE.LINK.TEXT }}</a> {{ CONTENT_STRINGS.PRIVACY.PRIVACY_NOTICE.TEXT }}
+        </span>
+      </p>
+
+      <p class="govuk-body" data-cy="continue-submit">{{ CONTENT_STRINGS.CONTINUE_SUBMIT }}</p>
+
     </div>
   </div>
 

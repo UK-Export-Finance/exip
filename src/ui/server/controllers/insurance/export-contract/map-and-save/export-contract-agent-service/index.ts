@@ -13,8 +13,8 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
  * and AGENT_CHARGES data exists in the application,
  * Nullify all AGENT_CHARGES data.
  * @param {RequestBody} formBody: Form body
- * @param {Application}
- * @param {Object} Validation errors
+ * @param {Application} application
+ * @param {Object} validationErrors: Validation errors
  * @returns {Promise<Boolean>}
  */
 const exportContractAgentService = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
@@ -56,8 +56,8 @@ const exportContractAgentService = async (formBody: RequestBody, application: Ap
     }
 
     return true;
-  } catch (err) {
-    console.error('Error mapping and saving application %O', err);
+  } catch (error) {
+    console.error('Error mapping and saving application %o', error);
 
     return false;
   }

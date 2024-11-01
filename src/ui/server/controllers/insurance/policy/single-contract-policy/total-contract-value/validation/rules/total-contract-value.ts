@@ -1,18 +1,16 @@
-import { APPLICATION } from '../../../../../../../constants';
-import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
+import { MINIMUM_CHARACTERS } from '../../../../../../../constants';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import numberAboveMinimumValidation from '../../../../../../../shared-validation/number-above-minimum';
 import { RequestBody } from '../../../../../../../../types';
 
-const { MINIMUM } = APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT;
+const MINIMUM = MINIMUM_CHARACTERS.POLICY.TOTAL_CONTRACT_VALUE;
 
 const {
-  POLICY: {
-    CONTRACT_POLICY: {
-      SINGLE: { TOTAL_CONTRACT_VALUE: FIELD_ID },
-    },
+  CONTRACT_POLICY: {
+    SINGLE: { TOTAL_CONTRACT_VALUE: FIELD_ID },
   },
-} = INSURANCE_FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 const {
   INSURANCE: {
@@ -26,10 +24,10 @@ const {
 
 /**
  * totalContractValueRules
- * Check submitted form data for errors with the total contract value field
+ * Check submitted form data for errors with the TOTAL_CONTRACT_VALUE field
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
- * @param {Object} Errors object from previous validation errors
+ * @param {Object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const totalContractValueRules = (formBody: RequestBody, errors: object) =>

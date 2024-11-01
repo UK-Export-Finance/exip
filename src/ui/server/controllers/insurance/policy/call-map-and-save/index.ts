@@ -5,7 +5,7 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../types
  * callMapAndSave
  * Call the "map and save" function with or without validation errors
  * @param {RequestBody} Form body
- * @param {Application}
+ * @param {Application} application
  * @param {Object} Form Validation errors
  * @returns {Boolean}
  */
@@ -22,8 +22,8 @@ const callMapAndSave = async (formData: RequestBody, application: Application, v
     saveResponse = await mapAndSave.policy(formData, application);
 
     return saveResponse;
-  } catch (err) {
-    console.error('Error calling mapAndSave.policy %O', err);
+  } catch (error) {
+    console.error('Error calling mapAndSave.policy %o', error);
 
     return false;
   }

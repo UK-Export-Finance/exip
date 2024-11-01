@@ -1,6 +1,5 @@
 import dashboardPage from '../../../../../../pages/insurance/dashboard';
 import { ROUTES, COOKIE } from '../../../../../../constants';
-import header from '../../../../../../partials/header';
 
 const { table } = dashboardPage;
 
@@ -66,7 +65,7 @@ context('Insurance - Account - When answering eligibility answers, creating an a
       });
 
       // go back to the dashboard
-      header.navigation.applications().click();
+      cy.clickHeaderApplicationsLink();
 
       cy.assertUrl(dashboardUrl);
 

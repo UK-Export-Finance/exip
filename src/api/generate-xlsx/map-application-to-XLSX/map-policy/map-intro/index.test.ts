@@ -6,7 +6,7 @@ import xlsxRow from '../../helpers/xlsx-row';
 import mapPolicyType from './map-policy-type';
 import formatDate from '../../../../helpers/format-date';
 import getPopulatedApplication from '../../../../helpers/get-populated-application';
-import { createFullApplication, getKeystoneContext, mapApplicationIds } from '../../../../test-helpers';
+import { getKeystoneContext, generateSubmittedApplication } from '../../../../test-helpers';
 import { Application, Context } from '../../../../types';
 
 const { FIELDS } = XLSX;
@@ -18,18 +18,15 @@ const {
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-intro', () => {
   let populatedApplication: Application;
-  let fullApplication: Application;
-  let application: object;
+  let submittedApplication: object;
   let context: Context;
 
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    fullApplication = await createFullApplication(context);
+    submittedApplication = await generateSubmittedApplication();
 
-    application = mapApplicationIds(fullApplication);
-
-    populatedApplication = await getPopulatedApplication.get({ context, application });
+    populatedApplication = await getPopulatedApplication.get({ context, application: submittedApplication });
   });
 
   it('should return an array of mapped fields', () => {

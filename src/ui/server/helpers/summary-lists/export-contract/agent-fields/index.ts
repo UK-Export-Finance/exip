@@ -9,7 +9,7 @@ import getCountryByIsoCode from '../../../get-country-by-iso-code';
 import generateChangeLink from '../../../generate-change-link';
 import replaceNewLineWithLineBreak from '../../../replace-new-line-with-line-break';
 import agentChargesFields from './agent-charges';
-import { ApplicationExportContractAgent, ApplicationExportContractAgentService, Country, SummaryListItemData } from '../../../../../types';
+import { ApplicationExportContractAgent, ApplicationExportContractAgentService, Country, Currency, SummaryListItemData } from '../../../../../types';
 
 const {
   EXPORT_CONTRACT: { AGENT: FORM_TITLE },
@@ -34,7 +34,7 @@ const { AGENT_SERVICE_CHANGE, AGENT_SERVICE_CHECK_AND_CHANGE } = EXPORT_CONTRACT
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>} Agent details fields
  */
-export const agentDetailsFields = (answers: ApplicationExportContractAgent, referenceNumber: number, countries: Array<Country>, checkAndChange: boolean) => {
+export const agentDetailsFields = (answers: ApplicationExportContractAgent, referenceNumber: number, countries: Array<Country>, checkAndChange?: boolean) => {
   const fields = [
     fieldGroupItem({
       field: getFieldById(FIELDS.AGENT_DETAILS, NAME),
@@ -73,7 +73,7 @@ export const agentDetailsFields = (answers: ApplicationExportContractAgent, refe
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>} Agent service fields
  */
-export const agentServiceFields = (answers: ApplicationExportContractAgentService, referenceNumber: number, checkAndChange: boolean) => {
+export const agentServiceFields = (answers: ApplicationExportContractAgentService, referenceNumber: number, checkAndChange?: boolean) => {
   const fields = [
     fieldGroupItem(
       {
@@ -95,10 +95,17 @@ export const agentServiceFields = (answers: ApplicationExportContractAgentServic
  * @param {ApplicationExportContractAgent} answers: All submitted agent data
  * @param {Number} referenceNumber: Application reference number
  * @param {Array<Country>} countries: Countries
+ * @param {Array<Currency>} currencies: Currencies
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} Fields and values in an object structure for GOVUK summary list structure
  */
-const agentFields = (answers: ApplicationExportContractAgent, referenceNumber: number, countries: Array<Country>, checkAndChange: boolean) => {
+const agentFields = (
+  answers: ApplicationExportContractAgent,
+  referenceNumber: number,
+  countries: Array<Country>,
+  currencies: Array<Currency>,
+  checkAndChange?: boolean,
+) => {
   let fields = [
     fieldGroupItem(
       {
@@ -116,7 +123,7 @@ const agentFields = (answers: ApplicationExportContractAgent, referenceNumber: n
       ...fields,
       ...agentDetailsFields(answers, referenceNumber, countries, checkAndChange),
       ...agentServiceFields(answers.service, referenceNumber, checkAndChange),
-      ...agentChargesFields(answers.service, referenceNumber, countries, checkAndChange),
+      ...agentChargesFields(answers.service, referenceNumber, countries, currencies, checkAndChange),
     ];
   }
 

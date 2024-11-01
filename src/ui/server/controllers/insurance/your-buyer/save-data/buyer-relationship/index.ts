@@ -33,7 +33,7 @@ const buyerRelationship = async (application: Application, formBody: RequestBody
     // send the form data to the API for database update.
     const saveResponse = await api.keystone.application.update.buyerRelationship(buyerRelationshipId, sanitisedData);
     return saveResponse;
-  } catch (err) {
+  } catch (error) {
     throw new Error('Updating buyer relationship');
   }
 };

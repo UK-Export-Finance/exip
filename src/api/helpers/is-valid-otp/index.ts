@@ -30,10 +30,10 @@ const isValidOTP = (securityCode: string, otpSalt: string, otpHash: string) => {
     }
 
     return false;
-  } catch (err) {
-    console.error('Error validating OTP %O', err);
+  } catch (error) {
+    console.error('Error validating OTP %o', error);
 
-    throw new Error(`Error validating OTP ${err}`);
+    throw new Error(`Error validating OTP ${error}`);
   }
 };
 

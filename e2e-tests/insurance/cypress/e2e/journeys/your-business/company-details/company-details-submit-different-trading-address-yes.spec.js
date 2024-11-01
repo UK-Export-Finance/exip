@@ -4,7 +4,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { TRADING_ADDRESS },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_ADDRESS },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -15,7 +15,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-describe(`Insurance - Your business - Company details page - submit ${TRADING_ADDRESS} as '${FIELD_VALUES.YES}'`, () => {
+describe(`Insurance - Your business - Company details page - submit ${HAS_DIFFERENT_TRADING_ADDRESS} as '${FIELD_VALUES.YES}'`, () => {
   let referenceNumber;
   let url;
   let alternativeTradingAddressUrl;
@@ -28,6 +28,7 @@ describe(`Insurance - Your business - Company details page - submit ${TRADING_AD
       alternativeTradingAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_ROOT}`;
 
       cy.startYourBusinessSection({});
+
       cy.completeCompanyDetailsForm({});
 
       cy.assertUrl(url);
@@ -38,7 +39,7 @@ describe(`Insurance - Your business - Company details page - submit ${TRADING_AD
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(`when submitting ${TRADING_ADDRESS} as '${FIELD_VALUES.YES}'`, () => {
+  describe(`when submitting ${HAS_DIFFERENT_TRADING_ADDRESS} as '${FIELD_VALUES.YES}'`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 

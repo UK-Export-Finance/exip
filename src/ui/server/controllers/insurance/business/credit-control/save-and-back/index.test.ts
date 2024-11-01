@@ -2,9 +2,9 @@ import { post } from '.';
 import constructPayload from '../../../../../helpers/construct-payload';
 import { FIELD_ID } from '..';
 import { ROUTES } from '../../../../../constants';
-import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
 import mapAndSave from '../../map-and-save/business';
 import { Request, Response } from '../../../../../../types';
+import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
@@ -37,7 +37,7 @@ describe('controllers/insurance/business/credit-control/save-and-back', () => {
     it('should redirect to all sections page', async () => {
       await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should call mapAndSave.business once with data from constructPayload', async () => {
@@ -61,7 +61,7 @@ describe('controllers/insurance/business/credit-control/save-and-back', () => {
     it('should redirect to all sections page', async () => {
       await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should NOT call mapAndSave.business', async () => {
@@ -105,7 +105,7 @@ describe('controllers/insurance/business/credit-control/save-and-back', () => {
         req.body = validBody;
         res.locals = mockRes().locals;
 
-        updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
+        updateMapAndSave = mockSpyPromiseRejection;
         mapAndSave.business = updateMapAndSave;
       });
 

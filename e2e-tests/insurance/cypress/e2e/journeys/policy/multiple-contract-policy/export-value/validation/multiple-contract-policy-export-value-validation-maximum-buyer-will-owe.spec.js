@@ -1,9 +1,9 @@
 import { multipleContractPolicyExportValuePage } from '../../../../../../../../pages/insurance/policy';
-import partials from '../../../../../../../../partials';
+import { errorSummaryListItems } from '../../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -11,12 +11,10 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
-    EXPORT_VALUE: {
-      MULTIPLE: { MAXIMUM_BUYER_WILL_OWE },
-    },
+  EXPORT_VALUE: {
+    MULTIPLE: { MAXIMUM_BUYER_WILL_OWE },
   },
-} = INSURANCE_FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 const {
   INSURANCE: {
@@ -38,9 +36,7 @@ context('Insurance - Policy - Multiple contract policy - Export value page - for
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm({ policyType });
-      cy.completeAndSubmitMultipleContractPolicyForm({ policyType });
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'multipleContractPolicy', policyType });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`;
 
@@ -63,7 +59,7 @@ context('Insurance - Policy - Multiple contract policy - Export value page - for
   it('should render a validation error when maximum buyer will owe is not provided', () => {
     cy.clickSubmitButton();
 
-    cy.checkText(partials.errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT);
+    cy.checkText(errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT);
 
     cy.checkText(field.errorMessage(), `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`);
   });
@@ -72,7 +68,7 @@ context('Insurance - Policy - Multiple contract policy - Export value page - for
     cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), 'ten!');
     cy.clickSubmitButton();
 
-    cy.checkText(partials.errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT);
+    cy.checkText(errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT);
 
     cy.checkText(field.errorMessage(), `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`);
   });
@@ -81,7 +77,7 @@ context('Insurance - Policy - Multiple contract policy - Export value page - for
     cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), '1.2');
     cy.clickSubmitButton();
 
-    cy.checkText(partials.errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT);
+    cy.checkText(errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT);
 
     cy.checkText(field.errorMessage(), `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`);
   });
@@ -90,7 +86,7 @@ context('Insurance - Policy - Multiple contract policy - Export value page - for
     cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), '1,234.56');
     cy.clickSubmitButton();
 
-    cy.checkText(partials.errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT);
+    cy.checkText(errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT);
 
     cy.checkText(field.errorMessage(), `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`);
   });
@@ -99,7 +95,7 @@ context('Insurance - Policy - Multiple contract policy - Export value page - for
     cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), '0');
     cy.clickSubmitButton();
 
-    cy.checkText(partials.errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].BELOW_MINIMUM);
+    cy.checkText(errorSummaryListItems().eq(1), EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].BELOW_MINIMUM);
 
     cy.checkText(field.errorMessage(), `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].BELOW_MINIMUM}`);
   });

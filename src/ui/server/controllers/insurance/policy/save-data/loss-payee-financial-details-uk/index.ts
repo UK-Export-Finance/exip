@@ -20,7 +20,7 @@ export const NULL_OR_EMPTY_STRING_FIELDS = [FINANCIAL_ADDRESS];
  * This is used for any save functionality in the Policy - Loss payee financial details Uk part of the application.
  * @param {Application} Application
  * @param {RequestBody} Form data
- * @param {Object} Field error list
+ * @param {Object} errorList: Field error list
  * @returns {Promise<Object>} Saved data
  */
 const lossPayeeFinancialDetailsUk = async (application: Application, formBody: RequestBody, errorList?: object) => {
@@ -36,8 +36,9 @@ const lossPayeeFinancialDetailsUk = async (application: Application, formBody: R
     const saveResponse = await api.keystone.application.update.lossPayeeFinancialDetailsUk(lossPayeeFinancialDetailsUkId, sanitisedData);
 
     return saveResponse;
-  } catch (err) {
-    console.error("Error updating application's loss payee financial details uk %O", err);
+  } catch (error) {
+    console.error("Error updating application's loss payee financial details uk %o", error);
+
     throw new Error("Updating application's loss payee financial details uk");
   }
 };

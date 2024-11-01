@@ -7,7 +7,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, HAS_DIFFERENT_TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -74,7 +74,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     it('should display the validation error for trading address in radio error summary', () => {
-      const field = companyDetails[TRADING_ADDRESS];
+      const field = companyDetails[HAS_DIFFERENT_TRADING_ADDRESS];
 
       const radioField = {
         ...field,
@@ -85,7 +85,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         field: radioField,
         errorIndex: 1,
         expectedErrorsCount: 4,
-        expectedErrorMessage: COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY,
+        expectedErrorMessage: COMPANY_DETAILS_ERRORS[HAS_DIFFERENT_TRADING_ADDRESS].IS_EMPTY,
       });
     });
 

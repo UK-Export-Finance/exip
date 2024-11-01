@@ -43,7 +43,7 @@ export const getAllTasksFieldsInAGroup = (group: TaskListDataGroup): Array<strin
  * @returns {Boolean}
  */
 export const areTaskDependenciesMet = (dependencies: Array<string>, submittedData: ApplicationFlat): boolean => {
-  const totalDependencies = (dependencies && dependencies.length) || 0;
+  const totalDependencies = dependencies?.length ?? 0;
 
   let validDependencies = [];
 

@@ -11,6 +11,10 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
+const { eligibleToApplyOnlinePage } = insurance.eligibility;
+
+const { PRIVACY } = CONTENT_STRINGS;
+
 context(
   'Insurance - Eligibility - You are eligible to apply online page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction',
   () => {
@@ -37,6 +41,7 @@ context(
         backLink: CHECK_YOUR_ANSWERS,
         submitButtonCopy: CONTENT_STRINGS.SUBMIT_BUTTON,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 
@@ -46,13 +51,25 @@ context(
       });
 
       it('renders inset text', () => {
-        insurance.eligibility.eligibleToApplyOnlinePage.insetText().should('exist');
+        eligibleToApplyOnlinePage.insetText().should('exist');
 
-        cy.checkText(insurance.eligibility.eligibleToApplyOnlinePage.insetText(), CONTENT_STRINGS.INSET);
+        cy.checkText(eligibleToApplyOnlinePage.insetText(), CONTENT_STRINGS.INSET);
       });
 
       it('renders body text', () => {
         cy.checkText(body(), CONTENT_STRINGS.BODY);
+      });
+
+      it('should render `privacy` copy and link', () => {
+        cy.checkText(eligibleToApplyOnlinePage.privacy.intro(), PRIVACY.INTRO);
+
+        cy.checkText(eligibleToApplyOnlinePage.privacy.notice(), `${PRIVACY.PRIVACY_NOTICE.LINK.TEXT} ${PRIVACY.PRIVACY_NOTICE.TEXT}`);
+
+        cy.checkLink(eligibleToApplyOnlinePage.privacy.noticeLink(), PRIVACY.PRIVACY_NOTICE.LINK.HREF, PRIVACY.PRIVACY_NOTICE.LINK.TEXT);
+      });
+
+      it('renders `continue submit` text', () => {
+        cy.checkText(eligibleToApplyOnlinePage.continueSubmit(), CONTENT_STRINGS.CONTINUE_SUBMIT);
       });
 
       describe('form submission', () => {

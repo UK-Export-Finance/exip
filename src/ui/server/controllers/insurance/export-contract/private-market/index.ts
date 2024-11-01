@@ -59,7 +59,7 @@ export const HTML_FLAGS = {
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
@@ -85,7 +85,6 @@ export const get = (req: Request, res: Response) => {
     ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
     ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
-    FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
     applicationAnswer: application.exportContract.privateMarket[FIELD_ID],
   });
 };
@@ -115,7 +114,6 @@ export const post = async (req: Request, res: Response) => {
       ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
       ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
-      FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
       submittedValues: payload,
       validationErrors,
     });
@@ -192,8 +190,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT}`);
-  } catch (err) {
-    console.error('Error updating application - export contract - private market %O', err);
+  } catch (error) {
+    console.error('Error updating application - export contract - private market %o', error);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

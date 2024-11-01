@@ -27,16 +27,24 @@ export const get = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { exportContract, referenceNumber, migratedV1toV2, totalContractValueOverThreshold } = application;
+  const { exportContract, referenceNumber, totalContractValueOverThreshold } = application;
 
   try {
     const countries = await api.keystone.countries.getAll();
 
-    if (!isPopulatedArray(countries)) {
+    const { allCurrencies } = await api.keystone.APIM.getCurrencies();
+
+    if (!isPopulatedArray(countries) || !isPopulatedArray(allCurrencies)) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const summaryLists = exportContractSummaryLists(exportContract, totalContractValueOverThreshold, migratedV1toV2, referenceNumber, countries);
+    const summaryLists = exportContractSummaryLists({
+      exportContract,
+      totalContractValueOverThreshold,
+      referenceNumber,
+      countries,
+      currencies: allCurrencies,
+    });
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -47,8 +55,8 @@ export const get = async (req: Request, res: Response) => {
       application: mapApplicationToFormFields(res.locals.application),
       SUMMARY_LISTS: summaryLists,
     });
-  } catch (err) {
-    console.error('Error getting countries %O', err);
+  } catch (error) {
+    console.error('Error getting countries %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

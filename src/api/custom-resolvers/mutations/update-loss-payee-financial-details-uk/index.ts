@@ -8,9 +8,9 @@ import { ApplicationLossPayeeFinancialUk, SuccessResponse } from '../../../types
  * updateLossPayeeFinancialDetailsUk
  * encrypts sortCode and accountNumber
  * saves sortCode, sortCodeVector, accountNumber, accountNumberVector, bankAddress to db
- * @param {Object} GraphQL root variables
+ * @param {Object} root: GraphQL root variables
  * @param {ApplicationLossPayeeFinancialUk} GraphQL variables for the ApplicationLossPayeeFinancialUk mutation
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag
  */
 const updateLossPayeeFinancialDetailsUk = async (root: any, variables: ApplicationLossPayeeFinancialUk, context: Context): Promise<SuccessResponse> => {
@@ -42,9 +42,10 @@ const updateLossPayeeFinancialDetailsUk = async (root: any, variables: Applicati
     return {
       success: false,
     };
-  } catch (err) {
-    console.error('Error updating loss payee financial UK %O', err);
-    throw new Error(`Updating loss payee financial UK ${err}`);
+  } catch (error) {
+    console.error('Error updating loss payee financial UK %o', error);
+
+    throw new Error(`Updating loss payee financial UK ${error}`);
   }
 };
 

@@ -1,9 +1,9 @@
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { field as fieldSelector, radios, autoCompleteField } from '../../pages/shared';
-import { EUR, GBP, JPY, USD, NON_STANDARD_CURRENCY_CODE, NON_STANDARD_CURRENCY_NAME } from '../../fixtures/currencies';
+import { errorSummaryListItems } from '../../partials';
 import { checkAutocompleteInput } from '../autocomplete-assertions';
+import { EUR, GBP, JPY, USD, NON_STANDARD_CURRENCY_CODE, NON_STANDARD_CURRENCY_NAME } from '../../fixtures/currencies';
 import { DZA } from '../../fixtures/countries';
-import partials from '../../partials';
 
 const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
@@ -71,8 +71,12 @@ const assertCurrencyFormFields = ({
     cy.checkCurrencyOption(option4, JPY);
 
     // Alternative currency
-    cy.checkText(option5.label(), alternativeCurrencyText);
-    cy.checkValue(option5, alternativeCurrencyFieldId);
+    cy.checkTextAndValue({
+      textSelector: option5.label(),
+      expectedText: alternativeCurrencyText,
+      valueSelector: option5,
+      expectedValue: alternativeCurrencyFieldId,
+    });
   },
   gbpCurrencyCheckedByDefault,
   assertGbpCurrencyCheckedByDefault: () => {
@@ -107,50 +111,65 @@ const assertCurrencyFormFields = ({
     const expectedValue = `${NON_STANDARD_CURRENCY_NAME} (${NON_STANDARD_CURRENCY_CODE})`;
     checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(alternativeCurrencyFieldId, DZA.NAME, NON_STANDARD_CURRENCY_NAME, expectedValue);
   },
-  rendersAlternativeCurrencyValidationError: ({ errorIndex = 0 }) => {
+  rendersAlternativeCurrencyValidationError: ({ errorIndex = 0, viaSaveAndBack }) => {
     cy.clickAlternativeCurrencyRadioOption();
 
-    cy.clickSubmitButton();
+    if (viaSaveAndBack) {
+      cy.clickSaveAndBackButton();
+    } else {
+      cy.clickSubmitButton();
+    }
 
-    cy.checkText(partials.errorSummaryListItems().eq(errorIndex), errors[alternativeCurrencyFieldId].IS_EMPTY);
+    cy.checkText(errorSummaryListItems().eq(errorIndex), errors[alternativeCurrencyFieldId].IS_EMPTY);
 
     cy.checkText(fieldSelector(alternativeCurrencyFieldId).errorMessage(), `Error: ${errors[alternativeCurrencyFieldId].IS_EMPTY}`);
   },
-  submitRadioAndAssertUrl: ({ currency, url, completeNonCurrencyFields }) => {
-    if (completeNonCurrencyFields) {
-      completeNonCurrencyFields();
+  submitRadioAndAssertUrl: ({ currency, completeNonCurrencyFieldsFunction, url, viaSaveAndBack }) => {
+    if (completeNonCurrencyFieldsFunction) {
+      completeNonCurrencyFieldsFunction();
     }
 
     const option = currencyRadio({ fieldId, currency });
 
     option.label().click();
-    cy.clickSubmitButton();
+
+    if (viaSaveAndBack) {
+      cy.clickSaveAndBackButton();
+    } else {
+      cy.clickSubmitButton();
+    }
 
     cy.url().should('include', url);
   },
-  submitAndAssertRadioIsChecked: ({ currency, completeNonCurrencyFields }) => {
-    if (completeNonCurrencyFields) {
-      completeNonCurrencyFields();
+  submitAndAssertRadioIsChecked: ({ currency, completeNonCurrencyFieldsFunction, viaSaveAndBack }) => {
+    if (completeNonCurrencyFieldsFunction) {
+      completeNonCurrencyFieldsFunction();
     }
 
     const option = currencyRadio({ fieldId, currency });
 
     option.label().click();
-    cy.clickSubmitButton();
+
+    if (viaSaveAndBack) {
+      cy.clickSaveAndBackButton();
+    } else {
+      cy.clickSubmitButton();
+    }
 
     cy.go('back');
 
     cy.assertRadioOptionIsChecked(option.input());
   },
-  submitAlternativeCurrencyAndAssertUrl: (url) => {
+  submitAlternativeCurrencyAndAssertUrl: ({ url, viaSaveAndBack }) => {
     cy.clickAlternativeCurrencyRadioAndSubmitCurrency({
       fieldId: alternativeCurrencyFieldId,
       currency: NON_STANDARD_CURRENCY_NAME,
+      viaSaveAndBack,
     });
 
     cy.url().should('include', url);
   },
-  submitAlternativeCurrencyAndAssertInput: () => {
+  submitAlternativeCurrencyAndAssertInput: ({ viaSaveAndBack }) => {
     const option5 = currencyRadio({ alternativeCurrencyFieldId });
 
     // clicks alternative currency radio
@@ -159,7 +178,11 @@ const assertCurrencyFormFields = ({
     // search for currency
     cy.autocompleteKeyboardInput(alternativeCurrencyFieldId, NON_STANDARD_CURRENCY_NAME);
 
-    cy.clickSubmitButton();
+    if (viaSaveAndBack) {
+      cy.clickSaveAndBackButton();
+    } else {
+      cy.clickSubmitButton();
+    }
 
     cy.go('back');
 

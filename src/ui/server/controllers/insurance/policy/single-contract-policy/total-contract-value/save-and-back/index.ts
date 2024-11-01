@@ -1,6 +1,6 @@
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import hasFormData from '../../../../../../helpers/has-form-data';
-import { FIELD_ID } from '..';
+import { FIELD_IDS } from '..';
 import constructPayload from '../../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
 import callMapAndSave from '../../../call-map-and-save';
@@ -26,7 +26,7 @@ export const post = async (req: Request, res: Response) => {
     const { referenceNumber } = req.params;
 
     if (hasFormData(req.body)) {
-      const payload = constructPayload(req.body, [FIELD_ID]);
+      const payload = constructPayload(req.body, FIELD_IDS);
 
       const saveResponse = await callMapAndSave(payload, application, generateValidationErrors(payload));
 
@@ -36,8 +36,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-  } catch (err) {
-    console.error('Error updating application - policy - single contract policy - total contract value (save and back) %O', err);
+  } catch (error) {
+    console.error('Error updating application - policy - single contract policy - total contract value (save and back) %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

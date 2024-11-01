@@ -5,7 +5,7 @@ import { summaryList } from '../../../../../../pages/shared';
 const { HAS_END_BUYER } = INSURANCE_FIELD_IDS.ELIGIBILITY;
 
 const {
-  ELIGIBILITY: { END_BUYER_CHANGE, CHECK_YOUR_ANSWERS, CANNOT_APPLY_MULTIPLE_RISKS },
+  ELIGIBILITY: { END_BUYER_CHANGE, CHECK_YOUR_ANSWERS, CANNOT_APPLY_MULTIPLE_RISKS_EXIT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -61,8 +61,8 @@ context('Insurance - Eligibility - Change your answers - End buyer - As an expor
       cy.clickSubmitButton();
     });
 
-    it(`should redirect to ${CANNOT_APPLY_MULTIPLE_RISKS}`, () => {
-      cy.assertChangeAnswersPageUrl({ route: CANNOT_APPLY_MULTIPLE_RISKS, fieldId, isInsuranceEligibility: true });
+    it(`should redirect to ${CANNOT_APPLY_MULTIPLE_RISKS_EXIT}`, () => {
+      cy.assertChangeAnswersPageUrl({ route: CANNOT_APPLY_MULTIPLE_RISKS_EXIT, fieldId, isInsuranceEligibility: true });
     });
   });
 });

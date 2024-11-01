@@ -1,6 +1,6 @@
 import { Connection } from 'mysql2/promise';
 import removeAntiBriberyTable from './anti-bribery';
-import removeConfidentialityTable from './confidentiality'
+import removeConfidentialityTable from './confidentiality';
 import removeConfirmationAndAcknowledgementTable from './confirmation-and-acknowledgement';
 import removeHowDataWillBeUsedTable from './how-data-will-be-used';
 
@@ -19,7 +19,7 @@ import removeHowDataWillBeUsedTable from './how-data-will-be-used';
 const removeDeclarationContentTables = async (connection: Connection) => {
   const loggingMessage = 'Removing TABLES declaration content';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const tables = await Promise.all([
@@ -30,10 +30,10 @@ const removeDeclarationContentTables = async (connection: Connection) => {
     ]);
 
     return tables;
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

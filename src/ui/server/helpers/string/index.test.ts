@@ -48,7 +48,7 @@ describe('server/helpers/string', () => {
 
     describe('when a string is undefined', () => {
       it('should return false', () => {
-        const result = isPopulatedString(undefined);
+        const result = isPopulatedString();
 
         expect(result).toEqual(false);
       });
@@ -100,7 +100,7 @@ describe('server/helpers/string', () => {
 
     describe('one string is defined', () => {
       it('should return false', () => {
-        const result = stringsAreDefined('test', undefined);
+        const result = stringsAreDefined('test');
 
         expect(result).toEqual(false);
       });
@@ -108,7 +108,7 @@ describe('server/helpers/string', () => {
 
     describe('both strings are undefined', () => {
       it('should return false', () => {
-        const result = stringsAreDefined(undefined, undefined);
+        const result = stringsAreDefined();
 
         expect(result).toEqual(false);
       });

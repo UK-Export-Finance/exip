@@ -1,5 +1,5 @@
 import { FORM_TITLES } from '../../../../content-strings/form-titles';
-import { FIELDS } from '../../../../content-strings/fields/insurance';
+import { EXPORTER_BUSINESS_FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
@@ -21,6 +21,8 @@ const {
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
 } = FIELD_IDS;
 
+const { NATURE_OF_YOUR_BUSINESS } = EXPORTER_BUSINESS_FIELDS;
+
 /**
  * generateNatureOfYourBusinessFields
  * Create all Nature of your business fields and values for the Insurance - Nature of your business govukSummaryList
@@ -29,22 +31,22 @@ const {
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} All Nature of your business fields and values in an object structure for GOVUK summary list structure
  */
-const generateNatureOfYourBusinessFields = (answers: ApplicationBusiness, referenceNumber: number, checkAndChange: boolean): SummaryListGroupData => {
+const generateNatureOfYourBusinessFields = (answers: ApplicationBusiness, referenceNumber: number, checkAndChange?: boolean): SummaryListGroupData => {
   const fields = [
     fieldGroupItem({
-      field: getFieldById(FIELDS.NATURE_OF_YOUR_BUSINESS, GOODS_OR_SERVICES),
+      field: getFieldById(NATURE_OF_YOUR_BUSINESS, GOODS_OR_SERVICES),
       data: answers,
       href: generateChangeLink(NATURE_OF_BUSINESS_CHANGE, NATURE_OF_BUSINESS_CHECK_AND_CHANGE, `#${GOODS_OR_SERVICES}-label`, referenceNumber, checkAndChange),
       renderChangeLink: true,
     }),
     fieldGroupItem({
-      field: getFieldById(FIELDS.NATURE_OF_YOUR_BUSINESS, YEARS_EXPORTING),
+      field: getFieldById(NATURE_OF_YOUR_BUSINESS, YEARS_EXPORTING),
       data: answers,
       href: generateChangeLink(NATURE_OF_BUSINESS_CHANGE, NATURE_OF_BUSINESS_CHECK_AND_CHANGE, `#${YEARS_EXPORTING}-label`, referenceNumber, checkAndChange),
       renderChangeLink: true,
     }),
     fieldGroupItem({
-      field: getFieldById(FIELDS.NATURE_OF_YOUR_BUSINESS, EMPLOYEES_UK),
+      field: getFieldById(NATURE_OF_YOUR_BUSINESS, EMPLOYEES_UK),
       data: answers,
       href: generateChangeLink(NATURE_OF_BUSINESS_CHANGE, NATURE_OF_BUSINESS_CHECK_AND_CHANGE, `#${EMPLOYEES_UK}-label`, referenceNumber, checkAndChange),
       renderChangeLink: true,

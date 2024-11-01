@@ -3,9 +3,9 @@ import { Context, SendConfirmEmailAddressVariables } from '../../../types';
 
 /**
  * sendEmailConfirmEmailAddress
- * @param {Object} GraphQL root variables
- * @param {Object} GraphQL variables for the SendEmailConfirmEmailAddress mutation
- * @param {Context} KeystoneJS context API
+ * @param {Object} root: GraphQL root variables
+ * @param {Object} variables: GraphQL variables for the SendEmailConfirmEmailAddress mutation
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag / result of sendEmailConfirmEmailAddress
  */
 const sendEmailConfirmEmailAddressMutation = async (root: any, variables: SendConfirmEmailAddressVariables, context: Context) => {
@@ -19,9 +19,10 @@ const sendEmailConfirmEmailAddressMutation = async (root: any, variables: SendCo
     }
 
     throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${emailResponse}`);
-  } catch (err) {
-    console.error('Error sending email verification for account creation (sendEmailConfirmEmailAddress mutation) %O', err);
-    throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${err}`);
+  } catch (error) {
+    console.error('Error sending email verification for account creation (sendEmailConfirmEmailAddress mutation) %o', error);
+
+    throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${error}`);
   }
 };
 

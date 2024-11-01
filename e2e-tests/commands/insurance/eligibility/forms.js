@@ -1,15 +1,15 @@
 import { FIELD_VALUES } from '../../../constants';
 import { field } from '../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
-import { FIELDS_ELIGIBILITY } from '../../../content-strings/fields/insurance/eligibility';
+import { ELIGIBILITY_FIELDS } from '../../../content-strings/fields/insurance/eligibility';
 
 const {
   ELIGIBILITY: { COVER_PERIOD, TOTAL_CONTRACT_VALUE },
 } = INSURANCE_FIELD_IDS;
 
-const { ABOVE: TOTAL_CONTRACT_VALUE_ABOVE, BELOW: TOTAL_CONTRACT_VALUE_BELOW } = FIELDS_ELIGIBILITY[TOTAL_CONTRACT_VALUE].OPTIONS;
+const { ABOVE: TOTAL_CONTRACT_VALUE_ABOVE, BELOW: TOTAL_CONTRACT_VALUE_BELOW } = ELIGIBILITY_FIELDS[TOTAL_CONTRACT_VALUE].OPTIONS;
 
-const { ABOVE: COVER_PERIOD_ABOVE, BELOW: COVER_PERIOD_BELOW } = FIELDS_ELIGIBILITY[COVER_PERIOD].OPTIONS;
+const { ABOVE: COVER_PERIOD_ABOVE, BELOW: COVER_PERIOD_BELOW } = ELIGIBILITY_FIELDS[COVER_PERIOD].OPTIONS;
 
 /**
  * selectRadioAndSubmit

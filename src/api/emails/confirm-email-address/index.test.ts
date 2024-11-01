@@ -2,7 +2,7 @@ import { confirmEmailAddress } from '.';
 import notify from '../../integrations/notify';
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
 import getFullNameString from '../../helpers/get-full-name-string';
-import { mockAccount, mockSendEmailResponse, mockUrlOrigin } from '../../test-mocks';
+import { mockAccount, mockSendEmailResponse, mockUrlOrigin, mockErrorMessage, mockSpyPromiseRejection } from '../../test-mocks';
 
 describe('emails/confirm-email-address', () => {
   const sendEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
@@ -18,8 +18,6 @@ describe('emails/confirm-email-address', () => {
     name: fullName,
     confirmToken: verificationHash,
   };
-
-  const mockErrorMessage = 'Mock error';
 
   beforeAll(async () => {
     notify.sendEmail = sendEmailSpy;
@@ -39,16 +37,16 @@ describe('emails/confirm-email-address', () => {
 
   describe('error handling', () => {
     beforeAll(async () => {
-      notify.sendEmail = jest.fn(() => Promise.reject(mockErrorMessage));
+      notify.sendEmail = mockSpyPromiseRejection;
     });
 
     test('should throw an error', async () => {
       try {
         await confirmEmailAddress(email, mockUrlOrigin, fullName, verificationHash, id);
-      } catch (err) {
-        const expected = new Error(`Sending confirm email address email Error: Sending email ${mockErrorMessage}`);
+      } catch (error) {
+        const expected = new Error(`Sending confirm email address email Error: Sending email ${new Error(mockErrorMessage)}`);
 
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

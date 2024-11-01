@@ -3,7 +3,7 @@ import { AccountStatusCore, Context } from '../../types';
 /**
  * account
  * Update an account
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} Account ID
  * @param {Account} Account update data
  * @returns {Promise<Object>} Updated account
@@ -20,10 +20,10 @@ const account = async (context: Context, accountId: string, updateData: object) 
     });
 
     return updatedAccount;
-  } catch (err) {
-    console.error('Error updating account %O', err);
+  } catch (error) {
+    console.error('Error updating account %o', error);
 
-    throw new Error(`Updating account ${err}`);
+    throw new Error(`Updating account ${error}`);
   }
 };
 
@@ -50,10 +50,10 @@ const accountStatus = async (context: Context, accountStatusId: string, updateDa
     });
 
     return updatedAccountStatus;
-  } catch (err) {
-    console.error('Error updating account status %O', err);
+  } catch (error) {
+    console.error('Error updating account status %o', error);
 
-    throw new Error(`Updating account status ${err}`);
+    throw new Error(`Updating account status ${error}`);
   }
 };
 

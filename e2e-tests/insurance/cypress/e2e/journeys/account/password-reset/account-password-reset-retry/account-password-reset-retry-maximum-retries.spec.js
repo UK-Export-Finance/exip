@@ -1,5 +1,3 @@
-import { yourDetailsPage } from '../../../../../../../pages/insurance/account/create';
-import { signInPage } from '../../../../../../../pages/insurance/account/sign-in';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
@@ -17,6 +15,7 @@ context(
     const accountSuspendedUrl = `${baseUrl}${SUSPENDED_ROOT}`;
 
     let account;
+    let expectedUrl;
 
     before(() => {
       cy.deleteAccount();
@@ -27,10 +26,10 @@ context(
       cy.clickBackLink();
 
       // navigate to sign in page
-      yourDetailsPage.signInButtonLink().click();
+      cy.clickSignInButtonLink();
 
       // navigate to password reset page
-      signInPage.resetPasswordLink().click();
+      cy.clickSignInResetPasswordLink();
 
       cy.assertUrl(passwordResetUrl);
     });
@@ -55,7 +54,7 @@ context(
           const [firstAccount] = responseData;
           account = firstAccount;
 
-          const expectedUrl = `${accountSuspendedUrl}?id=${account.id}`;
+          expectedUrl = `${accountSuspendedUrl}?id=${account.id}`;
 
           cy.assertUrl(expectedUrl);
         });
@@ -72,8 +71,6 @@ context(
       });
 
       it(`should redirect to ${SUSPENDED_ROOT} with ID query param`, () => {
-        const expectedUrl = `${accountSuspendedUrl}?id=${account.id}`;
-
         cy.assertUrl(expectedUrl);
       });
     });

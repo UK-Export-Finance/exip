@@ -1,7 +1,7 @@
 import { HEADER } from '../../../content-strings';
 import { ROUTES } from '../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
-import header from '../../../partials/header';
+import { header } from '../../../partials';
 import mockAccount from '../../../fixtures/account';
 
 const {

@@ -47,8 +47,8 @@ export const get = async (req: Request, res: Response) => {
     }
 
     return res.redirect(PROBLEM_WITH_SERVICE);
-  } catch (err) {
-    console.error("Error sending 'confirm email address' email %O", err);
+  } catch (error) {
+    console.error("Error sending 'confirm email address' email %o", error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

@@ -26,7 +26,7 @@ const {
 /**
  * mapKeyInformation
  * Map key information for an application
- * @param {Application}
+ * @param {Application} application
  * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapKeyInformation = (application: Application) => {

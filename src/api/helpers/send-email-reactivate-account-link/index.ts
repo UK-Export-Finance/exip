@@ -20,7 +20,7 @@ const {
  * sendEmailReactivateAccountLink
  * Generate a hash, update account and send a link to the account via email.
  * @param {AccountSendEmailReactivateLinkVariables} variables for the SendReactivateAccountEmail helper
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag
  */
 const send = async (variables: AccountSendEmailReactivateLinkVariables, context: Context): Promise<AccountSendEmailReactivateLinkResponse> => {
@@ -75,10 +75,10 @@ const send = async (variables: AccountSendEmailReactivateLinkVariables, context:
     }
 
     return { accountId, email, success: false };
-  } catch (err) {
-    console.error('Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper) %O', err);
+  } catch (error) {
+    console.error('Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper) %o', error);
 
-    throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper) ${err}`);
+    throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper) ${error}`);
   }
 };
 

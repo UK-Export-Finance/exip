@@ -2,7 +2,6 @@ import { yesNoRadioHint, yesRadio, noRadio } from '../../../../../../pages/share
 import { FIELDS, PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 import {
   checkCalculateDescriptionSummaryText,
   checkCalculateDescriptionSummaryClickRevealsContent,
@@ -30,15 +29,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
   const url = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
 
   before(() => {
-    cy.navigateToCheckIfEligibleUrl();
-    cy.completeCheckIfEligibleForm();
-    cy.completeExporterLocationForm();
-    cy.completeCompaniesHouseNumberForm();
-    cy.completeAndSubmitCompaniesHouseSearchForm({});
-    cy.completeEligibilityCompanyDetailsForm();
-    completeAndSubmitBuyerCountryForm({});
-    cy.completeAndSubmitTotalValueInsuredForm({});
-    cy.completeCoverPeriodForm({});
+    cy.completeAndSubmitEligibilityForms({ formToStopAt: 'coverPeriod' });
 
     cy.assertUrl(url);
   });
@@ -53,6 +44,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
       currentHref: UK_GOODS_OR_SERVICES,
       backLink: COVER_PERIOD,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

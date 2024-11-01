@@ -9,6 +9,7 @@ import mockCountries from './mock-countries';
 import mockCurrencies, { EUR, HKD, JPY, GBP, USD, mockCurrenciesResponse, mockCurrenciesEmptyResponse } from './mock-currencies';
 import mockCompaniesHouseResponse from './mock-companies-house-response';
 import mockCompany from './mock-company';
+import mockCreateApplicationResponse from './mock-create-application-response';
 import mockApplication, {
   mockExportContract,
   mockExportContractAgent,
@@ -39,7 +40,7 @@ import mockSicCodes from './mock-sic-codes';
 import mockBusinessNatureOfBusiness from './mock-business-nature-of-business';
 import mockBusinessTurnover from './mock-business-turnover';
 import mockBroker from './mock-broker';
-import mockBuyer, { mockBuyerTradingHistory, mockBuyerRelationship, mockBuyerContact } from './mock-buyer';
+import mockBuyer, { mockBuyerTradingHistory, mockBuyerRelationship, mockBuyerContact, mockBuyerOutstandingOrOverduePayments } from './mock-buyer';
 import { mockInsuranceFeedback } from './mock-feedback';
 import mockJointlyInsuredParty from './mock-jointly-insured-party';
 import mockLossPayeeDetails from './mock-loss-payee-details';
@@ -116,7 +117,11 @@ const mockRes = () => {
   return res;
 };
 
+const mockErrorMessage = 'Mock error';
+
 const mockSpyPromise = () => jest.fn().mockResolvedValue({});
+
+const mockSpyPromiseRejection = jest.fn().mockRejectedValue(new Error(mockErrorMessage));
 
 export {
   EUR,
@@ -147,16 +152,19 @@ export {
   mockBusinessTurnover,
   mockBuyer,
   mockBuyerContact,
+  mockBuyerOutstandingOrOverduePayments,
   mockBuyerRelationship,
   mockBuyerTradingHistory,
   mockCountries,
   mockCompaniesHouseResponse,
   mockCompany,
+  mockCreateApplicationResponse,
   mockCurrencies,
   mockCurrenciesResponse,
   mockCurrenciesEmptyResponse,
   mockCompanyDifferentTradingAddress,
   mockEligibility,
+  mockErrorMessage,
   mockErrorMessagesObject,
   mockErrors,
   mockExportContractAgentService,
@@ -176,6 +184,7 @@ export {
   mockReq,
   mockRes,
   mockSpyPromise,
+  mockSpyPromiseRejection,
   mockValidEmail,
   referenceNumber,
 };

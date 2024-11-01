@@ -128,6 +128,8 @@ const corePageChecks = ({
 
   if (assertSaveAndBackButtonDoesNotExist) {
     cy.assertSaveAndBackButtonDoesNotExist();
+  } else {
+    cy.assertSaveAndBackButton();
   }
 };
 

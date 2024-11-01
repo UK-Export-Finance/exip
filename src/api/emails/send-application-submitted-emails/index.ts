@@ -8,8 +8,8 @@ import { SuccessResponse, ApplicationSubmissionEmailVariables, Application } fro
 /**
  * applicationSubmittedEmails.send
  * Send "application submitted" emails
- * @param {Application}
- * @param {String} Path to XLSX file for underwriting team email
+ * @param {Application} application
+ * @param {String} xlsxPath: Path to XLSX file for underwriting team email
  * @returns {Promise<Object>} Object with success flag and emailRecipient
  */
 const send = async (application: Application, xlsxPath: string): Promise<SuccessResponse> => {
@@ -54,7 +54,7 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
 
     const accountSubmittedResponse = await sendEmail.application.submittedEmail(sendOwnerEmailVars);
 
-    if (!accountSubmittedResponse.success) {
+    if (!accountSubmittedResponse?.success) {
       throw new Error('Sending application submitted email to owner/account');
     }
 
@@ -66,7 +66,7 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
       console.info('Sending application submitted email to policy contact email: %s', sendContactEmailVars.emailAddress);
       const contactSubmittedResponse = await sendEmail.application.submittedEmail(sendContactEmailVars);
 
-      if (!contactSubmittedResponse.success) {
+      if (!contactSubmittedResponse?.success) {
         throw new Error('Sending application submitted email to contact');
       }
     }
@@ -108,10 +108,10 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
     return {
       success: true,
     };
-  } catch (err) {
-    console.error('Error sending application submitted emails %O', err);
+  } catch (error) {
+    console.error('Error sending application submitted emails %o', error);
 
-    throw new Error(`Sending application submitted emails ${err}`);
+    throw new Error(`Sending application submitted emails ${error}`);
   }
 };
 

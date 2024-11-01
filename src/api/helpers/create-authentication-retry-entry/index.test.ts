@@ -78,10 +78,10 @@ describe('helpers/create-authentication-retry-entry', () => {
     it('should throw an error', async () => {
       try {
         await createAuthenticationRetryEntry(context, account.id);
-      } catch (err) {
+      } catch (error) {
         const expectedErr = 'An error occurred while resolving relationship fields';
 
-        expect(String(err).includes(expectedErr)).toEqual(true);
+        expect(String(error).includes(expectedErr)).toEqual(true);
       }
     });
   });

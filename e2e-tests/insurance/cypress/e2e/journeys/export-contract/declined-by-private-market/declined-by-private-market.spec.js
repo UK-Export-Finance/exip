@@ -41,11 +41,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.startInsuranceExportContractSection({});
-        cy.completeAndSubmitHowWasTheContractAwardedForm({});
-        cy.completeAndSubmitAboutGoodsOrServicesForm({});
-        cy.completeAndSubmitHowYouWillGetPaidForm({});
-        cy.completeAndSubmitPrivateMarketForm({ attemptedPrivateMarketCover: true });
+        cy.completeAndSubmitExportContractForms({ formToStopAt: 'privateMarket', totalContractValueOverThreshold: true, attemptedPrivateMarketCover: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
         agentUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT}`;
@@ -85,10 +81,6 @@ context(
           maximumCharacters: fieldStrings.MAXIMUM,
           expectedHint: fieldStrings.HINT,
         });
-      });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
       });
     });
 

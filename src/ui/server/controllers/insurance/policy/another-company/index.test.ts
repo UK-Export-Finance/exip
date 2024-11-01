@@ -11,7 +11,7 @@ import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import mapAndSave from '../map-and-save/jointly-insured-party';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -69,7 +69,7 @@ describe('controllers/insurance/policy/another-company', () => {
   });
 
   describe('PAGE_CONTENT_STRINGS', () => {
-    it('should have the correct properties', () => {
+    it('should have the correct strings', () => {
       const expected = {
         ...PAGES.INSURANCE.POLICY.ANOTHER_COMPANY,
         HINT: FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[REQUESTED].HINT,
@@ -326,7 +326,7 @@ describe('controllers/insurance/policy/another-company', () => {
 
         describe('when there is an error', () => {
           beforeEach(() => {
-            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+            const mapAndSaveSpy = mockSpyPromiseRejection;
 
             mapAndSave.jointlyInsuredParty = mapAndSaveSpy;
           });

@@ -1,12 +1,4 @@
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import {
-  completeAndSubmitBuyerBodyForm,
-  completeAndSubmitExporterLocationForm,
-  completeAndSubmitUkContentForm,
-  completeAndSubmitPolicyTypeSingleForm,
-} from '../../../../../../commands/quote/forms';
 import { field as fieldSelector } from '../../../../../../pages/shared';
-import { tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
 import { FIELDS, PAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { EUR, GBP, JPY, USD } from '../../../../../../fixtures/currencies';
@@ -28,13 +20,13 @@ context('Tell us about your single policy page - as an exporter, I want to provi
   const url = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
 
   before(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
-    completeAndSubmitBuyerCountryForm({});
-    completeAndSubmitBuyerBodyForm();
-    completeAndSubmitExporterLocationForm();
-    completeAndSubmitUkContentForm();
-    completeAndSubmitPolicyTypeSingleForm();
+    cy.completeAndSubmitBuyerCountryForm({});
+    cy.completeAndSubmitBuyerBodyForm();
+    cy.completeAndSubmitExporterLocationForm();
+    cy.completeAndSubmitUkContentForm();
+    cy.completeAndSubmitPolicyTypeSingleForm();
 
     cy.assertUrl(url);
   });
@@ -50,6 +42,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
       backLink: POLICY_TYPE,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 
@@ -129,9 +122,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
     });
 
     it('does NOT render `credit period` label, hint and input', () => {
-      const fieldId = CREDIT_PERIOD;
-
-      const field = tellUsAboutYourPolicyPage[fieldId];
+      const field = fieldSelector(CREDIT_PERIOD);
 
       field.label().should('not.exist');
 

@@ -1,5 +1,6 @@
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import checkSummaryList from '../../../../../../../commands/insurance/check-your-buyer-summary-list';
 
 const {
@@ -21,6 +22,8 @@ const {
   HAS_BUYER_FINANCIAL_ACCOUNTS,
 } = YOUR_BUYER_FIELD_IDS;
 
+const { CURRENCY_CODE } = INSURANCE_FIELD_IDS.CURRENCY;
+
 const baseUrl = Cypress.config('baseUrl');
 
 context(
@@ -29,19 +32,14 @@ context(
     let referenceNumber;
     let url;
 
-    describe(`${CONNECTION_WITH_BUYER} as no`, () => {
+    describe(`when ${CONNECTION_WITH_BUYER} is 'no'`, () => {
       before(() => {
         cy.deleteAccount();
 
         cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
           referenceNumber = refNumber;
 
-          cy.startInsuranceYourBuyerSection({});
-
-          cy.completeAndSubmitCompanyOrOrganisationForm({});
-          cy.completeAndSubmitConnectionWithTheBuyerForm({});
-          cy.completeAndSubmitTradedWithBuyerForm({});
-          cy.completeAndSubmitBuyerFinancialInformationForm({});
+          cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'buyerFinancialInformation' });
 
           url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
         });
@@ -91,6 +89,10 @@ context(
 
       it(`should NOT render a ${OUTSTANDING_PAYMENTS} summary list row`, () => {
         checkSummaryList[OUTSTANDING_PAYMENTS]({ shouldRender: false });
+      });
+
+      it(`should NOT render a ${CURRENCY_CODE} summary list row`, () => {
+        checkSummaryList[CURRENCY_CODE]({ shouldRender: false });
       });
 
       it(`should NOT render a ${TOTAL_AMOUNT_OVERDUE} summary list row`, () => {

@@ -3,6 +3,7 @@ export const APPLICATION = {
     MIA: 'Manual Inclusion Application',
   },
   SUBMISSION_DEADLINE_IN_MONTHS: 1,
+  SUBMISSION_DEADLINE_IN_DAYS: 30,
   POLICY_TYPE: {
     SINGLE: 'Single contract policy',
     MULTIPLE: 'Multiple contract policy',
@@ -12,10 +13,10 @@ export const APPLICATION = {
     },
   },
   POLICY: {
-    TOTAL_VALUE_OF_CONTRACT: {
+    TOTAL_MONTHS_OF_COVER: {
       MINIMUM: 1,
+      MAXIMUM: 12,
     },
-    TOTAL_MONTHS_OF_COVER: 12,
   },
   STATUS: {
     IN_PROGRESS: 'In progress',

@@ -1,4 +1,4 @@
-import partials from '../../../../../../partials';
+import { headingCaption } from '../../../../../../partials';
 import { field as fieldSelector } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -31,17 +31,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.startInsurancePolicySection({});
-
-        cy.completeAndSubmitPolicyTypeForm({});
-        cy.completeAndSubmitSingleContractPolicyForm({});
-        cy.completeAndSubmitTotalContractValueForm({});
-        cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
-        cy.completeAndSubmitPreCreditPeriodForm({});
-        cy.completeAndSubmitAnotherCompanyForm({});
-        cy.completeAndSubmitBrokerForm({ usingBroker: false });
-        cy.completeAndSubmitLossPayeeForm({ isAppointingLossPayee: true });
-        cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: false });
+        cy.completeAndSubmitPolicyForms({ formToStopAt: 'lossPayeeDetails', isAppointingLossPayee: true, locatedInUK: false });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT}`;
         checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
@@ -72,7 +62,7 @@ context(
       });
 
       it('renders a heading caption', () => {
-        cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+        cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
       it('renders a hint', () => {
@@ -107,10 +97,6 @@ context(
           expectedLabel: fieldStrings.LABEL,
           maximumCharacters: fieldStrings.MAXIMUM,
         });
-      });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
       });
     });
 

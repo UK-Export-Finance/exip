@@ -1,4 +1,4 @@
-import partials from '../../../../../../partials';
+import { headingCaption } from '../../../../../../partials';
 import { field as fieldSelector } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -32,15 +32,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.startInsurancePolicySection({});
-
-        cy.completeAndSubmitPolicyTypeForm({});
-        cy.completeAndSubmitSingleContractPolicyForm({});
-        cy.completeAndSubmitTotalContractValueForm({});
-        cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
-        cy.completeAndSubmitPreCreditPeriodForm({});
-        cy.completeAndSubmitAnotherCompanyForm({});
-        cy.completeAndSubmitBrokerForm({ usingBroker: true });
+        cy.completeAndSubmitPolicyForms({ formToStopAt: 'broker', usingBroker: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
         brokerConfirmAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
@@ -71,7 +63,7 @@ context(
       });
 
       it('renders a heading caption', () => {
-        cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+        cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
       it('renders intro text', () => {
@@ -104,10 +96,6 @@ context(
           expectedLabel: fieldStrings.LABEL,
           maximumCharacters: fieldStrings.MAXIMUM,
         });
-      });
-
-      it('renders a `save and back` button', () => {
-        cy.assertSaveAndBackButton();
       });
     });
 

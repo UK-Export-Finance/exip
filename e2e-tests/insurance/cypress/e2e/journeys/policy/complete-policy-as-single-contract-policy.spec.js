@@ -5,16 +5,7 @@ context('Insurance - Policy - Complete the entire section as a single contract p
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection({});
-
-      cy.completeAndSubmitPolicyTypeForm({});
-      cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitTotalContractValueForm({});
-      cy.completeAndSubmitNameOnPolicyForm({});
-      cy.completeAndSubmitPreCreditPeriodForm({});
-      cy.completeAndSubmitAnotherCompanyForm({});
-      cy.completeAndSubmitBrokerForm({});
-      cy.completeAndSubmitLossPayeeForm({});
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'lossPayee' });
 
       /**
        * Submit the "Policy - check your answers" form,

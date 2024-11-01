@@ -7,7 +7,7 @@ import mapYesNoField from '../../../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../../../generate-change-link';
 import { ApplicationBuyerTradingHistory, SummaryListItemData } from '../../../../../../../types';
 
-const { TRADING_HISTORY_CHANGE, TRADING_HISTORY_CHECK_AND_CHANGE } = YOUR_BUYER_ROUTES;
+const { TRADING_HISTORY_CHANGE, TRADING_HISTORY_CHECK_AND_CHANGE, FAILED_TO_PAY_CHANGE, FAILED_TO_PAY_CHECK_AND_CHANGE } = YOUR_BUYER_ROUTES;
 
 const { TRADED_WITH_BUYER, OUTSTANDING_PAYMENTS, FAILED_PAYMENTS } = BUYER_FIELD_IDS;
 
@@ -17,7 +17,7 @@ const { TRADED_WITH_BUYER, OUTSTANDING_PAYMENTS, FAILED_PAYMENTS } = BUYER_FIELD
  * if TRADED_WITH_BUYER is true, render additional rows in summary list
  * @param {ApplicationBuyerTradingHistory} answers: Buyer trading history answers
  * @param {Number} referenceNumber: Application reference number
- * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>} Array including or excluding OUTSTANDING_PAYMENTS and FAILED_PAYMENTS in correct structure
  */
 const optionalTradedWithBuyerFields = (answers: ApplicationBuyerTradingHistory, referenceNumber: number, checkAndChange?: boolean) => {
@@ -38,7 +38,7 @@ const optionalTradedWithBuyerFields = (answers: ApplicationBuyerTradingHistory, 
         {
           field: getFieldById(FIELDS, FAILED_PAYMENTS),
           data: answers,
-          href: generateChangeLink(TRADING_HISTORY_CHANGE, TRADING_HISTORY_CHECK_AND_CHANGE, `#${FAILED_PAYMENTS}-label`, referenceNumber, checkAndChange),
+          href: generateChangeLink(FAILED_TO_PAY_CHANGE, FAILED_TO_PAY_CHECK_AND_CHANGE, `#${FAILED_PAYMENTS}-label`, referenceNumber, checkAndChange),
           renderChangeLink: true,
         },
         mapYesNoField(answers[FAILED_PAYMENTS]),

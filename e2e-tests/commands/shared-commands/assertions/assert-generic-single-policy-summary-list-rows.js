@@ -4,7 +4,7 @@ import checkSummaryList from '../../insurance/check-policy-summary-list';
 const {
   TYPE_OF_POLICY: { POLICY_TYPE },
   CONTRACT_POLICY: {
-    SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
+    SINGLE: { CONTRACT_COMPLETION_DATE, REQUESTED_CREDIT_LIMIT, TOTAL_CONTRACT_VALUE },
   },
 } = POLICY_FIELD_IDS;
 
@@ -20,6 +20,7 @@ const assertGenericSinglePolicySummaryListRows = () => {
 
   checkSummaryList.singleContractPolicy[CONTRACT_COMPLETION_DATE]();
   checkSummaryList.singleContractPolicy[TOTAL_CONTRACT_VALUE]();
+  checkSummaryList.singleContractPolicy[REQUESTED_CREDIT_LIMIT]();
 };
 
 export default assertGenericSinglePolicySummaryListRows;

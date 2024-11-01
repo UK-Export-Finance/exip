@@ -1,21 +1,21 @@
 import save from '.';
 import api from '../../../../../api';
-import { mockApplication, mockJointlyInsuredParty } from '../../../../../test-mocks';
+import { mockApplication, mockJointlyInsuredParty, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 describe('controllers/insurance/policy/save-data/jointly-insured-policy - API error', () => {
   const mockFormBody = mockJointlyInsuredParty;
 
   beforeEach(() => {
-    const updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+    const updateApplicationSpy = mockSpyPromiseRejection;
     api.keystone.application.update.jointlyInsuredParty = updateApplicationSpy;
   });
 
   it('should throw an error', async () => {
     try {
       await save.jointlyInsuredParty(mockApplication, mockFormBody);
-    } catch (err) {
+    } catch (error) {
       const expected = new Error("Updating application's jointly insured party");
-      expect(err).toEqual(expected);
+      expect(error).toEqual(expected);
     }
   });
 });

@@ -1,12 +1,11 @@
 import createANominatedLossPayee from '.';
 import { Application, Context } from '../../types';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
 
-const invalidId = 'invalid-id';
-
-const assertError = (err) => {
-  const errorString = String(err);
+const assertError = (error) => {
+  const errorString = String(error);
 
   expect(errorString.includes('Creating a nominated loss payee')).toEqual(true);
 };
@@ -18,7 +17,7 @@ describe('helpers/create-a-nominated-loss-payee', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await applications.create({ context, data: {} })) as Application;
+    application = (await applications.create({ context })) as Application;
   });
 
   test('it should return a nominated loss payee with ID', async () => {
@@ -42,9 +41,9 @@ describe('helpers/create-a-nominated-loss-payee', () => {
   describe('when an invalid application ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createANominatedLossPayee(context, invalidId);
-      } catch (err) {
-        assertError(err);
+        await createANominatedLossPayee(context, mockInvalidId);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -54,8 +53,8 @@ describe('helpers/create-a-nominated-loss-payee', () => {
       try {
         // pass empty context object to force an error
         await createANominatedLossPayee({}, application.id);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

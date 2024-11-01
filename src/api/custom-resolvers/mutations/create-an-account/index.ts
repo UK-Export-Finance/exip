@@ -24,9 +24,9 @@ import { Account, AccountCreationVariables, AccountCreationCore, Context } from 
  * - Create initial account data.
  * - Create account status connection
  * - Send "confirm email address" email.
- * @param {Object} GraphQL root variables
+ * @param {Object} root: GraphQL root variables
  * @param {AccountCreationVariables} GraphQL variables for the CreateAnAccount mutation
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag and some account data
  */
 const createAnAccount = async (root: any, variables: AccountCreationVariables, context: Context) => {
@@ -169,9 +169,10 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
     }
 
     throw new Error(`Account creation - sending email verification for account creation ${emailResponse}`);
-  } catch (err) {
-    console.error('Error Account creation - creating account %O', err);
-    throw new Error(`Account creation - creating account ${err}`);
+  } catch (error) {
+    console.error('Error Account creation - creating account %o', error);
+
+    throw new Error(`Account creation - creating account ${error}`);
   }
 };
 

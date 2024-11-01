@@ -10,29 +10,29 @@ import mapBroker from './map-broker';
 import mapLossPayee from './map-loss-payee';
 import getPopulatedApplication from '../../../helpers/get-populated-application';
 import { mockCountries } from '../../../test-mocks';
-import { createFullApplication, getKeystoneContext, mapApplicationIds } from '../../../test-helpers';
+import { createFullApplication, getKeystoneContext, generateSubmittedApplication } from '../../../test-helpers';
 import { Application, Context } from '../../../types';
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-policy', () => {
   let populatedApplicationMultiplePolicy: Application;
-  let fullApplication: Application;
+  let submittedApplication: Application;
   let context: Context;
 
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    fullApplication = await createFullApplication(context);
+    submittedApplication = await generateSubmittedApplication();
 
     const multiplePolicyApplication = await createFullApplication(context, FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
-    populatedApplicationMultiplePolicy = await getPopulatedApplication.get({ context, application: mapApplicationIds(multiplePolicyApplication) });
+    populatedApplicationMultiplePolicy = await getPopulatedApplication.get({ context, application: multiplePolicyApplication });
   });
 
   describe(`when the policy type is ${FIELD_VALUES.POLICY_TYPE.SINGLE}`, () => {
     it('should return an array of mapped fields via mapSingleContractPolicy', () => {
-      const result = mapPolicy(fullApplication, mockCountries);
+      const result = mapPolicy(submittedApplication, mockCountries);
 
-      const { nominatedLossPayee, policy, policyContact } = fullApplication;
+      const { nominatedLossPayee, policy, policyContact } = submittedApplication;
 
       const expected = [
         ...mapIntro(policy),
@@ -44,7 +44,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy', () => {
 
         ...mapJointlyInsuredParty(policy.jointlyInsuredParty, mockCountries),
 
-        ...mapBroker(fullApplication),
+        ...mapBroker(submittedApplication),
         ...mapLossPayee(nominatedLossPayee),
       ];
 
@@ -68,7 +68,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy', () => {
 
         ...mapJointlyInsuredParty(policy.jointlyInsuredParty, mockCountries),
 
-        ...mapBroker(fullApplication),
+        ...mapBroker(submittedApplication),
         ...mapLossPayee(nominatedLossPayee),
       ];
 

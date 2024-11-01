@@ -5,11 +5,11 @@ import { EmailResponse } from '../../types';
 /**
  * confirmEmailAddress
  * Send "confirm your email address" email to an account
- * @param {String} Email address
- * @param {String} URL origin
- * @param {String} Name
- * @param {String} Verification hash
- * @param {String} Account ID
+ * @param {String} emailAddress: Email address
+ * @param {String} urlOrigin: URL origin
+ * @param {String} name: Name
+ * @param {String} verificationHash: Verification hash
+ * @param {String} id: Account ID
  * @returns {Promise<Object>} callNotify response
  */
 export const confirmEmailAddress = async (
@@ -29,9 +29,9 @@ export const confirmEmailAddress = async (
     const response = await callNotify(templateId, emailAddress, variables);
 
     return response;
-  } catch (err) {
-    console.error('Error sending confirm email address email %O', err);
+  } catch (error) {
+    console.error('Error sending confirm email address email %o', error);
 
-    throw new Error(`Sending confirm email address email ${err}`);
+    throw new Error(`Sending confirm email address email ${error}`);
   }
 };

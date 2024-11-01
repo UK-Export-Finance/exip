@@ -1,5 +1,4 @@
 import { headingCaption } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -10,10 +9,6 @@ const {
 } = INSURANCE_ROUTES;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_EXPORT_CONTRACT;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -29,7 +24,7 @@ context(
 
         cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-        task.link().click();
+        cy.clickTaskCheckAnswers();
 
         // To get past previous "Check your answers" pages
         cy.completeAndSubmitMultipleCheckYourAnswers({ count: 3 });
@@ -84,6 +79,10 @@ context(
 
         it('should change the status of task `check your answers` to `completed`', () => {
           cy.checkTaskCheckAnswersStatusIsComplete();
+        });
+
+        it('should update the status of task `declarations and submit` to `not started yet`', () => {
+          cy.checkTaskDeclarationsAndSubmitStatusIsNotStartedYet();
         });
       });
     });

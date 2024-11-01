@@ -14,9 +14,9 @@ const {
 /**
  * verifyAccountSignInCode
  * Check if a OTP/access code is valid and if so, wipe the retry entries and generate and return a JWT
- * @param {Object} GraphQL root variables
- * @param {Object} GraphQL variables for the AccountSignIn mutation
- * @param {Context} KeystoneJS context API
+ * @param {Object} root: GraphQL root variables
+ * @param {Object} variables: GraphQL variables for the AccountSignIn mutation
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success or expired flag.
  */
 const verifyAccountSignInCode = async (root: any, variables: VerifyAccountSignInCodeVariables, context: Context): Promise<VerifyAccountSignInCodeResponse> => {
@@ -97,9 +97,10 @@ const verifyAccountSignInCode = async (root: any, variables: VerifyAccountSignIn
     return {
       success: false,
     };
-  } catch (err) {
-    console.error('Error verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) %O', err);
-    throw new Error(`Verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) ${err}`);
+  } catch (error) {
+    console.error('Error verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) %o', error);
+
+    throw new Error(`Verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) ${error}`);
   }
 };
 

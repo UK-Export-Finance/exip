@@ -1,4 +1,4 @@
-import partials from '../../../../../../../partials';
+import { errorSummaryListItems } from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { APPLICATION } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -25,6 +25,8 @@ const {
   },
 } = ERROR_MESSAGES;
 
+const { MULTIPLE } = APPLICATION.POLICY_TYPE;
+
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Multiple contract policy page - form validation', () => {
@@ -35,8 +37,7 @@ context('Insurance - Policy - Multiple contract policy page - form validation', 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm({ policyType: APPLICATION.POLICY_TYPE.MULTIPLE });
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'policyType', policyType: MULTIPLE });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 
@@ -62,10 +63,10 @@ context('Insurance - Policy - Multiple contract policy page - form validation', 
     const TOTAL_REQUIRED_FIELDS = 3;
     cy.assertErrorSummaryListLength(TOTAL_REQUIRED_FIELDS);
 
-    cy.checkText(partials.errorSummaryListItems().eq(0), CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].INCORRECT_FORMAT);
+    cy.checkText(errorSummaryListItems().eq(0), CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].INCORRECT_FORMAT);
 
-    cy.checkText(partials.errorSummaryListItems().eq(1), CONTRACT_ERROR_MESSAGES.MULTIPLE[TOTAL_MONTHS_OF_COVER].IS_EMPTY);
+    cy.checkText(errorSummaryListItems().eq(1), CONTRACT_ERROR_MESSAGES.MULTIPLE[TOTAL_MONTHS_OF_COVER].IS_EMPTY);
 
-    cy.checkText(partials.errorSummaryListItems().eq(2), CONTRACT_ERROR_MESSAGES[CURRENCY_CODE].IS_EMPTY);
+    cy.checkText(errorSummaryListItems().eq(2), CONTRACT_ERROR_MESSAGES[CURRENCY_CODE].IS_EMPTY);
   });
 });

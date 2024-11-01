@@ -21,21 +21,23 @@ const updateBuyerRelationship = async (id: string, update: object) => {
     const response = (await apollo('POST', updateBuyerRelationshipMutation, variables)) as ApolloResponse;
 
     if (response.errors) {
-      console.error('GraphQL error updating buyer relationship %O', response.errors);
+      console.error('GraphQL error updating buyer relationship %o', response.errors);
     }
 
     if (response?.networkError?.result?.errors) {
-      console.error('GraphQL network error updating buyer relationship %O', response.networkError.result.errors);
+      console.error('GraphQL network error updating buyer relationship %o', response.networkError.result.errors);
     }
 
     if (response?.data?.updateBuyerRelationship) {
       return response.data.updateBuyerRelationship;
     }
 
-    console.error('Error with GraphQL updateBuyerRelationshipMutation %O', response);
+    console.error('Error with GraphQL updateBuyerRelationshipMutation %o', response);
+
     throw new Error('Updating buyer relationship');
-  } catch (err) {
-    console.error('Error updating application buyer relationship %O', err);
+  } catch (error) {
+    console.error('Error updating application buyer relationship %o', error);
+
     throw new Error('Updating buyer relationship');
   }
 };

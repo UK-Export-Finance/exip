@@ -1,7 +1,6 @@
 import create from './create';
 import declarations from './declarations';
 import eligibility from './eligibility';
-import get from './get';
 import getByReferenceNumber from './get-by-reference-number';
 import submit from './submit';
 import update from './update';
@@ -15,7 +14,6 @@ const application = {
   create,
   declarations,
   eligibility,
-  get,
   getByReferenceNumber,
   submit,
   update,

@@ -16,7 +16,7 @@ import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route
 import { Application, Request, Response } from '../../../../../types';
 
 const {
-  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_NAME },
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, HAS_DIFFERENT_TRADING_ADDRESS, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_NAME },
 } = BUSINESS_FIELD_IDS;
 
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
@@ -39,7 +39,7 @@ const {
 
 export const TEMPLATE = COMPANY_DETAILS_TEMPLATE;
 
-export const FIELD_IDS = [HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_NAME];
+export const FIELD_IDS = [HAS_DIFFERENT_TRADING_NAME, HAS_DIFFERENT_TRADING_ADDRESS, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_NAME];
 
 const IS_APPLICATION_SUMMARY_LIST = true;
 
@@ -78,7 +78,7 @@ const get = (req: Request, res: Response) => {
 
     const submittedValues = {
       [HAS_DIFFERENT_TRADING_NAME]: company?.[HAS_DIFFERENT_TRADING_NAME],
-      [TRADING_ADDRESS]: company?.[TRADING_ADDRESS],
+      [HAS_DIFFERENT_TRADING_ADDRESS]: company?.[HAS_DIFFERENT_TRADING_ADDRESS],
       [WEBSITE]: company?.[WEBSITE],
       [PHONE_NUMBER]: company?.[PHONE_NUMBER],
       [DIFFERENT_TRADING_NAME]: company?.[DIFFERENT_TRADING_NAME],
@@ -95,8 +95,9 @@ const get = (req: Request, res: Response) => {
       submittedValues,
       SUMMARY_LIST: companiesHouseSummaryList(mappedApplication.company, IS_APPLICATION_SUMMARY_LIST),
     });
-  } catch (err) {
-    console.error('Error getting company details %O', err);
+  } catch (error) {
+    console.error('Error getting company details %o', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -122,7 +123,7 @@ const post = async (req: Request, res: Response) => {
 
     const payload = constructPayload(req.body, FIELD_IDS);
 
-    const sanitisedHasTradingAddress = sanitiseValue({ key: TRADING_ADDRESS, value: payload[TRADING_ADDRESS] });
+    const sanitisedHasTradingAddress = sanitiseValue({ key: HAS_DIFFERENT_TRADING_ADDRESS, value: payload[HAS_DIFFERENT_TRADING_ADDRESS] });
 
     const submittedValues = {
       /**
@@ -130,7 +131,7 @@ const post = async (req: Request, res: Response) => {
        * convert to a boolean.
        */
       [HAS_DIFFERENT_TRADING_NAME]: sanitiseValue({ key: HAS_DIFFERENT_TRADING_NAME, value: payload[HAS_DIFFERENT_TRADING_NAME] }),
-      [TRADING_ADDRESS]: sanitisedHasTradingAddress,
+      [HAS_DIFFERENT_TRADING_ADDRESS]: sanitisedHasTradingAddress,
       [WEBSITE]: payload[WEBSITE],
       [PHONE_NUMBER]: payload[PHONE_NUMBER],
       [DIFFERENT_TRADING_NAME]: payload[DIFFERENT_TRADING_NAME],
@@ -161,13 +162,13 @@ const post = async (req: Request, res: Response) => {
 
     /**
      * Flag to determine if "alternative trading address" field is required.
-     * This field is required if TRADING_ADDRESS is "yes"/true and an address has not been provided.
+     * This field is required if HAS_DIFFERENT_TRADING_ADDRESS is "yes"/true and an address has not been provided.
      * This enables us to handle many scenarios that require different redirects:
-     * 1) When TRADING_ADDRESS is "yes"/true:
+     * 1) When HAS_DIFFERENT_TRADING_ADDRESS is "yes"/true:
      * - Regular form POST.
      * - Change answers form POST.
      * - Check/change answers form POST.
-     * 2) When TRADING_ADDRESS is "no"/false:
+     * 2) When HAS_DIFFERENT_TRADING_ADDRESS is "no"/false:
      * - Regular form POST.
      * - Change answers form POST.
      * - Check/change answers form POST.
@@ -180,7 +181,7 @@ const post = async (req: Request, res: Response) => {
      * and the route is NOT a check-and-change route,
      * redirect to ALTERNATIVE_TRADING_ADDRESS_ROOT.
      */
-    if (submittedValues[TRADING_ADDRESS] && !(isChangeRoute(req.originalUrl) || isCheckAndChangeRoute(req.originalUrl))) {
+    if (submittedValues[HAS_DIFFERENT_TRADING_ADDRESS] && !(isChangeRoute(req.originalUrl) || isCheckAndChangeRoute(req.originalUrl))) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_ROOT}`);
     }
 
@@ -221,8 +222,9 @@ const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`);
-  } catch (err) {
-    console.error('Error updating application - your business - company details %O', err);
+  } catch (error) {
+    console.error('Error updating application - your business - company details %o', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

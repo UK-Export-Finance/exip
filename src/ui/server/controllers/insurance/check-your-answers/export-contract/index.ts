@@ -3,6 +3,7 @@ import { ROUTES, TEMPLATES } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
 import api from '../../../../api';
+import { isPopulatedArray } from '../../../../helpers/array';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { exportContractSummaryLists } from '../../../../helpers/summary-lists/export-contract';
@@ -48,7 +49,7 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber, exportContract, totalContractValueOverThreshold, migratedV1toV2 } = application;
+    const { referenceNumber, exportContract, totalContractValueOverThreshold } = application;
 
     const {
       finalDestinationKnown,
@@ -67,7 +68,20 @@ export const get = async (req: Request, res: Response) => {
 
     const countries = await api.keystone.countries.getAll();
 
-    const summaryList = exportContractSummaryLists(exportContract, totalContractValueOverThreshold, migratedV1toV2, referenceNumber, countries, checkAndChange);
+    const { allCurrencies } = await api.keystone.APIM.getCurrencies();
+
+    if (!isPopulatedArray(countries) || !isPopulatedArray(allCurrencies)) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    const summaryList = exportContractSummaryLists({
+      exportContract,
+      totalContractValueOverThreshold,
+      referenceNumber,
+      countries,
+      currencies: allCurrencies,
+      checkAndChange,
+    });
 
     const exportContractFields = requiredFields({
       totalContractValueOverThreshold,
@@ -91,8 +105,9 @@ export const get = async (req: Request, res: Response) => {
       status,
       SUMMARY_LISTS: summaryList,
     });
-  } catch (err) {
-    console.error('Error getting Check your answers - Export contract %O', err);
+  } catch (error) {
+    console.error('Error getting Check your answers - Export contract %o', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -124,8 +139,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-  } catch (err) {
-    console.error('Error updating Check your answers - Export contract %O', err);
+  } catch (error) {
+    console.error('Error updating Check your answers - Export contract %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

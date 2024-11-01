@@ -25,18 +25,18 @@ const { REQUESTED_JOINTLY_INSURED_PARTY } = POLICY_FIELDS;
 
 /**
  * optionalOtherCompanyFields
- * if yes selected for other company requested, populates and returns optional fields in an array
+ * if yes is selected for other company requested, populates and returns optional fields in an array
  * @param {ApplicationJointlyInsuredParty} answers: Jointly insured party answers
  * @param {Number} referenceNumber: Application reference number
  * @param {Array<Country>} countries: Countries
- * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
- * @returns {Array<SummaryListItemData>} optional other company fields if yes selected
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {Array<SummaryListItemData>} Optional other company fields if yes is selected
  */
 export const optionalOtherCompanyFields = (
   answers: ApplicationJointlyInsuredParty,
   referenceNumber: number,
   countries: Array<Country>,
-  checkAndChange: boolean,
+  checkAndChange?: boolean,
 ) => {
   let fields = [] as Array<SummaryListItemData>;
 
@@ -95,15 +95,16 @@ export const optionalOtherCompanyFields = (
  * generateOtherCompanyFields
  * Create all other company fields and values for the Insurance - Other company govukSummaryList
  * @param {ApplicationJointlyInsuredParty} answers
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @param {Array<Country>} countries: Countries
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} All other company fields and values in an object structure for GOVUK summary list structure
  */
 export const generateOtherCompanyFields = (
   answers: ApplicationJointlyInsuredParty,
   referenceNumber: number,
   countries: Array<Country>,
-  checkAndChange: boolean,
+  checkAndChange?: boolean,
 ) => {
   const fields = [
     fieldGroupItem(

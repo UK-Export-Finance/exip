@@ -1,4 +1,3 @@
-import partials from '../../../../../../../partials';
 import { field, summaryList } from '../../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -12,10 +11,6 @@ const {
 const {
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
 } = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const getFieldVariables = (fieldId, referenceNumber) => ({
   route: NATURE_OF_BUSINESS_CHECK_AND_CHANGE,
@@ -39,7 +34,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 

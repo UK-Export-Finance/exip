@@ -51,7 +51,7 @@ describe('controllers/insurance/business/company-details/validation/company-deta
     });
   });
 
-  describe(`${PHONE_NUMBER} is the correct format`, () => {
+  describe(`when ${PHONE_NUMBER} is the correct format`, () => {
     it('should not return a validation error', () => {
       mockBody[PHONE_NUMBER] = VALID_PHONE_NUMBERS.MOBILE;
 
@@ -61,7 +61,7 @@ describe('controllers/insurance/business/company-details/validation/company-deta
     });
   });
 
-  describe(`${PHONE_NUMBER} is blank`, () => {
+  describe(`when ${PHONE_NUMBER} is empty`, () => {
     it('should not return a validation error', () => {
       mockBody[PHONE_NUMBER] = '';
 

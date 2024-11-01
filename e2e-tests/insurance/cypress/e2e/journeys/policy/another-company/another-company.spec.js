@@ -42,13 +42,7 @@ context(`Insurance - Policy - Another company page - ${story}`, () => {
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.startInsurancePolicySection({});
-
-      cy.completeAndSubmitPolicyTypeForm({});
-      cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitTotalContractValueForm({});
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
-      cy.completeAndSubmitPreCreditPeriodForm({});
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'preCreditPeriod' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${ANOTHER_COMPANY}`;
       brokerUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
@@ -81,10 +75,6 @@ context(`Insurance - Policy - Another company page - ${story}`, () => {
 
     it('renders a heading caption', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
-    });
-
-    it('renders a `save and back` button', () => {
-      cy.assertSaveAndBackButton();
     });
 
     describe(`renders ${FIELD_ID}`, () => {

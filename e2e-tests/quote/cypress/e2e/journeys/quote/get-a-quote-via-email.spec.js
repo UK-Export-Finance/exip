@@ -13,7 +13,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 context('Get a quote via email exit page', () => {
   beforeEach(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
     cy.keyboardInput(autoCompleteField(FIELD_ID).input(), COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY);
 
@@ -35,6 +35,7 @@ context('Get a quote via email exit page', () => {
       hasAForm: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       lightHouseThresholds: {
         seo: 60,
       },

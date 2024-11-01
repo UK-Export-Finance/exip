@@ -21,21 +21,23 @@ const updateBusiness = async (id: string, update: object) => {
     const response = (await apollo('POST', updateBusinessMutation, variables)) as ApolloResponse;
 
     if (response.errors) {
-      console.error('GraphQL error updating application business %O', response.errors);
+      console.error('GraphQL error updating application business %o', response.errors);
     }
 
     if (response?.networkError?.result?.errors) {
-      console.error('GraphQL network error updating application business %O', response.networkError.result.errors);
+      console.error('GraphQL network error updating application business %o', response.networkError.result.errors);
     }
 
     if (response?.data?.updateBusiness) {
       return response.data.updateBusiness;
     }
 
-    console.error('Error with GraphQL updateBusinessMutation %O', response);
+    console.error('Error with GraphQL updateBusinessMutation %o', response);
+
     throw new Error('Updating application business');
-  } catch (err) {
-    console.error('Error updating application business %O', err);
+  } catch (error) {
+    console.error('Error updating application business %o', error);
+
     throw new Error('Updating application business');
   }
 };

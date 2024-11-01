@@ -6,7 +6,7 @@ import { ACCOUNT } from '../../../constants';
 import accounts from '../../../test-helpers/accounts';
 import authRetries from '../../../test-helpers/auth-retries';
 import { get30minutesFromNow } from '../../../helpers/date';
-import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../../test-mocks';
+import { mockAccount, mockUrlOrigin, mockSendEmailResponse, mockErrorMessage, mockSpyPromiseRejection } from '../../../test-mocks';
 import { Account, Context, SuccessResponse } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
@@ -178,17 +178,17 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      sendEmail.passwordResetLink = jest.fn(() => Promise.reject(mockSendEmailResponse));
+      sendEmail.passwordResetLink = mockSpyPromiseRejection;
     });
 
     test('should throw an error', async () => {
       try {
         await sendEmailPasswordResetLink({}, variables, context);
-      } catch (err) {
+      } catch (error) {
         expect(passwordResetLinkSpy).toHaveBeenCalledTimes(1);
 
-        const expected = new Error(`Checking account and sending password reset email (sendEmailPasswordResetLink mutation) ${mockSendEmailResponse}`);
-        expect(err).toEqual(expected);
+        const expected = new Error(`Checking account and sending password reset email (sendEmailPasswordResetLink mutation) ${new Error(mockErrorMessage)}`);
+        expect(error).toEqual(expected);
       }
     });
   });

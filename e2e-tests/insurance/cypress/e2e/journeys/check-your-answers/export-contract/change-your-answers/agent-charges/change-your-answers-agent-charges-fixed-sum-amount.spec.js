@@ -1,5 +1,4 @@
 import { status, summaryList } from '../../../../../../../../pages/shared';
-import partials from '../../../../../../../../partials';
 import FIELD_IDS from '../../../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import formatCurrency from '../../../../../../../../helpers/format-currency';
@@ -8,16 +7,12 @@ import application from '../../../../../../../../fixtures/application';
 const {
   ROOT,
   CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT },
-  EXPORT_CONTRACT: { AGENT_CHARGES_CHECK_AND_CHANGE },
+  EXPORT_CONTRACT: { HOW_MUCH_THE_AGENT_IS_CHARGING_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {
   AGENT_CHARGES: { FIXED_SUM_AMOUNT },
 } = FIELD_IDS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const fieldId = FIXED_SUM_AMOUNT;
 
@@ -38,7 +33,7 @@ context(`Insurance - Change your answers - Export contract - Summary list - Agen
         agentChargeMethodFixedSum: true,
       });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       // To get past previous "Check your answers" pages
       cy.completeAndSubmitMultipleCheckYourAnswers({ count: 3 });
@@ -60,12 +55,12 @@ context(`Insurance - Change your answers - Export contract - Summary list - Agen
   });
 
   describe('when clicking the `change` link', () => {
-    it(`should redirect to ${AGENT_CHARGES_CHECK_AND_CHANGE}`, () => {
+    it(`should redirect to ${HOW_MUCH_THE_AGENT_IS_CHARGING_CHECK_AND_CHANGE}`, () => {
       cy.navigateToUrl(url);
 
       summaryList.field(fieldId).changeLink().click();
 
-      cy.assertChangeAnswersPageUrl({ referenceNumber, route: AGENT_CHARGES_CHECK_AND_CHANGE, fieldId });
+      cy.assertChangeAnswersPageUrl({ referenceNumber, route: HOW_MUCH_THE_AGENT_IS_CHARGING_CHECK_AND_CHANGE, fieldId });
     });
   });
 
@@ -79,10 +74,7 @@ context(`Insurance - Change your answers - Export contract - Summary list - Agen
     it(`should redirect to ${EXPORT_CONTRACT}`, () => {
       summaryList.field(fieldId).changeLink().click();
 
-      cy.completeAndSubmitAgentChargesForm({
-        fixedSumMethod: true,
-        fixedSumAmount: newValueInput,
-      });
+      cy.completeAndSubmitHowMuchTheAgentIsChargingForm({ fixedSumAmount: newValueInput });
 
       cy.assertChangeAnswersPageUrl({ referenceNumber, route: EXPORT_CONTRACT, fieldId });
     });

@@ -1,6 +1,4 @@
-import insurancePartials from '../../../../../partials/insurance';
-
-const { taskList } = insurancePartials;
+import { taskList } from '../../../../../partials/insurance';
 
 const task = taskList.prepareApplication.tasks.exportContract;
 

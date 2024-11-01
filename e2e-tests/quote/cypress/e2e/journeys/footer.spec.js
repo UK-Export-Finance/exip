@@ -1,9 +1,9 @@
-import footer from '../../../../partials/footer';
+import { footer } from '../../../../partials';
 import { FOOTER } from '../../../../content-strings';
 
 context('Footer', () => {
   beforeEach(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
     cy.saveSession();
   });

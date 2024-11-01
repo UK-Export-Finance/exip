@@ -1,20 +1,19 @@
 import { actions } from '../../../../../../pages/shared';
-import { contractTooShort } from '../../../../../../pages/insurance/eligibility';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.CONTRACT_TOO_SHORT;
+const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.CONTRACT_TOO_SHORT_EXIT;
 
 const { CONTACT_EFM } = CONTENT_STRINGS;
 
 const {
-  ELIGIBILITY: { CONTRACT_TOO_SHORT },
+  ELIGIBILITY: { CONTRACT_TOO_SHORT_EXIT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Eligibility - Contract too short page', () => {
-  const url = `${baseUrl}${CONTRACT_TOO_SHORT}`;
+  const url = `${baseUrl}${CONTRACT_TOO_SHORT_EXIT}`;
 
   before(() => {
     cy.navigateToUrl(url);
@@ -29,9 +28,10 @@ context('Insurance - Eligibility - Contract too short page', () => {
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      backLink: `${CONTRACT_TOO_SHORT}#`,
-      currentHref: CONTRACT_TOO_SHORT,
+      backLink: `${CONTRACT_TOO_SHORT_EXIT}#`,
+      currentHref: CONTRACT_TOO_SHORT_EXIT,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       hasAForm: false,
     });
   });
@@ -45,10 +45,6 @@ context('Insurance - Eligibility - Contract too short page', () => {
 
     it('should render an intro copy', () => {
       cy.checkIntroText(CONTENT_STRINGS.INTRO);
-    });
-
-    it('should render the "can still apply" copy', () => {
-      cy.checkText(contractTooShort.canStillApply(), CONTENT_STRINGS.CAN_STILL_APPLY);
     });
 
     it('should render the `CONTACT EFM` intro', () => {

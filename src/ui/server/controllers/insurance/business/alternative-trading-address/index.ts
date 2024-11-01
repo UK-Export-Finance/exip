@@ -3,7 +3,7 @@ import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
+import { EXPORTER_BUSINESS_FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../types';
@@ -43,12 +43,12 @@ const pageVariables = {
   FIELDS: {
     ALTERNATIVE_TRADING_ADDRESS: {
       ID: FULL_ADDRESS,
-      ...FIELDS[FULL_ADDRESS],
+      ...EXPORTER_BUSINESS_FIELDS[FULL_ADDRESS],
     },
     REGISTERED_OFFICE_ADDRESS: {
       ID: COMPANY_ADDRESS,
-      HEADING: FIELDS[FULL_ADDRESS].REGISTERED_OFFICE_ADDRESS_HEADING,
-      HINT: FIELDS[FULL_ADDRESS].REGISTERED_OFFICE_ADDRESS_HINT,
+      HEADING: EXPORTER_BUSINESS_FIELDS[FULL_ADDRESS].REGISTERED_OFFICE_ADDRESS_HEADING,
+      HINT: EXPORTER_BUSINESS_FIELDS[FULL_ADDRESS].REGISTERED_OFFICE_ADDRESS_HINT,
     },
   },
 };
@@ -84,8 +84,9 @@ const get = (req: Request, res: Response) => {
       application: mapApplicationToFormFields(application),
       SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
     });
-  } catch (err) {
-    console.error('Error getting alternative trading address %O', err);
+  } catch (error) {
+    console.error('Error getting alternative trading address %o', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -152,8 +153,9 @@ const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`);
-  } catch (err) {
-    console.error('Error posting alternative trading address %O', err);
+  } catch (error) {
+    console.error('Error posting alternative trading address %o', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

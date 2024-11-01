@@ -4,13 +4,13 @@ import { APPLICATION } from '../../constants';
 /**
  * createABuyerTradingHistory
  * Create a buyer trading history with buyer relationships.
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} buyerId: Buyer ID
  * @param {String} applicationId: Application ID
  * @returns {Promise<Object>} Created buyer trading history
  */
 const createABuyerTradingHistory = async (context: Context, buyerId: string, applicationId: string) => {
-  console.info('Creating a buyer trading history for ', buyerId);
+  console.info('Creating a buyer trading history for %s', buyerId);
 
   try {
     const buyerTradingHistory = await context.db.BuyerTradingHistory.createOne({
@@ -30,10 +30,10 @@ const createABuyerTradingHistory = async (context: Context, buyerId: string, app
     });
 
     return buyerTradingHistory;
-  } catch (err) {
-    console.error('Error creating a buyer trading history %O', err);
+  } catch (error) {
+    console.error('Error creating a buyer trading history %o', error);
 
-    throw new Error(`Creating a buyer trading history ${err}`);
+    throw new Error(`Creating a buyer trading history ${error}`);
   }
 };
 

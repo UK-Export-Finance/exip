@@ -1,7 +1,7 @@
 /**
  * clicks change link and checks that page goes to correct route
  * @param {Object} fieldVariables
- * @param {String} referenceNumber
+ * @param {String} referenceNumber: Application reference number
  */
 export const checkChangeLinkUrl = (fieldVariables, referenceNumber) => {
   const { route, fieldId, summaryList } = fieldVariables;

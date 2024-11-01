@@ -21,8 +21,8 @@ describe('helpers/get-countries', () => {
     it('should throw an error', async () => {
       try {
         await getCountries({});
-      } catch (err) {
-        const expected = String(err).includes('Error: Getting countries');
+      } catch (error) {
+        const expected = String(error).includes('Error: Getting countries');
 
         expect(expected).toEqual(true);
       }

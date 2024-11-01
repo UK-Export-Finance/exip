@@ -29,7 +29,7 @@ const { DECLINED_BY_PRIVATE_MARKET_CHANGE, DECLINED_BY_PRIVATE_MARKET_CHECK_AND_
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} Fields and values in an object structure for GOVUK summary list structure
  */
-const generatePrivateMarketFields = (answers: ApplicationPrivateMarket, referenceNumber: number, checkAndChange: boolean) => {
+const generatePrivateMarketFields = (answers: ApplicationPrivateMarket, referenceNumber: number, checkAndChange?: boolean) => {
   const fields = [
     fieldGroupItem(
       {

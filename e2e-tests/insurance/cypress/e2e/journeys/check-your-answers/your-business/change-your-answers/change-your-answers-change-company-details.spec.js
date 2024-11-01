@@ -1,5 +1,4 @@
 import { field, status, summaryList } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
 import { VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -13,14 +12,10 @@ const {
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER },
     ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
   },
 } = INSURANCE_FIELD_IDS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -44,7 +39,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 
@@ -103,8 +98,8 @@ context('Insurance - Check your answers - Company details - Your business - Summ
     });
   });
 
-  describe(TRADING_ADDRESS, () => {
-    const fieldId = TRADING_ADDRESS;
+  describe(HAS_DIFFERENT_TRADING_ADDRESS, () => {
+    const fieldId = HAS_DIFFERENT_TRADING_ADDRESS;
 
     let fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
@@ -121,7 +116,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
       });
     });
 
-    describe(`form submission with a new answer (change ${TRADING_ADDRESS} from no to yes)`, () => {
+    describe(`form submission with a new answer (change ${HAS_DIFFERENT_TRADING_ADDRESS} from no to yes)`, () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
 
@@ -134,14 +129,14 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE, fieldId });
       });
 
-      it(`should redirect to ${YOUR_BUSINESS} after submitting new ${TRADING_ADDRESS} and ${FULL_ADDRESS} answers`, () => {
+      it(`should redirect to ${YOUR_BUSINESS} after submitting new ${HAS_DIFFERENT_TRADING_ADDRESS} and ${FULL_ADDRESS} answers`, () => {
         cy.completeAndSubmitAlternativeTradingAddressForm({});
 
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
 
         const expectedFullAddress = application.DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS];
 
-        cy.assertSummaryListRowValue(summaryList, TRADING_ADDRESS, expectedFullAddress);
+        cy.assertSummaryListRowValue(summaryList, HAS_DIFFERENT_TRADING_ADDRESS, expectedFullAddress);
       });
 
       it('should retain a `completed` status tag', () => {

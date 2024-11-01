@@ -4,6 +4,7 @@ import mapAndFilterAddress from '../../../helpers/map-and-filter-address';
 import mockOrdnanceSurveyResponse from '../../../test-mocks/mock-ordnance-survey-response';
 import { MOCK_OS_ADDRESS_INPUT } from '../../../test-mocks/mock-os-address-input';
 import { OrdnanceSurveyResponse } from '../../../types';
+import { mockSpyPromiseRejection } from '../../../test-mocks';
 
 describe('getOrdnanceSurveyAddress', () => {
   jest.mock('../../../integrations/ordnance-survey');
@@ -44,7 +45,7 @@ describe('getOrdnanceSurveyAddress', () => {
 
   describe('when ordnanceSurvey API is down', () => {
     beforeEach(() => {
-      ordnanceSurvey.get = jest.fn(() => Promise.reject());
+      ordnanceSurvey.get = mockSpyPromiseRejection;
     });
 
     it('should return object containing success as false and apiError as true', async () => {

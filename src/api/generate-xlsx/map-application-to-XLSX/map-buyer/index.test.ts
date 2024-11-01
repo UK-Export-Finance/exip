@@ -28,7 +28,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-buyer', () => {
   it('should return an array of mapped buyer fields', () => {
     const result = mapBuyer(mockApplication);
 
-    const { eligibility, buyer, migratedV1toV2 } = mockApplication;
+    const { buyer } = mockApplication;
     const { buyerTradingHistory, relationship } = buyer;
 
     const expected = [
@@ -44,7 +44,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-buyer', () => {
 
       ...mapBuyerTradingHistory(buyerTradingHistory),
 
-      ...mapPreviousCoverWithBuyer(eligibility, relationship, migratedV1toV2),
+      ...mapPreviousCoverWithBuyer(mockApplication),
 
       xlsxRow(String(FIELDS[HAS_BUYER_FINANCIAL_ACCOUNTS]), mapYesNoField({ answer: relationship[HAS_BUYER_FINANCIAL_ACCOUNTS] })),
     ];

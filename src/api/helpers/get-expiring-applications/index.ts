@@ -40,10 +40,10 @@ const getExpiringApplications = async (context: Context): Promise<Application[]>
     })) as Array<Application>;
 
     return applications;
-  } catch (err) {
-    console.error('Error getting expiring applications (getExpiringApplications helper) %O', err);
+  } catch (error) {
+    console.error('Error getting expiring applications (getExpiringApplications helper) %o', error);
 
-    throw new Error(`Error getting expiring applications (getExpiringApplications helper) ${err}`);
+    throw new Error(`Error getting expiring applications (getExpiringApplications helper) ${error}`);
   }
 };
 

@@ -5,10 +5,10 @@ import mapAndUpdateInactiveApplications from '../map-and-update-inactive-applica
 
 /**
  * updateInactiveApplications
- * Gets inactive applications which have not been updated for 30 days
+ * Gets inactive applications which have not been updated for SUBMISSION_DEADLINE_IN_DAYS
  * Sets their status to Abandoned
  * returns success flag
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<SuccessResponse>} success flag
  */
 const updateInactiveApplications = async (context: Context): Promise<SuccessResponse> => {
@@ -30,9 +30,10 @@ const updateInactiveApplications = async (context: Context): Promise<SuccessResp
     return {
       success: true,
     };
-  } catch (err) {
-    console.error('Error getting and updating inactive applications %O', err);
-    throw new Error(`Error getting and updating inactive applications ${err}`);
+  } catch (error) {
+    console.error('Error getting and updating inactive applications %o', error);
+
+    throw new Error(`Error getting and updating inactive applications ${error}`);
   }
 };
 

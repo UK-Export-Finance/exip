@@ -1,12 +1,10 @@
 import preCreditPeriodRule from './pre-credit-period';
-import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 import { mockErrors } from '../../../../../../test-mocks';
 
-const {
-  POLICY: { NEED_PRE_CREDIT_PERIOD: FIELD_ID },
-} = INSURANCE_FIELD_IDS;
+const { NEED_PRE_CREDIT_PERIOD: FIELD_ID } = POLICY_FIELD_IDS;
 
 const {
   INSURANCE: {

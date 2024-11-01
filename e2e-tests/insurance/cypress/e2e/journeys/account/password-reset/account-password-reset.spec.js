@@ -1,5 +1,3 @@
-import { signInPage } from '../../../../../../pages/insurance/account/sign-in';
-import { yourDetailsPage } from '../../../../../../pages/insurance/account/create';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { ACCOUNT_FIELDS } from '../../../../../../content-strings/fields/insurance/account';
@@ -36,10 +34,10 @@ context(
       cy.clickBackLink();
 
       // navigate to sign in page
-      yourDetailsPage.signInButtonLink().click();
+      cy.clickSignInButtonLink();
 
       // navigate to password reset page
-      signInPage.resetPasswordLink().click();
+      cy.clickSignInResetPasswordLink();
 
       url = `${baseUrl}${PASSWORD_RESET_ROOT}`;
 
@@ -60,6 +58,7 @@ context(
         currentHref: PASSWORD_RESET_ROOT,
         backLink: SIGN_IN_ROOT,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
         submitButtonCopy: BUTTONS.SUBMIT,
       });
     });

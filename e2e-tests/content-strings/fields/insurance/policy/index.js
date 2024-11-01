@@ -51,7 +51,7 @@ export const POLICY_FIELDS = {
       MULTIPLE: {
         ID: MULTIPLE_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
-        TEXT: 'Multiple contract policy (revolving credit)',
+        TEXT: 'Multiple contract policy (Revolving credit)',
         HINT_LIST: [
           `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER} months`,
           "Best if you'll have an ongoing relationship with the buyer but you're not sure yet how many contracts or sales you'll have",
@@ -95,9 +95,21 @@ export const POLICY_FIELDS = {
         },
       },
       [CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
+        LABEL: "What's the total value of the contract you want to insure?",
         HINT: 'Enter a whole number. Do not enter decimals.',
         SUMMARY: {
           TITLE: 'Contract value',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
+        },
+      },
+      [CONTRACT_POLICY.SINGLE.REQUESTED_CREDIT_LIMIT]: {
+        LABEL: 'What credit limit do you require?',
+        HINT: {
+          INTRO: 'For example, your total contract maybe £250,000 but the amount you want to insure is £100,000.',
+          OUTRO: 'Enter a whole number. Do not enter decimals.',
+        },
+        SUMMARY: {
+          TITLE: 'Credit limit',
           FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
         },
       },
@@ -105,7 +117,7 @@ export const POLICY_FIELDS = {
     MULTIPLE: {
       [CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
         LABEL: 'How many months do you want to be insured for?',
-        HINT: `The maximum is ${TOTAL_MONTHS_OF_COVER} months.`,
+        HINT: `The maximum is ${TOTAL_MONTHS_OF_COVER.MAXIMUM} months.`,
         OPTIONS: FIELD_VALUES.TOTAL_MONTHS_OF_COVER,
         SUMMARY: {
           TITLE: 'How many months you want to be insured for',
@@ -151,7 +163,7 @@ export const POLICY_FIELDS = {
     },
     [NAME_ON_POLICY.POSITION]: {
       LABEL: "What's your position at the company?",
-      MAXIMUM: 50,
+      MAXIMUM: MAXIMUM_CHARACTERS.NAME_ON_POLICY_POSITION,
       SUMMARY: {
         TITLE: 'Position at company',
         FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY,
@@ -167,7 +179,7 @@ export const POLICY_FIELDS = {
   DIFFERENT_NAME_ON_POLICY: {
     [DIFFERENT_NAME_ON_POLICY.POSITION]: {
       LABEL: 'Position at company',
-      MAXIMUM: 50,
+      MAXIMUM: MAXIMUM_CHARACTERS.DIFFERENT_NAME_ON_POLICY,
     },
     [EMAIL]: {
       SUMMARY: {
@@ -177,14 +189,13 @@ export const POLICY_FIELDS = {
     },
   },
   [NEED_PRE_CREDIT_PERIOD]: {
-    HINT: 'This is known as the pre-credit period',
     SUMMARY: {
       TITLE: 'Pre-credit period',
       FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
     },
   },
   [CREDIT_PERIOD_WITH_BUYER]: {
-    LABEL: 'What period of pre-credit cover do you require?',
+    LABEL: 'How long do you need pre-credit cover for?',
     SUMMARY: {
       TITLE: 'Period of pre-credit cover',
       FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
@@ -201,7 +212,7 @@ export const POLICY_FIELDS = {
     },
     [COMPANY_NAME]: {
       LABEL: 'Name of the other company',
-      MAXIMUM: 200,
+      MAXIMUM: MAXIMUM_CHARACTERS.REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NAME,
       SUMMARY: {
         TITLE: 'Name of the other company',
         FORM_TITLE: POLICY_FORM_TITLES.OTHER_COMPANY,
@@ -209,7 +220,7 @@ export const POLICY_FIELDS = {
     },
     [COMPANY_NUMBER]: {
       LABEL: 'Registration number of the other company (optional)',
-      MAXIMUM: 100,
+      MAXIMUM: MAXIMUM_CHARACTERS.REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NUMBER,
       SUMMARY: {
         TITLE: 'Registration number of the other company',
         FORM_TITLE: POLICY_FORM_TITLES.OTHER_COMPANY,
@@ -235,7 +246,7 @@ export const POLICY_FIELDS = {
   BROKER_DETAILS: {
     [NAME]: {
       LABEL: 'Name of broker or company',
-      MAXIMUM: 300,
+      MAXIMUM: MAXIMUM_CHARACTERS.BROKER_NAME,
       SUMMARY: {
         TITLE: "Broker's name or company",
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,

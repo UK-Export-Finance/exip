@@ -184,7 +184,7 @@ const addRowToGrid = (grid, months, rates, policyType, riskCategory) => {
  * @returns {Object} Updated pricing grid
  */
 const addPolicyToGrid = (grid, policyType, rows) => {
-  console.info(`adding ${policyType} to the grid`);
+  console.info('adding %s to the grid', policyType);
 
   let updatedGrid;
 

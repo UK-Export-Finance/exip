@@ -95,7 +95,7 @@ describe('helpers/send-email-application-submission-deadline', () => {
 
   describe('error handling', () => {
     describe('when an error occurs whilst getting and sending email for expiring applications', () => {
-      test('should return success as false', async () => {
+      test('should throw an error', async () => {
         jest.resetAllMocks();
         await expect(applicationSubmissionDeadlineEmail()).rejects.toThrow(
           'Sending application submission deadline email (emailApplicationSubmissionDeadlineEmail helper)',

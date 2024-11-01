@@ -1,5 +1,4 @@
 import dashboardPage from '../../../../../pages/insurance/dashboard';
-import partials from '../../../../../partials';
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES, FIELD_VALUES } from '../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../constants/field-ids/insurance';
@@ -39,7 +38,7 @@ context('Insurance - Dashboard - populated application - GBP currency', () => {
 
       url = `${baseUrl}${DASHBOARD}`;
 
-      partials.header.navigation.applications().click();
+      cy.clickHeaderApplicationsLink();
 
       cy.assertUrl(url);
     });
@@ -70,7 +69,7 @@ context('Insurance - Dashboard - populated application - GBP currency', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      partials.header.navigation.applications().click();
+      cy.clickHeaderApplicationsLink();
     });
 
     it(`should render a value in the ${TABLE_HEADERS.BUYER_LOCATION} cell`, () => {
@@ -109,7 +108,7 @@ context('Insurance - Dashboard - populated application - GBP currency', () => {
     });
 
     it(`should render a formatted value of ${TOTAL_CONTRACT_VALUE} in the ${TABLE_HEADERS.VALUE} cell`, () => {
-      partials.header.navigation.applications().click();
+      cy.clickHeaderApplicationsLink();
 
       const cell = table.body.row(referenceNumber).value();
 
@@ -140,7 +139,7 @@ context('Insurance - Dashboard - populated application - GBP currency', () => {
     });
 
     it(`should render a formatted value of ${MAXIMUM_BUYER_WILL_OWE} in the ${TABLE_HEADERS.VALUE} cell`, () => {
-      partials.header.navigation.applications().click();
+      cy.clickHeaderApplicationsLink();
 
       const cell = table.body.row(referenceNumber).value();
 

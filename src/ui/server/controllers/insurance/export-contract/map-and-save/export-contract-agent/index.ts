@@ -11,8 +11,8 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
  * If the form is submitted with the "using agent" as false (USING_AGENT),
  * and if AGENT_SERVICE data exists in the application, nullify all AGENT_SERVICE and AGENT_CHARGES data.
  * @param {RequestBody} formBody: Form body
- * @param {Application}
- * @param {Object} Validation errors
+ * @param {Application} application
+ * @param {Object} validationErrors: Validation errors
  * @returns {Promise<Boolean>}
  */
 const exportContractAgent = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
@@ -50,8 +50,8 @@ const exportContractAgent = async (formBody: RequestBody, application: Applicati
     }
 
     return true;
-  } catch (err) {
-    console.error('Error mapping and saving application %O', err);
+  } catch (error) {
+    console.error('Error mapping and saving application %o', error);
 
     return false;
   }

@@ -40,7 +40,7 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
   const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
   before(() => {
-    cy.login();
+    cy.navigateToRootUrl();
     cy.submitQuoteAnswersHappyPathSinglePolicy({});
     cy.assertUrl(url);
   });
@@ -57,6 +57,7 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
       submitButtonCopy: CONTENT_STRINGS.SUBMIT_BUTTON,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

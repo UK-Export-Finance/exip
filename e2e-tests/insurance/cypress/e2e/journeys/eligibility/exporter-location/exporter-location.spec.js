@@ -19,8 +19,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Exporter location page - as an exporter, I want to check if my company can get UKEF issue credit insurance cover', () => {
   beforeEach(() => {
-    cy.navigateToCheckIfEligibleUrl();
-    cy.completeCheckIfEligibleForm();
+    cy.completeAndSubmitEligibilityForms({ formToStopAt: 'checkIfEligible' });
 
     const expectedUrl = `${baseUrl}${EXPORTER_LOCATION}`;
 
@@ -33,6 +32,7 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
       currentHref: EXPORTER_LOCATION,
       backLink: CHECK_IF_ELIGIBLE,
       assertAuthenticatedHeader: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

@@ -13,10 +13,20 @@ import { post as postConnectionToTheBuyerSaveAndBack } from '../../../controller
 import { get as getTradingHistory, post as postTradingHistory } from '../../../controllers/insurance/your-buyer/trading-history';
 import { post as postTradingHistorySaveAndBack } from '../../../controllers/insurance/your-buyer/trading-history/save-and-back';
 
-import { get as getAlternativeCurrency, post as postAlternativeCurrency } from '../../../controllers/insurance/your-buyer/alternative-currency';
+import { get as getCurrencyOfLatePayments, post as postCurrencyOfLatePayments } from '../../../controllers/insurance/your-buyer/currency-of-late-payments';
+import { post as postCurrencyOfLatePaymentsSaveAndBack } from '../../../controllers/insurance/your-buyer/currency-of-late-payments/save-and-back';
+
+import {
+  get as getOutstandingOrOverduePayments,
+  post as postOutstandingOrOverduePayments,
+} from '../../../controllers/insurance/your-buyer/outstanding-or-overdue-payments';
+import { post as postOutstandingOrOverduePaymentsSaveAndBack } from '../../../controllers/insurance/your-buyer/outstanding-or-overdue-payments/save-and-back';
 
 import { get as getCreditInsuranceCover, post as postCreditInsuranceCover } from '../../../controllers/insurance/your-buyer/credit-insurance-cover';
 import { post as postCreditInsuranceCoverSaveAndBack } from '../../../controllers/insurance/your-buyer/credit-insurance-cover/save-and-back';
+
+import { get as getFailedToPay, post as postFailedToPay } from '../../../controllers/insurance/your-buyer/failed-to-pay-on-time';
+import { post as postFailedToPaySaveAndBack } from '../../../controllers/insurance/your-buyer/failed-to-pay-on-time/save-and-back';
 
 import {
   get as getBuyerFinancialInformation,
@@ -63,12 +73,29 @@ yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY_CHANGE}`, po
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY_CHECK_AND_CHANGE}`, getTradingHistory);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY_CHECK_AND_CHANGE}`, postTradingHistory);
 
-yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY}`, getAlternativeCurrency);
-yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY}`, postAlternativeCurrency);
-yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY_CHANGE}`, getAlternativeCurrency);
-yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY_CHANGE}`, postAlternativeCurrency);
-yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`, getAlternativeCurrency);
-yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`, postAlternativeCurrency);
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS}`, getCurrencyOfLatePayments);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS}`, postCurrencyOfLatePayments);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS_SAVE_AND_BACK}`, postCurrencyOfLatePaymentsSaveAndBack);
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS_CHANGE}`, getCurrencyOfLatePayments);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS_CHANGE}`, postCurrencyOfLatePayments);
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE}`, getCurrencyOfLatePayments);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE}`, postCurrencyOfLatePayments);
+
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.FAILED_TO_PAY}`, getFailedToPay);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.FAILED_TO_PAY}`, postFailedToPay);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.FAILED_TO_PAY_SAVE_AND_BACK}`, postFailedToPaySaveAndBack);
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.FAILED_TO_PAY_CHANGE}`, getFailedToPay);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.FAILED_TO_PAY_CHANGE}`, postFailedToPay);
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.FAILED_TO_PAY_CHECK_AND_CHANGE}`, getFailedToPay);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.FAILED_TO_PAY_CHECK_AND_CHANGE}`, postFailedToPay);
+
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.OUTSTANDING_OR_OVERDUE_PAYMENTS}`, getOutstandingOrOverduePayments);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.OUTSTANDING_OR_OVERDUE_PAYMENTS}`, postOutstandingOrOverduePayments);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.OUTSTANDING_OR_OVERDUE_PAYMENTS_SAVE_AND_BACK}`, postOutstandingOrOverduePaymentsSaveAndBack);
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.OUTSTANDING_OR_OVERDUE_PAYMENTS_CHANGE}`, getOutstandingOrOverduePayments);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.OUTSTANDING_OR_OVERDUE_PAYMENTS_CHANGE}`, postOutstandingOrOverduePayments);
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.OUTSTANDING_OR_OVERDUE_PAYMENTS_CHECK_AND_CHANGE}`, getOutstandingOrOverduePayments);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.OUTSTANDING_OR_OVERDUE_PAYMENTS_CHECK_AND_CHANGE}`, postOutstandingOrOverduePayments);
 
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.CREDIT_INSURANCE_COVER}`, getCreditInsuranceCover);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CREDIT_INSURANCE_COVER}`, postCreditInsuranceCover);

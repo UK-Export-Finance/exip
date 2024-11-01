@@ -1,5 +1,5 @@
 import { FORM_TITLES } from '../../../../content-strings/form-titles';
-import { FIELDS } from '../../../../content-strings/fields/insurance';
+import { EXPORTER_BUSINESS_FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
@@ -28,11 +28,11 @@ const {
  * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} All Credit control fields and values in an object structure for GOVUK summary list structure
  */
-const generateCreditControlFields = (answers: ApplicationBusiness, referenceNumber: number, checkAndChange: boolean): SummaryListGroupData => {
+const generateCreditControlFields = (answers: ApplicationBusiness, referenceNumber: number, checkAndChange?: boolean): SummaryListGroupData => {
   const fields = [
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS, HAS_CREDIT_CONTROL),
+        field: getFieldById(EXPORTER_BUSINESS_FIELDS, HAS_CREDIT_CONTROL),
         data: answers,
         href: generateChangeLink(CREDIT_CONTROL_CHANGE, CREDIT_CONTROL_CHECK_AND_CHANGE, `#${HAS_CREDIT_CONTROL}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,

@@ -22,7 +22,7 @@ const mapSicCodes = (sicCodes: Array<string>, industrySectorNames: Array<string>
      * If industrySectorNames has value at index,
      * add to the object
      */
-    if (industrySectorNames && industrySectorNames[index]) {
+    if (industrySectorNames?.[index]) {
       industrySectorName = industrySectorNames[index];
     }
 

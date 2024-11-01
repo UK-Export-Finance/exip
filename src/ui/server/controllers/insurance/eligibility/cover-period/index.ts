@@ -1,7 +1,7 @@
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { COVER_PERIOD, FIELD_IDS, TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
-import { FIELDS_ELIGIBILITY as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
+import { ELIGIBILITY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
@@ -22,7 +22,7 @@ export const PAGE_VARIABLES = {
 };
 
 const {
-  ELIGIBILITY: { LONG_TERM_COVER, UK_GOODS_OR_SERVICES, CHECK_YOUR_ANSWERS },
+  ELIGIBILITY: { LONG_TERM_COVER_EXIT, UK_GOODS_OR_SERVICES, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.COVER_PERIOD;
@@ -69,7 +69,7 @@ export const post = (req: Request, res: Response) => {
   const answer = Number(req.body[FIELD_ID]);
 
   if (answer !== COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID) {
-    return res.redirect(LONG_TERM_COVER);
+    return res.redirect(LONG_TERM_COVER_EXIT);
   }
 
   req.session.submittedData = {

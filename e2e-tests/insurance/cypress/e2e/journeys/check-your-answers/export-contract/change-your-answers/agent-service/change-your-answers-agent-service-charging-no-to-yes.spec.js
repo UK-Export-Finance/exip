@@ -1,5 +1,4 @@
 import { status, summaryList } from '../../../../../../../../pages/shared';
-import partials from '../../../../../../../../partials';
 import FIELD_IDS from '../../../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import checkSummaryList from '../../../../../../../../commands/insurance/check-export-contract-summary-list';
@@ -14,10 +13,6 @@ const {
   AGENT_SERVICE: { IS_CHARGING: FIELD_ID },
   AGENT_CHARGES: { FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -36,7 +31,7 @@ context('Insurance - Change your answers - Export contract - Summary list - Agen
         agentIsCharging: false,
       });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       // To get past previous "Check your answers" pages
       cy.completeAndSubmitMultipleCheckYourAnswers({ count: 3 });
@@ -74,7 +69,7 @@ context('Insurance - Change your answers - Export contract - Summary list - Agen
         cy.navigateToUrl(url);
       });
 
-      it(`should redirect to ${EXPORT_CONTRACT} after completing (now required) ${AGENT_CHARGES_CHECK_AND_CHANGE} fields`, () => {
+      it(`should redirect to ${AGENT_SERVICE_CHECK_AND_CHANGE} and then ${EXPORT_CONTRACT} after completing (now required) agent charges related forms`, () => {
         summaryList.field(FIELD_ID).changeLink().click();
 
         cy.navigateToUrl(url);
@@ -90,7 +85,12 @@ context('Insurance - Change your answers - Export contract - Summary list - Agen
 
         cy.completeAndSubmitAgentChargesForm({
           fixedSumMethod: true,
+          percentageMethod: false,
         });
+
+        cy.completeAndSubmitCurrencyForm({});
+
+        cy.completeAndSubmitHowMuchTheAgentIsChargingForm({});
 
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: EXPORT_CONTRACT, fieldId: FIELD_ID });
       });

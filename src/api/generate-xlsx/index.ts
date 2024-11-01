@@ -39,20 +39,20 @@ const XLSX = (application: Application, countries: Array<Country>): Promise<stri
       const sheetNames = Object.values(SECTION_NAMES);
 
       sheetNames.forEach((sheetName) => {
-        console.info(`Generating XLSX file - adding ${sheetName} worksheet`);
+        console.info('Generating XLSX file - adding %s worksheet', sheetName);
 
         let worksheet = workbook.addWorksheet(sheetName);
 
-        console.info(`Generating XLSX file - protecting ${sheetName} worksheet from modification`);
+        console.info('Generating XLSX file - protecting %s worksheet from modification', sheetName);
 
         worksheet.protect(String(EXCELJS_PROTECTION_PASSWORD), {});
 
-        console.info(`Generating XLSX file - adding ${sheetName} worksheet header columns`);
+        console.info('Generating XLSX file - adding %s worksheet header columns', sheetName);
 
         worksheet.columns = HEADER_COLUMNS(sheetName);
 
         xlsxData[sheetName].forEach((row) => {
-          console.info(`Generating XLSX file - adding rows to ${sheetName} worksheeet`);
+          console.info('Generating XLSX file - adding rows to %s worksheeet', sheetName);
 
           /**
            * NOTE: some rows are undefined.
@@ -63,7 +63,7 @@ const XLSX = (application: Application, countries: Array<Country>): Promise<stri
           }
         });
 
-        console.info(`Generating XLSX file - adding custom styles to ${sheetName} worksheet`);
+        console.info('Generating XLSX file - adding custom styles to %s worksheet', sheetName);
 
         /**
          * Add custom styles to each column in the worksheet.
@@ -82,10 +82,10 @@ const XLSX = (application: Application, countries: Array<Country>): Promise<stri
 
       workbook.xlsx.writeFile(filePath).then(() => resolve(filePath));
     });
-  } catch (err) {
-    console.error('Error generating XLSX file %O', err);
+  } catch (error) {
+    console.error('Error generating XLSX file %o', error);
 
-    throw new Error(`Generating XLSX file ${err}`);
+    throw new Error(`Generating XLSX file ${error}`);
   }
 };
 

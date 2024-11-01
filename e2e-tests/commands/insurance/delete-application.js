@@ -8,8 +8,8 @@ import api from '../api';
 const deleteApplication = (referenceNumber) => {
   try {
     return api.deleteApplicationByReferenceNumber(Number(referenceNumber)).then((response) => response);
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
 
     throw new Error('Deleting application');
   }

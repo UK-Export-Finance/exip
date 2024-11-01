@@ -12,7 +12,16 @@ import mapPercentageOfCover from '../../../helpers/mappings/map-percentage-of-co
 import mapCreditPeriod from '../../../helpers/mappings/map-credit-period';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { isSinglePolicyType, isMultiplePolicyType } from '../../../helpers/policy-type';
-import { mockReq, mockRes, mockAnswers, mockCurrencies, mockCurrenciesResponse, mockCurrenciesEmptyResponse, mockSession } from '../../../test-mocks';
+import {
+  mockReq,
+  mockRes,
+  mockAnswers,
+  mockCurrencies,
+  mockCurrenciesResponse,
+  mockCurrenciesEmptyResponse,
+  mockSession,
+  mockSpyPromiseRejection,
+} from '../../../test-mocks';
 import { Request, Response, SelectOption } from '../../../../types';
 
 const {
@@ -331,7 +340,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
     describe('api error handling', () => {
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          getCurrenciesSpy = mockSpyPromiseRejection;
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
@@ -378,6 +387,12 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
     describe('when there are validation errors', () => {
       beforeEach(() => {
         req.body = {};
+      });
+
+      it('should call api.keystone.APIM.getCurrencies', async () => {
+        await get(req, res);
+
+        expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
       });
 
       it('should render template with validation errors and submitted values from constructPayload function', async () => {
@@ -552,6 +567,12 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         req.body = validBody;
       });
 
+      it('should call api.keystone.APIM.getCurrencies', async () => {
+        await get(req, res);
+
+        expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
+      });
+
       it('should update the session with submitted data, populated with full currency object from constructPayload function', async () => {
         await post(req, res);
 
@@ -587,7 +608,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
     describe('api error handling', () => {
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          getCurrenciesSpy = mockSpyPromiseRejection;
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 

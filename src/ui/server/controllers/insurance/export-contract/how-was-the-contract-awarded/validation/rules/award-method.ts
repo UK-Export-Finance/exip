@@ -19,7 +19,7 @@ const {
  * awardMethodRule
  * Returns emptyFieldValidation for the AWARD_METHOD field.
  * @param {RequestBody} formBody: Form body
- * @param {Object} Errors object from previous validation errors
+ * @param {Object} errors: Errors from previous validation errors
  * @returns {ValidationErrors}
  */
 const awardMethodRule = (formBody: RequestBody, errors: object) => emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT.IS_EMPTY, errors);

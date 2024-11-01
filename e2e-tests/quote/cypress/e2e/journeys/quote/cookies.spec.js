@@ -1,5 +1,4 @@
 import { cookiesPage, cookiesSavedPage } from '../../../../../pages';
-import partials from '../../../../../partials';
 import { BUTTONS, ERROR_MESSAGES, FIELDS, PAGES } from '../../../../../content-strings';
 import { FIELD_IDS, ROUTES, COOKIE } from '../../../../../constants';
 
@@ -26,9 +25,9 @@ context('Cookies page - Quote', () => {
   const buyerCountryUrl = `${baseUrl}${BUYER_COUNTRY}`;
 
   beforeEach(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
-    partials.footer.supportLinks.cookies().click();
+    cy.clickFooterCookiesLink();
 
     cy.assertUrl(`${baseUrl}${url}`);
 
@@ -45,6 +44,7 @@ context('Cookies page - Quote', () => {
       submitButtonCopy: BUTTONS.SAVE_CHANGES,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 
@@ -182,7 +182,7 @@ context('Cookies page - Quote', () => {
 
           cy.navigateToUrl(BUYER_COUNTRY);
 
-          partials.footer.supportLinks.cookies().click();
+          cy.clickFooterCookiesLink();
 
           accept.label().click();
           cy.clickSubmitButton();
@@ -217,7 +217,7 @@ context('Cookies page - Quote', () => {
 
           cy.navigateToUrl(BUYER_COUNTRY);
 
-          partials.footer.supportLinks.cookies().click();
+          cy.clickFooterCookiesLink();
 
           reject.label().click();
           cy.clickSubmitButton();

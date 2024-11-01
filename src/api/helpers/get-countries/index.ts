@@ -4,7 +4,7 @@ import { Country } from '../../types';
 /**
  * getCountries
  * Get countries
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Array<Country>}
  */
 const getCountries = async (context: Context) => {
@@ -14,9 +14,10 @@ const getCountries = async (context: Context) => {
     const countries = (await context.db.Country.findMany()) as Array<Country>;
 
     return countries;
-  } catch (err) {
-    console.error('Error getting countries %O', err);
-    throw new Error(`Getting countries ${err}`);
+  } catch (error) {
+    console.error('Error getting countries %o', error);
+
+    throw new Error(`Getting countries ${error}`);
   }
 };
 

@@ -44,6 +44,7 @@ context(
         backLink: ENTER_CODE,
         submitButtonCopy: BUTTONS.SEND_NEW_ACCESS_CODE,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

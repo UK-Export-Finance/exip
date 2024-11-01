@@ -1,5 +1,4 @@
 import { accessibilityStatementPage } from '../../../../../pages';
-import partials from '../../../../../partials';
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 
@@ -31,9 +30,10 @@ const baseUrl = Cypress.config('baseUrl');
 
 context('Accessibility statement page - Quote', () => {
   beforeEach(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
-    partials.footer.supportLinks.accessibilityStatement().click();
+    cy.clickFooterAccessibilityStatementLink();
+
     cy.assertUrl(`${baseUrl}${ROUTES.ACCESSIBILITY_STATEMENT}`);
 
     cy.saveSession();
@@ -49,6 +49,7 @@ context('Accessibility statement page - Quote', () => {
       hasAForm: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

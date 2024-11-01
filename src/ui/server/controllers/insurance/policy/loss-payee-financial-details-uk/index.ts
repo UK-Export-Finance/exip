@@ -33,7 +33,7 @@ export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.LOSS_PAYEE_FINANCIAL_UK;
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
@@ -125,8 +125,9 @@ export const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
-  } catch (err) {
-    console.error('Error updating application - policy - loss payee financial details (uk) %O', err);
+  } catch (error) {
+    console.error('Error updating application - policy - loss payee financial details (uk) %o', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

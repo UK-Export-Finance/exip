@@ -15,9 +15,9 @@ const {
  * verifyAccountReactivationToken
  * Check if an account can be reactivated.
  * If so, update the account.
- * @param {Object} GraphQL root variables
- * @param {Object} GraphQL variables for the VerifyAccountReactivationToken mutation
- * @param {Context} KeystoneJS context API
+ * @param {Object} root: GraphQL root variables
+ * @param {Object} variables: GraphQL variables for the VerifyAccountReactivationToken mutation
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success or expired flag.
  */
 const verifyAccountReactivationToken = async (
@@ -88,9 +88,10 @@ const verifyAccountReactivationToken = async (
       success: false,
       invalid: true,
     };
-  } catch (err) {
-    console.error('Error checking account and reactivating account(verifyAccountReactivationToken mutation) %O', err);
-    throw new Error(`Checking account and reactivating account(verifyAccountReactivationToken mutation) ${err}`);
+  } catch (error) {
+    console.error('Error checking account and reactivating account(verifyAccountReactivationToken mutation) %o', error);
+
+    throw new Error(`Checking account and reactivating account(verifyAccountReactivationToken mutation) ${error}`);
   }
 };
 

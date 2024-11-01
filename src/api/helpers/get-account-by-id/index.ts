@@ -18,10 +18,10 @@ const getAccountById = async (context: Context, accountId: string): Promise<Acco
     })) as Account;
 
     return account;
-  } catch (err) {
-    console.error('Error getting account by ID %O', err);
+  } catch (error) {
+    console.error('Error getting account by ID %o', error);
 
-    throw new Error(`Getting account by ID ${err}`);
+    throw new Error(`Getting account by ID ${error}`);
   }
 };
 

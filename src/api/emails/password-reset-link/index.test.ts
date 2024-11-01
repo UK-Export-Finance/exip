@@ -2,7 +2,7 @@ import { passwordResetLink } from '.';
 import notify from '../../integrations/notify';
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
 import getFullNameString from '../../helpers/get-full-name-string';
-import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../test-mocks';
+import { mockAccount, mockUrlOrigin, mockSendEmailResponse, mockErrorMessage, mockSpyPromiseRejection } from '../../test-mocks';
 
 describe('emails/password-reset-link', () => {
   const sendEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
@@ -20,8 +20,6 @@ describe('emails/password-reset-link', () => {
     name: fullName,
     passwordResetToken: mockPasswordResetHash,
   };
-
-  const mockErrorMessage = 'Mock error';
 
   beforeAll(async () => {
     notify.sendEmail = sendEmailSpy;
@@ -42,16 +40,16 @@ describe('emails/password-reset-link', () => {
 
   describe('error handling', () => {
     beforeAll(async () => {
-      notify.sendEmail = jest.fn(() => Promise.reject(mockErrorMessage));
+      notify.sendEmail = mockSpyPromiseRejection;
     });
 
     test('should throw an error', async () => {
       try {
         await passwordResetLink(mockUrlOrigin, email, fullName, mockPasswordResetHash);
-      } catch (err) {
-        const expected = new Error(`Sending email for account password reset Error: Sending email ${mockErrorMessage}`);
+      } catch (error) {
+        const expected = new Error(`Sending email for account password reset Error: Sending email ${new Error(mockErrorMessage)}`);
 
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

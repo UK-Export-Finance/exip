@@ -3,7 +3,7 @@ import { LINKS } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
-  ELIGIBILITY: { COMPANIES_HOUSE_NUMBER, NO_COMPANIES_HOUSE_NUMBER },
+  ELIGIBILITY: { COMPANIES_HOUSE_NUMBER, NO_COMPANIES_HOUSE_NUMBER_EXIT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -14,9 +14,7 @@ context(
     const url = `${baseUrl}${COMPANIES_HOUSE_NUMBER}`;
 
     before(() => {
-      cy.navigateToCheckIfEligibleUrl();
-      cy.completeCheckIfEligibleForm();
-      cy.completeExporterLocationForm();
+      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'exporterLocation' });
     });
 
     beforeEach(() => {
@@ -28,8 +26,8 @@ context(
       cy.clickSubmitButton();
     });
 
-    it(`should redirect to ${NO_COMPANIES_HOUSE_NUMBER} exit page`, () => {
-      const expectedUrl = `${baseUrl}${NO_COMPANIES_HOUSE_NUMBER}`;
+    it(`should redirect to ${NO_COMPANIES_HOUSE_NUMBER_EXIT} exit page`, () => {
+      const expectedUrl = `${baseUrl}${NO_COMPANIES_HOUSE_NUMBER_EXIT}`;
 
       cy.assertUrl(expectedUrl);
     });

@@ -1,12 +1,6 @@
-import { policyTypePage, tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
+import { field as fieldSelector } from '../../../../../../pages/shared';
+import { policyTypePage } from '../../../../../../pages/quote';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import {
-  completeAndSubmitBuyerBodyForm,
-  completeAndSubmitExporterLocationForm,
-  completeAndSubmitUkContentForm,
-  completeAndSubmitPolicyTypeSingleForm,
-} from '../../../../../../commands/quote/forms';
 
 const {
   ELIGIBILITY: { CREDIT_PERIOD },
@@ -28,13 +22,13 @@ context(
     const url = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
 
     const completePreviousForms = () => {
-      cy.login();
+      cy.navigateToRootUrl();
 
-      completeAndSubmitBuyerCountryForm({});
-      completeAndSubmitBuyerBodyForm();
-      completeAndSubmitExporterLocationForm();
-      completeAndSubmitUkContentForm();
-      completeAndSubmitPolicyTypeSingleForm();
+      cy.completeAndSubmitBuyerCountryForm({});
+      cy.completeAndSubmitBuyerBodyForm();
+      cy.completeAndSubmitExporterLocationForm();
+      cy.completeAndSubmitUkContentForm();
+      cy.completeAndSubmitPolicyTypeSingleForm();
 
       cy.assertUrl(url);
 
@@ -62,9 +56,7 @@ context(
       policyTypePage[POLICY_TYPE].multiple.label().click();
       cy.clickSubmitButton();
 
-      const field = tellUsAboutYourPolicyPage[CREDIT_PERIOD];
-
-      field.input().should('exist');
+      fieldSelector(CREDIT_PERIOD).input().should('exist');
     });
 
     context('change for a second time - policy type from multiple to single', () => {
@@ -86,7 +78,7 @@ context(
       });
 
       it('does NOT render credit period field in the `tell us about your policy` page', () => {
-        const field = tellUsAboutYourPolicyPage[CREDIT_PERIOD];
+        const field = fieldSelector(CREDIT_PERIOD);
 
         field.label().should('not.exist');
         field.hint().should('not.exist');
@@ -124,9 +116,7 @@ context(
       });
 
       it('renders credit period field in the `tell us about your policy` page', () => {
-        const field = tellUsAboutYourPolicyPage[CREDIT_PERIOD];
-
-        field.input().should('exist');
+        fieldSelector(CREDIT_PERIOD).input().should('exist');
       });
     });
   },

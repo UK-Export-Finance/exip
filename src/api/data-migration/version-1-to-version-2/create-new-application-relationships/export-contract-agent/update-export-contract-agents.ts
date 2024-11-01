@@ -1,7 +1,7 @@
 import { Connection } from 'mysql2/promise';
 import getAllExportContracts from '../../get-all-export-contracts';
 import getAllExportContractAgents from '../../get-all-export-contract-agents';
-import executeSqlQuery from '../../execute-sql-query';
+import executeSqlQuery from '../../../execute-sql-query';
 
 /**
  * updateExportContractAgents
@@ -15,7 +15,7 @@ import executeSqlQuery from '../../execute-sql-query';
 const updateExportContractAgents = async (connection: Connection) => {
   const loggingMessage = 'Updating agent columns in exportContract entries';
 
-  console.info(`✅ ${loggingMessage}`);
+  console.info('✅ %s', loggingMessage);
 
   try {
     const exportContracts = await getAllExportContracts(connection);
@@ -38,10 +38,10 @@ const updateExportContractAgents = async (connection: Connection) => {
     });
 
     return Promise.all(promises);
-  } catch (err) {
-    console.error(`🚨 error ${loggingMessage} %O`, err);
+  } catch (error) {
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
-    throw new Error(`🚨 error ${loggingMessage} ${err}`);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
   }
 };
 

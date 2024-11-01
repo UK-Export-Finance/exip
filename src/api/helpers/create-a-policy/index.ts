@@ -5,12 +5,12 @@ import { Context, CreatePolicyResponse } from '../../types';
 /**
  * createAPolicy
  * Create a policy with an application relationship.
- * @param {Context} KeystoneJS context API
- * @param {String} Application ID
+ * @param {Context} context: KeystoneJS context API
+ * @param {String} applicationId: Application ID
  * @returns {Promise<Object>} Created policy
  */
 const createAPolicy = async (context: Context, applicationId: string): Promise<CreatePolicyResponse> => {
-  console.info('Creating a policy for ', applicationId);
+  console.info('Creating a policy for %s', applicationId);
 
   try {
     const policy = await context.db.Policy.createOne({
@@ -25,13 +25,13 @@ const createAPolicy = async (context: Context, applicationId: string): Promise<C
     const jointlyInsuredParty = await createAJointlyInsuredParty(context, policy.id);
 
     return {
-      policy,
+      ...policy,
       jointlyInsuredParty,
     };
-  } catch (err) {
-    console.error('Error creating a policy %O', err);
+  } catch (error) {
+    console.error('Error creating a policy %o', error);
 
-    throw new Error(`Creating a policy ${err}`);
+    throw new Error(`Creating a policy ${error}`);
   }
 };
 

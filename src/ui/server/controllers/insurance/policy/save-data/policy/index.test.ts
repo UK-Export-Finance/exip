@@ -1,11 +1,11 @@
 import save from '.';
 import api from '../../../../../api';
+import { FIELD_VALUES } from '../../../../../constants';
+import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import getDataToSave from '../../../../../helpers/get-data-to-save';
 import generateValidationErrors from '../../type-of-policy/validation';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
-import { FIELD_VALUES } from '../../../../../constants';
-import { mockApplication } from '../../../../../test-mocks';
-import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
+import { mockApplication, mockSpyPromiseRejection } from '../../../../../test-mocks';
 
 const { POLICY_TYPE } = POLICY_FIELD_IDS;
 
@@ -69,16 +69,16 @@ describe('controllers/insurance/policy/save-data/policy', () => {
 
   describe('when there is an error calling the API', () => {
     beforeEach(() => {
-      updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+      updateApplicationSpy = mockSpyPromiseRejection;
       api.keystone.application.update.policy = updateApplicationSpy;
     });
 
     it('should throw an error', async () => {
       try {
         await save.policy(mockApplication, mockFormBody.valid);
-      } catch (err) {
+      } catch (error) {
         const expected = new Error("Updating application's policy");
-        expect(err).toEqual(expected);
+        expect(error).toEqual(expected);
       }
     });
   });

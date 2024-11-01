@@ -9,11 +9,11 @@ import { validation as generateValidationErrors } from '../../../../shared-valid
 import api from '../../../../api';
 import mapCountries from '../../../../helpers/mappings/map-countries';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockCountries } from '../../../../test-mocks';
+import { mockReq, mockRes, mockCountries, mockSpyPromiseRejection } from '../../../../test-mocks';
 
 const {
   PROBLEM_WITH_SERVICE,
-  ELIGIBILITY: { CANNOT_APPLY: CANNOT_APPLY_ROUTE },
+  ELIGIBILITY: { CANNOT_APPLY_EXIT: CANNOT_APPLY_ROUTE },
 } = INSURANCE_ROUTES;
 
 describe('controllers/insurance/eligibility/buyer-country', () => {
@@ -89,7 +89,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
     describe('when the get CIS countries API call fails', () => {
       beforeEach(() => {
-        getCisCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        getCisCountriesSpy = mockSpyPromiseRejection;
         api.keystone.APIM.getCisCountries = getCisCountriesSpy;
       });
 
@@ -149,7 +149,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
     describe('when the get CIS countries API call fails', () => {
       beforeEach(() => {
-        getCisCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        getCisCountriesSpy = mockSpyPromiseRejection;
         api.keystone.APIM.getCisCountries = getCisCountriesSpy;
       });
 

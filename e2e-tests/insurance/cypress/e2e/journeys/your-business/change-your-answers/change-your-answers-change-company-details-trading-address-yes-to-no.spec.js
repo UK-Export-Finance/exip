@@ -5,7 +5,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { TRADING_ADDRESS: FIELD_ID },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_ADDRESS: FIELD_ID },
     ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
   },
 } = INSURANCE_FIELD_IDS;
@@ -29,14 +29,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.startYourBusinessSection({});
-
-        cy.completeAndSubmitCompanyDetails({ differentTradingAddress: true });
-        cy.completeAndSubmitAlternativeTradingAddressForm({});
-
-        cy.completeAndSubmitNatureOfYourBusiness();
-        cy.completeAndSubmitTurnoverForm({});
-        cy.completeAndSubmitCreditControlForm({});
+        cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'creditControl', differentTradingAddress: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       });

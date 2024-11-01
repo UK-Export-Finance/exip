@@ -20,11 +20,8 @@ context(
     const url = `${baseUrl}${COMPANY_DETAILS}`;
 
     before(() => {
-      cy.navigateToCheckIfEligibleUrl();
-      cy.completeCheckIfEligibleForm();
-      cy.completeExporterLocationForm();
-      cy.completeCompaniesHouseNumberForm();
-      cy.completeAndSubmitCompaniesHouseSearchForm({
+      cy.completeAndSubmitEligibilityForms({
+        formToStopAt: 'companiesHouseNumberSearch',
         companyNumber: COMPANIES_HOUSE_NUMBER_MULTIPLE_SIC_CODES,
       });
 

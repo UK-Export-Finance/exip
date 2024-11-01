@@ -6,7 +6,7 @@ const { IN_PROGRESS } = APPLICATION.STATUS;
 
 /**
  * getInactiveApplications
- * gets inactive applications - not updated for 30 days
+ * gets inactive applications - not updated for SUBMISSION_DEADLINE_IN_DAYS
  * returns array of application ids and statuses
  * @param {Context} context
  * @returns {Promise<Application[]>} Array of application ids and status
@@ -28,10 +28,10 @@ const getInactiveApplications = async (context: Context): Promise<Application[]>
     })) as Array<Application>;
 
     return applications;
-  } catch (err) {
-    console.error('Error getting inactive applications (getInactiveApplications helper) %O', err);
+  } catch (error) {
+    console.error('Error getting inactive applications (getInactiveApplications helper) %o', error);
 
-    throw new Error(`Error getting inactive applications (getInactiveApplications helper) ${err}`);
+    throw new Error(`Error getting inactive applications (getInactiveApplications helper) ${error}`);
   }
 };
 

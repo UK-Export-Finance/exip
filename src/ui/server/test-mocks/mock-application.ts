@@ -31,6 +31,7 @@ export const mockSinglePolicy = {
   policyType: APPLICATION.POLICY_TYPE.SINGLE,
   contractCompletionDate: String(add(new Date(), { months: 3 })),
   totalValueOfContract: 1500,
+  requestedCreditLimit: 1000,
 };
 
 export const mockMultiplePolicy = {
@@ -68,7 +69,7 @@ export const mockExportContractAgent = {
   countryCode: mockCountries[0].isoCode,
   fullAddress: 'Mock export contract agent address',
   isUsingAgent: false,
-  name: 'Mock export contract agent name',
+  name: "Mock export contract agent name O'Neill",
   service: mockExportContractAgentService,
 };
 
@@ -213,7 +214,6 @@ const mockApplication = {
   sectionReview: mockSectionReview,
   declaration: mockApplicationDeclaration,
   totalContractValueOverThreshold: false,
-  migratedV1toV2: false,
 };
 
 export const mockApplicationAgentServiceChargeEmpty = {

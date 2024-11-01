@@ -1,4 +1,3 @@
-import partials from '../../../../../../../partials';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import checkSummaryList from '../../../../../../../commands/insurance/check-your-business-summary-list';
@@ -9,15 +8,11 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER },
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
-  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER, TURNOVER_CURRENCY_CODE },
   HAS_CREDIT_CONTROL,
 } = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -31,7 +26,7 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 
@@ -53,8 +48,8 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
     checkSummaryList[HAS_DIFFERENT_TRADING_NAME]({});
   });
 
-  it(`should render a ${TRADING_ADDRESS} summary list row`, () => {
-    checkSummaryList[TRADING_ADDRESS]({});
+  it(`should render a ${HAS_DIFFERENT_TRADING_ADDRESS} summary list row`, () => {
+    checkSummaryList[HAS_DIFFERENT_TRADING_ADDRESS]({});
   });
 
   it(`should render a ${WEBSITE} summary list row`, () => {
@@ -75,6 +70,10 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
 
   it(`should render a ${EMPLOYEES_UK} summary list row`, () => {
     checkSummaryList[EMPLOYEES_UK]();
+  });
+
+  it(`should render a ${TURNOVER_CURRENCY_CODE} summary list row`, () => {
+    checkSummaryList[TURNOVER_CURRENCY_CODE]();
   });
 
   it(`should render a ${ESTIMATED_ANNUAL_TURNOVER} summary list row`, () => {

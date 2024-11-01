@@ -32,14 +32,23 @@ export const TRADED_WITH_BUYER = {
 
 export const TRADING_HISTORY = {
   ...SHARED,
-  PAGE_TITLE: 'Tell us about your trading history with the buyer',
+  PAGE_TITLE: 'Do you currently have any outstanding or overdue payments from the buyer?',
   INTRO: 'We will request a copy of your trading history once the application has been submitted.',
-  PROVIDE_ALTERNATIVE_CURRENCY: 'Use a different currency for any outstanding or overdue payments from the buyer',
 };
 
-export const ALTERNATIVE_CURRENCY = {
+export const CURRENCY_OF_LATE_PAYMENTS = {
   ...SHARED,
-  PAGE_TITLE: 'What currency are the outstanding or overdue payments in?',
+  PAGE_TITLE: 'What is the currency the outstanding or overdue payments are in?',
+};
+
+export const FAILED_PAYMENTS = {
+  ...SHARED,
+  PAGE_TITLE: 'Has the buyer ever failed to pay you on time?',
+};
+
+export const OUTSTANDING_OR_OVERDUE_PAYMENTS = {
+  ...SHARED,
+  PAGE_TITLE: 'Tell us about the outstanding or overdue payments',
 };
 
 export const CREDIT_INSURANCE_COVER = {

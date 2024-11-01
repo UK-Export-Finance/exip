@@ -1,12 +1,4 @@
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import {
-  completeAndSubmitBuyerBodyForm,
-  completeAndSubmitExporterLocationForm,
-  completeAndSubmitUkContentForm,
-  completeAndSubmitPolicyTypeMultiForm,
-} from '../../../../../../commands/quote/forms';
 import { field as fieldSelector } from '../../../../../../pages/shared';
-import { tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
 import { LINKS, FIELDS, PAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { EUR, GBP, JPY, USD } from '../../../../../../fixtures/currencies';
@@ -27,13 +19,13 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
   const url = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
 
   before(() => {
-    cy.login();
+    cy.navigateToRootUrl();
 
-    completeAndSubmitBuyerCountryForm({});
-    completeAndSubmitBuyerBodyForm();
-    completeAndSubmitExporterLocationForm();
-    completeAndSubmitUkContentForm();
-    completeAndSubmitPolicyTypeMultiForm();
+    cy.completeAndSubmitBuyerCountryForm({});
+    cy.completeAndSubmitBuyerBodyForm();
+    cy.completeAndSubmitExporterLocationForm();
+    cy.completeAndSubmitUkContentForm();
+    cy.completeAndSubmitPolicyTypeMultiForm();
 
     cy.assertUrl(url);
   });
@@ -49,6 +41,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
       backLink: POLICY_TYPE,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
       lightHouseThresholds: {
         // accessibility threshold is reduced here because
         // the radio component from design system has an invalid aria attribute.
@@ -137,7 +130,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
     it('should render `credit period` label, hint and input with correct options', () => {
       const fieldId = CREDIT_PERIOD;
 
-      const field = tellUsAboutYourPolicyPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       cy.checkText(field.label(), FIELDS[fieldId].LABEL);
 
@@ -169,7 +162,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
       cy.keyboardInput(fieldSelector(MAX_AMOUNT_OWED).input(), '100');
       fieldSelector(CURRENCY).input().select(GBP.isoCode);
       fieldSelector(PERCENTAGE_OF_COVER).input().select('90');
-      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
+      fieldSelector(CREDIT_PERIOD).input().select('1');
 
       cy.clickSubmitButton();
 

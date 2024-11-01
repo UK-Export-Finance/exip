@@ -2,14 +2,14 @@ import { Context, SectionReview } from '../../types';
 
 /**
  * createASectionReview
- * Create a section review with appropriate relationships.
- * @param {Context} KeystoneJS context API
- * @param {String} Application ID
- * @param {Object} sectionReviewData data to create
+ * Create a section review with an application relationship
+ * @param {Context} context: KeystoneJS context API
+ * @param {String} applicationId: Application ID
+ * @param {Object} sectionReviewData: data to create
  * @returns {Promise<Object>}  Created section review
  */
 const createASectionReview = async (context: Context, applicationId: string, sectionReviewData: SectionReview) => {
-  console.info('Creating a section review for ', applicationId);
+  console.info('Creating a section review for %s', applicationId);
 
   try {
     /**
@@ -25,10 +25,10 @@ const createASectionReview = async (context: Context, applicationId: string, sec
     });
 
     return sectionReview;
-  } catch (err) {
-    console.error('Error creating a section review %O', err);
+  } catch (error) {
+    console.error('Error creating a section review %o', error);
 
-    throw new Error(`Creating a section review ${err}`);
+    throw new Error(`Creating a section review ${error}`);
   }
 };
 

@@ -11,7 +11,7 @@ import generateValidationErrors from './validation';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapAndSave from '../map-and-save/policy';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, referenceNumber } from '../../../../test-mocks';
+import { mockReq, mockRes, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -291,7 +291,7 @@ describe('controllers/insurance/policy/type-of-policy', () => {
 
         describe('when there is an error', () => {
           beforeEach(() => {
-            const savePolicyDataSpy = jest.fn(() => Promise.reject(new Error('mock')));
+            const savePolicyDataSpy = mockSpyPromiseRejection;
 
             mapAndSave.policy = savePolicyDataSpy;
           });

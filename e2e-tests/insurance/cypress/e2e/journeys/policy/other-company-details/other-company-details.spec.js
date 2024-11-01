@@ -33,14 +33,7 @@ context(`Insurance - Policy - Other company details page - ${story}`, () => {
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.startInsurancePolicySection({});
-
-      cy.completeAndSubmitPolicyTypeForm({});
-      cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitTotalContractValueForm({});
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
-      cy.completeAndSubmitPreCreditPeriodForm({});
-      cy.completeAndSubmitAnotherCompanyForm({ otherCompanyInvolved: true });
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'anotherCompany', otherCompanyInvolved: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS}`;
       brokerUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
@@ -93,10 +86,6 @@ context(`Insurance - Policy - Other company details page - ${story}`, () => {
 
       cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
       field.input().should('exist');
-    });
-
-    it('renders a `save and back` button', () => {
-      cy.assertSaveAndBackButton();
     });
   });
 

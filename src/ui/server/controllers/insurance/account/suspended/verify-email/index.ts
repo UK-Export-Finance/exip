@@ -41,8 +41,9 @@ export const get = async (req: Request, res: Response) => {
     }
 
     return res.redirect(REACTIVATED_ROOT);
-  } catch (err) {
-    console.error('Error verifying account password reset token %O', err);
+  } catch (error) {
+    console.error('Error verifying account password reset token %o', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

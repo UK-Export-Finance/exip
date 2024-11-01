@@ -1,5 +1,4 @@
 import { summaryList } from '../../../../../../../../pages/shared';
-import partials from '../../../../../../../../partials';
 import FIELD_IDS from '../../../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import checkSummaryList from '../../../../../../../../commands/insurance/check-export-contract-summary-list';
@@ -20,10 +19,6 @@ const { DIRECT_AWARD, NEGOTIATED_CONTRACT, COMPETITIVE_BIDDING, OPEN_TENDER, OTH
 
 const baseUrl = Cypress.config('baseUrl');
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
-
 context(
   'Insurance - Change your answers - How the contract was awarded - As an Exporter, I want to be able to review my input regarding how the contract was awarded, So that I can be assured I am providing UKEF with the right information',
   () => {
@@ -38,7 +33,7 @@ context(
           referenceNumber,
         });
 
-        task.link().click();
+        cy.clickTaskCheckAnswers();
 
         // To get past previous "Check your answers" pages
         cy.completeAndSubmitMultipleCheckYourAnswers({ count: 3 });

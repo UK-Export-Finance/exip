@@ -1,14 +1,12 @@
-import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../content-strings';
 import dateRules from '../date';
 import requestedStartDateRules from '.';
 import { mockErrors } from '../../test-mocks';
 
 const {
-  POLICY: {
-    CONTRACT_POLICY: { REQUESTED_START_DATE: FIELD_ID },
-  },
-} = INSURANCE_FIELD_IDS;
+  CONTRACT_POLICY: { REQUESTED_START_DATE: FIELD_ID },
+} = POLICY_FIELD_IDS;
 
 const {
   INSURANCE: {

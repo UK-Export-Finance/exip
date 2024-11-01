@@ -1,5 +1,6 @@
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import checkSummaryList from '../../../../../../../commands/insurance/check-your-buyer-summary-list';
 
 const {
@@ -21,6 +22,8 @@ const {
   HAS_BUYER_FINANCIAL_ACCOUNTS,
 } = YOUR_BUYER_FIELD_IDS;
 
+const { CURRENCY_CODE } = INSURANCE_FIELD_IDS.CURRENCY;
+
 const baseUrl = Cypress.config('baseUrl');
 
 context(
@@ -29,7 +32,7 @@ context(
     let referenceNumber;
     let url;
 
-    describe(`${CONNECTION_WITH_BUYER} as no`, () => {
+    describe(`when ${CONNECTION_WITH_BUYER} is 'no'`, () => {
       before(() => {
         cy.deleteAccount();
 
@@ -43,6 +46,7 @@ context(
             hasHadCreditInsuranceCoverWithBuyer: true,
             exporterHasBuyerFinancialAccounts: true,
             totalContractValueOverThreshold: true,
+            failedToPay: true,
           });
 
           url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
@@ -93,6 +97,10 @@ context(
 
       it(`should render a ${OUTSTANDING_PAYMENTS} summary list row`, () => {
         checkSummaryList[OUTSTANDING_PAYMENTS]({ shouldRender: true, isYes: true });
+      });
+
+      it(`should render a ${CURRENCY_CODE} summary list row`, () => {
+        checkSummaryList[CURRENCY_CODE]({ shouldRender: true });
       });
 
       it(`should render a ${TOTAL_AMOUNT_OVERDUE} summary list row`, () => {

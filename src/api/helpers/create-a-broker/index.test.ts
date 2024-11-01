@@ -1,5 +1,6 @@
 import createABroker from '.';
 import { Application, Context } from '../../types';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
 
@@ -10,7 +11,7 @@ describe('helpers/create-a-broker', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await applications.create({ context, data: {} })) as Application;
+    application = (await applications.create({ context })) as Application;
   });
 
   test('it should return a broker', async () => {
@@ -33,7 +34,7 @@ describe('helpers/create-a-broker', () => {
 
   describe('when an invalid application ID is passed', () => {
     test('it should throw an error', async () => {
-      await expect(createABroker(context, 'invalid-id')).rejects.toThrow('Creating a broker');
+      await expect(createABroker(context, mockInvalidId)).rejects.toThrow('Creating a broker');
     });
   });
 

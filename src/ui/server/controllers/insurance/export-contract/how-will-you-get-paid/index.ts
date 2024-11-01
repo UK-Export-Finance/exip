@@ -39,7 +39,7 @@ export const TEMPLATE = HOW_WILL_YOU_GET_PAID;
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
@@ -111,7 +111,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { totalContractValueOverThreshold, migratedV1toV2 } = application;
+    const { totalContractValueOverThreshold } = application;
 
     if (isChangeRoute(req.originalUrl)) {
       /**
@@ -122,7 +122,7 @@ export const post = async (req: Request, res: Response) => {
        * This ensures that the next page can consume /change in the URL
        * and therefore correctly redirect on submission.
        */
-      if (totalContractValueOverThreshold || migratedV1toV2) {
+      if (totalContractValueOverThreshold) {
         return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET_CHANGE}`);
       }
 
@@ -139,8 +139,7 @@ export const post = async (req: Request, res: Response) => {
        * and therefore correctly redirect on submission.
        * Otherwise, redirect to CHECK_AND_CHANGE_ROUTE.
        */
-
-      if (totalContractValueOverThreshold || migratedV1toV2) {
+      if (totalContractValueOverThreshold) {
         return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET_CHECK_AND_CHANGE}`);
       }
 
@@ -149,17 +148,16 @@ export const post = async (req: Request, res: Response) => {
 
     /**
      * if totalContractValue is over the threshold,
-     * or the application has been migrated from V1 to V2,
      * redirect to PRIVATE_MARKET.
      * otherwise it should redirect to the AGENT page
      */
-    if (totalContractValueOverThreshold || migratedV1toV2) {
+    if (totalContractValueOverThreshold) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT}`);
-  } catch (err) {
-    console.error('Error updating application - export contract - how will you get paid %O', err);
+  } catch (error) {
+    console.error('Error updating application - export contract - how will you get paid %o', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

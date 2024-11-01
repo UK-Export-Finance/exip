@@ -4,44 +4,37 @@ import { generateOtherCompanyFields } from './other-company-fields';
 import { generateBrokerFields } from './broker-fields';
 import { generateLossPayeeFields } from './loss-payee-fields';
 import generateGroupsOfSummaryLists from '../generate-groups-of-summary-lists';
-import {
-  ApplicationPolicy,
-  ApplicationPolicyContact,
-  ApplicationBroker,
-  ApplicationNominatedLossPayee,
-  Currency,
-  Country,
-  SummaryListGroupData,
-} from '../../../../types';
+import { SummaryListParamsPolicy, SummaryListGroupData } from '../../../../types';
 
 /**
  * generateFields
  * Create all fields for the insurance - Type of policy govukSummaryList
- * @param {Object} answers: Submitted "policy" data
- * @param {Object} answersPolicyContact: Submitted "policy contact" data
- * @param {Object} answersBroker: Submitted "broker" data
+ * @param {Object} policy: Submitted "policy" data
+ * @param {Object} policyContact: Submitted "policy contact" data
+ * @param {Object} broker: Submitted "broker" data
+ * @param {Object} nominatedLossPayee: Submitted "Nominated loss payee" data
  * @param {Integer} referenceNumber: Application reference number
- * @param {Array} currencies: Currencies
+ * @param {Array<Currency>} currencies: Currencies
  * @param {Array<Country>} countries: Countries
- * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} All policy values in an object structure for GOVUK summary list structure
  */
-const generateFields = (
-  answers: ApplicationPolicy,
-  answersPolicyContact: ApplicationPolicyContact,
-  answersBroker: ApplicationBroker,
-  answersLossPayee: ApplicationNominatedLossPayee,
-  referenceNumber: number,
-  currencies: Array<Currency>,
-  countries: Array<Country>,
-  checkAndChange: boolean,
-): Array<SummaryListGroupData> => {
+const generateFields = ({
+  policy,
+  policyContact,
+  broker,
+  nominatedLossPayee,
+  referenceNumber,
+  currencies,
+  countries,
+  checkAndChange,
+}: SummaryListParamsPolicy): Array<SummaryListGroupData> => {
   const fields = [
-    generatePolicyAndDateFields(answers, referenceNumber, currencies, checkAndChange),
-    generatePolicyContactFields(answersPolicyContact, referenceNumber, checkAndChange),
-    generateOtherCompanyFields(answers.jointlyInsuredParty, referenceNumber, countries, checkAndChange),
-    generateBrokerFields(answersBroker, referenceNumber, checkAndChange),
-    generateLossPayeeFields(answersLossPayee, referenceNumber, checkAndChange),
+    generatePolicyAndDateFields(policy, referenceNumber, currencies, checkAndChange),
+    generatePolicyContactFields(policyContact, referenceNumber, checkAndChange),
+    generateOtherCompanyFields(policy.jointlyInsuredParty, referenceNumber, countries, checkAndChange),
+    generateBrokerFields(broker, referenceNumber, checkAndChange),
+    generateLossPayeeFields(nominatedLossPayee, referenceNumber, checkAndChange),
   ] as Array<SummaryListGroupData>;
 
   return fields;
@@ -50,26 +43,36 @@ const generateFields = (
 /**
  * policySummaryLists
  * Create multiple groups with govukSummaryList data structure
- * @param {ApplicationPolicy} answers: policy answers/submitted data in a simple object/text structure
- * @param {ApplicationPolicyContact} answersPolicyContact: policyContact answers/submitted data in a simple object/text structure
- * @param {ApplicationBroker} answersBroker: broker answers/submitted data in a simple object/text structure
+ * @param {ApplicationPolicy} policy: Policy answers/submitted data in a simple object/text structure
+ * @param {ApplicationPolicyContact} policyContact: Policy contact answers/submitted data in a simple object/text structure
+ * @param {ApplicationBroker} broker: Broker answers/submitted data in a simple object/text structure
+ * @param {ApplicationNominatedLossPayee} nominatedLossPayee: Nominated loss payee answers/submitted data in a simple object/text structure
  * @param {Number} referenceNumber: Application reference number
  * @param {Array<Currency>} currencies: Currencies
  * @param {Array<Country>} countries: Countries
- * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section. Defaults to false
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
-const policySummaryLists = (
-  answers: ApplicationPolicy,
-  answersPolicyContact: ApplicationPolicyContact,
-  answersBroker: ApplicationBroker,
-  answersLossPayee: ApplicationNominatedLossPayee,
-  referenceNumber: number,
-  currencies: Array<Currency>,
-  countries: Array<Country>,
-  checkAndChange = false,
-) => {
-  const fields = generateFields(answers, answersPolicyContact, answersBroker, answersLossPayee, referenceNumber, currencies, countries, checkAndChange);
+const policySummaryLists = ({
+  policy,
+  policyContact,
+  broker,
+  nominatedLossPayee,
+  referenceNumber,
+  currencies,
+  countries,
+  checkAndChange,
+}: SummaryListParamsPolicy) => {
+  const fields = generateFields({
+    policy,
+    policyContact,
+    broker,
+    nominatedLossPayee,
+    referenceNumber,
+    currencies,
+    countries,
+    checkAndChange,
+  });
 
   const summaryList = generateGroupsOfSummaryLists(fields);
 

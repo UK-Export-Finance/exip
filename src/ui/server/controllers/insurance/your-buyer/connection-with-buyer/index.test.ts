@@ -6,13 +6,13 @@ import YOUR_BUYER_FIELD_IDS from '../../../../constants/field-ids/insurance/your
 import { TEMPLATES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 import constructPayload from '../../../../helpers/construct-payload';
-import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockBuyer, referenceNumber } from '../../../../test-mocks';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/buyer-relationship';
+import { Request, Response } from '../../../../../types';
+import { mockReq, mockRes, mockApplication, mockBuyer, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -68,7 +68,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
   });
 
   describe('PAGE_CONTENT_STRINGS', () => {
-    it('should have the correct page content strings', () => {
+    it('should have the correct strings', () => {
       expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER);
     });
   });
@@ -255,7 +255,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
         beforeEach(() => {
           req.body = validBody;
           res.locals = mockRes().locals;
-          mapAndSave.buyerRelationship = jest.fn(() => Promise.reject(new Error('mock')));
+          mapAndSave.buyerRelationship = mockSpyPromiseRejection;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

@@ -40,9 +40,10 @@ const getAccountByField = async (context: Context, field: string, value: string)
     } as Account;
 
     return populatedAccount;
-  } catch (err) {
-    console.error('Error getting account by field/value %O', err);
-    throw new Error(`Getting account by field/value ${err}`);
+  } catch (error) {
+    console.error('Error getting account by field/value %o', error);
+
+    throw new Error(`Getting account by field/value ${error}`);
   }
 };
 

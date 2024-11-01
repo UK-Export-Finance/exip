@@ -3,7 +3,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { AGENT_CHARGES, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { AGENT_CHARGES, AGENT_CHARGES_CURRENCY },
 } = INSURANCE_ROUTES;
 
 const {
@@ -15,23 +15,17 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Export contract - Agent charges page - Fixed sum amount as decimal', () => {
   let referenceNumber;
   let url;
-  let checkYourAnswersUrl;
+  let agentChargesCurrencyUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.startInsuranceExportContractSection({});
-      cy.completeAndSubmitHowWasTheContractAwardedForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm({});
-      cy.completeAndSubmitHowYouWillGetPaidForm({});
-      cy.completeAndSubmitAgentForm({ isUsingAgent: true });
-      cy.completeAndSubmitAgentDetailsForm({});
-      cy.completeAndSubmitAgentServiceForm({ agentIsCharging: true });
+      cy.completeAndSubmitExportContractForms({ formToStopAt: 'agentService', isUsingAgent: true, agentIsCharging: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES}`;
-      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      agentChargesCurrencyUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY}`;
     });
   });
 
@@ -51,16 +45,16 @@ context('Insurance - Export contract - Agent charges page - Fixed sum amount as 
     describe(`when submitting with ${METHOD} as ${FIXED_SUM} as a decimal number`, () => {
       const fixedSumAmount = '100.54';
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+      it(`should redirect to ${AGENT_CHARGES_CURRENCY}`, () => {
         cy.completeAndSubmitAgentChargesForm({ fixedSumMethod: true, fixedSumAmount });
 
-        cy.assertUrl(checkYourAnswersUrl);
+        cy.assertUrl(agentChargesCurrencyUrl);
       });
 
-      it('should update the `export contract` task status to `completed`', () => {
+      it('should retain the status of task `export contract` as `in progress`', () => {
         cy.navigateToAllSectionsUrl(referenceNumber);
 
-        cy.checkTaskExportContractStatusIsComplete();
+        cy.checkTaskExportContractStatusIsInProgress();
       });
 
       describe('when going back to the page', () => {

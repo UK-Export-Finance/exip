@@ -1,6 +1,6 @@
 import mapInsuredFor from './map-value';
 import { GBP_CURRENCY_CODE } from '../../../constants';
-import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../constants/field-ids/insurance/policy';
 import { DEFAULT } from '../../../content-strings';
 import formatCurrency from '../../format-currency';
 import mockApplication, { mockSinglePolicy, mockMultiplePolicy } from '../../../test-mocks/mock-application';
@@ -9,16 +9,14 @@ import { EUR } from '../../../test-mocks/mock-currencies';
 const { policy: initPolicy } = mockApplication;
 
 const {
-  POLICY: {
-    CONTRACT_POLICY: {
-      POLICY_CURRENCY_CODE,
-      SINGLE: { TOTAL_CONTRACT_VALUE },
-    },
-    EXPORT_VALUE: {
-      MULTIPLE: { MAXIMUM_BUYER_WILL_OWE },
-    },
+  CONTRACT_POLICY: {
+    POLICY_CURRENCY_CODE,
+    SINGLE: { TOTAL_CONTRACT_VALUE },
   },
-} = INSURANCE_FIELD_IDS;
+  EXPORT_VALUE: {
+    MULTIPLE: { MAXIMUM_BUYER_WILL_OWE },
+  },
+} = POLICY_FIELD_IDS;
 
 describe('server/helpers/mappings/map-applications/map-value', () => {
   describe(`when the policy type is single policy type and ${POLICY_CURRENCY_CODE} is available`, () => {

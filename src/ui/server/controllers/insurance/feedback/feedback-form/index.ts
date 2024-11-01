@@ -21,8 +21,6 @@ export const TEMPLATE = FEEDBACK_TEMPLATE;
 
 export const FIELD_IDS = [SATISFACTION, IMPROVEMENT, OTHER_COMMENTS];
 
-export const MAXIMUM = 1200;
-
 const pageVariables = () => ({
   FIELDS: {
     SATISFACTION: {
@@ -39,7 +37,6 @@ const pageVariables = () => ({
       ...FIELDS[OTHER_COMMENTS],
     },
   },
-  MAXIMUM,
 });
 
 /**
@@ -64,8 +61,9 @@ const get = (req: Request, res: Response) => {
       ...pageVariables(),
       userName: getUserNameFromSession(req.session.user),
     });
-  } catch (err) {
-    console.error('Error getting insurance feedback page %O', err);
+  } catch (error) {
+    console.error('Error getting insurance feedback page %o', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -125,8 +123,9 @@ const post = async (req: Request, res: Response) => {
     }
 
     return res.redirect(FEEDBACK_SENT);
-  } catch (err) {
-    console.error('Error posting insurance feedback page %O', err);
+  } catch (error) {
+    console.error('Error posting insurance feedback page %o', error);
+
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

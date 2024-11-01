@@ -4,9 +4,9 @@ import { AccountSendEmailReactivateLinkVariables, AccountSendEmailReactivateLink
 /**
  * sendEmailReactivateAccountLink
  * Generate a hash, update account and send a link to the account via email.
- * @param {Object} GraphQL root variables
- * @param {Object} GraphQL variables for the SendReactivateAccountEmail mutation
- * @param {Context} KeystoneJS context API
+ * @param {Object} root: GraphQL root variables
+ * @param {Object} variables: GraphQL variables for the SendReactivateAccountEmail mutation
+ * @param {Context} context: KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag
  */
 const sendEmailReactivateAccountLink = async (
@@ -20,10 +20,10 @@ const sendEmailReactivateAccountLink = async (
     const reactiveAccountResponse = await sendEmailReactivateAccountLinkHelper.send(variables, context);
 
     return reactiveAccountResponse;
-  } catch (err) {
-    console.error('Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) %O', err);
+  } catch (error) {
+    console.error('Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) %o', error);
 
-    throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) ${err}`);
+    throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) ${error}`);
   }
 };
 

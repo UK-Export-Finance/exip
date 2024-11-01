@@ -1,6 +1,6 @@
 import generatePreCreditPeriodFields from '.';
 import { POLICY_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance';
-import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import fieldGroupItem from '../../../generate-field-group-item';
 import getFieldById from '../../../../get-field-by-id';

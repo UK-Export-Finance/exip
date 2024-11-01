@@ -1,76 +1,44 @@
-import { get, post, pageVariables, TEMPLATE, FIELD_IDS, PAGE_CONTENT_STRINGS, HTML_FLAGS } from '.';
+import { get, post, pageVariables, TEMPLATE, FIELD_ID, PAGE_CONTENT_STRINGS, HTML_FLAGS } from '.';
 import { PAGES } from '../../../../content-strings';
-import { ATTRIBUTES, FIELD_VALUES, TEMPLATES } from '../../../../constants';
+import { FIELD_VALUES, TEMPLATES } from '../../../../constants';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import BUYER_FIELD_IDS from '../../../../constants/field-ids/insurance/your-buyer';
-import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import tradingHistoryValidation from './validation';
 import constructPayload from '../../../../helpers/construct-payload';
-import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import mapAndSave from '../map-and-save/buyer-trading-history';
-import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
-import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
-import {
-  mockReq,
-  mockRes,
-  mockApplication,
-  mockApplicationTotalContractValueThresholdTrue,
-  mockApplicationTotalContractValueThresholdFalse,
-  mockCurrencies,
-  mockCurrenciesResponse,
-  referenceNumber,
-} from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
   YOUR_BUYER: {
-    TRADING_HISTORY_CHANGE,
-    TRADING_HISTORY_CHECK_AND_CHANGE,
     TRADING_HISTORY_SAVE_AND_BACK: SAVE_AND_BACK,
     CHECK_YOUR_ANSWERS,
-    ALTERNATIVE_CURRENCY,
-    ALTERNATIVE_CURRENCY_CHANGE,
-    ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE,
-    BUYER_FINANCIAL_INFORMATION,
-    CREDIT_INSURANCE_COVER,
+    CURRENCY_OF_LATE_PAYMENTS,
+    FAILED_TO_PAY,
+    TRADING_HISTORY_CHANGE,
+    TRADING_HISTORY_CHECK_AND_CHANGE,
+    CURRENCY_OF_LATE_PAYMENTS_CHANGE,
+    CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE,
+    FAILED_TO_PAY_CHANGE,
+    FAILED_TO_PAY_CHECK_AND_CHANGE,
   },
   CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-const { OUTSTANDING_PAYMENTS, FAILED_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE } = BUYER_FIELD_IDS;
-
-const {
-  CURRENCY: { CURRENCY_CODE },
-} = INSURANCE_FIELD_IDS;
-
-const {
-  PARTIALS: {
-    INSURANCE: { BUYER },
-  },
-} = TEMPLATES;
-
-const {
-  CLASSES: { LEGEND, FONT_WEIGHT },
-} = ATTRIBUTES;
-
-const currencyValue = mockApplication.buyer.buyerTradingHistory[CURRENCY_CODE];
+const { OUTSTANDING_PAYMENTS, FAILED_PAYMENTS } = BUYER_FIELD_IDS;
 
 describe('controllers/insurance/your-buyer/trading-history', () => {
   let req: Request;
   let res: Response;
 
-  let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
-
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
 
   afterAll(() => {
@@ -79,80 +47,32 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(referenceNumber, mockCurrencies, currencyValue);
-
-      const currency = getCurrencyByCode(mockCurrencies, String(currencyValue));
+      const result = pageVariables(referenceNumber);
 
       const expected = {
-        FIELDS: {
-          OUTSTANDING_PAYMENTS: {
-            ID: OUTSTANDING_PAYMENTS,
-            ...FIELDS[OUTSTANDING_PAYMENTS],
-          },
-          FAILED_PAYMENTS: {
-            ID: FAILED_PAYMENTS,
-            ...FIELDS[FAILED_PAYMENTS],
-          },
-          TOTAL_OUTSTANDING_PAYMENTS: {
-            ID: TOTAL_OUTSTANDING_PAYMENTS,
-            ...FIELDS[TOTAL_OUTSTANDING_PAYMENTS],
-          },
-          TOTAL_AMOUNT_OVERDUE: {
-            ID: TOTAL_AMOUNT_OVERDUE,
-            ...FIELDS[TOTAL_AMOUNT_OVERDUE],
-          },
-        },
-        PAGE_CONTENT_STRINGS,
+        FIELD_ID,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
-        PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`,
-        CURRENCY_PREFIX_SYMBOL: currency.symbol,
+        FIELD_HINT: FIELDS[OUTSTANDING_PAYMENTS].HINT,
       };
 
       expect(result).toEqual(expected);
     });
-
-    describe('when isChange is provided as true', () => {
-      it(`should return "PROVIDE_ALTERNATIVE_CURRENCY_URL" as ${ALTERNATIVE_CURRENCY_CHANGE}`, () => {
-        const isChange = true;
-
-        const result = pageVariables(referenceNumber, mockCurrencies, currencyValue, isChange);
-
-        const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY_CHANGE}`;
-
-        expect(result.PROVIDE_ALTERNATIVE_CURRENCY_URL).toEqual(expected);
-      });
-    });
-
-    describe('when isCheckAndChange is provided as true', () => {
-      it(`should return "PROVIDE_ALTERNATIVE_CURRENCY_URL" as ${ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`, () => {
-        const isChange = false;
-        const isCheckAndChange = true;
-
-        const result = pageVariables(referenceNumber, mockCurrencies, currencyValue, isChange, isCheckAndChange);
-
-        const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`;
-
-        expect(result.PROVIDE_ALTERNATIVE_CURRENCY_URL).toEqual(expected);
-      });
-    });
   });
 
-  describe('FIELD_IDS', () => {
-    it('should have the correct FIELD_IDS', () => {
-      const EXPECTED_FIELD_IDS = [OUTSTANDING_PAYMENTS, FAILED_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE];
-
-      expect(FIELD_IDS).toEqual(EXPECTED_FIELD_IDS);
+  describe('FIELD_ID', () => {
+    it('should have the correct ID', () => {
+      expect(FIELD_ID).toEqual(OUTSTANDING_PAYMENTS);
     });
   });
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.YOUR_BUYER.TRADING_HISTORY);
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SINGLE_RADIO);
     });
   });
 
   describe('PAGE_CONTENT_STRINGS', () => {
-    it('should have the correct template defined', () => {
+    it('should have the correct strings', () => {
       expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.YOUR_BUYER.TRADING_HISTORY);
     });
   });
@@ -160,8 +80,8 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
   describe('HTML_FLAGS', () => {
     it('should have the correct flags defined', () => {
       const expected = {
-        CONDITIONAL_YES_HTML: BUYER.OUTSTANDING_PAYMENTS.CONDITIONAL_YES_HTML,
-        LEGEND_CLASS: `${LEGEND.S} ${FONT_WEIGHT.REGULAR}`,
+        HORIZONTAL_RADIOS: true,
+        NO_RADIO_AS_FIRST_OPTION: true,
       };
 
       expect(HTML_FLAGS).toEqual(expected);
@@ -169,12 +89,6 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
   });
 
   describe('get', () => {
-    it('should call api.keystone.APIM.getCurrencies', async () => {
-      await get(req, res);
-
-      expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
-    });
-
     it('should render template', async () => {
       await get(req, res);
 
@@ -185,36 +99,11 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
           HTML_FLAGS,
         }),
         userName: getUserNameFromSession(req.session.user),
-        ...pageVariables(referenceNumber, mockCurrencies, currencyValue),
-        application: mapApplicationToFormFields(mockApplication),
+        ...pageVariables(referenceNumber),
+        submittedValues: mockApplication.buyer.buyerTradingHistory,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    describe("when the url's last substring is `change`", () => {
-      it('should render template with alternative pageVariables', async () => {
-        const isChangeRoute = true;
-
-        req.originalUrl = TRADING_HISTORY_CHANGE;
-
-        await get(req, res);
-
-        const expectedVariables = {
-          ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS,
-            BACK_LINK: req.headers.referer,
-            HTML_FLAGS,
-          }),
-          userName: getUserNameFromSession(req.session.user),
-          ...pageVariables(referenceNumber, mockCurrencies, currencyValue, isChangeRoute),
-          application: mapApplicationToFormFields(mockApplication),
-        };
-
-        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-
-        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-      });
     });
 
     describe('when there is no application', () => {
@@ -233,13 +122,10 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
   describe('post', () => {
     const validBody = {
       [OUTSTANDING_PAYMENTS]: FIELD_VALUES.NO,
-      [FAILED_PAYMENTS]: FIELD_VALUES.NO,
     };
 
     beforeEach(() => {
       mapAndSave.buyerTradingHistory = jest.fn(() => Promise.resolve(true));
-      getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
-      api.keystone.APIM.getCurrencies = getCurrenciesSpy;
     });
 
     describe('when there are no validation errors', () => {
@@ -252,51 +138,64 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
 
         expect(mapAndSave.buyerTradingHistory).toHaveBeenCalledTimes(1);
 
-        const payload = constructPayload(req.body, FIELD_IDS);
+        const payload = constructPayload(req.body, [FIELD_ID]);
 
         expect(mapAndSave.buyerTradingHistory).toHaveBeenCalledWith(payload, mockApplication);
       });
 
-      describe('when application.totalContractValueOverThreshold=true, migratedV1toV2=false', () => {
-        it(`should redirect to ${CREDIT_INSURANCE_COVER}`, async () => {
-          res.locals.application = mockApplicationTotalContractValueThresholdTrue;
-          res.locals.application.migratedV1toV2 = false;
+      it(`should redirect to ${FAILED_TO_PAY}`, async () => {
+        await post(req, res);
+
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${FAILED_TO_PAY}`;
+
+        expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+
+      describe(`when${OUTSTANDING_PAYMENTS} is true`, () => {
+        it(`should redirect to ${CURRENCY_OF_LATE_PAYMENTS}`, async () => {
+          validBody[OUTSTANDING_PAYMENTS] = 'true';
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CURRENCY_OF_LATE_PAYMENTS}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });
 
-      describe('when application.totalContractValueOverThreshold=false, migratedV1toV2=true', () => {
-        it(`should redirect to ${CREDIT_INSURANCE_COVER}`, async () => {
-          res.locals.application = mockApplicationTotalContractValueThresholdFalse;
-          res.locals.application.migratedV1toV2 = true;
+      describe(`when the url's last substring is "change" and ${OUTSTANDING_PAYMENTS} is true`, () => {
+        it(`should redirect to ${CURRENCY_OF_LATE_PAYMENTS_CHANGE}`, async () => {
+          req.originalUrl = TRADING_HISTORY_CHANGE;
+
+          validBody[OUTSTANDING_PAYMENTS] = 'true';
 
           await post(req, res);
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CURRENCY_OF_LATE_PAYMENTS_CHANGE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });
 
-      describe('when application.totalContractValueOverThreshold=false, migratedV1toV2=false', () => {
-        it(`should redirect to ${BUYER_FINANCIAL_INFORMATION}`, async () => {
-          res.locals.application = mockApplicationTotalContractValueThresholdFalse;
-          res.locals.application.migratedV1toV2 = false;
+      describe(`when the url's last substring is "check-and-change" and ${OUTSTANDING_PAYMENTS} is true`, () => {
+        it(`should redirect to ${CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE}`, async () => {
+          req.originalUrl = TRADING_HISTORY_CHECK_AND_CHANGE;
+
+          validBody[OUTSTANDING_PAYMENTS] = 'true';
 
           await post(req, res);
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CURRENCY_OF_LATE_PAYMENTS_CHECK_AND_CHANGE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });
 
-      describe("when the url's last substring is `check`", () => {
+      describe(`when the url's last substring is "change" and ${OUTSTANDING_PAYMENTS} is false`, () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
           req.originalUrl = TRADING_HISTORY_CHANGE;
+
+          validBody[OUTSTANDING_PAYMENTS] = 'false';
 
           await post(req, res);
 
@@ -306,13 +205,51 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
         });
       });
 
-      describe("when the url's last substring is `check-and-change`", () => {
+      describe(`when the url's last substring is "change" and ${OUTSTANDING_PAYMENTS} is false and ${FAILED_PAYMENTS} is null`, () => {
+        it(`should redirect to ${FAILED_TO_PAY_CHANGE}`, async () => {
+          req.originalUrl = TRADING_HISTORY_CHANGE;
+
+          validBody[OUTSTANDING_PAYMENTS] = 'false';
+
+          res.locals.application = mockApplication;
+          res.locals.application.buyer.buyerTradingHistory[FAILED_PAYMENTS] = null;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${FAILED_TO_PAY_CHANGE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when the url's last substring is "check-and-change" and ${OUTSTANDING_PAYMENTS} is false`, () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
           req.originalUrl = TRADING_HISTORY_CHECK_AND_CHANGE;
+
+          validBody[OUTSTANDING_PAYMENTS] = 'false';
+          res.locals.application = mockApplication;
+          res.locals.application.buyer.buyerTradingHistory[FAILED_PAYMENTS] = true;
 
           await post(req, res);
 
           const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when the url's last substring is "check-and-change" and ${OUTSTANDING_PAYMENTS} is false and ${FAILED_PAYMENTS} is null`, () => {
+        it(`should redirect to ${FAILED_TO_PAY_CHECK_AND_CHANGE}`, async () => {
+          req.originalUrl = TRADING_HISTORY_CHECK_AND_CHANGE;
+
+          validBody[OUTSTANDING_PAYMENTS] = 'false';
+
+          res.locals.application = mockApplication;
+          res.locals.application.buyer.buyerTradingHistory[FAILED_PAYMENTS] = null;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${FAILED_TO_PAY_CHECK_AND_CHANGE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -323,7 +260,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
       it('should render template with validation errors', async () => {
         await post(req, res);
 
-        const payload = constructPayload(req.body, FIELD_IDS);
+        const payload = constructPayload(req.body, [FIELD_ID]);
 
         const validationErrors = tradingHistoryValidation(payload);
 
@@ -334,7 +271,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
             HTML_FLAGS,
           }),
           userName: getUserNameFromSession(req.session.user),
-          ...pageVariables(referenceNumber, mockCurrencies, currencyValue),
+          ...pageVariables(referenceNumber),
           submittedValues: payload,
           validationErrors,
         };
@@ -373,7 +310,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
         beforeEach(() => {
           req.body = validBody;
           res.locals = mockRes().locals;
-          mapAndSave.buyerTradingHistory = jest.fn(() => Promise.reject(new Error('mock')));
+          mapAndSave.buyerTradingHistory = mockSpyPromiseRejection;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

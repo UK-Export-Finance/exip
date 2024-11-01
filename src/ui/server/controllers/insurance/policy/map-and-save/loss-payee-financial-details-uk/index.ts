@@ -8,8 +8,8 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
  * mapAndSave lossPayeeFinancialDetails
  * Map and save any valid nominatedLossPayee fields
  * @param {RequestBody} formBody: Form body
- * @param {Application}
- * @param {Object} Validation errors
+ * @param {Application} application
+ * @param {Object} validationErrors: Validation errors
  * @returns {Boolean}
  */
 const lossPayeeFinancialDetailsUk = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
@@ -33,8 +33,8 @@ const lossPayeeFinancialDetailsUk = async (formBody: RequestBody, application: A
     }
 
     return true;
-  } catch (err) {
-    console.error('Error mapping and saving application - policy - loss payee financial details UK %O', err);
+  } catch (error) {
+    console.error('Error mapping and saving application - policy - loss payee financial details UK %o', error);
 
     return false;
   }

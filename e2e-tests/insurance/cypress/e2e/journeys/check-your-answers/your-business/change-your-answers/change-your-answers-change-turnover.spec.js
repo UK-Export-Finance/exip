@@ -1,4 +1,3 @@
-import partials from '../../../../../../../partials';
 import { field, summaryList } from '../../../../../../../pages/shared';
 import { GBP_CURRENCY_CODE } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -14,10 +13,6 @@ const {
 const {
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
 } = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
 
 const getFieldVariables = (fieldId, referenceNumber) => ({
   route: TURNOVER_CHECK_AND_CHANGE,
@@ -41,7 +36,7 @@ context('Insurance - Check your answers - Turnover - Your business - Summary lis
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 

@@ -1,4 +1,3 @@
-import partials from '../../../../../../../partials';
 import checkSummaryList from '../../../../../../../commands/insurance/check-your-buyer-summary-list';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -22,9 +21,7 @@ const {
   HAS_BUYER_FINANCIAL_ACCOUNTS,
 } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.submitApplication.tasks.checkAnswers;
+const { CURRENCY_CODE } = INSURANCE_FIELD_IDS.CURRENCY;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -38,7 +35,7 @@ context('Insurance - Check your answers - Your buyer page - Summary list - appli
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-      task.link().click();
+      cy.clickTaskCheckAnswers();
 
       // To get past "Your business" check your answers page
       cy.completeAndSubmitMultipleCheckYourAnswers({ count: 1 });
@@ -93,6 +90,10 @@ context('Insurance - Check your answers - Your buyer page - Summary list - appli
 
   it(`should NOT render a ${OUTSTANDING_PAYMENTS} summary list row`, () => {
     checkSummaryList[OUTSTANDING_PAYMENTS]({ shouldRender: false });
+  });
+
+  it(`should NOT render a ${CURRENCY_CODE} summary list row`, () => {
+    checkSummaryList[CURRENCY_CODE]({ shouldRender: false });
   });
 
   it(`should NOT render a ${TOTAL_AMOUNT_OVERDUE} summary list row`, () => {

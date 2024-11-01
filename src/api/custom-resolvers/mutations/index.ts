@@ -10,12 +10,12 @@ import sendEmailPasswordResetLink from './send-email-password-reset-link';
 import accountPasswordReset from './account-password-reset';
 import sendEmailReactivateAccountLink from './send-email-reactivate-account-link';
 import createAnApplication from './create-an-application';
+import createManyApplications from './create-many-applications';
 import createAnAbandonedApplication from './create-an-abandoned-application';
 import deleteApplicationByReferenceNumber from './delete-application-by-reference-number';
 import submitApplication from './submit-application';
 import createFeedbackAndSendEmail from './create-feedback';
 import verifyAccountReactivationToken from './verify-account-reactivation-token';
-import updateCompanyPostDataMigration from './update-company-post-data-migration';
 import updateLossPayeeFinancialDetailsUk from './update-loss-payee-financial-details-uk';
 import updateLossPayeeFinancialDetailsInternational from './update-loss-payee-financial-details-international';
 
@@ -32,12 +32,12 @@ export {
   accountPasswordReset,
   sendEmailReactivateAccountLink,
   createAnApplication,
+  createManyApplications,
   createAnAbandonedApplication,
   deleteApplicationByReferenceNumber,
   submitApplication,
   createFeedbackAndSendEmail,
   verifyAccountReactivationToken,
-  updateCompanyPostDataMigration,
   updateLossPayeeFinancialDetailsUk,
   updateLossPayeeFinancialDetailsInternational,
 };

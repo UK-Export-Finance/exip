@@ -1,5 +1,3 @@
-import { completeAndSubmitBuyerCountryForm } from '../../forms';
-
 /**
  * checkAuthHeader
  * Run authenticated header check if flag is true
@@ -36,7 +34,7 @@ const submitAnswersFromExporterLocationHappyPath = ({ assertAuthenticatedHeader 
 
   checkAuthHeader(assertAuthenticatedHeader);
 
-  completeAndSubmitBuyerCountryForm({});
+  cy.completeAndSubmitBuyerCountryForm({});
 
   checkAuthHeader(assertAuthenticatedHeader);
 

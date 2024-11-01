@@ -2,8 +2,6 @@ import { yesRadio, yesNoRadioHint, noRadio } from '../../../../../../pages/share
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELDS } from '../../../../../../content-strings/fields';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import { completeAndSubmitBuyerBodyForm } from '../../../../../../commands/quote/forms';
 
 const CONTENT_STRINGS = PAGES.EXPORTER_LOCATION;
 
@@ -21,9 +19,9 @@ context('Exporter location page - as an exporter, I want to check if my company 
   const url = `${baseUrl}${EXPORTER_LOCATION}`;
 
   beforeEach(() => {
-    cy.login();
-    completeAndSubmitBuyerCountryForm({});
-    completeAndSubmitBuyerBodyForm();
+    cy.navigateToRootUrl();
+    cy.completeAndSubmitBuyerCountryForm({});
+    cy.completeAndSubmitBuyerBodyForm();
 
     cy.assertUrl(url);
   });
@@ -35,6 +33,7 @@ context('Exporter location page - as an exporter, I want to check if my company 
       backLink: BUYER_BODY,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

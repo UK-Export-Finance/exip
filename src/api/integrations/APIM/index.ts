@@ -42,10 +42,10 @@ const APIM = {
       return {
         success: false,
       };
-    } catch (err) {
-      console.error('Error calling APIM - CIS countries %O', err);
+    } catch (error) {
+      console.error('Error calling APIM - CIS countries %o', error);
 
-      throw new Error(`Calling APIM - CIS countries ${err}`);
+      throw new Error(`Calling APIM - CIS countries ${error}`);
     }
   },
   getCurrencies: async (): Promise<GetApimCurrenciesResponse> => {
@@ -75,10 +75,10 @@ const APIM = {
       return {
         success: false,
       };
-    } catch (err) {
-      console.error('Error calling APIM - currencies %O', err);
+    } catch (error) {
+      console.error('Error calling APIM - currencies %o', error);
 
-      throw new Error(`Calling APIM - currencies ${err}`);
+      throw new Error(`Calling APIM - currencies ${error}`);
     }
   },
 };

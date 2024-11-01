@@ -9,7 +9,7 @@ const {
   CURRENCY: { CURRENCY_CODE },
   POLICY: {
     CONTRACT_POLICY: {
-      SINGLE: { TOTAL_CONTRACT_VALUE },
+      SINGLE: { TOTAL_CONTRACT_VALUE, REQUESTED_CREDIT_LIMIT },
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -45,6 +45,10 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
 
   it(`should render ${TOTAL_CONTRACT_VALUE} with alternative currency code`, () => {
     checkSummaryList.singleContractPolicy[TOTAL_CONTRACT_VALUE](NON_STANDARD_CURRENCY_CODE);
+  });
+
+  it(`should render ${REQUESTED_CREDIT_LIMIT} with alternative currency code`, () => {
+    checkSummaryList.singleContractPolicy[REQUESTED_CREDIT_LIMIT](NON_STANDARD_CURRENCY_CODE);
   });
 
   it(`should render ${CURRENCY_CODE} with alternative currency code`, () => {

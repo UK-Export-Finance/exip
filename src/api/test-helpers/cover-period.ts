@@ -1,30 +1,31 @@
+import { Context } from '.keystone/types'; // eslint-disable-line
 import { COVER_PERIOD } from '../constants';
-import { CoverPeriod, TestHelperCreate } from '../types';
 
 const coverPeriodQuery = 'id value valueId';
 
 /**
- * create coverPeriod test helper
+ * Create coverPeriod test helper
  * Create an coverPeriod with mock data
- * @param {Context} KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @returns {Object} Created coverPeriod
  */
-const create = async ({ context }: TestHelperCreate) => {
+const create = async (context: Context) => {
   try {
     console.info('Creating an coverPeriod (test helpers)');
 
-    const coverPeriod = (await context.query.CoverPeriod.createOne({
+    const coverPeriod = await context.query.CoverPeriod.createOne({
       data: {
         valueId: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
         value: 'Mock value',
       },
       query: coverPeriodQuery,
-    })) as CoverPeriod;
+    });
 
     return coverPeriod;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+
+    return error;
   }
 };
 

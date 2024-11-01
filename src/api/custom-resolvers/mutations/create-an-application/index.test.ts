@@ -1,5 +1,5 @@
 import createAnApplication from '.';
-import { mockAccount, mockCountries } from '../../../test-mocks';
+import { mockAccount, mockCountries, mockInvalidId } from '../../../test-mocks';
 import mockCompany from '../../../test-mocks/mock-company';
 import { Account, Context, SuccessResponse } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
@@ -49,7 +49,7 @@ describe('custom-resolvers/create-an-application', () => {
 
   describe('when there is no account for the provided accountId', () => {
     test('it should return success=false', async () => {
-      variables.accountId = 'invalid-id';
+      variables.accountId = mockInvalidId;
 
       result = await createAnApplication({}, variables, context);
 
@@ -62,8 +62,8 @@ describe('custom-resolvers/create-an-application', () => {
       try {
         // pass empty context object to force an error
         await createAnApplication({}, variables, {});
-      } catch (err) {
-        const errorString = String(err);
+      } catch (error) {
+        const errorString = String(error);
 
         expect(errorString.includes('Creating application')).toEqual(true);
       }

@@ -1,6 +1,5 @@
 import { PAGES } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../commands/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM_EXIT;
 
@@ -16,18 +15,7 @@ context(
     let url;
 
     before(() => {
-      cy.navigateToCheckIfEligibleUrl();
-      cy.completeCheckIfEligibleForm();
-      cy.completeExporterLocationForm();
-      cy.completeCompaniesHouseNumberForm();
-      cy.completeAndSubmitCompaniesHouseSearchForm({});
-      cy.completeEligibilityCompanyDetailsForm();
-      completeAndSubmitBuyerCountryForm({});
-      cy.completeAndSubmitTotalValueInsuredForm({});
-      cy.completeCoverPeriodForm({});
-      cy.completeUkGoodsAndServicesForm();
-      cy.completeEndBuyerForm();
-      cy.completePartyToConsortiumForm({ partyToConsortium: true });
+      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'partyToConsortium', partyToConsortium: true });
 
       url = `${baseUrl}${PARTY_TO_CONSORTIUM_EXIT}`;
 
@@ -45,6 +33,7 @@ context(
         backLink: PARTY_TO_CONSORTIUM,
         hasAForm: false,
         assertAuthenticatedHeader: false,
+        assertSaveAndBackButtonDoesNotExist: true,
       });
     });
 

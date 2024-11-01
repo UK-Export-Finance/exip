@@ -1,12 +1,11 @@
 import createASectionReview from '.';
+import { mockInvalidId } from '../../test-mocks';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
 import { Application, Context, SectionReview } from '../../types';
 
-const invalidId = 'invalid-id';
-
-const assertError = (err) => {
-  const errorString = String(err);
+const assertError = (error) => {
+  const errorString = String(error);
 
   expect(errorString.includes('Creating a section review')).toEqual(true);
 };
@@ -19,7 +18,7 @@ describe('helpers/create-a-section-review', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await applications.create({ context, data: {} })) as Application;
+    application = (await applications.create({ context })) as Application;
 
     sectionReview = { eligibility: true };
   });
@@ -46,8 +45,8 @@ describe('helpers/create-a-section-review', () => {
     test('it should throw an error', async () => {
       try {
         await createASectionReview(context, application.id, {} as SectionReview);
-      } catch (err) {
-        assertError(err);
+      } catch (error) {
+        assertError(error);
       }
     });
   });
@@ -55,9 +54,9 @@ describe('helpers/create-a-section-review', () => {
   describe('when an invalid application ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createASectionReview(context, invalidId, {} as SectionReview);
-      } catch (err) {
-        assertError(err);
+        await createASectionReview(context, mockInvalidId, {} as SectionReview);
+      } catch (error) {
+        assertError(error);
       }
     });
   });

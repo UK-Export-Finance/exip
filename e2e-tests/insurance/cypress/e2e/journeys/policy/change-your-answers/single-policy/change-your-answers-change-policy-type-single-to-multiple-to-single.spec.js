@@ -15,7 +15,7 @@ const {
 const {
   TYPE_OF_POLICY: { POLICY_TYPE },
   CONTRACT_POLICY: {
-    SINGLE: { TOTAL_CONTRACT_VALUE },
+    SINGLE: { TOTAL_CONTRACT_VALUE, REQUESTED_CREDIT_LIMIT },
   },
 } = FIELD_IDS;
 
@@ -66,6 +66,7 @@ context('Insurance - Policy - Change your answers - Policy type - single to mult
 
     cy.navigateToUrl(totalContractValueUrl);
 
-    field(TOTAL_CONTRACT_VALUE).input().should('have.value', '');
+    cy.checkValue(field(TOTAL_CONTRACT_VALUE), '');
+    cy.checkValue(field(REQUESTED_CREDIT_LIMIT), '');
   });
 });
