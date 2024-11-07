@@ -33,12 +33,12 @@ describe('custom-resolvers/get-APIM-currencies', () => {
     });
   });
 
-  describe('when APIM currencies API returns success as false', () => {
+  describe('when APIM currencies API returns success=false', () => {
     beforeEach(() => {
       APIM.getCurrencies = jest.fn(() => Promise.resolve({ success: false }));
     });
 
-    it('should return object containing success as false', async () => {
+    it('should return object containing success=false', async () => {
       const response = await apimCurrencies.get();
 
       const expected = { success: false };
@@ -52,7 +52,7 @@ describe('custom-resolvers/get-APIM-currencies', () => {
       APIM.getCurrencies = jest.fn(() => Promise.resolve({ success: true, data: undefined }));
     });
 
-    it('should return object containing success as false', async () => {
+    it('should return object containing success=false', async () => {
       const response = await apimCurrencies.get();
 
       const expected = { success: false };

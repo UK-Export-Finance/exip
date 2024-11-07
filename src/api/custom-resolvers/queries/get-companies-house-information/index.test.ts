@@ -29,12 +29,12 @@ describe('custom-resolvers/get-companies-house-information', () => {
     expect(companiesHouse.get).toHaveBeenCalledWith(expected);
   });
 
-  describe('when companies house API returns success as false', () => {
+  describe('when companies house API returns success=false', () => {
     beforeEach(() => {
       companiesHouse.get = jest.fn(() => Promise.resolve({ success: false, notFound: true }));
     });
 
-    it('should return object containing success as false', async () => {
+    it('should return object containing success=false', async () => {
       const response = await getCompaniesHouseInformation({}, { companiesHouseNumber: '12345' });
 
       const expected = {
@@ -51,7 +51,7 @@ describe('custom-resolvers/get-companies-house-information', () => {
       companiesHouse.get = jest.fn(() => Promise.resolve({ success: true, data: undefined }));
     });
 
-    it('should return object containing success as false', async () => {
+    it('should return object containing success=false', async () => {
       const response = await getCompaniesHouseInformation({}, { companiesHouseNumber: '12345' });
 
       const expected = { success: false };
@@ -65,7 +65,7 @@ describe('custom-resolvers/get-companies-house-information', () => {
       companiesHouse.get = mockSpyPromiseRejection;
     });
 
-    it('should return object containing success as false and apiError as true', async () => {
+    it('should return object containing success=false and apiError as true', async () => {
       const response = await getCompaniesHouseInformation({}, { companiesHouseNumber: '12345' });
 
       const expected = { success: false, apiError: true };
@@ -80,7 +80,7 @@ describe('custom-resolvers/get-companies-house-information', () => {
       industrySectorNames.get = jest.fn(() => Promise.resolve({ success: false }));
     });
 
-    it('should return object containing success as false and apiError as true', async () => {
+    it('should return object containing success=false and apiError as true', async () => {
       const response = await getCompaniesHouseInformation({}, { companiesHouseNumber: '12345' });
 
       const expected = { success: false, apiError: true };
@@ -95,7 +95,7 @@ describe('custom-resolvers/get-companies-house-information', () => {
       industrySectorNames.get = jest.fn(() => Promise.resolve({ success: false, apiError: true }));
     });
 
-    it('should return object containing success as false and apiError as true', async () => {
+    it('should return object containing success=false and apiError as true', async () => {
       const response = await getCompaniesHouseInformation({}, { companiesHouseNumber: '12345' });
 
       const expected = { success: false, apiError: true };
@@ -110,7 +110,7 @@ describe('custom-resolvers/get-companies-house-information', () => {
       industrySectorNames.get = mockSpyPromiseRejection;
     });
 
-    it('should return object containing success as false and apiError as true', async () => {
+    it('should return object containing success=false and apiError as true', async () => {
       const response = await getCompaniesHouseInformation({}, { companiesHouseNumber: '12345' });
 
       const expected = { success: false, apiError: true };
@@ -125,7 +125,7 @@ describe('custom-resolvers/get-companies-house-information', () => {
       industrySectorNames.get = jest.fn(() => Promise.resolve({ success: true, data: mockIndustrySectors }));
     });
 
-    it('should return object containing success as true and the mapped companies house fields', async () => {
+    it('should return object containing success=true and the mapped companies house fields', async () => {
       const response = await getCompaniesHouseInformation({}, { companiesHouseNumber: '12345' });
 
       const expected = { success: true, ...mapCompaniesHouseFields(mockCompanyAPIResponse, mockIndustrySectors) };
