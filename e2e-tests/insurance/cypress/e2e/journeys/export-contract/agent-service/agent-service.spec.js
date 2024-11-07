@@ -33,14 +33,6 @@ context(
         // go to the page we want to test.
         cy.completeAndSubmitExportContractForms({ stopSubmittingAfter: 'agentDetails', isUsingAgent: true });
 
-        // stopSubmittingAfter is ACTUALLY
-        // "the last form to submit"
-        // lastFormSubmission
-        // finalFormSubmission
-        //
-        // formSubmissionToStopAt
-        // stopSubmittingAfter
-
         url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_SERVICE}`;
         checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
         agentChargesUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES}`;
