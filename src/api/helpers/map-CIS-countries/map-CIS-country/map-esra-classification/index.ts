@@ -5,9 +5,9 @@ const { CIS } = EXTERNAL_API_DEFINITIONS;
  * mapEsraClassification
  * Transform a country's ESRAClassificationDesc field into a consistent string
  * @param {String} Risk category
- * @returns {String} Consistent risk category
+ * @returns {String} Consistent ESRA classification
  */
-const mapEsraClassification = (str: string) => {
+const mapEsraClassification = (str: string): string | null => {
   if (str === CIS.RISK.STANDARD) {
     return EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD;
   }

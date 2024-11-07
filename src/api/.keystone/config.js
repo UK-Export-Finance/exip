@@ -2819,7 +2819,7 @@ var typeDefs = `
     isoCode: String!
     name: String
     shortTermCover: Boolean
-    riskCategory: String
+    esraClassification: String
     nbiIssueAvailable: Boolean
     canGetAQuoteOnline: Boolean
     canGetAQuoteOffline: Boolean
@@ -8964,6 +8964,16 @@ var mapEsraClassification = (str) => {
 };
 var map_esra_classification_default = mapEsraClassification;
 
+// helpers/map-CIS-countries/map-CIS-country/map-NBI-issue-available/index.ts
+var { CIS: CIS2 } = EXTERNAL_API_DEFINITIONS;
+var mapNbiIssueAvailable = (str) => {
+  if (str === CIS2.NBI_ISSUE_AVAILABLE.YES) {
+    return true;
+  }
+  return false;
+};
+var map_NBI_issue_available_default = mapNbiIssueAvailable;
+
 // helpers/map-CIS-countries/map-CIS-country/map-short-term-cover-available/index.ts
 var {
   CIS: { SHORT_TERM_COVER_AVAILABLE },
@@ -8983,16 +8993,6 @@ var mapShortTermCoverAvailable = (str) => {
   }
 };
 var map_short_term_cover_available_default = mapShortTermCoverAvailable;
-
-// helpers/map-CIS-countries/map-CIS-country/map-NBI-issue-available/index.ts
-var { CIS: CIS2 } = EXTERNAL_API_DEFINITIONS;
-var mapNbiIssueAvailable = (str) => {
-  if (str === CIS2.NBI_ISSUE_AVAILABLE.YES) {
-    return true;
-  }
-  return false;
-};
-var map_NBI_issue_available_default = mapNbiIssueAvailable;
 
 // helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-online/index.ts
 var canGetAQuoteOnline = ({ shortTermCover, nbiIssueAvailable, esraClassification }) => {
@@ -9055,14 +9055,15 @@ var no_insurance_support_default = noInsuranceSupportAvailable;
 var mapCisCountry = (cisCountry) => {
   const { marketName, isoCode } = cisCountry;
   const esraClassification = map_esra_classification_default(cisCountry.ESRAClassificationDesc);
-  const shortTermCover = map_short_term_cover_available_default(cisCountry.shortTermCoverAvailabilityDesc);
   const nbiIssueAvailable = map_NBI_issue_available_default(cisCountry.NBIIssue);
+  const shortTermCover = map_short_term_cover_available_default(cisCountry.shortTermCoverAvailabilityDesc);
   const mapped = {
     name: marketName,
-    isoCode,
     esraClassification,
-    shortTermCover,
+    isoCode,
     nbiIssueAvailable,
+    // riskCategory,
+    shortTermCover,
   };
   mapped.canGetAQuoteOnline = can_get_a_quote_online_default({ shortTermCover, nbiIssueAvailable, esraClassification });
   mapped.canGetAQuoteOffline = can_apply_offline_default(cisCountry.shortTermCoverAvailabilityDesc);
