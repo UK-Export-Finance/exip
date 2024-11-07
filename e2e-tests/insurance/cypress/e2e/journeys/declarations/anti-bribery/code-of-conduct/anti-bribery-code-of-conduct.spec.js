@@ -90,7 +90,7 @@ context(
         codeOfConductPage.revealText().should('not.be.visible');
       });
 
-      it('should display conditional `we will email you` hint when selecting the "yes" radio', () => {
+      it('should render conditional `we will email you` hint when selecting the "yes" radio', () => {
         cy.clickYesRadioInput();
 
         codeOfConductPage.revealText().should('be.visible');

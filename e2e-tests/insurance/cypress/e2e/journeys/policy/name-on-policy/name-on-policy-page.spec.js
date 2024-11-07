@@ -81,7 +81,7 @@ context(
         field(POSITION).input().should('not.be.visible');
       });
 
-      it(`should display conditional "${POSITION}" section when selecting the "yes" radio`, () => {
+      it(`should render conditional "${POSITION}" section when selecting the "yes" radio`, () => {
         field(SAME_NAME).label().click();
 
         field(POSITION).input().should('be.visible');

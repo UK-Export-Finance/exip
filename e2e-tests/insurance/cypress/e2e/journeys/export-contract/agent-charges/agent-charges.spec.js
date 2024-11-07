@@ -90,7 +90,7 @@ context(
           fieldSelector(PERCENTAGE_CHARGE).input().should('not.be.visible');
         });
 
-        it(`should display conditional "${PERCENTAGE_CHARGE}" field when selecting the ${PERCENTAGE} radio`, () => {
+        it(`should render conditional "${PERCENTAGE_CHARGE}" field when selecting the ${PERCENTAGE} radio`, () => {
           agentChargesPage[METHOD][PERCENTAGE].label().click();
 
           const fieldId = PERCENTAGE_CHARGE;
@@ -163,7 +163,7 @@ context(
             cy.assertAgentChargesFieldValues({ percentageMethod: true });
           });
 
-          it(`should display conditional "${PERCENTAGE_CHARGE}" field`, () => {
+          it(`should render conditional "${PERCENTAGE_CHARGE}" field`, () => {
             fieldSelector(PERCENTAGE_CHARGE).input().should('be.visible');
           });
         });

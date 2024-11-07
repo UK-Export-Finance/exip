@@ -56,7 +56,7 @@ context('Insurance - Policy - Name on policy - Validation', () => {
       cy.navigateToUrl(url);
     });
 
-    it('should display validation error', () => {
+    it('should render validation error', () => {
       const expectedErrorsCount = 1;
       const expectedErrorMessage = NAME_ON_POLICY_ERRORS[NAME].IS_EMPTY;
 
