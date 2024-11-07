@@ -83,7 +83,7 @@ context('Insurance - Your business - Alternative trading address - Save and go b
     it('should NOT have the originally submitted answer', () => {
       cy.navigateToUrl(url);
 
-      cy.checkText(field(FULL_ADDRESS).textarea(), '');
+      cy.assertEmptyTextareaFieldValue(FULL_ADDRESS);
     });
   });
 

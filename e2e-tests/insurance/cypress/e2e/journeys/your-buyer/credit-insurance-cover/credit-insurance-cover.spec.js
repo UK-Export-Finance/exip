@@ -169,9 +169,7 @@ context(
 
             cy.clickYesRadioInput();
 
-            const field = fieldSelector(PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER).textarea();
-
-            cy.checkText(field, '');
+            cy.assertEmptyTextareaFieldValue(PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER);
           });
         });
       });

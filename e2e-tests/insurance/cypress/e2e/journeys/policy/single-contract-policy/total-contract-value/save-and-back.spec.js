@@ -73,7 +73,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
       cy.navigateToUrl(url);
 
       cy.checkValue(fieldSelector(TOTAL_CONTRACT_VALUE), application.POLICY[TOTAL_CONTRACT_VALUE]);
-      cy.checkValue(fieldSelector(REQUESTED_CREDIT_LIMIT), '');
+      cy.assertEmptyFieldValue(REQUESTED_CREDIT_LIMIT);
     });
   });
 
