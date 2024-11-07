@@ -25,7 +25,7 @@ context(
     let url;
 
     before(() => {
-      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'buyerCountry' });
+      cy.completeAndSubmitEligibilityForms({ stopSubmittingAfter: 'buyerCountry' });
 
       url = `${baseUrl}${TOTAL_VALUE_INSURED}`;
 

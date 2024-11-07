@@ -22,7 +22,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'buyerFinancialInformation' });
+        cy.completeAndSubmitYourBuyerForms({ stopSubmittingAfter: 'buyerFinancialInformation' });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       });

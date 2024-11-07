@@ -22,7 +22,7 @@ context(
     const url = `${baseUrl}${PARTY_TO_CONSORTIUM}`;
 
     before(() => {
-      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'endBuyer' });
+      cy.completeAndSubmitEligibilityForms({ stopSubmittingAfter: 'endBuyer' });
 
       cy.assertUrl(url);
     });

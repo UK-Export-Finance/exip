@@ -27,7 +27,7 @@ context(
         referenceNumber = refNumber;
 
         cy.completeAndSubmitYourBuyerForms({
-          formToStopAt: 'buyerFinancialInformation',
+          stopSubmittingAfter: 'buyerFinancialInformation',
           exporterHasTradedWithBuyer: true,
           outstandingPayments: true,
           failedToPay: true,

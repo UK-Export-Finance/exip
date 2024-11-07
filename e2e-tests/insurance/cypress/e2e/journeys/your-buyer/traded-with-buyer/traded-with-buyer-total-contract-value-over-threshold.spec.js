@@ -17,7 +17,7 @@ context('Insurance - Your buyer - Traded with buyer page - Submission with total
     cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'connectionWithTheBuyer' });
+      cy.completeAndSubmitYourBuyerForms({ stopSubmittingAfter: 'connectionWithTheBuyer' });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`;
       tradingHistoryUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY}`;
