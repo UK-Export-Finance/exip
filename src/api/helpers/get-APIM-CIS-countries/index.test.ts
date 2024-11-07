@@ -33,7 +33,7 @@ describe('helpers/get-APIM-CIS-countries', () => {
       APIM.getCisCountries = jest.fn(() => Promise.resolve({ success: false }));
     });
 
-    it('should return object containing success=false', async () => {
+    it('should return an object containing success=false', async () => {
       const response = await apimCisCountries.get();
 
       const expected = { success: false };
@@ -47,7 +47,7 @@ describe('helpers/get-APIM-CIS-countries', () => {
       APIM.getCisCountries = jest.fn(() => Promise.resolve({ success: true, data: undefined }));
     });
 
-    it('should return object containing success=false', async () => {
+    it('should return an object containing success=false', async () => {
       const response = await apimCisCountries.get();
 
       const expected = { success: false };

@@ -33,7 +33,6 @@ const companiesHouse = {
         };
       }
 
-      // if no data in response or status is not 200 then return success=false
       if (!response.data || response.status !== 200) {
         return {
           success: false,
