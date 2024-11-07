@@ -578,7 +578,6 @@ var DEFAULT_RESOLVERS = [
   'updateAccount',
   // misc
   'countries',
-  'page',
 ];
 var CUSTOM_RESOLVERS = [
   // account
@@ -606,8 +605,10 @@ var CUSTOM_RESOLVERS = [
   'submitApplication',
   // feedback
   'createFeedbackAndSendEmail',
+  // countries and currencies
   'getApimCisCountries',
   'getApimCurrencies',
+  'getCountriesAndCurrencies',
 ];
 if (isDevEnvironment) {
   CUSTOM_RESOLVERS.push(
@@ -2809,6 +2810,11 @@ var typeDefs = `
     referenceNumber: Int
   }
 
+  type Country {
+    isoCode: String!
+    name: String!
+  }
+
   type MappedCisCountry {
     isoCode: String!
     name: String
@@ -2830,6 +2836,13 @@ var typeDefs = `
   }
 
   type GetApimCurrencyResponse {
+    supportedCurrencies: [MappedCurrency]
+    alternativeCurrencies: [MappedCurrency]
+    allCurrencies: [MappedCurrency]
+  }
+
+  type GetCountriesAndCurrenciesResponse {
+    countries: [Country]
     supportedCurrencies: [MappedCurrency]
     alternativeCurrencies: [MappedCurrency]
     allCurrencies: [MappedCurrency]
@@ -3047,9 +3060,6 @@ var typeDefs = `
       token: String!
     ): AccountPasswordResetTokenResponse
 
-    """ get CIS countries from APIM """
-    getApimCisCountries: [MappedCisCountry]
-
     """ get companies house information """
     getCompaniesHouseInformation(
       companiesHouseNumber: String!
@@ -3073,6 +3083,9 @@ var typeDefs = `
 
     """ get currencies from APIM """
     getApimCurrencies: GetApimCurrencyResponse
+
+    """ get countries and currencies """
+    getCountriesAndCurrencies: GetCountriesAndCurrenciesResponse
   }
 `;
 var type_defs_default = typeDefs;
@@ -9078,22 +9091,44 @@ var mapCisCountries = (countries) => {
 };
 var map_CIS_countries_default = mapCisCountries;
 
-// custom-resolvers/queries/get-APIM-CIS-countries/index.ts
-var getApimCisCountries = async () => {
+// helpers/get-APIM-CIS-countries/index.ts
+var get = async () => {
   try {
-    console.info('Getting and mapping CIS countries from APIM');
+    console.info('Getting and mapping CIS countries from APIM (apimCisCountries helper)');
     const response = await APIM_default.getCisCountries();
     if (response.data) {
       const mapped = map_CIS_countries_default(response.data);
-      return mapped;
+      return {
+        success: true,
+        countries: mapped,
+      };
     }
     return { success: false };
   } catch (error) {
-    console.error('Error Getting and mapping CIS countries from APIM %o', error);
-    throw new Error(`Getting and mapping CIS countries from APIM ${error}`);
+    console.error('Error Getting and mapping CIS countries from APIM (apimCisCountries helper) %o', error);
+    throw new Error(`Getting and mapping CIS countries from APIM (apimCisCountries helper) ${error}`);
   }
 };
-var get_APIM_CIS_countries_default = getApimCisCountries;
+var apimCisCountries = {
+  get,
+};
+var get_APIM_CIS_countries_default = apimCisCountries;
+
+// custom-resolvers/queries/get-APIM-CIS-countries/index.ts
+var getApimCisCountriesQuery = async () => {
+  try {
+    console.info('Getting CIS countries from APIM');
+    const response = await get_APIM_CIS_countries_default.get();
+    if (response.success) {
+      return response.countries;
+    }
+    return [];
+  } catch (error) {
+    console.error('Error Getting CIS countries from APIM %o', error);
+    throw new Error(`Getting CIS countries from APIM ${error}`);
+  }
+};
+var get_APIM_CIS_countries_default2 = getApimCisCountriesQuery;
 
 // helpers/map-currencies/index.ts
 var { CIS: CIS5 } = EXTERNAL_API_DEFINITIONS;
@@ -9117,16 +9152,17 @@ var mapCurrencies = (currencies, alternativeCurrencies) => {
 };
 var map_currencies_default = mapCurrencies;
 
-// custom-resolvers/queries/get-APIM-currencies/index.ts
-var getApimCurrencies = async () => {
+// helpers/get-APIM-currencies/index.ts
+var get2 = async () => {
   try {
-    console.info('Getting and mapping currencies from APIM');
+    console.info('Getting and mapping currencies from APIM (apimCurrencies helper)');
     const response = await APIM_default.getCurrencies();
     if (response.data) {
       const supportedCurrencies = map_currencies_default(response.data, false);
       const alternativeCurrencies = map_currencies_default(response.data, true);
       const allCurrencies = [...supportedCurrencies, ...alternativeCurrencies];
       return {
+        success: true,
         supportedCurrencies,
         alternativeCurrencies,
         allCurrencies,
@@ -9134,11 +9170,52 @@ var getApimCurrencies = async () => {
     }
     return { success: false };
   } catch (error) {
+    console.error('Error Getting and mapping currencies from APIM (apimCurrencies helper) %o', error);
+    throw new Error(`Getting and mapping currencies from APIM (apimCurrencies helper) ${error}`);
+  }
+};
+var apimCurrencies = {
+  get: get2,
+};
+var get_APIM_currencies_default = apimCurrencies;
+
+// custom-resolvers/queries/get-APIM-currencies/index.ts
+var getApimCurrenciesQuery = async () => {
+  try {
+    console.info('Getting and mapping currencies from APIM');
+    const response = await get_APIM_currencies_default.get();
+    if (response.success) {
+      return response;
+    }
+    return {};
+  } catch (error) {
     console.error('Error Getting and mapping currencies from APIM %o', error);
     throw new Error(`Getting and mapping currencies from APIM ${error}`);
   }
 };
-var get_APIM_currencies_default = getApimCurrencies;
+var get_APIM_currencies_default2 = getApimCurrenciesQuery;
+
+// custom-resolvers/queries/get-countries-and-currencies/index.ts
+var getCountriesAndCurrencies = async (root, variables, context) => {
+  try {
+    console.info('Getting countries and currencies (getCountriesAndCurrencies resolver)');
+    const [countries, currenciesResponse] = await Promise.all([await get_countries_default(context), await get_APIM_currencies_default.get()]);
+    if (!currenciesResponse.success) {
+      throw new Error('Getting currencies (getCountriesAndCurrencies resolver)');
+    }
+    const { allCurrencies, alternativeCurrencies, supportedCurrencies } = currenciesResponse;
+    return {
+      countries,
+      allCurrencies,
+      alternativeCurrencies,
+      supportedCurrencies,
+    };
+  } catch (error) {
+    console.error('Error getting countries and currencies (getCountriesAndCurrencies resolver) %o', error);
+    throw new Error(`Getting countries and currencies (getCountriesAndCurrencies resolver) ${error}`);
+  }
+};
+var get_countries_and_currencies_default = getCountriesAndCurrencies;
 
 // helpers/remove-white-space/index.ts
 var removeWhiteSpace = (string) => string.replace(' ', '');
@@ -9513,8 +9590,9 @@ var customResolvers = {
   },
   Query: {
     getAccountPasswordResetToken: get_account_password_reset_token_default,
-    getApimCisCountries: get_APIM_CIS_countries_default,
-    getApimCurrencies: get_APIM_currencies_default,
+    getApimCisCountries: get_APIM_CIS_countries_default2,
+    getApimCurrencies: get_APIM_currencies_default2,
+    getCountriesAndCurrencies: get_countries_and_currencies_default,
     getCompaniesHouseInformation: get_companies_house_information_default,
     getApplicationByReferenceNumber: get_application_by_reference_number_default2,
     getOrdnanceSurveyAddress: get_ordnance_survey_address_default,

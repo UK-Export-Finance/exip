@@ -1,4 +1,4 @@
-import { Currency } from '../currency';
+import { SuccessResponse } from '../generic';
 import { Relationship } from '../relationship';
 
 export interface CisCountry {
@@ -25,16 +25,6 @@ export interface Country extends Relationship {
   noInsuranceSupport?: boolean;
 }
 
-export interface GetApimCisCountriesResponse {
-  success: boolean;
-  data?: [CisCountry];
-}
-
-export interface GetApimCurrenciesResponse {
-  success: boolean;
-  data?: [Currency];
-}
-
 export interface MappedCisCountry {
   name: string;
   isoCode: string;
@@ -47,4 +37,12 @@ export interface MappedCisCountry {
   cannotGetAQuote: boolean;
   canApplyForInsuranceOnline: boolean;
   noInsuranceSupport: boolean;
+}
+
+export interface GetApimCisCountriesResponse extends SuccessResponse {
+  data?: [CisCountry];
+}
+
+export interface GetApimCisCountriesHelperResponse extends SuccessResponse {
+  countries: [MappedCisCountry];
 }
