@@ -35,7 +35,7 @@ context('Insurance - Policy - Name on policy - Validation', () => {
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.completeAndSubmitPolicyForms({ formToStopAt: 'totalContractValue' });
+      cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'totalContractValue' });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
 

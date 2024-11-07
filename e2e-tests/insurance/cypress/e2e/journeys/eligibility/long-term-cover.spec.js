@@ -15,7 +15,7 @@ context(
     let url;
 
     before(() => {
-      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'coverPeriod', coverPeriodIsUnderThreshold: false });
+      cy.completeAndSubmitEligibilityForms({ stopSubmittingAfter: 'coverPeriod', coverPeriodIsUnderThreshold: false });
 
       url = `${baseUrl}${LONG_TERM_COVER_EXIT}`;
 

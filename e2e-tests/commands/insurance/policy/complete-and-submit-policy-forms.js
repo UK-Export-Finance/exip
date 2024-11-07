@@ -6,7 +6,7 @@ const { SINGLE } = APPLICATION.POLICY_TYPE;
  * completeAndPolicyForms
  * completes policy forms up to the specified form to stop at
  * eg, when 'exportValue' is passed, it will complete all forms up to and including 'exportValue'
- * @param {String} formToStopAt: the form to stop at
+ * @param {String} stopSubmittingAfter: The final form to submit
  * @param {String} policyType: Single or multiple. Defaults to single.
  * @param {Boolean} sameName: if name on policy is the same as the signed in user - defaults to true
  * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker"
@@ -17,7 +17,7 @@ const { SINGLE } = APPLICATION.POLICY_TYPE;
  * @param {Boolean} otherCompanyInvolved: If "another company to be insured" is on.
  */
 const completeAndPolicyForms = ({
-  formToStopAt,
+  stopSubmittingAfter,
   policyType = SINGLE,
   sameName = true,
   usingBroker,
@@ -67,7 +67,7 @@ const completeAndPolicyForms = ({
   for (const step of steps) {
     step.action();
 
-    if (step.name === formToStopAt) {
+    if (step.name === stopSubmittingAfter) {
       break;
     }
   }

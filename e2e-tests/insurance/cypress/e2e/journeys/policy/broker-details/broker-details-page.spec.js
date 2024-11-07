@@ -32,7 +32,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.completeAndSubmitPolicyForms({ formToStopAt: 'broker', usingBroker: true });
+        cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'broker', usingBroker: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
         brokerConfirmAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;

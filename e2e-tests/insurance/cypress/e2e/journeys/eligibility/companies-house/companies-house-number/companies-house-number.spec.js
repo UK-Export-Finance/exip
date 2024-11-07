@@ -17,7 +17,7 @@ context(
     const url = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
 
     before(() => {
-      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'exporterLocation' });
+      cy.completeAndSubmitEligibilityForms({ stopSubmittingAfter: 'exporterLocation' });
 
       cy.assertUrl(url);
     });

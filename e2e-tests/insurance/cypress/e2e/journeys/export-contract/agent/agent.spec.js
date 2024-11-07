@@ -30,7 +30,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.completeAndSubmitExportContractForms({ formToStopAt: 'howYouWillGetPaid' });
+        cy.completeAndSubmitExportContractForms({ stopSubmittingAfter: 'howYouWillGetPaid' });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT}`;
         agentDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_DETAILS}`;

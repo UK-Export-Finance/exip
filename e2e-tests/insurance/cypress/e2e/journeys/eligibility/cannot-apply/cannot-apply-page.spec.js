@@ -25,7 +25,7 @@ context(
 
       cy.navigateToCheckIfEligibleUrl();
 
-      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'companyDetails' });
+      cy.completeAndSubmitEligibilityForms({ stopSubmittingAfter: 'companyDetails' });
 
       cy.keyboardInput(autoCompleteField(FIELD_ID).input(), COUNTRY_NAME);
 

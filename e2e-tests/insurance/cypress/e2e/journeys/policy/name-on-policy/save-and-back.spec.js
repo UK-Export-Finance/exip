@@ -24,7 +24,7 @@ context('Insurance - Policy - Name on policy - Save and go back', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitPolicyForms({ formToStopAt: 'totalContractValue' });
+      cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'totalContractValue' });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
 

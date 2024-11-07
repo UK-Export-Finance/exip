@@ -33,7 +33,7 @@ context(
         url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
         buyerFinancialInformationUrl = `${baseUrl}${ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
 
-        cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'tradedWithBuyer' });
+        cy.completeAndSubmitYourBuyerForms({ stopSubmittingAfter: 'tradedWithBuyer' });
 
         cy.assertUrl(url);
       });
