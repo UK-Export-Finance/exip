@@ -1,6 +1,5 @@
 import { companyDetails } from '../../../../../../pages/your-business';
-import { headingCaption } from '../../../../../../partials';
-import { body, field, yesRadioInput, noRadioInput } from '../../../../../../pages/shared';
+import { body, field, headingCaption, noRadioInput, yesRadioInput } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';

@@ -1,5 +1,4 @@
-import { headingCaption } from '../../../../../../partials';
-import { yesNoRadioHint, yesRadio, noRadio } from '../../../../../../pages/shared';
+import { headingCaption, noRadio, yesNoRadioHint, yesRadio } from '../../../../../../pages/shared';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { FIELD_VALUES } from '../../../../../../constants';
