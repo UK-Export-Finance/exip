@@ -125,7 +125,6 @@ context(
       it('should display the company website text input', () => {
         cy.checkText(field(WEBSITE).label(), CONTENT_STRINGS.WEBSITE);
 
-        field(WEBSITE).input().should('exist');
         cy.checkAriaLabel(field(WEBSITE).input(), CONTENT_STRINGS.WEBSITE);
       });
 
@@ -134,7 +133,6 @@ context(
 
         cy.checkText(field(PHONE_NUMBER).hint(), CONTENT_STRINGS.PHONE_NUMBER_HINT);
 
-        field(PHONE_NUMBER).input().should('exist');
         cy.checkAriaLabel(field(PHONE_NUMBER).input(), CONTENT_STRINGS.PHONE_NUMBER);
       });
     });

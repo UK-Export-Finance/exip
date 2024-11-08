@@ -178,8 +178,6 @@ context('Change your answers - as an exporter, I want to change the details befo
       });
 
       it('renders a back link with correct url', () => {
-        backLink().should('exist');
-
         const expectedHref = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
         cy.checkLink(backLink(), expectedHref, LINKS.BACK);
