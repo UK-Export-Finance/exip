@@ -102,7 +102,7 @@ describe('controllers/insurance/business/companies-details', () => {
   });
 
   describe('get', () => {
-    it('should render the company-details template with correct variables', () => {
+    it('should render template', () => {
       get(req, res);
 
       const mappedApplication = mapApplicationToFormFields(mockApplication) as Application;

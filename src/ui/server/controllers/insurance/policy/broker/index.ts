@@ -62,7 +62,7 @@ export const HTML_FLAGS = {
  * Render the Broker page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} renders broker page with previously submitted details
+ * @returns {Express.Response.render} Broker page
  */
 export const get = (req: Request, res: Response) => {
   const { application } = res.locals;
