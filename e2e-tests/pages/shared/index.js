@@ -16,7 +16,7 @@ const emailPrefix = () => cy.get('[data-cy="email-prefix"]');
 const emailLink = () => cy.get('[data-cy="email-link"]');
 const form = () => cy.get('[data-cy="form"]');
 const heading = () => cy.get('[data-cy="heading"]');
-const headingCaption = () => cy.get('[data-cy="heading-caption"]');
+const headingCaption = () => cy.get('[data-cy="{{ DATA_CY.HEADING_CAPTION }}"]');
 const insetText = () => cy.get('[data-cy="inset-text"]');
 const insetTextHtml = () => cy.get('[data-cy="inset-text-html"]');
 const insetTextHtmlLineBreak = () => cy.get('[data-cy="inset-text-html"] br');
