@@ -2177,7 +2177,10 @@ var lists = {
   Broker: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: 'Application' }),
+      // TODO: update SQL dump
+      buildingNumberOrName: (0, import_fields.text)(),
       isUsingBroker: nullable_checkbox_default(),
+      isBasedInUk: nullable_checkbox_default(),
       name: (0, import_fields.text)({
         db: { nativeType: 'VarChar(800)' },
       }),
