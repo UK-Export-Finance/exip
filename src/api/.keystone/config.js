@@ -9469,17 +9469,25 @@ var ordnance_survey_default = ordnanceSurvey;
 var import_postcode_validator = require('postcode-validator');
 var isValidPostcode = (postcode) => (0, import_postcode_validator.postcodeValidator)(postcode, 'GB');
 
-// helpers/map-address/index.ts
-var mapAddress = (address) => {
+// helpers/map-ordnance-survey-address/index.ts
+var mapOrdnanceSurveyAddress = (address) => {
   let addressLine1 = '';
   if (address.DPA.SUB_BUILDING_NAME) {
     addressLine1 = address.DPA.SUB_BUILDING_NAME;
   }
   if (address.DPA.ORGANISATION_NAME) {
-    addressLine1 += ` ${address.DPA.ORGANISATION_NAME}`;
+    if (addressLine1) {
+      addressLine1 += ` ${address.DPA.ORGANISATION_NAME}`;
+    } else {
+      addressLine1 = address.DPA.ORGANISATION_NAME;
+    }
   }
   if (address.DPA.BUILDING_NAME) {
-    addressLine1 += ` ${address.DPA.BUILDING_NAME}`;
+    if (addressLine1) {
+      addressLine1 += ` ${address.DPA.BUILDING_NAME}`;
+    } else {
+      addressLine1 = address.DPA.BUILDING_NAME;
+    }
   }
   return {
     addressLine1,
@@ -9488,29 +9496,28 @@ var mapAddress = (address) => {
     postalCode: address.DPA.POSTCODE,
   };
 };
-var map_address_default = mapAddress;
+var map_ordnance_survey_address_default = mapOrdnanceSurveyAddress;
 
-// helpers/map-and-filter-address/index.ts
-var mapAndFilterAddress = (houseNameOrNumber, ordnanceSurveyResponse) => {
+// helpers/map-and-filter-ordnance-survey-addresses/index.ts
+var mapAndFilterOrdnanceSurveyAddresses = (houseNameOrNumber, ordnanceSurveyResponse) => {
   try {
     console.info('Mapping and filtering Ordnance Survey addresses');
     const mappedAndFiltered = [];
     ordnanceSurveyResponse.forEach((address) => {
       if (address.DPA.SUB_BUILDING_NAME && address.DPA.SUB_BUILDING_NAME.includes(houseNameOrNumber)) {
-        mappedAndFiltered.push(map_address_default(address));
+        mappedAndFiltered.push(map_ordnance_survey_address_default(address));
       }
       if (address.DPA.BUILDING_NAME && address.DPA.BUILDING_NAME.includes(houseNameOrNumber)) {
-        mappedAndFiltered.push(map_address_default(address));
+        mappedAndFiltered.push(map_ordnance_survey_address_default(address));
       }
     });
-    console.log('>>>>>>>>> mappedAndFiltered ', mappedAndFiltered);
     return mappedAndFiltered;
   } catch (error) {
     console.error('Error mapping and filtering Ordnance Survey addresses %o', error);
     throw new Error(`Mapping and filtering Ordnance Survey addresses ${error}`);
   }
 };
-var map_and_filter_address_default = mapAndFilterAddress;
+var map_and_filter_ordnance_survey_addresses_default = mapAndFilterOrdnanceSurveyAddresses;
 
 // custom-resolvers/queries/get-ordnance-survey-address/index.ts
 var getOrdnanceSurveyAddress = async (root, variables) => {
@@ -9531,9 +9538,7 @@ var getOrdnanceSurveyAddress = async (root, variables) => {
         success: false,
       };
     }
-    console.log('>>> response.data ', response.data);
-    const mappedAddresses = map_and_filter_address_default(houseNameOrNumber, response.data);
-    console.log('>>>> mappedAddresses ', mappedAddresses);
+    const mappedAddresses = map_and_filter_ordnance_survey_addresses_default(houseNameOrNumber, response.data);
     if (!mappedAddresses.length) {
       return {
         success: false,
