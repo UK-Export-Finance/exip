@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.36.2](https://github.com/UK-Export-Finance/exip/compare/v2.36.1...v2.36.2) (2024-11-13)
+
+
+### Bug Fixes
+
+* **EMS-3988:** regenerate api schema ([#3301](https://github.com/UK-Export-Finance/exip/issues/3301)) ([81b382c](https://github.com/UK-Export-Finance/exip/commit/81b382c4039f089101623f2b1a740a1a97ce9797))
+
 ## [2.36.1](https://github.com/UK-Export-Finance/exip/compare/v2.36.0...v2.36.1) (2024-11-13)
 
 
