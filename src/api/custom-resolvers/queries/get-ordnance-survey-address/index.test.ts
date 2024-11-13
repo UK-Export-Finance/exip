@@ -1,6 +1,6 @@
 import getOrdnanceSurveyAddress from '.';
 import ordnanceSurvey from '../../../integrations/ordnance-survey';
-import mapAndFilterAddress from '../../../helpers/map-and-filter-ordnance-survey-addresses';
+import mapAndFilterOrdnanceSurveyAddresses from '../../../helpers/map-and-filter-ordnance-survey-addresses';
 import mockOrdnanceSurveyResponse from '../../../test-mocks/mock-ordnance-survey-response';
 import { MOCK_OS_ADDRESS_INPUT } from '../../../test-mocks/mock-os-address-input';
 import { OrdnanceSurveyResponse } from '../../../types';
@@ -76,7 +76,7 @@ describe('getOrdnanceSurveyAddress', () => {
     it('should return object containing success as true and the mapped address', async () => {
       const response = await getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber });
 
-      const expected = { success: true, addresses: mapAndFilterAddress('10', mockOrdnanceSurveyResponse.results) };
+      const expected = { success: true, addresses: mapAndFilterOrdnanceSurveyAddresses('10', mockOrdnanceSurveyResponse.results) };
 
       expect(response).toEqual(expected);
     });

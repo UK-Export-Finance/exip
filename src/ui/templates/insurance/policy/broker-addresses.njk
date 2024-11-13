@@ -30,13 +30,16 @@
 
         <p class="govuk-body" data-cy="body">{{ BODY }} <span class="govuk-!-font-weight-bold">{{ postcode }}</span></p>
 
+        {% set legendHtml %}
+          <legend class="govuk-fieldset__legend govuk-!-font-weight-bold" data-cy="{{ FIELD.ID }}-label">{{ FIELD.LABEL }}</legend>
+        {% endset %}
+
         {{ govukRadios({
-          idPrefix: 'theRadios',
+          idPrefix: FIELD.ID,
           name: FIELD.ID,
           fieldset: {
             legend: {
-              text: FIELD.LABEL,
-              classes: "govuk-!-font-weight-bold"
+              html: legendHtml
             }
           },
           items: mappedAddresses
