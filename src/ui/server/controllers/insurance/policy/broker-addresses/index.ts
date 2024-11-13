@@ -11,7 +11,11 @@ import { Request, Response } from '../../../../../types';
 
 const { SELECT_THE_ADDRESS } = POLICY_FIELD_IDS.BROKER_ADDRESSES;
 
-const { INSURANCE_ROOT, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const {
+  INSURANCE_ROOT,
+  PROBLEM_WITH_SERVICE,
+  POLICY: { BROKER_DETAILS_ROOT, BROKER_ZERO_ADDRESSES_ROOT },
+} = INSURANCE_ROUTES;
 
 const { BROKER_ADDRESSES } = POLICY_FIELDS;
 
@@ -23,16 +27,15 @@ export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.BROKER_ADDRESSES;
  * pageVariables
  * Page fields and "save and go back" URL
  * @param {Number} referenceNumber: Application reference number
- * @param {String} postcode: The submitted postcode
  * @param {Number} totalAddresses: Total amount of addresses found
  * @returns {Object} Page variables
  */
-export const pageVariables = (referenceNumber: number, postcode: string, totalAddresses: number) => ({
+export const pageVariables = (referenceNumber: number, totalAddresses: number) => ({
   FIELD: {
     ID: SELECT_THE_ADDRESS,
     ...BROKER_ADDRESSES[SELECT_THE_ADDRESS],
   },
-  BODY: `${totalAddresses} ${PAGE_CONTENT_STRINGS.BODY} ${postcode}`,
+  BODY: `${totalAddresses} ${PAGE_CONTENT_STRINGS.BODY}`,
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
 });
 
@@ -54,16 +57,12 @@ export const get = async (req: Request, res: Response) => {
 
     // TODO: check that postcode and houseNameOrNumber is provided - if not, redirect
 
-    // TODO: this will come from the following:
+    // TODO: EMS-3974 - this will come from the following:
     // application.broker.buildingNumberOrName
     // application.broker.postcode
 
-    // const mockPostcode = 'IG95NX';
-    // // const mockHouseNameOrNumber = '15';
-    // const mockHouseNameOrNumber = 'FLAT';
-
-    const mockPostcode = 'W1A';
-    const mockHouseNameOrNumber = '2';
+    const mockPostcode = 'W1A 1AA';
+    const mockHouseNameOrNumber = 'WOGAN HOUSE';
 
     // TODO
     // TODO: rename getOrdnanceSurveyAddress to getOrdnanceSurveyAddresses
@@ -75,15 +74,24 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
+    if (response.invalidPostcode) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`);
+    }
+
+    if (response.noAddressesFound) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ZERO_ADDRESSES_ROOT}`);
+    }
+
     const { addresses } = response;
 
     const mappedAddresses = mapOrdnanceSurveyAddresses(addresses);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({ PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
-      ...pageVariables(referenceNumber, mockPostcode, addresses.length),
+      ...pageVariables(referenceNumber, addresses.length),
       userName: getUserNameFromSession(req.session.user),
       mappedAddresses,
+      postcode: mockPostcode,
     });
   } catch (error) {
     console.error('Error calling ordnance survey %o', error);

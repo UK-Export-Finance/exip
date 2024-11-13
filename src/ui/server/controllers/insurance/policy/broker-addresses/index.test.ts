@@ -13,12 +13,17 @@ import { mockReq, mockRes, mockOrdnanceSurveyAddressResponse, mockSpyPromiseReje
 
 const { SELECT_THE_ADDRESS } = POLICY_FIELD_IDS.BROKER_ADDRESSES;
 
-const { INSURANCE_ROOT, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const {
+  INSURANCE_ROOT,
+  PROBLEM_WITH_SERVICE,
+  POLICY: { BROKER_DETAILS_ROOT, BROKER_ZERO_ADDRESSES_ROOT },
+} = INSURANCE_ROUTES;
 
 const { BROKER_ADDRESSES } = POLICY_FIELDS;
 
-const tempMockTotalAddresses = '2';
-const tempMockPostcode = 'W1A';
+const tempMockPostcode = 'W1A 1AA';
+const tempMockHouseNameOrNumber = 'WOGAN HOUSE';
+const mockTotalAddresses = mockOrdnanceSurveyAddressResponse.addresses.length;
 
 describe('controllers/insurance/policy/broker-addresses', () => {
   let req: Request;
@@ -51,14 +56,14 @@ describe('controllers/insurance/policy/broker-addresses', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(referenceNumber, tempMockPostcode, mockOrdnanceSurveyAddressResponse.addresses.length);
+      const result = pageVariables(referenceNumber, mockTotalAddresses);
 
       const expected = {
         FIELD: {
           ID: SELECT_THE_ADDRESS,
           ...BROKER_ADDRESSES[SELECT_THE_ADDRESS],
         },
-        BODY: `${tempMockTotalAddresses} ${PAGE_CONTENT_STRINGS.BODY} ${tempMockPostcode}`,
+        BODY: `${mockTotalAddresses} ${PAGE_CONTENT_STRINGS.BODY}`,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
       };
 
@@ -72,7 +77,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
 
       expect(getOrdnanceSurveyAddressSpy).toHaveBeenCalledTimes(1);
 
-      expect(getOrdnanceSurveyAddressSpy).toHaveBeenCalledWith(tempMockPostcode, tempMockTotalAddresses);
+      expect(getOrdnanceSurveyAddressSpy).toHaveBeenCalledWith(tempMockPostcode, tempMockHouseNameOrNumber);
     });
 
     it('should render template', async () => {
@@ -83,9 +88,10 @@ describe('controllers/insurance/policy/broker-addresses', () => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(referenceNumber, tempMockPostcode, mockOrdnanceSurveyAddressResponse.addresses.length),
+        ...pageVariables(referenceNumber, mockOrdnanceSurveyAddressResponse.addresses.length),
         userName: getUserNameFromSession(req.session.user),
         mappedAddresses: mapOrdnanceSurveyAddresses(mockOrdnanceSurveyAddressResponse.addresses),
+        postcode: tempMockPostcode,
       });
     });
 
@@ -114,6 +120,36 @@ describe('controllers/insurance/policy/broker-addresses', () => {
           await get(req, res);
 
           expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when api.keystone.getOrdnanceSurveyAddress returns invalidPostcode=true', () => {
+        it(`should redirect to ${BROKER_DETAILS_ROOT}`, async () => {
+          const mockResponse = {
+            ...mockOrdnanceSurveyAddressResponse,
+            invalidPostcode: true,
+          };
+
+          api.keystone.getOrdnanceSurveyAddress = jest.fn(() => Promise.resolve(mockResponse));
+
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`);
+        });
+      });
+
+      describe('when api.keystone.getOrdnanceSurveyAddress returns noAddressesFound=true', () => {
+        it(`should redirect to ${BROKER_ZERO_ADDRESSES_ROOT}`, async () => {
+          const mockResponse = {
+            ...mockOrdnanceSurveyAddressResponse,
+            noAddressesFound: true,
+          };
+
+          api.keystone.getOrdnanceSurveyAddress = jest.fn(() => Promise.resolve(mockResponse));
+
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ZERO_ADDRESSES_ROOT}`);
         });
       });
 
