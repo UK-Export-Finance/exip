@@ -1,6 +1,6 @@
 import getOrdnanceSurveyAddress from '.';
 import ordnanceSurvey from '../../../integrations/ordnance-survey';
-import mapAndFilterAddress from '../../../helpers/map-and-filter-address';
+import mapAndFilterAddress from '../../../helpers/map-and-filter-ordnance-survey-addresses';
 import mockOrdnanceSurveyResponse from '../../../test-mocks/mock-ordnance-survey-response';
 import { MOCK_OS_ADDRESS_INPUT } from '../../../test-mocks/mock-os-address-input';
 import { OrdnanceSurveyResponse } from '../../../types';
