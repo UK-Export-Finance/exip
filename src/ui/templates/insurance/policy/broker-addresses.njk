@@ -28,7 +28,7 @@
 
         <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
-        <p class="govuk-body" data-cy="body">{{ BODY }}</p>
+        <p class="govuk-body" data-cy="body">{{ BODY }} <span class="govuk-!-font-weight-bold">{{ postcode }}</span></p>
 
         {{ govukRadios({
           idPrefix: 'theRadios',
