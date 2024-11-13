@@ -8,7 +8,8 @@ export interface MappedOrdnanceSurveyAddress extends Address {
 
 export interface OrdnanceSurveyAddress {
   ADDRESS: string;
-  BUILDING_NUMBER: string;
+  // BUILDING_NUMBER: string;
+  SUB_BUILDING_NAME: string;
   BUILDING_NAME?: string;
   POST_TOWN: string;
   POSTCODE: string;

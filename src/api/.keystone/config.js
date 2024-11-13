@@ -349,6 +349,9 @@ var POLICY = {
     BROKER_EMAIL: 'broker.email',
     FULL_ADDRESS: 'fullAddress',
   },
+  BROKER_ADDRESSES: {
+    SELECT_THE_ADDRESS: 'selectTheAddress',
+  },
   LOSS_PAYEE: {
     IS_APPOINTED: 'isAppointed',
   },
@@ -600,8 +603,9 @@ var CUSTOM_RESOLVERS = [
   'declarationConfirmationAndAcknowledgements',
   'declarationHowDataWillBeUseds',
   'deleteApplicationByReferenceNumber',
-  'getCompaniesHouseInformation',
   'getApplicationByReferenceNumber',
+  'getCompaniesHouseInformation',
+  'getOrdnanceSurveyAddress',
   'submitApplication',
   // feedback
   'createFeedbackAndSendEmail',
@@ -6483,6 +6487,7 @@ var {
     USING_BROKER,
     BROKER_DETAILS: { NAME, FULL_ADDRESS },
     LOSS_PAYEE: { IS_APPOINTED },
+    BROKER_ADDRESSES: { SELECT_THE_ADDRESS },
     LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY },
     LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
     LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
@@ -6724,6 +6729,11 @@ var POLICY_FIELDS = {
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
       MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
+    },
+  },
+  BROKER_ADDRESSES: {
+    [SELECT_THE_ADDRESS]: {
+      LABEL: 'Select the address',
     },
   },
   LOSS_PAYEE: {
@@ -9461,7 +9471,8 @@ var isValidPostcode = (postcode) => (0, import_postcode_validator.postcodeValida
 
 // helpers/map-address/index.ts
 var mapAddress = (address) => ({
-  addressLine1: `${address.DPA.ORGANISATION_NAME ?? ''} ${address.DPA.BUILDING_NAME ?? ''} ${address.DPA.BUILDING_NUMBER ?? ''} ${
+  // addressLine1: `${address.DPA.ORGANISATION_NAME ?? ''} ${address.DPA.BUILDING_NAME ?? ''} ${address.DPA.SUB_BUILDING_NAME ?? ''} ${
+  addressLine1: `${address.DPA.SUB_BUILDING_NAME ?? ''} ${address.DPA.ORGANISATION_NAME ?? ''} ${address.DPA.BUILDING_NAME ?? ''} ${
     address.DPA.THOROUGHFARE_NAME ?? ''
   }`.trim(),
   addressLine2: address.DPA.DEPENDENT_LOCALITY,
@@ -9473,7 +9484,8 @@ var map_address_default = mapAddress;
 // helpers/map-and-filter-address/index.ts
 var mapAndFilterAddress = (houseNameOrNumber, ordnanceSurveyResponse) => {
   const filtered = ordnanceSurveyResponse.filter(
-    (eachAddress) => eachAddress.DPA.BUILDING_NUMBER === houseNameOrNumber || eachAddress.DPA.BUILDING_NAME === houseNameOrNumber,
+    //   (address) => address.DPA.BUILDING_NUMBER === houseNameOrNumber || address.DPA.BUILDING_NAME === houseNameOrNumber,
+    (address) => address.DPA.SUB_BUILDING_NAME.includes(houseNameOrNumber) || address.DPA.BUILDING_NAME === houseNameOrNumber,
   );
   if (!filtered.length) {
     return [];

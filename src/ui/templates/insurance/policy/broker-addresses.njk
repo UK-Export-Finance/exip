@@ -1,5 +1,6 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/radios/macro.njk' import govukRadios %}
 {% import '../../components/form-buttons.njk' as formButtons %}
 
 {% block pageTitle %}
@@ -26,6 +27,20 @@
         <span class="govuk-caption-xl" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
 
         <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+        <p class="govuk-body" data-cy="body">{{ BODY }}</p>
+
+        {{ govukRadios({
+          idPrefix: 'theRadios',
+          name: FIELD.ID,
+          fieldset: {
+            legend: {
+              text: FIELD.LABEL,
+              classes: "govuk-!-font-weight-bold"
+            }
+          },
+          items: mappedAddresses
+        }) }}
 
       </div>
     </div>

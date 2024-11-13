@@ -63,6 +63,9 @@ export const POLICY = {
     BROKER_EMAIL: 'broker.email',
     FULL_ADDRESS: 'fullAddress',
   },
+  BROKER_ADDRESSES: {
+    SELECT_THE_ADDRESS: 'selectTheAddress',
+  },
   LOSS_PAYEE: {
     IS_APPOINTED: 'isAppointed',
   },
