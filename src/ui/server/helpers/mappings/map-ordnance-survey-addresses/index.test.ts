@@ -8,8 +8,8 @@ describe('helpers/mappings/map-ordnance-survey-addresses', () => {
     const result = mapOrdnanceSurveyAddresses(mockAddresses);
 
     const expected = mockAddresses.map((address) => ({
-      text: address.addressLine1,
-      value: address.addressLine1,
+      text: `${address.addressLine1} ${address.addressLine2}`,
+      value: `${address.addressLine1} ${address.addressLine2}`,
     }));
 
     expect(result).toEqual(expected);

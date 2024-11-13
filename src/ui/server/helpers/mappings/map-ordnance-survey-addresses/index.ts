@@ -7,10 +7,14 @@ import { MappedOrdnanceSurveyAddress } from '../../../../types';
  * @returns {Array} Mapped addresses for GOV radios component
  */
 const mapOrdnanceSurveyAddresses = (addresses: Array<MappedOrdnanceSurveyAddress>) => {
-  const mapped = addresses.map((address: MappedOrdnanceSurveyAddress) => ({
-    text: address.addressLine1,
-    value: address.addressLine1,
-  }));
+  const mapped = addresses.map((address: MappedOrdnanceSurveyAddress) => {
+    const addressString = `${address.addressLine1} ${address.addressLine2}`;
+
+    return {
+      text: addressString,
+      value: addressString,
+    };
+  });
 
   return mapped;
 };
