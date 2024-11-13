@@ -55,17 +55,12 @@ export const get = async (req: Request, res: Response) => {
 
     const { referenceNumber } = application;
 
-    // TODO: check that postcode and houseNameOrNumber is provided - if not, redirect
-
     // TODO: EMS-3974 - this will come from the following:
     // application.broker.buildingNumberOrName
     // application.broker.postcode
 
     const mockPostcode = 'W1A 1AA';
     const mockHouseNameOrNumber = 'WOGAN HOUSE';
-
-    // TODO
-    // TODO: rename getOrdnanceSurveyAddress to getOrdnanceSurveyAddresses
 
     // TODO: do we need constructPayload and sanitiseData?
     const response = await api.keystone.getOrdnanceSurveyAddress(mockPostcode, mockHouseNameOrNumber);
