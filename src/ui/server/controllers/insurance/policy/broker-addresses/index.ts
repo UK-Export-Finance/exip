@@ -62,7 +62,6 @@ export const get = async (req: Request, res: Response) => {
     const mockPostcode = 'W1A 1AA';
     const mockHouseNameOrNumber = 'WOGAN HOUSE';
 
-    // TODO: do we need constructPayload and sanitiseData?
     const response = await api.keystone.getOrdnanceSurveyAddress(mockPostcode, mockHouseNameOrNumber);
 
     if (response.apiError) {
