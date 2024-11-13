@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.36.1](https://github.com/UK-Export-Finance/exip/compare/v2.36.0...v2.36.1) (2024-11-13)
+
+
+### Bug Fixes
+
+* **EMS-3988:** quote tool - type of policy - hint text ([3bd562c](https://github.com/UK-Export-Finance/exip/commit/3bd562ca8df1c85c787137e251f62c4b601d9a45))
+
 ## [2.36.0](https://github.com/UK-Export-Finance/exip/compare/v2.35.5...v2.36.0) (2024-11-01)
 
 
