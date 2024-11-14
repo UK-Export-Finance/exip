@@ -87,6 +87,25 @@ const BROKER_DETAILS = {
     "Your broker's contact details will be stored securely and in line with GDPR. They will also be our main point of contact when processing your application.",
 };
 
+const BROKER_ZERO_ADDRESSES = {
+  ...SHARED,
+  PAGE_TITLE: 'No addresses found',
+  BODY: '0 results found',
+  OUTRO: {
+    COULD_NOT_FIND: 'We could not find any addresses for',
+    YOU_CAN: 'You can',
+    SEARCH_AGAIN: {
+      TEXT: 'search again',
+      HREF: '#',
+    },
+    OR: 'or',
+    ENTER_MANUALLY: {
+      TEXT: 'enter the address manually.',
+      HREF: '#',
+    },
+  },
+};
+
 const BROKER_CONFIRM_ADDRESS = {
   ...SHARED,
   PAGE_TITLE: "Confirm broker's address",
@@ -128,6 +147,7 @@ module.exports = {
   OTHER_COMPANY_DETAILS,
   BROKER,
   BROKER_DETAILS,
+  BROKER_ZERO_ADDRESSES,
   BROKER_CONFIRM_ADDRESS,
   LOSS_PAYEE,
   LOSS_PAYEE_DETAILS,
