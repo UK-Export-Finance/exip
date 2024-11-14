@@ -265,6 +265,16 @@ export const POLICY_FIELDS = {
       MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
     },
   },
+  BROKER_MANUAL_ADDRESS: {
+    [FULL_ADDRESS]: {
+      LABEL: "Broker's address",
+      SUMMARY: {
+        TITLE: "Broker's address",
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
+      },
+      MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
+    },
+  },
   LOSS_PAYEE: {
     [IS_APPOINTED]: {
       HINT: {
