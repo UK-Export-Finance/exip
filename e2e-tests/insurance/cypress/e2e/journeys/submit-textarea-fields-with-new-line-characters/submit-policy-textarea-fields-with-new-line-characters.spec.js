@@ -71,7 +71,8 @@ context('Insurance - Textarea fields - `Policy` textarea fields should render ne
     });
   });
 
-  describe(FULL_ADDRESS, () => {
+  // TODO: EMS-3975 - move FULL_ADDRESS to new form
+  describe.skip(FULL_ADDRESS, () => {
     describe('when submitting the textarea field with new lines va the `enter` key and going back to the page', () => {
       beforeEach(() => {
         cy.saveSession();

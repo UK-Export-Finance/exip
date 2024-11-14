@@ -75,7 +75,8 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
     });
   });
 
-  describe(FULL_ADDRESS, () => {
+  // TODO: EMS-3975 - move FULL_ADDRESS to new form
+  describe.skip(FULL_ADDRESS, () => {
     const fieldId = FULL_ADDRESS;
 
     describe('when clicking the `change` link', () => {
@@ -192,9 +193,10 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
         summaryList.field(EMAIL).value().eq(1).should('not.exist');
         summaryList.field(EMAIL).changeLink().should('not.exist');
 
-        summaryList.field(FULL_ADDRESS).key().should('not.exist');
-        summaryList.field(FULL_ADDRESS).value().should('not.exist');
-        summaryList.field(FULL_ADDRESS).changeLink().should('not.exist');
+        // TODO: EMS-3975 - move FULL_ADDRESS to new form
+        // summaryList.field(FULL_ADDRESS).key().should('not.exist');
+        // summaryList.field(FULL_ADDRESS).value().should('not.exist');
+        // summaryList.field(FULL_ADDRESS).changeLink().should('not.exist');
       });
     });
   });

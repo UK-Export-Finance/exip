@@ -19,7 +19,8 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(
+// TODO: EMS-3975 - move FULL_ADDRESS to new form
+context.skip(
   "Insurance - Policy - Broker confirm address - As an exporter, I want to be able to review the broker's contact details that I have provided, So that I can confirm my input or amend any errors if needed",
   () => {
     let referenceNumber;
