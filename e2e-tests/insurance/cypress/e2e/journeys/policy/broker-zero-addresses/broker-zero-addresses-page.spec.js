@@ -25,7 +25,6 @@ context('Insurance - Policy - Broker - zero addresses page - As an exporter ... 
       referenceNumber = refNumber;
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ZERO_ADDRESSES_ROOT}`;
-      // brokerConfirmAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
 
       cy.navigateToUrl(url);
     });
