@@ -91,6 +91,7 @@ const BROKER_CONFIRM_ADDRESS = {
   ...SHARED,
   PAGE_TITLE: "Confirm broker's address",
   USE_DIFFERENT_ADDRESS: 'Use a different address',
+  ENTER_ADDRESS_MANUALLY: 'Enter address manually',
 };
 
 const LOSS_PAYEE = {

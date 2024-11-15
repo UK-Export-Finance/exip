@@ -14,7 +14,7 @@ const {
 
 const {
   ROOT,
-  POLICY: { BROKER_CONFIRM_ADDRESS_ROOT, BROKER_DETAILS_ROOT, LOSS_PAYEE_ROOT },
+  POLICY: { BROKER_CONFIRM_ADDRESS_ROOT, BROKER_DETAILS_ROOT, BROKER_MANUAL_ADDRESS_ROOT, LOSS_PAYEE_ROOT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -26,6 +26,7 @@ context(
     let url;
     let lossPayeeUrl;
     let brokerDetailsUrl;
+    let brokerManualAddressUrl;
 
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -37,6 +38,7 @@ context(
         url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
         lossPayeeUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
         brokerDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
+        brokerManualAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
 
         cy.assertUrl(url);
       });
@@ -94,6 +96,22 @@ context(
           brokerConfirmAddressPage.useDifferentAddressLink().click();
 
           cy.assertUrl(brokerDetailsUrl);
+        });
+      });
+
+      describe('`enter address manually` link', () => {
+        it('renders', () => {
+          cy.checkLink(
+            brokerConfirmAddressPage.enterAddressManuallyLink(),
+            `${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`,
+            CONTENT_STRINGS.ENTER_ADDRESS_MANUALLY,
+          );
+        });
+
+        it(`should redirect to ${BROKER_MANUAL_ADDRESS_ROOT}`, () => {
+          brokerConfirmAddressPage.enterAddressManuallyLink().click();
+
+          cy.assertUrl(brokerManualAddressUrl);
         });
       });
     });
