@@ -37,7 +37,7 @@ describe('controllers/insurance/policy/broker-zero-addresses', () => {
   });
 
   describe('get', () => {
-    it('should render the broker zero addresses template with correct variables', () => {
+    it('should render template', () => {
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
