@@ -1,5 +1,4 @@
 import { headingCaption } from '../../../../../../partials';
-import { field } from '../../../../../../pages/shared';
 import { brokerManualAddressPage } from '../../../../../../pages/insurance/policy';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -15,7 +14,7 @@ const {
 
 const {
   ROOT,
-  POLICY: { BROKER_MANUAL_ADDRESS_ROOT },
+  POLICY: { BROKER_MANUAL_ADDRESS_ROOT, LOSS_PAYEE_ROOT },
 } = INSURANCE_ROUTES;
 
 const { BROKER_MANUAL_ADDRESS: FIELD_STRINGS } = FIELDS;
@@ -25,6 +24,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Policy - Broker manual address page - As an exporter, ... TODO', () => {
   let referenceNumber;
   let url;
+  let lossPayeeUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -34,6 +34,7 @@ context('Insurance - Policy - Broker manual address page - As an exporter, ... T
       cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'brokerDetails', usingBroker: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
+      lossPayeeUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
 
       // TODO: EMS-3973 - remove this
       cy.navigateToUrl(url);
@@ -79,15 +80,23 @@ context('Insurance - Policy - Broker manual address page - As an exporter, ... T
       const fieldId = FIELD_ID;
       const fieldStrings = FIELD_STRINGS[fieldId];
 
-      // TODO: EMS-3975 - remove this,
-      // after FULL_ADDRESS has been removed from BROKER_DETAILS
-      field(FIELD_ID).textarea().clear();
-
       cy.assertTextareaRendering({
         fieldId,
         expectedLabel: fieldStrings.LABEL,
         maximumCharacters: fieldStrings.MAXIMUM,
       });
+    });
+  });
+
+  describe('form submission', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
+    it(`should redirect to ${LOSS_PAYEE_ROOT} page`, () => {
+      cy.completeAndSubmitBrokerManualAddressForm({});
+
+      cy.assertUrl(lossPayeeUrl);
     });
   });
 });

@@ -14,7 +14,7 @@ import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, referenceNumber, mockSpyPromiseRejection } from '../../../../test-mocks';
 
-const { NAME, EMAIL, FULL_ADDRESS } = POLICY_FIELD_IDS.BROKER_DETAILS;
+const { NAME, EMAIL } = POLICY_FIELD_IDS.BROKER_DETAILS;
 
 const {
   INSURANCE_ROOT,
@@ -42,7 +42,7 @@ describe('controllers/insurance/policy/broker-details', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [NAME, EMAIL, FULL_ADDRESS];
+      const expected = [NAME, EMAIL];
 
       expect(FIELD_IDS).toEqual(expected);
     });
@@ -73,10 +73,6 @@ describe('controllers/insurance/policy/broker-details', () => {
           EMAIL: {
             ID: EMAIL,
             ...BROKER_DETAILS[EMAIL],
-          },
-          FULL_ADDRESS: {
-            ID: FULL_ADDRESS,
-            ...BROKER_DETAILS[FULL_ADDRESS],
           },
         },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_SAVE_AND_BACK}`,
@@ -118,7 +114,6 @@ describe('controllers/insurance/policy/broker-details', () => {
     const validBody = {
       [NAME]: broker[NAME],
       [EMAIL]: broker[EMAIL],
-      [FULL_ADDRESS]: broker[FULL_ADDRESS],
     };
 
     mapAndSave.broker = jest.fn(() => Promise.resolve(true));

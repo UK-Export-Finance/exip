@@ -4,7 +4,7 @@ import { get as getBroker, post as postBroker } from '../../../../controllers/in
 import { post as postBrokerSaveAndBack } from '../../../../controllers/insurance/policy/broker/save-and-back';
 import { get as getBrokerDetails, post as postBrokerDetails } from '../../../../controllers/insurance/policy/broker-details';
 import { post as postBrokerDetailsSaveAndBack } from '../../../../controllers/insurance/policy/broker-details/save-and-back';
-import { get as getBrokerManualAddress } from '../../../../controllers/insurance/policy/broker-manual-address';
+import { get as getBrokerManualAddress, post as postBrokerManualAddress } from '../../../../controllers/insurance/policy/broker-manual-address';
 import { get as getBrokerConfirmAddress, post as postBrokerConfirmAddress } from '../../../../controllers/insurance/policy/broker-confirm-address';
 
 const {
@@ -31,7 +31,7 @@ describe('routes/insurance/policy/broker', () => {
 
   it('should setup all routes', () => {
     expect(get).toHaveBeenCalledTimes(8);
-    expect(post).toHaveBeenCalledTimes(9);
+    expect(post).toHaveBeenCalledTimes(10);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${BROKER_ROOT}`, getBroker);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${BROKER_ROOT}`, postBroker);
@@ -50,6 +50,7 @@ describe('routes/insurance/policy/broker', () => {
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${BROKER_DETAILS_CHECK_AND_CHANGE}`, postBrokerDetails);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${BROKER_MANUAL_ADDRESS_ROOT}`, getBrokerManualAddress);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${BROKER_MANUAL_ADDRESS_ROOT}`, postBrokerManualAddress);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_ROOT}`, getBrokerConfirmAddress);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_ROOT}`, postBrokerConfirmAddress);

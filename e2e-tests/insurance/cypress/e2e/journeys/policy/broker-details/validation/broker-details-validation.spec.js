@@ -6,7 +6,7 @@ import { MAXIMUM_CHARACTERS } from '../../../../../../../constants/validation';
 import { assertEmailFieldValidation } from '../../../../../../../shared-test-assertions';
 
 const {
-  BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
+  BROKER_DETAILS: { NAME, EMAIL },
 } = POLICY_FIELD_IDS;
 
 const {
@@ -83,42 +83,5 @@ context('Insurance - Policy - Broker details page - validation', () => {
     errorMessages: BROKER_DETAILS_ERROR_MESSAGES[EMAIL],
     totalExpectedErrors: 3,
     totalExpectedOtherErrorsWithValidEmail: 2,
-  });
-
-  describe(FULL_ADDRESS, () => {
-    const field = fieldSelector(FULL_ADDRESS);
-
-    const textareaField = {
-      ...field,
-      input: field.textarea,
-    };
-
-    const errorIndex = 2;
-    const expectedErrorsCount = 3;
-
-    const ERROR_MESSAGES_OBJECT = BROKER_DETAILS_ERROR_MESSAGES[FULL_ADDRESS];
-
-    it(`should render validation errors when ${FULL_ADDRESS} is left empty`, () => {
-      cy.navigateToUrl(url);
-
-      cy.submitAndAssertFieldErrors({
-        field: textareaField,
-        errorIndex,
-        expectedErrorsCount,
-        expectedErrorMessage: ERROR_MESSAGES_OBJECT.IS_EMPTY,
-      });
-    });
-
-    it(`should render validation errors when ${FULL_ADDRESS} is over ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`, () => {
-      cy.navigateToUrl(url);
-
-      cy.submitAndAssertFieldErrors({
-        field: textareaField,
-        value: 'a'.repeat(MAXIMUM_CHARACTERS.FULL_ADDRESS + 1),
-        errorIndex,
-        expectedErrorsCount,
-        expectedErrorMessage: ERROR_MESSAGES_OBJECT.ABOVE_MAXIMUM,
-      });
-    });
   });
 });

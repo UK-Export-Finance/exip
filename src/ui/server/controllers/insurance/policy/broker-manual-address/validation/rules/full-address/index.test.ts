@@ -9,10 +9,10 @@ const {
 } = POLICY_FIELD_IDS;
 
 const {
-  BROKER_DETAILS: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
+  BROKER_MANUAL_ADDRESS: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
 } = ERROR_MESSAGES.INSURANCE.POLICY;
 
-describe('controllers/insurance/policy/broker-details/validation/rules/full-address', () => {
+describe('controllers/insurance/policy/broker-manual-address/validation/rules/full-address', () => {
   const mockBody = {
     [FIELD_ID]: '',
   };

@@ -14,7 +14,7 @@ import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
-const { NAME, EMAIL, FULL_ADDRESS } = POLICY_FIELD_IDS.BROKER_DETAILS;
+const { NAME, EMAIL } = POLICY_FIELD_IDS.BROKER_DETAILS;
 
 const {
   INSURANCE_ROOT,
@@ -25,7 +25,7 @@ const {
 
 const { BROKER_DETAILS } = POLICY_FIELDS;
 
-export const FIELD_IDS = [NAME, EMAIL, FULL_ADDRESS];
+export const FIELD_IDS = [NAME, EMAIL];
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_DETAILS;
 
@@ -46,10 +46,6 @@ export const pageVariables = (referenceNumber: number) => ({
     EMAIL: {
       ID: EMAIL,
       ...BROKER_DETAILS[EMAIL],
-    },
-    FULL_ADDRESS: {
-      ID: FULL_ADDRESS,
-      ...BROKER_DETAILS[FULL_ADDRESS],
     },
   },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_SAVE_AND_BACK}`,
