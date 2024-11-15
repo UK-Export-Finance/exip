@@ -344,7 +344,7 @@ model Broker {
   id                      String        @id @default(cuid())
   application             Application?  @relation("Broker_application", fields: [applicationId], references: [id])
   applicationId           String?       @map("application")
-  buildingNumberOrName    String        @default("")
+  buildingNumberOrName    String        @default("") @mysql.VarChar(100)
   isUsingBroker           Boolean?
   isBasedInUk             Boolean?
   name                    String        @default("") @mysql.VarChar(800)

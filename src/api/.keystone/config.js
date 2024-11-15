@@ -945,6 +945,7 @@ var MAXIMUM_CHARACTERS = {
   AGENT_SERVICE_DESCRIPTION: 1e3,
   BIC_SWIFT_CODE: 11,
   BROKER_NAME: 800,
+  BROKER_BUILDING_NUMBER_OR_NAME: 100,
   BUSINESS: {
     GOODS_OR_SERVICES_DESCRIPTION: 1e3,
   },
@@ -2181,7 +2182,10 @@ var lists = {
   Broker: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: 'Application' }),
-      buildingNumberOrName: (0, import_fields.text)(),
+      // TODO: update sql dump
+      buildingNumberOrName: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(100)' },
+      }),
       isUsingBroker: nullable_checkbox_default(),
       isBasedInUk: nullable_checkbox_default(),
       name: (0, import_fields.text)({

@@ -21,6 +21,7 @@ const mapSubmittedData = (formBody: RequestBody): object => {
     populatedData[NAME] = '';
     populatedData[EMAIL] = '';
     populatedData[FULL_ADDRESS] = '';
+    // TODO: update to wipe IS_BASED_IN_UK, POSTCODE, BUILDING_NUMBER_OR_NAME
   }
 
   /**
