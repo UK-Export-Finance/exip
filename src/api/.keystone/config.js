@@ -6514,7 +6514,7 @@ var POLICY_FIELDS = {
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
         TEXT: 'Multiple contract policy (Revolving credit)',
         HINT_LIST: [
-          `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER} months`,
+          `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER.MAXIMUM} months`,
           "Best if you'll have an ongoing relationship with the buyer but you're not sure yet how many contracts or sales you'll have",
           'You only pay for your insurance each time you declare a new contract or sale - no need to pay before the policy starts',
         ],
