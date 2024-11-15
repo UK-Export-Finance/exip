@@ -2182,7 +2182,6 @@ var lists = {
   Broker: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: 'Application' }),
-      // TODO: update sql dump
       buildingNumberOrName: (0, import_fields.text)({
         db: { nativeType: 'VarChar(100)' },
       }),
