@@ -5,19 +5,19 @@ import mapAndFilterAddress from '../../../helpers/map-and-filter-address';
 import removeWhiteSpace from '../../../helpers/remove-white-space';
 
 /**
- * getOrdnanceSurveyAddress
+ * getOrdnanceSurveyAddresses
  * Checks postcode is valid
  * Calls Ordnance Survey API with postcode
  * Finds address by house name/number
  * @param {Object} root: GraphQL root variables
- * @param {Object} variables: GraphQL variables for the getOrdnanceSurveyAddress mutation - postcode and houseNameOrNumber
+ * @param {Object} variables: GraphQL variables for the getOrdnanceSurveyAddresses mutation - postcode and houseNameOrNumber
  * @returns {Promise<Object>} Object with success flag and addresses in an array
  */
-const getOrdnanceSurveyAddress = async (root: any, variables: OrdnanceSurveyVariables) => {
+const getOrdnanceSurveyAddresses = async (root: any, variables: OrdnanceSurveyVariables) => {
   try {
     const { postcode, houseNameOrNumber } = variables;
 
-    console.info('Getting Ordnance Survey address for postcode: %s, houseNameOrNumber: %s', postcode, houseNameOrNumber);
+    console.info('Getting Ordnance Survey addresses for postcode: %s, houseNameOrNumber: %s', postcode, houseNameOrNumber);
 
     const noWhitespacePostcode = removeWhiteSpace(postcode);
 
@@ -56,7 +56,7 @@ const getOrdnanceSurveyAddress = async (root: any, variables: OrdnanceSurveyVari
       success: true,
     };
   } catch (error) {
-    console.error('Error getting Ordnance Survey address results %o', error);
+    console.error('Error getting Ordnance Survey addresses results %o', error);
 
     return {
       apiError: true,
@@ -65,4 +65,4 @@ const getOrdnanceSurveyAddress = async (root: any, variables: OrdnanceSurveyVari
   }
 };
 
-export default getOrdnanceSurveyAddress;
+export default getOrdnanceSurveyAddresses;

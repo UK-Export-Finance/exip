@@ -27,7 +27,7 @@ import {
   getCountriesAndCurrencies,
   getCompaniesHouseInformation,
   getApplicationByReferenceNumber,
-  getOrdnanceSurveyAddress,
+  getOrdnanceSurveyAddresses,
   verifyAccountPasswordResetToken,
 } from './queries';
 
@@ -68,7 +68,7 @@ const customResolvers = {
     getCountriesAndCurrencies,
     getCompaniesHouseInformation,
     getApplicationByReferenceNumber,
-    getOrdnanceSurveyAddress,
+    getOrdnanceSurveyAddresses,
     verifyAccountPasswordResetToken,
   },
 };
