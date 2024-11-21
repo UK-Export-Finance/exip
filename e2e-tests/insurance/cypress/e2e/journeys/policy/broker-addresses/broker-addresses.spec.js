@@ -1,4 +1,4 @@
-import { body, field as fieldSelector, radios } from '../../../../../../pages/shared';
+import { intro, field as fieldSelector, radios } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -55,10 +55,12 @@ context('Insurance - Policy - Broker addresses page', () => {
       cy.navigateToUrl(url);
     });
 
-    it('renders body copy', () => {
-      const expected = `1 ${CONTENT_STRINGS.BODY} W1A 1AA`;
+    it('renders intro copy', () => {
+      const { ADDRESS, FOUND_FOR, SEPARATOR } = CONTENT_STRINGS.INTRO;
 
-      cy.checkText(body(), expected);
+      const expected = `1 ${ADDRESS} ${FOUND_FOR} W1A 1AA ${SEPARATOR} WOGAN HOUSE`;
+
+      cy.checkText(intro(), expected);
     });
 
     describe(FIELD_ID, () => {

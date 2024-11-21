@@ -28,7 +28,10 @@
 
         <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
-        <p class="govuk-body" data-cy="body">{{ BODY }} <span class="govuk-!-font-weight-bold">{{ postcode }}</span></p>
+        <p class="govuk-intro" data-cy="intro">
+          {{ INTRO.ADDRESSES_FOUND }} <span class="govuk-!-font-weight-bold" data-cy="intro-postcode">{{ postcode }}</span> {{ INTRO.SEPARATOR }} {{ buildingNumberOrName }}
+        </p>
+
 
         {% set legendHtml %}
           <legend class="govuk-fieldset__legend govuk-!-font-weight-bold" data-cy="{{ FIELD.ID }}-label">{{ FIELD.LABEL }}</legend>
