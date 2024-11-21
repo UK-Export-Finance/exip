@@ -5,9 +5,10 @@ import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_ZERO_ADDRESSES;
+
 const {
   ROOT,
-  POLICY: { BROKER_ZERO_ADDRESSES_ROOT },
+  POLICY: { BROKER_DETAILS_ROOT, BROKER_MANUAL_ADDRESS_ROOT, BROKER_ZERO_ADDRESSES_ROOT },
 } = INSURANCE_ROUTES;
 
 const { outro } = brokerZeroAddressesPage;
@@ -69,11 +70,15 @@ context('Insurance - Policy - Broker - zero addresses page - As an exporter ... 
     });
 
     it('renders outro `search again` link', () => {
-      cy.checkText(outro.searchAgainLink(), CONTENT_STRINGS.OUTRO.SEARCH_AGAIN.TEXT, '#');
+      const expectedHref = `${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
+
+      cy.checkText(outro.searchAgainLink(), CONTENT_STRINGS.OUTRO.SEARCH_AGAIN, expectedHref);
     });
 
     it('renders outro `enter manually` link', () => {
-      cy.checkText(outro.enterManuallyLink(), CONTENT_STRINGS.OUTRO.ENTER_MANUALLY.TEXT, '#');
+      const expectedHref = `${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
+
+      cy.checkText(outro.enterManuallyLink(), CONTENT_STRINGS.OUTRO.ENTER_MANUALLY, expectedHref);
     });
   });
 });
