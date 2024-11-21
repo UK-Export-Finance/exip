@@ -9,7 +9,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_ADDRESSES;
 
 const {
   ROOT,
-  POLICY: { BROKER_ADDRESSES_ROOT },
+  POLICY: { BROKER_ADDRESSES_ROOT, BROKER_CONFIRM_ADDRESS_ROOT },
 } = INSURANCE_ROUTES;
 
 const {
@@ -22,9 +22,12 @@ const baseUrl = Cypress.config('baseUrl');
 
 const expectedFieldValue = 'BRITISH BROADCASTING CORPORATION WOGAN HOUSE PORTLAND PLACE';
 
+const optionId = `${FIELD_ID}-${expectedFieldValue}`;
+
 context('Insurance - Policy - Broker addresses page', () => {
   let referenceNumber;
   let url;
+  let brokerConfirmAddressUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -32,6 +35,7 @@ context('Insurance - Policy - Broker addresses page', () => {
 
       // go to the page we want to test.
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ADDRESSES_ROOT}`;
+      brokerConfirmAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
 
       cy.navigateToUrl(url);
     });
@@ -103,10 +107,16 @@ context('Insurance - Policy - Broker addresses page', () => {
       it('should focus on input when clicking summary error message', () => {
         errorSummaryListItemLinks().eq(errorIndex).click();
 
-        const optionId = `${FIELD_ID}-${expectedFieldValue}`;
-
         fieldSelector(optionId).input().should('have.focus');
       });
+    });
+
+    it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, () => {
+      radios(optionId).option.label().click();
+
+      cy.clickSubmitButton();
+
+      cy.assertUrl(brokerConfirmAddressUrl);
     });
   });
 });
