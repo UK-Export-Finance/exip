@@ -1,4 +1,5 @@
 import { headingCaption } from '../../../../../../partials';
+import { field } from '../../../../../../pages/shared';
 import { brokerManualAddressPage } from '../../../../../../pages/insurance/policy';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -97,6 +98,14 @@ context('Insurance - Policy - Broker manual address page - As an exporter, ... T
       cy.completeAndSubmitBrokerManualAddressForm({});
 
       cy.assertUrl(lossPayeeUrl);
+    });
+  });
+
+  describe('when going back to the page', () => {
+    it('should have the submitted value', () => {
+      cy.navigateToUrl(url);
+
+      cy.checkText(field(FIELD_ID).textarea(), mockApplication.BROKER[FIELD_ID]);
     });
   });
 });

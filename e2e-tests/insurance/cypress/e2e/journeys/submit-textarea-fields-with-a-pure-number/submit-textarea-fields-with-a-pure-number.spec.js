@@ -6,7 +6,7 @@ const {
   ROOT,
   YOUR_BUYER: { CONNECTION_WITH_BUYER },
   EXPORT_CONTRACT: { AGENT_SERVICE, HOW_WILL_YOU_GET_PAID },
-  POLICY: { BROKER_DETAILS_ROOT, PRE_CREDIT_PERIOD, LOSS_PAYEE_DETAILS_ROOT, OTHER_COMPANY_DETAILS },
+  POLICY: { BROKER_DETAILS_ROOT, BROKER_MANUAL_ADDRESS_ROOT, PRE_CREDIT_PERIOD, LOSS_PAYEE_DETAILS_ROOT, OTHER_COMPANY_DETAILS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -33,6 +33,7 @@ context('Insurance - Textarea fields - Textarea fields should be able to submit 
   let agentServiceUrl;
   let howWillYouGetPaidUrl;
   let brokerDetailsUrl;
+  let brokerManualAddressUrl;
   let preCreditPeriodUrl;
   let lossPayeeDetailsUrl;
   let otherCompanyUrl;
@@ -45,6 +46,7 @@ context('Insurance - Textarea fields - Textarea fields should be able to submit 
       agentServiceUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_SERVICE}`;
       howWillYouGetPaidUrl = `${baseUrl}${ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
       brokerDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
+      brokerManualAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
       preCreditPeriodUrl = `${baseUrl}${ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`;
       lossPayeeDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`;
       otherCompanyUrl = `${baseUrl}${ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS}`;
@@ -123,8 +125,8 @@ context('Insurance - Textarea fields - Textarea fields should be able to submit 
     });
   });
 
-  describe(`${BROKER_NAME} and ${FULL_ADDRESS}`, () => {
-    describe('when submitting the textarea field with a pure number and going back to the page', () => {
+  describe(BROKER_NAME, () => {
+    describe('when submitting the field with a pure number and going back to the page', () => {
       beforeEach(() => {
         cy.saveSession();
 
@@ -132,7 +134,6 @@ context('Insurance - Textarea fields - Textarea fields should be able to submit 
 
         cy.completeAndSubmitBrokerDetailsForm({
           name: numberString,
-          fullAddress: numberString,
         });
 
         cy.clickBackLink();
@@ -140,7 +141,25 @@ context('Insurance - Textarea fields - Textarea fields should be able to submit 
 
       it('should render the pure number exactly as it was submitted', () => {
         cy.checkValue(field(BROKER_NAME), numberString);
+      });
+    });
+  });
 
+  describe(FULL_ADDRESS, () => {
+    describe('when submitting the textarea field with a pure number and going back to the page', () => {
+      beforeEach(() => {
+        cy.saveSession();
+
+        cy.navigateToUrl(brokerManualAddressUrl);
+
+        cy.completeAndSubmitBrokerManualAddressForm({
+          fullAddress: numberString,
+        });
+
+        cy.clickBackLink();
+      });
+
+      it('should render the pure number exactly as it was submitted', () => {
         cy.checkTextareaValue({
           fieldId: FULL_ADDRESS,
           expectedValue: numberString,

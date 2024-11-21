@@ -151,18 +151,18 @@ describe('controllers/insurance/policy/broker-details', () => {
         await post(req, res);
       });
 
-      it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, () => {
-        const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
-
-        expect(res.redirect).toHaveBeenCalledWith(expected);
-      });
-
       it('should call mapAndSave.broker once with data from constructPayload function', () => {
         const payload = constructPayload(req.body, FIELD_IDS);
 
         expect(mapAndSave.broker).toHaveBeenCalledTimes(1);
 
         expect(mapAndSave.broker).toHaveBeenCalledWith(payload, mockApplication);
+      });
+
+      it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, () => {
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
+
+        expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
       describe("when the url's last substring is `change`", () => {
@@ -207,7 +207,7 @@ describe('controllers/insurance/policy/broker-details', () => {
           req.body = validBody;
         });
 
-        describe('when no application is returned', () => {
+        describe('when mapAndSave.broker does not return a true boolean', () => {
           beforeEach(() => {
             const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
 

@@ -9,8 +9,9 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
-import { mockApplication, mockReq, mockRes, referenceNumber } from '../../../../test-mocks';
+import { mockApplication, mockReq, mockRes, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const {
   BROKER_DETAILS: { FULL_ADDRESS },
@@ -103,6 +104,8 @@ describe('controllers/insurance/policy/broker-manual-address', () => {
       [FULL_ADDRESS]: broker[FULL_ADDRESS],
     };
 
+    mapAndSave.broker = jest.fn(() => Promise.resolve(true));
+
     describe('when there are validation errors', () => {
       it('should render template with validation errors and submitted values', () => {
         req.body = {};
@@ -132,6 +135,14 @@ describe('controllers/insurance/policy/broker-manual-address', () => {
         post(req, res);
       });
 
+      it('should call mapAndSave.broker once with data from constructPayload function', () => {
+        const payload = constructPayload(req.body, [FIELD_ID]);
+
+        expect(mapAndSave.broker).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.broker).toHaveBeenCalledWith(payload, mockApplication);
+      });
+
       it(`should redirect to ${LOSS_PAYEE_ROOT}`, () => {
         const expected = `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
 
@@ -148,6 +159,42 @@ describe('controllers/insurance/policy/broker-manual-address', () => {
         post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('mapAndSave.broker call', () => {
+        beforeEach(() => {
+          req.body = validBody;
+        });
+
+        describe('when mapAndSave.broker does not return a true boolean', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
+
+            mapAndSave.broker = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when there is an error', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = mockSpyPromiseRejection;
+
+            mapAndSave.broker = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
       });
     });
   });
