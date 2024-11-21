@@ -384,6 +384,9 @@ export const ERROR_MESSAGES = {
           ABOVE_MAXIMUM: `The broker's address cannot be more than ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`,
         },
       },
+      [FIELD_IDS.INSURANCE.POLICY.BROKER_ADDRESSES.SELECT_THE_ADDRESS]: {
+        IS_EMPTY: "Select your broker's address",
+      },
       [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE.IS_APPOINTED]: {
         IS_EMPTY: 'Select if you are appointing a loss payee',
       },

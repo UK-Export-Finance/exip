@@ -1,5 +1,6 @@
+import { errorSummaryListItems, errorSummaryListItemLinks } from '../../../../../../partials';
 import { body, field as fieldSelector, radios } from '../../../../../../pages/shared';
-import { PAGES } from '../../../../../../content-strings';
+import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
@@ -18,6 +19,8 @@ const {
 const { BROKER_ADDRESSES: FIELD_STRINGS } = FIELDS;
 
 const baseUrl = Cypress.config('baseUrl');
+
+const expectedFieldValue = 'BRITISH BROADCASTING CORPORATION WOGAN HOUSE PORTLAND PLACE';
 
 context('Insurance - Policy - Broker addresses page', () => {
   let referenceNumber;
@@ -69,11 +72,40 @@ context('Insurance - Policy - Broker addresses page', () => {
       });
 
       it('renders an `address` radio label and input', () => {
-        const expectedFieldValue = 'BRITISH BROADCASTING CORPORATION WOGAN HOUSE PORTLAND PLACE';
-
         const { option } = radios(FIELD_ID, expectedFieldValue);
 
         cy.checkText(option.label(), expectedFieldValue);
+      });
+    });
+  });
+
+  describe('form submission', () => {
+    describe('when submitting an empty form', () => {
+      const errorIndex = 0;
+      const expectedErrorMessage = ERROR_MESSAGES.INSURANCE.POLICY[FIELD_ID].IS_EMPTY;
+
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+        cy.clickSubmitButton();
+      });
+
+      it('should render validation errors', () => {
+        const field = fieldSelector(FIELD_ID);
+
+        cy.checkErrorSummaryListHeading();
+        cy.assertErrorSummaryListLength(1);
+
+        cy.checkText(errorSummaryListItems().eq(errorIndex), expectedErrorMessage);
+
+        cy.checkText(field.errorMessage(), `Error: ${expectedErrorMessage}`);
+      });
+
+      it('should focus on input when clicking summary error message', () => {
+        errorSummaryListItemLinks().eq(errorIndex).click();
+
+        const optionId = `${FIELD_ID}-${expectedFieldValue}`;
+
+        fieldSelector(optionId).input().should('have.focus');
       });
     });
   });
