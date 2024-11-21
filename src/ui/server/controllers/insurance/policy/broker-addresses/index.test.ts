@@ -59,6 +59,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
         ID: SELECT_THE_ADDRESS,
         ...BROKER_ADDRESSES[SELECT_THE_ADDRESS],
       },
+      SEARCH_AGAIN_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
       SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
     };
 

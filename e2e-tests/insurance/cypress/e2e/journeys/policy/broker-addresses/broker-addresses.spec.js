@@ -1,14 +1,18 @@
 import { intro, field as fieldSelector, radios } from '../../../../../../pages/shared';
+import { brokerAddressesPage } from '../../../../../../pages/insurance/policy';
 import { PAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_ADDRESSES;
+const {
+  PAGE_TITLE,
+  INTRO: { ADDRESS, FOUND_FOR, SEPARATOR, SEARCH_AGAIN },
+} = PAGES.INSURANCE.POLICY.BROKER_ADDRESSES;
 
 const {
   ROOT,
-  POLICY: { BROKER_ADDRESSES_ROOT },
+  POLICY: { BROKER_ADDRESSES_ROOT, BROKER_DETAILS_ROOT },
 } = INSURANCE_ROUTES;
 
 const {
@@ -44,7 +48,7 @@ context('Insurance - Policy - Broker addresses page', () => {
 
   it('renders core page elements', () => {
     cy.corePageChecks({
-      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      pageTitle: PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${BROKER_ADDRESSES_ROOT}`,
       backLink: `${ROOT}/${referenceNumber}${BROKER_ADDRESSES_ROOT}#`,
     });
@@ -55,12 +59,22 @@ context('Insurance - Policy - Broker addresses page', () => {
       cy.navigateToUrl(url);
     });
 
-    it('renders intro copy', () => {
-      const { ADDRESS, FOUND_FOR, SEPARATOR } = CONTENT_STRINGS.INTRO;
+    it('renders a intro copy', () => {
+      intro()
+        .invoke('text')
+        .then((text) => {
+          expect(text.trim()).includes(`1 ${ADDRESS} ${FOUND_FOR} `);
+          expect(text.trim()).includes('W1A 1AA');
+          expect(text.trim()).includes(` ${SEPARATOR} `);
+          expect(text.trim()).includes('WOGAN HOUSE.');
+          expect(text.trim()).includes(SEARCH_AGAIN);
+        });
+    });
 
-      const expected = `1 ${ADDRESS} ${FOUND_FOR} W1A 1AA ${SEPARATOR} WOGAN HOUSE`;
+    it('renders a `search again` link', () => {
+      const expectedHref = `${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
 
-      cy.checkText(intro(), expected);
+      cy.checkLink(brokerAddressesPage.searchAgainLink(), expectedHref, SEARCH_AGAIN);
     });
 
     describe(FIELD_ID, () => {

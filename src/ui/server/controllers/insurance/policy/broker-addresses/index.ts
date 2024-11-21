@@ -46,6 +46,7 @@ export const pageVariables = (referenceNumber: number, totalAddresses: number) =
       ...PAGE_CONTENT_STRINGS.INTRO,
       ADDRESSES_FOUND: `${totalAddresses} ${ADDRESS_STRING} ${PAGE_CONTENT_STRINGS.INTRO.FOUND_FOR}`,
     },
+    SEARCH_AGAIN_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
     SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
   };
 };
