@@ -14,7 +14,7 @@ const {
 
 const {
   ROOT,
-  POLICY: { BROKER_ROOT, BROKER_DETAILS_ROOT, BROKER_CONFIRM_ADDRESS_ROOT },
+  POLICY: { BROKER_ROOT, BROKER_DETAILS_ROOT, BROKER_ADDRESSES_ROOT, BROKER_MANUAL_ADDRESS_ROOT },
 } = INSURANCE_ROUTES;
 
 const { BROKER_DETAILS: FIELD_STRINGS } = FIELDS;
@@ -26,7 +26,8 @@ context(
   () => {
     let referenceNumber;
     let url;
-    let brokerConfirmAddressUrl;
+    let brokerAddressesUrl;
+    let brokerManualAddressUrl;
 
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -36,7 +37,8 @@ context(
         cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'broker', usingBroker: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
-        brokerConfirmAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
+        brokerAddressesUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ADDRESSES_ROOT}`;
+        brokerManualAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
 
         cy.assertUrl(url);
       });
@@ -156,17 +158,35 @@ context(
         cy.navigateToUrl(url);
       });
 
-      it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT} page`, () => {
-        cy.completeAndSubmitBrokerDetailsForm({});
+      describe(`when submitting ${IS_BASED_IN_UK} as yes`, () => {
+        it(`should redirect to ${BROKER_ADDRESSES_ROOT} page`, () => {
+          cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk: true });
 
-        cy.assertUrl(brokerConfirmAddressUrl);
+          cy.assertUrl(brokerAddressesUrl);
+        });
+
+        describe('when going back to the page', () => {
+          it('should have the submitted values', () => {
+            cy.navigateToUrl(url);
+
+            cy.assertBrokerDetailsFieldValues({});
+          });
+        });
       });
 
-      describe('when going back to the page', () => {
-        it('should have the submitted values', () => {
-          cy.navigateToUrl(url);
+      describe(`when submitting ${IS_BASED_IN_UK} as yes`, () => {
+        it(`should redirect to ${BROKER_MANUAL_ADDRESS_ROOT} page`, () => {
+          cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk: false });
 
-          cy.assertBrokerDetailsFieldValues({});
+          cy.assertUrl(brokerManualAddressUrl);
+        });
+
+        describe('when going back to the page', () => {
+          it('should have the submitted values', () => {
+            cy.navigateToUrl(url);
+
+            cy.assertBrokerDetailsFieldValues({});
+          });
         });
       });
     });
