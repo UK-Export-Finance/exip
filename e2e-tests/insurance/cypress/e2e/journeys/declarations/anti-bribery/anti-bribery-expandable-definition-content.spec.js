@@ -50,8 +50,6 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
   });
 
   it('renders summary text', () => {
-    expandable.summary().should('exist');
-
     cy.checkText(expandable.summary(), INTRO);
   });
 
