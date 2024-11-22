@@ -9,7 +9,7 @@ const {
 
 const {
   CREDIT_PERIOD_WITH_BUYER,
-  BROKER_DETAILS: { FULL_ADDRESS },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');

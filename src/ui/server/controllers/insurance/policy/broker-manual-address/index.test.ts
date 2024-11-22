@@ -10,7 +10,7 @@ import { Request, Response } from '../../../../../types';
 import { mockApplication, mockReq, mockRes } from '../../../../test-mocks';
 
 const {
-  BROKER_DETAILS: { FULL_ADDRESS },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 const { PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;

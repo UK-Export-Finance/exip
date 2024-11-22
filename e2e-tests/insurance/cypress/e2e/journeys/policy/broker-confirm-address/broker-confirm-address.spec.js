@@ -9,7 +9,7 @@ import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-id
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_CONFIRM_ADDRESS;
 
 const {
-  BROKER_DETAILS: { FULL_ADDRESS },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 const {

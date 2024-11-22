@@ -4,7 +4,7 @@ import fullAddressValidation from '../../../../../../../shared-validation/full-a
 import { RequestBody } from '../../../../../../../../types';
 
 const {
-  BROKER_DETAILS: { FULL_ADDRESS: FIELD_ID },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS: FIELD_ID },
 } = POLICY_FIELD_IDS;
 
 const {
