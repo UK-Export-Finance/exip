@@ -274,7 +274,7 @@ const createApplications = (accountId, count) => {
 
     return responseBody;
   } catch (error) {
-    console.error('Creating applications', error);
+    console.error('Creating applications %o', error);
 
     throw new Error('Creating applications', { error });
   }
