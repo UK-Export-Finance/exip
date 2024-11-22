@@ -56,7 +56,7 @@ context('Insurance - Check your answers - Policy - Multiple contract policy - Wi
     checkSummaryList.BROKER[NAME]({});
   });
 
-  // TODO: EMS-3975 - move FULL_ADDRESS to new form
+  // TODO: EMS-3975
   it.skip(`should render a ${FULL_ADDRESS} summary list row`, () => {
     checkSummaryList.BROKER[FULL_ADDRESS]();
   });

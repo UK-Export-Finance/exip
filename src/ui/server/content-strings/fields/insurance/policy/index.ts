@@ -276,7 +276,7 @@ export const POLICY_FIELDS = {
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
     },
-    // TODO: EMS-3975 - move FULL_ADDRESS to new form
+    // TODO: EMS-3975
     // [FULL_ADDRESS]: {
     //   LABEL: "Broker's address",
     //   SUMMARY: {
