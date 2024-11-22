@@ -85,7 +85,8 @@ context('Insurance - Policy - Broker details page - validation', () => {
     totalExpectedOtherErrorsWithValidEmail: 2,
   });
 
-  describe(FULL_ADDRESS, () => {
+  // TODO: EMS-3975
+  describe.skip(FULL_ADDRESS, () => {
     const field = fieldSelector(FULL_ADDRESS);
 
     const textareaField = {

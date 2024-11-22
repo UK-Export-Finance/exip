@@ -61,7 +61,11 @@ export const POLICY = {
     NAME: 'name',
     EMAIL: SHARED.EMAIL,
     BROKER_EMAIL: 'broker.email',
+    // TODO: EMS-3975
     FULL_ADDRESS: 'fullAddress',
+    IS_BASED_IN_UK: 'isBasedInUk',
+    POSTCODE: 'postcode',
+    BUILDING_NUMBER_OR_NAME: 'buildingNumberOrName',
   },
   LOSS_PAYEE: {
     IS_APPOINTED: 'isAppointed',

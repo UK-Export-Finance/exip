@@ -51,7 +51,8 @@ const assertFullyPopulatedExportContractSummaryListRows = ({ agentChargeMethodFi
     checkSummaryList[NAME]({ shouldRender: true });
   });
 
-  it(`should render a ${FULL_ADDRESS} summary list row`, () => {
+  // TODO: EMS-3975
+  it.skip(`should render a ${FULL_ADDRESS} summary list row`, () => {
     checkSummaryList[FULL_ADDRESS]({ shouldRender: true });
   });
 

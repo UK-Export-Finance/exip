@@ -17,7 +17,7 @@ const {
     CREDIT_PERIOD_WITH_BUYER,
     REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
     USING_BROKER,
-    BROKER_DETAILS: { NAME, FULL_ADDRESS },
+    BROKER_DETAILS: { NAME, IS_BASED_IN_UK, POSTCODE, BUILDING_NUMBER_OR_NAME },
     LOSS_PAYEE: { IS_APPOINTED },
     LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY },
     LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
@@ -255,14 +255,36 @@ export const POLICY_FIELDS = {
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
     },
-    [FULL_ADDRESS]: {
-      LABEL: "Broker's address",
+    [IS_BASED_IN_UK]: {
+      LABEL: 'Is the broker based in the UK?',
       SUMMARY: {
-        TITLE: "Broker's address",
+        TITLE: 'Is the broker based in the UK?',
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
-      MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
     },
+    [POSTCODE]: {
+      LABEL: 'Postcode',
+      SUMMARY: {
+        TITLE: 'Postcode',
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
+      },
+    },
+    [BUILDING_NUMBER_OR_NAME]: {
+      LABEL: 'Building number or name',
+      SUMMARY: {
+        TITLE: 'Building number or name',
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
+      },
+    },
+    // TODO: EMS-3975
+    // [FULL_ADDRESS]: {
+    //   LABEL: "Broker's address",
+    //   SUMMARY: {
+    //     TITLE: "Broker's address",
+    //     FORM_TITLE: POLICY_FORM_TITLES.BROKER,
+    //   },
+    //   MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
+    // },
   },
   LOSS_PAYEE: {
     [IS_APPOINTED]: {
