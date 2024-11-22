@@ -5,6 +5,7 @@ import { post as postBrokerSaveAndBack } from '../../../../controllers/insurance
 import { get as getBrokerDetails, post as postBrokerDetails } from '../../../../controllers/insurance/policy/broker-details';
 import { post as postBrokerDetailsSaveAndBack } from '../../../../controllers/insurance/policy/broker-details/save-and-back';
 import { get as getBrokerManualAddress, post as postBrokerManualAddress } from '../../../../controllers/insurance/policy/broker-manual-address';
+import { post as postBrokerManualAddressSaveAndBack } from '../../../../controllers/insurance/policy/broker-manual-address/save-and-back';
 import { get as getBrokerConfirmAddress, post as postBrokerConfirmAddress } from '../../../../controllers/insurance/policy/broker-confirm-address';
 
 const {
@@ -17,6 +18,7 @@ const {
   BROKER_DETAILS_CHANGE,
   BROKER_DETAILS_CHECK_AND_CHANGE,
   BROKER_MANUAL_ADDRESS_ROOT,
+  BROKER_MANUAL_ADDRESS_SAVE_AND_BACK,
   BROKER_CONFIRM_ADDRESS_ROOT,
 } = POLICY;
 
@@ -41,6 +43,7 @@ router.post(`/:referenceNumber${BROKER_DETAILS_CHECK_AND_CHANGE}`, postBrokerDet
 
 router.get(`/:referenceNumber${BROKER_MANUAL_ADDRESS_ROOT}`, getBrokerManualAddress);
 router.post(`/:referenceNumber${BROKER_MANUAL_ADDRESS_ROOT}`, postBrokerManualAddress);
+router.post(`/:referenceNumber${BROKER_MANUAL_ADDRESS_SAVE_AND_BACK}`, postBrokerManualAddressSaveAndBack);
 
 router.get(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_ROOT}`, getBrokerConfirmAddress);
 router.post(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_ROOT}`, postBrokerConfirmAddress);
