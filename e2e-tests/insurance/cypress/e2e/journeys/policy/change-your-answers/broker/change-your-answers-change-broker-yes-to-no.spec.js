@@ -83,7 +83,7 @@ context('Insurance - Policy - Change your answers - Broker - Yes to no - As an e
         cy.assertEmptyFieldValue(NAME);
         cy.assertEmptyFieldValue(EMAIL);
 
-        // TODO: EMS-3975 - move FULL_ADDRESS to new form
+        // TODO: EMS-3975
         // cy.checkTextareaValue({
         //   fieldId: FULL_ADDRESS,
         //   expectedValue: '',

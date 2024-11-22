@@ -65,7 +65,7 @@ context('Insurance - Policy - Change your answers - Broker - No to yes - As an e
       checkSummaryList[FIELD_ID]({ usingBroker: true });
       checkSummaryList.BROKER[NAME]({});
 
-      // TODO: EMS-3975 - move FULL_ADDRESS to new form
+      // TODO: EMS-3975
       // checkSummaryList.BROKER[FULL_ADDRESS]();
 
       checkSummaryList.BROKER[EMAIL]();

@@ -85,7 +85,7 @@ context('Insurance - Policy - Broker details page - validation', () => {
     totalExpectedOtherErrorsWithValidEmail: 2,
   });
 
-  // TODO: EMS-3975 - move FULL_ADDRESS to new form
+  // TODO: EMS-3975
   describe.skip(FULL_ADDRESS, () => {
     const field = fieldSelector(FULL_ADDRESS);
 
