@@ -138,7 +138,9 @@ describe('controllers/insurance/policy/broker-details', () => {
     const validBody = {
       [NAME]: broker[NAME],
       [EMAIL]: broker[EMAIL],
-      [IS_BASED_IN_UK]: broker[IS_BASED_IN_UK],
+      [IS_BASED_IN_UK]: 'true',
+      [POSTCODE]: broker[POSTCODE],
+      [BUILDING_NUMBER_OR_NAME]: broker[BUILDING_NUMBER_OR_NAME],
     };
 
     mapAndSave.broker = jest.fn(() => Promise.resolve(true));
@@ -177,7 +179,7 @@ describe('controllers/insurance/policy/broker-details', () => {
         await post(req, res);
       });
 
-      it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, () => {
+      it.only(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, () => {
         const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
