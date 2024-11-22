@@ -432,7 +432,9 @@ export const lists = {
   Broker: list({
     fields: {
       application: relationship({ ref: 'Application' }),
+      buildingNumberOrName: text(),
       isUsingBroker: nullableCheckbox(),
+      isBasedInUk: nullableCheckbox(),
       name: text({
         db: { nativeType: 'VarChar(800)' },
       }),

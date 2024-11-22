@@ -5,7 +5,7 @@ import { isSinglePolicyType, isMultiplePolicyType } from '../../policy-type';
 const { REQUESTED_START_DATE, POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
 
 const {
-  BROKER_DETAILS: { NAME, BROKER_EMAIL, FULL_ADDRESS },
+  BROKER_DETAILS: { NAME, BROKER_EMAIL },
   CONTRACT_POLICY: {
     SINGLE: { CONTRACT_COMPLETION_DATE, REQUESTED_CREDIT_LIMIT, TOTAL_CONTRACT_VALUE },
     MULTIPLE: { TOTAL_MONTHS_OF_COVER },
@@ -76,7 +76,10 @@ export const getJointlyInsuredPartyTasks = (jointlyInsuredParty?: boolean) => {
  */
 export const getBrokerTasks = (isUsingBroker?: boolean) => {
   if (isUsingBroker) {
-    return [NAME, BROKER_EMAIL, FULL_ADDRESS];
+    // TODO: EMS-3979
+    // return [NAME, BROKER_EMAIL, FULL_ADDRESS];
+
+    return [NAME, BROKER_EMAIL];
   }
 
   return [];

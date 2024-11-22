@@ -2,8 +2,8 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
-{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
 {% import '../../components/text-input.njk' as textInput %}
+{% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
 {% import '../../components/form-buttons.njk' as formButtons %}
 
 {% block pageTitle %}
@@ -61,35 +61,36 @@
           errorMessage: validationErrors.errorList[FIELDS.EMAIL.ID]
         }) }}
 
-        {{ govukCharacterCount({
-          name: FIELDS.FULL_ADDRESS.ID,
-          id: FIELDS.FULL_ADDRESS.ID,
-          maxlength: FIELDS.FULL_ADDRESS.MAXIMUM,
-          value: submittedValues[FIELDS.FULL_ADDRESS.ID] or application.broker[FIELDS.FULL_ADDRESS.ID],
-          label: {
-            text: FIELDS.FULL_ADDRESS.LABEL,
-            classes: "govuk-body govuk-!-font-weight-bold govuk-!-font-size-24",
-            attributes: {
-              'data-cy': FIELDS.FULL_ADDRESS.ID + '-label'
-            }
-          },
-          hint: {
-            text: FIELDS.FULL_ADDRESS.HINT,
-            attributes: {
-              'data-cy': FIELDS.FULL_ADDRESS.ID + '-hint'
-            }
-          },
-          errorMessage: validationErrors.errorList[FIELDS.FULL_ADDRESS.ID] and {
-            text: validationErrors.errorList[FIELDS.FULL_ADDRESS.ID].text,
-            attributes: {
-              "data-cy": FIELDS.FULL_ADDRESS.ID + "-error-message"
-            }
-          },
-          classes: "govuk-input--width-20",
-          attributes: {
-            'data-cy': FIELDS.FULL_ADDRESS.ID
-          }
+        {% set conditionalYesHtml %}
+          {{ textInput.render({
+            id: FIELDS.POSTCODE.ID,
+            labelText: FIELDS.POSTCODE.LABEL,
+            labelClasses: "govuk-label--s",
+            inputClasses: "govuk-input--width-20",
+            errorMessage: validationErrors.errorList[FIELDS.POSTCODE]
+          }) }}
+
+          {{ textInput.render({
+            id: FIELDS.BUILDING_NUMBER_OR_NAME.ID,
+            labelText: FIELDS.BUILDING_NUMBER_OR_NAME.LABEL,
+            labelClasses: "govuk-label--s",
+            inputClasses: "govuk-input--width-20",
+            errorMessage: validationErrors.errorList[FIELDS.BUILDING_NUMBER_OR_NAME]
+          }) }}
+        {% endset %}
+
+        {{ yesNoRadioButtons.render({
+          fieldId: FIELDS.IS_BASED_IN_UK.ID,
+          legendText: FIELDS.IS_BASED_IN_UK.LABEL,
+          legendSpan: true,
+          legendClass: 'govuk-fieldset__legend--m',
+          errorMessage: validationErrors.errorList[FIELDS.IS_BASED_IN_UK.ID],
+          dataCyLegend: FIELDS.IS_BASED_IN_UK + '-legend',
+          horizontalRadios: HORIZONTAL_RADIOS,
+          noRadioAsFirstOption: NO_RADIO_AS_FIRST_OPTION,
+          conditionalYesHtml: conditionalYesHtml
         }) }}
+
       </div>
     </div>
 
