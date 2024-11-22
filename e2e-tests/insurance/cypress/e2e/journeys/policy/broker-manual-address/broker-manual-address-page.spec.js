@@ -1,5 +1,4 @@
 import { headingCaption } from '../../../../../../partials';
-import { field } from '../../../../../../pages/shared';
 import { brokerManualAddressPage } from '../../../../../../pages/insurance/policy';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -78,10 +77,6 @@ context('Insurance - Policy - Broker manual address page - As an exporter, ... T
     it(`renders ${FIELD_ID} textarea`, () => {
       const fieldId = FIELD_ID;
       const fieldStrings = FIELD_STRINGS[fieldId];
-
-      // TODO: EMS-3975 - remove this,
-      // after FULL_ADDRESS has been removed from BROKER_DETAILS
-      field(FIELD_ID).textarea().clear();
 
       cy.assertTextareaRendering({
         fieldId,
