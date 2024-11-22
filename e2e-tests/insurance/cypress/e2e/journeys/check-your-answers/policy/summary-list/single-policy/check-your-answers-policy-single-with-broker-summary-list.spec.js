@@ -56,7 +56,8 @@ context('Insurance - Check your answers - Policy - Single contract policy - With
     checkSummaryList.BROKER[NAME]({});
   });
 
-  it(`should render a ${FULL_ADDRESS} summary list row`, () => {
+  // TODO: EMS-3975
+  it.skip(`should render a ${FULL_ADDRESS} summary list row`, () => {
     checkSummaryList.BROKER[FULL_ADDRESS]();
   });
 

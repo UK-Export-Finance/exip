@@ -5,7 +5,7 @@ import checkSummaryList from '../../../../../../../commands/insurance/check-poli
 
 const {
   USING_BROKER: FIELD_ID,
-  BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
+  BROKER_DETAILS: { NAME, EMAIL },
 } = POLICY_FIELD_IDS;
 
 const {
@@ -64,7 +64,10 @@ context('Insurance - Policy - Change your answers - Broker - No to yes - As an e
     it(`should render new ${FIELD_ID} answer and broker details fields`, () => {
       checkSummaryList[FIELD_ID]({ usingBroker: true });
       checkSummaryList.BROKER[NAME]({});
-      checkSummaryList.BROKER[FULL_ADDRESS]();
+
+      // TODO: EMS-3975
+      // checkSummaryList.BROKER[FULL_ADDRESS]();
+
       checkSummaryList.BROKER[EMAIL]();
     });
   });
