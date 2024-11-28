@@ -14,6 +14,10 @@ const getCompaniesHouseInformation = async (companiesHouseNumber: string) => {
       console.error('GraphQL network error querying companies house information %o', response.errors);
     }
 
+    if (response.apiError) {
+      console.error('GraphQL API error querying companies house information %o', response);
+    }
+
     if (response?.networkError?.result?.errors) {
       console.error('GraphQL network error querying companies house information %o', response.networkError.result.errors);
     }

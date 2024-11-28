@@ -65,6 +65,9 @@ export const POLICY = {
     POSTCODE: 'postcode',
     BUILDING_NUMBER_OR_NAME: 'buildingNumberOrName',
   },
+  BROKER_ADDRESSES: {
+    SELECT_THE_ADDRESS: 'selectTheAddress',
+  },
   BROKER_MANUAL_ADDRESS: {
     FULL_ADDRESS: 'fullAddress',
   },
