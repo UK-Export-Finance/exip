@@ -9,7 +9,7 @@ const { POLICY_TYPE } = FIELD_VALUES;
 const { REQUESTED_START_DATE, POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
 
 const {
-  BROKER_DETAILS: { NAME, BROKER_EMAIL, FULL_ADDRESS },
+  BROKER_DETAILS: { NAME, BROKER_EMAIL },
   CONTRACT_POLICY: {
     SINGLE: { CONTRACT_COMPLETION_DATE, REQUESTED_CREDIT_LIMIT, TOTAL_CONTRACT_VALUE },
     MULTIPLE: { TOTAL_MONTHS_OF_COVER },
@@ -122,7 +122,7 @@ describe('server/helpers/required-fields/policy', () => {
 
         const result = getBrokerTasks(isUsingBrokerFlag);
 
-        const expected = [NAME, BROKER_EMAIL, FULL_ADDRESS];
+        const expected = [NAME, BROKER_EMAIL];
 
         expect(result).toEqual(expected);
       });

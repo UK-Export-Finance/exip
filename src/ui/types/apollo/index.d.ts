@@ -15,6 +15,7 @@ type ApolloResponseNetworkError = {
 interface ApolloResponse {
   errors: Array<ApolloResponseError>;
   networkError: ApolloResponseNetworkError;
+  apiError: boolean;
   data: any;
   loading: boolean;
   networkStatus: number;

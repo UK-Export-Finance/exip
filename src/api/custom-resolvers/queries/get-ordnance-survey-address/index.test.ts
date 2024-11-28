@@ -69,14 +69,18 @@ describe('getOrdnanceSurveyAddress', () => {
 
   describe('when ordnance survey API returns a valid response', () => {
     beforeEach(() => {
-      const ordnanceSurveyResponse = mockOrdnanceSurveyResponse.results as Array<OrdnanceSurveyResponse>;
+      const ordnanceSurveyResponse: Array<OrdnanceSurveyResponse> = mockOrdnanceSurveyResponse.results;
+
       ordnanceSurvey.get = jest.fn(() => Promise.resolve({ success: true, data: ordnanceSurveyResponse }));
     });
 
     it('should return object containing success as true and the mapped address', async () => {
       const response = await getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber });
 
-      const expected = { success: true, addresses: mapAndFilterOrdnanceSurveyAddresses('10', mockOrdnanceSurveyResponse.results) };
+      const expected = {
+        success: true,
+        addresses: mapAndFilterOrdnanceSurveyAddresses(houseNameOrNumber, mockOrdnanceSurveyResponse.results),
+      };
 
       expect(response).toEqual(expected);
     });
