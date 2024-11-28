@@ -37,7 +37,7 @@ export const pageVariables = (referenceNumber: number) => ({
  * Render the Confirm broker address page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} renders Confirm broker address page with previously submitted details
+ * @returns {Express.Response.render} Confirm broker address page
  */
 export const get = (req: Request, res: Response) => {
   const { application } = res.locals;

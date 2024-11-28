@@ -59,7 +59,7 @@ describe('controllers/insurance/policy/broker-confirm-address', () => {
   });
 
   describe('get', () => {
-    it('should render the broker template with correct variables', () => {
+    it('should render template', () => {
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
