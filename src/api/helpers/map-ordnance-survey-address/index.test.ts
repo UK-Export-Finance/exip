@@ -37,16 +37,20 @@ describe('mapOrdnanceSurveyAddress', () => {
 
   describe('when address has only a SUB_BUILDING_NAME addressLine1 property', () => {
     it('should return an object with partially populated addressLine1', () => {
-      const mockAddress = mockAddressFullyPopulated;
-      mockAddress.DPA.ORGANISATION_NAME = '';
-      mockAddress.DPA.BUILDING_NAME = '';
+      const mockAddress = {
+        DPA: {
+          ...mockAddressFullyPopulated.DPA,
+          ORGANISATION_NAME: '',
+          BUILDING_NAME: '',
+        },
+      };
 
-      const result = mapOrdnanceSurveyAddress(mockAddressFullyPopulated);
+      const result = mapOrdnanceSurveyAddress(mockAddress);
 
       const expected = {
         ...expectedBase,
         addressLine1: mockSubBuildingName,
-        addressLine2: mockAddressFullyPopulated.DPA.THOROUGHFARE_NAME,
+        addressLine2: mockAddress.DPA.THOROUGHFARE_NAME,
       };
 
       expect(result).toEqual(expected);
@@ -55,16 +59,20 @@ describe('mapOrdnanceSurveyAddress', () => {
 
   describe('when address has only an ORGANISATION_NAME addressLine1 property', () => {
     it('should return an object with partially populated addressLine1', () => {
-      const mockAddress = mockAddressFullyPopulated;
-      mockAddress.DPA.SUB_BUILDING_NAME = '';
-      mockAddress.DPA.BUILDING_NAME = '';
+      const mockAddress = {
+        DPA: {
+          ...mockAddressFullyPopulated.DPA,
+          SUB_BUILDING_NAME: '',
+          BUILDING_NAME: '',
+        },
+      };
 
-      const result = mapOrdnanceSurveyAddress(mockAddressFullyPopulated);
+      const result = mapOrdnanceSurveyAddress(mockAddress);
 
       const expected = {
         ...expectedBase,
         addressLine1: mockOrganisationName,
-        addressLine2: mockAddressFullyPopulated.DPA.THOROUGHFARE_NAME,
+        addressLine2: mockAddress.DPA.THOROUGHFARE_NAME,
       };
 
       expect(result).toEqual(expected);
@@ -73,16 +81,20 @@ describe('mapOrdnanceSurveyAddress', () => {
 
   describe('when address has only a BUILDING_NAME addressLine1 property', () => {
     it('should return an object with partially populated addressLine1', () => {
-      const mockAddress = mockAddressFullyPopulated;
-      mockAddress.DPA.SUB_BUILDING_NAME = '';
-      mockAddress.DPA.ORGANISATION_NAME = '';
+      const mockAddress = {
+        DPA: {
+          ...mockAddressFullyPopulated.DPA,
+          SUB_BUILDING_NAME: '',
+          ORGANISATION_NAME: '',
+        },
+      };
 
-      const result = mapOrdnanceSurveyAddress(mockAddressFullyPopulated);
+      const result = mapOrdnanceSurveyAddress(mockAddress);
 
       const expected = {
         ...expectedBase,
         addressLine1: mockBuildingName,
-        addressLine2: mockAddressFullyPopulated.DPA.THOROUGHFARE_NAME,
+        addressLine2: mockAddress.DPA.THOROUGHFARE_NAME,
       };
 
       expect(result).toEqual(expected);

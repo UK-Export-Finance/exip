@@ -14,7 +14,7 @@ import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
-const { NAME, EMAIL, FULL_ADDRESS } = POLICY_FIELD_IDS.BROKER_DETAILS;
+const { NAME, EMAIL, IS_BASED_IN_UK, POSTCODE, BUILDING_NUMBER_OR_NAME } = POLICY_FIELD_IDS.BROKER_DETAILS;
 
 const {
   INSURANCE_ROOT,
@@ -25,7 +25,7 @@ const {
 
 const { BROKER_DETAILS } = POLICY_FIELDS;
 
-export const FIELD_IDS = [NAME, EMAIL, FULL_ADDRESS];
+export const FIELD_IDS = [NAME, EMAIL, IS_BASED_IN_UK, POSTCODE, BUILDING_NUMBER_OR_NAME];
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_DETAILS;
 
@@ -47,13 +47,30 @@ export const pageVariables = (referenceNumber: number) => ({
       ID: EMAIL,
       ...BROKER_DETAILS[EMAIL],
     },
-    FULL_ADDRESS: {
-      ID: FULL_ADDRESS,
-      ...BROKER_DETAILS[FULL_ADDRESS],
+    IS_BASED_IN_UK: {
+      ID: IS_BASED_IN_UK,
+      ...BROKER_DETAILS[IS_BASED_IN_UK],
+    },
+    POSTCODE: {
+      ID: POSTCODE,
+      ...BROKER_DETAILS[POSTCODE],
+    },
+    BUILDING_NUMBER_OR_NAME: {
+      ID: BUILDING_NUMBER_OR_NAME,
+      ...BROKER_DETAILS[BUILDING_NUMBER_OR_NAME],
     },
   },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_SAVE_AND_BACK}`,
 });
+
+/**
+ * HTML_FLAGS
+ * Conditional flags for the nunjucks template to match design
+ */
+export const HTML_FLAGS = {
+  HORIZONTAL_RADIOS: true,
+  NO_RADIO_AS_FIRST_OPTION: true,
+};
 
 /**
  * Render the Broker details page
@@ -73,6 +90,7 @@ export const get = (req: Request, res: Response) => {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
+        HTML_FLAGS,
       }),
       ...pageVariables(application.referenceNumber),
       userName: getUserNameFromSession(req.session.user),
@@ -111,6 +129,7 @@ export const post = async (req: Request, res: Response) => {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
+        HTML_FLAGS,
       }),
       ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
