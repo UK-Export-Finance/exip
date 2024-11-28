@@ -2649,16 +2649,7 @@ var typeDefs = `
   type OrdnanceSurveyAddress {
     addressLine1: String
     addressLine2: String
-    postalCode: String
-    country: String
-    county: String
-    town: String
-  }
-
-  input OrdnanceAddressInput  {
-    addressLine1: String
-    addressLine2: String
-    postalCode: String
+    postcode: String
     country: String
     county: String
     town: String
@@ -9489,11 +9480,13 @@ var mapOrdnanceSurveyAddress = (address) => {
       addressLine1 = address.DPA.BUILDING_NAME;
     }
   }
+  const county = '';
   return {
     addressLine1,
     addressLine2: address.DPA.THOROUGHFARE_NAME,
     town: address.DPA.POST_TOWN,
-    postalCode: address.DPA.POSTCODE,
+    county,
+    postcode: address.DPA.POSTCODE,
   };
 };
 var map_ordnance_survey_address_default = mapOrdnanceSurveyAddress;

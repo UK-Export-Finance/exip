@@ -18,7 +18,8 @@ describe('mapOrdnanceSurveyAddress', () => {
 
   const expectedBase = {
     town: mockAddressFullyPopulated.DPA.POST_TOWN,
-    postalCode: mockAddressFullyPopulated.DPA.POSTCODE,
+    county: '',
+    postcode: mockAddressFullyPopulated.DPA.POSTCODE,
   };
 
   describe('when address has all conditional addressLine1 properties', () => {
