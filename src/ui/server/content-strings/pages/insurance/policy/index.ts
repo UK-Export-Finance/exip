@@ -87,6 +87,11 @@ const BROKER_DETAILS = {
     "Your broker's contact details will be stored securely and in line with GDPR. They will also be our main point of contact when processing your application.",
 };
 
+const BROKER_ADDRESSES = {
+  ...SHARED,
+  PAGE_TITLE: "Select your broker's address",
+};
+
 const BROKER_ZERO_ADDRESSES = {
   ...SHARED,
   PAGE_TITLE: 'No addresses found',
@@ -147,6 +152,7 @@ export default {
   OTHER_COMPANY_DETAILS,
   BROKER,
   BROKER_DETAILS,
+  BROKER_ADDRESSES,
   BROKER_ZERO_ADDRESSES,
   BROKER_CONFIRM_ADDRESS,
   LOSS_PAYEE,
