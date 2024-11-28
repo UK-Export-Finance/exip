@@ -179,7 +179,7 @@ describe('controllers/insurance/policy/broker-details', () => {
         await post(req, res);
       });
 
-      it.only(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, () => {
+      it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, () => {
         const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
