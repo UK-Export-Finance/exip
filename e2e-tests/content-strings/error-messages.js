@@ -379,7 +379,7 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: 'Select if the broker you are using in the UK',
         },
         [FIELD_IDS.INSURANCE.POLICY.BROKER_DETAILS.POSTCODE]: {
-          IS_EMPTY: "Enter the broker's post code",
+          IS_EMPTY: "Enter the broker's postcode",
           INCORRECT_FORMAT: 'Enter a full UK postcode',
         },
         [FIELD_IDS.INSURANCE.POLICY.BROKER_DETAILS.BUILDING_NUMBER_OR_NAME]: {
