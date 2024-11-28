@@ -356,9 +356,6 @@ var POLICY = {
   BROKER_ADDRESSES: {
     SELECT_THE_ADDRESS: 'selectTheAddress',
   },
-  BROKER_ADDRESSES: {
-    SELECT_THE_ADDRESS: 'selectTheAddress',
-  },
   LOSS_PAYEE: {
     IS_APPOINTED: 'isAppointed',
   },
