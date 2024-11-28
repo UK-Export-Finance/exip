@@ -184,6 +184,11 @@ const applicationByReferenceNumberQuery = gql`
           isUsingBroker
           name
           email
+          addressLine1
+          addressLine2
+          town
+          county
+          postcode
           fullAddress
         }
         buyer {

@@ -126,6 +126,10 @@ interface ApplicationBroker {
   id: string;
   isUsingBroker?: boolean;
   name?: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  town?: string;
+  postcode?: string;
   fullAddress?: string;
   email?: string;
 }

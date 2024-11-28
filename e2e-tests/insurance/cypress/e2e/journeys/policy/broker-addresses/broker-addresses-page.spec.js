@@ -20,9 +20,11 @@ const { BROKER_ADDRESSES: FIELD_STRINGS } = FIELDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
-const expectedFieldValue = 'BRITISH BROADCASTING CORPORATION WOGAN HOUSE PORTLAND PLACE';
+const field = fieldSelector(FIELD_ID);
 
-const optionId = `${FIELD_ID}-${expectedFieldValue}`;
+const expectedFieldLabel = 'BRITISH BROADCASTING CORPORATION WOGAN HOUSE PORTLAND PLACE';
+
+const optionId = `${FIELD_ID}-${expectedFieldLabel}`;
 
 context('Insurance - Policy - Broker addresses page', () => {
   let referenceNumber;
@@ -69,16 +71,16 @@ context('Insurance - Policy - Broker addresses page', () => {
     });
 
     describe(FIELD_ID, () => {
-      const field = fieldSelector(FIELD_ID);
-
       it('renders a legend', () => {
         cy.checkText(field.label(), FIELD_STRINGS[FIELD_ID].LABEL);
       });
 
       it('renders an `address` radio label and input', () => {
-        const { option } = radios(FIELD_ID, expectedFieldValue);
+        const { option } = radios(FIELD_ID, expectedFieldLabel);
 
-        cy.checkText(option.label(), expectedFieldValue);
+        cy.checkText(option.label(), expectedFieldLabel);
+
+        option.input().should('exist');
       });
     });
   });
@@ -90,12 +92,11 @@ context('Insurance - Policy - Broker addresses page', () => {
 
       beforeEach(() => {
         cy.navigateToUrl(url);
+
         cy.clickSubmitButton();
       });
 
       it('should render validation errors', () => {
-        const field = fieldSelector(FIELD_ID);
-
         cy.checkErrorSummaryListHeading();
         cy.assertErrorSummaryListLength(1);
 
@@ -112,11 +113,23 @@ context('Insurance - Policy - Broker addresses page', () => {
     });
 
     it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, () => {
+      cy.navigateToUrl(url);
+
       radios(optionId).option.label().click();
 
       cy.clickSubmitButton();
 
       cy.assertUrl(brokerConfirmAddressUrl);
+    });
+
+    describe('when going back to the page', () => {
+      it('should have the submitted value', () => {
+        cy.navigateToUrl(url);
+
+        const { option } = radios(FIELD_ID, expectedFieldLabel);
+
+        cy.assertRadioOptionIsChecked(option.input());
+      });
     });
   });
 });
