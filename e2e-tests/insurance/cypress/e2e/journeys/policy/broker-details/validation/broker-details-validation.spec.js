@@ -6,7 +6,7 @@ import { MAXIMUM_CHARACTERS } from '../../../../../../../constants/validation';
 import { assertEmailFieldValidation } from '../../../../../../../shared-test-assertions';
 
 const {
-  BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
+  BROKER_DETAILS: { NAME, EMAIL, IS_BASED_IN_UK, POSTCODE, BUILDING_NUMBER_OR_NAME },
 } = POLICY_FIELD_IDS;
 
 const {
@@ -85,39 +85,51 @@ context('Insurance - Policy - Broker details page - validation', () => {
     totalExpectedOtherErrorsWithValidEmail: 2,
   });
 
-  // TODO: EMS-3978
-  describe.skip(FULL_ADDRESS, () => {
-    const field = fieldSelector(FULL_ADDRESS);
-
-    const textareaField = {
-      ...field,
-      input: field.textarea,
-    };
-
-    const errorIndex = 2;
-    const expectedErrorsCount = 3;
-
-    const ERROR_MESSAGES_OBJECT = BROKER_DETAILS_ERROR_MESSAGES[FULL_ADDRESS];
-
-    it(`should render validation errors when ${FULL_ADDRESS} is left empty`, () => {
+  describe(`when ${IS_BASED_IN_UK} is 'yes'`, () => {
+    beforeEach(() => {
       cy.navigateToUrl(url);
 
+      cy.clickYesRadioInput();
+    });
+
+    it(`should render a validation error when ${POSTCODE} is not provided`, () => {
+      const field = fieldSelector(POSTCODE);
+
+      const ERROR_MESSAGES_OBJECT = BROKER_DETAILS_ERROR_MESSAGES[POSTCODE];
+
       cy.submitAndAssertFieldErrors({
-        field: textareaField,
-        errorIndex,
-        expectedErrorsCount,
+        field,
+        value: '',
+        errorIndex: 2,
+        expectedErrorsCount: 4,
         expectedErrorMessage: ERROR_MESSAGES_OBJECT.IS_EMPTY,
       });
     });
 
-    it(`should render validation errors when ${FULL_ADDRESS} is over ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`, () => {
-      cy.navigateToUrl(url);
+    it(`should render a validation error when ${BUILDING_NUMBER_OR_NAME} is not provided`, () => {
+      const field = fieldSelector(BUILDING_NUMBER_OR_NAME);
+
+      const ERROR_MESSAGES_OBJECT = BROKER_DETAILS_ERROR_MESSAGES[BUILDING_NUMBER_OR_NAME];
 
       cy.submitAndAssertFieldErrors({
-        field: textareaField,
-        value: 'a'.repeat(MAXIMUM_CHARACTERS.FULL_ADDRESS + 1),
-        errorIndex,
-        expectedErrorsCount,
+        field,
+        value: '',
+        errorIndex: 3,
+        expectedErrorsCount: 4,
+        expectedErrorMessage: ERROR_MESSAGES_OBJECT.IS_EMPTY,
+      });
+    });
+
+    it(`should render a validation error when ${BUILDING_NUMBER_OR_NAME} is above the maximum`, () => {
+      const field = fieldSelector(BUILDING_NUMBER_OR_NAME);
+
+      const ERROR_MESSAGES_OBJECT = BROKER_DETAILS_ERROR_MESSAGES[BUILDING_NUMBER_OR_NAME];
+
+      cy.submitAndAssertFieldErrors({
+        field,
+        value: 'a'.repeat(MAXIMUM_CHARACTERS.BROKER_BUILDING_NUMBER_OR_NAME) + 1,
+        errorIndex: 3,
+        expectedErrorsCount: 4,
         expectedErrorMessage: ERROR_MESSAGES_OBJECT.ABOVE_MAXIMUM,
       });
     });
