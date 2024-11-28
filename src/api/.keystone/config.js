@@ -9062,7 +9062,6 @@ var mapCisCountry = (cisCountry) => {
     esraClassification,
     isoCode,
     nbiIssueAvailable,
-    // riskCategory,
     shortTermCover,
   };
   mapped.canGetAQuoteOnline = can_get_a_quote_online_default({ shortTermCover, nbiIssueAvailable, esraClassification });

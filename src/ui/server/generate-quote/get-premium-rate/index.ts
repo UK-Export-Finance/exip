@@ -30,7 +30,7 @@ const getPremiumRate = (policyType: string, esraClassification: string, totalMon
 
     const esraClassificationKey = PRICING_GRID_MAP.RISK_CATEGORY[esraClassification];
 
-    const pricingGrid: any = PRICING_GRID as PricingGrid;
+    const pricingGrid: PricingGrid = PRICING_GRID;
 
     const risk = pricingGrid[policyTypeKey][esraClassificationKey];
 
