@@ -1,4 +1,4 @@
-import postCodeValidation from '.';
+import postcodeValidation from '.';
 import generateValidationErrors from '../../helpers/validation';
 import { mockErrors } from '../../test-mocks';
 
@@ -11,7 +11,7 @@ describe('shared-validation/postcode', () => {
     it('should return a validation error', () => {
       const mockValue = '';
 
-      const result = postCodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
+      const result = postcodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
 
       const expected = generateValidationErrors(mockFieldId, mockErrorMessageEmpty, mockErrors);
 
@@ -23,7 +23,7 @@ describe('shared-validation/postcode', () => {
     it('should return a validation error', () => {
       const mockValue = 'S 2AA';
 
-      const result = postCodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
+      const result = postcodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
 
       const expected = generateValidationErrors(mockFieldId, mockErrorMessageFormat, mockErrors);
 
@@ -35,7 +35,7 @@ describe('shared-validation/postcode', () => {
     it('should return a validation error', () => {
       const mockValue = '22 2AA';
 
-      const result = postCodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
+      const result = postcodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
 
       const expected = generateValidationErrors(mockFieldId, mockErrorMessageFormat, mockErrors);
 
@@ -47,7 +47,7 @@ describe('shared-validation/postcode', () => {
     it('should return a validation error', () => {
       const mockValue = 'SW1 22A';
 
-      const result = postCodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
+      const result = postcodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
 
       const expected = generateValidationErrors(mockFieldId, mockErrorMessageFormat, mockErrors);
 
@@ -59,7 +59,7 @@ describe('shared-validation/postcode', () => {
     it('should return a validation error', () => {
       const mockValue = 'SW1 222';
 
-      const result = postCodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
+      const result = postcodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
 
       const expected = generateValidationErrors(mockFieldId, mockErrorMessageFormat, mockErrors);
 
@@ -71,7 +71,7 @@ describe('shared-validation/postcode', () => {
     it('should return a validation error', () => {
       const mockValue = 'SW1 AAA';
 
-      const result = postCodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
+      const result = postcodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
 
       const expected = generateValidationErrors(mockFieldId, mockErrorMessageFormat, mockErrors);
 
@@ -83,7 +83,7 @@ describe('shared-validation/postcode', () => {
     it('should return a validation error', () => {
       const mockValue = 'SW1A 2HQA';
 
-      const result = postCodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
+      const result = postcodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
 
       const expected = generateValidationErrors(mockFieldId, mockErrorMessageFormat, mockErrors);
 
@@ -96,7 +96,7 @@ describe('shared-validation/postcode', () => {
       it('should return the provided errors object', () => {
         const mockValue = 'SW1A 2HQ';
 
-        const result = postCodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
+        const result = postcodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
 
         expect(result).toEqual(mockErrors);
       });
@@ -106,7 +106,7 @@ describe('shared-validation/postcode', () => {
       it('should return the provided errors object', () => {
         const mockValue = 'SW1A2HQ';
 
-        const result = postCodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
+        const result = postcodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
 
         expect(result).toEqual(mockErrors);
       });
@@ -116,7 +116,7 @@ describe('shared-validation/postcode', () => {
       it('should return the provided errors object', () => {
         const mockValue = 'L1 8JQ';
 
-        const result = postCodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
+        const result = postcodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
 
         expect(result).toEqual(mockErrors);
       });
@@ -126,7 +126,7 @@ describe('shared-validation/postcode', () => {
       it('should return the provided errors object', () => {
         const mockValue = 'KT3 3QQ';
 
-        const result = postCodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
+        const result = postcodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
 
         expect(result).toEqual(mockErrors);
       });
