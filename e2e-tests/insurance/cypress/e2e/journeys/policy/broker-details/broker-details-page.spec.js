@@ -158,7 +158,7 @@ context(
         cy.navigateToUrl(url);
       });
 
-      describe(`when submitting ${IS_BASED_IN_UK} as yes`, () => {
+      describe(`when submitting ${IS_BASED_IN_UK} as "yes"`, () => {
         it(`should redirect to ${BROKER_ADDRESSES_ROOT} page`, () => {
           cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk: true });
 
@@ -169,12 +169,12 @@ context(
           it('should have the submitted values', () => {
             cy.navigateToUrl(url);
 
-            cy.assertBrokerDetailsFieldValues({});
+            cy.assertBrokerDetailsFieldValues({ isBasedInUk: true });
           });
         });
       });
 
-      describe(`when submitting ${IS_BASED_IN_UK} as yes`, () => {
+      describe(`when submitting ${IS_BASED_IN_UK} as "no"`, () => {
         it(`should redirect to ${BROKER_MANUAL_ADDRESS_ROOT} page`, () => {
           cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk: false });
 
@@ -185,7 +185,7 @@ context(
           it('should have the submitted values', () => {
             cy.navigateToUrl(url);
 
-            cy.assertBrokerDetailsFieldValues({});
+            cy.assertBrokerDetailsFieldValues({ isBasedInUk: false });
           });
         });
       });

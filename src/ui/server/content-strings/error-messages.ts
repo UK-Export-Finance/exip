@@ -383,7 +383,7 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: 'Select if the broker you are using in the UK',
         },
         [FIELD_IDS.INSURANCE.POLICY.BROKER_DETAILS.POSTCODE]: {
-          IS_EMPTY: "Enter the broker's post code",
+          IS_EMPTY: "Enter the broker's postcode",
           INCORRECT_FORMAT: 'Enter a full UK postcode',
         },
         [FIELD_IDS.INSURANCE.POLICY.BROKER_DETAILS.BUILDING_NUMBER_OR_NAME]: {
@@ -394,6 +394,9 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: "Enter the broker's address",
           ABOVE_MAXIMUM: `The broker's address cannot be more than ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`,
         },
+      },
+      [FIELD_IDS.INSURANCE.POLICY.BROKER_ADDRESSES.SELECT_THE_ADDRESS]: {
+        IS_EMPTY: "Select your broker's address",
       },
       [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE.IS_APPOINTED]: {
         IS_EMPTY: 'Select if you are appointing a loss payee',

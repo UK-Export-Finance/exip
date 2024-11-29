@@ -16,7 +16,6 @@ const { EMAIL } = ACCOUNT_FIELD_IDS;
  * Complete and submit "broker details" form
  * @param {String} name: Broker name
  * @param {String} email: Broker email
- * @param {String} fullAddress: Broker's full address
  * @param {Boolean} isBasedInUk: Broker is based in the UK
  * @param {String} postcode: Broker's postcode
  * @param {String} buildingNumberOrName: Broker's building name or number

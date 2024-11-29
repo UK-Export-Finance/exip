@@ -123,7 +123,7 @@ context('Insurance - Textarea fields - Textarea fields should be able to submit 
     });
   });
 
-  // TODO: EMS-3975 - move FULL_ADDRESS to new form
+  // TODO: EMS-3975
   describe.skip(`${BROKER_NAME} and ${FULL_ADDRESS}`, () => {
     describe('when submitting the textarea field with a pure number and going back to the page', () => {
       beforeEach(() => {

@@ -51,7 +51,7 @@ const assertFullyPopulatedExportContractSummaryListRows = ({ agentChargeMethodFi
     checkSummaryList[NAME]({ shouldRender: true });
   });
 
-  // TODO: EMS-3975 - move FULL_ADDRESS to new form
+  // TODO: EMS-3975
   it.skip(`should render a ${FULL_ADDRESS} summary list row`, () => {
     checkSummaryList[FULL_ADDRESS]({ shouldRender: true });
   });
