@@ -666,6 +666,7 @@ jobs:
             'policy/broker-addresses/**/*.spec.js',
             'policy/broker-confirm-address/**/*.spec.js',
             'policy/broker-manual-address/**/*.spec.js',
+            'policy/broker-zero-addresses/**/*.spec.js',
             'policy/change-your-answers/another-company/**/*.spec.js',
             'policy/change-your-answers/broker/**/*.spec.js',
             'policy/change-your-answers/loss-payee/**/*.spec.js',
