@@ -9022,12 +9022,7 @@ var cannotGetAQuote = ({ shortTermCover, nbiIssueAvailable, esraClassification }
 var cannot_get_a_quote_default = cannotGetAQuote;
 
 // helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/index.ts
-var canApplyForInsuranceOnline = (shortTermCover, esraClassification) => {
-  if (shortTermCover && esraClassification) {
-    return true;
-  }
-  return false;
-};
+var canApplyForInsuranceOnline = (shortTermCover, esraClassification) => shortTermCover && esraClassification;
 var can_apply_for_insurance_online_default = canApplyForInsuranceOnline;
 
 // helpers/map-CIS-countries/map-CIS-country/can-apply-offline/index.ts
