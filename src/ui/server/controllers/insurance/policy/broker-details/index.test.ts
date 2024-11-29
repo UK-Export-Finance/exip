@@ -1,4 +1,4 @@
-import { pageVariables, FIELD_IDS, PAGE_CONTENT_STRINGS, TEMPLATE, get, post } from '.';
+import { pageVariables, HTML_FLAGS, FIELD_IDS, PAGE_CONTENT_STRINGS, TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -14,7 +14,7 @@ import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection } from '../../../../test-mocks';
 
-const { NAME, EMAIL, FULL_ADDRESS } = POLICY_FIELD_IDS.BROKER_DETAILS;
+const { NAME, EMAIL, IS_BASED_IN_UK, POSTCODE, BUILDING_NUMBER_OR_NAME } = POLICY_FIELD_IDS.BROKER_DETAILS;
 
 const {
   INSURANCE_ROOT,
@@ -42,7 +42,7 @@ describe('controllers/insurance/policy/broker-details', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [NAME, EMAIL, FULL_ADDRESS];
+      const expected = [NAME, EMAIL, IS_BASED_IN_UK, POSTCODE, BUILDING_NUMBER_OR_NAME];
 
       expect(FIELD_IDS).toEqual(expected);
     });
@@ -74,9 +74,17 @@ describe('controllers/insurance/policy/broker-details', () => {
             ID: EMAIL,
             ...BROKER_DETAILS[EMAIL],
           },
-          FULL_ADDRESS: {
-            ID: FULL_ADDRESS,
-            ...BROKER_DETAILS[FULL_ADDRESS],
+          IS_BASED_IN_UK: {
+            ID: IS_BASED_IN_UK,
+            ...BROKER_DETAILS[IS_BASED_IN_UK],
+          },
+          POSTCODE: {
+            ID: POSTCODE,
+            ...BROKER_DETAILS[POSTCODE],
+          },
+          BUILDING_NUMBER_OR_NAME: {
+            ID: BUILDING_NUMBER_OR_NAME,
+            ...BROKER_DETAILS[BUILDING_NUMBER_OR_NAME],
           },
         },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_SAVE_AND_BACK}`,
@@ -86,14 +94,26 @@ describe('controllers/insurance/policy/broker-details', () => {
     });
   });
 
+  describe('HTML_FLAGS', () => {
+    it('should have correct properties', () => {
+      const expected = {
+        HORIZONTAL_RADIOS: true,
+        NO_RADIO_AS_FIRST_OPTION: true,
+      };
+
+      expect(HTML_FLAGS).toEqual(expected);
+    });
+  });
+
   describe('get', () => {
-    it('should render the broker details template with correct variables', () => {
+    it('should render template', () => {
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
+          HTML_FLAGS,
         }),
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
@@ -118,7 +138,9 @@ describe('controllers/insurance/policy/broker-details', () => {
     const validBody = {
       [NAME]: broker[NAME],
       [EMAIL]: broker[EMAIL],
-      [FULL_ADDRESS]: broker[FULL_ADDRESS],
+      [IS_BASED_IN_UK]: 'true',
+      [POSTCODE]: broker[POSTCODE],
+      [BUILDING_NUMBER_OR_NAME]: broker[BUILDING_NUMBER_OR_NAME],
     };
 
     mapAndSave.broker = jest.fn(() => Promise.resolve(true));
@@ -139,6 +161,7 @@ describe('controllers/insurance/policy/broker-details', () => {
           ...insuranceCorePageVariables({
             PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
+            HTML_FLAGS,
           }),
           ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),

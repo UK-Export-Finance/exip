@@ -1,7 +1,7 @@
 import { OrdnanceSurveyVariables } from '../../../types';
 import ordnanceSurvey from '../../../integrations/ordnance-survey';
 import { isValidPostcode } from '../../../helpers/is-valid-postcode';
-import mapAndFilterAddress from '../../../helpers/map-and-filter-address';
+import mapAndFilterOrdnanceSurveyAddresses from '../../../helpers/map-and-filter-ordnance-survey-addresses';
 import removeWhiteSpace from '../../../helpers/remove-white-space';
 
 /**
@@ -40,10 +40,10 @@ const getOrdnanceSurveyAddresses = async (root: any, variables: OrdnanceSurveyVa
       };
     }
 
-    // finds specific address by house name/number and returns array of mapped addresses
-    const mappedAddresses = mapAndFilterAddress(houseNameOrNumber, response.data);
+    // get specific addresses by house name/number
+    const mappedAddresses = mapAndFilterOrdnanceSurveyAddresses(houseNameOrNumber, response.data);
 
-    // if no addresses found, then returns success false and additional flag
+    // if no addresses found, return success false and additional flag
     if (!mappedAddresses.length) {
       return {
         success: false,

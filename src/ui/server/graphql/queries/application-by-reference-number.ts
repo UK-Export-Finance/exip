@@ -185,6 +185,9 @@ const applicationByReferenceNumberQuery = gql`
           name
           email
           fullAddress
+          isBasedInUk
+          postcode
+          buildingNumberOrName
         }
         buyer {
           id

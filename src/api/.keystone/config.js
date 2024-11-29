@@ -347,7 +347,14 @@ var POLICY = {
     NAME: 'name',
     EMAIL: shared_default.EMAIL,
     BROKER_EMAIL: 'broker.email',
+    // TODO: EMS-3975
     FULL_ADDRESS: 'fullAddress',
+    IS_BASED_IN_UK: 'isBasedInUk',
+    POSTCODE: 'postcode',
+    BUILDING_NUMBER_OR_NAME: 'buildingNumberOrName',
+  },
+  BROKER_ADDRESSES: {
+    SELECT_THE_ADDRESS: 'selectTheAddress',
   },
   LOSS_PAYEE: {
     IS_APPOINTED: 'isAppointed',
@@ -600,8 +607,9 @@ var CUSTOM_RESOLVERS = [
   'declarationConfirmationAndAcknowledgements',
   'declarationHowDataWillBeUseds',
   'deleteApplicationByReferenceNumber',
-  'getCompaniesHouseInformation',
   'getApplicationByReferenceNumber',
+  'getCompaniesHouseInformation',
+  'getOrdnanceSurveyAddress',
   'submitApplication',
   // feedback
   'createFeedbackAndSendEmail',
@@ -941,6 +949,7 @@ var MAXIMUM_CHARACTERS = {
   AGENT_SERVICE_DESCRIPTION: 1e3,
   BIC_SWIFT_CODE: 11,
   BROKER_NAME: 800,
+  BROKER_BUILDING_NUMBER_OR_NAME: 100,
   BUSINESS: {
     GOODS_OR_SERVICES_DESCRIPTION: 1e3,
   },
@@ -2177,7 +2186,11 @@ var lists = {
   Broker: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: 'Application' }),
+      buildingNumberOrName: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(100)' },
+      }),
       isUsingBroker: nullable_checkbox_default(),
+      isBasedInUk: nullable_checkbox_default(),
       name: (0, import_fields.text)({
         db: { nativeType: 'VarChar(800)' },
       }),
@@ -6483,6 +6496,7 @@ var {
     USING_BROKER,
     BROKER_DETAILS: { NAME, FULL_ADDRESS },
     LOSS_PAYEE: { IS_APPOINTED },
+    BROKER_ADDRESSES: { SELECT_THE_ADDRESS },
     LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY },
     LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
     LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
@@ -6724,6 +6738,11 @@ var POLICY_FIELDS = {
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
       MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
+    },
+  },
+  BROKER_ADDRESSES: {
+    [SELECT_THE_ADDRESS]: {
+      LABEL: 'Select the address',
     },
   },
   LOSS_PAYEE: {
@@ -9459,32 +9478,55 @@ var ordnance_survey_default = ordnanceSurvey;
 var import_postcode_validator = require('postcode-validator');
 var isValidPostcode = (postcode) => (0, import_postcode_validator.postcodeValidator)(postcode, 'GB');
 
-// helpers/map-address/index.ts
-var mapAddress = (address) => ({
-  addressLine1: `${address.DPA.ORGANISATION_NAME ?? ''} ${address.DPA.BUILDING_NAME ?? ''} ${address.DPA.BUILDING_NUMBER ?? ''} ${
-    address.DPA.THOROUGHFARE_NAME ?? ''
-  }`.trim(),
-  addressLine2: address.DPA.DEPENDENT_LOCALITY,
-  town: address.DPA.POST_TOWN,
-  postalCode: address.DPA.POSTCODE,
-});
-var map_address_default = mapAddress;
-
-// helpers/map-and-filter-address/index.ts
-var mapAndFilterAddress = (houseNameOrNumber, ordnanceSurveyResponse) => {
-  const filtered = ordnanceSurveyResponse.filter(
-    (eachAddress) => eachAddress.DPA.BUILDING_NUMBER === houseNameOrNumber || eachAddress.DPA.BUILDING_NAME === houseNameOrNumber,
-  );
-  if (!filtered.length) {
-    return [];
+// helpers/map-ordnance-survey-address/index.ts
+var mapOrdnanceSurveyAddress = (address) => {
+  let addressLine1 = '';
+  if (address.DPA.SUB_BUILDING_NAME) {
+    addressLine1 = address.DPA.SUB_BUILDING_NAME;
   }
-  const mappedFilteredAddresses = [];
-  filtered.forEach((address) => {
-    mappedFilteredAddresses.push(map_address_default(address));
-  });
-  return mappedFilteredAddresses;
+  if (address.DPA.ORGANISATION_NAME) {
+    if (addressLine1) {
+      addressLine1 += ` ${address.DPA.ORGANISATION_NAME}`;
+    } else {
+      addressLine1 = address.DPA.ORGANISATION_NAME;
+    }
+  }
+  if (address.DPA.BUILDING_NAME) {
+    if (addressLine1) {
+      addressLine1 += ` ${address.DPA.BUILDING_NAME}`;
+    } else {
+      addressLine1 = address.DPA.BUILDING_NAME;
+    }
+  }
+  return {
+    addressLine1,
+    addressLine2: address.DPA.THOROUGHFARE_NAME,
+    town: address.DPA.POST_TOWN,
+    postalCode: address.DPA.POSTCODE,
+  };
 };
-var map_and_filter_address_default = mapAndFilterAddress;
+var map_ordnance_survey_address_default = mapOrdnanceSurveyAddress;
+
+// helpers/map-and-filter-ordnance-survey-addresses/index.ts
+var mapAndFilterOrdnanceSurveyAddresses = (houseNameOrNumber, ordnanceSurveyResponse) => {
+  try {
+    console.info('Mapping and filtering Ordnance Survey addresses');
+    const mappedAndFiltered = [];
+    ordnanceSurveyResponse.forEach((address) => {
+      if (address.DPA.SUB_BUILDING_NAME && address.DPA.SUB_BUILDING_NAME.includes(houseNameOrNumber)) {
+        mappedAndFiltered.push(map_ordnance_survey_address_default(address));
+      }
+      if (address.DPA.BUILDING_NAME && address.DPA.BUILDING_NAME.includes(houseNameOrNumber)) {
+        mappedAndFiltered.push(map_ordnance_survey_address_default(address));
+      }
+    });
+    return mappedAndFiltered;
+  } catch (error) {
+    console.error('Error mapping and filtering Ordnance Survey addresses %o', error);
+    throw new Error(`Mapping and filtering Ordnance Survey addresses ${error}`);
+  }
+};
+var map_and_filter_ordnance_survey_addresses_default = mapAndFilterOrdnanceSurveyAddresses;
 
 // custom-resolvers/queries/get-ordnance-survey-addresses/index.ts
 var getOrdnanceSurveyAddresses = async (root, variables) => {
@@ -9505,7 +9547,7 @@ var getOrdnanceSurveyAddresses = async (root, variables) => {
         success: false,
       };
     }
-    const mappedAddresses = map_and_filter_address_default(houseNameOrNumber, response.data);
+    const mappedAddresses = map_and_filter_ordnance_survey_addresses_default(houseNameOrNumber, response.data);
     if (!mappedAddresses.length) {
       return {
         success: false,

@@ -4,7 +4,7 @@ import { RequestBody } from '../../../../../../types';
 
 const {
   USING_BROKER,
-  BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
+  BROKER_DETAILS: { BUILDING_NUMBER_OR_NAME, EMAIL, FULL_ADDRESS, IS_BASED_IN_UK, NAME, POSTCODE },
 } = FIELD_IDS;
 
 /**
@@ -29,6 +29,16 @@ const mapSubmittedData = (formBody: RequestBody): object => {
    */
   if (isEmptyString(formBody[USING_BROKER])) {
     delete populatedData[USING_BROKER];
+  }
+
+  /**
+   * If IS_BASED_IN_UK is an empty string,
+   * nullify IS_BASED_IN_UK related fields
+   */
+  if (isEmptyString(formBody[IS_BASED_IN_UK])) {
+    populatedData[IS_BASED_IN_UK] = null;
+    populatedData[POSTCODE] = '';
+    populatedData[BUILDING_NUMBER_OR_NAME] = '';
   }
 
   return populatedData;

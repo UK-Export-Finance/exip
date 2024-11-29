@@ -1,6 +1,6 @@
 import getOrdnanceSurveyAddress from '.';
 import ordnanceSurvey from '../../../integrations/ordnance-survey';
-import mapAndFilterAddress from '../../../helpers/map-and-filter-address';
+import mapAndFilterOrdnanceSurveyAddresses from '../../../helpers/map-and-filter-ordnance-survey-addresses';
 import mockOrdnanceSurveyResponse from '../../../test-mocks/mock-ordnance-survey-response';
 import { MOCK_OS_ADDRESS_INPUT } from '../../../test-mocks/mock-os-address-input';
 import { OrdnanceSurveyResponse } from '../../../types';
@@ -69,24 +69,30 @@ describe('getOrdnanceSurveyAddresses', () => {
 
   describe('when ordnance survey API returns a valid response', () => {
     beforeEach(() => {
-      const ordnanceSurveyResponse = mockOrdnanceSurveyResponse.results as Array<OrdnanceSurveyResponse>;
+      const ordnanceSurveyResponse: Array<OrdnanceSurveyResponse> = mockOrdnanceSurveyResponse.results;
+
       ordnanceSurvey.get = jest.fn(() => Promise.resolve({ success: true, data: ordnanceSurveyResponse }));
     });
 
-    it('should return object containing success as true and the mapped address', async () => {
+    it('should return an object containing success as true and mapped addresses', async () => {
       const response = await getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber });
 
-      const expected = { success: true, addresses: mapAndFilterAddress('10', mockOrdnanceSurveyResponse.results) };
+      const expected = {
+        success: true,
+        addresses: mapAndFilterOrdnanceSurveyAddresses(houseNameOrNumber, mockOrdnanceSurveyResponse.results),
+      };
 
       expect(response).toEqual(expected);
     });
 
-    it('should return object containing success as false and noAddressesFound as true when house number not found', async () => {
-      const response = await getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber: 'A' });
+    describe('when no addresses are found', () => {
+      it('should return an object containing success as false and noAddressesFound as true', async () => {
+        const response = await getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber: 'NOT FOUND' });
 
-      const expected = { success: false, noAddressesFound: true };
+        const expected = { success: false, noAddressesFound: true };
 
-      expect(response).toEqual(expected);
+        expect(response).toEqual(expected);
+      });
     });
   });
 });
