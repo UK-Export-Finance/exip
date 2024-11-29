@@ -48,6 +48,7 @@ import mockLossPayeeDetails from './mock-loss-payee-details';
 import mockLossPayeeFinancialDetailsInternational from './mock-loss-payee-financial-details-international';
 import mockLossPayeeFinancialDetailsUk from './mock-loss-payee-financial-details-uk';
 import mockContact from './mock-contact';
+import mockOrdnanceSurveyAddressResponse from './mock-ordnance-survey-address-response';
 import mockValidEmail from './mock-valid-email';
 import { Request, Response } from '../../types';
 
@@ -178,6 +179,7 @@ export {
   mockLossPayeeFinancialDetailsInternational,
   mockLossPayeeFinancialDetailsUk,
   mockNominatedLossPayee,
+  mockOrdnanceSurveyAddressResponse,
   mockUrlOrigin,
   mockSession,
   mockSicCodes,

@@ -663,6 +663,7 @@ jobs:
             'policy/another-company/**/*.spec.js',
             'policy/broker/**/*.spec.js',
             'policy/broker-details/**/*.spec.js',
+            'policy/broker-addresses/**/*.spec.js',
             'policy/broker-confirm-address/**/*.spec.js',
             'policy/broker-zero-addresses/**/*.spec.js',
             'policy/change-your-answers/another-company/**/*.spec.js',

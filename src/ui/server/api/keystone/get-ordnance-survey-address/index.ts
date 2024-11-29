@@ -23,6 +23,10 @@ const getOrdnanceSurveyAddress = async (postcode: string, houseNameOrNumber: str
       console.error('GraphQL network error querying Ordnance Survey address %o', response.errors);
     }
 
+    if (response.apiError) {
+      console.error('GraphQL API error querying Ordnance Survey address %o', response);
+    }
+
     if (response?.networkError?.result?.errors) {
       console.error('GraphQL network error querying Ordnance Survey address %o', response.networkError.result.errors);
     }

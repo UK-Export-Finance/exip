@@ -95,7 +95,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
     });
   });
 
-  describe(`when submitting an answer of ${FIELD_VALUES.NO} via 'save and go back' button`, () => {
+  describe(`when submitting an answer of "no" via 'save and go back' button`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
