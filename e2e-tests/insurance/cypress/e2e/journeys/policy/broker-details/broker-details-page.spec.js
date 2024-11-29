@@ -162,7 +162,7 @@ context(
         cy.assertUrl(brokerConfirmAddressUrl);
       });
 
-      describe(`when submitting ${IS_BASED_IN_UK} as no and going back to the page`, () => {
+      describe(`when submitting ${IS_BASED_IN_UK} as "no" and going back to the page`, () => {
         it('should have the submitted values', () => {
           cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk: false });
 
@@ -172,7 +172,7 @@ context(
         });
       });
 
-      describe(`when submitting ${IS_BASED_IN_UK} as yes and going back to the page`, () => {
+      describe(`when submitting ${IS_BASED_IN_UK} as "yes" and going back to the page`, () => {
         it('should have the submitted values', () => {
           cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk: true });
 
