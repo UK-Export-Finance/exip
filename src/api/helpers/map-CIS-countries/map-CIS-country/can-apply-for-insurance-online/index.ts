@@ -13,6 +13,12 @@
  * @param {String} esraClassification: ESRA classification.
  * @returns {Boolean}
  */
-const canApplyForInsuranceOnline = (shortTermCover: boolean, esraClassification: string | null) => shortTermCover && esraClassification;
+const canApplyForInsuranceOnline = (shortTermCover: boolean, esraClassification: string | null) => {
+  if (shortTermCover && esraClassification) {
+    return true;
+  }
+
+  return false;
+};
 
 export default canApplyForInsuranceOnline;
