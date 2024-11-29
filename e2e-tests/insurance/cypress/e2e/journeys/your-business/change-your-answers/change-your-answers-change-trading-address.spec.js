@@ -44,7 +44,7 @@ context(
       cy.deleteApplication(referenceNumber);
     });
 
-    describe(`do NOT change any answers (${HAS_DIFFERENT_TRADING_ADDRESS} remains as ${FIELD_VALUES.NO})`, () => {
+    describe(`do NOT change any answers (${HAS_DIFFERENT_TRADING_ADDRESS} remains as "no"`, () => {
       const fieldId = HAS_DIFFERENT_TRADING_ADDRESS;
 
       beforeEach(() => {
@@ -60,7 +60,7 @@ context(
       });
     });
 
-    describe(`change ${HAS_DIFFERENT_TRADING_ADDRESS} from ${FIELD_VALUES.NO} to ${FIELD_VALUES.YES}`, () => {
+    describe(`change ${HAS_DIFFERENT_TRADING_ADDRESS} from "no" to "yes"`, () => {
       const fieldId = HAS_DIFFERENT_TRADING_ADDRESS;
 
       describe('when clicking the `change` link', () => {
@@ -131,7 +131,7 @@ context(
       });
     });
 
-    describe(`change ${HAS_DIFFERENT_TRADING_ADDRESS} from ${FIELD_VALUES.YES} to ${FIELD_VALUES.NO}`, () => {
+    describe(`change ${HAS_DIFFERENT_TRADING_ADDRESS} from "yes" to "no"`, () => {
       const fieldId = HAS_DIFFERENT_TRADING_ADDRESS;
 
       describe('when clicking the `change` link', () => {
@@ -159,6 +159,7 @@ context(
 
         it('should render the new answer', () => {
           const expected = FIELD_VALUES.NO;
+
           cy.assertSummaryListRowValue(summaryList, fieldId, expected);
         });
       });
