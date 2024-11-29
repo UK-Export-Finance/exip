@@ -277,43 +277,11 @@ export const POLICY_FIELDS = {
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
     },
-    // TODO: EMS-3975
-    // [FULL_ADDRESS]: {
-    //   LABEL: "Broker's address",
-    //   SUMMARY: {
-    //     TITLE: "Broker's address",
-    //     FORM_TITLE: POLICY_FORM_TITLES.BROKER,
-    //   },
-    //   MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
-    // },
   },
   BROKER_ADDRESSES: {
     [SELECT_THE_ADDRESS]: {
       LABEL: 'Select the address',
     },
-    [POSTCODE]: {
-      LABEL: 'Postcode',
-      SUMMARY: {
-        TITLE: 'Postcode',
-        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
-      },
-    },
-    [BUILDING_NUMBER_OR_NAME]: {
-      LABEL: 'Building number or name',
-      SUMMARY: {
-        TITLE: 'Building number or name',
-        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
-      },
-    },
-    // TODO: EMS-3975 - move FULL_ADDRESS to new form
-    // [FULL_ADDRESS]: {
-    //   LABEL: "Broker's address",
-    //   SUMMARY: {
-    //     TITLE: "Broker's address",
-    //     FORM_TITLE: POLICY_FORM_TITLES.BROKER,
-    //   },
-    //   MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
-    // },
   },
   LOSS_PAYEE: {
     [IS_APPOINTED]: {
