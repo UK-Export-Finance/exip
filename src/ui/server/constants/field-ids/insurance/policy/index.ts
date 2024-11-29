@@ -64,8 +64,12 @@ export const POLICY = {
     // TODO: EMS-3975
     FULL_ADDRESS: 'fullAddress',
     IS_BASED_IN_UK: 'isBasedInUk',
-    POSTCODE: 'postcode',
     BUILDING_NUMBER_OR_NAME: 'buildingNumberOrName',
+    ADDRESS_LINE_1: 'addressLine1',
+    ADDRESS_LINE_2: 'addressLine2',
+    TOWN: 'town',
+    COUNTY: 'county',
+    POSTCODE: 'postcode',
   },
   BROKER_ADDRESSES: {
     SELECT_THE_ADDRESS: 'selectTheAddress',

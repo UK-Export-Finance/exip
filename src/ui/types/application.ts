@@ -125,9 +125,10 @@ interface ApplicationBusiness {
 interface ApplicationBroker {
   id: string;
   isUsingBroker?: boolean;
+  isBasedInUk?: boolean;
   name?: string;
-  fullAddress?: string;
   email?: string;
+  fullAddress?: string;
 }
 
 interface ApplicationBuyerCountry {

@@ -112,9 +112,7 @@ context('Insurance - Policy - Broker addresses page', () => {
     });
 
     it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, () => {
-      radios(optionId).option.label().click();
-
-      cy.clickSubmitButton();
+      cy.completeAndSubmitBrokerAddressesForm({});
 
       cy.assertUrl(brokerConfirmAddressUrl);
     });

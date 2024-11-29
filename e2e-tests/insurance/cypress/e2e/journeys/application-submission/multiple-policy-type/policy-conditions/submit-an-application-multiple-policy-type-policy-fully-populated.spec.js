@@ -13,6 +13,7 @@ context('Insurance - submit an application - Multiple policy type - fully popula
       totalContractValueOverThreshold: true,
       hasHadCreditInsuranceCoverWithBuyer: true,
       usingBroker: true,
+      brokerIsBasedInUk: true,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });
