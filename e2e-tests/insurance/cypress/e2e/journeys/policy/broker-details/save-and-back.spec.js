@@ -121,7 +121,7 @@ context('Insurance - Policy - Broker details page - Save and back', () => {
       // go through 7 policy forms.
       cy.clickSubmitButtonMultipleTimes({ count: 7 });
 
-      cy.assertBrokerDetailsFieldValues({ isBasedInUk: false });
+      cy.assertBrokerDetailsFieldValues({ isBasedInUk: true });
     });
   });
 });
