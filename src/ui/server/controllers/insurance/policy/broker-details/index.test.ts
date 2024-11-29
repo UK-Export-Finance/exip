@@ -106,7 +106,7 @@ describe('controllers/insurance/policy/broker-details', () => {
   });
 
   describe('get', () => {
-    it('should render the broker details template with correct variables', () => {
+    it('should render template', () => {
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
@@ -138,7 +138,9 @@ describe('controllers/insurance/policy/broker-details', () => {
     const validBody = {
       [NAME]: broker[NAME],
       [EMAIL]: broker[EMAIL],
-      [IS_BASED_IN_UK]: broker[IS_BASED_IN_UK],
+      [IS_BASED_IN_UK]: 'true',
+      [POSTCODE]: broker[POSTCODE],
+      [BUILDING_NUMBER_OR_NAME]: broker[BUILDING_NUMBER_OR_NAME],
     };
 
     mapAndSave.broker = jest.fn(() => Promise.resolve(true));
