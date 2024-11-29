@@ -93,6 +93,25 @@ const BROKER_ADDRESSES = {
   BODY: 'addresses found for',
 };
 
+const BROKER_ZERO_ADDRESSES = {
+  ...SHARED,
+  PAGE_TITLE: 'No addresses found',
+  BODY: '0 results found',
+  OUTRO: {
+    COULD_NOT_FIND: 'We could not find any addresses for',
+    YOU_CAN: 'You can',
+    SEARCH_AGAIN: {
+      TEXT: 'search again',
+      HREF: '#',
+    },
+    OR: 'or',
+    ENTER_MANUALLY: {
+      TEXT: 'enter the address manually.',
+      HREF: '#',
+    },
+  },
+};
+
 const BROKER_CONFIRM_ADDRESS = {
   ...SHARED,
   PAGE_TITLE: "Confirm broker's address",
@@ -135,6 +154,7 @@ module.exports = {
   BROKER,
   BROKER_DETAILS,
   BROKER_ADDRESSES,
+  BROKER_ZERO_ADDRESSES,
   BROKER_CONFIRM_ADDRESS,
   LOSS_PAYEE,
   LOSS_PAYEE_DETAILS,

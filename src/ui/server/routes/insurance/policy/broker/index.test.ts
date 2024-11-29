@@ -5,6 +5,7 @@ import { post as postBrokerSaveAndBack } from '../../../../controllers/insurance
 import { get as getBrokerDetails, post as postBrokerDetails } from '../../../../controllers/insurance/policy/broker-details';
 import { post as postBrokerDetailsSaveAndBack } from '../../../../controllers/insurance/policy/broker-details/save-and-back';
 import { get as getBrokerAddresses, post as postBrokerAddresses } from '../../../../controllers/insurance/policy/broker-addresses';
+import { get as getBrokerZeroAddresses } from '../../../../controllers/insurance/policy/broker-zero-addresses';
 import { get as getBrokerConfirmAddress, post as postBrokerConfirmAddress } from '../../../../controllers/insurance/policy/broker-confirm-address';
 
 const {
@@ -17,6 +18,7 @@ const {
   BROKER_DETAILS_CHANGE,
   BROKER_DETAILS_CHECK_AND_CHANGE,
   BROKER_ADDRESSES_ROOT,
+  BROKER_ZERO_ADDRESSES_ROOT,
   BROKER_CONFIRM_ADDRESS_ROOT,
 } = POLICY;
 
@@ -30,7 +32,7 @@ describe('routes/insurance/policy/broker', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(8);
+    expect(get).toHaveBeenCalledTimes(9);
     expect(post).toHaveBeenCalledTimes(10);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${BROKER_ROOT}`, getBroker);
@@ -48,6 +50,8 @@ describe('routes/insurance/policy/broker', () => {
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${BROKER_DETAILS_CHANGE}`, postBrokerDetails);
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${BROKER_DETAILS_CHECK_AND_CHANGE}`, getBrokerDetails);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${BROKER_DETAILS_CHECK_AND_CHANGE}`, postBrokerDetails);
+
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${BROKER_ZERO_ADDRESSES_ROOT}`, getBrokerZeroAddresses);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${BROKER_ADDRESSES_ROOT}`, getBrokerAddresses);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${BROKER_ADDRESSES_ROOT}`, postBrokerAddresses);
