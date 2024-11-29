@@ -92,7 +92,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
   });
 
   describe('get', () => {
-    it('should render the nature-of-business template with correct variables', () => {
+    it('should render template', () => {
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(NATURE_OF_YOUR_BUSINESS_TEMPLATE, {

@@ -57,7 +57,7 @@ export const pageVariables = (referenceNumber: number) => ({
  * Render the Loss payee page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} renders Loss payee page with previously submitted details
+ * @returns {Express.Response.render} Loss payee page
  */
 export const get = (req: Request, res: Response) => {
   const { application } = res.locals;
