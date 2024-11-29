@@ -1,5 +1,4 @@
 import { field } from '../../../../../../pages/shared';
-import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
@@ -19,7 +18,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 const { YOUR_COMPANY } = application;
 
-describe(`Insurance - Your business - Company details page - submit ${DIFFERENT_TRADING_NAME} as '${FIELD_VALUES.YES}'`, () => {
+describe(`Insurance - Your business - Company details page - submit ${DIFFERENT_TRADING_NAME} as "yes`, () => {
   let referenceNumber;
   let url;
 
@@ -45,7 +44,7 @@ describe(`Insurance - Your business - Company details page - submit ${DIFFERENT_
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(`when submitting ${DIFFERENT_TRADING_NAME} as '${FIELD_VALUES.YES}'`, () => {
+  describe(`when submitting ${DIFFERENT_TRADING_NAME} as "yes""`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
@@ -63,7 +62,7 @@ describe(`Insurance - Your business - Company details page - submit ${DIFFERENT_
     });
   });
 
-  describe(`when submitting ${DIFFERENT_TRADING_NAME} as '${FIELD_VALUES.NO}'`, () => {
+  describe(`when submitting ${DIFFERENT_TRADING_NAME} as "no"`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
@@ -81,7 +80,7 @@ describe(`Insurance - Your business - Company details page - submit ${DIFFERENT_
     });
   });
 
-  describe(`when changing ${DIFFERENT_TRADING_NAME} to '${FIELD_VALUES.NO}'`, () => {
+  describe(`when changing ${DIFFERENT_TRADING_NAME} to "no"`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 

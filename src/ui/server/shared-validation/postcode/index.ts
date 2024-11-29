@@ -2,7 +2,7 @@ import { postcodeValidator } from 'postcode-validator';
 import generateValidationErrors from '../../helpers/validation';
 
 /**
- * postCodeValidation
+ * postcodeValidation
  * Check if an postcode is valid
  * Returns generateValidationErrors if there are any errors or if is empty.
  * @param {String} fieldId
@@ -12,7 +12,7 @@ import generateValidationErrors from '../../helpers/validation';
  * @param {Object} errors object from previous validation errors
  * @returns {ValidationErrors}
  */
-const postCodeValidation = (fieldId: string, postcode: string, errorMessageEmpty: string, errorMessageFormat: string, errors: object) => {
+const postcodeValidation = (fieldId: string, postcode: string, errorMessageEmpty: string, errorMessageFormat: string, errors: object) => {
   try {
     if (!postcode) {
       return generateValidationErrors(fieldId, errorMessageEmpty, errors);
@@ -29,4 +29,4 @@ const postCodeValidation = (fieldId: string, postcode: string, errorMessageEmpty
   return errors;
 };
 
-export default postCodeValidation;
+export default postcodeValidation;

@@ -39,7 +39,7 @@ describe(`Insurance - Your business - Company details page - submit ${HAS_DIFFER
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(`when submitting ${HAS_DIFFERENT_TRADING_ADDRESS} as '${FIELD_VALUES.YES}'`, () => {
+  describe(`when submitting ${HAS_DIFFERENT_TRADING_ADDRESS} as "yes"`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
