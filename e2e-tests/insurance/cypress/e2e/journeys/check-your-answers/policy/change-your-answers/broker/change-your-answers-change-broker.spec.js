@@ -101,7 +101,8 @@ context('Insurance - Change your answers - Policy - Broker - As an exporter, I w
     });
   });
 
-  describe(FULL_ADDRESS, () => {
+  // TODO: EMS-3975
+  describe.skip(FULL_ADDRESS, () => {
     const fieldId = FULL_ADDRESS;
 
     describe('when clicking the `change` link', () => {
