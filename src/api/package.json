@@ -34,7 +34,7 @@
     "@types/express": "^5.0.0",
     "@types/overload-protection": "^1.2.4",
     "apollo-server-express": "^3.13.0",
-    "axios": "^1.7.7",
+    "axios": "^1.7.8",
     "axios-mock-adapter": "^2.1.0",
     "date-fns": "^4.1.0",
     "dotenv": "16.4.5",
