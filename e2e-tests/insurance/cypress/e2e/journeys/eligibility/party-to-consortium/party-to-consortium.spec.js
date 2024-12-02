@@ -67,11 +67,8 @@ context(
       });
 
       it('should render validation errors', () => {
-        const expectedErrorsCount = 1;
-
         cy.submitAndAssertRadioErrors({
           field: yesRadio(FIELD_ID),
-          expectedErrorsCount,
           expectedErrorMessage: ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY,
         });
       });

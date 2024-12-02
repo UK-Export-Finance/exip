@@ -57,13 +57,9 @@ context('Insurance - Policy - Name on policy - Validation', () => {
     });
 
     it('should display validation error', () => {
-      const expectedErrorsCount = 1;
-      const expectedErrorMessage = NAME_ON_POLICY_ERRORS[NAME].IS_EMPTY;
-
       cy.submitAndAssertRadioErrors({
         field: fieldSelector(SAME_NAME),
-        expectedErrorsCount,
-        expectedErrorMessage,
+        expectedErrorMessage: NAME_ON_POLICY_ERRORS[NAME].IS_EMPTY,
       });
     });
   });
