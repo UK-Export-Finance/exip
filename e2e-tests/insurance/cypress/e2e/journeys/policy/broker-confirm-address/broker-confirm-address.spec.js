@@ -85,7 +85,7 @@ context.skip(
       });
 
       describe('`use a different address` link', () => {
-        it('renders', () => {
+        it('should render', () => {
           cy.checkLink(
             brokerConfirmAddressPage.useDifferentAddressLink(),
             `${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
@@ -101,7 +101,7 @@ context.skip(
       });
 
       describe('`enter address manually` link', () => {
-        it('renders', () => {
+        it('should render', () => {
           cy.checkLink(
             brokerConfirmAddressPage.enterAddressManuallyLink(),
             `${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`,
