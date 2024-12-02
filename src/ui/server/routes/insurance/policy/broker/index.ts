@@ -4,8 +4,10 @@ import { get as getBroker, post as postBroker } from '../../../../controllers/in
 import { post as postBrokerSaveAndBack } from '../../../../controllers/insurance/policy/broker/save-and-back';
 import { get as getBrokerDetails, post as postBrokerDetails } from '../../../../controllers/insurance/policy/broker-details';
 import { post as postBrokerDetailsSaveAndBack } from '../../../../controllers/insurance/policy/broker-details/save-and-back';
-import { get as getBrokerManualAddress, post as postBrokerManualAddress } from '../../../../controllers/insurance/policy/broker-manual-address';
+import { get as getBrokerAddresses, post as postBrokerAddresses } from '../../../../controllers/insurance/policy/broker-addresses';
+import { get as getBrokerZeroAddresses } from '../../../../controllers/insurance/policy/broker-zero-addresses';
 import { get as getBrokerConfirmAddress, post as postBrokerConfirmAddress } from '../../../../controllers/insurance/policy/broker-confirm-address';
+import { get as getBrokerManualAddress, post as postBrokerManualAddress } from '../../../../controllers/insurance/policy/broker-manual-address';
 
 const {
   BROKER_ROOT,
@@ -16,8 +18,10 @@ const {
   BROKER_DETAILS_SAVE_AND_BACK,
   BROKER_DETAILS_CHANGE,
   BROKER_DETAILS_CHECK_AND_CHANGE,
-  BROKER_MANUAL_ADDRESS_ROOT,
+  BROKER_ADDRESSES_ROOT,
+  BROKER_ZERO_ADDRESSES_ROOT,
   BROKER_CONFIRM_ADDRESS_ROOT,
+  BROKER_MANUAL_ADDRESS_ROOT,
 } = POLICY;
 
 // @ts-ignore
@@ -41,6 +45,11 @@ router.post(`/:referenceNumber${BROKER_DETAILS_CHECK_AND_CHANGE}`, postBrokerDet
 
 router.get(`/:referenceNumber${BROKER_MANUAL_ADDRESS_ROOT}`, getBrokerManualAddress);
 router.post(`/:referenceNumber${BROKER_MANUAL_ADDRESS_ROOT}`, postBrokerManualAddress);
+
+router.get(`/:referenceNumber${BROKER_ADDRESSES_ROOT}`, getBrokerAddresses);
+router.post(`/:referenceNumber${BROKER_ADDRESSES_ROOT}`, postBrokerAddresses);
+
+router.get(`/:referenceNumber${BROKER_ZERO_ADDRESSES_ROOT}`, getBrokerZeroAddresses);
 
 router.get(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_ROOT}`, getBrokerConfirmAddress);
 router.post(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_ROOT}`, postBrokerConfirmAddress);

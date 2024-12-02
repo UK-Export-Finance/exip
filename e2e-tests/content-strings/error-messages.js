@@ -375,12 +375,26 @@ export const ERROR_MESSAGES = {
           ABOVE_MAXIMUM: `The broker or company email cannot be more than ${MAXIMUM_CHARACTERS.EMAIL} characters`,
           INCORRECT_FORMAT: 'Enter the broker or company email address in the correct format, like name@example.com',
         },
+        [FIELD_IDS.INSURANCE.POLICY.BROKER_DETAILS.IS_BASED_IN_UK]: {
+          IS_EMPTY: 'Select if the broker you are using in the UK',
+        },
+        [FIELD_IDS.INSURANCE.POLICY.BROKER_DETAILS.POSTCODE]: {
+          IS_EMPTY: "Enter the broker's postcode",
+          INCORRECT_FORMAT: 'Enter a full UK postcode',
+        },
+        [FIELD_IDS.INSURANCE.POLICY.BROKER_DETAILS.BUILDING_NUMBER_OR_NAME]: {
+          IS_EMPTY: "Enter the broker's building number or name",
+          ABOVE_MAXIMUM: `The broker's building number or name cannot be more than ${MAXIMUM_CHARACTERS.BROKER_BUILDING_NUMBER_OR_NAME} characters`,
+        },
       },
       BROKER_MANUAL_ADDRESS: {
         [FIELD_IDS.INSURANCE.POLICY.BROKER_DETAILS.FULL_ADDRESS]: {
           IS_EMPTY: "Enter the broker's address",
           ABOVE_MAXIMUM: `The broker's address cannot be more than ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`,
         },
+      },
+      [FIELD_IDS.INSURANCE.POLICY.BROKER_ADDRESSES.SELECT_THE_ADDRESS]: {
+        IS_EMPTY: "Select your broker's address",
       },
       [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE.IS_APPOINTED]: {
         IS_EMPTY: 'Select if you are appointing a loss payee',

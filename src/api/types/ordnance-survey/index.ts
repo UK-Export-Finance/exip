@@ -8,12 +8,13 @@ export interface MappedOrdnanceSurveyAddress extends Address {
 
 export interface OrdnanceSurveyAddress {
   ADDRESS: string;
-  BUILDING_NUMBER: string;
+  BUILDING_NUMBER?: string;
   BUILDING_NAME?: string;
-  POST_TOWN: string;
-  POSTCODE: string;
   DEPENDENT_LOCALITY?: string;
   ORGANISATION_NAME?: string;
+  POST_TOWN: string;
+  POSTCODE: string;
+  SUB_BUILDING_NAME?: string;
   THOROUGHFARE_NAME?: string;
 }
 

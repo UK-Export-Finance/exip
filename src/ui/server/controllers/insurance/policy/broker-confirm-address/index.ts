@@ -14,7 +14,7 @@ const {
 const {
   INSURANCE_ROOT,
   ALL_SECTIONS,
-  POLICY: { BROKER_DETAILS_ROOT, LOSS_PAYEE_ROOT },
+  POLICY: { BROKER_DETAILS_ROOT, BROKER_MANUAL_ADDRESS_ROOT, LOSS_PAYEE_ROOT },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -30,6 +30,7 @@ export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.BROKER_CONFIRM_ADDRESS;
  */
 export const pageVariables = (referenceNumber: number) => ({
   USE_DIFFERENT_ADDRESS_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
+  ENTER_ADDRESS_MANUALLY_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`,
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
 });
 
@@ -37,7 +38,7 @@ export const pageVariables = (referenceNumber: number) => ({
  * Render the Confirm broker address page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} renders Confirm broker address page with previously submitted details
+ * @returns {Express.Response.render} Confirm broker address page
  */
 export const get = (req: Request, res: Response) => {
   const { application } = res.locals;

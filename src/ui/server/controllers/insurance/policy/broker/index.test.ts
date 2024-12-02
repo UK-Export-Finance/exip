@@ -105,7 +105,7 @@ describe('controllers/insurance/policy/broker', () => {
   });
 
   describe('get', () => {
-    it('should render the broker template with correct variables', () => {
+    it('should render template', () => {
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {

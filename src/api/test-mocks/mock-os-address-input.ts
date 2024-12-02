@@ -1,4 +1,6 @@
+import mockOrdnanceSurveyResponse from './mock-ordnance-survey-response';
+
 export const MOCK_OS_ADDRESS_INPUT = {
-  postcode: 'SW1A 2AA',
-  houseNameOrNumber: '10',
+  postcode: mockOrdnanceSurveyResponse.results[1].DPA.POSTCODE || '',
+  houseNameOrNumber: mockOrdnanceSurveyResponse.results[1].DPA.BUILDING_NAME || '',
 };
