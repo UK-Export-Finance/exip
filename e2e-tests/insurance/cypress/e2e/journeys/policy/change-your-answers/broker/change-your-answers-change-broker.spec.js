@@ -7,7 +7,8 @@ import { mockAddress1 } from '../../../../../../../fixtures/addresses';
 
 const {
   USING_BROKER,
-  BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
+  BROKER_DETAILS: { NAME, EMAIL },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 const {
