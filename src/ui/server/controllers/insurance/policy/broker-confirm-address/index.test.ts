@@ -10,7 +10,7 @@ import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
 
 const {
-  BROKER_DETAILS: { FULL_ADDRESS: FIELD_ID },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS: FIELD_ID },
 } = POLICY_FIELD_IDS;
 
 const {

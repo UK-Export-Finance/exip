@@ -392,7 +392,7 @@ export const ERROR_MESSAGES = {
         },
       },
       BROKER_MANUAL_ADDRESS: {
-        [FIELD_IDS.INSURANCE.POLICY.BROKER_DETAILS.FULL_ADDRESS]: {
+        [FIELD_IDS.INSURANCE.POLICY.BROKER_MANUAL_ADDRESS.FULL_ADDRESS]: {
           IS_EMPTY: "Enter the broker's address",
           ABOVE_MAXIMUM: `The broker's address cannot be more than ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`,
         },
