@@ -3,7 +3,8 @@ import FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 
 const {
   USING_BROKER,
-  BROKER_DETAILS: { BUILDING_NUMBER_OR_NAME, EMAIL, FULL_ADDRESS, IS_BASED_IN_UK, NAME, POSTCODE },
+  BROKER_DETAILS: { BUILDING_NUMBER_OR_NAME, EMAIL, IS_BASED_IN_UK, NAME, POSTCODE },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = FIELD_IDS;
 
 describe('controllers/insurance/policy/map-submitted-data/broker', () => {

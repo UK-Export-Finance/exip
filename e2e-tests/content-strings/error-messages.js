@@ -386,7 +386,9 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: "Enter the broker's building number or name",
           ABOVE_MAXIMUM: `The broker's building number or name cannot be more than ${MAXIMUM_CHARACTERS.BROKER_BUILDING_NUMBER_OR_NAME} characters`,
         },
-        [FIELD_IDS.INSURANCE.POLICY.BROKER_DETAILS.FULL_ADDRESS]: {
+      },
+      BROKER_MANUAL_ADDRESS: {
+        [FIELD_IDS.INSURANCE.POLICY.BROKER_MANUAL_ADDRESS.FULL_ADDRESS]: {
           IS_EMPTY: "Enter the broker's address",
           ABOVE_MAXIMUM: `The broker's address cannot be more than ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`,
         },

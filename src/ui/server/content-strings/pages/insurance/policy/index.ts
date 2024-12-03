@@ -119,6 +119,12 @@ const BROKER_CONFIRM_ADDRESS = {
   ENTER_ADDRESS_MANUALLY: 'Enter address manually',
 };
 
+const BROKER_MANUAL_ADDRESS = {
+  ...SHARED,
+  PAGE_TITLE: "Enter your broker's address",
+  INTRO: "Your broker's name or company name",
+};
+
 const LOSS_PAYEE = {
   ...SHARED,
   PAGE_TITLE: 'Are you appointing a loss payee?',
@@ -157,6 +163,7 @@ export default {
   BROKER_ADDRESSES,
   BROKER_ZERO_ADDRESSES,
   BROKER_CONFIRM_ADDRESS,
+  BROKER_MANUAL_ADDRESS,
   LOSS_PAYEE,
   LOSS_PAYEE_DETAILS,
   LOSS_PAYEE_FINANCIAL_DETAILS,

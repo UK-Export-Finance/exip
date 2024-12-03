@@ -14,6 +14,7 @@ export const POLICY_TEMPLATES = {
   BROKER_ADDRESSES: 'insurance/policy/broker-addresses.njk',
   BROKER_ZERO_ADDRESSES: 'insurance/policy/broker-zero-addresses.njk',
   BROKER_CONFIRM_ADDRESS: 'insurance/policy/broker-confirm-address.njk',
+  BROKER_MANUAL_ADDRESS: 'insurance/policy/broker-manual-address.njk',
   LOSS_PAYEE_DETAILS: 'insurance/policy/loss-payee-details.njk',
   LOSS_PAYEE_FINANCIAL_UK: 'insurance/policy/loss-payee-financial-details-uk.njk',
   LOSS_PAYEE_FINANCIAL_INTERNATIONAL: 'insurance/policy/loss-payee-financial-details-international.njk',

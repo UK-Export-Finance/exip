@@ -16,7 +16,8 @@ const {
   },
   YOUR_BUYER: { CONNECTION_WITH_BUYER_DESCRIPTION },
   POLICY: {
-    BROKER_DETAILS: { NAME: BROKER_NAME, FULL_ADDRESS },
+    BROKER_DETAILS: { NAME: BROKER_NAME },
+    BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
     CREDIT_PERIOD_WITH_BUYER,
     REQUESTED_JOINTLY_INSURED_PARTY: { COMPANY_NAME },
     FINANCIAL_ADDRESS,
@@ -123,7 +124,7 @@ context('Insurance - Textarea fields - Textarea fields should be able to submit 
     });
   });
 
-  // TODO: EMS-3975
+  // TODO: EMS-3976
   describe.skip(`${BROKER_NAME} and ${FULL_ADDRESS}`, () => {
     describe('when submitting the textarea field with a pure number and going back to the page', () => {
       beforeEach(() => {

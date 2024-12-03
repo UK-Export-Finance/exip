@@ -12,7 +12,7 @@ import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, referenceNumber, mockSpyPromiseRejection } from '../../../../test-mocks';
 
 const { NAME, EMAIL, IS_BASED_IN_UK, POSTCODE, BUILDING_NUMBER_OR_NAME } = POLICY_FIELD_IDS.BROKER_DETAILS;
 
@@ -25,7 +25,7 @@ const {
 
 const { BROKER_DETAILS } = POLICY_FIELDS;
 
-const { referenceNumber, broker } = mockApplication;
+const { broker } = mockApplication;
 
 describe('controllers/insurance/policy/broker-details', () => {
   let req: Request;
