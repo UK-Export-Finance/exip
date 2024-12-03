@@ -72,7 +72,7 @@ context(
         cy.checkText(fieldSelector(POLICY_CONTACT_DETAIL).hint(), CONTENT_STRINGS.HINT);
       });
 
-      it(`should render ${FIRST_NAME} field and be prepopulated`, () => {
+      it(`should render a prepopulated ${FIRST_NAME} field`, () => {
         const fieldId = FIRST_NAME;
         const field = fieldSelector(fieldId);
 
@@ -81,7 +81,7 @@ context(
         cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
       });
 
-      it(`should render ${LAST_NAME} field and be prepopulated`, () => {
+      it(`should render a prepopulated ${LAST_NAME} field`, () => {
         const fieldId = LAST_NAME;
         const field = fieldSelector(fieldId);
 
@@ -90,7 +90,7 @@ context(
         cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
       });
 
-      it(`should render ${EMAIL} field and be prepopulated`, () => {
+      it(`should render a prepopulated ${EMAIL} field`, () => {
         const fieldId = EMAIL;
         const field = fieldSelector(fieldId);
 
@@ -99,7 +99,7 @@ context(
         cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
       });
 
-      it(`should render ${POSITION} field and should not be prepopulated`, () => {
+      it(`should render a ${POSITION} field that is not prepopulated`, () => {
         const fieldId = POSITION;
         const field = fieldSelector(fieldId);
 

@@ -101,11 +101,11 @@ context(
         cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.HAS_DIFFERENT_TRADING_NAME);
       });
 
-      it(`should NOT display conditional ${DIFFERENT_TRADING_NAME} input without selecting the trading name "yes" radio`, () => {
+      it(`should NOT display a conditional ${DIFFERENT_TRADING_NAME} input without selecting the trading name "yes" radio`, () => {
         field(DIFFERENT_TRADING_NAME).input().should('not.be.visible');
       });
 
-      it(`should render conditional ${DIFFERENT_TRADING_NAME} input when selecting the trading name "yes" radio`, () => {
+      it(`should render a conditional ${DIFFERENT_TRADING_NAME} input when selecting the trading name "yes" radio`, () => {
         cy.clickYesRadioInput();
 
         field(DIFFERENT_TRADING_NAME).input().should('be.visible');
