@@ -74,6 +74,7 @@ const corePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL, USE_
     ATTRIBUTES,
     DATA_CY: {
       HEADING: 'heading',
+      HEADING_CAPTION: 'heading-caption',
       BACK_LINK: 'back-link',
       INTRO: 'intro',
     },
