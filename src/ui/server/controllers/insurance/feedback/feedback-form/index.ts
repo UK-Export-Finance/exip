@@ -21,6 +21,11 @@ export const TEMPLATE = FEEDBACK_TEMPLATE;
 
 export const FIELD_IDS = [SATISFACTION, IMPROVEMENT, OTHER_COMMENTS];
 
+/**
+ * pageVariables
+ * Page fields
+ * @returns {Object} Page variables
+ */
 const pageVariables = () => ({
   FIELDS: {
     SATISFACTION: {

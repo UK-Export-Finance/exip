@@ -27,7 +27,7 @@ context('Insurance - Policy - Loss Payee Details - Validation', () => {
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.completeAndSubmitPolicyForms({ formToStopAt: 'lossPayee', isAppointingLossPayee: true });
+      cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'lossPayee', isAppointingLossPayee: true });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`;
 
@@ -67,7 +67,7 @@ context('Insurance - Policy - Loss Payee Details - Validation', () => {
     const FIELD_ID = LOCATION;
     const ERROR = ERRORS[FIELD_ID];
 
-    it('should a render validation error when radio is not selected', () => {
+    it('should render a validation error when radio is not selected', () => {
       const radioField = {
         ...fieldSelector(FIELD_ID),
         input: fieldSelector(`${LOCATION}-${IS_LOCATED_IN_UK}`).input,

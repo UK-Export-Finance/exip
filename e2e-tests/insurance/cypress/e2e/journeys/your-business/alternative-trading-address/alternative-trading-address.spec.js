@@ -1,5 +1,5 @@
-import { headingCaption, html } from '../../../../../../partials';
-import { field as fieldSelector } from '../../../../../../pages/shared';
+import { html } from '../../../../../../partials';
+import { field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELD_STRINGS } from '../../../../../../content-strings/fields/insurance/business';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -45,7 +45,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'companyDetails', differentTradingAddress: true });
+        cy.completeAndSubmitYourBusinessForms({ stopSubmittingAfter: 'companyDetails', differentTradingAddress: true });
 
         alternativeAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_ROOT}`;
 

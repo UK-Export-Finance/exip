@@ -35,7 +35,7 @@ context(
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
         checkYourAnswersUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
-        cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'tradedWithBuyer' });
+        cy.completeAndSubmitYourBuyerForms({ stopSubmittingAfter: 'tradedWithBuyer' });
 
         cy.assertUrl(url);
       });
@@ -106,11 +106,8 @@ context(
       });
 
       it('should render validation errors', () => {
-        const expectedErrorsCount = 1;
-
         cy.submitAndAssertRadioErrors({
           field: noRadio(FIELD_ID),
-          expectedErrorsCount,
           expectedErrorMessage: ERROR_MESSAGE.IS_EMPTY,
         });
       });

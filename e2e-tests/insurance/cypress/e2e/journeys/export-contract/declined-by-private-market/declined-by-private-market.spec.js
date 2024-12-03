@@ -41,7 +41,11 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.completeAndSubmitExportContractForms({ formToStopAt: 'privateMarket', totalContractValueOverThreshold: true, attemptedPrivateMarketCover: true });
+        cy.completeAndSubmitExportContractForms({
+          stopSubmittingAfter: 'privateMarket',
+          totalContractValueOverThreshold: true,
+          attemptedPrivateMarketCover: true,
+        });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
         agentUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT}`;

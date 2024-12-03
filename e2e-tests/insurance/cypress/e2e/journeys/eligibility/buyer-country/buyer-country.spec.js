@@ -19,7 +19,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Buyer country page - as an exporter, I want to check if UKEF offer credit insurance policy for where my buyer is based', () => {
   beforeEach(() => {
-    cy.completeAndSubmitEligibilityForms({ formToStopAt: 'companyDetails' });
+    cy.completeAndSubmitEligibilityForms({ stopSubmittingAfter: 'companyDetails' });
 
     const expectedUrl = `${baseUrl}${BUYER_COUNTRY}`;
 
