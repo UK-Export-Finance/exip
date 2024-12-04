@@ -5,7 +5,7 @@ import mockApplication from '../../fixtures/application';
 const { BROKER } = mockApplication;
 
 const {
-  BROKER_DETAILS: { FULL_ADDRESS },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 /**

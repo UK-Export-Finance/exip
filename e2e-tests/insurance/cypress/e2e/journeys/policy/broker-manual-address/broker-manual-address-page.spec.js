@@ -10,7 +10,8 @@ import mockApplication from '../../../../../../fixtures/application';
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_MANUAL_ADDRESS;
 
 const {
-  BROKER_DETAILS: { NAME, FULL_ADDRESS: FIELD_ID },
+  BROKER_DETAILS: { NAME },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS: FIELD_ID },
 } = POLICY_FIELD_IDS;
 
 const {

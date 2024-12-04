@@ -1,4 +1,5 @@
 import { Account } from './account';
+import { Address } from './address';
 import { AnswersContent, AnswersFieldGroups } from './answers';
 import {
   Application,
@@ -35,9 +36,10 @@ import { CompaniesHouseResponse } from './company-house-response';
 import { Connect } from './connect';
 import { Country } from './country';
 import { Currency, CurrencyRadios } from './currency';
-import { DateErrorMessage, ErrorMessageObject } from './errors';
 import { Business } from './business';
+import { DateErrorMessage, ErrorMessageObject } from './errors';
 import { Next, Request, RequestBody, RequestSession, RequestSessionUser, Response } from './express';
+import { MappedOrdnanceSurveyAddress } from './ordnance-survey';
 import { RequiredDataStateInsuranceEligibility, RequiredDataStateQuoteEligibility } from './required-data-state';
 import { PricingGrid, PricingGridMonth, PricingGridRate } from './pricing-grid';
 import { Quote, QuoteContent } from './quote';
@@ -93,6 +95,7 @@ import { ObjectType } from './object';
 
 export {
   Account,
+  Address,
   AnswersContent,
   AnswersFieldGroups,
   Application,
@@ -143,6 +146,7 @@ export {
   InsuranceEligibility,
   InsuranceEligibilityCore,
   InsuranceFeedbackVariables,
+  MappedOrdnanceSurveyAddress,
   Next,
   Object,
   ObjectType,

@@ -1,10 +1,9 @@
-import { field as fieldSelector } from '../../../pages/shared';
-import { EXPECTED_MULTI_LINE_STRING } from '../../../constants';
+import { field } from '../../../pages/shared';
 import { POLICY as POLICY_FIELD_IDS } from '../../../constants/field-ids/insurance/policy';
 import mockApplication from '../../../fixtures/application';
 
 const {
-  BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
+  BROKER_DETAILS: { NAME, EMAIL, POSTCODE, BUILDING_NUMBER_OR_NAME },
 } = POLICY_FIELD_IDS;
 
 /**
@@ -12,20 +11,30 @@ const {
  * Assert all field values in the "broker details" form.
  * @param {String} expectedName: Name
  * @param {String} expectedEmail: Email
- * @param {String} expectedFullAddress: Full address
+ * @param {Boolean} isBasedInUk: Broker is based in the UK
+ * @param {String} expectedPostcode: Broker's postcode
+ * @param {String} expectedBuildingNumberOrName: Broker's building name or number
  */
 const assertBrokerDetailsFieldValues = ({
   expectedName = mockApplication.BROKER[NAME],
   expectedEmail = mockApplication.BROKER[EMAIL],
-  expectedFullAddress = EXPECTED_MULTI_LINE_STRING,
+  isBasedInUk = false,
+  expectedPostcode = mockApplication.BROKER[POSTCODE],
+  expectedBuildingNumberOrName = mockApplication.BROKER[BUILDING_NUMBER_OR_NAME],
 }) => {
-  cy.checkValue(fieldSelector(NAME), expectedName);
-  cy.checkValue(fieldSelector(EMAIL), expectedEmail);
+  cy.checkValue(field(NAME), expectedName);
+  cy.checkValue(field(EMAIL), expectedEmail);
 
-  cy.checkTextareaValue({
-    fieldId: FULL_ADDRESS,
-    expectedValue: expectedFullAddress,
-  });
+  if (isBasedInUk) {
+    cy.assertYesRadioOptionIsChecked();
+    cy.assertNoRadioOptionIsNotChecked();
+
+    cy.checkValue(field(POSTCODE), expectedPostcode);
+    cy.checkValue(field(BUILDING_NUMBER_OR_NAME), expectedBuildingNumberOrName);
+  } else {
+    cy.assertNoRadioOptionIsChecked();
+    cy.assertYesRadioOptionIsNotChecked();
+  }
 };
 
 export default assertBrokerDetailsFieldValues;

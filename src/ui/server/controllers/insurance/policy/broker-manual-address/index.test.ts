@@ -14,7 +14,7 @@ import { Request, Response } from '../../../../../types';
 import { mockApplication, mockReq, mockRes, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const {
-  BROKER_DETAILS: { FULL_ADDRESS },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 const {

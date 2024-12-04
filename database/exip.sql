@@ -813,7 +813,9 @@ DROP TABLE IF EXISTS `Broker`;
 CREATE TABLE `Broker` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `buildingNumberOrName` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `isUsingBroker` tinyint(1) DEFAULT NULL,
+  `isBasedInUk` tinyint(1) DEFAULT NULL,
   `name` varchar(800) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `addressLine1` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `addressLine2` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
