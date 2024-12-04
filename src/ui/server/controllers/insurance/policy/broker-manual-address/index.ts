@@ -5,13 +5,20 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
+import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
 
 const {
   BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
-const { PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const {
+  PROBLEM_WITH_SERVICE,
+  INSURANCE_ROOT,
+  POLICY: { LOSS_PAYEE_ROOT },
+} = INSURANCE_ROUTES;
 
 export const FIELD_ID = FULL_ADDRESS;
 
@@ -57,4 +64,38 @@ export const get = (req: Request, res: Response) => {
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
+};
+
+/**
+ * post
+ * Check Policy - Broker manual address validation errors and if successful, redirect to the next part of the flow.
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.redirect} Next part of the flow or error page
+ */
+export const post = async (req: Request, res: Response) => {
+  const { application } = res.locals;
+
+  if (!application) {
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
+
+  const { referenceNumber } = application;
+
+  const payload = constructPayload(req.body, [FIELD_ID]);
+  const sanitisedData = sanitiseData(payload);
+
+  const validationErrors = generateValidationErrors(payload);
+
+  if (validationErrors) {
+    return res.render(TEMPLATE, {
+      ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
+      ...pageVariables(),
+      userName: getUserNameFromSession(req.session.user),
+      submittedValues: sanitisedData,
+      validationErrors,
+    });
+  }
+
+  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`);
 };

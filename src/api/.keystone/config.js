@@ -6734,6 +6734,11 @@ var POLICY_FIELDS = {
       },
     },
   },
+  BROKER_ADDRESSES: {
+    [SELECT_THE_ADDRESS]: {
+      LABEL: 'Select the address',
+    },
+  },
   BROKER_MANUAL_ADDRESS: {
     [FULL_ADDRESS]: {
       LABEL: "Broker's address",
@@ -6742,11 +6747,6 @@ var POLICY_FIELDS = {
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
       MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
-    },
-  },
-  BROKER_ADDRESSES: {
-    [SELECT_THE_ADDRESS]: {
-      LABEL: 'Select the address',
     },
   },
   LOSS_PAYEE: {

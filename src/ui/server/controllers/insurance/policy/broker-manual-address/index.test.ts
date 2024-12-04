@@ -1,4 +1,4 @@
-import { pageVariables, FIELD_ID, PAGE_CONTENT_STRINGS, TEMPLATE, get } from '.';
+import { pageVariables, FIELD_ID, PAGE_CONTENT_STRINGS, TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/policy';
 import { TEMPLATES } from '../../../../constants';
@@ -6,14 +6,23 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
+import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
-import { mockApplication, mockReq, mockRes } from '../../../../test-mocks';
+import { mockApplication, mockReq, mockRes, referenceNumber } from '../../../../test-mocks';
 
 const {
   BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
-const { PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const {
+  PROBLEM_WITH_SERVICE,
+  INSURANCE_ROOT,
+  POLICY: { LOSS_PAYEE_ROOT },
+} = INSURANCE_ROUTES;
+
+const { broker } = mockApplication;
 
 describe('controllers/insurance/policy/broker-manual-address', () => {
   let req: Request;
@@ -83,6 +92,60 @@ describe('controllers/insurance/policy/broker-manual-address', () => {
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
         get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+  });
+
+  describe('post', () => {
+    const validBody = {
+      [FULL_ADDRESS]: broker[FULL_ADDRESS],
+    };
+
+    describe('when there are validation errors', () => {
+      it('should render template with validation errors and submitted values', () => {
+        req.body = {};
+
+        post(req, res);
+
+        const sanitisedData = sanitiseData(req.body);
+
+        const payload = constructPayload(sanitisedData, [FIELD_ID]);
+
+        const validationErrors = generateValidationErrors(payload);
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+          ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
+          ...pageVariables(),
+          userName: getUserNameFromSession(req.session.user),
+          submittedValues: payload,
+          validationErrors,
+        });
+      });
+    });
+
+    describe('when there are no validation errors', () => {
+      beforeEach(() => {
+        req.body = validBody;
+
+        post(req, res);
+      });
+
+      it(`should redirect to ${LOSS_PAYEE_ROOT}`, () => {
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
+
+        expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+    });
+
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        delete res.locals.application;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
+        post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
