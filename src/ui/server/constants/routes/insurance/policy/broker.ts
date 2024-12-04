@@ -3,8 +3,9 @@ import POLICY_ROOT from './root';
 const ROOT = `${POLICY_ROOT}/broker`;
 const BROKER_DETAILS_ROOT = `${POLICY_ROOT}/broker-details`;
 const BROKER_ADDRESSES_ROOT = `${POLICY_ROOT}/broker-addresses`;
-const BROKER_MANUAL_ADDRESS_ROOT = `${POLICY_ROOT}/broker-manual-address`;
 const BROKER_CONFIRM_ADDRESS_ROOT = `${POLICY_ROOT}/broker-confirm-address`;
+const BROKER_ZERO_ADDRESSES_ROOT = `${BROKER_DETAILS_ROOT}/broker-zero-addresses`;
+const BROKER_MANUAL_ADDRESS_ROOT = `${POLICY_ROOT}/broker-manual-address`;
 
 const BROKER_ROUTES = {
   BROKER_ROOT: ROOT,
@@ -16,9 +17,9 @@ const BROKER_ROUTES = {
   BROKER_DETAILS_CHANGE: `${BROKER_DETAILS_ROOT}/change`,
   BROKER_DETAILS_CHECK_AND_CHANGE: `${BROKER_DETAILS_ROOT}/check-and-change`,
   BROKER_ADDRESSES_ROOT,
-  BROKER_MANUAL_ADDRESS_ROOT,
-  BROKER_ZERO_ADDRESSES_ROOT: `${BROKER_DETAILS_ROOT}/broker-zero-addresses`,
   BROKER_CONFIRM_ADDRESS_ROOT,
+  BROKER_ZERO_ADDRESSES_ROOT,
+  BROKER_MANUAL_ADDRESS_ROOT,
 };
 
 export default BROKER_ROUTES;

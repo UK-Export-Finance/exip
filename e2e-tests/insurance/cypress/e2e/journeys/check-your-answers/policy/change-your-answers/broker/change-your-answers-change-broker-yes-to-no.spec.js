@@ -100,12 +100,6 @@ context('Insurance - Change your answers - Policy - Broker - Yes to no - As an e
 
         cy.assertEmptyFieldValue(NAME);
         cy.assertEmptyFieldValue(EMAIL);
-
-        // TODO: EMS-3975
-        // cy.checkTextareaValue({
-        //   fieldId: FULL_ADDRESS,
-        //   expectedValue: '',
-        // });
       });
     });
   });

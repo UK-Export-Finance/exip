@@ -9,12 +9,12 @@ import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-id
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_CONFIRM_ADDRESS;
 
 const {
-  BROKER_DETAILS: { FULL_ADDRESS },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 const {
   ROOT,
-  POLICY: { BROKER_CONFIRM_ADDRESS_ROOT, BROKER_DETAILS_ROOT, LOSS_PAYEE_ROOT },
+  POLICY: { BROKER_CONFIRM_ADDRESS_ROOT, BROKER_DETAILS_ROOT, BROKER_MANUAL_ADDRESS_ROOT, LOSS_PAYEE_ROOT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -27,6 +27,7 @@ context.skip(
     let url;
     let lossPayeeUrl;
     let brokerDetailsUrl;
+    let brokerManualAddressUrl;
 
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -38,6 +39,7 @@ context.skip(
         url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
         lossPayeeUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
         brokerDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
+        brokerManualAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
 
         cy.assertUrl(url);
       });
@@ -83,7 +85,7 @@ context.skip(
       });
 
       describe('`use a different address` link', () => {
-        it('renders', () => {
+        it('should render', () => {
           cy.checkLink(
             brokerConfirmAddressPage.useDifferentAddressLink(),
             `${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
@@ -95,6 +97,22 @@ context.skip(
           brokerConfirmAddressPage.useDifferentAddressLink().click();
 
           cy.assertUrl(brokerDetailsUrl);
+        });
+      });
+
+      describe('`enter address manually` link', () => {
+        it('should render', () => {
+          cy.checkLink(
+            brokerConfirmAddressPage.enterAddressManuallyLink(),
+            `${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`,
+            CONTENT_STRINGS.ENTER_ADDRESS_MANUALLY,
+          );
+        });
+
+        it(`should redirect to ${BROKER_MANUAL_ADDRESS_ROOT}`, () => {
+          brokerConfirmAddressPage.enterAddressManuallyLink().click();
+
+          cy.assertUrl(brokerManualAddressUrl);
         });
       });
     });
