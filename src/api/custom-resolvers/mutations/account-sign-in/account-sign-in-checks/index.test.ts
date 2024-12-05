@@ -12,6 +12,8 @@ import { Account, Context } from '../../../../types';
 
 dotenv.config();
 
+const originalEnv = { ...process.env };
+
 describe('custom-resolvers/account-sign-in/account-sign-in-checks', () => {
   let context: Context;
   let account: Account;
@@ -38,6 +40,8 @@ describe('custom-resolvers/account-sign-in/account-sign-in-checks', () => {
   });
 
   afterAll(() => {
+    process.env = originalEnv;
+
     jest.resetAllMocks();
   });
 
