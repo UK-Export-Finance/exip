@@ -5,11 +5,26 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../types';
 
-const { PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const {
+  INSURANCE_ROOT,
+  PROBLEM_WITH_SERVICE,
+  POLICY: { BROKER_DETAILS_ROOT, BROKER_MANUAL_ADDRESS_ROOT },
+} = INSURANCE_ROUTES;
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_ZERO_ADDRESSES;
 
 export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.BROKER_ZERO_ADDRESSES;
+
+/**
+ * pageVariables
+ * Page fields and "save and go back" URL
+ * @param {Number} referenceNumber: Application reference number
+ * @returns {Object} Page variables
+ */
+export const pageVariables = (referenceNumber: number) => ({
+  SEARCH_AGAIN_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
+  ENTER_MANUALLY_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`,
+});
 
 /**
  * Render the Broker - zero addresses found page
@@ -35,6 +50,7 @@ export const get = (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
       }),
+      ...pageVariables(application.referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       postcode: mockPostcode,
     });
