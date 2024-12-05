@@ -1,11 +1,11 @@
 import { headingCaption } from '../../../../../../partials';
-import { field } from '../../../../../../pages/shared';
 import { brokerManualAddressPage } from '../../../../../../pages/insurance/policy';
 import { PAGES } from '../../../../../../content-strings';
+import { EXPECTED_MULTI_LINE_STRING } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
-import mockApplication from '../../../../../../fixtures/application';
+import application from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_MANUAL_ADDRESS;
 
@@ -75,7 +75,7 @@ context('Insurance - Policy - Broker manual address page - As an exporter, ... T
     });
 
     it('renders `broker name` text', () => {
-      cy.checkText(brokerManualAddressPage.brokerName(), mockApplication.BROKER[NAME]);
+      cy.checkText(brokerManualAddressPage.brokerName(), application.BROKER[NAME]);
     });
 
     it(`renders ${FIELD_ID} textarea`, () => {
@@ -106,7 +106,10 @@ context('Insurance - Policy - Broker manual address page - As an exporter, ... T
     it('should have the submitted value', () => {
       cy.navigateToUrl(url);
 
-      cy.checkText(field(FIELD_ID).textarea(), mockApplication.BROKER[FIELD_ID]);
+      cy.checkTextareaValue({
+        fieldId: FIELD_ID,
+        expectedValue: EXPECTED_MULTI_LINE_STRING,
+      });
     });
   });
 });
