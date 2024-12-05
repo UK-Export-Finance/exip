@@ -8,6 +8,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -97,5 +98,17 @@ export const post = async (req: Request, res: Response) => {
     });
   }
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`);
+  try {
+    const saveResponse = await mapAndSave.broker(payload, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`);
+  } catch (error) {
+    console.error('Error updating application - policy - broker manual address %o', error);
+
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
 };

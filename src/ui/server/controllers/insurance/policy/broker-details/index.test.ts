@@ -272,7 +272,7 @@ describe('controllers/insurance/policy/broker-details', () => {
           req.body = validBody.notBasedInUk;
         });
 
-        describe('when no application is returned', () => {
+        describe('when mapAndSave.broker does not return a true boolean', () => {
           beforeEach(() => {
             const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
 
