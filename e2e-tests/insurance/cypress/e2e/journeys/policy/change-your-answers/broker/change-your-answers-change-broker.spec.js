@@ -7,7 +7,8 @@ import { mockAddress1 } from '../../../../../../../fixtures/addresses';
 
 const {
   USING_BROKER,
-  BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
+  BROKER_DETAILS: { NAME, EMAIL },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 const {
@@ -75,7 +76,7 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
     });
   });
 
-  // TODO: EMS-3975
+  // TODO: EMS-4011
   describe.skip(FULL_ADDRESS, () => {
     const fieldId = FULL_ADDRESS;
 
@@ -193,7 +194,7 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
         summaryList.field(EMAIL).value().eq(1).should('not.exist');
         summaryList.field(EMAIL).changeLink().should('not.exist');
 
-        // TODO: EMS-3975
+        // TODO: EMS-4011
         // summaryList.field(FULL_ADDRESS).key().should('not.exist');
         // summaryList.field(FULL_ADDRESS).value().should('not.exist');
         // summaryList.field(FULL_ADDRESS).changeLink().should('not.exist');

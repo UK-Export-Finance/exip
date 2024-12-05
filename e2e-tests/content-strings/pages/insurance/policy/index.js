@@ -90,7 +90,13 @@ const BROKER_DETAILS = {
 const BROKER_ADDRESSES = {
   ...SHARED,
   PAGE_TITLE: "Select your broker's address",
-  BODY: 'addresses found for',
+  INTRO: {
+    ADDRESS: 'address',
+    ADDRESSES: 'addresses',
+    FOUND_FOR: 'found for',
+    SEPARATOR: 'and',
+    SEARCH_AGAIN: 'Search again',
+  },
 };
 
 const BROKER_ZERO_ADDRESSES = {
@@ -110,6 +116,13 @@ const BROKER_CONFIRM_ADDRESS = {
   ...SHARED,
   PAGE_TITLE: "Confirm broker's address",
   USE_DIFFERENT_ADDRESS: 'Use a different address',
+  ENTER_ADDRESS_MANUALLY: 'Enter address manually',
+};
+
+const BROKER_MANUAL_ADDRESS = {
+  ...SHARED,
+  PAGE_TITLE: "Enter your broker's address",
+  INTRO: "Your broker's name or company name",
 };
 
 const LOSS_PAYEE = {
@@ -150,6 +163,7 @@ module.exports = {
   BROKER_ADDRESSES,
   BROKER_ZERO_ADDRESSES,
   BROKER_CONFIRM_ADDRESS,
+  BROKER_MANUAL_ADDRESS,
   LOSS_PAYEE,
   LOSS_PAYEE_DETAILS,
   LOSS_PAYEE_FINANCIAL_DETAILS,
