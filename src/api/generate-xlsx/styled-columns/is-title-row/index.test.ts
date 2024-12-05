@@ -34,7 +34,7 @@ describe('api/generate-xlsx/styled-columns/is-title-row', () => {
     });
   });
 
-  describe(`when the sheetName is NOT ${APPLICATION_INFORMATION}, rowNumber=1`, () => {
+  describe(`when the sheetName is NOT ${APPLICATION_INFORMATION}`, () => {
     const mockSheetName = 'Mock sheet name';
 
     describe('when rowNumber=1', () => {
