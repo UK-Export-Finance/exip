@@ -78,18 +78,6 @@ describe('custom-resolvers/create-an-account', () => {
       createdAccount = await createAnAccount({}, variables, context);
     });
 
-    // it('should return the account ID, verification hash and success=true', async () => {
-    //   const newAccount = await accounts.get(context, createdAccount.id);
-
-    //   const expected = {
-    //     id: newAccount.id,
-    //     verificationHash: newAccount.verificationHash,
-    //     success: true,
-    //   };
-
-    //   expect(createdAccount).toEqual(expected);
-    // });
-
     it('should generate a created account with added salt and hashes', async () => {
       const newAccount = await accounts.get(context, createdAccount.id);
 
