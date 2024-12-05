@@ -74,7 +74,7 @@ describe('getOrdnanceSurveyAddress', () => {
       ordnanceSurvey.get = jest.fn(() => Promise.resolve({ success: true, data: ordnanceSurveyResponse }));
     });
 
-    it('should return object containing success as true and the mapped address', async () => {
+    it('should return an object containing success as true and mapped addresses', async () => {
       const response = await getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber });
 
       const expected = {
@@ -85,12 +85,14 @@ describe('getOrdnanceSurveyAddress', () => {
       expect(response).toEqual(expected);
     });
 
-    it('should return object containing success as false and noAddressesFound as true when house number not found', async () => {
-      const response = await getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber: 'A' });
+    describe('when no addresses are found', () => {
+      it('should return an object containing success as false and noAddressesFound as true', async () => {
+        const response = await getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber: 'NOT FOUND' });
 
-      const expected = { success: false, noAddressesFound: true };
+        const expected = { success: false, noAddressesFound: true };
 
-      expect(response).toEqual(expected);
+        expect(response).toEqual(expected);
+      });
     });
   });
 });

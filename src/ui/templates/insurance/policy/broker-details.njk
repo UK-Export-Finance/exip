@@ -67,7 +67,8 @@
             labelText: FIELDS.POSTCODE.LABEL,
             labelClasses: "govuk-label--s",
             inputClasses: "govuk-input--width-20",
-            errorMessage: validationErrors.errorList[FIELDS.POSTCODE]
+            value: submittedValues[FIELDS.POSTCODE.ID] or application.broker[FIELDS.POSTCODE.ID],
+            errorMessage: validationErrors.errorList[FIELDS.POSTCODE.ID]
           }) }}
 
           {{ textInput.render({
@@ -75,7 +76,8 @@
             labelText: FIELDS.BUILDING_NUMBER_OR_NAME.LABEL,
             labelClasses: "govuk-label--s",
             inputClasses: "govuk-input--width-20",
-            errorMessage: validationErrors.errorList[FIELDS.BUILDING_NUMBER_OR_NAME]
+            value: submittedValues[FIELDS.BUILDING_NUMBER_OR_NAME.ID] or application.broker[FIELDS.BUILDING_NUMBER_OR_NAME.ID],
+            errorMessage: validationErrors.errorList[FIELDS.BUILDING_NUMBER_OR_NAME.ID]
           }) }}
         {% endset %}
 
@@ -88,7 +90,8 @@
           dataCyLegend: FIELDS.IS_BASED_IN_UK + '-legend',
           horizontalRadios: HORIZONTAL_RADIOS,
           noRadioAsFirstOption: NO_RADIO_AS_FIRST_OPTION,
-          conditionalYesHtml: conditionalYesHtml
+          conditionalYesHtml: conditionalYesHtml,
+          submittedAnswer: submittedValues[FIELDS.IS_BASED_IN_UK.ID] or application.broker[FIELDS.IS_BASED_IN_UK.ID]
         }) }}
 
       </div>

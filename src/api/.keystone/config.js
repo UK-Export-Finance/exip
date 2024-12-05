@@ -347,14 +347,15 @@ var POLICY = {
     NAME: 'name',
     EMAIL: shared_default.EMAIL,
     BROKER_EMAIL: 'broker.email',
-    // TODO: EMS-3975
-    FULL_ADDRESS: 'fullAddress',
     IS_BASED_IN_UK: 'isBasedInUk',
     POSTCODE: 'postcode',
     BUILDING_NUMBER_OR_NAME: 'buildingNumberOrName',
   },
   BROKER_ADDRESSES: {
     SELECT_THE_ADDRESS: 'selectTheAddress',
+  },
+  BROKER_MANUAL_ADDRESS: {
+    FULL_ADDRESS: 'fullAddress',
   },
   LOSS_PAYEE: {
     IS_APPOINTED: 'isAppointed',
@@ -949,6 +950,7 @@ var MAXIMUM_CHARACTERS = {
   AGENT_SERVICE_DESCRIPTION: 1e3,
   BIC_SWIFT_CODE: 11,
   BROKER_NAME: 800,
+  BROKER_BUILDING_NUMBER_OR_NAME: 100,
   BUSINESS: {
     GOODS_OR_SERVICES_DESCRIPTION: 1e3,
   },
@@ -2185,7 +2187,9 @@ var lists = {
   Broker: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: 'Application' }),
-      buildingNumberOrName: (0, import_fields.text)(),
+      buildingNumberOrName: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(100)' },
+      }),
       isUsingBroker: nullable_checkbox_default(),
       isBasedInUk: nullable_checkbox_default(),
       name: (0, import_fields.text)({
@@ -6491,7 +6495,8 @@ var {
     CREDIT_PERIOD_WITH_BUYER,
     REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME: COMPANY_NAME2, COMPANY_NUMBER, COUNTRY_CODE },
     USING_BROKER,
-    BROKER_DETAILS: { NAME, FULL_ADDRESS },
+    BROKER_DETAILS: { NAME },
+    BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
     LOSS_PAYEE: { IS_APPOINTED },
     BROKER_ADDRESSES: { SELECT_THE_ADDRESS },
     LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY },
@@ -6728,6 +6733,13 @@ var POLICY_FIELDS = {
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
     },
+  },
+  BROKER_ADDRESSES: {
+    [SELECT_THE_ADDRESS]: {
+      LABEL: 'Select the address',
+    },
+  },
+  BROKER_MANUAL_ADDRESS: {
     [FULL_ADDRESS]: {
       LABEL: "Broker's address",
       SUMMARY: {
@@ -6735,11 +6747,6 @@ var POLICY_FIELDS = {
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
       MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
-    },
-  },
-  BROKER_ADDRESSES: {
-    [SELECT_THE_ADDRESS]: {
-      LABEL: 'Select the address',
     },
   },
   LOSS_PAYEE: {

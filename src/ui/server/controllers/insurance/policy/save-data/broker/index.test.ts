@@ -7,7 +7,7 @@ import { mockApplication, mockBroker } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 
 const {
-  BROKER_DETAILS: { FULL_ADDRESS },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 describe('controllers/insurance/policy/save-data/broker', () => {
