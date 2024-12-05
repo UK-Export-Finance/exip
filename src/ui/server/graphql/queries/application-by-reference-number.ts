@@ -190,6 +190,9 @@ const applicationByReferenceNumberQuery = gql`
           county
           postcode
           fullAddress
+          isBasedInUk
+          postcode
+          buildingNumberOrName
         }
         buyer {
           id

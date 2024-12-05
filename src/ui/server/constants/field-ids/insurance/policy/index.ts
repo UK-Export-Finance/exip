@@ -61,10 +61,15 @@ export const POLICY = {
     NAME: 'name',
     EMAIL: SHARED.EMAIL,
     BROKER_EMAIL: 'broker.email',
-    FULL_ADDRESS: 'fullAddress',
+    IS_BASED_IN_UK: 'isBasedInUk',
+    POSTCODE: 'postcode',
+    BUILDING_NUMBER_OR_NAME: 'buildingNumberOrName',
   },
   BROKER_ADDRESSES: {
     SELECT_THE_ADDRESS: 'selectTheAddress',
+  },
+  BROKER_MANUAL_ADDRESS: {
+    FULL_ADDRESS: 'fullAddress',
   },
   LOSS_PAYEE: {
     IS_APPOINTED: 'isAppointed',

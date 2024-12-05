@@ -6,20 +6,22 @@ describe('mapAndFilterOrdnanceSurveyAddresses', () => {
   const ordnanceSurveyResponse = mockOrdnanceSurveyResponse.results;
 
   describe('when an address is found', () => {
-    it('should return a single element array when searching by house number', () => {
+    it('should return a single element array when an address is found by SUB_BUILDING_NAME', () => {
       const address = ordnanceSurveyResponse[0].DPA;
 
-      const result = mapAndFilterOrdnanceSurveyAddresses(address.BUILDING_NUMBER, ordnanceSurveyResponse);
+      const result = mapAndFilterOrdnanceSurveyAddresses(String(address.SUB_BUILDING_NAME), ordnanceSurveyResponse);
 
       const expected = [mapAddress(ordnanceSurveyResponse[0])];
 
       expect(result).toEqual(expected);
     });
 
-    it('should return a single element array when searching by house name', () => {
-      const result = mapAndFilterOrdnanceSurveyAddresses('TEST', ordnanceSurveyResponse);
+    it('should return a single element array when an address is found by BUILDING_NAME', () => {
+      const address = ordnanceSurveyResponse[1].DPA;
 
-      const expected = [mapAddress(ordnanceSurveyResponse[2])];
+      const result = mapAndFilterOrdnanceSurveyAddresses(String(address.BUILDING_NAME), ordnanceSurveyResponse);
+
+      const expected = [mapAddress(ordnanceSurveyResponse[1])];
 
       expect(result).toEqual(expected);
     });

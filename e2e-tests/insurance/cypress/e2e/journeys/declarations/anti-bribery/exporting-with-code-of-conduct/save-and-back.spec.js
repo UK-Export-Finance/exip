@@ -1,4 +1,3 @@
-import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
@@ -57,7 +56,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
     });
   });
 
-  describe(`when submitting an answer of ${FIELD_VALUES.YES} via 'save and go back' button`, () => {
+  describe(`when submitting an answer of "yes" via 'save and go back' button`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
@@ -81,7 +80,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
     });
   });
 
-  describe(`when submitting an answer of ${FIELD_VALUES.NO} via 'save and go back' button`, () => {
+  describe(`when submitting an answer of "no" via 'save and go back' button`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 

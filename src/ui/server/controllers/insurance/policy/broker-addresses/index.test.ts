@@ -26,7 +26,6 @@ const { BROKER_ADDRESSES } = POLICY_FIELDS;
 
 const tempMockPostcode = 'W1A 1AA';
 const tempMockHouseNameOrNumber = 'WOGAN HOUSE';
-const mockTotalAddresses = mockOrdnanceSurveyAddressResponse.addresses.length;
 
 const mappedAddresses = mapOrdnanceSurveyAddresses(mockOrdnanceSurveyAddressResponse.addresses, mockApplication.broker);
 
@@ -76,19 +75,49 @@ describe('controllers/insurance/policy/broker-addresses', () => {
   });
 
   describe('pageVariables', () => {
-    it('should have correct properties', () => {
-      const result = pageVariables(referenceNumber, mockTotalAddresses);
+    const expectedGenericProperties = {
+      FIELD: {
+        ID: SELECT_THE_ADDRESS,
+        ...BROKER_ADDRESSES[SELECT_THE_ADDRESS],
+      },
+      SEARCH_AGAIN_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
+      SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
+    };
 
-      const expected = {
-        FIELD: {
-          ID: SELECT_THE_ADDRESS,
-          ...BROKER_ADDRESSES[SELECT_THE_ADDRESS],
-        },
-        BODY: `${mockTotalAddresses} ${PAGE_CONTENT_STRINGS.BODY}`,
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
-      };
+    describe('when totalAddresses is 1', () => {
+      it('should have correct properties', () => {
+        const mockTotalAddresses = 1;
 
-      expect(result).toEqual(expected);
+        const result = pageVariables(referenceNumber, mockTotalAddresses);
+
+        const expected = {
+          ...expectedGenericProperties,
+          INTRO: {
+            ...PAGE_CONTENT_STRINGS.INTRO,
+            ADDRESSES_FOUND: `${mockTotalAddresses} ${PAGE_CONTENT_STRINGS.INTRO.ADDRESS} ${PAGE_CONTENT_STRINGS.INTRO.FOUND_FOR}`,
+          },
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when totalAddresses is greater than 1', () => {
+      it('should have correct properties', () => {
+        const mockTotalAddresses = 2;
+
+        const result = pageVariables(referenceNumber, mockTotalAddresses);
+
+        const expected = {
+          ...expectedGenericProperties,
+          INTRO: {
+            ...PAGE_CONTENT_STRINGS.INTRO,
+            ADDRESSES_FOUND: `${mockTotalAddresses} ${PAGE_CONTENT_STRINGS.INTRO.ADDRESSES} ${PAGE_CONTENT_STRINGS.INTRO.FOUND_FOR}`,
+          },
+        };
+
+        expect(result).toEqual(expected);
+      });
     });
   });
 
@@ -113,6 +142,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
         userName: getUserNameFromSession(req.session.user),
         mappedAddresses,
         postcode: tempMockPostcode,
+        buildingNumberOrName: tempMockHouseNameOrNumber,
       });
     });
 

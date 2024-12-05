@@ -1,4 +1,4 @@
-import { pageVariables, FIELD_IDS, PAGE_CONTENT_STRINGS, TEMPLATE, get, post } from '.';
+import { pageVariables, HTML_FLAGS, FIELD_IDS, PAGE_CONTENT_STRINGS, TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -12,20 +12,27 @@ import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockSpyPromiseRejection } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, referenceNumber, mockSpyPromiseRejection } from '../../../../test-mocks';
 
-const { NAME, EMAIL, FULL_ADDRESS } = POLICY_FIELD_IDS.BROKER_DETAILS;
+const { NAME, EMAIL, IS_BASED_IN_UK, POSTCODE, BUILDING_NUMBER_OR_NAME } = POLICY_FIELD_IDS.BROKER_DETAILS;
 
 const {
   INSURANCE_ROOT,
-  POLICY: { BROKER_DETAILS_SAVE_AND_BACK, BROKER_CONFIRM_ADDRESS_ROOT, BROKER_DETAILS_CHANGE, BROKER_DETAILS_CHECK_AND_CHANGE, CHECK_YOUR_ANSWERS },
+  POLICY: {
+    BROKER_DETAILS_SAVE_AND_BACK,
+    BROKER_ADDRESSES_ROOT,
+    BROKER_MANUAL_ADDRESS_ROOT,
+    BROKER_DETAILS_CHANGE,
+    BROKER_DETAILS_CHECK_AND_CHANGE,
+    CHECK_YOUR_ANSWERS,
+  },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
 const { BROKER_DETAILS } = POLICY_FIELDS;
 
-const { referenceNumber, broker } = mockApplication;
+const { broker } = mockApplication;
 
 describe('controllers/insurance/policy/broker-details', () => {
   let req: Request;
@@ -42,7 +49,7 @@ describe('controllers/insurance/policy/broker-details', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [NAME, EMAIL, FULL_ADDRESS];
+      const expected = [NAME, EMAIL, IS_BASED_IN_UK, POSTCODE, BUILDING_NUMBER_OR_NAME];
 
       expect(FIELD_IDS).toEqual(expected);
     });
@@ -74,15 +81,34 @@ describe('controllers/insurance/policy/broker-details', () => {
             ID: EMAIL,
             ...BROKER_DETAILS[EMAIL],
           },
-          FULL_ADDRESS: {
-            ID: FULL_ADDRESS,
-            ...BROKER_DETAILS[FULL_ADDRESS],
+          IS_BASED_IN_UK: {
+            ID: IS_BASED_IN_UK,
+            ...BROKER_DETAILS[IS_BASED_IN_UK],
+          },
+          POSTCODE: {
+            ID: POSTCODE,
+            ...BROKER_DETAILS[POSTCODE],
+          },
+          BUILDING_NUMBER_OR_NAME: {
+            ID: BUILDING_NUMBER_OR_NAME,
+            ...BROKER_DETAILS[BUILDING_NUMBER_OR_NAME],
           },
         },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
+    });
+  });
+
+  describe('HTML_FLAGS', () => {
+    it('should have correct properties', () => {
+      const expected = {
+        HORIZONTAL_RADIOS: true,
+        NO_RADIO_AS_FIRST_OPTION: true,
+      };
+
+      expect(HTML_FLAGS).toEqual(expected);
     });
   });
 
@@ -94,6 +120,7 @@ describe('controllers/insurance/policy/broker-details', () => {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
+          HTML_FLAGS,
         }),
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
@@ -115,10 +142,22 @@ describe('controllers/insurance/policy/broker-details', () => {
   });
 
   describe('post', () => {
-    const validBody = {
+    const genericValidBody = {
       [NAME]: broker[NAME],
       [EMAIL]: broker[EMAIL],
-      [FULL_ADDRESS]: broker[FULL_ADDRESS],
+    };
+
+    const validBody = {
+      basedInUk: {
+        ...genericValidBody,
+        [IS_BASED_IN_UK]: 'true',
+        [POSTCODE]: broker[POSTCODE],
+        [BUILDING_NUMBER_OR_NAME]: broker[BUILDING_NUMBER_OR_NAME],
+      },
+      notBasedInUk: {
+        ...genericValidBody,
+        [IS_BASED_IN_UK]: 'false',
+      },
     };
 
     mapAndSave.broker = jest.fn(() => Promise.resolve(true));
@@ -139,6 +178,7 @@ describe('controllers/insurance/policy/broker-details', () => {
           ...insuranceCorePageVariables({
             PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
+            HTML_FLAGS,
           }),
           ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
@@ -150,19 +190,35 @@ describe('controllers/insurance/policy/broker-details', () => {
     });
 
     describe('when there are no validation errors', () => {
-      beforeEach(async () => {
-        req.body = validBody;
+      describe(`when ${IS_BASED_IN_UK} is true`, () => {
+        it(`should redirect to ${BROKER_ADDRESSES_ROOT}`, async () => {
+          req.body = validBody.basedInUk;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ADDRESSES_ROOT}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when ${IS_BASED_IN_UK} is false`, () => {
+        it(`should redirect to ${BROKER_MANUAL_ADDRESS_ROOT}`, async () => {
+          req.body = validBody.notBasedInUk;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      it('should call mapAndSave.broker once with data from constructPayload function', async () => {
+        req.body = validBody.notBasedInUk;
 
         await post(req, res);
-      });
 
-      it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, () => {
-        const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
-
-        expect(res.redirect).toHaveBeenCalledWith(expected);
-      });
-
-      it('should call mapAndSave.broker once with data from constructPayload function', () => {
         const payload = constructPayload(req.body, FIELD_IDS);
 
         expect(mapAndSave.broker).toHaveBeenCalledTimes(1);
@@ -172,6 +228,8 @@ describe('controllers/insurance/policy/broker-details', () => {
 
       describe("when the url's last substring is `change`", () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.body = validBody.notBasedInUk;
+
           req.originalUrl = BROKER_DETAILS_CHANGE;
 
           await post(req, res);
@@ -183,6 +241,8 @@ describe('controllers/insurance/policy/broker-details', () => {
 
       describe("when the url's last substring is `check-and-change`", () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.body = validBody.notBasedInUk;
+
           req.originalUrl = BROKER_DETAILS_CHECK_AND_CHANGE;
 
           await post(req, res);
@@ -209,10 +269,10 @@ describe('controllers/insurance/policy/broker-details', () => {
     describe('api error handling', () => {
       describe('mapAndSave.broker call', () => {
         beforeEach(() => {
-          req.body = validBody;
+          req.body = validBody.notBasedInUk;
         });
 
-        describe('when no application is returned', () => {
+        describe('when mapAndSave.broker does not return a true boolean', () => {
           beforeEach(() => {
             const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
 

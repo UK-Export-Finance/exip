@@ -1,6 +1,7 @@
 import { headingCaption } from '../../../../../../partials';
-import { field as fieldSelector } from '../../../../../../pages/shared';
+import { field as fieldSelector, noRadio, yesRadio } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
+import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
@@ -8,12 +9,12 @@ import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/field
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_DETAILS;
 
 const {
-  BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
+  BROKER_DETAILS: { NAME, EMAIL, IS_BASED_IN_UK, POSTCODE, BUILDING_NUMBER_OR_NAME },
 } = POLICY_FIELD_IDS;
 
 const {
   ROOT,
-  POLICY: { BROKER_ROOT, BROKER_DETAILS_ROOT, BROKER_CONFIRM_ADDRESS_ROOT },
+  POLICY: { BROKER_ROOT, BROKER_DETAILS_ROOT, BROKER_ADDRESSES_ROOT, BROKER_MANUAL_ADDRESS_ROOT },
 } = INSURANCE_ROUTES;
 
 const { BROKER_DETAILS: FIELD_STRINGS } = FIELDS;
@@ -25,7 +26,8 @@ context(
   () => {
     let referenceNumber;
     let url;
-    let brokerConfirmAddressUrl;
+    let brokerAddressesUrl;
+    let brokerManualAddressUrl;
 
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -35,7 +37,8 @@ context(
         cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'broker', usingBroker: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
-        brokerConfirmAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
+        brokerAddressesUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ADDRESSES_ROOT}`;
+        brokerManualAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
 
         cy.assertUrl(url);
       });
@@ -87,14 +90,65 @@ context(
         });
       });
 
-      it(`renders ${FULL_ADDRESS} textarea`, () => {
-        const fieldId = FULL_ADDRESS;
-        const fieldStrings = FIELD_STRINGS[fieldId];
+      describe(`renders ${IS_BASED_IN_UK} label and inputs`, () => {
+        const fieldId = IS_BASED_IN_UK;
 
-        cy.assertTextareaRendering({
-          fieldId,
-          expectedLabel: fieldStrings.LABEL,
-          maximumCharacters: fieldStrings.MAXIMUM,
+        it('renders `yes` and `no` radio buttons in the correct order', () => {
+          cy.assertYesNoRadiosOrder({ noRadioFirst: true });
+        });
+
+        it('renders `no` radio button', () => {
+          cy.checkText(noRadio().label(), FIELD_VALUES.NO);
+
+          cy.checkRadioInputNoAriaLabel(FIELD_STRINGS[fieldId].LABEL);
+        });
+
+        it('renders `yes` radio button', () => {
+          cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
+
+          cy.checkRadioInputYesAriaLabel(FIELD_STRINGS[fieldId].LABEL);
+        });
+      });
+
+      describe(POSTCODE, () => {
+        const fieldId = POSTCODE;
+        const field = fieldSelector(fieldId);
+
+        it('should NOT by visible by default', () => {
+          field.input().should('not.be.visible');
+        });
+
+        describe(`when clicking ${IS_BASED_IN_UK} 'yes' radio`, () => {
+          it(`should render ${fieldId} input`, () => {
+            cy.clickYesRadioInput();
+
+            const fieldStrings = FIELD_STRINGS[fieldId];
+
+            field.input().should('be.visible');
+
+            cy.checkText(field.label(), fieldStrings.LABEL);
+          });
+        });
+      });
+
+      describe(BUILDING_NUMBER_OR_NAME, () => {
+        const fieldId = BUILDING_NUMBER_OR_NAME;
+        const field = fieldSelector(fieldId);
+
+        it('should NOT by visible by default', () => {
+          field.input().should('not.be.visible');
+        });
+
+        describe(`when clicking ${IS_BASED_IN_UK} 'yes' radio`, () => {
+          it(`should render ${fieldId} input`, () => {
+            cy.clickYesRadioInput();
+
+            const fieldStrings = FIELD_STRINGS[fieldId];
+
+            field.input().should('be.visible');
+
+            cy.checkText(field.label(), fieldStrings.LABEL);
+          });
         });
       });
     });
@@ -104,17 +158,35 @@ context(
         cy.navigateToUrl(url);
       });
 
-      it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT} page`, () => {
-        cy.completeAndSubmitBrokerDetailsForm({});
+      describe(`when submitting ${IS_BASED_IN_UK} as "yes"`, () => {
+        it(`should redirect to ${BROKER_ADDRESSES_ROOT} page`, () => {
+          cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk: true });
 
-        cy.assertUrl(brokerConfirmAddressUrl);
+          cy.assertUrl(brokerAddressesUrl);
+        });
+
+        describe('when going back to the page', () => {
+          it('should have the submitted values', () => {
+            cy.navigateToUrl(url);
+
+            cy.assertBrokerDetailsFieldValues({ isBasedInUk: true });
+          });
+        });
       });
 
-      describe('when going back to the page', () => {
-        it('should have the submitted values', () => {
-          cy.navigateToUrl(url);
+      describe(`when submitting ${IS_BASED_IN_UK} as "no"`, () => {
+        it(`should redirect to ${BROKER_MANUAL_ADDRESS_ROOT} page`, () => {
+          cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk: false });
 
-          cy.assertBrokerDetailsFieldValues({});
+          cy.assertUrl(brokerManualAddressUrl);
+        });
+
+        describe('when going back to the page', () => {
+          it('should have the submitted values', () => {
+            cy.navigateToUrl(url);
+
+            cy.assertBrokerDetailsFieldValues({ isBasedInUk: false });
+          });
         });
       });
     });

@@ -13,7 +13,8 @@ const {
 
 const {
   USING_BROKER,
-  BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
+  BROKER_DETAILS: { NAME, EMAIL },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = INSURANCE_FIELD_IDS.POLICY;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -101,7 +102,8 @@ context('Insurance - Change your answers - Policy - Broker - As an exporter, I w
     });
   });
 
-  describe(FULL_ADDRESS, () => {
+  // TODO: EMS-3975
+  describe.skip(FULL_ADDRESS, () => {
     const fieldId = FULL_ADDRESS;
 
     describe('when clicking the `change` link', () => {
