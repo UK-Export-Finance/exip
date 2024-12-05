@@ -90,7 +90,13 @@ const BROKER_DETAILS = {
 const BROKER_ADDRESSES = {
   ...SHARED,
   PAGE_TITLE: "Select your broker's address",
-  BODY: 'addresses found for',
+  INTRO: {
+    ADDRESS: 'address',
+    ADDRESSES: 'addresses',
+    FOUND_FOR: 'found for',
+    SEPARATOR: 'and',
+    SEARCH_AGAIN: 'Search again',
+  },
 };
 
 const BROKER_CONFIRM_ADDRESS = {

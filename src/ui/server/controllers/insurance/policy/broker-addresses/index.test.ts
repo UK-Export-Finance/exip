@@ -28,7 +28,7 @@ const tempMockPostcode = 'W1A 1AA';
 const tempMockHouseNameOrNumber = 'WOGAN HOUSE';
 const mockTotalAddresses = mockOrdnanceSurveyAddressResponse.addresses.length;
 
-const mappedAddresses = mapOrdnanceSurveyAddresses(mockOrdnanceSurveyAddressResponse.addresses);
+const mappedAddresses = mapOrdnanceSurveyAddresses(mockOrdnanceSurveyAddressResponse.addresses, mockApplication.broker);
 
 describe('controllers/insurance/policy/broker-addresses', () => {
   let req: Request;
