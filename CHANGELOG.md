@@ -23,51 +23,47 @@
 
 ## [2.36.0](https://github.com/UK-Export-Finance/exip/compare/v2.35.5...v2.36.0) (2024-11-01)
 
-
 ### Features
 
-* **EMS-3767-3768-3781:** business - turnover currency page and check your answers ([#2987](https://github.com/UK-Export-Finance/exip/issues/2987)) ([869054b](https://github.com/UK-Export-Finance/exip/commit/869054b49ce984d928a7a90af911614f38804ca3))
-* **EMS-3769-3770-3771-3772-3782:** buyer - split outstanding/overdue and failed payments ([#3012](https://github.com/UK-Export-Finance/exip/issues/3012)) ([00a704b](https://github.com/UK-Export-Finance/exip/commit/00a704b1bbada6f3b274a52305421abbb660c800))
-* **EMS-3773-3792:** policy - single contract - credit limit field ([#3026](https://github.com/UK-Export-Finance/exip/issues/3026)) ([ef3edaf](https://github.com/UK-Export-Finance/exip/commit/ef3edafd00a5ed8e956578086159f54b87848c68))
-* **EMS-3783-3792:** policy - check/change your answers - credit limit field ([#3029](https://github.com/UK-Export-Finance/exip/issues/3029)) ([76d8bad](https://github.com/UK-Export-Finance/exip/commit/76d8badc3537c1d6a570e918400dd8aaa870d1b5))
-* **EMS-3825:** export contract - remove fixed sum amount from the ui ([#3051](https://github.com/UK-Export-Finance/exip/issues/3051)) ([a01d96b](https://github.com/UK-Export-Finance/exip/commit/a01d96b937ddcf94bdb90fb17d4bb861d0931808))
-* **EMS-3826-3827:** export contract - agent charges currency - page setup ([#3067](https://github.com/UK-Export-Finance/exip/issues/3067)) ([e059ccc](https://github.com/UK-Export-Finance/exip/commit/e059ccc5310ffb704214bd02439039c6434bbe89))
-* **EMS-3826-3829:** export contract - agent charges - user flow ([#3098](https://github.com/UK-Export-Finance/exip/issues/3098)) ([be6a35a](https://github.com/UK-Export-Finance/exip/commit/be6a35a7aca016b80845f53efa9afa4f2bd48abb))
-* **EMS-3828-3876:** currency of agent charges - save and back, improve e2e assertions ([#3101](https://github.com/UK-Export-Finance/exip/issues/3101)) ([f9769ee](https://github.com/UK-Export-Finance/exip/commit/f9769ee48e17d7b3284f52a0886eb2b8e987c18c))
-* **EMS-3829:** export contract - how much is the agent charging - page setup, validation ([#3072](https://github.com/UK-Export-Finance/exip/issues/3072)) ([42e4c11](https://github.com/UK-Export-Finance/exip/commit/42e4c11f8b52a01db279172bb05277887686d2a7))
-* **EMS-3833:** export contract - how much agent is charging - data saving ([#3122](https://github.com/UK-Export-Finance/exip/issues/3122)) ([cd6398b](https://github.com/UK-Export-Finance/exip/commit/cd6398b21f6e7905c1f43ac855af2d26ad332f99))
-* **EMS-3851-3852:** export contract - change answers - currency of agent charges ([#3132](https://github.com/UK-Export-Finance/exip/issues/3132)) ([e3fa1ae](https://github.com/UK-Export-Finance/exip/commit/e3fa1ae3adff3be04cff8aaf41e5da902dea4cb8))
-* **EMS-3853-54-55:** export contract - agent charges - change answers ([#3142](https://github.com/UK-Export-Finance/exip/issues/3142)) ([3087bed](https://github.com/UK-Export-Finance/exip/commit/3087bed0e2e40fad8d581af7ceeacab315b407ad))
-* **EMS-3877-3879:** business - turnover currency - save and back ([#3129](https://github.com/UK-Export-Finance/exip/issues/3129)) ([ff4fcf4](https://github.com/UK-Export-Finance/exip/commit/ff4fcf465c015edd689807be6ade950eca609c7b))
-* **EMS-3893:** buyer - currency of late payments - save and back ([#3128](https://github.com/UK-Export-Finance/exip/issues/3128)) ([1a59d47](https://github.com/UK-Export-Finance/exip/commit/1a59d470c2e4f4d1e7c2f333f45137da5861fa10))
-
+- **EMS-3767-3768-3781:** business - turnover currency page and check your answers ([#2987](https://github.com/UK-Export-Finance/exip/issues/2987)) ([869054b](https://github.com/UK-Export-Finance/exip/commit/869054b49ce984d928a7a90af911614f38804ca3))
+- **EMS-3769-3770-3771-3772-3782:** buyer - split outstanding/overdue and failed payments ([#3012](https://github.com/UK-Export-Finance/exip/issues/3012)) ([00a704b](https://github.com/UK-Export-Finance/exip/commit/00a704b1bbada6f3b274a52305421abbb660c800))
+- **EMS-3773-3792:** policy - single contract - credit limit field ([#3026](https://github.com/UK-Export-Finance/exip/issues/3026)) ([ef3edaf](https://github.com/UK-Export-Finance/exip/commit/ef3edafd00a5ed8e956578086159f54b87848c68))
+- **EMS-3783-3792:** policy - check/change your answers - credit limit field ([#3029](https://github.com/UK-Export-Finance/exip/issues/3029)) ([76d8bad](https://github.com/UK-Export-Finance/exip/commit/76d8badc3537c1d6a570e918400dd8aaa870d1b5))
+- **EMS-3825:** export contract - remove fixed sum amount from the ui ([#3051](https://github.com/UK-Export-Finance/exip/issues/3051)) ([a01d96b](https://github.com/UK-Export-Finance/exip/commit/a01d96b937ddcf94bdb90fb17d4bb861d0931808))
+- **EMS-3826-3827:** export contract - agent charges currency - page setup ([#3067](https://github.com/UK-Export-Finance/exip/issues/3067)) ([e059ccc](https://github.com/UK-Export-Finance/exip/commit/e059ccc5310ffb704214bd02439039c6434bbe89))
+- **EMS-3826-3829:** export contract - agent charges - user flow ([#3098](https://github.com/UK-Export-Finance/exip/issues/3098)) ([be6a35a](https://github.com/UK-Export-Finance/exip/commit/be6a35a7aca016b80845f53efa9afa4f2bd48abb))
+- **EMS-3828-3876:** currency of agent charges - save and back, improve e2e assertions ([#3101](https://github.com/UK-Export-Finance/exip/issues/3101)) ([f9769ee](https://github.com/UK-Export-Finance/exip/commit/f9769ee48e17d7b3284f52a0886eb2b8e987c18c))
+- **EMS-3829:** export contract - how much is the agent charging - page setup, validation ([#3072](https://github.com/UK-Export-Finance/exip/issues/3072)) ([42e4c11](https://github.com/UK-Export-Finance/exip/commit/42e4c11f8b52a01db279172bb05277887686d2a7))
+- **EMS-3833:** export contract - how much agent is charging - data saving ([#3122](https://github.com/UK-Export-Finance/exip/issues/3122)) ([cd6398b](https://github.com/UK-Export-Finance/exip/commit/cd6398b21f6e7905c1f43ac855af2d26ad332f99))
+- **EMS-3851-3852:** export contract - change answers - currency of agent charges ([#3132](https://github.com/UK-Export-Finance/exip/issues/3132)) ([e3fa1ae](https://github.com/UK-Export-Finance/exip/commit/e3fa1ae3adff3be04cff8aaf41e5da902dea4cb8))
+- **EMS-3853-54-55:** export contract - agent charges - change answers ([#3142](https://github.com/UK-Export-Finance/exip/issues/3142)) ([3087bed](https://github.com/UK-Export-Finance/exip/commit/3087bed0e2e40fad8d581af7ceeacab315b407ad))
+- **EMS-3877-3879:** business - turnover currency - save and back ([#3129](https://github.com/UK-Export-Finance/exip/issues/3129)) ([ff4fcf4](https://github.com/UK-Export-Finance/exip/commit/ff4fcf465c015edd689807be6ade950eca609c7b))
+- **EMS-3893:** buyer - currency of late payments - save and back ([#3128](https://github.com/UK-Export-Finance/exip/issues/3128)) ([1a59d47](https://github.com/UK-Export-Finance/exip/commit/1a59d470c2e4f4d1e7c2f333f45137da5861fa10))
 
 ### Bug Fixes
 
-* **EMS-3511:** task list - declarations/submit dependencies ([#2965](https://github.com/UK-Export-Finance/exip/issues/2965)) ([57b5c8f](https://github.com/UK-Export-Finance/exip/commit/57b5c8f5491d3c0671ec44b3af049305e66f23f2))
-* **EMS-3659:** declarations - confirmation/acknowledgements - submit button copy ([#2960](https://github.com/UK-Export-Finance/exip/issues/2960)) ([d183d21](https://github.com/UK-Export-Finance/exip/commit/d183d210e1cee28e538f1ec938fd64fb8c5b9f1e))
-* **EMS-3755:** fix failing e2e tests ([#2949](https://github.com/UK-Export-Finance/exip/issues/2949)) ([994e19a](https://github.com/UK-Export-Finance/exip/commit/994e19a3c692a4ba88c5f6b406e29af16ad509e5))
-* **EMS-3787:** export contract - agent name with an apostrophe ([#2989](https://github.com/UK-Export-Finance/exip/issues/2989)) ([7f64dcf](https://github.com/UK-Export-Finance/exip/commit/7f64dcf4fd244ef8fdc4b634a31a44dccec642a4))
-* **EMS-3804:** eligibility - end buyer - error message ([#3049](https://github.com/UK-Export-Finance/exip/issues/3049)) ([3a02b8c](https://github.com/UK-Export-Finance/exip/commit/3a02b8c85f5476d5faa3064f97034aa730b54549))
-* **EMS-3822:** your buyer - outstanding/overdue payments - label currencies ([#3048](https://github.com/UK-Export-Finance/exip/issues/3048)) ([c905028](https://github.com/UK-Export-Finance/exip/commit/c905028e9c12138fcf514204ec550502650ba807))
-* **EMS-3831:** buyer - outstanding/overdue payments - missing hint text ([#3120](https://github.com/UK-Export-Finance/exip/issues/3120)) ([adedd9a](https://github.com/UK-Export-Finance/exip/commit/adedd9a8594ebd42645de4e2ac5bf2c5a1d1b9eb))
-* **EMS-3901:** data migration - requestedCreditLimit column ([#3255](https://github.com/UK-Export-Finance/exip/issues/3255)) ([cf86b8e](https://github.com/UK-Export-Finance/exip/commit/cf86b8e0d6b5876fd8806726e5fb5c769f2a0ca2))
-* **EMS-3945:** policy - total contract value - credit limit hint ([#3197](https://github.com/UK-Export-Finance/exip/issues/3197)) ([f562f23](https://github.com/UK-Export-Finance/exip/commit/f562f23e71821155ff04d1132c89ea8fdca8573a))
-* **EMS-3959:** multiple contract policy - error message/hint ([c266b2e](https://github.com/UK-Export-Finance/exip/commit/c266b2e7895d7a21ae2d43f413086fb437c5fe21))
+- **EMS-3511:** task list - declarations/submit dependencies ([#2965](https://github.com/UK-Export-Finance/exip/issues/2965)) ([57b5c8f](https://github.com/UK-Export-Finance/exip/commit/57b5c8f5491d3c0671ec44b3af049305e66f23f2))
+- **EMS-3659:** declarations - confirmation/acknowledgements - submit button copy ([#2960](https://github.com/UK-Export-Finance/exip/issues/2960)) ([d183d21](https://github.com/UK-Export-Finance/exip/commit/d183d210e1cee28e538f1ec938fd64fb8c5b9f1e))
+- **EMS-3755:** fix failing e2e tests ([#2949](https://github.com/UK-Export-Finance/exip/issues/2949)) ([994e19a](https://github.com/UK-Export-Finance/exip/commit/994e19a3c692a4ba88c5f6b406e29af16ad509e5))
+- **EMS-3787:** export contract - agent name with an apostrophe ([#2989](https://github.com/UK-Export-Finance/exip/issues/2989)) ([7f64dcf](https://github.com/UK-Export-Finance/exip/commit/7f64dcf4fd244ef8fdc4b634a31a44dccec642a4))
+- **EMS-3804:** eligibility - end buyer - error message ([#3049](https://github.com/UK-Export-Finance/exip/issues/3049)) ([3a02b8c](https://github.com/UK-Export-Finance/exip/commit/3a02b8c85f5476d5faa3064f97034aa730b54549))
+- **EMS-3822:** your buyer - outstanding/overdue payments - label currencies ([#3048](https://github.com/UK-Export-Finance/exip/issues/3048)) ([c905028](https://github.com/UK-Export-Finance/exip/commit/c905028e9c12138fcf514204ec550502650ba807))
+- **EMS-3831:** buyer - outstanding/overdue payments - missing hint text ([#3120](https://github.com/UK-Export-Finance/exip/issues/3120)) ([adedd9a](https://github.com/UK-Export-Finance/exip/commit/adedd9a8594ebd42645de4e2ac5bf2c5a1d1b9eb))
+- **EMS-3901:** data migration - requestedCreditLimit column ([#3255](https://github.com/UK-Export-Finance/exip/issues/3255)) ([cf86b8e](https://github.com/UK-Export-Finance/exip/commit/cf86b8e0d6b5876fd8806726e5fb5c769f2a0ca2))
+- **EMS-3945:** policy - total contract value - credit limit hint ([#3197](https://github.com/UK-Export-Finance/exip/issues/3197)) ([f562f23](https://github.com/UK-Export-Finance/exip/commit/f562f23e71821155ff04d1132c89ea8fdca8573a))
+- **EMS-3959:** multiple contract policy - error message/hint ([c266b2e](https://github.com/UK-Export-Finance/exip/commit/c266b2e7895d7a21ae2d43f413086fb437c5fe21))
 
 ## [2.35.5](https://github.com/UK-Export-Finance/exip/compare/v2.35.4...v2.35.5) (2024-08-12)
 
-
 ### Bug Fixes
 
-* **EMS-3633:** data migration - xlsx - total contract value ([#2934](https://github.com/UK-Export-Finance/exip/issues/2934)) ([f0bfdba](https://github.com/UK-Export-Finance/exip/commit/f0bfdba5d1b1300018ab67b0224c2dfeb6993e4c))
+- **EMS-3633:** data migration - xlsx - total contract value ([#2934](https://github.com/UK-Export-Finance/exip/issues/2934)) ([f0bfdba](https://github.com/UK-Export-Finance/exip/commit/f0bfdba5d1b1300018ab67b0224c2dfeb6993e4c))
 
 ## [2.35.4](https://github.com/UK-Export-Finance/exip/compare/v2.35.3...v2.35.4) (2024-08-09)
 
-
 ### Bug Fixes
 
-* **EMS-3633:** data migration - xlsx - eligibility questions ([#2932](https://github.com/UK-Export-Finance/exip/issues/2932)) ([f80ac41](https://github.com/UK-Export-Finance/exip/commit/f80ac410e050353a055ed4d1ca462c7bc96c617c))
+- **EMS-3633:** data migration - xlsx - eligibility questions ([#2932](https://github.com/UK-Export-Finance/exip/issues/2932)) ([f80ac41](https://github.com/UK-Export-Finance/exip/commit/f80ac410e050353a055ed4d1ca462c7bc96c617c))
 
 ## [2.35.3](https://github.com/UK-Export-Finance/exip/compare/v2.35.2...v2.35.3) (2024-08-09)
 

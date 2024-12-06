@@ -1,6 +1,5 @@
 import { brokerPage } from '../../../../../../pages/insurance/policy';
-import { headingCaption } from '../../../../../../partials';
-import { field as fieldSelector, yesRadio, noRadio, noRadioInput } from '../../../../../../pages/shared';
+import { field as fieldSelector, yesRadio, noRadio, noRadioInput, headingCaption } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES, LINKS } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';

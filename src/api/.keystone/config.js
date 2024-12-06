@@ -2819,7 +2819,7 @@ var typeDefs = `
     isoCode: String!
     name: String
     shortTermCover: Boolean
-    riskCategory: String
+    esraClassification: String
     nbiIssueAvailable: Boolean
     canGetAQuoteOnline: Boolean
     canGetAQuoteOffline: Boolean
@@ -4077,7 +4077,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
           };
         }
       } catch (error) {
-        console.error('Error blocking account $O', error);
+        console.error('Error blocking account %o', error);
         return { success: false };
       }
     }
@@ -4097,7 +4097,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
     }
     return { success: false };
   } catch (error) {
-    console.error('Error checking account and sending password reset email (sendEmailPasswordResetLink mutation) $O', error);
+    console.error('Error checking account and sending password reset email (sendEmailPasswordResetLink mutation) %o', error);
     throw new Error(`Checking account and sending password reset email (sendEmailPasswordResetLink mutation) ${error}`);
   }
 };
@@ -8440,49 +8440,77 @@ var XLSX_ROW_INDEXES = {
 };
 var INDEXES_default = XLSX_ROW_INDEXES;
 
-// generate-xlsx/styled-columns/index.ts
-var { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, FONT_SIZE } = XLSX_CONFIG;
-var { APPLICATION_INFORMATION: APPLICATION_INFORMATION2 } = SECTION_NAMES_default;
-var worksheetRowHeights = (rowIndexes, worksheet, sheetName) => {
-  const modifiedWorksheet = worksheet;
-  modifiedWorksheet.getRow(1).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
-  const isInformationSheet = sheetName === APPLICATION_INFORMATION2;
-  if (isInformationSheet) {
-    modifiedWorksheet.getRow(8).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
-    modifiedWorksheet.getRow(13).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
-  }
-  rowIndexes.forEach((rowIndex) => {
-    modifiedWorksheet.getRow(rowIndex).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
-  });
-  return modifiedWorksheet;
+// constants/XLSX-CONFIG/INDEXES/APPLICATION_INFORMATION/index.ts
+var APPLICATION_INFORMATION_INDEXES = {
+  EXPORTER_CONTACT_DETAILS: 8,
+  KEY_INFORMATION: 13,
 };
-var styledColumns = (application2, worksheet, sheetName) => {
-  let modifiedWorksheet = worksheet;
-  modifiedWorksheet.eachRow((row, rowNumber) => {
+var APPLICATION_INFORMATION_default = APPLICATION_INFORMATION_INDEXES;
+
+// generate-xlsx/styled-columns/is-title-row/index.ts
+var { APPLICATION_INFORMATION: APPLICATION_INFORMATION2 } = SECTION_NAMES_default;
+var { EXPORTER_CONTACT_DETAILS, KEY_INFORMATION } = APPLICATION_INFORMATION_default;
+var isTitleRow = (sheetName, rowNumber) => {
+  const isInfoSheet = sheetName === APPLICATION_INFORMATION2;
+  const isInfoTitle = isInfoSheet && (rowNumber === EXPORTER_CONTACT_DETAILS || rowNumber === KEY_INFORMATION);
+  const result = rowNumber === 1 || isInfoTitle;
+  return result;
+};
+var is_title_row_default = isTitleRow;
+
+// generate-xlsx/styled-columns/modify-row-styles/index.ts
+var { FONT_SIZE } = XLSX_CONFIG;
+var modifyRowStyles = (worksheet, sheetName) => {
+  worksheet.eachRow((row, rowNumber) => {
     row.eachCell((cell, colNumber) => {
       const modifiedRow = row;
       modifiedRow.getCell(colNumber).alignment = {
         vertical: 'top',
         wrapText: true,
       };
-      const isInformationSheet = sheetName === APPLICATION_INFORMATION2;
-      const isInformationTitleOne = isInformationSheet && rowNumber === 8;
-      const isInformationTitleTwo = isInformationSheet && rowNumber === 13;
-      const isInformationTitle = isInformationTitleOne || isInformationTitleTwo;
-      const isTitleRow = rowNumber === 1 || isInformationTitle;
+      const isATitleRow = is_title_row_default(sheetName, rowNumber);
       modifiedRow.getCell(colNumber).font = {
-        bold: Boolean(isTitleRow),
-        size: isTitleRow ? FONT_SIZE.TITLE : FONT_SIZE.DEFAULT,
+        bold: isATitleRow,
+        size: isATitleRow ? FONT_SIZE.TITLE : FONT_SIZE.DEFAULT,
       };
     });
   });
+  return worksheet;
+};
+var modify_row_styles_default = modifyRowStyles;
+
+// generate-xlsx/styled-columns/modify-row-heights/index.ts
+var { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT } = XLSX_CONFIG;
+var { APPLICATION_INFORMATION: APPLICATION_INFORMATION3 } = SECTION_NAMES_default;
+var { EXPORTER_CONTACT_DETAILS: EXPORTER_CONTACT_DETAILS2, KEY_INFORMATION: KEY_INFORMATION2 } = APPLICATION_INFORMATION_default;
+var modifyRowHeights = (rowIndexes, worksheet, sheetName) => {
+  const modifiedWorksheet = worksheet;
+  modifiedWorksheet.getRow(1).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+  if (sheetName === APPLICATION_INFORMATION3) {
+    modifiedWorksheet.getRow(EXPORTER_CONTACT_DETAILS2).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+    modifiedWorksheet.getRow(KEY_INFORMATION2).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+  }
+  rowIndexes.forEach((rowIndex) => {
+    modifiedWorksheet.getRow(rowIndex).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
+  });
+  return modifiedWorksheet;
+};
+var modify_row_heights_default = modifyRowHeights;
+
+// generate-xlsx/styled-columns/index.ts
+var getAdditionalRowHeightIndexes = (application2, sheetName) => {
   let INDEXES = [];
   if (INDEXES_default[sheetName]) {
     const sheetIndexes = INDEXES_default[sheetName](application2);
     INDEXES = Object.values(sheetIndexes);
   }
-  modifiedWorksheet = worksheetRowHeights(INDEXES, modifiedWorksheet, sheetName);
-  return modifiedWorksheet;
+  return INDEXES;
+};
+var styledColumns = (application2, worksheet, sheetName) => {
+  const withRowStyles = modify_row_styles_default(worksheet, sheetName);
+  const indexes = getAdditionalRowHeightIndexes(application2, sheetName);
+  const withRowHeights = modify_row_heights_default(indexes, withRowStyles, sheetName);
+  return withRowHeights;
 };
 var styled_columns_default = styledColumns;
 
@@ -8975,9 +9003,9 @@ var filterCisEntries = (arr, invalidEntries, entityPropertyName) => {
 };
 var filter_cis_entries_default = filterCisEntries;
 
-// helpers/map-CIS-countries/map-CIS-country/map-risk-category/index.ts
+// helpers/map-CIS-countries/map-CIS-country/map-esra-classification/index.ts
 var { CIS } = EXTERNAL_API_DEFINITIONS;
-var mapRiskCategory = (str) => {
+var mapEsraClassification = (str) => {
   if (str === CIS.RISK.STANDARD) {
     return EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD;
   }
@@ -8989,7 +9017,17 @@ var mapRiskCategory = (str) => {
   }
   return null;
 };
-var map_risk_category_default = mapRiskCategory;
+var map_esra_classification_default = mapEsraClassification;
+
+// helpers/map-CIS-countries/map-CIS-country/map-NBI-issue-available/index.ts
+var { CIS: CIS2 } = EXTERNAL_API_DEFINITIONS;
+var mapNbiIssueAvailable = (str) => {
+  if (str === CIS2.NBI_ISSUE_AVAILABLE.YES) {
+    return true;
+  }
+  return false;
+};
+var map_NBI_issue_available_default = mapNbiIssueAvailable;
 
 // helpers/map-CIS-countries/map-CIS-country/map-short-term-cover-available/index.ts
 var {
@@ -9011,19 +9049,9 @@ var mapShortTermCoverAvailable = (str) => {
 };
 var map_short_term_cover_available_default = mapShortTermCoverAvailable;
 
-// helpers/map-CIS-countries/map-CIS-country/map-NBI-issue-available/index.ts
-var { CIS: CIS2 } = EXTERNAL_API_DEFINITIONS;
-var mapNbiIssueAvailable = (str) => {
-  if (str === CIS2.NBI_ISSUE_AVAILABLE.YES) {
-    return true;
-  }
-  return false;
-};
-var map_NBI_issue_available_default = mapNbiIssueAvailable;
-
 // helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-online/index.ts
-var canGetAQuoteOnline = (country) => {
-  if (country.riskCategory && country.shortTermCover && country.nbiIssueAvailable) {
+var canGetAQuoteOnline = ({ shortTermCover, nbiIssueAvailable, esraClassification }) => {
+  if (esraClassification && shortTermCover && nbiIssueAvailable) {
     return true;
   }
   return false;
@@ -9031,8 +9059,8 @@ var canGetAQuoteOnline = (country) => {
 var can_get_a_quote_online_default = canGetAQuoteOnline;
 
 // helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-by-email/index.ts
-var canGetAQuoteByEmail = (country) => {
-  if (country.riskCategory && country.shortTermCover && !country.nbiIssueAvailable) {
+var canGetAQuoteByEmail = ({ shortTermCover, nbiIssueAvailable, esraClassification }) => {
+  if (shortTermCover && !nbiIssueAvailable && esraClassification) {
     return true;
   }
   return false;
@@ -9040,8 +9068,8 @@ var canGetAQuoteByEmail = (country) => {
 var can_get_a_quote_by_email_default = canGetAQuoteByEmail;
 
 // helpers/map-CIS-countries/map-CIS-country/cannot-get-a-quote/index.ts
-var cannotGetAQuote = (country) => {
-  if (!country.riskCategory || (!country.shortTermCover && !country.nbiIssueAvailable)) {
+var cannotGetAQuote = ({ shortTermCover, nbiIssueAvailable, esraClassification }) => {
+  if (!esraClassification || (!shortTermCover && !nbiIssueAvailable)) {
     return true;
   }
   return false;
@@ -9049,8 +9077,8 @@ var cannotGetAQuote = (country) => {
 var cannot_get_a_quote_default = cannotGetAQuote;
 
 // helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/index.ts
-var canApplyForInsuranceOnline = (shortTermCover, riskCategory) => {
-  if (riskCategory && shortTermCover) {
+var canApplyForInsuranceOnline = (shortTermCover, esraClassification) => {
+  if (shortTermCover && esraClassification) {
     return true;
   }
   return false;
@@ -9079,20 +9107,24 @@ var noInsuranceSupportAvailable = (marketRiskAppetitePublicDesc) => marketRiskAp
 var no_insurance_support_default = noInsuranceSupportAvailable;
 
 // helpers/map-CIS-countries/map-CIS-country/index.ts
-var mapCisCountry = (country) => {
+var mapCisCountry = (cisCountry) => {
+  const { marketName, isoCode } = cisCountry;
+  const esraClassification = map_esra_classification_default(cisCountry.ESRAClassificationDesc);
+  const nbiIssueAvailable = map_NBI_issue_available_default(cisCountry.NBIIssue);
+  const shortTermCover = map_short_term_cover_available_default(cisCountry.shortTermCoverAvailabilityDesc);
   const mapped = {
-    name: country.marketName,
-    isoCode: country.isoCode,
-    riskCategory: map_risk_category_default(country.ESRAClassificationDesc),
-    shortTermCover: map_short_term_cover_available_default(country.shortTermCoverAvailabilityDesc),
-    nbiIssueAvailable: map_NBI_issue_available_default(country.NBIIssue),
+    name: marketName,
+    esraClassification,
+    isoCode,
+    nbiIssueAvailable,
+    shortTermCover,
   };
-  mapped.canGetAQuoteOnline = can_get_a_quote_online_default(mapped);
-  mapped.canGetAQuoteOffline = can_apply_offline_default(country.shortTermCoverAvailabilityDesc);
-  mapped.canGetAQuoteByEmail = can_get_a_quote_by_email_default(mapped);
-  mapped.cannotGetAQuote = cannot_get_a_quote_default(mapped);
-  mapped.canApplyForInsuranceOnline = can_apply_for_insurance_online_default(mapped.shortTermCover, mapped.riskCategory);
-  mapped.noInsuranceSupport = no_insurance_support_default(country.marketRiskAppetitePublicDesc);
+  mapped.canGetAQuoteOnline = can_get_a_quote_online_default({ shortTermCover, nbiIssueAvailable, esraClassification });
+  mapped.canGetAQuoteOffline = can_apply_offline_default(cisCountry.shortTermCoverAvailabilityDesc);
+  mapped.canGetAQuoteByEmail = can_get_a_quote_by_email_default({ shortTermCover, nbiIssueAvailable, esraClassification });
+  mapped.cannotGetAQuote = cannot_get_a_quote_default({ shortTermCover, nbiIssueAvailable, esraClassification });
+  mapped.canApplyForInsuranceOnline = can_apply_for_insurance_online_default(shortTermCover, esraClassification);
+  mapped.noInsuranceSupport = no_insurance_support_default(cisCountry.marketRiskAppetitePublicDesc);
   return mapped;
 };
 var map_CIS_country_default = mapCisCountry;

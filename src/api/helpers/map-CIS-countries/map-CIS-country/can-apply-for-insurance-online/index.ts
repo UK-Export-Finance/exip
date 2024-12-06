@@ -9,12 +9,12 @@
  * - CILC
  * - Refer
  * - Unlisted
- * @param {Boolean} shortTermCover: Boolean value of shortTermCover.
- * @param {String} riskCategory: Country risk category.
+ * @param {Boolean} shortTermCover: Short term cover flag.
+ * @param {String} esraClassification: ESRA classification.
  * @returns {Boolean}
  */
-export const canApplyForInsuranceOnline = (shortTermCover: boolean, riskCategory?: string) => {
-  if (riskCategory && shortTermCover) {
+const canApplyForInsuranceOnline = (shortTermCover: boolean, esraClassification: string | null) => {
+  if (shortTermCover && esraClassification) {
     return true;
   }
 

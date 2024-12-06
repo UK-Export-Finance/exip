@@ -21,6 +21,7 @@ describe('server/generate-quote/index', () => {
         };
 
         const result = getContractValue(mockSubmittedData);
+
         const expected = {
           [CONTRACT_VALUE]: mockSubmittedData[CONTRACT_VALUE],
         };
@@ -37,6 +38,7 @@ describe('server/generate-quote/index', () => {
         };
 
         const result = getContractValue(mockSubmittedData);
+
         const expected = {
           [MAX_AMOUNT_OWED]: mockSubmittedData[MAX_AMOUNT_OWED],
         };
@@ -64,6 +66,7 @@ describe('server/generate-quote/index', () => {
         };
 
         const result = getInsuredFor(mockSubmittedData.quoteEligibility);
+
         const expected = Number(getPercentageOfNumber(80, 1234));
 
         expect(result).toEqual(expected);
@@ -81,6 +84,7 @@ describe('server/generate-quote/index', () => {
         };
 
         const result = getInsuredFor(mockSubmittedData.quoteEligibility);
+
         const expected = Number(getPercentageOfNumber(80, 5678));
 
         expect(result).toEqual(expected);
@@ -161,7 +165,7 @@ describe('server/generate-quote/index', () => {
 
       const expectedPremiumRate = getPremiumRate(
         mockSubmittedData.quoteEligibility[POLICY_TYPE],
-        mockSubmittedData.quoteEligibility[BUYER_COUNTRY].riskCategory,
+        mockSubmittedData.quoteEligibility[BUYER_COUNTRY].esraClassification,
         expectedTotalMonths,
         mockPercentageOfCover,
       );

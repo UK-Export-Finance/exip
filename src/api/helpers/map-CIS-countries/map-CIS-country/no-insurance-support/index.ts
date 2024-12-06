@@ -8,6 +8,6 @@ const { NO_COVER } = EXTERNAL_API_DEFINITIONS.CIS;
  * @param {String} marketRiskAppetitePublicDesc market risk appetite definition from CIS API.
  * @returns {Boolean}
  */
-export const noInsuranceSupportAvailable = (marketRiskAppetitePublicDesc: string) => marketRiskAppetitePublicDesc === NO_COVER;
+const noInsuranceSupportAvailable = (marketRiskAppetitePublicDesc: string) => marketRiskAppetitePublicDesc === NO_COVER;
 
 export default noInsuranceSupportAvailable;
