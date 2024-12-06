@@ -12,55 +12,79 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
-      interval: 'monthly'
-      time: '03:00'
+      interval: 'daily'
+      time: '15:30'
     labels:
       - 'chore'
+    groups:
+      npm-packages:
+        patterns:
+          - '*'  
 
   # `API` package-*.json files
   - package-ecosystem: 'npm'
     directory: '/src/api'
     schedule:
-      interval: 'monthly'
-      time: '03:00'
+      interval: 'daily'
+      time: '15:30'
     labels:
       - 'chore'
+    groups:
+      npm-packages:
+        patterns:
+          - '*'
 
   # `UI` package-*.json files
   - package-ecosystem: 'npm'
     directory: '/src/ui'
     schedule:
-      interval: 'monthly'
-      time: '03:00'
+      interval: 'daily'
+      time: '15:30'
     labels:
       - 'chore'
+    groups:
+      npm-packages:
+        patterns:
+          - '*'
 
   # `generate-exip-pricing-grid` package-*.json files
   - package-ecosystem: 'npm'
     directory: '/generate-exip-pricing-grid'
     schedule:
-      interval: 'monthly'
-      time: '03:00'
+      interval: 'daily'
+      time: '15:30'
     labels:
       - 'chore'
+    groups:
+      npm-packages:
+        patterns:
+          - '*'
 
   # `API` Dockerfile
   - package-ecosystem: 'docker'
     directory: '/src/api'
     schedule:
-      interval: 'monthly'
-      time: '03:00'
+      interval: 'daily'
+      time: '15:30'
     labels:
       - 'chore'
+    groups:
+      docker-packages:
+        patterns:
+          - '*'
 
   # `UI` Dockerfile
   - package-ecosystem: 'docker'
     directory: '/src/ui'
     schedule:
-      interval: 'monthly'
-      time: '03:00'
+      interval: 'daily'
+      time: '15:30'
     labels:
       - 'chore'
+    groups:
+      docker-packages:
+        patterns:
+          - '*'
 
   # Git Hub Actions
   #  Set the directory to `/` for
@@ -68,7 +92,11 @@ updates:
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
-      interval: 'monthly'
-      time: '03:00'
+      interval: 'daily'
+      time: '15:30'
     labels:
       - 'chore'
+    groups:
+      github-actions:
+        patterns:
+          - '*'
