@@ -3077,8 +3077,8 @@ var typeDefs = `
       decryptFinancialInternational: Boolean
     ): ApplicationSuccessResponse
 
-    """ get Ordnance Survey address """
-    getOrdnanceSurveyAddress(
+    """ get Ordnance Survey addresses """
+    getOrdnanceSurveyAddresses(
       postcode: String!
       houseNameOrNumber: String!
     ): OrdnanceSurveyResponse
@@ -9552,11 +9552,11 @@ var mapAndFilterOrdnanceSurveyAddresses = (houseNameOrNumber, ordnanceSurveyResp
 };
 var map_and_filter_ordnance_survey_addresses_default = mapAndFilterOrdnanceSurveyAddresses;
 
-// custom-resolvers/queries/get-ordnance-survey-address/index.ts
-var getOrdnanceSurveyAddress = async (root, variables) => {
+// custom-resolvers/queries/get-ordnance-survey-addresses/index.ts
+var getOrdnanceSurveyAddresses = async (root, variables) => {
   try {
     const { postcode, houseNameOrNumber } = variables;
-    console.info('Getting Ordnance Survey address for postcode: %s, houseNameOrNumber: %s', postcode, houseNameOrNumber);
+    console.info('Getting Ordnance Survey addresses for postcode: %s, houseNameOrNumber: %s', postcode, houseNameOrNumber);
     const noWhitespacePostcode = remove_white_space_default(postcode);
     if (!isValidPostcode(noWhitespacePostcode)) {
       console.error('Invalid postcode: %s', postcode);
@@ -9583,14 +9583,14 @@ var getOrdnanceSurveyAddress = async (root, variables) => {
       success: true,
     };
   } catch (error) {
-    console.error('Error getting Ordnance Survey address results %o', error);
+    console.error('Error getting Ordnance Survey addresses results %o', error);
     return {
       apiError: true,
       success: false,
     };
   }
 };
-var get_ordnance_survey_address_default = getOrdnanceSurveyAddress;
+var get_ordnance_survey_addresses_default = getOrdnanceSurveyAddresses;
 
 // custom-resolvers/queries/verify-account-password-reset-token/index.ts
 var { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY } = account_default;
@@ -9657,7 +9657,7 @@ var customResolvers = {
     getCountriesAndCurrencies: get_countries_and_currencies_default,
     getCompaniesHouseInformation: get_companies_house_information_default,
     getApplicationByReferenceNumber: get_application_by_reference_number_default2,
-    getOrdnanceSurveyAddress: get_ordnance_survey_address_default,
+    getOrdnanceSurveyAddresses: get_ordnance_survey_addresses_default,
     verifyAccountPasswordResetToken: verify_account_password_reset_token_default,
   },
 };
