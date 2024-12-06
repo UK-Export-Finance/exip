@@ -1,4 +1,4 @@
-import { OrdnanceSurveyResponse } from '../../types';
+import { MappedOrdnanceSurveyAddress, OrdnanceSurveyResponse } from '../../types';
 
 /**
  * mapOrdnanceSurveyAddress
@@ -6,7 +6,7 @@ import { OrdnanceSurveyResponse } from '../../types';
  * @param {OrdnanceSurveyResponse} address
  * @returns {Address} mapped address
  */
-const mapOrdnanceSurveyAddress = (address: OrdnanceSurveyResponse) => {
+const mapOrdnanceSurveyAddress = (address: OrdnanceSurveyResponse): MappedOrdnanceSurveyAddress => {
   let addressLine1 = '';
 
   if (address.DPA.SUB_BUILDING_NAME) {
