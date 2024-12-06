@@ -2,7 +2,7 @@ import { field, headingCaption } from '../../../../../../pages/shared';
 import { insurance } from '../../../../../../pages';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
-import { APPLICATION, FIELD_IDS } from '../../../../../../constants';
+import { APPLICATION, ELIGIBILITY, FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
@@ -15,8 +15,9 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.TYPE_OF_POLICY;
 
 const FIELD_ID = FIELD_IDS.INSURANCE.POLICY.POLICY_TYPE;
 
-const singlePolicyField = insurance.policy.typeOfPolicyPage[FIELD_ID].single;
-const multiplePolicyField = insurance.policy.typeOfPolicyPage[FIELD_ID].multiple;
+const { MAX_COVER_PERIOD_MONTHS } = ELIGIBILITY;
+
+const { single: singlePolicyField, multiple: multiplePolicyField } = insurance.policy.typeOfPolicyPage[FIELD_ID];
 
 const goToPageDirectly = (referenceNumber) => {
   cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`);
@@ -65,28 +66,53 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    it('renders `single` radio input with label and hint text list', () => {
-      singlePolicyField.input().should('exist');
-      cy.checkText(singlePolicyField.label(), FIELDS[FIELD_ID].OPTIONS.SINGLE.TEXT);
+    describe('`single policy type` radio', () => {
+      it('should render an input and label', () => {
+        singlePolicyField.input().should('exist');
 
-      cy.checkText(singlePolicyField.hintList.item1(), FIELDS[FIELD_ID].OPTIONS.SINGLE.HINT_LIST[0]);
+        cy.checkText(singlePolicyField.label(), FIELDS[FIELD_ID].OPTIONS.SINGLE.TEXT);
+      });
 
-      cy.checkText(singlePolicyField.hintList.item2(), FIELDS[FIELD_ID].OPTIONS.SINGLE.HINT_LIST[1]);
+      it('should render a hint', () => {
+        const HINT_STRINGS = FIELDS[FIELD_ID].OPTIONS.SINGLE.HINT_LIST;
 
-      cy.checkText(singlePolicyField.hintList.item3(), FIELDS[FIELD_ID].OPTIONS.SINGLE.HINT_LIST[2]);
+        cy.checkText(singlePolicyField.hintListItem(1), HINT_STRINGS[0]);
 
-      cy.checkText(singlePolicyField.hintList.item4(), FIELDS[FIELD_ID].OPTIONS.SINGLE.HINT_LIST[3]);
+        cy.checkText(singlePolicyField.hintListItem(2), HINT_STRINGS[1]);
+
+        singlePolicyField
+          .hintListItem(2)
+          .invoke('text')
+          .then((text) => {
+            expect(text).includes(`${MAX_COVER_PERIOD_MONTHS} months`);
+          });
+
+        cy.checkText(singlePolicyField.hintListItem(4), HINT_STRINGS[3]);
+      });
     });
 
-    it('renders `multiple` radio input with label and hint text list', () => {
-      multiplePolicyField.input().should('exist');
-      cy.checkText(multiplePolicyField.label(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.TEXT);
+    describe('`multiple policy type` radio', () => {
+      it('should render an input and label', () => {
+        multiplePolicyField.input().should('exist');
 
-      cy.checkText(multiplePolicyField.hintList.item1(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[0]);
+        cy.checkText(multiplePolicyField.label(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.TEXT);
+      });
 
-      cy.checkText(multiplePolicyField.hintList.item2(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[1]);
+      it('should render a hint', () => {
+        const HINT_STRINGS = FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST;
 
-      cy.checkText(multiplePolicyField.hintList.item3(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT_LIST[2]);
+        cy.checkText(multiplePolicyField.hintListItem(1), HINT_STRINGS[0]);
+
+        multiplePolicyField
+          .hintListItem(1)
+          .invoke('text')
+          .then((text) => {
+            expect(text).includes(`${APPLICATION.POLICY.TOTAL_MONTHS_OF_COVER.MAXIMUM} months`);
+          });
+
+        cy.checkText(multiplePolicyField.hintListItem(2), HINT_STRINGS[1]);
+        cy.checkText(multiplePolicyField.hintListItem(3), HINT_STRINGS[2]);
+      });
     });
   });
 

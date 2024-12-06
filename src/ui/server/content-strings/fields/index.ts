@@ -2,6 +2,7 @@ import { APPLICATION, ELIGIBILITY, FIELD_IDS, FIELD_VALUES, MAXIMUM_CHARACTERS }
 import { LINKS } from '../links';
 
 const { MAX_COVER_PERIOD_MONTHS } = ELIGIBILITY;
+
 const {
   POLICY: { TOTAL_MONTHS_OF_COVER },
 } = APPLICATION;
@@ -123,23 +124,9 @@ export const FIELDS = {
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
         TEXT: 'Multiple contract policy (Revolving credit)',
         HINT: [
-          `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER} months`,
+          `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER.MAXIMUM} months`,
           "Best if you'll have an ongoing relationship with the buyer but you're not sure yet how many contracts or sales you'll have",
           'You only pay for your insurance each time you declare a new contract or sale - no need to pay before the policy starts',
-        ],
-        INSET: [
-          [
-            {
-              text: `If you need a policy of over ${TOTAL_MONTHS_OF_COVER} months`,
-            },
-            {
-              text: 'fill in this form',
-              href: LINKS.EXTERNAL.NBI_FORM,
-            },
-            {
-              text: ' and email it to UKEF.',
-            },
-          ],
         ],
       },
     },

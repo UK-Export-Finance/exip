@@ -8,9 +8,11 @@ import accounts from '../../../../test-helpers/accounts';
 import accountStatusHelper from '../../../../test-helpers/account-status';
 import getKeystoneContext from '../../../../test-helpers/get-keystone-context';
 import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin, mockErrorMessage, mockSpyPromiseRejection } from '../../../../test-mocks';
-import { Account, AccountSignInResponse, Context } from '../../../../types';
+import { Account, Context } from '../../../../types';
 
 dotenv.config();
+
+const originalEnv = { ...process.env };
 
 describe('custom-resolvers/account-sign-in/account-sign-in-checks', () => {
   let context: Context;
@@ -21,6 +23,7 @@ describe('custom-resolvers/account-sign-in/account-sign-in-checks', () => {
 
   generate.otp = () => mockOTP;
 
+  let consoleSpy = jest.fn();
   let sendConfirmEmailAddressEmailSpy = jest.fn();
   let accessCodeEmailSpy = jest.fn();
 
@@ -37,10 +40,10 @@ describe('custom-resolvers/account-sign-in/account-sign-in-checks', () => {
   });
 
   afterAll(() => {
+    process.env = originalEnv;
+
     jest.resetAllMocks();
   });
-
-  let result: AccountSignInResponse;
 
   beforeEach(async () => {
     await accounts.deleteAll(context);
@@ -55,39 +58,115 @@ describe('custom-resolvers/account-sign-in/account-sign-in-checks', () => {
 
     accessCodeEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
     sendEmail.accessCodeEmail = accessCodeEmailSpy;
-
-    result = await accountSignInChecks(context, account, mockUrlOrigin);
-
-    account = await accounts.get(context, account.id);
   });
 
   describe('when the account is verified', () => {
-    test('it should generate an OTP and save to the account', () => {
+    it('should generate an OTP and save to the account', async () => {
+      await accountSignInChecks(context, account, mockUrlOrigin);
+
+      account = await accounts.get(context, account.id);
+
       expect(account.otpSalt).toEqual(mockOTP.salt);
       expect(account.otpHash).toEqual(mockOTP.hash);
       expect(new Date(account.otpExpiry)).toEqual(mockOTP.expiry);
     });
 
-    test('it should call sendEmail.accessCodeEmail', () => {
-      const { email } = account;
+    describe('when NODE_ENV is `development`', () => {
+      beforeAll(() => {
+        process.env.NODE_ENV = 'development';
+      });
 
-      const name = getFullNameString(account);
+      beforeEach(() => {
+        jest.resetAllMocks();
 
-      expect(accessCodeEmailSpy).toHaveBeenCalledTimes(1);
-      expect(accessCodeEmailSpy).toHaveBeenCalledWith(email, name, mockOTP.securityCode);
+        console.info = consoleSpy;
+
+        accessCodeEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+        sendEmail.accessCodeEmail = accessCodeEmailSpy;
+      });
+
+      it('should NOT call sendEmail.confirmEmailAddress', async () => {
+        await accountSignInChecks(context, account, mockUrlOrigin);
+
+        expect(accessCodeEmailSpy).toHaveBeenCalledTimes(0);
+      });
+
+      it('should log out an OTP', async () => {
+        await accountSignInChecks(context, account, mockUrlOrigin);
+
+        const flattenedSpys = consoleSpy.mock.calls.flat();
+
+        const assertion1 = flattenedSpys.includes('✅ Signing in account (dev environment only) - mimicking sending OTP via email %s');
+        const assertion2 = flattenedSpys.includes(mockOTP.securityCode);
+
+        expect(assertion1).toEqual(true);
+        expect(assertion2).toEqual(true);
+      });
+
+      it('should return an accountId and success=true', async () => {
+        const result = await accountSignInChecks(context, account, mockUrlOrigin);
+
+        const expected = {
+          accountId: account.id,
+          success: true,
+        };
+
+        expect(result).toEqual(expected);
+      });
     });
 
-    test('it should return the email response and accountId', () => {
-      const expected = {
-        ...mockSendEmailResponse,
-        accountId: account.id,
-      };
+    describe('when NODE_ENV is NOT `development`', () => {
+      consoleSpy = jest.fn();
 
-      expect(result).toEqual(expected);
+      beforeAll(() => {
+        process.env.NODE_ENV = 'not-development';
+      });
+
+      beforeEach(() => {
+        jest.resetAllMocks();
+
+        console.info = consoleSpy;
+
+        accessCodeEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+        sendEmail.accessCodeEmail = accessCodeEmailSpy;
+      });
+
+      it('should call sendEmail.confirmEmailAddress', async () => {
+        await accountSignInChecks(context, account, mockUrlOrigin);
+
+        expect(accessCodeEmailSpy).toHaveBeenCalledTimes(1);
+
+        const name = getFullNameString(account);
+
+        expect(accessCodeEmailSpy).toHaveBeenCalledWith(account.email, name, mockOTP.securityCode);
+      });
+
+      it('should NOT log out an OTP', async () => {
+        await accountSignInChecks(context, account, mockUrlOrigin);
+
+        const flattenedSpys = consoleSpy.mock.calls.flat();
+
+        const assertion = flattenedSpys.includes('(dev environment only) - mimicking');
+
+        expect(assertion).toEqual(false);
+      });
+
+      it('should return the email response and accountId', async () => {
+        const result = await accountSignInChecks(context, account, mockUrlOrigin);
+
+        const expected = {
+          ...mockSendEmailResponse,
+          accountId: account.id,
+        };
+
+        expect(result).toEqual(expected);
+      });
     });
   });
 
   describe('when the account is NOT verified', () => {
+    let updatedAccount: Account;
+
     beforeEach(async () => {
       jest.resetAllMocks();
 
@@ -104,25 +183,29 @@ describe('custom-resolvers/account-sign-in/account-sign-in-checks', () => {
 
       await accountStatusHelper.update(context, account.status.id, { isVerified: false });
 
-      const updatedAccount = await context.query.Account.updateOne({
+      updatedAccount = await context.query.Account.updateOne({
         where: { id: account.id },
         data: accountUpdate,
         query: 'id firstName lastName email verificationHash status { isVerified isBlocked }',
       });
-
-      result = await accountSignInChecks(context, updatedAccount, mockUrlOrigin);
     });
 
-    test('it should call confirmEmailAddressEmail.send', async () => {
+    it('should call confirmEmailAddressEmail.send', async () => {
+      await accountSignInChecks(context, updatedAccount, mockUrlOrigin);
+
       expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledTimes(1);
       expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledWith(context, variables.urlOrigin, account.id);
     });
 
-    test('it should NOT call sendEmail.accessCodeEmail', async () => {
+    it('should NOT call sendEmail.accessCodeEmail', async () => {
+      await accountSignInChecks(context, updatedAccount, mockUrlOrigin);
+
       expect(accessCodeEmailSpy).toHaveBeenCalledTimes(0);
     });
 
-    test('it should return success=false, accountId and resentVerificationEmail=true', async () => {
+    it('should return success=false, accountId and resentVerificationEmail=true', async () => {
+      const result = await accountSignInChecks(context, updatedAccount, mockUrlOrigin);
+
       const expected = {
         success: false,
         resentVerificationEmail: true,

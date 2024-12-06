@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import isValidAccountPassword from '../../../helpers/is-valid-account-password';
@@ -32,6 +33,9 @@ import { Account, AccountCreationVariables, AccountCreationCore, Context } from 
 const createAnAccount = async (root: any, variables: AccountCreationVariables, context: Context) => {
   console.info('Account creation - %s', variables.email);
 
+  const { NODE_ENV } = process.env;
+  const isDevEnvironment = NODE_ENV === 'development';
+
   try {
     const { urlOrigin, firstName, lastName, email, password } = variables;
 
@@ -44,8 +48,8 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
         console.info('Account creation - account already exists - valid credentials provided %s', email);
 
         /**
-         * if account's status is blocked
-         * sends a reactivation email
+         * if account status is blocked,
+         * send a reactivation email
          * returns object including isBlocked=true
          */
         if (account.status.isBlocked) {
@@ -140,11 +144,13 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
 
     console.info('Account creation - creating account status relationship %s', email);
 
+    const accountId = creationResponse.id;
+
     await context.db.AccountStatus.createOne({
       data: {
         account: {
           connect: {
-            id: creationResponse.id,
+            id: accountId,
           },
         },
       },
@@ -158,11 +164,27 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
 
     const name = getFullNameString(creationResponse);
 
-    const emailResponse = await sendEmail.confirmEmailAddress(email, urlOrigin, name, verificationHash, creationResponse.id);
+    /**
+     * If running in a dev environment, no need to send emails.
+     * Otherwise, we risk reaching the rate limit.
+     */
+    if (isDevEnvironment) {
+      const verificationUrl = `${variables.urlOrigin}/apply/create-account/verify-email?token=${verificationHash}&id=${accountId}`;
+
+      console.info('✅ Account creation (dev environment only) - mimicking sending verification link via email \n%s', verificationUrl);
+
+      return {
+        id: accountId,
+        verificationHash,
+        success: true,
+      };
+    }
+
+    const emailResponse = await sendEmail.confirmEmailAddress(email, urlOrigin, name, verificationHash, accountId);
 
     if (emailResponse.success) {
       return {
-        id: creationResponse.id,
+        id: accountId,
         verificationHash,
         success: true,
       };
