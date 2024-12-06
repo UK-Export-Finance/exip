@@ -127,23 +127,25 @@ context('Insurance - Policy - Broker addresses page', () => {
       });
     });
 
-    it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, () => {
-      cy.navigateToUrl(url);
-
-      radios(optionId).option.label().click();
-
-      cy.clickSubmitButton();
-
-      cy.assertUrl(brokerConfirmAddressUrl);
-    });
-
-    describe('when going back to the page', () => {
-      it('should have the submitted value', () => {
+    describe('when submitting a fully completed form', () => {
+      it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, () => {
         cy.navigateToUrl(url);
 
-        const { option } = radios(FIELD_ID, expectedFieldValue);
+        radios(optionId).option.label().click();
 
-        cy.assertRadioOptionIsChecked(option.input());
+        cy.clickSubmitButton();
+
+        cy.assertUrl(brokerConfirmAddressUrl);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted value', () => {
+          cy.navigateToUrl(url);
+
+          const { option } = radios(FIELD_ID, expectedFieldValue);
+
+          cy.assertRadioOptionIsChecked(option.input());
+        });
       });
     });
   });
