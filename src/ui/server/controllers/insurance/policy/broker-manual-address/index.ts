@@ -18,7 +18,7 @@ const {
 const {
   PROBLEM_WITH_SERVICE,
   INSURANCE_ROOT,
-  POLICY: { LOSS_PAYEE_ROOT },
+  POLICY: { LOSS_PAYEE_ROOT, BROKER_MANUAL_ADDRESS_SAVE_AND_BACK },
 } = INSURANCE_ROUTES;
 
 export const FIELD_ID = FULL_ADDRESS;
@@ -30,14 +30,15 @@ export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.BROKER_MANUAL_ADDRESS;
 /**
  * pageVariables
  * Page fields and "save and go back" URL
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object} Page variables
  */
-export const pageVariables = () => ({
+export const pageVariables = (referenceNumber: number) => ({
   FIELD: {
     ID: FIELD_ID,
     ...FIELDS.BROKER_MANUAL_ADDRESS[FIELD_ID],
   },
-  SAVE_AND_BACK_URL: '#',
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_SAVE_AND_BACK}`,
 });
 
 /**
@@ -56,7 +57,7 @@ export const get = (req: Request, res: Response) => {
 
     return res.render(TEMPLATE, {
       ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
-      ...pageVariables(),
+      ...pageVariables(application.referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       application,
     });
@@ -91,7 +92,7 @@ export const post = async (req: Request, res: Response) => {
   if (validationErrors) {
     return res.render(TEMPLATE, {
       ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
-      ...pageVariables(),
+      ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       submittedValues: sanitisedData,
       validationErrors,

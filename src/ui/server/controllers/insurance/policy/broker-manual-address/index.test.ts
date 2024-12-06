@@ -20,7 +20,7 @@ const {
 const {
   PROBLEM_WITH_SERVICE,
   INSURANCE_ROOT,
-  POLICY: { LOSS_PAYEE_ROOT },
+  POLICY: { LOSS_PAYEE_ROOT, BROKER_MANUAL_ADDRESS_SAVE_AND_BACK },
 } = INSURANCE_ROUTES;
 
 const { broker } = mockApplication;
@@ -60,14 +60,14 @@ describe('controllers/insurance/policy/broker-manual-address', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables();
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELD: {
           ID: FIELD_ID,
           ...FIELDS.BROKER_MANUAL_ADDRESS[FIELD_ID],
         },
-        SAVE_AND_BACK_URL: '#',
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -80,7 +80,7 @@ describe('controllers/insurance/policy/broker-manual-address', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
-        ...pageVariables(),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mockApplication,
       });
@@ -120,7 +120,7 @@ describe('controllers/insurance/policy/broker-manual-address', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
-          ...pageVariables(),
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           submittedValues: payload,
           validationErrors,

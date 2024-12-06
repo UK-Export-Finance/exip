@@ -1,7 +1,6 @@
 import { headingCaption } from '../../../../../../partials';
 import { brokerManualAddressPage } from '../../../../../../pages/insurance/policy';
 import { PAGES } from '../../../../../../content-strings';
-import { EXPECTED_MULTI_LINE_STRING } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
@@ -108,7 +107,7 @@ context('Insurance - Policy - Broker manual address page - As an exporter, ... T
 
       cy.checkTextareaValue({
         fieldId: FIELD_ID,
-        expectedValue: EXPECTED_MULTI_LINE_STRING,
+        expectedValue: application.BROKER[FIELD_ID],
       });
     });
   });

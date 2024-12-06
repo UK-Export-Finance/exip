@@ -8,6 +8,7 @@ import { get as getBrokerAddresses, post as postBrokerAddresses } from '../../..
 import { get as getBrokerConfirmAddress, post as postBrokerConfirmAddress } from '../../../../controllers/insurance/policy/broker-confirm-address';
 import { get as getBrokerZeroAddresses } from '../../../../controllers/insurance/policy/broker-zero-addresses';
 import { get as getBrokerManualAddress, post as postBrokerManualAddress } from '../../../../controllers/insurance/policy/broker-manual-address';
+import { post as postBrokerManualAddressSaveAndBack } from '../../../../controllers/insurance/policy/broker-manual-address/save-and-back';
 
 const {
   BROKER_ROOT,
@@ -22,6 +23,7 @@ const {
   BROKER_CONFIRM_ADDRESS_ROOT,
   BROKER_ZERO_ADDRESSES_ROOT,
   BROKER_MANUAL_ADDRESS_ROOT,
+  BROKER_MANUAL_ADDRESS_SAVE_AND_BACK,
 } = POLICY;
 
 // @ts-ignore
@@ -49,11 +51,10 @@ router.post(`/:referenceNumber${BROKER_ADDRESSES_ROOT}`, postBrokerAddresses);
 router.get(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_ROOT}`, getBrokerConfirmAddress);
 router.post(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_ROOT}`, postBrokerConfirmAddress);
 
-router.get(`/:referenceNumber${BROKER_MANUAL_ADDRESS_ROOT}`, getBrokerManualAddress);
-router.post(`/:referenceNumber${BROKER_MANUAL_ADDRESS_ROOT}`, postBrokerManualAddress);
-
 router.get(`/:referenceNumber${BROKER_ZERO_ADDRESSES_ROOT}`, getBrokerZeroAddresses);
 
 router.get(`/:referenceNumber${BROKER_MANUAL_ADDRESS_ROOT}`, getBrokerManualAddress);
+router.post(`/:referenceNumber${BROKER_MANUAL_ADDRESS_ROOT}`, postBrokerManualAddress);
+router.post(`/:referenceNumber${BROKER_MANUAL_ADDRESS_SAVE_AND_BACK}`, postBrokerManualAddressSaveAndBack);
 
 export default router;
