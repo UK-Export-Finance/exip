@@ -10,7 +10,7 @@ const { INITIAL_CHECKS, PREPARE_APPLICATION, SUBMIT_APPLICATION } = TASKS.LIST;
 
 describe('server/helpers/task-list/generate-groups-and-tasks', () => {
   const {
-    broker: { isUsingBroker },
+    broker: { isUsingBroker, isBasedInUk: brokerIsBasedInUk },
     buyer: {
       relationship: { exporterIsConnectedWithBuyer, exporterHasPreviousCreditInsuranceWithBuyer },
       buyerTradingHistory: { exporterHasTradedWithBuyer, outstandingPayments },
@@ -46,6 +46,7 @@ describe('server/helpers/task-list/generate-groups-and-tasks', () => {
       finalDestinationKnown,
       jointlyInsuredParty.requested,
       isUsingBroker,
+      brokerIsBasedInUk,
       isAppointingLossPayee,
       lossPayeeIsLocatedInUk,
       lossPayeeIsLocatedInInternationally,
@@ -80,6 +81,7 @@ describe('server/helpers/task-list/generate-groups-and-tasks', () => {
         finalDestinationKnown,
         jointlyInsuredParty: jointlyInsuredParty.requested,
         isUsingBroker,
+        brokerIsBasedInUk,
         isAppointingLossPayee,
         lossPayeeIsLocatedInUk,
         hasDifferentTradingName,
