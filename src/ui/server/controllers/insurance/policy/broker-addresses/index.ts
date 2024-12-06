@@ -9,6 +9,7 @@ import api from '../../../../api';
 import mapOrdnanceSurveyAddresses from '../../../../helpers/mappings/map-ordnance-survey-addresses';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
 
 const { SELECT_THE_ADDRESS } = POLICY_FIELD_IDS.BROKER_ADDRESSES;
@@ -78,7 +79,7 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber } = application;
+    const { broker, referenceNumber } = application;
 
     const response = await api.keystone.getOrdnanceSurveyAddresses(mockPostcode, mockHouseNameOrNumber);
 
@@ -96,7 +97,7 @@ export const get = async (req: Request, res: Response) => {
 
     const { addresses } = response;
 
-    const mappedAddresses = mapOrdnanceSurveyAddresses(addresses);
+    const mappedAddresses = mapOrdnanceSurveyAddresses(addresses, broker);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({ PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
@@ -128,19 +129,19 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber } = application;
+    const { broker, referenceNumber } = application;
 
     const payload = constructPayload(req.body, [FIELD_ID]);
 
     const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
 
+    const response = await api.keystone.getOrdnanceSurveyAddresses(mockPostcode, mockHouseNameOrNumber);
+
+    const { addresses } = response;
+
+    const mappedAddresses = mapOrdnanceSurveyAddresses(addresses, broker);
+
     if (validationErrors) {
-      const response = await api.keystone.getOrdnanceSurveyAddresses(mockPostcode, mockHouseNameOrNumber);
-
-      const { addresses } = response;
-
-      const mappedAddresses = mapOrdnanceSurveyAddresses(addresses);
-
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
@@ -152,6 +153,16 @@ export const post = async (req: Request, res: Response) => {
         postcode: mockPostcode,
         validationErrors,
       });
+    }
+
+    const answer = payload[FIELD_ID];
+
+    const { __typename, ...chosenAddress } = addresses[answer];
+
+    const saveResponse = await mapAndSave.broker(chosenAddress, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`);

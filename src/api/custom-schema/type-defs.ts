@@ -59,16 +59,7 @@ const typeDefs = `
   type OrdnanceSurveyAddress {
     addressLine1: String
     addressLine2: String
-    postalCode: String
-    country: String
-    county: String
-    town: String
-  }
-
-  input OrdnanceAddressInput  {
-    addressLine1: String
-    addressLine2: String
-    postalCode: String
+    postcode: String
     country: String
     county: String
     town: String

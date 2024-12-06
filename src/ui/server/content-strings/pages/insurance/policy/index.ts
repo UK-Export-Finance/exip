@@ -99,6 +99,13 @@ const BROKER_ADDRESSES = {
   },
 };
 
+const BROKER_CONFIRM_ADDRESS = {
+  ...SHARED,
+  PAGE_TITLE: "Confirm broker's address",
+  USE_DIFFERENT_ADDRESS: 'Use a different address',
+  ENTER_ADDRESS_MANUALLY: 'Enter address manually',
+};
+
 const BROKER_ZERO_ADDRESSES = {
   ...SHARED,
   PAGE_TITLE: 'No addresses found',
@@ -110,13 +117,6 @@ const BROKER_ZERO_ADDRESSES = {
     OR: 'or',
     ENTER_MANUALLY: 'enter the address manually.',
   },
-};
-
-const BROKER_CONFIRM_ADDRESS = {
-  ...SHARED,
-  PAGE_TITLE: "Confirm broker's address",
-  USE_DIFFERENT_ADDRESS: 'Use a different address',
-  ENTER_ADDRESS_MANUALLY: 'Enter address manually',
 };
 
 const BROKER_MANUAL_ADDRESS = {
@@ -161,8 +161,8 @@ export default {
   BROKER,
   BROKER_DETAILS,
   BROKER_ADDRESSES,
-  BROKER_ZERO_ADDRESSES,
   BROKER_CONFIRM_ADDRESS,
+  BROKER_ZERO_ADDRESSES,
   BROKER_MANUAL_ADDRESS,
   LOSS_PAYEE,
   LOSS_PAYEE_DETAILS,

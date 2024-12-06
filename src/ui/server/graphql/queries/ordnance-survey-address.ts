@@ -9,7 +9,7 @@ const ordnanceSurveyAddressesQuery = gql`
         addressLine2
         town
         county
-        postalCode
+        postcode
       }
       noAddressesFound
       apiError
