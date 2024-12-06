@@ -15,7 +15,7 @@ const isChecked = (address: MappedOrdnanceSurveyAddress, submittedAddress: Appli
   const townIsTheSame = town === submittedAddress.town;
   const postcodeIsTheSame = postcode === submittedAddress.postcode;
 
-  return addressLine1IsTheSame && addressLine2IsTheSame && townIsTheSame && postcodeIsTheSame ? true : false;
+  return addressLine1IsTheSame && addressLine2IsTheSame && townIsTheSame && postcodeIsTheSame;
 };
 
 export default isChecked;
