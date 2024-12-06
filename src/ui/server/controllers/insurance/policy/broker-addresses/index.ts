@@ -17,7 +17,7 @@ const { SELECT_THE_ADDRESS } = POLICY_FIELD_IDS.BROKER_ADDRESSES;
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  POLICY: { BROKER_DETAILS_ROOT, BROKER_ZERO_ADDRESSES_ROOT, BROKER_CONFIRM_ADDRESS_ROOT },
+  POLICY: { BROKER_DETAILS_ROOT, BROKER_ZERO_ADDRESSES_ROOT, BROKER_CONFIRM_ADDRESS_ROOT, BROKER_MANUAL_ADDRESS_ROOT },
 } = INSURANCE_ROUTES;
 
 const { BROKER_ADDRESSES } = POLICY_FIELDS;
@@ -54,6 +54,7 @@ export const pageVariables = (referenceNumber: number, totalAddresses: number) =
       ADDRESSES_FOUND: `${totalAddresses} ${ADDRESS_STRING} ${PAGE_CONTENT_STRINGS.INTRO.FOUND_FOR}`,
     },
     SEARCH_AGAIN_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
+    ENTER_ADDRESS_MANUALLY_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`,
     SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
   };
 };
@@ -81,7 +82,7 @@ export const get = async (req: Request, res: Response) => {
 
     const { broker, referenceNumber } = application;
 
-    const response = await api.keystone.getOrdnanceSurveyAddress(mockPostcode, mockHouseNameOrNumber);
+    const response = await api.keystone.getOrdnanceSurveyAddresses(mockPostcode, mockHouseNameOrNumber);
 
     if (response.apiError) {
       return res.redirect(PROBLEM_WITH_SERVICE);
@@ -135,7 +136,7 @@ export const post = async (req: Request, res: Response) => {
 
     const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
 
-    const response = await api.keystone.getOrdnanceSurveyAddress(mockPostcode, mockHouseNameOrNumber);
+    const response = await api.keystone.getOrdnanceSurveyAddresses(mockPostcode, mockHouseNameOrNumber);
 
     const { addresses } = response;
 

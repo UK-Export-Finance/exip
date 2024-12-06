@@ -477,8 +477,8 @@ const typeDefs = `
       decryptFinancialInternational: Boolean
     ): ApplicationSuccessResponse
 
-    """ get Ordnance Survey address """
-    getOrdnanceSurveyAddress(
+    """ get Ordnance Survey addresses """
+    getOrdnanceSurveyAddresses(
       postcode: String!
       houseNameOrNumber: String!
     ): OrdnanceSurveyResponse
