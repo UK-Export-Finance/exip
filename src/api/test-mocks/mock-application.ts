@@ -46,6 +46,7 @@ export const mockSinglePolicy = {
   contractCompletionDate: new Date(date.setMonth(month + 3)),
   totalValueOfContract: 1500,
   needPreCreditPeriodCover: false,
+  requestedCreditLimit: 865,
 };
 
 export const mockMultiplePolicy = {
