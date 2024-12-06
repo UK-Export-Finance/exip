@@ -80,7 +80,7 @@ export const get = async (req: Request, res: Response) => {
 
     const { referenceNumber } = application;
 
-    const response = await api.keystone.getOrdnanceSurveyAddress(mockPostcode, mockHouseNameOrNumber);
+    const response = await api.keystone.getOrdnanceSurveyAddresses(mockPostcode, mockHouseNameOrNumber);
 
     if (response.apiError) {
       return res.redirect(PROBLEM_WITH_SERVICE);
@@ -135,7 +135,7 @@ export const post = async (req: Request, res: Response) => {
     const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
 
     if (validationErrors) {
-      const response = await api.keystone.getOrdnanceSurveyAddress(mockPostcode, mockHouseNameOrNumber);
+      const response = await api.keystone.getOrdnanceSurveyAddresses(mockPostcode, mockHouseNameOrNumber);
 
       const { addresses } = response;
 

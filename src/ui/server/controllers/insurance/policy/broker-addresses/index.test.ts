@@ -32,13 +32,13 @@ describe('controllers/insurance/policy/broker-addresses', () => {
   let req: Request;
   let res: Response;
 
-  const getOrdnanceSurveyAddressSpy = jest.fn(() => Promise.resolve(mockOrdnanceSurveyAddressResponse));
+  const getOrdnanceSurveyAddressesSpy = jest.fn(() => Promise.resolve(mockOrdnanceSurveyAddressResponse));
 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
 
-    api.keystone.getOrdnanceSurveyAddress = getOrdnanceSurveyAddressSpy;
+    api.keystone.getOrdnanceSurveyAddresses = getOrdnanceSurveyAddressesSpy;
   });
 
   afterAll(() => {
@@ -121,12 +121,12 @@ describe('controllers/insurance/policy/broker-addresses', () => {
   });
 
   describe('get', () => {
-    it('should call api.keystone.getOrdnanceSurveyAddress', async () => {
+    it('should call api.keystone.getOrdnanceSurveyAddresses', async () => {
       await get(req, res);
 
-      expect(getOrdnanceSurveyAddressSpy).toHaveBeenCalledTimes(1);
+      expect(getOrdnanceSurveyAddressesSpy).toHaveBeenCalledTimes(1);
 
-      expect(getOrdnanceSurveyAddressSpy).toHaveBeenCalledWith(tempMockPostcode, tempMockHouseNameOrNumber);
+      expect(getOrdnanceSurveyAddressesSpy).toHaveBeenCalledWith(tempMockPostcode, tempMockHouseNameOrNumber);
     });
 
     it('should render template', async () => {
@@ -158,14 +158,14 @@ describe('controllers/insurance/policy/broker-addresses', () => {
     });
 
     describe('api error handling', () => {
-      describe('when api.keystone.getOrdnanceSurveyAddress returns apiError=true', () => {
+      describe('when api.keystone.getOrdnanceSurveyAddresses returns apiError=true', () => {
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           const mockResponse = {
             ...mockOrdnanceSurveyAddressResponse,
             apiError: true,
           };
 
-          api.keystone.getOrdnanceSurveyAddress = jest.fn(() => Promise.resolve(mockResponse));
+          api.keystone.getOrdnanceSurveyAddresses = jest.fn(() => Promise.resolve(mockResponse));
 
           await get(req, res);
 
@@ -173,14 +173,14 @@ describe('controllers/insurance/policy/broker-addresses', () => {
         });
       });
 
-      describe('when api.keystone.getOrdnanceSurveyAddress returns invalidPostcode=true', () => {
+      describe('when api.keystone.getOrdnanceSurveyAddresses returns invalidPostcode=true', () => {
         it(`should redirect to ${BROKER_DETAILS_ROOT}`, async () => {
           const mockResponse = {
             ...mockOrdnanceSurveyAddressResponse,
             invalidPostcode: true,
           };
 
-          api.keystone.getOrdnanceSurveyAddress = jest.fn(() => Promise.resolve(mockResponse));
+          api.keystone.getOrdnanceSurveyAddresses = jest.fn(() => Promise.resolve(mockResponse));
 
           await get(req, res);
 
@@ -188,14 +188,14 @@ describe('controllers/insurance/policy/broker-addresses', () => {
         });
       });
 
-      describe('when api.keystone.getOrdnanceSurveyAddress returns noAddressesFound=true', () => {
+      describe('when api.keystone.getOrdnanceSurveyAddresses returns noAddressesFound=true', () => {
         it(`should redirect to ${BROKER_ZERO_ADDRESSES_ROOT}`, async () => {
           const mockResponse = {
             ...mockOrdnanceSurveyAddressResponse,
             noAddressesFound: true,
           };
 
-          api.keystone.getOrdnanceSurveyAddress = jest.fn(() => Promise.resolve(mockResponse));
+          api.keystone.getOrdnanceSurveyAddresses = jest.fn(() => Promise.resolve(mockResponse));
 
           await get(req, res);
 
@@ -205,7 +205,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
 
       describe('when there is an error', () => {
         beforeEach(() => {
-          api.keystone.getOrdnanceSurveyAddress = mockSpyPromiseRejection;
+          api.keystone.getOrdnanceSurveyAddresses = mockSpyPromiseRejection;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -222,15 +222,15 @@ describe('controllers/insurance/policy/broker-addresses', () => {
       [FIELD_ID]: mappedAddresses[0].value,
     };
 
-    api.keystone.getOrdnanceSurveyAddress = jest.fn(() => Promise.resolve(mockOrdnanceSurveyAddressResponse.addresses));
+    api.keystone.getOrdnanceSurveyAddresses = jest.fn(() => Promise.resolve(mockOrdnanceSurveyAddressResponse.addresses));
 
     describe('when there are validation errors', () => {
-      it('should call api.keystone.getOrdnanceSurveyAddress', async () => {
+      it('should call api.keystone.getOrdnanceSurveyAddresses', async () => {
         await get(req, res);
 
-        expect(getOrdnanceSurveyAddressSpy).toHaveBeenCalledTimes(1);
+        expect(getOrdnanceSurveyAddressesSpy).toHaveBeenCalledTimes(1);
 
-        expect(getOrdnanceSurveyAddressSpy).toHaveBeenCalledWith(tempMockPostcode, tempMockHouseNameOrNumber);
+        expect(getOrdnanceSurveyAddressesSpy).toHaveBeenCalledWith(tempMockPostcode, tempMockHouseNameOrNumber);
       });
 
       it('should render template with validation errors and submitted values', async () => {
@@ -261,10 +261,10 @@ describe('controllers/insurance/policy/broker-addresses', () => {
         req.body = validBody;
       });
 
-      it('should NOT call api.keystone.getOrdnanceSurveyAddress', async () => {
+      it('should NOT call api.keystone.getOrdnanceSurveyAddresses', async () => {
         await post(req, res);
 
-        expect(getOrdnanceSurveyAddressSpy).toHaveBeenCalledTimes(0);
+        expect(getOrdnanceSurveyAddressesSpy).toHaveBeenCalledTimes(0);
       });
 
       it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, async () => {
@@ -276,9 +276,9 @@ describe('controllers/insurance/policy/broker-addresses', () => {
       });
 
       describe('api error handling', () => {
-        describe('when api.keystone.getOrdnanceSurveyAddress throws an error', () => {
+        describe('when api.keystone.getOrdnanceSurveyAddresses throws an error', () => {
           beforeEach(() => {
-            api.keystone.getOrdnanceSurveyAddress = mockSpyPromiseRejection;
+            api.keystone.getOrdnanceSurveyAddresses = mockSpyPromiseRejection;
           });
 
           it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
