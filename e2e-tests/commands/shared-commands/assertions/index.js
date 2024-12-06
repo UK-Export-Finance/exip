@@ -70,6 +70,8 @@ Cypress.Commands.add('assertConnectionWithBuyerFieldValues', require('./assert-c
 
 Cypress.Commands.add('assertEmptyOverdueOrOutstandingFieldValues', require('./assert-empty-overdue-or-outstanding-field-values'));
 
+Cypress.Commands.add('assertEnterAddressManuallyLink', require('./assert-enter-address-manually-link'));
+
 Cypress.Commands.add('assertDifferentNameOnPolicyFieldValues', require('./assert-different-name-on-policy-field-values'));
 Cypress.Commands.add('assertOtherCompanyDetailsFieldValues', require('./assert-other-company-details-field-values'));
 Cypress.Commands.add('assertEmptyOtherCompanyDetailsFieldValues', require('./assert-empty-other-company-details-field-values'));

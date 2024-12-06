@@ -4,14 +4,15 @@ export const LINKS = {
   ADD: 'Add',
   BACK: 'Back',
   CHANGE: 'Change',
-  START_AGAIN: {
-    TEXT: 'Start again',
-    HREF: ROUTES.ROOT,
-  },
+  ENTER_ADDRESS_MANUALLY: 'Enter address manually',
   FEEDBACK: 'feedback',
   GIVE_FEEDBACK: 'Give feedback',
   GIVE_FEEDBACK_LOWERCASE: 'give feedback',
   SKIP_TO_MAIN_CONTENT: 'Skip to main content',
+  START_AGAIN: {
+    TEXT: 'Start again',
+    HREF: ROUTES.ROOT,
+  },
   EXTERNAL: {
     GUIDANCE: 'https://www.gov.uk/guidance/credit-insurance-policy#eligibility',
     BEFORE_YOU_START: 'https://www.gov.uk/guidance/get-a-quote-for-ukef-credit-insurance',
