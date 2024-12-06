@@ -13,7 +13,8 @@ const {
 
 const {
   USING_BROKER,
-  BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
+  BROKER_DETAILS: { NAME, EMAIL },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = INSURANCE_FIELD_IDS.POLICY;
 
 const baseUrl = Cypress.config('baseUrl');

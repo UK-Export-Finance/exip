@@ -1,5 +1,6 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from 'govuk/components/radios/macro.njk' import govukRadios %}
 {% import '../../components/form-buttons.njk' as formButtons %}
 
@@ -17,6 +18,13 @@
     }
   }) }}
 
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
   <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
@@ -28,7 +36,17 @@
 
         <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
-        <p class="govuk-body" data-cy="body">{{ BODY }} <span class="govuk-!-font-weight-bold">{{ postcode }}</span></p>
+        {% set postcodeHtml %}
+          <span class="govuk-!-font-weight-bold">{{ postcode }}</span>
+        {% endset %}
+
+        {% set searchAgainHtml %}
+          <a class="govuk-link" data-cy="search-again-link" href="{{ SEARCH_AGAIN_URL }}">{{ INTRO.SEARCH_AGAIN }}</a>
+        {% endset %}
+
+        <p class="govuk-intro" data-cy="intro">
+          {{ INTRO.ADDRESSES_FOUND }} {{ postcodeHtml | safe }} {{ INTRO.SEPARATOR }} {{ buildingNumberOrName }}. {{ searchAgainHtml | safe }}
+        </p>
 
         {% set legendHtml %}
           <legend class="govuk-fieldset__legend govuk-!-font-weight-bold" data-cy="{{ FIELD.ID }}-label">{{ FIELD.LABEL }}</legend>
@@ -42,7 +60,13 @@
               html: legendHtml
             }
           },
-          items: mappedAddresses
+          items: mappedAddresses,
+          errorMessage: validationErrors.errorList[FIELD.ID] and {
+            text: validationErrors.errorList[FIELD.ID].text,
+            attributes: {
+              "data-cy": FIELD.ID + "-error-message"
+            }
+          }
         }) }}
 
       </div>

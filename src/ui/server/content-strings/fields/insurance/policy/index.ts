@@ -19,6 +19,7 @@ const {
     USING_BROKER,
     BROKER_DETAILS: { NAME, IS_BASED_IN_UK, POSTCODE, BUILDING_NUMBER_OR_NAME },
     BROKER_ADDRESSES: { SELECT_THE_ADDRESS },
+    BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
     LOSS_PAYEE: { IS_APPOINTED },
     LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY },
     LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
@@ -54,7 +55,7 @@ export const POLICY_FIELDS = {
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
         TEXT: 'Multiple contract policy (Revolving credit)',
         HINT_LIST: [
-          `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER} months`,
+          `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER.MAXIMUM} months`,
           "Best if you'll have an ongoing relationship with the buyer but you're not sure yet how many contracts or sales you'll have",
           'You only pay for your insurance each time you declare a new contract or sale - no need to pay before the policy starts',
         ],
@@ -277,19 +278,20 @@ export const POLICY_FIELDS = {
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
     },
-    // TODO: EMS-3975
-    // [FULL_ADDRESS]: {
-    //   LABEL: "Broker's address",
-    //   SUMMARY: {
-    //     TITLE: "Broker's address",
-    //     FORM_TITLE: POLICY_FORM_TITLES.BROKER,
-    //   },
-    //   MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
-    // },
   },
   BROKER_ADDRESSES: {
     [SELECT_THE_ADDRESS]: {
       LABEL: 'Select the address',
+    },
+  },
+  BROKER_MANUAL_ADDRESS: {
+    [FULL_ADDRESS]: {
+      LABEL: "Broker's address",
+      SUMMARY: {
+        TITLE: "Broker's address",
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
+      },
+      MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
     },
   },
   LOSS_PAYEE: {

@@ -118,7 +118,7 @@ context('Policy type page - as an exporter, I want to get UKEF credit insurance 
       });
     });
 
-    describe('when form is valid', () => {
+    describe('form submission', () => {
       it(`should redirect to ${TELL_US_ABOUT_YOUR_POLICY}`, () => {
         policyTypePage[FIELD_ID].single.label().click();
 
