@@ -4,7 +4,7 @@ import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-id
 import application from '../../../../../../fixtures/application';
 
 const {
-  BROKER_DETAILS: { FULL_ADDRESS: FIELD_ID },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS: FIELD_ID },
 } = POLICY_FIELD_IDS;
 
 const {
