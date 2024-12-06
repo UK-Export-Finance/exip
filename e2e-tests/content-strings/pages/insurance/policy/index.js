@@ -113,15 +113,9 @@ const BROKER_ZERO_ADDRESSES = {
   OUTRO: {
     COULD_NOT_FIND: 'We could not find any addresses for',
     YOU_CAN: 'You can',
-    SEARCH_AGAIN: {
-      TEXT: 'search again',
-      HREF: '#',
-    },
+    SEARCH_AGAIN: 'search again',
     OR: 'or',
-    ENTER_MANUALLY: {
-      TEXT: 'enter the address manually.',
-      HREF: '#',
-    },
+    ENTER_MANUALLY: 'enter the address manually.',
   },
 };
 
