@@ -35,7 +35,7 @@ __export(keystone_exports, {
   default: () => keystone_default,
 });
 module.exports = __toCommonJS(keystone_exports);
-var import_config5 = require('dotenv/config');
+var import_config7 = require('dotenv/config');
 var import_core3 = require('@keystone-6/core');
 var import_overload_protection = __toESM(require('overload-protection'));
 
@@ -347,8 +347,6 @@ var POLICY = {
     NAME: 'name',
     EMAIL: shared_default.EMAIL,
     BROKER_EMAIL: 'broker.email',
-    // TODO: EMS-3975
-    FULL_ADDRESS: 'fullAddress',
     IS_BASED_IN_UK: 'isBasedInUk',
     BUILDING_NUMBER_OR_NAME: 'buildingNumberOrName',
     ADDRESS_LINE_1: 'addressLine1',
@@ -359,6 +357,9 @@ var POLICY = {
   },
   BROKER_ADDRESSES: {
     SELECT_THE_ADDRESS: 'selectTheAddress',
+  },
+  BROKER_MANUAL_ADDRESS: {
+    FULL_ADDRESS: 'fullAddress',
   },
   LOSS_PAYEE: {
     IS_APPOINTED: 'isAppointed',
@@ -2662,16 +2663,7 @@ var typeDefs = `
   type OrdnanceSurveyAddress {
     addressLine1: String
     addressLine2: String
-    postalCode: String
-    country: String
-    county: String
-    town: String
-  }
-
-  input OrdnanceAddressInput  {
-    addressLine1: String
-    addressLine2: String
-    postalCode: String
+    postcode: String
     country: String
     county: String
     town: String
@@ -3107,6 +3099,9 @@ var typeDefs = `
 `;
 var type_defs_default = typeDefs;
 
+// custom-resolvers/mutations/create-an-account/index.ts
+var import_config5 = require('dotenv/config');
+
 // helpers/get-account-status-by-id/index.ts
 var getAccountStatusById = async (context, id) => {
   try {
@@ -3381,6 +3376,8 @@ var send_email_reactivate_account_link_default = sendEmailReactivateAccountLinkH
 // custom-resolvers/mutations/create-an-account/index.ts
 var createAnAccount = async (root, variables, context) => {
   console.info('Account creation - %s', variables.email);
+  const { NODE_ENV: NODE_ENV3 } = process.env;
+  const isDevEnvironment3 = NODE_ENV3 === 'development';
   try {
     const { urlOrigin, firstName, lastName, email, password: password2 } = variables;
     const account2 = await get_account_by_field_default(context, account_default.EMAIL, email);
@@ -3390,16 +3387,16 @@ var createAnAccount = async (root, variables, context) => {
         console.info('Account creation - account already exists - valid credentials provided %s', email);
         if (account2.status.isBlocked) {
           console.info('Account creation - unable to create a new account - account already exists and is blocked %s', email);
-          const { id: accountId } = account2;
+          const { id: accountId2 } = account2;
           const reactivateAccountVariables = {
-            accountId,
+            accountId: accountId2,
             urlOrigin,
           };
           console.info('Account creation - resending an email for reactivation %s', email);
           const emailResponse2 = await send_email_reactivate_account_link_default.send(reactivateAccountVariables, context);
           if (emailResponse2.success) {
             return {
-              id: accountId,
+              id: accountId2,
               success: true,
               alreadyExists: true,
               isVerified: false,
@@ -3413,12 +3410,12 @@ var createAnAccount = async (root, variables, context) => {
         }
         if (!account2.status.isVerified) {
           console.info('Account creation - unable to create a new account - account already exists and is not verified %s', email);
-          const { id: accountId } = account2;
+          const { id: accountId2 } = account2;
           console.info('Account creation - resending an email verification for %s', email);
-          const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
+          const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId2);
           if (emailResponse2.success) {
             return {
-              id: accountId,
+              id: accountId2,
               success: true,
               alreadyExists: true,
               isVerified: false,
@@ -3456,21 +3453,31 @@ var createAnAccount = async (root, variables, context) => {
       data: accountData,
     });
     console.info('Account creation - creating account status relationship %s', email);
+    const accountId = creationResponse.id;
     await context.db.AccountStatus.createOne({
       data: {
         account: {
           connect: {
-            id: creationResponse.id,
+            id: accountId,
           },
         },
       },
     });
     console.info('Account creation - sending an email verification for %s', email);
     const name = get_full_name_string_default(creationResponse);
-    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, verificationHash, creationResponse.id);
+    if (isDevEnvironment3) {
+      const verificationUrl = `${variables.urlOrigin}/apply/create-account/verify-email?token=${verificationHash}&id=${accountId}`;
+      console.info('\u2705 Account creation (dev environment only) - mimicking sending verification link via email \n%s', verificationUrl);
+      return {
+        id: accountId,
+        verificationHash,
+        success: true,
+      };
+    }
+    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, verificationHash, accountId);
     if (emailResponse.success) {
       return {
-        id: creationResponse.id,
+        id: accountId,
         verificationHash,
         success: true,
       };
@@ -3694,6 +3701,9 @@ var blockAccount = async (context, statusId) => {
 };
 var block_account_default = blockAccount;
 
+// custom-resolvers/mutations/account-sign-in/account-sign-in-checks/index.ts
+var import_config6 = require('dotenv/config');
+
 // helpers/generate-otp/index.ts
 var import_crypto5 = __toESM(require('crypto'));
 var import_otplib = require('otplib');
@@ -3759,6 +3769,8 @@ var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
 var accountSignInChecks = async (context, account2, urlOrigin) => {
   try {
     console.info('Signing in account - checking account');
+    const { NODE_ENV: NODE_ENV3 } = process.env;
+    const isDevEnvironment3 = NODE_ENV3 === 'development';
     const { id: accountId, email } = account2;
     if (!account2.status.isVerified) {
       console.info('Unable to sign in account - account has not been verified yet. Sending a new email verification');
@@ -3775,7 +3787,14 @@ var accountSignInChecks = async (context, account2, urlOrigin) => {
     console.info('Signing in account - account is verified. Generating and sending an OTP');
     const { securityCode } = await generate_otp_and_update_account_default(context, accountId);
     const name = get_full_name_string_default(account2);
-    const emailResponse = await emails_default.accessCodeEmail(email, name, String(securityCode));
+    if (isDevEnvironment3) {
+      console.info('\u2705 Signing in account (dev environment only) - mimicking sending OTP via email %s', securityCode);
+      return {
+        accountId,
+        success: true,
+      };
+    }
+    const emailResponse = await emails_default.accessCodeEmail(email, name, securityCode);
     if (emailResponse?.success) {
       return {
         ...emailResponse,
@@ -6498,7 +6517,8 @@ var {
     CREDIT_PERIOD_WITH_BUYER,
     REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME: COMPANY_NAME2, COMPANY_NUMBER, COUNTRY_CODE },
     USING_BROKER,
-    BROKER_DETAILS: { NAME, FULL_ADDRESS },
+    BROKER_DETAILS: { NAME },
+    BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
     LOSS_PAYEE: { IS_APPOINTED },
     BROKER_ADDRESSES: { SELECT_THE_ADDRESS },
     LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY },
@@ -6532,7 +6552,7 @@ var POLICY_FIELDS = {
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
         TEXT: 'Multiple contract policy (Revolving credit)',
         HINT_LIST: [
-          `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER} months`,
+          `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER.MAXIMUM} months`,
           "Best if you'll have an ongoing relationship with the buyer but you're not sure yet how many contracts or sales you'll have",
           'You only pay for your insurance each time you declare a new contract or sale - no need to pay before the policy starts',
         ],
@@ -6735,6 +6755,13 @@ var POLICY_FIELDS = {
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
     },
+  },
+  BROKER_ADDRESSES: {
+    [SELECT_THE_ADDRESS]: {
+      LABEL: 'Select the address',
+    },
+  },
+  BROKER_MANUAL_ADDRESS: {
     [FULL_ADDRESS]: {
       LABEL: "Broker's address",
       SUMMARY: {
@@ -6742,11 +6769,6 @@ var POLICY_FIELDS = {
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
       MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
-    },
-  },
-  BROKER_ADDRESSES: {
-    [SELECT_THE_ADDRESS]: {
-      LABEL: 'Select the address',
     },
   },
   LOSS_PAYEE: {
@@ -9502,11 +9524,13 @@ var mapOrdnanceSurveyAddress = (address) => {
       addressLine1 = address.DPA.BUILDING_NAME;
     }
   }
+  const county = '';
   return {
     addressLine1,
     addressLine2: address.DPA.THOROUGHFARE_NAME,
     town: address.DPA.POST_TOWN,
-    postalCode: address.DPA.POSTCODE,
+    county,
+    postcode: address.DPA.POSTCODE,
   };
 };
 var map_ordnance_survey_address_default = mapOrdnanceSurveyAddress;

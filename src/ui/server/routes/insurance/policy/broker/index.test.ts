@@ -6,6 +6,8 @@ import { get as getBrokerDetails, post as postBrokerDetails } from '../../../../
 import { post as postBrokerDetailsSaveAndBack } from '../../../../controllers/insurance/policy/broker-details/save-and-back';
 import { get as getBrokerAddresses, post as postBrokerAddresses } from '../../../../controllers/insurance/policy/broker-addresses';
 import { get as getBrokerConfirmAddress, post as postBrokerConfirmAddress } from '../../../../controllers/insurance/policy/broker-confirm-address';
+import { get as getBrokerZeroAddresses } from '../../../../controllers/insurance/policy/broker-zero-addresses';
+import { get as getBrokerManualAddress, post as postBrokerManualAddress } from '../../../../controllers/insurance/policy/broker-manual-address';
 
 const {
   BROKER_ROOT,
@@ -18,6 +20,8 @@ const {
   BROKER_DETAILS_CHECK_AND_CHANGE,
   BROKER_ADDRESSES_ROOT,
   BROKER_CONFIRM_ADDRESS_ROOT,
+  BROKER_ZERO_ADDRESSES_ROOT,
+  BROKER_MANUAL_ADDRESS_ROOT,
 } = POLICY;
 
 describe('routes/insurance/policy/broker', () => {
@@ -30,8 +34,8 @@ describe('routes/insurance/policy/broker', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(8);
-    expect(post).toHaveBeenCalledTimes(10);
+    expect(get).toHaveBeenCalledTimes(11);
+    expect(post).toHaveBeenCalledTimes(11);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${BROKER_ROOT}`, getBroker);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${BROKER_ROOT}`, postBroker);
@@ -54,5 +58,10 @@ describe('routes/insurance/policy/broker', () => {
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_ROOT}`, getBrokerConfirmAddress);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_ROOT}`, postBrokerConfirmAddress);
+
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${BROKER_ZERO_ADDRESSES_ROOT}`, getBrokerZeroAddresses);
+
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${BROKER_MANUAL_ADDRESS_ROOT}`, getBrokerManualAddress);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${BROKER_MANUAL_ADDRESS_ROOT}`, postBrokerManualAddress);
   });
 });

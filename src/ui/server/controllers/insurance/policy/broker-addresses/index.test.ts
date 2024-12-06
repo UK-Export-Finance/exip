@@ -10,8 +10,9 @@ import api from '../../../../api';
 import mapOrdnanceSurveyAddresses from '../../../../helpers/mappings/map-ordnance-survey-addresses';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockOrdnanceSurveyAddressResponse, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockOrdnanceSurveyAddressResponse, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const { SELECT_THE_ADDRESS } = POLICY_FIELD_IDS.BROKER_ADDRESSES;
 
@@ -25,9 +26,8 @@ const { BROKER_ADDRESSES } = POLICY_FIELDS;
 
 const tempMockPostcode = 'W1A 1AA';
 const tempMockHouseNameOrNumber = 'WOGAN HOUSE';
-const mockTotalAddresses = mockOrdnanceSurveyAddressResponse.addresses.length;
 
-const mappedAddresses = mapOrdnanceSurveyAddresses(mockOrdnanceSurveyAddressResponse.addresses);
+const mappedAddresses = mapOrdnanceSurveyAddresses(mockOrdnanceSurveyAddressResponse.addresses, mockApplication.broker);
 
 describe('controllers/insurance/policy/broker-addresses', () => {
   let req: Request;
@@ -75,19 +75,49 @@ describe('controllers/insurance/policy/broker-addresses', () => {
   });
 
   describe('pageVariables', () => {
-    it('should have correct properties', () => {
-      const result = pageVariables(referenceNumber, mockTotalAddresses);
+    const expectedGenericProperties = {
+      FIELD: {
+        ID: SELECT_THE_ADDRESS,
+        ...BROKER_ADDRESSES[SELECT_THE_ADDRESS],
+      },
+      SEARCH_AGAIN_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
+      SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
+    };
 
-      const expected = {
-        FIELD: {
-          ID: SELECT_THE_ADDRESS,
-          ...BROKER_ADDRESSES[SELECT_THE_ADDRESS],
-        },
-        BODY: `${mockTotalAddresses} ${PAGE_CONTENT_STRINGS.BODY}`,
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
-      };
+    describe('when totalAddresses is 1', () => {
+      it('should have correct properties', () => {
+        const mockTotalAddresses = 1;
 
-      expect(result).toEqual(expected);
+        const result = pageVariables(referenceNumber, mockTotalAddresses);
+
+        const expected = {
+          ...expectedGenericProperties,
+          INTRO: {
+            ...PAGE_CONTENT_STRINGS.INTRO,
+            ADDRESSES_FOUND: `${mockTotalAddresses} ${PAGE_CONTENT_STRINGS.INTRO.ADDRESS} ${PAGE_CONTENT_STRINGS.INTRO.FOUND_FOR}`,
+          },
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when totalAddresses is greater than 1', () => {
+      it('should have correct properties', () => {
+        const mockTotalAddresses = 2;
+
+        const result = pageVariables(referenceNumber, mockTotalAddresses);
+
+        const expected = {
+          ...expectedGenericProperties,
+          INTRO: {
+            ...PAGE_CONTENT_STRINGS.INTRO,
+            ADDRESSES_FOUND: `${mockTotalAddresses} ${PAGE_CONTENT_STRINGS.INTRO.ADDRESSES} ${PAGE_CONTENT_STRINGS.INTRO.FOUND_FOR}`,
+          },
+        };
+
+        expect(result).toEqual(expected);
+      });
     });
   });
 
@@ -112,6 +142,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
         userName: getUserNameFromSession(req.session.user),
         mappedAddresses,
         postcode: tempMockPostcode,
+        buildingNumberOrName: tempMockHouseNameOrNumber,
       });
     });
 
@@ -193,6 +224,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
     };
 
     api.keystone.getOrdnanceSurveyAddress = jest.fn(() => Promise.resolve(mockOrdnanceSurveyAddressResponse.addresses));
+    mapAndSave.broker = jest.fn(() => Promise.resolve(true));
 
     describe('when there are validation errors', () => {
       it('should call api.keystone.getOrdnanceSurveyAddress', async () => {
@@ -227,22 +259,34 @@ describe('controllers/insurance/policy/broker-addresses', () => {
     });
 
     describe('when there are no validation errors', () => {
-      beforeEach(() => {
+      beforeEach(async () => {
         req.body = validBody;
+
+        await post(req, res);
       });
 
-      it('should NOT call api.keystone.getOrdnanceSurveyAddress', async () => {
-        await post(req, res);
+      it('should call api.keystone.getOrdnanceSurveyAddress', () => {
+        expect(getOrdnanceSurveyAddressSpy).toHaveBeenCalledTimes(1);
 
-        expect(getOrdnanceSurveyAddressSpy).toHaveBeenCalledTimes(0);
+        expect(getOrdnanceSurveyAddressSpy).toHaveBeenCalledWith(tempMockPostcode, tempMockHouseNameOrNumber);
       });
 
-      it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, async () => {
-        await post(req, res);
-
+      it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, () => {
         const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+
+      it('should call mapAndSave.broker once with address data and application data', () => {
+        expect(mapAndSave.broker).toHaveBeenCalledTimes(1);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
+
+        const answer = payload[FIELD_ID];
+
+        const chosenAddress = mockOrdnanceSurveyAddressResponse.addresses[answer];
+
+        expect(mapAndSave.broker).toHaveBeenCalledWith(chosenAddress, mockApplication);
       });
 
       describe('api error handling', () => {
@@ -255,6 +299,40 @@ describe('controllers/insurance/policy/broker-addresses', () => {
             await get(req, res);
 
             expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('mapAndSave.broker call', () => {
+          beforeEach(() => {
+            req.body = validBody;
+          });
+
+          describe('when no application is returned', () => {
+            beforeEach(() => {
+              const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
+
+              mapAndSave.broker = mapAndSaveSpy;
+            });
+
+            it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+              await post(req, res);
+
+              expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+            });
+          });
+
+          describe('when there is an error', () => {
+            beforeEach(() => {
+              const mapAndSaveSpy = mockSpyPromiseRejection;
+
+              mapAndSave.broker = mapAndSaveSpy;
+            });
+
+            it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+              await post(req, res);
+
+              expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+            });
           });
         });
       });

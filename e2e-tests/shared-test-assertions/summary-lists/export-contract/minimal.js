@@ -52,7 +52,7 @@ const assertMinimalExportContractSummaryListRows = ({ awardMethodValue = OPEN_TE
     checkSummaryList[NAME]({ shouldRender: false });
   });
 
-  // TODO: EMS-3975
+  // TODO: EMS-4011
   it.skip(`should NOT render a ${FULL_ADDRESS} summary list row`, () => {
     checkSummaryList[FULL_ADDRESS]({ shouldRender: false });
   });

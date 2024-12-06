@@ -9,6 +9,7 @@ import api from '../../../../api';
 import mapOrdnanceSurveyAddresses from '../../../../helpers/mappings/map-ordnance-survey-addresses';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
 
 const { SELECT_THE_ADDRESS } = POLICY_FIELD_IDS.BROKER_ADDRESSES;
@@ -36,14 +37,26 @@ export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.BROKER_ADDRESSES;
  * @param {Number} totalAddresses: Total amount of addresses found
  * @returns {Object} Page variables
  */
-export const pageVariables = (referenceNumber: number, totalAddresses: number) => ({
-  FIELD: {
-    ID: FIELD_ID,
-    ...BROKER_ADDRESSES[FIELD_ID],
-  },
-  BODY: `${totalAddresses} ${PAGE_CONTENT_STRINGS.BODY}`,
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
-});
+export const pageVariables = (referenceNumber: number, totalAddresses: number) => {
+  let ADDRESS_STRING = PAGE_CONTENT_STRINGS.INTRO.ADDRESSES;
+
+  if (totalAddresses === 1) {
+    ADDRESS_STRING = PAGE_CONTENT_STRINGS.INTRO.ADDRESS;
+  }
+
+  return {
+    FIELD: {
+      ID: SELECT_THE_ADDRESS,
+      ...BROKER_ADDRESSES[SELECT_THE_ADDRESS],
+    },
+    INTRO: {
+      ...PAGE_CONTENT_STRINGS.INTRO,
+      ADDRESSES_FOUND: `${totalAddresses} ${ADDRESS_STRING} ${PAGE_CONTENT_STRINGS.INTRO.FOUND_FOR}`,
+    },
+    SEARCH_AGAIN_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
+    SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
+  };
+};
 
 // TODO: EMS-3974 - this will come from the following:
 // application.broker.buildingNumberOrName
@@ -66,7 +79,7 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber } = application;
+    const { broker, referenceNumber } = application;
 
     const response = await api.keystone.getOrdnanceSurveyAddress(mockPostcode, mockHouseNameOrNumber);
 
@@ -84,7 +97,7 @@ export const get = async (req: Request, res: Response) => {
 
     const { addresses } = response;
 
-    const mappedAddresses = mapOrdnanceSurveyAddresses(addresses);
+    const mappedAddresses = mapOrdnanceSurveyAddresses(addresses, broker);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({ PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
@@ -92,6 +105,7 @@ export const get = async (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
       mappedAddresses,
       postcode: mockPostcode,
+      buildingNumberOrName: mockHouseNameOrNumber,
     });
   } catch (error) {
     console.error('Error calling ordnance survey %o', error);
@@ -115,19 +129,19 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber } = application;
+    const { broker, referenceNumber } = application;
 
     const payload = constructPayload(req.body, [FIELD_ID]);
 
     const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
 
+    const response = await api.keystone.getOrdnanceSurveyAddress(mockPostcode, mockHouseNameOrNumber);
+
+    const { addresses } = response;
+
+    const mappedAddresses = mapOrdnanceSurveyAddresses(addresses, broker);
+
     if (validationErrors) {
-      const response = await api.keystone.getOrdnanceSurveyAddress(mockPostcode, mockHouseNameOrNumber);
-
-      const { addresses } = response;
-
-      const mappedAddresses = mapOrdnanceSurveyAddresses(addresses);
-
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
@@ -139,6 +153,16 @@ export const post = async (req: Request, res: Response) => {
         postcode: mockPostcode,
         validationErrors,
       });
+    }
+
+    const answer = payload[FIELD_ID];
+
+    const { __typename, ...chosenAddress } = addresses[answer];
+
+    const saveResponse = await mapAndSave.broker(chosenAddress, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`);

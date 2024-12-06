@@ -61,8 +61,6 @@ export const POLICY = {
     NAME: 'name',
     EMAIL: SHARED.EMAIL,
     BROKER_EMAIL: 'broker.email',
-    // TODO: EMS-3975
-    FULL_ADDRESS: 'fullAddress',
     IS_BASED_IN_UK: 'isBasedInUk',
     BUILDING_NUMBER_OR_NAME: 'buildingNumberOrName',
     ADDRESS_LINE_1: 'addressLine1',
@@ -73,6 +71,9 @@ export const POLICY = {
   },
   BROKER_ADDRESSES: {
     SELECT_THE_ADDRESS: 'selectTheAddress',
+  },
+  BROKER_MANUAL_ADDRESS: {
+    FULL_ADDRESS: 'fullAddress',
   },
   LOSS_PAYEE: {
     IS_APPOINTED: 'isAppointed',

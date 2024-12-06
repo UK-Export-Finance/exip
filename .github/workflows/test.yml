@@ -53,6 +53,8 @@ env:
   CRON_SCHEDULE_INACTIVE_APPLICATION: ${{ secrets.CRON_SCHEDULE_INACTIVE_APPLICATION }}
   CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL: ${{ secrets.CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL }}
   APPLICATION_URL: ${{ vars.APPLICATION_URL }}
+  ORDNANCE_SURVEY_API_KEY: ${{ secrets.ORDNANCE_SURVEY_API_KEY }}
+  ORDNANCE_SURVEY_API_URL: ${{ secrets.ORDNANCE_SURVEY_API_URL }}
 
 jobs:
   # 1. Setup test infrastructure
@@ -174,6 +176,8 @@ jobs:
           CRON_SCHEDULE_INACTIVE_APPLICATION: ${{ secrets.CRON_SCHEDULE_INACTIVE_APPLICATION }}
           CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL: ${{ secrets.CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL }}
           APPLICATION_URL: ${{ secrets.APPLICATION_URL }}
+          ORDNANCE_SURVEY_API_KEY: ${{ secrets.ORDNANCE_SURVEY_API_KEY }}
+          ORDNANCE_SURVEY_API_URL: ${{ secrets.ORDNANCE_SURVEY_API_URL }}
         run: |
           docker compose up --build -d
           npm run ci:all
@@ -665,6 +669,8 @@ jobs:
             'policy/broker-details/**/*.spec.js',
             'policy/broker-addresses/**/*.spec.js',
             'policy/broker-confirm-address/**/*.spec.js',
+            'policy/broker-manual-address/**/*.spec.js',
+            'policy/broker-zero-addresses/**/*.spec.js',
             'policy/change-your-answers/another-company/**/*.spec.js',
             'policy/change-your-answers/broker/**/*.spec.js',
             'policy/change-your-answers/loss-payee/**/*.spec.js',

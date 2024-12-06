@@ -127,8 +127,12 @@ interface ApplicationBroker {
   isUsingBroker?: boolean;
   isBasedInUk?: boolean;
   name?: string;
-  email?: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  town?: string;
+  postcode?: string;
   fullAddress?: string;
+  email?: string;
 }
 
 interface ApplicationBuyerCountry {
