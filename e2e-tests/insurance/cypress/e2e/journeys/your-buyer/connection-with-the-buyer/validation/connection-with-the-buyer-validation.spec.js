@@ -44,7 +44,7 @@ context('Insurance - Your buyer - Connection to the buyer page - form validation
   });
 
   describe(`when ${CONNECTION_WITH_BUYER} 'no' is selected`, () => {
-    it('should display validation errors', () => {
+    it('should render validation errors', () => {
       cy.navigateToUrl(url);
 
       const radioField = {

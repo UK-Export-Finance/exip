@@ -82,7 +82,7 @@ context(
         cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
       });
 
-      it('should display summary text with collapsed conditional `details` content', () => {
+      it('should render summary text with collapsed conditional `details` content', () => {
         cy.checkText(buyerFinancialInformationPage.summary(), CONTENT_STRINGS.SUMMARY);
 
         buyerFinancialInformationPage.details().should('not.have.attr', 'open');

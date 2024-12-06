@@ -58,7 +58,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   });
 
   describe('all page errors', () => {
-    it('should display the validation error for trading name in radio error summary', () => {
+    it('should render the validation error for trading name in radio error summary', () => {
       const field = companyDetails[HAS_DIFFERENT_TRADING_NAME];
 
       const radioField = {
@@ -73,7 +73,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
     });
 
-    it('should display the validation error for trading address in radio error summary', () => {
+    it('should render the validation error for trading address in radio error summary', () => {
       const field = companyDetails[HAS_DIFFERENT_TRADING_ADDRESS];
 
       const radioField = {
@@ -89,7 +89,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
     });
 
-    it('should display the validation error for company website in company website section', () => {
+    it('should render the validation error for company website in company website section', () => {
       cy.submitAndAssertFieldErrors({
         field: fieldSelector(WEBSITE),
         value: WEBSITE_EXAMPLES.INVALID,
@@ -99,7 +99,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
     });
 
-    it('should display the validation error for phone number in phone number section', () => {
+    it('should render the validation error for phone number in phone number section', () => {
       cy.submitAndAssertFieldErrors({
         field: fieldSelector(PHONE_NUMBER),
         value: INVALID_PHONE_NUMBER,

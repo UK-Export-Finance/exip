@@ -155,7 +155,7 @@ context(
       });
 
       describe('when submitting an empty form', () => {
-        it(`should display validation errors if ${FIELD_ID} radio is not selected`, () => {
+        it(`should render validation errors if ${FIELD_ID} radio is not selected`, () => {
           cy.navigateToUrl(url);
 
           const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;

@@ -93,7 +93,7 @@ context(
         cy.checkText(html(COMPANY_ADDRESS), addressText);
       });
 
-      it(`should display ${FULL_ADDRESS} textarea`, () => {
+      it(`should render ${FULL_ADDRESS} textarea`, () => {
         const fieldStrings = FIELD_STRINGS[fieldId];
 
         cy.assertTextareaRendering({
@@ -109,14 +109,14 @@ context(
         cy.navigateToUrl(alternativeAddressUrl);
       });
 
-      it(`should display validation errors if ${FULL_ADDRESS} is left empty`, () => {
+      it(`should render validation errors if ${FULL_ADDRESS} is left empty`, () => {
         cy.submitAndAssertFieldErrors({
           field: textareaField,
           expectedErrorMessage: ERRORS[FULL_ADDRESS].IS_EMPTY,
         });
       });
 
-      it(`should display validation errors if ${FULL_ADDRESS} is over ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`, () => {
+      it(`should render validation errors if ${FULL_ADDRESS} is over ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`, () => {
         cy.submitAndAssertFieldErrors({
           field: textareaField,
           value: 'a'.repeat(MAXIMUM_CHARACTERS.FULL_ADDRESS + 1),

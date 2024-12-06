@@ -44,7 +44,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should display validation errors if ${HAS_DIFFERENT_TRADING_ADDRESS} is left empty`, () => {
+  it(`should render validation errors if ${HAS_DIFFERENT_TRADING_ADDRESS} is left empty`, () => {
     const field = companyDetails[HAS_DIFFERENT_TRADING_ADDRESS];
 
     const radioField = {

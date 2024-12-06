@@ -65,7 +65,7 @@ describe('controllers/insurance/check-your-answers/export-contract', () => {
   });
 
   describe('FIELD_ID', () => {
-    it('should have the correct FIELD_ID', () => {
+    it('should have the correct ID', () => {
       const expected = CHECK_YOUR_ANSWERS_FIELD_IDS.EXPORT_CONTRACT;
 
       expect(FIELD_ID).toEqual(expected);

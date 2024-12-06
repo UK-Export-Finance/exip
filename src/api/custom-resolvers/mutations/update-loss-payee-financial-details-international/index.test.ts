@@ -59,7 +59,7 @@ describe('custom-resolvers/update-loss-payee-financial-details-international', (
       lossPayeeFinancialDetailsInternationalResponse = await updateLossPayeeFinancialDetailsInternational({}, variables, context);
     });
 
-    it('should return success as true', () => {
+    it('should return success=true', () => {
       const { success } = lossPayeeFinancialDetailsInternationalResponse;
 
       expect(success).toEqual(true);

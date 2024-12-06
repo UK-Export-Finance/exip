@@ -67,7 +67,7 @@ context('Insurance - Policy - Loss Payee Details - Validation', () => {
     const FIELD_ID = LOCATION;
     const ERROR = ERRORS[FIELD_ID];
 
-    it('should display validation error when radio is not selected', () => {
+    it('should render a validation error when radio is not selected', () => {
       const radioField = {
         ...fieldSelector(FIELD_ID),
         input: fieldSelector(`${LOCATION}-${IS_LOCATED_IN_UK}`).input,

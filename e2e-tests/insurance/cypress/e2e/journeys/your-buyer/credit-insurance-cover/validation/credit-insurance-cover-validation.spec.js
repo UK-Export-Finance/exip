@@ -46,7 +46,7 @@ context('Insurance - Your buyer - Credit insurance cover - form validation', () 
   describe(`when ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} 'no' is selected`, () => {
     const FIELD_ID = HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER;
 
-    it('should display validation errors', () => {
+    it('should render validation errors', () => {
       cy.navigateToUrl(url);
 
       const radioField = {

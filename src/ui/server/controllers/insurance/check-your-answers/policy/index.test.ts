@@ -59,7 +59,7 @@ describe('controllers/insurance/check-your-answers/policy', () => {
   });
 
   describe('FIELD_ID', () => {
-    it('should have the correct FIELD_ID', () => {
+    it('should have the correct ID', () => {
       const expected = CHECK_YOUR_ANSWERS_FIELD_IDS.POLICY;
 
       expect(FIELD_ID).toEqual(expected);

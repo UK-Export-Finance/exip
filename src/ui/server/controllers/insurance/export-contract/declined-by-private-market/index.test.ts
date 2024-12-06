@@ -54,7 +54,7 @@ describe('controllers/insurance/export-contract/declined-by-private-market', () 
   });
 
   describe('FIELD_ID', () => {
-    it('should have the correct FIELD_ID', () => {
+    it('should have the correct ID', () => {
       expect(FIELD_ID).toEqual(DECLINED_DESCRIPTION);
     });
   });

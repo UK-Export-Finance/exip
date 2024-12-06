@@ -48,7 +48,7 @@ context('Insurance - Your buyer - Company or organisation page - form validation
   });
 
   describe(`when ${FIELD_ID} is over ${MAXIMUM_CHARACTERS.BUYER.COMPANY_OR_ORGANISATION} characters`, () => {
-    it('should display validation errors and retain the submitted value', () => {
+    it('should render validation errors and retain the submitted value', () => {
       const submittedValue = 'a'.repeat(MAXIMUM_CHARACTERS.BUYER.COMPANY_OR_ORGANISATION + 1);
 
       cy.submitAndAssertFieldErrors({

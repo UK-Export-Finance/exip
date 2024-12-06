@@ -66,7 +66,7 @@ context(
         cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
-      it(`should display ${GOODS_OR_SERVICES} label, input and hint`, () => {
+      it(`should render ${GOODS_OR_SERVICES} label, input and hint`, () => {
         const fieldId = GOODS_OR_SERVICES;
         const field = fieldSelector(fieldId);
 
@@ -76,7 +76,7 @@ context(
         field.hint().contains(FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HINT);
       });
 
-      it(`should display ${YEARS_EXPORTING} label, input and hint`, () => {
+      it(`should render ${YEARS_EXPORTING} label, input and hint`, () => {
         const fieldId = YEARS_EXPORTING;
         const field = fieldSelector(fieldId);
 
@@ -87,7 +87,7 @@ context(
         cy.assertSuffix({ fieldId, value: FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].SUFFIX });
       });
 
-      it(`should display ${EMPLOYEES_UK} label and input`, () => {
+      it(`should render ${EMPLOYEES_UK} label and input`, () => {
         const fieldId = EMPLOYEES_UK;
         const field = fieldSelector(fieldId);
 

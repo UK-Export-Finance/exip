@@ -93,7 +93,7 @@ context(
         cy.navigateToUrl(url);
       });
 
-      it(`should display validation errors if ${FIELD_ID} is left empty`, () => {
+      it(`should render validation errors if ${FIELD_ID} is left empty`, () => {
         cy.submitAndAssertFieldErrors({
           field: textareaField,
           expectedErrorMessage: ERRORS[FIELD_ID].IS_EMPTY,
@@ -101,7 +101,7 @@ context(
       });
 
       describe(`when ${FIELD_ID} is over ${MAXIMUM_CHARACTERS.DECLINED_BY_PRIVATE_MARKET_DESCRIPTION} characters`, () => {
-        it('should display validation errors and retain the submitted value', () => {
+        it('should render validation errors and retain the submitted value', () => {
           const submittedValue = 'a'.repeat(MAXIMUM_CHARACTERS.DECLINED_BY_PRIVATE_MARKET_DESCRIPTION + 1);
 
           cy.submitAndAssertFieldErrors({

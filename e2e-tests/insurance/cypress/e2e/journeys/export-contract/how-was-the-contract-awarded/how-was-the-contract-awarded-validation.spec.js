@@ -56,7 +56,7 @@ context('Insurance - Export contract - How was the contract awarded page - form 
       cy.navigateToUrl(url);
     });
 
-    it('should display validation error', () => {
+    it('should render a validation error', () => {
       const expectedErrorMessage = ERROR_MESSAGES_OBJECT[AWARD_METHOD].IS_EMPTY;
 
       const radioField = {
