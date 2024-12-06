@@ -10,16 +10,12 @@ import { MappedOrdnanceSurveyAddress, ApplicationBroker } from '../../../../../t
 const isChecked = (address: MappedOrdnanceSurveyAddress, submittedAddress: ApplicationBroker) => {
   const { addressLine1, addressLine2, town, postcode } = address;
 
-  if (
-    addressLine1 === submittedAddress.addressLine1 &&
-    addressLine2 === submittedAddress.addressLine2 &&
-    town === submittedAddress.town &&
-    postcode === submittedAddress.postcode
-  ) {
-    return true;
-  }
+  const addressLine1IsTheSame = addressLine1 === submittedAddress.addressLine1;
+  const addressLine2IsTheSame = addressLine2 === submittedAddress.addressLine2;
+  const townIsTheSame = town === submittedAddress.town;
+  const postcodeIsTheSame = postcode === submittedAddress.postcode;
 
-  return false;
+  return addressLine1IsTheSame && addressLine2IsTheSame && townIsTheSame && postcodeIsTheSame ? true : false;
 };
 
 export default isChecked;
