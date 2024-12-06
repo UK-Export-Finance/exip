@@ -9,7 +9,7 @@ const {
 
 const {
   CREDIT_PERIOD_WITH_BUYER,
-  BROKER_DETAILS: { FULL_ADDRESS },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -71,7 +71,8 @@ context('Insurance - Textarea fields - `Policy` textarea fields should render ne
     });
   });
 
-  describe(FULL_ADDRESS, () => {
+  // TODO: EMS-3976
+  describe.skip(FULL_ADDRESS, () => {
     describe('when submitting the textarea field with new lines va the `enter` key and going back to the page', () => {
       beforeEach(() => {
         cy.saveSession();

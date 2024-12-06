@@ -4,7 +4,7 @@ import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-id
 import mockApplication from '../../../../../../fixtures/application';
 
 const {
-  BROKER_DETAILS: { NAME },
+  BROKER_DETAILS: { NAME, IS_BASED_IN_UK },
 } = POLICY_FIELD_IDS;
 
 const {
@@ -71,14 +71,16 @@ context('Insurance - Policy - Broker details page - Save and back', () => {
     });
   });
 
-  describe('when all fields are provided', () => {
-    it('should redirect to `all sections` and retain the `insurance policy` task status as `in progress`', () => {
+  describe(`when submitting all fields with ${IS_BASED_IN_UK} as no`, () => {
+    beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeBrokerDetailsForm({});
+      cy.completeBrokerDetailsForm({ isBasedInUk: false });
 
       cy.clickSaveAndBackButton();
+    });
 
+    it('should redirect to `all sections` and retain the `insurance policy` task status as `in progress`', () => {
       cy.assertAllSectionsUrl(referenceNumber);
 
       cy.checkTaskPolicyStatusIsInProgress();
@@ -93,6 +95,33 @@ context('Insurance - Policy - Broker details page - Save and back', () => {
       cy.clickSubmitButtonMultipleTimes({ count: 7 });
 
       cy.assertBrokerDetailsFieldValues({});
+    });
+  });
+
+  describe(`when submitting all fields with ${IS_BASED_IN_UK} as yes`, () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
+      cy.completeBrokerDetailsForm({ isBasedInUk: true });
+
+      cy.clickSaveAndBackButton();
+    });
+
+    it('should redirect to `all sections` and retain the `insurance policy` task status as `in progress`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
+
+      cy.checkTaskPolicyStatusIsInProgress();
+    });
+
+    it('should retain all the relevant fields on the page', () => {
+      cy.navigateToAllSectionsUrl(referenceNumber);
+
+      cy.startInsurancePolicySection({});
+
+      // go through 7 policy forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 7 });
+
+      cy.assertBrokerDetailsFieldValues({ isBasedInUk: true });
     });
   });
 });

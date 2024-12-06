@@ -87,16 +87,42 @@ const BROKER_DETAILS = {
     "Your broker's contact details will be stored securely and in line with GDPR. They will also be our main point of contact when processing your application.",
 };
 
-const BROKER_MANUAL_ADDRESS = {
+const BROKER_ADDRESSES = {
   ...SHARED,
-  PAGE_TITLE: "Enter your broker's address",
-  INTRO: "Your broker's name or company name",
+  PAGE_TITLE: "Select your broker's address",
+  INTRO: {
+    ADDRESS: 'address',
+    ADDRESSES: 'addresses',
+    FOUND_FOR: 'found for',
+    SEPARATOR: 'and',
+    SEARCH_AGAIN: 'Search again',
+  },
+};
+
+const BROKER_ZERO_ADDRESSES = {
+  ...SHARED,
+  PAGE_TITLE: 'No addresses found',
+  BODY: '0 results found',
+  OUTRO: {
+    COULD_NOT_FIND: 'We could not find any addresses for',
+    YOU_CAN: 'You can',
+    SEARCH_AGAIN: 'search again',
+    OR: 'or',
+    ENTER_MANUALLY: 'enter the address manually.',
+  },
 };
 
 const BROKER_CONFIRM_ADDRESS = {
   ...SHARED,
   PAGE_TITLE: "Confirm broker's address",
   USE_DIFFERENT_ADDRESS: 'Use a different address',
+  ENTER_ADDRESS_MANUALLY: 'Enter address manually',
+};
+
+const BROKER_MANUAL_ADDRESS = {
+  ...SHARED,
+  PAGE_TITLE: "Enter your broker's address",
+  INTRO: "Your broker's name or company name",
 };
 
 const LOSS_PAYEE = {
@@ -134,8 +160,10 @@ module.exports = {
   OTHER_COMPANY_DETAILS,
   BROKER,
   BROKER_DETAILS,
-  BROKER_MANUAL_ADDRESS,
+  BROKER_ADDRESSES,
+  BROKER_ZERO_ADDRESSES,
   BROKER_CONFIRM_ADDRESS,
+  BROKER_MANUAL_ADDRESS,
   LOSS_PAYEE,
   LOSS_PAYEE_DETAILS,
   LOSS_PAYEE_FINANCIAL_DETAILS,

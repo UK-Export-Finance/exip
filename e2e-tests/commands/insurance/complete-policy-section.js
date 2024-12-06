@@ -71,8 +71,7 @@ const completePolicySection = ({
   if (usingBroker) {
     cy.completeAndSubmitBrokerDetailsForm({});
 
-    // submit the "confirm broker address" form
-    cy.clickSubmitButton();
+    cy.completeAndSubmitBrokerManualAddressForm({});
   }
 
   cy.completeAndSubmitLossPayeeForm({ isAppointingLossPayee });

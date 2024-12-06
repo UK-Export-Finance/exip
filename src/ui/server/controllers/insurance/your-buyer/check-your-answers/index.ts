@@ -17,7 +17,7 @@ const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
  * gets the template for check your answers page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} renders check your answers page with previously submitted details
+ * @returns {Express.Response.render} Check your answers page
  */
 const get = (req: Request, res: Response) => {
   try {

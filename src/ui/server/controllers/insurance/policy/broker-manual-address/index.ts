@@ -12,7 +12,7 @@ import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
 
 const {
-  BROKER_DETAILS: { FULL_ADDRESS },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 const {

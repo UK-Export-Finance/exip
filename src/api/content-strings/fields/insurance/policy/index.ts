@@ -17,8 +17,10 @@ const {
     CREDIT_PERIOD_WITH_BUYER,
     REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
     USING_BROKER,
-    BROKER_DETAILS: { NAME, FULL_ADDRESS },
+    BROKER_DETAILS: { NAME },
+    BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
     LOSS_PAYEE: { IS_APPOINTED },
+    BROKER_ADDRESSES: { SELECT_THE_ADDRESS },
     LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY },
     LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
     LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
@@ -53,7 +55,7 @@ export const POLICY_FIELDS = {
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
         TEXT: 'Multiple contract policy (Revolving credit)',
         HINT_LIST: [
-          `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER} months`,
+          `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER.MAXIMUM} months`,
           "Best if you'll have an ongoing relationship with the buyer but you're not sure yet how many contracts or sales you'll have",
           'You only pay for your insurance each time you declare a new contract or sale - no need to pay before the policy starts',
         ],
@@ -256,13 +258,10 @@ export const POLICY_FIELDS = {
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
     },
-    [FULL_ADDRESS]: {
-      LABEL: "Broker's address",
-      SUMMARY: {
-        TITLE: "Broker's address",
-        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
-      },
-      MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
+  },
+  BROKER_ADDRESSES: {
+    [SELECT_THE_ADDRESS]: {
+      LABEL: 'Select the address',
     },
   },
   BROKER_MANUAL_ADDRESS: {

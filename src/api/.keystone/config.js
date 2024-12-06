@@ -35,7 +35,7 @@ __export(keystone_exports, {
   default: () => keystone_default,
 });
 module.exports = __toCommonJS(keystone_exports);
-var import_config5 = require('dotenv/config');
+var import_config7 = require('dotenv/config');
 var import_core3 = require('@keystone-6/core');
 var import_overload_protection = __toESM(require('overload-protection'));
 
@@ -347,6 +347,14 @@ var POLICY = {
     NAME: 'name',
     EMAIL: shared_default.EMAIL,
     BROKER_EMAIL: 'broker.email',
+    IS_BASED_IN_UK: 'isBasedInUk',
+    POSTCODE: 'postcode',
+    BUILDING_NUMBER_OR_NAME: 'buildingNumberOrName',
+  },
+  BROKER_ADDRESSES: {
+    SELECT_THE_ADDRESS: 'selectTheAddress',
+  },
+  BROKER_MANUAL_ADDRESS: {
     FULL_ADDRESS: 'fullAddress',
   },
   LOSS_PAYEE: {
@@ -600,8 +608,9 @@ var CUSTOM_RESOLVERS = [
   'declarationConfirmationAndAcknowledgements',
   'declarationHowDataWillBeUseds',
   'deleteApplicationByReferenceNumber',
-  'getCompaniesHouseInformation',
   'getApplicationByReferenceNumber',
+  'getCompaniesHouseInformation',
+  'getOrdnanceSurveyAddress',
   'submitApplication',
   // feedback
   'createFeedbackAndSendEmail',
@@ -941,6 +950,7 @@ var MAXIMUM_CHARACTERS = {
   AGENT_SERVICE_DESCRIPTION: 1e3,
   BIC_SWIFT_CODE: 11,
   BROKER_NAME: 800,
+  BROKER_BUILDING_NUMBER_OR_NAME: 100,
   BUSINESS: {
     GOODS_OR_SERVICES_DESCRIPTION: 1e3,
   },
@@ -2177,7 +2187,11 @@ var lists = {
   Broker: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: 'Application' }),
+      buildingNumberOrName: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(100)' },
+      }),
       isUsingBroker: nullable_checkbox_default(),
+      isBasedInUk: nullable_checkbox_default(),
       name: (0, import_fields.text)({
         db: { nativeType: 'VarChar(800)' },
       }),
@@ -3090,6 +3104,9 @@ var typeDefs = `
 `;
 var type_defs_default = typeDefs;
 
+// custom-resolvers/mutations/create-an-account/index.ts
+var import_config5 = require('dotenv/config');
+
 // helpers/get-account-status-by-id/index.ts
 var getAccountStatusById = async (context, id) => {
   try {
@@ -3364,6 +3381,8 @@ var send_email_reactivate_account_link_default = sendEmailReactivateAccountLinkH
 // custom-resolvers/mutations/create-an-account/index.ts
 var createAnAccount = async (root, variables, context) => {
   console.info('Account creation - %s', variables.email);
+  const { NODE_ENV: NODE_ENV3 } = process.env;
+  const isDevEnvironment3 = NODE_ENV3 === 'development';
   try {
     const { urlOrigin, firstName, lastName, email, password: password2 } = variables;
     const account2 = await get_account_by_field_default(context, account_default.EMAIL, email);
@@ -3373,16 +3392,16 @@ var createAnAccount = async (root, variables, context) => {
         console.info('Account creation - account already exists - valid credentials provided %s', email);
         if (account2.status.isBlocked) {
           console.info('Account creation - unable to create a new account - account already exists and is blocked %s', email);
-          const { id: accountId } = account2;
+          const { id: accountId2 } = account2;
           const reactivateAccountVariables = {
-            accountId,
+            accountId: accountId2,
             urlOrigin,
           };
           console.info('Account creation - resending an email for reactivation %s', email);
           const emailResponse2 = await send_email_reactivate_account_link_default.send(reactivateAccountVariables, context);
           if (emailResponse2.success) {
             return {
-              id: accountId,
+              id: accountId2,
               success: true,
               alreadyExists: true,
               isVerified: false,
@@ -3396,12 +3415,12 @@ var createAnAccount = async (root, variables, context) => {
         }
         if (!account2.status.isVerified) {
           console.info('Account creation - unable to create a new account - account already exists and is not verified %s', email);
-          const { id: accountId } = account2;
+          const { id: accountId2 } = account2;
           console.info('Account creation - resending an email verification for %s', email);
-          const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
+          const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId2);
           if (emailResponse2.success) {
             return {
-              id: accountId,
+              id: accountId2,
               success: true,
               alreadyExists: true,
               isVerified: false,
@@ -3439,21 +3458,31 @@ var createAnAccount = async (root, variables, context) => {
       data: accountData,
     });
     console.info('Account creation - creating account status relationship %s', email);
+    const accountId = creationResponse.id;
     await context.db.AccountStatus.createOne({
       data: {
         account: {
           connect: {
-            id: creationResponse.id,
+            id: accountId,
           },
         },
       },
     });
     console.info('Account creation - sending an email verification for %s', email);
     const name = get_full_name_string_default(creationResponse);
-    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, verificationHash, creationResponse.id);
+    if (isDevEnvironment3) {
+      const verificationUrl = `${variables.urlOrigin}/apply/create-account/verify-email?token=${verificationHash}&id=${accountId}`;
+      console.info('\u2705 Account creation (dev environment only) - mimicking sending verification link via email \n%s', verificationUrl);
+      return {
+        id: accountId,
+        verificationHash,
+        success: true,
+      };
+    }
+    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, verificationHash, accountId);
     if (emailResponse.success) {
       return {
-        id: creationResponse.id,
+        id: accountId,
         verificationHash,
         success: true,
       };
@@ -3677,6 +3706,9 @@ var blockAccount = async (context, statusId) => {
 };
 var block_account_default = blockAccount;
 
+// custom-resolvers/mutations/account-sign-in/account-sign-in-checks/index.ts
+var import_config6 = require('dotenv/config');
+
 // helpers/generate-otp/index.ts
 var import_crypto5 = __toESM(require('crypto'));
 var import_otplib = require('otplib');
@@ -3742,6 +3774,8 @@ var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
 var accountSignInChecks = async (context, account2, urlOrigin) => {
   try {
     console.info('Signing in account - checking account');
+    const { NODE_ENV: NODE_ENV3 } = process.env;
+    const isDevEnvironment3 = NODE_ENV3 === 'development';
     const { id: accountId, email } = account2;
     if (!account2.status.isVerified) {
       console.info('Unable to sign in account - account has not been verified yet. Sending a new email verification');
@@ -3758,7 +3792,14 @@ var accountSignInChecks = async (context, account2, urlOrigin) => {
     console.info('Signing in account - account is verified. Generating and sending an OTP');
     const { securityCode } = await generate_otp_and_update_account_default(context, accountId);
     const name = get_full_name_string_default(account2);
-    const emailResponse = await emails_default.accessCodeEmail(email, name, String(securityCode));
+    if (isDevEnvironment3) {
+      console.info('\u2705 Signing in account (dev environment only) - mimicking sending OTP via email %s', securityCode);
+      return {
+        accountId,
+        success: true,
+      };
+    }
+    const emailResponse = await emails_default.accessCodeEmail(email, name, securityCode);
     if (emailResponse?.success) {
       return {
         ...emailResponse,
@@ -6481,8 +6522,10 @@ var {
     CREDIT_PERIOD_WITH_BUYER,
     REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME: COMPANY_NAME2, COMPANY_NUMBER, COUNTRY_CODE },
     USING_BROKER,
-    BROKER_DETAILS: { NAME, FULL_ADDRESS },
+    BROKER_DETAILS: { NAME },
+    BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
     LOSS_PAYEE: { IS_APPOINTED },
+    BROKER_ADDRESSES: { SELECT_THE_ADDRESS },
     LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY },
     LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
     LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
@@ -6514,7 +6557,7 @@ var POLICY_FIELDS = {
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
         TEXT: 'Multiple contract policy (Revolving credit)',
         HINT_LIST: [
-          `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER} months`,
+          `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER.MAXIMUM} months`,
           "Best if you'll have an ongoing relationship with the buyer but you're not sure yet how many contracts or sales you'll have",
           'You only pay for your insurance each time you declare a new contract or sale - no need to pay before the policy starts',
         ],
@@ -6717,6 +6760,13 @@ var POLICY_FIELDS = {
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
     },
+  },
+  BROKER_ADDRESSES: {
+    [SELECT_THE_ADDRESS]: {
+      LABEL: 'Select the address',
+    },
+  },
+  BROKER_MANUAL_ADDRESS: {
     [FULL_ADDRESS]: {
       LABEL: "Broker's address",
       SUMMARY: {
@@ -9469,32 +9519,55 @@ var ordnance_survey_default = ordnanceSurvey;
 var import_postcode_validator = require('postcode-validator');
 var isValidPostcode = (postcode) => (0, import_postcode_validator.postcodeValidator)(postcode, 'GB');
 
-// helpers/map-address/index.ts
-var mapAddress = (address) => ({
-  addressLine1: `${address.DPA.ORGANISATION_NAME ?? ''} ${address.DPA.BUILDING_NAME ?? ''} ${address.DPA.BUILDING_NUMBER ?? ''} ${
-    address.DPA.THOROUGHFARE_NAME ?? ''
-  }`.trim(),
-  addressLine2: address.DPA.DEPENDENT_LOCALITY,
-  town: address.DPA.POST_TOWN,
-  postalCode: address.DPA.POSTCODE,
-});
-var map_address_default = mapAddress;
-
-// helpers/map-and-filter-address/index.ts
-var mapAndFilterAddress = (houseNameOrNumber, ordnanceSurveyResponse) => {
-  const filtered = ordnanceSurveyResponse.filter(
-    (eachAddress) => eachAddress.DPA.BUILDING_NUMBER === houseNameOrNumber || eachAddress.DPA.BUILDING_NAME === houseNameOrNumber,
-  );
-  if (!filtered.length) {
-    return [];
+// helpers/map-ordnance-survey-address/index.ts
+var mapOrdnanceSurveyAddress = (address) => {
+  let addressLine1 = '';
+  if (address.DPA.SUB_BUILDING_NAME) {
+    addressLine1 = address.DPA.SUB_BUILDING_NAME;
   }
-  const mappedFilteredAddresses = [];
-  filtered.forEach((address) => {
-    mappedFilteredAddresses.push(map_address_default(address));
-  });
-  return mappedFilteredAddresses;
+  if (address.DPA.ORGANISATION_NAME) {
+    if (addressLine1) {
+      addressLine1 += ` ${address.DPA.ORGANISATION_NAME}`;
+    } else {
+      addressLine1 = address.DPA.ORGANISATION_NAME;
+    }
+  }
+  if (address.DPA.BUILDING_NAME) {
+    if (addressLine1) {
+      addressLine1 += ` ${address.DPA.BUILDING_NAME}`;
+    } else {
+      addressLine1 = address.DPA.BUILDING_NAME;
+    }
+  }
+  return {
+    addressLine1,
+    addressLine2: address.DPA.THOROUGHFARE_NAME,
+    town: address.DPA.POST_TOWN,
+    postalCode: address.DPA.POSTCODE,
+  };
 };
-var map_and_filter_address_default = mapAndFilterAddress;
+var map_ordnance_survey_address_default = mapOrdnanceSurveyAddress;
+
+// helpers/map-and-filter-ordnance-survey-addresses/index.ts
+var mapAndFilterOrdnanceSurveyAddresses = (houseNameOrNumber, ordnanceSurveyResponse) => {
+  try {
+    console.info('Mapping and filtering Ordnance Survey addresses');
+    const mappedAndFiltered = [];
+    ordnanceSurveyResponse.forEach((address) => {
+      if (address.DPA.SUB_BUILDING_NAME && address.DPA.SUB_BUILDING_NAME.includes(houseNameOrNumber)) {
+        mappedAndFiltered.push(map_ordnance_survey_address_default(address));
+      }
+      if (address.DPA.BUILDING_NAME && address.DPA.BUILDING_NAME.includes(houseNameOrNumber)) {
+        mappedAndFiltered.push(map_ordnance_survey_address_default(address));
+      }
+    });
+    return mappedAndFiltered;
+  } catch (error) {
+    console.error('Error mapping and filtering Ordnance Survey addresses %o', error);
+    throw new Error(`Mapping and filtering Ordnance Survey addresses ${error}`);
+  }
+};
+var map_and_filter_ordnance_survey_addresses_default = mapAndFilterOrdnanceSurveyAddresses;
 
 // custom-resolvers/queries/get-ordnance-survey-address/index.ts
 var getOrdnanceSurveyAddress = async (root, variables) => {
@@ -9515,7 +9588,7 @@ var getOrdnanceSurveyAddress = async (root, variables) => {
         success: false,
       };
     }
-    const mappedAddresses = map_and_filter_address_default(houseNameOrNumber, response.data);
+    const mappedAddresses = map_and_filter_ordnance_survey_addresses_default(houseNameOrNumber, response.data);
     if (!mappedAddresses.length) {
       return {
         success: false,
