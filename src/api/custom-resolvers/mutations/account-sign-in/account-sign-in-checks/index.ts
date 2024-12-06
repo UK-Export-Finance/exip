@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import confirmEmailAddressEmail from '../../../../helpers/send-email-confirm-email-address';
 import generateOTPAndUpdateAccount from '../../../../helpers/generate-otp-and-update-account';
 import getFullNameString from '../../../../helpers/get-full-name-string';
@@ -24,6 +25,9 @@ import { Account, Context } from '../../../../types';
 const accountSignInChecks = async (context: Context, account: Account, urlOrigin: string) => {
   try {
     console.info('Signing in account - checking account');
+
+    const { NODE_ENV } = process.env;
+    const isDevEnvironment = NODE_ENV === 'development';
 
     const { id: accountId, email } = account;
 
@@ -57,7 +61,20 @@ const accountSignInChecks = async (context: Context, account: Account, urlOrigin
      */
     const name = getFullNameString(account);
 
-    const emailResponse = await sendEmail.accessCodeEmail(email, name, String(securityCode));
+    /**
+     * If running in a dev environment, no need to send emails.
+     * Otherwise, we risk reaching the rate limit.
+     */
+    if (isDevEnvironment) {
+      console.info('✅ Signing in account (dev environment only) - mimicking sending OTP via email %s', securityCode);
+
+      return {
+        accountId,
+        success: true,
+      };
+    }
+
+    const emailResponse = await sendEmail.accessCodeEmail(email, name, securityCode);
 
     if (emailResponse?.success) {
       return {

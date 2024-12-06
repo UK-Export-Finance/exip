@@ -11,20 +11,11 @@ const typeOfPolicy = {
   [POLICY_TYPE]: {
     single: {
       ...field(SINGLE_POLICY_TYPE),
-      hintList: {
-        item1: () => cy.get(`[data-cy="${SINGLE_POLICY_TYPE}-hint-list-item-1"]`),
-        item2: () => cy.get(`[data-cy="${SINGLE_POLICY_TYPE}-hint-list-item-2"]`),
-        item3: () => cy.get(`[data-cy="${SINGLE_POLICY_TYPE}-hint-list-item-3"]`),
-        item4: () => cy.get(`[data-cy="${SINGLE_POLICY_TYPE}-hint-list-item-4"]`),
-      },
+      hintListItem: (index) => cy.get(`[data-cy="${SINGLE_POLICY_TYPE}-hint-list-item-${index}"]`),
     },
     multiple: {
       ...field(MULTIPLE_POLICY_TYPE),
-      hintList: {
-        item1: () => cy.get(`[data-cy="${MULTIPLE_POLICY_TYPE}-hint-list-item-1"]`),
-        item2: () => cy.get(`[data-cy="${MULTIPLE_POLICY_TYPE}-hint-list-item-2"]`),
-        item3: () => cy.get(`[data-cy="${MULTIPLE_POLICY_TYPE}-hint-list-item-3"]`),
-      },
+      hintListItem: (index) => cy.get(`[data-cy="${MULTIPLE_POLICY_TYPE}-hint-list-item-${index}"]`),
     },
   },
 };
