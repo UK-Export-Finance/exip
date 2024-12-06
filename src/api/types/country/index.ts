@@ -8,13 +8,11 @@ export interface CisCountry {
   ESRAClassificationDesc: string;
   NBIIssue: string;
   marketRiskAppetitePublicDesc: string;
-  riskCategory?: string;
 }
 
 export interface Country extends Relationship {
   name: string;
   isoCode: string;
-  riskCategory?: string;
   shortTermCover?: boolean;
   nbiIssueAvailable?: boolean;
   canGetAQuoteOnline?: boolean;
@@ -29,7 +27,7 @@ export interface MappedCisCountry {
   name: string;
   isoCode: string;
   shortTermCover: boolean;
-  riskCategory?: string;
+  esraClassification?: string;
   nbiIssueAvailable: boolean;
   canGetAQuoteOnline: boolean;
   canGetAQuoteOffline: boolean;

@@ -2819,7 +2819,7 @@ var typeDefs = `
     isoCode: String!
     name: String
     shortTermCover: Boolean
-    riskCategory: String
+    esraClassification: String
     nbiIssueAvailable: Boolean
     canGetAQuoteOnline: Boolean
     canGetAQuoteOffline: Boolean
@@ -8976,9 +8976,9 @@ var filterCisEntries = (arr, invalidEntries, entityPropertyName) => {
 };
 var filter_cis_entries_default = filterCisEntries;
 
-// helpers/map-CIS-countries/map-CIS-country/map-risk-category/index.ts
+// helpers/map-CIS-countries/map-CIS-country/map-esra-classification/index.ts
 var { CIS } = EXTERNAL_API_DEFINITIONS;
-var mapRiskCategory = (str) => {
+var mapEsraClassification = (str) => {
   if (str === CIS.RISK.STANDARD) {
     return EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD;
   }
@@ -8990,7 +8990,17 @@ var mapRiskCategory = (str) => {
   }
   return null;
 };
-var map_risk_category_default = mapRiskCategory;
+var map_esra_classification_default = mapEsraClassification;
+
+// helpers/map-CIS-countries/map-CIS-country/map-NBI-issue-available/index.ts
+var { CIS: CIS2 } = EXTERNAL_API_DEFINITIONS;
+var mapNbiIssueAvailable = (str) => {
+  if (str === CIS2.NBI_ISSUE_AVAILABLE.YES) {
+    return true;
+  }
+  return false;
+};
+var map_NBI_issue_available_default = mapNbiIssueAvailable;
 
 // helpers/map-CIS-countries/map-CIS-country/map-short-term-cover-available/index.ts
 var {
@@ -9012,19 +9022,9 @@ var mapShortTermCoverAvailable = (str) => {
 };
 var map_short_term_cover_available_default = mapShortTermCoverAvailable;
 
-// helpers/map-CIS-countries/map-CIS-country/map-NBI-issue-available/index.ts
-var { CIS: CIS2 } = EXTERNAL_API_DEFINITIONS;
-var mapNbiIssueAvailable = (str) => {
-  if (str === CIS2.NBI_ISSUE_AVAILABLE.YES) {
-    return true;
-  }
-  return false;
-};
-var map_NBI_issue_available_default = mapNbiIssueAvailable;
-
 // helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-online/index.ts
-var canGetAQuoteOnline = (country) => {
-  if (country.riskCategory && country.shortTermCover && country.nbiIssueAvailable) {
+var canGetAQuoteOnline = ({ shortTermCover, nbiIssueAvailable, esraClassification }) => {
+  if (esraClassification && shortTermCover && nbiIssueAvailable) {
     return true;
   }
   return false;
@@ -9032,8 +9032,8 @@ var canGetAQuoteOnline = (country) => {
 var can_get_a_quote_online_default = canGetAQuoteOnline;
 
 // helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-by-email/index.ts
-var canGetAQuoteByEmail = (country) => {
-  if (country.riskCategory && country.shortTermCover && !country.nbiIssueAvailable) {
+var canGetAQuoteByEmail = ({ shortTermCover, nbiIssueAvailable, esraClassification }) => {
+  if (shortTermCover && !nbiIssueAvailable && esraClassification) {
     return true;
   }
   return false;
@@ -9041,8 +9041,8 @@ var canGetAQuoteByEmail = (country) => {
 var can_get_a_quote_by_email_default = canGetAQuoteByEmail;
 
 // helpers/map-CIS-countries/map-CIS-country/cannot-get-a-quote/index.ts
-var cannotGetAQuote = (country) => {
-  if (!country.riskCategory || (!country.shortTermCover && !country.nbiIssueAvailable)) {
+var cannotGetAQuote = ({ shortTermCover, nbiIssueAvailable, esraClassification }) => {
+  if (!esraClassification || (!shortTermCover && !nbiIssueAvailable)) {
     return true;
   }
   return false;
@@ -9050,8 +9050,8 @@ var cannotGetAQuote = (country) => {
 var cannot_get_a_quote_default = cannotGetAQuote;
 
 // helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/index.ts
-var canApplyForInsuranceOnline = (shortTermCover, riskCategory) => {
-  if (riskCategory && shortTermCover) {
+var canApplyForInsuranceOnline = (shortTermCover, esraClassification) => {
+  if (shortTermCover && esraClassification) {
     return true;
   }
   return false;
@@ -9080,20 +9080,24 @@ var noInsuranceSupportAvailable = (marketRiskAppetitePublicDesc) => marketRiskAp
 var no_insurance_support_default = noInsuranceSupportAvailable;
 
 // helpers/map-CIS-countries/map-CIS-country/index.ts
-var mapCisCountry = (country) => {
+var mapCisCountry = (cisCountry) => {
+  const { marketName, isoCode } = cisCountry;
+  const esraClassification = map_esra_classification_default(cisCountry.ESRAClassificationDesc);
+  const nbiIssueAvailable = map_NBI_issue_available_default(cisCountry.NBIIssue);
+  const shortTermCover = map_short_term_cover_available_default(cisCountry.shortTermCoverAvailabilityDesc);
   const mapped = {
-    name: country.marketName,
-    isoCode: country.isoCode,
-    riskCategory: map_risk_category_default(country.ESRAClassificationDesc),
-    shortTermCover: map_short_term_cover_available_default(country.shortTermCoverAvailabilityDesc),
-    nbiIssueAvailable: map_NBI_issue_available_default(country.NBIIssue),
+    name: marketName,
+    esraClassification,
+    isoCode,
+    nbiIssueAvailable,
+    shortTermCover,
   };
-  mapped.canGetAQuoteOnline = can_get_a_quote_online_default(mapped);
-  mapped.canGetAQuoteOffline = can_apply_offline_default(country.shortTermCoverAvailabilityDesc);
-  mapped.canGetAQuoteByEmail = can_get_a_quote_by_email_default(mapped);
-  mapped.cannotGetAQuote = cannot_get_a_quote_default(mapped);
-  mapped.canApplyForInsuranceOnline = can_apply_for_insurance_online_default(mapped.shortTermCover, mapped.riskCategory);
-  mapped.noInsuranceSupport = no_insurance_support_default(country.marketRiskAppetitePublicDesc);
+  mapped.canGetAQuoteOnline = can_get_a_quote_online_default({ shortTermCover, nbiIssueAvailable, esraClassification });
+  mapped.canGetAQuoteOffline = can_apply_offline_default(cisCountry.shortTermCoverAvailabilityDesc);
+  mapped.canGetAQuoteByEmail = can_get_a_quote_by_email_default({ shortTermCover, nbiIssueAvailable, esraClassification });
+  mapped.cannotGetAQuote = cannot_get_a_quote_default({ shortTermCover, nbiIssueAvailable, esraClassification });
+  mapped.canApplyForInsuranceOnline = can_apply_for_insurance_online_default(shortTermCover, esraClassification);
+  mapped.noInsuranceSupport = no_insurance_support_default(cisCountry.marketRiskAppetitePublicDesc);
   return mapped;
 };
 var map_CIS_country_default = mapCisCountry;
