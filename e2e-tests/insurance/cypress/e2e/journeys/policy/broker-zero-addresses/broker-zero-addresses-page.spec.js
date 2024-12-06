@@ -72,13 +72,13 @@ context('Insurance - Policy - Broker - zero addresses page - As an exporter ... 
     it('renders outro `search again` link', () => {
       const expectedHref = `${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
 
-      cy.checkLink(outro.searchAgainLink(), CONTENT_STRINGS.OUTRO.SEARCH_AGAIN, expectedHref);
+      cy.checkLink(outro.searchAgainLink(), expectedHref, CONTENT_STRINGS.OUTRO.SEARCH_AGAIN);
     });
 
     it('renders outro `enter manually` link', () => {
       const expectedHref = `${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
 
-      cy.checkLink(outro.enterManuallyLink(), CONTENT_STRINGS.OUTRO.ENTER_MANUALLY, expectedHref);
+      cy.checkLink(outro.enterManuallyLink(), expectedHref, CONTENT_STRINGS.OUTRO.ENTER_MANUALLY);
     });
   });
 });
