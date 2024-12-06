@@ -3,6 +3,6 @@ export interface Address {
   premises?: string;
   addressLine1?: string;
   addressLine2?: string;
-  postalCode?: string;
+  postcode?: string;
   country?: string;
 }

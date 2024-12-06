@@ -1,4 +1,4 @@
-import { OrdnanceSurveyResponse } from '../../types';
+import { MappedOrdnanceSurveyAddress, OrdnanceSurveyResponse } from '../../types';
 
 /**
  * mapOrdnanceSurveyAddress
@@ -6,7 +6,7 @@ import { OrdnanceSurveyResponse } from '../../types';
  * @param {OrdnanceSurveyResponse} address
  * @returns {Address} mapped address
  */
-const mapOrdnanceSurveyAddress = (address: OrdnanceSurveyResponse) => {
+const mapOrdnanceSurveyAddress = (address: OrdnanceSurveyResponse): MappedOrdnanceSurveyAddress => {
   let addressLine1 = '';
 
   if (address.DPA.SUB_BUILDING_NAME) {
@@ -29,11 +29,19 @@ const mapOrdnanceSurveyAddress = (address: OrdnanceSurveyResponse) => {
     }
   }
 
+  /**
+   * NOTE: Ordnance Survey does not return county data.
+   * Therefore this should be set to an empty string,
+   * to avoid any null/mapping/type issues.
+   */
+  const county = '';
+
   return {
     addressLine1,
     addressLine2: address.DPA.THOROUGHFARE_NAME,
     town: address.DPA.POST_TOWN,
-    postalCode: address.DPA.POSTCODE,
+    county,
+    postcode: address.DPA.POSTCODE,
   };
 };
 
