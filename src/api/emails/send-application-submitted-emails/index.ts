@@ -14,7 +14,14 @@ import { SuccessResponse, ApplicationSubmissionEmailVariables, Application } fro
  */
 const send = async (application: Application, xlsxPath: string): Promise<SuccessResponse> => {
   try {
-    const { referenceNumber, owner, company, buyer, policy, policyContact } = application;
+    const {
+      referenceNumber,
+      owner,
+      company,
+      buyer,
+      policy: { policyType, requestedStartDate },
+      policyContact,
+    } = application;
 
     // generate email variables
     const { email } = owner;
@@ -25,7 +32,7 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
       buyerName: replaceCharacterCodesWithCharacters(String(buyer.companyOrOrganisationName)),
       buyerLocation: buyer.country?.name,
       companyName: replaceCharacterCodesWithCharacters(company.companyName),
-      requestedStartDate: formatDate(policy.requestedStartDate),
+      requestedStartDate: formatDate(requestedStartDate),
     };
 
     /**
@@ -52,7 +59,7 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
 
     console.info('Sending application submitted email to application account owner: %s', sendOwnerEmailVars.emailAddress);
 
-    const accountSubmittedResponse = await sendEmail.application.submittedEmail(sendOwnerEmailVars);
+    const accountSubmittedResponse = await sendEmail.application.submittedEmail(sendOwnerEmailVars, policyType);
 
     if (!accountSubmittedResponse?.success) {
       throw new Error('Sending application submitted email to owner/account');
@@ -64,7 +71,7 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
      */
     if (!policyContact.isSameAsOwner) {
       console.info('Sending application submitted email to policy contact email: %s', sendContactEmailVars.emailAddress);
-      const contactSubmittedResponse = await sendEmail.application.submittedEmail(sendContactEmailVars);
+      const contactSubmittedResponse = await sendEmail.application.submittedEmail(sendContactEmailVars, policyType);
 
       if (!contactSubmittedResponse?.success) {
         throw new Error('Sending application submitted email to contact');

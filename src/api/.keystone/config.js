@@ -1094,7 +1094,8 @@ var EMAIL_TEMPLATE_IDS = {
   APPLICATION: {
     SUBMISSION: {
       EXPORTER: {
-        CONFIRMATION: '2e9084e2-d871-4be7-85d0-0ccc1961b148',
+        SINGLE_CONTRACT_POLICY_CONFIRMATION: '2e9084e2-d871-4be7-85d0-0ccc1961b148',
+        MULTIPLE_CONTRACT_POLICY_CONFIRMATION: 'TODO',
         SEND_DOCUMENTS: {
           TRADING_HISTORY: '1ae4d77e-58d6-460e-99c0-b62bf08d8c52',
           ANTI_BRIBERY: '002e43e3-ca78-4b9c-932f-6833014bb1e4',
@@ -1427,6 +1428,22 @@ var reactivateAccountLink = async (urlOrigin, emailAddress, name, reactivationHa
   }
 };
 
+// helpers/policy-type/index.ts
+var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
+var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
+
+// emails/application/get-submitted-confirmation-template-id/index.ts
+var getSubmittedConfirmationTemplateId = (policyType) => {
+  if (isSinglePolicyType(policyType)) {
+    return EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SINGLE_CONTRACT_POLICY_CONFIRMATION;
+  }
+  if (isMultiplePolicyType(policyType)) {
+    return EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.MULTIPLE_CONTRACT_POLICY_CONFIRMATION;
+  }
+  return '';
+};
+var get_submitted_confirmation_template_id_default = getSubmittedConfirmationTemplateId;
+
 // file-system/index.ts
 var import_fs = require('fs');
 var import_path = __toESM(require('path'));
@@ -1483,13 +1500,14 @@ var application = {
   /**
    * application.submittedEmail
    * Send "application submitted" email to an account
+   * @param {String} policyType: Application "Policy type"
    * @param {ApplicationSubmissionEmailVariables} ApplicationSubmissionEmailVariables
    * @returns {Promise<Object>} callNotify response
    */
-  submittedEmail: async (variables) => {
+  submittedEmail: async (variables, policyType) => {
     try {
       console.info('Sending application submitted email to application owner or provided business contact');
-      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
+      const templateId = get_submitted_confirmation_template_id_default(policyType);
       const { emailAddress } = variables;
       const response = await callNotify(templateId, emailAddress, variables);
       return response;
@@ -6127,14 +6145,21 @@ var get_application_submitted_email_template_ids_default = getApplicationSubmitt
 // emails/send-application-submitted-emails/index.ts
 var send4 = async (application2, xlsxPath) => {
   try {
-    const { referenceNumber, owner, company, buyer, policy, policyContact } = application2;
+    const {
+      referenceNumber,
+      owner,
+      company,
+      buyer,
+      policy: { policyType, requestedStartDate },
+      policyContact,
+    } = application2;
     const { email } = owner;
     const sharedEmailVars = {
       referenceNumber,
       buyerName: replace_character_codes_with_characters_default(String(buyer.companyOrOrganisationName)),
       buyerLocation: buyer.country?.name,
       companyName: replace_character_codes_with_characters_default(company.companyName),
-      requestedStartDate: format_date_default(policy.requestedStartDate),
+      requestedStartDate: format_date_default(requestedStartDate),
     };
     const sendOwnerEmailVars = {
       ...sharedEmailVars,
@@ -6149,13 +6174,13 @@ var send4 = async (application2, xlsxPath) => {
       emailAddress: policyContact.email,
     };
     console.info('Sending application submitted email to application account owner: %s', sendOwnerEmailVars.emailAddress);
-    const accountSubmittedResponse = await emails_default.application.submittedEmail(sendOwnerEmailVars);
+    const accountSubmittedResponse = await emails_default.application.submittedEmail(sendOwnerEmailVars, policyType);
     if (!accountSubmittedResponse?.success) {
       throw new Error('Sending application submitted email to owner/account');
     }
     if (!policyContact.isSameAsOwner) {
       console.info('Sending application submitted email to policy contact email: %s', sendContactEmailVars.emailAddress);
-      const contactSubmittedResponse = await emails_default.application.submittedEmail(sendContactEmailVars);
+      const contactSubmittedResponse = await emails_default.application.submittedEmail(sendContactEmailVars, policyType);
       if (!contactSubmittedResponse?.success) {
         throw new Error('Sending application submitted email to contact');
       }
@@ -7447,10 +7472,6 @@ var mapKeyInformation = (application2) => {
   return mapped;
 };
 var map_key_information_default = mapKeyInformation;
-
-// helpers/policy-type/index.ts
-var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
-var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-intro/map-policy-type/index.ts
 var {

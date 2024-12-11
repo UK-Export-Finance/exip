@@ -255,7 +255,7 @@ export interface ApplicationJointlyInsuredParty extends Relationship {
 }
 
 export interface ApplicationPolicy extends Relationship {
-  policyType?: string;
+  policyType: string;
   requestedStartDate: Date;
   contractCompletionDate: Date;
   totalValueOfContract?: number;

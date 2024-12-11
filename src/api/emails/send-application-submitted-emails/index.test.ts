@@ -21,6 +21,7 @@ describe('emails/send-email-application-submitted', () => {
   let applicationSubmittedEmailSpy = jest.fn();
   let underwritingTeamEmailSpy = jest.fn();
   let documentsEmailSpy = jest.fn();
+  let mockPolicyType = '';
 
   beforeAll(() => {
     context = getKeystoneContext();
@@ -32,6 +33,12 @@ describe('emails/send-email-application-submitted', () => {
 
   beforeEach(async () => {
     application = await createFullApplication(context);
+
+    const {
+      policy: { policyType },
+    } = application;
+
+    mockPolicyType = policyType;
 
     jest.resetAllMocks();
 
@@ -83,7 +90,7 @@ describe('emails/send-email-application-submitted', () => {
         await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
 
         expect(applicationSubmittedEmailSpy).toHaveBeenCalledTimes(1);
-        expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendOwnerEmailVars);
+        expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendOwnerEmailVars, mockPolicyType);
       });
 
       test('it should call sendEmail.application.applicationSubmittedEmail with the correct template ID', async () => {
@@ -118,8 +125,8 @@ describe('emails/send-email-application-submitted', () => {
         await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
 
         expect(applicationSubmittedEmailSpy).toHaveBeenCalledTimes(2);
-        expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendOwnerEmailVars);
-        expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedContactSendEmailVars);
+        expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendOwnerEmailVars, mockPolicyType);
+        expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedContactSendEmailVars, mockPolicyType);
       });
 
       test('it should call sendEmail.application.submittedEmail with the correct template ID', async () => {
