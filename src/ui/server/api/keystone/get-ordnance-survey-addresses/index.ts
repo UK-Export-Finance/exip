@@ -1,6 +1,6 @@
 import { ApolloResponse } from '../../../../types';
 import apollo from '../../../graphql/apollo';
-import ordnanceSurveyAddressQuery from '../../../graphql/queries/ordnance-survey-address';
+import ordnanceSurveyAddressesQuery from '../../../graphql/queries/ordnance-survey-addresses';
 
 /**
  * keystone GraphQL API call for Ordnance Survey addresses
@@ -17,7 +17,7 @@ const getOrdnanceSurveyAddresses = async (postcode: string, houseNameOrNumber: s
       houseNameOrNumber,
     };
 
-    const response = (await apollo('GET', ordnanceSurveyAddressQuery, queryParams)) as ApolloResponse;
+    const response = (await apollo('GET', ordnanceSurveyAddressesQuery, queryParams)) as ApolloResponse;
 
     if (response.errors) {
       console.error('GraphQL network error querying Ordnance Survey addresses %o', response.errors);

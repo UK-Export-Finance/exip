@@ -40,10 +40,9 @@ export const get = (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    // TODO: EMS-3974 - this will come from the following:
-    // application.broker.postcode
-
-    const mockPostcode = 'W1A 1AA';
+    const {
+      broker: { postcode },
+    } = application;
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -52,7 +51,7 @@ export const get = (req: Request, res: Response) => {
       }),
       ...pageVariables(application.referenceNumber),
       userName: getUserNameFromSession(req.session.user),
-      postcode: mockPostcode,
+      postcode,
     });
   } catch (error) {
     console.error('Error getting broker zero addresses %o', error);
