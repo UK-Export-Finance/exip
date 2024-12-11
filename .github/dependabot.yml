@@ -19,6 +19,10 @@ updates:
     ignore:
       - dependency-name: "@keystone-6/core"
         versions: [">=6.0.0"]
+      - dependency-name: "@keystone-6/auth"
+        versions: [">=8.0.0"]
+      - dependency-name: "@typescript-eslint/eslint-plugin"
+        versions: [">=8.0.0"]
       - dependency-name: "graphql"
         versions: [">=16.0.0"]
       - dependency-name: "eslint"
@@ -43,6 +47,10 @@ updates:
     ignore:
       - dependency-name: "@keystone-6/core"
         versions: [">=6.0.0"]
+      - dependency-name: "@keystone-6/auth"
+        versions: [">=8.0.0"]
+      - dependency-name: "@typescript-eslint/eslint-plugin"
+        versions: [">=8.0.0"]
       - dependency-name: "eslint"
         versions: [">=9.0.0"]
       - dependency-name: "eslint-plugin-prettier"
@@ -65,6 +73,8 @@ updates:
     ignore:
       - dependency-name: "graphql"
         versions: [">=16.0.0"]
+      - dependency-name: "@typescript-eslint/eslint-plugin"
+        versions: [">=8.0.0"]
       - dependency-name: "eslint"
         versions: [">=9.0.0"]
       - dependency-name: "eslint-plugin-prettier"
