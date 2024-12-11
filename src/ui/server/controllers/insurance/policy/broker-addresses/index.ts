@@ -76,6 +76,16 @@ export const get = async (req: Request, res: Response) => {
     const { broker, referenceNumber } = application;
     const { postcode, buildingNumberOrName } = broker;
 
+    /**
+     * If a user manually navigates to this route,
+     * without providing previously required data,
+     * redirect the user back to BROKER_DETAILS,
+     * where the data can be submitted.
+     */
+    if (!postcode || !buildingNumberOrName) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`);
+    }
+
     const response = await api.keystone.getOrdnanceSurveyAddresses(String(postcode), String(buildingNumberOrName));
 
     if (response.apiError) {

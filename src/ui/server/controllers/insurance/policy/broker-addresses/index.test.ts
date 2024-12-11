@@ -14,7 +14,10 @@ import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockOrdnanceSurveyAddressResponse, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
-const { SELECT_THE_ADDRESS } = POLICY_FIELD_IDS.BROKER_ADDRESSES;
+const {
+  BROKER_DETAILS: { POSTCODE, BUILDING_NUMBER_OR_NAME },
+  BROKER_ADDRESSES: { SELECT_THE_ADDRESS },
+} = POLICY_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
@@ -123,6 +126,42 @@ describe('controllers/insurance/policy/broker-addresses', () => {
   });
 
   describe('get', () => {
+    describe(`when application.broker does not have a ${POSTCODE}`, () => {
+      beforeEach(() => {
+        res.locals.application = {
+          ...mockApplication,
+          broker: {
+            ...mockApplication.broker,
+            [POSTCODE]: '',
+          },
+        };
+      });
+
+      it(`should redirect to ${BROKER_DETAILS_ROOT}`, async () => {
+        await get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`);
+      });
+    });
+
+    describe(`when application.broker does not have a ${BUILDING_NUMBER_OR_NAME}`, () => {
+      beforeEach(() => {
+        res.locals.application = {
+          ...mockApplication,
+          broker: {
+            ...mockApplication.broker,
+            [BUILDING_NUMBER_OR_NAME]: '',
+          },
+        };
+      });
+
+      it(`should redirect to ${BROKER_DETAILS_ROOT}`, async () => {
+        await get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`);
+      });
+    });
+
     it('should call api.keystone.getOrdnanceSurveyAddresses', async () => {
       await get(req, res);
 
