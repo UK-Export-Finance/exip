@@ -15,6 +15,7 @@ const { SINGLE } = APPLICATION.POLICY_TYPE;
  * @param {String} isoCode: Policy currency ISO code
  * @param {Boolean} alternativeCurrency: Select the "turnover - alternative currency" option
  * @param {Boolean} otherCompanyInvolved: If "another company to be insured" is on.
+ * @param {Boolean} isBasedInUk: Broker is based in the UK
  */
 const completeAndPolicyForms = ({
   stopSubmittingAfter,
@@ -26,6 +27,7 @@ const completeAndPolicyForms = ({
   isoCode,
   alternativeCurrency,
   otherCompanyInvolved,
+  isBasedInUk = true,
 }) => {
   cy.startInsurancePolicySection({});
 
@@ -51,7 +53,13 @@ const completeAndPolicyForms = ({
   steps.push({ name: 'broker', action: () => cy.completeAndSubmitBrokerForm({ usingBroker }) });
 
   if (usingBroker) {
-    steps.push({ name: 'brokerDetails', action: () => cy.completeAndSubmitBrokerDetailsForm({}) });
+    steps.push({ name: 'brokerDetails', action: () => cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk }) });
+
+    if (isBasedInUk) {
+      steps.push({ name: 'brokerAddresses', action: () => cy.completeAndSubmitBrokerAddressesForm({ isBasedInUk }) });
+
+      steps.push({ name: 'brokerConfirmAddress', action: () => cy.clickSubmitButton() });
+    }
   }
 
   steps.push({ name: 'lossPayee', action: () => cy.completeAndSubmitLossPayeeForm({ isAppointingLossPayee }) });

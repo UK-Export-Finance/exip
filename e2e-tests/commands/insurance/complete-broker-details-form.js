@@ -23,8 +23,7 @@ const { EMAIL } = ACCOUNT_FIELD_IDS;
 const completeBrokerDetailsForm = ({
   name = BROKER[NAME],
   email = BROKER[EMAIL],
-  // TODO: EMS-3974 - make this have a true default
-  isBasedInUk = false,
+  isBasedInUk = true,
   postcode = BROKER[POSTCODE],
   buildingNumberOrName = BROKER[BUILDING_NUMBER_OR_NAME],
 }) => {
