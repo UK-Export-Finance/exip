@@ -68,7 +68,7 @@ const CUSTOM_RESOLVERS = [
   'deleteApplicationByReferenceNumber',
   'getApplicationByReferenceNumber',
   'getCompaniesHouseInformation',
-  'getOrdnanceSurveyAddress',
+  'getOrdnanceSurveyAddresses',
   'submitApplication',
 
   // feedback
