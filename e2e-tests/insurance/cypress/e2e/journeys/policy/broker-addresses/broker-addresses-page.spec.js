@@ -26,9 +26,9 @@ const baseUrl = Cypress.config('baseUrl');
 
 const field = fieldSelector(FIELD_ID);
 
-const expectedFieldValue = 'BRITISH BROADCASTING CORPORATION WOGAN HOUSE PORTLAND PLACE';
+const optionValue = 'H M TREASURY HORSE GUARDS ROAD';
 
-const optionId = `${FIELD_ID}-${expectedFieldValue}`;
+const optionDataCy = `${FIELD_ID}-${optionValue}`;
 
 context('Insurance - Policy - Broker addresses page', () => {
   let referenceNumber;
@@ -40,10 +40,12 @@ context('Insurance - Policy - Broker addresses page', () => {
       referenceNumber = refNumber;
 
       // go to the page we want to test.
+      cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'brokerDetails', usingBroker: true, isBasedInUk: true });
+
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ADDRESSES_ROOT}`;
       brokerConfirmAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
 
-      cy.navigateToUrl(url);
+      cy.assertUrl(url);
     });
   });
 
@@ -59,7 +61,7 @@ context('Insurance - Policy - Broker addresses page', () => {
     cy.corePageChecks({
       pageTitle: PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${BROKER_ADDRESSES_ROOT}`,
-      backLink: `${ROOT}/${referenceNumber}${BROKER_ADDRESSES_ROOT}#`,
+      backLink: `${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
     });
   });
 
@@ -73,9 +75,9 @@ context('Insurance - Policy - Broker addresses page', () => {
         .invoke('text')
         .then((text) => {
           expect(text.trim()).includes(`1 ${ADDRESS} ${FOUND_FOR} `);
-          expect(text.trim()).includes('W1A 1AA');
+          expect(text.trim()).includes('SW1A 2HQ');
           expect(text.trim()).includes(` ${SEPARATOR} `);
-          expect(text.trim()).includes('WOGAN HOUSE.');
+          expect(text.trim()).includes('1.');
           expect(text.trim()).includes(SEARCH_AGAIN);
         });
     });
@@ -92,9 +94,9 @@ context('Insurance - Policy - Broker addresses page', () => {
       });
 
       it('renders an `address` radio label and input', () => {
-        const { option } = radios(FIELD_ID, expectedFieldValue);
+        const { option } = radios(FIELD_ID, optionValue);
 
-        cy.checkText(option.label(), expectedFieldValue);
+        cy.checkText(option.label(), optionValue);
 
         option.input().should('exist');
       });
@@ -127,7 +129,7 @@ context('Insurance - Policy - Broker addresses page', () => {
       it('should focus on input when clicking summary error message', () => {
         errorSummaryListItemLinks().eq(errorIndex).click();
 
-        fieldSelector(optionId).input().should('have.focus');
+        fieldSelector(optionDataCy).input().should('have.focus');
       });
     });
 
@@ -135,9 +137,7 @@ context('Insurance - Policy - Broker addresses page', () => {
       it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, () => {
         cy.navigateToUrl(url);
 
-        radios(optionId).option.label().click();
-
-        cy.clickSubmitButton();
+        cy.completeAndSubmitBrokerAddressesForm({ optionValue });
 
         cy.assertUrl(brokerConfirmAddressUrl);
       });
@@ -146,7 +146,7 @@ context('Insurance - Policy - Broker addresses page', () => {
         it('should have the submitted value', () => {
           cy.navigateToUrl(url);
 
-          const { option } = radios(FIELD_ID, expectedFieldValue);
+          const { option } = radios(FIELD_ID, optionValue);
 
           cy.assertRadioOptionIsChecked(option.input());
         });

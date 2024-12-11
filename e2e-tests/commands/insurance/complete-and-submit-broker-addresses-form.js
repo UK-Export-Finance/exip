@@ -4,7 +4,7 @@
  * @param {String} optionValue: Address option value
  */
 const completeAndSubmitBrokerAddressesForm = ({ optionValue }) => {
-  cy.completeBrokerDetailsForm({ optionValue });
+  cy.completeBrokerAddressesForm({ optionValue });
 
   cy.clickSubmitButton();
 };
