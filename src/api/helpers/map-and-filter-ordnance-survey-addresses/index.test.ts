@@ -25,6 +25,16 @@ describe('mapAndFilterOrdnanceSurveyAddresses', () => {
 
       expect(result).toEqual(expected);
     });
+
+    it('should return a single element array when an address is found by BUILDING_NUMBER', () => {
+      const address = ordnanceSurveyResponse[2].DPA;
+
+      const result = mapAndFilterOrdnanceSurveyAddresses(String(address.BUILDING_NUMBER), ordnanceSurveyResponse);
+
+      const expected = [mapAddress(ordnanceSurveyResponse[2])];
+
+      expect(result).toEqual(expected);
+    });
   });
 
   describe('when no addresses are found', () => {

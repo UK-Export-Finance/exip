@@ -610,7 +610,7 @@ var CUSTOM_RESOLVERS = [
   'deleteApplicationByReferenceNumber',
   'getApplicationByReferenceNumber',
   'getCompaniesHouseInformation',
-  'getOrdnanceSurveyAddress',
+  'getOrdnanceSurveyAddresses',
   'submitApplication',
   // feedback
   'createFeedbackAndSendEmail',
@@ -9543,6 +9543,9 @@ var mapAndFilterOrdnanceSurveyAddresses = (houseNameOrNumber, ordnanceSurveyResp
       if (address.DPA.BUILDING_NAME && address.DPA.BUILDING_NAME.includes(houseNameOrNumber)) {
         mappedAndFiltered.push(map_ordnance_survey_address_default(address));
       }
+      if (address.DPA.BUILDING_NUMBER && address.DPA.BUILDING_NUMBER.includes(houseNameOrNumber)) {
+        mappedAndFiltered.push(map_ordnance_survey_address_default(address));
+      }
     });
     return mappedAndFiltered;
   } catch (error) {
@@ -9571,7 +9574,9 @@ var getOrdnanceSurveyAddresses = async (root, variables) => {
         success: false,
       };
     }
+    console.log('>>>>>>>> response.data ', response.data);
     const mappedAddresses = map_and_filter_ordnance_survey_addresses_default(houseNameOrNumber, response.data);
+    console.log('>>>>>>>> mappedAddresses ', mappedAddresses);
     if (!mappedAddresses.length) {
       return {
         success: false,
