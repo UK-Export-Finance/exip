@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.36.3](https://github.com/UK-Export-Finance/exip/compare/v2.36.2...v2.36.3) (2024-11-14)
+
+
+### Bug Fixes
+
+* **EMS-3988:** apply - type of policy - hint text ([#3305](https://github.com/UK-Export-Finance/exip/issues/3305)) ([885194b](https://github.com/UK-Export-Finance/exip/commit/885194b3bffed7c4e28fd1767406495ed75b7e56))
+
+## [2.36.2](https://github.com/UK-Export-Finance/exip/compare/v2.36.1...v2.36.2) (2024-11-13)
+
+
+### Bug Fixes
+
+* **EMS-3988:** regenerate api schema ([#3301](https://github.com/UK-Export-Finance/exip/issues/3301)) ([81b382c](https://github.com/UK-Export-Finance/exip/commit/81b382c4039f089101623f2b1a740a1a97ce9797))
+
+## [2.36.1](https://github.com/UK-Export-Finance/exip/compare/v2.36.0...v2.36.1) (2024-11-13)
+
+
+### Bug Fixes
+
+* **EMS-3988:** quote tool - type of policy - hint text ([3bd562c](https://github.com/UK-Export-Finance/exip/commit/3bd562ca8df1c85c787137e251f62c4b601d9a45))
+
 ## [2.36.0](https://github.com/UK-Export-Finance/exip/compare/v2.35.5...v2.36.0) (2024-11-01)
 
 ### Features

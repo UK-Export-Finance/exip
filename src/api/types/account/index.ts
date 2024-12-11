@@ -32,7 +32,7 @@ export interface AddOtpToAccountVariables {
 }
 
 export interface AddAndGetOtpResponse extends SuccessResponse {
-  securityCode?: string;
+  securityCode: string;
 }
 
 export interface AccountPasswordResetResponse extends SuccessResponse {
