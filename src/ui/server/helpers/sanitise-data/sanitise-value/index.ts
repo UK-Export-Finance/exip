@@ -19,7 +19,6 @@ const {
     AGENT_SERVICE: { SERVICE_DESCRIPTION },
   },
   POLICY: {
-    // TODO: ticket for adding E2E test, submitting as pure number and pure letters.
     BROKER_DETAILS: { NAME: BROKER_NAME, BUILDING_NUMBER_OR_NAME },
     BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
     LOSS_PAYEE_FINANCIAL_UK: { ACCOUNT_NUMBER, SORT_CODE },
