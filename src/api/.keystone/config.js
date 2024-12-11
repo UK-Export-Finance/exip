@@ -9574,9 +9574,7 @@ var getOrdnanceSurveyAddresses = async (root, variables) => {
         success: false,
       };
     }
-    console.log('>>>>>>>> response.data ', response.data);
     const mappedAddresses = map_and_filter_ordnance_survey_addresses_default(houseNameOrNumber, response.data);
-    console.log('>>>>>>>> mappedAddresses ', mappedAddresses);
     if (!mappedAddresses.length) {
       return {
         success: false,

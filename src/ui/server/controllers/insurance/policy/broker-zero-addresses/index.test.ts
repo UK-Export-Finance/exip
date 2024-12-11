@@ -5,7 +5,7 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, referenceNumber } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -13,7 +13,8 @@ const {
   POLICY: { BROKER_DETAILS_ROOT, BROKER_MANUAL_ADDRESS_ROOT },
 } = INSURANCE_ROUTES;
 
-const tempMockPostcode = 'W1A 1AA';
+const { broker } = mockApplication;
+const { postcode } = broker;
 
 describe('controllers/insurance/policy/broker-zero-addresses', () => {
   let req: Request;
@@ -64,7 +65,7 @@ describe('controllers/insurance/policy/broker-zero-addresses', () => {
         }),
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
-        postcode: tempMockPostcode,
+        postcode,
       });
     });
 

@@ -24,10 +24,10 @@ const {
 
 const { BROKER_ADDRESSES } = POLICY_FIELDS;
 
-const tempMockPostcode = 'W1A 1AA';
-const tempMockHouseNameOrNumber = 'WOGAN HOUSE';
+const { broker } = mockApplication;
+const { postcode, buildingNumberOrName } = broker;
 
-const mappedAddresses = mapOrdnanceSurveyAddresses(mockOrdnanceSurveyAddressResponse.addresses, mockApplication.broker);
+const mappedAddresses = mapOrdnanceSurveyAddresses(mockOrdnanceSurveyAddressResponse.addresses, broker);
 
 describe('controllers/insurance/policy/broker-addresses', () => {
   let req: Request;
@@ -128,7 +128,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
 
       expect(getOrdnanceSurveyAddressesSpy).toHaveBeenCalledTimes(1);
 
-      expect(getOrdnanceSurveyAddressesSpy).toHaveBeenCalledWith(tempMockPostcode, tempMockHouseNameOrNumber);
+      expect(getOrdnanceSurveyAddressesSpy).toHaveBeenCalledWith(postcode, buildingNumberOrName);
     });
 
     it('should render template', async () => {
@@ -142,8 +142,8 @@ describe('controllers/insurance/policy/broker-addresses', () => {
         ...pageVariables(referenceNumber, mockOrdnanceSurveyAddressResponse.addresses.length),
         userName: getUserNameFromSession(req.session.user),
         mappedAddresses,
-        postcode: tempMockPostcode,
-        buildingNumberOrName: tempMockHouseNameOrNumber,
+        postcode,
+        buildingNumberOrName,
       });
     });
 
@@ -233,7 +233,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
 
         expect(getOrdnanceSurveyAddressesSpy).toHaveBeenCalledTimes(1);
 
-        expect(getOrdnanceSurveyAddressesSpy).toHaveBeenCalledWith(tempMockPostcode, tempMockHouseNameOrNumber);
+        expect(getOrdnanceSurveyAddressesSpy).toHaveBeenCalledWith(broker.postcode, broker.buildingNumberOrName);
       });
 
       it('should render template with validation errors and submitted values', async () => {
@@ -253,7 +253,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
           ...pageVariables(referenceNumber, mockOrdnanceSurveyAddressResponse.addresses.length),
           userName: getUserNameFromSession(req.session.user),
           mappedAddresses,
-          postcode: tempMockPostcode,
+          postcode,
           validationErrors,
         });
       });
@@ -269,7 +269,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
       it('should call api.keystone.getOrdnanceSurveyAddress', () => {
         expect(getOrdnanceSurveyAddressesSpy).toHaveBeenCalledTimes(1);
 
-        expect(getOrdnanceSurveyAddressesSpy).toHaveBeenCalledWith(tempMockPostcode, tempMockHouseNameOrNumber);
+        expect(getOrdnanceSurveyAddressesSpy).toHaveBeenCalledWith(postcode, buildingNumberOrName);
       });
 
       it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, () => {

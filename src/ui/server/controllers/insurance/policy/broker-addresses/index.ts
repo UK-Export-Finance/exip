@@ -59,13 +59,6 @@ export const pageVariables = (referenceNumber: number, totalAddresses: number) =
   };
 };
 
-// TODO: EMS-3974 - this will come from the following:
-// application.broker.buildingNumberOrName
-// application.broker.postcode
-
-const mockPostcode = 'W1A 1AA';
-const mockHouseNameOrNumber = 'WOGAN HOUSE';
-
 /**
  * Render the Broker addresses page
  * @param {Express.Request} Express request
@@ -81,8 +74,9 @@ export const get = async (req: Request, res: Response) => {
     }
 
     const { broker, referenceNumber } = application;
+    const { postcode, buildingNumberOrName } = broker;
 
-    const response = await api.keystone.getOrdnanceSurveyAddresses(mockPostcode, mockHouseNameOrNumber);
+    const response = await api.keystone.getOrdnanceSurveyAddresses(String(postcode), String(buildingNumberOrName));
 
     if (response.apiError) {
       return res.redirect(PROBLEM_WITH_SERVICE);
@@ -105,8 +99,8 @@ export const get = async (req: Request, res: Response) => {
       ...pageVariables(referenceNumber, addresses.length),
       userName: getUserNameFromSession(req.session.user),
       mappedAddresses,
-      postcode: mockPostcode,
-      buildingNumberOrName: mockHouseNameOrNumber,
+      postcode,
+      buildingNumberOrName,
     });
   } catch (error) {
     console.error('Error calling ordnance survey %o', error);
@@ -131,12 +125,13 @@ export const post = async (req: Request, res: Response) => {
     }
 
     const { broker, referenceNumber } = application;
+    const { postcode, buildingNumberOrName } = broker;
 
     const payload = constructPayload(req.body, [FIELD_ID]);
 
     const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
 
-    const response = await api.keystone.getOrdnanceSurveyAddresses(mockPostcode, mockHouseNameOrNumber);
+    const response = await api.keystone.getOrdnanceSurveyAddresses(String(postcode), String(buildingNumberOrName));
 
     const { addresses } = response;
 
@@ -151,7 +146,7 @@ export const post = async (req: Request, res: Response) => {
         ...pageVariables(referenceNumber, addresses.length),
         userName: getUserNameFromSession(req.session.user),
         mappedAddresses,
-        postcode: mockPostcode,
+        postcode,
         validationErrors,
       });
     }
