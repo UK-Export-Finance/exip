@@ -21,6 +21,10 @@ updates:
         versions: [">=6.0.0"]
       - dependency-name: "@keystone-6/auth"
         versions: [">=8.0.0"]
+      - dependency-name: "@keystone-6/fields-document"
+        versions: [">=9.0.0"]
+      - dependency-name: "@typescript-eslint/parser"
+        versions: [">=8.0.0"]
       - dependency-name: "@typescript-eslint/eslint-plugin"
         versions: [">=8.0.0"]
       - dependency-name: "graphql"
@@ -49,7 +53,11 @@ updates:
         versions: [">=6.0.0"]
       - dependency-name: "@keystone-6/auth"
         versions: [">=8.0.0"]
+      - dependency-name: "@keystone-6/fields-document"
+        versions: [">=9.0.0"]
       - dependency-name: "@typescript-eslint/eslint-plugin"
+        versions: [">=8.0.0"]
+      - dependency-name: "@typescript-eslint/parser"
         versions: [">=8.0.0"]
       - dependency-name: "eslint"
         versions: [">=9.0.0"]
@@ -74,6 +82,8 @@ updates:
       - dependency-name: "graphql"
         versions: [">=16.0.0"]
       - dependency-name: "@typescript-eslint/eslint-plugin"
+        versions: [">=8.0.0"]
+      - dependency-name: "@typescript-eslint/parser"
         versions: [">=8.0.0"]
       - dependency-name: "eslint"
         versions: [">=9.0.0"]
