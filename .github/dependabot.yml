@@ -12,8 +12,8 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
-      interval: 'daily'
-      time: '17:15'
+      interval: 'monthly'
+      time: '03:00'
     labels:
       - 'chore'
     ignore:
@@ -46,8 +46,8 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/src/api'
     schedule:
-      interval: 'daily'
-      time: '17:15'
+      interval: 'monthly'
+      time: '03:00'
     labels:
       - 'chore'
     ignore:
@@ -78,8 +78,8 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/src/ui'
     schedule:
-      interval: 'daily'
-      time: '17:15'
+      interval: 'monthly'
+      time: '03:00'
     labels:
       - 'chore'
     ignore:
@@ -106,8 +106,8 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/generate-exip-pricing-grid'
     schedule:
-      interval: 'daily'
-      time: '17:15'
+      interval: 'monthly'
+      time: '03:00'
     labels:
       - 'chore'
     groups:
@@ -119,8 +119,8 @@ updates:
   - package-ecosystem: 'docker'
     directory: '/src/api'
     schedule:
-      interval: 'daily'
-      time: '17:15'
+      interval: 'monthly'
+      time: '03:00'
     labels:
       - 'chore'
     groups:
@@ -132,8 +132,8 @@ updates:
   - package-ecosystem: 'docker'
     directory: '/src/ui'
     schedule:
-      interval: 'daily'
-      time: '17:15'
+      interval: 'monthly'
+      time: '03:00'
     labels:
       - 'chore'
     groups:
@@ -147,8 +147,8 @@ updates:
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
-      interval: 'daily'
-      time: '17:15'
+      interval: 'monthly'
+      time: '03:00'
     labels:
       - 'chore'
     groups:
