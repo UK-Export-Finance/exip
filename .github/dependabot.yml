@@ -13,9 +13,20 @@ updates:
     directory: '/'
     schedule:
       interval: 'daily'
-      time: '16:00'
+      time: '16:30'
     labels:
       - 'chore'
+    ignore:
+      - dependency-name: "@keystone-6/core"
+        versions: [">=6.0.0"]
+      - dependency-name: "graphql"
+        versions: [">=16.0.0"]
+      - dependency-name: "eslint"
+        versions: [">=9.0.0"]
+      - dependency-name: "eslint-plugin-prettier"
+        versions: [">=16.0.0"]
+      - dependency-name: "prettier"
+        versions: [">=3.0.0"]
     groups:
       npm-packages:
         patterns:
@@ -26,9 +37,18 @@ updates:
     directory: '/src/api'
     schedule:
       interval: 'daily'
-      time: '16:00'
+      time: '16:30'
     labels:
       - 'chore'
+    ignore:
+      - dependency-name: "@keystone-6/core"
+        versions: [">=6.0.0"]
+      - dependency-name: "eslint"
+        versions: [">=9.0.0"]
+      - dependency-name: "eslint-plugin-prettier"
+        versions: [">=16.0.0"]
+      - dependency-name: "prettier"
+        versions: [">=3.0.0"]
     groups:
       npm-packages:
         patterns:
@@ -39,9 +59,18 @@ updates:
     directory: '/src/ui'
     schedule:
       interval: 'daily'
-      time: '16:00'
+      time: '16:30'
     labels:
       - 'chore'
+    ignore:
+      - dependency-name: "graphql"
+        versions: [">=16.0.0"]
+      - dependency-name: "eslint"
+        versions: [">=9.0.0"]
+      - dependency-name: "eslint-plugin-prettier"
+        versions: [">=16.0.0"]
+      - dependency-name: "prettier"
+        versions: [">=3.0.0"]
     groups:
       npm-packages:
         patterns:
@@ -52,7 +81,7 @@ updates:
     directory: '/generate-exip-pricing-grid'
     schedule:
       interval: 'daily'
-      time: '16:00'
+      time: '16:30'
     labels:
       - 'chore'
     groups:
@@ -65,7 +94,7 @@ updates:
     directory: '/src/api'
     schedule:
       interval: 'daily'
-      time: '16:00'
+      time: '16:30'
     labels:
       - 'chore'
     groups:
@@ -78,7 +107,7 @@ updates:
     directory: '/src/ui'
     schedule:
       interval: 'daily'
-      time: '16:00'
+      time: '16:30'
     labels:
       - 'chore'
     groups:
@@ -93,7 +122,7 @@ updates:
     directory: '/'
     schedule:
       interval: 'daily'
-      time: '16:00'
+      time: '16:30'
     labels:
       - 'chore'
     groups:
