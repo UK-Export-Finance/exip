@@ -124,7 +124,7 @@ export interface ApplicationDeclaration extends Relationship {
   agreeToAntiBribery?: boolean;
   agreeToConfidentiality?: boolean;
   agreeToConfirmationAndAcknowledgements?: boolean;
-  hasAntiBriberyCodeOfConduct?: boolean | null;
+  hasAntiBriberyCodeOfConduct?: boolean;
   willExportWithAntiBriberyCodeOfConduct?: boolean;
 }
 
@@ -135,6 +135,18 @@ export interface ApplicationDeclarationVersions {
   CONFIDENTIALITY: string;
   CONFIRMATION_AND_ACKNOWLEDGEMENTS: string;
   HOW_YOUR_DATA_WILL_BE_USED?: string;
+}
+
+export interface ApplicationDeclarationModernSlavery extends Relationship {
+  willAdhereToAllRequirements?: boolean;
+  hasNoOffensesOrInvestigations?: boolean;
+  isNotAwareOfExistingSlavery?: boolean;
+}
+
+export interface ApplicationDeclarationModernSlaveryVersions {
+  WILL_ADHERE_TO_ALL_REQUIREMENTS: string;
+  HAS_NO_OFFENSES_OR_INVESTIGATIONS: string;
+  IS_NOT_AWARE_OF_EXISTING_SLAVERY: string;
 }
 
 export interface ApplicationLossPayeeFinancialInternationalVector extends Relationship {

@@ -24,11 +24,7 @@ const {
  * @param {Boolean} hasAntiBriberyCodeOfConduct: "Has anti-bribery code of conduct" flag
  * @returns {Array} Submit application tasks
  */
-const createSubmitApplicationTasks = (
-  referenceNumber: number,
-  otherGroups: TaskListData,
-  hasAntiBriberyCodeOfConduct?: boolean | null,
-): Array<TaskListDataTask> => {
+const createSubmitApplicationTasks = (referenceNumber: number, otherGroups: TaskListData, hasAntiBriberyCodeOfConduct?: boolean): Array<TaskListDataTask> => {
   const initialChecksGroup = getGroupById(otherGroups, GROUP_IDS.INITIAL_CHECKS);
   const prepareApplicationGroup = getGroupById(otherGroups, GROUP_IDS.PREPARE_APPLICATION);
 

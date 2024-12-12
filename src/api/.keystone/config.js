@@ -761,30 +761,40 @@ var DATE_FORMAT = {
 };
 
 // constants/declarations/versions/index.ts
-var DECLARATION_VERSIONS = [
-  {
-    ANTI_BRIBERY: '1',
-    ANTI_BRIBERY_CODE_OF_CONDUCT: '1',
-    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: '1',
-    CONFIDENTIALITY: '1',
-    CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
-    HOW_YOUR_DATA_WILL_BE_USED: '1',
-  },
-  {
-    ANTI_BRIBERY: '2',
-    ANTI_BRIBERY_CODE_OF_CONDUCT: '2',
-    ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: '1',
-    CONFIDENTIALITY: '1',
-    CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
-  },
-];
+var VERSION_12 = {
+  ANTI_BRIBERY: '1',
+  ANTI_BRIBERY_CODE_OF_CONDUCT: '1',
+  ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: '1',
+  CONFIDENTIALITY: '1',
+  CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
+  HOW_YOUR_DATA_WILL_BE_USED: '1',
+};
+var VERSION_22 = {
+  ANTI_BRIBERY: '2',
+  ANTI_BRIBERY_CODE_OF_CONDUCT: '2',
+  ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: '1',
+  CONFIDENTIALITY: '1',
+  CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
+};
+var DECLARATION_VERSIONS = [VERSION_12, VERSION_22];
 var versions_default2 = DECLARATION_VERSIONS;
+
+// constants/declarations/modern-slavery-versions/index.ts
+var VERSION_13 = {
+  WILL_ADHERE_TO_ALL_REQUIREMENTS: '1',
+  HAS_NO_OFFENSES_OR_INVESTIGATIONS: '1',
+  IS_NOT_AWARE_OF_EXISTING_SLAVERY: '1',
+};
+var DECLARATION_MODERN_SLAVERY_VERSIONS = [VERSION_13];
+var modern_slavery_versions_default = DECLARATION_MODERN_SLAVERY_VERSIONS;
 
 // constants/declarations/index.ts
 var DECLARATIONS2 = {
   VERSIONS: versions_default2,
   V1_DECLARATIONS: versions_default2[0],
   LATEST_DECLARATIONS: versions_default2[versions_default2.length - 1],
+  MODREN_SLAVERY_VERSIONS: modern_slavery_versions_default,
+  LATEST_MODERN_SLAVERY_DECLARATIONS: modern_slavery_versions_default[modern_slavery_versions_default.length - 1],
 };
 var declarations_default2 = DECLARATIONS2;
 
@@ -2417,6 +2427,7 @@ var lists = {
       agreeToConfirmationAndAcknowledgements: nullable_checkbox_default(),
       hasAntiBriberyCodeOfConduct: nullable_checkbox_default(),
       willExportWithAntiBriberyCodeOfConduct: nullable_checkbox_default(),
+      modernSlavery: (0, import_fields.relationship)({ ref: 'DeclarationModernSlavery' }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -2446,6 +2457,38 @@ var lists = {
         db: { nativeType: 'VarChar(3)' },
       }),
       agreeHowDataWillBeUsed: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(3)' },
+      }),
+    },
+    access: import_access.allowAll,
+  }),
+  DeclarationModernSlavery: (0, import_core2.list)({
+    fields: {
+      declaration: (0, import_fields.relationship)({ ref: 'Declaration' }),
+      version: (0, import_fields.relationship)({ ref: 'DeclarationModernSlaveryVersion' }),
+      willAdhereToAllRequirements: nullable_checkbox_default(),
+      hasNoOffensesOrInvestigations: nullable_checkbox_default(),
+      isNotAwareOfExistingSlavery: nullable_checkbox_default(),
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      },
+    },
+    access: import_access.allowAll,
+  }),
+  DeclarationModernSlaveryVersion: (0, import_core2.list)({
+    fields: {
+      declarationModernSlavery: (0, import_fields.relationship)({ ref: 'DeclarationModernSlavery' }),
+      willAdhereToAllRequirements: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(3)' },
+      }),
+      hasNoOffensesOrInvestigations: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(3)' },
+      }),
+      isNotAwareOfExistingSlavery: (0, import_fields.text)({
         db: { nativeType: 'VarChar(3)' },
       }),
     },

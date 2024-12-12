@@ -524,22 +524,26 @@ model SectionReview {
 }
 
 model Declaration {
-  id                                     String               @id @default(cuid())
-  application                            Application?         @relation("Declaration_application", fields: [applicationId], references: [id])
-  applicationId                          String?              @map("application")
-  version                                DeclarationVersion?  @relation("Declaration_version", fields: [versionId], references: [id])
-  versionId                              String?              @map("version")
-  agreeHowDataWillBeUsed                 Boolean?
-  agreeToAntiBribery                     Boolean?
-  agreeToConfidentiality                 Boolean?
-  agreeToConfirmationAndAcknowledgements Boolean?
-  hasAntiBriberyCodeOfConduct            Boolean?
-  willExportWithAntiBriberyCodeOfConduct Boolean?
-  from_Application_declaration           Application[]        @relation("Application_declaration")
-  from_DeclarationVersion_declaration    DeclarationVersion[] @relation("DeclarationVersion_declaration")
+  id                                        String                     @id @default(cuid())
+  application                               Application?               @relation("Declaration_application", fields: [applicationId], references: [id])
+  applicationId                             String?                    @map("application")
+  version                                   DeclarationVersion?        @relation("Declaration_version", fields: [versionId], references: [id])
+  versionId                                 String?                    @map("version")
+  agreeHowDataWillBeUsed                    Boolean?
+  agreeToAntiBribery                        Boolean?
+  agreeToConfidentiality                    Boolean?
+  agreeToConfirmationAndAcknowledgements    Boolean?
+  hasAntiBriberyCodeOfConduct               Boolean?
+  willExportWithAntiBriberyCodeOfConduct    Boolean?
+  modernSlavery                             DeclarationModernSlavery?  @relation("Declaration_modernSlavery", fields: [modernSlaveryId], references: [id])
+  modernSlaveryId                           String?                    @map("modernSlavery")
+  from_Application_declaration              Application[]              @relation("Application_declaration")
+  from_DeclarationVersion_declaration       DeclarationVersion[]       @relation("DeclarationVersion_declaration")
+  from_DeclarationModernSlavery_declaration DeclarationModernSlavery[] @relation("DeclarationModernSlavery_declaration")
 
   @@index([applicationId])
   @@index([versionId])
+  @@index([modernSlaveryId])
 }
 
 model DeclarationVersion {
@@ -555,6 +559,34 @@ model DeclarationVersion {
   from_Declaration_version               Declaration[] @relation("Declaration_version")
 
   @@index([declarationId])
+}
+
+model DeclarationModernSlavery {
+  id                                                            String                            @id @default(cuid())
+  declaration                                                   Declaration?                      @relation("DeclarationModernSlavery_declaration", fields: [declarationId], references: [id])
+  declarationId                                                 String?                           @map("declaration")
+  version                                                       DeclarationModernSlaveryVersion?  @relation("DeclarationModernSlavery_version", fields: [versionId], references: [id])
+  versionId                                                     String?                           @map("version")
+  willAdhereToAllRequirements                                   Boolean?
+  hasNoOffensesOrInvestigations                                 Boolean?
+  isNotAwareOfExistingSlavery                                   Boolean?
+  from_Declaration_modernSlavery                                Declaration[]                     @relation("Declaration_modernSlavery")
+  from_DeclarationModernSlaveryVersion_declarationModernSlavery DeclarationModernSlaveryVersion[] @relation("DeclarationModernSlaveryVersion_declarationModernSlavery")
+
+  @@index([declarationId])
+  @@index([versionId])
+}
+
+model DeclarationModernSlaveryVersion {
+  id                                    String                     @id @default(cuid())
+  declarationModernSlavery              DeclarationModernSlavery?  @relation("DeclarationModernSlaveryVersion_declarationModernSlavery", fields: [declarationModernSlaveryId], references: [id])
+  declarationModernSlaveryId            String?                    @map("declarationModernSlavery")
+  willAdhereToAllRequirements           String                     @default("") @mysql.VarChar(3)
+  hasNoOffensesOrInvestigations         String                     @default("") @mysql.VarChar(3)
+  isNotAwareOfExistingSlavery           String                     @default("") @mysql.VarChar(3)
+  from_DeclarationModernSlavery_version DeclarationModernSlavery[] @relation("DeclarationModernSlavery_version")
+
+  @@index([declarationModernSlaveryId])
 }
 
 model Page {

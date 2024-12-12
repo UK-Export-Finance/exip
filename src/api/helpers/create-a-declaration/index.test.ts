@@ -18,7 +18,7 @@ describe('helpers/create-a-declaration', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await applications.create({ context, data: {} })) as Application;
+    application = (await applications.create({ context })) as Application;
   });
 
   test('it should return a declaration with ID', async () => {
@@ -29,7 +29,6 @@ describe('helpers/create-a-declaration', () => {
     expect(result.id.length).toBeGreaterThan(0);
   });
 
-  // declarationVersion
   test('it should return an application ID', async () => {
     const result = await createADeclaration(context, application.id);
 
