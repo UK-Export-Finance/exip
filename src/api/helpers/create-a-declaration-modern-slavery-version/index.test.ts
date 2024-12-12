@@ -3,17 +3,10 @@ import DECLARATIONS from '../../constants/declarations';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import declarationsModernSlavery from '../../test-helpers/declarations-modern-slavery';
 import { ApplicationDeclarationModernSlavery, Context } from '../../types';
+import { mockInvalidId } from '../../test-mocks';
 
 const { WILL_ADHERE_TO_ALL_REQUIREMENTS, HAS_NO_OFFENSES_OR_INVESTIGATIONS, IS_NOT_AWARE_OF_EXISTING_SLAVERY } =
   DECLARATIONS.LATEST_MODERN_SLAVERY_DECLARATIONS;
-
-const invalidId = 'invalid-id';
-
-const assertError = (err) => {
-  const errorString = String(err);
-
-  expect(errorString.includes('Creating an application declaration modern slavery version')).toEqual(true);
-};
 
 describe('helpers/create-a-declaration-modern-slavery-version', () => {
   let context: Context;
@@ -49,11 +42,17 @@ describe('helpers/create-a-declaration-modern-slavery-version', () => {
 
   describe('when an invalid declaration modern slavery ID is passed', () => {
     test('it should throw an error', async () => {
-      try {
-        await createADeclarationModernSlaveryVersion(context, invalidId);
-      } catch (error) {
-        assertError(error);
-      }
+      await expect(createADeclarationModernSlaveryVersion(context, mockInvalidId)).rejects.toThrow(
+        'Creating an application declaration modern slavery version',
+      );
+    });
+  });
+
+  describe('when creation is not successful', () => {
+    test('it should throw an error', async () => {
+      await expect(createADeclarationModernSlaveryVersion({}, declarationModernSlavery.id)).rejects.toThrow(
+        'Creating an application declaration modern slavery version',
+      );
     });
   });
 });

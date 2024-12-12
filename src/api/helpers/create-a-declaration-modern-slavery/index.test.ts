@@ -6,12 +6,6 @@ import applications from '../../test-helpers/applications';
 import declarations from '../../test-helpers/declarations';
 import { Application, ApplicationDeclaration, Context } from '../../types';
 
-const assertError = (err) => {
-  const errorString = String(err);
-
-  expect(errorString.includes('Creating an application declaration modern slavery')).toEqual(true);
-};
-
 describe('helpers/create-a-declaration-modern-slavery', () => {
   let context: Context;
   let application: Application;
@@ -81,11 +75,6 @@ describe('helpers/create-a-declaration-modern-slavery', () => {
   describe('when creation is not successful', () => {
     test('it should throw an error', async () => {
       await expect(createADeclarationModernSlavery({}, application.id)).rejects.toThrow('Creating an application declaration modern slavery');
-      try {
-        await createADeclarationModernSlavery(context, mockInvalidId);
-      } catch (error) {
-        assertError(error);
-      }
     });
   });
 });
