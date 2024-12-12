@@ -1,7 +1,7 @@
-import DECLARATION_VERSIONS from '.';
+import DECLARATION_MODERN_SLAVERY_VERSIONS from '.';
 
 describe('api/constants/declarations/modern-slavery-versions', () => {
-  it('should return an array of modern slavery decalration versions', () => {
+  it('should return an array of modern slavery declaration versions', () => {
     const expected = [
       {
         WILL_ADHERE_TO_ALL_REQUIREMENTS: '1',
@@ -10,6 +10,6 @@ describe('api/constants/declarations/modern-slavery-versions', () => {
       },
     ];
 
-    expect(DECLARATION_VERSIONS).toEqual(expected);
+    expect(DECLARATION_MODERN_SLAVERY_VERSIONS).toEqual(expected);
   });
 });
