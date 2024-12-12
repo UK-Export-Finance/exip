@@ -27,6 +27,9 @@ const VERSIONS = [
     OVER_500K_SUPPORT: true,
     DEFAULT_FINAL_DESTINATION_KNOWN: null,
     DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: null,
+    SMALL_EXPORT_BUILDER: {
+      MAXIMUM_BUYER_WILL_OWE: 25000,
+    },
   },
 ] as Array<ApplicationVersion>;
 

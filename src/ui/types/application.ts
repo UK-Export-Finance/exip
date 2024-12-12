@@ -263,6 +263,7 @@ interface ApplicationPolicy {
   totalSalesToBuyer?: number;
   maximumBuyerWillOwe?: number;
   jointlyInsuredParty: ApplicationJointlyInsuredParty;
+  requestedCreditLimit?: number;
 }
 
 interface Application extends ApplicationCore {
@@ -290,6 +291,10 @@ interface ApplicationFlatCore extends ApplicationCore, InsuranceEligibilityCore,
 
 type ApplicationFlat = ApplicationFlatCore & ApplicationPolicy & ApplicationBroker & ApplicationCompany & ApplicationDeclaration;
 
+interface ApplicationVersionSmallExportBuilder {
+  MAXIMUM_REQUESTED_CREDIT_LIMIT: number;
+}
+
 interface ApplicationVersion {
   VERSION_NUMBER: string;
   OVER_500K_SUPPORT: boolean;
@@ -297,6 +302,7 @@ interface ApplicationVersion {
   TOTAL_VALUE_OF_CONTRACT: number;
   DEFAULT_FINAL_DESTINATION_KNOWN: boolean;
   DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: boolean;
+  SMALL_EXPORT_BUILDER?: ApplicationVersionSmallExportBuilder;
 }
 
 export {

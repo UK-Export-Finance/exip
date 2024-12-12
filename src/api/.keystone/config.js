@@ -652,6 +652,9 @@ var VERSION_3 = {
   ...VERSION_2,
   VERSION_NUMBER: '3',
   REQUESTED_CREDIT_LIMIT_REQUIRED: true,
+  SMALL_EXPORT_BUILDER: {
+    MAXIMUM_BUYER_WILL_OWE: 25e3,
+  },
 };
 var VERSIONS = [VERSION_1, VERSION_2, VERSION_3];
 var versions_default = VERSIONS;
@@ -1094,8 +1097,15 @@ var EMAIL_TEMPLATE_IDS = {
   APPLICATION: {
     SUBMISSION: {
       EXPORTER: {
-        SINGLE_CONTRACT_POLICY_CONFIRMATION: '2e9084e2-d871-4be7-85d0-0ccc1961b148',
-        MULTIPLE_CONTRACT_POLICY_CONFIRMATION: '7ee4729d-53ba4729-af50-f733870914de',
+        // SINGLE_CONTRACT_POLICY_CONFIRMATION: '2e9084e2-d871-4be7-85d0-0ccc1961b148',
+        CONFIRMATION: {
+          SINGLE_OR_MULTIPLE_CONTRACT_POLICY: '2e9084e2-d871-4be7-85d0-0ccc1961b148',
+          MULTIPLE_CONTRACT_POLICY: {
+            ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION: '7ee4729d-53ba4729-af50-f733870914de',
+          },
+        },
+        // MULTIPLE_CONTRACT_POLICY_CONFIRMATION: '7ee4729d-53ba4729-af50-f733870914de',
+        // MULTIPLE_CONTRACT_POLICY_
         SEND_DOCUMENTS: {
           TRADING_HISTORY: '1ae4d77e-58d6-460e-99c0-b62bf08d8c52',
           ANTI_BRIBERY: '002e43e3-ca78-4b9c-932f-6833014bb1e4',
@@ -1433,12 +1443,28 @@ var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE
 var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
 // emails/application/get-submitted-confirmation-template-id/index.ts
-var getSubmittedConfirmationTemplateId = (policyType) => {
+var {
+  LATEST_VERSION: { SMALL_EXPORT_BUILDER },
+} = APPLICATION;
+var {
+  APPLICATION: {
+    SUBMISSION: {
+      EXPORTER: { CONFIRMATION },
+    },
+  },
+} = EMAIL_TEMPLATE_IDS;
+var getSubmittedConfirmationTemplateId = (policy) => {
+  const { policyType, maximumBuyerWillOwe } = policy;
   if (isSinglePolicyType(policyType)) {
-    return EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SINGLE_CONTRACT_POLICY_CONFIRMATION;
+    return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
   }
-  if (isMultiplePolicyType(policyType)) {
-    return EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.MULTIPLE_CONTRACT_POLICY_CONFIRMATION;
+  if (isMultiplePolicyType(policyType) && maximumBuyerWillOwe) {
+    const threshold = Number(SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE);
+    const eligibileForSmallExportBuilder = maximumBuyerWillOwe <= threshold;
+    if (eligibileForSmallExportBuilder) {
+      return CONFIRMATION.MULTIPLE_CONTRACT_POLICY.ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION;
+    }
+    return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
   }
   return '';
 };
@@ -1500,14 +1526,14 @@ var application = {
   /**
    * application.submittedEmail
    * Send "application submitted" email to an account
-   * @param {String} policyType: Application "Policy type"
    * @param {ApplicationSubmissionEmailVariables} ApplicationSubmissionEmailVariables
+   * @param {ApplicationPolicy} policy: Application policy
    * @returns {Promise<Object>} callNotify response
    */
-  submittedEmail: async (variables, policyType) => {
+  submittedEmail: async (variables, policy) => {
     try {
       console.info('Sending application submitted email to application owner or provided business contact');
-      const templateId = get_submitted_confirmation_template_id_default(policyType);
+      const templateId = get_submitted_confirmation_template_id_default(policy);
       const { emailAddress } = variables;
       const response = await callNotify(templateId, emailAddress, variables);
       return response;
@@ -6145,14 +6171,8 @@ var get_application_submitted_email_template_ids_default = getApplicationSubmitt
 // emails/send-application-submitted-emails/index.ts
 var send4 = async (application2, xlsxPath) => {
   try {
-    const {
-      referenceNumber,
-      owner,
-      company,
-      buyer,
-      policy: { policyType, requestedStartDate },
-      policyContact,
-    } = application2;
+    const { referenceNumber, owner, company, buyer, policy, policyContact } = application2;
+    const { requestedStartDate } = policy;
     const { email } = owner;
     const sharedEmailVars = {
       referenceNumber,
@@ -6174,13 +6194,13 @@ var send4 = async (application2, xlsxPath) => {
       emailAddress: policyContact.email,
     };
     console.info('Sending application submitted email to application account owner: %s', sendOwnerEmailVars.emailAddress);
-    const accountSubmittedResponse = await emails_default.application.submittedEmail(sendOwnerEmailVars, policyType);
+    const accountSubmittedResponse = await emails_default.application.submittedEmail(sendOwnerEmailVars, policy);
     if (!accountSubmittedResponse?.success) {
       throw new Error('Sending application submitted email to owner/account');
     }
     if (!policyContact.isSameAsOwner) {
       console.info('Sending application submitted email to policy contact email: %s', sendContactEmailVars.emailAddress);
-      const contactSubmittedResponse = await emails_default.application.submittedEmail(sendContactEmailVars, policyType);
+      const contactSubmittedResponse = await emails_default.application.submittedEmail(sendContactEmailVars, policy);
       if (!contactSubmittedResponse?.success) {
         throw new Error('Sending application submitted email to contact');
       }

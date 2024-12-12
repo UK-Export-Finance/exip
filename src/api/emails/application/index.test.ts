@@ -17,10 +17,7 @@ describe('emails/application', () => {
   const unlinkSpy = jest.fn(() => Promise.resolve(true));
 
   const { email } = mockAccount;
-  const {
-    referenceNumber,
-    policy: { policyType },
-  } = mockApplication;
+  const { referenceNumber, policy } = mockApplication;
   const { companyName } = mockCompany;
   const { companyOrOrganisationName } = mockBuyer;
 
@@ -34,12 +31,10 @@ describe('emails/application', () => {
     buyerLocation: companyName,
   };
 
-  const mockPolicyType = String(policyType);
-
   const mockFilePath = '/path-to-file';
 
   describe('application', () => {
-    const expectedTemplateId = getSubmittedConfirmationTemplateId(mockPolicyType);
+    const expectedTemplateId = getSubmittedConfirmationTemplateId(policy);
 
     beforeEach(() => {
       jest.clearAllMocks();
@@ -52,7 +47,7 @@ describe('emails/application', () => {
     test('it should call notify.sendEmail and return the response', async () => {
       notify.sendEmail = sendEmailSpy;
 
-      const result = await application.submittedEmail(variables, mockPolicyType);
+      const result = await application.submittedEmail(variables, policy);
 
       expect(sendEmailSpy).toHaveBeenCalledTimes(1);
       expect(sendEmailSpy).toHaveBeenCalledWith(expectedTemplateId, email, variables);
@@ -69,7 +64,7 @@ describe('emails/application', () => {
 
       test('should throw an error', async () => {
         try {
-          await application.submittedEmail(variables, mockPolicyType);
+          await application.submittedEmail(variables, policy);
         } catch (error) {
           const expected = new Error(
             `Sending application submitted email to to application owner or provided business contact Error: Sending email ${new Error(mockErrorMessage)}`,
