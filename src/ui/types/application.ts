@@ -292,7 +292,7 @@ interface ApplicationFlatCore extends ApplicationCore, InsuranceEligibilityCore,
 type ApplicationFlat = ApplicationFlatCore & ApplicationPolicy & ApplicationBroker & ApplicationCompany & ApplicationDeclaration;
 
 interface ApplicationVersionSmallExportBuilder {
-  MAXIMUM_REQUESTED_CREDIT_LIMIT: number;
+  MAXIMUM_BUYER_WILL_OWE: number;
 }
 
 interface ApplicationVersion {

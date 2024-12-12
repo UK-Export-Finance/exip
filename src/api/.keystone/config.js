@@ -6335,7 +6335,7 @@ var {
   HAS_COMPANIES_HOUSE_NUMBER,
 } = insurance_default.ELIGIBILITY;
 var { COMPANY_NAME } = insurance_default.COMPANIES_HOUSE;
-var THRESHOLD = format_currency_default(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
+var THRESHOLD = format_currency_default(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE);
 var ELIGIBILITY_FIELDS = {
   [BUYER_COUNTRY]: {
     SUMMARY: {
@@ -6561,9 +6561,12 @@ var {
 } = insurance_default;
 var { MAX_COVER_PERIOD_MONTHS } = ELIGIBILITY;
 var {
+  LATEST_VERSION: { SMALL_EXPORT_BUILDER: SMALL_EXPORT_BUILDER2 },
   POLICY: { TOTAL_MONTHS_OF_COVER },
 } = APPLICATION;
 var { POLICY: POLICY_FORM_TITLES } = FORM_TITLES;
+var maxBuyerWillOweThreshold = Number(SMALL_EXPORT_BUILDER2?.MAXIMUM_BUYER_WILL_OWE);
+var SMALL_EXPORT_BUILDER_THRESHOLD = format_currency_default(maxBuyerWillOweThreshold, GBP_CURRENCY_CODE);
 var POLICY_FIELDS = {
   [POLICY_TYPE3]: {
     ID: POLICY_TYPE3,
@@ -6672,7 +6675,7 @@ var POLICY_FIELDS = {
         HINT: {
           FOR_EXAMPLE: 'For example, your total sales might be \xA3250,000 but the maximum the buyer will owe you at any single point is \xA3100,000.',
           INITIAL_CREDIT_LIMIT: {
-            INTRO: 'If your initial credit limit request is \xA325,000 or less you could be eligible for the',
+            INTRO: `If your initial credit limit request is ${SMALL_EXPORT_BUILDER_THRESHOLD} or less you could be eligible for the`,
             LINK: {
               TEXT: 'Small Export Builder.',
               HREF: LINKS.EXTERNAL.SMALL_EXPORT_BUILDER,
