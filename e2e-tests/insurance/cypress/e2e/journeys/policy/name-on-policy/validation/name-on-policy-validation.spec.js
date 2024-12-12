@@ -56,7 +56,7 @@ context('Insurance - Policy - Name on policy - Validation', () => {
       cy.navigateToUrl(url);
     });
 
-    it('should display validation error', () => {
+    it('should render a validation error', () => {
       cy.submitAndAssertRadioErrors({
         field: fieldSelector(SAME_NAME),
         expectedErrorMessage: NAME_ON_POLICY_ERRORS[NAME].IS_EMPTY,

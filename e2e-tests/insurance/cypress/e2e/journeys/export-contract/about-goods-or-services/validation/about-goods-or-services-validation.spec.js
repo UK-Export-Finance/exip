@@ -85,7 +85,7 @@ context('Insurance - Export contract - About goods or services page - form valid
     });
   });
 
-  it(`should display validation errors if ${DESCRIPTION} is over ${MAXIMUM} characters`, () => {
+  it(`should render validation errors if ${DESCRIPTION} is over ${MAXIMUM} characters`, () => {
     cy.navigateToUrl(url);
 
     cy.submitAndAssertFieldErrors({

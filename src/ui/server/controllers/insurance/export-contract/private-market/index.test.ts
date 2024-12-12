@@ -55,7 +55,7 @@ describe('controllers/insurance/export-contract/private-market', () => {
   });
 
   describe('FIELD_ID', () => {
-    it('should have the correct FIELD_ID', () => {
+    it('should have the correct ID', () => {
       expect(FIELD_ID).toEqual(ATTEMPTED);
     });
   });

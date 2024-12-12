@@ -77,11 +77,11 @@ context(
         cy.checkText(field(SAME_NAME).label(), nameAndEmail);
       });
 
-      it(`should NOT display conditional "${POSITION}" section without selecting the "same name" radio`, () => {
+      it(`should NOT display a conditional "${POSITION}" section without selecting the "same name" radio`, () => {
         field(POSITION).input().should('not.be.visible');
       });
 
-      it(`should display conditional "${POSITION}" section when selecting the "yes" radio`, () => {
+      it(`should render a conditional "${POSITION}" section when selecting the "yes" radio`, () => {
         field(SAME_NAME).label().click();
 
         field(POSITION).input().should('be.visible');
