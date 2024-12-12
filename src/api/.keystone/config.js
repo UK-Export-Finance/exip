@@ -4577,6 +4577,53 @@ var createADeclarationVersion = async (context, declarationId) => {
 };
 var create_a_declaration_version_default = createADeclarationVersion;
 
+// helpers/create-a-declaration-modern-slavery-version/index.ts
+var { WILL_ADHERE_TO_ALL_REQUIREMENTS, HAS_NO_OFFENSES_OR_INVESTIGATIONS, IS_NOT_AWARE_OF_EXISTING_SLAVERY } =
+  declarations_default2.LATEST_MODERN_SLAVERY_DECLARATIONS;
+var createADeclarationModernSlaveryVersion = async (context, declarationModernSlaveryId) => {
+  console.info('Creating an application declaration modern slavery version for %s', declarationModernSlaveryId);
+  try {
+    const version = await context.db.DeclarationModernSlaveryVersion.createOne({
+      data: {
+        declarationModernSlavery: {
+          connect: { id: declarationModernSlaveryId },
+        },
+        willAdhereToAllRequirements: WILL_ADHERE_TO_ALL_REQUIREMENTS,
+        hasNoOffensesOrInvestigations: HAS_NO_OFFENSES_OR_INVESTIGATIONS,
+        isNotAwareOfExistingSlavery: IS_NOT_AWARE_OF_EXISTING_SLAVERY,
+      },
+    });
+    return version;
+  } catch (error) {
+    console.error('Error creating an application declaration modern slavery version %o', error);
+    throw new Error(`Creating an application declaration modern slavery version ${error}`);
+  }
+};
+var create_a_declaration_modern_slavery_version_default = createADeclarationModernSlaveryVersion;
+
+// helpers/create-a-declaration-modern-slavery/index.ts
+var createADeclarationModernSlavery = async (context, declarationId) => {
+  console.info('Creating an application declaration modern slavery for %s', declarationId);
+  try {
+    const declarationModernSlavery = await context.db.DeclarationModernSlavery.createOne({
+      data: {
+        declaration: {
+          connect: { id: declarationId },
+        },
+      },
+    });
+    const declarationModernSlaveryVersion = await create_a_declaration_modern_slavery_version_default(context, declarationModernSlavery.id);
+    return {
+      ...declarationModernSlavery,
+      declarationModernSlaveryVersion,
+    };
+  } catch (error) {
+    console.error('Error creating an application declaration modern slavery %o', error);
+    throw new Error(`Creating an application declaration modern slavery ${error}`);
+  }
+};
+var create_a_declaration_modern_slavery_default = createADeclarationModernSlavery;
+
 // helpers/create-a-declaration/index.ts
 var createADeclaration = async (context, applicationId) => {
   console.info('Creating an application declaration for %s', applicationId);
@@ -4589,9 +4636,11 @@ var createADeclaration = async (context, applicationId) => {
       },
     });
     const declarationVersion = await create_a_declaration_version_default(context, declaration.id);
+    const declarationModernSlavery = await create_a_declaration_modern_slavery_default(context, declaration.id);
     return {
       ...declaration,
       declarationVersion,
+      declarationModernSlavery,
     };
   } catch (error) {
     console.error('Error creating an application declaration %o', error);

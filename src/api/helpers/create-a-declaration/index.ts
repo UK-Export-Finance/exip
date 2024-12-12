@@ -1,4 +1,5 @@
 import createADeclarationVersion from '../create-a-declaration-version';
+import createADeclarationModernSlavery from '../create-a-declaration-modern-slavery';
 import { Context } from '../../types';
 
 /**
@@ -22,9 +23,12 @@ const createADeclaration = async (context: Context, applicationId: string) => {
 
     const declarationVersion = await createADeclarationVersion(context, declaration.id);
 
+    const declarationModernSlavery = await createADeclarationModernSlavery(context, declaration.id);
+
     return {
       ...declaration,
       declarationVersion,
+      declarationModernSlavery,
     };
   } catch (error) {
     console.error('Error creating an application declaration %o', error);
