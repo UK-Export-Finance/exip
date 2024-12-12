@@ -652,6 +652,9 @@ var VERSION_3 = {
   ...VERSION_2,
   VERSION_NUMBER: '3',
   REQUESTED_CREDIT_LIMIT_REQUIRED: true,
+  SMALL_EXPORT_BUILDER: {
+    MAXIMUM_BUYER_WILL_OWE: 25e3,
+  },
 };
 var VERSIONS = [VERSION_1, VERSION_2, VERSION_3];
 var versions_default = VERSIONS;
@@ -1094,7 +1097,12 @@ var EMAIL_TEMPLATE_IDS = {
   APPLICATION: {
     SUBMISSION: {
       EXPORTER: {
-        CONFIRMATION: '2e9084e2-d871-4be7-85d0-0ccc1961b148',
+        CONFIRMATION: {
+          SINGLE_OR_MULTIPLE_CONTRACT_POLICY: '2e9084e2-d871-4be7-85d0-0ccc1961b148',
+          MULTIPLE_CONTRACT_POLICY: {
+            ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION: '7ee4729d-53ba4729-af50-f733870914de',
+          },
+        },
         SEND_DOCUMENTS: {
           TRADING_HISTORY: '1ae4d77e-58d6-460e-99c0-b62bf08d8c52',
           ANTI_BRIBERY: '002e43e3-ca78-4b9c-932f-6833014bb1e4',
@@ -1427,6 +1435,38 @@ var reactivateAccountLink = async (urlOrigin, emailAddress, name, reactivationHa
   }
 };
 
+// helpers/policy-type/index.ts
+var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
+var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
+
+// emails/application/get-submitted-confirmation-template-id/index.ts
+var {
+  LATEST_VERSION: { SMALL_EXPORT_BUILDER },
+} = APPLICATION;
+var {
+  APPLICATION: {
+    SUBMISSION: {
+      EXPORTER: { CONFIRMATION },
+    },
+  },
+} = EMAIL_TEMPLATE_IDS;
+var getSubmittedConfirmationTemplateId = (policy) => {
+  const { policyType, maximumBuyerWillOwe } = policy;
+  if (isSinglePolicyType(policyType)) {
+    return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
+  }
+  if (isMultiplePolicyType(policyType) && maximumBuyerWillOwe) {
+    const threshold = Number(SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE);
+    const eligibileForSmallExportBuilder = maximumBuyerWillOwe <= threshold;
+    if (eligibileForSmallExportBuilder) {
+      return CONFIRMATION.MULTIPLE_CONTRACT_POLICY.ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION;
+    }
+    return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
+  }
+  return '';
+};
+var get_submitted_confirmation_template_id_default = getSubmittedConfirmationTemplateId;
+
 // file-system/index.ts
 var import_fs = require('fs');
 var import_path = __toESM(require('path'));
@@ -1484,12 +1524,13 @@ var application = {
    * application.submittedEmail
    * Send "application submitted" email to an account
    * @param {ApplicationSubmissionEmailVariables} ApplicationSubmissionEmailVariables
+   * @param {ApplicationPolicy} policy: Application policy
    * @returns {Promise<Object>} callNotify response
    */
-  submittedEmail: async (variables) => {
+  submittedEmail: async (variables, policy) => {
     try {
       console.info('Sending application submitted email to application owner or provided business contact');
-      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
+      const templateId = get_submitted_confirmation_template_id_default(policy);
       const { emailAddress } = variables;
       const response = await callNotify(templateId, emailAddress, variables);
       return response;
@@ -6128,13 +6169,14 @@ var get_application_submitted_email_template_ids_default = getApplicationSubmitt
 var send4 = async (application2, xlsxPath) => {
   try {
     const { referenceNumber, owner, company, buyer, policy, policyContact } = application2;
+    const { requestedStartDate } = policy;
     const { email } = owner;
     const sharedEmailVars = {
       referenceNumber,
       buyerName: replace_character_codes_with_characters_default(String(buyer.companyOrOrganisationName)),
       buyerLocation: buyer.country?.name,
       companyName: replace_character_codes_with_characters_default(company.companyName),
-      requestedStartDate: format_date_default(policy.requestedStartDate),
+      requestedStartDate: format_date_default(requestedStartDate),
     };
     const sendOwnerEmailVars = {
       ...sharedEmailVars,
@@ -6149,13 +6191,13 @@ var send4 = async (application2, xlsxPath) => {
       emailAddress: policyContact.email,
     };
     console.info('Sending application submitted email to application account owner: %s', sendOwnerEmailVars.emailAddress);
-    const accountSubmittedResponse = await emails_default.application.submittedEmail(sendOwnerEmailVars);
+    const accountSubmittedResponse = await emails_default.application.submittedEmail(sendOwnerEmailVars, policy);
     if (!accountSubmittedResponse?.success) {
       throw new Error('Sending application submitted email to owner/account');
     }
     if (!policyContact.isSameAsOwner) {
       console.info('Sending application submitted email to policy contact email: %s', sendContactEmailVars.emailAddress);
-      const contactSubmittedResponse = await emails_default.application.submittedEmail(sendContactEmailVars);
+      const contactSubmittedResponse = await emails_default.application.submittedEmail(sendContactEmailVars, policy);
       if (!contactSubmittedResponse?.success) {
         throw new Error('Sending application submitted email to contact');
       }
@@ -6293,7 +6335,7 @@ var {
   HAS_COMPANIES_HOUSE_NUMBER,
 } = insurance_default.ELIGIBILITY;
 var { COMPANY_NAME } = insurance_default.COMPANIES_HOUSE;
-var THRESHOLD = format_currency_default(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
+var THRESHOLD = format_currency_default(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE);
 var ELIGIBILITY_FIELDS = {
   [BUYER_COUNTRY]: {
     SUMMARY: {
@@ -6519,9 +6561,12 @@ var {
 } = insurance_default;
 var { MAX_COVER_PERIOD_MONTHS } = ELIGIBILITY;
 var {
+  LATEST_VERSION: { SMALL_EXPORT_BUILDER: SMALL_EXPORT_BUILDER2 },
   POLICY: { TOTAL_MONTHS_OF_COVER },
 } = APPLICATION;
 var { POLICY: POLICY_FORM_TITLES } = FORM_TITLES;
+var maxBuyerWillOweThreshold = Number(SMALL_EXPORT_BUILDER2?.MAXIMUM_BUYER_WILL_OWE);
+var SMALL_EXPORT_BUILDER_THRESHOLD = format_currency_default(maxBuyerWillOweThreshold, GBP_CURRENCY_CODE);
 var POLICY_FIELDS = {
   [POLICY_TYPE3]: {
     ID: POLICY_TYPE3,
@@ -6630,7 +6675,7 @@ var POLICY_FIELDS = {
         HINT: {
           FOR_EXAMPLE: 'For example, your total sales might be \xA3250,000 but the maximum the buyer will owe you at any single point is \xA3100,000.',
           INITIAL_CREDIT_LIMIT: {
-            INTRO: 'If your initial credit limit request is \xA325,000 or less you could be eligible for the',
+            INTRO: `If your initial credit limit request is ${SMALL_EXPORT_BUILDER_THRESHOLD} or less you could be eligible for the`,
             LINK: {
               TEXT: 'Small Export Builder.',
               HREF: LINKS.EXTERNAL.SMALL_EXPORT_BUILDER,
@@ -7455,10 +7500,6 @@ var mapKeyInformation = (application2) => {
   return mapped;
 };
 var map_key_information_default = mapKeyInformation;
-
-// helpers/policy-type/index.ts
-var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
-var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-intro/map-policy-type/index.ts
 var {

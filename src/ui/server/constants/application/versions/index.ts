@@ -24,6 +24,9 @@ const VERSION_3: ApplicationVersion = {
   ...VERSION_2,
   VERSION_NUMBER: '3',
   REQUESTED_CREDIT_LIMIT_REQUIRED: true,
+  SMALL_EXPORT_BUILDER: {
+    MAXIMUM_BUYER_WILL_OWE: 25000,
+  },
 };
 
 /**

@@ -130,7 +130,7 @@ context(
       });
 
       it(`should redirect to ${NAME_ON_POLICY}`, () => {
-        cy.completeAndSubmitExportValueForm({ policyType });
+        cy.completeAndSubmitExportValueForm({});
 
         const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
         cy.assertUrl(expectedUrl);

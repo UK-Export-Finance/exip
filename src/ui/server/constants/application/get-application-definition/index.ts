@@ -1,5 +1,5 @@
 import VERSIONS from '../versions';
-import { ApplicationVersion } from '../../../types';
+import { ApplicationVersion } from '../../../../types';
 
 /**
  * getApplicationDefinition
