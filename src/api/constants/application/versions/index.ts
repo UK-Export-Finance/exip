@@ -29,15 +29,16 @@ const VERSION_3: ApplicationVersion = {
 /**
  * VERSIONS
  * All possible application versions.
- * These versions highlight changes to certain features involving data changes,
- * That differ as the service is iterated.
+ * These versions highlight changes to certain features, involving:
+ * - Data changes
+ * - Changes to thresholds
+ * - Required questions/answers
+ * These differ as the service is iterated.
  * This should be manually updated each time a phase of EXIP is started. For example:
  * - Version number 1: MVP, no support for applications over 500k.
  * - Version number 2: Support for applications over 500k.
  * - Version number 3: Design and content iterations. 1x new database field.
- * - Version number 4: Address lookup
- * - Version number 5: File uploads
- * - Version number 6: Payments integration
+ * - Version number 4: Payments integration
  * @returns {Array<ApplicationVersion>} All application versions
  */
 const VERSIONS: Array<ApplicationVersion> = [VERSION_1, VERSION_2, VERSION_3];
