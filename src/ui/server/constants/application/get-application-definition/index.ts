@@ -4,6 +4,7 @@ import { ApplicationVersion } from '../../../../types';
 /**
  * getApplicationDefinition
  * Get the latest application config
+ * @param {String} versionNumber: Application version number
  * @returns {Object} Latest application config
  */
 const getApplicationDefinition = (versionNumber: string): ApplicationVersion => {
