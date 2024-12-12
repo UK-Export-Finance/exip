@@ -86,11 +86,11 @@ context(
         cy.assertSubmitAndSaveButtons();
       });
 
-      it('should NOT render conditional `we will email you` hint without selecting the "yes" radio', () => {
+      it('should NOT render a conditional `we will email you` hint without selecting the "yes" radio', () => {
         codeOfConductPage.revealText().should('not.be.visible');
       });
 
-      it('should display conditional `we will email you` hint when selecting the "yes" radio', () => {
+      it('should render a conditional `we will email you` hint when selecting the "yes" radio', () => {
         cy.clickYesRadioInput();
 
         codeOfConductPage.revealText().should('be.visible');

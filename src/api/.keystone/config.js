@@ -6309,6 +6309,7 @@ var LINKS = {
     BRIBERY_ACT_2010_GUIDANCE: 'https://www.justice.gov.uk/downloads/legislation/bribery-act-2010-guidance.pdf',
     ICO_MAKE_A_COMPLAINT: 'https://ico.org.uk/make-a-complaint',
     COMPANIES_HOUSE: 'https://find-and-update.company-information.service.gov.uk',
+    SMALL_EXPORT_BUILDER: 'Small Export Builder',
   },
 };
 
@@ -6670,6 +6671,13 @@ var POLICY_FIELDS = {
         LABEL: 'Estimate the maximum amount your buyer will owe you at any single point during this time',
         HINT: {
           FOR_EXAMPLE: 'For example, your total sales might be \xA3250,000 but the maximum the buyer will owe you at any single point is \xA3100,000.',
+          INITIAL_CREDIT_LIMIT: {
+            INTRO: 'If your initial credit limit request is \xA325,000 or less you could be eligible for the',
+            LINK: {
+              TEXT: 'Small Export Builder.',
+              HREF: LINKS.EXTERNAL.SMALL_EXPORT_BUILDER,
+            },
+          },
           NO_DECIMALS: 'Enter a whole number. Do not enter decimals.',
         },
         SUMMARY: {
