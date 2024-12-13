@@ -18,7 +18,7 @@ const addDeclarationModernSlaveryConstraints = async (connection: Connection) =>
     }),
     executeSqlQuery({
       connection,
-      query: `ALTER TABLE DeclarationModernSlavery ADD CONSTRAINT DeclarationModernSlavery_declaration_fkey FOREIGN KEY (declaration) REFERENCES DeclarationModernSlavery (id) ON DELETE SET NULL ON UPDATE CASCADE`,
+      query: `ALTER TABLE DeclarationModernSlavery ADD CONSTRAINT DeclarationModernSlavery_declaration_fkey FOREIGN KEY (declaration) REFERENCES Declaration (id) ON DELETE SET NULL ON UPDATE CASCADE`,
       loggingMessage: 'Adding CONSTRAINT declaration to DeclarationModernSlavery table',
     }),
     executeSqlQuery({

@@ -16,7 +16,6 @@ const createDeclarationModernSlaveryRows = async (connection: Connection) => {
   const declarationModernSlaveryPromises = declarations.map(async (declaration: ApplicationDeclaration) => {
     const { id: declarationId } = declaration;
 
-    // const theValues = `(${createCuid()} ${declarationId})`;
     const theValues = `('${createCuid()}', '${declarationId}')`;
 
     const query = await executeSqlQuery({
