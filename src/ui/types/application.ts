@@ -210,6 +210,18 @@ interface ApplicationDeclarationVersions {
   HOW_YOUR_DATA_WILL_BE_USED?: string;
 }
 
+export interface ApplicationDeclarationModernSlavery {
+  willAdhereToAllRequirements?: boolean;
+  hasNoOffensesOrInvestigations?: boolean;
+  isNotAwareOfExistingSlavery?: boolean;
+}
+
+export interface ApplicationDeclarationModernSlaveryVersions {
+  WILL_ADHERE_TO_ALL_REQUIREMENTS: string;
+  HAS_NO_OFFENSES_OR_INVESTIGATIONS: string;
+  IS_NOT_AWARE_OF_EXISTING_SLAVERY: string;
+}
+
 interface ApplicationPolicyContact {
   id: string;
   firstName?: string;
