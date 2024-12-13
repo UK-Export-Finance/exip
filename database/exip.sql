@@ -646,9 +646,9 @@ DROP TABLE IF EXISTS `DeclarationModernSlaveryVersion`;
 CREATE TABLE `DeclarationModernSlaveryVersion` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `declarationModernSlavery` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `hasNoOffensesOrInvestigations` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `isNotAwareOfExistingSlavery` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `willAdhereToAllRequirements` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `hasNoOffensesOrInvestigations` tinyint(1) DEFAULT NULL,
+  `isNotAwareOfExistingSlavery` tinyint(1) DEFAULT NULL,
+  `willAdhereToAllRequirements` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `DeclarationModernSlaveryVersion_declarationModernSlavery_idx` (`declarationModernSlavery`),
   CONSTRAINT `DeclarationModernSlaveryVersion_declarationModernSlavery_fkey` FOREIGN KEY (`declarationModernSlavery`) REFERENCES `DeclarationModernSlavery` (`id`) ON DELETE

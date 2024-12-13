@@ -3,13 +3,13 @@ import updateApplications from './update-applications';
 
 /**
  * dataMigration
- * Update all applications from the V2 data model/structure,
- * to the V3 data model/structure.
+ * Update all applications from the V3 data model/structure,
+ * to the V4 data model/structure.
  * @returns {Function} process.exit()
  */
 const dataMigration = async () => {
   try {
-    console.info('🚀 Beginning data migration (v2 to v3)');
+    console.info('🚀 Beginning data migration (v3 to v4)');
 
     const connection = await connectToDatabase();
 
