@@ -1,0 +1,110 @@
+import { pageVariables, PAGE_CONTENT_STRINGS, HTML_FLAGS, TEMPLATE, FIELD_IDS, get } from '.';
+import { PAGES } from '../../../../content-strings';
+import { TEMPLATES, ROUTES, DECLARATIONS } from '../../../../constants';
+import DECLARATIONS_FIELD_IDS from '../../../../constants/field-ids/insurance/declarations';
+import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import { Request, Response } from '../../../../../types';
+import { mockReq, mockRes, referenceNumber } from '../../../../test-mocks';
+
+const { WILL_ADHERE_TO_ALL_REQUIREMENTS, HAS_NO_OFFENSES_OR_INVESTIGATIONS, IS_NOT_AWARE_OF_EXISTING_SLAVERY } = DECLARATIONS_FIELD_IDS.MODERN_SLAVERY;
+
+const { MODERN_SLAVERY } = DECLARATIONS.LATEST_DECLARATIONS;
+
+const { INSURANCE_ROOT, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
+
+describe('controllers/insurance/declarations/modern-slavery', () => {
+  let req: Request;
+  let res: Response;
+
+  beforeEach(() => {
+    req = mockReq();
+    res = mockRes();
+  });
+
+  describe('PAGE_CONTENT_STRINGS', () => {
+    it('should have the correct strings', () => {
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.DECLARATIONS.MODERN_SLAVERY);
+    });
+  });
+
+  describe('HTML_FLAGS', () => {
+    it('should have correct properties', () => {
+      const expected = {
+        HORIZONTAL_RADIOS: true,
+      };
+
+      expect(HTML_FLAGS).toEqual(expected);
+    });
+  });
+
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.DECLARATIONS.MODERN_SLAVERY);
+    });
+  });
+
+  describe('FIELD_IDS', () => {
+    it('should have the correct FIELD_IDS', () => {
+      const expected = [WILL_ADHERE_TO_ALL_REQUIREMENTS, HAS_NO_OFFENSES_OR_INVESTIGATIONS, IS_NOT_AWARE_OF_EXISTING_SLAVERY];
+
+      expect(FIELD_IDS).toEqual(expected);
+    });
+  });
+
+  describe('pageVariables', () => {
+    it('should have correct properties', () => {
+      const result = pageVariables(referenceNumber);
+
+      const expected = {
+        FIELDS: {
+          WILL_ADHERE_TO_ALL_REQUIREMENTS: {
+            ID: WILL_ADHERE_TO_ALL_REQUIREMENTS,
+            ...MODERN_SLAVERY.WILL_ADHERE_TO_ALL_REQUIREMENTS,
+          },
+          HAS_NO_OFFENSES_OR_INVESTIGATIONS: {
+            ID: HAS_NO_OFFENSES_OR_INVESTIGATIONS,
+            ...MODERN_SLAVERY.HAS_NO_OFFENSES_OR_INVESTIGATIONS,
+          },
+          IS_NOT_AWARE_OF_EXISTING_SLAVERY: {
+            ID: IS_NOT_AWARE_OF_EXISTING_SLAVERY,
+            ...MODERN_SLAVERY.IS_NOT_AWARE_OF_EXISTING_SLAVERY,
+          },
+        },
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('get', () => {
+    it('should render template', () => {
+      get(req, res);
+
+      const expectedVariables = {
+        ...insuranceCorePageVariables({
+          PAGE_CONTENT_STRINGS,
+          BACK_LINK: req.headers.referer,
+          HTML_FLAGS,
+        }),
+        ...pageVariables(referenceNumber),
+        userName: getUserNameFromSession(req.session.user),
+      };
+
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+    });
+
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        delete res.locals.application;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
+        get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+  });
+});

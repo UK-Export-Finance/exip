@@ -1,37 +1,8 @@
-import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
+import DECLARATIONS_FIELDS_IDS from '../../../../constants/field-ids/insurance/declarations';
 
-const {
-  DECLARATIONS: {
-    AGREE_CONFIDENTIALITY,
-    AGREE_ANTI_BRIBERY,
-    HAS_ANTI_BRIBERY_CODE_OF_CONDUCT,
-    AGREE_CONFIRMATION_ACKNOWLEDGEMENTS,
-    MODERN_SLAVERY: { WILL_ADHERE_TO_ALL_REQUIREMENTS, HAS_NO_OFFENSES_OR_INVESTIGATIONS, IS_NOT_AWARE_OF_EXISTING_SLAVERY },
-    WILL_EXPORT_WITH_CODE_OF_CONDUCT,
-  },
-} = INSURANCE_FIELD_IDS;
+const { WILL_ADHERE_TO_ALL_REQUIREMENTS, HAS_NO_OFFENSES_OR_INVESTIGATIONS, IS_NOT_AWARE_OF_EXISTING_SLAVERY } = DECLARATIONS_FIELDS_IDS.MODERN_SLAVERY;
 
 export const DECLARATIONS_FIELDS = {
-  [AGREE_CONFIDENTIALITY]: {
-    SUMMARY: {
-      TITLE: 'Confidentiality',
-    },
-  },
-  [AGREE_ANTI_BRIBERY]: {
-    SUMMARY: {
-      TITLE: 'Anti-bribery and corruption',
-    },
-  },
-  [HAS_ANTI_BRIBERY_CODE_OF_CONDUCT]: {
-    SUMMARY: {
-      TITLE: 'Do you have a code of conduct?',
-    },
-  },
-  [WILL_EXPORT_WITH_CODE_OF_CONDUCT]: {
-    SUMMARY: {
-      TITLE: 'Will you export using your code of conduct?',
-    },
-  },
   MODERN_SLAVERY: {
     [WILL_ADHERE_TO_ALL_REQUIREMENTS]: {
       VERSIONS: [
@@ -59,11 +30,6 @@ export const DECLARATIONS_FIELDS = {
             'To the best of your knowledge, can you confirm you are not aware of the existence of Modern Slavery  in respect of yourself, the export contract (s), your immediate holding company or your supply chain, in each case,  at present or in the past 2 years.',
         },
       ],
-    },
-  },
-  [AGREE_CONFIRMATION_ACKNOWLEDGEMENTS]: {
-    SUMMARY: {
-      TITLE: 'Confirmation and acknowledgements',
     },
   },
 };

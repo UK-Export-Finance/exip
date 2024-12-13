@@ -493,6 +493,11 @@ var DECLARATIONS = {
   HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: 'hasAntiBriberyCodeOfConduct',
   WILL_EXPORT_WITH_CODE_OF_CONDUCT: 'willExportWithAntiBriberyCodeOfConduct',
   AGREE_CONFIRMATION_ACKNOWLEDGEMENTS: 'agreeToConfirmationAndAcknowledgements',
+  MODERN_SLAVERY: {
+    WILL_ADHERE_TO_ALL_REQUIREMENTS: 'willAdhereToAllRequirements',
+    HAS_NO_OFFENSES_OR_INVESTIGATIONS: 'hasNoOffensesOrInvestigations',
+    IS_NOT_AWARE_OF_EXISTING_SLAVERY: 'isNotAwareOfExistingSlavery',
+  },
 };
 var declarations_default = DECLARATIONS;
 
@@ -6202,6 +6207,7 @@ var {
     AGREE_ANTI_BRIBERY,
     HAS_ANTI_BRIBERY_CODE_OF_CONDUCT,
     AGREE_CONFIRMATION_ACKNOWLEDGEMENTS,
+    MODERN_SLAVERY: { WILL_ADHERE_TO_ALL_REQUIREMENTS, HAS_NO_OFFENSES_OR_INVESTIGATIONS, IS_NOT_AWARE_OF_EXISTING_SLAVERY },
     WILL_EXPORT_WITH_CODE_OF_CONDUCT,
   },
 } = insurance_default;
@@ -6224,6 +6230,35 @@ var DECLARATIONS_FIELDS = {
   [WILL_EXPORT_WITH_CODE_OF_CONDUCT]: {
     SUMMARY: {
       TITLE: 'Will you export using your code of conduct?',
+    },
+  },
+  MODERN_SLAVERY: {
+    [WILL_ADHERE_TO_ALL_REQUIREMENTS]: {
+      VERSIONS: [
+        {
+          VERSION: '1',
+          LABEL:
+            'Do you adhere to, and intend to continue to adhere to, all requirements that apply to you as set out in the Modern Slavery Act 2015, including reporting obligations, and all applicable legislation relating to the prevention of modern slavery in every country that you operate in?',
+        },
+      ],
+    },
+    [HAS_NO_OFFENSES_OR_INVESTIGATIONS]: {
+      VERSIONS: [
+        {
+          VERSION: '1',
+          LABEL:
+            'Do you confirm you are not currently under investigation and have not been fined, convicted or found guilty of any offences under the Modern Slavery Act 2015, or under any applicable similar laws or regulations relating to the prevention of modern slavery or any similar infringement of human rights in any jurisdiction?',
+        },
+      ],
+    },
+    [IS_NOT_AWARE_OF_EXISTING_SLAVERY]: {
+      VERSIONS: [
+        {
+          VERSION: '1',
+          LABEL:
+            'To the best of your knowledge, can you confirm you are not aware of the existence of Modern Slavery\xA0 in respect of yourself, the export contract (s), your immediate holding company or your supply chain, in each case, \xA0at present or in the past 2 years.',
+        },
+      ],
     },
   },
   [AGREE_CONFIRMATION_ACKNOWLEDGEMENTS]: {
