@@ -1,7 +1,7 @@
 import DECLARATION_VERSIONS from '.';
 
 describe('api/constants/declarations/versions', () => {
-  it('should return an array of application versions', () => {
+  it('should return an array of declaration versions', () => {
     const expected = [
       {
         ANTI_BRIBERY: '1',

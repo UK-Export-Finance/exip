@@ -41,7 +41,7 @@ const generateGroupsAndTasks = (
   lossPayeeIsLocatedInUk?: boolean,
   lossPayeeIsLocatedInternationally?: boolean,
   hasDifferentTradingName?: boolean,
-  hasAntiBriberyCodeOfConduct?: boolean | null,
+  hasAntiBriberyCodeOfConduct?: boolean,
   connectionWithBuyer?: boolean,
   tradedWithBuyer?: boolean,
   outstandingPayments?: boolean,
