@@ -29,7 +29,7 @@ export const DECLARATIONS_FIELDS = {
         {
           VERSION: '1',
           LABEL:
-            'To the best of your knowledge, can you confirm you are not aware of the existence of Modern Slavery  in respect of yourself, the export contract (s), your immediate holding company or your supply chain, in each case,  at present or in the past 2 years.',
+            'To the best of your knowledge, can you confirm you are not aware of the existence of Modern Slavery in respect of yourself, the export contract (s), your immediate holding company or your supply chain, in each case, at present or in the past 2 years.',
         },
       ],
     },
