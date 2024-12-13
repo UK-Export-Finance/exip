@@ -1,4 +1,5 @@
 import { field as fieldSelector, headingCaption, yesRadio, noRadio } from '../../../../../../pages/shared';
+import { modernSlaveryPage } from '../../../../../../pages/insurance/declarations';
 import { PAGES } from '../../../../../../content-strings';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/declarations';
 import { FIELD_VALUES } from '../../../../../../constants';
@@ -16,9 +17,13 @@ const {
   MODERN_SLAVERY: { WILL_ADHERE_TO_ALL_REQUIREMENTS, HAS_NO_OFFENSES_OR_INVESTIGATIONS, IS_NOT_AWARE_OF_EXISTING_SLAVERY },
 } = DECLARATIONS_FIELD_IDS;
 
+const {
+  intro: { answerTheQuestions, guidingPrinciplesLink, ifYouSayNo },
+} = modernSlaveryPage;
+
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Declarations - Modern slavery page - TODO', () => {
+context('Insurance - Declarations - Modern slavery page - TODO EMS-4023', () => {
   let referenceNumber;
   let url;
 
@@ -56,6 +61,20 @@ context('Insurance - Declarations - Modern slavery page - TODO', () => {
 
     it('renders a heading caption', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    });
+
+    describe('intro', () => {
+      it('should render `answer the questions` copy', () => {
+        cy.checkText(answerTheQuestions(), CONTENT_STRINGS.INTRO.ANSWER_THE_QUESTIONS);
+      });
+
+      it('should render a `guiding principles` link', () => {
+        cy.checkLink(guidingPrinciplesLink(), '#', CONTENT_STRINGS.INTRO.GUIDING_PRINCIPLES_LINK.TEXT);
+      });
+
+      it('should render `if you say no` copy', () => {
+        cy.checkText(ifYouSayNo(), CONTENT_STRINGS.INTRO.IF_YOU_SAY_NO);
+      });
     });
 
     describe(WILL_ADHERE_TO_ALL_REQUIREMENTS, () => {
