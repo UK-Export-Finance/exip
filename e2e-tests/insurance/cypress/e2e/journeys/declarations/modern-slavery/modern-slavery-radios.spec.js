@@ -1,6 +1,6 @@
 import { field as fieldSelector, yesRadio, noRadio } from '../../../../../../pages/shared';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/declarations';
-import { FIELD_VALUES } from '../../../../../../constants';
+import { FIELD_VALUES, MAXIMUM_CHARACTERS } from '../../../../../../constants';
 import { DECLARATIONS as DECLARATIONS_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/declarations';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -93,8 +93,7 @@ context('Insurance - Declarations - Modern slavery page - radios - TODO EMS-4023
       cy.assertTextareaRendering({
         fieldId: conditionalFieldId,
         expectedLabel: fieldStrings.CONDITIONAL_REASON.LABEL,
-        // maximumCharacters: MAXIMUM,
-        maximumCharacters: 123,
+        maximumCharacters: MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON,
       });
     });
   });
@@ -147,8 +146,7 @@ context('Insurance - Declarations - Modern slavery page - radios - TODO EMS-4023
       cy.assertTextareaRendering({
         fieldId: conditionalFieldId,
         expectedLabel: fieldStrings.CONDITIONAL_REASON.LABEL,
-        // maximumCharacters: MAXIMUM,
-        maximumCharacters: 123,
+        maximumCharacters: MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON,
       });
     });
   });
@@ -201,8 +199,7 @@ context('Insurance - Declarations - Modern slavery page - radios - TODO EMS-4023
       cy.assertTextareaRendering({
         fieldId: conditionalFieldId,
         expectedLabel: fieldStrings.CONDITIONAL_REASON.LABEL,
-        // maximumCharacters: MAXIMUM,
-        maximumCharacters: 123,
+        maximumCharacters: MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON,
       });
     });
   });

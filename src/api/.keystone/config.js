@@ -971,6 +971,11 @@ var MAXIMUM_CHARACTERS = {
   COMPANY_DIFFERENT_TRADING_NAME: 200,
   CONNECTION_WITH_BUYER_DESCRIPTION: 1e3,
   CREDIT_PERIOD_WITH_BUYER: 1e3,
+  DECLARATIONS: {
+    MODERN_SLAVERY: {
+      CONDITIONAL_REASON: 1e3,
+    },
+  },
   DECLINED_BY_PRIVATE_MARKET_DESCRIPTION: 1e3,
   DIFFERENT_NAME_ON_POLICY_POSITION: 50,
   DIFFERENT_NAME_ON_POLICY: 50,
@@ -6343,6 +6348,7 @@ var DECLARATIONS_FIELDS = {
           CONDITIONAL_REASON: {
             LABEL:
               'If you have a turnover of more than \xA336 million enter full details why you cannot. Include all information relating to the type of Modern Slavery that exists or has existed, and/or any investigation or enforcement action, and any actions taken by you in connection with this.',
+            MAXIMUM: MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON,
           },
         },
       ],
@@ -6356,6 +6362,7 @@ var DECLARATIONS_FIELDS = {
           CONDITIONAL_REASON: {
             LABEL:
               'Enter full details why you cannot. Include all information relating to the type of Modern Slavery that exists or has existed, and/or any investigation or enforcement action, and any actions taken by you in connection with this.',
+            MAXIMUM: MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON,
           },
         },
       ],
@@ -6369,6 +6376,7 @@ var DECLARATIONS_FIELDS = {
           CONDITIONAL_REASON: {
             LABEL:
               'Enter full details why you cannot. Include all information relating to the type of Modern Slavery that exists or has existed, and/or any investigation or enforcement action, and any actions taken by you in connection with this.',
+            MAXIMUM: MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON,
           },
         },
       ],

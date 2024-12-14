@@ -1,14 +1,13 @@
 {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
 
-{# maxlength: FIELDS.HAS_NO_OFFENSES_OR_INVESTIGATIONS.CONDITIONAL_REASON.MAXIMUM, #}
-
 {% set fieldId = FIELDS.HAS_NO_OFFENSES_OR_INVESTIGATIONS.CONDITIONAL_REASON.ID %}
 {% set label = FIELDS.HAS_NO_OFFENSES_OR_INVESTIGATIONS.CONDITIONAL_REASON.LABEL %}
+{% set maxLength = FIELDS.HAS_NO_OFFENSES_OR_INVESTIGATIONS.CONDITIONAL_REASON.MAXIMUM %}
 
 {{ govukCharacterCount({
   name: fieldId,
   id: fieldId,
-  maxlength: 123,
+  maxlength: maxLength,
   value: submittedValues[fieldId],
   label: {
     text: label,
