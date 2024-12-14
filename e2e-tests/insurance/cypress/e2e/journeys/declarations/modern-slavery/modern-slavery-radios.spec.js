@@ -18,6 +18,8 @@ const {
   },
 } = DECLARATIONS_FIELD_IDS;
 
+const { YES, NO } = FIELD_VALUES;
+
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Declarations - Modern slavery page - radios - TODO EMS-4023', () => {
@@ -59,7 +61,7 @@ context('Insurance - Declarations - Modern slavery page - radios - TODO EMS-4023
       const selector = yesRadio();
 
       it('should render a label', () => {
-        cy.checkText(selector.label().first(), FIELD_VALUES.YES);
+        cy.checkText(selector.label().first(), YES);
 
         cy.checkRadioInputYesAriaLabel(fieldStrings.LABEL);
       });
@@ -73,7 +75,7 @@ context('Insurance - Declarations - Modern slavery page - radios - TODO EMS-4023
       const selector = noRadio();
 
       it('should render a label', () => {
-        cy.checkText(selector.label().first(), FIELD_VALUES.NO);
+        cy.checkText(selector.label().first(), NO);
 
         cy.checkRadioInputNoAriaLabel(fieldStrings.LABEL);
       });
@@ -112,7 +114,7 @@ context('Insurance - Declarations - Modern slavery page - radios - TODO EMS-4023
       const selector = yesRadio();
 
       it('should render a label', () => {
-        cy.checkText(selector.label().eq(1), FIELD_VALUES.YES);
+        cy.checkText(selector.label().eq(1), YES);
 
         cy.checkRadioInputYesAriaLabel(fieldStrings.LABEL, 1);
       });
@@ -126,7 +128,7 @@ context('Insurance - Declarations - Modern slavery page - radios - TODO EMS-4023
       const selector = noRadio();
 
       it('should render a label', () => {
-        cy.checkText(selector.label().first(), FIELD_VALUES.NO);
+        cy.checkText(selector.label().first(), NO);
 
         cy.checkRadioInputNoAriaLabel(fieldStrings.LABEL, 1);
       });
@@ -165,7 +167,7 @@ context('Insurance - Declarations - Modern slavery page - radios - TODO EMS-4023
       const selector = yesRadio();
 
       it('should render a label', () => {
-        cy.checkText(selector.label().eq(1), FIELD_VALUES.YES);
+        cy.checkText(selector.label().eq(1), YES);
 
         cy.checkRadioInputYesAriaLabel(fieldStrings.LABEL, 2);
       });
@@ -179,7 +181,7 @@ context('Insurance - Declarations - Modern slavery page - radios - TODO EMS-4023
       const selector = noRadio();
 
       it('should render a label', () => {
-        cy.checkText(selector.label().first(), FIELD_VALUES.NO);
+        cy.checkText(selector.label().first(), NO);
 
         cy.checkRadioInputNoAriaLabel(fieldStrings.LABEL, 2);
       });

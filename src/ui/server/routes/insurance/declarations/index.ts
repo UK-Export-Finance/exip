@@ -7,7 +7,7 @@ import {
   get as exportingWithCodeOfConductGet,
   post as exportingWithCodeOfConductPost,
 } from '../../../controllers/insurance/declarations/anti-bribery/exporting-with-code-of-conduct';
-import { get as modernSlaveryGet } from '../../../controllers/insurance/declarations/modern-slavery';
+import { get as modernSlaveryGet, post as modernSlaveryPost } from '../../../controllers/insurance/declarations/modern-slavery';
 import {
   get as confirmationAndAcknowledgementsGet,
   post as confirmationAndAcknowledgementsPost,
@@ -42,6 +42,7 @@ insuranceDeclarationsRouter.post(
 );
 
 insuranceDeclarationsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.MODERN_SLAVERY}`, modernSlaveryGet);
+insuranceDeclarationsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.MODERN_SLAVERY}`, modernSlaveryPost);
 
 insuranceDeclarationsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, confirmationAndAcknowledgementsGet);
 insuranceDeclarationsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, confirmationAndAcknowledgementsPost);
