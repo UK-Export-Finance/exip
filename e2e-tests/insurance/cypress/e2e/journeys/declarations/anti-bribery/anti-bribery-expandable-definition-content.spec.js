@@ -1,4 +1,4 @@
-import { antiBriberyPage } from '../../../../../../pages/insurance/declarations';
+import { expandable } from '../../../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -10,8 +10,6 @@ const {
     ANTI_BRIBERY: { ROOT: ANTI_BRIBERY_ROOT },
   },
 } = INSURANCE_ROUTES;
-
-const { expandable } = antiBriberyPage;
 
 const { INTRO, TABLE } = CONTENT_STRINGS.EXPANDABLE;
 

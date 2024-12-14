@@ -24,7 +24,12 @@ describe('controllers/insurance/declarations/modern-slavery', () => {
 
   describe('PAGE_CONTENT_STRINGS', () => {
     it('should have the correct strings', () => {
-      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.DECLARATIONS.MODERN_SLAVERY);
+      const expected = {
+        ...PAGES.INSURANCE.DECLARATIONS.MODERN_SLAVERY,
+        EXPANDABLE: PAGES.INSURANCE.DECLARATIONS.MODERN_SLAVERY.EXPANDABLE.VERSIONS[0],
+      };
+
+      expect(PAGE_CONTENT_STRINGS).toEqual(expected);
     });
   });
 
