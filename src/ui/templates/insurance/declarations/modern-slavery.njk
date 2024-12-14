@@ -1,7 +1,6 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
-{% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
 {% import '../../components/form-buttons.njk' as formButtons %}
 
 {% block pageTitle %}
@@ -41,35 +40,11 @@
           <span data-cy="intro-if-you-say-no">{{ CONTENT_STRINGS.INTRO.IF_YOU_SAY_NO }}</span>
         </p>
 
-        {{ yesNoRadioButtons.render({
-          fieldId: FIELDS.WILL_ADHERE_TO_ALL_REQUIREMENTS.ID,
-          legendText: FIELDS.WILL_ADHERE_TO_ALL_REQUIREMENTS.LABEL,
-          legendClass: 'govuk-fieldset__legend--s',
-          legendSpan: true,
-          errorMessage: validationErrors.errorList[FIELDS.WILL_ADHERE_TO_ALL_REQUIREMENTS.ID],
-          dataCyLegend: FIELDS.WILL_ADHERE_TO_ALL_REQUIREMENTS.ID + '-legend',
-          horizontalRadios: HORIZONTAL_RADIOS
-        }) }}
+        {% include "partials/insurance/declarations/modern-slavery/will-adhere-to-all-requirements.njk" %}
 
-        {{ yesNoRadioButtons.render({
-          fieldId: FIELDS.HAS_NO_OFFENSES_OR_INVESTIGATIONS.ID,
-          legendText: FIELDS.HAS_NO_OFFENSES_OR_INVESTIGATIONS.LABEL,
-          legendClass: 'govuk-fieldset__legend--s',
-          legendSpan: true,
-          errorMessage: validationErrors.errorList[FIELDS.HAS_NO_OFFENSES_OR_INVESTIGATIONS.ID],
-          dataCyLegend: FIELDS.HAS_NO_OFFENSES_OR_INVESTIGATIONS.ID + '-legend',
-          horizontalRadios: HORIZONTAL_RADIOS
-        }) }}
+        {% include "partials/insurance/declarations/modern-slavery/has-no-offenses-or-investigations.njk" %}
 
-        {{ yesNoRadioButtons.render({
-          fieldId: FIELDS.IS_NOT_AWARE_OF_EXISTING_SLAVERY.ID,
-          legendText: FIELDS.IS_NOT_AWARE_OF_EXISTING_SLAVERY.LABEL,
-          legendClass: 'govuk-fieldset__legend--s',
-          legendSpan: true,
-          errorMessage: validationErrors.errorList[FIELDS.IS_NOT_AWARE_OF_EXISTING_SLAVERY.ID],
-          dataCyLegend: FIELDS.IS_NOT_AWARE_OF_EXISTING_SLAVERY.ID + '-legend',
-          horizontalRadios: HORIZONTAL_RADIOS
-        }) }}
+        {% include "partials/insurance/declarations/modern-slavery/is-not-aware-of-existing-slavery.njk" %}
 
       </div>
     </div>

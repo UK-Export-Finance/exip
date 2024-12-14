@@ -1,0 +1,16 @@
+{% import '../../../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
+
+{% set conditionalNoHtml %}
+  {% include "partials/insurance/declarations/modern-slavery/conditional-reasons/offenses-or-investigations.njk" %}
+{% endset %}
+
+{{ yesNoRadioButtons.render({
+  fieldId: FIELDS.HAS_NO_OFFENSES_OR_INVESTIGATIONS.ID,
+  legendText: FIELDS.HAS_NO_OFFENSES_OR_INVESTIGATIONS.LABEL,
+  legendClass: 'govuk-fieldset__legend--s',
+  legendSpan: true,
+  errorMessage: validationErrors.errorList[FIELDS.HAS_NO_OFFENSES_OR_INVESTIGATIONS.ID],
+  dataCyLegend: FIELDS.HAS_NO_OFFENSES_OR_INVESTIGATIONS.ID + '-legend',
+  horizontalRadios: HORIZONTAL_RADIOS,
+  conditionalNoHtml: conditionalNoHtml
+}) }}

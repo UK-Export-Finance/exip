@@ -1,0 +1,28 @@
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+
+{# maxlength: FIELDS.IS_NOT_AWARE_OF_EXISTING_SLAVERY.CONDITIONAL_REASON.MAXIMUM, #}
+
+{% set fieldId = FIELDS.IS_NOT_AWARE_OF_EXISTING_SLAVERY.CONDITIONAL_REASON.ID %}
+{% set label = FIELDS.IS_NOT_AWARE_OF_EXISTING_SLAVERY.CONDITIONAL_REASON.LABEL %}
+
+{{ govukCharacterCount({
+  name: fieldId,
+  id: fieldId,
+  maxlength: 123,
+  value: submittedValues[fieldId],
+  label: {
+    text: label,
+    attributes: {
+      'data-cy': fieldId + '-label'
+    }
+  },
+  errorMessage: validationErrors.errorList[fieldId] and {
+    text: validationErrors.errorList[fieldId].text,
+    attributes: {
+      "data-cy": fieldId + "-error-message"
+    }
+  },
+  attributes: {
+    'data-cy': fieldId
+  }
+}) }}
