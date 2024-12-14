@@ -715,6 +715,16 @@ export const lists = {
       willAdhereToAllRequirements: nullableCheckbox(),
       hasNoOffensesOrInvestigations: nullableCheckbox(),
       isNotAwareOfExistingSlavery: nullableCheckbox(),
+
+      cannotAdhereToAllRequirements: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+      offensesOrInvestigations: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+      awareOfExistingSlavery: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {

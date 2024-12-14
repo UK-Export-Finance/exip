@@ -497,6 +497,11 @@ var DECLARATIONS = {
     WILL_ADHERE_TO_ALL_REQUIREMENTS: 'willAdhereToAllRequirements',
     HAS_NO_OFFENSES_OR_INVESTIGATIONS: 'hasNoOffensesOrInvestigations',
     IS_NOT_AWARE_OF_EXISTING_SLAVERY: 'isNotAwareOfExistingSlavery',
+    CONDITIONAL_REASONS: {
+      CANNOT_ADHERE_TO_ALL_REQUIREMENTS: 'cannotAdhereToAllRequirements',
+      OFFENSES_OR_INVESTIGATIONS: 'offensesOrInvestigations',
+      AWARE_OF_EXISTING_SLAVERY: 'awareOfExistingSlavery',
+    },
   },
 };
 var declarations_default = DECLARATIONS;
@@ -2474,6 +2479,15 @@ var lists = {
       willAdhereToAllRequirements: nullable_checkbox_default(),
       hasNoOffensesOrInvestigations: nullable_checkbox_default(),
       isNotAwareOfExistingSlavery: nullable_checkbox_default(),
+      cannotAdhereToAllRequirements: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+      offensesOrInvestigations: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+      awareOfExistingSlavery: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -6352,7 +6366,7 @@ var DECLARATIONS_FIELDS = {
         {
           VERSION: '1',
           LABEL:
-            'To the best of your knowledge, can you confirm you are not aware of the existence of Modern Slavery\xA0 in respect of yourself, the export contract (s), your immediate holding company or your supply chain, in each case, \xA0at present or in the past 2 years.',
+            'To the best of your knowledge, can you confirm you are not aware of the existence of Modern Slavery in respect of yourself, the export contract (s), your immediate holding company or your supply chain, in each case, at present or in the past 2 years.',
         },
       ],
     },
