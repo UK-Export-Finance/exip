@@ -7,6 +7,13 @@ const {
   },
 } = DECLARATIONS_FIELD_IDS;
 
+/**
+ * completeModernSlaveryFormConditionalFields
+ * complete the conditional "modern slavery" form fields.
+ * @param {String} cannotAdhereToAllRequirements: Textarea answer
+ * @param {String} offensesOrInvestigations: Textarea answer
+ * @param {String} awareOfExistingSlavery: Textarea answer
+ */
 const completeModernSlaveryFormConditionalFields = ({ cannotAdhereToAllRequirements, offensesOrInvestigations, awareOfExistingSlavery }) => {
   if (cannotAdhereToAllRequirements) {
     cy.keyboardInput(autoCompleteField(CANNOT_ADHERE_TO_ALL_REQUIREMENTS).input(), cannotAdhereToAllRequirements);

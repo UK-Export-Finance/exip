@@ -1,3 +1,13 @@
+/**
+ * completeAndSubmitModernSlaveryForm
+ * complete and submit the "modern slavery" form.
+ * @param {Boolean} willAdhereToAllRequirements: radio answer
+ * @param {Boolean} hasNoOffensesOrInvestigations: radio answer
+ * @param {Boolean} isNotAwareOfExistingSlavery: radio answer
+ * @param {String} conditionalFields.cannotAdhereToAllRequirements: Textarea answer
+ * @param {String} conditionalFields.offensesOrInvestigations: Textarea answer
+ * @param {String} conditionalFields.awareOfExistingSlavery: Textarea answer
+ */
 const completeAndSubmitModernSlaveryForm = ({
   willAdhereToAllRequirements,
   hasNoOffensesOrInvestigations,

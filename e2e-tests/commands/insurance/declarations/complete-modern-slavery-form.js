@@ -1,3 +1,13 @@
+/**
+ * completeModernSlaveryForm
+ * complete the "modern slavery" form.
+ * @param {Boolean} willAdhereToAllRequirements: radio answer
+ * @param {Boolean} hasNoOffensesOrInvestigations: radio answer
+ * @param {Boolean} isNotAwareOfExistingSlavery: radio answer
+ * @param {String} conditionalFields.cannotAdhereToAllRequirements: Textarea answer
+ * @param {String} conditionalFields.offensesOrInvestigations: Textarea answer
+ * @param {String} conditionalFields.awareOfExistingSlavery: Textarea answer
+ */
 const completeModernSlaveryForm = ({
   willAdhereToAllRequirements = true,
   hasNoOffensesOrInvestigations = true,
@@ -34,7 +44,5 @@ const completeModernSlaveryForm = ({
 
   cy.completeModernSlaveryFormConditionalFields(conditionalFields);
 };
-
-// TODO: update other declration commands functions to have a function name
 
 export default completeModernSlaveryForm;

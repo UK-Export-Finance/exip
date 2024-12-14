@@ -3,8 +3,10 @@ import { singleInputField } from '../../../pages/shared';
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIDENTIALITY;
 
-export default () => {
+const completeAndSubmitConfidentialityForm = () => {
   singleInputField(FIELD_ID).label().click();
 
   cy.clickSubmitButton();
 };
+
+export default completeAndSubmitConfidentialityForm;
