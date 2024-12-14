@@ -17,14 +17,3 @@ const DECLARATIONS = {
 };
 
 export default DECLARATIONS;
-
-// with declarationModernSlaveryReason being a new table
-
-// willAdhereToAllRequirements
-// declarationModernSlaveryReason.cannotAdhereToAllRequirements
-
-// hasNoOffensesOrInvestigations
-// declarationModernSlaveryReason.offensesOrInvestigations
-
-// isNotAwareOfExistingSlavery
-// declarationModernSlaveryReason.awareOfExistingSlavery
