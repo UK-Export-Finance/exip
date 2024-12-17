@@ -1,6 +1,7 @@
 import canSubmitApplication from '.';
 import { APPLICATION } from '../../constants';
 import { DATE_ONE_MINUTE_IN_THE_PAST } from '../../constants/dates';
+import { Application } from '../../../types';
 import { mockApplication } from '../../test-mocks';
 
 describe('server/helpers/can-submit-application', () => {
@@ -10,10 +11,13 @@ describe('server/helpers/can-submit-application', () => {
     expect(result).toEqual(true);
   });
 
-  describe('when an application is incomplete', () => {
-    const mockApplicationIncomplete = {
+  describe.only('when an application is incomplete', () => {
+    const mockApplicationIncomplete: Application = {
       ...mockApplication,
-      declaration: { id: mockApplication.declaration.id },
+      declaration: {
+        ...mockApplication.declaration,
+        agreeToConfidentiality: undefined,
+      },
     };
 
     it('should return false', () => {

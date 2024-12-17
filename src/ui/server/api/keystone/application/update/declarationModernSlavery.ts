@@ -1,5 +1,5 @@
 import apollo from '../../../../graphql/apollo';
-import updateApplicationDeclarationMutation from '../../../../graphql/mutations/update-application/declaration';
+import updateApplicationDeclarationModernSlaveryMutation from '../../../../graphql/mutations/update-application/declarationModernSlavery';
 import { ApolloResponse } from '../../../../../types';
 
 /**
@@ -18,7 +18,7 @@ const updateDeclarationModernSlavery = async (id: string, update: object) => {
       data: update,
     };
 
-    const response = (await apollo('POST', updateApplicationDeclarationMutation, variables)) as ApolloResponse;
+    const response = (await apollo('POST', updateApplicationDeclarationModernSlaveryMutation, variables)) as ApolloResponse;
 
     if (response.errors) {
       console.error('GraphQL error updating application declaration modern slavery %o', response.errors);

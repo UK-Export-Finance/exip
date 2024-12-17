@@ -18,7 +18,7 @@ const declaration = async (application: Application, formBody: RequestBody) => {
   const sanitisedData = sanitiseData(fieldsWithValues);
 
   // send the form data to the API for database update.
-  const declarationId = application.declaration?.id;
+  const declarationId = application.declaration.id;
 
   try {
     const saveResponse = await api.keystone.application.update.declaration(declarationId, sanitisedData);

@@ -18,10 +18,10 @@ const declarationModernSlavery = async (application: Application, formBody: Requ
   const sanitisedData = sanitiseData(fieldsWithValues);
 
   // send the form data to the API for database update.
-  const declarationId = application.declaration?.id;
+  const declarationModernSlaveryId = application.declaration.modernSlavery.id;
 
   try {
-    const saveResponse = await api.keystone.application.update.declarationModernSlavery(declarationId, sanitisedData);
+    const saveResponse = await api.keystone.application.update.declarationModernSlavery(declarationModernSlaveryId, sanitisedData);
 
     return saveResponse;
   } catch (error) {

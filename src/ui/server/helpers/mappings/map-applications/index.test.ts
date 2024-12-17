@@ -11,15 +11,17 @@ describe('server/helpers/mappings/map-applications', () => {
     it('should return a mapped application', () => {
       const result = mapApplication(mockApplication);
 
-      const { status, submissionDate, referenceNumber, buyer } = mockApplication;
+      const { status, referenceNumber, buyer } = mockApplication;
+
+      const submissionDate = new Date(String(mockApplication.submissionDate));
 
       const expected = {
         status,
         referenceNumber,
-        buyerLocation: buyer.country.name,
+        buyerLocation: buyer.country?.name,
         buyerName: replaceCharacterCodesWithCharacters(buyer.companyOrOrganisationName),
         value: mapValue(mockApplication),
-        submitted: formatDate(new Date(submissionDate), DATE_FORMAT.SHORT_MONTH),
+        submitted: formatDate(submissionDate, DATE_FORMAT.SHORT_MONTH),
       };
 
       expect(result).toEqual(expected);

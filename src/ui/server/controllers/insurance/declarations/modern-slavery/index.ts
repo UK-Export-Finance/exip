@@ -3,6 +3,7 @@ import DECLARATIONS_FIELD_IDS from '../../../../constants/field-ids/insurance/de
 import { PAGES } from '../../../../content-strings';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import save from '../save-data/modern-slavery';
@@ -95,6 +96,7 @@ export const get = (req: Request, res: Response) => {
     }),
     ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
+    application: mapApplicationToFormFields(res.locals.application),
   });
 };
 

@@ -1,17 +1,17 @@
 import dotenv from 'dotenv';
 import { add, addMonths } from 'date-fns';
 import { APPLICATION, EXPORT_CONTRACT_AWARD_METHOD } from '../constants';
+import { GBP, EUR } from '../constants/supported-currencies';
 import mockEligibility from './mock-eligibility';
 import mockAccount from './mock-account';
 import mockCountries from './mock-countries';
 import mockContact from './mock-contact';
 import companyMock from './mock-company';
-import { Application } from '../../types';
 import broker from './mock-broker';
 import buyer from './mock-buyer';
 import mockJointlyInsuredParty from './mock-jointly-insured-party';
 import nominatedLossPayee from './mock-nominated-loss-payee';
-import { GBP, EUR } from '../constants/supported-currencies';
+import { Application } from '../../types';
 
 dotenv.config();
 
@@ -176,6 +176,16 @@ export const mockSectionReview = {
   policy: true,
 };
 
+export const mockApplicationDeclarationModernSlavery = {
+  id: 'clf3te7vx1432cfoqp9rbop74',
+  willAdhereToAllRequirements: true,
+  hasNoOffensesOrInvestigations: true,
+  isNotAwareOfExistingSlavery: true,
+  cannotAdhereToAllRequirements: '',
+  offensesOrInvestigations: '',
+  awareOfExistingSlavery: '',
+};
+
 export const mockApplicationDeclaration = {
   id: 'clf3te7vx1432cfoqp9rbop73',
   agreeToConfidentiality: true,
@@ -183,10 +193,11 @@ export const mockApplicationDeclaration = {
   hasAntiBriberyCodeOfConduct: true,
   willExportWithAntiBriberyCodeOfConduct: true,
   agreeToConfirmationAndAcknowledgements: true,
-  agreeHowDataWillBeUsed: null,
+  agreeHowDataWillBeUsed: true,
+  modernSlavery: mockApplicationDeclarationModernSlavery,
 };
 
-const mockApplication = {
+const mockApplication: Application = {
   id: 'clacdgc630000kdoqn7wcgrz1',
   referenceNumber,
   version: APPLICATION.LATEST_VERSION.LATEST_VERSION_NUMBER,

@@ -4,6 +4,7 @@ import { TEMPLATES, ROUTES, DECLARATIONS } from '../../../../constants';
 import DECLARATIONS_FIELD_IDS from '../../../../constants/field-ids/insurance/declarations';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import save from '../save-data/modern-slavery';
@@ -120,6 +121,7 @@ describe('controllers/insurance/declarations/modern-slavery', () => {
         }),
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
+        application: mapApplicationToFormFields(res.locals.application),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

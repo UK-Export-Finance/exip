@@ -162,6 +162,8 @@ describe('server/helpers/flatten-application-data', () => {
         ...company,
         ...contact,
         ...getTrueAndFalseAnswers(declaration),
+        ...declaration.modernSlavery,
+        ...getTrueAndFalseAnswers(declaration.modernSlavery),
         ...exportContract,
         ...exportContract.awardMethod,
         ...getTrueAndFalseAnswers(exportContract),

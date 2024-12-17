@@ -29,7 +29,7 @@ describe('controllers/insurance/declarations/save-data/modern-slavery', () => {
     expect(result).toEqual(mockUpdateApplicationResponse);
   });
 
-  it('should call api.keystone.application.update.declarationModernSlavery with declaration ID and sanitised data without empty fields', async () => {
+  it('should call api.keystone.application.update.declarationModernSlavery with declarationModernSlavery ID and sanitised data without empty fields', async () => {
     await save.declarationModernSlavery(mockApplication, mockFormBody);
 
     expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
@@ -38,7 +38,7 @@ describe('controllers/insurance/declarations/save-data/modern-slavery', () => {
 
     const expectedData = sanitiseData(fieldsWithValues);
 
-    expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.declaration.id, expectedData);
+    expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.declaration.modernSlavery.id, expectedData);
   });
 
   it('should return the API response', async () => {

@@ -569,6 +569,7 @@ var DEFAULT_RESOLVERS = [
   'updateBuyerTradingHistory',
   'updateCompany',
   'updateDeclaration',
+  'updateDeclarationModernSlavery',
   'updateNominatedLossPayee',
   'updateJointlyInsuredParty',
   'updatePolicy',
@@ -2442,7 +2443,7 @@ var lists = {
       agreeToConfirmationAndAcknowledgements: nullable_checkbox_default(),
       hasAntiBriberyCodeOfConduct: nullable_checkbox_default(),
       willExportWithAntiBriberyCodeOfConduct: nullable_checkbox_default(),
-      modernSlavery: (0, import_fields.relationship)({ ref: 'DeclarationModernSlavery' }),
+      modernSlavery: (0, import_fields.relationship)({ ref: 'DeclarationModernSlavery.declaration' }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -2479,7 +2480,7 @@ var lists = {
   }),
   DeclarationModernSlavery: (0, import_core2.list)({
     fields: {
-      declaration: (0, import_fields.relationship)({ ref: 'Declaration' }),
+      declaration: (0, import_fields.relationship)({ ref: 'Declaration.modernSlavery' }),
       version: (0, import_fields.relationship)({ ref: 'DeclarationModernSlaveryVersion' }),
       willAdhereToAllRequirements: nullable_checkbox_default(),
       hasNoOffensesOrInvestigations: nullable_checkbox_default(),
@@ -6070,16 +6071,22 @@ var getPopulatedBuyer = async (context, id) => {
 var get_populated_buyer_default = getPopulatedBuyer;
 
 // helpers/get-declaration-by-id/index.ts
-var getDeclarationById = async (context, id) => {
+var getDeclarationById = async (context, declarationId) => {
   try {
-    console.info('Getting declaration by ID %s', id);
+    console.info('Getting declaration by ID %s', declarationId);
     const declaration = await context.db.Declaration.findOne({
-      where: { id },
+      where: { id: declarationId },
     });
-    return declaration;
+    const declarationModernSlavery = await context.db.DeclarationModernSlavery.findOne({
+      where: { id: declaration?.modernSlaveryId },
+    });
+    return {
+      ...declaration,
+      modernSlavery: declarationModernSlavery,
+    };
   } catch (error) {
-    console.error('Getting declaration by ID %s %o', id, error);
-    throw new Error(`Error Getting declaration by ID ${id} ${error}`);
+    console.error('Getting declaration by ID %s %o', declarationId, error);
+    throw new Error(`Error Getting declaration by ID ${declarationId} ${error}`);
   }
 };
 var get_declaration_by_id_default = getDeclarationById;
