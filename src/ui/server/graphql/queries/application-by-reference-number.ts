@@ -241,6 +241,9 @@ const applicationByReferenceNumberQuery = gql`
             willAdhereToAllRequirements
             hasNoOffensesOrInvestigations
             isNotAwareOfExistingSlavery
+            cannotAdhereToAllRequirements
+            offensesOrInvestigations
+            awareOfExistingSlavery
           }
         }
       }
