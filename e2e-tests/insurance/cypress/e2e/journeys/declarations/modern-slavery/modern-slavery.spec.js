@@ -1,5 +1,6 @@
 import { headingCaption } from '../../../../../../pages/shared';
 import { modernSlaveryPage } from '../../../../../../pages/insurance/declarations';
+import { expandable } from '../../../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -67,6 +68,28 @@ context('Insurance - Declarations - Modern slavery page - TODO EMS-4023', () => 
 
       it('should render `if you say no` copy', () => {
         cy.checkText(ifYouSayNo(), CONTENT_STRINGS.INTRO.IF_YOU_SAY_NO);
+      });
+    });
+
+    describe('expandable details - definition of terms', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
+      it('should render summary text with collapsed conditional `details` content', () => {
+        const expectedText = CONTENT_STRINGS.EXPANDABLE.VERSIONS[0].INTRO;
+
+        cy.checkText(expandable.summary(), expectedText);
+
+        expandable.details().should('not.have.attr', 'open');
+      });
+
+      describe('when clicking the summary text', () => {
+        it('should expand the collapsed `details` content', () => {
+          expandable.summary().click();
+
+          expandable.details().should('have.attr', 'open');
+        });
       });
     });
   });

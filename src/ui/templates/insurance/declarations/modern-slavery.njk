@@ -1,6 +1,7 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% import '../../components/declarations/anti-bribery/expandable-content.njk' as expandableContent %}
 {% import '../../components/form-buttons.njk' as formButtons %}
 
 {% block pageTitle %}
@@ -46,6 +47,15 @@
 
         {% include "partials/insurance/declarations/modern-slavery/is-not-aware-of-existing-slavery.njk" %}
 
+      </div>
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full-width">
+
+        {{ expandableContent.render({
+          CONTENT: CONTENT_STRINGS.EXPANDABLE
+        }) }}
       </div>
     </div>
 
