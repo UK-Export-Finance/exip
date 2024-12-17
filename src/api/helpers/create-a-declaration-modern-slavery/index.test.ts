@@ -38,6 +38,10 @@ describe('helpers/create-a-declaration-modern-slavery', () => {
     expect(result.willAdhereToAllRequirements).toBeNull();
     expect(result.hasNoOffensesOrInvestigations).toBeNull();
     expect(result.isNotAwareOfExistingSlavery).toBeNull();
+
+    expect(result.cannotAdhereToAllRequirements).toEqual('');
+    expect(result.offensesOrInvestigations).toEqual('');
+    expect(result.awareOfExistingSlavery).toEqual('');
   });
 
   test('it should return declaration version fields via createADeclarationModernSlaveryVersion helper', async () => {

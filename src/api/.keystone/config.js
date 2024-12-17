@@ -2484,6 +2484,15 @@ var lists = {
       willAdhereToAllRequirements: nullable_checkbox_default(),
       hasNoOffensesOrInvestigations: nullable_checkbox_default(),
       isNotAwareOfExistingSlavery: nullable_checkbox_default(),
+      cannotAdhereToAllRequirements: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+      offensesOrInvestigations: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+      awareOfExistingSlavery: (0, import_fields.text)({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
