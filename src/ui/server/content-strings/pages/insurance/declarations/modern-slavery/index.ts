@@ -83,7 +83,7 @@ export const MODERN_SLAVERY = {
               TERM: 'UN Guiding Principles  on Business and Human Rights',
               DEFINITION: [
                 {
-                  TEXT: 'The UN Guiding Principles on Business and Human Rights (Guiding Principles on Business and Human Rights: Implementing the United Nations “Protect, Respect and Remedy” Framework | OHCHR) provide guidance and advice on the approach companies should take to respecting human rights wherever they operate.',
+                  TEXT: 'The UN Guiding Principles on Business and Human Rights (Guiding Principles on Business and Human Rights: Implementing the United Nations "Protect, Respect and Remedy" Framework | OHCHR) provide guidance and advice on the approach companies should take to respecting human rights wherever they operate.',
                 },
               ],
             },

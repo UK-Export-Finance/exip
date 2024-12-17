@@ -11,11 +11,6 @@ const {
 
 const { INTRO, TABLE } = CONTENT_STRINGS;
 
-// TODO: DRY - with anti bribery expandable content
-const assertTermColumn = (selector, content) => {
-  cy.checkText(selector, content.TERM);
-};
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Declarations - Modern slavery page - expandable `definition` content', () => {
@@ -60,7 +55,6 @@ context('Insurance - Declarations - Modern slavery page - expandable `definition
     const { BODY, HEADERS } = TABLE;
 
     let row;
-    let content;
 
     it('renders table headers', () => {
       expandable.summary().click();
@@ -70,17 +64,16 @@ context('Insurance - Declarations - Modern slavery page - expandable `definition
     });
 
     describe('body row 1', () => {
+      const { 0: content } = BODY;
+
       beforeEach(() => {
         expandable.summary().click();
 
         row = expandable.table.body.row(1);
-
-        const { 0: contentRow } = BODY;
-        content = contentRow;
       });
 
       it('renders `term` column', () => {
-        assertTermColumn(row.term(), content);
+        cy.checkText(row.term(), content.TERM);
       });
 
       it('renders `definition` column', () => {
@@ -89,17 +82,16 @@ context('Insurance - Declarations - Modern slavery page - expandable `definition
     });
 
     describe('body row 2', () => {
+      const { 1: content } = BODY;
+
       beforeEach(() => {
         expandable.summary().click();
 
         row = expandable.table.body.row(2);
-
-        const { 1: contentRow } = BODY;
-        content = contentRow;
       });
 
       it('renders `term` column', () => {
-        assertTermColumn(row.term(), content);
+        cy.checkText(row.term(), content.TERM);
       });
 
       it('renders `definition` column', () => {
@@ -108,17 +100,16 @@ context('Insurance - Declarations - Modern slavery page - expandable `definition
     });
 
     describe('body row 3', () => {
+      const { 2: content } = BODY;
+
       beforeEach(() => {
         expandable.summary().click();
 
         row = expandable.table.body.row(3);
-
-        const { 2: contentRow } = BODY;
-        content = contentRow;
       });
 
       it('renders `term` column', () => {
-        assertTermColumn(row.term(), content);
+        cy.checkText(row.term(), content.TERM);
       });
 
       it('renders `definition` column', () => {
@@ -136,17 +127,16 @@ context('Insurance - Declarations - Modern slavery page - expandable `definition
     });
 
     describe('body row 4', () => {
+      const { 3: content } = BODY;
+
       beforeEach(() => {
         expandable.summary().click();
 
         row = expandable.table.body.row(4);
-
-        const { 3: contentRow } = BODY;
-        content = contentRow;
       });
 
       it('renders `term` column', () => {
-        assertTermColumn(row.term(), content);
+        cy.checkText(row.term(), content.TERM);
       });
 
       it('renders `definition` column', () => {
@@ -178,17 +168,16 @@ context('Insurance - Declarations - Modern slavery page - expandable `definition
     });
 
     describe('body row 5', () => {
+      const { 4: content } = BODY;
+
       beforeEach(() => {
         expandable.summary().click();
 
         row = expandable.table.body.row(5);
-
-        const { 4: contentRow } = BODY;
-        content = contentRow;
       });
 
       it('renders `term` column', () => {
-        assertTermColumn(row.term(), content);
+        cy.checkText(row.term(), content.TERM);
       });
 
       it('renders `definition` column', () => {

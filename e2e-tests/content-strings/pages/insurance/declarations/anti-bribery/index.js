@@ -36,7 +36,7 @@ const EXPANDABLE = {
             TEXT: 'or (c) is found by a court or competent authority in any competent jurisdiction (after all available rights of appeal have been exhausted) outside the United Kingdom to constitute an offence under any applicable law (except by virtue of changes to that law having retrospective effect);',
           },
           {
-            TEXT: 'or (d) is found by a court or competent authority in the United Kingdom (after all available rights of appeal have been exhausted) to constitute a Relevant Offence and which activity in respect of paragraphs (a), (b) and (c) above corresponds to a Relevant Offence provided that, where for the purposes of paragraph (b) above, any such activity is admitted by an Excluded Person, such activity shall not, for the purposes of this policy, constitute “Corrupt Activity” if such activity was not, at the time it was engaged in, unlawful under the laws or regulations of the country in which it took place;',
+            TEXT: 'or (d) is found by a court or competent authority in the United Kingdom (after all available rights of appeal have been exhausted) to constitute a Relevant Offence and which activity in respect of paragraphs (a), (b) and (c) above corresponds to a Relevant Offence provided that, where for the purposes of paragraph (b) above, any such activity is admitted by an Excluded Person, such activity shall not, for the purposes of this policy, constitute "Corrupt Activity" if such activity was not, at the time it was engaged in, unlawful under the laws or regulations of the country in which it took place;',
           },
         ],
       },
