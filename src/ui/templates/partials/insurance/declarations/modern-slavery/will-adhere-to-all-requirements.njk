@@ -1,0 +1,19 @@
+{% import '../../../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
+
+{% set conditionalNoHtml %}
+  {% include "partials/insurance/declarations/modern-slavery/conditional-reasons/cannot-adhere-to-all-requirements.njk" %}
+{% endset %}
+
+{% set fieldId = FIELDS.WILL_ADHERE_TO_ALL_REQUIREMENTS.ID %}
+
+{{ yesNoRadioButtons.render({
+  fieldId: fieldId,
+  legendText: FIELDS.WILL_ADHERE_TO_ALL_REQUIREMENTS.LABEL,
+  legendClass: 'govuk-fieldset__legend--s',
+  legendSpan: true,
+  errorMessage: validationErrors.errorList[fieldId],
+  dataCyLegend: fieldId + '-legend',
+  horizontalRadios: HORIZONTAL_RADIOS,
+  conditionalNoHtml: conditionalNoHtml,
+  submittedAnswer: submittedValues[fieldId]
+}) }}

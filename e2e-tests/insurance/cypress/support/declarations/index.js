@@ -11,6 +11,14 @@ Cypress.Commands.add(
   'completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct',
   require('../../../../commands/insurance/declarations/complete-and-submit-anti-bribery-exporting-with-code-of-conduct-form'),
 );
+
+Cypress.Commands.add('completeModernSlaveryForm', require('../../../../commands/insurance/declarations/complete-modern-slavery-form'));
+Cypress.Commands.add('completeAndSubmitModernSlaveryForm', require('../../../../commands/insurance/declarations/complete-and-submit-modern-slavery-form'));
+Cypress.Commands.add(
+  'completeModernSlaveryFormConditionalFields',
+  require('../../../../commands/insurance/declarations/complete-modern-slavery-form-conditional-fields'),
+);
+
 Cypress.Commands.add(
   'completeAndSubmitDeclarationConfirmationAndAcknowledgements',
   require('../../../../commands/insurance/declarations/complete-and-submit-confirmation-and-acknowledgements-form'),
