@@ -7,7 +7,7 @@ import updateApplicationMigrated from './update-application-migrated';
 
 /**
  * updateApplications
- * Update applications from the "No PDF" data model/structure, to the new "No PDF iterations" data model/structure.
+ * Update applications from the V2 data model/structure, to the V3 data model/structure.
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<object>>} executeSqlQuery responses
  */
