@@ -1,6 +1,6 @@
 /**
  * completeAndSubmitModernSlaveryForm
- * complete and submit the "modern slavery" form.
+ * Complete and submit the "modern slavery" form.
  * @param {Boolean} willAdhereToAllRequirements: radio answer
  * @param {Boolean} hasNoOffensesOrInvestigations: radio answer
  * @param {Boolean} isNotAwareOfExistingSlavery: radio answer
@@ -27,7 +27,5 @@ const completeAndSubmitModernSlaveryForm = ({
 
   cy.clickSubmitButton();
 };
-
-// TODO: update other declration commands functions to have a function name
 
 export default completeAndSubmitModernSlaveryForm;
