@@ -2812,6 +2812,9 @@ type DeclarationModernSlavery {
   willAdhereToAllRequirements: Boolean
   hasNoOffensesOrInvestigations: Boolean
   isNotAwareOfExistingSlavery: Boolean
+  cannotAdhereToAllRequirements: String
+  offensesOrInvestigations: String
+  awareOfExistingSlavery: String
 }
 
 input DeclarationModernSlaveryWhereUniqueInput {
@@ -2825,10 +2828,16 @@ input DeclarationModernSlaveryWhereInput {
   id: IDFilter
   declaration: DeclarationWhereInput
   version: DeclarationModernSlaveryVersionWhereInput
+  cannotAdhereToAllRequirements: StringFilter
+  offensesOrInvestigations: StringFilter
+  awareOfExistingSlavery: StringFilter
 }
 
 input DeclarationModernSlaveryOrderByInput {
   id: OrderDirection
+  cannotAdhereToAllRequirements: OrderDirection
+  offensesOrInvestigations: OrderDirection
+  awareOfExistingSlavery: OrderDirection
 }
 
 input DeclarationModernSlaveryUpdateInput {
@@ -2837,6 +2846,9 @@ input DeclarationModernSlaveryUpdateInput {
   willAdhereToAllRequirements: Boolean
   hasNoOffensesOrInvestigations: Boolean
   isNotAwareOfExistingSlavery: Boolean
+  cannotAdhereToAllRequirements: String
+  offensesOrInvestigations: String
+  awareOfExistingSlavery: String
 }
 
 input DeclarationModernSlaveryVersionRelateToOneForUpdateInput {
@@ -2856,6 +2868,9 @@ input DeclarationModernSlaveryCreateInput {
   willAdhereToAllRequirements: Boolean
   hasNoOffensesOrInvestigations: Boolean
   isNotAwareOfExistingSlavery: Boolean
+  cannotAdhereToAllRequirements: String
+  offensesOrInvestigations: String
+  awareOfExistingSlavery: String
 }
 
 input DeclarationModernSlaveryVersionRelateToOneForCreateInput {
