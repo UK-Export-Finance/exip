@@ -19,6 +19,8 @@ const {
   },
 } = ERROR_MESSAGES;
 
+const MAXIMUM = MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON;
+
 /**
  * cannotAdhereToAllRequirementsRules
  * @param {Express.Request.body} Express response body
@@ -27,7 +29,7 @@ const {
  */
 const cannotAdhereToAllRequirementsRules = (formBody: RequestBody, errors: object) => {
   if (formBody[WILL_ADHERE_TO_ALL_REQUIREMENTS] === 'false') {
-    return providedAndMaxLength(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON);
+    return providedAndMaxLength(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM);
   }
 
   return errors;

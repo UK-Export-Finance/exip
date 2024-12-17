@@ -104,7 +104,7 @@ export const get = (req: Request, res: Response) => {
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = async (req: Request, res: Response) => {
+export const post = (req: Request, res: Response) => {
   const { application } = res.locals;
 
   if (!application) {
