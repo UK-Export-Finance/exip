@@ -1,0 +1,16 @@
+{% import '../../../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
+
+{% set conditionalNoHtml %}
+  {% include "partials/insurance/declarations/modern-slavery/conditional-reasons/aware-of-existing-slavery.njk" %}
+{% endset %}
+
+{{ yesNoRadioButtons.render({
+  fieldId: FIELDS.IS_NOT_AWARE_OF_EXISTING_SLAVERY.ID,
+  legendText: FIELDS.IS_NOT_AWARE_OF_EXISTING_SLAVERY.LABEL,
+  legendClass: 'govuk-fieldset__legend--s',
+  legendSpan: true,
+  errorMessage: validationErrors.errorList[FIELDS.IS_NOT_AWARE_OF_EXISTING_SLAVERY.ID],
+  dataCyLegend: FIELDS.IS_NOT_AWARE_OF_EXISTING_SLAVERY.ID + '-legend',
+  horizontalRadios: HORIZONTAL_RADIOS,
+  conditionalNoHtml: conditionalNoHtml
+}) }}
