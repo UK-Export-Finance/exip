@@ -11,7 +11,7 @@ describe('server/helpers/can-submit-application', () => {
     expect(result).toEqual(true);
   });
 
-  describe.only('when an application is incomplete', () => {
+  describe('when an application is incomplete', () => {
     const mockApplicationIncomplete: Application = {
       ...mockApplication,
       declaration: {
