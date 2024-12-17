@@ -6,9 +6,10 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
+import save from '../save-data/modern-slavery';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, referenceNumber } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockSpyPromise, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
 const { WILL_ADHERE_TO_ALL_REQUIREMENTS, HAS_NO_OFFENSES_OR_INVESTIGATIONS, IS_NOT_AWARE_OF_EXISTING_SLAVERY, CONDITIONAL_REASONS } =
   DECLARATIONS_FIELD_IDS.MODERN_SLAVERY;
@@ -18,6 +19,12 @@ const { MODERN_SLAVERY } = DECLARATIONS.LATEST_DECLARATIONS;
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 describe('controllers/insurance/declarations/modern-slavery', () => {
+  jest.mock('../save-data/modern-slavery');
+
+  let mockSaveDeclarationModernSlavery = mockSpyPromise();
+
+  save.declarationModernSlavery = mockSaveDeclarationModernSlavery;
+
   let req: Request;
   let res: Response;
 
@@ -143,8 +150,17 @@ describe('controllers/insurance/declarations/modern-slavery', () => {
         req.body = validBody;
       });
 
-      it(`should redirect to ${ALL_SECTIONS}`, () => {
-        post(req, res);
+      it('should call save.declaration with application and submitted values from constructPayload function', async () => {
+        await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        expect(save.declarationModernSlavery).toHaveBeenCalledTimes(1);
+        expect(save.declarationModernSlavery).toHaveBeenCalledWith(mockApplication, payload);
+      });
+
+      it(`should redirect to ${ALL_SECTIONS}`, async () => {
+        await post(req, res);
 
         const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
@@ -153,8 +169,8 @@ describe('controllers/insurance/declarations/modern-slavery', () => {
     });
 
     describe('when there are validation errors', () => {
-      it('should render template with validation errors from constructPayload function', () => {
-        post(req, res);
+      it('should render template with validation errors from constructPayload function', async () => {
+        await post(req, res);
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
@@ -179,10 +195,44 @@ describe('controllers/insurance/declarations/modern-slavery', () => {
         delete res.locals.application;
       });
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('save data call', () => {
+        describe('when the save data API call does not return anything', () => {
+          beforeEach(() => {
+            mockSaveDeclarationModernSlavery = jest.fn(() => Promise.resolve(false));
+            save.declarationModernSlavery = mockSaveDeclarationModernSlavery;
+
+            req.body = validBody;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when the save data API call fails', () => {
+          beforeEach(() => {
+            mockSaveDeclarationModernSlavery = mockSpyPromiseRejection;
+            save.declarationModernSlavery = mockSaveDeclarationModernSlavery;
+
+            req.body = validBody;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
       });
     });
   });
