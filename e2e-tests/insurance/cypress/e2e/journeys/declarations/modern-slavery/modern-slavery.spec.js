@@ -1,5 +1,6 @@
 import { field as fieldSelector, headingCaption, yesRadio, noRadio } from '../../../../../../pages/shared';
 import { modernSlaveryPage } from '../../../../../../pages/insurance/declarations';
+import { expandable } from '../../../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/declarations';
 import { FIELD_VALUES } from '../../../../../../constants';
@@ -187,6 +188,28 @@ context('Insurance - Declarations - Modern slavery page - TODO EMS-4023', () => 
 
         it('should render an input', () => {
           selector.input().first().should('exist');
+        });
+      });
+    });
+
+    describe('expandable details - definition of terms', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
+      it('should render summary text with collapsed conditional `details` content', () => {
+        const expectedText = CONTENT_STRINGS.EXPANDABLE.VERSIONS[0].INTRO;
+
+        cy.checkText(expandable.summary(), expectedText);
+
+        expandable.details().should('not.have.attr', 'open');
+      });
+
+      describe('when clicking the summary text', () => {
+        it('should expand the collapsed `details` content', () => {
+          expandable.summary().click();
+
+          expandable.details().should('have.attr', 'open');
         });
       });
     });
