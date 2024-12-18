@@ -9043,9 +9043,9 @@ var cannotGetAQuote = ({ shortTermCover, nbiIssueAvailable, esraClassification }
 };
 var cannot_get_a_quote_default = cannotGetAQuote;
 
-// helpers/map-CIS-countries/map-CIS-country/can-apply-offline/index.ts
+// helpers/map-CIS-countries/map-CIS-country/can-apply-for-quote-offline/index.ts
 var { CIS: CIS3 } = EXTERNAL_API_DEFINITIONS;
-var canApplyOffline = (originalShortTermCover) => {
+var canApplyForAQuoteOffline = (originalShortTermCover) => {
   if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.ILC) {
     return true;
   }
@@ -9057,7 +9057,7 @@ var canApplyOffline = (originalShortTermCover) => {
   }
   return false;
 };
-var can_apply_offline_default = canApplyOffline;
+var can_apply_for_quote_offline_default = canApplyForAQuoteOffline;
 
 // helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/has-valid-esra-classification/index.ts
 var {
@@ -9145,7 +9145,7 @@ var mapCisCountry = (cisCountry) => {
     shortTermCover,
   };
   mapped.canGetAQuoteOnline = can_get_a_quote_online_default({ shortTermCover, nbiIssueAvailable, esraClassification });
-  mapped.canGetAQuoteOffline = can_apply_offline_default(cisCountry.shortTermCoverAvailabilityDesc);
+  mapped.canGetAQuoteOffline = can_apply_for_quote_offline_default(cisCountry.shortTermCoverAvailabilityDesc);
   mapped.canGetAQuoteByEmail = can_get_a_quote_by_email_default({ shortTermCover, nbiIssueAvailable, esraClassification });
   mapped.cannotGetAQuote = cannot_get_a_quote_default({ shortTermCover, nbiIssueAvailable, esraClassification });
   mapped.canApplyForInsuranceOnline = can_apply_for_insurance_online_default(cisCountry);
