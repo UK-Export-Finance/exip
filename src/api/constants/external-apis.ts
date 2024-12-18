@@ -7,6 +7,7 @@ export const EXTERNAL_API_DEFINITIONS = {
       VERY_HIGH: 'Very High',
       HIGH: 'High',
       STANDARD: 'Standard Risk',
+      NONE: 'None',
     },
     SHORT_TERM_COVER_AVAILABLE: {
       YES: 'Yes',

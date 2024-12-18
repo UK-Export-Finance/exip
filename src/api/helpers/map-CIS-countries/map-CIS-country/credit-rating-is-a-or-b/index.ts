@@ -1,4 +1,4 @@
-import { EXTERNAL_API_DEFINITIONS } from '../../../../../constants';
+import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
 
 const {
   CIS: { CREDIT_RATINGS },
@@ -6,11 +6,11 @@ const {
 
 /**
  * hasValidRating
- * Check if a country's "rating" can apply for insurance online.
+ * Check if a country's "credit rating" is A or B.
  * @param {String} rating: Country rating
  * @returns {Boolean}
  */
-export const hasValidRating = (rating: string): boolean => {
+export const creditRatingIsAorB = (rating: string): boolean => {
   if (CREDIT_RATINGS.A.includes(rating)) {
     return true;
   }
@@ -22,4 +22,4 @@ export const hasValidRating = (rating: string): boolean => {
   return false;
 };
 
-export default hasValidRating;
+export default creditRatingIsAorB;

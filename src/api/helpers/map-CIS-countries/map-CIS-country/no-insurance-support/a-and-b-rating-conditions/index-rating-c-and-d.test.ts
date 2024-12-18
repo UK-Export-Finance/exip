@@ -1,0 +1,36 @@
+import aAndBRatingConditions from '.';
+import { EXTERNAL_API_DEFINITIONS } from '../../../../../constants';
+
+const {
+  CIS: { CREDIT_RATINGS, RISK, SHORT_TERM_COVER_AVAILABLE },
+} = EXTERNAL_API_DEFINITIONS;
+
+const countryRatingsCParams = CREDIT_RATINGS.C.map((rating: string) => ({
+  countryRating: rating,
+  esraClassification: RISK.STANDARD,
+  shortTermCover: SHORT_TERM_COVER_AVAILABLE.YES,
+}));
+
+const countryRatingsDParams = CREDIT_RATINGS.D.map((rating: string) => ({
+  countryRating: rating,
+  esraClassification: RISK.STANDARD,
+  shortTermCover: SHORT_TERM_COVER_AVAILABLE.YES,
+}));
+
+describe('helpers/map-CIS-countries/map-CIS-country/no-insurance-support/a-and-b-rating-conditions - ratings as C and D', () => {
+  describe.each(countryRatingsCParams)('when the country rating is `C`', (countryObj) => {
+    it(`should return false for ${countryObj.countryRating}`, () => {
+      const result = aAndBRatingConditions(countryObj);
+
+      expect(result).toEqual(false);
+    });
+  });
+
+  describe.each(countryRatingsDParams)('when the country rating is `D`', (countryObj) => {
+    it(`should return false for ${countryObj.countryRating}`, () => {
+      const result = aAndBRatingConditions(countryObj);
+
+      expect(result).toEqual(false);
+    });
+  });
+});
