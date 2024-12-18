@@ -1,4 +1,4 @@
-import canApplyOffline from '.';
+import canApplyForAQuoteOffline from '.';
 import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
 import mockCountries from '../../../../test-mocks/mock-countries';
 
@@ -14,7 +14,7 @@ describe('helpers/map-cis-countries/map-cis-country/can-apply-offline', () => {
         shortTermCoverAvailabilityDesc: CIS.SHORT_TERM_COVER_AVAILABLE.ILC,
       };
 
-      const result = canApplyOffline(mockCountry.shortTermCoverAvailabilityDesc);
+      const result = canApplyForAQuoteOffline(mockCountry.shortTermCoverAvailabilityDesc);
 
       expect(result).toEqual(true);
     });
@@ -27,7 +27,7 @@ describe('helpers/map-cis-countries/map-cis-country/can-apply-offline', () => {
         shortTermCoverAvailabilityDesc: CIS.SHORT_TERM_COVER_AVAILABLE.CILC,
       };
 
-      const result = canApplyOffline(mockCountry.shortTermCoverAvailabilityDesc);
+      const result = canApplyForAQuoteOffline(mockCountry.shortTermCoverAvailabilityDesc);
 
       expect(result).toEqual(true);
     });
@@ -40,7 +40,7 @@ describe('helpers/map-cis-countries/map-cis-country/can-apply-offline', () => {
         shortTermCoverAvailabilityDesc: CIS.SHORT_TERM_COVER_AVAILABLE.REFER,
       };
 
-      const result = canApplyOffline(mockCountry.shortTermCoverAvailabilityDesc);
+      const result = canApplyForAQuoteOffline(mockCountry.shortTermCoverAvailabilityDesc);
 
       expect(result).toEqual(true);
     });
@@ -53,7 +53,7 @@ describe('helpers/map-cis-countries/map-cis-country/can-apply-offline', () => {
         shortTermCoverAvailabilityDesc: 'Something else',
       };
 
-      const result = canApplyOffline(mockCountry.shortTermCoverAvailabilityDesc);
+      const result = canApplyForAQuoteOffline(mockCountry.shortTermCoverAvailabilityDesc);
 
       expect(result).toEqual(false);
     });

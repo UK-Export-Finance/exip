@@ -3,12 +3,12 @@ import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
 const { CIS } = EXTERNAL_API_DEFINITIONS;
 
 /**
- * canApplyOffline
+ * canApplyForAQuoteOffline
  * Check if a country can get a quote offline
  * @param {String} Country original short term cover definition from CIS API.
  * @returns {Boolean}
  */
-export const canApplyOffline = (originalShortTermCover: string) => {
+export const canApplyForAQuoteOffline = (originalShortTermCover: string) => {
   if (originalShortTermCover === CIS.SHORT_TERM_COVER_AVAILABLE.ILC) {
     return true;
   }
@@ -24,4 +24,4 @@ export const canApplyOffline = (originalShortTermCover: string) => {
   return false;
 };
 
-export default canApplyOffline;
+export default canApplyForAQuoteOffline;

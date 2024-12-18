@@ -4,7 +4,7 @@ import mapNbiIssueAvailable from './map-NBI-issue-available';
 import canGetAQuoteOnline from './can-get-a-quote-online';
 import canGetAQuoteByEmail from './can-get-a-quote-by-email';
 import cannotGetAQuote from './cannot-get-a-quote';
-import canApplyOffline from './can-apply-offline';
+import canApplyForAQuoteOffline from './can-apply-for-quote-offline';
 import canApplyForInsuranceOnline from './can-apply-for-insurance-online';
 import noInsuranceSupportAvailable from './no-insurance-support';
 import { CisCountry, MappedCisCountry } from '../../../types';
@@ -33,7 +33,7 @@ export const mapCisCountry = (cisCountry: CisCountry): MappedCisCountry => {
 
   mapped.canGetAQuoteOnline = canGetAQuoteOnline({ shortTermCover, nbiIssueAvailable, esraClassification });
 
-  mapped.canGetAQuoteOffline = canApplyOffline(cisCountry.shortTermCoverAvailabilityDesc);
+  mapped.canGetAQuoteOffline = canApplyForAQuoteOffline(cisCountry.shortTermCoverAvailabilityDesc);
 
   mapped.canGetAQuoteByEmail = canGetAQuoteByEmail({ shortTermCover, nbiIssueAvailable, esraClassification });
 
