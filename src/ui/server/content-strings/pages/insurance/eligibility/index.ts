@@ -168,7 +168,7 @@ const HAVE_AN_ACCOUNT = {
   PAGE_TITLE: 'Do you have an account with us?',
 };
 
-const CONTRACT_TOO_SHORT_EXIT = {
+const TALK_TO_AN_EXPORT_FINANCE_MANAGER = {
   PAGE_TITLE: 'Talk to an export finance manager',
   INTRO: "We do not normally offer short term cover for the country you've selected.",
   CONTACT_EFM: {
@@ -206,7 +206,7 @@ export default {
   CHECK_YOUR_ANSWERS,
   ELIGIBLE_TO_APPLY_ONLINE,
   HAVE_AN_ACCOUNT,
-  CONTRACT_TOO_SHORT_EXIT,
+  TALK_TO_AN_EXPORT_FINANCE_MANAGER,
   PARTY_TO_CONSORTIUM,
   MEMBER_OF_A_GROUP,
   MEMBER_OF_A_GROUP_EXIT,

@@ -13,5 +13,5 @@ export const ELIGIBILITY_TEMPLATES = {
   CANNOT_APPLY_MULTIPLE_RISKS_EXIT: 'insurance/eligibility/cannot-apply-multiple-risks.njk',
   CHECK_YOUR_ANSWERS: 'insurance/eligibility/check-your-answers.njk',
   ELIGIBLE_TO_APPLY_ONLINE: 'insurance/eligibility/eligible-to-apply-online.njk',
-  CONTRACT_TOO_SHORT_EXIT: 'insurance/eligibility/contract-too-short.njk',
+  TALK_TO_AN_EXPORT_FINANCE_MANAGER: 'insurance/eligibility/talk-to-an-export-finance-manager.njk',
 };

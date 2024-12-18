@@ -6,7 +6,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import { mockReq, mockRes } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
 
-describe('controllers/insurance/eligibility/contract-too-short', () => {
+describe('controllers/insurance/eligibility/talk-to-an-export-finance-manager', () => {
   let req: Request;
   let res: Response;
 
@@ -17,7 +17,7 @@ describe('controllers/insurance/eligibility/contract-too-short', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.CONTRACT_TOO_SHORT_EXIT);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.TALK_TO_AN_EXPORT_FINANCE_MANAGER);
     });
   });
 
@@ -27,7 +27,7 @@ describe('controllers/insurance/eligibility/contract-too-short', () => {
 
       const expectedVariables = {
         ...corePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.CONTRACT_TOO_SHORT_EXIT,
+          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.TALK_TO_AN_EXPORT_FINANCE_MANAGER,
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),

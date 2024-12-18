@@ -22,7 +22,7 @@ import { get as eligibleToApplyOnlineGet, post as eligibleToApplyOnlinePost } fr
 import { get as haveAnAccountGet, post as haveAnAccountPost } from '../../../controllers/insurance/eligibility/do-you-have-an-account';
 import { get as cannotApplyGet } from '../../../controllers/insurance/eligibility/cannot-apply';
 import { get as needToStartAgainGet, post as needToStartAgainPost } from '../../../controllers/insurance/eligibility/need-to-start-again';
-import { get as contractTooShortGet } from '../../../controllers/insurance/eligibility/contract-too-short';
+import { get as contractTooShortGet } from '../../../controllers/insurance/eligibility/talk-to-an-export-finance-manager';
 import { get as partyToConsortiumExitGet } from '../../../controllers/insurance/eligibility/party-to-consortium-exit';
 import { get as memberOfAGroupExitGet } from '../../../controllers/insurance/eligibility/member-of-a-group-exit';
 
@@ -102,7 +102,7 @@ describe('routes/insurance/eligibility', () => {
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN, needToStartAgainGet);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN, needToStartAgainPost);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CONTRACT_TOO_SHORT_EXIT, contractTooShortGet);
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.TALK_TO_AN_EXPORT_FINANCE_MANAGER, contractTooShortGet);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM_EXIT, partyToConsortiumExitGet);
 
