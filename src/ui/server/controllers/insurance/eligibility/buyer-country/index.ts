@@ -90,17 +90,8 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(CANNOT_APPLY_ROUTE);
     }
 
-    // TODO: confirm with BA if we still need CONTRACT_TOO_SHORT_EXIT.
-
-    // /**
-    //  * If a country has no insurance support and no short term cover,
-    //  * redirect to CONTRACT_TOO_SHORT_EXIT.
-    //  */
-    // const noShortTermCover = !country.noOnlineInsuranceSupport && !country.shortTermCover;
-
-    // if (noShortTermCover) {
     if (country.noOnlineInsuranceSupport) {
-      console.info(`Country support - ${country.name} - no insurance support or short term cover available`);
+      console.info(`Country support - ${country.name} - no online insurance support available`);
 
       const populatedData = mapSubmittedEligibilityCountry(country);
 
@@ -129,8 +120,8 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(TOTAL_VALUE_INSURED);
     }
 
-    if (country.noOnlineInsuranceSupport) {
-      console.info(`Country support - ${country.name} - no online insurance support`);
+    if (country.noInsuranceSupport) {
+      console.info(`Country support - ${country.name} - no insurance support`);
 
       const populatedData = mapSubmittedEligibilityCountry(country);
 
