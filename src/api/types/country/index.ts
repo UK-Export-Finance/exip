@@ -2,13 +2,14 @@ import { Currency } from '../currency';
 import { Relationship } from '../relationship';
 
 export interface CisCountry {
-  marketName: string;
-  isoCode: string;
-  shortTermCoverAvailabilityDesc: string;
+  countryRatingDesc: string;
   ESRAClassificationDesc: string;
-  NBIIssue: string;
+  isoCode: string;
+  marketName: string;
   marketRiskAppetitePublicDesc: string;
+  NBIIssue: string;
   riskCategory?: string;
+  shortTermCoverAvailabilityDesc: string;
 }
 
 export interface Country extends Relationship {
@@ -36,11 +37,13 @@ export interface GetApimCurrenciesResponse {
 }
 
 export interface MappedCisCountry {
-  name: string;
+  countryRating: string;
+  esraClassification?: string;
   isoCode: string;
-  shortTermCover: boolean;
-  riskCategory?: string;
   nbiIssueAvailable: boolean;
+  name: string;
+  riskCategory?: string;
+  shortTermCover: boolean;
   canGetAQuoteOnline: boolean;
   canGetAQuoteOffline: boolean;
   canGetAQuoteByEmail: boolean;

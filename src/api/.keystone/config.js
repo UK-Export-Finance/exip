@@ -822,6 +822,7 @@ var EXPORT_CONTRACT_AWARD_METHOD = {
 // constants/external-apis.ts
 var EXTERNAL_API_DEFINITIONS = {
   CIS: {
+    // TODO: rename to ESRA_CLASSIFICATION?
     RISK: {
       VERY_HIGH: 'Very High',
       HIGH: 'High',
@@ -850,6 +851,13 @@ var EXTERNAL_API_DEFINITIONS = {
       'Third Country',
     ],
     INVALID_CURRENCIES: ['Gold'],
+    // TODO: ame COUNTRY or CREDIT rating?
+    CREDIT_RATINGS: {
+      A: ['AAA', 'AA+', 'AA', 'AA-', 'A+', 'A', 'A-'],
+      B: ['BBB+', 'BBB', 'BBB-', 'BB+', 'BB', 'BB-', 'B+', 'B', 'B-'],
+      C: ['CCC+', 'CCC', 'CCC-', 'CC', 'C'],
+      D: ['D'],
+    },
   },
   COMPANIES_HOUSE: {
     COMPANY_STATUS: {
@@ -8962,9 +8970,9 @@ var filterCisEntries = (arr, invalidEntries, entityPropertyName) => {
 };
 var filter_cis_entries_default = filterCisEntries;
 
-// helpers/map-CIS-countries/map-CIS-country/map-risk-category/index.ts
+// helpers/map-CIS-countries/map-CIS-country/map-esra-classification/index.ts
 var { CIS } = EXTERNAL_API_DEFINITIONS;
-var mapRiskCategory = (str) => {
+var mapEsraClassification = (str) => {
   if (str === CIS.RISK.STANDARD) {
     return EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD;
   }
@@ -8976,7 +8984,7 @@ var mapRiskCategory = (str) => {
   }
   return null;
 };
-var map_risk_category_default = mapRiskCategory;
+var map_esra_classification_default = mapEsraClassification;
 
 // helpers/map-CIS-countries/map-CIS-country/map-short-term-cover-available/index.ts
 var {
@@ -9009,8 +9017,8 @@ var mapNbiIssueAvailable = (str) => {
 var map_NBI_issue_available_default = mapNbiIssueAvailable;
 
 // helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-online/index.ts
-var canGetAQuoteOnline = (country) => {
-  if (country.riskCategory && country.shortTermCover && country.nbiIssueAvailable) {
+var canGetAQuoteOnline = ({ shortTermCover, nbiIssueAvailable, esraClassification }) => {
+  if (esraClassification && shortTermCover && nbiIssueAvailable) {
     return true;
   }
   return false;
@@ -9018,8 +9026,8 @@ var canGetAQuoteOnline = (country) => {
 var can_get_a_quote_online_default = canGetAQuoteOnline;
 
 // helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-by-email/index.ts
-var canGetAQuoteByEmail = (country) => {
-  if (country.riskCategory && country.shortTermCover && !country.nbiIssueAvailable) {
+var canGetAQuoteByEmail = ({ shortTermCover, nbiIssueAvailable, esraClassification }) => {
+  if (shortTermCover && !nbiIssueAvailable && esraClassification) {
     return true;
   }
   return false;
@@ -9027,22 +9035,13 @@ var canGetAQuoteByEmail = (country) => {
 var can_get_a_quote_by_email_default = canGetAQuoteByEmail;
 
 // helpers/map-CIS-countries/map-CIS-country/cannot-get-a-quote/index.ts
-var cannotGetAQuote = (country) => {
-  if (!country.riskCategory || (!country.shortTermCover && !country.nbiIssueAvailable)) {
+var cannotGetAQuote = ({ shortTermCover, nbiIssueAvailable, esraClassification }) => {
+  if (!esraClassification || (!shortTermCover && !nbiIssueAvailable)) {
     return true;
   }
   return false;
 };
 var cannot_get_a_quote_default = cannotGetAQuote;
-
-// helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/index.ts
-var canApplyForInsuranceOnline = (shortTermCover, riskCategory) => {
-  if (riskCategory && shortTermCover) {
-    return true;
-  }
-  return false;
-};
-var can_apply_for_insurance_online_default = canApplyForInsuranceOnline;
 
 // helpers/map-CIS-countries/map-CIS-country/can-apply-offline/index.ts
 var { CIS: CIS3 } = EXTERNAL_API_DEFINITIONS;
@@ -9060,26 +9059,97 @@ var canApplyOffline = (originalShortTermCover) => {
 };
 var can_apply_offline_default = canApplyOffline;
 
+// helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/has-valid-esra-classification/index.ts
+var {
+  CIS: {
+    RISK: { STANDARD, HIGH, VERY_HIGH },
+  },
+} = EXTERNAL_API_DEFINITIONS;
+var hasValidEsraClassification = (esraClassification) => {
+  switch (esraClassification) {
+    case STANDARD:
+      return true;
+    case HIGH:
+      return true;
+    case VERY_HIGH:
+      return true;
+    default:
+      return false;
+  }
+};
+var has_valid_esra_classification_default = hasValidEsraClassification;
+
+// helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/has-valid-short-term-cover/index.ts
+var {
+  CIS: {
+    SHORT_TERM_COVER_AVAILABLE: { YES: YES2, REFER, UNLISTED },
+  },
+} = EXTERNAL_API_DEFINITIONS;
+var hasValidShortTermCover = (shortTermCover) => {
+  switch (shortTermCover) {
+    case YES2:
+      return true;
+    case REFER:
+      return true;
+    case UNLISTED:
+      return true;
+    default:
+      return false;
+  }
+};
+var has_valid_short_term_cover_default = hasValidShortTermCover;
+
+// helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/has-valid-rating/index.ts
+var {
+  CIS: { CREDIT_RATINGS },
+} = EXTERNAL_API_DEFINITIONS;
+var hasValidRating = (rating) => {
+  if (CREDIT_RATINGS.A.includes(rating)) {
+    return true;
+  }
+  if (CREDIT_RATINGS.B.includes(rating)) {
+    return true;
+  }
+  return false;
+};
+var has_valid_rating_default = hasValidRating;
+
+// helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/index.ts
+var canApplyForInsuranceOnline = (cisCountry) => {
+  const { ESRAClassificationDesc, shortTermCoverAvailabilityDesc, countryRatingDesc } = cisCountry;
+  const conditions =
+    has_valid_esra_classification_default(ESRAClassificationDesc) &&
+    has_valid_short_term_cover_default(shortTermCoverAvailabilityDesc) &&
+    has_valid_rating_default(countryRatingDesc);
+  return conditions;
+};
+var can_apply_for_insurance_online_default = canApplyForInsuranceOnline;
+
 // helpers/map-CIS-countries/map-CIS-country/no-insurance-support/index.ts
 var { NO_COVER } = EXTERNAL_API_DEFINITIONS.CIS;
 var noInsuranceSupportAvailable = (marketRiskAppetitePublicDesc) => marketRiskAppetitePublicDesc === NO_COVER;
 var no_insurance_support_default = noInsuranceSupportAvailable;
 
 // helpers/map-CIS-countries/map-CIS-country/index.ts
-var mapCisCountry = (country) => {
+var mapCisCountry = (cisCountry) => {
+  const { countryRatingDesc, isoCode, marketName } = cisCountry;
+  const esraClassification = map_esra_classification_default(cisCountry.ESRAClassificationDesc);
+  const nbiIssueAvailable = map_NBI_issue_available_default(cisCountry.NBIIssue);
+  const shortTermCover = map_short_term_cover_available_default(cisCountry.shortTermCoverAvailabilityDesc);
   const mapped = {
-    name: country.marketName,
-    isoCode: country.isoCode,
-    riskCategory: map_risk_category_default(country.ESRAClassificationDesc),
-    shortTermCover: map_short_term_cover_available_default(country.shortTermCoverAvailabilityDesc),
-    nbiIssueAvailable: map_NBI_issue_available_default(country.NBIIssue),
+    countryRating: countryRatingDesc,
+    esraClassification,
+    isoCode,
+    name: marketName,
+    nbiIssueAvailable,
+    shortTermCover,
   };
-  mapped.canGetAQuoteOnline = can_get_a_quote_online_default(mapped);
-  mapped.canGetAQuoteOffline = can_apply_offline_default(country.shortTermCoverAvailabilityDesc);
-  mapped.canGetAQuoteByEmail = can_get_a_quote_by_email_default(mapped);
-  mapped.cannotGetAQuote = cannot_get_a_quote_default(mapped);
-  mapped.canApplyForInsuranceOnline = can_apply_for_insurance_online_default(mapped.shortTermCover, mapped.riskCategory);
-  mapped.noInsuranceSupport = no_insurance_support_default(country.marketRiskAppetitePublicDesc);
+  mapped.canGetAQuoteOnline = can_get_a_quote_online_default({ shortTermCover, nbiIssueAvailable, esraClassification });
+  mapped.canGetAQuoteOffline = can_apply_offline_default(cisCountry.shortTermCoverAvailabilityDesc);
+  mapped.canGetAQuoteByEmail = can_get_a_quote_by_email_default({ shortTermCover, nbiIssueAvailable, esraClassification });
+  mapped.cannotGetAQuote = cannot_get_a_quote_default({ shortTermCover, nbiIssueAvailable, esraClassification });
+  mapped.canApplyForInsuranceOnline = can_apply_for_insurance_online_default(cisCountry);
+  mapped.noInsuranceSupport = no_insurance_support_default(cisCountry.marketRiskAppetitePublicDesc);
   return mapped;
 };
 var map_CIS_country_default = mapCisCountry;
