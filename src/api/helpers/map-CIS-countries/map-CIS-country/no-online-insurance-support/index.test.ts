@@ -5,7 +5,7 @@ import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
 import { mockCisCountry } from '../../../../test-mocks';
 
 const {
-  CIS: { CREDIT_RATINGS },
+  CIS: { COUNTRY_RATINGS },
 } = EXTERNAL_API_DEFINITIONS;
 
 const mockInitCountry = {
@@ -16,7 +16,7 @@ const mockInitCountry = {
 describe('helpers/map-CIS-countries/map-CIS-country/no-online-insurance-support', () => {
   describe('when a country rating is `A`', () => {
     it('should return the result of aAndBRatingConditions', () => {
-      const [mockRating] = CREDIT_RATINGS.A;
+      const [mockRating] = COUNTRY_RATINGS.A;
 
       const mockCountry = {
         ...mockInitCountry,
@@ -37,7 +37,7 @@ describe('helpers/map-CIS-countries/map-CIS-country/no-online-insurance-support'
 
   describe('when a country rating is `B`', () => {
     it('should return the result of aAndBRatingConditions', () => {
-      const [mockRating] = CREDIT_RATINGS.B;
+      const [mockRating] = COUNTRY_RATINGS.B;
 
       const mockCountry = {
         ...mockInitCountry,
@@ -58,7 +58,7 @@ describe('helpers/map-CIS-countries/map-CIS-country/no-online-insurance-support'
 
   describe('when a country rating is `C`', () => {
     it('should return the result of cAndDRatingConditions', () => {
-      const [mockRating] = CREDIT_RATINGS.C;
+      const [mockRating] = COUNTRY_RATINGS.C;
 
       const mockCountry = {
         ...mockInitCountry,
@@ -79,7 +79,7 @@ describe('helpers/map-CIS-countries/map-CIS-country/no-online-insurance-support'
 
   describe('when a country rating is `D`', () => {
     it('should return the result of cAndDRatingConditions', () => {
-      const [mockRating] = CREDIT_RATINGS.D;
+      const [mockRating] = COUNTRY_RATINGS.D;
 
       const mockCountry = {
         ...mockInitCountry,

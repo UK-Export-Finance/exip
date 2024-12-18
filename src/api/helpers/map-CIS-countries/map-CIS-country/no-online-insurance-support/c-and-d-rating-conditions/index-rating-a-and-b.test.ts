@@ -2,16 +2,16 @@ import cAndDRatingConditions from '.';
 import { EXTERNAL_API_DEFINITIONS } from '../../../../../constants';
 
 const {
-  CIS: { CREDIT_RATINGS, ESRA_CLASSIFICATION, SHORT_TERM_COVER_AVAILABLE },
+  CIS: { COUNTRY_RATINGS, ESRA_CLASSIFICATION, SHORT_TERM_COVER_AVAILABLE },
 } = EXTERNAL_API_DEFINITIONS;
 
-const countryRatingsAParams = CREDIT_RATINGS.A.map((rating: string) => ({
+const countryRatingsAParams = COUNTRY_RATINGS.A.map((rating: string) => ({
   countryRating: rating,
   esraClassification: ESRA_CLASSIFICATION.STANDARD,
   shortTermCover: SHORT_TERM_COVER_AVAILABLE.YES,
 }));
 
-const countryRatingsBParams = CREDIT_RATINGS.B.map((rating: string) => ({
+const countryRatingsBParams = COUNTRY_RATINGS.B.map((rating: string) => ({
   countryRating: rating,
   esraClassification: ESRA_CLASSIFICATION.STANDARD,
   shortTermCover: SHORT_TERM_COVER_AVAILABLE.YES,

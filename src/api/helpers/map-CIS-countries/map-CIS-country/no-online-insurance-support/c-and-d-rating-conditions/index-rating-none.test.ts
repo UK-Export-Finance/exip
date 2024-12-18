@@ -3,7 +3,7 @@ import { EXTERNAL_API_DEFINITIONS } from '../../../../../constants';
 
 const {
   CIS: {
-    CREDIT_RATINGS,
+    COUNTRY_RATINGS,
     ESRA_CLASSIFICATION: { NONE },
     SHORT_TERM_COVER_AVAILABLE: { NO },
   },
@@ -13,7 +13,7 @@ describe('helpers/map-CIS-countries/map-CIS-country/no-insurance-support/c-and-d
   describe('when the country rating is `C`', () => {
     it('should return true', () => {
       const result = cAndDRatingConditions({
-        countryRating: CREDIT_RATINGS.C[0],
+        countryRating: COUNTRY_RATINGS.C[0],
         esraClassification: NONE,
         shortTermCover: NO,
       });
@@ -25,7 +25,7 @@ describe('helpers/map-CIS-countries/map-CIS-country/no-insurance-support/c-and-d
   describe('when the country rating is `D`', () => {
     it('should return true', () => {
       const result = cAndDRatingConditions({
-        countryRating: CREDIT_RATINGS.D[0],
+        countryRating: COUNTRY_RATINGS.D[0],
         esraClassification: NONE,
         shortTermCover: NO,
       });

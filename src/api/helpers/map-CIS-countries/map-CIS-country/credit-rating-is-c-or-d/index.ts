@@ -1,7 +1,7 @@
 import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
 
 const {
-  CIS: { CREDIT_RATINGS },
+  CIS: { COUNTRY_RATINGS },
 } = EXTERNAL_API_DEFINITIONS;
 
 /**
@@ -11,11 +11,11 @@ const {
  * @returns {Boolean}
  */
 const creditRatingIsCorD = (rating: string): boolean => {
-  if (CREDIT_RATINGS.C.includes(rating)) {
+  if (COUNTRY_RATINGS.C.includes(rating)) {
     return true;
   }
 
-  if (CREDIT_RATINGS.D.includes(rating)) {
+  if (COUNTRY_RATINGS.D.includes(rating)) {
     return true;
   }
 

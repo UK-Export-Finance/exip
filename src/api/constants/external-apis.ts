@@ -31,8 +31,7 @@ export const EXTERNAL_API_DEFINITIONS = {
       'Third Country',
     ],
     INVALID_CURRENCIES: ['Gold'],
-    // TODO: ame COUNTRY or CREDIT rating?
-    CREDIT_RATINGS: {
+    COUNTRY_RATINGS: {
       A: ['AAA', 'AA+', 'AA', 'AA-', 'A+', 'A', 'A-'],
       B: ['BBB+', 'BBB', 'BBB-', 'BB+', 'BB', 'BB-', 'B+', 'B', 'B-'],
       C: ['CCC+', 'CCC', 'CCC-', 'CC', 'C'],

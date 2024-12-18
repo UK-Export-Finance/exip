@@ -8,3 +8,9 @@ export interface MapCisCountryParams {
   nbiIssueAvailable: boolean;
   esraClassification?: string | null;
 }
+
+export interface noOnlineInsuranceSupportParams {
+  countryRating: string;
+  esraClassification: string;
+  shortTermCover: string;
+}

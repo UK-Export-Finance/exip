@@ -1,12 +1,6 @@
 import aAndBRatingConditions from './a-and-b-rating-conditions';
 import cAndDRatingConditions from './c-and-d-rating-conditions';
-
-// TODO: DRY - this is repeated 3 times.
-interface aAndBRatingConditionsParams {
-  countryRating: string;
-  esraClassification: string;
-  shortTermCover: string;
-}
+import { noOnlineInsuranceSupportParams } from '../../../../types';
 
 /**
  * noOnlineInsuranceSupport
@@ -14,7 +8,7 @@ interface aAndBRatingConditionsParams {
  * @param {String} marketRiskAppetitePublicDesc market risk appetite definition from CIS API.
  * @returns {Boolean}
  */
-const noOnlineInsuranceSupport = ({ countryRating, esraClassification, shortTermCover }: aAndBRatingConditionsParams): boolean => {
+const noOnlineInsuranceSupport = ({ countryRating, esraClassification, shortTermCover }: noOnlineInsuranceSupportParams): boolean => {
   const conditions =
     aAndBRatingConditions({
       countryRating,

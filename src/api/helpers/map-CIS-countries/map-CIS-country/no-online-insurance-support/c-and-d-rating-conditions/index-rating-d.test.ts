@@ -3,14 +3,14 @@ import { EXTERNAL_API_DEFINITIONS } from '../../../../../constants';
 
 const {
   CIS: {
-    CREDIT_RATINGS,
+    COUNTRY_RATINGS,
     ESRA_CLASSIFICATION: { STANDARD, HIGH, VERY_HIGH },
     SHORT_TERM_COVER_AVAILABLE: { YES, NO, ILC, CILC, REFER, UNLISTED },
   },
 } = EXTERNAL_API_DEFINITIONS;
 
 const createMockParams = (esraClassification: string, shortTermCover: string) =>
-  CREDIT_RATINGS.D.map((rating: string) => ({
+  COUNTRY_RATINGS.D.map((rating: string) => ({
     countryRating: rating,
     esraClassification,
     shortTermCover,

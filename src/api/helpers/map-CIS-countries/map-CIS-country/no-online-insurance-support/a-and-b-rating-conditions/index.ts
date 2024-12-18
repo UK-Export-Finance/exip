@@ -1,5 +1,6 @@
 import { EXTERNAL_API_DEFINITIONS } from '../../../../../constants';
 import creditRatingIsAorB from '../../credit-rating-is-a-or-b';
+import { noOnlineInsuranceSupportParams } from '../../../../../types';
 
 const {
   CIS: {
@@ -7,12 +8,6 @@ const {
     SHORT_TERM_COVER_AVAILABLE: { NO, ILC, CILC },
   },
 } = EXTERNAL_API_DEFINITIONS;
-
-interface aAndBRatingConditionsParams {
-  countryRating: string;
-  esraClassification: string;
-  shortTermCover: string;
-}
 
 /**
  * aAndBRatingConditions
@@ -23,7 +18,7 @@ interface aAndBRatingConditionsParams {
  * @param {String} shortTermCover: Short term cover
  * @returns {Boolean}
  */
-const aAndBRatingConditions = ({ countryRating, esraClassification, shortTermCover }: aAndBRatingConditionsParams): boolean => {
+const aAndBRatingConditions = ({ countryRating, esraClassification, shortTermCover }: noOnlineInsuranceSupportParams): boolean => {
   if (!creditRatingIsAorB(countryRating)) {
     return false;
   }

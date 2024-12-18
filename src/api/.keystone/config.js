@@ -851,8 +851,7 @@ var EXTERNAL_API_DEFINITIONS = {
       'Third Country',
     ],
     INVALID_CURRENCIES: ['Gold'],
-    // TODO: ame COUNTRY or CREDIT rating?
-    CREDIT_RATINGS: {
+    COUNTRY_RATINGS: {
       A: ['AAA', 'AA+', 'AA', 'AA-', 'A+', 'A', 'A-'],
       B: ['BBB+', 'BBB', 'BBB-', 'BB+', 'BB', 'BB-', 'B+', 'B', 'B-'],
       C: ['CCC+', 'CCC', 'CCC-', 'CC', 'C'],
@@ -9101,13 +9100,13 @@ var has_valid_short_term_cover_default = hasValidShortTermCover;
 
 // helpers/map-CIS-countries/map-CIS-country/credit-rating-is-a-or-b/index.ts
 var {
-  CIS: { CREDIT_RATINGS },
+  CIS: { COUNTRY_RATINGS },
 } = EXTERNAL_API_DEFINITIONS;
 var creditRatingIsAorB = (rating) => {
-  if (CREDIT_RATINGS.A.includes(rating)) {
+  if (COUNTRY_RATINGS.A.includes(rating)) {
     return true;
   }
-  if (CREDIT_RATINGS.B.includes(rating)) {
+  if (COUNTRY_RATINGS.B.includes(rating)) {
     return true;
   }
   return false;
@@ -9156,13 +9155,13 @@ var a_and_b_rating_conditions_default = aAndBRatingConditions;
 
 // helpers/map-CIS-countries/map-CIS-country/credit-rating-is-c-or-d/index.ts
 var {
-  CIS: { CREDIT_RATINGS: CREDIT_RATINGS2 },
+  CIS: { COUNTRY_RATINGS: COUNTRY_RATINGS2 },
 } = EXTERNAL_API_DEFINITIONS;
 var creditRatingIsCorD = (rating) => {
-  if (CREDIT_RATINGS2.C.includes(rating)) {
+  if (COUNTRY_RATINGS2.C.includes(rating)) {
     return true;
   }
-  if (CREDIT_RATINGS2.D.includes(rating)) {
+  if (COUNTRY_RATINGS2.D.includes(rating)) {
     return true;
   }
   return false;
