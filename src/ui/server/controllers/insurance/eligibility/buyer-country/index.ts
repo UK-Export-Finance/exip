@@ -97,6 +97,8 @@ export const post = async (req: Request, res: Response) => {
     const noShortTermCover = !country.noInsuranceSupport && !country.shortTermCover;
 
     if (noShortTermCover) {
+      console.info(`Country support - ${country.name} - no insurance support or short term cover available`);
+
       const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData = {
@@ -108,6 +110,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (country.canApplyForInsuranceOnline) {
+      console.info(`Country support - ${country.name} - can apply for insurance online`);
+
       const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData = {
@@ -123,6 +127,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (country.noInsuranceSupport) {
+      console.info(`Country support - ${country.name} - no insurance support`);
+
       const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData = {
@@ -139,6 +145,10 @@ export const post = async (req: Request, res: Response) => {
 
       return res.redirect(CANNOT_APPLY_ROUTE);
     }
+
+    console.info(`Country support - ${country.name} - unable to determine country support`);
+
+    return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (error) {
     console.error('Error posting insurance - eligibility - buyer-country %o', error);
 

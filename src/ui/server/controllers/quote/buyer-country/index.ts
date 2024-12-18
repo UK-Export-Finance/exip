@@ -122,6 +122,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (country.canGetAQuoteOnline) {
+      console.info(`Country support - ${country.name} - can get a quote online`);
+
       const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
@@ -134,6 +136,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (country.canGetAQuoteByEmail) {
+      console.info(`Country support - ${country.name} - can get a quote by email`);
+
       const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
@@ -150,6 +154,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (country.cannotGetAQuote) {
+      console.info(`Country support - ${country.name} - cannot a quote`);
+
       const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
