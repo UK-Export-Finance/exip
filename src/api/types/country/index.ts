@@ -49,5 +49,6 @@ export interface MappedCisCountry {
   canGetAQuoteByEmail: boolean;
   cannotGetAQuote: boolean;
   canApplyForInsuranceOnline: boolean;
+  noOnlineInsuranceSupport: boolean;
   noInsuranceSupport: boolean;
 }

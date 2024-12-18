@@ -9,12 +9,12 @@ interface aAndBRatingConditionsParams {
 }
 
 /**
- * noInsuranceSupportAvailable
+ * noOnlineInsuranceSupport
  * Check if a country cannot apply for insurance
  * @param {String} marketRiskAppetitePublicDesc market risk appetite definition from CIS API.
  * @returns {Boolean}
  */
-const noInsuranceSupportAvailable = ({ countryRating, esraClassification, shortTermCover }: aAndBRatingConditionsParams): boolean => {
+const noOnlineInsuranceSupport = ({ countryRating, esraClassification, shortTermCover }: aAndBRatingConditionsParams): boolean => {
   const conditions =
     aAndBRatingConditions({
       countryRating,
@@ -29,4 +29,4 @@ const noInsuranceSupportAvailable = ({ countryRating, esraClassification, shortT
   return conditions;
 };
 
-export default noInsuranceSupportAvailable;
+export default noOnlineInsuranceSupport;

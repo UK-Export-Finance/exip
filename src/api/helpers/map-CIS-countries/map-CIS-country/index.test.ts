@@ -7,7 +7,7 @@ import canGetAQuoteByEmail from './can-get-a-quote-by-email';
 import cannotGetAQuote from './cannot-get-a-quote';
 import canApplyForInsuranceOnline from './can-apply-for-insurance-online';
 import canApplyOffline from './can-apply-for-quote-offline';
-import noInsuranceSupportAvailable from './no-insurance-support';
+import noOnlineInsuranceSupport from './no-online-insurance-support';
 import { EXTERNAL_API_DEFINITIONS, EXTERNAL_API_MAPPINGS } from '../../../constants';
 import { MappedCisCountry } from '../../../types';
 import { mockCisCountry } from '../../../test-mocks';
@@ -55,7 +55,11 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
 
     mapped.canApplyForInsuranceOnline = canApplyForInsuranceOnline(mockCisCountry);
 
-    mapped.noInsuranceSupport = noInsuranceSupportAvailable(mockCountryBase.marketRiskAppetitePublicDesc);
+    mapped.noInsuranceSupport = noOnlineInsuranceSupport({
+      countryRating: mockCisCountry.countryRatingDesc,
+      esraClassification: mockCisCountry.ESRAClassificationDesc,
+      shortTermCover: mockCisCountry.shortTermCoverAvailabilityDesc,
+    });
 
     expect(result).toEqual(mapped);
   });
