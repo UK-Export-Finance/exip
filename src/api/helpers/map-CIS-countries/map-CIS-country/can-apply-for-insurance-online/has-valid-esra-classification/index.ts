@@ -2,7 +2,7 @@ import { EXTERNAL_API_DEFINITIONS } from '../../../../../constants';
 
 const {
   CIS: {
-    RISK: { STANDARD, HIGH, VERY_HIGH },
+    ESRA_CLASSIFICATION: { STANDARD, HIGH, VERY_HIGH },
   },
 } = EXTERNAL_API_DEFINITIONS;
 

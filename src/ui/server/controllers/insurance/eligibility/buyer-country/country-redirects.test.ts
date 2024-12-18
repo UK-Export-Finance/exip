@@ -19,7 +19,7 @@ describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
 
   let mockCountriesResponse = mockCountries;
 
-  const { 1: countryApplyOnline, 4: countryCannotApply, 5: countryNoShortTermCover } = mockCountriesResponse;
+  const { 1: countryApplyOnline, 4: countryNoInsuranceSupport, 5: countryNoOnlineInsuranceSupport } = mockCountriesResponse;
   const mockFlash = jest.fn();
 
   beforeEach(() => {
@@ -40,7 +40,7 @@ describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
       api.keystone.APIM.getCisCountries = getCisCountriesSpy;
     });
 
-    describe('when the submitted country is not found', () => {
+    describe('when the country is not found', () => {
       beforeEach(() => {
         req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = 'Country not in the mock response';
       });
@@ -52,7 +52,7 @@ describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
       });
     });
 
-    describe('when the country can apply for an application online', () => {
+    describe('when the country has a canApplyForInsuranceOnline flag', () => {
       const selectedCountryIsoCode = countryApplyOnline.isoCode;
 
       const validBody = {
@@ -102,13 +102,13 @@ describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
       });
     });
 
-    describe('when the submitted country does not have short term cover', () => {
-      const selectedCountryName = countryNoShortTermCover.isoCode;
+    describe('when the country has a noOnlineInsuranceSupport flag', () => {
+      const selectedCountryName = countryNoOnlineInsuranceSupport.isoCode;
 
       beforeEach(() => {
         req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = selectedCountryName;
 
-        mockCountriesResponse = [countryNoShortTermCover];
+        mockCountriesResponse = [countryNoOnlineInsuranceSupport];
 
         getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 
@@ -118,7 +118,7 @@ describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
       it('should update the session with populated country object', async () => {
         await post(req, res);
 
-        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, countryNoShortTermCover.isoCode);
+        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, countryNoOnlineInsuranceSupport.isoCode);
 
         const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
 
@@ -137,14 +137,14 @@ describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
       });
     });
 
-    describe('when the submitted country cannot apply for an application', () => {
-      const selectedCountryName = countryCannotApply.name;
-      const selectedCountryIsoCode = countryCannotApply.isoCode;
+    describe('when the country has a noInsuranceSupport flag', () => {
+      const selectedCountryName = countryNoInsuranceSupport.name;
+      const selectedCountryIsoCode = countryNoInsuranceSupport.isoCode;
 
       beforeEach(() => {
         req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = selectedCountryIsoCode;
 
-        mockCountriesResponse = [countryCannotApply];
+        mockCountriesResponse = [countryNoInsuranceSupport];
 
         getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 

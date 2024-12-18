@@ -3,7 +3,7 @@ import creditRatingIsCorD from '../../credit-rating-is-c-or-d';
 
 const {
   CIS: {
-    RISK: { STANDARD, HIGH, VERY_HIGH, NONE },
+    ESRA_CLASSIFICATION: { STANDARD, HIGH, VERY_HIGH, NONE },
     SHORT_TERM_COVER_AVAILABLE: { YES, NO, ILC, CILC, REFER, UNLISTED },
   },
 } = EXTERNAL_API_DEFINITIONS;

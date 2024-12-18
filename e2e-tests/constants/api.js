@@ -2,7 +2,7 @@
 
 export const API = {
   CIS: {
-    RISK: {
+    ESRA_CLASSIFICATION: {
       VERY_HIGH: 'Very High',
       HIGH: 'High',
       STANDARD: 'Standard Risk',

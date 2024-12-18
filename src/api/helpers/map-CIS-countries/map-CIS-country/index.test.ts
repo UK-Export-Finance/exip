@@ -18,7 +18,7 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
   const mockCountryBase = {
     ...mockCisCountry,
     marketName: mockCisCountry.marketName,
-    esraClassification: EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD,
+    esraClassification: EXTERNAL_API_MAPPINGS.CIS.ESRA_CLASSIFICATION.STANDARD,
     isoCode: mockCisCountry.isoCode,
     shortTermCoverAvailabilityDesc: CIS.SHORT_TERM_COVER_AVAILABLE.ILC,
     marketRiskAppetitePublicDesc: CIS.NO_COVER,

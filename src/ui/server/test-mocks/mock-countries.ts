@@ -76,6 +76,7 @@ const mockCountries = [
     canGetAQuoteOnline: false,
     canGetAQuoteOffline: false,
     canApplyForInsuranceOnline: false,
+    noOnlineInsuranceSupport: false,
     noInsuranceSupport: true,
   },
   /**
@@ -95,6 +96,7 @@ const mockCountries = [
     canApplyForInsuranceOffline: false,
     noInsuranceSupport: false,
     shortTermCover: false,
+    noOnlineInsuranceSupport: true,
   },
 ] as Array<Country>;
 

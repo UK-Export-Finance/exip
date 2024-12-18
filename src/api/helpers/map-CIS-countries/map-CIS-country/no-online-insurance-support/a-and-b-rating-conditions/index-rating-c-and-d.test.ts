@@ -2,18 +2,18 @@ import aAndBRatingConditions from '.';
 import { EXTERNAL_API_DEFINITIONS } from '../../../../../constants';
 
 const {
-  CIS: { CREDIT_RATINGS, RISK, SHORT_TERM_COVER_AVAILABLE },
+  CIS: { CREDIT_RATINGS, ESRA_CLASSIFICATION, SHORT_TERM_COVER_AVAILABLE },
 } = EXTERNAL_API_DEFINITIONS;
 
 const countryRatingsCParams = CREDIT_RATINGS.C.map((rating: string) => ({
   countryRating: rating,
-  esraClassification: RISK.STANDARD,
+  esraClassification: ESRA_CLASSIFICATION.STANDARD,
   shortTermCover: SHORT_TERM_COVER_AVAILABLE.YES,
 }));
 
 const countryRatingsDParams = CREDIT_RATINGS.D.map((rating: string) => ({
   countryRating: rating,
-  esraClassification: RISK.STANDARD,
+  esraClassification: ESRA_CLASSIFICATION.STANDARD,
   shortTermCover: SHORT_TERM_COVER_AVAILABLE.YES,
 }));
 

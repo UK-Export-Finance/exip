@@ -2,8 +2,7 @@
 
 export const EXTERNAL_API_DEFINITIONS = {
   CIS: {
-    // TODO: rename to ESRA_CLASSIFICATION?
-    RISK: {
+    ESRA_CLASSIFICATION: {
       VERY_HIGH: 'Very High',
       HIGH: 'High',
       STANDARD: 'Standard Risk',
@@ -49,7 +48,7 @@ export const EXTERNAL_API_DEFINITIONS = {
 
 export const EXTERNAL_API_MAPPINGS = {
   CIS: {
-    RISK: {
+    ESRA_CLASSIFICATION: {
       VERY_HIGH: 'Very High',
       HIGH: 'High',
       STANDARD: 'Standard',

@@ -3,7 +3,7 @@ import creditRatingIsAorB from '../../credit-rating-is-a-or-b';
 
 const {
   CIS: {
-    RISK: { STANDARD, HIGH, VERY_HIGH, NONE },
+    ESRA_CLASSIFICATION: { STANDARD, HIGH, VERY_HIGH, NONE },
     SHORT_TERM_COVER_AVAILABLE: { NO, ILC, CILC },
   },
 } = EXTERNAL_API_DEFINITIONS;

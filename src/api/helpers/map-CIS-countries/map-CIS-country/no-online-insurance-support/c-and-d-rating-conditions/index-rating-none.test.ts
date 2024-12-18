@@ -4,7 +4,7 @@ import { EXTERNAL_API_DEFINITIONS } from '../../../../../constants';
 const {
   CIS: {
     CREDIT_RATINGS,
-    RISK: { NONE },
+    ESRA_CLASSIFICATION: { NONE },
     SHORT_TERM_COVER_AVAILABLE: { NO },
   },
 } = EXTERNAL_API_DEFINITIONS;
