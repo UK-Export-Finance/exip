@@ -2,18 +2,18 @@ import { actions } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.TALK_TO_AN_EXPORT_FINANCE_MANAGER;
+const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT_EXIT;
 
 const { CONTACT_EFM } = CONTENT_STRINGS;
 
 const {
-  ELIGIBILITY: { TALK_TO_AN_EXPORT_FINANCE_MANAGER },
+  ELIGIBILITY: { TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Eligibility - Talk to an export finance manager page', () => {
-  const url = `${baseUrl}${TALK_TO_AN_EXPORT_FINANCE_MANAGER}`;
+  const url = `${baseUrl}${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT}`;
 
   before(() => {
     cy.navigateToUrl(url);
@@ -28,8 +28,8 @@ context('Insurance - Eligibility - Talk to an export finance manager page', () =
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      backLink: `${TALK_TO_AN_EXPORT_FINANCE_MANAGER}#`,
-      currentHref: TALK_TO_AN_EXPORT_FINANCE_MANAGER,
+      backLink: `${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT}#`,
+      currentHref: TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT,
       assertAuthenticatedHeader: false,
       assertSaveAndBackButtonDoesNotExist: true,
       hasAForm: false,

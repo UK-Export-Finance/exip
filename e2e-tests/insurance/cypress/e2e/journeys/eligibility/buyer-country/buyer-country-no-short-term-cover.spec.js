@@ -2,7 +2,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { COUNTRY_APPLICATION_SUPPORT } from '../../../../../../fixtures/countries';
 
 const {
-  ELIGIBILITY: { TALK_TO_AN_EXPORT_FINANCE_MANAGER },
+  ELIGIBILITY: { TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT },
 } = INSURANCE_ROUTES;
 
 const COUNTRY_NAME_1 = COUNTRY_APPLICATION_SUPPORT.NO_SHORT_TERM_COVER_1.NAME;
@@ -18,14 +18,14 @@ context(
     });
 
     describe(COUNTRY_NAME_1, () => {
-      it(`redirects to ${TALK_TO_AN_EXPORT_FINANCE_MANAGER} exit page`, () => {
-        cy.enterCountryAndAssertExitPageUrlBuyerCountry(COUNTRY_NAME_1, TALK_TO_AN_EXPORT_FINANCE_MANAGER);
+      it(`redirects to ${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT} exit page`, () => {
+        cy.enterCountryAndAssertExitPageUrlBuyerCountry(COUNTRY_NAME_1, TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT);
       });
     });
 
     describe(COUNTRY_NAME_2, () => {
-      it(`redirects to ${TALK_TO_AN_EXPORT_FINANCE_MANAGER} exit page`, () => {
-        cy.enterCountryAndAssertExitPageUrlBuyerCountry(COUNTRY_NAME_2, TALK_TO_AN_EXPORT_FINANCE_MANAGER);
+      it(`redirects to ${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT} exit page`, () => {
+        cy.enterCountryAndAssertExitPageUrlBuyerCountry(COUNTRY_NAME_2, TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT);
       });
     });
   },

@@ -17,7 +17,7 @@ describe('controllers/insurance/eligibility/talk-to-an-export-finance-manager', 
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.TALK_TO_AN_EXPORT_FINANCE_MANAGER);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT);
     });
   });
 
@@ -27,7 +27,7 @@ describe('controllers/insurance/eligibility/talk-to-an-export-finance-manager', 
 
       const expectedVariables = {
         ...corePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.TALK_TO_AN_EXPORT_FINANCE_MANAGER,
+          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT,
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),
