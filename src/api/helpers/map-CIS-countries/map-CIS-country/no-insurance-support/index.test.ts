@@ -1,24 +1,100 @@
 import noInsuranceSupportAvailable from '.';
+import aAndBRatingConditions from './a-and-b-rating-conditions';
+import cAndDRatingConditions from './c-and-d-rating-conditions';
 import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
+import { mockCisCountry } from '../../../../test-mocks';
 
 const {
-  CIS: { NO_COVER },
+  CIS: { CREDIT_RATINGS },
 } = EXTERNAL_API_DEFINITIONS;
 
-describe('helpers/map-CIS-countries/map-CIS-country/no-insurance-support', () => {
-  describe(`when marketRiskAppetitePublicDesc is ${NO_COVER}`, () => {
-    it('should return true', () => {
-      const result = noInsuranceSupportAvailable(NO_COVER);
+const mockInitCountry = {
+  esraClassification: mockCisCountry.ESRAClassificationDesc,
+  shortTermCover: mockCisCountry.shortTermCoverAvailabilityDesc,
+};
 
-      expect(result).toEqual(true);
+describe('helpers/map-CIS-countries/map-CIS-country/no-insurance-support', () => {
+  describe('when a country rating is `A`', () => {
+    it('should return the result of aAndBRatingConditions', () => {
+      const [mockRating] = CREDIT_RATINGS.A;
+
+      const mockCountry = {
+        ...mockInitCountry,
+        countryRating: mockRating,
+      };
+
+      const result = noInsuranceSupportAvailable(mockCountry);
+
+      const expected = aAndBRatingConditions({
+        countryRating: mockRating,
+        esraClassification: mockInitCountry.esraClassification,
+        shortTermCover: mockInitCountry.shortTermCover,
+      });
+
+      expect(result).toEqual(expected);
     });
   });
 
-  describe(`when originalShortTermCover is NOT '${NO_COVER}'`, () => {
-    it('should return false', () => {
-      const result = noInsuranceSupportAvailable('');
+  describe('when a country rating is `B`', () => {
+    it('should return the result of aAndBRatingConditions', () => {
+      const [mockRating] = CREDIT_RATINGS.B;
 
-      expect(result).toEqual(false);
+      const mockCountry = {
+        ...mockInitCountry,
+        countryRating: mockRating,
+      };
+
+      const result = noInsuranceSupportAvailable(mockCountry);
+
+      const expected = aAndBRatingConditions({
+        countryRating: mockRating,
+        esraClassification: mockInitCountry.esraClassification,
+        shortTermCover: mockInitCountry.shortTermCover,
+      });
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when a country rating is `C`', () => {
+    it('should return the result of cAndDRatingConditions', () => {
+      const [mockRating] = CREDIT_RATINGS.C;
+
+      const mockCountry = {
+        ...mockInitCountry,
+        countryRating: mockRating,
+      };
+
+      const result = noInsuranceSupportAvailable(mockCountry);
+
+      const expected = cAndDRatingConditions({
+        countryRating: mockRating,
+        esraClassification: mockInitCountry.esraClassification,
+        shortTermCover: mockInitCountry.shortTermCover,
+      });
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when a country rating is `D`', () => {
+    it('should return the result of cAndDRatingConditions', () => {
+      const [mockRating] = CREDIT_RATINGS.D;
+
+      const mockCountry = {
+        ...mockInitCountry,
+        countryRating: mockRating,
+      };
+
+      const result = noInsuranceSupportAvailable(mockCountry);
+
+      const expected = cAndDRatingConditions({
+        countryRating: mockRating,
+        esraClassification: mockInitCountry.esraClassification,
+        shortTermCover: mockInitCountry.shortTermCover,
+      });
+
+      expect(result).toEqual(expected);
     });
   });
 });

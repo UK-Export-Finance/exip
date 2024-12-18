@@ -16,7 +16,7 @@ import { CisCountry, MappedCisCountry } from '../../../types';
  * @returns {MappedCisCountry} Mapped country
  */
 export const mapCisCountry = (cisCountry: CisCountry): MappedCisCountry => {
-  const { countryRatingDesc, isoCode, marketName } = cisCountry;
+  const { countryRatingDesc, ESRAClassificationDesc, isoCode, marketName, shortTermCoverAvailabilityDesc } = cisCountry;
 
   const esraClassification = mapEsraClassification(cisCountry.ESRAClassificationDesc);
   const nbiIssueAvailable = mapNbiIssueAvailable(cisCountry.NBIIssue);
@@ -41,7 +41,11 @@ export const mapCisCountry = (cisCountry: CisCountry): MappedCisCountry => {
 
   mapped.canApplyForInsuranceOnline = canApplyForInsuranceOnline(cisCountry);
 
-  mapped.noInsuranceSupport = noInsuranceSupportAvailable(cisCountry.marketRiskAppetitePublicDesc);
+  mapped.noInsuranceSupport = noInsuranceSupportAvailable({
+    countryRating: countryRatingDesc,
+    esraClassification: ESRAClassificationDesc,
+    shortTermCover: shortTermCoverAvailabilityDesc,
+  });
 
   return mapped;
 };

@@ -5,21 +5,21 @@ const {
 } = EXTERNAL_API_DEFINITIONS;
 
 /**
- * creditRatingIsAorB
- * Check if a country's "credit rating" is A or B.
+ * creditRatingIsCorD
+ * Check if a country's "credit rating" is C or D.
  * @param {String} rating: Country rating
  * @returns {Boolean}
  */
-const creditRatingIsAorB = (rating: string): boolean => {
-  if (CREDIT_RATINGS.A.includes(rating)) {
+const creditRatingIsCorD = (rating: string): boolean => {
+  if (CREDIT_RATINGS.C.includes(rating)) {
     return true;
   }
 
-  if (CREDIT_RATINGS.B.includes(rating)) {
+  if (CREDIT_RATINGS.D.includes(rating)) {
     return true;
   }
 
   return false;
 };
 
-export default creditRatingIsAorB;
+export default creditRatingIsCorD;

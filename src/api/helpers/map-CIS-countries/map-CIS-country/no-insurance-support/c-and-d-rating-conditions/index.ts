@@ -1,39 +1,51 @@
 import { EXTERNAL_API_DEFINITIONS } from '../../../../../constants';
-import creditRatingIsAorB from '../../credit-rating-is-a-or-b';
+import creditRatingIsCorD from '../../credit-rating-is-c-or-d';
 
 const {
   CIS: {
     RISK: { STANDARD, HIGH, VERY_HIGH, NONE },
-    SHORT_TERM_COVER_AVAILABLE: { NO, ILC, CILC },
+    SHORT_TERM_COVER_AVAILABLE: { YES, NO, ILC, CILC, REFER, UNLISTED },
   },
 } = EXTERNAL_API_DEFINITIONS;
 
-interface aAndBRatingConditionsParams {
+interface aAndDRatingConditionsParams {
   countryRating: string;
   esraClassification: string;
   shortTermCover: string;
 }
 
 /**
- * aAndBRatingConditions
- * Country conditions for "A and B country ratings",
+ * aAndDRatingConditions
+ * Country conditions for "C and D country ratings",
  * to determine if a country does NOT have insurance support available.
  * @param {String} countryRating: Country rating
  * @param {String} esraClassification: ESRA classification
  * @param {String} shortTermCover: Short term cover
  * @returns {Boolean}
  */
-const aAndBRatingConditions = ({ countryRating, esraClassification, shortTermCover }: aAndBRatingConditionsParams): boolean => {
-  if (!creditRatingIsAorB(countryRating)) {
+const aAndDRatingConditions = ({ countryRating, esraClassification, shortTermCover }: aAndDRatingConditionsParams): boolean => {
+  if (!creditRatingIsCorD(countryRating)) {
     return false;
   }
 
   if (esraClassification === STANDARD || esraClassification === HIGH || esraClassification === VERY_HIGH) {
+    if (shortTermCover === YES) {
+      return true;
+    }
+
     if (shortTermCover === ILC) {
       return true;
     }
 
     if (shortTermCover === CILC) {
+      return true;
+    }
+
+    if (shortTermCover === REFER) {
+      return true;
+    }
+
+    if (shortTermCover === UNLISTED) {
       return true;
     }
 
@@ -49,4 +61,4 @@ const aAndBRatingConditions = ({ countryRating, esraClassification, shortTermCov
   return false;
 };
 
-export default aAndBRatingConditions;
+export default aAndDRatingConditions;

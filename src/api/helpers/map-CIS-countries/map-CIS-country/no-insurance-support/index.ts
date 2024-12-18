@@ -1,6 +1,12 @@
-import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
+import aAndBRatingConditions from './a-and-b-rating-conditions';
+import cAndDRatingConditions from './c-and-d-rating-conditions';
 
-const { NO_COVER } = EXTERNAL_API_DEFINITIONS.CIS;
+// TODO: DRY - this is repeated 3 times.
+interface aAndBRatingConditionsParams {
+  countryRating: string;
+  esraClassification: string;
+  shortTermCover: string;
+}
 
 /**
  * noInsuranceSupportAvailable
@@ -8,6 +14,19 @@ const { NO_COVER } = EXTERNAL_API_DEFINITIONS.CIS;
  * @param {String} marketRiskAppetitePublicDesc market risk appetite definition from CIS API.
  * @returns {Boolean}
  */
-const noInsuranceSupportAvailable = (marketRiskAppetitePublicDesc: string) => marketRiskAppetitePublicDesc === NO_COVER;
+const noInsuranceSupportAvailable = ({ countryRating, esraClassification, shortTermCover }: aAndBRatingConditionsParams): boolean => {
+  const conditions =
+    aAndBRatingConditions({
+      countryRating,
+      esraClassification,
+      shortTermCover,
+    }) ||
+    cAndDRatingConditions({
+      countryRating,
+      esraClassification,
+      shortTermCover,
+    });
+  return conditions;
+};
 
 export default noInsuranceSupportAvailable;
