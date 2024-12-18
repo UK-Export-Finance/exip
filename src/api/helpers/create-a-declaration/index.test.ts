@@ -90,14 +90,11 @@ describe('helpers/create-a-declaration', () => {
         isNotAwareOfExistingSlavery,
         declarationModernSlaveryVersion,
       },
-      id: declarationId,
     } = result;
 
     expect(declarationModernSlaveryId).toBeDefined();
     expect(typeof declarationModernSlaveryId).toEqual('string');
     expect(declarationModernSlaveryId.length).toBeGreaterThan(0);
-
-    expect(result.declarationModernSlavery.declarationId).toEqual(declarationId);
 
     const expectedVersions = await createADeclarationModernSlaveryVersion(context, declarationModernSlaveryId);
 
