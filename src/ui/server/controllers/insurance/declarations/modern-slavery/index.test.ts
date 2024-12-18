@@ -206,7 +206,7 @@ describe('controllers/insurance/declarations/modern-slavery', () => {
 
     describe('api error handling', () => {
       describe('save data call', () => {
-        describe('when the save data API call does not return anything', () => {
+        describe('when the save data API call returns false', () => {
           beforeEach(() => {
             mockSaveDeclarationModernSlavery = jest.fn(() => Promise.resolve(false));
             save.declarationModernSlavery = mockSaveDeclarationModernSlavery;
