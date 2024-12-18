@@ -1,21 +1,21 @@
-import { Context } from '../types';
+import { Context } from '.keystone/types'; // eslint-disable-line
 
 /**
  * create declaration test helper
  * Create a declaration modern slavery
  * @param {Context} KeystoneJS context API, application data
+ * @param {ApplicationDeclarationModernSlavery} data
  * @returns {ApplicationDeclarationModernSlavery} Created declaration
  */
 const create = async (context: Context, data = {}) => {
   try {
     console.info('Creating a declaration modern slavery (test helpers)');
 
-    const declaration = await context.query.DeclarationModernSlavery.createOne({
+    const declarationModernSlavery = await context.db.DeclarationModernSlavery.createOne({
       data,
-      query: 'id',
     });
 
-    return declaration;
+    return declarationModernSlavery;
   } catch (error) {
     console.error(error);
 

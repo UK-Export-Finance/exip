@@ -6071,22 +6071,16 @@ var getPopulatedBuyer = async (context, id) => {
 var get_populated_buyer_default = getPopulatedBuyer;
 
 // helpers/get-declaration-by-id/index.ts
-var getDeclarationById = async (context, declarationId) => {
+var getDeclarationById = async (context, id) => {
   try {
-    console.info('Getting declaration by ID %s', declarationId);
+    console.info('Getting declaration by ID %s', id);
     const declaration = await context.db.Declaration.findOne({
-      where: { id: declarationId },
+      where: { id },
     });
-    const declarationModernSlavery = await context.db.DeclarationModernSlavery.findOne({
-      where: { id: declaration?.modernSlaveryId },
-    });
-    return {
-      ...declaration,
-      modernSlavery: declarationModernSlavery,
-    };
+    return declaration;
   } catch (error) {
-    console.error('Getting declaration by ID %s %o', declarationId, error);
-    throw new Error(`Error Getting declaration by ID ${declarationId} ${error}`);
+    console.error('Getting declaration by ID %s %o', id, error);
+    throw new Error(`Error Getting declaration by ID ${id} ${error}`);
   }
 };
 var get_declaration_by_id_default = getDeclarationById;

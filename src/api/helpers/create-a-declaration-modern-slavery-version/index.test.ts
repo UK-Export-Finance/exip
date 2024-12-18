@@ -1,7 +1,7 @@
 import createADeclarationModernSlaveryVersion from '.';
 import DECLARATIONS from '../../constants/declarations';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
-import declarationsModernSlavery from '../../test-helpers/declarations-modern-slavery';
+import declarationsModernSlavery from '../../test-helpers/declaration-modern-slavery';
 import { ApplicationDeclarationModernSlavery, Context } from '../../types';
 import { mockInvalidId } from '../../test-mocks';
 
