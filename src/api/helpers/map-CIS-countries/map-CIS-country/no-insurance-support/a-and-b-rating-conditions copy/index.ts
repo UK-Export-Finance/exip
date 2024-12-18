@@ -1,13 +1,18 @@
 import { EXTERNAL_API_DEFINITIONS } from '../../../../../constants';
 import countryRatingIsAorB from '../../country-rating-is-a-or-b';
-import { noOnlineInsuranceSupportParams } from '../../../../../types';
 
 const {
   CIS: {
-    ESRA_CLASSIFICATION: { STANDARD, HIGH, VERY_HIGH, NONE },
+    RISK: { STANDARD, HIGH, VERY_HIGH, NONE },
     SHORT_TERM_COVER_AVAILABLE: { NO, ILC, CILC },
   },
 } = EXTERNAL_API_DEFINITIONS;
+
+interface aAndBRatingConditionsParams {
+  countryRating: string;
+  esraClassification: string;
+  shortTermCover: string;
+}
 
 /**
  * aAndBRatingConditions
@@ -18,7 +23,7 @@ const {
  * @param {String} shortTermCover: Short term cover
  * @returns {Boolean}
  */
-const aAndBRatingConditions = ({ countryRating, esraClassification, shortTermCover }: noOnlineInsuranceSupportParams): boolean => {
+const aAndBRatingConditions = ({ countryRating, esraClassification, shortTermCover }: aAndBRatingConditionsParams): boolean => {
   if (!countryRatingIsAorB(countryRating)) {
     return false;
   }

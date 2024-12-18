@@ -9098,11 +9098,11 @@ var hasValidShortTermCover = (shortTermCover) => {
 };
 var has_valid_short_term_cover_default = hasValidShortTermCover;
 
-// helpers/map-CIS-countries/map-CIS-country/credit-rating-is-a-or-b/index.ts
+// helpers/map-CIS-countries/map-CIS-country/country-rating-is-a-or-b/index.ts
 var {
   CIS: { COUNTRY_RATINGS },
 } = EXTERNAL_API_DEFINITIONS;
-var creditRatingIsAorB = (rating) => {
+var countryRatingIsAorB = (rating) => {
   if (COUNTRY_RATINGS.A.includes(rating)) {
     return true;
   }
@@ -9111,7 +9111,7 @@ var creditRatingIsAorB = (rating) => {
   }
   return false;
 };
-var credit_rating_is_a_or_b_default = creditRatingIsAorB;
+var country_rating_is_a_or_b_default = countryRatingIsAorB;
 
 // helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/index.ts
 var canApplyForInsuranceOnline = (cisCountry) => {
@@ -9119,7 +9119,7 @@ var canApplyForInsuranceOnline = (cisCountry) => {
   const conditions =
     has_valid_esra_classification_default(ESRAClassificationDesc) &&
     has_valid_short_term_cover_default(shortTermCoverAvailabilityDesc) &&
-    credit_rating_is_a_or_b_default(countryRatingDesc);
+    country_rating_is_a_or_b_default(countryRatingDesc);
   return conditions;
 };
 var can_apply_for_insurance_online_default = canApplyForInsuranceOnline;
@@ -9132,7 +9132,7 @@ var {
   },
 } = EXTERNAL_API_DEFINITIONS;
 var aAndBRatingConditions = ({ countryRating, esraClassification, shortTermCover }) => {
-  if (!credit_rating_is_a_or_b_default(countryRating)) {
+  if (!country_rating_is_a_or_b_default(countryRating)) {
     return false;
   }
   if (esraClassification === STANDARD2 || esraClassification === HIGH2 || esraClassification === VERY_HIGH2) {
@@ -9153,11 +9153,11 @@ var aAndBRatingConditions = ({ countryRating, esraClassification, shortTermCover
 };
 var a_and_b_rating_conditions_default = aAndBRatingConditions;
 
-// helpers/map-CIS-countries/map-CIS-country/credit-rating-is-c-or-d/index.ts
+// helpers/map-CIS-countries/map-CIS-country/country-rating-is-c-or-d/index.ts
 var {
   CIS: { COUNTRY_RATINGS: COUNTRY_RATINGS2 },
 } = EXTERNAL_API_DEFINITIONS;
-var creditRatingIsCorD = (rating) => {
+var countryRatingIsCorD = (rating) => {
   if (COUNTRY_RATINGS2.C.includes(rating)) {
     return true;
   }
@@ -9166,7 +9166,7 @@ var creditRatingIsCorD = (rating) => {
   }
   return false;
 };
-var credit_rating_is_c_or_d_default = creditRatingIsCorD;
+var country_rating_is_c_or_d_default = countryRatingIsCorD;
 
 // helpers/map-CIS-countries/map-CIS-country/no-online-insurance-support/c-and-d-rating-conditions/index.ts
 var {
@@ -9176,7 +9176,7 @@ var {
   },
 } = EXTERNAL_API_DEFINITIONS;
 var aAndDRatingConditions = ({ countryRating, esraClassification, shortTermCover }) => {
-  if (!credit_rating_is_c_or_d_default(countryRating)) {
+  if (!country_rating_is_c_or_d_default(countryRating)) {
     return false;
   }
   if (esraClassification === STANDARD3 || esraClassification === HIGH3 || esraClassification === VERY_HIGH3) {

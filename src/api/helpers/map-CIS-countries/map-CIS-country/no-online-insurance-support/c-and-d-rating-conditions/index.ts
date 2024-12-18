@@ -1,5 +1,5 @@
 import { EXTERNAL_API_DEFINITIONS } from '../../../../../constants';
-import creditRatingIsCorD from '../../credit-rating-is-c-or-d';
+import countryRatingIsCorD from '../../country-rating-is-c-or-d';
 import { noOnlineInsuranceSupportParams } from '../../../../../types';
 
 const {
@@ -19,7 +19,7 @@ const {
  * @returns {Boolean}
  */
 const aAndDRatingConditions = ({ countryRating, esraClassification, shortTermCover }: noOnlineInsuranceSupportParams): boolean => {
-  if (!creditRatingIsCorD(countryRating)) {
+  if (!countryRatingIsCorD(countryRating)) {
     return false;
   }
 
