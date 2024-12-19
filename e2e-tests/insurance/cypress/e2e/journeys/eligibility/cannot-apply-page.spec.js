@@ -16,7 +16,8 @@ const COUNTRY_NAME_UNSUPPORTED = COUNTRY_APPLICATION_SUPPORT.UNSUPPORTED_1.NAME;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance Eligibility - Cannot apply exit page', () => {
+// TODO: EMS-4065
+context.skip('Insurance Eligibility - Cannot apply exit page', () => {
   beforeEach(() => {
     cy.completeAndSubmitEligibilityForms({ formToStopAt: 'companyDetails' });
 

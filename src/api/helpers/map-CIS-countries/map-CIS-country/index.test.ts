@@ -42,7 +42,6 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
       canGetAQuoteOffline: false,
       canGetAQuoteByEmail: false,
       cannotGetAQuote: false,
-      noInsuranceSupport: false,
     } as MappedCisCountry;
 
     mapped.canGetAQuoteOnline = canGetAQuoteOnline({ shortTermCover, nbiIssueAvailable, esraClassification });
@@ -55,7 +54,7 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
 
     mapped.canApplyForInsuranceOnline = canApplyForInsuranceOnline(mockCisCountry);
 
-    mapped.noInsuranceSupport = noOnlineInsuranceSupport({
+    mapped.noOnlineInsuranceSupport = noOnlineInsuranceSupport({
       countryRating: mockCisCountry.countryRatingDesc,
       esraClassification: mockCisCountry.ESRAClassificationDesc,
       shortTermCover: mockCisCountry.shortTermCoverAvailabilityDesc,
