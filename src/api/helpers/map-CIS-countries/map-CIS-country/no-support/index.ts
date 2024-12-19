@@ -13,14 +13,14 @@ const {
 } = EXTERNAL_API_DEFINITIONS;
 
 /**
- * noInsuranceSupport
- * Check if a country has no insurance support (online or offline)
+ * noSupport
+ * Check if a country has no quote or insurance support (online or offline)
  * @param {String} countryRating: Country rating
  * @param {String} esraClassification: ESRA classification
  * @param {String} shortTermCover: Short term cover
  * @returns {Boolean}
  */
-const noInsuranceSupport = ({ countryRating, esraClassification, shortTermCover }: NoInsuranceSupportParams): boolean => {
+const noSupport = ({ countryRating, esraClassification, shortTermCover }: NoInsuranceSupportParams): boolean => {
   const shortTermCoverIsUnlisted = shortTermCover === UNLISTED;
   const esraClassificationIsNone = esraClassification === NONE;
   const countryRatingIsNotApplicable = countryRating === NOT_APPLICABLE;
@@ -40,4 +40,4 @@ const noInsuranceSupport = ({ countryRating, esraClassification, shortTermCover 
   return false;
 };
 
-export default noInsuranceSupport;
+export default noSupport;
