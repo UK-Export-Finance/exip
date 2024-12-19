@@ -1,4 +1,5 @@
 import hasFormData from '../../../../../helpers/has-form-data';
+import mapSubmittedData from '../../map-submitted-data/modern-slavery';
 import save from '../../save-data/modern-slavery';
 import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
 
@@ -13,12 +14,14 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
 const declarationModernSlavery = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
+      const populatedData = mapSubmittedData(formBody);
+
       let saveResponse;
 
       if (validationErrors) {
-        saveResponse = await save.declarationModernSlavery(application, formBody, validationErrors.errorList);
+        saveResponse = await save.declarationModernSlavery(application, populatedData, validationErrors.errorList);
       } else {
-        saveResponse = await save.declarationModernSlavery(application, formBody);
+        saveResponse = await save.declarationModernSlavery(application, populatedData);
       }
 
       if (!saveResponse) {
@@ -30,7 +33,7 @@ const declarationModernSlavery = async (formBody: RequestBody, application: Appl
 
     return true;
   } catch (error) {
-    console.error('Error mapping and saving application %o', error);
+    console.error('Error mapping and saving declaration - modern slavery %o', error);
 
     return false;
   }

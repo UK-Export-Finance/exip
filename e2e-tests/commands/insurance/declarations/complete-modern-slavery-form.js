@@ -12,11 +12,8 @@ const completeModernSlaveryForm = ({
   willAdhereToAllRequirements = true,
   hasNoOffensesOrInvestigations = true,
   isNotAwareOfExistingSlavery = true,
-  conditionalFields = {
-    cannotAdhereToAllRequirements: '',
-    offensesOrInvestigations: '',
-    awareOfExistingSlavery: '',
-  },
+  conditionalFields = {},
+  submitConditionalFields = false,
 }) => {
   if (willAdhereToAllRequirements) {
     cy.clickYesRadioInput(0);
@@ -42,7 +39,9 @@ const completeModernSlaveryForm = ({
     cy.clickNoRadioInput(2);
   }
 
-  cy.completeModernSlaveryFormConditionalFields(conditionalFields);
+  if (submitConditionalFields) {
+    cy.completeModernSlaveryFormConditionalFields(conditionalFields);
+  }
 };
 
 export default completeModernSlaveryForm;

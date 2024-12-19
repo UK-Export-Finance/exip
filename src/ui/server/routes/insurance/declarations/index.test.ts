@@ -8,6 +8,7 @@ import {
   post as exportingWithCodeOfConductPost,
 } from '../../../controllers/insurance/declarations/anti-bribery/exporting-with-code-of-conduct';
 import { get as modernSlaveryGet, post as modernSlaveryPost } from '../../../controllers/insurance/declarations/modern-slavery';
+import { post as modernSlaverySaveAndBackPost } from '../../../controllers/insurance/declarations/modern-slavery/save-and-back';
 import {
   get as confirmationAndAcknowledgementsGet,
   post as confirmationAndAcknowledgementsPost,
@@ -56,6 +57,7 @@ describe('routes/insurance/declarations', () => {
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.MODERN_SLAVERY}`, modernSlaveryGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.MODERN_SLAVERY}`, modernSlaveryPost);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.MODERN_SLAVERY_SAVE_AND_BACK}`, modernSlaverySaveAndBackPost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, confirmationAndAcknowledgementsGet);
 
