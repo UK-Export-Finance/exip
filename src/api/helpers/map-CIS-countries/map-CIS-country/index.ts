@@ -3,11 +3,10 @@ import mapShortTermCoverAvailable from './map-short-term-cover-available';
 import mapNbiIssueAvailable from './map-NBI-issue-available';
 import canGetAQuoteOnline from './can-get-a-quote-online';
 import canGetAQuoteByEmail from './can-get-a-quote-by-email';
-import cannotGetAQuote from './cannot-get-a-quote';
 import canApplyForAQuoteOffline from './can-apply-for-quote-offline';
 import canApplyForInsuranceOnline from './can-apply-for-insurance-online';
 import noOnlineInsuranceSupport from './no-online-insurance-support';
-import noInsuranceSupport from './no-insurance-support';
+import noSupport from './no-support';
 import { CisCountry, MappedCisCountry } from '../../../types';
 
 /**
@@ -39,7 +38,11 @@ export const mapCisCountry = (cisCountry: CisCountry): MappedCisCountry => {
 
     canGetAQuoteByEmail: canGetAQuoteByEmail({ shortTermCover, nbiIssueAvailable, esraClassification }),
 
-    cannotGetAQuote: cannotGetAQuote({ shortTermCover, nbiIssueAvailable, esraClassification }),
+    cannotGetAQuote: noSupport({
+      countryRating,
+      esraClassification: ESRAClassificationDesc,
+      shortTermCover: shortTermCoverAvailabilityDesc,
+    }),
 
     canApplyForInsuranceOnline: canApplyForInsuranceOnline(cisCountry),
 
@@ -49,7 +52,7 @@ export const mapCisCountry = (cisCountry: CisCountry): MappedCisCountry => {
       shortTermCover: shortTermCoverAvailabilityDesc,
     }),
 
-    noInsuranceSupport: noInsuranceSupport({
+    noInsuranceSupport: noSupport({
       countryRating,
       esraClassification: ESRAClassificationDesc,
       shortTermCover: shortTermCoverAvailabilityDesc,

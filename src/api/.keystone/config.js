@@ -9037,15 +9037,6 @@ var canGetAQuoteByEmail = ({ shortTermCover, nbiIssueAvailable, esraClassificati
 };
 var can_get_a_quote_by_email_default = canGetAQuoteByEmail;
 
-// helpers/map-CIS-countries/map-CIS-country/cannot-get-a-quote/index.ts
-var cannotGetAQuote = ({ shortTermCover, nbiIssueAvailable, esraClassification }) => {
-  if (!esraClassification || (!shortTermCover && !nbiIssueAvailable)) {
-    return true;
-  }
-  return false;
-};
-var cannot_get_a_quote_default = cannotGetAQuote;
-
 // helpers/map-CIS-countries/map-CIS-country/can-apply-for-quote-offline/index.ts
 var {
   CIS: {
@@ -9231,7 +9222,7 @@ var noOnlineInsuranceSupport = ({ countryRating, esraClassification, shortTermCo
 };
 var no_online_insurance_support_default = noOnlineInsuranceSupport;
 
-// helpers/map-CIS-countries/map-CIS-country/no-insurance-support/index.ts
+// helpers/map-CIS-countries/map-CIS-country/no-support/index.ts
 var {
   CIS: {
     COUNTRY_RATINGS: { NOT_APPLICABLE },
@@ -9239,7 +9230,7 @@ var {
     SHORT_TERM_COVER: { UNLISTED: UNLISTED3, CILC: CILC4 },
   },
 } = EXTERNAL_API_DEFINITIONS;
-var noInsuranceSupport = ({ countryRating, esraClassification, shortTermCover }) => {
+var noSupport = ({ countryRating, esraClassification, shortTermCover }) => {
   const shortTermCoverIsUnlisted = shortTermCover === UNLISTED3;
   const esraClassificationIsNone = esraClassification === NONE3;
   const countryRatingIsNotApplicable = countryRating === NOT_APPLICABLE;
@@ -9254,7 +9245,7 @@ var noInsuranceSupport = ({ countryRating, esraClassification, shortTermCover })
   }
   return false;
 };
-var no_insurance_support_default = noInsuranceSupport;
+var no_support_default = noSupport;
 
 // helpers/map-CIS-countries/map-CIS-country/index.ts
 var mapCisCountry = (cisCountry) => {
@@ -9273,14 +9264,18 @@ var mapCisCountry = (cisCountry) => {
     canGetAQuoteOnline: can_get_a_quote_online_default({ shortTermCover, nbiIssueAvailable, esraClassification }),
     canGetAQuoteOffline: can_apply_for_quote_offline_default(cisCountry.shortTermCoverAvailabilityDesc),
     canGetAQuoteByEmail: can_get_a_quote_by_email_default({ shortTermCover, nbiIssueAvailable, esraClassification }),
-    cannotGetAQuote: cannot_get_a_quote_default({ shortTermCover, nbiIssueAvailable, esraClassification }),
+    cannotGetAQuote: no_support_default({
+      countryRating,
+      esraClassification: ESRAClassificationDesc,
+      shortTermCover: shortTermCoverAvailabilityDesc,
+    }),
     canApplyForInsuranceOnline: can_apply_for_insurance_online_default(cisCountry),
     noOnlineInsuranceSupport: no_online_insurance_support_default({
       countryRating,
       esraClassification: ESRAClassificationDesc,
       shortTermCover: shortTermCoverAvailabilityDesc,
     }),
-    noInsuranceSupport: no_insurance_support_default({
+    noInsuranceSupport: no_support_default({
       countryRating,
       esraClassification: ESRAClassificationDesc,
       shortTermCover: shortTermCoverAvailabilityDesc,

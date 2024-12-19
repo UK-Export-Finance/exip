@@ -1,4 +1,4 @@
-import noInsuranceSupport from '.';
+import noSupport from '.';
 import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
 
 const {
@@ -89,12 +89,12 @@ const params = {
   ],
 };
 
-describe('helpers/map-CIS-countries/map-CIS-country/no-insurance-support', () => {
+describe('helpers/map-CIS-countries/map-CIS-country/no-support', () => {
   describe(`when shortTermCover is ${UNLISTED} and esraClassification is ${NONE}`, () => {
     describe.each(params.firstConditions)('', ({ country, description, expectation }) => {
       describe(`when the countryRating is ${description}`, () => {
         it(`should return ${expectation}`, () => {
-          const result = noInsuranceSupport(country);
+          const result = noSupport(country);
 
           expect(result).toEqual(expectation);
         });
@@ -106,7 +106,7 @@ describe('helpers/map-CIS-countries/map-CIS-country/no-insurance-support', () =>
     describe.each(params.secondConditions)('', ({ country, description, expectation }) => {
       describe(`when the esraClassification is ${description}`, () => {
         it(`should return ${expectation}`, () => {
-          const result = noInsuranceSupport(country);
+          const result = noSupport(country);
 
           expect(result).toEqual(expectation);
         });
