@@ -1,4 +1,4 @@
-import noOnlineInsuranceSupport from '.';
+import noOnlineSupport from '.';
 import aAndBRatingConditions from './a-and-b-rating-conditions';
 import cAndDRatingConditions from './c-and-d-rating-conditions';
 import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
@@ -13,7 +13,7 @@ const mockInitCountry = {
   shortTermCover: mockCisCountry.shortTermCoverAvailabilityDesc,
 };
 
-describe('helpers/map-CIS-countries/map-CIS-country/no-online-insurance-support', () => {
+describe('helpers/map-CIS-countries/map-CIS-country/no-online-support', () => {
   describe('when a country rating is `A`', () => {
     it('should return the result of aAndBRatingConditions', () => {
       const [mockRating] = COUNTRY_RATINGS.A;
@@ -23,7 +23,7 @@ describe('helpers/map-CIS-countries/map-CIS-country/no-online-insurance-support'
         countryRating: mockRating,
       };
 
-      const result = noOnlineInsuranceSupport(mockCountry);
+      const result = noOnlineSupport(mockCountry);
 
       const expected = aAndBRatingConditions({
         countryRating: mockRating,
@@ -44,7 +44,7 @@ describe('helpers/map-CIS-countries/map-CIS-country/no-online-insurance-support'
         countryRating: mockRating,
       };
 
-      const result = noOnlineInsuranceSupport(mockCountry);
+      const result = noOnlineSupport(mockCountry);
 
       const expected = aAndBRatingConditions({
         countryRating: mockRating,
@@ -65,7 +65,7 @@ describe('helpers/map-CIS-countries/map-CIS-country/no-online-insurance-support'
         countryRating: mockRating,
       };
 
-      const result = noOnlineInsuranceSupport(mockCountry);
+      const result = noOnlineSupport(mockCountry);
 
       const expected = cAndDRatingConditions({
         countryRating: mockRating,
@@ -86,7 +86,7 @@ describe('helpers/map-CIS-countries/map-CIS-country/no-online-insurance-support'
         countryRating: mockRating,
       };
 
-      const result = noOnlineInsuranceSupport(mockCountry);
+      const result = noOnlineSupport(mockCountry);
 
       const expected = cAndDRatingConditions({
         countryRating: mockRating,

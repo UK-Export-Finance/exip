@@ -2,13 +2,11 @@ import mapCisCountry from '.';
 import mapEsraClassification from './map-esra-classification';
 import mapShortTermCoverAvailable from './map-short-term-cover-available';
 import mapNbiIssueAvailable from './map-NBI-issue-available';
+import noOnlineSupport from './no-online-support';
 import canGetAQuoteOnline from './can-get-a-quote-online';
-import canGetAQuoteByEmail from './can-get-a-quote-by-email';
 import cannotGetAQuote from './cannot-get-a-quote';
 import canApplyForInsuranceOnline from './can-apply-for-insurance-online';
 import canApplyOffline from './can-apply-for-quote-offline';
-import noOnlineInsuranceSupport from './no-online-insurance-support';
-import noInsuranceSupport from './no-insurance-support';
 import { EXTERNAL_API_DEFINITIONS, EXTERNAL_API_MAPPINGS } from '../../../constants';
 import { MappedCisCountry } from '../../../types';
 import { mockCisCountry } from '../../../test-mocks';
@@ -42,27 +40,19 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
       nbiIssueAvailable,
       shortTermCover,
 
+      noOnlineSupport: noOnlineSupport({
+        countryRating,
+        esraClassification: mockCisCountry.ESRAClassificationDesc,
+        shortTermCover: mockCisCountry.shortTermCoverAvailabilityDesc,
+      }),
+
       canGetAQuoteOnline: canGetAQuoteOnline({ shortTermCover, nbiIssueAvailable, esraClassification }),
 
       canGetAQuoteOffline: canApplyOffline(mockCountryBase.shortTermCoverAvailabilityDesc),
 
-      canGetAQuoteByEmail: canGetAQuoteByEmail({ shortTermCover, nbiIssueAvailable, esraClassification }),
-
       cannotGetAQuote: cannotGetAQuote({ shortTermCover, nbiIssueAvailable, esraClassification }),
 
       canApplyForInsuranceOnline: canApplyForInsuranceOnline(mockCisCountry),
-
-      noOnlineInsuranceSupport: noOnlineInsuranceSupport({
-        countryRating,
-        esraClassification: mockCisCountry.ESRAClassificationDesc,
-        shortTermCover: mockCisCountry.shortTermCoverAvailabilityDesc,
-      }),
-
-      noInsuranceSupport: noInsuranceSupport({
-        countryRating,
-        esraClassification: mockCisCountry.ESRAClassificationDesc,
-        shortTermCover: mockCisCountry.shortTermCoverAvailabilityDesc,
-      }),
     };
 
     expect(result).toEqual(mapped);

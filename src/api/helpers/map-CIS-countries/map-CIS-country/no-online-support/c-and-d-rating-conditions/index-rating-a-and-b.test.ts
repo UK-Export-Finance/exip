@@ -1,34 +1,34 @@
-import aAndBRatingConditions from '.';
+import cAndDRatingConditions from '.';
 import { EXTERNAL_API_DEFINITIONS } from '../../../../../constants';
 
 const {
   CIS: { COUNTRY_RATINGS, ESRA_CLASSIFICATION, SHORT_TERM_COVER },
 } = EXTERNAL_API_DEFINITIONS;
 
-const countryRatingsCParams = COUNTRY_RATINGS.C.map((rating: string) => ({
+const countryRatingsAParams = COUNTRY_RATINGS.A.map((rating: string) => ({
   countryRating: rating,
   esraClassification: ESRA_CLASSIFICATION.STANDARD,
   shortTermCover: SHORT_TERM_COVER.YES,
 }));
 
-const countryRatingsDParams = COUNTRY_RATINGS.D.map((rating: string) => ({
+const countryRatingsBParams = COUNTRY_RATINGS.B.map((rating: string) => ({
   countryRating: rating,
   esraClassification: ESRA_CLASSIFICATION.STANDARD,
   shortTermCover: SHORT_TERM_COVER.YES,
 }));
 
-describe('helpers/map-CIS-countries/map-CIS-country/no-online-insurance-support/a-and-b-rating-conditions - ratings as C and D', () => {
-  describe.each(countryRatingsCParams)('when the country rating is `C`', (countryObj) => {
+describe('helpers/map-CIS-countries/map-CIS-country/no-support/a-and-b-rating-conditions - rating as A and B', () => {
+  describe.each(countryRatingsAParams)('when the country rating is `A`', (countryObj) => {
     it(`should return false for ${countryObj.countryRating}`, () => {
-      const result = aAndBRatingConditions(countryObj);
+      const result = cAndDRatingConditions(countryObj);
 
       expect(result).toEqual(false);
     });
   });
 
-  describe.each(countryRatingsDParams)('when the country rating is `D`', (countryObj) => {
+  describe.each(countryRatingsBParams)('when the country rating is `B`', (countryObj) => {
     it(`should return false for ${countryObj.countryRating}`, () => {
-      const result = aAndBRatingConditions(countryObj);
+      const result = cAndDRatingConditions(countryObj);
 
       expect(result).toEqual(false);
     });

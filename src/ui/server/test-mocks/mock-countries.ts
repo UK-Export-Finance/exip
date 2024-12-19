@@ -9,10 +9,9 @@ const {
 const baseCountry = {
   canGetAQuoteOnline: true,
   canGetAQuoteOffline: false,
-  canGetAQuoteByEmail: false,
+  noOnlineSupport: false,
   cannotGetAQuote: false,
   canApplyForInsuranceOnline: true,
-  noInsuranceSupport: false,
   shortTermCover: true,
 };
 
@@ -49,7 +48,7 @@ const mockCountries = [
     esraClassification: RISK.VERY_HIGH,
     ...baseCountry,
     canGetAQuoteOnline: false,
-    canGetAQuoteByEmail: true,
+    noOnlineSupport: true,
   },
   /**
    * mock country that:
@@ -76,8 +75,7 @@ const mockCountries = [
     canGetAQuoteOnline: false,
     canGetAQuoteOffline: false,
     canApplyForInsuranceOnline: false,
-    noOnlineInsuranceSupport: false,
-    noInsuranceSupport: true,
+    noOnlineSupport: false,
   },
   /**
    * mock country that:
@@ -94,9 +92,8 @@ const mockCountries = [
     canGetAQuoteOffline: true,
     canApplyForInsuranceOnline: true,
     canApplyForInsuranceOffline: false,
-    noInsuranceSupport: false,
     shortTermCover: false,
-    noOnlineInsuranceSupport: true,
+    noOnlineSupport: true,
   },
 ] as Array<Country>;
 

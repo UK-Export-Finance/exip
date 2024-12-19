@@ -4,10 +4,9 @@ import { MappedCisCountry } from '../types';
 const baseCountry = {
   canGetAQuoteOnline: true,
   canGetAQuoteOffline: true,
-  canGetAQuoteByEmail: true,
+  noOnlineSupport: true,
   cannotGetAQuote: false,
   canApplyForInsuranceOnline: true,
-  noInsuranceSupport: false,
 };
 
 const mockCountries = [

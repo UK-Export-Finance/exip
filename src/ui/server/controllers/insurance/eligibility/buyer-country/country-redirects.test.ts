@@ -19,7 +19,7 @@ describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
 
   let mockCountriesResponse = mockCountries;
 
-  const { 1: countryApplyOnline, 4: countryNoInsuranceSupport, 5: countryNoOnlineInsuranceSupport } = mockCountriesResponse;
+  const { 1: countryApplyOnline, 4: countryNoOnlineSupport, 5: countryNoOnlineInsuranceSupport } = mockCountriesResponse;
   const mockFlash = jest.fn();
 
   beforeEach(() => {
@@ -102,7 +102,7 @@ describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
       });
     });
 
-    describe('when the country has a noOnlineInsuranceSupport flag', () => {
+    describe('when the country has a noOnlineSupport flag', () => {
       const selectedCountryName = countryNoOnlineInsuranceSupport.isoCode;
 
       beforeEach(() => {
@@ -137,14 +137,14 @@ describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
       });
     });
 
-    describe('when the country has a noInsuranceSupport flag', () => {
-      const selectedCountryName = countryNoInsuranceSupport.name;
-      const selectedCountryIsoCode = countryNoInsuranceSupport.isoCode;
+    describe('when the country has a noOnlineSupport flag', () => {
+      const selectedCountryName = countryNoOnlineSupport.name;
+      const selectedCountryIsoCode = countryNoOnlineSupport.isoCode;
 
       beforeEach(() => {
         req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = selectedCountryIsoCode;
 
-        mockCountriesResponse = [countryNoInsuranceSupport];
+        mockCountriesResponse = [countryNoOnlineSupport];
 
         getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 

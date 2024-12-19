@@ -140,10 +140,10 @@ export const post = async (req: Request, res: Response) => {
     }
 
     /**
-     * If a country can get a quote by email,
+     * If a country has no online support,
      * redirect to a specific exit page.
      */
-    if (country.canGetAQuoteByEmail) {
+    if (country.noOnlineSupport) {
       console.info('Country support - %s - can get a quote by email', country.name);
 
       const populatedData = mapSubmittedEligibilityCountry(country);

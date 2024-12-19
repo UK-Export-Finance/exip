@@ -232,12 +232,10 @@ const typeDefs = `
     nbiIssueAvailable: Boolean
     canGetAQuoteOnline: Boolean
     canGetAQuoteOffline: Boolean
-    canGetAQuoteByEmail: Boolean
     cannotGetAQuote: Boolean
     cannotApply: Boolean
     canApplyForInsuranceOnline: Boolean
-    noOnlineInsuranceSupport: Boolean
-    noInsuranceSupport: Boolean
+    noOnlineSupport: Boolean
   }
 
   type MappedCurrency {
