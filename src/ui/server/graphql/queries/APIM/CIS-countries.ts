@@ -7,7 +7,6 @@ const getApimCisCountries = gql`
       name
       esraClassification
       canGetAQuoteOnline
-      canGetAQuoteOffline
       canGetAQuoteByEmail
       cannotGetAQuote
       cannotApply

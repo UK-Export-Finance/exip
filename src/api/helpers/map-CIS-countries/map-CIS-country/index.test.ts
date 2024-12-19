@@ -6,7 +6,6 @@ import canGetAQuoteOnline from './can-get-a-quote-online';
 import canGetAQuoteByEmail from './can-get-a-quote-by-email';
 import cannotGetAQuote from './cannot-get-a-quote';
 import canApplyForInsuranceOnline from './can-apply-for-insurance-online';
-import canApplyOffline from './can-apply-for-quote-offline';
 import noOnlineInsuranceSupport from './no-online-insurance-support';
 import noInsuranceSupport from './no-insurance-support';
 import { EXTERNAL_API_DEFINITIONS, EXTERNAL_API_MAPPINGS } from '../../../constants';
@@ -43,8 +42,6 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
       shortTermCover,
 
       canGetAQuoteOnline: canGetAQuoteOnline({ shortTermCover, nbiIssueAvailable, esraClassification }),
-
-      canGetAQuoteOffline: canApplyOffline(mockCountryBase.shortTermCoverAvailabilityDesc),
 
       canGetAQuoteByEmail: canGetAQuoteByEmail({ shortTermCover, nbiIssueAvailable, esraClassification }),
 
