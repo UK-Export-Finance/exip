@@ -13,7 +13,7 @@ const {
   INSURANCE_ROOT,
   DECLARATIONS: {
     ANTI_BRIBERY: { EXPORTING_WITH_CODE_OF_CONDUCT_SAVE_AND_BACK },
-    CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+    MODERN_SLAVERY,
   },
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
@@ -111,10 +111,10 @@ describe('controllers/insurance/declarations/anti-bribery/exporting-with-a-code-
         expect(save.declaration).toHaveBeenCalledWith(mockApplication, payload);
       });
 
-      it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, async () => {
+      it(`should redirect to ${MODERN_SLAVERY}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
