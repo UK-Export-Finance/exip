@@ -2,7 +2,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { COUNTRY_APPLICATION_SUPPORT } from '../../../../../../fixtures/countries';
 
 const {
-  ELIGIBILITY: { CANNOT_APPLY_EXIT },
+  ELIGIBILITY: { TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT },
 } = INSURANCE_ROUTES;
 
 const COUNTRY_NAME_1 = COUNTRY_APPLICATION_SUPPORT.UNSUPPORTED_1.NAME;
@@ -21,26 +21,26 @@ context(`Insurance - Buyer country page - ${contextString} - Unsupported countri
   });
 
   describe(COUNTRY_NAME_1, () => {
-    it(`redirects to ${CANNOT_APPLY_EXIT} exit page`, () => {
-      cy.enterCountryAndAssertExitPageUrlBuyerCountry(COUNTRY_NAME_1, CANNOT_APPLY_EXIT);
+    it(`should redirect to ${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT} exit page`, () => {
+      cy.enterCountryAndAssertExitPageUrlBuyerCountry(COUNTRY_NAME_1, TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT);
     });
   });
 
   describe(COUNTRY_NAME_2, () => {
-    it(`redirects to ${CANNOT_APPLY_EXIT} exit page`, () => {
-      cy.enterCountryAndAssertExitPageUrlBuyerCountry(COUNTRY_NAME_2, CANNOT_APPLY_EXIT);
+    it(`should redirect to ${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT} exit page`, () => {
+      cy.enterCountryAndAssertExitPageUrlBuyerCountry(COUNTRY_NAME_2, TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT);
     });
   });
 
   describe(COUNTRY_NAME_3, () => {
-    it(`redirects to ${CANNOT_APPLY_EXIT} exit page`, () => {
-      cy.enterCountryAndAssertExitPageUrlBuyerCountry(COUNTRY_NAME_3, CANNOT_APPLY_EXIT);
+    it(`should redirect to ${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT} exit page`, () => {
+      cy.enterCountryAndAssertExitPageUrlBuyerCountry(COUNTRY_NAME_3, TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT);
     });
   });
 
   describe(COUNTRY_NAME_4, () => {
-    it(`redirects to ${CANNOT_APPLY_EXIT} exit page`, () => {
-      cy.enterCountryAndAssertExitPageUrlBuyerCountry(COUNTRY_NAME_4, CANNOT_APPLY_EXIT);
+    it(`should redirect to ${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT} exit page`, () => {
+      cy.enterCountryAndAssertExitPageUrlBuyerCountry(COUNTRY_NAME_4, TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT);
     });
   });
 });

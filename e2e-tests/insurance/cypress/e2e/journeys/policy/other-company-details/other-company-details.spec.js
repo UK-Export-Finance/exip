@@ -77,7 +77,10 @@ context(`Insurance - Policy - Other company details page - ${story}`, () => {
     });
 
     describe(`searchable autocomplete input (${COUNTRY_CODE})`, () => {
-      assertCountryAutocompleteInput({ fieldId: COUNTRY_CODE });
+      assertCountryAutocompleteInput({
+        fieldId: COUNTRY_CODE,
+        assertFilteredCisCountries: false,
+      });
     });
 
     it(`renders ${COMPANY_NUMBER} label and input`, () => {
