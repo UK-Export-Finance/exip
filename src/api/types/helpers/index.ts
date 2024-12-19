@@ -9,7 +9,7 @@ export interface MapCisCountryParams {
   esraClassification?: string | null;
 }
 
-export interface noOnlineInsuranceSupportParams {
+export interface noInsuranceSupportParams {
   countryRating: string;
   esraClassification: string;
   shortTermCover: string;

@@ -1,6 +1,6 @@
 import aAndBRatingConditions from './a-and-b-rating-conditions';
 import cAndDRatingConditions from './c-and-d-rating-conditions';
-import { noOnlineInsuranceSupportParams } from '../../../../types';
+import { noInsuranceSupportParams } from '../../../../types';
 
 /**
  * noOnlineInsuranceSupport
@@ -10,7 +10,7 @@ import { noOnlineInsuranceSupportParams } from '../../../../types';
  * @param {String} shortTermCover: Short term cover
  * @returns {Boolean}
  */
-const noOnlineInsuranceSupport = ({ countryRating, esraClassification, shortTermCover }: noOnlineInsuranceSupportParams): boolean => {
+const noOnlineInsuranceSupport = ({ countryRating, esraClassification, shortTermCover }: noInsuranceSupportParams): boolean => {
   const aAndBConditions = aAndBRatingConditions({
     countryRating,
     esraClassification,

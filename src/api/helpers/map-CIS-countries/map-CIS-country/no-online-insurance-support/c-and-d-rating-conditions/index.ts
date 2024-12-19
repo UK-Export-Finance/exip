@@ -1,6 +1,6 @@
 import { EXTERNAL_API_DEFINITIONS } from '../../../../../constants';
 import countryRatingIsCorD from '../../country-rating-is-c-or-d';
-import { noOnlineInsuranceSupportParams } from '../../../../../types';
+import { noInsuranceSupportParams } from '../../../../../types';
 
 const {
   CIS: {
@@ -18,7 +18,7 @@ const {
  * @param {String} shortTermCover: Short term cover
  * @returns {Boolean}
  */
-const cAndDRatingConditions = ({ countryRating, esraClassification, shortTermCover }: noOnlineInsuranceSupportParams): boolean => {
+const cAndDRatingConditions = ({ countryRating, esraClassification, shortTermCover }: noInsuranceSupportParams): boolean => {
   if (!countryRatingIsCorD(countryRating)) {
     return false;
   }

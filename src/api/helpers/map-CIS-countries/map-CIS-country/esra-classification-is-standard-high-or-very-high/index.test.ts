@@ -1,5 +1,5 @@
-import hasValidEsraClassification from '.';
-import { EXTERNAL_API_DEFINITIONS } from '../../../../../constants';
+import esraClassificationIsStandardHighOrVeryHigh from '.';
+import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
 
 const {
   CIS: {
@@ -10,7 +10,7 @@ const {
 describe('helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/has-valid-esra-classification', () => {
   describe(`when the classification is ${STANDARD}`, () => {
     it('should return true', () => {
-      const result = hasValidEsraClassification(STANDARD);
+      const result = esraClassificationIsStandardHighOrVeryHigh(STANDARD);
 
       expect(result).toEqual(true);
     });
@@ -18,7 +18,7 @@ describe('helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-onli
 
   describe(`when the classification is ${HIGH}`, () => {
     it('should return true', () => {
-      const result = hasValidEsraClassification(HIGH);
+      const result = esraClassificationIsStandardHighOrVeryHigh(HIGH);
 
       expect(result).toEqual(true);
     });
@@ -26,7 +26,7 @@ describe('helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-onli
 
   describe(`when the classification is ${VERY_HIGH}`, () => {
     it('should return true', () => {
-      const result = hasValidEsraClassification(VERY_HIGH);
+      const result = esraClassificationIsStandardHighOrVeryHigh(VERY_HIGH);
 
       expect(result).toEqual(true);
     });
@@ -34,7 +34,7 @@ describe('helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-onli
 
   describe(`when the classification is ${NONE}`, () => {
     it('should return false', () => {
-      const result = hasValidEsraClassification(NONE);
+      const result = esraClassificationIsStandardHighOrVeryHigh(NONE);
 
       expect(result).toEqual(false);
     });
@@ -42,7 +42,7 @@ describe('helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-onli
 
   describe('when the classification is unrecognised', () => {
     it('should return false', () => {
-      const result = hasValidEsraClassification('Some other classification');
+      const result = esraClassificationIsStandardHighOrVeryHigh('Some other classification');
 
       expect(result).toEqual(false);
     });
