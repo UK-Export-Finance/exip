@@ -4,25 +4,28 @@ const mockDescription = 'Mock description';
 
 const mockCisCountries = [
   {
-    marketName: 'Abu Dhabi',
+    countryRatingDesc: 'A',
+    ESRAClassificationDesc: mockDescription,
     isoCode: 'XAD',
-    shortTermCoverAvailabilityDesc: mockDescription,
-    ESRAClassificationDesc: mockDescription,
+    marketName: 'Abu Dhabi',
     NBIIssue: '',
+    shortTermCoverAvailabilityDesc: mockDescription,
   },
   {
-    marketName: 'Algeria',
+    countryRatingDesc: 'B+',
+    ESRAClassificationDesc: mockDescription,
     isoCode: 'DZA',
-    shortTermCoverAvailabilityDesc: mockDescription,
-    ESRAClassificationDesc: mockDescription,
+    marketName: 'Algeria',
     NBIIssue: '',
+    shortTermCoverAvailabilityDesc: mockDescription,
   },
   {
-    marketName: 'Greenland',
-    isoCode: 'GRL',
-    shortTermCoverAvailabilityDesc: mockDescription,
+    countryRatingDesc: 'CCC-',
     ESRAClassificationDesc: mockDescription,
+    isoCode: 'GRL',
+    marketName: 'Greenland',
     NBIIssue: '',
+    shortTermCoverAvailabilityDesc: mockDescription,
   },
 ] as Array<CisCountry>;
 

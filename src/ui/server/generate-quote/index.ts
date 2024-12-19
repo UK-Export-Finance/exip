@@ -114,7 +114,7 @@ const generateQuote = (submittedData: SubmittedData): Quote => {
 
   const totalMonths = getTotalMonths(mapped[POLICY_TYPE], mapped[POLICY_LENGTH], mapped[CREDIT_PERIOD]);
 
-  const premiumRate = getPremiumRate(mapped[POLICY_TYPE], mapped[BUYER_COUNTRY].riskCategory, totalMonths, mapped[PERCENTAGE_OF_COVER]);
+  const premiumRate = getPremiumRate(mapped[POLICY_TYPE], mapped[BUYER_COUNTRY].esraClassification, totalMonths, mapped[PERCENTAGE_OF_COVER]);
 
   const [contractValueAmount] = Object.values(contractValue);
 

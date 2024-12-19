@@ -2,7 +2,7 @@ interface Country {
   id?: string;
   name: string;
   isoCode: string;
-  riskCategory: string;
+  esraClassification: string;
   selected?: boolean;
   value: string;
   canGetAQuoteOnline: boolean;
@@ -10,6 +10,7 @@ interface Country {
   canGetAQuoteByEmail: boolean;
   cannotGetAQuote: boolean;
   canApplyForInsuranceOnline: boolean;
+  noOnlineInsuranceSupport: boolean;
   noInsuranceSupport: boolean;
   shortTermCover: boolean;
 }

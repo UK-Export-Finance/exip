@@ -2,19 +2,20 @@ import { Currency } from '../currency';
 import { Relationship } from '../relationship';
 
 export interface CisCountry {
-  marketName: string;
-  isoCode: string;
-  shortTermCoverAvailabilityDesc: string;
+  countryRatingDesc: string;
   ESRAClassificationDesc: string;
-  NBIIssue: string;
+  isoCode: string;
+  marketName: string;
   marketRiskAppetitePublicDesc: string;
-  riskCategory?: string;
+  NBIIssue: string;
+  esraClassification?: string;
+  shortTermCoverAvailabilityDesc: string;
 }
 
 export interface Country extends Relationship {
   name: string;
   isoCode: string;
-  riskCategory?: string;
+  esraClassification?: string;
   shortTermCover?: boolean;
   nbiIssueAvailable?: boolean;
   canGetAQuoteOnline?: boolean;
@@ -36,15 +37,18 @@ export interface GetApimCurrenciesResponse {
 }
 
 export interface MappedCisCountry {
-  name: string;
+  countryRating: string;
+  esraClassification?: string;
   isoCode: string;
-  shortTermCover: boolean;
-  riskCategory?: string;
   nbiIssueAvailable: boolean;
+  name: string;
+  esraClassification?: string;
+  shortTermCover: boolean;
   canGetAQuoteOnline: boolean;
   canGetAQuoteOffline: boolean;
   canGetAQuoteByEmail: boolean;
   cannotGetAQuote: boolean;
   canApplyForInsuranceOnline: boolean;
+  noOnlineInsuranceSupport: boolean;
   noInsuranceSupport: boolean;
 }

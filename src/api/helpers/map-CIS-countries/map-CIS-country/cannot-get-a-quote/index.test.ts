@@ -1,57 +1,32 @@
 import cannotGetAQuote from '.';
-import mockCountries from '../../../../test-mocks/mock-countries';
-import { MappedCisCountry } from '../../../../types';
+import { EXTERNAL_API_MAPPINGS } from '../../../../constants';
 
-const mockCountryCannotGetAQuote = {
-  ...mockCountries[0],
-  shortTermCover: false,
-  nbiIssueAvailable: false,
-} as MappedCisCountry;
+const {
+  CIS: {
+    ESRA_CLASSIFICATION: { STANDARD },
+  },
+} = EXTERNAL_API_MAPPINGS;
 
 describe('helpers/map-cis-countries/map-cis-country/cannot-get-a-quote', () => {
-  describe('when country does not have riskCategory, shortTermCover and nbiIssueAvailable', () => {
+  describe('when country has shortTermCover=false, nbiIssueAvailable=false and no esraClassification', () => {
     it('should return true', () => {
-      const result = cannotGetAQuote(mockCountryCannotGetAQuote);
+      const result = cannotGetAQuote({ shortTermCover: false, nbiIssueAvailable: false, esraClassification: null });
 
       expect(result).toEqual(true);
     });
   });
 
-  describe('when country does not have riskCategory, but has shortTermCover and nbiIssueAvailable', () => {
+  describe('when country has shortTermCover=false, nbiIssueAvailable=false and has a esraClassification', () => {
     it('should return true', () => {
-      const mockCountry = {
-        ...mockCountryCannotGetAQuote,
-        shortTermCover: true,
-        nbiIssueAvailable: true,
-      };
-      const result = cannotGetAQuote(mockCountry);
+      const result = cannotGetAQuote({ shortTermCover: false, nbiIssueAvailable: false, esraClassification: STANDARD });
 
       expect(result).toEqual(true);
     });
   });
 
-  describe('when country has riskCategory, but not shortTermCover and nbiIssueAvailable', () => {
-    it('should return true', () => {
-      const mockCountry = {
-        ...mockCountryCannotGetAQuote,
-        riskCategory: 'Mock',
-      };
-      const result = cannotGetAQuote(mockCountry);
-
-      expect(result).toEqual(true);
-    });
-  });
-
-  describe('when country has riskCategory, shortTermCover and nbiIssueAvailable', () => {
+  describe('when country has shortTermCover=true, nbiIssueAvailable=true and has a esraClassification', () => {
     it('should return false', () => {
-      const mockCountry = {
-        ...mockCountryCannotGetAQuote,
-        riskCategory: 'Mock',
-        shortTermCover: true,
-        nbiIssueAvailable: true,
-      };
-
-      const result = cannotGetAQuote(mockCountry);
+      const result = cannotGetAQuote({ shortTermCover: true, nbiIssueAvailable: true, esraClassification: STANDARD });
 
       expect(result).toEqual(false);
     });

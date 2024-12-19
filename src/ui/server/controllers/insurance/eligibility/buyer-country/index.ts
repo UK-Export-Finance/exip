@@ -91,12 +91,12 @@ export const post = async (req: Request, res: Response) => {
     }
 
     /**
-     * If a country has no insurance support and no short term cover,
-     * redirect to TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT.
+     * If a country does not have online insurance support,
+     * redirect to a specific exit page.
      */
-    const noShortTermCover = !country.noInsuranceSupport && !country.shortTermCover;
+    if (country.noOnlineInsuranceSupport) {
+      console.info('Country support - %s - no online insurance support available', country.name);
 
-    if (noShortTermCover) {
       const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData = {
@@ -107,7 +107,13 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT);
     }
 
+    /**
+     * If a country cannot apply for insurance online,
+     * redirect to a specific exit page.
+     */
     if (country.canApplyForInsuranceOnline) {
+      console.info('Country support - %s - can apply for insurance online', country.name);
+
       const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData = {
@@ -122,7 +128,13 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(TOTAL_VALUE_INSURED);
     }
 
+    /**
+     * If a country has no insurance support (online or offline)
+     * redirect to a specific exit page.
+     */
     if (country.noInsuranceSupport) {
+      console.info('Country support - %s - no insurance support', country.name);
+
       const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData = {
@@ -139,6 +151,10 @@ export const post = async (req: Request, res: Response) => {
 
       return res.redirect(CANNOT_APPLY_ROUTE);
     }
+
+    console.info('Country support - %s - unable to determine country support', country.name);
+
+    return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (error) {
     console.error('Error posting insurance - eligibility - buyer-country %o', error);
 

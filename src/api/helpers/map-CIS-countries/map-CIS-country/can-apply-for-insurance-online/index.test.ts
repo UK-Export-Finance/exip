@@ -1,52 +1,20 @@
 import canApplyForInsuranceOnline from '.';
-import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
-
-const {
-  CIS: {
-    RISK: { VERY_HIGH },
-  },
-} = EXTERNAL_API_DEFINITIONS;
-
-const mockRiskCategory = VERY_HIGH;
+import hasValidEsraClassification from './has-valid-esra-classification';
+import hasValidShortTermCover from './has-valid-short-term-cover';
+import countryRatingIsAorB from '../country-rating-is-a-or-b';
+import { mockCisCountry } from '../../../../test-mocks';
 
 describe('helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online', () => {
-  describe('when a country has a riskCategory and shortTermCover of true', () => {
-    it('should return true', () => {
-      const shortTermCover = true;
+  it('should return the result of 3x conditions', () => {
+    const result = canApplyForInsuranceOnline(mockCisCountry);
 
-      const result = canApplyForInsuranceOnline(shortTermCover, mockRiskCategory);
+    const { ESRAClassificationDesc, shortTermCoverAvailabilityDesc, marketRiskAppetitePublicDesc } = mockCisCountry;
 
-      expect(result).toEqual(true);
-    });
-  });
+    const expected =
+      hasValidEsraClassification(ESRAClassificationDesc) &&
+      hasValidShortTermCover(shortTermCoverAvailabilityDesc) &&
+      countryRatingIsAorB(marketRiskAppetitePublicDesc);
 
-  describe('when a country has a riskCategory and shortTermCover is false', () => {
-    it('should return false', () => {
-      const shortTermCover = false;
-
-      const result = canApplyForInsuranceOnline(shortTermCover, mockRiskCategory);
-
-      expect(result).toEqual(false);
-    });
-  });
-
-  describe('when a country does not have a riskCategory and shortTermCover of true', () => {
-    it('should return false', () => {
-      const shortTermCover = true;
-
-      const result = canApplyForInsuranceOnline(shortTermCover);
-
-      expect(result).toEqual(false);
-    });
-  });
-
-  describe('when a country does not have a riskCategory and shortTermCover is false', () => {
-    it('should return false', () => {
-      const shortTermCover = false;
-
-      const result = canApplyForInsuranceOnline(shortTermCover);
-
-      expect(result).toEqual(false);
-    });
+    expect(result).toEqual(expected);
   });
 });

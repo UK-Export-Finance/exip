@@ -2,10 +2,11 @@
 
 export const EXTERNAL_API_DEFINITIONS = {
   CIS: {
-    RISK: {
+    ESRA_CLASSIFICATION: {
       VERY_HIGH: 'Very High',
       HIGH: 'High',
       STANDARD: 'Standard Risk',
+      NONE: 'None',
     },
     SHORT_TERM_COVER_AVAILABLE: {
       YES: 'Yes',
@@ -20,8 +21,22 @@ export const EXTERNAL_API_DEFINITIONS = {
       NO: 'N',
     },
     NO_COVER: 'Off cover',
-    INVALID_COUNTRIES: ['EC Market n/k', 'Non EC Market n/k', 'Non UK', 'Third Country', 'Eastern and Southern African Trade and Development Bank'],
+    INVALID_COUNTRIES: [
+      'CABEI',
+      'Cor Andino Fom',
+      'Eastern and Southern African Trade and Development Bank',
+      'EC Market n/k',
+      'Non EC Market n/k',
+      'Non UK',
+      'Third Country',
+    ],
     INVALID_CURRENCIES: ['Gold'],
+    COUNTRY_RATINGS: {
+      A: ['AAA', 'AA+', 'AA', 'AA-', 'A+', 'A', 'A-'],
+      B: ['BBB+', 'BBB', 'BBB-', 'BB+', 'BB', 'BB-', 'B+', 'B', 'B-'],
+      C: ['CCC+', 'CCC', 'CCC-', 'CC', 'C'],
+      D: ['D'],
+    },
   },
   COMPANIES_HOUSE: {
     COMPANY_STATUS: {
@@ -32,7 +47,7 @@ export const EXTERNAL_API_DEFINITIONS = {
 
 export const EXTERNAL_API_MAPPINGS = {
   CIS: {
-    RISK: {
+    ESRA_CLASSIFICATION: {
       VERY_HIGH: 'Very High',
       HIGH: 'High',
       STANDARD: 'Standard',

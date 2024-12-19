@@ -22,14 +22,14 @@ const PRICING_GRID_MAP = {
  * @param {Number} Percentage of the export that will be insured
  * @returns {Number} Premium rate percentage
  */
-const getPremiumRate = (policyType: string, riskCategory: string, totalMonths: number, insuredFor: number): number => {
+const getPremiumRate = (policyType: string, esraClassification: string, totalMonths: number, insuredFor: number): number => {
   const policyTypeKey = PRICING_GRID_MAP.POLICY_TYPE[policyType];
 
-  const riskCategoryKey = PRICING_GRID_MAP.RISK_CATEGORY[riskCategory];
+  const esraClassificationKey = PRICING_GRID_MAP.RISK_CATEGORY[esraClassification];
 
   const pricingGrid: any = PRICING_GRID as PricingGrid;
 
-  const risk = pricingGrid[policyTypeKey][riskCategoryKey];
+  const risk = pricingGrid[policyTypeKey][esraClassificationKey];
 
   const pricingGridMonth = risk.find((month: PricingGridMonth) => month.months === totalMonths);
 

@@ -8,6 +8,7 @@ import currencies from './mock-currencies';
 import company, { companyScenarios } from './mock-company';
 import companySicCode from './mock-company-sic-code';
 import nominatedLossPayee from './mock-nominated-loss-payee';
+import mapCisCountries from '../helpers/map-CIS-countries';
 import { Account } from '../types';
 
 const {
@@ -113,6 +114,12 @@ export const mockApplicationMultiplePolicyTotalContractValueOverThreshold = {
 };
 
 export const mockCisCountries = cisCountries;
+
+const [firstCisCountry] = mockCisCountries;
+
+export const mockCisCountry = firstCisCountry;
+
+export const mockMappedCisCountries = mapCisCountries(mockCisCountries);
 
 export const mockCompany = company;
 export const mockCompanySicCode = companySicCode;
