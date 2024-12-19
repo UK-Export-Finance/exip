@@ -3,7 +3,7 @@ import { EXTERNAL_API_DEFINITIONS } from '../../../../../constants';
 
 const {
   CIS: {
-    ESRA_CLASSIFICATION: { STANDARD, HIGH, VERY_HIGH },
+    ESRA_CLASSIFICATION: { STANDARD, HIGH, VERY_HIGH, NONE },
   },
 } = EXTERNAL_API_DEFINITIONS;
 
@@ -29,6 +29,14 @@ describe('helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-onli
       const result = hasValidEsraClassification(VERY_HIGH);
 
       expect(result).toEqual(true);
+    });
+  });
+
+  describe(`when the classification is ${NONE}`, () => {
+    it('should return false', () => {
+      const result = hasValidEsraClassification(NONE);
+
+      expect(result).toEqual(false);
     });
   });
 
