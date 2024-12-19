@@ -2,7 +2,7 @@ import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
 import countryRatingIsAorB from '../country-rating-is-a-or-b';
 import countryRatingIsCorD from '../country-rating-is-c-or-d';
 import esraClassificationIsStandardHighOrVeryHigh from '../esra-classification-is-standard-high-or-very-high';
-import { noInsuranceSupportParams } from '../../../../types';
+import { NoInsuranceSupportParams } from '../../../../types';
 
 const {
   CIS: {
@@ -20,7 +20,7 @@ const {
  * @param {String} shortTermCover: Short term cover
  * @returns {Boolean}
  */
-const noInsuranceSupport = ({ countryRating, esraClassification, shortTermCover }: noInsuranceSupportParams): boolean => {
+const noInsuranceSupport = ({ countryRating, esraClassification, shortTermCover }: NoInsuranceSupportParams): boolean => {
   const shortTermCoverIsUnlisted = shortTermCover === UNLISTED;
   const esraClassificationIsNone = esraClassification === NONE;
   const countryRatingIsNotApplicable = countryRating === NOT_APPLICABLE;
