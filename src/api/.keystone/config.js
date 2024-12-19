@@ -2820,7 +2820,7 @@ var typeDefs = `
     isoCode: String!
     name: String
     shortTermCover: Boolean
-    riskCategory: String
+    esraClassification: String
     nbiIssueAvailable: Boolean
     canGetAQuoteOnline: Boolean
     canGetAQuoteOffline: Boolean

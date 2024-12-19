@@ -161,7 +161,7 @@ describe('server/generate-quote/index', () => {
 
       const expectedPremiumRate = getPremiumRate(
         mockSubmittedData.quoteEligibility[POLICY_TYPE],
-        mockSubmittedData.quoteEligibility[BUYER_COUNTRY].riskCategory,
+        mockSubmittedData.quoteEligibility[BUYER_COUNTRY].esraClassification,
         expectedTotalMonths,
         mockPercentageOfCover,
       );
