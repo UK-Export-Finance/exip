@@ -3,8 +3,10 @@ import DECLARATIONS_FIELD_IDS from '../../../../constants/field-ids/insurance/de
 import { PAGES } from '../../../../content-strings';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
+import save from '../save-data/modern-slavery';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import { Request, Response } from '../../../../../types';
 
@@ -97,6 +99,7 @@ export const get = (req: Request, res: Response) => {
     }),
     ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
+    application: mapApplicationToFormFields(res.locals.application),
   });
 };
 
@@ -107,7 +110,7 @@ export const get = (req: Request, res: Response) => {
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = (req: Request, res: Response) => {
+export const post = async (req: Request, res: Response) => {
   const { application } = res.locals;
 
   if (!application) {
@@ -134,5 +137,18 @@ export const post = (req: Request, res: Response) => {
     });
   }
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+  try {
+    // save the application
+    const saveResponse = await save.declarationModernSlavery(application, payload);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+  } catch (error) {
+    console.error('Error updating application - declarations - modern slavery %o', error);
+
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
 };

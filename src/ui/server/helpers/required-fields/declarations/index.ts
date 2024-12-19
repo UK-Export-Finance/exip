@@ -17,7 +17,7 @@ export const getAntiBriberyCodeOfConductTasks = (hasAntiBriberyCodeOfConduct?: b
     return [HAS_ANTI_BRIBERY_CODE_OF_CONDUCT];
   }
 
-  // has been answered 'yes'
+  // has been answered 'yes' - additional fields required.
   if (hasAntiBriberyCodeOfConduct === true) {
     return [HAS_ANTI_BRIBERY_CODE_OF_CONDUCT, WILL_EXPORT_WITH_CODE_OF_CONDUCT];
   }

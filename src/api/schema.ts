@@ -673,7 +673,7 @@ export const lists = {
       agreeToConfirmationAndAcknowledgements: nullableCheckbox(),
       hasAntiBriberyCodeOfConduct: nullableCheckbox(),
       willExportWithAntiBriberyCodeOfConduct: nullableCheckbox(),
-      modernSlavery: relationship({ ref: 'DeclarationModernSlavery' }),
+      modernSlavery: relationship({ ref: 'DeclarationModernSlavery.declaration' }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -710,7 +710,7 @@ export const lists = {
   }),
   DeclarationModernSlavery: list({
     fields: {
-      declaration: relationship({ ref: 'Declaration' }),
+      declaration: relationship({ ref: 'Declaration.modernSlavery' }),
       version: relationship({ ref: 'DeclarationModernSlaveryVersion' }),
       willAdhereToAllRequirements: nullableCheckbox(),
       hasNoOffensesOrInvestigations: nullableCheckbox(),

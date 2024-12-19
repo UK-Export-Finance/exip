@@ -1,6 +1,6 @@
 import validationRules from './rules';
-import { RequestBody, ValidationErrors } from '../../../../../../../types';
-import combineValidationRules from '../../../../../../helpers/combine-validation-rules';
+import { RequestBody, ValidationErrors } from '../../../../../../types';
+import combineValidationRules from '../../../../../helpers/combine-validation-rules';
 
 /**
  * validates company details page response

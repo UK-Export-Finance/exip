@@ -1,8 +1,8 @@
-import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { MAXIMUM_CHARACTERS } from '../../../../../../../constants/validation';
-import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/business';
-import providedAndMaxLength from '../../../../../../../shared-validation/provided-and-max-length';
-import { RequestBody } from '../../../../../../../../types';
+import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import { MAXIMUM_CHARACTERS } from '../../../../../../constants/validation';
+import FIELD_IDS from '../../../../../../constants/field-ids/insurance/business';
+import providedAndMaxLength from '../../../../../../shared-validation/provided-and-max-length';
+import { RequestBody } from '../../../../../../../types';
 
 const {
   YOUR_COMPANY: { DIFFERENT_TRADING_NAME: FIELD_ID, HAS_DIFFERENT_TRADING_NAME },

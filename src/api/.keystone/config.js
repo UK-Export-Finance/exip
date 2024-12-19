@@ -569,6 +569,7 @@ var DEFAULT_RESOLVERS = [
   'updateBuyerTradingHistory',
   'updateCompany',
   'updateDeclaration',
+  'updateDeclarationModernSlavery',
   'updateNominatedLossPayee',
   'updateJointlyInsuredParty',
   'updatePolicy',
@@ -2442,7 +2443,7 @@ var lists = {
       agreeToConfirmationAndAcknowledgements: nullable_checkbox_default(),
       hasAntiBriberyCodeOfConduct: nullable_checkbox_default(),
       willExportWithAntiBriberyCodeOfConduct: nullable_checkbox_default(),
-      modernSlavery: (0, import_fields.relationship)({ ref: 'DeclarationModernSlavery' }),
+      modernSlavery: (0, import_fields.relationship)({ ref: 'DeclarationModernSlavery.declaration' }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -2479,7 +2480,7 @@ var lists = {
   }),
   DeclarationModernSlavery: (0, import_core2.list)({
     fields: {
-      declaration: (0, import_fields.relationship)({ ref: 'Declaration' }),
+      declaration: (0, import_fields.relationship)({ ref: 'Declaration.modernSlavery' }),
       version: (0, import_fields.relationship)({ ref: 'DeclarationModernSlaveryVersion' }),
       willAdhereToAllRequirements: nullable_checkbox_default(),
       hasNoOffensesOrInvestigations: nullable_checkbox_default(),

@@ -1,9 +1,9 @@
-import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { FIELD_IDS } from '../../../../../../../constants';
-import { RequestBody } from '../../../../../../../../types';
+import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import { FIELD_IDS } from '../../../../../../constants';
+import { RequestBody } from '../../../../../../../types';
 import companyWebsite from './company-website';
-import generateValidationErrors from '../../../../../../../helpers/validation';
-import { mockErrors } from '../../../../../../../test-mocks';
+import generateValidationErrors from '../../../../../../helpers/validation';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const {
   YOUR_COMPANY: { WEBSITE },

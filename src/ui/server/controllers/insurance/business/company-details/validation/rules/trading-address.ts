@@ -1,7 +1,7 @@
-import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
-import fullAddressValidation from '../../../../../../../shared-validation/full-address';
-import { RequestBody } from '../../../../../../../../types';
+import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
+import fullAddressValidation from '../../../../../../shared-validation/full-address';
+import { RequestBody } from '../../../../../../../types';
 
 const {
   EXPORTER_BUSINESS: {

@@ -1,8 +1,8 @@
-import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { FIELD_IDS } from '../../../../../../../constants';
-import { RequestBody } from '../../../../../../../../types';
-import validatePhoneNumber from '../../../../../../../shared-validation/phone-number';
-import { objectHasProperty } from '../../../../../../../helpers/object';
+import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import { FIELD_IDS } from '../../../../../../constants';
+import { RequestBody } from '../../../../../../../types';
+import validatePhoneNumber from '../../../../../../shared-validation/phone-number';
+import { objectHasProperty } from '../../../../../../helpers/object';
 
 const {
   YOUR_COMPANY: { PHONE_NUMBER },
