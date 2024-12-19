@@ -1,9 +1,9 @@
-import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { FIELD_IDS } from '../../../../../../../constants';
-import { RequestBody } from '../../../../../../../../types';
+import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import { FIELD_IDS } from '../../../../../../constants';
+import { RequestBody } from '../../../../../../../types';
 import phoneNumber from './phone-number';
-import generateValidationErrors from '../../../../../../../helpers/validation';
-import { mockErrors, mockPhoneNumbers } from '../../../../../../../test-mocks';
+import generateValidationErrors from '../../../../../../helpers/validation';
+import { mockErrors, mockPhoneNumbers } from '../../../../../../test-mocks';
 
 const { INVALID_PHONE_NUMBERS, VALID_PHONE_NUMBERS } = mockPhoneNumbers;
 

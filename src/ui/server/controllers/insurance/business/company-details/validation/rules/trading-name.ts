@@ -1,7 +1,7 @@
-import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { FIELD_IDS } from '../../../../../../../constants';
-import emptyFieldValidation from '../../../../../../../shared-validation/empty-field';
-import { RequestBody } from '../../../../../../../../types';
+import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import { FIELD_IDS } from '../../../../../../constants';
+import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
+import { RequestBody } from '../../../../../../../types';
 
 const {
   YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: FIELD_ID },

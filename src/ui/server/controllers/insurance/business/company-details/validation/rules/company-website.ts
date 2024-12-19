@@ -1,9 +1,9 @@
-import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { FIELD_IDS } from '../../../../../../../constants';
-import { RequestBody } from '../../../../../../../../types';
-import isStringWithHttp from '../../../../../../../helpers/is-string-with-http';
-import validateWebsiteAddress from '../../../../../../../shared-validation/website-address';
-import { objectHasProperty } from '../../../../../../../helpers/object';
+import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import { FIELD_IDS } from '../../../../../../constants';
+import { RequestBody } from '../../../../../../../types';
+import isStringWithHttp from '../../../../../../helpers/is-string-with-http';
+import validateWebsiteAddress from '../../../../../../shared-validation/website-address';
+import { objectHasProperty } from '../../../../../../helpers/object';
 
 const {
   YOUR_COMPANY: { WEBSITE },

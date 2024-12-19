@@ -1,9 +1,9 @@
 import tradingAddress from './trading-address';
-import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
-import fullAddressValidation from '../../../../../../../shared-validation/full-address';
-import { RequestBody } from '../../../../../../../../types';
-import { mockErrors } from '../../../../../../../test-mocks';
+import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
+import fullAddressValidation from '../../../../../../shared-validation/full-address';
+import { RequestBody } from '../../../../../../../types';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const {
   EXPORTER_BUSINESS: {
