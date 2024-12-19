@@ -10,7 +10,7 @@ const {
 } = EXTERNAL_API_DEFINITIONS;
 
 /**
- * aAndDRatingConditions
+ * cAndDRatingConditions
  * Country conditions for "C and D country ratings",
  * to determine if a country does NOT have insurance support available.
  * @param {String} countryRating: Country rating
@@ -18,7 +18,7 @@ const {
  * @param {String} shortTermCover: Short term cover
  * @returns {Boolean}
  */
-const aAndDRatingConditions = ({ countryRating, esraClassification, shortTermCover }: noOnlineInsuranceSupportParams): boolean => {
+const cAndDRatingConditions = ({ countryRating, esraClassification, shortTermCover }: noOnlineInsuranceSupportParams): boolean => {
   if (!countryRatingIsCorD(countryRating)) {
     return false;
   }
@@ -56,4 +56,4 @@ const aAndDRatingConditions = ({ countryRating, esraClassification, shortTermCov
   return false;
 };
 
-export default aAndDRatingConditions;
+export default cAndDRatingConditions;

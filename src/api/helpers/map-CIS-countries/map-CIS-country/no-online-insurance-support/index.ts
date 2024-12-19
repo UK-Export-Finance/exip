@@ -4,22 +4,27 @@ import { noOnlineInsuranceSupportParams } from '../../../../types';
 
 /**
  * noOnlineInsuranceSupport
- * Check if a country cannot apply for insurance
- * @param {String} marketRiskAppetitePublicDesc market risk appetite definition from CIS API.
+ * Check if a country has no online insurance support
+ * @param {String} countryRating: Country rating
+ * @param {String} esraClassification: ESRA classification
+ * @param {String} shortTermCover: Short term cover
  * @returns {Boolean}
  */
 const noOnlineInsuranceSupport = ({ countryRating, esraClassification, shortTermCover }: noOnlineInsuranceSupportParams): boolean => {
-  const conditions =
-    aAndBRatingConditions({
-      countryRating,
-      esraClassification,
-      shortTermCover,
-    }) ||
-    cAndDRatingConditions({
-      countryRating,
-      esraClassification,
-      shortTermCover,
-    });
+  const aAndBConditions = aAndBRatingConditions({
+    countryRating,
+    esraClassification,
+    shortTermCover,
+  });
+
+  const cAndDConditions = cAndDRatingConditions({
+    countryRating,
+    esraClassification,
+    shortTermCover,
+  });
+
+  const conditions = aAndBConditions || cAndDConditions;
+
   return conditions;
 };
 

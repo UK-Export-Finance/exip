@@ -9177,7 +9177,7 @@ var {
     SHORT_TERM_COVER_AVAILABLE: { YES: YES3, NO: NO3, ILC: ILC2, CILC: CILC2, REFER: REFER2, UNLISTED: UNLISTED2 },
   },
 } = EXTERNAL_API_DEFINITIONS;
-var aAndDRatingConditions = ({ countryRating, esraClassification, shortTermCover }) => {
+var cAndDRatingConditions = ({ countryRating, esraClassification, shortTermCover }) => {
   if (!country_rating_is_c_or_d_default(countryRating)) {
     return false;
   }
@@ -9206,21 +9206,21 @@ var aAndDRatingConditions = ({ countryRating, esraClassification, shortTermCover
   }
   return false;
 };
-var c_and_d_rating_conditions_default = aAndDRatingConditions;
+var c_and_d_rating_conditions_default = cAndDRatingConditions;
 
 // helpers/map-CIS-countries/map-CIS-country/no-online-insurance-support/index.ts
 var noOnlineInsuranceSupport = ({ countryRating, esraClassification, shortTermCover }) => {
-  const conditions =
-    a_and_b_rating_conditions_default({
-      countryRating,
-      esraClassification,
-      shortTermCover,
-    }) ||
-    c_and_d_rating_conditions_default({
-      countryRating,
-      esraClassification,
-      shortTermCover,
-    });
+  const aAndBConditions = a_and_b_rating_conditions_default({
+    countryRating,
+    esraClassification,
+    shortTermCover,
+  });
+  const cAndDConditions = c_and_d_rating_conditions_default({
+    countryRating,
+    esraClassification,
+    shortTermCover,
+  });
+  const conditions = aAndBConditions || cAndDConditions;
   return conditions;
 };
 var no_online_insurance_support_default = noOnlineInsuranceSupport;

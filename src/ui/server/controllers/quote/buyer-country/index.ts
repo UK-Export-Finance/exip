@@ -121,8 +121,12 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.QUOTE.CANNOT_APPLY_EXIT);
     }
 
+    /**
+     * If a country cannot get a quote online,
+     * redirect to a specific exit page.
+     */
     if (country.canGetAQuoteOnline) {
-      console.info(`Country support - ${country.name} - can get a quote online`);
+      console.info(`Country support - %s ${country.name} - can get a quote online`);
 
       const populatedData = mapSubmittedEligibilityCountry(country);
 
@@ -135,8 +139,12 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.QUOTE.BUYER_BODY);
     }
 
+    /**
+     * If a country can get a quote by email,
+     * redirect to a specific exit page.
+     */
     if (country.canGetAQuoteByEmail) {
-      console.info(`Country support - ${country.name} - can get a quote by email`);
+      console.info(`Country support - %s ${country.name} - can get a quote by email`);
 
       const populatedData = mapSubmittedEligibilityCountry(country);
 
@@ -153,8 +161,12 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL);
     }
 
+    /**
+     * If a country cannot get a quote,
+     * redirect to a specific exit page.
+     */
     if (country.cannotGetAQuote) {
-      console.info(`Country support - ${country.name} - cannot a quote`);
+      console.info(`Country support - %s ${country.name} - cannot a quote`);
 
       const populatedData = mapSubmittedEligibilityCountry(country);
 
