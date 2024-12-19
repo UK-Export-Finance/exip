@@ -2,7 +2,7 @@ import { EXTERNAL_API_DEFINITIONS } from '../../../../../constants';
 
 const {
   CIS: {
-    SHORT_TERM_COVER_AVAILABLE: { YES, REFER, UNLISTED },
+    SHORT_TERM_COVER: { YES, REFER, UNLISTED },
   },
 } = EXTERNAL_API_DEFINITIONS;
 

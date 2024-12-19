@@ -1,4 +1,4 @@
-import { EXTERNAL_API_DEFINITIONS } from '../../../../../constants';
+import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
 
 const {
   CIS: {
@@ -7,12 +7,12 @@ const {
 } = EXTERNAL_API_DEFINITIONS;
 
 /**
- * hasValidEsraClassification
- * Check if a country's "ESRA classification" can apply for insurance online.
+ * esraClassificationIsStandardHighOrVeryHigh
+ * Check if a country's "ESRA classification" is STANDARD, HIGH or VERY_HIGH
  * @param {String} esraClassification: ESRA classification
  * @returns {Boolean}
  */
-const hasValidEsraClassification = (esraClassification: string): boolean => {
+const esraClassificationIsStandardHighOrVeryHigh = (esraClassification: string): boolean => {
   switch (esraClassification) {
     case STANDARD:
       return true;
@@ -28,4 +28,4 @@ const hasValidEsraClassification = (esraClassification: string): boolean => {
   }
 };
 
-export default hasValidEsraClassification;
+export default esraClassificationIsStandardHighOrVeryHigh;

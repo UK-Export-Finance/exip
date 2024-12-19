@@ -8,7 +8,7 @@ export const EXTERNAL_API_DEFINITIONS = {
       STANDARD: 'Standard Risk',
       NONE: 'None',
     },
-    SHORT_TERM_COVER_AVAILABLE: {
+    SHORT_TERM_COVER: {
       YES: 'Yes',
       NO: 'No',
       ILC: 'ILC Only',
@@ -36,6 +36,7 @@ export const EXTERNAL_API_DEFINITIONS = {
       B: ['BBB+', 'BBB', 'BBB-', 'BB+', 'BB', 'BB-', 'B+', 'B', 'B-'],
       C: ['CCC+', 'CCC', 'CCC-', 'CC', 'C'],
       D: ['D'],
+      NOT_APPLICABLE: 'N/A',
     },
   },
   COMPANIES_HOUSE: {

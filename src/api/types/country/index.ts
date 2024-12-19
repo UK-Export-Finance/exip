@@ -38,11 +38,10 @@ export interface GetApimCurrenciesResponse {
 
 export interface MappedCisCountry {
   countryRating: string;
-  esraClassification?: string;
+  esraClassification?: string | null;
   isoCode: string;
   nbiIssueAvailable: boolean;
   name: string;
-  esraClassification?: string;
   shortTermCover: boolean;
   canGetAQuoteOnline: boolean;
   canGetAQuoteOffline: boolean;
