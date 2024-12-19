@@ -113,35 +113,4 @@ describe('helpers/map-CIS-countries/map-CIS-country/no-insurance-support', () =>
       });
     });
   });
-
-  // describe(`when shortTermCover is ${CILC} and esraClassification is ${COUNTRY_RATINGS.NOT_APPLICABLE}`, () => {
-  //   describe(`when esraClassification is ${STANDARD}`, () => {
-  //     it('should return true', () => {
-
-  //     });
-  //   });
-
-  //   describe(`when esraClassification is ${HIGH}`, () => {
-  //     it('should return true', () => {
-
-  //     });
-  //   });
-
-  //   describe(`when esraClassification is ${VERY_HIGH}`, () => {
-  //     it('should return true', () => {
-
-  //     });
-  //   });
-
-  //   describe(`when esraClassification is ${NONE}`, () => {
-  //     it('should return true', () => {
-
-  //     });
-  //   });
-
-  //   describe('when esraClassification is not recognised', () => {
-  //     it('should return false', () => {
-
-  //     });
-  //   });
 });
