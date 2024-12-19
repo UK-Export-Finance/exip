@@ -9272,7 +9272,7 @@ var mapCisCountry = (cisCountry) => {
     name: marketName,
     nbiIssueAvailable,
     shortTermCover,
-    canGetAQuoteOnline: can_get_a_quote_online_default({ shortTermCover, nbiIssueAvailable, esraClassification }),
+    canGetAQuoteOnline: can_get_a_quote_online_default(cisCountry),
     canGetAQuoteOffline: can_apply_for_quote_offline_default(cisCountry.shortTermCoverAvailabilityDesc),
     canGetAQuoteByEmail: can_get_a_quote_by_email_default({ shortTermCover, nbiIssueAvailable, esraClassification }),
     cannotGetAQuote: cannot_get_a_quote_default({ shortTermCover, nbiIssueAvailable, esraClassification }),
