@@ -10,7 +10,7 @@ import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockCountries } from '../../../../test-mocks';
 
 const {
-  ELIGIBILITY: { CANNOT_APPLY_EXIT: CANNOT_APPLY_ROUTE, TOTAL_VALUE_INSURED, BUYER_COUNTRY_CHANGE, CHECK_YOUR_ANSWERS, CONTRACT_TOO_SHORT_EXIT },
+  ELIGIBILITY: { CANNOT_APPLY_EXIT: CANNOT_APPLY_ROUTE, TOTAL_VALUE_INSURED, BUYER_COUNTRY_CHANGE, CHECK_YOUR_ANSWERS, TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT },
 } = INSURANCE_ROUTES;
 
 describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
@@ -130,10 +130,10 @@ describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${CONTRACT_TOO_SHORT_EXIT}`, async () => {
+      it(`should redirect to ${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(CONTRACT_TOO_SHORT_EXIT);
+        expect(res.redirect).toHaveBeenCalledWith(TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT);
       });
     });
 

@@ -25,7 +25,7 @@ export const TEMPLATE = TEMPLATES.SHARED_PAGES.BUYER_COUNTRY;
 
 const {
   PROBLEM_WITH_SERVICE,
-  ELIGIBILITY: { CANNOT_APPLY_EXIT: CANNOT_APPLY_ROUTE, TOTAL_VALUE_INSURED, CHECK_YOUR_ANSWERS, CONTRACT_TOO_SHORT_EXIT },
+  ELIGIBILITY: { CANNOT_APPLY_EXIT: CANNOT_APPLY_ROUTE, TOTAL_VALUE_INSURED, CHECK_YOUR_ANSWERS, TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT },
 } = INSURANCE_ROUTES;
 
 export const get = async (req: Request, res: Response) => {
@@ -104,7 +104,7 @@ export const post = async (req: Request, res: Response) => {
         insuranceEligibility: updateSubmittedData(populatedData, req.session.submittedData.insuranceEligibility),
       };
 
-      return res.redirect(CONTRACT_TOO_SHORT_EXIT);
+      return res.redirect(TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT);
     }
 
     /**
