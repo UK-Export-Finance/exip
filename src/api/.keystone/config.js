@@ -8970,15 +8970,17 @@ var filterCisEntries = (arr, invalidEntries, entityPropertyName) => {
 var filter_cis_entries_default = filterCisEntries;
 
 // helpers/map-CIS-countries/map-CIS-country/map-esra-classification/index.ts
-var { CIS } = EXTERNAL_API_DEFINITIONS;
+var {
+  CIS: { ESRA_CLASSIFICATION },
+} = EXTERNAL_API_DEFINITIONS;
 var mapEsraClassification = (str) => {
-  if (str === CIS.ESRA_CLASSIFICATION.STANDARD) {
+  if (str === ESRA_CLASSIFICATION.STANDARD) {
     return EXTERNAL_API_MAPPINGS.CIS.ESRA_CLASSIFICATION.STANDARD;
   }
-  if (str === CIS.ESRA_CLASSIFICATION.HIGH) {
+  if (str === ESRA_CLASSIFICATION.HIGH) {
     return str;
   }
-  if (str === CIS.ESRA_CLASSIFICATION.VERY_HIGH) {
+  if (str === ESRA_CLASSIFICATION.VERY_HIGH) {
     return str;
   }
   return null;
@@ -9006,9 +9008,9 @@ var mapShortTermCoverAvailable = (str) => {
 var map_short_term_cover_available_default = mapShortTermCoverAvailable;
 
 // helpers/map-CIS-countries/map-CIS-country/map-NBI-issue-available/index.ts
-var { CIS: CIS2 } = EXTERNAL_API_DEFINITIONS;
+var { CIS } = EXTERNAL_API_DEFINITIONS;
 var mapNbiIssueAvailable = (str) => {
-  if (str === CIS2.NBI_ISSUE_AVAILABLE.YES) {
+  if (str === CIS.NBI_ISSUE_AVAILABLE.YES) {
     return true;
   }
   return false;
@@ -9043,15 +9045,15 @@ var cannotGetAQuote = ({ shortTermCover, nbiIssueAvailable, esraClassification }
 var cannot_get_a_quote_default = cannotGetAQuote;
 
 // helpers/map-CIS-countries/map-CIS-country/can-apply-for-quote-offline/index.ts
-var { CIS: CIS3 } = EXTERNAL_API_DEFINITIONS;
+var { CIS: CIS2 } = EXTERNAL_API_DEFINITIONS;
 var canApplyForAQuoteOffline = (originalShortTermCover) => {
-  if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.ILC) {
+  if (originalShortTermCover === CIS2.SHORT_TERM_COVER_AVAILABLE.ILC) {
     return true;
   }
-  if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.CILC) {
+  if (originalShortTermCover === CIS2.SHORT_TERM_COVER_AVAILABLE.CILC) {
     return true;
   }
-  if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.REFER) {
+  if (originalShortTermCover === CIS2.SHORT_TERM_COVER_AVAILABLE.REFER) {
     return true;
   }
   return false;
@@ -9236,17 +9238,17 @@ var mapCisCountry = (cisCountry) => {
     name: marketName,
     nbiIssueAvailable,
     shortTermCover,
+    canGetAQuoteOnline: can_get_a_quote_online_default({ shortTermCover, nbiIssueAvailable, esraClassification }),
+    canGetAQuoteOffline: can_apply_for_quote_offline_default(cisCountry.shortTermCoverAvailabilityDesc),
+    canGetAQuoteByEmail: can_get_a_quote_by_email_default({ shortTermCover, nbiIssueAvailable, esraClassification }),
+    cannotGetAQuote: cannot_get_a_quote_default({ shortTermCover, nbiIssueAvailable, esraClassification }),
+    canApplyForInsuranceOnline: can_apply_for_insurance_online_default(cisCountry),
+    noOnlineInsuranceSupport: no_online_insurance_support_default({
+      countryRating: countryRatingDesc,
+      esraClassification: ESRAClassificationDesc,
+      shortTermCover: shortTermCoverAvailabilityDesc,
+    }),
   };
-  mapped.canGetAQuoteOnline = can_get_a_quote_online_default({ shortTermCover, nbiIssueAvailable, esraClassification });
-  mapped.canGetAQuoteOffline = can_apply_for_quote_offline_default(cisCountry.shortTermCoverAvailabilityDesc);
-  mapped.canGetAQuoteByEmail = can_get_a_quote_by_email_default({ shortTermCover, nbiIssueAvailable, esraClassification });
-  mapped.cannotGetAQuote = cannot_get_a_quote_default({ shortTermCover, nbiIssueAvailable, esraClassification });
-  mapped.canApplyForInsuranceOnline = can_apply_for_insurance_online_default(cisCountry);
-  mapped.noOnlineInsuranceSupport = no_online_insurance_support_default({
-    countryRating: countryRatingDesc,
-    esraClassification: ESRAClassificationDesc,
-    shortTermCover: shortTermCoverAvailabilityDesc,
-  });
   return mapped;
 };
 var map_CIS_country_default = mapCisCountry;
@@ -9259,9 +9261,9 @@ var sortArrayAlphabetically = (arr, field) => {
 var sort_array_alphabetically_default = sortArrayAlphabetically;
 
 // helpers/map-CIS-countries/index.ts
-var { CIS: CIS4 } = EXTERNAL_API_DEFINITIONS;
+var { CIS: CIS3 } = EXTERNAL_API_DEFINITIONS;
 var mapCisCountries = (countries) => {
-  const filteredCountries = filter_cis_entries_default(countries, CIS4.INVALID_COUNTRIES, 'marketName');
+  const filteredCountries = filter_cis_entries_default(countries, CIS3.INVALID_COUNTRIES, 'marketName');
   const mapped = filteredCountries.map((country) => map_CIS_country_default(country));
   const sorted = sort_array_alphabetically_default(mapped, 'name');
   return sorted;
@@ -9286,7 +9288,7 @@ var getApimCisCountries = async () => {
 var get_APIM_CIS_countries_default = getApimCisCountries;
 
 // helpers/map-currencies/index.ts
-var { CIS: CIS5 } = EXTERNAL_API_DEFINITIONS;
+var { CIS: CIS4 } = EXTERNAL_API_DEFINITIONS;
 var getSupportedCurrencies = (currencies) => {
   const supported = currencies.filter((currency) => SUPPORTED_CURRENCIES.find((currencyCode) => currency.isoCode === currencyCode));
   return supported;
@@ -9296,7 +9298,7 @@ var getAlternativeCurrencies = (currencies) => {
   return alternate;
 };
 var mapCurrencies = (currencies, alternativeCurrencies) => {
-  let currenciesArray = filter_cis_entries_default(currencies, CIS5.INVALID_CURRENCIES, 'name');
+  let currenciesArray = filter_cis_entries_default(currencies, CIS4.INVALID_CURRENCIES, 'name');
   if (!alternativeCurrencies) {
     currenciesArray = getSupportedCurrencies(currenciesArray);
   } else {

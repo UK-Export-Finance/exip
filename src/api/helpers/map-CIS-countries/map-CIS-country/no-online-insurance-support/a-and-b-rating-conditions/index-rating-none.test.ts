@@ -9,7 +9,7 @@ const {
   },
 } = EXTERNAL_API_DEFINITIONS;
 
-describe('helpers/map-CIS-countries/map-CIS-country/no-insurance-support/a-and-b-rating-conditions - ESRA classification=NONE, short term cover=NO', () => {
+describe('helpers/map-CIS-countries/map-CIS-country/no-online-insurance-support/a-and-b-rating-conditions - ESRA classification=NONE, short term cover=NO', () => {
   describe('when the country rating is `A`', () => {
     it('should return true', () => {
       const result = aAndBRatingConditions({

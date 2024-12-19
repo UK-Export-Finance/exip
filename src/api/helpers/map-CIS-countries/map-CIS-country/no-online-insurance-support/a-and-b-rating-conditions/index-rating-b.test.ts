@@ -34,7 +34,7 @@ const params = {
   },
 };
 
-describe('helpers/map-CIS-countries/map-CIS-country/no-insurance-support/a-and-b-rating-conditions - rating as B', () => {
+describe('helpers/map-CIS-countries/map-CIS-country/no-online-insurance-support/a-and-b-rating-conditions - rating as B', () => {
   describe(`when the ESRA classification is ${STANDARD}`, () => {
     describe.each(params.STANDARD[ILC])(`when the short term cover is ${ILC}`, (countryObj) => {
       it(`should return true for ${countryObj.countryRating}`, () => {

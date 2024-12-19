@@ -29,23 +29,23 @@ export const mapCisCountry = (cisCountry: CisCountry): MappedCisCountry => {
     name: marketName,
     nbiIssueAvailable,
     shortTermCover,
+
+    canGetAQuoteOnline: canGetAQuoteOnline({ shortTermCover, nbiIssueAvailable, esraClassification }),
+
+    canGetAQuoteOffline: canApplyForAQuoteOffline(cisCountry.shortTermCoverAvailabilityDesc),
+
+    canGetAQuoteByEmail: canGetAQuoteByEmail({ shortTermCover, nbiIssueAvailable, esraClassification }),
+
+    cannotGetAQuote: cannotGetAQuote({ shortTermCover, nbiIssueAvailable, esraClassification }),
+
+    canApplyForInsuranceOnline: canApplyForInsuranceOnline(cisCountry),
+
+    noOnlineInsuranceSupport: noOnlineInsuranceSupport({
+      countryRating: countryRatingDesc,
+      esraClassification: ESRAClassificationDesc,
+      shortTermCover: shortTermCoverAvailabilityDesc,
+    }),
   } as MappedCisCountry;
-
-  mapped.canGetAQuoteOnline = canGetAQuoteOnline({ shortTermCover, nbiIssueAvailable, esraClassification });
-
-  mapped.canGetAQuoteOffline = canApplyForAQuoteOffline(cisCountry.shortTermCoverAvailabilityDesc);
-
-  mapped.canGetAQuoteByEmail = canGetAQuoteByEmail({ shortTermCover, nbiIssueAvailable, esraClassification });
-
-  mapped.cannotGetAQuote = cannotGetAQuote({ shortTermCover, nbiIssueAvailable, esraClassification });
-
-  mapped.canApplyForInsuranceOnline = canApplyForInsuranceOnline(cisCountry);
-
-  mapped.noOnlineInsuranceSupport = noOnlineInsuranceSupport({
-    countryRating: countryRatingDesc,
-    esraClassification: ESRAClassificationDesc,
-    shortTermCover: shortTermCoverAvailabilityDesc,
-  });
 
   // TODO: EMS-4065 - noInsuranceSupport.
 
