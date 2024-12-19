@@ -99,6 +99,10 @@ context('Insurance - Policy - Broker addresses page', () => {
         option.input().should('exist');
       });
     });
+
+    it('should render an `enter address manually` link', () => {
+      cy.assertEnterAddressManuallyLink({ referenceNumber });
+    });
   });
 
   describe('form submission', () => {

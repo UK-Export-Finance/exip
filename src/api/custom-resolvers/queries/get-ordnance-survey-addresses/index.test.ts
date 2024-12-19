@@ -6,7 +6,7 @@ import { MOCK_OS_ADDRESS_INPUT } from '../../../test-mocks/mock-os-address-input
 import { OrdnanceSurveyResponse } from '../../../types';
 import { mockSpyPromiseRejection } from '../../../test-mocks';
 
-describe('getOrdnanceSurveyAddress', () => {
+describe('getOrdnanceSurveyAddresses', () => {
   jest.mock('../../../integrations/ordnance-survey');
 
   afterAll(() => {

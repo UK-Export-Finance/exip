@@ -14,33 +14,32 @@ const {
 
 const {
   ROOT,
-  POLICY: { BROKER_CONFIRM_ADDRESS_ROOT, BROKER_DETAILS_ROOT, BROKER_MANUAL_ADDRESS_ROOT, LOSS_PAYEE_ROOT },
+  POLICY: { BROKER_CONFIRM_ADDRESS_ROOT, BROKER_DETAILS_ROOT, LOSS_PAYEE_ROOT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-// TODO: EMS-3975
-context.skip(
+context(
   "Insurance - Policy - Broker confirm address - As an exporter, I want to be able to review the broker's contact details that I have provided, So that I can confirm my input or amend any errors if needed",
   () => {
     let referenceNumber;
     let url;
     let lossPayeeUrl;
     let brokerDetailsUrl;
-    let brokerManualAddressUrl;
 
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
+        // TODO: EMS-3981
         // go to the page we want to test.
-        cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'brokerDetails', usingBroker: true });
+        // cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'brokerDetails', usingBroker: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
         lossPayeeUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
         brokerDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
-        brokerManualAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
 
+        cy.navigateToUrl(url);
         cy.assertUrl(url);
       });
     });
@@ -57,7 +56,7 @@ context.skip(
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: `${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`,
-        backLink: `${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
+        backLink: `${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}#`,
         submitButtonCopy: BUTTONS.USE_THIS_ADDRESS,
       });
     });
@@ -71,7 +70,8 @@ context.skip(
         cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
-      it(`renders ${FULL_ADDRESS} exactly as they were submitted, with line break elements`, () => {
+      // TODO: EMS-3981
+      it.skip(`renders ${FULL_ADDRESS} exactly as they were submitted, with line break elements`, () => {
         /**
          * Cypress text assertion does not pick up HTML characters such as <br/>.
          * Therefore, we have to assert the text without line breaks
@@ -100,20 +100,8 @@ context.skip(
         });
       });
 
-      describe('`enter address manually` link', () => {
-        it('should render', () => {
-          cy.checkLink(
-            brokerConfirmAddressPage.enterAddressManuallyLink(),
-            `${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`,
-            CONTENT_STRINGS.ENTER_ADDRESS_MANUALLY,
-          );
-        });
-
-        it(`should redirect to ${BROKER_MANUAL_ADDRESS_ROOT}`, () => {
-          brokerConfirmAddressPage.enterAddressManuallyLink().click();
-
-          cy.assertUrl(brokerManualAddressUrl);
-        });
+      it('should render an `enter address manually` link', () => {
+        cy.assertEnterAddressManuallyLink({ referenceNumber });
       });
     });
 
