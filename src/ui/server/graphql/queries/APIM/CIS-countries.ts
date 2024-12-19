@@ -12,6 +12,7 @@ const getApimCisCountries = gql`
       cannotGetAQuote
       cannotApply
       canApplyForInsuranceOnline
+      noOnlineInsuranceSupport
       noInsuranceSupport
       shortTermCover
     }

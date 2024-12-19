@@ -2828,6 +2828,7 @@ var typeDefs = `
     cannotGetAQuote: Boolean
     cannotApply: Boolean
     canApplyForInsuranceOnline: Boolean
+    noOnlineInsuranceSupport: Boolean
     noInsuranceSupport: Boolean
   }
 
