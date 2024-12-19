@@ -7,11 +7,11 @@ const { CIS } = EXTERNAL_API_DEFINITIONS;
 const { 1: mockCountryBase } = mockCountries;
 
 describe('helpers/map-cis-countries/map-cis-country/can-apply-offline', () => {
-  describe(`when shortTermCoverAvailabilityDesc is ${CIS.SHORT_TERM_COVER_AVAILABLE.ILC}`, () => {
+  describe(`when shortTermCoverAvailabilityDesc is ${CIS.SHORT_TERM_COVER.ILC}`, () => {
     it('should return true', () => {
       const mockCountry = {
         ...mockCountryBase,
-        shortTermCoverAvailabilityDesc: CIS.SHORT_TERM_COVER_AVAILABLE.ILC,
+        shortTermCoverAvailabilityDesc: CIS.SHORT_TERM_COVER.ILC,
       };
 
       const result = canApplyForAQuoteOffline(mockCountry.shortTermCoverAvailabilityDesc);
@@ -20,11 +20,11 @@ describe('helpers/map-cis-countries/map-cis-country/can-apply-offline', () => {
     });
   });
 
-  describe(`when shortTermCoverAvailabilityDesc is ${CIS.SHORT_TERM_COVER_AVAILABLE.CILC}`, () => {
+  describe(`when shortTermCoverAvailabilityDesc is ${CIS.SHORT_TERM_COVER.CILC}`, () => {
     it('should return true', () => {
       const mockCountry = {
         ...mockCountryBase,
-        shortTermCoverAvailabilityDesc: CIS.SHORT_TERM_COVER_AVAILABLE.CILC,
+        shortTermCoverAvailabilityDesc: CIS.SHORT_TERM_COVER.CILC,
       };
 
       const result = canApplyForAQuoteOffline(mockCountry.shortTermCoverAvailabilityDesc);
@@ -33,11 +33,11 @@ describe('helpers/map-cis-countries/map-cis-country/can-apply-offline', () => {
     });
   });
 
-  describe(`when shortTermCoverAvailabilityDesc is ${CIS.SHORT_TERM_COVER_AVAILABLE.REFER}`, () => {
+  describe(`when shortTermCoverAvailabilityDesc is ${CIS.SHORT_TERM_COVER.REFER}`, () => {
     it('should return true', () => {
       const mockCountry = {
         ...mockCountryBase,
-        shortTermCoverAvailabilityDesc: CIS.SHORT_TERM_COVER_AVAILABLE.REFER,
+        shortTermCoverAvailabilityDesc: CIS.SHORT_TERM_COVER.REFER,
       };
 
       const result = canApplyForAQuoteOffline(mockCountry.shortTermCoverAvailabilityDesc);

@@ -5,7 +5,7 @@ import { noInsuranceSupportParams } from '../../../../../types';
 const {
   CIS: {
     ESRA_CLASSIFICATION: { STANDARD, HIGH, VERY_HIGH, NONE },
-    SHORT_TERM_COVER_AVAILABLE: { NO, ILC, CILC },
+    SHORT_TERM_COVER: { NO, ILC, CILC },
   },
 } = EXTERNAL_API_DEFINITIONS;
 

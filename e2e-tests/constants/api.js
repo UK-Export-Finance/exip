@@ -7,7 +7,7 @@ export const API = {
       HIGH: 'High',
       STANDARD: 'Standard Risk',
     },
-    SHORT_TERM_COVER_AVAILABLE: {
+    SHORT_TERM_COVER: {
       YES: 'Yes',
       ILC: 'ILC Only',
       CILC: 'CILC Only',

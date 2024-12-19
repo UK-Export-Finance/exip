@@ -9,15 +9,15 @@ const { CIS } = EXTERNAL_API_DEFINITIONS;
  * @returns {Boolean}
  */
 export const canApplyForAQuoteOffline = (originalShortTermCover: string) => {
-  if (originalShortTermCover === CIS.SHORT_TERM_COVER_AVAILABLE.ILC) {
+  if (originalShortTermCover === CIS.SHORT_TERM_COVER.ILC) {
     return true;
   }
 
-  if (originalShortTermCover === CIS.SHORT_TERM_COVER_AVAILABLE.CILC) {
+  if (originalShortTermCover === CIS.SHORT_TERM_COVER.CILC) {
     return true;
   }
 
-  if (originalShortTermCover === CIS.SHORT_TERM_COVER_AVAILABLE.REFER) {
+  if (originalShortTermCover === CIS.SHORT_TERM_COVER.REFER) {
     return true;
   }
 

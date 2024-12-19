@@ -8,8 +8,7 @@ export const EXTERNAL_API_DEFINITIONS = {
       STANDARD: 'Standard Risk',
       NONE: 'None',
     },
-    // TODO: rename to SHORT_TERM_COVER
-    SHORT_TERM_COVER_AVAILABLE: {
+    SHORT_TERM_COVER: {
       YES: 'Yes',
       NO: 'No',
       ILC: 'ILC Only',

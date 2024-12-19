@@ -828,8 +828,7 @@ var EXTERNAL_API_DEFINITIONS = {
       STANDARD: 'Standard Risk',
       NONE: 'None',
     },
-    // TODO: rename to SHORT_TERM_COVER
-    SHORT_TERM_COVER_AVAILABLE: {
+    SHORT_TERM_COVER: {
       YES: 'Yes',
       NO: 'No',
       ILC: 'ILC Only',
@@ -8992,17 +8991,17 @@ var map_esra_classification_default = mapEsraClassification;
 
 // helpers/map-CIS-countries/map-CIS-country/map-short-term-cover-available/index.ts
 var {
-  CIS: { SHORT_TERM_COVER_AVAILABLE },
+  CIS: { SHORT_TERM_COVER },
 } = EXTERNAL_API_DEFINITIONS;
 var mapShortTermCoverAvailable = (str) => {
   switch (str) {
-    case SHORT_TERM_COVER_AVAILABLE.YES:
+    case SHORT_TERM_COVER.YES:
       return true;
-    case SHORT_TERM_COVER_AVAILABLE.ILC:
+    case SHORT_TERM_COVER.ILC:
       return true;
-    case SHORT_TERM_COVER_AVAILABLE.CILC:
+    case SHORT_TERM_COVER.CILC:
       return true;
-    case SHORT_TERM_COVER_AVAILABLE.REFER:
+    case SHORT_TERM_COVER.REFER:
       return true;
     default:
       return false;
@@ -9050,13 +9049,13 @@ var cannot_get_a_quote_default = cannotGetAQuote;
 // helpers/map-CIS-countries/map-CIS-country/can-apply-for-quote-offline/index.ts
 var { CIS: CIS2 } = EXTERNAL_API_DEFINITIONS;
 var canApplyForAQuoteOffline = (originalShortTermCover) => {
-  if (originalShortTermCover === CIS2.SHORT_TERM_COVER_AVAILABLE.ILC) {
+  if (originalShortTermCover === CIS2.SHORT_TERM_COVER.ILC) {
     return true;
   }
-  if (originalShortTermCover === CIS2.SHORT_TERM_COVER_AVAILABLE.CILC) {
+  if (originalShortTermCover === CIS2.SHORT_TERM_COVER.CILC) {
     return true;
   }
-  if (originalShortTermCover === CIS2.SHORT_TERM_COVER_AVAILABLE.REFER) {
+  if (originalShortTermCover === CIS2.SHORT_TERM_COVER.REFER) {
     return true;
   }
   return false;
@@ -9086,7 +9085,7 @@ var esra_classification_is_standard_high_or_very_high_default = esraClassificati
 // helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/has-valid-short-term-cover/index.ts
 var {
   CIS: {
-    SHORT_TERM_COVER_AVAILABLE: { YES: YES2, REFER, UNLISTED },
+    SHORT_TERM_COVER: { YES: YES2, REFER, UNLISTED },
   },
 } = EXTERNAL_API_DEFINITIONS;
 var hasValidShortTermCover = (shortTermCover) => {
@@ -9133,7 +9132,7 @@ var can_apply_for_insurance_online_default = canApplyForInsuranceOnline;
 var {
   CIS: {
     ESRA_CLASSIFICATION: { STANDARD: STANDARD2, HIGH: HIGH2, VERY_HIGH: VERY_HIGH2, NONE },
-    SHORT_TERM_COVER_AVAILABLE: { NO: NO2, ILC, CILC },
+    SHORT_TERM_COVER: { NO: NO2, ILC, CILC },
   },
 } = EXTERNAL_API_DEFINITIONS;
 var aAndBRatingConditions = ({ countryRating, esraClassification, shortTermCover }) => {
@@ -9177,7 +9176,7 @@ var country_rating_is_c_or_d_default = countryRatingIsCorD;
 var {
   CIS: {
     ESRA_CLASSIFICATION: { STANDARD: STANDARD3, HIGH: HIGH3, VERY_HIGH: VERY_HIGH3, NONE: NONE2 },
-    SHORT_TERM_COVER_AVAILABLE: { YES: YES3, NO: NO3, ILC: ILC2, CILC: CILC2, REFER: REFER2, UNLISTED: UNLISTED2 },
+    SHORT_TERM_COVER: { YES: YES3, NO: NO3, ILC: ILC2, CILC: CILC2, REFER: REFER2, UNLISTED: UNLISTED2 },
   },
 } = EXTERNAL_API_DEFINITIONS;
 var cAndDRatingConditions = ({ countryRating, esraClassification, shortTermCover }) => {
@@ -9233,7 +9232,7 @@ var {
   CIS: {
     COUNTRY_RATINGS: { NOT_APPLICABLE },
     ESRA_CLASSIFICATION: { NONE: NONE3 },
-    SHORT_TERM_COVER_AVAILABLE: { UNLISTED: UNLISTED3, CILC: CILC3 },
+    SHORT_TERM_COVER: { UNLISTED: UNLISTED3, CILC: CILC3 },
   },
 } = EXTERNAL_API_DEFINITIONS;
 var noInsuranceSupport = ({ countryRating, esraClassification, shortTermCover }) => {
