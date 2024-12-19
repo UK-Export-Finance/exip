@@ -138,6 +138,8 @@ context(
             isNotAwareOfExistingSlavery: false,
           });
 
+          cy.completeAndSubmitModernSlaveryFormConditionalFields({});
+
           cy.assertAllSectionsUrl(referenceNumber);
         });
 

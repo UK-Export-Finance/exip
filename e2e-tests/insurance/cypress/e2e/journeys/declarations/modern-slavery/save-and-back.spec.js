@@ -143,8 +143,9 @@ context('Insurance - Declarations - Modern slavery page - Save and go back', () 
         willAdhereToAllRequirements: false,
         hasNoOffensesOrInvestigations: false,
         isNotAwareOfExistingSlavery: false,
-        submitConditionalFields: true,
       });
+
+      cy.completeModernSlaveryFormConditionalFields({});
 
       cy.clickSaveAndBackButton();
 
@@ -163,8 +164,9 @@ context('Insurance - Declarations - Modern slavery page - Save and go back', () 
           willAdhereToAllRequirements: false,
           hasNoOffensesOrInvestigations: false,
           isNotAwareOfExistingSlavery: false,
-          submitConditionalFields: true,
         });
+
+        cy.completeModernSlaveryFormConditionalFields({});
 
         cy.clickSaveAndBackButton();
 

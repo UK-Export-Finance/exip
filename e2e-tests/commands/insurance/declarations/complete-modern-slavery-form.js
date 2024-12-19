@@ -4,17 +4,8 @@
  * @param {Boolean} willAdhereToAllRequirements: radio answer
  * @param {Boolean} hasNoOffensesOrInvestigations: radio answer
  * @param {Boolean} isNotAwareOfExistingSlavery: radio answer
- * @param {String} conditionalFields.cannotAdhereToAllRequirements: Textarea answer
- * @param {String} conditionalFields.offensesOrInvestigations: Textarea answer
- * @param {String} conditionalFields.awareOfExistingSlavery: Textarea answer
  */
-const completeModernSlaveryForm = ({
-  willAdhereToAllRequirements = true,
-  hasNoOffensesOrInvestigations = true,
-  isNotAwareOfExistingSlavery = true,
-  conditionalFields = {},
-  submitConditionalFields = false,
-}) => {
+const completeModernSlaveryForm = ({ willAdhereToAllRequirements = true, hasNoOffensesOrInvestigations = true, isNotAwareOfExistingSlavery = true }) => {
   if (willAdhereToAllRequirements) {
     cy.clickYesRadioInput(0);
   }
@@ -37,10 +28,6 @@ const completeModernSlaveryForm = ({
 
   if (isNotAwareOfExistingSlavery === false) {
     cy.clickNoRadioInput(2);
-  }
-
-  if (submitConditionalFields) {
-    cy.completeModernSlaveryFormConditionalFields(conditionalFields);
   }
 };
 

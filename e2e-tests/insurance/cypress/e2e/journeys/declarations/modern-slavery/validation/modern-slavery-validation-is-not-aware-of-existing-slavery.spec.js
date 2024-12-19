@@ -73,17 +73,20 @@ context(`Insurance - Declarations - Modern slavery page - validation - ${fieldId
 
       cy.completeAndSubmitModernSlaveryForm({
         isNotAwareOfExistingSlavery: false,
-        conditionalFields: {
-          awareOfExistingSlavery: reasonOverMaximum,
-        },
+      });
+
+      cy.completeAndSubmitModernSlaveryFormConditionalFields({
+        awareOfExistingSlavery: reasonOverMaximum,
+        offensesOrInvestigations: null,
+        cannotAdhereToAllRequirements: null,
       });
     });
 
     it(`should render a ${conditionalFieldId} validation error`, () => {
       cy.assertFieldErrors({
         field: autoCompleteField(conditionalFieldId),
-        errorIndex: 0,
-        errorSummaryLength: 1,
+        errorIndex: 2,
+        errorSummaryLength: 3,
         errorMessage: ERROR_STRINGS.CONDITIONAL_REASONS[conditionalFieldId].ABOVE_MAXIMUM,
       });
     });
