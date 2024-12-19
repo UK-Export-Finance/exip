@@ -25,15 +25,15 @@ const noInsuranceSupport = ({ countryRating, esraClassification, shortTermCover 
   const esraClassificationIsNone = esraClassification === NONE;
   const countryRatingIsNotApplicable = countryRating === NOT_APPLICABLE;
 
-  if (
-    shortTermCoverIsUnlisted &&
-    esraClassificationIsNone &&
-    (countryRatingIsAorB(countryRating) || countryRatingIsCorD(countryRating) || countryRatingIsNotApplicable)
-  ) {
+  const countryRatingConditions = countryRatingIsAorB(countryRating) || countryRatingIsCorD(countryRating) || countryRatingIsNotApplicable;
+
+  if (shortTermCoverIsUnlisted && esraClassificationIsNone && countryRatingConditions) {
     return true;
   }
 
-  if (shortTermCover === CILC && countryRatingIsNotApplicable && (esraClassificationIsStandardHighOrVeryHigh(esraClassification) || esraClassificationIsNone)) {
+  const esraClassificationConditions = esraClassificationIsStandardHighOrVeryHigh(esraClassification) || esraClassificationIsNone;
+
+  if (shortTermCover === CILC && countryRatingIsNotApplicable && esraClassificationConditions) {
     return true;
   }
 

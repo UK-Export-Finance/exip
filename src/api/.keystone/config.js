@@ -9239,18 +9239,13 @@ var noInsuranceSupport = ({ countryRating, esraClassification, shortTermCover })
   const shortTermCoverIsUnlisted = shortTermCover === UNLISTED3;
   const esraClassificationIsNone = esraClassification === NONE3;
   const countryRatingIsNotApplicable = countryRating === NOT_APPLICABLE;
-  if (
-    shortTermCoverIsUnlisted &&
-    esraClassificationIsNone &&
-    (country_rating_is_a_or_b_default(countryRating) || country_rating_is_c_or_d_default(countryRating) || countryRatingIsNotApplicable)
-  ) {
+  const countryRatingConditions =
+    country_rating_is_a_or_b_default(countryRating) || country_rating_is_c_or_d_default(countryRating) || countryRatingIsNotApplicable;
+  if (shortTermCoverIsUnlisted && esraClassificationIsNone && countryRatingConditions) {
     return true;
   }
-  if (
-    shortTermCover === CILC3 &&
-    countryRatingIsNotApplicable &&
-    (esra_classification_is_standard_high_or_very_high_default(esraClassification) || esraClassificationIsNone)
-  ) {
+  const esraClassificationConditions = esra_classification_is_standard_high_or_very_high_default(esraClassification) || esraClassificationIsNone;
+  if (shortTermCover === CILC3 && countryRatingIsNotApplicable && esraClassificationConditions) {
     return true;
   }
   return false;
