@@ -23,7 +23,9 @@ describe('controllers/insurance/declarations/save-data/modern-slavery', () => {
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
       const dataToSave = getDataToSave(mockFormBody, mockValidationErrors.errorList);
+
       const expectedSanitisedData = sanitiseData(dataToSave);
+
       expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.declaration.modernSlavery.id, expectedSanitisedData);
     });
 
@@ -41,7 +43,9 @@ describe('controllers/insurance/declarations/save-data/modern-slavery', () => {
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
       const dataToSave = getDataToSave(mockFormBody);
+
       const expectedSanitisedData = sanitiseData(dataToSave);
+
       expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.declaration.modernSlavery.id, expectedSanitisedData);
     });
 

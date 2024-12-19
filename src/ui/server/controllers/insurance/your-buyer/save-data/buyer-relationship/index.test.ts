@@ -35,7 +35,9 @@ describe('controllers/insurance/your-buyer/save-data/buyer-relationship', () => 
         expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
         const dataToSave = getDataToSave(mockFormBody, mockValidationErrors.errorList);
+
         const expectedSanitisedData = stripEmptyFormFields(sanitiseData(dataToSave), NULL_OR_EMPTY_STRING_FIELDS);
+
         expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.buyer.relationship.id, expectedSanitisedData);
       });
 
@@ -53,7 +55,9 @@ describe('controllers/insurance/your-buyer/save-data/buyer-relationship', () => 
         expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
         const dataToSave = getDataToSave(mockFormBody);
+
         const expectedSanitisedData = stripEmptyFormFields(sanitiseData(dataToSave), NULL_OR_EMPTY_STRING_FIELDS);
+
         expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.buyer.relationship.id, expectedSanitisedData);
       });
 
