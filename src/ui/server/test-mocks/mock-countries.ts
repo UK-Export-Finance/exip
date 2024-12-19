@@ -26,7 +26,7 @@ const mockCountries = [
     name: 'Abu Dhabi',
     ...baseCountry,
     isoCode: 'XAD',
-    riskCategory: RISK.STANDARD,
+    esraClassification: RISK.STANDARD,
     shortTermCover: false,
     canGetAQuoteOnline: false,
     canApplyForInsuranceOnline: false,
@@ -35,7 +35,7 @@ const mockCountries = [
   {
     name: 'Algeria',
     isoCode: 'DZA',
-    riskCategory: RISK.STANDARD,
+    esraClassification: RISK.STANDARD,
     ...baseCountry,
   },
   /**
@@ -46,7 +46,7 @@ const mockCountries = [
   {
     name: 'Egypt',
     isoCode: 'EGY',
-    riskCategory: RISK.VERY_HIGH,
+    esraClassification: RISK.VERY_HIGH,
     ...baseCountry,
     canGetAQuoteOnline: false,
     canGetAQuoteByEmail: true,
@@ -58,7 +58,7 @@ const mockCountries = [
   {
     name: 'Gabon',
     isoCode: 'GAB',
-    riskCategory: RISK.VERY_HIGH,
+    esraClassification: RISK.VERY_HIGH,
     ...baseCountry,
     canGetAQuoteOnline: false,
     canApplyForInsuranceOnline: false,
@@ -72,7 +72,7 @@ const mockCountries = [
     name: 'Gibraltar',
     isoCode: 'GIB',
     ...baseCountry,
-    riskCategory: RISK.STANDARD,
+    esraClassification: RISK.STANDARD,
     canGetAQuoteOnline: false,
     canGetAQuoteOffline: false,
     canApplyForInsuranceOnline: false,
@@ -89,7 +89,7 @@ const mockCountries = [
     name: 'France',
     isoCode: 'FRA',
     ...baseCountry,
-    riskCategory: RISK.STANDARD,
+    esraClassification: RISK.STANDARD,
     canGetAQuoteOnline: true,
     canGetAQuoteOffline: true,
     canApplyForInsuranceOnline: true,

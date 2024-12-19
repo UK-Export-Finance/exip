@@ -140,16 +140,16 @@ const mapRowRates = (row) => {
  * @param {String} Risk category from spreadsheet, e.g "Standard Risk"
  * @returns {String} Risk category in the grid, e.g "STANDARD"
  */
-const mapRiskCategory = (riskCategory) => {
-  if (riskCategory === RISK.STANDARD) {
+const mapRiskCategory = (esraClassification) => {
+  if (esraClassification === RISK.STANDARD) {
     return RISK_FIELDS.STANDARD;
   }
 
-  if (riskCategory === RISK.HIGH) {
+  if (esraClassification === RISK.HIGH) {
     return RISK_FIELDS.HIGH;
   }
 
-  if (riskCategory === RISK.VERY_HIGH) {
+  if (esraClassification === RISK.VERY_HIGH) {
     return RISK_FIELDS.VERY_HIGH;
   }
 
@@ -166,8 +166,8 @@ const mapRiskCategory = (riskCategory) => {
  * @param {String} Risk category
  * @returns {Object} Updated pricing grid
  */
-const addRowToGrid = (grid, months, rates, policyType, riskCategory) => {
-  grid[policyType][riskCategory].push({
+const addRowToGrid = (grid, months, rates, policyType, esraClassification) => {
+  grid[policyType][esraClassification].push({
     months,
     rates,
   });
@@ -193,9 +193,9 @@ const addPolicyToGrid = (grid, policyType, rows) => {
       const months = Number(row[1]);
 
       const rates = mapRowRates(row);
-      const riskCategory = mapRiskCategory(row[0]);
+      const esraClassification = mapRiskCategory(row[0]);
 
-      updatedGrid = addRowToGrid(grid, months, rates, policyType, riskCategory);
+      updatedGrid = addRowToGrid(grid, months, rates, policyType, esraClassification);
     }
   });
 
