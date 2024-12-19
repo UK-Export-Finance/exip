@@ -17,8 +17,7 @@ const COUNTRY_NAME = COUNTRY_APPLICATION_SUPPORT.UNSUPPORTED_1.NAME;
 
 const baseUrl = Cypress.config('baseUrl');
 
-// TODO: EMS-4065
-context.skip(
+context(
   'Insurance - Cannot apply page - as an exporter, I want to check if UKEF offer credit insurance policy for where my buyer is based - Unsupported country',
   () => {
     beforeEach(() => {
