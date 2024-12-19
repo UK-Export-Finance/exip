@@ -126,7 +126,7 @@ export const post = async (req: Request, res: Response) => {
      * redirect to a specific exit page.
      */
     if (country.canGetAQuoteOnline) {
-      console.info(`Country support - %s ${country.name} - can get a quote online`);
+      console.info('Country support - %s - can get a quote online', country.name);
 
       const populatedData = mapSubmittedEligibilityCountry(country);
 
@@ -144,7 +144,7 @@ export const post = async (req: Request, res: Response) => {
      * redirect to a specific exit page.
      */
     if (country.canGetAQuoteByEmail) {
-      console.info(`Country support - %s ${country.name} - can get a quote by email`);
+      console.info('Country support - %s - can get a quote by email', country.name);
 
       const populatedData = mapSubmittedEligibilityCountry(country);
 
@@ -166,7 +166,7 @@ export const post = async (req: Request, res: Response) => {
      * redirect to a specific exit page.
      */
     if (country.cannotGetAQuote) {
-      console.info(`Country support - %s ${country.name} - cannot a quote`);
+      console.info('Country support - %s - cannot a quote', country.name);
 
       const populatedData = mapSubmittedEligibilityCountry(country);
 

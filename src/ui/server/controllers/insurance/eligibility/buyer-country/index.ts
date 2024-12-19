@@ -95,7 +95,7 @@ export const post = async (req: Request, res: Response) => {
      * redirect to a specific exit page.
      */
     if (country.noOnlineInsuranceSupport) {
-      console.info(`Country support - %s ${country.name} - no online insurance support available`);
+      console.info('Country support - %s - no online insurance support available', country.name);
 
       const populatedData = mapSubmittedEligibilityCountry(country);
 
@@ -112,7 +112,7 @@ export const post = async (req: Request, res: Response) => {
      * redirect to a specific exit page.
      */
     if (country.canApplyForInsuranceOnline) {
-      console.info(`Country support - %s ${country.name} - can apply for insurance online`);
+      console.info('Country support - %s - can apply for insurance online', country.name);
 
       const populatedData = mapSubmittedEligibilityCountry(country);
 
@@ -133,7 +133,7 @@ export const post = async (req: Request, res: Response) => {
      * redirect to a specific exit page.
      */
     if (country.noInsuranceSupport) {
-      console.info(`Country support - %s ${country.name} - no insurance support`);
+      console.info('Country support - %s - no insurance support', country.name);
 
       const populatedData = mapSubmittedEligibilityCountry(country);
 
@@ -152,7 +152,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(CANNOT_APPLY_ROUTE);
     }
 
-    console.info(`Country support - %s ${country.name} - unable to determine country support`);
+    console.info('Country support - %s - unable to determine country support', country.name);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (error) {
