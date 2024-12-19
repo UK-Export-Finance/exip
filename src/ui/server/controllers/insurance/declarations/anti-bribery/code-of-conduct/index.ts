@@ -15,7 +15,7 @@ const {
   INSURANCE_ROOT,
   DECLARATIONS: {
     ANTI_BRIBERY: { EXPORTING_WITH_CODE_OF_CONDUCT, CODE_OF_CONDUCT_SAVE_AND_BACK },
-    CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+    MODERN_SLAVERY,
   },
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
@@ -123,7 +123,7 @@ export const post = async (req: Request, res: Response) => {
     }
 
     // answer is false
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY}`);
   } catch (error) {
     console.error('Error updating application - declarations - anti-bribery - exporting with code of conduct %o', error);
 

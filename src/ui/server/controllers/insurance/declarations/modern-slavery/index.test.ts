@@ -17,7 +17,11 @@ const { WILL_ADHERE_TO_ALL_REQUIREMENTS, HAS_NO_OFFENSES_OR_INVESTIGATIONS, IS_N
 
 const { MODERN_SLAVERY } = DECLARATIONS.LATEST_DECLARATIONS;
 
-const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
+const {
+  INSURANCE_ROOT,
+  DECLARATIONS: { CONFIRMATION_AND_ACKNOWLEDGEMENTS },
+  PROBLEM_WITH_SERVICE,
+} = ROUTES.INSURANCE;
 
 describe('controllers/insurance/declarations/modern-slavery', () => {
   jest.mock('../save-data/modern-slavery');
@@ -166,10 +170,10 @@ describe('controllers/insurance/declarations/modern-slavery', () => {
         expect(save.declarationModernSlavery).toHaveBeenCalledWith(mockApplication, payload);
       });
 
-      it(`should redirect to ${ALL_SECTIONS}`, async () => {
+      it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

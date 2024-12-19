@@ -9,8 +9,11 @@ const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.MODERN_SLAVERY;
 
 const {
   ROOT: INSURANCE_ROOT,
-  ALL_SECTIONS,
-  DECLARATIONS: { MODERN_SLAVERY },
+  DECLARATIONS: {
+    ANTI_BRIBERY: { EXPORTING_WITH_CODE_OF_CONDUCT },
+    CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+    MODERN_SLAVERY,
+  },
 } = INSURANCE_ROUTES;
 
 const {
@@ -33,9 +36,11 @@ context('Insurance - Declarations - Modern slavery page - TODO EMS-4023', () => 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
+      cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'exportingWithCodeOfConduct', referenceNumber });
+
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY}`;
 
-      cy.navigateToUrl(url);
+      // cy.navigateToUrl(url);
       cy.assertUrl(url);
     });
   });
@@ -52,7 +57,7 @@ context('Insurance - Declarations - Modern slavery page - TODO EMS-4023', () => 
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY}#`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`,
     });
   });
 
@@ -104,7 +109,7 @@ context('Insurance - Declarations - Modern slavery page - TODO EMS-4023', () => 
 
   describe('form submission', () => {
     describe('when submitting all radios as `yes`', () => {
-      it(`should redirect to ${ALL_SECTIONS}`, () => {
+      it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, () => {
         cy.navigateToUrl(url);
 
         cy.completeAndSubmitModernSlaveryForm({
@@ -113,7 +118,7 @@ context('Insurance - Declarations - Modern slavery page - TODO EMS-4023', () => 
           isNotAwareOfExistingSlavery: true,
         });
 
-        const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+        const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
         cy.assertUrl(expectedUrl);
       });
@@ -134,7 +139,7 @@ context('Insurance - Declarations - Modern slavery page - TODO EMS-4023', () => 
         [AWARE_OF_EXISTING_SLAVERY]: 'Mock aware of existing slavery reason',
       };
 
-      it(`should redirect to ${ALL_SECTIONS}`, () => {
+      it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, () => {
         cy.navigateToUrl(url);
 
         // TODO: EMS-4046 - use application fixtures.
@@ -145,7 +150,7 @@ context('Insurance - Declarations - Modern slavery page - TODO EMS-4023', () => 
           conditionalFields: mockReasons,
         });
 
-        const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+        const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
         cy.assertUrl(expectedUrl);
       });
