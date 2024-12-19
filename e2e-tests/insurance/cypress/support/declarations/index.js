@@ -20,6 +20,11 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add(
+  'completeAndSubmitModernSlaveryFormConditionalFields',
+  require('../../../../commands/insurance/declarations/complete-and-submit-modern-slavery-form-conditional-fields'),
+);
+
+Cypress.Commands.add(
   'completeAndSubmitDeclarationConfirmationAndAcknowledgements',
   require('../../../../commands/insurance/declarations/complete-and-submit-confirmation-and-acknowledgements-form'),
 );

@@ -39,6 +39,7 @@ describe('controllers/insurance/export-contract/save-data/export-contract', () =
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
       const expectedSanitisedData = sanitiseData(mockFormBody.invalid);
+
       expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.exportContract.id, expectedSanitisedData);
     });
 
@@ -56,6 +57,7 @@ describe('controllers/insurance/export-contract/save-data/export-contract', () =
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
       const expectedSanitisedData = sanitiseData(mockFormBody.valid);
+
       expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.exportContract.id, expectedSanitisedData);
     });
 

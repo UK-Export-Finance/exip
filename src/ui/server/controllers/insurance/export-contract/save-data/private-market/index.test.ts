@@ -39,6 +39,7 @@ describe('controllers/insurance/export-contract/save-data/private-market', () =>
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
       const expectedSanitisedData = sanitiseData(mockFormBody.invalid);
+
       expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.exportContract.privateMarket.id, expectedSanitisedData);
     });
 
@@ -56,6 +57,7 @@ describe('controllers/insurance/export-contract/save-data/private-market', () =>
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
       const expectedSanitisedData = sanitiseData(mockFormBody.valid);
+
       expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.exportContract.privateMarket.id, expectedSanitisedData);
     });
 

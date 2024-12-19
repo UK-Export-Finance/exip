@@ -1,5 +1,6 @@
 import { autoCompleteField } from '../../../pages/shared';
 import { DECLARATIONS as DECLARATIONS_FIELD_IDS } from '../../../constants/field-ids/insurance/declarations';
+import application from '../../../fixtures/application';
 
 const {
   MODERN_SLAVERY: {
@@ -14,7 +15,11 @@ const {
  * @param {String} offensesOrInvestigations: Textarea answer
  * @param {String} awareOfExistingSlavery: Textarea answer
  */
-const completeModernSlaveryFormConditionalFields = ({ cannotAdhereToAllRequirements, offensesOrInvestigations, awareOfExistingSlavery }) => {
+const completeModernSlaveryFormConditionalFields = ({
+  cannotAdhereToAllRequirements = application.DECLARATION.MODERN_SLAVERY[CANNOT_ADHERE_TO_ALL_REQUIREMENTS],
+  offensesOrInvestigations = application.DECLARATION.MODERN_SLAVERY[OFFENSES_OR_INVESTIGATIONS],
+  awareOfExistingSlavery = application.DECLARATION.MODERN_SLAVERY[AWARE_OF_EXISTING_SLAVERY],
+}) => {
   if (cannotAdhereToAllRequirements) {
     cy.keyboardInput(autoCompleteField(CANNOT_ADHERE_TO_ALL_REQUIREMENTS).input(), cannotAdhereToAllRequirements);
   }

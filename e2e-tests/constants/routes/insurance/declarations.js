@@ -15,6 +15,7 @@ export const DECLARATIONS = {
     EXPORTING_WITH_CODE_OF_CONDUCT_SAVE_AND_BACK: `${ANTI_BRIBERY_ROOT}/exporting-with-code-of-conduct/save-and-back`,
   },
   MODERN_SLAVERY: `${ROOT}/modern-slavery`,
+  MODERN_SLAVERY_SAVE_AND_BACK: `${ROOT}/modern-slavery/save-and-back`,
   CONFIRMATION_AND_ACKNOWLEDGEMENTS: `${ROOT}/confirmation-and-acknowledgements`,
   CONFIRMATION_AND_ACKNOWLEDGEMENTS_SAVE_AND_BACK: `${ROOT}/confirmation-and-acknowledgements/save-and-back`,
 };

@@ -82,6 +82,11 @@ const {
       HAS_BUYER_FINANCIAL_ACCOUNTS,
     },
     CURRENCY: { CURRENCY_CODE },
+    DECLARATIONS: {
+      MODERN_SLAVERY: {
+        CONDITIONAL_REASONS: { CANNOT_ADHERE_TO_ALL_REQUIREMENTS, OFFENSES_OR_INVESTIGATIONS, AWARE_OF_EXISTING_SLAVERY },
+      },
+    },
   },
 } = FIELD_IDS;
 
@@ -220,6 +225,13 @@ const application = {
   },
   DIFFERENT_TRADING_ADDRESS: {
     [EXPORTER_BUSINESS_FULL_ALT_TRADING_ADDRESS]: 'Mock full address',
+  },
+  DECLARATION: {
+    MODERN_SLAVERY: {
+      [CANNOT_ADHERE_TO_ALL_REQUIREMENTS]: 'Mock cannot adhere to all requirements reason',
+      [OFFENSES_OR_INVESTIGATIONS]: 'Mock offenses or investigations reason',
+      [AWARE_OF_EXISTING_SLAVERY]: 'Mock aware of existing slavery reason',
+    },
   },
 };
 

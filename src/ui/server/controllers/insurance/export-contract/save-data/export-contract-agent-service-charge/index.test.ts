@@ -43,6 +43,7 @@ describe('controllers/insurance/export-contract/save-data/export-contract-agent-
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
       const expectedSanitisedData = sanitiseData(mockFormBody.invalid);
+
       expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.exportContract.agent.service.charge.id, expectedSanitisedData);
     });
 
@@ -60,6 +61,7 @@ describe('controllers/insurance/export-contract/save-data/export-contract-agent-
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
       const expectedSanitisedData = sanitiseData(mockFormBody.valid);
+
       expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.exportContract.agent.service.charge.id, expectedSanitisedData);
     });
 

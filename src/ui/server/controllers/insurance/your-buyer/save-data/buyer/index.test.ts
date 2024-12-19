@@ -30,7 +30,9 @@ describe('controllers/insurance/your-buyer/save-data/buyer', () => {
         expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
         const dataToSave = getDataToSave(mockFormBody, mockValidationErrors.errorList);
+
         const expectedSanitisedData = sanitiseData(dataToSave);
+
         expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.buyer.id, expectedSanitisedData);
       });
 
@@ -48,7 +50,9 @@ describe('controllers/insurance/your-buyer/save-data/buyer', () => {
         expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
         const dataToSave = getDataToSave(mockFormBody);
+
         const expectedSanitisedData = sanitiseData(dataToSave);
+
         expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.buyer.id, expectedSanitisedData);
       });
 

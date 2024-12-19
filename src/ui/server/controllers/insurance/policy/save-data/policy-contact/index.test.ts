@@ -37,6 +37,7 @@ describe('controllers/insurance/policy/save-data/policy-contact', () => {
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
       const expectedSanitisedData = sanitiseData(mockFormBody.invalid);
+
       expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.policyContact.id, expectedSanitisedData);
     });
 
@@ -54,6 +55,7 @@ describe('controllers/insurance/policy/save-data/policy-contact', () => {
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
       const expectedSanitisedData = sanitiseData(mockFormBody.valid);
+
       expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.policyContact.id, expectedSanitisedData);
     });
 

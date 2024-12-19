@@ -32,6 +32,7 @@ describe('controllers/insurance/check-your-answers/save-data', () => {
     expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
     const expectedSanitisedData = sanitiseData(mockFormBody);
+
     expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.sectionReview.id, expectedSanitisedData);
   });
 
