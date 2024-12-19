@@ -19,7 +19,6 @@ export interface Country extends Relationship {
   shortTermCover?: boolean;
   nbiIssueAvailable?: boolean;
   canGetAQuoteOnline?: boolean;
-  canGetAQuoteOffline?: boolean;
   canGetAQuoteByEmail?: boolean;
   cannotGetAQuote?: boolean;
   canApplyForInsuranceOnline?: boolean;
@@ -44,7 +43,6 @@ export interface MappedCisCountry {
   name: string;
   shortTermCover: boolean;
   canGetAQuoteOnline: boolean;
-  canGetAQuoteOffline: boolean;
   canGetAQuoteByEmail: boolean;
   cannotGetAQuote: boolean;
   canApplyForInsuranceOnline: boolean;

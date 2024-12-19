@@ -6,7 +6,6 @@ interface Country {
   selected?: boolean;
   value: string;
   canGetAQuoteOnline: boolean;
-  canGetAQuoteOffline: boolean;
   canGetAQuoteByEmail: boolean;
   cannotGetAQuote: boolean;
   canApplyForInsuranceOnline: boolean;

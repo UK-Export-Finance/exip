@@ -8,7 +8,6 @@ const {
 // mock base country that can get a quote and apply online.
 const baseCountry = {
   canGetAQuoteOnline: true,
-  canGetAQuoteOffline: false,
   canGetAQuoteByEmail: false,
   cannotGetAQuote: false,
   canApplyForInsuranceOnline: true,
@@ -74,7 +73,6 @@ const mockCountries = [
     ...baseCountry,
     esraClassification: RISK.STANDARD,
     canGetAQuoteOnline: false,
-    canGetAQuoteOffline: false,
     canApplyForInsuranceOnline: false,
     noOnlineInsuranceSupport: false,
     noInsuranceSupport: true,
@@ -91,7 +89,6 @@ const mockCountries = [
     ...baseCountry,
     esraClassification: RISK.STANDARD,
     canGetAQuoteOnline: true,
-    canGetAQuoteOffline: true,
     canApplyForInsuranceOnline: true,
     canApplyForInsuranceOffline: false,
     noInsuranceSupport: false,

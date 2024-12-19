@@ -231,7 +231,6 @@ const typeDefs = `
     esraClassification: String
     nbiIssueAvailable: Boolean
     canGetAQuoteOnline: Boolean
-    canGetAQuoteOffline: Boolean
     canGetAQuoteByEmail: Boolean
     cannotGetAQuote: Boolean
     cannotApply: Boolean
