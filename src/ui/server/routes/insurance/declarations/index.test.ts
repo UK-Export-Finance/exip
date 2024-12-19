@@ -25,7 +25,7 @@ describe('routes/insurance/declarations', () => {
 
   it('should setup all routes', () => {
     expect(get).toHaveBeenCalledTimes(6);
-    expect(post).toHaveBeenCalledTimes(11);
+    expect(post).toHaveBeenCalledTimes(12);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIDENTIALITY}`, confidentialityGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.DECLARATIONS.CONFIDENTIALITY}`, confidentialityPost);

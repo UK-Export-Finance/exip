@@ -1,6 +1,6 @@
 import api from '../../../../../api';
+import getDataToSave from '../../../../../helpers/get-data-to-save';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
-import stripEmptyFormFields from '../../../../../helpers/strip-empty-form-fields';
 import { Application, RequestBody } from '../../../../../../types';
 
 /**
@@ -11,11 +11,11 @@ import { Application, RequestBody } from '../../../../../../types';
  * @param {Express.Request.body} formBody
  * @returns {Promise<Object>} Saved data
  */
-const declarationModernSlavery = async (application: Application, formBody: RequestBody) => {
-  // strip empty form fields.
-  const fieldsWithValues = stripEmptyFormFields(formBody);
+const declarationModernSlavery = async (application: Application, formBody: RequestBody, errorList?: object) => {
+  // determines which fields to save
+  const dataToSave = getDataToSave(formBody, errorList);
 
-  const sanitisedData = sanitiseData(fieldsWithValues);
+  const sanitisedData = sanitiseData(dataToSave);
 
   // send the form data to the API for database update.
   const declarationModernSlaveryId = application.declaration.modernSlavery.id;
