@@ -1,4 +1,4 @@
-import { EXTERNAL_API_DEFINITIONS } from '../../../../../constants';
+import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
 
 const {
   CIS: {
@@ -7,12 +7,12 @@ const {
 } = EXTERNAL_API_DEFINITIONS;
 
 /**
- * hasValidShortTermCover
+ * shortTermCoverIsYesReferOrUnlisted
  * Check if a country's "short term cover" flag can apply for insurance online.
  * @param {String} shortTermCover: Short term cover
  * @returns {Boolean}
  */
-const hasValidShortTermCover = (shortTermCover: string): boolean => {
+const shortTermCoverIsYesReferOrUnlisted = (shortTermCover: string): boolean => {
   switch (shortTermCover) {
     case YES:
       return true;
@@ -28,4 +28,4 @@ const hasValidShortTermCover = (shortTermCover: string): boolean => {
   }
 };
 
-export default hasValidShortTermCover;
+export default shortTermCoverIsYesReferOrUnlisted;

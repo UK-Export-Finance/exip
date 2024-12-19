@@ -1,5 +1,5 @@
 import esraClassificationIsStandardHighOrVeryHigh from '../esra-classification-is-standard-high-or-very-high';
-import hasValidShortTermCover from './has-valid-short-term-cover';
+import shortTermCoverIsYesReferOrUnlisted from '../short-term-cover-is-yes-refer-or-unlisted';
 import countryRatingIsAorB from '../country-rating-is-a-or-b';
 import { CisCountry } from '../../../../types';
 
@@ -14,7 +14,7 @@ const canApplyForInsuranceOnline = (cisCountry: CisCountry): boolean => {
 
   const conditions =
     esraClassificationIsStandardHighOrVeryHigh(ESRAClassificationDesc) &&
-    hasValidShortTermCover(shortTermCoverAvailabilityDesc) &&
+    shortTermCoverIsYesReferOrUnlisted(shortTermCoverAvailabilityDesc) &&
     countryRatingIsAorB(countryRatingDesc);
 
   return conditions;
