@@ -16,8 +16,8 @@ updates:
       - '/src/ui'
       - '/generate-exip-pricing-grid'
     schedule:
-      interval: 'daily'
-      time: '12:00'
+      interval: 'monthly'
+      time: '03:00'
     labels:
       - 'chore'
     ignore:
