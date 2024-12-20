@@ -11,6 +11,7 @@ import { mockReq, mockRes, mockCountries } from '../../../../test-mocks';
 
 const {
   ELIGIBILITY: { CANNOT_APPLY_EXIT: CANNOT_APPLY_ROUTE, TOTAL_VALUE_INSURED, BUYER_COUNTRY_CHANGE, CHECK_YOUR_ANSWERS, TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT },
+  PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
 describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
@@ -181,6 +182,31 @@ describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
         await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(CANNOT_APPLY_ROUTE);
+      });
+    });
+
+    describe('when the country does not have any recognised flags with a value of true', () => {
+      beforeEach(() => {
+        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = countryNoInsuranceSupport.isoCode;
+
+        mockCountriesResponse = [
+          {
+            ...countryNoInsuranceSupport,
+            noOnlineInsuranceSupport: false,
+            canApplyForInsuranceOnline: false,
+            noInsuranceSupport: false,
+          },
+        ];
+
+        getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+
+        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });
