@@ -7,10 +7,9 @@ const getApimCisCountries = gql`
       name
       esraClassification
       canGetAQuoteOnline
-      canGetAQuoteByEmail
       cannotGetAQuote
       canApplyForInsuranceOnline
-      noOnlineInsuranceSupport
+      noOnlineSupport
       noInsuranceSupport
       shortTermCover
     }

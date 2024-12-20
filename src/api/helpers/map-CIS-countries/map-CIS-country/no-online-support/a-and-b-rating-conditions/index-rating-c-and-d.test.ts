@@ -17,7 +17,7 @@ const countryRatingsDParams = COUNTRY_RATINGS.D.map((rating: string) => ({
   shortTermCover: SHORT_TERM_COVER.YES,
 }));
 
-describe('helpers/map-CIS-countries/map-CIS-country/no-online-insurance-support/a-and-b-rating-conditions - ratings as C and D', () => {
+describe('helpers/map-CIS-countries/map-CIS-country/no-online-support/a-and-b-rating-conditions - ratings as C and D', () => {
   describe.each(countryRatingsCParams)('when the country rating is `C`', (countryObj) => {
     it(`should return false for ${countryObj.countryRating}`, () => {
       const result = aAndBRatingConditions(countryObj);

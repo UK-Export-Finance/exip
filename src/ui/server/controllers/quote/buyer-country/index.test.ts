@@ -377,7 +377,6 @@ describe('controllers/quote/buyer-country', () => {
           {
             ...countryQuoteOnline,
             canGetAQuoteOnline: false,
-            canGetAQuoteByEmail: false,
             cannotGetAQuote: false,
           },
         ];
