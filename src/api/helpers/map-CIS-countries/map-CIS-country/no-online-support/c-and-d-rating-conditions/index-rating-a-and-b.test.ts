@@ -17,7 +17,7 @@ const countryRatingsBParams = COUNTRY_RATINGS.B.map((rating: string) => ({
   shortTermCover: SHORT_TERM_COVER.YES,
 }));
 
-describe('helpers/map-CIS-countries/map-CIS-country/no-support/a-and-b-rating-conditions - rating as A and B', () => {
+describe('helpers/map-CIS-countries/map-CIS-country/no-online-support/a-and-b-rating-conditions - rating as A and B', () => {
   describe.each(countryRatingsAParams)('when the country rating is `A`', (countryObj) => {
     it(`should return false for ${countryObj.countryRating}`, () => {
       const result = cAndDRatingConditions(countryObj);
