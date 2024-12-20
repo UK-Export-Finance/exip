@@ -2828,6 +2828,7 @@ var typeDefs = `
     cannotApply: Boolean
     canApplyForInsuranceOnline: Boolean
     noOnlineSupport: Boolean
+    noInsuranceSupport: Boolean
   }
 
   type MappedCurrency {
