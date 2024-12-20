@@ -16,8 +16,6 @@ export interface Country extends Relationship {
   name: string;
   isoCode: string;
   esraClassification?: string;
-  shortTermCover?: boolean;
-  nbiIssueAvailable?: boolean;
   canGetAQuoteOnline?: boolean;
   cannotGetAQuote?: boolean;
   canApplyForInsuranceOnline?: boolean;
@@ -37,9 +35,7 @@ export interface MappedCisCountry {
   countryRating: string;
   esraClassification?: string | null;
   isoCode: string;
-  nbiIssueAvailable: boolean;
   name: string;
-  shortTermCover: boolean;
   noOnlineSupport: boolean;
   canGetAQuoteOnline: boolean;
   cannotGetAQuote: boolean;

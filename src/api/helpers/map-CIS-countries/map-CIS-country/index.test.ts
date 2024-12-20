@@ -1,11 +1,9 @@
 import mapCisCountry from '.';
 import mapEsraClassification from './map-esra-classification';
-import mapShortTermCoverAvailable from './map-short-term-cover-available';
-import mapNbiIssueAvailable from './map-NBI-issue-available';
-import noOnlineSupport from './no-online-support';
+import hasNoOnlineSupport from './has-no-online-support';
 import canGetAQuoteOnline from './can-get-a-quote-online';
 import canApplyForInsuranceOnline from './can-apply-for-insurance-online';
-import noSupport from './no-support';
+import hasNoSupport from './has-no-support';
 import { EXTERNAL_API_DEFINITIONS, EXTERNAL_API_MAPPINGS } from '../../../constants';
 import { MappedCisCountry } from '../../../types';
 import { mockCisCountry } from '../../../test-mocks';
@@ -26,8 +24,6 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
     const result = mapCisCountry(mockCountryBase);
 
     const esraClassification = mapEsraClassification(mockCountryBase.ESRAClassificationDesc);
-    const shortTermCover = mapShortTermCoverAvailable(mockCountryBase.shortTermCoverAvailabilityDesc);
-    const nbiIssueAvailable = mapNbiIssueAvailable(mockCountryBase.NBIIssue);
 
     const countryRating = mockCisCountry.countryRatingDesc;
 
@@ -36,10 +32,8 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
       esraClassification,
       isoCode: mockCountryBase.isoCode,
       name: mockCountryBase.marketName,
-      nbiIssueAvailable,
-      shortTermCover,
 
-      noOnlineSupport: noOnlineSupport({
+      noOnlineSupport: hasNoOnlineSupport({
         countryRating,
         esraClassification: mockCisCountry.ESRAClassificationDesc,
         shortTermCover: mockCisCountry.shortTermCoverAvailabilityDesc,
@@ -47,7 +41,7 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
 
       canGetAQuoteOnline: canGetAQuoteOnline(mockCisCountry),
 
-      cannotGetAQuote: noSupport({
+      cannotGetAQuote: hasNoSupport({
         countryRating,
         esraClassification: mockCisCountry.ESRAClassificationDesc,
         shortTermCover: mockCisCountry.shortTermCoverAvailabilityDesc,
@@ -55,7 +49,7 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
 
       canApplyForInsuranceOnline: canApplyForInsuranceOnline(mockCisCountry),
 
-      noInsuranceSupport: noSupport({
+      noInsuranceSupport: hasNoSupport({
         countryRating,
         esraClassification: mockCisCountry.ESRAClassificationDesc,
         shortTermCover: mockCisCountry.shortTermCoverAvailabilityDesc,

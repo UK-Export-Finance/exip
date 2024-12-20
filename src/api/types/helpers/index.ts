@@ -5,7 +5,6 @@ export interface MapYesNoFieldParams {
 
 export interface MapCisCountryParams {
   shortTermCover: boolean;
-  nbiIssueAvailable: boolean;
   esraClassification?: string | null;
 }
 

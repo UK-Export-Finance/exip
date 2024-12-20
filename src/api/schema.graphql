@@ -3743,7 +3743,6 @@ type MappedCisCountry {
   name: String
   shortTermCover: Boolean
   esraClassification: String
-  nbiIssueAvailable: Boolean
   canGetAQuoteOnline: Boolean
   cannotGetAQuote: Boolean
   cannotApply: Boolean
