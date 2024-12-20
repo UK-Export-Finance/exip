@@ -38,17 +38,17 @@ context(
       cy.clickSubmitButton();
     });
 
-    it('redirects to `cannot obtain cover` exit page', () => {
+    it(`should redirect to ${CANNOT_APPLY_EXIT} exit page`, () => {
       const expectedUrl = `${baseUrl}${CANNOT_APPLY_EXIT}`;
 
       cy.assertUrl(expectedUrl);
     });
 
-    it('renders a back link with correct url', () => {
+    it('should render a back link with correct url', () => {
       cy.checkLink(backLink(), BUYER_COUNTRY, LINKS.BACK);
     });
 
-    it('renders a specific reason', () => {
+    it('should render a specific reason', () => {
       const { REASON } = CONTENT_STRINGS;
       const expected = `${REASON.INTRO} ${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${NEW_COUNTRY_INPUT}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
       cy.checkText(cannotApplyPage.reason(), expected);

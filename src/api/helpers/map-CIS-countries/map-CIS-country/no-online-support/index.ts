@@ -3,14 +3,14 @@ import cAndDRatingConditions from './c-and-d-rating-conditions';
 import { NoInsuranceSupportParams } from '../../../../types';
 
 /**
- * noOnlineInsuranceSupport
- * Check if a country has no online insurance support
+ * noOnlineSupport
+ * Check if a country has no quote or insurance support (online)
  * @param {String} countryRating: Country rating
  * @param {String} esraClassification: ESRA classification
  * @param {String} shortTermCover: Short term cover
  * @returns {Boolean}
  */
-const noOnlineInsuranceSupport = ({ countryRating, esraClassification, shortTermCover }: NoInsuranceSupportParams): boolean => {
+const noOnlineSupport = ({ countryRating, esraClassification, shortTermCover }: NoInsuranceSupportParams): boolean => {
   const aAndBConditions = aAndBRatingConditions({
     countryRating,
     esraClassification,
@@ -28,4 +28,4 @@ const noOnlineInsuranceSupport = ({ countryRating, esraClassification, shortTerm
   return conditions;
 };
 
-export default noOnlineInsuranceSupport;
+export default noOnlineSupport;

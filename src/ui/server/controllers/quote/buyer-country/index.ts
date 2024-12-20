@@ -140,10 +140,10 @@ export const post = async (req: Request, res: Response) => {
     }
 
     /**
-     * If a country can get a quote by email,
+     * If a country has no online support,
      * redirect to a specific exit page.
      */
-    if (country.canGetAQuoteByEmail) {
+    if (country.noOnlineSupport) {
       console.info('Country support - %s - can get a quote by email', country.name);
 
       const populatedData = mapSubmittedEligibilityCountry(country);
@@ -183,6 +183,10 @@ export const post = async (req: Request, res: Response) => {
 
       return res.redirect(ROUTES.QUOTE.CANNOT_APPLY_EXIT);
     }
+
+    console.info('Country support - %s - unable to determine country support', country.name);
+
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   } catch (error) {
     console.error('Error getting CIS countries %o', error);
 
