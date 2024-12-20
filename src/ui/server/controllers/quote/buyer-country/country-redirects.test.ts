@@ -5,16 +5,21 @@ import getCountryByIsoCode from '../../../helpers/get-country-by-iso-code';
 import mapSubmittedEligibilityCountry from '../../../helpers/mappings/map-submitted-eligibility-country';
 import api from '../../../api';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
-import { mockReq, mockRes, mockCountries } from '../../../test-mocks';
+import {
+  mockReq,
+  mockRes,
+  mockCountries,
+  mockCountryCannotGetAQuote,
+  mockCountryCanGetAQuoteOnline,
+  mockCountryCanGetAQuoteByEmail,
+} from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
+
+let mockCountriesResponse = mockCountries;
 
 describe('controllers/quote/buyer-country - redirects', () => {
   let req: Request;
   let res: Response;
-
-  let mockCountriesResponse = mockCountries;
-
-  const { 0: cannotGetAQuote, 1: canGetAQuoteOnline, 2: canGetAQuoteByEmail } = mockCountriesResponse;
 
   const mockFlash = jest.fn();
 
@@ -49,12 +54,12 @@ describe('controllers/quote/buyer-country - redirects', () => {
     });
 
     describe('when the API returns a canGetAQuoteOnline flag for the submitted country', () => {
-      const selectedCountryIsoCode = canGetAQuoteOnline.isoCode;
+      const selectedCountryIsoCode = mockCountryCanGetAQuoteOnline.isoCode;
 
       beforeEach(() => {
         jest.resetAllMocks();
 
-        mockCountriesResponse = [canGetAQuoteOnline];
+        mockCountriesResponse = [mockCountryCanGetAQuoteOnline];
 
         getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 
@@ -93,18 +98,18 @@ describe('controllers/quote/buyer-country - redirects', () => {
     });
 
     describe('when the API returns a canGetAQuoteByEmail flag for the submitted country', () => {
-      const selectedCountryIsoCode = canGetAQuoteByEmail.isoCode;
+      const selectedCountryIsoCode = mockCountryCanGetAQuoteByEmail.isoCode;
 
       beforeEach(() => {
         jest.resetAllMocks();
 
-        mockCountriesResponse = [canGetAQuoteByEmail];
+        mockCountriesResponse = [mockCountryCanGetAQuoteByEmail];
 
         getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 
         api.keystone.APIM.getCisCountries = getCisCountriesSpy;
 
-        req.body[FIELD_ID] = canGetAQuoteByEmail.isoCode;
+        req.body[FIELD_ID] = mockCountryCanGetAQuoteByEmail.isoCode;
       });
 
       it('should update the session with submitted data, populated with country object', async () => {
@@ -141,13 +146,13 @@ describe('controllers/quote/buyer-country - redirects', () => {
     });
 
     describe('when the API returns a cannotGetAQuote flag for the submitted country', () => {
-      const selectedCountryName = cannotGetAQuote.name;
-      const selectedCountryIsoCode = cannotGetAQuote.isoCode;
+      const selectedCountryName = mockCountryCannotGetAQuote.name;
+      const selectedCountryIsoCode = mockCountryCannotGetAQuote.isoCode;
 
       beforeEach(() => {
         jest.resetAllMocks();
 
-        mockCountriesResponse = [cannotGetAQuote];
+        mockCountriesResponse = [mockCountryCannotGetAQuote];
 
         getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 
