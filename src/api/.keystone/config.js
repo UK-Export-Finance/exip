@@ -2824,7 +2824,6 @@ var typeDefs = `
     esraClassification: String
     nbiIssueAvailable: Boolean
     canGetAQuoteOnline: Boolean
-    canGetAQuoteOffline: Boolean
     cannotGetAQuote: Boolean
     cannotApply: Boolean
     canApplyForInsuranceOnline: Boolean
@@ -9131,44 +9130,6 @@ var noOnlineSupport = ({ countryRating, esraClassification, shortTermCover }) =>
 };
 var no_online_support_default = noOnlineSupport;
 
-// helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-online/index.ts
-var canGetAQuoteOnline = ({ shortTermCover, nbiIssueAvailable, esraClassification }) => {
-  if (esraClassification && shortTermCover && nbiIssueAvailable) {
-    return true;
-  }
-  return false;
-};
-var can_get_a_quote_online_default = canGetAQuoteOnline;
-
-// helpers/map-CIS-countries/map-CIS-country/cannot-get-a-quote/index.ts
-var cannotGetAQuote = ({ shortTermCover, nbiIssueAvailable, esraClassification }) => {
-  if (!esraClassification || (!shortTermCover && !nbiIssueAvailable)) {
-    return true;
-  }
-  return false;
-};
-var cannot_get_a_quote_default = cannotGetAQuote;
-
-// helpers/map-CIS-countries/map-CIS-country/can-apply-for-quote-offline/index.ts
-var {
-  CIS: {
-    SHORT_TERM_COVER: { ILC: ILC3, CILC: CILC3, REFER: REFER2 },
-  },
-} = EXTERNAL_API_DEFINITIONS;
-var canApplyForAQuoteOffline = (originalShortTermCover) => {
-  if (originalShortTermCover === ILC3) {
-    return true;
-  }
-  if (originalShortTermCover === CILC3) {
-    return true;
-  }
-  if (originalShortTermCover === REFER2) {
-    return true;
-  }
-  return false;
-};
-var can_apply_for_quote_offline_default = canApplyForAQuoteOffline;
-
 // helpers/map-CIS-countries/map-CIS-country/esra-classification-is-standard-high-or-very-high/index.ts
 var {
   CIS: {
@@ -9189,17 +9150,17 @@ var esraClassificationIsStandardHighOrVeryHigh = (esraClassification) => {
 };
 var esra_classification_is_standard_high_or_very_high_default = esraClassificationIsStandardHighOrVeryHigh;
 
-// helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/has-valid-short-term-cover/index.ts
+// helpers/map-CIS-countries/map-CIS-country/short-term-cover-is-yes-refer-or-unlisted/index.ts
 var {
   CIS: {
-    SHORT_TERM_COVER: { YES: YES3, REFER: REFER3, UNLISTED: UNLISTED2 },
+    SHORT_TERM_COVER: { YES: YES3, REFER: REFER2, UNLISTED: UNLISTED2 },
   },
 } = EXTERNAL_API_DEFINITIONS;
-var hasValidShortTermCover = (shortTermCover) => {
+var shortTermCoverIsYesReferOrUnlisted = (shortTermCover) => {
   switch (shortTermCover) {
     case YES3:
       return true;
-    case REFER3:
+    case REFER2:
       return true;
     case UNLISTED2:
       return true;
@@ -9207,18 +9168,54 @@ var hasValidShortTermCover = (shortTermCover) => {
       return false;
   }
 };
-var has_valid_short_term_cover_default = hasValidShortTermCover;
+var short_term_cover_is_yes_refer_or_unlisted_default = shortTermCoverIsYesReferOrUnlisted;
+
+// helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-online/index.ts
+var canGetAQuoteOnline = (cisCountry) => {
+  const { ESRAClassificationDesc, shortTermCoverAvailabilityDesc, countryRatingDesc } = cisCountry;
+  const conditions =
+    esra_classification_is_standard_high_or_very_high_default(ESRAClassificationDesc) &&
+    short_term_cover_is_yes_refer_or_unlisted_default(shortTermCoverAvailabilityDesc) &&
+    country_rating_is_a_or_b_default(countryRatingDesc);
+  return conditions;
+};
+var can_get_a_quote_online_default = canGetAQuoteOnline;
 
 // helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/index.ts
 var canApplyForInsuranceOnline = (cisCountry) => {
   const { ESRAClassificationDesc, shortTermCoverAvailabilityDesc, countryRatingDesc } = cisCountry;
   const conditions =
     esra_classification_is_standard_high_or_very_high_default(ESRAClassificationDesc) &&
-    has_valid_short_term_cover_default(shortTermCoverAvailabilityDesc) &&
+    short_term_cover_is_yes_refer_or_unlisted_default(shortTermCoverAvailabilityDesc) &&
     country_rating_is_a_or_b_default(countryRatingDesc);
   return conditions;
 };
 var can_apply_for_insurance_online_default = canApplyForInsuranceOnline;
+
+// helpers/map-CIS-countries/map-CIS-country/no-support/index.ts
+var {
+  CIS: {
+    COUNTRY_RATINGS: { NOT_APPLICABLE },
+    ESRA_CLASSIFICATION: { NONE: NONE3 },
+    SHORT_TERM_COVER: { UNLISTED: UNLISTED3, CILC: CILC3 },
+  },
+} = EXTERNAL_API_DEFINITIONS;
+var noSupport = ({ countryRating, esraClassification, shortTermCover }) => {
+  const shortTermCoverIsUnlisted = shortTermCover === UNLISTED3;
+  const esraClassificationIsNone = esraClassification === NONE3;
+  const countryRatingIsNotApplicable = countryRating === NOT_APPLICABLE;
+  const countryRatingConditions =
+    country_rating_is_a_or_b_default(countryRating) || country_rating_is_c_or_d_default(countryRating) || countryRatingIsNotApplicable;
+  if (shortTermCoverIsUnlisted && esraClassificationIsNone && countryRatingConditions) {
+    return true;
+  }
+  const esraClassificationConditions = esra_classification_is_standard_high_or_very_high_default(esraClassification) || esraClassificationIsNone;
+  if (shortTermCover === CILC3 && countryRatingIsNotApplicable && esraClassificationConditions) {
+    return true;
+  }
+  return false;
+};
+var no_support_default = noSupport;
 
 // helpers/map-CIS-countries/map-CIS-country/index.ts
 var mapCisCountry = (cisCountry) => {
@@ -9239,10 +9236,18 @@ var mapCisCountry = (cisCountry) => {
       esraClassification: ESRAClassificationDesc,
       shortTermCover: shortTermCoverAvailabilityDesc,
     }),
-    canGetAQuoteOnline: can_get_a_quote_online_default({ shortTermCover, nbiIssueAvailable, esraClassification }),
-    canGetAQuoteOffline: can_apply_for_quote_offline_default(cisCountry.shortTermCoverAvailabilityDesc),
-    cannotGetAQuote: cannot_get_a_quote_default({ shortTermCover, nbiIssueAvailable, esraClassification }),
+    canGetAQuoteOnline: can_get_a_quote_online_default(cisCountry),
+    cannotGetAQuote: no_support_default({
+      countryRating,
+      esraClassification: ESRAClassificationDesc,
+      shortTermCover: shortTermCoverAvailabilityDesc,
+    }),
     canApplyForInsuranceOnline: can_apply_for_insurance_online_default(cisCountry),
+    noInsuranceSupport: no_support_default({
+      countryRating,
+      esraClassification: ESRAClassificationDesc,
+      shortTermCover: shortTermCoverAvailabilityDesc,
+    }),
   };
   return mapped;
 };

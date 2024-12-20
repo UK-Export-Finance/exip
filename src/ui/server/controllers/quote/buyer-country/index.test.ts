@@ -369,6 +369,30 @@ describe('controllers/quote/buyer-country', () => {
       });
     });
 
+    describe('when the country does not have any recognised flags with a value of true', () => {
+      beforeEach(() => {
+        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = countryQuoteOnline.isoCode;
+
+        mockCountriesResponse = [
+          {
+            ...countryQuoteOnline,
+            canGetAQuoteOnline: false,
+            cannotGetAQuote: false,
+          },
+        ];
+
+        getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+
+        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
+      });
+
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      });
+    });
+
     describe('api error handling', () => {
       describe('when the get CIS countries API call fails', () => {
         beforeEach(() => {

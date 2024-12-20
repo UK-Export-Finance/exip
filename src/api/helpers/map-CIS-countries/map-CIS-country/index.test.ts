@@ -4,9 +4,8 @@ import mapShortTermCoverAvailable from './map-short-term-cover-available';
 import mapNbiIssueAvailable from './map-NBI-issue-available';
 import noOnlineSupport from './no-online-support';
 import canGetAQuoteOnline from './can-get-a-quote-online';
-import cannotGetAQuote from './cannot-get-a-quote';
 import canApplyForInsuranceOnline from './can-apply-for-insurance-online';
-import canApplyOffline from './can-apply-for-quote-offline';
+import noSupport from './no-support';
 import { EXTERNAL_API_DEFINITIONS, EXTERNAL_API_MAPPINGS } from '../../../constants';
 import { MappedCisCountry } from '../../../types';
 import { mockCisCountry } from '../../../test-mocks';
@@ -46,13 +45,21 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
         shortTermCover: mockCisCountry.shortTermCoverAvailabilityDesc,
       }),
 
-      canGetAQuoteOnline: canGetAQuoteOnline({ shortTermCover, nbiIssueAvailable, esraClassification }),
+      canGetAQuoteOnline: canGetAQuoteOnline(mockCisCountry),
 
-      canGetAQuoteOffline: canApplyOffline(mockCountryBase.shortTermCoverAvailabilityDesc),
-
-      cannotGetAQuote: cannotGetAQuote({ shortTermCover, nbiIssueAvailable, esraClassification }),
+      cannotGetAQuote: noSupport({
+        countryRating,
+        esraClassification: mockCisCountry.ESRAClassificationDesc,
+        shortTermCover: mockCisCountry.shortTermCoverAvailabilityDesc,
+      }),
 
       canApplyForInsuranceOnline: canApplyForInsuranceOnline(mockCisCountry),
+
+      noInsuranceSupport: noSupport({
+        countryRating,
+        esraClassification: mockCisCountry.ESRAClassificationDesc,
+        shortTermCover: mockCisCountry.shortTermCoverAvailabilityDesc,
+      }),
     };
 
     expect(result).toEqual(mapped);

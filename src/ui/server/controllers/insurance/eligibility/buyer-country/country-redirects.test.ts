@@ -19,7 +19,7 @@ describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
 
   let mockCountriesResponse = mockCountries;
 
-  const { 1: countryApplyOnline, 4: countryNoOnlineSupport, 5: countryNoOnlineInsuranceSupport } = mockCountriesResponse;
+  const { 1: canApplyForInsuranceOnline, 4: noInsuranceSupport, 5: noOnlineInsuranceSupport } = mockCountriesResponse;
   const mockFlash = jest.fn();
 
   beforeEach(() => {
@@ -52,8 +52,43 @@ describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
       });
     });
 
-    describe('when the country has a canApplyForInsuranceOnline flag', () => {
-      const selectedCountryIsoCode = countryApplyOnline.isoCode;
+    describe('when the API returns a noOnlineInsuranceSupport flag for the submitted country', () => {
+      const selectedCountryName = noOnlineInsuranceSupport.isoCode;
+
+      beforeEach(() => {
+        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = selectedCountryName;
+
+        mockCountriesResponse = [noOnlineInsuranceSupport];
+
+        getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+
+        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
+      });
+
+      it('should update the session with populated country object', async () => {
+        await post(req, res);
+
+        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, noOnlineInsuranceSupport.isoCode);
+
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
+
+        const expected = {
+          ...req.session.submittedData,
+          insuranceEligibility: updateSubmittedData(expectedPopulatedData, req.session.submittedData.insuranceEligibility),
+        };
+
+        expect(req.session.submittedData).toEqual(expected);
+      });
+
+      it(`should redirect to ${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT);
+      });
+    });
+
+    describe('when the API returns a canApplyForInsuranceOnline flag for the submitted country', () => {
+      const selectedCountryIsoCode = canApplyForInsuranceOnline.isoCode;
 
       const validBody = {
         [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]: selectedCountryIsoCode,
@@ -62,7 +97,7 @@ describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
       beforeEach(() => {
         req.body = validBody;
 
-        mockCountriesResponse = [countryApplyOnline];
+        mockCountriesResponse = [canApplyForInsuranceOnline];
 
         getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 
@@ -102,49 +137,14 @@ describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
       });
     });
 
-    describe('when the country has a noOnlineSupport flag', () => {
-      const selectedCountryName = countryNoOnlineInsuranceSupport.isoCode;
-
-      beforeEach(() => {
-        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = selectedCountryName;
-
-        mockCountriesResponse = [countryNoOnlineInsuranceSupport];
-
-        getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
-
-        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
-      });
-
-      it('should update the session with populated country object', async () => {
-        await post(req, res);
-
-        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, countryNoOnlineInsuranceSupport.isoCode);
-
-        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
-
-        const expected = {
-          ...req.session.submittedData,
-          insuranceEligibility: updateSubmittedData(expectedPopulatedData, req.session.submittedData.insuranceEligibility),
-        };
-
-        expect(req.session.submittedData).toEqual(expected);
-      });
-
-      it(`should redirect to ${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT);
-      });
-    });
-
-    describe('when the country has a noOnlineSupport flag', () => {
-      const selectedCountryName = countryNoOnlineSupport.name;
-      const selectedCountryIsoCode = countryNoOnlineSupport.isoCode;
+    describe('when the API returns a noInsuranceSupport flag for the submitted country', () => {
+      const selectedCountryName = noInsuranceSupport.name;
+      const selectedCountryIsoCode = noInsuranceSupport.isoCode;
 
       beforeEach(() => {
         req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = selectedCountryIsoCode;
 
-        mockCountriesResponse = [countryNoOnlineSupport];
+        mockCountriesResponse = [noInsuranceSupport];
 
         getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 

@@ -108,8 +108,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     /**
-     * If a country cannot apply for insurance online,
-     * redirect to a specific exit page.
+     * If a country can apply for insurance online,
+     * redirect to the next page.
      */
     if (country.canApplyForInsuranceOnline) {
       console.info('Country support - %s - can apply for insurance online', country.name);
@@ -132,7 +132,7 @@ export const post = async (req: Request, res: Response) => {
      * If a country has no online support
      * redirect to a specific exit page.
      */
-    if (country.noOnlineSupport) {
+    if (country.noInsuranceSupport) {
       console.info('Country support - %s - no insurance support', country.name);
 
       const populatedData = mapSubmittedEligibilityCountry(country);

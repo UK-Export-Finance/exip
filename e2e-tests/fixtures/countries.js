@@ -59,7 +59,7 @@ const mockCountries = [XAD, AFG, DZA, AGO, AUS, BLR, BRA, MMR, FRA, RUS, GBR];
  * COUNTRY_QUOTE_SUPPORT
  * Different types of country support for a quote.
  */
-const { 2: QUOTE_ONLINE, 3: QUOTE_BY_EMAIL, 8: QUOTE_UNSUPPORTED } = mockCountries;
+const { 2: QUOTE_ONLINE, 3: QUOTE_BY_EMAIL, 10: QUOTE_UNSUPPORTED } = mockCountries;
 
 export const COUNTRY_QUOTE_SUPPORT = {
   ONLINE: QUOTE_ONLINE,
