@@ -68,7 +68,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
       });
     });
 
-    describe('when submitting with a supported country', () => {
+    describe('when submitting with a country that can get a quote online', () => {
       const field = autoCompleteField(FIELD_ID);
 
       beforeEach(() => {

@@ -232,7 +232,6 @@ const typeDefs = `
     nbiIssueAvailable: Boolean
     canGetAQuoteOnline: Boolean
     cannotGetAQuote: Boolean
-    cannotApply: Boolean
     canApplyForInsuranceOnline: Boolean
     noOnlineSupport: Boolean
     noInsuranceSupport: Boolean
