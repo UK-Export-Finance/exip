@@ -41,7 +41,7 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
       nbiIssueAvailable,
       shortTermCover,
 
-      canGetAQuoteOnline: canGetAQuoteOnline({ shortTermCover, nbiIssueAvailable, esraClassification }),
+      canGetAQuoteOnline: canGetAQuoteOnline(mockCisCountry),
 
       canGetAQuoteOffline: canApplyOffline(mockCountryBase.shortTermCoverAvailabilityDesc),
 

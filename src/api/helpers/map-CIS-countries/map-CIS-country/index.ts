@@ -32,7 +32,7 @@ export const mapCisCountry = (cisCountry: CisCountry): MappedCisCountry => {
     nbiIssueAvailable,
     shortTermCover,
 
-    canGetAQuoteOnline: canGetAQuoteOnline({ shortTermCover, nbiIssueAvailable, esraClassification }),
+    canGetAQuoteOnline: canGetAQuoteOnline(cisCountry),
 
     canGetAQuoteOffline: canApplyForAQuoteOffline(cisCountry.shortTermCoverAvailabilityDesc),
 
