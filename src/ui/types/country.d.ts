@@ -10,7 +10,6 @@ interface Country {
   canApplyForInsuranceOnline: boolean;
   noOnlineSupport: boolean;
   noInsuranceSupport: boolean;
-  shortTermCover: boolean;
 }
 
 export { Country };

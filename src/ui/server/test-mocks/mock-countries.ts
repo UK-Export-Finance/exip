@@ -10,7 +10,6 @@ const baseCountry = {
   canGetAQuoteOnline: true,
   cannotGetAQuote: false,
   canApplyForInsuranceOnline: true,
-  shortTermCover: true,
 };
 
 const mockCountries = [
@@ -24,7 +23,6 @@ const mockCountries = [
     ...baseCountry,
     isoCode: 'XAD',
     esraClassification: RISK.STANDARD,
-    shortTermCover: false,
     canGetAQuoteOnline: false,
     canApplyForInsuranceOnline: false,
     cannotGetAQuote: true,
@@ -88,7 +86,6 @@ const mockCountries = [
     canGetAQuoteOnline: true,
     canApplyForInsuranceOnline: true,
     canApplyForInsuranceOffline: false,
-    shortTermCover: false,
     noOnlineSupport: true,
   },
 ] as Array<Country>;
