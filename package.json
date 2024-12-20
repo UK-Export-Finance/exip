@@ -61,13 +61,13 @@
     "typescript": "5.6.3"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.6.0",
+    "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "19.6.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.2",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
-    "commitlint": "^19.6.0",
+    "commitlint": "^19.6.1",
     "cspell": "^8.16.1",
     "eslint": "^8.57.1",
     "eslint-config-airbnb": "^19.0.4",
