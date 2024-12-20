@@ -183,6 +183,10 @@ export const post = async (req: Request, res: Response) => {
 
       return res.redirect(ROUTES.QUOTE.CANNOT_APPLY_EXIT);
     }
+
+    console.info('Country support - %s - unable to determine country support', country.name);
+
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   } catch (error) {
     console.error('Error getting CIS countries %o', error);
 

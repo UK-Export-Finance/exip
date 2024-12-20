@@ -1,6 +1,6 @@
 import canApplyForInsuranceOnline from '.';
 import esraClassificationIsStandardHighOrVeryHigh from '../esra-classification-is-standard-high-or-very-high';
-import hasValidShortTermCover from './has-valid-short-term-cover';
+import shortTermCoverIsYesReferOrUnlisted from '../short-term-cover-is-yes-refer-or-unlisted';
 import countryRatingIsAorB from '../country-rating-is-a-or-b';
 import { mockCisCountry } from '../../../../test-mocks';
 
@@ -12,7 +12,7 @@ describe('helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-onli
 
     const expected =
       esraClassificationIsStandardHighOrVeryHigh(ESRAClassificationDesc) &&
-      hasValidShortTermCover(shortTermCoverAvailabilityDesc) &&
+      shortTermCoverIsYesReferOrUnlisted(shortTermCoverAvailabilityDesc) &&
       countryRatingIsAorB(marketRiskAppetitePublicDesc);
 
     expect(result).toEqual(expected);
