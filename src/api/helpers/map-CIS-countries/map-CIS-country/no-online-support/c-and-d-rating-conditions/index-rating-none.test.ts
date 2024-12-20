@@ -1,4 +1,4 @@
-import aAndBRatingConditions from '.';
+import cAndDRatingConditions from '.';
 import { EXTERNAL_API_DEFINITIONS } from '../../../../../constants';
 
 const {
@@ -9,11 +9,11 @@ const {
   },
 } = EXTERNAL_API_DEFINITIONS;
 
-describe('helpers/map-CIS-countries/map-CIS-country/no-online-insurance-support/a-and-b-rating-conditions - ESRA classification=NONE, short term cover=NO', () => {
-  describe('when the country rating is `A`', () => {
+describe('helpers/map-CIS-countries/map-CIS-country/no-online-support/c-and-d-rating-conditions - ESRA classification=NONE, short term cover=NO', () => {
+  describe('when the country rating is `C`', () => {
     it('should return true', () => {
-      const result = aAndBRatingConditions({
-        countryRating: COUNTRY_RATINGS.A[0],
+      const result = cAndDRatingConditions({
+        countryRating: COUNTRY_RATINGS.C[0],
         esraClassification: NONE,
         shortTermCover: NO,
       });
@@ -22,10 +22,10 @@ describe('helpers/map-CIS-countries/map-CIS-country/no-online-insurance-support/
     });
   });
 
-  describe('when the country rating is `B`', () => {
+  describe('when the country rating is `D`', () => {
     it('should return true', () => {
-      const result = aAndBRatingConditions({
-        countryRating: COUNTRY_RATINGS.B[0],
+      const result = cAndDRatingConditions({
+        countryRating: COUNTRY_RATINGS.D[0],
         esraClassification: NONE,
         shortTermCover: NO,
       });

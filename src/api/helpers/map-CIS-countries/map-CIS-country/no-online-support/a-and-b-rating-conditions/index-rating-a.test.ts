@@ -10,7 +10,7 @@ const {
 } = EXTERNAL_API_DEFINITIONS;
 
 const createMockParams = (esraClassification: string, shortTermCover: string) =>
-  COUNTRY_RATINGS.B.map((rating: string) => ({
+  COUNTRY_RATINGS.A.map((rating: string) => ({
     countryRating: rating,
     esraClassification,
     shortTermCover,
@@ -34,7 +34,7 @@ const params = {
   },
 };
 
-describe('helpers/map-CIS-countries/map-CIS-country/no-online-insurance-support/a-and-b-rating-conditions - rating as B', () => {
+describe('helpers/map-CIS-countries/map-CIS-country/no-online-support/a-and-b-rating-conditions - rating as A', () => {
   describe(`when the ESRA classification is ${STANDARD}`, () => {
     describe.each(params.STANDARD[ILC])(`when the short term cover is ${ILC}`, (countryObj) => {
       it(`should return true for ${countryObj.countryRating}`, () => {

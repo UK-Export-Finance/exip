@@ -231,11 +231,10 @@ const typeDefs = `
     esraClassification: String
     nbiIssueAvailable: Boolean
     canGetAQuoteOnline: Boolean
-    canGetAQuoteByEmail: Boolean
     cannotGetAQuote: Boolean
     cannotApply: Boolean
     canApplyForInsuranceOnline: Boolean
-    noOnlineInsuranceSupport: Boolean
+    noOnlineSupport: Boolean
     noInsuranceSupport: Boolean
   }
 
