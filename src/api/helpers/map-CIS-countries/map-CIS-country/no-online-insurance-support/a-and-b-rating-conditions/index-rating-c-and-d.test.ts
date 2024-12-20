@@ -2,19 +2,19 @@ import aAndBRatingConditions from '.';
 import { EXTERNAL_API_DEFINITIONS } from '../../../../../constants';
 
 const {
-  CIS: { COUNTRY_RATINGS, ESRA_CLASSIFICATION, SHORT_TERM_COVER_AVAILABLE },
+  CIS: { COUNTRY_RATINGS, ESRA_CLASSIFICATION, SHORT_TERM_COVER },
 } = EXTERNAL_API_DEFINITIONS;
 
 const countryRatingsCParams = COUNTRY_RATINGS.C.map((rating: string) => ({
   countryRating: rating,
   esraClassification: ESRA_CLASSIFICATION.STANDARD,
-  shortTermCover: SHORT_TERM_COVER_AVAILABLE.YES,
+  shortTermCover: SHORT_TERM_COVER.YES,
 }));
 
 const countryRatingsDParams = COUNTRY_RATINGS.D.map((rating: string) => ({
   countryRating: rating,
   esraClassification: ESRA_CLASSIFICATION.STANDARD,
-  shortTermCover: SHORT_TERM_COVER_AVAILABLE.YES,
+  shortTermCover: SHORT_TERM_COVER.YES,
 }));
 
 describe('helpers/map-CIS-countries/map-CIS-country/no-online-insurance-support/a-and-b-rating-conditions - ratings as C and D', () => {

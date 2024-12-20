@@ -1,7 +1,7 @@
 import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
 
 const {
-  CIS: { SHORT_TERM_COVER_AVAILABLE },
+  CIS: { SHORT_TERM_COVER },
 } = EXTERNAL_API_DEFINITIONS;
 
 /**
@@ -12,16 +12,16 @@ const {
  */
 const mapShortTermCoverAvailable = (str: string): boolean => {
   switch (str) {
-    case SHORT_TERM_COVER_AVAILABLE.YES:
+    case SHORT_TERM_COVER.YES:
       return true;
 
-    case SHORT_TERM_COVER_AVAILABLE.ILC:
+    case SHORT_TERM_COVER.ILC:
       return true;
 
-    case SHORT_TERM_COVER_AVAILABLE.CILC:
+    case SHORT_TERM_COVER.CILC:
       return true;
 
-    case SHORT_TERM_COVER_AVAILABLE.REFER:
+    case SHORT_TERM_COVER.REFER:
       return true;
 
     default:

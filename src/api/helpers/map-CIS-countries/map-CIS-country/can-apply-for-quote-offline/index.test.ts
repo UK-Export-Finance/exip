@@ -2,16 +2,20 @@ import canApplyForAQuoteOffline from '.';
 import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
 import mockCountries from '../../../../test-mocks/mock-countries';
 
-const { CIS } = EXTERNAL_API_DEFINITIONS;
+const {
+  CIS: {
+    SHORT_TERM_COVER: { ILC, CILC, REFER },
+  },
+} = EXTERNAL_API_DEFINITIONS;
 
 const { 1: mockCountryBase } = mockCountries;
 
 describe('helpers/map-cis-countries/map-cis-country/can-apply-offline', () => {
-  describe(`when shortTermCoverAvailabilityDesc is ${CIS.SHORT_TERM_COVER_AVAILABLE.ILC}`, () => {
+  describe(`when shortTermCoverAvailabilityDesc is ${ILC}`, () => {
     it('should return true', () => {
       const mockCountry = {
         ...mockCountryBase,
-        shortTermCoverAvailabilityDesc: CIS.SHORT_TERM_COVER_AVAILABLE.ILC,
+        shortTermCoverAvailabilityDesc: ILC,
       };
 
       const result = canApplyForAQuoteOffline(mockCountry.shortTermCoverAvailabilityDesc);
@@ -20,11 +24,11 @@ describe('helpers/map-cis-countries/map-cis-country/can-apply-offline', () => {
     });
   });
 
-  describe(`when shortTermCoverAvailabilityDesc is ${CIS.SHORT_TERM_COVER_AVAILABLE.CILC}`, () => {
+  describe(`when shortTermCoverAvailabilityDesc is ${CILC}`, () => {
     it('should return true', () => {
       const mockCountry = {
         ...mockCountryBase,
-        shortTermCoverAvailabilityDesc: CIS.SHORT_TERM_COVER_AVAILABLE.CILC,
+        shortTermCoverAvailabilityDesc: CILC,
       };
 
       const result = canApplyForAQuoteOffline(mockCountry.shortTermCoverAvailabilityDesc);
@@ -33,11 +37,11 @@ describe('helpers/map-cis-countries/map-cis-country/can-apply-offline', () => {
     });
   });
 
-  describe(`when shortTermCoverAvailabilityDesc is ${CIS.SHORT_TERM_COVER_AVAILABLE.REFER}`, () => {
+  describe(`when shortTermCoverAvailabilityDesc is ${REFER}`, () => {
     it('should return true', () => {
       const mockCountry = {
         ...mockCountryBase,
-        shortTermCoverAvailabilityDesc: CIS.SHORT_TERM_COVER_AVAILABLE.REFER,
+        shortTermCoverAvailabilityDesc: REFER,
       };
 
       const result = canApplyForAQuoteOffline(mockCountry.shortTermCoverAvailabilityDesc);

@@ -7,6 +7,7 @@ import cannotGetAQuote from './cannot-get-a-quote';
 import canApplyForAQuoteOffline from './can-apply-for-quote-offline';
 import canApplyForInsuranceOnline from './can-apply-for-insurance-online';
 import noOnlineInsuranceSupport from './no-online-insurance-support';
+import noInsuranceSupport from './no-insurance-support';
 import { CisCountry, MappedCisCountry } from '../../../types';
 
 /**
@@ -22,8 +23,10 @@ export const mapCisCountry = (cisCountry: CisCountry): MappedCisCountry => {
   const nbiIssueAvailable = mapNbiIssueAvailable(cisCountry.NBIIssue);
   const shortTermCover = mapShortTermCoverAvailable(cisCountry.shortTermCoverAvailabilityDesc);
 
-  const mapped = {
-    countryRating: countryRatingDesc,
+  const countryRating = countryRatingDesc;
+
+  const mapped: MappedCisCountry = {
+    countryRating,
     esraClassification,
     isoCode,
     name: marketName,
@@ -41,13 +44,17 @@ export const mapCisCountry = (cisCountry: CisCountry): MappedCisCountry => {
     canApplyForInsuranceOnline: canApplyForInsuranceOnline(cisCountry),
 
     noOnlineInsuranceSupport: noOnlineInsuranceSupport({
-      countryRating: countryRatingDesc,
+      countryRating,
       esraClassification: ESRAClassificationDesc,
       shortTermCover: shortTermCoverAvailabilityDesc,
     }),
-  } as MappedCisCountry;
 
-  // TODO: EMS-4065 - noInsuranceSupport.
+    noInsuranceSupport: noInsuranceSupport({
+      countryRating,
+      esraClassification: ESRAClassificationDesc,
+      shortTermCover: shortTermCoverAvailabilityDesc,
+    }),
+  };
 
   return mapped;
 };

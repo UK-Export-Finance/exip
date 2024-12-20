@@ -1,6 +1,10 @@
 import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
 
-const { CIS } = EXTERNAL_API_DEFINITIONS;
+const {
+  CIS: {
+    SHORT_TERM_COVER: { ILC, CILC, REFER },
+  },
+} = EXTERNAL_API_DEFINITIONS;
 
 /**
  * canApplyForAQuoteOffline
@@ -9,15 +13,15 @@ const { CIS } = EXTERNAL_API_DEFINITIONS;
  * @returns {Boolean}
  */
 export const canApplyForAQuoteOffline = (originalShortTermCover: string) => {
-  if (originalShortTermCover === CIS.SHORT_TERM_COVER_AVAILABLE.ILC) {
+  if (originalShortTermCover === ILC) {
     return true;
   }
 
-  if (originalShortTermCover === CIS.SHORT_TERM_COVER_AVAILABLE.CILC) {
+  if (originalShortTermCover === CILC) {
     return true;
   }
 
-  if (originalShortTermCover === CIS.SHORT_TERM_COVER_AVAILABLE.REFER) {
+  if (originalShortTermCover === REFER) {
     return true;
   }
 
