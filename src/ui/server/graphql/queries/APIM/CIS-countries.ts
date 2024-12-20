@@ -9,7 +9,6 @@ const getApimCisCountries = gql`
       canGetAQuoteOnline
       canGetAQuoteByEmail
       cannotGetAQuote
-      cannotApply
       canApplyForInsuranceOnline
       noOnlineInsuranceSupport
       noInsuranceSupport

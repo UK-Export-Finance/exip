@@ -2826,7 +2826,6 @@ var typeDefs = `
     canGetAQuoteOnline: Boolean
     canGetAQuoteByEmail: Boolean
     cannotGetAQuote: Boolean
-    cannotApply: Boolean
     canApplyForInsuranceOnline: Boolean
     noOnlineInsuranceSupport: Boolean
     noInsuranceSupport: Boolean
