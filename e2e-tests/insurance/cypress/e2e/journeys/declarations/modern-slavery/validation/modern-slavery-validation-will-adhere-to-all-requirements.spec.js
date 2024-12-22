@@ -54,7 +54,7 @@ context(`Insurance - Declarations - Modern slavery page - validation - ${fieldId
     it(`should render a ${conditionalFieldId} validation error`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitModernSlaveryForm({
+      cy.completeAndSubmitModernSlavery({
         willAdhereToAllRequirements: false,
       });
 
@@ -71,7 +71,7 @@ context(`Insurance - Declarations - Modern slavery page - validation - ${fieldId
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitModernSlaveryForm({
+      cy.completeAndSubmitModernSlavery({
         willAdhereToAllRequirements: false,
         conditionalFields: {
           cannotAdhereToAllRequirements: reasonOverMaximum,

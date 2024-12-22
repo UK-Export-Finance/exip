@@ -113,7 +113,7 @@ context(
         it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, () => {
           cy.navigateToUrl(url);
 
-          cy.completeAndSubmitModernSlaveryForm({
+          cy.completeAndSubmitModernSlavery({
             willAdhereToAllRequirements: true,
             hasNoOffensesOrInvestigations: true,
             isNotAwareOfExistingSlavery: true,
@@ -144,7 +144,7 @@ context(
           cy.navigateToUrl(url);
 
           // TODO: EMS-4046 - use application fixtures.
-          cy.completeAndSubmitModernSlaveryForm({
+          cy.completeAndSubmitModernSlavery({
             willAdhereToAllRequirements: false,
             hasNoOffensesOrInvestigations: false,
             isNotAwareOfExistingSlavery: false,
