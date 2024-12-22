@@ -12,7 +12,7 @@ const {
   QUOTE: { BUYER_COUNTRY, BUYER_BODY },
 } = ROUTES;
 
-const supportedCountryName = COUNTRY_QUOTE_SUPPORT.ONLINE.NAME;
+const supportedCountryName = COUNTRY_QUOTE_SUPPORT.ONLINE_SUPPORT.NAME;
 
 const baseUrl = Cypress.config('baseUrl');
 

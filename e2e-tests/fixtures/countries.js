@@ -1,8 +1,3 @@
-export const AFG = {
-  NAME: 'Afghanistan',
-  ISO_CODE: 'AFG',
-};
-
 export const AGO = {
   NAME: 'Angola',
   ISO_CODE: 'AGO',
@@ -11,11 +6,6 @@ export const AGO = {
 export const ARG = {
   NAME: 'Argentina',
   ISO_CODE: 'AGO',
-};
-
-export const BLR = {
-  NAME: 'Belarus',
-  ISO_CODE: 'BLR',
 };
 
 export const BRA = {
@@ -28,6 +18,11 @@ export const DZA = {
   ISO_CODE: 'DZA',
 };
 
+export const ERI = {
+  NAME: 'Eritrea',
+  ISO_CODE: 'ERI',
+};
+
 export const FRA = {
   NAME: 'France',
   ISO_CODE: 'FRA',
@@ -36,6 +31,16 @@ export const FRA = {
 export const GBR = {
   NAME: 'United Kingdom',
   ISO_CODE: 'GBR',
+};
+
+export const IOT = {
+  NAME: 'British Indian Ocean Territory',
+  ISO_CODE: 'IOT',
+};
+
+export const NCL = {
+  NAME: 'New Caledonia',
+  ISO_CODE: 'NCL',
 };
 
 export const TN = {
@@ -48,7 +53,7 @@ export const XAD = {
   ISO_CODE: 'XAD',
 };
 
-const mockCountries = [DZA, FRA, AGO, GBR, AFG, BLR, XAD, BRA];
+const mockCountries = [DZA, FRA, AGO, GBR, XAD, BRA];
 
 const ONLINE_SUPPORT_1 = DZA;
 
@@ -58,9 +63,9 @@ const NO_ONLINE_SUPPORT_3 = ARG;
 const NO_ONLINE_SUPPORT_4 = TN;
 
 const NOT_SUPPORTED_1 = GBR;
-const NOT_SUPPORTED_2 = AFG;
-const NOT_SUPPORTED_3 = BLR;
-const NOT_SUPPORTED_4 = XAD;
+const NOT_SUPPORTED_2 = ERI;
+const NOT_SUPPORTED_3 = IOT;
+const NOT_SUPPORTED_4 = NCL;
 
 /**
  * COUNTRY_QUOTE_SUPPORT
