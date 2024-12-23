@@ -192,7 +192,7 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
 
     describe('api error handling', () => {
       describe('save data call', () => {
-        describe('when the save data API call does not return anything', () => {
+        describe('when the save data API call returns false', () => {
           beforeEach(() => {
             mockSaveDeclaration = jest.fn(() => Promise.resolve(false));
             save.declaration = mockSaveDeclaration;

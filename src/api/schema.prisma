@@ -524,26 +524,24 @@ model SectionReview {
 }
 
 model Declaration {
-  id                                        String                     @id @default(cuid())
-  application                               Application?               @relation("Declaration_application", fields: [applicationId], references: [id])
-  applicationId                             String?                    @map("application")
-  version                                   DeclarationVersion?        @relation("Declaration_version", fields: [versionId], references: [id])
-  versionId                                 String?                    @map("version")
-  agreeHowDataWillBeUsed                    Boolean?
-  agreeToAntiBribery                        Boolean?
-  agreeToConfidentiality                    Boolean?
-  agreeToConfirmationAndAcknowledgements    Boolean?
-  hasAntiBriberyCodeOfConduct               Boolean?
-  willExportWithAntiBriberyCodeOfConduct    Boolean?
-  modernSlavery                             DeclarationModernSlavery?  @relation("Declaration_modernSlavery", fields: [modernSlaveryId], references: [id])
-  modernSlaveryId                           String?                    @map("modernSlavery")
-  from_Application_declaration              Application[]              @relation("Application_declaration")
-  from_DeclarationVersion_declaration       DeclarationVersion[]       @relation("DeclarationVersion_declaration")
-  from_DeclarationModernSlavery_declaration DeclarationModernSlavery[] @relation("DeclarationModernSlavery_declaration")
+  id                                     String                    @id @default(cuid())
+  application                            Application?              @relation("Declaration_application", fields: [applicationId], references: [id])
+  applicationId                          String?                   @map("application")
+  version                                DeclarationVersion?       @relation("Declaration_version", fields: [versionId], references: [id])
+  versionId                              String?                   @map("version")
+  agreeHowDataWillBeUsed                 Boolean?
+  agreeToAntiBribery                     Boolean?
+  agreeToConfidentiality                 Boolean?
+  agreeToConfirmationAndAcknowledgements Boolean?
+  hasAntiBriberyCodeOfConduct            Boolean?
+  willExportWithAntiBriberyCodeOfConduct Boolean?
+  modernSlavery                          DeclarationModernSlavery? @relation("Declaration_modernSlavery", fields: [modernSlaveryId], references: [id])
+  modernSlaveryId                        String?                   @unique @map("modernSlavery")
+  from_Application_declaration           Application[]             @relation("Application_declaration")
+  from_DeclarationVersion_declaration    DeclarationVersion[]      @relation("DeclarationVersion_declaration")
 
   @@index([applicationId])
   @@index([versionId])
-  @@index([modernSlaveryId])
 }
 
 model DeclarationVersion {
@@ -563,17 +561,17 @@ model DeclarationVersion {
 
 model DeclarationModernSlavery {
   id                                                            String                            @id @default(cuid())
-  declaration                                                   Declaration?                      @relation("DeclarationModernSlavery_declaration", fields: [declarationId], references: [id])
-  declarationId                                                 String?                           @map("declaration")
+  declaration                                                   Declaration?                      @relation("Declaration_modernSlavery")
   version                                                       DeclarationModernSlaveryVersion?  @relation("DeclarationModernSlavery_version", fields: [versionId], references: [id])
   versionId                                                     String?                           @map("version")
   willAdhereToAllRequirements                                   Boolean?
   hasNoOffensesOrInvestigations                                 Boolean?
   isNotAwareOfExistingSlavery                                   Boolean?
-  from_Declaration_modernSlavery                                Declaration[]                     @relation("Declaration_modernSlavery")
+  cannotAdhereToAllRequirements                                 String                            @default("") @mysql.VarChar(1000)
+  offensesOrInvestigations                                      String                            @default("") @mysql.VarChar(1000)
+  awareOfExistingSlavery                                        String                            @default("") @mysql.VarChar(1000)
   from_DeclarationModernSlaveryVersion_declarationModernSlavery DeclarationModernSlaveryVersion[] @relation("DeclarationModernSlaveryVersion_declarationModernSlavery")
 
-  @@index([declarationId])
   @@index([versionId])
 }
 

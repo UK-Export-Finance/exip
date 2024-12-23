@@ -26,18 +26,16 @@ describe('helpers/create-a-declaration-modern-slavery', () => {
     expect(result.id.length).toBeGreaterThan(0);
   });
 
-  test('it should return a declaration ID', async () => {
-    const result = await createADeclarationModernSlavery(context, declaration.id);
-
-    expect(result.declarationId).toEqual(declaration.id);
-  });
-
   test('it should return empty declaration modern slavery fields', async () => {
     const result = await createADeclarationModernSlavery(context, declaration.id);
 
     expect(result.willAdhereToAllRequirements).toBeNull();
     expect(result.hasNoOffensesOrInvestigations).toBeNull();
     expect(result.isNotAwareOfExistingSlavery).toBeNull();
+
+    expect(result.cannotAdhereToAllRequirements).toEqual('');
+    expect(result.offensesOrInvestigations).toEqual('');
+    expect(result.awareOfExistingSlavery).toEqual('');
   });
 
   test('it should return declaration version fields via createADeclarationModernSlaveryVersion helper', async () => {
@@ -56,8 +54,6 @@ describe('helpers/create-a-declaration-modern-slavery', () => {
     expect(declarationModernSlaveryVersionId).toBeDefined();
     expect(typeof declarationModernSlaveryVersionId).toEqual('string');
     expect(declarationModernSlaveryVersionId.length).toBeGreaterThan(0);
-
-    expect(result.declarationId).toEqual(declaration.id);
 
     const expectedVersions = await createADeclarationModernSlaveryVersion(context, declarationModernSlaveryId);
 

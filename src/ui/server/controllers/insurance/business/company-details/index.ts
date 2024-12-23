@@ -7,8 +7,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import constructPayload from '../../../../helpers/construct-payload';
-import companyDetailsValidation from './validation/company-details';
-import { isPopulatedArray } from '../../../../helpers/array';
+import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/company-details';
 import { companiesHouseSummaryList } from '../../../../helpers/summary-lists/companies-house';
 import isChangeRoute from '../../../../helpers/is-change-route';
@@ -137,9 +136,9 @@ const post = async (req: Request, res: Response) => {
       [DIFFERENT_TRADING_NAME]: payload[DIFFERENT_TRADING_NAME],
     };
 
-    const validationErrors = companyDetailsValidation(payload);
+    const validationErrors = generateValidationErrors(payload);
 
-    if (isPopulatedArray(Object.keys(validationErrors))) {
+    if (validationErrors) {
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,

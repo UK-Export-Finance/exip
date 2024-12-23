@@ -1,5 +1,5 @@
 import { headingCaption, singleInputField, declarationPage } from '../../../../../../pages/shared';
-import { antiBriberyPage } from '../../../../../../pages/insurance/declarations';
+import { expandable } from '../../../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -107,8 +107,6 @@ context(
         beforeEach(() => {
           cy.navigateToUrl(url);
         });
-
-        const { expandable } = antiBriberyPage;
 
         it('should render summary text with collapsed conditional `details` content', () => {
           cy.checkText(expandable.summary(), CONTENT_STRINGS.EXPANDABLE.INTRO);

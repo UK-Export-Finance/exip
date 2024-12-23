@@ -4,7 +4,7 @@ import { FIELD_VALUES } from '../../../constants';
  * completeAndSubmitDeclarationAntiBriberyCodeOfConduct
  * @param {String} Yes/no answer
  */
-export default (answer) => {
+const completeAndSubmitDeclarationAntiBriberyCodeOfConduct = (answer) => {
   if (answer === FIELD_VALUES.NO) {
     cy.clickNoRadioInput();
   } else {
@@ -13,3 +13,5 @@ export default (answer) => {
 
   cy.clickSubmitButton();
 };
+
+export default completeAndSubmitDeclarationAntiBriberyCodeOfConduct;

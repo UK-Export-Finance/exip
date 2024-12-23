@@ -192,13 +192,40 @@ interface ApplicationSectionReview {
   buyer?: boolean;
 }
 
-interface ApplicationDeclaration {
+export interface ApplicationDeclarationModernSlavery {
   id: string;
-  agreeToConfidentiality?: boolean;
+  willAdhereToAllRequirements?: boolean;
+  hasNoOffensesOrInvestigations?: boolean;
+  isNotAwareOfExistingSlavery?: boolean;
+  cannotAdhereToAllRequirements?: string;
+  offensesOrInvestigations?: string;
+  awareOfExistingSlavery?: string;
+}
+
+export interface ApplicationDeclarationModernSlaveryVersions {
+  WILL_ADHERE_TO_ALL_REQUIREMENTS: string;
+  HAS_NO_OFFENSES_OR_INVESTIGATIONS: string;
+  IS_NOT_AWARE_OF_EXISTING_SLAVERY: string;
+}
+
+interface ApplicationDeclarationCore {
+  id: string;
+  agreeHowDataWillBeUsed?: boolean;
   agreeToAntiBribery?: boolean;
+  agreeToConfidentiality?: boolean;
+  agreeToConfirmationAndAcknowledgements?: boolean;
   hasAntiBriberyCodeOfConduct?: boolean;
   willExportWithAntiBriberyCodeOfConduct?: boolean;
-  agreeToConfirmationAndAcknowledgements?: boolean;
+}
+
+interface ApplicationDeclarationFlat extends ApplicationDeclarationCore {
+  willAdhereToAllRequirements?: boolean;
+  hasNoOffensesOrInvestigations?: boolean;
+  isNotAwareOfExistingSlavery?: boolean;
+}
+
+interface ApplicationDeclaration extends ApplicationDeclarationCore {
+  modernSlavery: ApplicationDeclarationModernSlavery;
 }
 
 interface ApplicationDeclarationVersions {
@@ -224,7 +251,7 @@ interface ApplicationJointlyInsuredParty {
   requested?: boolean;
   companyName?: string;
   companyNumber?: string;
-  country?: string;
+  countryCode?: string;
 }
 
 interface ApplicationLossPayeeFinancialDetailsInternational {
@@ -288,7 +315,7 @@ interface ApplicationFlatCore extends ApplicationCore, InsuranceEligibilityCore,
   migratedV2toV3?: boolean;
 }
 
-type ApplicationFlat = ApplicationFlatCore & ApplicationPolicy & ApplicationBroker & ApplicationCompany & ApplicationDeclaration;
+type ApplicationFlat = ApplicationFlatCore & ApplicationPolicy & ApplicationBroker & ApplicationCompany & ApplicationDeclarationFlat;
 
 interface ApplicationVersion {
   VERSION_NUMBER: string;

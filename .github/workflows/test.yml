@@ -464,6 +464,7 @@ jobs:
           [
             'declarations/anti-bribery/**/*.spec.js',
             'declarations/confidentiality/**/*.spec.js',
+            'declarations/modern-slavery/**/*.spec.js',
             'declarations/confirmation-and-acknowledgements/**/*.spec.js',
           ]
 

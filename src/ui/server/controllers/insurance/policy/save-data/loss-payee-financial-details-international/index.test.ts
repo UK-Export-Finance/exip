@@ -36,6 +36,7 @@ describe('controllers/insurance/policy/save-data/loss-payee-financial-details-in
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
       const dataToSave = stripEmptyFormFields(getDataToSave(mockFormBody, mockValidationErrors.errorList), NULL_OR_EMPTY_STRING_FIELDS);
+
       const expectedSanitisedData = sanitiseData(dataToSave);
 
       expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.nominatedLossPayee.financialInternational.id, expectedSanitisedData);
@@ -55,6 +56,7 @@ describe('controllers/insurance/policy/save-data/loss-payee-financial-details-in
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
       const dataToSave = stripEmptyFormFields(getDataToSave(mockFormBody), NULL_OR_EMPTY_STRING_FIELDS);
+
       const expectedSanitisedData = sanitiseData(dataToSave);
 
       expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.nominatedLossPayee.financialInternational.id, expectedSanitisedData);

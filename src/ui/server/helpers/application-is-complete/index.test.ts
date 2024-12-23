@@ -14,7 +14,10 @@ describe('server/helpers/application-is-complete', () => {
     it('should return false', () => {
       const mockApplicationIncomplete = {
         ...mockApplication,
-        declaration: { id: mockApplication.declaration.id },
+        declaration: {
+          ...mockApplication.declaration,
+          agreeToConfidentiality: undefined,
+        },
       };
 
       const flatApplicationData = flattenApplicationData(mockApplicationIncomplete);

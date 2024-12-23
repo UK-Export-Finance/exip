@@ -1,14 +1,15 @@
 import { FIELD_IDS, post } from '.';
-import { ROUTES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import DECLARATIONS_FIELD_IDS from '../../../../constants/field-ids/insurance/declarations';
 import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
 
-const {
-  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE },
-} = ROUTES;
+const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+
+const { AGREE_CONFIDENTIALITY, AGREE_ANTI_BRIBERY, HAS_ANTI_BRIBERY_CODE_OF_CONDUCT, WILL_EXPORT_WITH_CODE_OF_CONDUCT, AGREE_CONFIRMATION_ACKNOWLEDGEMENTS } =
+  DECLARATIONS_FIELD_IDS;
 
 describe('controllers/insurance/declarations/confidentiality/save-and-back', () => {
   let req: Request;
@@ -33,7 +34,13 @@ describe('controllers/insurance/declarations/confidentiality/save-and-back', () 
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = Object.values(DECLARATIONS_FIELD_IDS);
+      const expected = [
+        AGREE_CONFIDENTIALITY,
+        AGREE_ANTI_BRIBERY,
+        HAS_ANTI_BRIBERY_CODE_OF_CONDUCT,
+        WILL_EXPORT_WITH_CODE_OF_CONDUCT,
+        AGREE_CONFIRMATION_ACKNOWLEDGEMENTS,
+      ];
 
       expect(FIELD_IDS).toEqual(expected);
     });

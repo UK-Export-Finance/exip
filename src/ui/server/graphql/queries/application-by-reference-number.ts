@@ -238,9 +238,13 @@ const applicationByReferenceNumberQuery = gql`
           willExportWithAntiBriberyCodeOfConduct
           agreeToConfirmationAndAcknowledgements
           modernSlavery {
+            id
             willAdhereToAllRequirements
             hasNoOffensesOrInvestigations
             isNotAwareOfExistingSlavery
+            cannotAdhereToAllRequirements
+            offensesOrInvestigations
+            awareOfExistingSlavery
           }
         }
       }
