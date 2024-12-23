@@ -223,6 +223,6 @@ const application = {
   },
 };
 
-export const country = COUNTRY_APPLICATION_SUPPORT.ONLINE_SUPPORT;
+export const country = COUNTRY_APPLICATION_SUPPORT.ONLINE_SUPPORT_1;
 
 export default application;
