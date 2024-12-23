@@ -40,7 +40,7 @@ context('Insurance - Declarations - Modern slavery page - validation - submittin
 
     cy.navigateToUrl(url);
 
-    cy.completeAndSubmitModernSlavery({
+    cy.completeAndSubmitModernSlaveryForm({
       willAdhereToAllRequirements: false,
       hasNoOffensesOrInvestigations: false,
       isNotAwareOfExistingSlavery: false,

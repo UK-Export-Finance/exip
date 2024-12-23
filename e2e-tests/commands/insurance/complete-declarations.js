@@ -25,7 +25,7 @@ const completeDeclarations = ({ hasAntiBriberyCodeOfConduct = true, exportingWit
     cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct(FIELD_VALUES.NO);
   }
 
-  cy.completeAndSubmitModernSlavery({});
+  cy.completeAndSubmitModernSlaveryForm({});
 
   cy.completeAndSubmitDeclarationConfirmationAndAcknowledgements();
 };

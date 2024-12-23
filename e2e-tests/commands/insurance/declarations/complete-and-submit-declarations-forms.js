@@ -18,7 +18,7 @@ const completeAndSubmitDeclarationsForms = ({ formToStopAt, referenceNumber }) =
     { name: 'antiBribery', action: () => cy.completeAndSubmitDeclarationAntiBribery() },
     { name: 'codeOfConduct', action: () => cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct() },
     { name: 'exportingWithCodeOfConduct', action: () => cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct() },
-    { name: 'modernSlavery', action: () => cy.completeAndSubmitModernSlavery({}) },
+    { name: 'modernSlavery', action: () => cy.completeAndSubmitModernSlaveryForm({}) },
   ];
 
   /**

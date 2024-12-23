@@ -16,10 +16,16 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add('completeModernSlaveryForm', require('../../../../../commands/insurance/declarations/complete-modern-slavery-form'));
-Cypress.Commands.add('completeAndSubmitModernSlavery', require('../../../../../commands/insurance/declarations/complete-and-submit-modern-slavery-form'));
+Cypress.Commands.add('completeAndSubmitModernSlaveryForm', require('../../../../../commands/insurance/declarations/complete-and-submit-modern-slavery-form'));
+
 Cypress.Commands.add(
   'completeModernSlaveryFormConditionalFields',
   require('../../../../../commands/insurance/declarations/complete-modern-slavery-form-conditional-fields'),
+);
+
+Cypress.Commands.add(
+  'completeAndSubmitModernSlaveryFormConditionalFields',
+  require('../../../../../commands/insurance/declarations/complete-and-submit-modern-slavery-form-conditional-fields'),
 );
 
 Cypress.Commands.add(

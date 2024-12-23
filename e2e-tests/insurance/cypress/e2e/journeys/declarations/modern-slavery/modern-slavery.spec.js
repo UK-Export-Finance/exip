@@ -114,7 +114,7 @@ context(
         it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, () => {
           cy.navigateToUrl(url);
 
-          cy.completeAndSubmitModernSlavery({
+          cy.completeAndSubmitModernSlaveryForm({
             willAdhereToAllRequirements: true,
             hasNoOffensesOrInvestigations: true,
             isNotAwareOfExistingSlavery: true,
