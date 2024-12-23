@@ -55,15 +55,13 @@ context('Insurance - Declarations - Modern slavery page - Save and go back', () 
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    // TODO: EMS-4059
-    it.skip('should retain the status of task `declarations and submit` as `in progress`', () => {
-      cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
+    it('should retain the status of task `declarations and submit` as `not started yet`', () => {
+      cy.checkTaskDeclarationsAndSubmitStatusIsNotStartedYet();
     });
   });
 
   describe('when fields are partially completed', () => {
-    // TODO: EMS-4059
-    it.skip('should retain the status of task `declarations and submit` as `in progress`', () => {
+    it('should update the status of task `declarations and submit` to `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.completeModernSlaveryForm({
@@ -95,8 +93,7 @@ context('Insurance - Declarations - Modern slavery page - Save and go back', () 
   });
 
   describe('when all fields are submitted with `yes` radios', () => {
-    // TODO: EMS-4059
-    it.skip('should retain the status of task `declarations and submit` as `in progress`', () => {
+    it('should update the status of task `declarations and submit` to `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.completeModernSlaveryForm({
@@ -135,8 +132,7 @@ context('Insurance - Declarations - Modern slavery page - Save and go back', () 
   });
 
   describe('when all fields are submitted with `no` radios', () => {
-    // TODO: EMS-4059
-    it.skip('should retain the status of task `declarations and submit` as `in progress`', () => {
+    it('should update the status of task `declarations and submit` to `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.completeModernSlaveryForm({
@@ -159,7 +155,7 @@ context('Insurance - Declarations - Modern slavery page - Save and go back', () 
         cy.navigateToUrl(url);
       });
 
-      it('should have the submitted radio values', () => {
+      it('should render the submitted radio values', () => {
         cy.completeModernSlaveryForm({
           willAdhereToAllRequirements: false,
           hasNoOffensesOrInvestigations: false,
