@@ -229,7 +229,6 @@ const typeDefs = `
     name: String
     shortTermCover: Boolean
     esraClassification: String
-    nbiIssueAvailable: Boolean
     canGetAQuoteOnline: Boolean
     cannotGetAQuote: Boolean
     canApplyForInsuranceOnline: Boolean

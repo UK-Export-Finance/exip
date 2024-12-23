@@ -4,13 +4,12 @@ interface Country {
   isoCode: string;
   esraClassification: string;
   selected?: boolean;
-  value: string;
+  value?: string;
   canGetAQuoteOnline: boolean;
   cannotGetAQuote: boolean;
   canApplyForInsuranceOnline: boolean;
   noOnlineSupport: boolean;
   noInsuranceSupport: boolean;
-  shortTermCover: boolean;
 }
 
 export { Country };
