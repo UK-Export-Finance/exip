@@ -16,7 +16,7 @@ describe('server/helpers/task-list/generate-groups-and-tasks', () => {
       buyerTradingHistory: { exporterHasTradedWithBuyer, outstandingPayments },
     },
     company: { hasDifferentTradingName },
-    declaration: { hasAntiBriberyCodeOfConduct },
+    declaration,
     exportContract: {
       finalDestinationKnown,
       privateMarket: { attempted: attemptedPrivateMarketCover },
@@ -42,6 +42,7 @@ describe('server/helpers/task-list/generate-groups-and-tasks', () => {
   it('should return EXIP groups and tasks', () => {
     const result = generateGroupsAndTasks(
       referenceNumber,
+      declaration,
       policyType,
       finalDestinationKnown,
       jointlyInsuredParty.requested,
@@ -50,7 +51,6 @@ describe('server/helpers/task-list/generate-groups-and-tasks', () => {
       lossPayeeIsLocatedInUk,
       lossPayeeIsLocatedInInternationally,
       hasDifferentTradingName,
-      hasAntiBriberyCodeOfConduct,
       exporterIsConnectedWithBuyer,
       exporterHasTradedWithBuyer,
       outstandingPayments,
@@ -99,7 +99,7 @@ describe('server/helpers/task-list/generate-groups-and-tasks', () => {
     const submitApplication = {
       title: SUBMIT_APPLICATION.HEADING,
       id: GROUP_IDS.SUBMIT_APPLICATION,
-      tasks: submitApplicationTasks(referenceNumber, [initialChecks, prepareApplication], hasAntiBriberyCodeOfConduct),
+      tasks: submitApplicationTasks(referenceNumber, [initialChecks, prepareApplication], declaration),
     };
 
     const expected = [initialChecks, prepareApplication, submitApplication];
