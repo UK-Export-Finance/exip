@@ -4,6 +4,7 @@ import { expandable } from '../../../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { DECLARATIONS as DECLARATIONS_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/declarations';
+import application from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.MODERN_SLAVERY;
 
@@ -119,9 +120,7 @@ context(
             isNotAwareOfExistingSlavery: true,
           });
 
-          const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
-
-          cy.assertUrl(expectedUrl);
+          cy.assertAllSectionsUrl(referenceNumber);
         });
 
         it('should have the submitted values when going back to the page', () => {
@@ -134,21 +133,13 @@ context(
       });
 
       describe('when submitting all radios as `no` and submitting conditional fields', () => {
-        const mockReasons = {
-          [CANNOT_ADHERE_TO_ALL_REQUIREMENTS]: 'Mock cannot adhere to all requirements reason',
-          [OFFENSES_OR_INVESTIGATIONS]: 'Mock offenses or investigations reason',
-          [AWARE_OF_EXISTING_SLAVERY]: 'Mock aware of existing slavery reason',
-        };
-
         it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, () => {
           cy.navigateToUrl(url);
 
-          // TODO: EMS-4046 - use application fixtures.
-          cy.completeAndSubmitModernSlavery({
+          cy.completeAndSubmitModernSlaveryForm({
             willAdhereToAllRequirements: false,
             hasNoOffensesOrInvestigations: false,
             isNotAwareOfExistingSlavery: false,
-            conditionalFields: mockReasons,
           });
 
           const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
@@ -184,7 +175,7 @@ context(
 
             cy.checkTextareaValue({
               fieldId,
-              expectedValue: mockReasons[fieldId],
+              expectedValue: application.DECLARATION.MODERN_SLAVERY[fieldId],
             });
           });
 
@@ -193,7 +184,7 @@ context(
 
             cy.checkTextareaValue({
               fieldId,
-              expectedValue: mockReasons[fieldId],
+              expectedValue: application.DECLARATION.MODERN_SLAVERY[fieldId],
             });
           });
 
@@ -202,7 +193,7 @@ context(
 
             cy.checkTextareaValue({
               fieldId,
-              expectedValue: mockReasons[fieldId],
+              expectedValue: application.DECLARATION.MODERN_SLAVERY[fieldId],
             });
           });
         });

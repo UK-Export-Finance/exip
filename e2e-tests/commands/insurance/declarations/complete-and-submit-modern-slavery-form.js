@@ -4,28 +4,15 @@
  * @param {Boolean} willAdhereToAllRequirements: radio answer
  * @param {Boolean} hasNoOffensesOrInvestigations: radio answer
  * @param {Boolean} isNotAwareOfExistingSlavery: radio answer
- * @param {String} conditionalFields.cannotAdhereToAllRequirements: Textarea answer
- * @param {String} conditionalFields.offensesOrInvestigations: Textarea answer
- * @param {String} conditionalFields.awareOfExistingSlavery: Textarea answer
  */
-const completeAndSubmitModernSlavery = ({
-  willAdhereToAllRequirements,
-  hasNoOffensesOrInvestigations,
-  isNotAwareOfExistingSlavery,
-  conditionalFields = {
-    cannotAdhereToAllRequirements: '',
-    offensesOrInvestigations: '',
-    awareOfExistingSlavery: '',
-  },
-}) => {
+const completeAndSubmitModernSlaveryForm = ({ willAdhereToAllRequirements, hasNoOffensesOrInvestigations, isNotAwareOfExistingSlavery }) => {
   cy.completeModernSlaveryForm({
     willAdhereToAllRequirements,
     hasNoOffensesOrInvestigations,
     isNotAwareOfExistingSlavery,
-    conditionalFields,
   });
 
   cy.clickSubmitButton();
 };
 
-export default completeAndSubmitModernSlavery;
+export default completeAndSubmitModernSlaveryForm;

@@ -58,10 +58,16 @@ context(`Insurance - Declarations - Modern slavery page - validation - ${fieldId
         willAdhereToAllRequirements: false,
       });
 
+      cy.completeAndSubmitModernSlaveryFormConditionalFields({
+        cannotAdhereToAllRequirements: null,
+        awareOfExistingSlavery: null,
+        offensesOrInvestigations: null,
+      });
+
       cy.assertFieldErrors({
         field: autoCompleteField(conditionalFieldId),
         errorIndex: 0,
-        errorSummaryLength: 1,
+        errorSummaryLength: 3,
         errorMessage: ERROR_STRINGS.CONDITIONAL_REASONS[conditionalFieldId].IS_EMPTY,
       });
     });
@@ -73,9 +79,12 @@ context(`Insurance - Declarations - Modern slavery page - validation - ${fieldId
 
       cy.completeAndSubmitModernSlavery({
         willAdhereToAllRequirements: false,
-        conditionalFields: {
-          cannotAdhereToAllRequirements: reasonOverMaximum,
-        },
+      });
+
+      cy.completeAndSubmitModernSlaveryFormConditionalFields({
+        cannotAdhereToAllRequirements: reasonOverMaximum,
+        offensesOrInvestigations: null,
+        awareOfExistingSlavery: null,
       });
     });
 
@@ -83,7 +92,7 @@ context(`Insurance - Declarations - Modern slavery page - validation - ${fieldId
       cy.assertFieldErrors({
         field: autoCompleteField(conditionalFieldId),
         errorIndex: 0,
-        errorSummaryLength: 1,
+        errorSummaryLength: 3,
         errorMessage: ERROR_STRINGS.CONDITIONAL_REASONS[conditionalFieldId].ABOVE_MAXIMUM,
       });
     });
