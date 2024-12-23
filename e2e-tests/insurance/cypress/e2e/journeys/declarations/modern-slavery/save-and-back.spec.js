@@ -55,13 +55,13 @@ context('Insurance - Declarations - Modern slavery page - Save and go back', () 
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should retain the status of task `declarations and submit` as `in progress`', () => {
-      cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
+    it('should retain the status of task `declarations and submit` as `not started yet`', () => {
+      cy.checkTaskDeclarationsAndSubmitStatusIsNotStartedYet();
     });
   });
 
   describe('when fields are partially completed', () => {
-    it('should retain the status of task `declarations and submit` as `in progress`', () => {
+    it('should update the status of task `declarations and submit` to `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.completeModernSlaveryForm({
@@ -93,7 +93,7 @@ context('Insurance - Declarations - Modern slavery page - Save and go back', () 
   });
 
   describe('when all fields are submitted with `yes` radios', () => {
-    it('should retain the status of task `declarations and submit` as `in progress`', () => {
+    it('should update the status of task `declarations and submit` to `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.completeModernSlaveryForm({
@@ -132,7 +132,7 @@ context('Insurance - Declarations - Modern slavery page - Save and go back', () 
   });
 
   describe('when all fields are submitted with `no` radios', () => {
-    it('should retain the status of task `declarations and submit` as `in progress`', () => {
+    it('should update the status of task `declarations and submit` to `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.completeModernSlaveryForm({
