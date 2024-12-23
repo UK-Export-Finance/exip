@@ -231,7 +231,6 @@ const typeDefs = `
     esraClassification: String
     canGetAQuoteOnline: Boolean
     cannotGetAQuote: Boolean
-    cannotApply: Boolean
     canApplyForInsuranceOnline: Boolean
     noOnlineSupport: Boolean
     noInsuranceSupport: Boolean

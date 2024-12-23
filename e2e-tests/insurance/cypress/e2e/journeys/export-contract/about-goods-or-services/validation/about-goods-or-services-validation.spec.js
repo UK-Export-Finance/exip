@@ -131,7 +131,7 @@ context('Insurance - Export contract - About goods or services page - form valid
 
       cy.assertYesRadioOptionIsChecked();
 
-      cy.checkText(autoCompleteField(FINAL_DESTINATION).results(), COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME);
+      cy.checkText(autoCompleteField(FINAL_DESTINATION).results(), COUNTRY_APPLICATION_SUPPORT.ONLINE_SUPPORT_1.NAME);
     });
   });
 
