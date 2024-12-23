@@ -17,8 +17,7 @@ const { MODERN_SLAVERY } = DECLARATIONS.LATEST_DECLARATIONS;
 
 const {
   INSURANCE_ROOT,
-  ALL_SECTIONS,
-  DECLARATIONS: { MODERN_SLAVERY_SAVE_AND_BACK },
+  DECLARATIONS: { CONFIRMATION_AND_ACKNOWLEDGEMENTS, MODERN_SLAVERY_SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
@@ -150,7 +149,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`);
   } catch (error) {
     console.error('Error updating application - declarations - modern slavery %o', error);
 

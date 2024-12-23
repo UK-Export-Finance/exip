@@ -97,7 +97,7 @@ context(`Insurance - Declarations - Modern slavery page - validation - ${fieldId
       });
     });
 
-    it('should retain the submitted value', () => {
+    it('should retain the submitted values', () => {
       cy.checkTextareaValue({
         fieldId: conditionalFieldId,
         expectedValue: reasonOverMaximum,
