@@ -10,8 +10,11 @@ const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.MODERN_SLAVERY;
 
 const {
   ROOT: INSURANCE_ROOT,
-  ALL_SECTIONS,
-  DECLARATIONS: { MODERN_SLAVERY },
+  DECLARATIONS: {
+    ANTI_BRIBERY: { EXPORTING_WITH_CODE_OF_CONDUCT },
+    CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+    MODERN_SLAVERY,
+  },
 } = INSURANCE_ROUTES;
 
 const {
@@ -31,14 +34,17 @@ context(
   () => {
     let referenceNumber;
     let url;
+    let confirmationAndAcknowledgementsUrl;
 
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY}`;
+        cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'exportingWithCodeOfConduct', referenceNumber });
 
-        cy.navigateToUrl(url);
+        url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY}`;
+        confirmationAndAcknowledgementsUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
+
         cy.assertUrl(url);
       });
     });
@@ -55,7 +61,7 @@ context(
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: `${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY}`,
-        backLink: `${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY}#`,
+        backLink: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`,
       });
     });
 
@@ -107,7 +113,7 @@ context(
 
     describe('form submission', () => {
       describe('when submitting all radios as `yes`', () => {
-        it(`should redirect to ${ALL_SECTIONS}`, () => {
+        it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, () => {
           cy.navigateToUrl(url);
 
           cy.completeAndSubmitModernSlaveryForm({
@@ -116,7 +122,7 @@ context(
             isNotAwareOfExistingSlavery: true,
           });
 
-          cy.assertAllSectionsUrl(referenceNumber);
+          cy.assertUrl(confirmationAndAcknowledgementsUrl);
         });
 
         it('should have the submitted values when going back to the page', () => {
@@ -129,10 +135,10 @@ context(
       });
 
       describe('when submitting all radios as `no` and submitting conditional fields', () => {
-        it(`should redirect to ${ALL_SECTIONS}`, () => {
+        it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, () => {
           cy.navigateToUrl(url);
 
-          cy.completeAndSubmitModernSlaveryForm({
+          cy.completeModernSlaveryForm({
             willAdhereToAllRequirements: false,
             hasNoOffensesOrInvestigations: false,
             isNotAwareOfExistingSlavery: false,
@@ -140,7 +146,7 @@ context(
 
           cy.completeAndSubmitModernSlaveryFormConditionalFields({});
 
-          cy.assertAllSectionsUrl(referenceNumber);
+          cy.assertUrl(confirmationAndAcknowledgementsUrl);
         });
 
         describe('when going back to the page', () => {

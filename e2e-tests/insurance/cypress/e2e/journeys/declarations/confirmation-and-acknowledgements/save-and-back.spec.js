@@ -19,7 +19,7 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'exportingWithCodeOfConduct', referenceNumber });
+      cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'modernSlavery', referenceNumber });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
@@ -75,8 +75,8 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
       cy.clickTaskDeclarationsAndSubmit();
 
-      // go through the first 4 declaration forms.
-      cy.clickSubmitButtonMultipleTimes({ count: 4 });
+      // go through the first 5 declaration forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 5 });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
