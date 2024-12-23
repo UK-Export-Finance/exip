@@ -3,6 +3,11 @@ import replaceCharacterCodesWithCharacters from '../../replace-character-codes-w
 import { Application } from '../../../../types';
 
 const {
+  DECLARATIONS: {
+    MODERN_SLAVERY: {
+      CONDITIONAL_REASONS: { CANNOT_ADHERE_TO_ALL_REQUIREMENTS, OFFENSES_OR_INVESTIGATIONS, AWARE_OF_EXISTING_SLAVERY },
+    },
+  },
   EXPORTER_BUSINESS: {
     ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS: ALT_TRADING_FULL_ADDRESS },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES },
@@ -35,7 +40,7 @@ const mapTextareaFields = (application: Application): Application => {
   try {
     console.info('Mapping textarea fields');
 
-    const { broker, business, buyer, company, exportContract, policy, nominatedLossPayee } = application;
+    const { broker, business, buyer, company, declaration, exportContract, policy, nominatedLossPayee } = application;
 
     broker[BROKER_ADDRESS] = replaceCharacterCodesWithCharacters(broker[BROKER_ADDRESS]);
 
@@ -66,6 +71,14 @@ const mapTextareaFields = (application: Application): Application => {
     nominatedLossPayee.financialInternational[FINANCIAL_ADDRESS] = replaceCharacterCodesWithCharacters(
       nominatedLossPayee.financialInternational[FINANCIAL_ADDRESS],
     );
+
+    declaration.modernSlavery[CANNOT_ADHERE_TO_ALL_REQUIREMENTS] = replaceCharacterCodesWithCharacters(
+      declaration.modernSlavery[CANNOT_ADHERE_TO_ALL_REQUIREMENTS],
+    );
+
+    declaration.modernSlavery[OFFENSES_OR_INVESTIGATIONS] = replaceCharacterCodesWithCharacters(declaration.modernSlavery[OFFENSES_OR_INVESTIGATIONS]);
+
+    declaration.modernSlavery[AWARE_OF_EXISTING_SLAVERY] = replaceCharacterCodesWithCharacters(declaration.modernSlavery[AWARE_OF_EXISTING_SLAVERY]);
 
     return application;
   } catch (error) {
