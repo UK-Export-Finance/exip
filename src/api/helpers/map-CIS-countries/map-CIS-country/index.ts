@@ -1,10 +1,8 @@
 import mapEsraClassification from './map-esra-classification';
-import mapShortTermCoverAvailable from './map-short-term-cover-available';
-import mapNbiIssueAvailable from './map-NBI-issue-available';
-import noOnlineSupport from './no-online-support';
+import hasNoSupport from './has-no-support';
+import hasNoOnlineSupport from './has-no-online-support';
 import canGetAQuoteOnline from './can-get-a-quote-online';
 import canApplyForInsuranceOnline from './can-apply-for-insurance-online';
-import noSupport from './no-support';
 import { CisCountry, MappedCisCountry } from '../../../types';
 
 /**
@@ -14,43 +12,40 @@ import { CisCountry, MappedCisCountry } from '../../../types';
  * @returns {MappedCisCountry} Mapped country
  */
 export const mapCisCountry = (cisCountry: CisCountry): MappedCisCountry => {
-  const { countryRatingDesc, ESRAClassificationDesc, isoCode, marketName, shortTermCoverAvailabilityDesc } = cisCountry;
+  const { countryRatingDesc: countryRating, ESRAClassificationDesc, isoCode, marketName, shortTermCoverAvailabilityDesc: shortTermCover } = cisCountry;
 
   const esraClassification = mapEsraClassification(cisCountry.ESRAClassificationDesc);
-  const nbiIssueAvailable = mapNbiIssueAvailable(cisCountry.NBIIssue);
-  const shortTermCover = mapShortTermCoverAvailable(cisCountry.shortTermCoverAvailabilityDesc);
 
-  const countryRating = countryRatingDesc;
+  /**
+   * Current business logic for "no support" (online or offline)
+   * Is exactly the same for "get a quote" and "insurance application".
+   * Therefore we can use hasNoSupport for both.
+   */
+  const noSupport = hasNoSupport({
+    countryRating,
+    esraClassification: ESRAClassificationDesc,
+    shortTermCover,
+  });
 
   const mapped: MappedCisCountry = {
     countryRating,
     esraClassification,
     isoCode,
     name: marketName,
-    nbiIssueAvailable,
-    shortTermCover,
 
-    noOnlineSupport: noOnlineSupport({
+    noOnlineSupport: hasNoOnlineSupport({
       countryRating,
       esraClassification: ESRAClassificationDesc,
-      shortTermCover: shortTermCoverAvailabilityDesc,
+      shortTermCover,
     }),
 
     canGetAQuoteOnline: canGetAQuoteOnline(cisCountry),
 
-    cannotGetAQuote: noSupport({
-      countryRating,
-      esraClassification: ESRAClassificationDesc,
-      shortTermCover: shortTermCoverAvailabilityDesc,
-    }),
+    cannotGetAQuote: noSupport,
 
     canApplyForInsuranceOnline: canApplyForInsuranceOnline(cisCountry),
 
-    noInsuranceSupport: noSupport({
-      countryRating,
-      esraClassification: ESRAClassificationDesc,
-      shortTermCover: shortTermCoverAvailabilityDesc,
-    }),
+    noInsuranceSupport: noSupport,
   };
 
   return mapped;

@@ -2822,7 +2822,6 @@ var typeDefs = `
     name: String
     shortTermCover: Boolean
     esraClassification: String
-    nbiIssueAvailable: Boolean
     canGetAQuoteOnline: Boolean
     cannotGetAQuote: Boolean
     cannotApply: Boolean
@@ -8987,36 +8986,6 @@ var mapEsraClassification = (str) => {
 };
 var map_esra_classification_default = mapEsraClassification;
 
-// helpers/map-CIS-countries/map-CIS-country/map-short-term-cover-available/index.ts
-var {
-  CIS: { SHORT_TERM_COVER },
-} = EXTERNAL_API_DEFINITIONS;
-var mapShortTermCoverAvailable = (str) => {
-  switch (str) {
-    case SHORT_TERM_COVER.YES:
-      return true;
-    case SHORT_TERM_COVER.ILC:
-      return true;
-    case SHORT_TERM_COVER.CILC:
-      return true;
-    case SHORT_TERM_COVER.REFER:
-      return true;
-    default:
-      return false;
-  }
-};
-var map_short_term_cover_available_default = mapShortTermCoverAvailable;
-
-// helpers/map-CIS-countries/map-CIS-country/map-NBI-issue-available/index.ts
-var { CIS } = EXTERNAL_API_DEFINITIONS;
-var mapNbiIssueAvailable = (str) => {
-  if (str === CIS.NBI_ISSUE_AVAILABLE.YES) {
-    return true;
-  }
-  return false;
-};
-var map_NBI_issue_available_default = mapNbiIssueAvailable;
-
 // helpers/map-CIS-countries/map-CIS-country/country-rating-is-a-or-b/index.ts
 var {
   CIS: { COUNTRY_RATINGS },
@@ -9031,35 +9000,6 @@ var countryRatingIsAorB = (rating) => {
   return false;
 };
 var country_rating_is_a_or_b_default = countryRatingIsAorB;
-
-// helpers/map-CIS-countries/map-CIS-country/no-online-support/a-and-b-rating-conditions/index.ts
-var {
-  CIS: {
-    ESRA_CLASSIFICATION: { STANDARD, HIGH, VERY_HIGH, NONE },
-    SHORT_TERM_COVER: { NO: NO2, ILC, CILC },
-  },
-} = EXTERNAL_API_DEFINITIONS;
-var aAndBRatingConditions = ({ countryRating, esraClassification, shortTermCover }) => {
-  if (!country_rating_is_a_or_b_default(countryRating)) {
-    return false;
-  }
-  if (esraClassification === STANDARD || esraClassification === HIGH || esraClassification === VERY_HIGH) {
-    if (shortTermCover === ILC) {
-      return true;
-    }
-    if (shortTermCover === CILC) {
-      return true;
-    }
-    if (shortTermCover === NO2) {
-      return true;
-    }
-  }
-  if (esraClassification === NONE && shortTermCover === NO2) {
-    return true;
-  }
-  return false;
-};
-var a_and_b_rating_conditions_default = aAndBRatingConditions;
 
 // helpers/map-CIS-countries/map-CIS-country/country-rating-is-c-or-d/index.ts
 var {
@@ -9076,46 +9016,120 @@ var countryRatingIsCorD = (rating) => {
 };
 var country_rating_is_c_or_d_default = countryRatingIsCorD;
 
-// helpers/map-CIS-countries/map-CIS-country/no-online-support/c-and-d-rating-conditions/index.ts
+// helpers/map-CIS-countries/map-CIS-country/esra-classification-is-standard-high-or-very-high/index.ts
+var {
+  CIS: {
+    ESRA_CLASSIFICATION: { STANDARD, HIGH, VERY_HIGH },
+  },
+} = EXTERNAL_API_DEFINITIONS;
+var esraClassificationIsStandardHighOrVeryHigh = (esraClassification) => {
+  switch (esraClassification) {
+    case STANDARD:
+      return true;
+    case HIGH:
+      return true;
+    case VERY_HIGH:
+      return true;
+    default:
+      return false;
+  }
+};
+var esra_classification_is_standard_high_or_very_high_default = esraClassificationIsStandardHighOrVeryHigh;
+
+// helpers/map-CIS-countries/map-CIS-country/has-no-support/index.ts
+var {
+  CIS: {
+    COUNTRY_RATINGS: { NOT_APPLICABLE },
+    ESRA_CLASSIFICATION: { NONE },
+    SHORT_TERM_COVER: { UNLISTED, CILC },
+  },
+} = EXTERNAL_API_DEFINITIONS;
+var hasNoSupport = ({ countryRating, esraClassification, shortTermCover }) => {
+  const shortTermCoverIsUnlisted = shortTermCover === UNLISTED;
+  const esraClassificationIsNone = esraClassification === NONE;
+  const countryRatingIsNotApplicable = countryRating === NOT_APPLICABLE;
+  const countryRatingConditions =
+    country_rating_is_a_or_b_default(countryRating) || country_rating_is_c_or_d_default(countryRating) || countryRatingIsNotApplicable;
+  if (shortTermCoverIsUnlisted && esraClassificationIsNone && countryRatingConditions) {
+    return true;
+  }
+  const esraClassificationConditions = esra_classification_is_standard_high_or_very_high_default(esraClassification) || esraClassificationIsNone;
+  if (shortTermCover === CILC && countryRatingIsNotApplicable && esraClassificationConditions) {
+    return true;
+  }
+  return false;
+};
+var has_no_support_default = hasNoSupport;
+
+// helpers/map-CIS-countries/map-CIS-country/has-no-online-support/a-and-b-rating-conditions/index.ts
 var {
   CIS: {
     ESRA_CLASSIFICATION: { STANDARD: STANDARD2, HIGH: HIGH2, VERY_HIGH: VERY_HIGH2, NONE: NONE2 },
-    SHORT_TERM_COVER: { YES: YES2, NO: NO3, ILC: ILC2, CILC: CILC2, REFER, UNLISTED },
+    SHORT_TERM_COVER: { NO: NO2, ILC, CILC: CILC2 },
+  },
+} = EXTERNAL_API_DEFINITIONS;
+var aAndBRatingConditions = ({ countryRating, esraClassification, shortTermCover }) => {
+  if (!country_rating_is_a_or_b_default(countryRating)) {
+    return false;
+  }
+  if (esraClassification === STANDARD2 || esraClassification === HIGH2 || esraClassification === VERY_HIGH2) {
+    if (shortTermCover === ILC) {
+      return true;
+    }
+    if (shortTermCover === CILC2) {
+      return true;
+    }
+    if (shortTermCover === NO2) {
+      return true;
+    }
+  }
+  if (esraClassification === NONE2 && shortTermCover === NO2) {
+    return true;
+  }
+  return false;
+};
+var a_and_b_rating_conditions_default = aAndBRatingConditions;
+
+// helpers/map-CIS-countries/map-CIS-country/has-no-online-support/c-and-d-rating-conditions/index.ts
+var {
+  CIS: {
+    ESRA_CLASSIFICATION: { STANDARD: STANDARD3, HIGH: HIGH3, VERY_HIGH: VERY_HIGH3, NONE: NONE3 },
+    SHORT_TERM_COVER: { YES: YES2, NO: NO3, ILC: ILC2, CILC: CILC3, REFER, UNLISTED: UNLISTED2 },
   },
 } = EXTERNAL_API_DEFINITIONS;
 var cAndDRatingConditions = ({ countryRating, esraClassification, shortTermCover }) => {
   if (!country_rating_is_c_or_d_default(countryRating)) {
     return false;
   }
-  if (esraClassification === STANDARD2 || esraClassification === HIGH2 || esraClassification === VERY_HIGH2) {
+  if (esraClassification === STANDARD3 || esraClassification === HIGH3 || esraClassification === VERY_HIGH3) {
     if (shortTermCover === YES2) {
       return true;
     }
     if (shortTermCover === ILC2) {
       return true;
     }
-    if (shortTermCover === CILC2) {
+    if (shortTermCover === CILC3) {
       return true;
     }
     if (shortTermCover === REFER) {
       return true;
     }
-    if (shortTermCover === UNLISTED) {
+    if (shortTermCover === UNLISTED2) {
       return true;
     }
     if (shortTermCover === NO3) {
       return true;
     }
   }
-  if (esraClassification === NONE2 && shortTermCover === NO3) {
+  if (esraClassification === NONE3 && shortTermCover === NO3) {
     return true;
   }
   return false;
 };
 var c_and_d_rating_conditions_default = cAndDRatingConditions;
 
-// helpers/map-CIS-countries/map-CIS-country/no-online-support/index.ts
-var noOnlineSupport = ({ countryRating, esraClassification, shortTermCover }) => {
+// helpers/map-CIS-countries/map-CIS-country/has-no-online-support/index.ts
+var hasNoOnlineSupport = ({ countryRating, esraClassification, shortTermCover }) => {
   const aAndBConditions = a_and_b_rating_conditions_default({
     countryRating,
     esraClassification,
@@ -9129,32 +9143,12 @@ var noOnlineSupport = ({ countryRating, esraClassification, shortTermCover }) =>
   const conditions = aAndBConditions || cAndDConditions;
   return conditions;
 };
-var no_online_support_default = noOnlineSupport;
-
-// helpers/map-CIS-countries/map-CIS-country/esra-classification-is-standard-high-or-very-high/index.ts
-var {
-  CIS: {
-    ESRA_CLASSIFICATION: { STANDARD: STANDARD3, HIGH: HIGH3, VERY_HIGH: VERY_HIGH3 },
-  },
-} = EXTERNAL_API_DEFINITIONS;
-var esraClassificationIsStandardHighOrVeryHigh = (esraClassification) => {
-  switch (esraClassification) {
-    case STANDARD3:
-      return true;
-    case HIGH3:
-      return true;
-    case VERY_HIGH3:
-      return true;
-    default:
-      return false;
-  }
-};
-var esra_classification_is_standard_high_or_very_high_default = esraClassificationIsStandardHighOrVeryHigh;
+var has_no_online_support_default = hasNoOnlineSupport;
 
 // helpers/map-CIS-countries/map-CIS-country/short-term-cover-is-yes-refer-or-unlisted/index.ts
 var {
   CIS: {
-    SHORT_TERM_COVER: { YES: YES3, REFER: REFER2, UNLISTED: UNLISTED2 },
+    SHORT_TERM_COVER: { YES: YES3, REFER: REFER2, UNLISTED: UNLISTED3 },
   },
 } = EXTERNAL_API_DEFINITIONS;
 var shortTermCoverIsYesReferOrUnlisted = (shortTermCover) => {
@@ -9163,7 +9157,7 @@ var shortTermCoverIsYesReferOrUnlisted = (shortTermCover) => {
       return true;
     case REFER2:
       return true;
-    case UNLISTED2:
+    case UNLISTED3:
       return true;
     default:
       return false;
@@ -9193,62 +9187,29 @@ var canApplyForInsuranceOnline = (cisCountry) => {
 };
 var can_apply_for_insurance_online_default = canApplyForInsuranceOnline;
 
-// helpers/map-CIS-countries/map-CIS-country/no-support/index.ts
-var {
-  CIS: {
-    COUNTRY_RATINGS: { NOT_APPLICABLE },
-    ESRA_CLASSIFICATION: { NONE: NONE3 },
-    SHORT_TERM_COVER: { UNLISTED: UNLISTED3, CILC: CILC3 },
-  },
-} = EXTERNAL_API_DEFINITIONS;
-var noSupport = ({ countryRating, esraClassification, shortTermCover }) => {
-  const shortTermCoverIsUnlisted = shortTermCover === UNLISTED3;
-  const esraClassificationIsNone = esraClassification === NONE3;
-  const countryRatingIsNotApplicable = countryRating === NOT_APPLICABLE;
-  const countryRatingConditions =
-    country_rating_is_a_or_b_default(countryRating) || country_rating_is_c_or_d_default(countryRating) || countryRatingIsNotApplicable;
-  if (shortTermCoverIsUnlisted && esraClassificationIsNone && countryRatingConditions) {
-    return true;
-  }
-  const esraClassificationConditions = esra_classification_is_standard_high_or_very_high_default(esraClassification) || esraClassificationIsNone;
-  if (shortTermCover === CILC3 && countryRatingIsNotApplicable && esraClassificationConditions) {
-    return true;
-  }
-  return false;
-};
-var no_support_default = noSupport;
-
 // helpers/map-CIS-countries/map-CIS-country/index.ts
 var mapCisCountry = (cisCountry) => {
-  const { countryRatingDesc, ESRAClassificationDesc, isoCode, marketName, shortTermCoverAvailabilityDesc } = cisCountry;
+  const { countryRatingDesc: countryRating, ESRAClassificationDesc, isoCode, marketName, shortTermCoverAvailabilityDesc: shortTermCover } = cisCountry;
   const esraClassification = map_esra_classification_default(cisCountry.ESRAClassificationDesc);
-  const nbiIssueAvailable = map_NBI_issue_available_default(cisCountry.NBIIssue);
-  const shortTermCover = map_short_term_cover_available_default(cisCountry.shortTermCoverAvailabilityDesc);
-  const countryRating = countryRatingDesc;
+  const noSupport = has_no_support_default({
+    countryRating,
+    esraClassification: ESRAClassificationDesc,
+    shortTermCover,
+  });
   const mapped = {
     countryRating,
     esraClassification,
     isoCode,
     name: marketName,
-    nbiIssueAvailable,
-    shortTermCover,
-    noOnlineSupport: no_online_support_default({
+    noOnlineSupport: has_no_online_support_default({
       countryRating,
       esraClassification: ESRAClassificationDesc,
-      shortTermCover: shortTermCoverAvailabilityDesc,
+      shortTermCover,
     }),
     canGetAQuoteOnline: can_get_a_quote_online_default(cisCountry),
-    cannotGetAQuote: no_support_default({
-      countryRating,
-      esraClassification: ESRAClassificationDesc,
-      shortTermCover: shortTermCoverAvailabilityDesc,
-    }),
+    cannotGetAQuote: noSupport,
     canApplyForInsuranceOnline: can_apply_for_insurance_online_default(cisCountry),
-    noInsuranceSupport: no_support_default({
-      countryRating,
-      esraClassification: ESRAClassificationDesc,
-      shortTermCover: shortTermCoverAvailabilityDesc,
-    }),
+    noInsuranceSupport: noSupport,
   };
   return mapped;
 };
@@ -9262,9 +9223,9 @@ var sortArrayAlphabetically = (arr, field) => {
 var sort_array_alphabetically_default = sortArrayAlphabetically;
 
 // helpers/map-CIS-countries/index.ts
-var { CIS: CIS2 } = EXTERNAL_API_DEFINITIONS;
+var { CIS } = EXTERNAL_API_DEFINITIONS;
 var mapCisCountries = (countries) => {
-  const filteredCountries = filter_cis_entries_default(countries, CIS2.INVALID_COUNTRIES, 'marketName');
+  const filteredCountries = filter_cis_entries_default(countries, CIS.INVALID_COUNTRIES, 'marketName');
   const mapped = filteredCountries.map((country) => map_CIS_country_default(country));
   const sorted = sort_array_alphabetically_default(mapped, 'name');
   return sorted;
@@ -9289,7 +9250,7 @@ var getApimCisCountries = async () => {
 var get_APIM_CIS_countries_default = getApimCisCountries;
 
 // helpers/map-currencies/index.ts
-var { CIS: CIS3 } = EXTERNAL_API_DEFINITIONS;
+var { CIS: CIS2 } = EXTERNAL_API_DEFINITIONS;
 var getSupportedCurrencies = (currencies) => {
   const supported = currencies.filter((currency) => SUPPORTED_CURRENCIES.find((currencyCode) => currency.isoCode === currencyCode));
   return supported;
@@ -9299,7 +9260,7 @@ var getAlternativeCurrencies = (currencies) => {
   return alternate;
 };
 var mapCurrencies = (currencies, alternativeCurrencies) => {
-  let currenciesArray = filter_cis_entries_default(currencies, CIS3.INVALID_CURRENCIES, 'name');
+  let currenciesArray = filter_cis_entries_default(currencies, CIS2.INVALID_CURRENCIES, 'name');
   if (!alternativeCurrencies) {
     currenciesArray = getSupportedCurrencies(currenciesArray);
   } else {
