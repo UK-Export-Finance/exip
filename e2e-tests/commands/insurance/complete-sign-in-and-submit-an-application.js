@@ -40,6 +40,7 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * @param {Boolean} submitCheckYourAnswers: Should click each section's "check your answers" submit button.
  * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker".
+ * @param {Boolean} brokerIsBasedInUk: Should submit "yes" or "no" to "broker is based in UK".
  * @return {String} Application reference number
  */
 const completeSignInAndSubmitAnApplication = ({
@@ -76,6 +77,7 @@ const completeSignInAndSubmitAnApplication = ({
   policyValueOverMvpMaximum = false,
   totalContractValueOverThreshold = false,
   usingBroker = false,
+  brokerIsBasedInUk = false,
 }) => {
   completeSignInAndGoToApplication({
     companyNumber,
@@ -113,6 +115,7 @@ const completeSignInAndSubmitAnApplication = ({
         referenceNumber,
         totalContractValueOverThreshold,
         usingBroker,
+        brokerIsBasedInUk,
       });
     } else {
       cy.completePrepareApplicationSinglePolicyType({
@@ -145,6 +148,7 @@ const completeSignInAndSubmitAnApplication = ({
         referenceNumber,
         totalContractValueOverThreshold,
         usingBroker,
+        brokerIsBasedInUk,
       });
     }
     cy.completeAndSubmitCheckYourAnswers();

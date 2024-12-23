@@ -3,7 +3,7 @@ import { APPLICATION } from '../../../constants';
 const { SINGLE } = APPLICATION.POLICY_TYPE;
 
 /**
- * completeAndPolicyForms
+ * completeAndSubmitPolicyForms
  * completes policy forms up to the specified form to stop at
  * eg, when 'exportValue' is passed, it will complete all forms up to and including 'exportValue'
  * @param {String} stopSubmittingAfter: The final form to submit
@@ -17,7 +17,7 @@ const { SINGLE } = APPLICATION.POLICY_TYPE;
  * @param {Boolean} otherCompanyInvolved: If "another company to be insured" is on.
  * @param {Boolean} isBasedInUk: Broker is based in the UK
  */
-const completeAndPolicyForms = ({
+const completeAndSubmitPolicyForms = ({
   stopSubmittingAfter,
   policyType = SINGLE,
   sameName = true,
@@ -81,4 +81,4 @@ const completeAndPolicyForms = ({
   }
 };
 
-export default completeAndPolicyForms;
+export default completeAndSubmitPolicyForms;

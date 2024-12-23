@@ -41,6 +41,7 @@ const { POLICY_TYPE } = APPLICATION;
  * @param {Boolean} submitCheckYourAnswers: Should click each section's "check your answers" submit button.
  * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker".
+ * @param {Boolean} brokerIsBasedInUk: Should submit "yes" or "no" to "broker is based in UK".
  */
 const completePrepareApplicationMultiplePolicyType = ({
   agentChargeMethodFixedSum = false,
@@ -78,6 +79,7 @@ const completePrepareApplicationMultiplePolicyType = ({
   totalContractValueOverThreshold = false,
   submitCheckYourAnswers = true,
   usingBroker = false,
+  brokerIsBasedInUk = false,
 }) => {
   cy.completeBusinessSection({
     differentTradingName,
@@ -106,6 +108,7 @@ const completePrepareApplicationMultiplePolicyType = ({
     policyValueOverMvpMaximum,
     submitCheckYourAnswers,
     usingBroker,
+    brokerIsBasedInUk,
     otherCompanyInvolved,
     needPreCreditPeriod,
     isAppointingLossPayee,
