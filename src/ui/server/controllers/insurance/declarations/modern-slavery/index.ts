@@ -6,7 +6,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
-import save from '../save-data/modern-slavery';
+import save from '../map-and-save/modern-slavery';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import { Request, Response } from '../../../../../types';
 
@@ -15,7 +15,12 @@ const { WILL_ADHERE_TO_ALL_REQUIREMENTS, HAS_NO_OFFENSES_OR_INVESTIGATIONS, IS_N
 
 const { MODERN_SLAVERY } = DECLARATIONS.LATEST_DECLARATIONS;
 
-const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
+const {
+  INSURANCE_ROOT,
+  ALL_SECTIONS,
+  DECLARATIONS: { MODERN_SLAVERY_SAVE_AND_BACK },
+  PROBLEM_WITH_SERVICE,
+} = ROUTES.INSURANCE;
 
 /**
  * pageVariables
@@ -50,7 +55,7 @@ export const pageVariables = (referenceNumber: number) => ({
       },
     },
   },
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY_SAVE_AND_BACK}`,
 });
 
 export const PAGE_CONTENT_STRINGS = {
@@ -139,7 +144,7 @@ export const post = async (req: Request, res: Response) => {
 
   try {
     // save the application
-    const saveResponse = await save.declarationModernSlavery(application, payload);
+    const saveResponse = await save.declarationModernSlavery(payload, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

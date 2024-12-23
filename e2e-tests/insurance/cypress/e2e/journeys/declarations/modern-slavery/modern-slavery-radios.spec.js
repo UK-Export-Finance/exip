@@ -22,187 +22,190 @@ const { YES, NO } = FIELD_VALUES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Declarations - Modern slavery page - radios - TODO EMS-4023', () => {
-  let referenceNumber;
-  let url;
+context(
+  'Insurance - Declarations - Modern slavery page - radios - As a UKEF legal adviser, I want to know whether an exporter adheres to the Modern Slavery Act 2015, So that UKEF is not at risk of supporting ethically unsustainable businesses',
+  () => {
+    let referenceNumber;
+    let url;
 
-  before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY}`;
+        url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY}`;
+
+        cy.navigateToUrl(url);
+        cy.assertUrl(url);
+      });
+    });
+
+    beforeEach(() => {
+      cy.saveSession();
 
       cy.navigateToUrl(url);
-      cy.assertUrl(url);
-    });
-  });
-
-  beforeEach(() => {
-    cy.saveSession();
-
-    cy.navigateToUrl(url);
-  });
-
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
-
-  describe(WILL_ADHERE_TO_ALL_REQUIREMENTS, () => {
-    const fieldId = WILL_ADHERE_TO_ALL_REQUIREMENTS;
-    const conditionalFieldId = CANNOT_ADHERE_TO_ALL_REQUIREMENTS;
-
-    const fieldStrings = FIELDS.MODERN_SLAVERY[fieldId].VERSIONS[0];
-
-    it('should render a legend', () => {
-      cy.checkText(fieldSelector(fieldId).legend(), fieldStrings.LABEL);
     });
 
-    describe('`yes` radio', () => {
-      const selector = yesRadio();
+    after(() => {
+      cy.deleteApplication(referenceNumber);
+    });
 
-      it('should render a label', () => {
-        cy.checkText(selector.label().first(), YES);
+    describe(WILL_ADHERE_TO_ALL_REQUIREMENTS, () => {
+      const fieldId = WILL_ADHERE_TO_ALL_REQUIREMENTS;
+      const conditionalFieldId = CANNOT_ADHERE_TO_ALL_REQUIREMENTS;
 
-        cy.checkRadioInputYesAriaLabel(fieldStrings.LABEL);
+      const fieldStrings = FIELDS.MODERN_SLAVERY[fieldId].VERSIONS[0];
+
+      it('should render a legend', () => {
+        cy.checkText(fieldSelector(fieldId).legend(), fieldStrings.LABEL);
       });
 
-      it('should render an input', () => {
-        selector.input().first().should('exist');
-      });
-    });
+      describe('`yes` radio', () => {
+        const selector = yesRadio();
 
-    describe('`no` radio', () => {
-      const selector = noRadio();
+        it('should render a label', () => {
+          cy.checkText(selector.label().first(), YES);
 
-      it('should render a label', () => {
-        cy.checkText(selector.label().first(), NO);
+          cy.checkRadioInputYesAriaLabel(fieldStrings.LABEL);
+        });
 
-        cy.checkRadioInputNoAriaLabel(fieldStrings.LABEL);
-      });
-
-      it('should render an input', () => {
-        selector.input().first().should('exist');
-      });
-    });
-
-    it(`should NOT display conditional "${conditionalFieldId}" field`, () => {
-      fieldSelector(conditionalFieldId).textarea().should('not.be.visible');
-    });
-
-    it(`should display conditional "${conditionalFieldId}" field when selecting the ${fieldId} radio`, () => {
-      cy.clickNoRadioInput(0);
-
-      cy.assertTextareaRendering({
-        fieldId: conditionalFieldId,
-        expectedLabel: fieldStrings.CONDITIONAL_REASON.LABEL,
-        maximumCharacters: MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON,
-      });
-    });
-  });
-
-  describe(HAS_NO_OFFENSES_OR_INVESTIGATIONS, () => {
-    const fieldId = HAS_NO_OFFENSES_OR_INVESTIGATIONS;
-    const conditionalFieldId = OFFENSES_OR_INVESTIGATIONS;
-
-    const fieldStrings = FIELDS.MODERN_SLAVERY[fieldId].VERSIONS[0];
-
-    it('should render a legend', () => {
-      cy.checkText(fieldSelector(fieldId).legend(), fieldStrings.LABEL);
-    });
-
-    describe('`yes` radio', () => {
-      const selector = yesRadio();
-
-      it('should render a label', () => {
-        cy.checkText(selector.label().eq(1), YES);
-
-        cy.checkRadioInputYesAriaLabel(fieldStrings.LABEL, 1);
+        it('should render an input', () => {
+          selector.input().first().should('exist');
+        });
       });
 
-      it('should render an input', () => {
-        selector.input().eq(1).should('exist');
+      describe('`no` radio', () => {
+        const selector = noRadio();
+
+        it('should render a label', () => {
+          cy.checkText(selector.label().first(), NO);
+
+          cy.checkRadioInputNoAriaLabel(fieldStrings.LABEL);
+        });
+
+        it('should render an input', () => {
+          selector.input().first().should('exist');
+        });
+      });
+
+      it(`should NOT display conditional "${conditionalFieldId}" field`, () => {
+        fieldSelector(conditionalFieldId).textarea().should('not.be.visible');
+      });
+
+      it(`should display conditional "${conditionalFieldId}" field when selecting the ${fieldId} radio`, () => {
+        cy.clickNoRadioInput(0);
+
+        cy.assertTextareaRendering({
+          fieldId: conditionalFieldId,
+          expectedLabel: fieldStrings.CONDITIONAL_REASON.LABEL,
+          maximumCharacters: MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON,
+        });
       });
     });
 
-    describe('`no` radio', () => {
-      const selector = noRadio();
+    describe(HAS_NO_OFFENSES_OR_INVESTIGATIONS, () => {
+      const fieldId = HAS_NO_OFFENSES_OR_INVESTIGATIONS;
+      const conditionalFieldId = OFFENSES_OR_INVESTIGATIONS;
 
-      it('should render a label', () => {
-        cy.checkText(selector.label().first(), NO);
+      const fieldStrings = FIELDS.MODERN_SLAVERY[fieldId].VERSIONS[0];
 
-        cy.checkRadioInputNoAriaLabel(fieldStrings.LABEL, 1);
+      it('should render a legend', () => {
+        cy.checkText(fieldSelector(fieldId).legend(), fieldStrings.LABEL);
       });
 
-      it('should render an input', () => {
-        selector.input().first().should('exist');
-      });
-    });
+      describe('`yes` radio', () => {
+        const selector = yesRadio();
 
-    it(`should NOT display conditional "${conditionalFieldId}" field`, () => {
-      fieldSelector(conditionalFieldId).textarea().should('not.be.visible');
-    });
+        it('should render a label', () => {
+          cy.checkText(selector.label().eq(1), YES);
 
-    it(`should display conditional "${conditionalFieldId}" field when selecting the ${fieldId} radio`, () => {
-      cy.clickNoRadioInput(1);
+          cy.checkRadioInputYesAriaLabel(fieldStrings.LABEL, 1);
+        });
 
-      cy.assertTextareaRendering({
-        fieldId: conditionalFieldId,
-        expectedLabel: fieldStrings.CONDITIONAL_REASON.LABEL,
-        maximumCharacters: MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON,
-      });
-    });
-  });
-
-  describe(IS_NOT_AWARE_OF_EXISTING_SLAVERY, () => {
-    const fieldId = IS_NOT_AWARE_OF_EXISTING_SLAVERY;
-    const conditionalFieldId = AWARE_OF_EXISTING_SLAVERY;
-
-    const fieldStrings = FIELDS.MODERN_SLAVERY[fieldId].VERSIONS[0];
-
-    it('should render a legend', () => {
-      cy.checkText(fieldSelector(fieldId).legend(), fieldStrings.LABEL);
-    });
-
-    describe('`yes` radio', () => {
-      const selector = yesRadio();
-
-      it('should render a label', () => {
-        cy.checkText(selector.label().eq(1), YES);
-
-        cy.checkRadioInputYesAriaLabel(fieldStrings.LABEL, 2);
+        it('should render an input', () => {
+          selector.input().eq(1).should('exist');
+        });
       });
 
-      it('should render an input', () => {
-        selector.input().eq(1).should('exist');
+      describe('`no` radio', () => {
+        const selector = noRadio();
+
+        it('should render a label', () => {
+          cy.checkText(selector.label().first(), NO);
+
+          cy.checkRadioInputNoAriaLabel(fieldStrings.LABEL, 1);
+        });
+
+        it('should render an input', () => {
+          selector.input().first().should('exist');
+        });
       });
-    });
 
-    describe('`no` radio', () => {
-      const selector = noRadio();
-
-      it('should render a label', () => {
-        cy.checkText(selector.label().first(), NO);
-
-        cy.checkRadioInputNoAriaLabel(fieldStrings.LABEL, 2);
+      it(`should NOT display conditional "${conditionalFieldId}" field`, () => {
+        fieldSelector(conditionalFieldId).textarea().should('not.be.visible');
       });
 
-      it('should render an input', () => {
-        selector.input().first().should('exist');
+      it(`should display conditional "${conditionalFieldId}" field when selecting the ${fieldId} radio`, () => {
+        cy.clickNoRadioInput(1);
+
+        cy.assertTextareaRendering({
+          fieldId: conditionalFieldId,
+          expectedLabel: fieldStrings.CONDITIONAL_REASON.LABEL,
+          maximumCharacters: MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON,
+        });
       });
     });
 
-    it(`should NOT display conditional "${conditionalFieldId}" field`, () => {
-      fieldSelector(conditionalFieldId).textarea().should('not.be.visible');
-    });
+    describe(IS_NOT_AWARE_OF_EXISTING_SLAVERY, () => {
+      const fieldId = IS_NOT_AWARE_OF_EXISTING_SLAVERY;
+      const conditionalFieldId = AWARE_OF_EXISTING_SLAVERY;
 
-    it(`should display conditional "${conditionalFieldId}" field when selecting the ${fieldId} radio`, () => {
-      cy.clickNoRadioInput(2);
+      const fieldStrings = FIELDS.MODERN_SLAVERY[fieldId].VERSIONS[0];
 
-      cy.assertTextareaRendering({
-        fieldId: conditionalFieldId,
-        expectedLabel: fieldStrings.CONDITIONAL_REASON.LABEL,
-        maximumCharacters: MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON,
+      it('should render a legend', () => {
+        cy.checkText(fieldSelector(fieldId).legend(), fieldStrings.LABEL);
+      });
+
+      describe('`yes` radio', () => {
+        const selector = yesRadio();
+
+        it('should render a label', () => {
+          cy.checkText(selector.label().eq(1), YES);
+
+          cy.checkRadioInputYesAriaLabel(fieldStrings.LABEL, 2);
+        });
+
+        it('should render an input', () => {
+          selector.input().eq(1).should('exist');
+        });
+      });
+
+      describe('`no` radio', () => {
+        const selector = noRadio();
+
+        it('should render a label', () => {
+          cy.checkText(selector.label().first(), NO);
+
+          cy.checkRadioInputNoAriaLabel(fieldStrings.LABEL, 2);
+        });
+
+        it('should render an input', () => {
+          selector.input().first().should('exist');
+        });
+      });
+
+      it(`should NOT display conditional "${conditionalFieldId}" field`, () => {
+        fieldSelector(conditionalFieldId).textarea().should('not.be.visible');
+      });
+
+      it(`should display conditional "${conditionalFieldId}" field when selecting the ${fieldId} radio`, () => {
+        cy.clickNoRadioInput(2);
+
+        cy.assertTextareaRendering({
+          fieldId: conditionalFieldId,
+          expectedLabel: fieldStrings.CONDITIONAL_REASON.LABEL,
+          maximumCharacters: MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON,
+        });
       });
     });
-  });
-});
+  },
+);

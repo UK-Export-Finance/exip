@@ -7,7 +7,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
-import save from '../save-data/modern-slavery';
+import save from '../map-and-save/modern-slavery';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockSpyPromise, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
@@ -17,7 +17,12 @@ const { WILL_ADHERE_TO_ALL_REQUIREMENTS, HAS_NO_OFFENSES_OR_INVESTIGATIONS, IS_N
 
 const { MODERN_SLAVERY } = DECLARATIONS.LATEST_DECLARATIONS;
 
-const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
+const {
+  INSURANCE_ROOT,
+  ALL_SECTIONS,
+  DECLARATIONS: { MODERN_SLAVERY_SAVE_AND_BACK },
+  PROBLEM_WITH_SERVICE,
+} = ROUTES.INSURANCE;
 
 describe('controllers/insurance/declarations/modern-slavery', () => {
   jest.mock('../save-data/modern-slavery');
@@ -107,7 +112,7 @@ describe('controllers/insurance/declarations/modern-slavery', () => {
             },
           },
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -163,7 +168,7 @@ describe('controllers/insurance/declarations/modern-slavery', () => {
         const payload = constructPayload(req.body, FIELD_IDS);
 
         expect(save.declarationModernSlavery).toHaveBeenCalledTimes(1);
-        expect(save.declarationModernSlavery).toHaveBeenCalledWith(mockApplication, payload);
+        expect(save.declarationModernSlavery).toHaveBeenCalledWith(payload, mockApplication);
       });
 
       it(`should redirect to ${ALL_SECTIONS}`, async () => {
