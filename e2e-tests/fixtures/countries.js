@@ -82,7 +82,7 @@ export const COUNTRY_QUOTE_SUPPORT = {
  * Different types of country support for an application
  */
 export const COUNTRY_APPLICATION_SUPPORT = {
-  ONLINE_SUPPORT: ONLINE_SUPPORT_1,
+  ONLINE_SUPPORT_1,
   NO_ONLINE_SUPPORT_1,
   NO_ONLINE_SUPPORT_2,
   NO_ONLINE_SUPPORT_3,
