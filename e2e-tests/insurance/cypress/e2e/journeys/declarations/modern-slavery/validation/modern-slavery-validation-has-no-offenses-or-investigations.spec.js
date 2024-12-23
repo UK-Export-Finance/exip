@@ -58,12 +58,6 @@ context(`Insurance - Declarations - Modern slavery page - validation - ${fieldId
         hasNoOffensesOrInvestigations: false,
       });
 
-      cy.completeAndSubmitModernSlaveryFormConditionalFields({
-        offensesOrInvestigations: null,
-        cannotAdhereToAllRequirements: null,
-        awareOfExistingSlavery: null,
-      });
-
       cy.assertFieldErrors({
         field: autoCompleteField(conditionalFieldId),
         errorIndex: 0,
@@ -95,7 +89,7 @@ context(`Insurance - Declarations - Modern slavery page - validation - ${fieldId
       });
     });
 
-    it('should retain the submitted value', () => {
+    it('should retain the submitted values', () => {
       cy.checkTextareaValue({
         fieldId: conditionalFieldId,
         expectedValue: reasonOverMaximum,

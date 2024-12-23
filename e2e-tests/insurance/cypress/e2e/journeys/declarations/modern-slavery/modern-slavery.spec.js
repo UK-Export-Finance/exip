@@ -34,6 +34,7 @@ context(
   () => {
     let referenceNumber;
     let url;
+    let confirmationAndAcknowledgementsUrl;
 
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -42,6 +43,7 @@ context(
         cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'exportingWithCodeOfConduct', referenceNumber });
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY}`;
+        confirmationAndAcknowledgementsUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
         cy.assertUrl(url);
       });
@@ -120,7 +122,7 @@ context(
             isNotAwareOfExistingSlavery: true,
           });
 
-          cy.assertAllSectionsUrl(referenceNumber);
+          cy.assertUrl(confirmationAndAcknowledgementsUrl);
         });
 
         it('should have the submitted values when going back to the page', () => {
@@ -136,15 +138,15 @@ context(
         it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, () => {
           cy.navigateToUrl(url);
 
-          cy.completeAndSubmitModernSlaveryForm({
+          cy.completeModernSlaveryForm({
             willAdhereToAllRequirements: false,
             hasNoOffensesOrInvestigations: false,
             isNotAwareOfExistingSlavery: false,
           });
 
-          const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
+          cy.completeAndSubmitModernSlaveryFormConditionalFields({});
 
-          cy.assertUrl(expectedUrl);
+          cy.assertUrl(confirmationAndAcknowledgementsUrl);
         });
 
         describe('when going back to the page', () => {

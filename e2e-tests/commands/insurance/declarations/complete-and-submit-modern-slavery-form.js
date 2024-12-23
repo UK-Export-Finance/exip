@@ -1,5 +1,5 @@
 /**
- * completeAndSubmitModernSlavery
+ * completeAndSubmitModernSlaveryForm
  * Complete and submit the "modern slavery" form.
  * @param {Boolean} willAdhereToAllRequirements: radio answer
  * @param {Boolean} hasNoOffensesOrInvestigations: radio answer
