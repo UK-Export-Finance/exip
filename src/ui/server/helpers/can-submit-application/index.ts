@@ -1,5 +1,4 @@
 import { isAfter } from 'date-fns';
-import flattenApplicationData from '../flatten-application-data';
 import applicationIsComplete from '../application-is-complete';
 import { APPLICATION } from '../../constants';
 import { Application } from '../../../types';
@@ -22,9 +21,7 @@ const canSubmitApplication = (application: Application): boolean => {
   const { status, submissionCount, submissionDeadline } = application;
 
   // check the application is complete
-  const flatApplicationData = flattenApplicationData(application);
-
-  const isComplete = applicationIsComplete(flatApplicationData);
+  const isComplete = applicationIsComplete(application);
 
   if (!isComplete) {
     console.info('Unable to submit application - application is not complete (canSubmitApplication helper)');
