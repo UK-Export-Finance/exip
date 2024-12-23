@@ -170,7 +170,7 @@ context(
             cy.navigateToUrl(url);
           });
 
-          it('should have the submitted radio values', () => {
+          it('should render the submitted radio values', () => {
             cy.assertNoRadioOptionIsChecked(0);
             cy.assertNoRadioOptionIsChecked(1);
             cy.assertNoRadioOptionIsChecked(2);
