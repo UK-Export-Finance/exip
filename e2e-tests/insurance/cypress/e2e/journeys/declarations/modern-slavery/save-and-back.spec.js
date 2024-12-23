@@ -159,7 +159,7 @@ context('Insurance - Declarations - Modern slavery page - Save and go back', () 
         cy.navigateToUrl(url);
       });
 
-      it('should have the submitted radio values', () => {
+      it('should render the submitted radio values', () => {
         cy.completeModernSlaveryForm({
           willAdhereToAllRequirements: false,
           hasNoOffensesOrInvestigations: false,
