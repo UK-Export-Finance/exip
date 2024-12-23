@@ -126,6 +126,8 @@ context(
         });
 
         it('should update the status of task `declarations and submit` to `in progress`', () => {
+          cy.navigateToAllSectionsUrl(referenceNumber);
+
           cy.assertAllSectionsUrl(referenceNumber);
 
           cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
@@ -156,6 +158,8 @@ context(
         });
 
         it('should update the status of task `declarations and submit` to `in progress`', () => {
+          cy.navigateToAllSectionsUrl(referenceNumber);
+
           cy.assertAllSectionsUrl(referenceNumber);
 
           cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
