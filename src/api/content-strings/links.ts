@@ -18,5 +18,7 @@ export const LINKS = {
     BRIBERY_ACT_2010_GUIDANCE: 'https://www.justice.gov.uk/downloads/legislation/bribery-act-2010-guidance.pdf',
     ICO_MAKE_A_COMPLAINT: 'https://ico.org.uk/make-a-complaint',
     COMPANIES_HOUSE: 'https://find-and-update.company-information.service.gov.uk',
+    OHCHR_UN_GUIDING_PRINCIPLES_ON_BUSINESS_AND_HUMAN_RIGHTS:
+      'https://www.ohchr.org/en/publications/reference-publications/guiding-principles-business-and-human-rights',
   },
 };

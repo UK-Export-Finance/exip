@@ -1,4 +1,5 @@
 import { SHARED } from '../shared';
+import { LINKS } from '../../../../links';
 
 export const MODERN_SLAVERY = {
   ...SHARED,
@@ -7,7 +8,7 @@ export const MODERN_SLAVERY = {
     ANSWER_THE_QUESTIONS: 'Answer the questions about complying with modern slavery legislation and the',
     GUIDING_PRINCIPLES_LINK: {
       TEXT: 'UN Guiding Principles on Business and Human Rights',
-      HREF: '#',
+      HREF: LINKS.EXTERNAL.OHCHR_UN_GUIDING_PRINCIPLES_ON_BUSINESS_AND_HUMAN_RIGHTS,
     },
     IF_YOU_SAY_NO: 'If you say no to any of the questions you must explain why.',
   },
@@ -43,7 +44,7 @@ export const MODERN_SLAVERY = {
                       TEXT: 'Means a subsidiary within the meaning of ',
                     },
                     {
-                      HREF: '#',
+                      HREF: LINKS.EXTERNAL.LEGISLATION_COMPANIES_ACT_2006_SECTION_1159,
                       TEXT: 'section 1159 of the Companies Act 2006',
                     },
                     {
