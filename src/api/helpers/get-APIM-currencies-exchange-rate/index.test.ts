@@ -1,11 +1,11 @@
 import apimCurrencyExchangeRate from '.';
+import { GBP, USD } from '../../constants';
 import APIM from '../../integrations/APIM';
 import mockApimCurrenciesExchangeResponse, { mockCurrencyExchange } from '../../test-mocks/mock-APIM-currencies-exchange-response';
-import { GBP, USD } from '../../test-mocks/mock-currencies';
 import { mockErrorMessage, mockSpyPromiseRejection } from '../../test-mocks';
 
-const mockSource = GBP.isoCode;
-const mockTarget = USD.isoCode;
+const mockSource = GBP;
+const mockTarget = USD;
 
 describe('custom-resolvers/get-APIM-currencies-exchange-rate', () => {
   jest.mock('../../integrations/APIM');
@@ -21,7 +21,7 @@ describe('custom-resolvers/get-APIM-currencies-exchange-rate', () => {
 
     describe(`when the provided source is ${GBP}`, () => {
       it('should return an exchange rate ', async () => {
-        const response = await apimCurrencyExchangeRate.get(GBP.isoCode, mockTarget);
+        const response = await apimCurrencyExchangeRate.get(GBP, mockTarget);
 
         const expected = mockCurrencyExchange.midPrice;
 
@@ -31,7 +31,7 @@ describe('custom-resolvers/get-APIM-currencies-exchange-rate', () => {
 
     describe(`when the provided source is NOT ${GBP}`, () => {
       it('should return an exchange rate ', async () => {
-        const response = await apimCurrencyExchangeRate.get(USD.isoCode, mockTarget);
+        const response = await apimCurrencyExchangeRate.get(USD, mockTarget);
 
         const expected = Number(Number(1 / mockCurrencyExchange.midPrice).toFixed(2));
 
