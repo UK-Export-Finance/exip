@@ -1122,6 +1122,7 @@ var EMAIL_TEMPLATE_IDS = {
   FEEDBACK: {
     INSURANCE: '4d3d7944-e894-4527-aee6-692038c84107',
   },
+  UNABLE_TO_DETERMINE_TEMPLATE_ID: 'UNABLE_TO_DETERMINE_TEMPLATE_ID',
 };
 var FEEDBACK = {
   VERY_SATISFIED: 'verySatisfied',
@@ -1567,7 +1568,7 @@ var get_APIM_currencies_exchange_rate_default = apimCurrencyExchangeRate;
 var roundNumber = (number) => Math.round(number);
 var round_number_default = roundNumber;
 
-// emails/application/get-submitted-confirmation-template-id/index.ts
+// emails/application/get-submitted-confirmation-template-id/multiple-policy-type/index.ts
 var {
   LATEST_VERSION: { SMALL_EXPORT_BUILDER },
 } = APPLICATION;
@@ -1577,15 +1578,12 @@ var {
       EXPORTER: { CONFIRMATION },
     },
   },
+  UNABLE_TO_DETERMINE_TEMPLATE_ID,
 } = EMAIL_TEMPLATE_IDS;
-var getSubmittedConfirmationTemplateId = async (policy) => {
+var get2 = async (policyType, policyCurrencyCode, maximumBuyerWillOwe) => {
   try {
-    console.info('Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper)');
-    const { maximumBuyerWillOwe, policyCurrencyCode, policyType } = policy;
-    if (isSinglePolicyType(policyType)) {
-      return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
-    }
-    if (isMultiplePolicyType(policyType) && maximumBuyerWillOwe) {
+    console.info('Getting submitted confirmation template ID for a multiple policy type (multiplePolicyTypeTemplateId helper)');
+    if (isMultiplePolicyType(policyType)) {
       let maximumBuyerWillOweInGbp = maximumBuyerWillOwe;
       if (policyCurrencyCode !== GBP) {
         const source = GBP;
@@ -1600,7 +1598,37 @@ var getSubmittedConfirmationTemplateId = async (policy) => {
       }
       return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
     }
-    return '';
+    return UNABLE_TO_DETERMINE_TEMPLATE_ID;
+  } catch (error) {
+    console.error('Error Getting submitted confirmation template ID for a multiple policy type (multiplePolicyTypeTemplateId helper) %o', error);
+    throw new Error(`Getting submitted confirmation template ID for a multiple policy type (multiplePolicyTypeTemplateId helper) ${error}`);
+  }
+};
+var multiplePolicyTypeTemplateId = {
+  get: get2,
+};
+var multiple_policy_type_default = multiplePolicyTypeTemplateId;
+
+// emails/application/get-submitted-confirmation-template-id/index.ts
+var {
+  APPLICATION: {
+    SUBMISSION: {
+      EXPORTER: { CONFIRMATION: CONFIRMATION2 },
+    },
+  },
+  UNABLE_TO_DETERMINE_TEMPLATE_ID: UNABLE_TO_DETERMINE_TEMPLATE_ID2,
+} = EMAIL_TEMPLATE_IDS;
+var getSubmittedConfirmationTemplateId = async (policy) => {
+  try {
+    console.info('Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper)');
+    const { maximumBuyerWillOwe, policyCurrencyCode, policyType } = policy;
+    if (isSinglePolicyType(policyType)) {
+      return CONFIRMATION2.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
+    }
+    if (isMultiplePolicyType(policyType) && maximumBuyerWillOwe) {
+      return await multiple_policy_type_default.get(policyType, String(policyCurrencyCode), maximumBuyerWillOwe);
+    }
+    return UNABLE_TO_DETERMINE_TEMPLATE_ID2;
   } catch (error) {
     console.error('Error Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper) %o', error);
     throw new Error(`Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper) ${error}`);
@@ -9269,7 +9297,7 @@ var mapCisCountries = (countries) => {
 var map_CIS_countries_default = mapCisCountries;
 
 // helpers/get-APIM-CIS-countries/index.ts
-var get2 = async () => {
+var get3 = async () => {
   try {
     console.info('Getting and mapping CIS countries from APIM (apimCisCountries helper)');
     const response = await APIM_default.getCisCountries();
@@ -9287,7 +9315,7 @@ var get2 = async () => {
   }
 };
 var apimCisCountries = {
-  get: get2,
+  get: get3,
 };
 var get_APIM_CIS_countries_default = apimCisCountries;
 
@@ -9330,7 +9358,7 @@ var mapCurrencies = (currencies, alternativeCurrencies) => {
 var map_currencies_default = mapCurrencies;
 
 // helpers/get-APIM-currencies/index.ts
-var get3 = async () => {
+var get4 = async () => {
   try {
     console.info('Getting and mapping currencies from APIM (apimCurrencies helper)');
     const response = await APIM_default.getCurrencies();
@@ -9352,7 +9380,7 @@ var get3 = async () => {
   }
 };
 var apimCurrencies = {
-  get: get3,
+  get: get4,
 };
 var get_APIM_currencies_default = apimCurrencies;
 

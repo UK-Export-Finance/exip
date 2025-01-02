@@ -1,26 +1,13 @@
 import getSubmittedConfirmationTemplateId from '.';
-import { APPLICATION, EMAIL_TEMPLATE_IDS, FIELD_VALUES, GBP, USD } from '../../../constants';
-import { POLICY as POLICY_FIELD_IDS } from '../../../constants/field-ids/insurance/policy';
-import apimCurrencyExchangeRate from '../../../helpers/get-APIM-currencies-exchange-rate';
+import { EMAIL_TEMPLATE_IDS, FIELD_VALUES } from '../../../constants';
+import multiplePolicyTypeTemplateId from './multiple-policy-type';
 import { ApplicationPolicy } from '../../../types';
 import { mockSpyPromiseRejection, mockErrorMessage } from '../../../test-mocks';
 import mockApplication, { mockMultiplePolicy } from '../../../test-mocks/mock-application';
-import { mockCurrencyExchange } from '../../../test-mocks/mock-APIM-currencies-exchange-response';
 
 const {
   POLICY_TYPE: { SINGLE, MULTIPLE },
 } = FIELD_VALUES;
-
-const {
-  EXPORT_VALUE: {
-    MULTIPLE: { MAXIMUM_BUYER_WILL_OWE },
-  },
-  CONTRACT_POLICY: { POLICY_CURRENCY_CODE },
-} = POLICY_FIELD_IDS;
-
-const {
-  LATEST_VERSION: { SMALL_EXPORT_BUILDER },
-} = APPLICATION;
 
 const {
   APPLICATION: {
@@ -28,6 +15,7 @@ const {
       EXPORTER: { CONFIRMATION },
     },
   },
+  UNABLE_TO_DETERMINE_TEMPLATE_ID,
 } = EMAIL_TEMPLATE_IDS;
 
 const mockSingleContractPolicy: ApplicationPolicy = {
@@ -40,15 +28,15 @@ const mockMultipleContractPolicy: ApplicationPolicy = {
   policyType: MULTIPLE,
 };
 
-const threshold = Number(SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE);
-
 describe('emails/application/get-submitted-confirmation-template-id', () => {
-  jest.mock('../../../helpers/get-APIM-currencies-exchange-rate');
+  jest.mock('./multiple-policy-type');
 
-  const mockApimCurrencyExchangeRateSpy = jest.fn(() => Promise.resolve(mockCurrencyExchange.midPrice));
+  const mockMultiplePolicyTypeTemplateId = CONFIRMATION.MULTIPLE_CONTRACT_POLICY.ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION;
+
+  const mockMultiplePolicyTypeTemplateIdSpy = jest.fn(() => Promise.resolve(mockMultiplePolicyTypeTemplateId));
 
   beforeEach(() => {
-    apimCurrencyExchangeRate.get = mockApimCurrencyExchangeRateSpy;
+    multiplePolicyTypeTemplateId.get = mockMultiplePolicyTypeTemplateIdSpy;
   });
 
   describe(`when policy type is ${SINGLE}`, () => {
@@ -61,115 +49,30 @@ describe('emails/application/get-submitted-confirmation-template-id', () => {
     });
   });
 
-  describe(`when policy type is ${MULTIPLE} and ${POLICY_CURRENCY_CODE} is ${GBP}`, () => {
-    const mockPolicyData: ApplicationPolicy = {
-      ...mockMultipleContractPolicy,
-      [POLICY_CURRENCY_CODE]: GBP,
-    };
+  describe(`when policy type is ${MULTIPLE}`, () => {
+    const mockPolicyData: ApplicationPolicy = mockMultipleContractPolicy;
 
-    it('should NOT call apimCurrencyExchangeRate.get', async () => {
+    const { policyType, policyCurrencyCode, maximumBuyerWillOwe } = mockPolicyData;
+
+    it('should call multiplePolicyTypeTemplateId.get', async () => {
       await getSubmittedConfirmationTemplateId(mockPolicyData);
 
-      expect(mockApimCurrencyExchangeRateSpy).toHaveBeenCalledTimes(0);
+      expect(mockMultiplePolicyTypeTemplateIdSpy).toHaveBeenCalledTimes(1);
+
+      expect(mockMultiplePolicyTypeTemplateIdSpy).toHaveBeenCalledWith(policyType, policyCurrencyCode, maximumBuyerWillOwe);
     });
 
-    describe(`when ${MAXIMUM_BUYER_WILL_OWE} is below ${SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE}`, () => {
-      it('should return the correct email template ID', async () => {
-        const mockPolicy: ApplicationPolicy = {
-          ...mockPolicyData,
-          [MAXIMUM_BUYER_WILL_OWE]: Number(threshold - 1),
-        };
+    it('should return the result of multiplePolicyTypeTemplateId.get', async () => {
+      const result = await getSubmittedConfirmationTemplateId(mockPolicyData);
 
-        const result = await getSubmittedConfirmationTemplateId(mockPolicy);
+      const expected = mockMultiplePolicyTypeTemplateId;
 
-        const expected = CONFIRMATION.MULTIPLE_CONTRACT_POLICY.ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION;
-
-        expect(result).toEqual(expected);
-      });
+      expect(result).toEqual(expected);
     });
 
-    describe(`when ${MAXIMUM_BUYER_WILL_OWE} is equal to ${SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE}`, () => {
-      it('should return the correct email template ID', async () => {
-        const mockPolicy: ApplicationPolicy = {
-          ...mockPolicyData,
-          [MAXIMUM_BUYER_WILL_OWE]: SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE,
-        };
-
-        const result = await getSubmittedConfirmationTemplateId(mockPolicy);
-
-        const expected = CONFIRMATION.MULTIPLE_CONTRACT_POLICY.ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION;
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe(`when ${MAXIMUM_BUYER_WILL_OWE} is over ${SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE}`, () => {
-      it('should return the correct email template ID', async () => {
-        const mockPolicy: ApplicationPolicy = {
-          ...mockPolicyData,
-          [MAXIMUM_BUYER_WILL_OWE]: Number(threshold + 1),
-        };
-
-        const result = await getSubmittedConfirmationTemplateId(mockPolicy);
-
-        const expected = CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
-
-        expect(result).toEqual(expected);
-      });
-    });
-  });
-
-  describe(`when policy type is ${MULTIPLE} and ${POLICY_CURRENCY_CODE} is NOT ${GBP}`, () => {
-    const mockPolicyData: ApplicationPolicy = {
-      ...mockMultipleContractPolicy,
-      [POLICY_CURRENCY_CODE]: USD,
-    };
-
-    it('should call apimCurrencyExchangeRate.get', async () => {
-      await getSubmittedConfirmationTemplateId(mockPolicyData);
-
-      expect(mockApimCurrencyExchangeRateSpy).toHaveBeenCalledTimes(1);
-
-      expect(mockApimCurrencyExchangeRateSpy).toHaveBeenCalledWith(GBP, mockPolicyData.policyCurrencyCode);
-    });
-
-    describe(`when ${MAXIMUM_BUYER_WILL_OWE} in ${GBP} is below ${SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE}`, () => {
-      it('should return the correct email template ID', async () => {
-        apimCurrencyExchangeRate.get = jest.fn(() => Promise.resolve(1));
-
-        const mockPolicy: ApplicationPolicy = {
-          ...mockPolicyData,
-          [MAXIMUM_BUYER_WILL_OWE]: Number(threshold - 1),
-        };
-
-        const result = await getSubmittedConfirmationTemplateId(mockPolicy);
-
-        const expected = CONFIRMATION.MULTIPLE_CONTRACT_POLICY.ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION;
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe(`when ${MAXIMUM_BUYER_WILL_OWE} in ${GBP} is over ${SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE}`, () => {
-      it('should return the correct email template ID', async () => {
-        apimCurrencyExchangeRate.get = jest.fn(() => Promise.resolve(1000));
-
-        const mockPolicy: ApplicationPolicy = {
-          ...mockPolicyData,
-          [MAXIMUM_BUYER_WILL_OWE]: Number(threshold + 1),
-        };
-
-        const result = await getSubmittedConfirmationTemplateId(mockPolicy);
-
-        const expected = CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when apimCurrencyExchangeRate.get throws an error', () => {
+    describe('when multiplePolicyTypeTemplateId.get throws an error', () => {
       it('should throw an error', async () => {
-        apimCurrencyExchangeRate.get = mockSpyPromiseRejection;
+        multiplePolicyTypeTemplateId.get = mockSpyPromiseRejection;
 
         await expect(getSubmittedConfirmationTemplateId(mockPolicyData)).rejects.toThrow(
           `Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper) ${new Error(mockErrorMessage)}`,
@@ -179,7 +82,7 @@ describe('emails/application/get-submitted-confirmation-template-id', () => {
   });
 
   describe('when policy type is not recognised', () => {
-    it('should return an empty string', async () => {
+    it(`should return ${UNABLE_TO_DETERMINE_TEMPLATE_ID}`, async () => {
       const mockPolicy = {
         ...mockApplication.policy,
         policyType: 'invalid-policy-type',
@@ -187,7 +90,7 @@ describe('emails/application/get-submitted-confirmation-template-id', () => {
 
       const result = await getSubmittedConfirmationTemplateId(mockPolicy);
 
-      expect(result).toEqual('');
+      expect(result).toEqual(UNABLE_TO_DETERMINE_TEMPLATE_ID);
     });
   });
 });
