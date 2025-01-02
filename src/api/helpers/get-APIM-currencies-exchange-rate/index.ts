@@ -1,13 +1,13 @@
 import APIM from '../../integrations/APIM';
 
 /**
- * getApimCurrencyExchangeRate
+ * get
  * Get a currency exchange rate from APIM
  * @param {String} source: Currency exchange rate  source.
  * @param {String} target: Currency exchange rate target.
  * @returns {Promise<Number>} APIM response data
  */
-const getApimCurrencyExchangeRate = async (source: string, target: string): Promise<number> => {
+const get = async (source: string, target: string): Promise<number> => {
   try {
     console.info('Getting currency exchange rate from APIM (getApimCurrencyExchangeRate helper)');
 
@@ -29,4 +29,8 @@ const getApimCurrencyExchangeRate = async (source: string, target: string): Prom
   }
 };
 
-export default getApimCurrencyExchangeRate;
+const apimCurrencyExchangeRate = {
+  get,
+};
+
+export default apimCurrencyExchangeRate;

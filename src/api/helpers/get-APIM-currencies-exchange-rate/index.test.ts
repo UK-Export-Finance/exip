@@ -1,4 +1,4 @@
-import getApimCurrencyExchangeRate from '.';
+import apimCurrencyExchangeRate from '.';
 import APIM from '../../integrations/APIM';
 import mockApimCurrenciesExchangeResponse, { mockCurrencyExchange } from '../../test-mocks/mock-APIM-currencies-exchange-response';
 import { GBP, USD } from '../../test-mocks/mock-currencies';
@@ -20,7 +20,7 @@ describe('custom-resolvers/get-APIM-currencies-exchange-rate', () => {
     });
 
     it('should return an object with mapped currencies ', async () => {
-      const response = await getApimCurrencyExchangeRate(mockSource, mockTarget);
+      const response = await apimCurrencyExchangeRate.get(mockSource, mockTarget);
 
       const expected = mockCurrencyExchange.midPrice;
 
@@ -34,7 +34,7 @@ describe('custom-resolvers/get-APIM-currencies-exchange-rate', () => {
     });
 
     it('should return 0', async () => {
-      const response = await getApimCurrencyExchangeRate(mockSource, mockTarget);
+      const response = await apimCurrencyExchangeRate.get(mockSource, mockTarget);
 
       expect(response).toEqual(0);
     });
@@ -46,7 +46,7 @@ describe('custom-resolvers/get-APIM-currencies-exchange-rate', () => {
     });
 
     it('should return 0', async () => {
-      const response = await getApimCurrencyExchangeRate(mockSource, mockTarget);
+      const response = await apimCurrencyExchangeRate.get(mockSource, mockTarget);
 
       expect(response).toEqual(0);
     });
@@ -58,13 +58,9 @@ describe('custom-resolvers/get-APIM-currencies-exchange-rate', () => {
     });
 
     it('should throw an error', async () => {
-      try {
-        await getApimCurrencyExchangeRate(mockSource, mockTarget);
-      } catch (error) {
-        const expected = new Error(`Getting currency exchange rate from APIM (getApimCurrencyExchangeRate helper) ${new Error(mockErrorMessage)}`);
-
-        expect(error).toEqual(expected);
-      }
+      await expect(apimCurrencyExchangeRate.get(mockSource, mockTarget)).rejects.toThrow(
+        `Getting currency exchange rate from APIM (getApimCurrencyExchangeRate helper) ${new Error(mockErrorMessage)}`,
+      );
     });
   });
 });

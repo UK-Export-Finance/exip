@@ -1,5 +1,7 @@
-import { APPLICATION, EMAIL_TEMPLATE_IDS } from '../../../constants';
+import { APPLICATION, EMAIL_TEMPLATE_IDS, GBP } from '../../../constants';
 import { isSinglePolicyType, isMultiplePolicyType } from '../../../helpers/policy-type';
+import apimCurrencyExchangeRate from '../../../helpers/get-APIM-currencies-exchange-rate';
+import roundNumber from '../../../helpers/round-number';
 import { ApplicationPolicy } from '../../../types';
 
 const {
@@ -15,33 +17,52 @@ const {
 } = EMAIL_TEMPLATE_IDS;
 
 /**
- * getSubmittedConfirmationTemplateId.submittedEmail
+ * getSubmittedConfirmationTemplateId
  * Get an email template ID for the "application submitted" email, depending on:
  * - The application's policy type.
- * - If the "maximum buyer will owe" is below a threshold.
+ * - If the "maximum buyer will owe" (in GBP) is below a threshold.
  * @param {ApplicationPolicy} policy: Application policy
- * @returns {String} callNotify response
+ * @returns {Promise<String>} "application submitted" template ID
  */
-const getSubmittedConfirmationTemplateId = (policy: ApplicationPolicy): string => {
-  const { policyType, maximumBuyerWillOwe } = policy;
+const getSubmittedConfirmationTemplateId = async (policy: ApplicationPolicy): Promise<string> => {
+  try {
+    console.info('Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper)');
 
-  if (isSinglePolicyType(policyType)) {
-    return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
-  }
+    const { maximumBuyerWillOwe, policyCurrencyCode, policyType } = policy;
 
-  if (isMultiplePolicyType(policyType) && maximumBuyerWillOwe) {
-    const threshold = Number(SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE);
-
-    const eligibileForSmallExportBuilder = maximumBuyerWillOwe <= threshold;
-
-    if (eligibileForSmallExportBuilder) {
-      return CONFIRMATION.MULTIPLE_CONTRACT_POLICY.ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION;
+    if (isSinglePolicyType(policyType)) {
+      return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
     }
 
-    return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
-  }
+    if (isMultiplePolicyType(policyType) && maximumBuyerWillOwe) {
+      let maximumBuyerWillOweInGbp = maximumBuyerWillOwe;
 
-  return '';
+      if (policyCurrencyCode !== GBP) {
+        const source = String(policyCurrencyCode);
+        const target = GBP;
+
+        const exchangeRate = await apimCurrencyExchangeRate.get(source, target);
+
+        maximumBuyerWillOweInGbp = roundNumber(maximumBuyerWillOwe * exchangeRate);
+      }
+
+      const threshold = Number(SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE);
+
+      const eligibileForSmallExportBuilder = maximumBuyerWillOweInGbp <= threshold;
+
+      if (eligibileForSmallExportBuilder) {
+        return CONFIRMATION.MULTIPLE_CONTRACT_POLICY.ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION;
+      }
+
+      return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
+    }
+
+    return '';
+  } catch (error) {
+    console.error('Error Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper) %o', error);
+
+    throw new Error(`Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper) ${error}`);
+  }
 };
 
 export default getSubmittedConfirmationTemplateId;
