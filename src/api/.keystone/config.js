@@ -1541,7 +1541,7 @@ var APIM_default = APIM;
 // helpers/get-APIM-currencies-exchange-rate/index.ts
 var get = async (source, target) => {
   try {
-    console.info('Getting currency exchange rate from APIM (getApimCurrencyExchangeRate helper)');
+    console.info('Getting currency exchange rate from APIM - %s to %s (getApimCurrencyExchangeRate helper)', source, target);
     const response = await APIM_default.getCurrenciesExchange(source, target);
     if (response.success && response.data) {
       const [currency] = response.data;
@@ -1554,8 +1554,8 @@ var get = async (source, target) => {
     }
     return 0;
   } catch (error) {
-    console.error('Error Getting currency exchange rate from APIM (getApimCurrencyExchangeRate helper) %o', error);
-    throw new Error(`Getting currency exchange rate from APIM (getApimCurrencyExchangeRate helper) ${error}`);
+    console.error('Error Getting currency exchange rate from APIM - %s to %s (getApimCurrencyExchangeRate helper) %o', source, target, error);
+    throw new Error(`Getting currency exchange rate from APIM - %s to %s (getApimCurrencyExchangeRate helper) ${error}`);
   }
 };
 var apimCurrencyExchangeRate = {
