@@ -873,6 +873,7 @@ var EXTERNAL_API_MAPPINGS = {
 var EXTERNAL_API_ENDPOINTS = {
   APIM_MDM: {
     CURRENCY: '/currencies',
+    CURRENCY_EXCHANGE: '/currencies/exchange',
     INDUSTRY_SECTORS: '/sector-industries',
     MARKETS: '/markets',
   },
@@ -1236,7 +1237,7 @@ var updateInactiveApplicationsJob = {
 var inactive_application_cron_job_default = updateInactiveApplicationsJob;
 
 // cron/application/email-submission-deadline-reminder-cron-job.ts
-var import_dotenv8 = __toESM(require('dotenv'));
+var import_dotenv9 = __toESM(require('dotenv'));
 
 // helpers/get-start-and-end-time-of-date/index.ts
 var {
@@ -1319,7 +1320,7 @@ var mapApplicationSubmissionDeadlineVariables = (application2) => {
 var map_application_submission_deadline_variables_default = mapApplicationSubmissionDeadlineVariables;
 
 // emails/index.ts
-var import_dotenv7 = __toESM(require('dotenv'));
+var import_dotenv8 = __toESM(require('dotenv'));
 
 // integrations/notify/index.ts
 var import_dotenv5 = __toESM(require('dotenv'));
@@ -1439,6 +1440,133 @@ var reactivateAccountLink = async (urlOrigin, emailAddress, name, reactivationHa
 var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
 var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
+// integrations/APIM/index.ts
+var import_axios = __toESM(require('axios'));
+var import_dotenv6 = __toESM(require('dotenv'));
+import_dotenv6.default.config();
+var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
+var { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
+var APIM = {
+  getCisCountries: async () => {
+    try {
+      console.info('Calling APIM - CIS countries');
+      const response = await (0, import_axios.default)({
+        method: 'get',
+        url: `${APIM_MDM_URL}${APIM_MDM.MARKETS}`,
+        headers: {
+          'Content-Type': 'application/json',
+          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
+        },
+        validateStatus(status) {
+          const acceptableStatus = [200];
+          return acceptableStatus.includes(status);
+        },
+      });
+      if (response.data && response.status === 200) {
+        return {
+          success: true,
+          data: response.data,
+        };
+      }
+      return {
+        success: false,
+      };
+    } catch (error) {
+      console.error('Error calling APIM - CIS countries %o', error);
+      throw new Error(`Calling APIM - CIS countries ${error}`);
+    }
+  },
+  getCurrencies: async () => {
+    try {
+      console.info('Calling APIM - currencies');
+      const response = await (0, import_axios.default)({
+        method: 'get',
+        url: `${APIM_MDM_URL}${APIM_MDM.CURRENCY}`,
+        headers: {
+          'Content-Type': 'application/json',
+          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
+        },
+        validateStatus(status) {
+          const acceptableStatus = [200];
+          return acceptableStatus.includes(status);
+        },
+      });
+      if (response.data && response.status === 200) {
+        return {
+          success: true,
+          data: response.data,
+        };
+      }
+      return {
+        success: false,
+      };
+    } catch (error) {
+      console.error('Error calling APIM - currencies %o', error);
+      throw new Error(`Calling APIM - currencies ${error}`);
+    }
+  },
+  getCurrenciesExchange: async (source, target) => {
+    try {
+      console.info('Calling APIM - currencies exchange');
+      const response = await (0, import_axios.default)({
+        method: 'get',
+        url: `${APIM_MDM_URL}${APIM_MDM.CURRENCY_EXCHANGE}`,
+        headers: {
+          'Content-Type': 'application/json',
+          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
+        },
+        params: { source, target },
+        validateStatus(status) {
+          const acceptableStatus = [200];
+          return acceptableStatus.includes(status);
+        },
+      });
+      if (response.data && response.status === 200) {
+        return {
+          success: true,
+          data: response.data,
+        };
+      }
+      return {
+        success: false,
+      };
+    } catch (error) {
+      console.error('Error calling APIM - currencies exchange %o', error);
+      throw new Error(`Calling APIM - currencies exchange ${error}`);
+    }
+  },
+};
+var APIM_default = APIM;
+
+// helpers/get-APIM-currencies-exchange-rate/index.ts
+var get = async (source, target) => {
+  try {
+    console.info('Getting currency exchange rate from APIM (getApimCurrencyExchangeRate helper)');
+    const response = await APIM_default.getCurrenciesExchange(source, target);
+    if (response.success && response.data) {
+      const [currency] = response.data;
+      const { midPrice: exchangeRate } = currency;
+      if (source !== GBP) {
+        const fixed = Number(1 / exchangeRate).toFixed(2);
+        return Number(fixed);
+      }
+      return exchangeRate;
+    }
+    return 0;
+  } catch (error) {
+    console.error('Error Getting currency exchange rate from APIM (getApimCurrencyExchangeRate helper) %o', error);
+    throw new Error(`Getting currency exchange rate from APIM (getApimCurrencyExchangeRate helper) ${error}`);
+  }
+};
+var apimCurrencyExchangeRate = {
+  get,
+};
+var get_APIM_currencies_exchange_rate_default = apimCurrencyExchangeRate;
+
+// helpers/round-number/index.ts
+var roundNumber = (number) => Math.round(number);
+var round_number_default = roundNumber;
+
 // emails/application/get-submitted-confirmation-template-id/index.ts
 var {
   LATEST_VERSION: { SMALL_EXPORT_BUILDER },
@@ -1450,20 +1578,33 @@ var {
     },
   },
 } = EMAIL_TEMPLATE_IDS;
-var getSubmittedConfirmationTemplateId = (policy) => {
-  const { policyType, maximumBuyerWillOwe } = policy;
-  if (isSinglePolicyType(policyType)) {
-    return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
-  }
-  if (isMultiplePolicyType(policyType) && maximumBuyerWillOwe) {
-    const threshold = Number(SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE);
-    const eligibileForSmallExportBuilder = maximumBuyerWillOwe <= threshold;
-    if (eligibileForSmallExportBuilder) {
-      return CONFIRMATION.MULTIPLE_CONTRACT_POLICY.ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION;
+var getSubmittedConfirmationTemplateId = async (policy) => {
+  try {
+    console.info('Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper)');
+    const { maximumBuyerWillOwe, policyCurrencyCode, policyType } = policy;
+    if (isSinglePolicyType(policyType)) {
+      return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
     }
-    return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
+    if (isMultiplePolicyType(policyType) && maximumBuyerWillOwe) {
+      let maximumBuyerWillOweInGbp = maximumBuyerWillOwe;
+      if (policyCurrencyCode !== GBP) {
+        const source = GBP;
+        const target = String(policyCurrencyCode);
+        const exchangeRate = await get_APIM_currencies_exchange_rate_default.get(source, target);
+        maximumBuyerWillOweInGbp = round_number_default(maximumBuyerWillOwe * exchangeRate);
+      }
+      const threshold = Number(SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE);
+      const eligibileForSmallExportBuilder = maximumBuyerWillOweInGbp <= threshold;
+      if (eligibileForSmallExportBuilder) {
+        return CONFIRMATION.MULTIPLE_CONTRACT_POLICY.ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION;
+      }
+      return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
+    }
+    return '';
+  } catch (error) {
+    console.error('Error Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper) %o', error);
+    throw new Error(`Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper) ${error}`);
   }
-  return '';
 };
 var get_submitted_confirmation_template_id_default = getSubmittedConfirmationTemplateId;
 
@@ -1530,7 +1671,7 @@ var application = {
   submittedEmail: async (variables, policy) => {
     try {
       console.info('Sending application submitted email to application owner or provided business contact');
-      const templateId = get_submitted_confirmation_template_id_default(policy);
+      const templateId = await get_submitted_confirmation_template_id_default(policy);
       const { emailAddress } = variables;
       const response = await callNotify(templateId, emailAddress, variables);
       return response;
@@ -1581,14 +1722,14 @@ var documentsEmail = async (variables, templateId) => {
 };
 
 // emails/insurance-feedback-email/index.ts
-var import_dotenv6 = __toESM(require('dotenv'));
+var import_dotenv7 = __toESM(require('dotenv'));
 
 // helpers/map-feedback-satisfaction/index.ts
 var mapFeedbackSatisfaction = (satisfaction) => FEEDBACK.EMAIL_TEXT[satisfaction];
 var map_feedback_satisfaction_default = mapFeedbackSatisfaction;
 
 // emails/insurance-feedback-email/index.ts
-import_dotenv6.default.config();
+import_dotenv7.default.config();
 var insuranceFeedbackEmail = async (variables) => {
   try {
     console.info('Sending insurance feedback email');
@@ -1626,7 +1767,7 @@ var submissionDeadlineEmail = async (emailAddress, submissionDeadlineEmailVariab
 };
 
 // emails/index.ts
-import_dotenv7.default.config();
+import_dotenv8.default.config();
 var sendEmail = {
   confirmEmailAddress,
   accessCodeEmail,
@@ -1687,7 +1828,7 @@ var applicationSubmissionDeadlineEmail = async (context) => {
 var send_email_application_submission_deadline_default = applicationSubmissionDeadlineEmail;
 
 // cron/application/email-submission-deadline-reminder-cron-job.ts
-import_dotenv8.default.config();
+import_dotenv9.default.config();
 var { CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL } = process.env;
 var sendEmailApplicationSubmissionDeadlineJob = {
   cronExpression: String(CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL),
@@ -6235,7 +6376,7 @@ var applicationSubmittedEmails = {
 var send_application_submitted_emails_default = applicationSubmittedEmails;
 
 // generate-xlsx/index.ts
-var import_dotenv9 = __toESM(require('dotenv'));
+var import_dotenv10 = __toESM(require('dotenv'));
 var import_exceljs = __toESM(require('exceljs'));
 
 // constants/XLSX-CONFIG/SECTION_NAMES/index.ts
@@ -8564,7 +8705,7 @@ var styledColumns = (application2, worksheet, sheetName) => {
 var styled_columns_default = styledColumns;
 
 // generate-xlsx/index.ts
-import_dotenv9.default.config();
+import_dotenv10.default.config();
 var { EXCELJS_PROTECTION_PASSWORD } = process.env;
 var XLSX2 = (application2, countries) => {
   try {
@@ -8977,74 +9118,6 @@ var getAccountPasswordResetToken = async (root, variables, context) => {
 };
 var get_account_password_reset_token_default = getAccountPasswordResetToken;
 
-// integrations/APIM/index.ts
-var import_axios = __toESM(require('axios'));
-var import_dotenv10 = __toESM(require('dotenv'));
-import_dotenv10.default.config();
-var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
-var { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
-var APIM = {
-  getCisCountries: async () => {
-    try {
-      console.info('Calling APIM - CIS countries');
-      const response = await (0, import_axios.default)({
-        method: 'get',
-        url: `${APIM_MDM_URL}${APIM_MDM.MARKETS}`,
-        headers: {
-          'Content-Type': 'application/json',
-          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
-        },
-        validateStatus(status) {
-          const acceptableStatus = [200];
-          return acceptableStatus.includes(status);
-        },
-      });
-      if (response.data && response.status === 200) {
-        return {
-          success: true,
-          data: response.data,
-        };
-      }
-      return {
-        success: false,
-      };
-    } catch (error) {
-      console.error('Error calling APIM - CIS countries %o', error);
-      throw new Error(`Calling APIM - CIS countries ${error}`);
-    }
-  },
-  getCurrencies: async () => {
-    try {
-      console.info('Calling APIM - currencies');
-      const response = await (0, import_axios.default)({
-        method: 'get',
-        url: `${APIM_MDM_URL}${APIM_MDM.CURRENCY}`,
-        headers: {
-          'Content-Type': 'application/json',
-          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
-        },
-        validateStatus(status) {
-          const acceptableStatus = [200];
-          return acceptableStatus.includes(status);
-        },
-      });
-      if (response.data && response.status === 200) {
-        return {
-          success: true,
-          data: response.data,
-        };
-      }
-      return {
-        success: false,
-      };
-    } catch (error) {
-      console.error('Error calling APIM - currencies %o', error);
-      throw new Error(`Calling APIM - currencies ${error}`);
-    }
-  },
-};
-var APIM_default = APIM;
-
 // helpers/filter-cis-entries/index.ts
 var filterCisEntries = (arr, invalidEntries, entityPropertyName) => {
   const filtered = arr.filter((obj) => !invalidEntries.includes(obj[entityPropertyName]));
@@ -9196,7 +9269,7 @@ var mapCisCountries = (countries) => {
 var map_CIS_countries_default = mapCisCountries;
 
 // helpers/get-APIM-CIS-countries/index.ts
-var get = async () => {
+var get2 = async () => {
   try {
     console.info('Getting and mapping CIS countries from APIM (apimCisCountries helper)');
     const response = await APIM_default.getCisCountries();
@@ -9214,7 +9287,7 @@ var get = async () => {
   }
 };
 var apimCisCountries = {
-  get,
+  get: get2,
 };
 var get_APIM_CIS_countries_default = apimCisCountries;
 
@@ -9257,7 +9330,7 @@ var mapCurrencies = (currencies, alternativeCurrencies) => {
 var map_currencies_default = mapCurrencies;
 
 // helpers/get-APIM-currencies/index.ts
-var get2 = async () => {
+var get3 = async () => {
   try {
     console.info('Getting and mapping currencies from APIM (apimCurrencies helper)');
     const response = await APIM_default.getCurrencies();
@@ -9279,7 +9352,7 @@ var get2 = async () => {
   }
 };
 var apimCurrencies = {
-  get: get2,
+  get: get3,
 };
 var get_APIM_currencies_default = apimCurrencies;
 

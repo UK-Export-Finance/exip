@@ -19,12 +19,24 @@ describe('custom-resolvers/get-APIM-currencies-exchange-rate', () => {
       APIM.getCurrenciesExchange = jest.fn(() => Promise.resolve(mockApimCurrenciesExchangeResponse));
     });
 
-    it('should return an object with mapped currencies ', async () => {
-      const response = await apimCurrencyExchangeRate.get(mockSource, mockTarget);
+    describe(`when the provided source is ${GBP}`, () => {
+      it('should return an exchange rate ', async () => {
+        const response = await apimCurrencyExchangeRate.get(GBP.isoCode, mockTarget);
 
-      const expected = mockCurrencyExchange.midPrice;
+        const expected = mockCurrencyExchange.midPrice;
 
-      expect(response).toEqual(expected);
+        expect(response).toEqual(expected);
+      });
+    });
+
+    describe(`when the provided source is NOT ${GBP}`, () => {
+      it('should return an exchange rate ', async () => {
+        const response = await apimCurrencyExchangeRate.get(USD.isoCode, mockTarget);
+
+        const expected = Number(Number(1 / mockCurrencyExchange.midPrice).toFixed(2));
+
+        expect(response).toEqual(expected);
+      });
     });
   });
 

@@ -1,3 +1,4 @@
+import { GBP } from '../../constants';
 import APIM from '../../integrations/APIM';
 
 /**
@@ -17,6 +18,17 @@ const get = async (source: string, target: string): Promise<number> => {
       const [currency] = response.data;
 
       const { midPrice: exchangeRate } = currency;
+
+      /**
+       * NOTE: At the time of writing,
+       * APIM only supports the source as GBP or USD.
+       * Therefore, we have to do the following for e.g "NON-GBP => GBP"
+       */
+      if (source !== GBP) {
+        const fixed = Number(1 / exchangeRate).toFixed(2);
+
+        return Number(fixed);
+      }
 
       return exchangeRate;
     }

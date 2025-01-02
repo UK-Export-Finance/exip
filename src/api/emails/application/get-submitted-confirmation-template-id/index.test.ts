@@ -130,7 +130,7 @@ describe('emails/application/get-submitted-confirmation-template-id', () => {
 
       expect(mockApimCurrencyExchangeRateSpy).toHaveBeenCalledTimes(1);
 
-      expect(mockApimCurrencyExchangeRateSpy).toHaveBeenCalledWith(mockPolicyData.policyCurrencyCode, GBP);
+      expect(mockApimCurrencyExchangeRateSpy).toHaveBeenCalledWith(GBP, mockPolicyData.policyCurrencyCode);
     });
 
     describe(`when ${MAXIMUM_BUYER_WILL_OWE} in ${GBP} is below ${SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE}`, () => {

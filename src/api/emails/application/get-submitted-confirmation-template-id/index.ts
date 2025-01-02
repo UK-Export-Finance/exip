@@ -38,8 +38,8 @@ const getSubmittedConfirmationTemplateId = async (policy: ApplicationPolicy): Pr
       let maximumBuyerWillOweInGbp = maximumBuyerWillOwe;
 
       if (policyCurrencyCode !== GBP) {
-        const source = String(policyCurrencyCode);
-        const target = GBP;
+        const source = GBP;
+        const target = String(policyCurrencyCode);
 
         const exchangeRate = await apimCurrencyExchangeRate.get(source, target);
 
