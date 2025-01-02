@@ -30,7 +30,7 @@ const completeDeclarations = ({
 
   cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct(exportingWithCodeOfConduct);
 
-  if (!willAdhereToAllRequirements || !hasNoOffensesOrInvestigations || !isNotAwareOfExistingSlavery) {
+  if (willAdhereToAllRequirements === false || hasNoOffensesOrInvestigations === false || isNotAwareOfExistingSlavery === false) {
     cy.completeModernSlaveryForm({
       willAdhereToAllRequirements,
       hasNoOffensesOrInvestigations,

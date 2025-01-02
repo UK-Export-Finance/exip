@@ -33,28 +33,40 @@ const completeAndSubmitDeclarationsForms = ({
     { name: 'antiBribery', action: () => cy.completeAndSubmitDeclarationAntiBribery() },
     { name: 'codeOfConduct', action: () => cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct(hasAntiBriberyCodeOfConduct) },
     { name: 'exportingWithCodeOfConduct', action: () => cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct(exportingWithCodeOfConduct) },
-    {
+  ];
+
+  if (willAdhereToAllRequirements === false || hasNoOffensesOrInvestigations === false || isNotAwareOfExistingSlavery === false) {
+    steps.push({
       name: 'modernSlavery',
       action: () =>
-        cy.completeAndSubmitModernSlaveryForm({
+        cy.completeModernSlaveryForm({
           willAdhereToAllRequirements,
           hasNoOffensesOrInvestigations,
           isNotAwareOfExistingSlavery,
         }),
-    },
-  ];
+    });
 
-  if (!willAdhereToAllRequirements || !hasNoOffensesOrInvestigations || !isNotAwareOfExistingSlavery) {
     steps.push({
       name: 'modernSlaveryConditionalFields',
       action: () =>
-        cy.completeModernSlaveryFormConditionalFields({
+        cy.completeAndSubmitModernSlaveryFormConditionalFields({
           awareOfExistingSlavery,
           cannotAdhereToAllRequirements,
           offensesOrInvestigations,
         }),
     });
+  } else {
+    cy.completeAndSubmitModernSlaveryForm({
+      willAdhereToAllRequirements,
+      hasNoOffensesOrInvestigations,
+      isNotAwareOfExistingSlavery,
+    });
   }
+
+  steps.push({
+    name: 'confirmationAndAcknowledgements',
+    action: () => cy.completeAndSubmitDeclarationConfirmationAndAcknowledgements(),
+  });
 
   /**
    * carries out steps in steps array
