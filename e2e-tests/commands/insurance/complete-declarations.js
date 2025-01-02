@@ -1,31 +1,54 @@
-import { FIELD_VALUES } from '../../constants';
-
 /**
  * completeDeclarations
  * Runs through the full declarations journey
- * @param {Object} Object with flags on how to complete specific declaration forms.
- * - exportingWithCodeOfConduct: Should submit "yes" in the "exporting with code of conduct" form. Defaults to "yes".
+ * @param {Boolean} hasAntiBriberyCodeOfConduct: has "anti-bribery - code of conduct"
+ * @param {Boolean} exportingWithCodeOfConduct: will export with "anti-bribery - exporting with code of conduct"
+ * @param {Boolean} willAdhereToAllRequirements: "Modern slavery - will adhere to all requirements" answer
+ * @param {Boolean} hasNoOffensesOrInvestigations: "Modern slavery - has no offenses or investigations" answer
+ * @param {Boolean} isNotAwareOfExistingSlavery: "Modern slavery - is not aware of existing slavery" answer
+ * @param {String} awareOfExistingSlavery: "Modern slavery - aware of existing slavery" textarea answer
+ * @param {String} cannotAdhereToAllRequirements: "Modern slavery - cannot adhere to all requirements" textarea answer
+ * @param {String} offensesOrInvestigations: "Modern slavery - offenses or investigations" textarea answer
  */
-const completeDeclarations = ({ hasAntiBriberyCodeOfConduct = true, exportingWithCodeOfConduct = true }) => {
+const completeDeclarations = ({
+  hasAntiBriberyCodeOfConduct = true,
+  exportingWithCodeOfConduct = true,
+  willAdhereToAllRequirements,
+  hasNoOffensesOrInvestigations,
+  isNotAwareOfExistingSlavery,
+  awareOfExistingSlavery,
+  cannotAdhereToAllRequirements,
+  offensesOrInvestigations,
+}) => {
   cy.clickTaskDeclarationsAndSubmit();
 
   cy.completeAndSubmitDeclarationConfidentiality();
 
   cy.completeAndSubmitDeclarationAntiBribery();
 
-  if (hasAntiBriberyCodeOfConduct) {
-    cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct(FIELD_VALUES.YES);
+  cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct(hasAntiBriberyCodeOfConduct);
 
-    if (exportingWithCodeOfConduct) {
-      cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct(FIELD_VALUES.YES);
-    } else {
-      cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct(FIELD_VALUES.NO);
-    }
+  cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct(exportingWithCodeOfConduct);
+
+  if (!willAdhereToAllRequirements || !hasNoOffensesOrInvestigations || !isNotAwareOfExistingSlavery) {
+    cy.completeModernSlaveryForm({
+      willAdhereToAllRequirements,
+      hasNoOffensesOrInvestigations,
+      isNotAwareOfExistingSlavery,
+    });
+
+    cy.completeAndSubmitModernSlaveryFormConditionalFields({
+      awareOfExistingSlavery,
+      cannotAdhereToAllRequirements,
+      offensesOrInvestigations,
+    });
   } else {
-    cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct(FIELD_VALUES.NO);
+    cy.completeAndSubmitModernSlaveryForm({
+      willAdhereToAllRequirements,
+      hasNoOffensesOrInvestigations,
+      isNotAwareOfExistingSlavery,
+    });
   }
-
-  cy.completeAndSubmitModernSlaveryForm({});
 
   cy.completeAndSubmitDeclarationConfirmationAndAcknowledgements();
 };

@@ -27,6 +27,8 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
+        cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+
         cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'codeOfConduct', referenceNumber });
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`;
