@@ -46,7 +46,7 @@ describe('custom-resolvers/get-companies-house-information', () => {
     });
   });
 
-  describe('when companies house API returns empty data object', () => {
+  describe('when companies house API returns an empty data object', () => {
     beforeEach(() => {
       companiesHouse.get = jest.fn(() => Promise.resolve({ success: true, data: undefined }));
     });

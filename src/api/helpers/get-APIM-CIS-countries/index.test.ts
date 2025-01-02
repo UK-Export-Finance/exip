@@ -42,7 +42,7 @@ describe('helpers/get-APIM-CIS-countries', () => {
     });
   });
 
-  describe('when APIM CIS API returns empty data object', () => {
+  describe('when APIM CIS API returns an empty data object', () => {
     beforeEach(() => {
       APIM.getCisCountries = jest.fn(() => Promise.resolve({ success: true, data: undefined }));
     });

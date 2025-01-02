@@ -1,7 +1,7 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
 import { EXTERNAL_API_ENDPOINTS } from '../../constants';
-import { GetApimCisCountriesResponse, GetApimCurrenciesResponse } from '../../types';
+import { GetApimCisCountriesResponse, GetApimCurrenciesResponse, GetApimCurrenciesExchangeResponse } from '../../types';
 
 dotenv.config();
 
@@ -79,6 +79,40 @@ const APIM = {
       console.error('Error calling APIM - currencies %o', error);
 
       throw new Error(`Calling APIM - currencies ${error}`);
+    }
+  },
+  getCurrenciesExchange: async (source: string, target: string): Promise<GetApimCurrenciesExchangeResponse> => {
+    try {
+      console.info('Calling APIM - currencies exchange');
+
+      const response = await axios({
+        method: 'get',
+        url: `${APIM_MDM_URL}${APIM_MDM.CURRENCY_EXCHANGE}`,
+        headers: {
+          'Content-Type': 'application/json',
+          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
+        },
+        params: { source, target },
+        validateStatus(status) {
+          const acceptableStatus = [200];
+          return acceptableStatus.includes(status);
+        },
+      });
+
+      if (response.data && response.status === 200) {
+        return {
+          success: true,
+          data: response.data,
+        };
+      }
+
+      return {
+        success: false,
+      };
+    } catch (error) {
+      console.error('Error calling APIM - currencies exchange %o', error);
+
+      throw new Error(`Calling APIM - currencies exchange ${error}`);
     }
   },
 };
