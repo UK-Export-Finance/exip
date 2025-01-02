@@ -5,6 +5,11 @@ import { mockPhoneNumbers, mockBuyer } from '../../../test-mocks';
 const {
   ACCOUNT: { ACCESS_CODE },
   COMPANIES_HOUSE: { COMPANY_NUMBER, COMPANY_SIC },
+  DECLARATIONS: {
+    MODERN_SLAVERY: {
+      CONDITIONAL_REASONS: { CANNOT_ADHERE_TO_ALL_REQUIREMENTS, OFFENSES_OR_INVESTIGATIONS, AWARE_OF_EXISTING_SLAVERY },
+    },
+  },
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: { PHONE_NUMBER },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES },
@@ -60,6 +65,9 @@ describe('server/helpers/sanitise-data/sanitise-value', () => {
         FINANCIAL_ADDRESS,
         PAYMENT_TERMS_DESCRIPTION,
         SERVICE_DESCRIPTION,
+        CANNOT_ADHERE_TO_ALL_REQUIREMENTS,
+        OFFENSES_OR_INVESTIGATIONS,
+        AWARE_OF_EXISTING_SLAVERY,
       ];
 
       expect(STRING_NUMBER_FIELDS).toEqual(expected);

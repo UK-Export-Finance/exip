@@ -23,6 +23,8 @@ context('Insurance - Textarea fields - `Declarations` textarea fields should ren
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
+      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+
       modernSlaveryUrl = `${baseUrl}${ROOT}/${referenceNumber}${MODERN_SLAVERY}`;
     });
   });
