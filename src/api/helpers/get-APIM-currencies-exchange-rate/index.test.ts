@@ -71,7 +71,7 @@ describe('custom-resolvers/get-APIM-currencies-exchange-rate', () => {
 
     it('should throw an error', async () => {
       await expect(apimCurrencyExchangeRate.get(mockSource, mockTarget)).rejects.toThrow(
-        `Getting currency exchange rate from APIM (getApimCurrencyExchangeRate helper) ${new Error(mockErrorMessage)}`,
+        `Getting currency exchange rate from APIM - %s to %s (getApimCurrencyExchangeRate helper) ${new Error(mockErrorMessage)}`,
       );
     });
   });
