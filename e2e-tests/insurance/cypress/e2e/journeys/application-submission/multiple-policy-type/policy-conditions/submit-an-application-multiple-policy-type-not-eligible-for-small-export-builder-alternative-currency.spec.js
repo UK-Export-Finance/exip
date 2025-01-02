@@ -1,7 +1,7 @@
 import { APPLICATION } from '../../../../../../../constants';
 
 context(
-  'Insurance - submit an application - Multiple policy type - Eligible for small export builder - Alternative currency - As an Exporter, I want to submit my completed credit insurance application, So that UKEF can process and make a decision on my application',
+  'Insurance - submit an application - Multiple policy type - Not eligible for small export builder - Alternative currency - As an Exporter, I want to submit my completed credit insurance application, So that UKEF can process and make a decision on my application',
   () => {
     let referenceNumber;
 
@@ -9,7 +9,7 @@ context(
       cy.completeSignInAndSubmitAnApplication({
         policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
         alternativeCurrencyPolicy: true,
-        maximumBuyerWillOwe: '100',
+        maximumBuyerWillOwe: '5000000',
       }).then((refNumber) => {
         referenceNumber = refNumber;
       });
