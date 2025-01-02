@@ -1,5 +1,5 @@
 import { expandable } from '../../../../../../partials';
-import { PAGES } from '../../../../../../content-strings';
+import { LINKS, PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.MODERN_SLAVERY.EXPANDABLE.VERSIONS[0];
@@ -121,7 +121,7 @@ context('Insurance - Declarations - Modern slavery page - expandable `definition
             expect(text).includes(content.DEFINITION[0].CHILDREN[0].TEXT);
           });
 
-        cy.checkLink(row.definitionListItemChild(1, 2), '#', content.DEFINITION[0].CHILDREN[1].TEXT);
+        cy.checkLink(row.definitionListItemChild(1, 2), LINKS.EXTERNAL.LEGISLATION_COMPANIES_ACT_2006_SECTION_1159, content.DEFINITION[0].CHILDREN[1].TEXT);
 
         cy.checkText(row.definitionListItemChild(1, 3), content.DEFINITION[0].CHILDREN[2].TEXT);
       });
@@ -148,7 +148,7 @@ context('Insurance - Declarations - Modern slavery page - expandable `definition
             expect(text).includes(content.DEFINITION[0].CHILDREN[0].TEXT);
           });
 
-        cy.checkLink(row.definitionListItemChild(1, 2), '#', content.DEFINITION[0].CHILDREN[1].TEXT);
+        cy.checkLink(row.definitionListItemChild(1, 2), LINKS.EXTERNAL.LEGISLATION_MODERN_SLAVERY_ACT_2015, content.DEFINITION[0].CHILDREN[1].TEXT);
 
         row
           .definitionListItemChild(1, 3)
@@ -157,7 +157,7 @@ context('Insurance - Declarations - Modern slavery page - expandable `definition
             expect(text).includes(content.DEFINITION[0].CHILDREN[2].TEXT);
           });
 
-        cy.checkLink(row.definitionListItemChild(1, 4), '#', content.DEFINITION[0].CHILDREN[3].TEXT);
+        cy.checkLink(row.definitionListItemChild(1, 4), LINKS.EXTERNAL.GOV_PUBLISH_AN_ANNUAL_MODERN_SLAVERY_STATEMENT, content.DEFINITION[0].CHILDREN[3].TEXT);
 
         row
           .definitionListItemChild(1, 5)

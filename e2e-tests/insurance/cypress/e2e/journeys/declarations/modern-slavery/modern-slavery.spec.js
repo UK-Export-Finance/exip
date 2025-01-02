@@ -1,7 +1,7 @@
 import { field, headingCaption } from '../../../../../../pages/shared';
 import { modernSlaveryPage } from '../../../../../../pages/insurance/declarations';
 import { expandable } from '../../../../../../partials';
-import { PAGES } from '../../../../../../content-strings';
+import { LINKS, PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { DECLARATIONS as DECLARATIONS_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/declarations';
 import application from '../../../../../../fixtures/application';
@@ -80,7 +80,10 @@ context(
         });
 
         it('should render a `guiding principles` link', () => {
-          cy.checkLink(guidingPrinciplesLink(), '#', CONTENT_STRINGS.INTRO.GUIDING_PRINCIPLES_LINK.TEXT);
+          const expectedHref = LINKS.EXTERNAL.OHCHR_UN_GUIDING_PRINCIPLES_ON_BUSINESS_AND_HUMAN_RIGHTS;
+          const expectedCopy = CONTENT_STRINGS.INTRO.GUIDING_PRINCIPLES_LINK.TEXT;
+
+          cy.checkLink(guidingPrinciplesLink(), expectedHref, expectedCopy);
         });
 
         it('should render `if you say no` copy', () => {
