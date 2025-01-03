@@ -17,12 +17,17 @@ const VERSION_2: ApplicationDeclarationVersions = {
   CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
 };
 
+const VERSION_3: ApplicationDeclarationVersions = {
+  ...VERSION_2,
+  MODERN_SLAVERY: '1',
+};
+
 /**
  * DECLARATION_VERSIONS
  * All possible declaration versions.
  * This should be manually updated each time declarations are updated
  * @returns {Array<ApplicationDeclarationVersions>} All declaration versions
  */
-const DECLARATION_VERSIONS: Array<ApplicationDeclarationVersions> = [VERSION_1, VERSION_2];
+const DECLARATION_VERSIONS: Array<ApplicationDeclarationVersions> = [VERSION_1, VERSION_2, VERSION_3];
 
 export default DECLARATION_VERSIONS;

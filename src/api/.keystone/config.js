@@ -792,7 +792,11 @@ var VERSION_22 = {
   CONFIDENTIALITY: '1',
   CONFIRMATION_AND_ACKNOWLEDGEMENTS: '1',
 };
-var DECLARATION_VERSIONS = [VERSION_12, VERSION_22];
+var VERSION_32 = {
+  ...VERSION_22,
+  MODERN_SLAVERY: '1',
+};
+var DECLARATION_VERSIONS = [VERSION_12, VERSION_22, VERSION_32];
 var versions_default2 = DECLARATION_VERSIONS;
 
 // constants/declarations/modern-slavery-versions/index.ts
