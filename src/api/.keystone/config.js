@@ -1589,7 +1589,7 @@ var get2 = async (policyType, policyCurrencyCode, maximumBuyerWillOwe) => {
         const source = GBP;
         const target = String(policyCurrencyCode);
         const exchangeRate = await get_APIM_currencies_exchange_rate_default.get(source, target);
-        maximumBuyerWillOweInGbp = round_number_default(maximumBuyerWillOwe * exchangeRate);
+        maximumBuyerWillOweInGbp = round_number_default(maximumBuyerWillOwe / exchangeRate);
       }
       const threshold = Number(SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE);
       const eligibileForSmallExportBuilder = maximumBuyerWillOweInGbp <= threshold;
@@ -6349,13 +6349,11 @@ var send4 = async (application2, xlsxPath) => {
     };
     const sendOwnerEmailVars = {
       ...sharedEmailVars,
-      buyerName: replace_character_codes_with_characters_default(String(buyer.companyOrOrganisationName)),
       name: replace_character_codes_with_characters_default(get_full_name_string_default(owner)),
       emailAddress: email,
     };
     const sendContactEmailVars = {
       ...sharedEmailVars,
-      buyerName: replace_character_codes_with_characters_default(String(buyer.companyOrOrganisationName)),
       name: replace_character_codes_with_characters_default(get_full_name_string_default(policyContact)),
       emailAddress: policyContact.email,
     };
