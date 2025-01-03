@@ -1,7 +1,7 @@
 import { field, headingCaption } from '../../../../../../pages/shared';
 import { modernSlaveryPage } from '../../../../../../pages/insurance/declarations';
 import { expandable } from '../../../../../../partials';
-import { PAGES } from '../../../../../../content-strings';
+import { LINKS, PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { DECLARATIONS as DECLARATIONS_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/declarations';
 import application from '../../../../../../fixtures/application';
@@ -10,8 +10,11 @@ const CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.MODERN_SLAVERY;
 
 const {
   ROOT: INSURANCE_ROOT,
-  ALL_SECTIONS,
-  DECLARATIONS: { MODERN_SLAVERY },
+  DECLARATIONS: {
+    ANTI_BRIBERY: { EXPORTING_WITH_CODE_OF_CONDUCT },
+    CONFIRMATION_AND_ACKNOWLEDGEMENTS,
+    MODERN_SLAVERY,
+  },
 } = INSURANCE_ROUTES;
 
 const {
@@ -31,14 +34,17 @@ context(
   () => {
     let referenceNumber;
     let url;
+    let confirmationAndAcknowledgementsUrl;
 
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY}`;
+        cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'exportingWithCodeOfConduct', referenceNumber });
 
-        cy.navigateToUrl(url);
+        url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY}`;
+        confirmationAndAcknowledgementsUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
+
         cy.assertUrl(url);
       });
     });
@@ -55,7 +61,7 @@ context(
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: `${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY}`,
-        backLink: `${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY}#`,
+        backLink: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`,
       });
     });
 
@@ -74,7 +80,10 @@ context(
         });
 
         it('should render a `guiding principles` link', () => {
-          cy.checkLink(guidingPrinciplesLink(), '#', CONTENT_STRINGS.INTRO.GUIDING_PRINCIPLES_LINK.TEXT);
+          const expectedHref = LINKS.EXTERNAL.OHCHR_UN_GUIDING_PRINCIPLES_ON_BUSINESS_AND_HUMAN_RIGHTS;
+          const expectedCopy = CONTENT_STRINGS.INTRO.GUIDING_PRINCIPLES_LINK.TEXT;
+
+          cy.checkLink(guidingPrinciplesLink(), expectedHref, expectedCopy);
         });
 
         it('should render `if you say no` copy', () => {
@@ -107,7 +116,7 @@ context(
 
     describe('form submission', () => {
       describe('when submitting all radios as `yes`', () => {
-        it(`should redirect to ${ALL_SECTIONS}`, () => {
+        it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, () => {
           cy.navigateToUrl(url);
 
           cy.completeAndSubmitModernSlaveryForm({
@@ -116,7 +125,15 @@ context(
             isNotAwareOfExistingSlavery: true,
           });
 
+          cy.assertUrl(confirmationAndAcknowledgementsUrl);
+        });
+
+        it('should update the status of task `declarations and submit` to `in progress`', () => {
+          cy.navigateToAllSectionsUrl(referenceNumber);
+
           cy.assertAllSectionsUrl(referenceNumber);
+
+          cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
         });
 
         it('should have the submitted values when going back to the page', () => {
@@ -129,10 +146,10 @@ context(
       });
 
       describe('when submitting all radios as `no` and submitting conditional fields', () => {
-        it(`should redirect to ${ALL_SECTIONS}`, () => {
+        it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, () => {
           cy.navigateToUrl(url);
 
-          cy.completeAndSubmitModernSlaveryForm({
+          cy.completeModernSlaveryForm({
             willAdhereToAllRequirements: false,
             hasNoOffensesOrInvestigations: false,
             isNotAwareOfExistingSlavery: false,
@@ -140,7 +157,15 @@ context(
 
           cy.completeAndSubmitModernSlaveryFormConditionalFields({});
 
+          cy.assertUrl(confirmationAndAcknowledgementsUrl);
+        });
+
+        it('should update the status of task `declarations and submit` to `in progress`', () => {
+          cy.navigateToAllSectionsUrl(referenceNumber);
+
           cy.assertAllSectionsUrl(referenceNumber);
+
+          cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
         });
 
         describe('when going back to the page', () => {
@@ -148,7 +173,7 @@ context(
             cy.navigateToUrl(url);
           });
 
-          it('should have the submitted radio values', () => {
+          it('should render the submitted radio values', () => {
             cy.assertNoRadioOptionIsChecked(0);
             cy.assertNoRadioOptionIsChecked(1);
             cy.assertNoRadioOptionIsChecked(2);

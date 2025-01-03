@@ -6382,7 +6382,7 @@ var DECLARATIONS_FIELDS = {
         {
           VERSION: '1',
           LABEL:
-            'To the best of your knowledge, can you confirm you are not aware of the existence of Modern Slavery in respect of yourself, the export contract (s), your immediate holding company or your supply chain, in each case, at present or in the past 2 years.',
+            'To the best of your knowledge, can you confirm you are not aware of the existence of Modern Slavery in respect of yourself, the export contract(s), your immediate holding company or your supply chain, in each case, at present or in the past 2 years.',
           CONDITIONAL_REASON: {
             LABEL:
               'Enter full details why you cannot. Include all information relating to the type of Modern Slavery that exists or has existed, and/or any investigation or enforcement action, and any actions taken by you in connection with this.',
@@ -6420,6 +6420,8 @@ var LINKS = {
     BRIBERY_ACT_2010_GUIDANCE: 'https://www.justice.gov.uk/downloads/legislation/bribery-act-2010-guidance.pdf',
     ICO_MAKE_A_COMPLAINT: 'https://ico.org.uk/make-a-complaint',
     COMPANIES_HOUSE: 'https://find-and-update.company-information.service.gov.uk',
+    OHCHR_UN_GUIDING_PRINCIPLES_ON_BUSINESS_AND_HUMAN_RIGHTS:
+      'https://www.ohchr.org/en/publications/reference-publications/guiding-principles-business-and-human-rights',
   },
 };
 

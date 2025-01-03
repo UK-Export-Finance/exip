@@ -31,5 +31,10 @@ export const LINKS = {
     BRIBERY_ACT_2010_GUIDANCE: 'https://assets.publishing.service.gov.uk/media/5d80cfc3ed915d51e9aff85a/bribery-act-2010-guidance.pdf',
     ICO_MAKE_A_COMPLAINT: 'https://ico.org.uk/make-a-complaint',
     COMPANIES_HOUSE: 'https://find-and-update.company-information.service.gov.uk',
+    OHCHR_UN_GUIDING_PRINCIPLES_ON_BUSINESS_AND_HUMAN_RIGHTS:
+      'https://www.ohchr.org/en/publications/reference-publications/guiding-principles-business-and-human-rights',
+    LEGISLATION_COMPANIES_ACT_2006_SECTION_1159: 'https://www.legislation.gov.uk/ukpga/2006/46/section/1159/enacted',
+    LEGISLATION_MODERN_SLAVERY_ACT_2015: 'https://www.legislation.gov.uk/ukpga/2015/30/contents',
+    GOV_PUBLISH_AN_ANNUAL_MODERN_SLAVERY_STATEMENT: 'https://www.gov.uk/guidance/publish-an-annual-modern-slavery-statement',
   },
 };

@@ -19,8 +19,7 @@ const { MODERN_SLAVERY } = DECLARATIONS.LATEST_DECLARATIONS;
 
 const {
   INSURANCE_ROOT,
-  ALL_SECTIONS,
-  DECLARATIONS: { MODERN_SLAVERY_SAVE_AND_BACK },
+  DECLARATIONS: { CONFIRMATION_AND_ACKNOWLEDGEMENTS, MODERN_SLAVERY_SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
@@ -171,10 +170,10 @@ describe('controllers/insurance/declarations/modern-slavery', () => {
         expect(save.declarationModernSlavery).toHaveBeenCalledWith(payload, mockApplication);
       });
 
-      it(`should redirect to ${ALL_SECTIONS}`, async () => {
+      it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

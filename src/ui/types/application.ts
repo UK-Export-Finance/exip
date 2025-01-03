@@ -224,7 +224,7 @@ interface ApplicationDeclarationFlat extends ApplicationDeclarationCore {
   isNotAwareOfExistingSlavery?: boolean;
 }
 
-interface ApplicationDeclaration extends ApplicationDeclarationCore {
+export interface ApplicationDeclaration extends ApplicationDeclarationCore {
   modernSlavery: ApplicationDeclarationModernSlavery;
 }
 
@@ -337,7 +337,6 @@ export {
   ApplicationBuyerApiInput,
   ApplicationCompany,
   ApplicationCompanyDifferentTradingAddress,
-  ApplicationDeclaration,
   ApplicationDeclarationVersions,
   ApplicationExportContract,
   ApplicationExportContractAgent,

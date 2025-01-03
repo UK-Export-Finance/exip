@@ -48,7 +48,6 @@ export const get = (req: Request, res: Response) => {
 
   const { isUsingBroker } = broker;
   const { hasDifferentTradingName } = company;
-  const { hasAntiBriberyCodeOfConduct } = declaration;
   const { buyerTradingHistory, relationship } = buyer;
   const { exporterIsConnectedWithBuyer, exporterHasPreviousCreditInsuranceWithBuyer } = relationship;
   const { outstandingPayments, exporterHasTradedWithBuyer } = buyerTradingHistory;
@@ -58,6 +57,7 @@ export const get = (req: Request, res: Response) => {
 
   const taskListStructure = generateGroupsAndTasks(
     referenceNumber,
+    declaration,
     policyType,
     finalDestinationKnown,
     jointlyInsuredParty.requested,
@@ -66,7 +66,6 @@ export const get = (req: Request, res: Response) => {
     lossPayeeIsLocatedInUk,
     lossPayeeIsLocatedInternationally,
     hasDifferentTradingName,
-    hasAntiBriberyCodeOfConduct,
     exporterIsConnectedWithBuyer,
     exporterHasTradedWithBuyer,
     outstandingPayments,
