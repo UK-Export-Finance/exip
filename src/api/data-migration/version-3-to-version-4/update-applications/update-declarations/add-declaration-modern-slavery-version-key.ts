@@ -10,7 +10,7 @@ import executeSqlQuery from '../../../execute-sql-query';
 const addDeclarationModernSlaveryVersionKey = async (connection: Connection) =>
   executeSqlQuery({
     connection,
-    query: 'ALTER TABLE DeclarationModernSlaveryVersion ADD KEY DeclarationModernSlaveryVersion_declarationModernSlavery_idx(declarationModernSlavery)',
+    query: 'ALTER TABLE DeclarationModernSlaveryVersion ADD KEY DeclarationModernSlaveryVersion_declarationModernSlavery_idx (declarationModernSlavery)',
     loggingMessage: 'Adding KEY declarationModernSlavery to DeclarationModernSlaveryVersion table',
   });
 

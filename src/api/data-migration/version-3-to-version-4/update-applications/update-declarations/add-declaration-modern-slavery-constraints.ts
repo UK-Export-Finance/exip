@@ -13,17 +13,7 @@ const addDeclarationModernSlaveryConstraints = async (connection: Connection) =>
   const queries = await Promise.all([
     executeSqlQuery({
       connection,
-      query: `ALTER TABLE Declaration ADD CONSTRAINT Declaration_modernSlavery_fkey FOREIGN KEY (modernSlavery) REFERENCES DeclarationModernSlavery (id) ON DELETE SET NULL ON UPDATE CASCADE`,
-      loggingMessage: 'Adding CONSTRAINT modernSlavery to Declaration table',
-    }),
-    executeSqlQuery({
-      connection,
-      query: `ALTER TABLE DeclarationModernSlavery ADD CONSTRAINT DeclarationModernSlavery_declaration_fkey FOREIGN KEY (declaration) REFERENCES Declaration (id) ON DELETE SET NULL ON UPDATE CASCADE`,
-      loggingMessage: 'Adding CONSTRAINT declaration to DeclarationModernSlavery table',
-    }),
-    executeSqlQuery({
-      connection,
-      query: `ALTER TABLE DeclarationModernSlavery ADD CONSTRAINT DeclarationModernSlavery_version_fkey FOREIGN KEY (version) REFERENCES DeclarationModernSlavery (id) ON DELETE SET NULL ON UPDATE CASCADE`,
+      query: `ALTER TABLE DeclarationModernSlavery ADD CONSTRAINT DeclarationModernSlavery_version_fkey FOREIGN KEY(version) REFERENCES DeclarationModernSlaveryVersion(id) ON DELETE SET NULL ON UPDATE CASCADE`,
       loggingMessage: 'Adding CONSTRAINT version to DeclarationModernSlavery table',
     }),
   ]);
@@ -32,3 +22,15 @@ const addDeclarationModernSlaveryConstraints = async (connection: Connection) =>
 };
 
 export default addDeclarationModernSlaveryConstraints;
+
+
+// executeSqlQuery({
+  // connection,
+  // query: `ALTER TABLE Declaration ADD CONSTRAINT Declaration_modernSlavery_fkey FOREIGN KEY (modernSlavery) REFERENCES DeclarationModernSlavery (id) ON DELETE SET NULL ON UPDATE CASCADE`,
+  // loggingMessage: 'Adding CONSTRAINT modernSlavery to Declaration table',
+// }),
+// executeSqlQuery({
+  // connection,
+  // query: `ALTER TABLE DeclarationModernSlavery ADD CONSTRAINT DeclarationModernSlavery_version_fkey FOREIGN KEY (version) REFERENCES DeclarationModernSlavery (id) ON DELETE SET NULL ON UPDATE CASCADE`,
+  // loggingMessage: 'Adding CONSTRAINT version to DeclarationModernSlavery table',
+// }),
