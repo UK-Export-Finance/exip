@@ -30,6 +30,12 @@ context(
 
         cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
+        /**
+         * TODO: check this is in place in other declaration tests.
+         * If not, should it be passing? I.e declaration required tasks / cannot skip etc.
+         */
+        cy.completeAndSubmitCheckYourAnswers();
+
         cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'confidentiality', referenceNumber });
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;

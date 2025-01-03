@@ -7,8 +7,13 @@ context('Insurance - submit an application, Multiple contract policy, modern sla
     cy.completeSignInAndSubmitAnApplication({
       policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
       isNotAwareOfExistingSlavery: false,
+
+      /**
+       * Set other conditional modern slavery fields to null.
+       * Otherwise, the test tries to enter text into inputs that are not visible.
+       */
       cannotAdhereToAllRequirements: null,
-      offensesOrInvestigations: null,
+      awareOfExistingSlavery: null,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });

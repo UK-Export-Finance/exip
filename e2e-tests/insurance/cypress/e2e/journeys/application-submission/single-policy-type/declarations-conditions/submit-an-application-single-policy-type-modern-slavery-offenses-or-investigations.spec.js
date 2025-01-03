@@ -3,9 +3,14 @@ context('Insurance - submit an application, Single contract policy, modern slave
 
   before(() => {
     cy.completeSignInAndSubmitAnApplication({
-      isNotAwareOfExistingSlavery: null,
+      hasNoOffensesOrInvestigations: false,
+
+      /**
+       * Set other conditional modern slavery fields to null.
+       * Otherwise, the test tries to enter text into inputs that are not visible.
+       */
       cannotAdhereToAllRequirements: null,
-      offensesOrInvestigations: false,
+      awareOfExistingSlavery: null,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });
