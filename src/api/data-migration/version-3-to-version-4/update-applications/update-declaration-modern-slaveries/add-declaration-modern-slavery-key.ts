@@ -7,16 +7,11 @@ import executeSqlQuery from '../../../execute-sql-query';
  * @param {Connection} connection: SQL database connection
  * @returns {Promise<Array<object>>} executeSqlQuery response
  */
-const addDeclarationModernSlaveryKeys = async (connection: Connection) => {
-  const queries = await Promise.all([
-    executeSqlQuery({
-      connection,
-      query: 'ALTER TABLE DeclarationModernSlavery ADD KEY DeclarationModernSlavery_version_idx (version)',
-      loggingMessage: 'Adding KEY version to DeclarationModernSlavery table',
-    }),
-  ]);
-
-  return queries;
-};
+const addDeclarationModernSlaveryKeys = (connection: Connection) =>
+  executeSqlQuery({
+    connection,
+    query: 'ALTER TABLE DeclarationModernSlavery ADD KEY DeclarationModernSlavery_version_idx (version)',
+    loggingMessage: 'Adding KEY version to DeclarationModernSlavery table',
+  });
 
 export default addDeclarationModernSlaveryKeys;

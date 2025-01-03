@@ -11,35 +11,43 @@ import { ApplicationDeclaration } from '../../../../types';
  * @returns {Promise<Array<object>>} executeSqlQuery response
  */
 const createDeclarationModernSlaveryRows = async (connection: Connection) => {
-  // TODO: try/catch
+  const loggingMessage = 'Creating modern slavery entries in the DeclarationModernSlavery table';
 
-  const declarations = await getAllDeclarationsNonSubmittedApplications(connection);
+  console.info('✅ %s', loggingMessage);
 
-  if (!declarations || !declarations.length) {
-    console.info('ℹ️ No non-submitted application declarations available - no need to create related declaration modern slavery entries');
+  try {
+    const declarations = await getAllDeclarationsNonSubmittedApplications(connection);
 
-    return false;
-  }
+    if (!declarations || !declarations.length) {
+      console.info('ℹ️ No non-submitted application declarations available - no need to create declaration modern slavery entries');
 
-  const promises = declarations.map(async (declaration: ApplicationDeclaration) => {
-    const { id: declarationId } = declaration;
+      return false;
+    }
 
-    const theValues = `('${createCuid()}')`;
+    const promises = declarations.map(async (declaration: ApplicationDeclaration) => {
+      const { id: declarationId } = declaration;
 
-    const query = `
-      INSERT INTO DeclarationModernSlavery (id) VALUES ${theValues};
-    `;
+      const theValues = `('${createCuid()}')`;
 
-    const created = await executeSqlQuery({
-      connection,
-      query,
-      loggingMessage: `Creating DeclarationModernSlavery entry for declaration ${declarationId}`,
+      const query = `
+        INSERT INTO DeclarationModernSlavery (id) VALUES ${theValues};
+      `;
+
+      const created = await executeSqlQuery({
+        connection,
+        query,
+        loggingMessage: `Creating DeclarationModernSlavery entry for declaration ${declarationId}`,
+      });
+
+      return created;
     });
 
-    return created;
-  });
+    return Promise.all(promises);
+  } catch (error) {
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
-  return Promise.all(promises);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
+  }
 };
 
 export default createDeclarationModernSlaveryRows;

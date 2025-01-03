@@ -34,8 +34,6 @@ const updateApplications = async (connection: Connection) => {
       updateApplicationMigrated(connection),
     ]);
 
-    // TODO: bump declarations version for in progress applications.
-
     return promises;
   } catch (error) {
     console.error('🚨 Error %s %o', loggingMessage, error);

@@ -11,32 +11,41 @@ import { ApplicationDeclaration } from '../../../../types';
  * @returns {Promise<Array<object>>} executeSqlQuery response
  */
 const addDeclarationModernSlaveryColumnValues = async (connection: Connection) => {
-  // TODO: try/catch
-  const declarations = await getAllDeclarationsNonSubmittedApplications(connection);
+  const loggingMessage = 'Adding modern slavery column values to the Declaration table';
 
-  if (!declarations || !declarations.length) {
-    console.info('ℹ️ No non-submitted application declarations available - no need to add related modern slavery column values');
+  console.info('✅ %s', loggingMessage);
 
-    return false;
-  }
+  try {
+    const declarations = await getAllDeclarationsNonSubmittedApplications(connection);
 
-  const decalarationModernSlaveries = await getAllDeclarationModernSlaveries(connection);
+    if (!declarations || !declarations.length) {
+      console.info('ℹ️ No non-submitted application declarations available - no need to add modern slavery column values');
 
-  const promises = declarations.map(async (declaration: ApplicationDeclaration, index: number) => {
-    const modernSlavery = decalarationModernSlaveries[index];
+      return false;
+    }
 
-    const query = `UPDATE Declaration SET modernSlavery='${modernSlavery.id}' WHERE id='${declaration.id}'`;
+    const decalarationModernSlaveries = await getAllDeclarationModernSlaveries(connection);
 
-    const updated = await executeSqlQuery({
-      connection,
-      query,
-      loggingMessage: `Updating modernSlavery column in declaration table for declaration ${declaration.id}`,
+    const promises = declarations.map(async (declaration: ApplicationDeclaration, index: number) => {
+      const modernSlavery = decalarationModernSlaveries[index];
+
+      const query = `UPDATE Declaration SET modernSlavery='${modernSlavery.id}' WHERE id='${declaration.id}'`;
+
+      const updated = await executeSqlQuery({
+        connection,
+        query,
+        loggingMessage: `Updating modernSlavery column in declaration table for declaration ${declaration.id}`,
+      });
+
+      return updated;
     });
 
-    return updated;
-  });
+    return Promise.all(promises);
+  } catch (error) {
+    console.error('🚨 Error %s %o', loggingMessage, error);
 
-  return Promise.all(promises);
+    throw new Error(`🚨 error ${loggingMessage} ${error}`);
+  }
 };
 
 export default addDeclarationModernSlaveryColumnValues;
