@@ -4,6 +4,7 @@ import addMigratedV3toV4Field from './add-application-migrated-v3-to-v4-field';
 import createDeclarationModernSlaveryTable from './create-declaration-modern-slavery-table';
 import createDeclarationModernSlaveryVersionTable from './create-declaration-modern-slavery-version-table';
 import updateDeclarations from './update-declarations';
+import updateDeclarationModernSlaveries from './update-declaration-modern-slaveries';
 import updateApplicationVersion from './update-application-version';
 import updateApplicationMigrated from './update-application-migrated';
 
@@ -27,6 +28,7 @@ const updateApplications = async (connection: Connection) => {
       createDeclarationModernSlaveryVersionTable(connection),
 
       updateDeclarations(connection),
+      updateDeclarationModernSlaveries(connection),
 
       updateApplicationVersion(connection),
       updateApplicationMigrated(connection),

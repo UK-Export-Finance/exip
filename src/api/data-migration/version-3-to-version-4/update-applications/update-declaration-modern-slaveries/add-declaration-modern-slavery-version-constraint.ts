@@ -10,7 +10,8 @@ import executeSqlQuery from '../../../execute-sql-query';
 const addDeclarationModernSlaveryVersionConstraint = async (connection: Connection) =>
   executeSqlQuery({
     connection,
-    query: 'ALTER TABLE DeclarationModernSlaveryVersion ADD CONSTRAINT DeclarationModernSlaveryVersion_declarationModernSlavery_fkey FOREIGN KEY(declarationModernSlavery) REFERENCES DeclarationModernSlavery(id) ON DELETE SET NULL ON UPDATE CASCADE',
+    query:
+      'ALTER TABLE DeclarationModernSlaveryVersion ADD CONSTRAINT DeclarationModernSlaveryVersion_declarationModernSlavery_fkey FOREIGN KEY(declarationModernSlavery) REFERENCES DeclarationModernSlavery(id) ON DELETE SET NULL ON UPDATE CASCADE',
     loggingMessage: 'Adding CONSTRAINT declarationModernSlavery to DeclarationModernSlaveryVersion table',
   });
 

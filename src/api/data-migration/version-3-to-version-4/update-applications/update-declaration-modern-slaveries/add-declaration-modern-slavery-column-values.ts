@@ -17,9 +17,7 @@ const addDeclarationModernSlaveryColumnValues = async (connection: Connection) =
   const promises = decalarations.map(async (declaration: ApplicationDeclaration, index: number) => {
     const modernSlavery = decalarationModernSlaveries[index];
 
-    const query = `
-        UPDATE Declaration SET modernSlavery='${modernSlavery.id}' WHERE id='${declaration.id}'
-      `;
+    const query = `UPDATE Declaration SET modernSlavery='${modernSlavery.id}' WHERE id='${declaration.id}'`;
 
     const updated = await executeSqlQuery({
       connection,

@@ -13,7 +13,6 @@ const createDeclarationModernSlaveryTable = (connection: Connection) => {
   const query = `
     CREATE TABLE DeclarationModernSlavery (
       id varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-      declaration varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
       version varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
       willAdhereToAllRequirements tinyint(1) DEFAULT NULL,
       hasNoOffensesOrInvestigations tinyint(1) DEFAULT NULL,

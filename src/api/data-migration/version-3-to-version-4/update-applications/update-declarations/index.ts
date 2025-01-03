@@ -1,12 +1,7 @@
 import { Connection } from 'mysql2/promise';
-import createDeclarationModernSlaveryRows from './create-declaration-modern-slavery-rows';
-import createDeclarationModernSlaveryVersionRows from './create-declaration-modern-slavery-version-rows';
-import addDeclarationModernSlaveryField from './add-declaration-modern-slavery-field';
-import addDeclarationModernSlaveryKeys from './add-declaration-modern-slavery-keys';
-import addDeclarationModernSlaveryConstraints from './add-declaration-modern-slavery-constraints';
-import addDeclarationModernSlaveryVersionKey from './add-declaration-modern-slavery-version-key';
-import addDeclarationModernSlaveryVersionConstraint from './add-declaration-modern-slavery-version-constraint';
-import addDeclarationModernSlaveryColumnValues from './add-declaration-modern-slavery-column-values';
+import addDeclarationFieldModernSlavery from './add-declaration-field-modern-slavery';
+import addDeclarationUniqueKeyModernSlavery from './add-declaration-unique-key-modern-slavery';
+import addDeclarationConstraintModernSlavery from './add-declaration-constraint-modern-slavery';
 
 /**
  * updateDeclarations
@@ -21,18 +16,9 @@ const updateDeclarations = async (connection: Connection) => {
 
   try {
     const promises = await Promise.all([
-      await addDeclarationModernSlaveryField(connection),
-
-      await createDeclarationModernSlaveryRows(connection),
-      await createDeclarationModernSlaveryVersionRows(connection),
-
-      await addDeclarationModernSlaveryKeys(connection),
-      await addDeclarationModernSlaveryConstraints(connection),
-
-      await addDeclarationModernSlaveryVersionKey(connection),
-      await addDeclarationModernSlaveryVersionConstraint(connection),
-
-      await addDeclarationModernSlaveryColumnValues(connection),
+      await addDeclarationFieldModernSlavery(connection),
+      await addDeclarationUniqueKeyModernSlavery(connection),
+      await addDeclarationConstraintModernSlavery(connection),
     ]);
 
     return promises;

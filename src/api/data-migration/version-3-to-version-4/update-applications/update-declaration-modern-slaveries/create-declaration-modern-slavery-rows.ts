@@ -13,21 +13,25 @@ import { ApplicationDeclaration } from '../../../../types';
 const createDeclarationModernSlaveryRows = async (connection: Connection) => {
   const declarations = await getAllDeclarations(connection);
 
-  const declarationModernSlaveryPromises = declarations.map(async (declaration: ApplicationDeclaration) => {
+  const promises = declarations.map(async (declaration: ApplicationDeclaration) => {
     const { id: declarationId } = declaration;
 
-    const theValues = `('${createCuid()}', '${declarationId}')`;
+    const theValues = `('${createCuid()}')`;
 
-    const query = await executeSqlQuery({
+    const query = `
+      INSERT INTO DeclarationModernSlavery (id) VALUES ${theValues};
+    `;
+
+    const created = await executeSqlQuery({
       connection,
-      query: `INSERT INTO DeclarationModernSlavery (id, declaration) VALUES ${theValues}`,
+      query,
       loggingMessage: `Creating DeclarationModernSlavery entry for declaration ${declarationId}`,
     });
 
-    return query;
+    return created;
   });
 
-  return Promise.all(declarationModernSlaveryPromises);
+  return Promise.all(promises);
 };
 
 export default createDeclarationModernSlaveryRows;
