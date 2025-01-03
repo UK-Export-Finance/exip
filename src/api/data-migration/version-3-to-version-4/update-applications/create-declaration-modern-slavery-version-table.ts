@@ -14,9 +14,9 @@ const createDeclarationModernSlaveryVersionTable = (connection: Connection) => {
     CREATE TABLE DeclarationModernSlaveryVersion (
       id varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
       declarationModernSlavery varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-      hasNoOffensesOrInvestigations tinyint(1) DEFAULT NULL,
-      isNotAwareOfExistingSlavery tinyint(1) DEFAULT NULL,
-      willAdhereToAllRequirements tinyint(1) DEFAULT NULL,
+      willAdhereToAllRequirements varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      hasNoOffensesOrInvestigations varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      isNotAwareOfExistingSlavery varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
       PRIMARY KEY (id)
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
   `;

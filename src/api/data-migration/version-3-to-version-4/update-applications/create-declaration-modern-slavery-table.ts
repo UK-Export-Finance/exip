@@ -18,6 +18,9 @@ const createDeclarationModernSlaveryTable = (connection: Connection) => {
       willAdhereToAllRequirements tinyint(1) DEFAULT NULL,
       hasNoOffensesOrInvestigations tinyint(1) DEFAULT NULL,
       isNotAwareOfExistingSlavery tinyint(1) DEFAULT NULL,
+      awareOfExistingSlavery varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      cannotAdhereToAllRequirements varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+      offensesOrInvestigations varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
       PRIMARY KEY (id)
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
   `;

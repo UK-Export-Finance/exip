@@ -12,7 +12,7 @@ const getAllDeclarations = async (connection: Connection) => {
   const loggingMessage = 'Getting all declarations';
 
   try {
-    const query = 'SELECT * FROM Application';
+    const query = 'SELECT * FROM Declaration';
 
     const [declarations] = await executeSqlQuery({ connection, query, loggingMessage });
 
