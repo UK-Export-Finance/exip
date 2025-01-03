@@ -37,7 +37,7 @@ const get = async (policyType: string, policyCurrencyCode: string, maximumBuyerW
 
         const exchangeRate = await apimCurrencyExchangeRate.get(source, target);
 
-        maximumBuyerWillOweInGbp = roundNumber(maximumBuyerWillOwe * exchangeRate);
+        maximumBuyerWillOweInGbp = roundNumber(maximumBuyerWillOwe / exchangeRate);
       }
 
       const threshold = Number(SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE);

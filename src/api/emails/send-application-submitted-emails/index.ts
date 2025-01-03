@@ -10,7 +10,7 @@ import { SuccessResponse, ApplicationSubmissionEmailVariables, Application } fro
  * Send "application submitted" emails
  * @param {Application} application
  * @param {String} xlsxPath: Path to XLSX file for underwriting team email
- * @returns {Promise<Object>} Object with success flag and emailRecipient
+ * @returns {Promise<SuccessResponse>} Object with success flag and emailRecipient
  */
 const send = async (application: Application, xlsxPath: string): Promise<SuccessResponse> => {
   try {
@@ -18,10 +18,11 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
 
     const { requestedStartDate } = policy;
 
-    // generate email variables
     const { email } = owner;
 
-    // shared variables for sending email
+    /**
+     * Shared email variables for all emails
+     */
     const sharedEmailVars = {
       referenceNumber,
       buyerName: replaceCharacterCodesWithCharacters(String(buyer.companyOrOrganisationName)),
@@ -32,11 +33,10 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
 
     /**
      * Email variables for sending email to:
-     * the application owner of application
+     * the owner of the application
      */
     const sendOwnerEmailVars = {
       ...sharedEmailVars,
-      buyerName: replaceCharacterCodesWithCharacters(String(buyer.companyOrOrganisationName)),
       name: replaceCharacterCodesWithCharacters(getFullNameString(owner)),
       emailAddress: email,
     } as ApplicationSubmissionEmailVariables;
@@ -47,7 +47,6 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
      */
     const sendContactEmailVars = {
       ...sharedEmailVars,
-      buyerName: replaceCharacterCodesWithCharacters(String(buyer.companyOrOrganisationName)),
       name: replaceCharacterCodesWithCharacters(getFullNameString(policyContact)),
       emailAddress: policyContact.email,
     } as ApplicationSubmissionEmailVariables;

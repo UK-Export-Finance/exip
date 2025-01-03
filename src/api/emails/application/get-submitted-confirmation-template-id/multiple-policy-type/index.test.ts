@@ -55,7 +55,7 @@ describe('emails/application/get-submitted-confirmation-template-id/multiple-pol
 
       describe(`when ${MAXIMUM_BUYER_WILL_OWE} is below ${SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE}`, () => {
         it('should return the correct email template ID', async () => {
-          const mockMaximumBuyerWillOwe = Number(threshold - 1);
+          const mockMaximumBuyerWillOwe = threshold - 1;
 
           const result = await multiplePolicyTypeTemplateId.get(policyType, mockPolicyCurrencyCode, mockMaximumBuyerWillOwe);
 
@@ -67,7 +67,7 @@ describe('emails/application/get-submitted-confirmation-template-id/multiple-pol
 
       describe(`when ${MAXIMUM_BUYER_WILL_OWE} is equal to ${SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE}`, () => {
         it('should return the correct email template ID', async () => {
-          const mockMaximumBuyerWillOwe = SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE;
+          const mockMaximumBuyerWillOwe = threshold;
 
           const result = await multiplePolicyTypeTemplateId.get(policyType, mockPolicyCurrencyCode, mockMaximumBuyerWillOwe);
 
@@ -79,7 +79,7 @@ describe('emails/application/get-submitted-confirmation-template-id/multiple-pol
 
       describe(`when ${MAXIMUM_BUYER_WILL_OWE} is over ${SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE}`, () => {
         it('should return the correct email template ID', async () => {
-          const mockMaximumBuyerWillOwe = Number(threshold + 1);
+          const mockMaximumBuyerWillOwe = threshold + 1;
 
           const result = await multiplePolicyTypeTemplateId.get(policyType, mockPolicyCurrencyCode, mockMaximumBuyerWillOwe);
 
@@ -105,7 +105,7 @@ describe('emails/application/get-submitted-confirmation-template-id/multiple-pol
         it('should return the correct email template ID', async () => {
           apimCurrencyExchangeRate.get = jest.fn(() => Promise.resolve(1));
 
-          const mockMaximumBuyerWillOwe = Number(threshold - 1);
+          const mockMaximumBuyerWillOwe = threshold - 1;
 
           const result = await multiplePolicyTypeTemplateId.get(policyType, mockPolicyCurrencyCode, mockMaximumBuyerWillOwe);
 
@@ -117,11 +117,13 @@ describe('emails/application/get-submitted-confirmation-template-id/multiple-pol
 
       describe(`when ${MAXIMUM_BUYER_WILL_OWE} in ${GBP} is over ${SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE}`, () => {
         it('should return the correct email template ID', async () => {
-          const mockResponse = Number(SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE);
+          /**
+           * Mock return an exchange rate of zero.
+           * This allows us to easily create a mock MAXIMUM_BUYER_WILL_OWE that is just above the threshold.
+           */
+          apimCurrencyExchangeRate.get = jest.fn(() => Promise.resolve(0));
 
-          apimCurrencyExchangeRate.get = jest.fn(() => Promise.resolve(mockResponse));
-
-          const mockMaximumBuyerWillOwe = Number(threshold + 1);
+          const mockMaximumBuyerWillOwe = threshold + 1;
 
           const result = await multiplePolicyTypeTemplateId.get(policyType, mockPolicyCurrencyCode, mockMaximumBuyerWillOwe);
 
