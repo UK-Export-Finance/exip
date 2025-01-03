@@ -1,5 +1,5 @@
 import { Connection } from 'mysql2/promise';
-import getAllDeclarations from '../../../helpers/get-all-declarations';
+import getAllDeclarationsNonSubmittedApplications from '../../../helpers/get-all-declarations-non-submitted-applications';
 import getAllDeclarationModernSlaveries from '../../../helpers/get-all-declaration-modern-slaveries';
 import executeSqlQuery from '../../../execute-sql-query';
 import { ApplicationDeclaration } from '../../../../types';
@@ -11,10 +11,18 @@ import { ApplicationDeclaration } from '../../../../types';
  * @returns {Promise<Array<object>>} executeSqlQuery response
  */
 const addDeclarationModernSlaveryColumnValues = async (connection: Connection) => {
-  const decalarations = await getAllDeclarations(connection);
+  // TODO: try/catch
+  const declarations = await getAllDeclarationsNonSubmittedApplications(connection);
+
+  if (!declarations || !declarations.length) {
+    console.info('ℹ️ No non-submitted application declarations available - no need to add related modern slavery column values');
+
+    return false;
+  }
+
   const decalarationModernSlaveries = await getAllDeclarationModernSlaveries(connection);
 
-  const promises = decalarations.map(async (declaration: ApplicationDeclaration, index: number) => {
+  const promises = declarations.map(async (declaration: ApplicationDeclaration, index: number) => {
     const modernSlavery = decalarationModernSlaveries[index];
 
     const query = `UPDATE Declaration SET modernSlavery='${modernSlavery.id}' WHERE id='${declaration.id}'`;

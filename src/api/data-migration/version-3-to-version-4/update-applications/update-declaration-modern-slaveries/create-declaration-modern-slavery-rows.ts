@@ -1,5 +1,5 @@
 import { Connection } from 'mysql2/promise';
-import getAllDeclarations from '../../../helpers/get-all-declarations';
+import getAllDeclarationsNonSubmittedApplications from '../../../helpers/get-all-declarations-non-submitted-applications';
 import createCuid from '../../../helpers/create-cuid';
 import executeSqlQuery from '../../../execute-sql-query';
 import { ApplicationDeclaration } from '../../../../types';
@@ -11,7 +11,15 @@ import { ApplicationDeclaration } from '../../../../types';
  * @returns {Promise<Array<object>>} executeSqlQuery response
  */
 const createDeclarationModernSlaveryRows = async (connection: Connection) => {
-  const declarations = await getAllDeclarations(connection);
+  // TODO: try/catch
+
+  const declarations = await getAllDeclarationsNonSubmittedApplications(connection);
+
+  if (!declarations || !declarations.length) {
+    console.info('ℹ️ No non-submitted application declarations available - no need to create related declaration modern slavery entries');
+
+    return false;
+  }
 
   const promises = declarations.map(async (declaration: ApplicationDeclaration) => {
     const { id: declarationId } = declaration;
