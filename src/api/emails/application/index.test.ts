@@ -34,8 +34,6 @@ describe('emails/application', () => {
   const mockFilePath = '/path-to-file';
 
   describe('application', () => {
-    const expectedTemplateId = getSubmittedConfirmationTemplateId(policy);
-
     beforeEach(() => {
       jest.clearAllMocks();
 
@@ -48,6 +46,8 @@ describe('emails/application', () => {
       notify.sendEmail = sendEmailSpy;
 
       const result = await application.submittedEmail(variables, policy);
+
+      const expectedTemplateId = await getSubmittedConfirmationTemplateId(policy);
 
       expect(sendEmailSpy).toHaveBeenCalledTimes(1);
       expect(sendEmailSpy).toHaveBeenCalledWith(expectedTemplateId, email, variables);

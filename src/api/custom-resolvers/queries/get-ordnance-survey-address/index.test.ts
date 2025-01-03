@@ -29,7 +29,7 @@ describe('getOrdnanceSurveyAddress', () => {
     });
   });
 
-  describe('when ordnance survey API returns empty data object', () => {
+  describe('when ordnance survey API returns an empty data object', () => {
     beforeEach(() => {
       ordnanceSurvey.get = jest.fn(() => Promise.resolve({ success: true, data: undefined }));
     });

@@ -1,22 +1,13 @@
 import getSubmittedConfirmationTemplateId from '.';
-import { APPLICATION, EMAIL_TEMPLATE_IDS, FIELD_VALUES } from '../../../constants';
-import { POLICY as POLICY_FIELD_IDS } from '../../../constants/field-ids/insurance/policy';
+import { EMAIL_TEMPLATE_IDS, FIELD_VALUES } from '../../../constants';
+import multiplePolicyTypeTemplateId from './multiple-policy-type';
 import { ApplicationPolicy } from '../../../types';
-import { mockApplication } from '../../../test-mocks';
+import { mockSpyPromiseRejection, mockErrorMessage } from '../../../test-mocks';
+import mockApplication, { mockMultiplePolicy } from '../../../test-mocks/mock-application';
 
 const {
   POLICY_TYPE: { SINGLE, MULTIPLE },
 } = FIELD_VALUES;
-
-const {
-  EXPORT_VALUE: {
-    MULTIPLE: { MAXIMUM_BUYER_WILL_OWE },
-  },
-} = POLICY_FIELD_IDS;
-
-const {
-  LATEST_VERSION: { SMALL_EXPORT_BUILDER },
-} = APPLICATION;
 
 const {
   APPLICATION: {
@@ -24,6 +15,7 @@ const {
       EXPORTER: { CONFIRMATION },
     },
   },
+  UNABLE_TO_DETERMINE_TEMPLATE_ID,
 } = EMAIL_TEMPLATE_IDS;
 
 const mockSingleContractPolicy: ApplicationPolicy = {
@@ -32,16 +24,24 @@ const mockSingleContractPolicy: ApplicationPolicy = {
 };
 
 const mockMultipleContractPolicy: ApplicationPolicy = {
-  ...mockApplication.policy,
+  ...mockMultiplePolicy,
   policyType: MULTIPLE,
 };
 
-const threshold = Number(SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE);
-
 describe('emails/application/get-submitted-confirmation-template-id', () => {
+  jest.mock('./multiple-policy-type');
+
+  const mockMultiplePolicyTypeTemplateId = CONFIRMATION.MULTIPLE_CONTRACT_POLICY.ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION;
+
+  const mockMultiplePolicyTypeTemplateIdSpy = jest.fn(() => Promise.resolve(mockMultiplePolicyTypeTemplateId));
+
+  beforeEach(() => {
+    multiplePolicyTypeTemplateId.get = mockMultiplePolicyTypeTemplateIdSpy;
+  });
+
   describe(`when policy type is ${SINGLE}`, () => {
-    it('should return the correct email template ID', () => {
-      const result = getSubmittedConfirmationTemplateId(mockSingleContractPolicy);
+    it('should return the correct email template ID', async () => {
+      const result = await getSubmittedConfirmationTemplateId(mockSingleContractPolicy);
 
       const expected = CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
 
@@ -50,62 +50,47 @@ describe('emails/application/get-submitted-confirmation-template-id', () => {
   });
 
   describe(`when policy type is ${MULTIPLE}`, () => {
-    describe(`when the requested credit limit is below ${SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE}`, () => {
-      it('should return the correct email template ID', () => {
-        const mockPolicy: ApplicationPolicy = {
-          ...mockMultipleContractPolicy,
-          [MAXIMUM_BUYER_WILL_OWE]: Number(threshold - 1),
-        };
+    const mockPolicyData: ApplicationPolicy = mockMultipleContractPolicy;
 
-        const result = getSubmittedConfirmationTemplateId(mockPolicy);
+    const { policyType, policyCurrencyCode, maximumBuyerWillOwe } = mockPolicyData;
 
-        const expected = CONFIRMATION.MULTIPLE_CONTRACT_POLICY.ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION;
+    it('should call multiplePolicyTypeTemplateId.get', async () => {
+      await getSubmittedConfirmationTemplateId(mockPolicyData);
 
-        expect(result).toEqual(expected);
-      });
+      expect(mockMultiplePolicyTypeTemplateIdSpy).toHaveBeenCalledTimes(1);
+
+      expect(mockMultiplePolicyTypeTemplateIdSpy).toHaveBeenCalledWith(policyType, policyCurrencyCode, maximumBuyerWillOwe);
     });
 
-    describe(`when the requested credit limit is equal to ${SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE}`, () => {
-      it('should return the correct email template ID', () => {
-        const mockPolicy: ApplicationPolicy = {
-          ...mockMultipleContractPolicy,
-          [MAXIMUM_BUYER_WILL_OWE]: SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE,
-        };
+    it('should return the result of multiplePolicyTypeTemplateId.get', async () => {
+      const result = await getSubmittedConfirmationTemplateId(mockPolicyData);
 
-        const result = getSubmittedConfirmationTemplateId(mockPolicy);
+      const expected = mockMultiplePolicyTypeTemplateId;
 
-        const expected = CONFIRMATION.MULTIPLE_CONTRACT_POLICY.ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION;
-
-        expect(result).toEqual(expected);
-      });
+      expect(result).toEqual(expected);
     });
 
-    describe(`when the requested credit limit is over ${SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE}`, () => {
-      it('should return the correct email template ID', () => {
-        const mockPolicy: ApplicationPolicy = {
-          ...mockMultipleContractPolicy,
-          [MAXIMUM_BUYER_WILL_OWE]: Number(threshold + 1),
-        };
+    describe('when multiplePolicyTypeTemplateId.get throws an error', () => {
+      it('should throw an error', async () => {
+        multiplePolicyTypeTemplateId.get = mockSpyPromiseRejection;
 
-        const result = getSubmittedConfirmationTemplateId(mockPolicy);
-
-        const expected = CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
-
-        expect(result).toEqual(expected);
+        await expect(getSubmittedConfirmationTemplateId(mockPolicyData)).rejects.toThrow(
+          `Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper) ${new Error(mockErrorMessage)}`,
+        );
       });
     });
   });
 
   describe('when policy type is not recognised', () => {
-    it('should return an empty string', () => {
+    it(`should return ${UNABLE_TO_DETERMINE_TEMPLATE_ID}`, async () => {
       const mockPolicy = {
         ...mockApplication.policy,
         policyType: 'invalid-policy-type',
       };
 
-      const result = getSubmittedConfirmationTemplateId(mockPolicy);
+      const result = await getSubmittedConfirmationTemplateId(mockPolicy);
 
-      expect(result).toEqual('');
+      expect(result).toEqual(UNABLE_TO_DETERMINE_TEMPLATE_ID);
     });
   });
 });

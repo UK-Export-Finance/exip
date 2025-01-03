@@ -1,10 +1,7 @@
-import { APPLICATION, EMAIL_TEMPLATE_IDS } from '../../../constants';
+import { EMAIL_TEMPLATE_IDS } from '../../../constants';
 import { isSinglePolicyType, isMultiplePolicyType } from '../../../helpers/policy-type';
+import multiplePolicyTypeTemplateId from './multiple-policy-type';
 import { ApplicationPolicy } from '../../../types';
-
-const {
-  LATEST_VERSION: { SMALL_EXPORT_BUILDER },
-} = APPLICATION;
 
 const {
   APPLICATION: {
@@ -12,36 +9,37 @@ const {
       EXPORTER: { CONFIRMATION },
     },
   },
+  UNABLE_TO_DETERMINE_TEMPLATE_ID,
 } = EMAIL_TEMPLATE_IDS;
 
 /**
- * getSubmittedConfirmationTemplateId.submittedEmail
+ * getSubmittedConfirmationTemplateId
  * Get an email template ID for the "application submitted" email, depending on:
  * - The application's policy type.
- * - If the "maximum buyer will owe" is below a threshold.
+ * - If the "maximum buyer will owe" (in GBP) is below a threshold.
  * @param {ApplicationPolicy} policy: Application policy
- * @returns {String} callNotify response
+ * @returns {Promise<String>} "Application submitted" template ID
  */
-const getSubmittedConfirmationTemplateId = (policy: ApplicationPolicy): string => {
-  const { policyType, maximumBuyerWillOwe } = policy;
+const getSubmittedConfirmationTemplateId = async (policy: ApplicationPolicy): Promise<string> => {
+  try {
+    console.info('Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper)');
 
-  if (isSinglePolicyType(policyType)) {
-    return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
-  }
+    const { maximumBuyerWillOwe, policyCurrencyCode, policyType } = policy;
 
-  if (isMultiplePolicyType(policyType) && maximumBuyerWillOwe) {
-    const threshold = Number(SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE);
-
-    const eligibileForSmallExportBuilder = maximumBuyerWillOwe <= threshold;
-
-    if (eligibileForSmallExportBuilder) {
-      return CONFIRMATION.MULTIPLE_CONTRACT_POLICY.ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION;
+    if (isSinglePolicyType(policyType)) {
+      return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
     }
 
-    return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
-  }
+    if (isMultiplePolicyType(policyType) && maximumBuyerWillOwe) {
+      return await multiplePolicyTypeTemplateId.get(policyType, String(policyCurrencyCode), maximumBuyerWillOwe);
+    }
 
-  return '';
+    return UNABLE_TO_DETERMINE_TEMPLATE_ID;
+  } catch (error) {
+    console.error('Error Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper) %o', error);
+
+    throw new Error(`Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper) ${error}`);
+  }
 };
 
 export default getSubmittedConfirmationTemplateId;
