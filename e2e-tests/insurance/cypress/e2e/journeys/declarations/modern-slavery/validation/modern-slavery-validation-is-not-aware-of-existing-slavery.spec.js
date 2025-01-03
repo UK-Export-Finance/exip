@@ -35,6 +35,8 @@ context(`Insurance - Declarations - Modern slavery page - validation - ${fieldId
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
+      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY}`;
 
       cy.navigateToUrl(url);

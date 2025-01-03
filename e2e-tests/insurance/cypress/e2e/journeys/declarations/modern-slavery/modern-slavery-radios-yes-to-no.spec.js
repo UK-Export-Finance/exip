@@ -26,6 +26,8 @@ context('Insurance - Declarations - Modern slavery page - radios - Yes to no', (
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
+      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY}`;
 
       cy.navigateToUrl(url);
