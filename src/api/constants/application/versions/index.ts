@@ -1,7 +1,7 @@
 import { ApplicationVersion } from '../../../types';
 import { GBP } from '../../supported-currencies';
 
-const VERSION_1 = {
+const VERSION_1: ApplicationVersion = {
   VERSION_NUMBER: '1',
   OVER_500K_SUPPORT: false,
   MAXIMUM_BUYER_CAN_OWE: 500000,
@@ -9,22 +9,28 @@ const VERSION_1 = {
   DEFAULT_FINAL_DESTINATION_KNOWN: true,
   DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: false,
   BROKER_ADDRESS_AS_MULTIPLE_FIELDS: true,
-} as ApplicationVersion;
+};
 
-const VERSION_2 = {
+const VERSION_2: ApplicationVersion = {
   VERSION_NUMBER: '2',
   OVER_500K_SUPPORT: true,
   DEFAULT_FINAL_DESTINATION_KNOWN: null,
   DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: null,
   DEFAULT_CURRENCY: GBP,
   BROKER_ADDRESS_AS_MULTIPLE_FIELDS: false,
-} as ApplicationVersion;
+};
 
-const VERSION_3 = {
+const VERSION_3: ApplicationVersion = {
   ...VERSION_2,
   VERSION_NUMBER: '3',
   REQUESTED_CREDIT_LIMIT_REQUIRED: true,
-} as ApplicationVersion;
+};
+
+const VERSION_4: ApplicationVersion = {
+  ...VERSION_3,
+  VERSION_NUMBER: '4',
+  DECLARATIONS_MODERN_SLAVERY: true,
+};
 
 /**
  * VERSIONS
@@ -35,9 +41,10 @@ const VERSION_3 = {
  * - Version number 1: MVP, no support for applications over 500k.
  * - Version number 2: Support for applications over 500k.
  * - Version number 3: Design and content iterations. 1x new database field.
- * - Version number 4: Payments integration
+ * - Version number 4: New declaration - "Modern slavery".
+ * - Version number 5: Payments integration
  * @returns {Array<ApplicationVersion>} All application versions
  */
-const VERSIONS = [VERSION_1, VERSION_2, VERSION_3] as Array<ApplicationVersion>;
+const VERSIONS: Array<ApplicationVersion> = [VERSION_1, VERSION_2, VERSION_3, VERSION_4];
 
 export default VERSIONS;

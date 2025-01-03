@@ -24,7 +24,7 @@ const addDeclarationModernSlaveryColumnValues = async (connection: Connection) =
     const updated = await executeSqlQuery({
       connection,
       query,
-      loggingMessage: `Updating modernSlavery column in decalration table for declaration ${declaration.id}`,
+      loggingMessage: `Updating modernSlavery column in declaration table for declaration ${declaration.id}`,
     });
 
     return updated;

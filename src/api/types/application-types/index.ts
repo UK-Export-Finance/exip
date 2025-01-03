@@ -337,6 +337,7 @@ export interface ApplicationVersion {
   DEFAULT_CURRENCY?: string;
   BROKER_ADDRESS_AS_MULTIPLE_FIELDS: boolean;
   REQUESTED_CREDIT_LIMIT_REQUIRED?: boolean;
+  DECLARATIONS_MODERN_SLAVERY?: boolean;
 }
 
 export interface SectionReview extends Relationship {
