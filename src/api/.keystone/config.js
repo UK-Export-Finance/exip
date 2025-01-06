@@ -1846,7 +1846,7 @@ var lists = {
         validation: { isRequired: true },
         db: { nativeType: 'VarChar(4)' },
       }),
-      migratedV3toV4: nullable_checkbox_default(),
+      migratedTo: (0, import_fields.integer)(),
     },
     access: import_access.allowAll,
   },
