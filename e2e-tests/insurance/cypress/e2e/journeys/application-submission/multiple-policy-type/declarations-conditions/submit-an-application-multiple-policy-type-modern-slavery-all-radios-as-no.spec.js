@@ -1,13 +1,14 @@
 import { APPLICATION } from '../../../../../../../constants';
 
-context('Insurance - submit an application - Multiple policy type, attempted private market cover', () => {
+context('Insurance - submit an application, Multiple contract policy, modern slavery declaration - all radios as no', () => {
   let referenceNumber;
 
   before(() => {
     cy.completeSignInAndSubmitAnApplication({
       policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
-      totalContractValueOverThreshold: true,
-      attemptedPrivateMarketCover: true,
+      isNotAwareOfExistingSlavery: false,
+      cannotAdhereToAllRequirements: false,
+      offensesOrInvestigations: false,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });

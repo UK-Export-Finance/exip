@@ -5,13 +5,7 @@ context(
   () => {
     let referenceNumber;
 
-    before(() => {
-      cy.createAccount({});
-    });
-
     beforeEach(() => {
-      cy.saveSession();
-
       cy.completeSignInAndSubmitAnApplication({
         policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
         exporterHasTradedWithBuyer: false,
@@ -22,6 +16,10 @@ context(
       });
     });
 
+    beforeEach(() => {
+      cy.saveSession();
+    });
+
     after(() => {
       cy.deleteApplication(referenceNumber);
     });
@@ -30,7 +28,7 @@ context(
       cy.assertApplicationSubmittedUrl(referenceNumber);
     });
 
-    it('should render in a `submitted` state in the dashboard', () => {
+    it('should render the application in a `submitted` state in the dashboard', () => {
       cy.assertDashboardApplicationSubmitted(referenceNumber);
     });
   },

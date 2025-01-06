@@ -28,6 +28,14 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
+        cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+
+        /**
+         * TODO: EMS-4096
+         * Introduce/enforce this, for all other declaration routes.
+         */
+        cy.completeAndSubmitCheckYourAnswers();
+
         cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'confidentiality', referenceNumber });
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;

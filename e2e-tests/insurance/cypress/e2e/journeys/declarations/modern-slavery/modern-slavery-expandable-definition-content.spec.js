@@ -23,6 +23,8 @@ context('Insurance - Declarations - Modern slavery page - expandable `definition
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
+      cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'exportingWithCodeOfConduct', referenceNumber });
+
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MODERN_SLAVERY}`;
 
       cy.navigateToUrl(url);

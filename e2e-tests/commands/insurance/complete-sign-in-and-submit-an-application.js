@@ -26,8 +26,8 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * @param {Boolean} differentTradingAddress: Should submit "yes" to "trade from a different address" in the "company details" form.
  * @param {Boolean} hasCreditControlProcess: Flag whether to submit "yes" or "no" radio input in the "credit control" form.
  * @param {Boolean} hasConnectionToBuyer: Should submit "yes" to "have connection to buyer" radio.
- * @param {Boolean} exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" in the "working with buyer" form.
  * @param {Boolean} exporterHasBuyerFinancialAccounts: Should submit "yes" to the "have buyer financial accounts" form.
+ * @param {Boolean} exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" in the "working with buyer" form.
  * @param {Boolean} finalDestinationKnown: Should submit "yes" to "Final destination known"
  * @param {Boolean} fullyPopulatedBuyerTradingHistory: Submit all possible optional "buyer trading history" form fields.
  * @param {Boolean} hasHadCreditInsuranceCoverWithBuyer: Submit "yes" to if export "has held credit insurance cover on the buyer in the past".
@@ -40,6 +40,14 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * @param {Boolean} submitCheckYourAnswers: Should click each section's "check your answers" submit button.
  * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker".
+ * @param {Boolean} hasAntiBriberyCodeOfConduct: has "anti-bribery - code of conduct"
+ * @param {Boolean} exportingWithCodeOfConduct: will export with "anti-bribery - exporting with code of conduct"
+ * @param {Boolean} willAdhereToAllRequirements: "Declaration - Modern slavery - will adhere to all requirements" answer
+ * @param {Boolean} hasNoOffensesOrInvestigations: "Declaration - Modern slavery - has no offenses or investigations" answer
+ * @param {Boolean} isNotAwareOfExistingSlavery: "Declaration - Modern slavery - is not aware of existing slavery" answer
+ * @param {String} awareOfExistingSlavery: "Declaration - modern slavery - aware of existing slavery" textarea answer
+ * @param {String} cannotAdhereToAllRequirements: "Declaration - modern slavery - cannot adhere to all requirements" textarea answer
+ * @param {String} offensesOrInvestigations: "Declaration - modern slavery - offenses or investigations" textarea answer
  * @return {String} Application reference number
  */
 const completeSignInAndSubmitAnApplication = ({
@@ -61,10 +69,8 @@ const completeSignInAndSubmitAnApplication = ({
   differentTradingAddress = false,
   exporterHasBuyerFinancialAccounts = false,
   exporterHasTradedWithBuyer = false,
-  exportingWithCodeOfConduct = false,
   finalDestinationKnown = false,
   fullyPopulatedBuyerTradingHistory = false,
-  hasAntiBriberyCodeOfConduct = false,
   hasConnectionToBuyer = false,
   hasHadCreditInsuranceCoverWithBuyer = false,
   isAppointingLossPayee = false,
@@ -76,6 +82,14 @@ const completeSignInAndSubmitAnApplication = ({
   policyValueOverMvpMaximum = false,
   totalContractValueOverThreshold = false,
   usingBroker = false,
+  hasAntiBriberyCodeOfConduct = false,
+  exportingWithCodeOfConduct = false,
+  willAdhereToAllRequirements,
+  hasNoOffensesOrInvestigations,
+  isNotAwareOfExistingSlavery,
+  awareOfExistingSlavery,
+  cannotAdhereToAllRequirements,
+  offensesOrInvestigations,
 }) => {
   completeSignInAndGoToApplication({
     companyNumber,
@@ -147,9 +161,19 @@ const completeSignInAndSubmitAnApplication = ({
         usingBroker,
       });
     }
+
     cy.completeAndSubmitCheckYourAnswers();
 
-    cy.completeAndSubmitDeclarations({ hasAntiBriberyCodeOfConduct, exportingWithCodeOfConduct });
+    cy.completeAndSubmitDeclarations({
+      hasAntiBriberyCodeOfConduct,
+      exportingWithCodeOfConduct,
+      willAdhereToAllRequirements,
+      hasNoOffensesOrInvestigations,
+      isNotAwareOfExistingSlavery,
+      awareOfExistingSlavery,
+      cannotAdhereToAllRequirements,
+      offensesOrInvestigations,
+    });
 
     return cy.getReferenceNumber().then((refNumber) => refNumber);
   });

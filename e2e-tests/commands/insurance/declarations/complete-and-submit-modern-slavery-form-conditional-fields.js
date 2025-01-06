@@ -5,7 +5,7 @@
  * @param {String} offensesOrInvestigations: Textarea answer
  * @param {String} awareOfExistingSlavery: Textarea answer
  */
-const completeModernSlaveryFormConditionalFields = ({ cannotAdhereToAllRequirements, offensesOrInvestigations, awareOfExistingSlavery }) => {
+const completeAndSubmitModernSlaveryFormConditionalFields = ({ cannotAdhereToAllRequirements, offensesOrInvestigations, awareOfExistingSlavery }) => {
   cy.completeModernSlaveryFormConditionalFields({
     cannotAdhereToAllRequirements,
     offensesOrInvestigations,
@@ -15,4 +15,4 @@ const completeModernSlaveryFormConditionalFields = ({ cannotAdhereToAllRequireme
   cy.clickSubmitButton();
 };
 
-export default completeModernSlaveryFormConditionalFields;
+export default completeAndSubmitModernSlaveryFormConditionalFields;

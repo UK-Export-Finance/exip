@@ -27,6 +27,8 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
+        cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+
         cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'modernSlavery', referenceNumber });
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
