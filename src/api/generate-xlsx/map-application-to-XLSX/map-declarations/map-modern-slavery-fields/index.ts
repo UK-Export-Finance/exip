@@ -22,7 +22,7 @@ const IS_NOT_AWARE_OF_EXISTING_SLAVERY_STRINGS = CONTENT_STRINGS[IS_NOT_AWARE_OF
 /**
  * mapModernSlaveryFields
  * Map an application's "modern slavery declaration" fields into an array of objects for XLSX generation
- * @param {ApplicationDeclarationModernSlavery} declaration
+ * @param {ApplicationDeclarationModernSlavery} modernSlavery
  * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapModernSlaveryFields = (modernSlavery: ApplicationDeclarationModernSlavery) => {
