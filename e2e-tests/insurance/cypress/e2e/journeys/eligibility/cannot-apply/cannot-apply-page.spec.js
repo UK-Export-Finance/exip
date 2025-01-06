@@ -25,7 +25,7 @@ context(
 
       cy.navigateToCheckIfEligibleUrl();
 
-      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'companyDetails' });
+      cy.completeAndSubmitEligibilityForms({ stopSubmittingAfter: 'companyDetails' });
 
       cy.keyboardInput(autoCompleteField(FIELD_ID).input(), COUNTRY_NAME);
 
@@ -42,9 +42,8 @@ context(
     });
 
     it('renders a reason', () => {
-      cannotApplyPage.reason().should('exist');
-
       const expected = `${REASON.INTRO} ${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${COUNTRY_NAME}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
+
       cy.checkText(cannotApplyPage.reason(), expected);
     });
 

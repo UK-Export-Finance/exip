@@ -135,10 +135,10 @@ const mapRowRates = (row) => {
 };
 
 /**
- * mapRiskCategory
- * Map a risk category in the spreadsheet to the risk name in the grid.
- * @param {String} Risk category from spreadsheet, e.g "Standard Risk"
- * @returns {String} Risk category in the grid, e.g "STANDARD"
+ * mapEsraClassification
+ * Map an ESRA classification in the spreadsheet to the ESRA classification in the grid.
+ * @param {String} esraClassification: ESRA classification from spreadsheet, e.g "Standard Risk"
+ * @returns {String | null} Risk category in the grid, e.g "STANDARD"
  */
 const mapRiskCategory = (esraClassification) => {
   if (esraClassification === RISK.STANDARD) {
@@ -159,11 +159,11 @@ const mapRiskCategory = (esraClassification) => {
 /**
  * addRowToGrid
  * add a single row to the pricing grid.
- * @param {Object} Pricing grid
- * @param {Number} Months of cover for the row
- * @param {Array} The rates to add
- * @param {String} Policy type
- * @param {String} Risk category
+ * @param {Object} grid: Pricing grid
+ * @param {Number} months: Months of cover for the row
+ * @param {Array} rates: The rates to add
+ * @param {String} policyType: Policy type
+ * @param {String} esraClassification: ESRA classification from spreadsheet, e.g "Standard Risk"
  * @returns {Object} Updated pricing grid
  */
 const addRowToGrid = (grid, months, rates, policyType, esraClassification) => {
@@ -178,9 +178,9 @@ const addRowToGrid = (grid, months, rates, policyType, esraClassification) => {
 /**
  * addPolicyToGrid
  * Map over every row for a policy and add to the grid
- * @param {Object} Pricing grid
- * @param {String} Policy type
- * @param {String} All rows for the policy type (all risk categories and associated data)
+ * @param {Object} grid: Pricing grid
+ * @param {String} policyType: Policy type
+ * @param {Array<String>} rows: All rows for the policy type (all risk categories and associated data)
  * @returns {Object} Updated pricing grid
  */
 const addPolicyToGrid = (grid, policyType, rows) => {

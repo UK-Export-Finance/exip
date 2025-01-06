@@ -34,7 +34,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'companyDetails' });
+      cy.completeAndSubmitYourBusinessForms({ stopSubmittingAfter: 'companyDetails' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
 
@@ -60,7 +60,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     });
 
     describe(`when ${FIELD_ID} is left empty`, () => {
-      it(`should display validation errors for ${FIELD_ID}`, () => {
+      it(`should render validation errors for ${FIELD_ID}`, () => {
         cy.submitAndAssertFieldErrors({
           ...assertions,
           expectedErrorMessage: NATURE_OF_BUSINESS_ERRORS[FIELD_ID].IS_EMPTY,
@@ -69,7 +69,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     });
 
     describe(`when ${FIELD_ID} is a decimal place number`, () => {
-      it(`should display validation errors for ${FIELD_ID}`, () => {
+      it(`should render validation errors for ${FIELD_ID}`, () => {
         cy.submitAndAssertFieldErrors({
           ...assertions,
           value: '5.5',
@@ -79,7 +79,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     });
 
     describe(`when ${FIELD_ID} has special characters`, () => {
-      it(`should display validation errors for ${FIELD_ID}`, () => {
+      it(`should render validation errors for ${FIELD_ID}`, () => {
         cy.submitAndAssertFieldErrors({
           ...assertions,
           value: '35!',
@@ -89,7 +89,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     });
 
     describe(`when ${FIELD_ID} has letters`, () => {
-      it(`should display validation errors for ${FIELD_ID}`, () => {
+      it(`should render validation errors for ${FIELD_ID}`, () => {
         cy.submitAndAssertFieldErrors({
           ...assertions,
           value: 'one',
@@ -99,7 +99,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     });
 
     describe(`when ${FIELD_ID} is below 0`, () => {
-      it(`should display validation errors for ${FIELD_ID}`, () => {
+      it(`should render validation errors for ${FIELD_ID}`, () => {
         cy.submitAndAssertFieldErrors({
           ...assertions,
           value: '-5',
@@ -109,7 +109,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     });
 
     describe(`when ${FIELD_ID} is entered as 0`, () => {
-      it(`should display validation errors for ${FIELD_ID}`, () => {
+      it(`should render validation errors for ${FIELD_ID}`, () => {
         cy.submitAndAssertFieldErrors({
           ...assertions,
           value: '0',

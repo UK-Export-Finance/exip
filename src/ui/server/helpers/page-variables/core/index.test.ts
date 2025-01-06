@@ -64,6 +64,7 @@ describe('server/helpers/page-variables/core', () => {
         ATTRIBUTES,
         DATA_CY: {
           HEADING: 'heading',
+          HEADING_CAPTION: 'heading-caption',
           BACK_LINK: 'back-link',
           INTRO: 'intro',
         },
@@ -101,6 +102,7 @@ describe('server/helpers/page-variables/core', () => {
         ATTRIBUTES,
         DATA_CY: {
           HEADING: 'heading',
+          HEADING_CAPTION: 'heading-caption',
           BACK_LINK: 'back-link',
           INTRO: 'intro',
         },
@@ -138,6 +140,7 @@ describe('server/helpers/page-variables/core', () => {
         ATTRIBUTES,
         DATA_CY: {
           HEADING: 'heading',
+          HEADING_CAPTION: 'heading-caption',
           BACK_LINK: 'back-link',
           INTRO: 'intro',
         },
@@ -176,6 +179,7 @@ describe('server/helpers/page-variables/core', () => {
         ATTRIBUTES,
         DATA_CY: {
           HEADING: 'heading',
+          HEADING_CAPTION: 'heading-caption',
           BACK_LINK: 'back-link',
           INTRO: 'intro',
         },
@@ -214,6 +218,7 @@ describe('server/helpers/page-variables/core', () => {
         ATTRIBUTES,
         DATA_CY: {
           HEADING: 'heading',
+          HEADING_CAPTION: 'heading-caption',
           BACK_LINK: 'back-link',
           INTRO: 'intro',
         },

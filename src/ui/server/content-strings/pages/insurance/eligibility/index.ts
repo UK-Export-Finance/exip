@@ -3,7 +3,7 @@ import { ACTIONS } from '../../../actions';
 import { LINKS } from '../../../links';
 import formatCurrency from '../../../../helpers/format-currency';
 
-const THRESHOLD = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
+const THRESHOLD = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE);
 
 const CHECK_IF_ELIGIBLE = {
   PAGE_TITLE: 'Check you can apply for credit insurance for your export',

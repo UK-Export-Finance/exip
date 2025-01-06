@@ -6,6 +6,7 @@ import mockAnswers from './mock-answers';
 import mockSession from './mock-session';
 import mockQuote from './mock-quote';
 export * from './mock-countries';
+import mockCountriesAndCurrencies from './mock-countries-and-currencies';
 import mockCurrencies, { EUR, HKD, JPY, GBP, USD, mockCurrenciesResponse, mockCurrenciesEmptyResponse } from './mock-currencies';
 import mockCompaniesHouseResponse from './mock-companies-house-response';
 import mockCompany from './mock-company';
@@ -155,6 +156,7 @@ export {
   mockBuyerOutstandingOrOverduePayments,
   mockBuyerRelationship,
   mockBuyerTradingHistory,
+  mockCountriesAndCurrencies,
   mockCompaniesHouseResponse,
   mockCompany,
   mockCreateApplicationResponse,

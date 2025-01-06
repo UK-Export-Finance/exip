@@ -12,6 +12,7 @@ describe('server/generate-quote/get-premium-rate', () => {
 
   describe('multiple policy - high risk', () => {
     const esraClassification = EXTERNAL_API_MAPPINGS.CIS.RISK.HIGH;
+
     const mock = {
       ...mockBase,
       esraClassification,

@@ -18,6 +18,7 @@ describe('server/generate-quote/get-premium-rate', () => {
 
   describe('single policy - standard risk', () => {
     const esraClassification = EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD;
+
     const mock = {
       ...mockBase,
       esraClassification,

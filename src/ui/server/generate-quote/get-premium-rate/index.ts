@@ -16,26 +16,34 @@ const PRICING_GRID_MAP = {
 
 /**
  * getPremiumRate
- * @param {String} Type of policy
- * @param {Number} Risk category
- * @param {Number} Length of the policy in months
- * @param {Number} Percentage of the export that will be insured
+ * @param {String} policyType: Type of policy
+ * @param {String | null} esraClassification: ESRA classification
+ * @param {Number} totalMonths: Length of the policy in months
+ * @param {Number} insuredFor: Percentage of the export that will be insured
  * @returns {Number} Premium rate percentage
  */
 const getPremiumRate = (policyType: string, esraClassification: string, totalMonths: number, insuredFor: number): number => {
-  const policyTypeKey = PRICING_GRID_MAP.POLICY_TYPE[policyType];
+  try {
+    console.info('Getting premium rate');
 
-  const esraClassificationKey = PRICING_GRID_MAP.RISK_CATEGORY[esraClassification];
+    const policyTypeKey = PRICING_GRID_MAP.POLICY_TYPE[policyType];
 
-  const pricingGrid: any = PRICING_GRID as PricingGrid;
+    const esraClassificationKey = PRICING_GRID_MAP.RISK_CATEGORY[esraClassification];
 
-  const risk = pricingGrid[policyTypeKey][esraClassificationKey];
+    const pricingGrid: PricingGrid = PRICING_GRID;
 
-  const pricingGridMonth = risk.find((month: PricingGridMonth) => month.months === totalMonths);
+    const risk = pricingGrid[policyTypeKey][esraClassificationKey];
 
-  const rateObj = pricingGridMonth.rates.find((rate: PricingGridRate) => rate.insuredFor === insuredFor);
+    const pricingGridMonth = risk.find((month: PricingGridMonth) => month.months === totalMonths);
 
-  return rateObj.premiumRate;
+    const rateObj = pricingGridMonth.rates.find((rate: PricingGridRate) => rate.insuredFor === insuredFor);
+
+    return rateObj.premiumRate;
+  } catch (error) {
+    console.error('Error getting premium rate %o', error);
+
+    throw new Error(`Getting premium rate ${error}`);
+  }
 };
 
 export { PRICING_GRID_MAP, getPremiumRate };

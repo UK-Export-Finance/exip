@@ -33,7 +33,7 @@ context(
         url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
         buyerFinancialInformationUrl = `${baseUrl}${ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
 
-        cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'tradedWithBuyer' });
+        cy.completeAndSubmitYourBuyerForms({ stopSubmittingAfter: 'tradedWithBuyer' });
 
         cy.assertUrl(url);
       });
@@ -169,9 +169,7 @@ context(
 
             cy.clickYesRadioInput();
 
-            const field = fieldSelector(PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER).textarea();
-
-            cy.checkText(field, '');
+            cy.assertEmptyTextareaFieldValue(PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER);
           });
         });
       });

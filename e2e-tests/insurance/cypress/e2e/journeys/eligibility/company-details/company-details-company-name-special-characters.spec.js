@@ -15,7 +15,7 @@ context(
 
     before(() => {
       cy.completeAndSubmitEligibilityForms({
-        formToStopAt: 'companiesHouseNumberSearch',
+        stopSubmittingAfter: 'companiesHouseNumberSearch',
         companyNumber: COMPANIES_HOUSE_NUMBER_SPECIAL_CHARACTERS_NAME,
       });
 

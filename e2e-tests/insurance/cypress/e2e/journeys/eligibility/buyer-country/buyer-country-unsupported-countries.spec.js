@@ -17,7 +17,7 @@ context(`Insurance - Buyer country page - ${contextString} - Unsupported countri
   beforeEach(() => {
     cy.saveSession();
 
-    cy.completeAndSubmitEligibilityForms({ formToStopAt: 'companyDetails' });
+    cy.completeAndSubmitEligibilityForms({ stopSubmittingAfter: 'companyDetails' });
   });
 
   describe(COUNTRY_NAME_1, () => {

@@ -1,5 +1,4 @@
-import { headingCaption } from '../../../../../../partials';
-import { field as fieldSelector } from '../../../../../../pages/shared';
+import { field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
@@ -32,7 +31,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.completeAndSubmitPolicyForms({ formToStopAt: 'broker', usingBroker: true });
+        cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'broker', usingBroker: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
         brokerConfirmAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;

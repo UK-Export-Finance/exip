@@ -18,7 +18,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance Eligibility - Cannot apply exit page', () => {
   beforeEach(() => {
-    cy.completeAndSubmitEligibilityForms({ formToStopAt: 'companyDetails' });
+    cy.completeAndSubmitEligibilityForms({ stopSubmittingAfter: 'companyDetails' });
 
     cy.keyboardInput(autoCompleteField(FIELD_ID).input(), COUNTRY_NAME_UNSUPPORTED);
     const results = autoCompleteField(FIELD_ID).results();

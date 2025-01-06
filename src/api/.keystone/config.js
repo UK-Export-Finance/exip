@@ -578,7 +578,6 @@ var DEFAULT_RESOLVERS = [
   'updateAccount',
   // misc
   'countries',
-  'page',
 ];
 var CUSTOM_RESOLVERS = [
   // account
@@ -606,8 +605,10 @@ var CUSTOM_RESOLVERS = [
   'submitApplication',
   // feedback
   'createFeedbackAndSendEmail',
+  // countries and currencies
   'getApimCisCountries',
   'getApimCurrencies',
+  'getCountriesAndCurrencies',
 ];
 if (isDevEnvironment) {
   CUSTOM_RESOLVERS.push(
@@ -651,6 +652,9 @@ var VERSION_3 = {
   ...VERSION_2,
   VERSION_NUMBER: '3',
   REQUESTED_CREDIT_LIMIT_REQUIRED: true,
+  SMALL_EXPORT_BUILDER: {
+    MAXIMUM_BUYER_WILL_OWE: 25e3,
+  },
 };
 var VERSIONS = [VERSION_1, VERSION_2, VERSION_3];
 var versions_default = VERSIONS;
@@ -877,6 +881,7 @@ var EXTERNAL_API_MAPPINGS = {
 var EXTERNAL_API_ENDPOINTS = {
   APIM_MDM: {
     CURRENCY: '/currencies',
+    CURRENCY_EXCHANGE: '/currencies/exchange',
     INDUSTRY_SECTORS: '/sector-industries',
     MARKETS: '/markets',
   },
@@ -1101,7 +1106,12 @@ var EMAIL_TEMPLATE_IDS = {
   APPLICATION: {
     SUBMISSION: {
       EXPORTER: {
-        CONFIRMATION: '2e9084e2-d871-4be7-85d0-0ccc1961b148',
+        CONFIRMATION: {
+          SINGLE_OR_MULTIPLE_CONTRACT_POLICY: '2e9084e2-d871-4be7-85d0-0ccc1961b148',
+          MULTIPLE_CONTRACT_POLICY: {
+            ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION: '7ee4729d-53ba4729-af50-f733870914de',
+          },
+        },
         SEND_DOCUMENTS: {
           TRADING_HISTORY: '1ae4d77e-58d6-460e-99c0-b62bf08d8c52',
           ANTI_BRIBERY: '002e43e3-ca78-4b9c-932f-6833014bb1e4',
@@ -1120,6 +1130,7 @@ var EMAIL_TEMPLATE_IDS = {
   FEEDBACK: {
     INSURANCE: '4d3d7944-e894-4527-aee6-692038c84107',
   },
+  UNABLE_TO_DETERMINE_TEMPLATE_ID: 'UNABLE_TO_DETERMINE_TEMPLATE_ID',
 };
 var FEEDBACK = {
   VERY_SATISFIED: 'verySatisfied',
@@ -1235,7 +1246,7 @@ var updateInactiveApplicationsJob = {
 var inactive_application_cron_job_default = updateInactiveApplicationsJob;
 
 // cron/application/email-submission-deadline-reminder-cron-job.ts
-var import_dotenv8 = __toESM(require('dotenv'));
+var import_dotenv9 = __toESM(require('dotenv'));
 
 // helpers/get-start-and-end-time-of-date/index.ts
 var {
@@ -1318,7 +1329,7 @@ var mapApplicationSubmissionDeadlineVariables = (application2) => {
 var map_application_submission_deadline_variables_default = mapApplicationSubmissionDeadlineVariables;
 
 // emails/index.ts
-var import_dotenv7 = __toESM(require('dotenv'));
+var import_dotenv8 = __toESM(require('dotenv'));
 
 // integrations/notify/index.ts
 var import_dotenv5 = __toESM(require('dotenv'));
@@ -1434,6 +1445,205 @@ var reactivateAccountLink = async (urlOrigin, emailAddress, name, reactivationHa
   }
 };
 
+// helpers/policy-type/index.ts
+var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
+var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
+
+// integrations/APIM/index.ts
+var import_axios = __toESM(require('axios'));
+var import_dotenv6 = __toESM(require('dotenv'));
+import_dotenv6.default.config();
+var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
+var { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
+var APIM = {
+  getCisCountries: async () => {
+    try {
+      console.info('Calling APIM - CIS countries');
+      const response = await (0, import_axios.default)({
+        method: 'get',
+        url: `${APIM_MDM_URL}${APIM_MDM.MARKETS}`,
+        headers: {
+          'Content-Type': 'application/json',
+          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
+        },
+        validateStatus(status) {
+          const acceptableStatus = [200];
+          return acceptableStatus.includes(status);
+        },
+      });
+      if (response.data && response.status === 200) {
+        return {
+          success: true,
+          data: response.data,
+        };
+      }
+      return {
+        success: false,
+      };
+    } catch (error) {
+      console.error('Error calling APIM - CIS countries %o', error);
+      throw new Error(`Calling APIM - CIS countries ${error}`);
+    }
+  },
+  getCurrencies: async () => {
+    try {
+      console.info('Calling APIM - currencies');
+      const response = await (0, import_axios.default)({
+        method: 'get',
+        url: `${APIM_MDM_URL}${APIM_MDM.CURRENCY}`,
+        headers: {
+          'Content-Type': 'application/json',
+          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
+        },
+        validateStatus(status) {
+          const acceptableStatus = [200];
+          return acceptableStatus.includes(status);
+        },
+      });
+      if (response.data && response.status === 200) {
+        return {
+          success: true,
+          data: response.data,
+        };
+      }
+      return {
+        success: false,
+      };
+    } catch (error) {
+      console.error('Error calling APIM - currencies %o', error);
+      throw new Error(`Calling APIM - currencies ${error}`);
+    }
+  },
+  getCurrenciesExchange: async (source, target) => {
+    try {
+      console.info('Calling APIM - currencies exchange');
+      const response = await (0, import_axios.default)({
+        method: 'get',
+        url: `${APIM_MDM_URL}${APIM_MDM.CURRENCY_EXCHANGE}`,
+        headers: {
+          'Content-Type': 'application/json',
+          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
+        },
+        params: { source, target },
+        validateStatus(status) {
+          const acceptableStatus = [200];
+          return acceptableStatus.includes(status);
+        },
+      });
+      if (response.data && response.status === 200) {
+        return {
+          success: true,
+          data: response.data,
+        };
+      }
+      return {
+        success: false,
+      };
+    } catch (error) {
+      console.error('Error calling APIM - currencies exchange %o', error);
+      throw new Error(`Calling APIM - currencies exchange ${error}`);
+    }
+  },
+};
+var APIM_default = APIM;
+
+// helpers/get-APIM-currencies-exchange-rate/index.ts
+var get = async (source, target) => {
+  try {
+    console.info('Getting currency exchange rate from APIM - %s to %s (getApimCurrencyExchangeRate helper)', source, target);
+    const response = await APIM_default.getCurrenciesExchange(source, target);
+    if (response.success && response.data) {
+      const [currency] = response.data;
+      const { midPrice: exchangeRate } = currency;
+      if (source !== GBP) {
+        const fixed = Number(1 / exchangeRate).toFixed(2);
+        return Number(fixed);
+      }
+      return exchangeRate;
+    }
+    return 0;
+  } catch (error) {
+    console.error('Error Getting currency exchange rate from APIM - %s to %s (getApimCurrencyExchangeRate helper) %o', source, target, error);
+    throw new Error(`Getting currency exchange rate from APIM - %s to %s (getApimCurrencyExchangeRate helper) ${error}`);
+  }
+};
+var apimCurrencyExchangeRate = {
+  get,
+};
+var get_APIM_currencies_exchange_rate_default = apimCurrencyExchangeRate;
+
+// helpers/round-number/index.ts
+var roundNumber = (number) => Math.round(number);
+var round_number_default = roundNumber;
+
+// emails/application/get-submitted-confirmation-template-id/multiple-policy-type/index.ts
+var {
+  LATEST_VERSION: { SMALL_EXPORT_BUILDER },
+} = APPLICATION;
+var {
+  APPLICATION: {
+    SUBMISSION: {
+      EXPORTER: { CONFIRMATION },
+    },
+  },
+  UNABLE_TO_DETERMINE_TEMPLATE_ID,
+} = EMAIL_TEMPLATE_IDS;
+var get2 = async (policyType, policyCurrencyCode, maximumBuyerWillOwe) => {
+  try {
+    console.info('Getting submitted confirmation template ID for a multiple policy type (multiplePolicyTypeTemplateId helper)');
+    if (isMultiplePolicyType(policyType)) {
+      let maximumBuyerWillOweInGbp = maximumBuyerWillOwe;
+      if (policyCurrencyCode !== GBP) {
+        const source = GBP;
+        const target = String(policyCurrencyCode);
+        const exchangeRate = await get_APIM_currencies_exchange_rate_default.get(source, target);
+        maximumBuyerWillOweInGbp = round_number_default(maximumBuyerWillOwe / exchangeRate);
+      }
+      const threshold = Number(SMALL_EXPORT_BUILDER?.MAXIMUM_BUYER_WILL_OWE);
+      const eligibileForSmallExportBuilder = maximumBuyerWillOweInGbp <= threshold;
+      if (eligibileForSmallExportBuilder) {
+        return CONFIRMATION.MULTIPLE_CONTRACT_POLICY.ELIGIBLE_FOR_SMALL_EXPORT_BUILDER_CONFIRMATION;
+      }
+      return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
+    }
+    return UNABLE_TO_DETERMINE_TEMPLATE_ID;
+  } catch (error) {
+    console.error('Error Getting submitted confirmation template ID for a multiple policy type (multiplePolicyTypeTemplateId helper) %o', error);
+    throw new Error(`Getting submitted confirmation template ID for a multiple policy type (multiplePolicyTypeTemplateId helper) ${error}`);
+  }
+};
+var multiplePolicyTypeTemplateId = {
+  get: get2,
+};
+var multiple_policy_type_default = multiplePolicyTypeTemplateId;
+
+// emails/application/get-submitted-confirmation-template-id/index.ts
+var {
+  APPLICATION: {
+    SUBMISSION: {
+      EXPORTER: { CONFIRMATION: CONFIRMATION2 },
+    },
+  },
+  UNABLE_TO_DETERMINE_TEMPLATE_ID: UNABLE_TO_DETERMINE_TEMPLATE_ID2,
+} = EMAIL_TEMPLATE_IDS;
+var getSubmittedConfirmationTemplateId = async (policy) => {
+  try {
+    console.info('Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper)');
+    const { maximumBuyerWillOwe, policyCurrencyCode, policyType } = policy;
+    if (isSinglePolicyType(policyType)) {
+      return CONFIRMATION2.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
+    }
+    if (isMultiplePolicyType(policyType) && maximumBuyerWillOwe) {
+      return await multiple_policy_type_default.get(policyType, String(policyCurrencyCode), maximumBuyerWillOwe);
+    }
+    return UNABLE_TO_DETERMINE_TEMPLATE_ID2;
+  } catch (error) {
+    console.error('Error Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper) %o', error);
+    throw new Error(`Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper) ${error}`);
+  }
+};
+var get_submitted_confirmation_template_id_default = getSubmittedConfirmationTemplateId;
+
 // file-system/index.ts
 var import_fs = require('fs');
 var import_path = __toESM(require('path'));
@@ -1491,12 +1701,13 @@ var application = {
    * application.submittedEmail
    * Send "application submitted" email to an account
    * @param {ApplicationSubmissionEmailVariables} ApplicationSubmissionEmailVariables
+   * @param {ApplicationPolicy} policy: Application policy
    * @returns {Promise<Object>} callNotify response
    */
-  submittedEmail: async (variables) => {
+  submittedEmail: async (variables, policy) => {
     try {
       console.info('Sending application submitted email to application owner or provided business contact');
-      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
+      const templateId = await get_submitted_confirmation_template_id_default(policy);
       const { emailAddress } = variables;
       const response = await callNotify(templateId, emailAddress, variables);
       return response;
@@ -1547,14 +1758,14 @@ var documentsEmail = async (variables, templateId) => {
 };
 
 // emails/insurance-feedback-email/index.ts
-var import_dotenv6 = __toESM(require('dotenv'));
+var import_dotenv7 = __toESM(require('dotenv'));
 
 // helpers/map-feedback-satisfaction/index.ts
 var mapFeedbackSatisfaction = (satisfaction) => FEEDBACK.EMAIL_TEXT[satisfaction];
 var map_feedback_satisfaction_default = mapFeedbackSatisfaction;
 
 // emails/insurance-feedback-email/index.ts
-import_dotenv6.default.config();
+import_dotenv7.default.config();
 var insuranceFeedbackEmail = async (variables) => {
   try {
     console.info('Sending insurance feedback email');
@@ -1592,7 +1803,7 @@ var submissionDeadlineEmail = async (emailAddress, submissionDeadlineEmailVariab
 };
 
 // emails/index.ts
-import_dotenv7.default.config();
+import_dotenv8.default.config();
 var sendEmail = {
   confirmEmailAddress,
   accessCodeEmail,
@@ -1653,7 +1864,7 @@ var applicationSubmissionDeadlineEmail = async (context) => {
 var send_email_application_submission_deadline_default = applicationSubmissionDeadlineEmail;
 
 // cron/application/email-submission-deadline-reminder-cron-job.ts
-import_dotenv8.default.config();
+import_dotenv9.default.config();
 var { CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL } = process.env;
 var sendEmailApplicationSubmissionDeadlineJob = {
   cronExpression: String(CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL),
@@ -2817,6 +3028,11 @@ var typeDefs = `
     referenceNumber: Int
   }
 
+  type Country {
+    isoCode: String!
+    name: String!
+  }
+
   type MappedCisCountry {
     isoCode: String!
     name: String
@@ -2835,6 +3051,13 @@ var typeDefs = `
   }
 
   type GetApimCurrencyResponse {
+    supportedCurrencies: [MappedCurrency]
+    alternativeCurrencies: [MappedCurrency]
+    allCurrencies: [MappedCurrency]
+  }
+
+  type GetCountriesAndCurrenciesResponse {
+    countries: [Country]
     supportedCurrencies: [MappedCurrency]
     alternativeCurrencies: [MappedCurrency]
     allCurrencies: [MappedCurrency]
@@ -3052,9 +3275,6 @@ var typeDefs = `
       token: String!
     ): AccountPasswordResetTokenResponse
 
-    """ get CIS countries from APIM """
-    getApimCisCountries: [MappedCisCountry]
-
     """ get companies house information """
     getCompaniesHouseInformation(
       companiesHouseNumber: String!
@@ -3078,6 +3298,9 @@ var typeDefs = `
 
     """ get currencies from APIM """
     getApimCurrencies: GetApimCurrencyResponse
+
+    """ get countries and currencies """
+    getCountriesAndCurrencies: GetCountriesAndCurrenciesResponse
   }
 `;
 var type_defs_default = typeDefs;
@@ -4069,7 +4292,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
           };
         }
       } catch (error) {
-        console.error('Error blocking account $O', error);
+        console.error('Error blocking account %o', error);
         return { success: false };
       }
     }
@@ -4089,7 +4312,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
     }
     return { success: false };
   } catch (error) {
-    console.error('Error checking account and sending password reset email (sendEmailPasswordResetLink mutation) $O', error);
+    console.error('Error checking account and sending password reset email (sendEmailPasswordResetLink mutation) %o', error);
     throw new Error(`Checking account and sending password reset email (sendEmailPasswordResetLink mutation) ${error}`);
   }
 };
@@ -6120,34 +6343,33 @@ var get_application_submitted_email_template_ids_default = getApplicationSubmitt
 var send4 = async (application2, xlsxPath) => {
   try {
     const { referenceNumber, owner, company, buyer, policy, policyContact } = application2;
+    const { requestedStartDate } = policy;
     const { email } = owner;
     const sharedEmailVars = {
       referenceNumber,
       buyerName: replace_character_codes_with_characters_default(String(buyer.companyOrOrganisationName)),
       buyerLocation: buyer.country?.name,
       companyName: replace_character_codes_with_characters_default(company.companyName),
-      requestedStartDate: format_date_default(policy.requestedStartDate),
+      requestedStartDate: format_date_default(requestedStartDate),
     };
     const sendOwnerEmailVars = {
       ...sharedEmailVars,
-      buyerName: replace_character_codes_with_characters_default(String(buyer.companyOrOrganisationName)),
       name: replace_character_codes_with_characters_default(get_full_name_string_default(owner)),
       emailAddress: email,
     };
     const sendContactEmailVars = {
       ...sharedEmailVars,
-      buyerName: replace_character_codes_with_characters_default(String(buyer.companyOrOrganisationName)),
       name: replace_character_codes_with_characters_default(get_full_name_string_default(policyContact)),
       emailAddress: policyContact.email,
     };
     console.info('Sending application submitted email to application account owner: %s', sendOwnerEmailVars.emailAddress);
-    const accountSubmittedResponse = await emails_default.application.submittedEmail(sendOwnerEmailVars);
+    const accountSubmittedResponse = await emails_default.application.submittedEmail(sendOwnerEmailVars, policy);
     if (!accountSubmittedResponse?.success) {
       throw new Error('Sending application submitted email to owner/account');
     }
     if (!policyContact.isSameAsOwner) {
       console.info('Sending application submitted email to policy contact email: %s', sendContactEmailVars.emailAddress);
-      const contactSubmittedResponse = await emails_default.application.submittedEmail(sendContactEmailVars);
+      const contactSubmittedResponse = await emails_default.application.submittedEmail(sendContactEmailVars, policy);
       if (!contactSubmittedResponse?.success) {
         throw new Error('Sending application submitted email to contact');
       }
@@ -6185,7 +6407,7 @@ var applicationSubmittedEmails = {
 var send_application_submitted_emails_default = applicationSubmittedEmails;
 
 // generate-xlsx/index.ts
-var import_dotenv9 = __toESM(require('dotenv'));
+var import_dotenv10 = __toESM(require('dotenv'));
 var import_exceljs = __toESM(require('exceljs'));
 
 // constants/XLSX-CONFIG/SECTION_NAMES/index.ts
@@ -6259,6 +6481,7 @@ var LINKS = {
     BRIBERY_ACT_2010_GUIDANCE: 'https://www.justice.gov.uk/downloads/legislation/bribery-act-2010-guidance.pdf',
     ICO_MAKE_A_COMPLAINT: 'https://ico.org.uk/make-a-complaint',
     COMPANIES_HOUSE: 'https://find-and-update.company-information.service.gov.uk',
+    SMALL_EXPORT_BUILDER: 'Small Export Builder',
   },
 };
 
@@ -6284,7 +6507,7 @@ var {
   HAS_COMPANIES_HOUSE_NUMBER,
 } = insurance_default.ELIGIBILITY;
 var { COMPANY_NAME } = insurance_default.COMPANIES_HOUSE;
-var THRESHOLD = format_currency_default(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
+var THRESHOLD = format_currency_default(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE);
 var ELIGIBILITY_FIELDS = {
   [BUYER_COUNTRY]: {
     SUMMARY: {
@@ -6510,9 +6733,12 @@ var {
 } = insurance_default;
 var { MAX_COVER_PERIOD_MONTHS } = ELIGIBILITY;
 var {
+  LATEST_VERSION: { SMALL_EXPORT_BUILDER: SMALL_EXPORT_BUILDER2 },
   POLICY: { TOTAL_MONTHS_OF_COVER },
 } = APPLICATION;
 var { POLICY: POLICY_FORM_TITLES } = FORM_TITLES;
+var maxBuyerWillOweThreshold = Number(SMALL_EXPORT_BUILDER2?.MAXIMUM_BUYER_WILL_OWE);
+var SMALL_EXPORT_BUILDER_THRESHOLD = format_currency_default(maxBuyerWillOweThreshold, GBP_CURRENCY_CODE);
 var POLICY_FIELDS = {
   [POLICY_TYPE3]: {
     ID: POLICY_TYPE3,
@@ -6620,6 +6846,13 @@ var POLICY_FIELDS = {
         LABEL: 'Estimate the maximum amount your buyer will owe you at any single point during this time',
         HINT: {
           FOR_EXAMPLE: 'For example, your total sales might be \xA3250,000 but the maximum the buyer will owe you at any single point is \xA3100,000.',
+          INITIAL_CREDIT_LIMIT: {
+            INTRO: `If your initial credit limit request is ${SMALL_EXPORT_BUILDER_THRESHOLD} or less you could be eligible for the`,
+            LINK: {
+              TEXT: 'Small Export Builder.',
+              HREF: LINKS.EXTERNAL.SMALL_EXPORT_BUILDER,
+            },
+          },
           NO_DECIMALS: 'Enter a whole number. Do not enter decimals.',
         },
         SUMMARY: {
@@ -7439,10 +7672,6 @@ var mapKeyInformation = (application2) => {
   return mapped;
 };
 var map_key_information_default = mapKeyInformation;
-
-// helpers/policy-type/index.ts
-var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
-var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/map-intro/map-policy-type/index.ts
 var {
@@ -8432,54 +8661,82 @@ var XLSX_ROW_INDEXES = {
 };
 var INDEXES_default = XLSX_ROW_INDEXES;
 
-// generate-xlsx/styled-columns/index.ts
-var { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, FONT_SIZE } = XLSX_CONFIG;
-var { APPLICATION_INFORMATION: APPLICATION_INFORMATION2 } = SECTION_NAMES_default;
-var worksheetRowHeights = (rowIndexes, worksheet, sheetName) => {
-  const modifiedWorksheet = worksheet;
-  modifiedWorksheet.getRow(1).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
-  const isInformationSheet = sheetName === APPLICATION_INFORMATION2;
-  if (isInformationSheet) {
-    modifiedWorksheet.getRow(8).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
-    modifiedWorksheet.getRow(13).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
-  }
-  rowIndexes.forEach((rowIndex) => {
-    modifiedWorksheet.getRow(rowIndex).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
-  });
-  return modifiedWorksheet;
+// constants/XLSX-CONFIG/INDEXES/APPLICATION_INFORMATION/index.ts
+var APPLICATION_INFORMATION_INDEXES = {
+  EXPORTER_CONTACT_DETAILS: 8,
+  KEY_INFORMATION: 13,
 };
-var styledColumns = (application2, worksheet, sheetName) => {
-  let modifiedWorksheet = worksheet;
-  modifiedWorksheet.eachRow((row, rowNumber) => {
+var APPLICATION_INFORMATION_default = APPLICATION_INFORMATION_INDEXES;
+
+// generate-xlsx/styled-columns/is-title-row/index.ts
+var { APPLICATION_INFORMATION: APPLICATION_INFORMATION2 } = SECTION_NAMES_default;
+var { EXPORTER_CONTACT_DETAILS, KEY_INFORMATION } = APPLICATION_INFORMATION_default;
+var isTitleRow = (sheetName, rowNumber) => {
+  const isInfoSheet = sheetName === APPLICATION_INFORMATION2;
+  const isInfoTitle = isInfoSheet && (rowNumber === EXPORTER_CONTACT_DETAILS || rowNumber === KEY_INFORMATION);
+  const result = rowNumber === 1 || isInfoTitle;
+  return result;
+};
+var is_title_row_default = isTitleRow;
+
+// generate-xlsx/styled-columns/modify-row-styles/index.ts
+var { FONT_SIZE } = XLSX_CONFIG;
+var modifyRowStyles = (worksheet, sheetName) => {
+  worksheet.eachRow((row, rowNumber) => {
     row.eachCell((cell, colNumber) => {
       const modifiedRow = row;
       modifiedRow.getCell(colNumber).alignment = {
         vertical: 'top',
         wrapText: true,
       };
-      const isInformationSheet = sheetName === APPLICATION_INFORMATION2;
-      const isInformationTitleOne = isInformationSheet && rowNumber === 8;
-      const isInformationTitleTwo = isInformationSheet && rowNumber === 13;
-      const isInformationTitle = isInformationTitleOne || isInformationTitleTwo;
-      const isTitleRow = rowNumber === 1 || isInformationTitle;
+      const isATitleRow = is_title_row_default(sheetName, rowNumber);
       modifiedRow.getCell(colNumber).font = {
-        bold: Boolean(isTitleRow),
-        size: isTitleRow ? FONT_SIZE.TITLE : FONT_SIZE.DEFAULT,
+        bold: isATitleRow,
+        size: isATitleRow ? FONT_SIZE.TITLE : FONT_SIZE.DEFAULT,
       };
     });
   });
+  return worksheet;
+};
+var modify_row_styles_default = modifyRowStyles;
+
+// generate-xlsx/styled-columns/modify-row-heights/index.ts
+var { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT } = XLSX_CONFIG;
+var { APPLICATION_INFORMATION: APPLICATION_INFORMATION3 } = SECTION_NAMES_default;
+var { EXPORTER_CONTACT_DETAILS: EXPORTER_CONTACT_DETAILS2, KEY_INFORMATION: KEY_INFORMATION2 } = APPLICATION_INFORMATION_default;
+var modifyRowHeights = (rowIndexes, worksheet, sheetName) => {
+  const modifiedWorksheet = worksheet;
+  modifiedWorksheet.getRow(1).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+  if (sheetName === APPLICATION_INFORMATION3) {
+    modifiedWorksheet.getRow(EXPORTER_CONTACT_DETAILS2).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+    modifiedWorksheet.getRow(KEY_INFORMATION2).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+  }
+  rowIndexes.forEach((rowIndex) => {
+    modifiedWorksheet.getRow(rowIndex).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
+  });
+  return modifiedWorksheet;
+};
+var modify_row_heights_default = modifyRowHeights;
+
+// generate-xlsx/styled-columns/index.ts
+var getAdditionalRowHeightIndexes = (application2, sheetName) => {
   let INDEXES = [];
   if (INDEXES_default[sheetName]) {
     const sheetIndexes = INDEXES_default[sheetName](application2);
     INDEXES = Object.values(sheetIndexes);
   }
-  modifiedWorksheet = worksheetRowHeights(INDEXES, modifiedWorksheet, sheetName);
-  return modifiedWorksheet;
+  return INDEXES;
+};
+var styledColumns = (application2, worksheet, sheetName) => {
+  const withRowStyles = modify_row_styles_default(worksheet, sheetName);
+  const indexes = getAdditionalRowHeightIndexes(application2, sheetName);
+  const withRowHeights = modify_row_heights_default(indexes, withRowStyles, sheetName);
+  return withRowHeights;
 };
 var styled_columns_default = styledColumns;
 
 // generate-xlsx/index.ts
-import_dotenv9.default.config();
+import_dotenv10.default.config();
 var { EXCELJS_PROTECTION_PASSWORD } = process.env;
 var XLSX2 = (application2, countries) => {
   try {
@@ -8892,74 +9149,6 @@ var getAccountPasswordResetToken = async (root, variables, context) => {
 };
 var get_account_password_reset_token_default = getAccountPasswordResetToken;
 
-// integrations/APIM/index.ts
-var import_axios = __toESM(require('axios'));
-var import_dotenv10 = __toESM(require('dotenv'));
-import_dotenv10.default.config();
-var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
-var { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
-var APIM = {
-  getCisCountries: async () => {
-    try {
-      console.info('Calling APIM - CIS countries');
-      const response = await (0, import_axios.default)({
-        method: 'get',
-        url: `${APIM_MDM_URL}${APIM_MDM.MARKETS}`,
-        headers: {
-          'Content-Type': 'application/json',
-          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
-        },
-        validateStatus(status) {
-          const acceptableStatus = [200];
-          return acceptableStatus.includes(status);
-        },
-      });
-      if (response.data && response.status === 200) {
-        return {
-          success: true,
-          data: response.data,
-        };
-      }
-      return {
-        success: false,
-      };
-    } catch (error) {
-      console.error('Error calling APIM - CIS countries %o', error);
-      throw new Error(`Calling APIM - CIS countries ${error}`);
-    }
-  },
-  getCurrencies: async () => {
-    try {
-      console.info('Calling APIM - currencies');
-      const response = await (0, import_axios.default)({
-        method: 'get',
-        url: `${APIM_MDM_URL}${APIM_MDM.CURRENCY}`,
-        headers: {
-          'Content-Type': 'application/json',
-          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
-        },
-        validateStatus(status) {
-          const acceptableStatus = [200];
-          return acceptableStatus.includes(status);
-        },
-      });
-      if (response.data && response.status === 200) {
-        return {
-          success: true,
-          data: response.data,
-        };
-      }
-      return {
-        success: false,
-      };
-    } catch (error) {
-      console.error('Error calling APIM - currencies %o', error);
-      throw new Error(`Calling APIM - currencies ${error}`);
-    }
-  },
-};
-var APIM_default = APIM;
-
 // helpers/filter-cis-entries/index.ts
 var filterCisEntries = (arr, invalidEntries, entityPropertyName) => {
   const filtered = arr.filter((obj) => !invalidEntries.includes(obj[entityPropertyName]));
@@ -9231,22 +9420,44 @@ var mapCisCountries = (countries) => {
 };
 var map_CIS_countries_default = mapCisCountries;
 
-// custom-resolvers/queries/get-APIM-CIS-countries/index.ts
-var getApimCisCountries = async () => {
+// helpers/get-APIM-CIS-countries/index.ts
+var get3 = async () => {
   try {
-    console.info('Getting and mapping CIS countries from APIM');
+    console.info('Getting and mapping CIS countries from APIM (apimCisCountries helper)');
     const response = await APIM_default.getCisCountries();
     if (response.data) {
       const mapped = map_CIS_countries_default(response.data);
-      return mapped;
+      return {
+        success: true,
+        countries: mapped,
+      };
     }
     return { success: false };
   } catch (error) {
-    console.error('Error Getting and mapping CIS countries from APIM %o', error);
-    throw new Error(`Getting and mapping CIS countries from APIM ${error}`);
+    console.error('Error Getting and mapping CIS countries from APIM (apimCisCountries helper) %o', error);
+    throw new Error(`Getting and mapping CIS countries from APIM (apimCisCountries helper) ${error}`);
   }
 };
-var get_APIM_CIS_countries_default = getApimCisCountries;
+var apimCisCountries = {
+  get: get3,
+};
+var get_APIM_CIS_countries_default = apimCisCountries;
+
+// custom-resolvers/queries/get-APIM-CIS-countries/index.ts
+var getApimCisCountriesQuery = async () => {
+  try {
+    console.info('Getting CIS countries from APIM');
+    const response = await get_APIM_CIS_countries_default.get();
+    if (response.success) {
+      return response.countries;
+    }
+    return [];
+  } catch (error) {
+    console.error('Error Getting CIS countries from APIM %o', error);
+    throw new Error(`Getting CIS countries from APIM ${error}`);
+  }
+};
+var get_APIM_CIS_countries_default2 = getApimCisCountriesQuery;
 
 // helpers/map-currencies/index.ts
 var { CIS: CIS2 } = EXTERNAL_API_DEFINITIONS;
@@ -9270,16 +9481,17 @@ var mapCurrencies = (currencies, alternativeCurrencies) => {
 };
 var map_currencies_default = mapCurrencies;
 
-// custom-resolvers/queries/get-APIM-currencies/index.ts
-var getApimCurrencies = async () => {
+// helpers/get-APIM-currencies/index.ts
+var get4 = async () => {
   try {
-    console.info('Getting and mapping currencies from APIM');
+    console.info('Getting and mapping currencies from APIM (apimCurrencies helper)');
     const response = await APIM_default.getCurrencies();
     if (response.data) {
       const supportedCurrencies = map_currencies_default(response.data, false);
       const alternativeCurrencies = map_currencies_default(response.data, true);
       const allCurrencies = [...supportedCurrencies, ...alternativeCurrencies];
       return {
+        success: true,
         supportedCurrencies,
         alternativeCurrencies,
         allCurrencies,
@@ -9287,11 +9499,52 @@ var getApimCurrencies = async () => {
     }
     return { success: false };
   } catch (error) {
+    console.error('Error Getting and mapping currencies from APIM (apimCurrencies helper) %o', error);
+    throw new Error(`Getting and mapping currencies from APIM (apimCurrencies helper) ${error}`);
+  }
+};
+var apimCurrencies = {
+  get: get4,
+};
+var get_APIM_currencies_default = apimCurrencies;
+
+// custom-resolvers/queries/get-APIM-currencies/index.ts
+var getApimCurrenciesQuery = async () => {
+  try {
+    console.info('Getting and mapping currencies from APIM');
+    const response = await get_APIM_currencies_default.get();
+    if (response.success) {
+      return response;
+    }
+    return {};
+  } catch (error) {
     console.error('Error Getting and mapping currencies from APIM %o', error);
     throw new Error(`Getting and mapping currencies from APIM ${error}`);
   }
 };
-var get_APIM_currencies_default = getApimCurrencies;
+var get_APIM_currencies_default2 = getApimCurrenciesQuery;
+
+// custom-resolvers/queries/get-countries-and-currencies/index.ts
+var getCountriesAndCurrencies = async (root, variables, context) => {
+  try {
+    console.info('Getting countries and currencies (getCountriesAndCurrencies resolver)');
+    const [countries, currenciesResponse] = await Promise.all([await get_countries_default(context), await get_APIM_currencies_default.get()]);
+    if (!currenciesResponse.success) {
+      throw new Error('Getting currencies (getCountriesAndCurrencies resolver)');
+    }
+    const { allCurrencies, alternativeCurrencies, supportedCurrencies } = currenciesResponse;
+    return {
+      countries,
+      allCurrencies,
+      alternativeCurrencies,
+      supportedCurrencies,
+    };
+  } catch (error) {
+    console.error('Error getting countries and currencies (getCountriesAndCurrencies resolver) %o', error);
+    throw new Error(`Getting countries and currencies (getCountriesAndCurrencies resolver) ${error}`);
+  }
+};
+var get_countries_and_currencies_default = getCountriesAndCurrencies;
 
 // helpers/remove-white-space/index.ts
 var removeWhiteSpace = (string) => string.replace(' ', '');
@@ -9666,8 +9919,9 @@ var customResolvers = {
   },
   Query: {
     getAccountPasswordResetToken: get_account_password_reset_token_default,
-    getApimCisCountries: get_APIM_CIS_countries_default,
-    getApimCurrencies: get_APIM_currencies_default,
+    getApimCisCountries: get_APIM_CIS_countries_default2,
+    getApimCurrencies: get_APIM_currencies_default2,
+    getCountriesAndCurrencies: get_countries_and_currencies_default,
     getCompaniesHouseInformation: get_companies_house_information_default,
     getApplicationByReferenceNumber: get_application_by_reference_number_default2,
     getOrdnanceSurveyAddress: get_ordnance_survey_address_default,

@@ -18,7 +18,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'turnover' });
+        cy.completeAndSubmitYourBusinessForms({ stopSubmittingAfter: 'turnover' });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
         brokerUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
