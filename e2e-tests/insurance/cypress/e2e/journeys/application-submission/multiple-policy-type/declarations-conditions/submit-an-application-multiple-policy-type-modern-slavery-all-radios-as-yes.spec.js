@@ -1,10 +1,11 @@
-context('Insurance - submit an application, Single contract policy, all modern slavery declaration answers as `yes`', () => {
+import { APPLICATION } from '../../../../../../../constants';
+
+context('Insurance - submit an application, Multiple contract policy, modern slavery declaration - all radios as yes', () => {
   let referenceNumber;
 
   before(() => {
-    cy.createAccount({});
-
     cy.completeSignInAndSubmitAnApplication({
+      policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
       willAdhereToAllRequirements: true,
       hasNoOffensesOrInvestigations: true,
       isNotAwareOfExistingSlavery: true,
@@ -25,7 +26,7 @@ context('Insurance - submit an application, Single contract policy, all modern s
     cy.assertApplicationSubmittedUrl(referenceNumber);
   });
 
-  it('should render in a `submitted` state in the dashboard', () => {
+  it('should render the application in a `submitted` state in the dashboard', () => {
     cy.assertDashboardApplicationSubmitted(referenceNumber);
   });
 });

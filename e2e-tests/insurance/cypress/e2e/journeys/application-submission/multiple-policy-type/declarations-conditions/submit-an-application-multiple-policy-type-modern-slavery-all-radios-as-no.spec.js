@@ -6,9 +6,9 @@ context('Insurance - submit an application, Multiple contract policy, modern sla
   before(() => {
     cy.completeSignInAndSubmitAnApplication({
       policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
+      willAdhereToAllRequirements: false,
+      hasNoOffensesOrInvestigations: false,
       isNotAwareOfExistingSlavery: false,
-      cannotAdhereToAllRequirements: false,
-      offensesOrInvestigations: false,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });
