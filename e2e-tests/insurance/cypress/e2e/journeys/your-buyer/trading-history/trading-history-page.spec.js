@@ -32,7 +32,7 @@ context(
         failedToPayUrl = `${baseUrl}${ROOT}/${referenceNumber}${FAILED_TO_PAY}`;
         currencyOfLatePaymentsUrl = `${baseUrl}${ROOT}/${referenceNumber}${CURRENCY_OF_LATE_PAYMENTS}`;
 
-        cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'tradedWithBuyer', exporterHasTradedWithBuyer: true });
+        cy.completeAndSubmitYourBuyerForms({ stopSubmittingAfter: 'tradedWithBuyer', exporterHasTradedWithBuyer: true });
 
         cy.assertUrl(url);
       });

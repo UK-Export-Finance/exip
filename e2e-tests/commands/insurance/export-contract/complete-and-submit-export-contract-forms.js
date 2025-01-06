@@ -2,7 +2,7 @@
  * completeAndSubmitExportContractForms
  * completes export contract forms up to the specified form to stop at
  * eg, when 'aboutGoodsOrServices' is passed, it will complete all forms up to and including 'aboutGoodsOrServices'
- * @param {String} formToStopAt: the form to stop at
+ * @param {String} stopSubmittingAfter: The final form to submit
  * @param {Boolean} viaTaskList: Start the "export contract" section from the task list.
  * @param {Boolean} finalDestinationKnown: whether the final destination is known
  * @param {Boolean} totalContractValueOverThreshold: whether total contract value is over threshold
@@ -13,7 +13,7 @@
  * @param {String} fixedSumAmount: Fixed sum amount
  */
 const completeAndSubmitExportContractForms = ({
-  formToStopAt,
+  stopSubmittingAfter,
   viaTaskList,
   finalDestinationKnown,
   totalContractValueOverThreshold,
@@ -61,7 +61,7 @@ const completeAndSubmitExportContractForms = ({
   for (const step of steps) {
     step.action();
 
-    if (step.name === formToStopAt) {
+    if (step.name === stopSubmittingAfter) {
       break;
     }
   }

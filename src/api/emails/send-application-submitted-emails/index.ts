@@ -10,31 +10,33 @@ import { SuccessResponse, ApplicationSubmissionEmailVariables, Application } fro
  * Send "application submitted" emails
  * @param {Application} application
  * @param {String} xlsxPath: Path to XLSX file for underwriting team email
- * @returns {Promise<Object>} Object with success flag and emailRecipient
+ * @returns {Promise<SuccessResponse>} Object with success flag and emailRecipient
  */
 const send = async (application: Application, xlsxPath: string): Promise<SuccessResponse> => {
   try {
     const { referenceNumber, owner, company, buyer, policy, policyContact } = application;
 
-    // generate email variables
+    const { requestedStartDate } = policy;
+
     const { email } = owner;
 
-    // shared variables for sending email
+    /**
+     * Shared email variables for all emails
+     */
     const sharedEmailVars = {
       referenceNumber,
       buyerName: replaceCharacterCodesWithCharacters(String(buyer.companyOrOrganisationName)),
       buyerLocation: buyer.country?.name,
       companyName: replaceCharacterCodesWithCharacters(company.companyName),
-      requestedStartDate: formatDate(policy.requestedStartDate),
+      requestedStartDate: formatDate(requestedStartDate),
     };
 
     /**
      * Email variables for sending email to:
-     * the application owner of application
+     * the owner of the application
      */
     const sendOwnerEmailVars = {
       ...sharedEmailVars,
-      buyerName: replaceCharacterCodesWithCharacters(String(buyer.companyOrOrganisationName)),
       name: replaceCharacterCodesWithCharacters(getFullNameString(owner)),
       emailAddress: email,
     } as ApplicationSubmissionEmailVariables;
@@ -45,14 +47,13 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
      */
     const sendContactEmailVars = {
       ...sharedEmailVars,
-      buyerName: replaceCharacterCodesWithCharacters(String(buyer.companyOrOrganisationName)),
       name: replaceCharacterCodesWithCharacters(getFullNameString(policyContact)),
       emailAddress: policyContact.email,
     } as ApplicationSubmissionEmailVariables;
 
     console.info('Sending application submitted email to application account owner: %s', sendOwnerEmailVars.emailAddress);
 
-    const accountSubmittedResponse = await sendEmail.application.submittedEmail(sendOwnerEmailVars);
+    const accountSubmittedResponse = await sendEmail.application.submittedEmail(sendOwnerEmailVars, policy);
 
     if (!accountSubmittedResponse?.success) {
       throw new Error('Sending application submitted email to owner/account');
@@ -64,7 +65,7 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
      */
     if (!policyContact.isSameAsOwner) {
       console.info('Sending application submitted email to policy contact email: %s', sendContactEmailVars.emailAddress);
-      const contactSubmittedResponse = await sendEmail.application.submittedEmail(sendContactEmailVars);
+      const contactSubmittedResponse = await sendEmail.application.submittedEmail(sendContactEmailVars, policy);
 
       if (!contactSubmittedResponse?.success) {
         throw new Error('Sending application submitted email to contact');

@@ -37,7 +37,7 @@ context(
         declinedByPrivateMarketUrl = `${baseUrl}${ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
 
         // go to the page we want to test.
-        cy.completeAndSubmitExportContractForms({ formToStopAt: 'howYouWillGetPaid' });
+        cy.completeAndSubmitExportContractForms({ stopSubmittingAfter: 'howYouWillGetPaid' });
       });
     });
 
@@ -110,7 +110,7 @@ context(
       });
 
       describe('when submitting an empty form', () => {
-        it(`should display validation errors if ${FIELD_ID} radio is not selected`, () => {
+        it(`should render validation errors if ${FIELD_ID} radio is not selected`, () => {
           const radioField = {
             ...fieldSelector(FIELD_ID),
             input: noRadioInput,
