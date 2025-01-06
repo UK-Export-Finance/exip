@@ -165,13 +165,10 @@ context('Insurance - All sections - new application', () => {
     });
 
     it('should render a heading', () => {
-      insurance.allSectionsPage.submissionDeadlineHeading().should('exist');
       cy.checkText(insurance.allSectionsPage.submissionDeadlineHeading(), CONTENT_STRINGS.DEADLINE_TO_SUBMIT);
     });
 
     it('should render correct submission deadline', () => {
-      insurance.allSectionsPage.submissionDeadline().should('exist');
-
       const now = new Date();
 
       const timestamp = addMonths(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
@@ -187,13 +184,10 @@ context('Insurance - All sections - new application', () => {
     });
 
     it('should render a heading', () => {
-      insurance.allSectionsPage.yourReferenceNumberHeading().should('exist');
       cy.checkText(insurance.allSectionsPage.yourReferenceNumberHeading(), CONTENT_STRINGS.REFERENCE_NUMBER);
     });
 
     it('should render correct reference number', () => {
-      insurance.allSectionsPage.yourReferenceNumber().should('exist');
-
       const expectedReferenceNumber = String(referenceNumber);
 
       cy.checkText(insurance.allSectionsPage.yourReferenceNumber(), expectedReferenceNumber);

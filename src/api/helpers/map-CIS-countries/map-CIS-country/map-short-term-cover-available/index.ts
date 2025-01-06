@@ -10,7 +10,7 @@ const {
  * @param {String} Risk category
  * @returns {Boolean}
  */
-export const mapShortTermCoverAvailable = (str: string): boolean => {
+const mapShortTermCoverAvailable = (str: string): boolean => {
   switch (str) {
     case SHORT_TERM_COVER_AVAILABLE.YES:
       return true;

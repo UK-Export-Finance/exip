@@ -22,6 +22,7 @@ const { POLICY_TYPE } = APPLICATION;
  * @param {Boolean} contractAwardedNegotiatedContract: "How was the contract awarded" method as NEGOTIATED_CONTRACT
  * @param {Boolean} contractAwardedOpenTender: "How was the contract awarded" method as OPEN_TENDER
  * @param {Boolean} contractAwardedOtherMethod: "How was the contract awarded" method as OTHER
+ * @param {String} maximumBuyerWillOwe: Maximum buyer will owe
  * @param {Boolean} differentPolicyContact: Should submit an application with a different policy contact to the owner.
  * @param {Boolean} differentTradingName: Should submit "yes" to "have a different trading name" in the "company details" form.
  * @param {Boolean} differentTradingAddress: Should submit "yes" to "trade from a different address" in the "company details" form.
@@ -59,6 +60,7 @@ const completePrepareApplicationMultiplePolicyType = ({
   contractAwardedNegotiatedContract = false,
   contractAwardedOpenTender = true,
   contractAwardedOtherMethod = false,
+  maximumBuyerWillOwe,
   differentPolicyContact = false,
   differentTradingName = false,
   differentTradingAddress = false,
@@ -102,6 +104,7 @@ const completePrepareApplicationMultiplePolicyType = ({
 
   cy.completePolicySection({
     policyType: POLICY_TYPE.MULTIPLE,
+    maximumBuyerWillOwe,
     sameName: !differentPolicyContact,
     policyValueOverMvpMaximum,
     submitCheckYourAnswers,

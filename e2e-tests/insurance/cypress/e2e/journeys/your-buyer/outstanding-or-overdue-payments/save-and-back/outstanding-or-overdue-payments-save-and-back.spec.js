@@ -24,7 +24,7 @@ context('Insurance - Your buyer - Outstanding or overdue payments - Save and bac
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${OUTSTANDING_OR_OVERDUE_PAYMENTS}`;
 
-      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'currencyOfLatePayments', outstandingPayments: true, exporterHasTradedWithBuyer: true });
+      cy.completeAndSubmitYourBuyerForms({ stopSubmittingAfter: 'currencyOfLatePayments', outstandingPayments: true, exporterHasTradedWithBuyer: true });
 
       cy.assertUrl(url);
     });

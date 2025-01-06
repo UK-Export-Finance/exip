@@ -52,7 +52,7 @@ context('Insurance - Your buyer - Outstanding or overdue payments - validation',
       url = `${baseUrl}${ROOT}/${referenceNumber}${OUTSTANDING_OR_OVERDUE_PAYMENTS}`;
       failedToPayUrl = `${baseUrl}${ROOT}/${referenceNumber}${FAILED_TO_PAY}`;
 
-      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'currencyOfLatePayments', outstandingPayments: true, exporterHasTradedWithBuyer: true });
+      cy.completeAndSubmitYourBuyerForms({ stopSubmittingAfter: 'currencyOfLatePayments', outstandingPayments: true, exporterHasTradedWithBuyer: true });
 
       cy.assertUrl(url);
     });

@@ -39,7 +39,7 @@ context('Insurance - Policy - Single contract policy page - form validation - re
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitPolicyForms({ formToStopAt: 'policyType' });
+      cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'policyType' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 

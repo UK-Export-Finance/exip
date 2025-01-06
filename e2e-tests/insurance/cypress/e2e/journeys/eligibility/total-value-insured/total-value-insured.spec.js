@@ -25,7 +25,7 @@ context(
     let url;
 
     before(() => {
-      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'buyerCountry' });
+      cy.completeAndSubmitEligibilityForms({ stopSubmittingAfter: 'buyerCountry' });
 
       url = `${baseUrl}${TOTAL_VALUE_INSURED}`;
 
@@ -83,11 +83,8 @@ context(
         it('should render validation errors', () => {
           const fieldId = `${FIELD_ID}-${BELOW.ID}`;
 
-          const expectedErrorsCount = 1;
-
           cy.submitAndAssertRadioErrors({
             field: fieldSelector(fieldId),
-            expectedErrorsCount,
             expectedErrorMessage: ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY,
           });
         });

@@ -17,10 +17,7 @@ import {
   mockRes,
   referenceNumber,
   mockApplication,
-  mockCountries,
-  mockCurrencies,
-  mockCurrenciesEmptyResponse,
-  mockCurrenciesResponse,
+  mockCountriesAndCurrencies,
   mockSpyPromise,
   mockSpyPromiseRejection,
 } from '../../../../test-mocks';
@@ -46,6 +43,8 @@ const {
   awardMethod,
 } = exportContract;
 
+const { allCurrencies, countries } = mockCountriesAndCurrencies;
+
 describe('controllers/insurance/check-your-answers/export-contract', () => {
   jest.mock('../save-data');
 
@@ -56,19 +55,17 @@ describe('controllers/insurance/check-your-answers/export-contract', () => {
   let req: Request;
   let res: Response;
 
-  let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
-  let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
+  let getCountriesAndCurrenciesSpy = jest.fn(() => Promise.resolve(mockCountriesAndCurrencies));
 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
 
-    api.keystone.countries.getAll = getCountriesSpy;
-    api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+    api.keystone.getCountriesAndCurrencies = getCountriesAndCurrenciesSpy;
   });
 
   describe('FIELD_ID', () => {
-    it('should have the correct FIELD_ID', () => {
+    it('should have the correct ID', () => {
       const expected = CHECK_YOUR_ANSWERS_FIELD_IDS.EXPORT_CONTRACT;
 
       expect(FIELD_ID).toEqual(expected);
@@ -96,16 +93,10 @@ describe('controllers/insurance/check-your-answers/export-contract', () => {
   });
 
   describe('get', () => {
-    it('should call api.keystone.countries.getAll', async () => {
+    it('should call api.keystone.getCountriesAndCurrencies', async () => {
       await get(req, res);
 
-      expect(getCountriesSpy).toHaveBeenCalledTimes(1);
-    });
-
-    it('should call api.keystone.APIM.getCurrencies', async () => {
-      await get(req, res);
-
-      expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
+      expect(getCountriesAndCurrenciesSpy).toHaveBeenCalledTimes(1);
     });
 
     it('should render template', async () => {
@@ -117,8 +108,8 @@ describe('controllers/insurance/check-your-answers/export-contract', () => {
         exportContract,
         totalContractValueOverThreshold,
         referenceNumber,
-        countries: mockCountries,
-        currencies: mockCurrencies,
+        countries,
+        currencies: allCurrencies,
         checkAndChange,
       });
 
@@ -160,55 +151,44 @@ describe('controllers/insurance/check-your-answers/export-contract', () => {
       });
     });
 
-    describe('when the get countries API call fails', () => {
-      beforeEach(() => {
-        getCountriesSpy = mockSpyPromiseRejection;
-        api.keystone.countries.getAll = getCountriesSpy;
+    describe('api error handling', () => {
+      describe('when the currencies and countries API call fails', () => {
+        beforeEach(() => {
+          getCountriesAndCurrenciesSpy = mockSpyPromiseRejection;
+          api.keystone.getCountriesAndCurrencies = getCountriesAndCurrenciesSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
       });
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
+      describe('when the get currencies and countries response does not return populated allCurrencies', () => {
+        beforeEach(() => {
+          getCountriesAndCurrenciesSpy = jest.fn(() => Promise.resolve({ ...mockCountriesAndCurrencies, allCurrencies: [] }));
+          api.keystone.getCountriesAndCurrencies = getCountriesAndCurrenciesSpy;
+        });
 
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
-    });
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
 
-    describe('when the get countries response does not return a populated array', () => {
-      beforeEach(() => {
-        getCountriesSpy = jest.fn(() => Promise.resolve([]));
-        api.keystone.countries.getAll = getCountriesSpy;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
-    });
-
-    describe('when the get currencies API call fails', () => {
-      beforeEach(() => {
-        getCurrenciesSpy = mockSpyPromiseRejection;
-        api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
       });
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
+      describe('when the get currencies and countries response does not return populated countries', () => {
+        beforeEach(() => {
+          getCountriesAndCurrenciesSpy = jest.fn(() => Promise.resolve({ ...mockCountriesAndCurrencies, countries: [] }));
+          api.keystone.getCountriesAndCurrencies = getCountriesAndCurrenciesSpy;
+        });
 
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
-    });
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
 
-    describe('when the get currencies response does not return a populated array', () => {
-      beforeEach(() => {
-        getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
-        api.keystone.APIM.getCurrencies = getCurrenciesSpy;
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
       });
     });
   });
