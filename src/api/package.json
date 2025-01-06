@@ -29,7 +29,7 @@
     "@babel/preset-typescript": "^7.26.0",
     "@graphql-tools/schema": "^10.0.11",
     "@keystone-6/auth": "^7.0.3",
-    "@keystone-6/core": "^5.8.0",
+    "@keystone-6/core": "^6.3.1",
     "@keystone-6/fields-document": "^8.0.2",
     "@types/express": "^5.0.0",
     "@types/overload-protection": "^1.2.4",
