@@ -22,7 +22,7 @@ import { Account, AccountSignInVariables, AccountSignInResponse, Context } from 
  * @param {Object} root: GraphQL root variables
  * @param {Object} variables: GraphQL variables for the AccountSignIn mutation
  * @param {Context} context: KeystoneJS context API
- * @returns {Promise<Object>} Object with success flag
+ * @returns {Promise<AccountSignInResponse>} Object with success flag
  */
 const accountSignIn = async (root: any, variables: AccountSignInVariables, context: Context): Promise<AccountSignInResponse> => {
   try {

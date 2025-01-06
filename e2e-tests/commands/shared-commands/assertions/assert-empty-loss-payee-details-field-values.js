@@ -10,7 +10,7 @@ const {
  * Assert all field values in the "loss payee details" form are empty.
  */
 const assertEmptyLossPayeeDetailsFieldValues = () => {
-  cy.checkValue(field(NAME), '');
+  cy.assertEmptyFieldValue(NAME);
 
   cy.assertRadioOptionIsNotChecked(field(`location-${IS_LOCATED_IN_UK}`).input());
   cy.assertRadioOptionIsNotChecked(field(`location-${IS_LOCATED_INTERNATIONALLY}`).input());

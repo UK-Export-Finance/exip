@@ -1,4 +1,3 @@
-import { autoCompleteField, field } from '../../../../pages/shared';
 import { ROUTES, FIELD_IDS } from '../../../../constants';
 
 const {
@@ -53,7 +52,7 @@ context('Insurance - Eligibility - start and complete for a second time after cr
     cy.completeCompaniesHouseNumberForm();
 
     // companies house search form
-    cy.checkValue(field(COMPANY_NUMBER), '');
+    cy.assertEmptyFieldValue(COMPANY_NUMBER);
 
     cy.completeAndSubmitCompaniesHouseSearchForm({});
 
@@ -61,7 +60,7 @@ context('Insurance - Eligibility - start and complete for a second time after cr
     cy.completeEligibilityCompanyDetailsForm();
 
     // buyer country question
-    cy.checkValue(autoCompleteField(BUYER_COUNTRY), '');
+    cy.assertEmptyAutocompleteFieldValue(BUYER_COUNTRY);
     cy.completeAndSubmitBuyerCountryForm({});
 
     /**

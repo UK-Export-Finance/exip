@@ -189,7 +189,7 @@ export const mockApplicationDeclaration = {
 const mockApplication = {
   id: 'clacdgc630000kdoqn7wcgrz1',
   referenceNumber,
-  version: APPLICATION.LATEST_VERSION.LATEST_VERSION_NUMBER,
+  version: APPLICATION.LATEST_VERSION_NUMBER,
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
   dealType: APPLICATION.DEAL_TYPE,

@@ -14,7 +14,7 @@ const assertEmptyAgentChargesFieldValues = () => {
   cy.assertRadioOptionIsNotChecked(field(`${METHOD}-${FIXED_SUM}`).input());
 
   cy.assertRadioOptionIsNotChecked(field(`${METHOD}-${PERCENTAGE}`).input());
-  cy.checkValue(field(PERCENTAGE_CHARGE), '');
+  cy.assertEmptyFieldValue(PERCENTAGE_CHARGE);
 
   checkAutocompleteInput.checkEmptyResults(COUNTRY_CODE);
 };

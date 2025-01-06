@@ -23,7 +23,7 @@ context('Insurance - Export contract - How much the agent is charging - Save and
 
       // go to the page we want to test.
       cy.completeAndSubmitExportContractForms({
-        formToStopAt: 'currencyOfAgentCharges',
+        stopSubmittingAfter: 'currencyOfAgentCharges',
         isUsingAgent: true,
         agentIsCharging: true,
         fixedSumMethod: true,

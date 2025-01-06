@@ -22,7 +22,7 @@ context('Insurance - Your buyer - Credit insurance cover - Save and back - Yes',
     cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'tradedWithBuyer' });
+      cy.completeAndSubmitYourBuyerForms({ stopSubmittingAfter: 'tradedWithBuyer' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
 
@@ -78,8 +78,7 @@ context('Insurance - Your buyer - Credit insurance cover - Save and back - Yes',
 
       cy.assertYesRadioOptionIsChecked();
 
-      const textArea = field(PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER).textarea();
-      cy.checkText(textArea, '');
+      cy.assertEmptyTextareaFieldValue(PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER);
     });
   });
 

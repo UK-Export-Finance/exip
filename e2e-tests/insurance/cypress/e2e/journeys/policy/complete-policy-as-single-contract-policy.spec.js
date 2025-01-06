@@ -5,7 +5,7 @@ context('Insurance - Policy - Complete the entire section as a single contract p
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitPolicyForms({ formToStopAt: 'lossPayee' });
+      cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'lossPayee' });
 
       /**
        * Submit the "Policy - check your answers" form,

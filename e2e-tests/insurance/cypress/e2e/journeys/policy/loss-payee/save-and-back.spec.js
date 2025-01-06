@@ -21,7 +21,7 @@ context('Insurance - Policy - Loss payee page - Save and back', () => {
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.completeAndSubmitPolicyForms({ formToStopAt: 'broker' });
+      cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'broker' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
 

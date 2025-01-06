@@ -26,7 +26,7 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.completeAndSubmitExportContractForms({ formToStopAt: 'aboutGoodsOrServices' });
+      cy.completeAndSubmitExportContractForms({ stopSubmittingAfter: 'aboutGoodsOrServices' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
 

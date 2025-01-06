@@ -24,7 +24,6 @@ const {
 } = ERROR_MESSAGES;
 
 const field = howWillYouGetPaidPage[FIELD_ID];
-const expectedErrorsCount = 1;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -39,7 +38,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.completeAndSubmitExportContractForms({ formToStopAt: 'aboutGoodsOrServices' });
+        cy.completeAndSubmitExportContractForms({ stopSubmittingAfter: 'aboutGoodsOrServices' });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
       });
@@ -95,22 +94,20 @@ context(
         cy.navigateToUrl(url);
       });
 
-      it(`should display validation errors if ${FIELD_ID} is left empty`, () => {
+      it(`should render validation errors if ${FIELD_ID} is left empty`, () => {
         cy.submitAndAssertFieldErrors({
           field,
-          expectedErrorsCount,
           expectedErrorMessage: ERRORS[FIELD_ID].IS_EMPTY,
         });
       });
 
       describe(`when ${FIELD_ID} is over ${MAXIMUM_CHARACTERS.PAYMENT_TERMS_DESCRIPTION} characters`, () => {
-        it('should display validation errors and retain the submitted value', () => {
+        it('should render validation errors and retain the submitted value', () => {
           const submittedValue = 'a'.repeat(MAXIMUM_CHARACTERS.PAYMENT_TERMS_DESCRIPTION + 1);
 
           cy.submitAndAssertFieldErrors({
             field,
             value: submittedValue,
-            expectedErrorsCount,
             expectedErrorMessage: ERRORS[FIELD_ID].ABOVE_MAXIMUM,
           });
 
