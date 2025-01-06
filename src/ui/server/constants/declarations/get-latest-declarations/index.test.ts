@@ -15,7 +15,7 @@ const { MODERN_SLAVERY } = DECLARATIONS_FIELDS;
 describe('server/constants/declarations/get-latest-declarations', () => {
   describe('getDeclarationContentStringsByVersionId', () => {
     it('should find content strings by version', () => {
-      const result = getDeclarationContentStringsByVersionId(CONFIDENTIALITY, VERSIONS[1].CONFIDENTIALITY);
+      const result = getDeclarationContentStringsByVersionId(CONFIDENTIALITY, VERSIONS[2].CONFIDENTIALITY);
 
       const [expected] = CONFIDENTIALITY.VERSIONS;
 

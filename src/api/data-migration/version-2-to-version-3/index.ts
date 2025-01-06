@@ -3,8 +3,8 @@ import updateApplications from './update-applications';
 
 /**
  * dataMigration
- * Update all accounts and applications from the MVP data model/structure,
- * to the new "No PDF" data model/structure.
+ * Update all applications from the V2 data model/structure,
+ * to the V3 data model/structure.
  * @returns {Function} process.exit()
  */
 const dataMigration = async () => {

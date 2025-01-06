@@ -235,6 +235,7 @@ interface ApplicationDeclarationVersions {
   CONFIDENTIALITY: string;
   CONFIRMATION_AND_ACKNOWLEDGEMENTS: string;
   HOW_YOUR_DATA_WILL_BE_USED?: string;
+  MODERN_SLAVERY?: string;
 }
 
 interface ApplicationPolicyContact {
@@ -306,13 +307,13 @@ interface Application extends ApplicationCore {
   sectionReview: ApplicationSectionReview;
   declaration: ApplicationDeclaration;
   totalContractValueOverThreshold: boolean;
-  migratedV2toV3?: boolean;
+  migratedTo?: boolean;
 }
 
 interface ApplicationFlatCore extends ApplicationCore, InsuranceEligibilityCore, ApplicationOwner {
   buyerCountry: string;
   totalContractValueOverThreshold?: boolean;
-  migratedV2toV3?: boolean;
+  migratedTo?: boolean;
 }
 
 type ApplicationFlat = ApplicationFlatCore & ApplicationPolicy & ApplicationBroker & ApplicationCompany & ApplicationDeclarationFlat;
