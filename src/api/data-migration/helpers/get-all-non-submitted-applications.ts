@@ -6,16 +6,16 @@ import { Application } from '../../types';
 const { STATUS } = APPLICATION;
 
 /**
- * getAllSubmittedApplications
- * Get all entries in the "Application" table with a SUBMITTED status
+ * getAllNonSubmittedApplications
+ * Get all entries in the "Application" table that do NOT have a SUBMITTED status
  * @param {Connection} connection: SQL database connection
- * @returns {Promise<Application>} Submitted applications
+ * @returns {Promise<Array<Application>>} Non-submitted applications
  */
-const getAllSubmittedApplications = async (connection: Connection) => {
-  const loggingMessage = 'Getting all submitted applications';
+const getAllNonSubmittedApplications = async (connection: Connection) => {
+  const loggingMessage = 'Getting all non-submitted applications';
 
   try {
-    const query = `SELECT * FROM Application WHERE status='${STATUS.SUBMITTED}'`;
+    const query = `SELECT * FROM Application WHERE status!='${STATUS.SUBMITTED}'`;
 
     const [applications] = await executeSqlQuery({ connection, query, loggingMessage });
 
@@ -27,4 +27,4 @@ const getAllSubmittedApplications = async (connection: Connection) => {
   }
 };
 
-export default getAllSubmittedApplications;
+export default getAllNonSubmittedApplications;

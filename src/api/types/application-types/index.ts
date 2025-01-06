@@ -317,7 +317,7 @@ export interface Application {
   sectionReview: Relationship;
   totalContractValueOverThreshold: boolean;
   version: number;
-  migratedV2toV3?: boolean;
+  migratedV3toV4?: boolean;
 }
 
 export interface ApplicationSubmissionEmailVariables {
@@ -338,6 +338,7 @@ export interface ApplicationVersion {
   DEFAULT_CURRENCY?: string;
   BROKER_ADDRESS_AS_MULTIPLE_FIELDS: boolean;
   REQUESTED_CREDIT_LIMIT_REQUIRED?: boolean;
+  DECLARATIONS_MODERN_SLAVERY?: boolean;
 }
 
 export interface SectionReview extends Relationship {
