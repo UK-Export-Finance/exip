@@ -67,7 +67,7 @@ export const lists = {
         validation: { isRequired: true },
         db: { nativeType: 'VarChar(4)' },
       }),
-      migratedV3toV4: nullableCheckbox(),
+      migratedTo: integer(),
     },
     access: allowAll,
   },
