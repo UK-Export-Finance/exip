@@ -76,10 +76,10 @@ const completePolicySection = ({
     if (brokerIsBasedInUk) {
       cy.completeAndSubmitBrokerAddressesForm({});
 
-      cy.completeAndSubmitBrokerManualAddressForm({});
-    } else {
       // submit the "confirm broker address" form
       cy.clickSubmitButton();
+    } else {
+      cy.completeAndSubmitBrokerManualAddressForm({});
     }
   }
 
