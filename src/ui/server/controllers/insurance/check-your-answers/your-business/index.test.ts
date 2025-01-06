@@ -41,7 +41,7 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
   });
 
   describe('FIELD_ID', () => {
-    it('should have the correct FIELD_ID', () => {
+    it('should have the correct ID', () => {
       const expected = FIELD_IDS.CHECK_YOUR_ANSWERS.EXPORTER_BUSINESS;
 
       expect(FIELD_ID).toEqual(expected);

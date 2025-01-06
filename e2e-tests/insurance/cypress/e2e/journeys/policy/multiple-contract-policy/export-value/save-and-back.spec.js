@@ -27,7 +27,7 @@ context('Insurance - Policy - Multiple contract policy Export value page - Save 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitPolicyForms({ formToStopAt: 'multipleContractPolicy', policyType });
+      cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'multipleContractPolicy', policyType });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`;
 
@@ -94,7 +94,7 @@ context('Insurance - Policy - Multiple contract policy Export value page - Save 
       });
 
       it('should NOT have saved the submitted value', () => {
-        cy.checkValue(field, '');
+        cy.assertEmptyFieldValue(TOTAL_SALES_TO_BUYER);
       });
     });
   });
@@ -133,7 +133,7 @@ context('Insurance - Policy - Multiple contract policy Export value page - Save 
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeExportValueForm();
+      cy.completeExportValueForm({});
       cy.clickSaveAndBackButton();
     });
 

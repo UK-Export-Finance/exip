@@ -1,6 +1,5 @@
 import { brokerPage } from '../../../../../../pages/insurance/policy';
-import { headingCaption } from '../../../../../../partials';
-import { field as fieldSelector, yesRadio, noRadio, noRadioInput } from '../../../../../../pages/shared';
+import { field as fieldSelector, yesRadio, noRadio, noRadioInput, headingCaption } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES, LINKS } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -40,7 +39,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.completeAndSubmitPolicyForms({ formToStopAt: 'anotherCompany' });
+        cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'anotherCompany' });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
         lossPayeeUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
@@ -156,7 +155,7 @@ context(
       });
 
       describe('when submitting an empty form', () => {
-        it(`should display validation errors if ${FIELD_ID} radio is not selected`, () => {
+        it(`should render validation errors if ${FIELD_ID} radio is not selected`, () => {
           cy.navigateToUrl(url);
 
           const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;

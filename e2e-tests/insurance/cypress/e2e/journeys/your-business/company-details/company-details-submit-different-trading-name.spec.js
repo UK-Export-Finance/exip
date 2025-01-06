@@ -77,7 +77,7 @@ describe(`Insurance - Your business - Company details page - submit ${DIFFERENT_
 
       // check input is not populated
       cy.clickYesRadioInput();
-      cy.checkValue(field(DIFFERENT_TRADING_NAME), '');
+      cy.assertEmptyFieldValue(DIFFERENT_TRADING_NAME);
     });
   });
 
@@ -100,7 +100,8 @@ describe(`Insurance - Your business - Company details page - submit ${DIFFERENT_
 
       // check input is not populated
       cy.clickYesRadioInput();
-      cy.checkValue(field(DIFFERENT_TRADING_NAME), '');
+
+      cy.assertEmptyFieldValue(DIFFERENT_TRADING_NAME);
     });
   });
 });

@@ -28,10 +28,15 @@ const {
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
-const { NATURE_OF_BUSINESS_ROOT, NATURE_OF_BUSINESS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, TURNOVER_CURRENCY_ROOT } = EXPORTER_BUSINESS_ROUTES;
+const { NATURE_OF_BUSINESS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, TURNOVER_CURRENCY_ROOT } = EXPORTER_BUSINESS_ROUTES;
 
 const { NATURE_OF_YOUR_BUSINESS: NATURE_OF_YOUR_BUSINESS_FIELDS } = EXPORTER_BUSINESS_FIELDS;
 
+/**
+ * pageVariables
+ * Page fields and "save and go back" URL
+ * @returns {Object} Page variables
+ */
 const pageVariables = (referenceNumber: number) => ({
   FIELDS: {
     GOODS_OR_SERVICES: {
@@ -47,10 +52,7 @@ const pageVariables = (referenceNumber: number) => ({
       ...NATURE_OF_YOUR_BUSINESS_FIELDS[EMPLOYEES_UK],
     },
   },
-  POST_ROUTES: {
-    NATURE_OF_BUSINESS: `${INSURANCE_ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`,
-    SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_SAVE_AND_BACK}`,
-  },
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_SAVE_AND_BACK}`,
 });
 
 /**
