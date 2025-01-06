@@ -43,7 +43,7 @@ export const TEMPLATE = TEMPLATES.INSURANCE.YOUR_BUYER.OUTSTANDING_OR_OVERDUE_PA
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.OUTSTANDING_OR_OVERDUE_PAYMENTS;
 
 /**
- * Page fields and "save and go back" URL
+ * pageVariables for outstanding-or-overdue page
  * @param {Number} referenceNumber: Application reference number
  * @param {Array<Currency>} currencies: Currencies
  * @param {String} currencyCode: Provided currency code

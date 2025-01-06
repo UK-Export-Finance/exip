@@ -11,7 +11,7 @@ const { CIS } = EXTERNAL_API_DEFINITIONS;
  * @param {Array} Array of all possible currencies
  * @returns {Array} Array of currencies that EXIP supports
  */
-export const getSupportedCurrencies = (currencies: Array<Currency>): Array<Currency> => {
+export const getSupportedCurrencies = (currencies: Array<Currency>) => {
   const supported = currencies.filter((currency) => SUPPORTED_CURRENCIES.find((currencyCode: string) => currency.isoCode === currencyCode));
 
   return supported;
@@ -23,7 +23,7 @@ export const getSupportedCurrencies = (currencies: Array<Currency>): Array<Curre
  * @param {Array} Array of all possible currencies
  * @returns {Array} Array of alternate currencies
  */
-export const getAlternativeCurrencies = (currencies: Array<Currency>): Array<Currency> => {
+export const getAlternativeCurrencies = (currencies: Array<Currency>) => {
   const alternate = currencies.filter((currency) => !SUPPORTED_CURRENCIES.includes(currency.isoCode));
 
   return alternate;
@@ -40,7 +40,7 @@ export const getAlternativeCurrencies = (currencies: Array<Currency>): Array<Cur
  * @param {Boolean} alternativeCurrencies if alternate currencies should be returned
  * @returns {Array} Array supported currencies
  */
-const mapCurrencies = (currencies: Array<Currency>, alternativeCurrencies: boolean): Array<Currency> => {
+const mapCurrencies = (currencies: Array<Currency>, alternativeCurrencies: boolean) => {
   let currenciesArray = filterCisEntries(currencies, CIS.INVALID_CURRENCIES, 'name') as Array<Currency>;
 
   if (!alternativeCurrencies) {

@@ -25,7 +25,7 @@ describe('server/helpers/mappings/map-submitted-eligibility-country', () => {
         [BUYER_COUNTRY]: {
           name: mappedCountry.name,
           isoCode: mappedCountry.isoCode,
-          esraClassification: mappedCountry.esraClassification,
+          riskCategory: mappedCountry.riskCategory,
           canApplyOnline: countryCanGetAQuoteOnline.canGetAQuoteOnline,
         },
       };
@@ -51,7 +51,7 @@ describe('server/helpers/mappings/map-submitted-eligibility-country', () => {
         [BUYER_COUNTRY]: {
           name: mappedCountry.name,
           isoCode: mappedCountry.isoCode,
-          esraClassification: mappedCountry.esraClassification,
+          riskCategory: mappedCountry.riskCategory,
           canApplyOnline: countryCanApplyForInsuranceOnline.canApplyForInsuranceOnline,
         },
       };

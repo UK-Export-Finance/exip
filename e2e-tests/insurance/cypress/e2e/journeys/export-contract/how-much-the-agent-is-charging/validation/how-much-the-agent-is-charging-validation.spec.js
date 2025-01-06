@@ -51,11 +51,11 @@ context('Insurance - Export contract - How much the agent is charging page - for
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should render validation errors when ${FIELD_ID} is left empty`, () => {
+  it(`should display validation errors when ${FIELD_ID} is left empty`, () => {
     cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: ERROR_MESSAGES_OBJECT.IS_EMPTY });
   });
 
-  it(`should render validation errors when ${FIELD_ID} has special characters`, () => {
+  it(`should display validation errors when ${FIELD_ID} has special characters`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: '10!',
@@ -63,7 +63,7 @@ context('Insurance - Export contract - How much the agent is charging page - for
     });
   });
 
-  it(`should render validation errors when ${FIELD_ID} has letters`, () => {
+  it(`should display validation errors when ${FIELD_ID} has letters`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: 'one',
@@ -71,7 +71,7 @@ context('Insurance - Export contract - How much the agent is charging page - for
     });
   });
 
-  it(`should render validation errors when ${FIELD_ID} is below ${MINIMUM_CHARACTERS.ONE}`, () => {
+  it(`should display validation errors when ${FIELD_ID} is below ${MINIMUM_CHARACTERS.ONE}`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: String(MINIMUM_CHARACTERS.ONE - 1),

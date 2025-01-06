@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { ACCOUNT, APPLICATION, FIELD_IDS, TOTAL_CONTRACT_VALUE } from '../constants';
 import encryptPassword from '../helpers/encrypt-password';
-import mapCisCountries from '../helpers/map-CIS-countries';
 import application, { mockExportContractAgentFullyPopulated } from './mock-application';
 import buyer from './mock-buyer';
 import cisCountries from './mock-CIS-countries';
@@ -9,7 +8,7 @@ import currencies from './mock-currencies';
 import company, { companyScenarios } from './mock-company';
 import companySicCode from './mock-company-sic-code';
 import nominatedLossPayee from './mock-nominated-loss-payee';
-import { Account, GetApimCisCountriesHelperResponse, GetApimCurrenciesHelperResponse } from '../types';
+import { Account } from '../types';
 
 const {
   ACCOUNT: { PASSWORD_RESET_HASH },
@@ -115,8 +114,6 @@ export const mockApplicationMultiplePolicyTotalContractValueOverThreshold = {
 
 export const mockCisCountries = cisCountries;
 
-export const mockMappedCisCountries = mapCisCountries(mockCisCountries);
-
 export const mockCompany = company;
 export const mockCompanySicCode = companySicCode;
 export const mockCompanyScenarios = companyScenarios;
@@ -168,19 +165,7 @@ export const mockCountries = [
   },
 ];
 
-export const mockApimCisCountriesGetHelperResponse = {
-  countries: mockMappedCisCountries,
-  success: true,
-} as GetApimCisCountriesHelperResponse;
-
 export const mockCurrencies = currencies;
-
-export const mockApimCurrenciesGetHelperResponse = {
-  allCurrencies: mockCurrencies,
-  alternativeCurrencies: mockCurrencies,
-  supportedCurrencies: mockCurrencies,
-  success: true,
-} as GetApimCurrenciesHelperResponse;
 
 export const mockApplicationDeclaration = {
   agreeToConfidentiality: true,

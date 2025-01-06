@@ -27,7 +27,7 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
-      <span class="govuk-caption-l" data-cy="{{ DATA_CY.HEADING_CAPTION }}">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+      <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
       <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }} {{ CURRENCY_NAME }}</h1>
     </div>
   </div>
@@ -57,21 +57,8 @@
         {% set MAXIMUM_HINT = FIELDS.MAXIMUM_BUYER_WILL_OWE.HINT %}
 
         {% set maximumBuyerWillOweHintHtml %}
-
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-three-quarters-from-desktop">
-
-              <p data-cy="{{ maximumBuyerWillOweId }}-hint-for-example">{{ MAXIMUM_HINT.FOR_EXAMPLE }}</p>
-
-              <p>
-                <span data-cy="{{ maximumBuyerWillOweId }}-hint-initial-credit-limit-intro">{{ MAXIMUM_HINT.INITIAL_CREDIT_LIMIT.INTRO }}</span>&nbsp;
-                <a class="govuk-link" href="{{ MAXIMUM_HINT.INITIAL_CREDIT_LIMIT.LINK.HREF }}" data-cy="{{ maximumBuyerWillOweId }}-hint-initial-credit-limit-link">{{ MAXIMUM_HINT.INITIAL_CREDIT_LIMIT.LINK.TEXT }}</a>
-              </p>
-
-              <p data-cy="{{ maximumBuyerWillOweId }}-hint-no-decimals">{{ MAXIMUM_HINT.NO_DECIMALS }}</p>
-
-            </div>
-          </div>
+          <p data-cy="{{ maximumBuyerWillOweId }}-hint-for-example">{{ MAXIMUM_HINT.FOR_EXAMPLE }}</p>
+          <p data-cy="{{ maximumBuyerWillOweId }}-hint-no-decimals">{{ MAXIMUM_HINT.NO_DECIMALS }}</p>
         {% endset %}
 
         {{ monetaryValueInput.render({

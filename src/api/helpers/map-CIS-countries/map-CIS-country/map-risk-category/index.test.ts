@@ -1,14 +1,14 @@
-import mapEsraClassification from '.';
+import mapRiskCategory from '.';
 import { EXTERNAL_API_DEFINITIONS, EXTERNAL_API_MAPPINGS } from '../../../../constants';
 
 const { CIS } = EXTERNAL_API_DEFINITIONS;
 
-describe('helpers/map-cis-countries/map-cis-country/map-esra-classification', () => {
+describe('helpers/map-cis-countries/map-cis-country/map-risk-category', () => {
   describe(`when the risk is '${CIS.RISK.STANDARD}'`, () => {
     it('should return simplified string', () => {
       const str = CIS.RISK.STANDARD;
 
-      const result = mapEsraClassification(str);
+      const result = mapRiskCategory(str);
 
       const expected = EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD;
 
@@ -20,7 +20,7 @@ describe('helpers/map-cis-countries/map-cis-country/map-esra-classification', ()
     it('should return the string', () => {
       const str = CIS.RISK.HIGH;
 
-      const result = mapEsraClassification(str);
+      const result = mapRiskCategory(str);
 
       expect(result).toEqual(str);
     });
@@ -30,7 +30,7 @@ describe('helpers/map-cis-countries/map-cis-country/map-esra-classification', ()
     it('should return the string', () => {
       const str = CIS.RISK.VERY_HIGH;
 
-      const result = mapEsraClassification(str);
+      const result = mapRiskCategory(str);
 
       expect(result).toEqual(str);
     });
@@ -39,7 +39,7 @@ describe('helpers/map-cis-countries/map-cis-country/map-esra-classification', ()
   it('should return null', () => {
     const str = 'None';
 
-    const result = mapEsraClassification(str);
+    const result = mapRiskCategory(str);
 
     expect(result).toBeNull();
   });

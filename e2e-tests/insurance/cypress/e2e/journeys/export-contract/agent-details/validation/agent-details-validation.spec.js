@@ -33,7 +33,7 @@ context('Insurance - Export contract - Agent details page - form validation', ()
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.completeAndSubmitExportContractForms({ stopSubmittingAfter: 'agent', isUsingAgent: true });
+      cy.completeAndSubmitExportContractForms({ formToStopAt: 'agent', isUsingAgent: true });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${AGENT_DETAILS}`;
     });

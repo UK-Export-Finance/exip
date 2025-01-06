@@ -25,7 +25,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.completeAndSubmitExportContractForms({ stopSubmittingAfter: 'howWasTheContractAwarded' });
+      cy.completeAndSubmitExportContractForms({ formToStopAt: 'howWasTheContractAwarded' });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
 

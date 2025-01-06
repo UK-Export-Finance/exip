@@ -30,7 +30,7 @@ context('Insurance - Your buyer - Traded with buyer page - As an exporter, I wan
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitYourBuyerForms({ stopSubmittingAfter: 'connectionWithTheBuyer' });
+      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'connectionWithTheBuyer' });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`;
       tradingHistoryUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY}`;
@@ -96,8 +96,11 @@ context('Insurance - Your buyer - Traded with buyer page - As an exporter, I wan
     });
 
     it('should render validation errors', () => {
+      const expectedErrorsCount = 1;
+
       cy.submitAndAssertRadioErrors({
         field: noRadio(FIELD_ID),
+        expectedErrorsCount,
         expectedErrorMessage: ERROR_MESSAGE.IS_EMPTY,
       });
     });

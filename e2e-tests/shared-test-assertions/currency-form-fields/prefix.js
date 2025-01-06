@@ -8,7 +8,7 @@ import { SYMBOLS, USD_CURRENCY_CODE, JPY_CURRENCY_CODE, EUR_CURRENCY_CODE } from
  */
 const prefixAssertions = ({ fieldId }) => {
   describe('when not selecting a currency', () => {
-    it(`should render ${SYMBOLS.GBP} as the prefix`, () => {
+    it(`should display ${SYMBOLS.GBP} as the prefix`, () => {
       cy.clickSubmitButton();
 
       cy.assertPrefix({ fieldId, value: SYMBOLS.GBP });
@@ -16,21 +16,21 @@ const prefixAssertions = ({ fieldId }) => {
   });
 
   describe(`when selecting ${USD_CURRENCY_CODE} as the currency code`, () => {
-    it(`should render ${SYMBOLS.USD} as the prefix`, () => {
+    it(`should display ${SYMBOLS.USD} as the prefix`, () => {
       cy.completeAndSubmitCurrencyForm({ isoCode: USD_CURRENCY_CODE });
       cy.assertPrefix({ fieldId, value: SYMBOLS.USD });
     });
   });
 
   describe(`when selecting ${JPY_CURRENCY_CODE} as the currency code`, () => {
-    it(`should render ${SYMBOLS.JPY} as the prefix`, () => {
+    it(`should display ${SYMBOLS.JPY} as the prefix`, () => {
       cy.completeAndSubmitCurrencyForm({ isoCode: JPY_CURRENCY_CODE });
       cy.assertPrefix({ fieldId, value: SYMBOLS.JPY });
     });
   });
 
   describe(`when selecting ${EUR_CURRENCY_CODE} as the currency code`, () => {
-    it(`should render ${SYMBOLS.EUR} as the prefix`, () => {
+    it(`should display ${SYMBOLS.EUR} as the prefix`, () => {
       cy.completeAndSubmitCurrencyForm({ isoCode: EUR_CURRENCY_CODE });
       cy.assertPrefix({ fieldId, value: SYMBOLS.EUR });
     });

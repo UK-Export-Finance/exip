@@ -7,7 +7,7 @@ import { AccountSendEmailReactivateLinkVariables, AccountSendEmailReactivateLink
  * @param {Object} root: GraphQL root variables
  * @param {Object} variables: GraphQL variables for the SendReactivateAccountEmail mutation
  * @param {Context} context: KeystoneJS context API
- * @returns {Promise<AccountSendEmailReactivateLinkResponse>} Object with success flag
+ * @returns {Promise<Object>} Object with success flag
  */
 const sendEmailReactivateAccountLink = async (
   root: any,

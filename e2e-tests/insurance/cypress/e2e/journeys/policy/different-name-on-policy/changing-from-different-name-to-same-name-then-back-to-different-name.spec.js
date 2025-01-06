@@ -24,7 +24,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'lossPayee' });
+        cy.completeAndSubmitPolicyForms({ formToStopAt: 'lossPayee' });
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 

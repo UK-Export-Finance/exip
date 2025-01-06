@@ -14,6 +14,8 @@ const EXPECTED_ARIA_LABELS = {
 };
 
 const shouldRender = () => {
+  passwordField.revealButton().should('exist');
+
   cy.checkText(passwordField.revealButton(), FIELD_STRINGS.REVEAL.SHOW);
   cy.checkAriaLabel(passwordField.revealButton(), EXPECTED_ARIA_LABELS.SHOW);
 };

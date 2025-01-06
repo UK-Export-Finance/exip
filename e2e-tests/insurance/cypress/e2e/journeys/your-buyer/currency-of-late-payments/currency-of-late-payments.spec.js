@@ -33,7 +33,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.completeAndSubmitYourBuyerForms({ stopSubmittingAfter: 'tradingHistoryWithBuyer', outstandingPayments: true, exporterHasTradedWithBuyer: true });
+        cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'tradingHistoryWithBuyer', outstandingPayments: true, exporterHasTradedWithBuyer: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CURRENCY_OF_LATE_PAYMENTS}`;
 

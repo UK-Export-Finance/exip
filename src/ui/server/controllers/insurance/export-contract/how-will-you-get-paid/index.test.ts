@@ -93,7 +93,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
   });
 
   describe('FIELD_ID', () => {
-    it('should have the correct ID', () => {
+    it('should have the correct FIELD_ID', () => {
       expect(FIELD_ID).toEqual(PAYMENT_TERMS_DESCRIPTION);
     });
   });

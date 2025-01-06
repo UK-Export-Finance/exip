@@ -2464,8 +2464,8 @@ input BuyerTradingHistoryCreateInput {
 
 type Country {
   id: ID!
-  isoCode: String!
-  name: String!
+  isoCode: String
+  name: String
 }
 
 input CountryWhereUniqueInput {
@@ -3411,6 +3411,9 @@ type Query {
   """ verify an account's password reset token """
   verifyAccountPasswordResetToken(token: String!): AccountPasswordResetTokenResponse
 
+  """ get CIS countries from APIM """
+  getApimCisCountries: [MappedCisCountry]
+
   """ get companies house information """
   getCompaniesHouseInformation(companiesHouseNumber: String!): CompaniesHouseResponse
 
@@ -3420,14 +3423,8 @@ type Query {
   """ get Ordnance Survey address """
   getOrdnanceSurveyAddress(postcode: String!, houseNameOrNumber: String!): OrdnanceSurveyResponse
 
-  """ get CIS countries from APIM """
-  getApimCisCountries: [MappedCisCountry]
-
   """ get currencies from APIM """
   getApimCurrencies: GetApimCurrencyResponse
-
-  """ get countries and currencies """
-  getCountriesAndCurrencies: GetCountriesAndCurrenciesResponse
 }
 
 union AuthenticatedItem = User
@@ -3745,7 +3742,7 @@ type MappedCisCountry {
   isoCode: String!
   name: String
   shortTermCover: Boolean
-  esraClassification: String
+  riskCategory: String
   nbiIssueAvailable: Boolean
   canGetAQuoteOnline: Boolean
   canGetAQuoteOffline: Boolean
@@ -3762,13 +3759,6 @@ type MappedCurrency {
 }
 
 type GetApimCurrencyResponse {
-  supportedCurrencies: [MappedCurrency]
-  alternativeCurrencies: [MappedCurrency]
-  allCurrencies: [MappedCurrency]
-}
-
-type GetCountriesAndCurrenciesResponse {
-  countries: [Country]
   supportedCurrencies: [MappedCurrency]
   alternativeCurrencies: [MappedCurrency]
   allCurrencies: [MappedCurrency]

@@ -19,7 +19,7 @@ context('Insurance - Your buyer - Failed to pay on time page - total contract va
       url = `${baseUrl}${ROOT}/${referenceNumber}${FAILED_TO_PAY}`;
       creditInsuranceCoverUrl = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
 
-      cy.completeAndSubmitYourBuyerForms({ stopSubmittingAfter: 'outstandingOrOverduePayments', exporterHasTradedWithBuyer: true, outstandingPayments: true });
+      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'outstandingOrOverduePayments', exporterHasTradedWithBuyer: true, outstandingPayments: true });
 
       cy.assertUrl(url);
     });

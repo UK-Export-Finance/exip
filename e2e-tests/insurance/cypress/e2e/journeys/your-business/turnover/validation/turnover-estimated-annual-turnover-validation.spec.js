@@ -25,7 +25,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitYourBusinessForms({ stopSubmittingAfter: 'turnoverCurrency' });
+      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'turnoverCurrency' });
 
       url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ROOT}`;
 
@@ -43,11 +43,11 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should render validation errors when ${FIELD_ID} is left empty`, () => {
+  it(`should display validation errors when ${FIELD_ID} is left empty`, () => {
     cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: ERROR_MESSAGE.IS_EMPTY });
   });
 
-  it(`should render validation errors when ${FIELD_ID} is a decimal place number`, () => {
+  it(`should display validation errors when ${FIELD_ID} is a decimal place number`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: '5.5',
@@ -55,7 +55,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
     });
   });
 
-  it(`should render validation errors when ${FIELD_ID} has special characters`, () => {
+  it(`should display validation errors when ${FIELD_ID} has special characters`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: '50!',
@@ -63,7 +63,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
     });
   });
 
-  it(`should render validation errors when ${FIELD_ID} has letters`, () => {
+  it(`should display validation errors when ${FIELD_ID} has letters`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: 'one',
@@ -71,7 +71,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
     });
   });
 
-  it(`should render validation errors when ${FIELD_ID} is negative but has a decimal place`, () => {
+  it(`should display validation errors when ${FIELD_ID} is negative but has a decimal place`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: '-123.456',

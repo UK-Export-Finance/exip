@@ -14,7 +14,7 @@ const createApplications = (accountId, count) => {
     try {
       return api.createApplications(accountId, count).then((applications) => applications);
     } catch (error) {
-      console.error('Creating applications %o', error);
+      console.error('Creating applications', error);
       return error;
     }
   }

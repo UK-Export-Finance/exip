@@ -30,7 +30,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.completeAndSubmitExportContractForms({ stopSubmittingAfter: 'howYouWillGetPaid' });
+        cy.completeAndSubmitExportContractForms({ formToStopAt: 'howYouWillGetPaid' });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT}`;
         agentDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_DETAILS}`;
@@ -96,7 +96,7 @@ context(
       });
 
       describe('when submitting an empty form', () => {
-        it(`should render validation errors if ${FIELD_ID} radio is not selected`, () => {
+        it(`should display validation errors if ${FIELD_ID} radio is not selected`, () => {
           const radioField = {
             ...fieldSelector(FIELD_ID),
             input: noRadioInput,

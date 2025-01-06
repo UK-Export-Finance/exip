@@ -1,4 +1,5 @@
-import { field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
+import { headingCaption } from '../../../../../../partials';
+import { field as fieldSelector } from '../../../../../../pages/shared';
 import { turnoverPage } from '../../../../../../pages/your-business';
 import { PAGES } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
@@ -39,7 +40,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completeAndSubmitYourBusinessForms({ stopSubmittingAfter: 'turnoverCurrency' });
+        cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'turnoverCurrency' });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
         creditControlUrl = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
@@ -73,7 +74,7 @@ context(
         cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
-      it(`should render a ${FINANCIAL_YEAR_END_DATE} section`, () => {
+      it(`should display ${FINANCIAL_YEAR_END_DATE} section`, () => {
         const fieldId = FINANCIAL_YEAR_END_DATE;
         const field = fieldSelector(fieldId);
 

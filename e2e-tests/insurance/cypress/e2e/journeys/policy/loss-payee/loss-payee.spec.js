@@ -1,4 +1,5 @@
-import { field as fieldSelector, headingCaption, noRadio, noRadioInput, yesRadio } from '../../../../../../pages/shared';
+import { headingCaption } from '../../../../../../partials';
+import { field as fieldSelector, noRadio, noRadioInput, yesRadio } from '../../../../../../pages/shared';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -35,7 +36,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'broker' });
+        cy.completeAndSubmitPolicyForms({ formToStopAt: 'broker' });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
         checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
@@ -106,7 +107,7 @@ context(
       });
 
       describe('when submitting an empty form', () => {
-        it(`should render validation errors if ${FIELD_ID} radio is not selected`, () => {
+        it(`should display validation errors if ${FIELD_ID} radio is not selected`, () => {
           const radioField = {
             ...fieldSelector(FIELD_ID),
             input: noRadioInput,

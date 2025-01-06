@@ -7,7 +7,7 @@ import { Context, InsuranceFeedbackVariables } from '../../../types';
  * @param {Object} root: GraphQL root variables
  * @param {Object} variables: GraphQL variables for the createInsuranceFeedback mutation
  * @param {Context} context: KeystoneJS context API
- * @returns {Promise<SuccessResponse>} with success true or false and response
+ * @returns {Promise<Object>} with success true or false and response
  */
 const createFeedback = async (root: any, variables: InsuranceFeedbackVariables, context: Context) => {
   console.info('Creating feedback');
@@ -26,7 +26,7 @@ const createFeedback = async (root: any, variables: InsuranceFeedbackVariables, 
     // sends email with relevant fields
     const emailResponse = await sendEmail.insuranceFeedbackEmail(feedback);
 
-    // only if data added to db and email has successfully been sent - then return success=true
+    // only if data added to db and email has successfully been sent - then return success as true
     if (response && emailResponse?.success) {
       return {
         ...response,

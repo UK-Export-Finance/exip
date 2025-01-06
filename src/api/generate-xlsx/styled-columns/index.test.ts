@@ -1,46 +1,56 @@
-import styledColumns, { getAdditionalRowHeightIndexes } from '.';
-import XLSX_ROW_INDEXES from '../../constants/XLSX-CONFIG/INDEXES';
-import modifyRowStyles from './modify-row-styles';
-import modifyRowHeights from './modify-row-heights';
+import ExcelJS from 'exceljs';
+import styledColumns, { worksheetRowHeights } from '.';
+import { XLSX_CONFIG } from '../../constants';
 import { mockApplicationMinimalBrokerBuyerAndCompany as mockApplication } from '../../test-mocks';
-import createMockWorksheet from '../../test-mocks/create-mock-worksheet';
+
+const { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, FONT_SIZE } = XLSX_CONFIG;
 
 describe('api/generate-xlsx/styled-columns/index', () => {
-  const { mockWorksheet, mockSheetName } = createMockWorksheet();
+  const mockSheetName = 'mock sheet name';
 
-  describe('getAdditionalRowHeightIndexes', () => {
-    describe('when a provided sheetName is in XLSX_ROW_INDEXES', () => {
-      it('should return index values', () => {
-        const result = getAdditionalRowHeightIndexes(mockApplication, mockSheetName);
+  const workbook = new ExcelJS.Workbook();
 
-        const sheetIndexes = XLSX_ROW_INDEXES[mockSheetName](mockApplication);
+  const worksheet = workbook.addWorksheet(mockSheetName);
 
-        const expected = Object.values(sheetIndexes);
+  describe('worksheetRowHeights', () => {
+    it('should add column heights to particular columns', async () => {
+      const mockIndexes = [5, 6];
 
-        expect(result).toEqual(expected);
-      });
-    });
+      const result = worksheetRowHeights(mockIndexes, worksheet);
 
-    describe('when a provided sheetName is NOT in XLSX_ROW_INDEXES', () => {
-      it('should return an empty array', () => {
-        const result = getAdditionalRowHeightIndexes(mockApplication, 'invalid sheet name');
-
-        expect(result).toEqual([]);
+      result.eachRow((row, rowNumber) => {
+        if (rowNumber === 1) {
+          expect(row.height).toEqual(ADDITIONAL_TITLE_COLUMN_HEIGHT);
+        } else if (mockIndexes.includes(rowNumber)) {
+          expect(row.height).toEqual(LARGE_ADDITIONAL_COLUMN_HEIGHT);
+        }
       });
     });
   });
 
   describe('styledColumns', () => {
-    it('should return a modified worksheet', async () => {
-      const result = styledColumns(mockApplication, mockWorksheet, mockSheetName);
+    it('should add custom `alignment` and font size properties to each column', async () => {
+      const result = styledColumns(mockApplication, worksheet, mockSheetName);
 
-      const modifiedRowStyles = modifyRowStyles(mockWorksheet, mockSheetName);
+      result.eachRow((row, rowNumber) => {
+        const isHeaderRow = rowNumber === 1;
 
-      const indexes = getAdditionalRowHeightIndexes(mockApplication, mockSheetName);
+        if (isHeaderRow) {
+          row.eachCell((cell, colNumber) => {
+            const cellData = row.getCell(colNumber);
 
-      const expected = modifyRowHeights(indexes, modifiedRowStyles, mockSheetName);
+            expect(cellData.font.bold).toEqual(true);
+            expect(cellData.font.size).toEqual(FONT_SIZE.TITLE);
+          });
+        } else {
+          row.eachCell((cell, colNumber) => {
+            const cellData = row.getCell(colNumber);
 
-      expect(result).toEqual(expected);
+            expect(cellData.font.bold).toEqual(false);
+            expect(cellData.font.size).toEqual(FONT_SIZE.DEFAULT);
+          });
+        }
+      });
     });
   });
 });

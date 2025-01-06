@@ -1,4 +1,4 @@
-import { status, summaryList } from '../../../../../../../../pages/shared';
+import { field, status, summaryList } from '../../../../../../../../pages/shared';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import { FIELD_VALUES } from '../../../../../../../../constants';
@@ -98,8 +98,8 @@ context('Insurance - Change your answers - Policy - Broker - Yes to no - As an e
 
         cy.completeAndSubmitBrokerForm({ usingBroker: true });
 
-        cy.assertEmptyFieldValue(NAME);
-        cy.assertEmptyFieldValue(EMAIL);
+        cy.checkValue(field(NAME), '');
+        cy.checkValue(field(EMAIL), '');
 
         cy.checkTextareaValue({
           fieldId: FULL_ADDRESS,

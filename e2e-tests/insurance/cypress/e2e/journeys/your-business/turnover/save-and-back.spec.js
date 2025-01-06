@@ -21,7 +21,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitYourBusinessForms({ stopSubmittingAfter: 'turnoverCurrency' });
+      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'turnoverCurrency' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
 
@@ -77,7 +77,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
       cy.clickSubmitButtonMultipleTimes({ count: 3 });
 
       cy.checkValue(field(ESTIMATED_ANNUAL_TURNOVER), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
-      cy.assertEmptyFieldValue(PERCENTAGE_TURNOVER);
+      cy.checkValue(field(PERCENTAGE_TURNOVER), '');
     });
   });
 

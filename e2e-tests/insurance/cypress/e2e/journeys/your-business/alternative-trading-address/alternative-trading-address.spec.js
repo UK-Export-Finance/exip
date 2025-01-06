@@ -1,5 +1,5 @@
-import { html } from '../../../../../../partials';
-import { field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
+import { headingCaption, html } from '../../../../../../partials';
+import { field as fieldSelector } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELD_STRINGS } from '../../../../../../content-strings/fields/insurance/business';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -45,7 +45,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completeAndSubmitYourBusinessForms({ stopSubmittingAfter: 'companyDetails', differentTradingAddress: true });
+        cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'companyDetails', differentTradingAddress: true });
 
         alternativeAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_ROOT}`;
 
@@ -93,7 +93,7 @@ context(
         cy.checkText(html(COMPANY_ADDRESS), addressText);
       });
 
-      it(`should render ${FULL_ADDRESS} textarea`, () => {
+      it(`should display ${FULL_ADDRESS} textarea`, () => {
         const fieldStrings = FIELD_STRINGS[fieldId];
 
         cy.assertTextareaRendering({
@@ -109,14 +109,14 @@ context(
         cy.navigateToUrl(alternativeAddressUrl);
       });
 
-      it(`should render validation errors if ${FULL_ADDRESS} is left empty`, () => {
+      it(`should display validation errors if ${FULL_ADDRESS} is left empty`, () => {
         cy.submitAndAssertFieldErrors({
           field: textareaField,
           expectedErrorMessage: ERRORS[FULL_ADDRESS].IS_EMPTY,
         });
       });
 
-      it(`should render validation errors if ${FULL_ADDRESS} is over ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`, () => {
+      it(`should display validation errors if ${FULL_ADDRESS} is over ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`, () => {
         cy.submitAndAssertFieldErrors({
           field: textareaField,
           value: 'a'.repeat(MAXIMUM_CHARACTERS.FULL_ADDRESS + 1),

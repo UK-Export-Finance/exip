@@ -9,7 +9,7 @@ context('Insurance - Policy - Complete the entire section as a multiple contract
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'lossPayee', policyType });
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'lossPayee', policyType });
 
       /**
        * Submit the "Policy - check your answers" form,

@@ -2,162 +2,67 @@ import dotenv from 'dotenv';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import APIM from '.';
-import { EXTERNAL_API_ENDPOINTS, GBP, USD } from '../../constants';
-import { mockCisCountries, mockCurrencies } from '../../test-mocks';
+import { EXTERNAL_API_ENDPOINTS } from '../../constants';
+import { mockCisCountries } from '../../test-mocks';
 
 dotenv.config();
 
 const { APIM_MDM_URL } = process.env;
 const { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
 
+const url = `${APIM_MDM_URL}${APIM_MDM.MARKETS}`;
+
 describe('integrations/APIM', () => {
-  describe('getCisCountries', () => {
-    const url = `${APIM_MDM_URL}${APIM_MDM.MARKETS}`;
+  describe('when a 200 status and data is returned', () => {
+    test('it should return success=true and data', async () => {
+      const mock = new MockAdapter(axios);
 
-    describe('when a 200 status and data is returned', () => {
-      test('it should return success=true and data', async () => {
-        const mock = new MockAdapter(axios);
+      const mockResponseData = mockCisCountries;
 
-        const mockResponseData = mockCisCountries;
+      mock.onGet(url).reply(200, mockResponseData);
 
-        mock.onGet(url).reply(200, mockResponseData);
+      const result = await APIM.getCisCountries();
 
-        const result = await APIM.getCisCountries();
+      const expected = {
+        success: true,
+        data: mockResponseData,
+      };
 
-        const expected = {
-          success: true,
-          data: mockResponseData,
-        };
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when no data is returned', () => {
-      test('it should return success=false', async () => {
-        const mock = new MockAdapter(axios);
-
-        mock.onGet(url).reply(200);
-
-        const result = await APIM.getCisCountries();
-
-        const expected = {
-          success: false,
-        };
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when a 200 status is not returned', () => {
-      test('it should throw an error', async () => {
-        const mock = new MockAdapter(axios);
-
-        mock.onGet(url).reply(500);
-
-        await expect(APIM.getCisCountries()).rejects.toThrow('Calling APIM - CIS countries');
-      });
+      expect(result).toEqual(expected);
     });
   });
 
-  describe('getCurrencies', () => {
-    const url = `${APIM_MDM_URL}${APIM_MDM.CURRENCY}`;
+  describe('when no data is returned', () => {
+    test('it should return success=false', async () => {
+      const mock = new MockAdapter(axios);
 
-    describe('when a 200 status and data is returned', () => {
-      test('it should return success=true and data', async () => {
-        const mock = new MockAdapter(axios);
+      mock.onGet(url).reply(200);
 
-        const mockResponseData = mockCurrencies;
+      const result = await APIM.getCisCountries();
 
-        mock.onGet(url).reply(200, mockResponseData);
+      const expected = {
+        success: false,
+      };
 
-        const result = await APIM.getCurrencies();
-
-        const expected = {
-          success: true,
-          data: mockResponseData,
-        };
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when no data is returned', () => {
-      test('it should return success=false', async () => {
-        const mock = new MockAdapter(axios);
-
-        mock.onGet(url).reply(200);
-
-        const result = await APIM.getCurrencies();
-
-        const expected = {
-          success: false,
-        };
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when a 200 status is not returned', () => {
-      test('it should throw an error', async () => {
-        const mock = new MockAdapter(axios);
-
-        mock.onGet(url).reply(500);
-
-        await expect(APIM.getCurrencies()).rejects.toThrow('Calling APIM - currencies');
-      });
+      expect(result).toEqual(expected);
     });
   });
 
-  describe('getCurrenciesExchange', () => {
-    const url = `${APIM_MDM_URL}${APIM_MDM.CURRENCY_EXCHANGE}`;
+  describe('when a 200 status is not returned', () => {
+    test('it should throw an error', async () => {
+      const mock = new MockAdapter(axios);
 
-    const mockSource = GBP;
-    const mockTarget = USD;
+      mock.onGet(url).reply(500);
 
-    describe('when a 200 status and data is returned', () => {
-      test('it should return success=true and data', async () => {
-        const mock = new MockAdapter(axios);
+      try {
+        await APIM.getCisCountries();
+      } catch (error) {
+        const expected = 'Calling APIM - CIS countries';
 
-        const mockResponseData = mockCurrencies;
+        const errorAssertion = String(error).includes(expected);
 
-        mock.onGet(url).reply(200, mockResponseData);
-
-        const result = await APIM.getCurrenciesExchange(mockSource, mockTarget);
-
-        const expected = {
-          success: true,
-          data: mockResponseData,
-        };
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when no data is returned', () => {
-      test('it should return success=false', async () => {
-        const mock = new MockAdapter(axios);
-
-        mock.onGet(url).reply(200);
-
-        const result = await APIM.getCurrenciesExchange(mockSource, mockTarget);
-
-        const expected = {
-          success: false,
-        };
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when a 200 status is not returned', () => {
-      test('it should throw an error', async () => {
-        const mock = new MockAdapter(axios);
-
-        mock.onGet(url).reply(500);
-
-        await expect(APIM.getCurrenciesExchange(mockSource, mockTarget)).rejects.toThrow('Calling APIM - currencies exchange');
-      });
+        expect(errorAssertion).toEqual(true);
+      }
     });
   });
 });

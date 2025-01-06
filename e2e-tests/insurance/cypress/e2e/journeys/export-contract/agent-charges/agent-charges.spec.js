@@ -32,7 +32,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.completeAndSubmitExportContractForms({ stopSubmittingAfter: 'agentService', isUsingAgent: true, agentIsCharging: true });
+        cy.completeAndSubmitExportContractForms({ formToStopAt: 'agentService', isUsingAgent: true, agentIsCharging: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES}`;
         agentChargesCurrencyUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES_CURRENCY}`;
@@ -86,11 +86,11 @@ context(
           cy.checkText(field.label(), OPTIONS.PERCENTAGE.TEXT);
         });
 
-        it(`should NOT display a conditional "${PERCENTAGE_CHARGE}" field`, () => {
+        it(`should NOT display conditional "${PERCENTAGE_CHARGE}" field`, () => {
           fieldSelector(PERCENTAGE_CHARGE).input().should('not.be.visible');
         });
 
-        it(`should render a conditional "${PERCENTAGE_CHARGE}" field when selecting the ${PERCENTAGE} radio`, () => {
+        it(`should display conditional "${PERCENTAGE_CHARGE}" field when selecting the ${PERCENTAGE} radio`, () => {
           agentChargesPage[METHOD][PERCENTAGE].label().click();
 
           const fieldId = PERCENTAGE_CHARGE;
@@ -163,7 +163,7 @@ context(
             cy.assertAgentChargesFieldValues({ percentageMethod: true });
           });
 
-          it(`should render a conditional "${PERCENTAGE_CHARGE}" field`, () => {
+          it(`should display conditional "${PERCENTAGE_CHARGE}" field`, () => {
             fieldSelector(PERCENTAGE_CHARGE).input().should('be.visible');
           });
         });

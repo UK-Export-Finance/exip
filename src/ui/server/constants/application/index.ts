@@ -1,14 +1,9 @@
-import getApplicationDefinition from './get-application-definition';
-import VERSIONS from './versions';
 import LATEST_VERSION_NUMBER from './versions/latest';
-
-const LATEST_VERSION = getApplicationDefinition(LATEST_VERSION_NUMBER);
 
 export const APPLY = 'Apply';
 
 export const APPLICATION = {
-  LATEST_VERSION,
-  LATEST_VERSION_NUMBER,
+  LATEST_VERSION: { LATEST_VERSION_NUMBER },
   DEAL_TYPE: 'EXIP',
   SUBMISSION_COUNT_DEFAULT: 0,
   SUBMISSION_DEADLINE_IN_MONTHS: 1,
@@ -43,5 +38,4 @@ export const APPLICATION = {
       },
     },
   },
-  VERSIONS,
 };

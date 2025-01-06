@@ -25,7 +25,7 @@ context('Insurance - Your buyer - Connection to the buyer page - form validation
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitYourBuyerForms({ stopSubmittingAfter: 'companyOrOrganisation' });
+      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'companyOrOrganisation' });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONNECTION_WITH_BUYER_ROUTE}`;
 
@@ -44,7 +44,7 @@ context('Insurance - Your buyer - Connection to the buyer page - form validation
   });
 
   describe(`when ${CONNECTION_WITH_BUYER} 'no' is selected`, () => {
-    it('should render validation errors', () => {
+    it('should display validation errors', () => {
       cy.navigateToUrl(url);
 
       const radioField = {

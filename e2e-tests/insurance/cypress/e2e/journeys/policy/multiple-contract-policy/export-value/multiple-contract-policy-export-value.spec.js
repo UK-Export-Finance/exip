@@ -1,6 +1,6 @@
 import { field as fieldSelector, headingCaption } from '../../../../../../../pages/shared';
 import { multipleContractPolicyExportValuePage } from '../../../../../../../pages/insurance/policy';
-import { LINKS, PAGES } from '../../../../../../../content-strings';
+import { PAGES } from '../../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
@@ -38,7 +38,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'multipleContractPolicy', policyType });
+        cy.completeAndSubmitPolicyForms({ formToStopAt: 'multipleContractPolicy', policyType });
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`;
 
@@ -54,7 +54,7 @@ context(
       cy.deleteApplication(referenceNumber);
     });
 
-    it('should render core page elements', () => {
+    it('renders core page elements', () => {
       cy.corePageChecks({
         pageTitle: `${CONTENT_STRINGS.PAGE_TITLE} ${GBP.name}`,
         currentHref: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`,
@@ -67,11 +67,11 @@ context(
         cy.navigateToUrl(url);
       });
 
-      it('should render a heading caption', () => {
+      it('renders a heading caption', () => {
         cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
-      it('should render `total sales to buyer` label, hint, prefix and input', () => {
+      it('renders `total sales to buyer` label, hint, prefix and input', () => {
         const fieldId = TOTAL_SALES_TO_BUYER;
         const field = fieldSelector(fieldId);
 
@@ -84,43 +84,20 @@ context(
         field.input().should('exist');
       });
 
-      describe('`maximum buyer will owe` field', () => {
+      it('renders `maximum buyer will owe` label, hint, prefix, input', () => {
         const fieldId = MAXIMUM_BUYER_WILL_OWE;
         const field = multipleContractPolicyExportValuePage[fieldId];
         const { HINT } = EXPORT_VALUE.MULTIPLE[fieldId];
 
-        it('should render a label', () => {
-          cy.checkText(field.label(), EXPORT_VALUE.MULTIPLE[fieldId].LABEL);
+        cy.checkText(field.label(), EXPORT_VALUE.MULTIPLE[fieldId].LABEL);
 
-          cy.assertPrefix({ fieldId, value: SYMBOLS.GBP });
-        });
+        cy.assertPrefix({ fieldId, value: SYMBOLS.GBP });
 
-        it('should render a prefix', () => {
-          cy.assertPrefix({ fieldId, value: SYMBOLS.GBP });
-        });
+        cy.checkText(field.hint.forExample(), HINT.FOR_EXAMPLE);
 
-        it('should render a `for example` hint', () => {
-          cy.checkText(field.hint.forExample(), HINT.FOR_EXAMPLE);
-        });
+        cy.checkText(field.hint.noDecimals(), HINT.NO_DECIMALS);
 
-        it('should render an `initial credit limit` hint intro', () => {
-          cy.checkText(field.hint.initialCreditLimit.intro(), HINT.INITIAL_CREDIT_LIMIT.INTRO);
-        });
-
-        it('should render an `initial credit limit` hint link', () => {
-          const expectedHref = LINKS.EXTERNAL.SMALL_EXPORT_BUILDER;
-          const expectedText = HINT.INITIAL_CREDIT_LIMIT.LINK.TEXT;
-
-          cy.checkLink(field.hint.initialCreditLimit.link(), expectedHref, expectedText);
-        });
-
-        it('should render a `no decimals` hint', () => {
-          cy.checkText(field.hint.noDecimals(), HINT.NO_DECIMALS);
-        });
-
-        it('should render an input', () => {
-          field.input().should('exist');
-        });
+        field.input().should('exist');
       });
     });
 
@@ -130,7 +107,7 @@ context(
       });
 
       it(`should redirect to ${NAME_ON_POLICY}`, () => {
-        cy.completeAndSubmitExportValueForm({});
+        cy.completeAndSubmitExportValueForm({ policyType });
 
         const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
         cy.assertUrl(expectedUrl);

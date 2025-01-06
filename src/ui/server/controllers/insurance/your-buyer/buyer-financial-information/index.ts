@@ -38,9 +38,9 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.BUYER_FINANCIAL_I
 
 /**
  * pageVariables
- * Page fields and "save and go back" URL
+ * returns pageVariables for buyer-financial information
  * @param {Number} referenceNumber: Application reference number
- * @returns {Object} Page variables
+ * @returns {Object} pageVariables
  */
 export const pageVariables = (referenceNumber: number) => ({
   FIELD_ID: HAS_BUYER_FINANCIAL_ACCOUNTS,

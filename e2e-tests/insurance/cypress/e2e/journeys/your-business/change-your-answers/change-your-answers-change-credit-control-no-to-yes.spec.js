@@ -24,7 +24,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completeAndSubmitYourBusinessForms({ stopSubmittingAfter: 'creditControl', hasCreditControlProcess: false });
+        cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'creditControl', hasCreditControlProcess: false });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       });

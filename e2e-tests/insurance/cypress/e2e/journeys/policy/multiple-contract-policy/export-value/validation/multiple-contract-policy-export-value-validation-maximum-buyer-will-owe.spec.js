@@ -36,7 +36,7 @@ context('Insurance - Policy - Multiple contract policy - Export value page - for
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'multipleContractPolicy', policyType });
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'multipleContractPolicy', policyType });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`;
 
@@ -101,7 +101,7 @@ context('Insurance - Policy - Multiple contract policy - Export value page - for
   });
 
   it('should redirect to the next page when maximum buyer will owe is valid and contains a comma as all fields are valid', () => {
-    cy.completeExportValueForm({});
+    cy.completeExportValueForm();
     cy.clickBackLink();
 
     cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), '1,234');

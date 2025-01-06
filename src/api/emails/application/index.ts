@@ -1,21 +1,20 @@
-import getSubmittedConfirmationTemplateId from './get-submitted-confirmation-template-id';
+import { EMAIL_TEMPLATE_IDS } from '../../constants';
 import fileSystem from '../../file-system';
 import { callNotify } from '../call-notify';
-import { ApplicationPolicy, ApplicationSubmissionEmailVariables, EmailResponse } from '../../types';
+import { ApplicationSubmissionEmailVariables, EmailResponse } from '../../types';
 
 const application = {
   /**
    * application.submittedEmail
    * Send "application submitted" email to an account
    * @param {ApplicationSubmissionEmailVariables} ApplicationSubmissionEmailVariables
-   * @param {ApplicationPolicy} policy: Application policy
    * @returns {Promise<Object>} callNotify response
    */
-  submittedEmail: async (variables: ApplicationSubmissionEmailVariables, policy: ApplicationPolicy): Promise<EmailResponse> => {
+  submittedEmail: async (variables: ApplicationSubmissionEmailVariables): Promise<EmailResponse> => {
     try {
       console.info('Sending application submitted email to application owner or provided business contact');
 
-      const templateId = await getSubmittedConfirmationTemplateId(policy);
+      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
 
       const { emailAddress } = variables;
 

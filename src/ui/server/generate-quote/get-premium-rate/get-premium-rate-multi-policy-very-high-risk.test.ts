@@ -11,11 +11,10 @@ describe('server/generate-quote/get-premium-rate', () => {
   };
 
   describe('multiple policy - very high risk', () => {
-    const esraClassification = EXTERNAL_API_MAPPINGS.CIS.RISK.VERY_HIGH;
-
+    const riskCategory = EXTERNAL_API_MAPPINGS.CIS.RISK.VERY_HIGH;
     const mock = {
       ...mockBase,
-      esraClassification,
+      riskCategory,
       creditPeriodInMonths: 1,
     };
 
@@ -25,7 +24,7 @@ describe('server/generate-quote/get-premium-rate', () => {
       });
 
       it('should return a premium rate from pricing grid', () => {
-        const { result, expected } = getResultAndExpected(mock.policyType, mock.esraClassification, mock.creditPeriodInMonths + 1, mock.insuredFor);
+        const { result, expected } = getResultAndExpected(mock.policyType, mock.riskCategory, mock.creditPeriodInMonths + 1, mock.insuredFor);
 
         expect(result).toEqual(expected);
 
@@ -41,7 +40,7 @@ describe('server/generate-quote/get-premium-rate', () => {
       });
 
       it('should return a premium rate from pricing grid', () => {
-        const { result, expected } = getResultAndExpected(mock.policyType, mock.esraClassification, mock.creditPeriodInMonths + 1, mock.insuredFor);
+        const { result, expected } = getResultAndExpected(mock.policyType, mock.riskCategory, mock.creditPeriodInMonths + 1, mock.insuredFor);
 
         expect(result).toEqual(expected);
 

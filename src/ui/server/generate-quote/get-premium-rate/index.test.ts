@@ -33,27 +33,17 @@ const getAvailableCover = (policyType: string, risk: string, coverMonths: number
   PRICING_GRID[policyType][risk].find((month: PricingGridMonth) => month.months === coverMonths);
 
 describe('server/generate-quote/get-premium-rate', () => {
-  const mock = {
-    policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
-    insuredFor: 80,
-    esraClassification: EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD,
-    totalMonths: 2,
-  };
-
   it('returns a number', () => {
-    const result = getPremiumRate(mock.policyType, mock.esraClassification, mock.totalMonths, mock.insuredFor);
+    const mock = {
+      policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+      insuredFor: 80,
+      riskCategory: EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD,
+      totalMonths: 2,
+    };
+
+    const result = getPremiumRate(mock.policyType, mock.riskCategory, mock.totalMonths, mock.insuredFor);
 
     expect(typeof result).toEqual('number');
-  });
-
-  describe('when the mapping fails', () => {
-    it('should throw an error', () => {
-      const invalidEsraClassification = 'invalid classification';
-
-      expect(() => getPremiumRate(mock.policyType, invalidEsraClassification, mock.totalMonths, mock.insuredFor)).toThrow(
-        new Error(`Getting premium rate TypeError: Cannot read properties of undefined (reading 'find')`),
-      );
-    });
   });
 });
 

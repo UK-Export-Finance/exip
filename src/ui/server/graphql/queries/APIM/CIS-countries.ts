@@ -5,7 +5,7 @@ const getApimCisCountries = gql`
     getApimCisCountries {
       isoCode
       name
-      esraClassification
+      riskCategory
       canGetAQuoteOnline
       canGetAQuoteOffline
       canGetAQuoteByEmail

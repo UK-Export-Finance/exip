@@ -1,39 +1,66 @@
 import getApimCurrencies from '.';
 import APIM from '../../../integrations/APIM';
-import apimCisCurrencies from '../../../helpers/get-APIM-currencies';
+import mapCurrencies from '../../../helpers/map-currencies';
 import mockApimCurrenciesResponse from '../../../test-mocks/mock-APIM-currencies-response';
-import { mockErrorMessage, mockSpyPromiseRejection } from '../../../test-mocks';
+import { mockCurrencies, mockErrorMessage, mockSpyPromiseRejection } from '../../../test-mocks';
 
 describe('custom-resolvers/get-APIM-currencies', () => {
-  jest.mock('../../../helpers/get-APIM-currencies');
-
-  beforeEach(() => {
-    apimCisCurrencies.get = jest.fn(() => Promise.resolve(mockApimCurrenciesResponse));
-  });
+  jest.mock('../../../integrations/APIM');
 
   afterAll(() => {
     jest.resetAllMocks();
   });
 
-  it('should return the result of apimCisCurrencies.get', async () => {
-    const response = await getApimCurrencies();
+  describe('when APIM currencies API returns success with data/countries', () => {
+    beforeEach(() => {
+      APIM.getCurrencies = jest.fn(() => Promise.resolve(mockApimCurrenciesResponse));
+    });
 
-    const currenciesResponse = await apimCisCurrencies.get();
-
-    expect(response).toEqual(currenciesResponse);
-  });
-
-  describe('when apimCisCurrencies.get returns success=false', () => {
-    it('should return an empty object', async () => {
-      apimCisCurrencies.get = jest.fn(() => Promise.resolve({ ...mockApimCurrenciesResponse, success: false }));
-
+    it('should return an object with mapped countries ', async () => {
       const response = await getApimCurrencies();
 
-      expect(response).toEqual({});
+      const mappedSupported = mapCurrencies(mockCurrencies, false);
+      const mappedAlternative = mapCurrencies(mockCurrencies, true);
+
+      const expected = {
+        supportedCurrencies: mappedSupported,
+        alternativeCurrencies: mappedAlternative,
+        allCurrencies: [...mappedSupported, ...mappedAlternative],
+      };
+
+      expect(response).toEqual(expected);
     });
   });
 
-  describe('when there is an error', () => {
+  describe('when APIM currencies API returns success as false', () => {
+    beforeEach(() => {
+      APIM.getCurrencies = jest.fn(() => Promise.resolve({ success: false }));
+    });
+
+    it('should return object containing success as false', async () => {
+      const response = await getApimCurrencies();
+
+      const expected = { success: false };
+
+      expect(response).toEqual(expected);
+    });
+  });
+
+  describe('when APIM currencies API returns empty data object', () => {
+    beforeEach(() => {
+      APIM.getCurrencies = jest.fn(() => Promise.resolve({ success: true, data: undefined }));
+    });
+
+    it('should return object containing success as false', async () => {
+      const response = await getApimCurrencies();
+
+      const expected = { success: false };
+
+      expect(response).toEqual(expected);
+    });
+  });
+
+  describe('when APIM currencies API is down', () => {
     beforeEach(() => {
       APIM.getCurrencies = mockSpyPromiseRejection;
     });

@@ -1,4 +1,4 @@
-import { radios, summaryList } from '../../../../../../../pages/shared';
+import { autoCompleteField, field, radios, summaryList } from '../../../../../../../pages/shared';
 import { agentChargesPage } from '../../../../../../../pages/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -95,8 +95,8 @@ context(
             cy.assertRadioOptionIsNotChecked(agentChargesPage[METHOD][FIXED_SUM].input());
             cy.assertRadioOptionIsNotChecked(agentChargesPage[METHOD][PERCENTAGE].input());
 
-            cy.assertEmptyFieldValue(PERCENTAGE_CHARGE);
-            cy.assertEmptyAutocompleteFieldValue(PAYABLE_COUNTRY_CODE);
+            cy.checkValue(field(PERCENTAGE_CHARGE), '');
+            cy.checkValue(autoCompleteField(PAYABLE_COUNTRY_CODE), '');
 
             cy.completeAndSubmitAgentChargesForm({ fixedSumMethod: true });
 
@@ -111,7 +111,7 @@ context(
             cy.completeAndSubmitCurrencyForm({});
 
             // assert HOW_MUCH_THE_AGENT_IS_CHARGING field values.
-            cy.assertEmptyFieldValue(FIXED_SUM_AMOUNT);
+            cy.checkValue(field(FIXED_SUM_AMOUNT), '');
           });
         });
       });

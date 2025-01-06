@@ -5,7 +5,7 @@
  * @param {Boolean} alternativeCurrency: If alternative currency should be entered.
  * @param {Boolean} exporterHasTradedWithBuyer: whether the exporter has traded with the buyer
  * @param {Boolean} failedToPay: whether the buyer has failed to pay the exporter
- * @param {String} stopSubmittingAfter: The final form to submit
+ * @param {String} formToStopAt: the form to stop at
  * @param {Boolean} fullyPopulatedBuyerTradingHistory: whether to fully populate the buyer trading history form
  * @param {Boolean} hasConnectionToBuyer: whether the exporter has a connection with the buyer
  * @param {Boolean} exporterHasBuyerFinancialAccounts: whether the exporter has buyer financial accounts
@@ -17,7 +17,7 @@ const completeAndSubmitYourBuyerForms = ({
   alternativeCurrency,
   exporterHasTradedWithBuyer,
   failedToPay,
-  stopSubmittingAfter,
+  formToStopAt,
   fullyPopulatedBuyerTradingHistory,
   exporterHasBuyerFinancialAccounts,
   hasConnectionToBuyer,
@@ -63,7 +63,7 @@ const completeAndSubmitYourBuyerForms = ({
   for (const step of steps) {
     step.action();
 
-    if (step.name === stopSubmittingAfter) {
+    if (step.name === formToStopAt) {
       break;
     }
   }

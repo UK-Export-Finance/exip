@@ -26,7 +26,7 @@ context('Insurance - Your buyer - Failed to pay on time page - Validation', () =
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${FAILED_TO_PAY}`;
 
-      cy.completeAndSubmitYourBuyerForms({ stopSubmittingAfter: 'outstandingOrOverduePayments', exporterHasTradedWithBuyer: true, outstandingPayments: true });
+      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'outstandingOrOverduePayments', exporterHasTradedWithBuyer: true, outstandingPayments: true });
 
       cy.assertUrl(url);
     });

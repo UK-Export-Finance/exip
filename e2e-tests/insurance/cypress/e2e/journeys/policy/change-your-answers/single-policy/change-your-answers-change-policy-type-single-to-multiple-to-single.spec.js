@@ -1,4 +1,4 @@
-import { summaryList } from '../../../../../../../pages/shared';
+import { field, summaryList } from '../../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/policy';
@@ -47,7 +47,7 @@ context('Insurance - Policy - Change your answers - Policy type - single to mult
     cy.navigateToUrl(checkYourAnswersUrl);
 
     cy.changePolicyTypeToMultipleAndSubmitContractPolicyForm();
-    cy.completeAndSubmitExportValueForm({});
+    cy.completeAndSubmitExportValueForm();
 
     summaryList.field(POLICY_TYPE).changeLink().click();
 
@@ -66,7 +66,7 @@ context('Insurance - Policy - Change your answers - Policy type - single to mult
 
     cy.navigateToUrl(totalContractValueUrl);
 
-    cy.assertEmptyFieldValue(TOTAL_CONTRACT_VALUE);
-    cy.assertEmptyFieldValue(REQUESTED_CREDIT_LIMIT);
+    cy.checkValue(field(TOTAL_CONTRACT_VALUE), '');
+    cy.checkValue(field(REQUESTED_CREDIT_LIMIT), '');
   });
 });

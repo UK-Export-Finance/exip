@@ -44,7 +44,7 @@ describe("Insurance - Your business - Company details page- As an Exporter I wan
     cy.deleteApplication(referenceNumber);
   });
 
-  it('should render validation errors if trading name question is not answered', () => {
+  it('should display validation errors if trading name question is not answered', () => {
     const field = companyDetails[HAS_DIFFERENT_TRADING_NAME];
 
     const radioField = {

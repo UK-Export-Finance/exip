@@ -27,7 +27,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitYourBusinessForms({ stopSubmittingAfter: 'companyDetails' });
+      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'companyDetails' });
 
       url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS_ROOT}`;
 
@@ -49,7 +49,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         cy.navigateToUrl(url);
       });
 
-      it(`should render validation errors if ${FIELD_ID} is left empty`, () => {
+      it(`should display validation errors if ${FIELD_ID} is left empty`, () => {
         cy.submitAndAssertFieldErrors({
           ...assertions,
           expectedErrorMessage: NATURE_OF_BUSINESS_ERRORS[FIELD_ID].IS_EMPTY,
@@ -69,7 +69,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         cy.navigateToUrl(url);
       });
 
-      it(`should render validation errors for ${FIELD_ID}`, () => {
+      it(`should display validation errors for ${FIELD_ID}`, () => {
         cy.submitAndAssertFieldErrors({
           ...assertions,
           value: '5.5',
@@ -83,7 +83,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         cy.navigateToUrl(url);
       });
 
-      it(`should render validation errors for ${FIELD_ID}`, () => {
+      it(`should display validation errors for ${FIELD_ID}`, () => {
         cy.submitAndAssertFieldErrors({
           ...assertions,
           value: '5!',
@@ -97,7 +97,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         cy.navigateToUrl(url);
       });
 
-      it(`should render validation errors for ${FIELD_ID}`, () => {
+      it(`should display validation errors for ${FIELD_ID}`, () => {
         cy.submitAndAssertFieldErrors({
           ...assertions,
           value: 'one',

@@ -20,7 +20,7 @@ context(
     const url = `${baseUrl}${CANNOT_APPLY_MULTIPLE_RISKS_EXIT}`;
 
     before(() => {
-      cy.completeAndSubmitEligibilityForms({ stopSubmittingAfter: 'ukGoodsAndServices' });
+      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'ukGoodsAndServices' });
 
       cy.clickYesRadioInput();
       cy.clickSubmitButton();

@@ -2,10 +2,10 @@
  * completeAndDeclarationsForms
  * completes declarations forms up to the specified form to stop at
  * eg, when 'antiBribery' is passed, it will complete all forms up to and including 'antiBribery'
- * @param {String} stopSubmittingAfter: The final form to submit
- * @param {String} referenceNumber: Application reference number
+ * @param {String} formToStopAt: the form to stop at
+ * @param {String} referenceNumber: application reference number
  */
-const completeAndSubmitDeclarationsForms = ({ stopSubmittingAfter, referenceNumber }) => {
+const completeAndSubmitDeclarationsForms = ({ formToStopAt, referenceNumber }) => {
   cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
   cy.completeAndSubmitCheckYourAnswers();
@@ -27,7 +27,7 @@ const completeAndSubmitDeclarationsForms = ({ stopSubmittingAfter, referenceNumb
   for (const step of steps) {
     step.action();
 
-    if (step.name === stopSubmittingAfter) {
+    if (step.name === formToStopAt) {
       break;
     }
   }

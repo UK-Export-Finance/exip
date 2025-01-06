@@ -2,12 +2,12 @@
  * completeAndSubmitYourBusinessForms
  * completes your business forms up to the specified form to stop at
  * eg, when 'turnover' is passed, it will complete all forms up to and including 'turnover'
- * @param {String} stopSubmittingAfter: The final form to submit
+ * @param {String} formToStopAt: the form to stop at
  * @param {Boolean} hasCreditControlProcess: whether the exporter has a credit control process
  * @param {Boolean} differentTradingAddress: whether the exporter has a different trading address
  * @param {Boolean} differentTradingName: whether the exporter has a different trading name
  */
-const completeAndSubmitYourBusinessForms = ({ stopSubmittingAfter, hasCreditControlProcess, differentTradingAddress, differentTradingName }) => {
+const completeAndSubmitYourBusinessForms = ({ formToStopAt, hasCreditControlProcess, differentTradingAddress, differentTradingName }) => {
   cy.startYourBusinessSection({});
 
   const initialSteps = [{ name: 'companyDetails', action: () => cy.completeAndSubmitCompanyDetails({ differentTradingAddress, differentTradingName }) }];
@@ -31,7 +31,7 @@ const completeAndSubmitYourBusinessForms = ({ stopSubmittingAfter, hasCreditCont
   for (const step of steps) {
     step.action();
 
-    if (step.name === stopSubmittingAfter) {
+    if (step.name === formToStopAt) {
       break;
     }
   }

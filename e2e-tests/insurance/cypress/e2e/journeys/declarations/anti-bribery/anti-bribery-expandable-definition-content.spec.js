@@ -31,7 +31,7 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitDeclarationsForms({ stopSubmittingAfter: 'confidentiality', referenceNumber });
+      cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'confidentiality', referenceNumber });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
 
@@ -50,6 +50,8 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
   });
 
   it('renders summary text', () => {
+    expandable.summary().should('exist');
+
     cy.checkText(expandable.summary(), INTRO);
   });
 

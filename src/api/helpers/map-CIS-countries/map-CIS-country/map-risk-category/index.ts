@@ -2,12 +2,12 @@ import { EXTERNAL_API_DEFINITIONS, EXTERNAL_API_MAPPINGS } from '../../../../con
 
 const { CIS } = EXTERNAL_API_DEFINITIONS;
 /**
- * mapEsraClassification
- * Transform a country's ESRAClassificationDesc field into a consistent string
+ * mapRiskCategory
+ * Transform a countries risk category to a consistent string
  * @param {String} Risk category
- * @returns {String} Consistent ESRA classification
+ * @returns {String} Consistent risk category
  */
-const mapEsraClassification = (str: string): string | null => {
+export const mapRiskCategory = (str: string) => {
   if (str === CIS.RISK.STANDARD) {
     return EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD;
   }
@@ -23,4 +23,4 @@ const mapEsraClassification = (str: string): string | null => {
   return null;
 };
 
-export default mapEsraClassification;
+export default mapRiskCategory;

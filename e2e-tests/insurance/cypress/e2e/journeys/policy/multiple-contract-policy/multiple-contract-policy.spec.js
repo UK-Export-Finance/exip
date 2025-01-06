@@ -46,7 +46,7 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'policyType', policyType: MULTIPLE });
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'policyType', policyType: MULTIPLE });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 

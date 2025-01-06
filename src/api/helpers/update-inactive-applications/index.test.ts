@@ -26,7 +26,7 @@ describe('helpers/update-inactive-applications', () => {
   });
 
   describe(`successfully updates inactive application to ${ABANDONED}`, () => {
-    it('should return success=true', async () => {
+    it('should return success as true', async () => {
       const { success } = await updateInactiveApplications(context);
 
       expect(success).toEqual(true);

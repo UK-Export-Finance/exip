@@ -50,7 +50,7 @@ context('Insurance - Export contract - About goods or services page - form valid
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.completeAndSubmitExportContractForms({ stopSubmittingAfter: 'howWasTheContractAwarded' });
+      cy.completeAndSubmitExportContractForms({ formToStopAt: 'howWasTheContractAwarded' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
 
@@ -85,7 +85,7 @@ context('Insurance - Export contract - About goods or services page - form valid
     });
   });
 
-  it(`should render validation errors if ${DESCRIPTION} is over ${MAXIMUM} characters`, () => {
+  it(`should display validation errors if ${DESCRIPTION} is over ${MAXIMUM} characters`, () => {
     cy.navigateToUrl(url);
 
     cy.submitAndAssertFieldErrors({

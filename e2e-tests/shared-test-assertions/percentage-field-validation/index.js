@@ -28,11 +28,11 @@ export const percentageFieldValidation = ({
     expectedErrorsCount: totalExpectedErrors,
   };
 
-  it(`should render validation errors when ${fieldId} percentage field is left empty`, () => {
+  it(`should display validation errors when ${fieldId} percentage field is left empty`, () => {
     cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: errorMessages.IS_EMPTY });
   });
 
-  it(`should render validation errors when ${fieldId} percentage field is a decimal place number`, () => {
+  it(`should display validation errors when ${fieldId} percentage field is a decimal place number`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: '5.5',
@@ -40,7 +40,7 @@ export const percentageFieldValidation = ({
     });
   });
 
-  it(`should render validation errors when ${fieldId} percentage has a comma`, () => {
+  it(`should display validation errors when ${fieldId} percentage has a comma`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: '4,4',
@@ -48,7 +48,7 @@ export const percentageFieldValidation = ({
     });
   });
 
-  it(`should render validation errors when ${fieldId} percentage has special characters`, () => {
+  it(`should display validation errors when ${fieldId} percentage has special characters`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: '50!',
@@ -56,7 +56,7 @@ export const percentageFieldValidation = ({
     });
   });
 
-  it(`should render validation errors when ${fieldId} percentage has letters`, () => {
+  it(`should display validation errors when ${fieldId} percentage has letters`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: 'one',
@@ -64,7 +64,7 @@ export const percentageFieldValidation = ({
     });
   });
 
-  it(`should render validation errors when ${fieldId} percentage field is over 100`, () => {
+  it(`should display validation errors when ${fieldId} percentage field is over 100`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: '101',
@@ -72,7 +72,7 @@ export const percentageFieldValidation = ({
     });
   });
 
-  it(`should render validation errors when ${fieldId} percentage field is below ${minimum}`, () => {
+  it(`should display validation errors when ${fieldId} percentage field is below ${minimum}`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: `${minimum - 1}`,

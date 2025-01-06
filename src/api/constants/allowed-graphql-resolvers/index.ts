@@ -38,6 +38,7 @@ const DEFAULT_RESOLVERS = [
 
   // misc
   'countries',
+  'page',
 ];
 
 /**
@@ -73,10 +74,8 @@ const CUSTOM_RESOLVERS = [
   // feedback
   'createFeedbackAndSendEmail',
 
-  // countries and currencies
   'getApimCisCountries',
   'getApimCurrencies',
-  'getCountriesAndCurrencies',
 ];
 
 /**
