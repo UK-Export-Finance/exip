@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.37.0](https://github.com/UK-Export-Finance/exip/compare/v2.36.3...v2.37.0) (2025-01-06)
+
+
+### Features
+
+* **EMS-3993:** multiple contract policy - small export builder content ([#3372](https://github.com/UK-Export-Finance/exip/issues/3372)) ([c76004f](https://github.com/UK-Export-Finance/exip/commit/c76004f183975b377f104b2d89f7af7b8b0cef4e))
+* **EMS-4000:** application submission - conditional email template ([#3397](https://github.com/UK-Export-Finance/exip/issues/3397)) ([8e890f3](https://github.com/UK-Export-Finance/exip/commit/8e890f3186d9e62d055b23db3fec78b3098e3881))
+* **EMS-4087:** application submission - small export builder - non gbp ([#3442](https://github.com/UK-Export-Finance/exip/issues/3442)) ([197d616](https://github.com/UK-Export-Finance/exip/commit/197d616a4549a9c64d95e39982b7da36aa66bb48))
+
+
+### Bug Fixes
+
+* **EMS-4088:** application submission - small export builder calculation ([#3444](https://github.com/UK-Export-Finance/exip/issues/3444)) ([3cbbe96](https://github.com/UK-Export-Finance/exip/commit/3cbbe966c08b959d2d4867e4cc087dbce796b830))
+
 ## [2.36.3](https://github.com/UK-Export-Finance/exip/compare/v2.36.2...v2.36.3) (2024-11-14)
 
 ### Bug Fixes
