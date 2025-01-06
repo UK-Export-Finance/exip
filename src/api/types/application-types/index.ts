@@ -120,23 +120,6 @@ export interface ApplicationCompanySicCode {
   industrySectorName: string;
 }
 
-export interface ApplicationDeclaration extends Relationship {
-  agreeToAntiBribery?: boolean;
-  agreeToConfidentiality?: boolean;
-  agreeToConfirmationAndAcknowledgements?: boolean;
-  hasAntiBriberyCodeOfConduct?: boolean;
-  willExportWithAntiBriberyCodeOfConduct?: boolean;
-}
-
-export interface ApplicationDeclarationVersions {
-  ANTI_BRIBERY: string;
-  ANTI_BRIBERY_CODE_OF_CONDUCT: string;
-  ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: string;
-  CONFIDENTIALITY: string;
-  CONFIRMATION_AND_ACKNOWLEDGEMENTS: string;
-  HOW_YOUR_DATA_WILL_BE_USED?: string;
-}
-
 export interface ApplicationDeclarationModernSlavery extends Relationship {
   willAdhereToAllRequirements?: boolean;
   hasNoOffensesOrInvestigations?: boolean;
@@ -147,6 +130,24 @@ export interface ApplicationDeclarationModernSlaveryVersions {
   WILL_ADHERE_TO_ALL_REQUIREMENTS: string;
   HAS_NO_OFFENSES_OR_INVESTIGATIONS: string;
   IS_NOT_AWARE_OF_EXISTING_SLAVERY: string;
+}
+
+export interface ApplicationDeclaration extends Relationship {
+  agreeToAntiBribery?: boolean;
+  agreeToConfidentiality?: boolean;
+  agreeToConfirmationAndAcknowledgements?: boolean;
+  hasAntiBriberyCodeOfConduct?: boolean;
+  willExportWithAntiBriberyCodeOfConduct?: boolean;
+  modernSlavery: ApplicationDeclarationModernSlavery;
+}
+
+export interface ApplicationDeclarationVersions {
+  ANTI_BRIBERY: string;
+  ANTI_BRIBERY_CODE_OF_CONDUCT: string;
+  ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT: string;
+  CONFIDENTIALITY: string;
+  CONFIRMATION_AND_ACKNOWLEDGEMENTS: string;
+  HOW_YOUR_DATA_WILL_BE_USED?: string;
 }
 
 export interface ApplicationLossPayeeFinancialInternationalVector extends Relationship {

@@ -1,0 +1,11 @@
+/**
+ * DECLARATIONS_INDEXES
+ * Default indexes for the "Declarations" XLSX worksheet.
+ */
+const DECLARATIONS_INDEXES = () => ({
+  CANNOT_ADHERE_TO_ALL_REQUIREMENTS: 7,
+  OFFENSES_OR_INVESTIGATIONS: 9,
+  AWARE_OF_EXISTING_SLAVERY: 11,
+});
+
+export default DECLARATIONS_INDEXES;

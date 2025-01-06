@@ -6,7 +6,7 @@ import getBuyerTradingHistoryById from '../get-buyer-trading-history-by-id';
 
 /**
  * getPopulatedBuyer
- * Get a populated eligibility
+ * Get a populated buyer
  * @param {Context} context: KeystoneJS context API
  * @param {String} id: Buyer ID
  * @returns {Promise<ApplicationBuyer>}

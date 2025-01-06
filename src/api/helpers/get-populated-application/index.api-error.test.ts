@@ -279,6 +279,22 @@ describe('api/helpers/get-populated-application - error handling', () => {
     }
   });
 
+  it('should throw an error when declaration modernSlavery does not exist', async () => {
+    const mockApplication = {
+      ...fullApplication,
+      declaration: {
+        ...fullApplication.declaration,
+        modernSlaveryId: mockInvalidId,
+      },
+    };
+
+    try {
+      await getPopulatedApplication.get({ context, application: mockApplication });
+    } catch (error) {
+      expect(String(error).includes(expectedErrorMessage)).toEqual(true);
+    }
+  });
+
   it('should throw an error when sectionReview does not exist', async () => {
     const mockApplication = { ...fullApplication, sectionReviewId: mockInvalidId };
 

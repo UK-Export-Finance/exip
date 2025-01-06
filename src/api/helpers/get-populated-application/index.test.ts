@@ -2,6 +2,7 @@ import { Application as KeystoneApplication } from '.keystone/types'; // eslint-
 import getPopulatedApplication from '.';
 import { createFullApplication, getKeystoneContext } from '../../test-helpers';
 import getPopulatedExportContract from '../get-populated-export-contract';
+import getPopulatedDeclaration from '../get-populated-declaration';
 import mapPolicy from './map-policy';
 import getNominatedLossPayee from './nominated-loss-payee';
 import mockCountries from '../../test-mocks/mock-countries';
@@ -113,6 +114,14 @@ describe('api/helpers/get-populated-application', () => {
     const expected = await getPopulatedExportContract(context, exportContract.id);
 
     expect(result.exportContract).toEqual(expected);
+  });
+
+  it('should return an application with populated declaration', async () => {
+    const result = await getPopulatedApplication.get({ context, application });
+
+    const expected = await getPopulatedDeclaration(context, application.declarationId);
+
+    expect(result.declaration).toEqual(expected);
   });
 
   it('should return an application with populated sectionReview', async () => {
