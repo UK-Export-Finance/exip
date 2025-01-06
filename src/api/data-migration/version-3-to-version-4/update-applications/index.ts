@@ -1,12 +1,12 @@
 import { Connection } from 'mysql2/promise';
-import removeMigratedV2toV3Field from './remove-application-migrated-v2-to-v3-field';
-import addMigratedV3toV4Field from './add-application-migrated-v3-to-v4-field';
+import addMigratedToField from './add-application-migrated-to-field';
 import createDeclarationModernSlaveryTable from './create-declaration-modern-slavery-table';
 import createDeclarationModernSlaveryVersionTable from './create-declaration-modern-slavery-version-table';
 import updateDeclarations from './update-declarations';
 import updateDeclarationModernSlaveries from './update-declaration-modern-slaveries';
 import updateApplicationVersion from './update-application-version';
-import updateApplicationMigrated from './update-application-migrated';
+import updateApplicationMigratedFields from './update-application-migrated-fields';
+import removeMigratedV2toV3Field from './remove-application-migrated-v2-to-v3-field';
 
 /**
  * updateApplications
@@ -21,17 +21,16 @@ const updateApplications = async (connection: Connection) => {
 
   try {
     const promises = await Promise.all([
-      removeMigratedV2toV3Field(connection),
-      addMigratedV3toV4Field(connection),
+      await createDeclarationModernSlaveryTable(connection),
+      await createDeclarationModernSlaveryVersionTable(connection),
 
-      createDeclarationModernSlaveryTable(connection),
-      createDeclarationModernSlaveryVersionTable(connection),
+      await updateDeclarations(connection),
+      await updateDeclarationModernSlaveries(connection),
 
-      updateDeclarations(connection),
-      updateDeclarationModernSlaveries(connection),
-
-      updateApplicationVersion(connection),
-      updateApplicationMigrated(connection),
+      await addMigratedToField(connection),
+      await updateApplicationMigratedFields(connection),
+      await updateApplicationVersion(connection),
+      await removeMigratedV2toV3Field(connection),
     ]);
 
     return promises;
