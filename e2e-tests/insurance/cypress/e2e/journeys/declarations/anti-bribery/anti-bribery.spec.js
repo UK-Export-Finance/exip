@@ -31,8 +31,8 @@ context(
         cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
         /**
-         * TODO: check this is in place in other declaration tests.
-         * If not, should it be passing? I.e declaration required tasks / cannot skip etc.
+         * TODO: EMS-4096
+         * Introduce/enforce this, for all other declaration routes.
          */
         cy.completeAndSubmitCheckYourAnswers();
 
