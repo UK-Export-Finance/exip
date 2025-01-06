@@ -25,7 +25,6 @@ const completeAndSubmitDeclarationsForms = ({
 }) => {
   cy.completeAndSubmitCheckYourAnswers();
 
-  // go to the page we want to test.
   cy.clickTaskDeclarationsAndSubmit();
 
   const steps = [
@@ -56,10 +55,14 @@ const completeAndSubmitDeclarationsForms = ({
         }),
     });
   } else {
-    cy.completeAndSubmitModernSlaveryForm({
-      willAdhereToAllRequirements,
-      hasNoOffensesOrInvestigations,
-      isNotAwareOfExistingSlavery,
+    steps.push({
+      name: 'modernSlavery',
+      action: () =>
+        cy.completeAndSubmitModernSlaveryForm({
+          willAdhereToAllRequirements,
+          hasNoOffensesOrInvestigations,
+          isNotAwareOfExistingSlavery,
+        }),
     });
   }
 
