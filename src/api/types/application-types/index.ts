@@ -255,9 +255,9 @@ export interface ApplicationJointlyInsuredParty extends Relationship {
 }
 
 export interface ApplicationPolicy extends Relationship {
-  policyType: string;
+  policyType?: string;
   requestedStartDate: Date;
-  contractCompletionDate?: Date;
+  contractCompletionDate: Date;
   totalValueOfContract?: number;
   needPreCreditPeriodCover?: boolean;
   creditPeriodWithBuyer?: string;
@@ -266,7 +266,6 @@ export interface ApplicationPolicy extends Relationship {
   totalSalesToBuyer?: number;
   maximumBuyerWillOwe?: number;
   jointlyInsuredParty: ApplicationJointlyInsuredParty;
-  requestedCreditLimit?: number;
 }
 
 export interface ApplicationPolicyContact extends Relationship {
@@ -316,10 +315,6 @@ export interface ApplicationSubmissionEmailVariables {
   buyerLocation: string;
 }
 
-interface ApplicationVersionSmallExportBuilder {
-  MAXIMUM_BUYER_WILL_OWE: number;
-}
-
 export interface ApplicationVersion {
   VERSION_NUMBER: string;
   OVER_500K_SUPPORT: boolean;
@@ -330,7 +325,6 @@ export interface ApplicationVersion {
   DEFAULT_CURRENCY?: string;
   BROKER_ADDRESS_AS_MULTIPLE_FIELDS: boolean;
   REQUESTED_CREDIT_LIMIT_REQUIRED?: boolean;
-  SMALL_EXPORT_BUILDER?: ApplicationVersionSmallExportBuilder;
 }
 
 export interface SectionReview extends Relationship {

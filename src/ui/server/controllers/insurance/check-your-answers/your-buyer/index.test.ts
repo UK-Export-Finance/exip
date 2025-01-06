@@ -39,7 +39,7 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
   });
 
   describe('FIELD_ID', () => {
-    it('should have the correct ID', () => {
+    it('should have the correct FIELD_ID', () => {
       const expected = FIELD_IDS.CHECK_YOUR_ANSWERS.BUYER;
 
       expect(FIELD_ID).toEqual(expected);

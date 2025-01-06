@@ -1,4 +1,5 @@
-import { field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
+import { headingCaption } from '../../../../../../partials';
+import { field as fieldSelector } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
@@ -30,7 +31,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'lossPayeeDetails', isAppointingLossPayee: true, locatedInUK: false });
+        cy.completeAndSubmitPolicyForms({ formToStopAt: 'lossPayeeDetails', isAppointingLossPayee: true, locatedInUK: false });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT}`;
         checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;

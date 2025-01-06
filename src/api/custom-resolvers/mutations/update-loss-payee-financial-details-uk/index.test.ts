@@ -44,7 +44,7 @@ describe('custom-resolvers/update-loss-payee-financial-details-uk', () => {
       lossPayeeFinancialDetailsUkResponse = await updateLossPayeeFinancialDetailsUk({}, variables, context);
     });
 
-    it('should return success=true', () => {
+    it('should return success as true', () => {
       const { success } = lossPayeeFinancialDetailsUkResponse;
 
       expect(success).toEqual(true);

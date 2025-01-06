@@ -83,8 +83,8 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
         expectedValue: '',
       });
 
-      cy.assertEmptyFieldValue(REGISTRATION_NUMBER);
-      cy.assertEmptyFieldValue(WEBSITE);
+      cy.checkValue(field(REGISTRATION_NUMBER), '');
+      cy.checkValue(field(WEBSITE), '');
     });
   });
 

@@ -10,6 +10,8 @@ context('Skip link should take user to the main content of a page', () => {
   it("When a user keyboard tabs from the html body, skip link should be focused and take the user to the page's #main-content", () => {
     cy.navigateToRootUrl();
 
+    skipLink().should('exist');
+
     cy.checkText(skipLink(), LINKS.SKIP_TO_MAIN_CONTENT);
   });
 });

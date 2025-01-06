@@ -113,7 +113,8 @@ export const get = async (req: Request, res: Response) => {
   } = application;
 
   try {
-    const { allCurrencies, countries } = await api.keystone.getCountriesAndCurrencies();
+    const countries = await api.keystone.countries.getAll();
+    const { allCurrencies } = await api.keystone.APIM.getCurrencies();
 
     if (!isPopulatedArray(countries) || !isPopulatedArray(allCurrencies)) {
       return res.redirect(PROBLEM_WITH_SERVICE);
@@ -162,7 +163,8 @@ export const post = async (req: Request, res: Response) => {
 
   if (validationErrors) {
     try {
-      const { allCurrencies, countries } = await api.keystone.getCountriesAndCurrencies();
+      const countries = await api.keystone.countries.getAll();
+      const { allCurrencies } = await api.keystone.APIM.getCurrencies();
 
       if (!isPopulatedArray(countries) || !isPopulatedArray(allCurrencies)) {
         return res.redirect(PROBLEM_WITH_SERVICE);

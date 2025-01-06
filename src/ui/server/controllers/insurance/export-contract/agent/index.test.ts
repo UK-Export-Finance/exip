@@ -47,7 +47,7 @@ describe('controllers/insurance/export-contract/agent', () => {
   });
 
   describe('FIELD_ID', () => {
-    it('should have the correct ID', () => {
+    it('should have the correct FIELD_ID', () => {
       expect(FIELD_ID).toEqual(USING_AGENT);
     });
   });

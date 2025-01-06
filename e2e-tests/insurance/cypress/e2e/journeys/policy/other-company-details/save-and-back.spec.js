@@ -25,7 +25,7 @@ context('Insurance - Policy - Other company details page - Save and back', () =>
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'anotherCompany', otherCompanyInvolved: true });
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'anotherCompany', otherCompanyInvolved: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS}`;
 

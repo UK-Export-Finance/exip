@@ -24,9 +24,6 @@ Cypress.Commands.add('assertCurrencyFormFieldsAreEmpty', require('./assert-curre
 Cypress.Commands.add('assertNameEmailAndPositionFields', require('./assert-name-email-and-position-fields'));
 
 Cypress.Commands.add('assertCopyWithCurrencyName', require('./assert-copy-with-currency-name'));
-Cypress.Commands.add('assertEmptyAutocompleteFieldValue', require('./assert-empty-autocomplete-field-value'));
-Cypress.Commands.add('assertEmptyFieldValue', require('./assert-empty-field-value'));
-Cypress.Commands.add('assertEmptyTextareaFieldValue', require('./assert-empty-textarea-field-value'));
 Cypress.Commands.add('assertPrefix', require('./assert-prefix'));
 Cypress.Commands.add('assertSuffix', require('./assert-suffix'));
 Cypress.Commands.add('assertTextareaRendering', require('./assert-textarea-rendering'));

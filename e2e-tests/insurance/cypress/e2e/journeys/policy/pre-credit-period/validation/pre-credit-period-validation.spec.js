@@ -48,9 +48,13 @@ context('Insurance - Policy - Pre-credit period page - validation', () => {
   it(`should render a validation error when ${NEED_PRE_CREDIT_PERIOD} is not provided`, () => {
     const fieldId = NEED_PRE_CREDIT_PERIOD;
 
+    const expectedErrorsCount = 1;
+    const expectedErrorMessage = POLICY_ERROR_MESSAGES[fieldId].IS_EMPTY;
+
     cy.submitAndAssertRadioErrors({
       field: noRadio(fieldId),
-      expectedErrorMessage: POLICY_ERROR_MESSAGES[fieldId].IS_EMPTY,
+      expectedErrorsCount,
+      expectedErrorMessage,
     });
   });
 

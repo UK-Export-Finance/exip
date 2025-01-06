@@ -27,7 +27,7 @@ context('Insurance - Your buyer - Credit insurance cover - form validation', () 
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
 
-      cy.completeAndSubmitYourBuyerForms({ stopSubmittingAfter: 'tradedWithBuyer' });
+      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'tradedWithBuyer' });
 
       cy.assertUrl(url);
     });
@@ -46,7 +46,7 @@ context('Insurance - Your buyer - Credit insurance cover - form validation', () 
   describe(`when ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} 'no' is selected`, () => {
     const FIELD_ID = HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER;
 
-    it('should render validation errors', () => {
+    it('should display validation errors', () => {
       cy.navigateToUrl(url);
 
       const radioField = {

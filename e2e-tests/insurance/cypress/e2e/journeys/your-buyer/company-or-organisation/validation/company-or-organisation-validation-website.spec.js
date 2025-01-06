@@ -50,7 +50,7 @@ context('Insurance - Your buyer - Company or organisation page - form validation
     expectedErrorsCount: 3,
   };
 
-  it(`should render validation errors if when ${FIELD_ID} is the incorrect format`, () => {
+  it(`should display validation errors if when ${FIELD_ID} is the incorrect format`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: WEBSITE_EXAMPLES.INVALID,
@@ -58,7 +58,7 @@ context('Insurance - Your buyer - Company or organisation page - form validation
     });
   });
 
-  it(`should render validation errors when ${FIELD_ID} is above 191 characters`, () => {
+  it(`should display validation errors when ${FIELD_ID} is above 191 characters`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH,

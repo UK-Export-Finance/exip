@@ -21,7 +21,7 @@ import { CreateManyApplicationsVariables, Context, ObjectType } from '../../../t
  * @param {Object} root: GraphQL root variables
  * @param {CreateManyApplicationsVariables} GraphQL variables for the createManyApplications mutation
  * @param {Context} context: KeystoneJS context API
- * @returns {Promise<SuccessResponse>} Object with success flag and applications array
+ * @returns {Promise<Object>} Object with success flag and applications array
  */
 const createManyApplications = async (root: any, variables: CreateManyApplicationsVariables, context: Context) => {
   console.info('Creating many applications');

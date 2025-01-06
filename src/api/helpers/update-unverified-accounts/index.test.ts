@@ -23,7 +23,7 @@ describe('helpers/update-unverified-accounts', () => {
   });
 
   describe(`successfully updates unverified accounts' "isInactive" status to true`, () => {
-    it('should return success=true', async () => {
+    it('should return success as true', async () => {
       const { success } = await updateUnverifiedAccounts(context);
 
       expect(success).toEqual(true);

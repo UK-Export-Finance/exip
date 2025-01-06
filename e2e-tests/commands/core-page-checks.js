@@ -21,6 +21,7 @@ const baseUrl = Cypress.config('baseUrl');
  * @param {String} expectedHref - Expected "back" HREF/route
  */
 const checkBackLink = (currentHref, expectedHref) => {
+  backLinkSelector().should('exist');
   cy.checkText(backLinkSelector(), LINKS.BACK);
 
   cy.clickBackLink();

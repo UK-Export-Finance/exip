@@ -37,7 +37,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
   let companyNumber;
 
   before(() => {
-    cy.completeAndSubmitEligibilityForms({ stopSubmittingAfter: 'companiesHouseNumber' });
+    cy.completeAndSubmitEligibilityForms({ formToStopAt: 'companiesHouseNumber' });
 
     cy.assertUrl(url);
   });
@@ -76,7 +76,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
         cy.navigateToUrl(url);
       });
 
-      it('should render the `is empty` error', () => {
+      it('should display the `is empty` error', () => {
         cy.submitAndAssertFieldErrors({
           field,
           value: companyNumber,
@@ -92,7 +92,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
         companyNumber = COMPANIES_HOUSE_NUMBER_EMPTY;
       });
 
-      it('should render the `is empty` error', () => {
+      it('should display the `is empty` error', () => {
         cy.submitAndAssertFieldErrors({
           field,
           value: companyNumber,
@@ -108,7 +108,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
         companyNumber = COMPANIES_HOUSE_NUMBER_TOO_SHORT;
       });
 
-      it('should render the `incorrect format` error', () => {
+      it('should display the `incorrect format` error', () => {
         cy.submitAndAssertFieldErrors({
           field,
           value: companyNumber,
@@ -126,7 +126,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
         cy.interceptCompaniesHousePost({ companyNumber });
       });
 
-      it('should render the `incorrect format` error', () => {
+      it('should display the `incorrect format` error', () => {
         cy.submitAndAssertFieldErrors({
           field,
           value: companyNumber,
@@ -144,7 +144,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
         cy.interceptCompaniesHousePost({ companyNumber });
       });
 
-      it('should render the `not found` error', () => {
+      it('should display the `not found` error', () => {
         cy.submitAndAssertFieldErrors({
           field,
           value: companyNumber,

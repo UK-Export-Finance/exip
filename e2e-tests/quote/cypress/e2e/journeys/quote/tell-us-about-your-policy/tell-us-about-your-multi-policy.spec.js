@@ -61,6 +61,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
 
       const field = fieldSelector(fieldId);
 
+      field.legend().should('exist');
       cy.checkText(field.legend(), FIELDS[fieldId].MULTIPLE_POLICY.LEGEND);
     });
 

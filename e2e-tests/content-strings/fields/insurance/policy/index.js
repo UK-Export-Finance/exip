@@ -1,8 +1,6 @@
-import { APPLICATION, ELIGIBILITY, FIELD_VALUES, GBP_CURRENCY_CODE, MAXIMUM_CHARACTERS } from '../../../../constants';
+import { APPLICATION, ELIGIBILITY, FIELD_VALUES, MAXIMUM_CHARACTERS } from '../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../constants/field-ids/insurance';
 import { FORM_TITLES } from '../../../form-titles';
-import { LINKS } from '../../../links';
-import formatCurrency from '../../../../helpers/format-currency';
 
 const {
   ACCOUNT: { EMAIL },
@@ -29,15 +27,11 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 const { MAX_COVER_PERIOD_MONTHS } = ELIGIBILITY;
-
 const {
-  SMALL_EXPORT_BUILDER,
   POLICY: { TOTAL_MONTHS_OF_COVER },
 } = APPLICATION;
 
 const { POLICY: POLICY_FORM_TITLES } = FORM_TITLES;
-
-const SMALL_EXPORT_BUILDER_THRESHOLD = formatCurrency(SMALL_EXPORT_BUILDER.MAXIMUM_BUYER_WILL_OWE, GBP_CURRENCY_CODE);
 
 export const POLICY_FIELDS = {
   [POLICY_TYPE]: {
@@ -146,13 +140,6 @@ export const POLICY_FIELDS = {
         LABEL: 'Estimate the maximum amount your buyer will owe you at any single point during this time',
         HINT: {
           FOR_EXAMPLE: 'For example, your total sales might be £250,000 but the maximum the buyer will owe you at any single point is £100,000.',
-          INITIAL_CREDIT_LIMIT: {
-            INTRO: `If your initial credit limit request is ${SMALL_EXPORT_BUILDER_THRESHOLD} or less you could be eligible for the`,
-            LINK: {
-              TEXT: 'Small Export Builder.',
-              HREF: LINKS.EXTERNAL.SMALL_EXPORT_BUILDER,
-            },
-          },
           NO_DECIMALS: 'Enter a whole number. Do not enter decimals.',
         },
         SUMMARY: {

@@ -99,40 +99,32 @@ const calculateEstimatedCost = (premiumRate: number, contractValue: number) => N
  * @returns {Object} Quote with premium rate and estimated cost
  */
 const generateQuote = (submittedData: SubmittedData): Quote => {
-  try {
-    console.info('Generating quote');
+  const contractValue = getContractValue(submittedData.quoteEligibility);
 
-    const contractValue = getContractValue(submittedData.quoteEligibility);
+  const mapped = {
+    ...contractValue,
+    percentageOfCover: submittedData.quoteEligibility[PERCENTAGE_OF_COVER],
+    insuredFor: getInsuredFor(submittedData.quoteEligibility),
+    buyerCountry: submittedData.quoteEligibility[BUYER_COUNTRY],
+    currency: submittedData.quoteEligibility[CURRENCY],
+    creditPeriodInMonths: submittedData.quoteEligibility[CREDIT_PERIOD],
+    policyType: submittedData.quoteEligibility[POLICY_TYPE],
+    policyLength: submittedData.quoteEligibility[POLICY_LENGTH],
+  };
 
-    const mapped = {
-      ...contractValue,
-      percentageOfCover: submittedData.quoteEligibility[PERCENTAGE_OF_COVER],
-      insuredFor: getInsuredFor(submittedData.quoteEligibility),
-      buyerCountry: submittedData.quoteEligibility[BUYER_COUNTRY],
-      currency: submittedData.quoteEligibility[CURRENCY],
-      creditPeriodInMonths: submittedData.quoteEligibility[CREDIT_PERIOD],
-      policyType: submittedData.quoteEligibility[POLICY_TYPE],
-      policyLength: submittedData.quoteEligibility[POLICY_LENGTH],
-    };
+  const totalMonths = getTotalMonths(mapped[POLICY_TYPE], mapped[POLICY_LENGTH], mapped[CREDIT_PERIOD]);
 
-    const totalMonths = getTotalMonths(mapped[POLICY_TYPE], mapped[POLICY_LENGTH], mapped[CREDIT_PERIOD]);
+  const premiumRate = getPremiumRate(mapped[POLICY_TYPE], mapped[BUYER_COUNTRY].riskCategory, totalMonths, mapped[PERCENTAGE_OF_COVER]);
 
-    const premiumRate = getPremiumRate(mapped[POLICY_TYPE], mapped[BUYER_COUNTRY].esraClassification, totalMonths, mapped[PERCENTAGE_OF_COVER]);
+  const [contractValueAmount] = Object.values(contractValue);
 
-    const [contractValueAmount] = Object.values(contractValue);
+  const quote = {
+    ...mapped,
+    premiumRatePercentage: premiumRate,
+    estimatedCost: calculateEstimatedCost(premiumRate, contractValueAmount),
+  };
 
-    const quote = {
-      ...mapped,
-      premiumRatePercentage: premiumRate,
-      estimatedCost: calculateEstimatedCost(premiumRate, contractValueAmount),
-    };
-
-    return quote;
-  } catch (error) {
-    console.error('Error generating quote %o', error);
-
-    throw new Error(`Generating quote ${error}`);
-  }
+  return quote;
 };
 
 export { getContractValue, getInsuredFor, getTotalMonths, calculateEstimatedCost, generateQuote };

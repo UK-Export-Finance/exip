@@ -35,7 +35,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'nameOnPolicy', sameName: false });
+        cy.completeAndSubmitPolicyForms({ formToStopAt: 'nameOnPolicy', sameName: false });
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
 
@@ -72,7 +72,7 @@ context(
         cy.checkText(fieldSelector(POLICY_CONTACT_DETAIL).hint(), CONTENT_STRINGS.HINT);
       });
 
-      it(`should render a prepopulated ${FIRST_NAME} field`, () => {
+      it(`should display ${FIRST_NAME} field and be prepopulated`, () => {
         const fieldId = FIRST_NAME;
         const field = fieldSelector(fieldId);
 
@@ -81,7 +81,7 @@ context(
         cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
       });
 
-      it(`should render a prepopulated ${LAST_NAME} field`, () => {
+      it(`should display ${LAST_NAME} field and be prepopulated`, () => {
         const fieldId = LAST_NAME;
         const field = fieldSelector(fieldId);
 
@@ -90,7 +90,7 @@ context(
         cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
       });
 
-      it(`should render a prepopulated ${EMAIL} field`, () => {
+      it(`should display ${EMAIL} field and be prepopulated`, () => {
         const fieldId = EMAIL;
         const field = fieldSelector(fieldId);
 
@@ -99,7 +99,7 @@ context(
         cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
       });
 
-      it(`should render a ${POSITION} field that is not prepopulated`, () => {
+      it(`should display ${POSITION} field and should not be prepopulated`, () => {
         const fieldId = POSITION;
         const field = fieldSelector(fieldId);
 

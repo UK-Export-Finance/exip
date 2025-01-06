@@ -1,5 +1,5 @@
 import { FIELD_VALUES } from '../../../../../../constants';
-import { summaryList } from '../../../../../../pages/shared';
+import { field, summaryList } from '../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -29,7 +29,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completeAndSubmitYourBusinessForms({ stopSubmittingAfter: 'creditControl', differentTradingAddress: true });
+        cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'creditControl', differentTradingAddress: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       });
@@ -77,7 +77,7 @@ context(
 
           cy.completeAndSubmitCompanyDetails({ differentTradingAddress: true });
 
-          cy.assertEmptyTextareaFieldValue(FULL_ADDRESS);
+          cy.checkText(field(FULL_ADDRESS).textarea(), '');
         });
       });
     });

@@ -46,7 +46,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   } catch (error) {
-    console.error('Error updating application - business - turnover currency (save and back) %o', error);
+    console.error('Error updating application - business - turnover currency (save and back) %O', error);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

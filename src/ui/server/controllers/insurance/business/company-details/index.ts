@@ -43,11 +43,6 @@ export const FIELD_IDS = [HAS_DIFFERENT_TRADING_NAME, HAS_DIFFERENT_TRADING_ADDR
 
 const IS_APPLICATION_SUMMARY_LIST = true;
 
-/**
- * pageVariables
- * Page fields and "save and go back" URL
- * @returns {Object} Page variables
- */
 const pageVariables = (referenceNumber: number) => ({
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
   DIFFERENT_COMPANIES_HOUSE_NUMBER_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}`,

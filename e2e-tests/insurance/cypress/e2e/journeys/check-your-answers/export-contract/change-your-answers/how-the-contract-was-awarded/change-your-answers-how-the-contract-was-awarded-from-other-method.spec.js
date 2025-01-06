@@ -1,4 +1,4 @@
-import { summaryList, radios } from '../../../../../../../../pages/shared';
+import { summaryList, radios, field } from '../../../../../../../../pages/shared';
 import FIELD_IDS from '../../../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../../../content-strings/fields/insurance/export-contract';
@@ -66,7 +66,7 @@ context(
         });
 
         it(`should have no value for ${OTHER_AWARD_METHOD} text input`, () => {
-          cy.assertEmptyFieldValue(OTHER_AWARD_METHOD);
+          cy.checkValue(field(OTHER_AWARD_METHOD), '');
         });
       });
     });

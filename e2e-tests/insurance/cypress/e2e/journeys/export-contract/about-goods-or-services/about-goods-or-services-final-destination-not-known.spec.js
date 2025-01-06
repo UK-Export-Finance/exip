@@ -28,7 +28,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.completeAndSubmitExportContractForms({ stopSubmittingAfter: 'howWasTheContractAwarded' });
+        cy.completeAndSubmitExportContractForms({ formToStopAt: 'howWasTheContractAwarded' });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
       });

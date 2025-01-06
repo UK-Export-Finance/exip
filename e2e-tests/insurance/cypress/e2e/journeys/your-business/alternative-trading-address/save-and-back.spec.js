@@ -27,7 +27,7 @@ context('Insurance - Your business - Alternative trading address - Save and go b
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitYourBusinessForms({ stopSubmittingAfter: 'companyDetails', differentTradingAddress: true });
+      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'companyDetails', differentTradingAddress: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_ROOT}`;
 
@@ -83,7 +83,7 @@ context('Insurance - Your business - Alternative trading address - Save and go b
     it('should NOT have the originally submitted answer', () => {
       cy.navigateToUrl(url);
 
-      cy.assertEmptyTextareaFieldValue(FULL_ADDRESS);
+      cy.checkText(field(FULL_ADDRESS).textarea(), '');
     });
   });
 

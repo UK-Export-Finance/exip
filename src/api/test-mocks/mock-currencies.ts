@@ -25,6 +25,6 @@ export const USD = {
   isoCode: 'USD',
 };
 
-const mockCurrencies: Array<Currency> = [EUR, HKD, JPY, GBP, USD];
+const mockCurrencies = [EUR, HKD, JPY, GBP, USD] as Array<Currency>;
 
 export default mockCurrencies;

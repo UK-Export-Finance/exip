@@ -12,7 +12,7 @@ import { Account, AccountDeletionVariables, AuthenticationRetry, Context } from 
  * @param {Object} root: GraphQL root variables
  * @param {Object} variables: GraphQL variables for the DeleteAnAccount mutation
  * @param {Context} context: KeystoneJS context API
- * @returns {Promise<SuccessResponse>} Object with success flag
+ * @returns {Promise<Object>} Object with success flag
  */
 const deleteAnAccount = async (root: any, variables: AccountDeletionVariables, context: Context) => {
   console.info('Deleting account ', variables.email);

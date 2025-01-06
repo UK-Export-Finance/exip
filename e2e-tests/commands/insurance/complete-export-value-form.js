@@ -12,16 +12,11 @@ const {
 /**
  * completeExportValueForm
  * Complete the "Export value" form
- * @param {String} totalSalesToBuyer: Total sales to the buyer
- * @param {String} maximumBuyerWillOwe: Maximum buyer will owe
  */
-const completeExportValueForm = ({
-  totalSalesToBuyer = application.POLICY[TOTAL_SALES_TO_BUYER],
-  maximumBuyerWillOwe = application.POLICY[MAXIMUM_BUYER_WILL_OWE],
-}) => {
-  cy.keyboardInput(field(TOTAL_SALES_TO_BUYER).input(), totalSalesToBuyer);
+const completeExportValueForm = () => {
+  cy.keyboardInput(field(TOTAL_SALES_TO_BUYER).input(), application.POLICY[TOTAL_SALES_TO_BUYER]);
 
-  cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), maximumBuyerWillOwe);
+  cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), application.POLICY[MAXIMUM_BUYER_WILL_OWE]);
 };
 
 export default completeExportValueForm;

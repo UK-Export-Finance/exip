@@ -19,7 +19,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Exporter location page - as an exporter, I want to check if my company can get UKEF issue credit insurance cover', () => {
   beforeEach(() => {
-    cy.completeAndSubmitEligibilityForms({ stopSubmittingAfter: 'checkIfEligible' });
+    cy.completeAndSubmitEligibilityForms({ formToStopAt: 'checkIfEligible' });
 
     const expectedUrl = `${baseUrl}${EXPORTER_LOCATION}`;
 
@@ -57,8 +57,11 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
       it('should render validation errors', () => {
+        const expectedErrorsCount = 1;
+
         cy.submitAndAssertRadioErrors({
           field: yesRadio(FIELD_ID),
+          expectedErrorsCount,
           expectedErrorMessage: ERROR_MESSAGES.ELIGIBILITY[FIELD_ID],
         });
 

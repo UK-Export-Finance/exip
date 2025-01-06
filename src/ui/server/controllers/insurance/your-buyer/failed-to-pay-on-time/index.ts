@@ -28,10 +28,9 @@ export const TEMPLATE = TEMPLATES.SHARED_PAGES.SINGLE_RADIO;
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.FAILED_PAYMENTS;
 
 /**
- * pageVariables
- * Page fields and "save and go back" URL
+ * pageVariables for failed-to-pay-on-time page
  * @param {Number} referenceNumber: Application reference number
- * @returns {Object} Page variables
+ * @returns {Object} pageVariables
  */
 export const pageVariables = (referenceNumber: number) => ({
   FIELD_ID,

@@ -51,7 +51,6 @@ export const EXTERNAL_API_MAPPINGS = {
 export const EXTERNAL_API_ENDPOINTS = {
   APIM_MDM: {
     CURRENCY: '/currencies',
-    CURRENCY_EXCHANGE: '/currencies/exchange',
     INDUSTRY_SECTORS: '/sector-industries',
     MARKETS: '/markets',
   },

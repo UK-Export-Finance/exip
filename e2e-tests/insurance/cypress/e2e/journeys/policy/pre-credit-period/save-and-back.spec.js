@@ -24,7 +24,7 @@ context('Insurance - Policy - Pre-credit period page - Save and go back', () => 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'nameOnPolicy' });
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'nameOnPolicy' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`;
 

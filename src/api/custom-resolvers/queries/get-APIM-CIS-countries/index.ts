@@ -1,27 +1,29 @@
-import apimCisCountries from '../../../helpers/get-APIM-CIS-countries';
-import { MappedCisCountry } from '../../../types';
+import APIM from '../../../integrations/APIM';
+import mapCisCountries from '../../../helpers/map-CIS-countries';
 
 /**
- * getApimCisCountriesQuery
+ * getApimCisCountries
  * Get countries from APIM
- * @returns {Promise<Array<MappedCisCountry>>} APIM response data
+ * @returns {Promise<Object>} APIM response data
  */
-const getApimCisCountriesQuery = async (): Promise<Array<MappedCisCountry>> => {
+const getApimCisCountries = async () => {
   try {
-    console.info('Getting CIS countries from APIM');
+    console.info('Getting and mapping CIS countries from APIM');
 
-    const response = await apimCisCountries.get();
+    const response = await APIM.getCisCountries();
 
-    if (response.success) {
-      return response.countries;
+    if (response.data) {
+      const mapped = mapCisCountries(response.data);
+
+      return mapped;
     }
 
-    return [];
+    return { success: false };
   } catch (error) {
-    console.error('Error Getting CIS countries from APIM %o', error);
+    console.error('Error Getting and mapping CIS countries from APIM %o', error);
 
-    throw new Error(`Getting CIS countries from APIM ${error}`);
+    throw new Error(`Getting and mapping CIS countries from APIM ${error}`);
   }
 };
 
-export default getApimCisCountriesQuery;
+export default getApimCisCountries;

@@ -27,7 +27,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completeAndSubmitDeclarationsForms({ stopSubmittingAfter: 'codeOfConduct', referenceNumber });
+        cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'codeOfConduct', referenceNumber });
 
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`;
 
@@ -88,8 +88,11 @@ context(
         });
 
         it('should render a validation error', () => {
+          const expectedErrorsCount = 1;
+
           cy.submitAndAssertRadioErrors({
             field: yesRadio(FIELD_ID),
+            expectedErrorsCount,
             expectedErrorMessage: ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
           });
         });

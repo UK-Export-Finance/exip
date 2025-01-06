@@ -1,32 +1,57 @@
 import cannotGetAQuote from '.';
-import { EXTERNAL_API_MAPPINGS } from '../../../../constants';
+import mockCountries from '../../../../test-mocks/mock-countries';
+import { MappedCisCountry } from '../../../../types';
 
-const {
-  CIS: { RISK },
-} = EXTERNAL_API_MAPPINGS;
-
-const mockEsraClassification = RISK.STANDARD;
+const mockCountryCannotGetAQuote = {
+  ...mockCountries[0],
+  shortTermCover: false,
+  nbiIssueAvailable: false,
+} as MappedCisCountry;
 
 describe('helpers/map-cis-countries/map-cis-country/cannot-get-a-quote', () => {
-  describe('when country has shortTermCover=false, nbiIssueAvailable=false and no esraClassification', () => {
+  describe('when country does not have riskCategory, shortTermCover and nbiIssueAvailable', () => {
     it('should return true', () => {
-      const result = cannotGetAQuote({ shortTermCover: false, nbiIssueAvailable: false, esraClassification: null });
+      const result = cannotGetAQuote(mockCountryCannotGetAQuote);
 
       expect(result).toEqual(true);
     });
   });
 
-  describe('when country has shortTermCover=false, nbiIssueAvailable=false and has a esraClassification', () => {
+  describe('when country does not have riskCategory, but has shortTermCover and nbiIssueAvailable', () => {
     it('should return true', () => {
-      const result = cannotGetAQuote({ shortTermCover: false, nbiIssueAvailable: false, esraClassification: mockEsraClassification });
+      const mockCountry = {
+        ...mockCountryCannotGetAQuote,
+        shortTermCover: true,
+        nbiIssueAvailable: true,
+      };
+      const result = cannotGetAQuote(mockCountry);
 
       expect(result).toEqual(true);
     });
   });
 
-  describe('when country has shortTermCover=true, nbiIssueAvailable=true and has a esraClassification', () => {
+  describe('when country has riskCategory, but not shortTermCover and nbiIssueAvailable', () => {
+    it('should return true', () => {
+      const mockCountry = {
+        ...mockCountryCannotGetAQuote,
+        riskCategory: 'Mock',
+      };
+      const result = cannotGetAQuote(mockCountry);
+
+      expect(result).toEqual(true);
+    });
+  });
+
+  describe('when country has riskCategory, shortTermCover and nbiIssueAvailable', () => {
     it('should return false', () => {
-      const result = cannotGetAQuote({ shortTermCover: true, nbiIssueAvailable: true, esraClassification: mockEsraClassification });
+      const mockCountry = {
+        ...mockCountryCannotGetAQuote,
+        riskCategory: 'Mock',
+        shortTermCover: true,
+        nbiIssueAvailable: true,
+      };
+
+      const result = cannotGetAQuote(mockCountry);
 
       expect(result).toEqual(false);
     });

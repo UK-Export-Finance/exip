@@ -22,11 +22,7 @@ context('Insurance - Export contract - Declined by private market - Save and go 
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.completeAndSubmitExportContractForms({
-        stopSubmittingAfter: 'privateMarket',
-        totalContractValueOverThreshold: true,
-        attemptedPrivateMarketCover: true,
-      });
+      cy.completeAndSubmitExportContractForms({ formToStopAt: 'privateMarket', totalContractValueOverThreshold: true, attemptedPrivateMarketCover: true });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
 

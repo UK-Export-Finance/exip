@@ -14,7 +14,7 @@ context(
     beforeEach(() => {
       cy.saveSession();
 
-      cy.completeAndSubmitEligibilityForms({ stopSubmittingAfter: 'companyDetails' });
+      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'companyDetails' });
     });
 
     describe(COUNTRY_NAME_1, () => {

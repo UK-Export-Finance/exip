@@ -1,4 +1,5 @@
-import { insetTextHtml, insetTextHtmlLineBreak, headingCaption } from '../../../../../../pages/shared';
+import { headingCaption } from '../../../../../../partials';
+import { insetTextHtml, insetTextHtmlLineBreak } from '../../../../../../pages/shared';
 import { brokerConfirmAddressPage } from '../../../../../../pages/insurance/policy';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { EXPECTED_SINGLE_LINE_STRING } from '../../../../../../constants';
@@ -31,7 +32,7 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'brokerDetails', usingBroker: true });
+        cy.completeAndSubmitPolicyForms({ formToStopAt: 'brokerDetails', usingBroker: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
         lossPayeeUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;

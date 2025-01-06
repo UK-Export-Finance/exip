@@ -1,4 +1,5 @@
-import { field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
+import { headingCaption } from '../../../../../../partials';
+import { field as fieldSelector } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -31,7 +32,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completeAndSubmitYourBusinessForms({ stopSubmittingAfter: 'companyDetails' });
+        cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'companyDetails' });
 
         natureOfBusinessUrl = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
 
@@ -66,7 +67,7 @@ context(
         cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
-      it(`should render ${GOODS_OR_SERVICES} label, input and hint`, () => {
+      it(`should display ${GOODS_OR_SERVICES} label, input and hint`, () => {
         const fieldId = GOODS_OR_SERVICES;
         const field = fieldSelector(fieldId);
 
@@ -76,7 +77,7 @@ context(
         field.hint().contains(FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HINT);
       });
 
-      it(`should render ${YEARS_EXPORTING} label, input and hint`, () => {
+      it(`should display ${YEARS_EXPORTING} label, input and hint`, () => {
         const fieldId = YEARS_EXPORTING;
         const field = fieldSelector(fieldId);
 
@@ -87,7 +88,7 @@ context(
         cy.assertSuffix({ fieldId, value: FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].SUFFIX });
       });
 
-      it(`should render ${EMPLOYEES_UK} label and input`, () => {
+      it(`should display ${EMPLOYEES_UK} label and input`, () => {
         const fieldId = EMPLOYEES_UK;
         const field = fieldSelector(fieldId);
 

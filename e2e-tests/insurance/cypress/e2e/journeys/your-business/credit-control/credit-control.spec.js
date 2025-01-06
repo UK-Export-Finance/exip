@@ -1,4 +1,5 @@
-import { headingCaption, noRadio, yesNoRadioHint, yesRadio } from '../../../../../../pages/shared';
+import { headingCaption } from '../../../../../../partials';
+import { yesNoRadioHint, yesRadio, noRadio } from '../../../../../../pages/shared';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { FIELD_VALUES } from '../../../../../../constants';
@@ -27,7 +28,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completeAndSubmitYourBusinessForms({ stopSubmittingAfter: 'turnover' });
+        cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'turnover' });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
         checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
@@ -86,8 +87,11 @@ context(
         });
 
         it('should render validation errors', () => {
+          const expectedErrorsCount = 1;
+
           cy.submitAndAssertRadioErrors({
             field: yesRadio(FIELD_ID),
+            expectedErrorsCount,
             expectedErrorMessage: ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS[FIELD_ID].IS_EMPTY,
           });
         });

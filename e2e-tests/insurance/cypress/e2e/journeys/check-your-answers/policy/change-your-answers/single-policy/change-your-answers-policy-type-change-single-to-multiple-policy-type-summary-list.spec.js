@@ -84,7 +84,7 @@ context('Insurance - Change your answers - Policy - Change single to multiple po
       cy.assertUrl(`${exportValueUrl}#heading`);
 
       // complete the now required "export value" form.
-      cy.completeAndSubmitExportValueForm({});
+      cy.completeAndSubmitExportValueForm();
 
       // assert the URL is CHECK_YOUR_ANSWERS.TYPE_OF_POLICY
       cy.assertUrl(`${checkYourAnswersUrl}#heading`);

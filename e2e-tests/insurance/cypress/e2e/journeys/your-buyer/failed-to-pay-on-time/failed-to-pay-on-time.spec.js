@@ -30,11 +30,7 @@ context(
         url = `${baseUrl}${ROOT}/${referenceNumber}${FAILED_TO_PAY}`;
         buyerFinancialInformationUrl = `${baseUrl}${ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
 
-        cy.completeAndSubmitYourBuyerForms({
-          stopSubmittingAfter: 'outstandingOrOverduePayments',
-          exporterHasTradedWithBuyer: true,
-          outstandingPayments: true,
-        });
+        cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'outstandingOrOverduePayments', exporterHasTradedWithBuyer: true, outstandingPayments: true });
 
         cy.assertUrl(url);
       });

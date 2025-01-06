@@ -1,16 +1,13 @@
-import { MapCisCountryParams } from '../../../../types';
+import { MappedCisCountry } from '../../../../types';
 
 /**
  * canGetAQuoteOnline
  * Check if a country is able to get a quote online
- * @param {MapCisCountryParams}
- * @param {Boolean} shortTermCover: Short term cover flag.
- * @param {Boolean} nbiIssueAvailable: NBI flag.
- * @param {String} esraClassification: ESRA classification.
+ * @param {MappedCisCountry} Mapped CIS Country
  * @returns {Boolean}
  */
-const canGetAQuoteOnline = ({ shortTermCover, nbiIssueAvailable, esraClassification }: MapCisCountryParams) => {
-  if (esraClassification && shortTermCover && nbiIssueAvailable) {
+export const canGetAQuoteOnline = (country: MappedCisCountry) => {
+  if (country.riskCategory && country.shortTermCover && country.nbiIssueAvailable) {
     return true;
   }
 

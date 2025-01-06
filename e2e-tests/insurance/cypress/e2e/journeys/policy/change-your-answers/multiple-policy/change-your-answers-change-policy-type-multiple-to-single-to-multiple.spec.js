@@ -1,4 +1,4 @@
-import { summaryList } from '../../../../../../../pages/shared';
+import { field, summaryList } from '../../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -64,13 +64,13 @@ context('Insurance - Policy - Change your answers - Policy type - multiple to si
   it(`should have empty field values when going back to ${MULTIPLE_CONTRACT_POLICY} and ${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`, () => {
     cy.assertEmptyRequestedStartDateFieldValues();
 
-    cy.assertEmptyFieldValue(TOTAL_MONTHS_OF_COVER);
+    cy.checkValue(field(TOTAL_MONTHS_OF_COVER), '');
 
     cy.assertCurrencyFormFieldsAreEmpty();
 
     cy.navigateToUrl(exportValueUrl);
 
-    cy.assertEmptyFieldValue(TOTAL_SALES_TO_BUYER);
-    cy.assertEmptyFieldValue(MAXIMUM_BUYER_WILL_OWE);
+    cy.checkValue(field(TOTAL_SALES_TO_BUYER), '');
+    cy.checkValue(field(MAXIMUM_BUYER_WILL_OWE), '');
   });
 });

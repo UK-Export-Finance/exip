@@ -34,7 +34,7 @@
       <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
-        <span class="govuk-caption-xl" data-cy="{{ DATA_CY.HEADING_CAPTION }}">
+        <span class="govuk-caption-xl" data-cy="heading-caption">
           {{ CONTENT_STRINGS.HEADING_CAPTION }}
         </span>
         <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
@@ -97,7 +97,7 @@
 
         {{ formButtons.render({
           contentStrings: CONTENT_STRINGS.BUTTONS,
-          saveAndBackUrl: SAVE_AND_BACK_URL
+          saveAndBackUrl: POST_ROUTES.SAVE_AND_BACK_URL
         }) }}
 
       </div>

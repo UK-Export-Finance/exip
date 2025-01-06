@@ -23,7 +23,7 @@ context(
     const url = `${baseUrl}${MEMBER_OF_A_GROUP}`;
 
     before(() => {
-      cy.completeAndSubmitEligibilityForms({ stopSubmittingAfter: 'partyToConsortium' });
+      cy.completeAndSubmitEligibilityForms({ formToStopAt: 'partyToConsortium' });
 
       cy.assertUrl(url);
     });
@@ -83,8 +83,11 @@ context(
       });
 
       it('should render validation errors', () => {
+        const expectedErrorsCount = 1;
+
         cy.submitAndAssertRadioErrors({
           field: yesRadio(FIELD_ID),
+          expectedErrorsCount,
           expectedErrorMessage: ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY,
         });
       });

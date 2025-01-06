@@ -9,7 +9,7 @@ import { CreateAnApplicationVariables, Context } from '../../../types';
  * @param {Object} root: GraphQL root variables
  * @param {CreateAnApplicationVariables} GraphQL variables for the createAnApplication mutation
  * @param {Context} context: KeystoneJS context API
- * @returns {Promise<SuccessResponse>} Object with success flag and application
+ * @returns {Promise<Object>} Object with success flag and application
  */
 const createAnApplication = async (root: any, variables: CreateAnApplicationVariables, context: Context) => {
   console.info('Creating application for user %s', variables.accountId);

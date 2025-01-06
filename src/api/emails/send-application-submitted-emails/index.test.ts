@@ -66,12 +66,14 @@ describe('emails/send-email-application-submitted', () => {
       expectedSendOwnerEmailVars = {
         ...sharedEmailVars,
         emailAddress: email,
+        buyerName: replaceCharacterCodesWithCharacters(String(buyer.companyOrOrganisationName)),
         name: replaceCharacterCodesWithCharacters(getFullNameString(owner)),
       } as ApplicationSubmissionEmailVariables;
 
       expectedContactSendEmailVars = {
         ...sharedEmailVars,
         emailAddress: policyContact.email,
+        buyerName: replaceCharacterCodesWithCharacters(String(buyer.companyOrOrganisationName)),
         name: replaceCharacterCodesWithCharacters(getFullNameString(policyContact)),
       } as ApplicationSubmissionEmailVariables;
     });
@@ -81,7 +83,7 @@ describe('emails/send-email-application-submitted', () => {
         await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
 
         expect(applicationSubmittedEmailSpy).toHaveBeenCalledTimes(1);
-        expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendOwnerEmailVars, application.policy);
+        expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendOwnerEmailVars);
       });
 
       test('it should call sendEmail.application.applicationSubmittedEmail with the correct template ID', async () => {
@@ -116,8 +118,8 @@ describe('emails/send-email-application-submitted', () => {
         await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
 
         expect(applicationSubmittedEmailSpy).toHaveBeenCalledTimes(2);
-        expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendOwnerEmailVars, application.policy);
-        expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedContactSendEmailVars, application.policy);
+        expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendOwnerEmailVars);
+        expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedContactSendEmailVars);
       });
 
       test('it should call sendEmail.application.submittedEmail with the correct template ID', async () => {

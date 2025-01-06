@@ -1,4 +1,4 @@
-import { SuccessResponse } from '../generic';
+import { Currency } from '../currency';
 import { Relationship } from '../relationship';
 
 export interface CisCountry {
@@ -8,11 +8,13 @@ export interface CisCountry {
   ESRAClassificationDesc: string;
   NBIIssue: string;
   marketRiskAppetitePublicDesc: string;
+  riskCategory?: string;
 }
 
 export interface Country extends Relationship {
   name: string;
   isoCode: string;
+  riskCategory?: string;
   shortTermCover?: boolean;
   nbiIssueAvailable?: boolean;
   canGetAQuoteOnline?: boolean;
@@ -23,11 +25,21 @@ export interface Country extends Relationship {
   noInsuranceSupport?: boolean;
 }
 
+export interface GetApimCisCountriesResponse {
+  success: boolean;
+  data?: [CisCountry];
+}
+
+export interface GetApimCurrenciesResponse {
+  success: boolean;
+  data?: [Currency];
+}
+
 export interface MappedCisCountry {
   name: string;
   isoCode: string;
   shortTermCover: boolean;
-  esraClassification?: string;
+  riskCategory?: string;
   nbiIssueAvailable: boolean;
   canGetAQuoteOnline: boolean;
   canGetAQuoteOffline: boolean;
@@ -35,12 +47,4 @@ export interface MappedCisCountry {
   cannotGetAQuote: boolean;
   canApplyForInsuranceOnline: boolean;
   noInsuranceSupport: boolean;
-}
-
-export interface GetApimCisCountriesResponse extends SuccessResponse {
-  data?: [CisCountry];
-}
-
-export interface GetApimCisCountriesHelperResponse extends SuccessResponse {
-  countries: [MappedCisCountry];
 }

@@ -224,16 +224,11 @@ const typeDefs = `
     referenceNumber: Int
   }
 
-  type Country {
-    isoCode: String!
-    name: String!
-  }
-
   type MappedCisCountry {
     isoCode: String!
     name: String
     shortTermCover: Boolean
-    esraClassification: String
+    riskCategory: String
     nbiIssueAvailable: Boolean
     canGetAQuoteOnline: Boolean
     canGetAQuoteOffline: Boolean
@@ -250,13 +245,6 @@ const typeDefs = `
   }
 
   type GetApimCurrencyResponse {
-    supportedCurrencies: [MappedCurrency]
-    alternativeCurrencies: [MappedCurrency]
-    allCurrencies: [MappedCurrency]
-  }
-
-  type GetCountriesAndCurrenciesResponse {
-    countries: [Country]
     supportedCurrencies: [MappedCurrency]
     alternativeCurrencies: [MappedCurrency]
     allCurrencies: [MappedCurrency]
@@ -474,6 +462,9 @@ const typeDefs = `
       token: String!
     ): AccountPasswordResetTokenResponse
 
+    """ get CIS countries from APIM """
+    getApimCisCountries: [MappedCisCountry]
+
     """ get companies house information """
     getCompaniesHouseInformation(
       companiesHouseNumber: String!
@@ -497,9 +488,6 @@ const typeDefs = `
 
     """ get currencies from APIM """
     getApimCurrencies: GetApimCurrencyResponse
-
-    """ get countries and currencies """
-    getCountriesAndCurrencies: GetCountriesAndCurrenciesResponse
   }
 `;
 

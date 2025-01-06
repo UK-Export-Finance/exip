@@ -10,13 +10,6 @@ const { EXPORTER_BUSINESS, POLICY, BUYER, EXPORT_CONTRACT } = SECTION_NAMES;
 /**
  * XLSX_ROW_INDEXES
  * Generate row indexes for each worksheet in the XLSX.
- * If a row requires some additional row height - for example, for a multi-line address field,
- * The row's index should be listed in the relevant section below.
- * No other indexes need to be listed.
- * NOTE: The APPLICATION_INFORMATION section indexes are intentionally excluded from here,
- * because it does NOT require additional heights.
- * - The APPLICATION_INFORMATION indexes are consumed in another area for other, non-height styling purposes.
- * - The APPLICATION_INFORMATION has some unique requirements unlike all other sections.
  * @returns {Object}
  */
 const XLSX_ROW_INDEXES = {

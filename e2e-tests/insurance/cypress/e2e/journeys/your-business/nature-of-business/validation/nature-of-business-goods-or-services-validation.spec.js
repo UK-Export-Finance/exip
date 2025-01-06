@@ -34,7 +34,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitYourBusinessForms({ stopSubmittingAfter: 'companyDetails' });
+      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'companyDetails' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
 
@@ -53,7 +53,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
   });
 
   describe(`when ${FIELD_ID} is left empty`, () => {
-    it('should render validation errors', () => {
+    it('should display validation errors', () => {
       cy.submitAndAssertFieldErrors({
         ...assertions,
         expectedErrorMessage: NATURE_OF_BUSINESS_ERRORS[FIELD_ID].IS_EMPTY,
@@ -69,7 +69,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
   });
 
   describe(`when ${FIELD_ID} has over the maximum`, () => {
-    it('should render validation errors', () => {
+    it('should display validation errors', () => {
       cy.submitAndAssertFieldErrors({
         ...assertions,
         value: 'a'.repeat(MAXIMUM_CHARACTERS.BUSINESS.GOODS_OR_SERVICES_DESCRIPTION + 1),

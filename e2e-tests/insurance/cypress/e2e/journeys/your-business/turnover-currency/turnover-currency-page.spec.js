@@ -26,7 +26,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completeAndSubmitYourBusinessForms({ stopSubmittingAfter: 'natureOfYourBusiness' });
+        cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'natureOfYourBusiness' });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_CURRENCY_ROOT}`;
 

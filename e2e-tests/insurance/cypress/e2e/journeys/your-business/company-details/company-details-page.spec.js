@@ -1,5 +1,6 @@
 import { companyDetails } from '../../../../../../pages/your-business';
-import { body, field, headingCaption, noRadioInput, yesRadioInput } from '../../../../../../pages/shared';
+import { headingCaption } from '../../../../../../partials';
+import { body, field, yesRadioInput, noRadioInput } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -92,7 +93,7 @@ context(
         });
       });
 
-      it('should render the trading name radios', () => {
+      it('should display the trading name radios', () => {
         cy.checkText(companyDetails[HAS_DIFFERENT_TRADING_NAME].label(), CONTENT_STRINGS.HAS_DIFFERENT_TRADING_NAME);
 
         cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.HAS_DIFFERENT_TRADING_NAME);
@@ -100,11 +101,11 @@ context(
         cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.HAS_DIFFERENT_TRADING_NAME);
       });
 
-      it(`should NOT display a conditional ${DIFFERENT_TRADING_NAME} input without selecting the trading name "yes" radio`, () => {
+      it(`should NOT display conditional ${DIFFERENT_TRADING_NAME} input without selecting the trading name "yes" radio`, () => {
         field(DIFFERENT_TRADING_NAME).input().should('not.be.visible');
       });
 
-      it(`should render a conditional ${DIFFERENT_TRADING_NAME} input when selecting the trading name "yes" radio`, () => {
+      it(`should display conditional ${DIFFERENT_TRADING_NAME} input when selecting the trading name "yes" radio`, () => {
         cy.clickYesRadioInput();
 
         field(DIFFERENT_TRADING_NAME).input().should('be.visible');
@@ -113,7 +114,7 @@ context(
         cy.checkText(field(DIFFERENT_TRADING_NAME).hint(), CONTENT_STRINGS.DIFFERENT_TRADING_NAME_HINT);
       });
 
-      it('should render the trading address radios', () => {
+      it('should display the trading address radios', () => {
         cy.checkText(companyDetails[HAS_DIFFERENT_TRADING_ADDRESS].label(), CONTENT_STRINGS.HAS_DIFFERENT_TRADING_ADDRESS);
 
         cy.checkAriaLabel(yesRadioInput().eq(1), `${CONTENT_STRINGS.HAS_DIFFERENT_TRADING_ADDRESS} Yes`);
@@ -121,17 +122,19 @@ context(
         cy.checkAriaLabel(noRadioInput().eq(1), `${CONTENT_STRINGS.HAS_DIFFERENT_TRADING_ADDRESS} No`);
       });
 
-      it('should render the company website text input', () => {
+      it('should display the company website text input', () => {
         cy.checkText(field(WEBSITE).label(), CONTENT_STRINGS.WEBSITE);
 
+        field(WEBSITE).input().should('exist');
         cy.checkAriaLabel(field(WEBSITE).input(), CONTENT_STRINGS.WEBSITE);
       });
 
-      it('should render the phone number text input', () => {
+      it('should display the phone number text input', () => {
         cy.checkText(field(PHONE_NUMBER).label(), CONTENT_STRINGS.PHONE_NUMBER);
 
         cy.checkText(field(PHONE_NUMBER).hint(), CONTENT_STRINGS.PHONE_NUMBER_HINT);
 
+        field(PHONE_NUMBER).input().should('exist');
         cy.checkAriaLabel(field(PHONE_NUMBER).input(), CONTENT_STRINGS.PHONE_NUMBER);
       });
     });

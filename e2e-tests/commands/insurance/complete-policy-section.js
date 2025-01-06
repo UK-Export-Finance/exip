@@ -10,7 +10,6 @@ const { POLICY_TYPE } = APPLICATION;
  * @param {Boolean} policyValueOverMvpMaximum: If the value should be over the MVP maximum amount
  * @param {String} isoCode: Policy currency ISO code
  * @param {Boolean} alternativeCurrency: Select the "alternative currency" option
- * @param {String} maximumBuyerWillOwe: Maximum buyer will owe
  * @param {Boolean} sameName: If name on policy is the same as the signed in user - defaults to true
  * @param {Boolean} needPreCreditPeriod: If the user needs a pre-credit period - defaults to false
  * @param {Boolean} usingBroker: If "using broker" on  - defaults to false
@@ -25,7 +24,6 @@ const completePolicySection = ({
   policyValueOverMvpMaximum = false,
   isoCode,
   alternativeCurrency = false,
-  maximumBuyerWillOwe,
   sameName = true,
   needPreCreditPeriod = false,
   usingBroker = false,
@@ -51,7 +49,7 @@ const completePolicySection = ({
       alternativeCurrency,
     });
 
-    cy.completeAndSubmitExportValueForm({ maximumBuyerWillOwe });
+    cy.completeAndSubmitExportValueForm({ policyType });
   }
 
   cy.completeAndSubmitNameOnPolicyForm({ sameName });

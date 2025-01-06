@@ -24,7 +24,7 @@ context('Insurance - Policy - Name on policy - Save and go back', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'totalContractValue' });
+      cy.completeAndSubmitPolicyForms({ formToStopAt: 'totalContractValue' });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
 
@@ -101,7 +101,7 @@ context('Insurance - Policy - Name on policy - Save and go back', () => {
 
       cy.assertRadioOptionIsChecked(field(SAME_NAME).input());
 
-      cy.assertEmptyFieldValue(POSITION);
+      cy.checkValue(field(POSITION), '');
     });
   });
 

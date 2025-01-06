@@ -26,7 +26,7 @@ context('Insurance - Your buyer - Outstanding or overdue payments - Non-GBP (sup
       url = `${baseUrl}${ROOT}/${referenceNumber}${OUTSTANDING_OR_OVERDUE_PAYMENTS}`;
 
       cy.completeAndSubmitYourBuyerForms({
-        stopSubmittingAfter: 'currencyOfLatePayments',
+        formToStopAt: 'currencyOfLatePayments',
         outstandingPayments: true,
         exporterHasTradedWithBuyer: true,
         isoCode: USD.isoCode,

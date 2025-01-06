@@ -22,7 +22,7 @@ context('Insurance - Your buyer - Connection with the buyer - Has connection to 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitYourBuyerForms({ stopSubmittingAfter: 'companyOrOrganisation' });
+      cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'companyOrOrganisation' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CONNECTION_WITH_BUYER_ROUTE}`;
 
@@ -79,8 +79,7 @@ context('Insurance - Your buyer - Connection with the buyer - Has connection to 
       cy.clickSubmitButton();
 
       cy.assertYesRadioOptionIsChecked();
-
-      cy.assertEmptyTextareaFieldValue(CONNECTION_WITH_BUYER_DESCRIPTION);
+      cy.checkText(field(CONNECTION_WITH_BUYER_DESCRIPTION).textarea(), '');
     });
   });
 

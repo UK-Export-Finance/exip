@@ -96,7 +96,7 @@ context('Insurance - Dashboard - populated application - alternative (non GBP) c
 
       // complete and submit the next 2 forms
       cy.completeAndSubmitMultipleContractPolicyForm({ alternativeCurrency: true, chooseCurrency: true });
-      cy.completeAndSubmitExportValueForm({});
+      cy.completeAndSubmitExportValueForm({ policyType });
     });
 
     it(`should render a formatted value of ${MAXIMUM_BUYER_WILL_OWE} in the ${TABLE_HEADERS.VALUE} cell`, () => {

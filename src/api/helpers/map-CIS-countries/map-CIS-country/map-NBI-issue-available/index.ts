@@ -8,7 +8,7 @@ const { CIS } = EXTERNAL_API_DEFINITIONS;
  * @param {String} NBI flag
  * @returns {Boolean}
  */
-const mapNbiIssueAvailable = (str: string): boolean => {
+export const mapNbiIssueAvailable = (str: string): boolean => {
   if (str === CIS.NBI_ISSUE_AVAILABLE.YES) {
     return true;
   }
