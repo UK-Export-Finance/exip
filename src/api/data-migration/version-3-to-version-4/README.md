@@ -16,13 +16,16 @@ This directory contains source code for migrating version 3 of EXIP data into th
 The migration should successfully do the following:
 
 1. Connect to the database.
-2. Remove the application `migratedV2toV3` field.
-3. Create a new application `migratedV3toV4` field.
-4. Create a new `modernSlavery` field in the declaration table.
-5. Create new `DeclarationModernSlavery` and `DeclarationModernSlaveryVersion` tables.
-6. Create appropriate declaration relationships
-7. Update the application version number.
-8. Update the new application `migratedV3toV4` field.
+2. Create a new `modernSlavery` field in the declaration table.
+3. Create new `DeclarationModernSlavery` and `DeclarationModernSlaveryVersion` tables.
+4. Create appropriate declaration relationships
+5. Update the application version number.
+6. Update the new application `migratedV3toV4` field.
+7. Create a new `migratedTo` field in the the application table.
+8. Update application's that have a `migratedV2toV3` value of 1 to have a `migratedTo` field with a value of 3.
+9. Update in progress application's to have a `migratedTo` value of 4.
+10. Update in progress application's version.
+11. Remove the application `migratedV2toV3` field.
 
 ## How to ensure that data migration was successful
 
