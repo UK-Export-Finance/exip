@@ -521,7 +521,6 @@ jobs:
             'eligibility/cannot-apply/**/*.spec.js',
             'eligibility/cannot-apply-multiple-risks/**/*.spec.js',
             'eligibility/cannot-skip-flow/**/*.spec.js',
-            'eligibility/contract-too-short/**/*.spec.js',
             'eligibility/change-your-answers/**/*.spec.js',
             'eligibility/check-your-answers/**/*.spec.js',
             'eligibility/companies-house/**/*.spec.js',
@@ -535,6 +534,7 @@ jobs:
             'eligibility/member-of-a-group/**/*.spec.js',
             'eligibility/no-companies-house-number/**/*.spec.js',
             'eligibility/party-to-consortium/**/*.spec.js',
+            'eligibility/talk-to-an-export-finance-manager/**/*.spec.js',
             'eligibility/total-value-insured/**/*.spec.js',
             'eligibility/uk-goods-or-services/**/*.spec.js',
           ]

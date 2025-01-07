@@ -2,12 +2,13 @@ import { autoCompleteField } from '../../../../../pages/shared';
 import { getAQuoteByEmailPage } from '../../../../../pages/quote';
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../constants';
+import { COUNTRY_QUOTE_SUPPORT } from '../../../../../fixtures/countries';
 
 const CONTENT_STRINGS = PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL;
 
 const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
-const COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY = 'Egypt';
+const COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY = COUNTRY_QUOTE_SUPPORT.NO_ONLINE_SUPPORT_1.NAME;
 
 const baseUrl = Cypress.config('baseUrl');
 

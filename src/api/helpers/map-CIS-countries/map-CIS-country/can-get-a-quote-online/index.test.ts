@@ -1,50 +1,20 @@
 import canGetAQuoteOnline from '.';
-import { EXTERNAL_API_MAPPINGS } from '../../../../constants';
-
-const {
-  CIS: { RISK },
-} = EXTERNAL_API_MAPPINGS;
-
-const mockEsraClassification = RISK.STANDARD;
+import esraClassificationIsStandardHighOrVeryHigh from '../esra-classification-is-standard-high-or-very-high';
+import shortTermCoverIsYesReferOrUnlisted from '../short-term-cover-is-yes-refer-or-unlisted';
+import countryRatingIsAorB from '../country-rating-is-a-or-b';
+import { mockCisCountry } from '../../../../test-mocks';
 
 describe('helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-online', () => {
-  describe('when shortTermCover=true, nbiIssueAvailable=true, esraClassification is provided', () => {
-    it('should return true', () => {
-      const result = canGetAQuoteOnline({ shortTermCover: true, nbiIssueAvailable: true, esraClassification: mockEsraClassification });
+  it('should return the result of 3x conditions', () => {
+    const result = canGetAQuoteOnline(mockCisCountry);
 
-      expect(result).toEqual(true);
-    });
-  });
+    const { ESRAClassificationDesc, shortTermCoverAvailabilityDesc, marketRiskAppetitePublicDesc } = mockCisCountry;
 
-  describe('when shortTermCover=true, nbiIssueAvailable=true, esraClassification is null', () => {
-    it('should return false', () => {
-      const result = canGetAQuoteOnline({ shortTermCover: true, nbiIssueAvailable: true, esraClassification: null });
+    const expected =
+      esraClassificationIsStandardHighOrVeryHigh(ESRAClassificationDesc) &&
+      shortTermCoverIsYesReferOrUnlisted(shortTermCoverAvailabilityDesc) &&
+      countryRatingIsAorB(marketRiskAppetitePublicDesc);
 
-      expect(result).toEqual(false);
-    });
-  });
-
-  describe('when shortTermCover=true, nbiIssueAvailable=true, esraClassification is an empty string', () => {
-    it('should return false', () => {
-      const result = canGetAQuoteOnline({ shortTermCover: true, nbiIssueAvailable: true, esraClassification: '' });
-
-      expect(result).toEqual(false);
-    });
-  });
-
-  describe('when shortTermCover=false, nbiIssueAvailable=true, esraClassification is provided', () => {
-    it('should return false', () => {
-      const result = canGetAQuoteOnline({ shortTermCover: false, nbiIssueAvailable: true, esraClassification: mockEsraClassification });
-
-      expect(result).toEqual(false);
-    });
-  });
-
-  describe('when shortTermCover=true, nbiIssueAvailable=false, esraClassification is provided', () => {
-    it('should return false', () => {
-      const result = canGetAQuoteOnline({ shortTermCover: true, nbiIssueAvailable: false, esraClassification: mockEsraClassification });
-
-      expect(result).toEqual(false);
-    });
+    expect(result).toEqual(expected);
   });
 });
