@@ -19,7 +19,12 @@ export const DEFAULT_INDEXES = () => ({
 
 /**
  * DECLARATIONS_INDEXES
- * Default indexes for the "Declarations" XLSX worksheet.
+ * Generate row indexes for the XLSX's "Declarations contract" worksheet.
+ * - If a CANNOT_ADHERE_TO_ALL_REQUIREMENTS answer is provided, the XLSX has 1 additional row.
+ * - If an OFFENSES_OR_INVESTIGATIONS answer is provided, the XLSX has 1 additional row.
+ * - If an AWARE_OF_EXISTING_SLAVERY answer is provided, the XLSX has 1 additional row.
+ * @param {ApplicationDeclarationModernSlavery} modernSlavery
+ * @return {Object}
  */
 const DECLARATIONS_INDEXES = (modernSlavery: ApplicationDeclarationModernSlavery) => {
   const INDEXES = DEFAULT_INDEXES();
