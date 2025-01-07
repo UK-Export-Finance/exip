@@ -2,18 +2,18 @@ import { actions } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.CONTRACT_TOO_SHORT_EXIT;
+const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT;
 
 const { CONTACT_EFM } = CONTENT_STRINGS;
 
 const {
-  ELIGIBILITY: { CONTRACT_TOO_SHORT_EXIT },
+  ELIGIBILITY: { TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Eligibility - Contract too short page', () => {
-  const url = `${baseUrl}${CONTRACT_TOO_SHORT_EXIT}`;
+context('Insurance - Eligibility - Talk to an export finance manager page', () => {
+  const url = `${baseUrl}${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT}`;
 
   before(() => {
     cy.navigateToUrl(url);
@@ -28,8 +28,8 @@ context('Insurance - Eligibility - Contract too short page', () => {
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      backLink: `${CONTRACT_TOO_SHORT_EXIT}#`,
-      currentHref: CONTRACT_TOO_SHORT_EXIT,
+      backLink: `${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT}#`,
+      currentHref: TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT,
       assertAuthenticatedHeader: false,
       assertSaveAndBackButtonDoesNotExist: true,
       hasAForm: false,
