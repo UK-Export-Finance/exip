@@ -9,8 +9,8 @@ const { POLICY_TYPE } = FIELD_VALUES;
 const { REQUESTED_START_DATE, POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
 
 const {
-  BROKER_DETAILS: { NAME, BROKER_EMAIL, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, POSTCODE },
-  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
+  BROKER_DETAILS: { BROKER_NAME, BROKER_EMAIL, BROKER_ADDRESS_LINE_1, BROKER_ADDRESS_LINE_2, BROKER_POSTCODE },
+  BROKER_MANUAL_ADDRESS: { BROKER_FULL_ADDRESS },
   CONTRACT_POLICY: {
     SINGLE: { CONTRACT_COMPLETION_DATE, REQUESTED_CREDIT_LIMIT, TOTAL_CONTRACT_VALUE },
     MULTIPLE: { TOTAL_MONTHS_OF_COVER },
@@ -124,7 +124,7 @@ describe('server/helpers/required-fields/policy', () => {
 
         const result = getBrokerTasks(isUsingBrokerFlag, brokerIsBasedInUkFlag);
 
-        const expected = [NAME, BROKER_EMAIL, FULL_ADDRESS];
+        const expected = [BROKER_NAME, BROKER_EMAIL, BROKER_FULL_ADDRESS];
 
         expect(result).toEqual(expected);
       });
@@ -137,7 +137,7 @@ describe('server/helpers/required-fields/policy', () => {
 
         const result = getBrokerTasks(isUsingBrokerFlag, brokerIsBasedInUkFlag);
 
-        const expected = [NAME, BROKER_EMAIL, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, POSTCODE];
+        const expected = [BROKER_NAME, BROKER_EMAIL, BROKER_ADDRESS_LINE_1, BROKER_ADDRESS_LINE_2, BROKER_POSTCODE];
 
         expect(result).toEqual(expected);
       });

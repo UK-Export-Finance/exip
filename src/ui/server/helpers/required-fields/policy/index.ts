@@ -5,8 +5,8 @@ import { isSinglePolicyType, isMultiplePolicyType } from '../../policy-type';
 const { REQUESTED_START_DATE, POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
 
 const {
-  BROKER_DETAILS: { NAME, BROKER_EMAIL, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, POSTCODE },
-  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
+  BROKER_DETAILS: { BROKER_NAME, BROKER_EMAIL, BROKER_ADDRESS_LINE_1, BROKER_ADDRESS_LINE_2, BROKER_POSTCODE },
+  BROKER_MANUAL_ADDRESS: { BROKER_FULL_ADDRESS },
   CONTRACT_POLICY: {
     SINGLE: { CONTRACT_COMPLETION_DATE, REQUESTED_CREDIT_LIMIT, TOTAL_CONTRACT_VALUE },
     MULTIPLE: { TOTAL_MONTHS_OF_COVER },
@@ -80,12 +80,17 @@ export const getBrokerTasks = (isUsingBroker?: boolean, brokerIsBasedInUk?: bool
   let tasks: Array<string> = [];
 
   if (isUsingBroker) {
-    tasks = [NAME, BROKER_EMAIL];
+    tasks = [BROKER_NAME, BROKER_EMAIL];
 
     if (brokerIsBasedInUk) {
-      tasks = [...tasks, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, POSTCODE];
+      /**
+       * TODO:
+       * do we need town?
+       * I think some Ordnance survey results do not have a town.
+       */
+      tasks = [...tasks, BROKER_ADDRESS_LINE_1, BROKER_ADDRESS_LINE_2, BROKER_POSTCODE];
     } else {
-      tasks = [...tasks, FULL_ADDRESS];
+      tasks = [...tasks, BROKER_FULL_ADDRESS];
     }
   }
 

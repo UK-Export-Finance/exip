@@ -19,6 +19,7 @@ const {
   POLICY: {
     TYPE_OF_POLICY: { POLICY_TYPE },
     USING_BROKER,
+    BROKER_DETAILS: { IS_BASED_IN_UK },
   },
   YOUR_BUYER: { CONNECTION_WITH_BUYER, OUTSTANDING_PAYMENTS, TRADED_WITH_BUYER, HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER },
 } = INSURANCE_FIELD_IDS;
@@ -33,6 +34,16 @@ const requiredFields = (application: ApplicationFlat): Array<string> => [
   ...requiredPolicyFields({
     policyType: application[POLICY_TYPE],
     isUsingBroker: application[USING_BROKER],
+    brokerIsBasedInUk: application[IS_BASED_IN_UK],
+
+    // TODO: should include the following:
+    // policyType,
+    // jointlyInsuredParty,
+    // isUsingBroker,
+    // brokerIsBasedInUk,
+    // isAppointingLossPayee,
+    // lossPayeeIsLocatedInUk,
+    // lossPayeeIsLocatedInternationally,
   }),
   ...requiredExportContractFields({
     finalDestinationKnown: application[FINAL_DESTINATION_KNOWN],
