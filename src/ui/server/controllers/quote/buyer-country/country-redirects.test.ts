@@ -97,7 +97,7 @@ describe('controllers/quote/buyer-country - redirects', () => {
       });
     });
 
-    describe('when the API returns a canGetAQuoteByEmail flag for the submitted country', () => {
+    describe('when the API returns a noOnlineSupport flag for the submitted country', () => {
       const selectedCountryIsoCode = mockCountryCanGetAQuoteByEmail.isoCode;
 
       beforeEach(() => {
