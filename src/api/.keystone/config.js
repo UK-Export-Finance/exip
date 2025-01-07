@@ -6395,7 +6395,7 @@ var DECLARATIONS_FIELDS = {
       LABEL:
         'Do you adhere to, and intend to continue to adhere to, all requirements that apply to you as set out in the Modern Slavery Act 2015, including reporting obligations, and all applicable legislation relating to the prevention of modern slavery in every country that you operate in?',
       SUMMARY: {
-        TITLE: 'Adherence to the Modern Slavery Act',
+        TITLE: 'Adhere to the Modern Slavery Act',
       },
       CONDITIONAL_REASON: {
         LABEL:
@@ -6410,7 +6410,7 @@ var DECLARATIONS_FIELDS = {
       LABEL:
         'Do you confirm you are not currently under investigation and have not been fined, convicted or found guilty of any offences under the Modern Slavery Act 2015, or under any applicable similar laws or regulations relating to the prevention of modern slavery or any similar infringement of human rights in any jurisdiction?',
       SUMMARY: {
-        TITLE: 'Not under investigation or have been convicted of any human right violations',
+        TITLE: 'Does the user confirm they are not under investigation or has been convicted of any human right violations',
       },
       CONDITIONAL_REASON: {
         LABEL:
