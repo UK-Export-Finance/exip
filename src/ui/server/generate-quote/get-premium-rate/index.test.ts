@@ -3,9 +3,9 @@ import { EXTERNAL_API_MAPPINGS, FIELD_VALUES } from '../../constants';
 import PRICING_GRID from '../pricing-grid.json';
 import { PricingGridMonth, PricingGridRate } from '../../../types';
 
-const expectedPremiumRate = (policyType: string, riskCategory: string, totalMonths: number, insuredFor: number) => {
+const expectedPremiumRate = (policyType: string, esraClassification: string, totalMonths: number, insuredFor: number) => {
   const mappedPolicyType = PRICING_GRID_MAP.POLICY_TYPE[policyType];
-  const mappedRiskCategory = PRICING_GRID_MAP.RISK_CATEGORY[riskCategory];
+  const mappedRiskCategory = PRICING_GRID_MAP.RISK_CATEGORY[esraClassification];
 
   const risk = PRICING_GRID[mappedPolicyType][mappedRiskCategory];
 
@@ -18,10 +18,10 @@ const expectedPremiumRate = (policyType: string, riskCategory: string, totalMont
   return expected;
 };
 
-const getResultAndExpected = (policyType: string, riskCategory: string, totalMonths: number, insuredFor: number) => {
-  const result = getPremiumRate(policyType, riskCategory, totalMonths, insuredFor);
+const getResultAndExpected = (policyType: string, esraClassification: string, totalMonths: number, insuredFor: number) => {
+  const result = getPremiumRate(policyType, esraClassification, totalMonths, insuredFor);
 
-  const expected = expectedPremiumRate(policyType, riskCategory, totalMonths, insuredFor);
+  const expected = expectedPremiumRate(policyType, esraClassification, totalMonths, insuredFor);
 
   return {
     result,
@@ -40,7 +40,7 @@ describe('server/generate-quote/get-premium-rate', () => {
     totalMonths: 2,
   };
 
-  it('returns a number', () => {
+  it('should return a number', () => {
     const result = getPremiumRate(mock.policyType, mock.esraClassification, mock.totalMonths, mock.insuredFor);
 
     expect(typeof result).toEqual('number');
