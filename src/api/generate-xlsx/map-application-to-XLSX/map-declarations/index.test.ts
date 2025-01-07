@@ -23,7 +23,7 @@ const {
 const { declaration } = mockApplication;
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-declarations', () => {
-  it('should return an array of mapped declaratin fields', () => {
+  it('should return an array of mapped declaration fields', () => {
     const result = mapDeclarations(mockApplication);
 
     const expected = [

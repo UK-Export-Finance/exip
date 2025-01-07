@@ -18,7 +18,7 @@ const XLSX_ROW_INDEXES = {
   [POLICY]: (application: Application) => POLICY_INDEXES(application),
   [BUYER]: () => BUYER_INDEXES(),
   [EXPORT_CONTRACT]: (application: Application) => EXPORT_CONTRACT_INDEXES(application),
-  [DECLARATIONS]: () => DECLARATIONS_INDEXES(),
+  [DECLARATIONS]: (application: Application) => DECLARATIONS_INDEXES(application.declaration.modernSlavery),
 };
 
 export default XLSX_ROW_INDEXES;

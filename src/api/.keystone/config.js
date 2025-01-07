@@ -8409,36 +8409,80 @@ var mapAgreedField = (answer) => {
 };
 var map_agreed_field_default = mapAgreedField;
 
-// generate-xlsx/map-application-to-XLSX/map-declarations/map-modern-slavery-fields/index.ts
+// generate-xlsx/map-application-to-XLSX/map-declarations/map-modern-slavery-fields/map-cannot-adhere-conditional-reason/index.ts
 var {
   MODERN_SLAVERY: {
     WILL_ADHERE_TO_ALL_REQUIREMENTS: WILL_ADHERE_TO_ALL_REQUIREMENTS3,
-    HAS_NO_OFFENSES_OR_INVESTIGATIONS: HAS_NO_OFFENSES_OR_INVESTIGATIONS3,
-    IS_NOT_AWARE_OF_EXISTING_SLAVERY: IS_NOT_AWARE_OF_EXISTING_SLAVERY3,
-    CONDITIONAL_REASONS: { CANNOT_ADHERE_TO_ALL_REQUIREMENTS, OFFENSES_OR_INVESTIGATIONS, AWARE_OF_EXISTING_SLAVERY },
+    CONDITIONAL_REASONS: { CANNOT_ADHERE_TO_ALL_REQUIREMENTS: FIELD_ID },
   },
 } = declarations_default;
-var CONTENT_STRINGS10 = DECLARATIONS_FIELDS.MODERN_SLAVERY;
-var WILL_ADHERE_TO_ALL_REQUIREMENTS_STRINGS = CONTENT_STRINGS10[WILL_ADHERE_TO_ALL_REQUIREMENTS3];
-var HAS_NO_OFFENSES_OR_INVESTIGATIONS_STRINGS = CONTENT_STRINGS10[HAS_NO_OFFENSES_OR_INVESTIGATIONS3];
-var IS_NOT_AWARE_OF_EXISTING_SLAVERY_STRINGS = CONTENT_STRINGS10[IS_NOT_AWARE_OF_EXISTING_SLAVERY3];
+var CONTENT_STRINGS10 = DECLARATIONS_FIELDS.MODERN_SLAVERY[WILL_ADHERE_TO_ALL_REQUIREMENTS3];
+var mapCannotAdhereConditionalReason = (modernSlavery) => {
+  if (modernSlavery[FIELD_ID]) {
+    return xlsx_row_default(CONTENT_STRINGS10.CONDITIONAL_REASON.SUMMARY.TITLE, modernSlavery[FIELD_ID]);
+  }
+};
+var map_cannot_adhere_conditional_reason_default = mapCannotAdhereConditionalReason;
+
+// generate-xlsx/map-application-to-XLSX/map-declarations/map-modern-slavery-fields/map-offenses-conditional-reason/index.ts
+var {
+  MODERN_SLAVERY: {
+    HAS_NO_OFFENSES_OR_INVESTIGATIONS: HAS_NO_OFFENSES_OR_INVESTIGATIONS3,
+    CONDITIONAL_REASONS: { OFFENSES_OR_INVESTIGATIONS: FIELD_ID2 },
+  },
+} = declarations_default;
+var CONTENT_STRINGS11 = DECLARATIONS_FIELDS.MODERN_SLAVERY[HAS_NO_OFFENSES_OR_INVESTIGATIONS3];
+var mapOffensesConditionalReason = (modernSlavery) => {
+  if (modernSlavery[FIELD_ID2]) {
+    return xlsx_row_default(CONTENT_STRINGS11.CONDITIONAL_REASON.SUMMARY.TITLE, modernSlavery[FIELD_ID2]);
+  }
+};
+var map_offenses_conditional_reason_default = mapOffensesConditionalReason;
+
+// generate-xlsx/map-application-to-XLSX/map-declarations/map-modern-slavery-fields/map-aware-of-conditional-reason/index.ts
+var {
+  MODERN_SLAVERY: {
+    IS_NOT_AWARE_OF_EXISTING_SLAVERY: IS_NOT_AWARE_OF_EXISTING_SLAVERY3,
+    CONDITIONAL_REASONS: { AWARE_OF_EXISTING_SLAVERY: FIELD_ID3 },
+  },
+} = declarations_default;
+var CONTENT_STRINGS12 = DECLARATIONS_FIELDS.MODERN_SLAVERY[IS_NOT_AWARE_OF_EXISTING_SLAVERY3];
+var mapAwareOfConditionalReason = (modernSlavery) => {
+  if (modernSlavery[FIELD_ID3]) {
+    return xlsx_row_default(CONTENT_STRINGS12.CONDITIONAL_REASON.SUMMARY.TITLE, modernSlavery[FIELD_ID3]);
+  }
+};
+var map_aware_of_conditional_reason_default = mapAwareOfConditionalReason;
+
+// generate-xlsx/map-application-to-XLSX/map-declarations/map-modern-slavery-fields/index.ts
+var {
+  MODERN_SLAVERY: {
+    WILL_ADHERE_TO_ALL_REQUIREMENTS: WILL_ADHERE_TO_ALL_REQUIREMENTS4,
+    HAS_NO_OFFENSES_OR_INVESTIGATIONS: HAS_NO_OFFENSES_OR_INVESTIGATIONS4,
+    IS_NOT_AWARE_OF_EXISTING_SLAVERY: IS_NOT_AWARE_OF_EXISTING_SLAVERY4,
+  },
+} = declarations_default;
+var CONTENT_STRINGS13 = DECLARATIONS_FIELDS.MODERN_SLAVERY;
+var WILL_ADHERE_TO_ALL_REQUIREMENTS_STRINGS = CONTENT_STRINGS13[WILL_ADHERE_TO_ALL_REQUIREMENTS4];
+var HAS_NO_OFFENSES_OR_INVESTIGATIONS_STRINGS = CONTENT_STRINGS13[HAS_NO_OFFENSES_OR_INVESTIGATIONS4];
+var IS_NOT_AWARE_OF_EXISTING_SLAVERY_STRINGS = CONTENT_STRINGS13[IS_NOT_AWARE_OF_EXISTING_SLAVERY4];
 var mapModernSlaveryFields = (modernSlavery) => {
   const mapped = [
     xlsx_row_default(
       WILL_ADHERE_TO_ALL_REQUIREMENTS_STRINGS.SUMMARY.TITLE,
-      map_yes_no_field_default({ answer: modernSlavery[WILL_ADHERE_TO_ALL_REQUIREMENTS3] }),
+      map_yes_no_field_default({ answer: modernSlavery[WILL_ADHERE_TO_ALL_REQUIREMENTS4] }),
     ),
-    xlsx_row_default(WILL_ADHERE_TO_ALL_REQUIREMENTS_STRINGS.CONDITIONAL_REASON.SUMMARY.TITLE, modernSlavery[CANNOT_ADHERE_TO_ALL_REQUIREMENTS]),
+    map_cannot_adhere_conditional_reason_default(modernSlavery),
     xlsx_row_default(
       HAS_NO_OFFENSES_OR_INVESTIGATIONS_STRINGS.SUMMARY.TITLE,
-      map_yes_no_field_default({ answer: modernSlavery[HAS_NO_OFFENSES_OR_INVESTIGATIONS3] }),
+      map_yes_no_field_default({ answer: modernSlavery[HAS_NO_OFFENSES_OR_INVESTIGATIONS4] }),
     ),
-    xlsx_row_default(HAS_NO_OFFENSES_OR_INVESTIGATIONS_STRINGS.CONDITIONAL_REASON.SUMMARY.TITLE, modernSlavery[OFFENSES_OR_INVESTIGATIONS]),
+    map_offenses_conditional_reason_default(modernSlavery),
     xlsx_row_default(
       IS_NOT_AWARE_OF_EXISTING_SLAVERY_STRINGS.SUMMARY.TITLE,
-      map_yes_no_field_default({ answer: modernSlavery[IS_NOT_AWARE_OF_EXISTING_SLAVERY3] }),
+      map_yes_no_field_default({ answer: modernSlavery[IS_NOT_AWARE_OF_EXISTING_SLAVERY4] }),
     ),
-    xlsx_row_default(IS_NOT_AWARE_OF_EXISTING_SLAVERY_STRINGS.CONDITIONAL_REASON.SUMMARY.TITLE, modernSlavery[AWARE_OF_EXISTING_SLAVERY]),
+    map_aware_of_conditional_reason_default(modernSlavery),
   ];
   return mapped;
 };
@@ -8667,11 +8711,44 @@ var EXPORT_CONTRACT_INDEXES = (application2) => {
 var EXPORT_CONTRACT_default = EXPORT_CONTRACT_INDEXES;
 
 // constants/XLSX-CONFIG/INDEXES/DECLARATIONS/index.ts
-var DECLARATIONS_INDEXES = () => ({
-  CANNOT_ADHERE_TO_ALL_REQUIREMENTS: 7,
-  OFFENSES_OR_INVESTIGATIONS: 9,
-  AWARE_OF_EXISTING_SLAVERY: 11,
+var {
+  MODERN_SLAVERY: {
+    CONDITIONAL_REASONS: { CANNOT_ADHERE_TO_ALL_REQUIREMENTS, OFFENSES_OR_INVESTIGATIONS, AWARE_OF_EXISTING_SLAVERY },
+  },
+} = declarations_default;
+var DEFAULT_INDEXES4 = () => ({
+  CANNOT_ADHERE_TO_ALL_REQUIREMENTS: 0,
+  OFFENSES_OR_INVESTIGATIONS: 0,
+  AWARE_OF_EXISTING_SLAVERY: 0,
 });
+var DECLARATIONS_INDEXES = (modernSlavery) => {
+  const INDEXES = DEFAULT_INDEXES4();
+  const cannotAdhereAnswer = modernSlavery[CANNOT_ADHERE_TO_ALL_REQUIREMENTS];
+  const offensesInvestigationsAnswer = modernSlavery[OFFENSES_OR_INVESTIGATIONS];
+  const awareOfAnswer = modernSlavery[AWARE_OF_EXISTING_SLAVERY];
+  if (cannotAdhereAnswer) {
+    INDEXES.CANNOT_ADHERE_TO_ALL_REQUIREMENTS = 7;
+  }
+  if (offensesInvestigationsAnswer) {
+    INDEXES.OFFENSES_OR_INVESTIGATIONS = 8;
+    if (cannotAdhereAnswer) {
+      INDEXES.OFFENSES_OR_INVESTIGATIONS += 1;
+    }
+    if (awareOfAnswer) {
+      INDEXES.OFFENSES_OR_INVESTIGATIONS += 1;
+    }
+  }
+  if (awareOfAnswer) {
+    INDEXES.AWARE_OF_EXISTING_SLAVERY = 9;
+    if (cannotAdhereAnswer) {
+      INDEXES.AWARE_OF_EXISTING_SLAVERY += 1;
+    }
+    if (offensesInvestigationsAnswer) {
+      INDEXES.AWARE_OF_EXISTING_SLAVERY += 1;
+    }
+  }
+  return INDEXES;
+};
 var DECLARATIONS_default = DECLARATIONS_INDEXES;
 
 // constants/XLSX-CONFIG/INDEXES/index.ts
@@ -8687,7 +8764,7 @@ var XLSX_ROW_INDEXES = {
   [POLICY5]: (application2) => POLICY_default(application2),
   [BUYER2]: () => BUYER_default(),
   [EXPORT_CONTRACT3]: (application2) => EXPORT_CONTRACT_default(application2),
-  [DECLARATIONS4]: () => DECLARATIONS_default(),
+  [DECLARATIONS4]: (application2) => DECLARATIONS_default(application2.declaration.modernSlavery),
 };
 var INDEXES_default = XLSX_ROW_INDEXES;
 

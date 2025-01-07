@@ -13,8 +13,8 @@ describe('api/constants/XLSX-CONFIG/INDEXES', () => {
   it('should return an object with section/worksheet specific indexes', () => {
     expect(XLSX_ROW_INDEXES[EXPORTER_BUSINESS](mockApplication)).toEqual(EXPORTER_BUSINESS_INDEXES(mockApplication));
     expect(XLSX_ROW_INDEXES[POLICY](mockApplication)).toEqual(POLICY_INDEXES(mockApplication));
-    expect(XLSX_ROW_INDEXES[BUYER]()).toEqual(BUYER_INDEXES());
+    expect(XLSX_ROW_INDEXES[BUYER](mockApplication)).toEqual(BUYER_INDEXES());
     expect(XLSX_ROW_INDEXES[EXPORT_CONTRACT](mockApplication)).toEqual(EXPORT_CONTRACT_INDEXES(mockApplication));
-    expect(XLSX_ROW_INDEXES[DECLARATIONS]()).toEqual(DECLARATIONS_INDEXES());
+    expect(XLSX_ROW_INDEXES[DECLARATIONS](mockApplication)).toEqual(DECLARATIONS_INDEXES(mockApplication.declaration.modernSlavery));
   });
 });
