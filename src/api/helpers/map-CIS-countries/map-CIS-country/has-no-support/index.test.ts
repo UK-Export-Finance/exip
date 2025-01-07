@@ -5,7 +5,7 @@ const {
   CIS: {
     COUNTRY_RATINGS,
     ESRA_CLASSIFICATION: { VERY_HIGH, HIGH, STANDARD, NONE },
-    SHORT_TERM_COVER: { UNLISTED, CILC },
+    SHORT_TERM_COVER: { UNLISTED, CILC, NO },
   },
 } = EXTERNAL_API_DEFINITIONS;
 
@@ -111,6 +111,20 @@ describe('helpers/map-CIS-countries/map-CIS-country/has-no-support', () => {
           expect(result).toEqual(expectation);
         });
       });
+    });
+  });
+
+  describe(`when a country does not meet any other conditions and has shortTermCover as ${NO}`, () => {
+    it('should return true', () => {
+      const mockCountry = {
+        countryRating: COUNTRY_RATINGS.NOT_APPLICABLE,
+        esraClassification: NONE,
+        shortTermCover: NO,
+      };
+
+      const result = hasNoSupport(mockCountry);
+
+      expect(result).toEqual(true);
     });
   });
 });

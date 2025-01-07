@@ -8,6 +8,11 @@ export const ARG = {
   ISO_CODE: 'AGO',
 };
 
+export const BLZ = {
+  NAME: 'Belize',
+  ISO_CODE: 'BLZ',
+};
+
 export const BRA = {
   NAME: 'Brazil',
   ISO_CODE: 'BRA',
@@ -38,6 +43,11 @@ export const IOT = {
   ISO_CODE: 'IOT',
 };
 
+export const IRL = {
+  NAME: 'Ireland',
+  ISO_CODE: 'IRL',
+};
+
 export const NCL = {
   NAME: 'New Caledonia',
   ISO_CODE: 'NCL',
@@ -57,15 +67,17 @@ const mockCountries = [DZA, FRA, AGO, GBR, XAD, BRA];
 
 const ONLINE_SUPPORT_1 = DZA;
 
-const NO_ONLINE_SUPPORT_1 = FRA;
-const NO_ONLINE_SUPPORT_2 = AGO;
-const NO_ONLINE_SUPPORT_3 = ARG;
+const NO_ONLINE_SUPPORT_1 = AGO;
+const NO_ONLINE_SUPPORT_2 = ARG;
+const NO_ONLINE_SUPPORT_3 = BLZ;
 const NO_ONLINE_SUPPORT_4 = TN;
 
 const NOT_SUPPORTED_1 = GBR;
 const NOT_SUPPORTED_2 = ERI;
 const NOT_SUPPORTED_3 = IOT;
 const NOT_SUPPORTED_4 = NCL;
+const NOT_SUPPORTED_5 = IRL;
+const NOT_SUPPORTED_6 = FRA;
 
 /**
  * COUNTRY_QUOTE_SUPPORT
@@ -91,6 +103,8 @@ export const COUNTRY_APPLICATION_SUPPORT = {
   NOT_SUPPORTED_2,
   NOT_SUPPORTED_3,
   NOT_SUPPORTED_4,
+  NOT_SUPPORTED_5,
+  NOT_SUPPORTED_6,
 };
 
 export default mockCountries;
