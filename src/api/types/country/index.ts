@@ -2,32 +2,36 @@ import { SuccessResponse } from '../generic';
 import { Relationship } from '../relationship';
 
 export interface CisCountry {
-  countryRatingDesc: string;
-  ESRAClassificationDesc: string;
-  isoCode: string;
   marketName: string;
-  marketRiskAppetitePublicDesc: string;
-  NBIIssue: string;
-  esraClassification?: string;
+  isoCode: string;
   shortTermCoverAvailabilityDesc: string;
+  ESRAClassificationDesc: string;
+  NBIIssue: string;
+  marketRiskAppetitePublicDesc: string;
 }
 
 export interface Country extends Relationship {
   name: string;
   isoCode: string;
-  esraClassification?: string;
+  shortTermCover?: boolean;
+  nbiIssueAvailable?: boolean;
   canGetAQuoteOnline?: boolean;
+  canGetAQuoteOffline?: boolean;
+  canGetAQuoteByEmail?: boolean;
   cannotGetAQuote?: boolean;
   canApplyForInsuranceOnline?: boolean;
+  noInsuranceSupport?: boolean;
 }
 
 export interface MappedCisCountry {
-  countryRating: string;
-  esraClassification?: string | null;
-  isoCode: string;
   name: string;
-  noOnlineSupport: boolean;
+  isoCode: string;
+  shortTermCover: boolean;
+  esraClassification?: string;
+  nbiIssueAvailable: boolean;
   canGetAQuoteOnline: boolean;
+  canGetAQuoteOffline: boolean;
+  canGetAQuoteByEmail: boolean;
   cannotGetAQuote: boolean;
   canApplyForInsuranceOnline: boolean;
   noInsuranceSupport: boolean;

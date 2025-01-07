@@ -1,23 +1,20 @@
-import esraClassificationIsStandardHighOrVeryHigh from '../esra-classification-is-standard-high-or-very-high';
-import shortTermCoverIsYesReferOrUnlisted from '../short-term-cover-is-yes-refer-or-unlisted';
-import countryRatingIsAorB from '../country-rating-is-a-or-b';
-import { CisCountry } from '../../../../types';
+import { MapCisCountryParams } from '../../../../types';
 
 /**
  * canGetAQuoteOnline
- * Check if a country can apply for a quote online.
- * @param {CisCountry} CIS Country
+ * Check if a country is able to get a quote online
+ * @param {MapCisCountryParams}
+ * @param {Boolean} shortTermCover: Short term cover flag.
+ * @param {Boolean} nbiIssueAvailable: NBI flag.
+ * @param {String} esraClassification: ESRA classification.
  * @returns {Boolean}
  */
-const canGetAQuoteOnline = (cisCountry: CisCountry) => {
-  const { ESRAClassificationDesc, shortTermCoverAvailabilityDesc, countryRatingDesc } = cisCountry;
+const canGetAQuoteOnline = ({ shortTermCover, nbiIssueAvailable, esraClassification }: MapCisCountryParams) => {
+  if (esraClassification && shortTermCover && nbiIssueAvailable) {
+    return true;
+  }
 
-  const conditions =
-    esraClassificationIsStandardHighOrVeryHigh(ESRAClassificationDesc) &&
-    shortTermCoverIsYesReferOrUnlisted(shortTermCoverAvailabilityDesc) &&
-    countryRatingIsAorB(countryRatingDesc);
-
-  return conditions;
+  return false;
 };
 
 export default canGetAQuoteOnline;

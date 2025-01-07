@@ -135,10 +135,7 @@ context(
             cy.clickYesRadioInput();
           });
 
-          assertCountryAutocompleteInput({
-            fieldId,
-            assertFilteredCisCountries: false,
-          });
+          assertCountryAutocompleteInput({ fieldId });
         });
       });
     });

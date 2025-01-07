@@ -12,7 +12,7 @@ const {
   QUOTE: { BUYER_COUNTRY, BUYER_BODY },
 } = ROUTES;
 
-const supportedCountryName = COUNTRY_QUOTE_SUPPORT.ONLINE_SUPPORT_1.NAME;
+const supportedCountryName = COUNTRY_QUOTE_SUPPORT.ONLINE.NAME;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -68,7 +68,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
       });
     });
 
-    describe('when submitting with a country that can get a quote online', () => {
+    describe('when submitting with a supported country', () => {
       const field = autoCompleteField(FIELD_ID);
 
       beforeEach(() => {

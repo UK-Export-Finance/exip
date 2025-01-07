@@ -13,7 +13,7 @@ const {
 
 const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
-const COUNTRY_NAME = COUNTRY_APPLICATION_SUPPORT.NOT_SUPPORTED_1.NAME;
+const COUNTRY_NAME = COUNTRY_APPLICATION_SUPPORT.UNSUPPORTED_1.NAME;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -35,7 +35,7 @@ context(
       cy.clickSubmitButton();
     });
 
-    it(`redirects to ${CANNOT_APPLY_EXIT} exit page`, () => {
+    it('redirects to `cannot apply` exit page', () => {
       const expectedUrl = `${baseUrl}${CANNOT_APPLY_EXIT}`;
 
       cy.assertUrl(expectedUrl);

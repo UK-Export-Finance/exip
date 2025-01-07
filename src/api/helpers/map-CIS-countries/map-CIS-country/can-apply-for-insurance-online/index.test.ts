@@ -1,20 +1,52 @@
 import canApplyForInsuranceOnline from '.';
-import esraClassificationIsStandardHighOrVeryHigh from '../esra-classification-is-standard-high-or-very-high';
-import shortTermCoverIsYesReferOrUnlisted from '../short-term-cover-is-yes-refer-or-unlisted';
-import countryRatingIsAorB from '../country-rating-is-a-or-b';
-import { mockCisCountry } from '../../../../test-mocks';
+import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
+
+const {
+  CIS: {
+    RISK: { VERY_HIGH },
+  },
+} = EXTERNAL_API_DEFINITIONS;
+
+const mockEsraClassification = VERY_HIGH;
 
 describe('helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online', () => {
-  it('should return the result of 3x conditions', () => {
-    const result = canApplyForInsuranceOnline(mockCisCountry);
+  describe('when shortTermCover=true, esraClassification is provided', () => {
+    it('should return true', () => {
+      const result = canApplyForInsuranceOnline(true, mockEsraClassification);
 
-    const { ESRAClassificationDesc, shortTermCoverAvailabilityDesc, marketRiskAppetitePublicDesc } = mockCisCountry;
+      expect(result).toEqual(true);
+    });
+  });
 
-    const expected =
-      esraClassificationIsStandardHighOrVeryHigh(ESRAClassificationDesc) &&
-      shortTermCoverIsYesReferOrUnlisted(shortTermCoverAvailabilityDesc) &&
-      countryRatingIsAorB(marketRiskAppetitePublicDesc);
+  describe('when shortTermCover=false, esraClassification is null', () => {
+    it('should return false', () => {
+      const result = canApplyForInsuranceOnline(false, null);
 
-    expect(result).toEqual(expected);
+      expect(result).toEqual(false);
+    });
+  });
+
+  describe('when shortTermCover=false, esraClassification is an empty string', () => {
+    it('should return false', () => {
+      const result = canApplyForInsuranceOnline(false, '');
+
+      expect(result).toEqual(false);
+    });
+  });
+
+  describe('when shortTermCover=true, esraClassification is null', () => {
+    it('should return false', () => {
+      const result = canApplyForInsuranceOnline(true, null);
+
+      expect(result).toEqual(false);
+    });
+  });
+
+  describe('when shortTermCover=true, esraClassification is an empty string', () => {
+    it('should return false', () => {
+      const result = canApplyForInsuranceOnline(true, '');
+
+      expect(result).toEqual(false);
+    });
   });
 });
