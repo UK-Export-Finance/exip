@@ -28,17 +28,6 @@ describe('api/constants/XLSX-CONFIG/INDEXES/DECLARATIONS', () => {
       [OFFENSES_OR_INVESTIGATIONS]: 'mock',
       [AWARE_OF_EXISTING_SLAVERY]: 'mock',
     };
-    // it('should return an object with indexes', () => {
-    //   const result = DECLARATIONS_INDEXES(mockApplication.declaration);
-
-    //   const expected = {
-    //     CANNOT_ADHERE_TO_ALL_REQUIREMENTS: 7,
-    //     OFFENSES_OR_INVESTIGATIONS: 9,
-    //     AWARE_OF_EXISTING_SLAVERY: 11,
-    //   };
-
-    //   expect(result).toEqual(expected);
-    // });
 
     describe(`when ${CANNOT_ADHERE_TO_ALL_REQUIREMENTS}, ${OFFENSES_OR_INVESTIGATIONS} and ${AWARE_OF_EXISTING_SLAVERY} are populated`, () => {
       it('should return an object with indexes', () => {
