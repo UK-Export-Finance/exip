@@ -26,7 +26,7 @@ const completeAboutGoodsOrServicesForm = ({
     cy.clickYesRadioInput();
 
     if (includeFinalDestination) {
-      cy.keyboardInput(autoCompleteField(FINAL_DESTINATION).input(), COUNTRY_APPLICATION_SUPPORT.ONLINE_SUPPORT_1.NAME);
+      cy.keyboardInput(autoCompleteField(FINAL_DESTINATION).input(), COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME);
     }
   } else {
     cy.clickNoRadioInput();

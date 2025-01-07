@@ -36,7 +36,7 @@ const {
   COMPANY_DETAILS_CHANGE,
   CANNOT_APPLY_MULTIPLE_RISKS_EXIT,
   ELIGIBLE_TO_APPLY_ONLINE,
-  TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT,
+  CONTRACT_TOO_SHORT_EXIT,
   PARTY_TO_CONSORTIUM,
   PARTY_TO_CONSORTIUM_CHANGE,
   MEMBER_OF_A_GROUP,
@@ -156,9 +156,9 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
       });
     });
 
-    describe(`when req.originalUrl is ${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT}`, () => {
+    describe(`when req.originalUrl is ${CONTRACT_TOO_SHORT_EXIT}`, () => {
       it('should call req.next', () => {
-        req.originalUrl = TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT;
+        req.originalUrl = CONTRACT_TOO_SHORT_EXIT;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();

@@ -168,7 +168,7 @@ export const HAVE_AN_ACCOUNT = {
   PAGE_TITLE: 'Do you have an account with us?',
 };
 
-export const TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT = {
+export const CONTRACT_TOO_SHORT_EXIT = {
   PAGE_TITLE: 'Talk to an export finance manager',
   INTRO: "We do not normally offer short term cover for the country you've selected.",
   CONTACT_EFM: {

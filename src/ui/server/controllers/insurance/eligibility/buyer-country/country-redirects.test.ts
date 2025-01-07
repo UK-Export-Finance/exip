@@ -7,25 +7,19 @@ import getCountryByIsoCode from '../../../../helpers/get-country-by-iso-code';
 import mapSubmittedEligibilityCountry from '../../../../helpers/mappings/map-submitted-eligibility-country';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
-import {
-  mockReq,
-  mockRes,
-  mockCountries,
-  mockCountryCanApplyForInsuranceOnline,
-  mockCountryNoInsuranceSupport,
-  mockCountryNoOnlineSupport,
-} from '../../../../test-mocks';
+import { mockReq, mockRes, mockCountries } from '../../../../test-mocks';
 
 const {
-  ELIGIBILITY: { CANNOT_APPLY_EXIT: CANNOT_APPLY_ROUTE, TOTAL_VALUE_INSURED, BUYER_COUNTRY_CHANGE, CHECK_YOUR_ANSWERS, TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT },
+  ELIGIBILITY: { CANNOT_APPLY_EXIT: CANNOT_APPLY_ROUTE, TOTAL_VALUE_INSURED, BUYER_COUNTRY_CHANGE, CHECK_YOUR_ANSWERS, CONTRACT_TOO_SHORT_EXIT },
 } = INSURANCE_ROUTES;
-
-let mockCountriesResponse = mockCountries;
 
 describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
   let req: Request;
   let res: Response;
 
+  let mockCountriesResponse = mockCountries;
+
+  const { 1: countryApplyOnline, 4: countryCannotApply, 5: countryNoShortTermCover } = mockCountriesResponse;
   const mockFlash = jest.fn();
 
   beforeEach(() => {
@@ -46,7 +40,7 @@ describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
       api.keystone.APIM.getCisCountries = getCisCountriesSpy;
     });
 
-    describe('when the country is not found', () => {
+    describe('when the submitted country is not found', () => {
       beforeEach(() => {
         req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = 'Country not in the mock response';
       });
@@ -58,56 +52,21 @@ describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
       });
     });
 
-    describe('when the API returns a noOnlineSupport flag for the submitted country', () => {
-      const selectedCountryName = mockCountryNoOnlineSupport.isoCode;
-
-      beforeEach(() => {
-        mockCountriesResponse = [mockCountryNoOnlineSupport];
-
-        getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
-
-        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
-
-        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = selectedCountryName;
-      });
-
-      it('should update the session with populated country object', async () => {
-        await post(req, res);
-
-        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, mockCountryNoOnlineSupport.isoCode);
-
-        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
-
-        const expected = {
-          ...req.session.submittedData,
-          insuranceEligibility: updateSubmittedData(expectedPopulatedData, req.session.submittedData.insuranceEligibility),
-        };
-
-        expect(req.session.submittedData).toEqual(expected);
-      });
-
-      it(`should redirect to ${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT);
-      });
-    });
-
-    describe('when the API returns a canApplyForInsuranceOnline flag for the submitted country', () => {
-      const selectedCountryIsoCode = mockCountryCanApplyForInsuranceOnline.isoCode;
+    describe('when the country can apply for an application online', () => {
+      const selectedCountryIsoCode = countryApplyOnline.isoCode;
 
       const validBody = {
         [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]: selectedCountryIsoCode,
       };
 
       beforeEach(() => {
-        mockCountriesResponse = [mockCountryCanApplyForInsuranceOnline];
+        req.body = validBody;
+
+        mockCountriesResponse = [countryApplyOnline];
 
         getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 
         api.keystone.APIM.getCisCountries = getCisCountriesSpy;
-
-        req.body = validBody;
       });
 
       it('should update the session with populated with country object', async () => {
@@ -143,18 +102,53 @@ describe('controllers/insurance/eligibility/buyer-country - redirects', () => {
       });
     });
 
-    describe('when the API returns a noInsuranceSupport flag for the submitted country', () => {
-      const selectedCountryName = mockCountryNoInsuranceSupport.name;
-      const selectedCountryIsoCode = mockCountryNoInsuranceSupport.isoCode;
+    describe('when the submitted country does not have short term cover', () => {
+      const selectedCountryName = countryNoShortTermCover.isoCode;
 
       beforeEach(() => {
-        mockCountriesResponse = [mockCountryNoInsuranceSupport];
+        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = selectedCountryName;
+
+        mockCountriesResponse = [countryNoShortTermCover];
 
         getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 
         api.keystone.APIM.getCisCountries = getCisCountriesSpy;
+      });
 
+      it('should update the session with populated country object', async () => {
+        await post(req, res);
+
+        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, countryNoShortTermCover.isoCode);
+
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
+
+        const expected = {
+          ...req.session.submittedData,
+          insuranceEligibility: updateSubmittedData(expectedPopulatedData, req.session.submittedData.insuranceEligibility),
+        };
+
+        expect(req.session.submittedData).toEqual(expected);
+      });
+
+      it(`should redirect to ${CONTRACT_TOO_SHORT_EXIT}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(CONTRACT_TOO_SHORT_EXIT);
+      });
+    });
+
+    describe('when the submitted country cannot apply for an application', () => {
+      const selectedCountryName = countryCannotApply.name;
+      const selectedCountryIsoCode = countryCannotApply.isoCode;
+
+      beforeEach(() => {
         req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = selectedCountryIsoCode;
+
+        mockCountriesResponse = [countryCannotApply];
+
+        getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+
+        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
       });
 
       it('should update the session with populated with country object', async () => {

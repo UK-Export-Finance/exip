@@ -104,10 +104,7 @@ context(
       });
 
       describe(`searchable autocomplete input (${PAYABLE_COUNTRY_CODE})`, () => {
-        assertCountryAutocompleteInput({
-          fieldId: PAYABLE_COUNTRY_CODE,
-          assertFilteredCisCountries: false,
-        });
+        assertCountryAutocompleteInput({ fieldId: PAYABLE_COUNTRY_CODE });
       });
     });
 

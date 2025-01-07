@@ -115,10 +115,6 @@ export const mockApplicationMultiplePolicyTotalContractValueOverThreshold = {
 
 export const mockCisCountries = cisCountries;
 
-const [firstCisCountry] = mockCisCountries;
-
-export const mockCisCountry = firstCisCountry;
-
 export const mockMappedCisCountries = mapCisCountries(mockCisCountries);
 
 export const mockCompany = company;
