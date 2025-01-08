@@ -3,7 +3,7 @@ import { ObjectType } from '../../../types';
 /**
  * objectHasKeysAndValues
  * Check if an object has keys and values
- * @param {Object} Object to check
+ * @param {ObjectType} Object to check
  * @returns {Boolean}
  */
 export const objectHasKeysAndValues = (obj: ObjectType) => {

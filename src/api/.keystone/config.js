@@ -6151,17 +6151,32 @@ var mapPolicy = (policy) => {
   const mappedPolicy = {
     ...policy,
   };
-  if (policy.requestedStartDate) {
+  if (policy?.requestedStartDate) {
     const { requestedStartDate } = policy;
     mappedPolicy.requestedStartDate = new Date(requestedStartDate);
   }
-  if (policy.contractCompletionDate) {
+  if (policy?.contractCompletionDate) {
     const { contractCompletionDate } = policy;
     mappedPolicy.contractCompletionDate = new Date(contractCompletionDate);
   }
   return mappedPolicy;
 };
 var map_policy_default = mapPolicy;
+
+// helpers/object/index.ts
+var objectHasKeysAndValues = (obj) => {
+  const keys = Object.keys(obj);
+  if (!keys.length) {
+    return false;
+  }
+  let hasValues = false;
+  keys.forEach((key2) => {
+    if (obj[key2]) {
+      hasValues = true;
+    }
+  });
+  return hasValues;
+};
 
 // helpers/get-populated-application/index.ts
 var EXPECTED_RELATIONSHIPS = [
@@ -6232,7 +6247,8 @@ var getPopulatedApplication = async ({
     };
     Object.keys(populatedApplication2).forEach((relationshipKey) => {
       if (EXPECTED_RELATIONSHIPS.includes(relationshipKey)) {
-        if (!populatedApplication2[relationshipKey]) {
+        const populatedRelationship = populatedApplication2[relationshipKey];
+        if (!populatedRelationship || !objectHasKeysAndValues(populatedRelationship)) {
           throw new Error(`Error getting '${relationshipKey}' relationship`);
         }
       }

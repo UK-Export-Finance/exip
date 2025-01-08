@@ -13,6 +13,7 @@ import getPopulatedDeclaration from '../get-populated-declaration';
 import getSectionReviewById from '../get-section-review-by-id';
 import mapTotalContractValueOverThreshold from '../map-total-contract-value-over-threshold';
 import mapPolicy from './map-policy';
+import { objectHasKeysAndValues } from '../object';
 import { Application } from '../../types';
 
 interface GetPopulatedApplicationParams {
@@ -125,7 +126,9 @@ const getPopulatedApplication = async ({
      */
     Object.keys(populatedApplication).forEach((relationshipKey: string) => {
       if (EXPECTED_RELATIONSHIPS.includes(relationshipKey)) {
-        if (!populatedApplication[relationshipKey]) {
+        const populatedRelationship = populatedApplication[relationshipKey];
+
+        if (!populatedRelationship || !objectHasKeysAndValues(populatedRelationship)) {
           throw new Error(`Error getting '${relationshipKey}' relationship`);
         }
       }

@@ -14,13 +14,13 @@ const mapPolicy = (policy: ApplicationPolicy) => {
     ...policy,
   };
 
-  if (policy.requestedStartDate) {
+  if (policy?.requestedStartDate) {
     const { requestedStartDate } = policy;
 
     mappedPolicy.requestedStartDate = new Date(requestedStartDate);
   }
 
-  if (policy.contractCompletionDate) {
+  if (policy?.contractCompletionDate) {
     const { contractCompletionDate } = policy;
 
     mappedPolicy.contractCompletionDate = new Date(contractCompletionDate);
