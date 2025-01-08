@@ -24,6 +24,9 @@ inputs:
   node:
     description: 'Node.js setup version'
     required: true
+  execute:
+    description: 'Ascertain SQL script execution'
+    required: true
 
 # Define the steps to run this action.
 runs:
@@ -49,7 +52,7 @@ runs:
 
     # Step 4: Execute MySQL export.
     - name: Import ⬇
-      if: ${{ '1' == vars.DATABASE }}
+      if: ${{ '1' == inputs.execute }}
       uses: azure/cli@v2
       with:
         inlineScript: |

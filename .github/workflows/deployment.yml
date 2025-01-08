@@ -86,6 +86,7 @@ jobs:
           database: ${{ env.PRODUCT }}
           branch: ${{ env.ENVIRONMENT }}
           node: ${{ vars.NODE_VERSION }}
+          execute: ${{ vars.DATABASE }}
 
   # 3. micro-serices WebApp deployments
   webapp:
