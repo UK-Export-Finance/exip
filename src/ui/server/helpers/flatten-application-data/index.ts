@@ -109,7 +109,6 @@ const flattenApplicationData = (application: Application): ApplicationFlat => {
       buyerCountry: application.eligibility?.buyerCountry?.isoCode,
       ...business,
       ...mapBroker(broker),
-      // broker: mapBroker(broker),
       ...buyer,
       ...buyerTradingHistory,
       ...company,

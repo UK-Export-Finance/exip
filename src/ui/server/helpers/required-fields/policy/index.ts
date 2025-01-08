@@ -83,11 +83,6 @@ export const getBrokerTasks = (isUsingBroker?: boolean, brokerIsBasedInUk?: bool
     tasks = [BROKER_NAME, BROKER_EMAIL];
 
     if (brokerIsBasedInUk) {
-      /**
-       * TODO:
-       * do we need town?
-       * I think some Ordnance survey results do not have a town.
-       */
       tasks = [...tasks, BROKER_ADDRESS_LINE_1, BROKER_ADDRESS_LINE_2, BROKER_POSTCODE];
     } else {
       tasks = [...tasks, BROKER_FULL_ADDRESS];
