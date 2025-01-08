@@ -23,7 +23,7 @@ const {
 
 /**
  * mapBroker
- * Map the broke to avoid clashes with other fields with the same name
+ * Map the broker to avoid clashes with other fields with the same name
  * e.g name, email, address fields.
  * @param {ApplicationBroker} broker
  * @returns {Object} ApplicationBroker with slightly different field IDs
