@@ -122,8 +122,8 @@ export const post = async (req: Request, res: Response) => {
     }
 
     /**
-     * If a country cannot get a quote online,
-     * redirect to a specific exit page.
+     * If a country can get a quote online,
+     * redirect to the next part of the flow.
      */
     if (country.canGetAQuoteOnline) {
       console.info('Country support - %s - can get a quote online', country.name);

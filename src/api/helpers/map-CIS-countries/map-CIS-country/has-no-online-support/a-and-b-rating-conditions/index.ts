@@ -31,10 +31,6 @@ const aAndBRatingConditions = ({ countryRating, esraClassification, shortTermCov
     if (shortTermCover === CILC) {
       return true;
     }
-
-    if (shortTermCover === NO) {
-      return true;
-    }
   }
 
   if (esraClassification === NONE && shortTermCover === NO) {

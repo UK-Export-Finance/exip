@@ -43,10 +43,6 @@ const cAndDRatingConditions = ({ countryRating, esraClassification, shortTermCov
     if (shortTermCover === UNLISTED) {
       return true;
     }
-
-    if (shortTermCover === NO) {
-      return true;
-    }
   }
 
   if (esraClassification === NONE && shortTermCover === NO) {
