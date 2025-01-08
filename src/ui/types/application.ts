@@ -129,6 +129,7 @@ interface ApplicationBroker {
   name?: string;
   addressLine1?: string;
   addressLine2?: string;
+  buildingNumberOrName?: string;
   town?: string;
   postcode?: string;
   fullAddress?: string;
