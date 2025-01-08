@@ -11,13 +11,15 @@ const {
 describe('api/constants/XLSX-CONFIG/INDEXES/DECLARATIONS', () => {
   describe('DEFAULT_INDEXES', () => {
     it('should return an object with indexes', () => {
+      const result = DEFAULT_INDEXES();
+
       const expected = {
         CANNOT_ADHERE_TO_ALL_REQUIREMENTS: 0,
         OFFENSES_OR_INVESTIGATIONS: 0,
         AWARE_OF_EXISTING_SLAVERY: 0,
       };
 
-      expect(DEFAULT_INDEXES()).toEqual(expected);
+      expect(result).toEqual(expected);
     });
   });
 
