@@ -125,6 +125,7 @@ interface ApplicationBusiness {
 interface ApplicationBroker {
   id: string;
   isUsingBroker?: boolean;
+  isBasedInUk?: boolean;
   name?: string;
   addressLine1?: string;
   addressLine2?: string;

@@ -12,10 +12,10 @@ const { POLICY_TYPE } = APPLICATION;
  * @param {Boolean} alternativeCurrency: Select the "alternative currency" option
  * @param {Boolean} sameName: If name on policy is the same as the signed in user - defaults to true
  * @param {Boolean} needPreCreditPeriod: If the user needs a pre-credit period - defaults to false
- * @param {Boolean} usingBroker: If "using broker" on  - defaults to false
- * @param {Boolean} brokerIsBasedInUk: If the Broker is based in the UK - defaults to true
- * @param {Boolean} otherCompanyInvolved: If "another company to be insured" is on  - defaults to false
- * @param {Boolean} isAppointingLossPayee: Should submit "yes" or "no" to "appointing a loss payee". Defaults to "no".
+ * @param {Boolean} usingBroker: If "using broker" - defaults to false
+ * @param {Boolean} brokerIsBasedInUk: Broker is based in the UK - defaults to false
+ * @param {Boolean} otherCompanyInvolved: Should submit "yes" to "another company to be insured". Defaults to false.
+ * @param {Boolean} isAppointingLossPayee: Should submit "yes" or "no" to "appointing a loss payee". Defaults to false.
  * @param {Boolean} lossPayeeIsLocatedInUK: Should submit "UK" to "loss payee details". Defaults to false.
  * @param {Boolean} submitCheckYourAnswers: Click policy "check your answers" submit button
  */
@@ -76,7 +76,7 @@ const completePolicySection = ({
     if (brokerIsBasedInUk) {
       cy.completeAndSubmitBrokerAddressesForm({});
 
-      // submit the "confirm address" form
+      // submit the "confirm broker address" form
       cy.clickSubmitButton();
     } else {
       cy.completeAndSubmitBrokerManualAddressForm({});

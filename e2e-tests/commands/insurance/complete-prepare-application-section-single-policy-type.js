@@ -41,7 +41,7 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * @param {Boolean} submitCheckYourAnswers: Should click each section's "check your answers" submit button.
  * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker".
- * @param {Boolean} brokerIsBasedInUk: Should submit "yes" or "no" to "broker is based in UK".
+ * @param {Boolean} brokerIsBasedInUk: Should submit "yes or "no" to "broker is based in the UK".
  */
 const completePrepareApplicationSinglePolicyType = ({
   agentChargeMethodFixedSum = false,

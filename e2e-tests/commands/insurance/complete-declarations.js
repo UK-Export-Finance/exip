@@ -4,7 +4,7 @@ import { FIELD_VALUES } from '../../constants';
  * completeDeclarations
  * Runs through the full declarations journey
  * @param {Object} Object with flags on how to complete specific declaration forms.
- * - exportingWithCodeOfConduct: Should submit "yes" in the "exporting with code of conduct" form. Defaults to "yes".
+ * - exportingWithCodeOfConduct: Should submit "yes" in the "exporting with code of conduct" form. Defaults to true.
  */
 const completeDeclarations = ({ hasAntiBriberyCodeOfConduct = true, exportingWithCodeOfConduct = true }) => {
   cy.clickTaskDeclarationsAndSubmit();

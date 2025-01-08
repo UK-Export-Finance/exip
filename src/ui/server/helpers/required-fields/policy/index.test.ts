@@ -9,7 +9,8 @@ const { POLICY_TYPE } = FIELD_VALUES;
 const { REQUESTED_START_DATE, POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
 
 const {
-  BROKER_DETAILS: { NAME, BROKER_EMAIL },
+  BROKER_DETAILS: { BROKER_NAME, BROKER_EMAIL, BROKER_ADDRESS_LINE_1, BROKER_ADDRESS_LINE_2, BROKER_POSTCODE },
+  BROKER_MANUAL_ADDRESS: { BROKER_FULL_ADDRESS },
   CONTRACT_POLICY: {
     SINGLE: { CONTRACT_COMPLETION_DATE, REQUESTED_CREDIT_LIMIT, TOTAL_CONTRACT_VALUE },
     MULTIPLE: { TOTAL_MONTHS_OF_COVER },
@@ -116,13 +117,27 @@ describe('server/helpers/required-fields/policy', () => {
   });
 
   describe('getBrokerTasks', () => {
-    describe('when isUsingBroker is true', () => {
+    describe('when isUsingBroker is true, brokerIsBasedInUk is false', () => {
       it('should return multiple field ids in an array', () => {
         const isUsingBrokerFlag = true;
+        const brokerIsBasedInUkFlag = false;
 
-        const result = getBrokerTasks(isUsingBrokerFlag);
+        const result = getBrokerTasks(isUsingBrokerFlag, brokerIsBasedInUkFlag);
 
-        const expected = [NAME, BROKER_EMAIL];
+        const expected = [BROKER_NAME, BROKER_EMAIL, BROKER_FULL_ADDRESS];
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when isUsingBroker is true, brokerIsBasedInUk is true', () => {
+      it('should return multiple field ids in an array', () => {
+        const isUsingBrokerFlag = true;
+        const brokerIsBasedInUkFlag = true;
+
+        const result = getBrokerTasks(isUsingBrokerFlag, brokerIsBasedInUkFlag);
+
+        const expected = [BROKER_NAME, BROKER_EMAIL, BROKER_ADDRESS_LINE_1, BROKER_ADDRESS_LINE_2, BROKER_POSTCODE];
 
         expect(result).toEqual(expected);
       });
