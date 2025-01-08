@@ -29,6 +29,16 @@ describe('helpers/get-populated-declaration', () => {
     };
 
     createdModernSlavery = (await declarationsModernSlavery.create(context, initModernSlavery)) as ApplicationDeclarationModernSlavery;
+
+    const declarationUpdateObject = {
+      modernSlavery: {
+        connect: {
+          id: createdModernSlavery.id,
+        },
+      },
+    };
+
+    await declaration.update(context, createdDeclaration.id, declarationUpdateObject);
   });
 
   it('should return a populated declaration', async () => {
@@ -41,13 +51,9 @@ describe('helpers/get-populated-declaration', () => {
 
   describe('when a declaration is not found', () => {
     it('should throw an error', async () => {
-      try {
-        await getPopulatedDeclaration(context, mockInvalidId);
-      } catch (error) {
-        const expected = `Getting populated declaration ${mockInvalidId}`;
+      const expectedErrorMessage = `Error getting populated declaration ${mockInvalidId}`;
 
-        expect(String(error).includes(expected)).toEqual(true);
-      }
+      await expect(getPopulatedDeclaration(context, mockInvalidId)).rejects.toThrow(expectedErrorMessage);
     });
   });
 
@@ -55,13 +61,9 @@ describe('helpers/get-populated-declaration', () => {
     it('should throw an error', async () => {
       const declarationNoModernSlavery = (await declaration.create(context)) as ApplicationDeclaration;
 
-      try {
-        await getPopulatedDeclaration(context, declarationNoModernSlavery.id);
-      } catch (error) {
-        const expected = `Getting populated declaration ${declarationNoModernSlavery.id}`;
+      const expectedErrorMessage = `Error getting populated declaration ${declarationNoModernSlavery.id}`;
 
-        expect(String(error).includes(expected)).toEqual(true);
-      }
+      await expect(getPopulatedDeclaration(context, declarationNoModernSlavery.id)).rejects.toThrow(expectedErrorMessage);
     });
   });
 });
