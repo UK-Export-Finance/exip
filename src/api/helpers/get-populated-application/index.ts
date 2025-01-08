@@ -23,6 +23,25 @@ interface GetPopulatedApplicationParams {
 }
 
 /**
+ * EXPECTED_RELATIONSHIPS
+ * Relationships that are expected to be populated with an application.
+ */
+export const EXPECTED_RELATIONSHIPS: Array<string> = [
+  'eligibility',
+  'broker',
+  'business',
+  'buyer',
+  'company',
+  'declaration',
+  'exportContract',
+  'owner',
+  'policy',
+  'policyContact',
+  'nominatedLossPayee',
+  'sectionReview',
+];
+
+/**
  * getPopulatedApplication
  * Get data associated with an application
  * @param {Context} context: KeystoneJS context API
@@ -99,11 +118,24 @@ const getPopulatedApplication = async ({
       totalContractValueOverThreshold,
     };
 
+    /**
+     * Check that all expected relationships are populated.
+     * If not, throw an error.
+     * Otherwise, unexpected behaviours could occur.
+     */
+    Object.keys(populatedApplication).forEach((relationshipKey: string) => {
+      if (EXPECTED_RELATIONSHIPS.includes(relationshipKey)) {
+        if (!populatedApplication[relationshipKey]) {
+          throw new Error(`Error getting '${relationshipKey}' relationship`);
+        }
+      }
+    });
+
     return populatedApplication;
   } catch (error) {
     console.error('Getting populated application (helper) %s %o', application.id, error);
 
-    throw new Error(`Error Getting populated application (helper) ${application.id} ${error}`);
+    throw new Error(`Error getting populated application (helper) ${application.id} ${error}`);
   }
 };
 

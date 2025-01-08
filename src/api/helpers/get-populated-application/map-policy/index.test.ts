@@ -53,16 +53,10 @@ describe('api/helpers/get-populated-application', () => {
       });
     });
 
-    it('should return a policy with date fields as empty strings', () => {
+    it('should return null', () => {
       const result = mapPolicy(policy);
 
-      const expected = {
-        ...policy,
-        requestedStartDate: null,
-        contractCompletionDate: null,
-      };
-
-      expect(result).toEqual(expected);
+      expect(result).toEqual(null);
     });
   });
 });

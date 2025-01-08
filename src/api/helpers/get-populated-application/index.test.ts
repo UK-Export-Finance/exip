@@ -1,5 +1,5 @@
 import { Application as KeystoneApplication } from '.keystone/types'; // eslint-disable-line
-import getPopulatedApplication from '.';
+import getPopulatedApplication, { EXPECTED_RELATIONSHIPS } from '.';
 import { createFullApplication, getKeystoneContext } from '../../test-helpers';
 import getPopulatedExportContract from '../get-populated-export-contract';
 import getPopulatedDeclaration from '../get-populated-declaration';
@@ -37,6 +37,29 @@ describe('api/helpers/get-populated-application', () => {
       nominatedLossPayeeId: fullApplication.nominatedLossPayeeId,
       sectionReviewId: fullApplication.sectionReviewId,
     };
+  });
+
+  describe('EXPECTED_RELATIONSHIPS', () => {
+    it('should return an array of expected relationships', () => {
+      const result = EXPECTED_RELATIONSHIPS;
+
+      const expected = [
+        'eligibility',
+        'broker',
+        'business',
+        'buyer',
+        'company',
+        'declaration',
+        'exportContract',
+        'owner',
+        'policy',
+        'policyContact',
+        'nominatedLossPayee',
+        'sectionReview',
+      ];
+
+      expect(result).toEqual(expected);
+    });
   });
 
   it('should return an application with associated data', async () => {

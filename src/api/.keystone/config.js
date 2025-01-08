@@ -5567,7 +5567,7 @@ var getPopulatedEligibility = async (context, id, buyerCountry) => {
     return populatedEligibility;
   } catch (error) {
     console.error('Getting populated eligibility %s %o', id, error);
-    throw new Error(`Error Getting populated eligibility ${id} ${error}`);
+    throw new Error(`Error getting populated eligibility ${id} ${error}`);
   }
 };
 var get_populated_eligibility_default = getPopulatedEligibility;
@@ -5876,7 +5876,7 @@ var getPopulatedExportContract = async (context, id) => {
     return populatedExportContract;
   } catch (error) {
     console.error('Getting populated exportContract %s %o', id, error);
-    throw new Error(`Error Getting populated exportContract ${id} ${error}`);
+    throw new Error(`Error getting populated exportContract ${id} ${error}`);
   }
 };
 var get_populated_export_contract_default = getPopulatedExportContract;
@@ -5962,7 +5962,7 @@ var getPopulatedCompany = async (context, id) => {
     return populatedCompany;
   } catch (error) {
     console.error('Getting populated company %s %o', id, error);
-    throw new Error(`Error Getting populated company ${id} ${error}`);
+    throw new Error(`Error getting populated company ${id} ${error}`);
   }
 };
 var get_populated_company_default = getPopulatedCompany;
@@ -6074,7 +6074,7 @@ var getPopulatedBuyer = async (context, id) => {
     return populatedBuyer;
   } catch (error) {
     console.error('Getting populated buyer %s %o', id, error);
-    throw new Error(`Error Getting populated buyer ${id} ${error}`);
+    throw new Error(`Error getting populated buyer ${id} ${error}`);
   }
 };
 var get_populated_buyer_default = getPopulatedBuyer;
@@ -6122,7 +6122,7 @@ var getPopulatedDeclaration = async (context, id) => {
     return populatedDeclaration;
   } catch (error) {
     console.error('Getting populated declaration %s %o', id, error);
-    throw new Error(`Error Getting populated declaration ${id} ${error}`);
+    throw new Error(`Error getting populated declaration ${id} ${error}`);
   }
 };
 var get_populated_declaration_default = getPopulatedDeclaration;
@@ -6148,17 +6148,34 @@ var map_total_contract_value_over_threshold_default = mapTotalContractValueOverT
 
 // helpers/get-populated-application/map-policy/index.ts
 var mapPolicy = (policy) => {
-  const { requestedStartDate, contractCompletionDate } = policy;
-  const mappedPolicy = {
-    ...policy,
-    requestedStartDate: requestedStartDate ? new Date(requestedStartDate) : null,
-    contractCompletionDate: contractCompletionDate ? new Date(contractCompletionDate) : null,
-  };
-  return mappedPolicy;
+  if (policy?.requestedStartDate && policy?.contractCompletionDate) {
+    const { requestedStartDate, contractCompletionDate } = policy;
+    const mappedPolicy = {
+      ...policy,
+      requestedStartDate: requestedStartDate ? new Date(requestedStartDate) : null,
+      contractCompletionDate: contractCompletionDate ? new Date(contractCompletionDate) : null,
+    };
+    return mappedPolicy;
+  }
+  return null;
 };
 var map_policy_default = mapPolicy;
 
 // helpers/get-populated-application/index.ts
+var EXPECTED_RELATIONSHIPS = [
+  'eligibility',
+  'broker',
+  'business',
+  'buyer',
+  'company',
+  'declaration',
+  'exportContract',
+  'owner',
+  'policy',
+  'policyContact',
+  'nominatedLossPayee',
+  'sectionReview',
+];
 var getPopulatedApplication = async ({
   context,
   application: application2,
@@ -6211,10 +6228,17 @@ var getPopulatedApplication = async ({
       sectionReview,
       totalContractValueOverThreshold,
     };
+    Object.keys(populatedApplication2).forEach((relationshipKey) => {
+      if (EXPECTED_RELATIONSHIPS.includes(relationshipKey)) {
+        if (!populatedApplication2[relationshipKey]) {
+          throw new Error(`Error getting '${relationshipKey}' relationship`);
+        }
+      }
+    });
     return populatedApplication2;
   } catch (error) {
     console.error('Getting populated application (helper) %s %o', application2.id, error);
-    throw new Error(`Error Getting populated application (helper) ${application2.id} ${error}`);
+    throw new Error(`Error getting populated application (helper) ${application2.id} ${error}`);
   }
 };
 var populatedApplication = {
