@@ -1,10 +1,12 @@
 import FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import { isEmptyString } from '../../../../../helpers/string';
+import { objectHasProperty } from '../../../../../helpers/object';
 import { RequestBody } from '../../../../../../types';
 
 const {
   USING_BROKER,
   BROKER_DETAILS: { BUILDING_NUMBER_OR_NAME, EMAIL, IS_BASED_IN_UK, NAME, POSTCODE },
+  BROKER_ADDRESSES: { SELECT_THE_ADDRESS },
   BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = FIELD_IDS;
 
@@ -40,6 +42,15 @@ const mapSubmittedData = (formBody: RequestBody): object => {
     populatedData[IS_BASED_IN_UK] = null;
     populatedData[POSTCODE] = '';
     populatedData[BUILDING_NUMBER_OR_NAME] = '';
+  }
+
+  /**
+   * If SELECT_THE_ADDRESS is provided,
+   * or is an empty string,
+   * delete the field.
+   */
+  if (objectHasProperty(formBody, SELECT_THE_ADDRESS) || isEmptyString(formBody[SELECT_THE_ADDRESS])) {
+    delete populatedData[SELECT_THE_ADDRESS];
   }
 
   return populatedData;
