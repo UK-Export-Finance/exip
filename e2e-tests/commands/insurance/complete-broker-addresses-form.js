@@ -10,7 +10,7 @@ const {
  * Complete "broker addresses" form
  * @param {String} optionValue: Address option value
  */
-const completeBrokerAddressesForm = ({ optionValue = 'BRITISH BROADCASTING CORPORATION WOGAN HOUSE PORTLAND PLACE' }) => {
+const completeBrokerAddressesForm = ({ optionValue = 'H M TREASURY HORSE GUARDS ROAD' }) => {
   const optionDataCy = `${FIELD_ID}-${optionValue}`;
 
   radios(optionDataCy).option.label().click();

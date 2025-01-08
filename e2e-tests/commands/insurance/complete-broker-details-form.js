@@ -17,14 +17,13 @@ const { EMAIL } = ACCOUNT_FIELD_IDS;
  * @param {String} name: Broker name
  * @param {String} email: Broker email
  * @param {Boolean} isBasedInUk: Broker is based in the UK
- * @param {String} postcode: Broker's postcode
- * @param {String} buildingNumberOrName: Broker's building name or number
+ * @param {String} postcode: Broker postcode
+ * @param {String} buildingNumberOrName: Broker building name or number
  */
 const completeBrokerDetailsForm = ({
   name = BROKER[NAME],
   email = BROKER[EMAIL],
-  // TODO: EMS-3974 - make this have a true default
-  isBasedInUk = false,
+  isBasedInUk = true,
   postcode = BROKER[POSTCODE],
   buildingNumberOrName = BROKER[BUILDING_NUMBER_OR_NAME],
 }) => {

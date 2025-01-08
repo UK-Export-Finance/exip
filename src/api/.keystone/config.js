@@ -9553,6 +9553,9 @@ var mapAndFilterOrdnanceSurveyAddresses = (houseNameOrNumber, ordnanceSurveyResp
       if (address.DPA.BUILDING_NAME && address.DPA.BUILDING_NAME.includes(houseNameOrNumber)) {
         mappedAndFiltered.push(map_ordnance_survey_address_default(address));
       }
+      if (address.DPA.BUILDING_NUMBER && address.DPA.BUILDING_NUMBER.includes(houseNameOrNumber)) {
+        mappedAndFiltered.push(map_ordnance_survey_address_default(address));
+      }
     });
     return mappedAndFiltered;
   } catch (error) {

@@ -3,7 +3,7 @@ import { APPLICATION } from '../../../constants';
 const { SINGLE } = APPLICATION.POLICY_TYPE;
 
 /**
- * completeAndPolicyForms
+ * completeAndSubmitPolicyForms
  * completes policy forms up to the specified form to stop at
  * eg, when 'exportValue' is passed, it will complete all forms up to and including 'exportValue'
  * @param {String} stopSubmittingAfter: The final form to submit
@@ -19,7 +19,7 @@ const { SINGLE } = APPLICATION.POLICY_TYPE;
  * @param {String} postcode: Broker postcode
  * @param {String} buildingNumberOrName: Broker building name or number
  */
-const completeAndPolicyForms = ({
+const completeAndSubmitPolicyForms = ({
   stopSubmittingAfter,
   policyType = SINGLE,
   sameName = true,
@@ -85,4 +85,4 @@ const completeAndPolicyForms = ({
   }
 };
 
-export default completeAndPolicyForms;
+export default completeAndSubmitPolicyForms;
