@@ -346,16 +346,26 @@ var POLICY = {
   BROKER_DETAILS: {
     NAME: 'name',
     EMAIL: shared_default.EMAIL,
-    BROKER_EMAIL: 'broker.email',
     IS_BASED_IN_UK: 'isBasedInUk',
-    POSTCODE: 'postcode',
     BUILDING_NUMBER_OR_NAME: 'buildingNumberOrName',
+    ADDRESS_LINE_1: 'addressLine1',
+    ADDRESS_LINE_2: 'addressLine2',
+    TOWN: 'town',
+    COUNTY: 'county',
+    POSTCODE: 'postcode',
+    BROKER_NAME: 'broker.name',
+    BROKER_EMAIL: 'broker.email',
+    BROKER_BUILDING_NUMBER_OR_NAME: 'broker.buildingNumberOrName',
+    BROKER_ADDRESS_LINE_1: 'broker.addressLine1',
+    BROKER_ADDRESS_LINE_2: 'broker.addressLine2',
+    BROKER_POSTCODE: 'broker.postcode',
   },
   BROKER_ADDRESSES: {
     SELECT_THE_ADDRESS: 'selectTheAddress',
   },
   BROKER_MANUAL_ADDRESS: {
     FULL_ADDRESS: 'fullAddress',
+    BROKER_FULL_ADDRESS: 'broker.fullAddress',
   },
   LOSS_PAYEE: {
     IS_APPOINTED: 'isAppointed',

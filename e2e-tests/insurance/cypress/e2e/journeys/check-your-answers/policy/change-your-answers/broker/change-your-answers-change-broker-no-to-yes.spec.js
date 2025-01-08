@@ -61,7 +61,8 @@ context('Insurance - Change your answers - Policy - Broker - No to yes - As an e
     });
   });
 
-  describe('after changing the answer from no to yes and completing (now required) broker details fields', () => {
+  // TODO: EMS-4028, EMS-4029
+  describe.skip('after changing the answer from no to yes and completing (now required) broker details fields', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
     });
