@@ -124,6 +124,9 @@ export interface ApplicationDeclarationModernSlavery extends Relationship {
   willAdhereToAllRequirements?: boolean;
   hasNoOffensesOrInvestigations?: boolean;
   isNotAwareOfExistingSlavery?: boolean;
+  cannotAdhereToAllRequirements?: string;
+  offensesOrInvestigations?: string;
+  awareOfExistingSlavery?: string;
 }
 
 export interface ApplicationDeclarationModernSlaveryVersions {
