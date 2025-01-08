@@ -610,7 +610,7 @@ var CUSTOM_RESOLVERS = [
   'deleteApplicationByReferenceNumber',
   'getApplicationByReferenceNumber',
   'getCompaniesHouseInformation',
-  'getOrdnanceSurveyAddress',
+  'getOrdnanceSurveyAddresses',
   'submitApplication',
   // feedback
   'createFeedbackAndSendEmail',
@@ -6755,16 +6755,6 @@ var POLICY_FIELDS = {
   BROKER_ADDRESSES: {
     [SELECT_THE_ADDRESS]: {
       LABEL: 'Select the address',
-    },
-  },
-  BROKER_MANUAL_ADDRESS: {
-    [FULL_ADDRESS]: {
-      LABEL: "Broker's address",
-      SUMMARY: {
-        TITLE: "Broker's address",
-        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
-      },
-      MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
     },
   },
   BROKER_MANUAL_ADDRESS: {

@@ -5,6 +5,7 @@ import { post as postBrokerSaveAndBack } from '../../../../controllers/insurance
 import { get as getBrokerDetails, post as postBrokerDetails } from '../../../../controllers/insurance/policy/broker-details';
 import { post as postBrokerDetailsSaveAndBack } from '../../../../controllers/insurance/policy/broker-details/save-and-back';
 import { get as getBrokerAddresses, post as postBrokerAddresses } from '../../../../controllers/insurance/policy/broker-addresses';
+import { post as postBrokerAddressesSaveAndBack } from '../../../../controllers/insurance/policy/broker-addresses/save-and-back';
 import { get as getBrokerConfirmAddress, post as postBrokerConfirmAddress } from '../../../../controllers/insurance/policy/broker-confirm-address';
 import { get as getBrokerZeroAddresses } from '../../../../controllers/insurance/policy/broker-zero-addresses';
 import { get as getBrokerManualAddress, post as postBrokerManualAddress } from '../../../../controllers/insurance/policy/broker-manual-address';
@@ -20,6 +21,7 @@ const {
   BROKER_DETAILS_CHANGE,
   BROKER_DETAILS_CHECK_AND_CHANGE,
   BROKER_ADDRESSES_ROOT,
+  BROKER_ADDRESSES_SAVE_AND_BACK,
   BROKER_CONFIRM_ADDRESS_ROOT,
   BROKER_ZERO_ADDRESSES_ROOT,
   BROKER_MANUAL_ADDRESS_ROOT,
@@ -47,6 +49,7 @@ router.post(`/:referenceNumber${BROKER_DETAILS_CHECK_AND_CHANGE}`, postBrokerDet
 
 router.get(`/:referenceNumber${BROKER_ADDRESSES_ROOT}`, getBrokerAddresses);
 router.post(`/:referenceNumber${BROKER_ADDRESSES_ROOT}`, postBrokerAddresses);
+router.post(`/:referenceNumber${BROKER_ADDRESSES_SAVE_AND_BACK}`, postBrokerAddressesSaveAndBack);
 
 router.get(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_ROOT}`, getBrokerConfirmAddress);
 router.post(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_ROOT}`, postBrokerConfirmAddress);
