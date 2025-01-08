@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.38.0](https://github.com/UK-Export-Finance/exip/compare/v2.37.0...v2.38.0) (2025-01-08)
+
+
+### Features
+
+* **EMS-3842-3990:** country risk logic - short term cover ([#3459](https://github.com/UK-Export-Finance/exip/issues/3459)) ([581b90f](https://github.com/UK-Export-Finance/exip/commit/581b90fa9a8d3470bee7dffb1a0ad3211082a995))
+
 ## [2.37.0](https://github.com/UK-Export-Finance/exip/compare/v2.36.3...v2.37.0) (2025-01-06)
 
 
