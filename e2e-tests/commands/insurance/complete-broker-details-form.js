@@ -17,8 +17,8 @@ const { EMAIL } = ACCOUNT_FIELD_IDS;
  * @param {String} name: Broker name
  * @param {String} email: Broker email
  * @param {Boolean} isBasedInUk: Broker is based in the UK
- * @param {String} postcode: Broker's postcode
- * @param {String} buildingNumberOrName: Broker's building name or number
+ * @param {String} postcode: Broker postcode
+ * @param {String} buildingNumberOrName: Broker building name or number
  */
 const completeBrokerDetailsForm = ({
   name = BROKER[NAME],

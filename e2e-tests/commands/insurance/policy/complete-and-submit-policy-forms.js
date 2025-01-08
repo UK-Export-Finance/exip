@@ -16,6 +16,8 @@ const { SINGLE } = APPLICATION.POLICY_TYPE;
  * @param {Boolean} alternativeCurrency: Select the "turnover - alternative currency" option
  * @param {Boolean} otherCompanyInvolved: If "another company to be insured" is on.
  * @param {Boolean} isBasedInUk: Broker is based in the UK
+ * @param {String} postcode: Broker postcode
+ * @param {String} buildingNumberOrName: Broker building name or number
  */
 const completeAndSubmitPolicyForms = ({
   stopSubmittingAfter,
@@ -28,6 +30,8 @@ const completeAndSubmitPolicyForms = ({
   alternativeCurrency,
   otherCompanyInvolved,
   isBasedInUk = true,
+  postcode,
+  buildingNumberOrName,
 }) => {
   cy.startInsurancePolicySection({});
 
@@ -53,7 +57,7 @@ const completeAndSubmitPolicyForms = ({
   steps.push({ name: 'broker', action: () => cy.completeAndSubmitBrokerForm({ usingBroker }) });
 
   if (usingBroker) {
-    steps.push({ name: 'brokerDetails', action: () => cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk }) });
+    steps.push({ name: 'brokerDetails', action: () => cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk, postcode, buildingNumberOrName }) });
 
     if (isBasedInUk) {
       steps.push({ name: 'brokerAddresses', action: () => cy.completeAndSubmitBrokerAddressesForm({ isBasedInUk }) });

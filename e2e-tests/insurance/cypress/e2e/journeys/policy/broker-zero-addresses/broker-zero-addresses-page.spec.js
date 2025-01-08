@@ -1,8 +1,10 @@
 import { headingCaption } from '../../../../../../partials';
 import { brokerZeroAddressesPage } from '../../../../../../pages/insurance/policy';
 import { body } from '../../../../../../pages/shared';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import mockApplication from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_ZERO_ADDRESSES;
 
@@ -11,9 +13,13 @@ const {
   POLICY: { BROKER_DETAILS_ROOT, BROKER_MANUAL_ADDRESS_ROOT, BROKER_ZERO_ADDRESSES_ROOT },
 } = INSURANCE_ROUTES;
 
+const {
+  BROKER_DETAILS: { POSTCODE },
+} = POLICY_FIELD_IDS;
+
 const { outro } = brokerZeroAddressesPage;
 
-const mockPostcode = 'W1A 1AA';
+const { BROKER } = mockApplication;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -26,6 +32,14 @@ context(
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
+
+        // go to the page we want to test.
+        cy.completeAndSubmitPolicyForms({
+          stopSubmittingAfter: 'brokerDetails',
+          usingBroker: true,
+          isBasedInUk: true,
+          buildingNumberOrName: '123456789',
+        });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ZERO_ADDRESSES_ROOT}`;
 
@@ -66,7 +80,7 @@ context(
 
       it('renders outro text', () => {
         cy.checkText(outro.couldNotFind(), CONTENT_STRINGS.OUTRO.COULD_NOT_FIND);
-        cy.checkText(outro.postcode(), `${mockPostcode}.`);
+        cy.checkText(outro.postcode(), `${BROKER[POSTCODE]}.`);
         cy.checkText(outro.youCan(), CONTENT_STRINGS.OUTRO.YOU_CAN);
         cy.checkText(outro.or(), CONTENT_STRINGS.OUTRO.OR);
       });
