@@ -1,0 +1,61 @@
+# This GitHub Action is designed to deploy the latest MySQL DDL and DML to MySQL server.
+
+name: 'MySQL migration'
+description: 'Deploy latest database structure to MySQL'
+
+# Define the inputs required for this action.
+inputs:
+  host:
+    description: 'MySQL host address'
+    required: true
+  username:
+    description: 'MySQL connection username'
+    required: true
+  password:
+    description: 'MySQL connection password'
+    required: true
+  database:
+    description: 'MySQL database name'
+    required: true
+  branch:
+    description: 'Source Git branch, main if none specified'
+    required: false
+    default: 'main'
+  node:
+    description: 'Node.js setup version'
+    required: true
+
+# Define the steps to run this action.
+runs:
+  using: 'composite'
+  steps:
+    # Step 1: Check out the repository.
+    - name: Repository
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ inputs.branch }}
+
+    # Step 2: Set up Node.js.
+    - name: Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node }}
+
+    # Step 3: Install dependencies.
+    - name: Dependencies
+      working-directory: ./libs/common
+      run: npm ci
+      shell: bash
+
+    # Step 4: Execute MySQL export.
+    - name: Import ⬇
+      if: ${{ '1' == vars.DATABASE }}
+      uses: azure/cli@v2
+      with:
+        inlineScript: |
+          az mysql flexible-server execute \
+          --name ${{ inputs.host }} \
+          --admin-user ${{ inputs.username }} \
+          --admin-password ${{ inputs.password }} \
+          --database-name ${{ inputs.database }} \
+          --file-path "database/exip.sql"
