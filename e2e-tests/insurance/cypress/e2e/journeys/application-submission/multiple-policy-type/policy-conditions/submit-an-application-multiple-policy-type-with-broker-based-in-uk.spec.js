@@ -1,10 +1,16 @@
+import { APPLICATION } from '../../../../../../../constants';
+
 context(
-  'Insurance - submit an application - Single policy type with a broker - As an Exporter, I want to submit my completed credit insurance application, So that UKEF can process and make a decision on my application',
+  'Insurance - submit an application - Multiple policy type with a broker - based in UK - As an Exporter, I want to submit my completed credit insurance application, So that UKEF can process and make a decision on my application',
   () => {
     let referenceNumber;
 
     before(() => {
-      cy.completeSignInAndSubmitAnApplication({ usingBroker: true }).then((refNumber) => {
+      cy.completeSignInAndSubmitAnApplication({
+        policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
+        usingBroker: true,
+        brokerIsBasedInUk: true,
+      }).then((refNumber) => {
         referenceNumber = refNumber;
       });
     });
