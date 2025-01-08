@@ -10,19 +10,23 @@ import { ApplicationPolicy } from '../../../types';
  * @returns {ApplicationPolicy} mapped policy
  */
 const mapPolicy = (policy: ApplicationPolicy) => {
-  if (policy?.requestedStartDate && policy?.contractCompletionDate) {
-    const { requestedStartDate, contractCompletionDate } = policy;
+  const mappedPolicy: ApplicationPolicy = {
+    ...policy,
+  };
 
-    const mappedPolicy = {
-      ...policy,
-      requestedStartDate: requestedStartDate ? new Date(requestedStartDate) : null,
-      contractCompletionDate: contractCompletionDate ? new Date(contractCompletionDate) : null,
-    } as ApplicationPolicy;
+  if (policy.requestedStartDate) {
+    const { requestedStartDate } = policy;
 
-    return mappedPolicy;
+    mappedPolicy.requestedStartDate = new Date(requestedStartDate);
   }
 
-  return null;
+  if (policy.contractCompletionDate) {
+    const { contractCompletionDate } = policy;
+
+    mappedPolicy.contractCompletionDate = new Date(contractCompletionDate);
+  }
+
+  return mappedPolicy;
 };
 
 export default mapPolicy;

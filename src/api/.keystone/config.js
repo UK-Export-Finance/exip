@@ -6148,16 +6148,18 @@ var map_total_contract_value_over_threshold_default = mapTotalContractValueOverT
 
 // helpers/get-populated-application/map-policy/index.ts
 var mapPolicy = (policy) => {
-  if (policy?.requestedStartDate && policy?.contractCompletionDate) {
-    const { requestedStartDate, contractCompletionDate } = policy;
-    const mappedPolicy = {
-      ...policy,
-      requestedStartDate: requestedStartDate ? new Date(requestedStartDate) : null,
-      contractCompletionDate: contractCompletionDate ? new Date(contractCompletionDate) : null,
-    };
-    return mappedPolicy;
+  const mappedPolicy = {
+    ...policy,
+  };
+  if (policy.requestedStartDate) {
+    const { requestedStartDate } = policy;
+    mappedPolicy.requestedStartDate = new Date(requestedStartDate);
   }
-  return null;
+  if (policy.contractCompletionDate) {
+    const { contractCompletionDate } = policy;
+    mappedPolicy.contractCompletionDate = new Date(contractCompletionDate);
+  }
+  return mappedPolicy;
 };
 var map_policy_default = mapPolicy;
 
