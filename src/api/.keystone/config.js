@@ -9229,7 +9229,7 @@ var {
   CIS: {
     COUNTRY_RATINGS: { NOT_APPLICABLE },
     ESRA_CLASSIFICATION: { NONE },
-    SHORT_TERM_COVER: { UNLISTED, CILC, NO: NO2 },
+    SHORT_TERM_COVER: { UNLISTED, CILC },
   },
 } = EXTERNAL_API_DEFINITIONS;
 var hasNoSupport = ({ countryRating, esraClassification, shortTermCover }) => {
@@ -9245,9 +9245,6 @@ var hasNoSupport = ({ countryRating, esraClassification, shortTermCover }) => {
   if (shortTermCover === CILC && countryRatingIsNotApplicable && esraClassificationConditions) {
     return true;
   }
-  if (shortTermCover === NO2) {
-    return true;
-  }
   return false;
 };
 var has_no_support_default = hasNoSupport;
@@ -9256,7 +9253,7 @@ var has_no_support_default = hasNoSupport;
 var {
   CIS: {
     ESRA_CLASSIFICATION: { STANDARD: STANDARD2, HIGH: HIGH2, VERY_HIGH: VERY_HIGH2, NONE: NONE2 },
-    SHORT_TERM_COVER: { NO: NO3, ILC, CILC: CILC2 },
+    SHORT_TERM_COVER: { NO: NO2, ILC, CILC: CILC2 },
   },
 } = EXTERNAL_API_DEFINITIONS;
 var aAndBRatingConditions = ({ countryRating, esraClassification, shortTermCover }) => {
@@ -9270,8 +9267,11 @@ var aAndBRatingConditions = ({ countryRating, esraClassification, shortTermCover
     if (shortTermCover === CILC2) {
       return true;
     }
+    if (shortTermCover === NO2) {
+      return true;
+    }
   }
-  if (esraClassification === NONE2 && shortTermCover === NO3) {
+  if (esraClassification === NONE2 && shortTermCover === NO2) {
     return true;
   }
   return false;
@@ -9282,7 +9282,7 @@ var a_and_b_rating_conditions_default = aAndBRatingConditions;
 var {
   CIS: {
     ESRA_CLASSIFICATION: { STANDARD: STANDARD3, HIGH: HIGH3, VERY_HIGH: VERY_HIGH3, NONE: NONE3 },
-    SHORT_TERM_COVER: { YES: YES2, NO: NO4, ILC: ILC2, CILC: CILC3, REFER, UNLISTED: UNLISTED2 },
+    SHORT_TERM_COVER: { YES: YES2, NO: NO3, ILC: ILC2, CILC: CILC3, REFER, UNLISTED: UNLISTED2 },
   },
 } = EXTERNAL_API_DEFINITIONS;
 var cAndDRatingConditions = ({ countryRating, esraClassification, shortTermCover }) => {
@@ -9305,8 +9305,11 @@ var cAndDRatingConditions = ({ countryRating, esraClassification, shortTermCover
     if (shortTermCover === UNLISTED2) {
       return true;
     }
+    if (shortTermCover === NO3) {
+      return true;
+    }
   }
-  if (esraClassification === NONE3 && shortTermCover === NO4) {
+  if (esraClassification === NONE3 && shortTermCover === NO3) {
     return true;
   }
   return false;

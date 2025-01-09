@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.39.0](https://github.com/UK-Export-Finance/exip/compare/v2.38.2...v2.39.0) (2025-01-09)
+
+
+### Features
+
+* **EMS-4098:** automate deployment pipeline ([#3462](https://github.com/UK-Export-Finance/exip/issues/3462)) ([090c464](https://github.com/UK-Export-Finance/exip/commit/090c4649ed084f8b9700d1d010820ef9960a4d28))
+
+## [2.38.2](https://github.com/UK-Export-Finance/exip/compare/v2.38.1...v2.38.2) (2025-01-09)
+
+
+### Bug Fixes
+
+* **EMS-4100:** country risk logic - short term cover ([#3465](https://github.com/UK-Export-Finance/exip/issues/3465)) ([09038c7](https://github.com/UK-Export-Finance/exip/commit/09038c7f659272b86823ad37c01dcfde41395837))
+
+## [2.38.1](https://github.com/UK-Export-Finance/exip/compare/v2.38.0...v2.38.1) (2025-01-09)
+
+
+### Bug Fixes
+
+* **EMS-4081:** rename 'talk to an export finance manager' url ([#3463](https://github.com/UK-Export-Finance/exip/issues/3463)) ([450fce4](https://github.com/UK-Export-Finance/exip/commit/450fce417e00c84fe18b7593c88f2151f4b120be))
+
 ## [2.38.0](https://github.com/UK-Export-Finance/exip/compare/v2.37.0...v2.38.0) (2025-01-08)
 
 

@@ -5,7 +5,7 @@ const {
   CIS: {
     COUNTRY_RATINGS,
     ESRA_CLASSIFICATION: { STANDARD, HIGH, VERY_HIGH },
-    SHORT_TERM_COVER: { YES, ILC, CILC, REFER, UNLISTED },
+    SHORT_TERM_COVER: { YES, ILC, CILC, NO, REFER, UNLISTED },
   },
 } = EXTERNAL_API_DEFINITIONS;
 
@@ -23,6 +23,7 @@ const params = {
     [CILC]: createMockParams(STANDARD, CILC),
     [REFER]: createMockParams(STANDARD, REFER),
     [UNLISTED]: createMockParams(STANDARD, UNLISTED),
+    [NO]: createMockParams(STANDARD, NO),
   },
   HIGH: {
     [YES]: createMockParams(HIGH, YES),
@@ -30,6 +31,7 @@ const params = {
     [CILC]: createMockParams(HIGH, CILC),
     [REFER]: createMockParams(HIGH, REFER),
     [UNLISTED]: createMockParams(HIGH, UNLISTED),
+    [NO]: createMockParams(HIGH, NO),
   },
   VERY_HIGH: {
     [YES]: createMockParams(VERY_HIGH, YES),
@@ -37,6 +39,7 @@ const params = {
     [CILC]: createMockParams(VERY_HIGH, CILC),
     [REFER]: createMockParams(VERY_HIGH, REFER),
     [UNLISTED]: createMockParams(VERY_HIGH, UNLISTED),
+    [NO]: createMockParams(VERY_HIGH, NO),
   },
 };
 
@@ -75,6 +78,14 @@ describe('helpers/map-CIS-countries/map-CIS-country/no-online-support/c-and-d-ra
     });
 
     describe.each(params.STANDARD[UNLISTED])(`when the short term cover is ${UNLISTED}`, (countryObj) => {
+      it(`should return true for ${countryObj.countryRating}`, () => {
+        const result = cAndDRatingConditions(countryObj);
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    describe.each(params.STANDARD[NO])(`when the short term cover is ${NO}`, (countryObj) => {
       it(`should return true for ${countryObj.countryRating}`, () => {
         const result = cAndDRatingConditions(countryObj);
 
@@ -123,6 +134,14 @@ describe('helpers/map-CIS-countries/map-CIS-country/no-online-support/c-and-d-ra
         expect(result).toEqual(true);
       });
     });
+
+    describe.each(params.HIGH[NO])(`when the short term cover is ${NO}`, (countryObj) => {
+      it(`should return true for ${countryObj.countryRating}`, () => {
+        const result = cAndDRatingConditions(countryObj);
+
+        expect(result).toEqual(true);
+      });
+    });
   });
 
   describe(`when the ESRA classification is ${VERY_HIGH}`, () => {
@@ -159,6 +178,14 @@ describe('helpers/map-CIS-countries/map-CIS-country/no-online-support/c-and-d-ra
     });
 
     describe.each(params.VERY_HIGH[UNLISTED])(`when the short term cover is ${UNLISTED}`, (countryObj) => {
+      it(`should return true for ${countryObj.countryRating}`, () => {
+        const result = cAndDRatingConditions(countryObj);
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    describe.each(params.VERY_HIGH[NO])(`when the short term cover is ${NO}`, (countryObj) => {
       it(`should return true for ${countryObj.countryRating}`, () => {
         const result = cAndDRatingConditions(countryObj);
 
