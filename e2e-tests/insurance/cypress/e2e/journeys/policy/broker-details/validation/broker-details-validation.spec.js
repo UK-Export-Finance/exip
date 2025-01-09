@@ -3,7 +3,7 @@ import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { MAXIMUM_CHARACTERS } from '../../../../../../../constants/validation';
-import { assertEmailFieldValidation } from '../../../../../../../shared-test-assertions';
+import { assertEmailFieldValidation, assertPostcodeFieldValidation } from '../../../../../../../shared-test-assertions';
 
 const {
   BROKER_DETAILS: { NAME, EMAIL, IS_BASED_IN_UK, POSTCODE, BUILDING_NUMBER_OR_NAME },
@@ -92,18 +92,12 @@ context('Insurance - Policy - Broker details page - validation', () => {
       cy.clickYesRadioInput();
     });
 
-    it(`should render a validation error when ${POSTCODE} is not provided`, () => {
-      const field = fieldSelector(POSTCODE);
-
-      const ERROR_MESSAGES_OBJECT = BROKER_DETAILS_ERROR_MESSAGES[POSTCODE];
-
-      cy.submitAndAssertFieldErrors({
-        field,
-        value: '',
-        errorIndex: 2,
-        expectedErrorsCount: 4,
-        expectedErrorMessage: ERROR_MESSAGES_OBJECT.IS_EMPTY,
-      });
+    assertPostcodeFieldValidation({
+      fieldId: POSTCODE,
+      errorIndex: 2,
+      errorMessages: BROKER_DETAILS_ERROR_MESSAGES[POSTCODE],
+      totalExpectedErrors: 4,
+      totalExpectedOtherErrorsWithValidPostcode: 3,
     });
 
     it(`should render a validation error when ${BUILDING_NUMBER_OR_NAME} is not provided`, () => {
