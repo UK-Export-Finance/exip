@@ -10,6 +10,7 @@ import api from '../../../../api';
 import mapOrdnanceSurveyAddresses from '../../../../helpers/mappings/map-ordnance-survey-addresses';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import getChosenOrdnanceSurveyAddress from '../../../../helpers/get-chosen-ordnance-survey-address';
 import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockOrdnanceSurveyAddressResponse, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
@@ -322,9 +323,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
 
         const payload = constructPayload(req.body, [FIELD_ID]);
 
-        const answer = payload[FIELD_ID];
-
-        const chosenAddress = mockOrdnanceSurveyAddressResponse.addresses[answer];
+        const chosenAddress = getChosenOrdnanceSurveyAddress(payload, FIELD_ID, mockOrdnanceSurveyAddressResponse.addresses);
 
         expect(mapAndSave.broker).toHaveBeenCalledWith(chosenAddress, mockApplication);
       });

@@ -1,8 +1,10 @@
 import { ROUTES } from '../../../../../constants';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
+import getChosenOrdnanceSurveyAddress from '../../../../../helpers/get-chosen-ordnance-survey-address';
 import mapAndSave from '../../map-and-save/broker';
 import { FIELD_ID, ERROR_MESSAGE } from '..';
+import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
@@ -17,22 +19,30 @@ const post = async (req: Request, res: Response) => {
   try {
     const { application } = res.locals;
 
-    const { referenceNumber } = req.params;
-
     if (!application) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { body } = req;
+    const { broker, referenceNumber } = application;
 
-    const payload = constructPayload(body, [FIELD_ID]);
+    const payload = constructPayload(req.body, [FIELD_ID]);
 
     const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
 
-    const saveResponse = await mapAndSave.broker(payload, application, validationErrors);
+    if (!validationErrors) {
+      const { postcode, buildingNumberOrName } = broker;
 
-    if (!saveResponse) {
-      return res.redirect(PROBLEM_WITH_SERVICE);
+      const response = await api.keystone.getOrdnanceSurveyAddresses(String(postcode), String(buildingNumberOrName));
+
+      const { addresses } = response;
+
+      const chosenAddress = getChosenOrdnanceSurveyAddress(payload, FIELD_ID, addresses);
+
+      const saveResponse = await mapAndSave.broker(chosenAddress, application, validationErrors);
+
+      if (!saveResponse) {
+        return res.redirect(PROBLEM_WITH_SERVICE);
+      }
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);

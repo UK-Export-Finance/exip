@@ -9,6 +9,7 @@ import api from '../../../../api';
 import mapOrdnanceSurveyAddresses from '../../../../helpers/mappings/map-ordnance-survey-addresses';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import getChosenOrdnanceSurveyAddress from '../../../../helpers/get-chosen-ordnance-survey-address';
 import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
 
@@ -161,9 +162,7 @@ export const post = async (req: Request, res: Response) => {
       });
     }
 
-    const answer = payload[FIELD_ID];
-
-    const { __typename, ...chosenAddress } = addresses[answer];
+    const chosenAddress = getChosenOrdnanceSurveyAddress(payload, FIELD_ID, addresses);
 
     const saveResponse = await mapAndSave.broker(chosenAddress, application);
 
