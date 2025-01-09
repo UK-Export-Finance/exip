@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.38.1](https://github.com/UK-Export-Finance/exip/compare/v2.38.0...v2.38.1) (2025-01-09)
+
+
+### Bug Fixes
+
+* **EMS-4081:** rename 'talk to an export finance manager' url ([#3463](https://github.com/UK-Export-Finance/exip/issues/3463)) ([450fce4](https://github.com/UK-Export-Finance/exip/commit/450fce417e00c84fe18b7593c88f2151f4b120be))
+
 ## [2.38.0](https://github.com/UK-Export-Finance/exip/compare/v2.37.0...v2.38.0) (2025-01-08)
 
 
