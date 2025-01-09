@@ -234,14 +234,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s
@@ -292,14 +294,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
   
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s
@@ -358,14 +362,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
   
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s
@@ -431,14 +437,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
     
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s
@@ -485,14 +493,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
   
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s
@@ -557,14 +567,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
   
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s
@@ -628,14 +640,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
   
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s
@@ -705,14 +719,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
   
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s
@@ -765,14 +781,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
   
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s
@@ -828,14 +846,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
   
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s
@@ -892,14 +912,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
   
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s
@@ -941,14 +963,16 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: npm run ci:all
+          retries: ${{ vars.RETRY_LIMIT }}
   
       - name: Docker
-        uses: ./.github/modules/retry
+        uses: ./.github/actions/rerun
         with:
           command: docker compose up --build -d
+          retries: ${{ vars.RETRY_LIMIT }}
 
       - name: Wait
         run: sleep 30s

@@ -17,147 +17,130 @@
 # 1. Push to the `dev`, `staging` and `production` branches only.
 # 2. Any modifications to atleast one of the `paths` targets.
 
-name: Deployment 🚀
-run-name: EXIP deployment for ${{ github.repository }}
+name: Deployment
+run-name: 🚀 Deploying to ${{ github.event.workflow_run.head_branch }}
 
 on:
+  schedule:
+    - cron: '0 0 * * *'
+
   push:
     branches:
+      # Manual deployment
       - dev
       - staging
       - production
 
     paths:
-      - "src/**"
-      - "database/**"
-      - ".github/workflows/deployment.yml"
+      - 'src/**'
+      - 'database/**'
+      - '.github/workflows/**'
 
 env:
   PRODUCT: exip
-  ENVIRONMENT: ${{ github.ref_name }}
-  TIMEZONE: "Europe/London"
-  # Base artifact
-  FROM: latest
+  ENVIRONMENT: ${{ github.event.workflow_run.head_branch }}
+  TIMEZONE: ${{ vars.TIMEZONE }}
 
 jobs:
+  # 1. Base actions configrations
   setup:
     name: Setup 🔧
     runs-on: [self-hosted, EXIP, deployment]
     outputs:
       product: ${{ env.PRODUCT }}
-      environment: ${{ env.ENVIRONMENT }}
+      environment: ${{ steps.environment.outputs.environment }}
       timezone: ${{ env.TIMEZONE }}
+
     steps:
       - name: Environment 🧪
-        run: echo "Environment set to ${{ env.ENVIRONMENT }}"
+        id: environment
+        run: |
+          if [[ "${{ env.ENVIRONMENT }}" == "main" ]]; then
+            echo "environment=dev" >> "$GITHUB_OUTPUT"
+          else
+            echo "environment=${{ github.event.workflow_run.head_branch }}" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Timezone 🌐
         run: echo "Timezone set to ${{ env.TIMEZONE }}"
 
-  db:
-    name: Database 💾
-    needs: setup
+  # 2. Database schema migration
+  database:
+    name: MySQL 🗄️
+    needs: [setup]
     environment: ${{ needs.setup.outputs.environment }}
+    runs-on: [self-hosted, EXIP, deployment]
     env:
       ENVIRONMENT: ${{ needs.setup.outputs.environment }}
-    runs-on: [self-hosted, EXIP, deployment]
+
     steps:
-      - name: Repository 🗃️
+      - name: Repository 🗂️
         uses: actions/checkout@v4
 
-      - name: Azure 🔐
-        uses: azure/login@v2
+      - name: Deploy ⚡
+        uses: ./.github/actions/mysql
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          host: sqldb-${{ env.PRODUCT }}-${{ env.ENVIRONMENT }}-${{ vars.VERSION }}
+          username: ${{ secrets.MYSQL_USER }}
+          password: ${{ secrets.MYSQL_PASSWORD }}
+          database: ${{ env.PRODUCT }}
+          branch: ${{ env.ENVIRONMENT }}
+          node: ${{ vars.NODE_VERSION }}
+          execute: ${{ vars.DATABASE }}
 
-      - name: Defaults ✨
-        uses: azure/cli@v2
-        with:
-          inlineScript: |
-            # Basic
-            az configure --defaults location=${{ vars.REGION }}
-            az configure --defaults group=rg-${{ env.PRODUCT }}-${{ github.ref_name }}-${{ vars.VERSION }}
-
-      - name: Extension ➕
-        if: ${{ '1' == vars.DATABASE }}
-        uses: azure/cli@v2
-        with:
-          inlineScript: |
-            az config set extension.use_dynamic_install=yes_without_prompt
-            az extension add --name rdbms-connect
-
-      - name: Import ⬇
-        if: ${{ '1' == vars.DATABASE }}
-        uses: azure/cli@v2
-        with:
-          inlineScript: |
-            az mysql flexible-server execute \
-            --name sqldb-${{ env.PRODUCT }}-${{ github.ref_name }}-${{ vars.VERSION }} \
-            --admin-user ${{ secrets.MYSQL_USER }} \
-            --admin-password ${{ secrets.MYSQL_PASSWORD }} \
-            --database-name ${{ env.PRODUCT }} \
-            --file-path "database/exip.sql"
-
-  api:
-    name: API 📦️
-    needs: setup
+  # 3. micro-serices WebApp deployments
+  webapp:
+    name: WebApp 🌐
+    needs: [setup, database]
     environment: ${{ needs.setup.outputs.environment }}
-    env:
-      NAME: api
-      ENVIRONMENT: ${{ needs.setup.outputs.environment }}
     runs-on: [self-hosted, EXIP, deployment]
+    env:
+      ENVIRONMENT: ${{ needs.setup.outputs.environment }}
+
+    strategy:
+      max-parallel: 2
+      # Do not cancel in-progress jobs upon failure
+      fail-fast: false
+      # Single dimension matrix
+      matrix:
+        webapp: ['ui', 'api']
+
+    concurrency:
+      group: deployment-webapp-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.webapp }}
+      cancel-in-progress: true
+
     steps:
-      - name: Repository 🗃️
+      - name: Repository 🗂️
         uses: actions/checkout@v4
 
-      - name: Azure 🔐
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Defaults ✨
-        uses: azure/cli@v2
-        with:
-          inlineScript: |
-            # Basic
-            az configure --defaults location=${{ vars.REGION }}
-            az configure --defaults group=rg-${{ env.PRODUCT }}-${{ github.ref_name }}-${{ vars.VERSION }}
-
-      - name: CLI 📝
+      - name: Port 🛜
         run: |
-          echo ACR=$(az acr show -n $(az resource list --resource-type 'Microsoft.ContainerRegistry/registries' --query '[0].name' -o tsv) --query loginServer -o tsv) >> $GITHUB_ENV
-          echo ACR_USER=$(az acr show -n $(az resource list --resource-type 'Microsoft.ContainerRegistry/registries' --query '[0].name' -o tsv) --query name -o tsv) >> $GITHUB_ENV
-          echo WEBAPP=$(az resource list --resource-type 'Microsoft.Web/sites' --query '[?contains(name, `${{ env.NAME }}`)].name' -o tsv) >> $GITHUB_ENV
+          if [[ "${{ matrix.webapp }}" == "ui" ]]; then
+            echo "PORT=${{ vars.UI_PORT }}" >> "$GITHUB_ENV"
+          elif [[ "${{ matrix.webapp }}" == "api" ]]; then
+            echo "PORT=${{ vars.API_PORT }}" >> "$GITHUB_ENV"
+          fi
 
-      - name: ACR 🔐
-        uses: azure/docker-login@v2
+      - name: Deploy ⚡
+        uses: ./.github/actions/webapp
         with:
-          login-server: ${{ env.ACR }}
-          username: ${{ env.ACR_USER }}
-          password: ${{ secrets.ACR_PASSWORD }}
-
-      - name: Artifacts 🗃️
-        working-directory: src/${{ env.NAME }}
-        run: |
-          # Build images
-          docker build . \
-          -t ${{ env.ACR }}/${{ env.NAME }}:${{ github.sha }} \
-          -t ${{ env.ACR }}/${{ env.NAME }}:${{ env.FROM }} \
-          --build-arg NODE_ENV=${{ vars.NODE_ENV }} \
-          --build-arg PORT=${{ vars.API_PORT }} \
-          --build-arg SESSION_SECRET=${{ secrets.SESSION_SECRET }} \
-          --build-arg GOV_NOTIFY_API_KEY=${{ secrets.GOV_NOTIFY_API_KEY }}
-
-          # Push images
-          docker push ${{ env.ACR }}/${{ env.NAME }}:${{ github.sha }}
-          docker push ${{ env.ACR }}/${{ env.NAME }}:${{ env.FROM }}
+          region: ${{ vars.REGION }}
+          group: ${{ secrets.RESOURCE_GROUP }}
+          credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          acr: ${{ secrets.ACR_PASSWORD }}
+          webapp: ${{ matrix.webapp }}
+          branch: ${{ env.ENVIRONMENT }}
+          node: ${{ vars.NODE_ENV }}
+          port: ${{ env.PORT }}
+          session: ${{ secrets.SESSION_SECRET }}
+          notify: ${{ secrets.GOV_NOTIFY_API_KEY }}
 
       - name: Environment 🧱
         uses: azure/cli@v2
         with:
           inlineScript: |
             az webapp config appsettings set \
-            --name app-${{ env.PRODUCT }}-${{ env.NAME }}-${{ github.ref_name }}-${{ vars.VERSION }} \
+            --name app-${{ env.PRODUCT }}-api-${{ env.ENVIRONMENT }}-${{ vars.VERSION }} \
             --settings \
             TZ='${{ vars.TIMEZONE }}' \
             NODE_ENV='${{ vars.NODE_ENV }}' \
@@ -176,93 +159,8 @@ jobs:
             FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}' \
             EXCELJS_PROTECTION_PASSWORD='${{ secrets.EXCELJS_PROTECTION_PASSWORD }}'
 
-      - name: Slot 🔀
-        uses: azure/cli@v2
-        with:
-          inlineScript: |
-            # Create new temporary slot
-            az webapp deployment slot create \
-            --slot ${{ github.sha }} \
-            --name ${{ env.WEBAPP }} \
-            --configuration-source ${{ env.WEBAPP }} \
-            --deployment-container-image-name ${{ env.ACR }}/${{ env.NAME }}:${{ env.FROM }}
-
-            # Swap slot
-            az webapp deployment slot swap \
-            --slot ${{ github.sha }} \
-            --name ${{ env.WEBAPP }} \
-            --action swap
-
-            # Delete temporary slot
-            az webapp deployment slot delete \
-            --slot ${{ github.sha }} \
-            --name ${{ env.WEBAPP }}
-
-      - name: Reboot ♻️
-        uses: azure/cli@v2
-        with:
-          inlineScript: |
-            az webapp restart \
-            --name ${{ env.WEBAPP }}
-
-  ui:
-    name: UI 📦️
-    needs: setup
-    environment: ${{ needs.setup.outputs.environment }}
-    env:
-      NAME: ui
-      ENVIRONMENT: ${{ needs.setup.outputs.environment }}
-    runs-on: [self-hosted, EXIP, deployment]
-    steps:
-      - name: Repository 🗃️
-        uses: actions/checkout@v4
-
-      - name: Azure 🔐
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Defaults ✨
-        uses: azure/cli@v2
-        with:
-          inlineScript: |
-            # Basic
-            az configure --defaults location=${{ vars.REGION }}
-            az configure --defaults group=rg-${{ env.PRODUCT }}-${{ github.ref_name }}-${{ vars.VERSION }}
-
-      - name: CLI 📝
-        run: |
-          echo ACR=$(az acr show -n $(az resource list --resource-type 'Microsoft.ContainerRegistry/registries' --query '[0].name' -o tsv) --query loginServer -o tsv) >> $GITHUB_ENV
-          echo ACR_USER=$(az acr show -n $(az resource list --resource-type 'Microsoft.ContainerRegistry/registries' --query '[0].name' -o tsv) --query name -o tsv) >> $GITHUB_ENV
-          echo WEBAPP=$(az resource list --resource-type 'Microsoft.Web/sites' --query '[?contains(name, `${{ env.NAME }}`)].name' -o tsv) >> $GITHUB_ENV
-
-      - name: ACR 🔐
-        uses: azure/docker-login@v2
-        with:
-          login-server: ${{ env.ACR }}
-          username: ${{ env.ACR_USER }}
-          password: ${{ secrets.ACR_PASSWORD }}
-
-      - name: Artifacts 🗃️
-        working-directory: src/${{ env.NAME }}
-        run: |
-          # Build images
-          docker build . \
-          -t ${{ env.ACR }}/${{ env.NAME }}:${{ github.sha }} \
-          -t ${{ env.ACR }}/${{ env.NAME }}:${{ env.FROM }} \
-          --build-arg NODE_ENV=${{ vars.NODE_ENV }} \
-          --build-arg PORT=${{ vars.UI_PORT }}
-
-          # Push images
-          docker push ${{ env.ACR }}/${{ env.NAME }}:${{ github.sha }}
-          docker push ${{ env.ACR }}/${{ env.NAME }}:${{ env.FROM }}
-
-      - name: Environment 🧱
-        uses: azure/cli@v2
-        with:
-          inlineScript: |
             az webapp config appsettings set \
-            --name app-${{ env.PRODUCT }}-${{ env.NAME }}-${{ github.ref_name }}-${{ vars.VERSION }} \
+            --name app-${{ env.PRODUCT }}-ui-${{ env.ENVIRONMENT }}-${{ vars.VERSION }} \
             --settings \
             TZ='${{ vars.TIMEZONE }}' \
             NODE_ENV='${{ vars.NODE_ENV }}' \
@@ -278,31 +176,66 @@ jobs:
             APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
             API_KEY='${{ secrets.API_KEY }}'
 
-      - name: Slot 🔀
-        uses: azure/cli@v2
-        with:
-          inlineScript: |
-            # Create new temporary slot
-            az webapp deployment slot create \
-            --slot ${{ github.sha }} \
-            --name ${{ env.WEBAPP }} \
-            --configuration-source ${{ env.WEBAPP }} \
-            --deployment-container-image-name ${{ env.ACR }}/${{ env.NAME }}:${{ env.FROM }}
+  # 4. Notification
+  notify:
+    name: Notification 🔔
+    needs: [setup, database, webapp]
+    environment: ${{ needs.setup.outputs.environment }}
+    runs-on: [self-hosted, EXIP, deployment]
 
-            # Swap slot
-            az webapp deployment slot swap \
-            --slot ${{ github.sha }} \
-            --name ${{ env.WEBAPP }} \
-            --action swap
+    env:
+      ENVIRONMENT: ${{ needs.setup.outputs.environment }}
+      WEBHOOK: ${{ secrets.MSTEAMS_WEBHOOK }}
 
-            # Delete temporary slot
-            az webapp deployment slot delete \
-            --slot ${{ github.sha }} \
-            --name ${{ env.WEBAPP }}
+    steps:
+      - name: Facts
+        run: |
 
-      - name: Reboot ♻️
-        uses: azure/cli@v2
-        with:
-          inlineScript: |
-            az webapp restart \
-            --name ${{ env.WEBAPP }}
+      - name: MS Teams
+        run: |
+          curl --location '${{ env.WEBHOOK }}' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+          "@type": "MessageCard",
+          "@context": "http://schema.org/extensions",
+          "themeColor": "00703c",
+          "title": "🚀 main : ${{ env.ENVIRONMENT }}",
+          "summary": "Deployed '\''main'\'' branch to '\''${{ env.ENVIRONMENT }}'\'' EXIP environment",
+          "sections": [
+          {
+            "activityTitle": "Branch deployment",
+            "activitySubtitle": "Deployed **main** branch to **${{ env.ENVIRONMENT }}** EXIP environment.",
+            "facts": [
+                {
+                    "name": "Branch",
+                    "value": "main"
+                },
+                {
+                    "name": "Environment",
+                    "value": "${{ env.ENVIRONMENT }}"
+                },
+                {
+                    "name": "Commit",
+                    "value": "${{ github.sha }}"
+                },
+                {
+                    "name": "Status",
+                    "value": "Successfull"
+                }
+            ],
+            "markdown": true
+                  }
+              ],
+            "potentialAction": [
+              {
+              "@type": "OpenUri",
+              "name": "Deployment",
+                "targets": [
+                  {
+                      "os": "default",
+                      "uri": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                  }
+                ]
+              }
+            ]
+          }'
