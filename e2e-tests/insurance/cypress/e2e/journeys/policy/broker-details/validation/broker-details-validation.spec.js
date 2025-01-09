@@ -86,6 +86,8 @@ context('Insurance - Policy - Broker details page - validation', () => {
   });
 
   describe(`when ${IS_BASED_IN_UK} is 'yes'`, () => {
+    const buildingNumberOrNameField = fieldSelector(BUILDING_NUMBER_OR_NAME);
+
     beforeEach(() => {
       cy.navigateToUrl(url);
 
@@ -101,12 +103,10 @@ context('Insurance - Policy - Broker details page - validation', () => {
     });
 
     it(`should render a validation error when ${BUILDING_NUMBER_OR_NAME} is not provided`, () => {
-      const field = fieldSelector(BUILDING_NUMBER_OR_NAME);
-
       const ERROR_MESSAGES_OBJECT = BROKER_DETAILS_ERROR_MESSAGES[BUILDING_NUMBER_OR_NAME];
 
       cy.submitAndAssertFieldErrors({
-        field,
+        field: buildingNumberOrNameField,
         value: '',
         errorIndex: 3,
         expectedErrorsCount: 4,
@@ -115,12 +115,10 @@ context('Insurance - Policy - Broker details page - validation', () => {
     });
 
     it(`should render a validation error when ${BUILDING_NUMBER_OR_NAME} is above the maximum`, () => {
-      const field = fieldSelector(BUILDING_NUMBER_OR_NAME);
-
       const ERROR_MESSAGES_OBJECT = BROKER_DETAILS_ERROR_MESSAGES[BUILDING_NUMBER_OR_NAME];
 
       cy.submitAndAssertFieldErrors({
-        field,
+        field: buildingNumberOrNameField,
         value: 'a'.repeat(MAXIMUM_CHARACTERS.BROKER_BUILDING_NUMBER_OR_NAME) + 1,
         errorIndex: 3,
         expectedErrorsCount: 4,
