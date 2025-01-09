@@ -22,7 +22,7 @@ inputs:
     required: false
     default: 'main'
   node:
-    description: 'Node.js setup version'
+    description: 'Node.js version'
     required: true
   execute:
     description: 'Ascertain SQL script execution'
