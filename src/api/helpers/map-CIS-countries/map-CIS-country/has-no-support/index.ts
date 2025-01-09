@@ -8,7 +8,7 @@ const {
   CIS: {
     COUNTRY_RATINGS: { NOT_APPLICABLE },
     ESRA_CLASSIFICATION: { NONE },
-    SHORT_TERM_COVER: { UNLISTED, CILC, NO },
+    SHORT_TERM_COVER: { UNLISTED, CILC },
   },
 } = EXTERNAL_API_DEFINITIONS;
 
@@ -34,10 +34,6 @@ const hasNoSupport = ({ countryRating, esraClassification, shortTermCover }: NoI
   const esraClassificationConditions = esraClassificationIsStandardHighOrVeryHigh(esraClassification) || esraClassificationIsNone;
 
   if (shortTermCover === CILC && countryRatingIsNotApplicable && esraClassificationConditions) {
-    return true;
-  }
-
-  if (shortTermCover === NO) {
     return true;
   }
 

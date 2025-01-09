@@ -9,8 +9,6 @@ const COUNTRY_NAME_1 = COUNTRY_APPLICATION_SUPPORT.NOT_SUPPORTED_1.NAME;
 const COUNTRY_NAME_2 = COUNTRY_APPLICATION_SUPPORT.NOT_SUPPORTED_2.NAME;
 const COUNTRY_NAME_3 = COUNTRY_APPLICATION_SUPPORT.NOT_SUPPORTED_3.NAME;
 const COUNTRY_NAME_4 = COUNTRY_APPLICATION_SUPPORT.NOT_SUPPORTED_4.NAME;
-const COUNTRY_NAME_5 = COUNTRY_APPLICATION_SUPPORT.NOT_SUPPORTED_5.NAME;
-const COUNTRY_NAME_6 = COUNTRY_APPLICATION_SUPPORT.NOT_SUPPORTED_6.NAME;
 
 const contextString =
   'As an exporter I want to enter the country where my buyer is based So that I can ascertain if I can obtain UKEF Credit Insurance for the country where my buyer is based - submit countries that cannot apply';
@@ -43,18 +41,6 @@ context(`Insurance - Buyer country page - ${contextString} - Unsupported countri
   describe(COUNTRY_NAME_4, () => {
     it(`should redirect to ${CANNOT_APPLY_EXIT} exit page`, () => {
       cy.enterCountryAndAssertExitPageUrlBuyerCountry(COUNTRY_NAME_4, CANNOT_APPLY_EXIT);
-    });
-  });
-
-  describe(COUNTRY_NAME_5, () => {
-    it(`should redirect to ${CANNOT_APPLY_EXIT} exit page`, () => {
-      cy.enterCountryAndAssertExitPageUrlBuyerCountry(COUNTRY_NAME_5, CANNOT_APPLY_EXIT);
-    });
-  });
-
-  describe(COUNTRY_NAME_6, () => {
-    it(`should redirect to ${CANNOT_APPLY_EXIT} exit page`, () => {
-      cy.enterCountryAndAssertExitPageUrlBuyerCountry(COUNTRY_NAME_6, CANNOT_APPLY_EXIT);
     });
   });
 });
