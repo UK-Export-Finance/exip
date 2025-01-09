@@ -139,6 +139,7 @@ export const assertPostcodeFieldValidation = ({
 
         field.errorMessage().should('not.exist');
       });
+
       it(`should NOT render a validation error when ${fieldId} is correctly formatted - SIX_DIGITS_WITHOUT_SPACE`, () => {
         cy.keyboardInput(fieldSelector(fieldId).input(), VALID_POSTCODES.SIX_DIGITS_WITHOUT_SPACE);
 
