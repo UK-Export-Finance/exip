@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.39.0](https://github.com/UK-Export-Finance/exip/compare/v2.38.2...v2.39.0) (2025-01-09)
+
+
+### Features
+
+* **EMS-4098:** automate deployment pipeline ([#3462](https://github.com/UK-Export-Finance/exip/issues/3462)) ([090c464](https://github.com/UK-Export-Finance/exip/commit/090c4649ed084f8b9700d1d010820ef9960a4d28))
+
 ## [2.38.2](https://github.com/UK-Export-Finance/exip/compare/v2.38.1...v2.38.2) (2025-01-09)
 
 
