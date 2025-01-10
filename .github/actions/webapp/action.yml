@@ -104,8 +104,8 @@ runs:
           # Create new temporary slot
           az webapp deployment slot create \
           --slot ${{ github.sha }} \
-          --name ${{ inputs.webapp }} \
-          --configuration-source ${{ inputs.webapp }} \
+          --name ${{ env.WEBAPP }} \
+          --configuration-source ${{ env.WEBAPP }} \
           --deployment-container-image-name ${{ env.ACR }}/${{ inputs.webapp }}:latest \
           --docker-registry-server-user ${{ env.ACR_USER }} \
           --docker-registry-server-password ${{ inputs.acr }}
@@ -113,13 +113,13 @@ runs:
           # Swap slot
           az webapp deployment slot swap \
           --slot ${{ github.sha }} \
-          --name ${{ inputs.webapp }} \
+          --name ${{ env.WEBAPP }} \
           --action swap
 
           # Delete temporary slot
           az webapp deployment slot delete \
           --slot ${{ github.sha }} \
-          --name ${{ inputs.webapp }}
+          --name ${{ env.WEBAPP }}
 
     # Step 8: Cleanup temporary slot.
     - name: Cleanup 🧹
@@ -130,4 +130,4 @@ runs:
           # Delete temporary slot
           az webapp deployment slot delete \
           --slot ${{ github.sha }} \
-          --name ${{ inputs.webapp }}
+          --name ${{ env.WEBAPP }}
