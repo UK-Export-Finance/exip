@@ -57,10 +57,10 @@ jobs:
       - name: Environment 🧪
         id: environment
         run: |
-          if [[ "${{ env.ENVIRONMENT }}" == feat/EMS-4098-deployment-pipeline ]]; then
+          if [[ "${{ env.ENVIRONMENT }}" == "feat/EMS-4098-deployment-pipeline" ]]; then
             echo "environment=dev" >> "$GITHUB_OUTPUT"
           else
-            echo "environment=${{ github.ref }}" >> "$GITHUB_OUTPUT"
+            echo "environment=${{ github.ref_name }}" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Timezone 🌐
