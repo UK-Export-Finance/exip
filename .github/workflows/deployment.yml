@@ -30,8 +30,6 @@ on:
       - dev
       - staging
       - production
-      # TODO: Remove prior to approval and merge
-      - feat/EMS-4098-deployment-pipeline
 
     paths:
       - 'src/**'
@@ -57,7 +55,7 @@ jobs:
       - name: Environment 🧪
         id: environment
         run: |
-          if [[ "${{ env.ENVIRONMENT }}" == "feat/EMS-4098-deployment-pipeline" ]]; then
+          if [[ "${{ env.ENVIRONMENT }}" == "main" ]]; then
             echo "environment=dev" >> "$GITHUB_OUTPUT"
           else
             echo "environment=${{ env.ENVIRONMENT }}" >> "$GITHUB_OUTPUT"
