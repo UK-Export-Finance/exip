@@ -62,7 +62,11 @@ jobs:
           fi
 
       - name: Timezone 🌐
-        run: echo "Timezone set to ${{ env.TIMEZONE }}"
+        run: |
+          echo "Timezone set to ${{ env.TIMEZONE }}"
+          echo "Env is ${{ steps.environment }}"
+          echo "Env is ${{ steps.environment.outputs }}"
+          echo "Env is ${{ steps.environment.outputs.environment }}"
 
   # 2. Database schema migration
   database:
