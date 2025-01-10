@@ -44,12 +44,6 @@ runs:
       with:
         node-version: ${{ inputs.node }}
 
-    # Step 3: Install dependencies.
-    - name: Dependencies
-      working-directory: ./libs/common
-      run: npm ci
-      shell: bash
-
     # Step 4: Execute MySQL export.
     - name: Import ⬇
       if: ${{ '1' == inputs.execute }}

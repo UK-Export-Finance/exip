@@ -30,6 +30,8 @@ on:
       - dev
       - staging
       - production
+      # TODO: Remove prior to approval and merge
+      - feat/EMS-4098-deployment-pipeline
 
     paths:
       - 'src/**'
