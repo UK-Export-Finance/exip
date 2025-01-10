@@ -83,11 +83,6 @@ runs:
       working-directory: src/${{ inputs.webapp }}
       run: |
         # Build images
-        docker build -f ./${{ env.DOCKERFILE }} . \
-        -t ${{ env.ACR }}/${{ inputs.webapp }}:${{ github.sha }} \
-        -t ${{ env.ACR }}/${{ inputs.webapp }}:latest \
-        --build-arg GITHUB_SHA=${{ github.sha }}
-
         docker build . \
           -t ${{ env.ACR }}/${{ inputs.webapp }}:${{ github.sha }} \
           -t ${{ env.ACR }}/${{ inputs.webapp }}:latest \
