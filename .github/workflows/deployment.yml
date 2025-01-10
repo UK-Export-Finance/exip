@@ -57,7 +57,7 @@ jobs:
       - name: Environment 🧪
         id: environment
         run: |
-          if [[ "${{ env.ENVIRONMENT }}" == "main" ]]; then
+          if [[ "${{ env.ENVIRONMENT }}" == "feat/EMS-4098-deployment-pipeline" ]]; then
             echo "environment=dev" >> "$GITHUB_OUTPUT"
           else
             echo "environment=${{ github.event.workflow_run.head_branch }}" >> "$GITHUB_OUTPUT"
@@ -112,10 +112,10 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - name: Repository 🗂️
+      - name: Repository 🗂️🌎
         uses: actions/checkout@v4
 
-      - name: Port 🛜
+      - name: Port ⭕️
         run: |
           if [[ "${{ matrix.webapp }}" == "ui" ]]; then
             echo "PORT=${{ vars.UI_PORT }}" >> "$GITHUB_ENV"
