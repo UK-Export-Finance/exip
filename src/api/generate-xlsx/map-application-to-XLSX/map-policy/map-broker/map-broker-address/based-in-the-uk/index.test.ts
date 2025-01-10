@@ -86,4 +86,22 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-broker/map-br
       expect(result).toEqual(expected);
     });
   });
+
+  describe('when all broker fields are empty string', () => {
+    it('should return a single string with all fields', () => {
+      const mockBroker: ApplicationBroker = {
+        ...broker,
+        [BUILDING_NUMBER_OR_NAME]: '',
+        [ADDRESS_LINE_1]: '',
+        [ADDRESS_LINE_2]: '',
+        [TOWN]: '',
+        [COUNTY]: '',
+        [POSTCODE]: '',
+      };
+
+      const result = mapBrokerAddressBasedInTheUk(mockBroker);
+
+      expect(result).toEqual('');
+    });
+  });
 });

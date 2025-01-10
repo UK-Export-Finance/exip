@@ -7716,9 +7716,15 @@ var map_jointly_insured_party_default = mapJointlyInsuredParty;
 // generate-xlsx/map-application-to-XLSX/map-policy/map-broker/map-broker-address/based-in-the-uk/index.ts
 var mapBrokerAddressBasedInTheUk = (broker) => {
   const { buildingNumberOrName, addressLine1, addressLine2, town, county, postcode } = broker;
-  let addressString = `${buildingNumberOrName}
-${addressLine1}
+  let addressString = '';
+  if (buildingNumberOrName) {
+    addressString += `${buildingNumberOrName}
 `;
+  }
+  if (addressLine1) {
+    addressString += `${addressLine1}
+`;
+  }
   if (addressLine2) {
     addressString += `${addressLine2}
 `;
