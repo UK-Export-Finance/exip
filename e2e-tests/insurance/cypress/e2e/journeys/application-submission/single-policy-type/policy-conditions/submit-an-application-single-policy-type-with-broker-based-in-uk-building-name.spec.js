@@ -9,17 +9,6 @@ context(
       cy.completeSignInAndSubmitAnApplication({
         usingBroker: true,
         brokerIsBasedInUk: true,
-        // brokerBuildingNumberOrName: 'Treasury',
-        // brokerBuildingNumberOrName: 'Westminster Abbey',
-
-        // brokerBuildingNumberOrName: 'Westminster',
-        // brokerPostcode: 'SW1H 9NH',
-
-        // brokerBuildingNumberOrName: 'Silvers',
-        // brokerPostcode: 'IG95NX',
-
-        // brokerBuildingNumberOrName: '15',
-
         brokerPostcode: VALID_POSTCODES.WITH_SPACE,
         brokerBuildingNumberOrName: BUILDING_NAMES.TREASURY,
       }).then((refNumber) => {
