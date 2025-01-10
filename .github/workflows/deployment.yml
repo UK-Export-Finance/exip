@@ -72,6 +72,7 @@ jobs:
     needs: [setup]
     environment: ${{ needs.setup.outputs.environment }}
     runs-on: [self-hosted, EXIP, deployment]
+    if: ${{ '1' == vars.DATABASE }}
     env:
       ENVIRONMENT: ${{ needs.setup.outputs.environment }}
 

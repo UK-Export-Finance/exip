@@ -8,7 +8,7 @@ inputs:
   region:
     description: 'Azure region'
     required: true
-  group:
+  resource:
     description: 'Azure resource group'
     required: true
   credentials:
@@ -54,7 +54,7 @@ runs:
         inlineScript: |
           # Basic
           az configure --defaults location=${{ inputs.region }}
-          az configure --defaults group=${{ inputs.group }}
+          az configure --defaults group=${{ inputs.resource }}
 
     # Step 3: Log in to Azure.
     - name: Azure 🔐
