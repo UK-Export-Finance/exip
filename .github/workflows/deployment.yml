@@ -17,8 +17,8 @@
 # 1. Push to the `dev`, `staging` and `production` branches only.
 # 2. Any modifications to atleast one of the `paths` targets.
 
-name: Deployment
-run-name: 🚀 Deploying to ${{ github.event.workflow_run.head_branch }}
+name: Deployment˙˙
+run-name: 🚀 Deploying to ${{ github.ref }}
 
 on:
   schedule:
@@ -40,7 +40,7 @@ on:
 
 env:
   PRODUCT: exip
-  ENVIRONMENT: ${{ github.event.workflow_run.head_branch }}
+  ENVIRONMENT: ${{ github.ref }}
   TIMEZONE: ${{ vars.TIMEZONE }}
 
 jobs:
@@ -60,7 +60,7 @@ jobs:
           if [[ "${{ env.ENVIRONMENT }}" == "feat/EMS-4098-deployment-pipeline" ]]; then
             echo "environment=dev" >> "$GITHUB_OUTPUT"
           else
-            echo "environment=${{ github.event.workflow_run.head_branch }}" >> "$GITHUB_OUTPUT"
+            echo "environment=${{ github.ref }}" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Timezone 🌐
