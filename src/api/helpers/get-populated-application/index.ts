@@ -128,7 +128,7 @@ const getPopulatedApplication = async ({
       if (EXPECTED_RELATIONSHIPS.includes(relationshipKey)) {
         const populatedRelationship = populatedApplication[relationshipKey];
 
-        if (!populatedRelationship || !objectHasKeysAndValues(populatedRelationship)) {
+        if (!objectHasKeysAndValues(populatedRelationship)) {
           throw new Error(`Error getting '${relationshipKey}' relationship`);
         }
       }

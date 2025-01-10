@@ -6,10 +6,14 @@ import { ObjectType } from '../../types';
  * @param {ObjectType} Object to check
  * @returns {Boolean}
  */
-export const objectHasKeysAndValues = (obj: ObjectType) => {
+export const objectHasKeysAndValues = (obj?: ObjectType) => {
+  if (!obj) {
+    return false;
+  }
+
   const keys = Object.keys(obj);
 
-  if (!keys.length) {
+  if (!keys?.length) {
     return false;
   }
 

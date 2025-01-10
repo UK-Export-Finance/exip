@@ -6165,8 +6165,11 @@ var map_policy_default = mapPolicy;
 
 // helpers/object/index.ts
 var objectHasKeysAndValues = (obj) => {
+  if (!obj) {
+    return false;
+  }
   const keys = Object.keys(obj);
-  if (!keys.length) {
+  if (!keys?.length) {
     return false;
   }
   let hasValues = false;
@@ -6248,7 +6251,7 @@ var getPopulatedApplication = async ({
     Object.keys(populatedApplication2).forEach((relationshipKey) => {
       if (EXPECTED_RELATIONSHIPS.includes(relationshipKey)) {
         const populatedRelationship = populatedApplication2[relationshipKey];
-        if (!populatedRelationship || !objectHasKeysAndValues(populatedRelationship)) {
+        if (!objectHasKeysAndValues(populatedRelationship)) {
           throw new Error(`Error getting '${relationshipKey}' relationship`);
         }
       }
