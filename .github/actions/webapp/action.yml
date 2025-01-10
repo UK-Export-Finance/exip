@@ -96,8 +96,8 @@ runs:
         docker push ${{ env.ACR }}/${{ inputs.webapp }}:latest
       shell: bash
 
-    # Step 7: Create and swap deployment slot.
-    - name: Slot 🔀
+    # Step 7: Create deployment slot.
+    - name: Create ➕
       uses: azure/cli@v2.1.0
       with:
         inlineScript: |
@@ -110,18 +110,18 @@ runs:
           --docker-registry-server-user ${{ env.ACR_USER }} \
           --docker-registry-server-password ${{ inputs.acr }}
 
+    # Step 8: Swap deployment slot.
+    - name: Swap 🔀
+      uses: azure/cli@v2.1.0
+      with:
+        inlineScript: |
           # Swap slot
           az webapp deployment slot swap \
           --slot ${{ github.sha }} \
           --name ${{ env.WEBAPP }} \
           --action swap
 
-          # Delete temporary slot
-          az webapp deployment slot delete \
-          --slot ${{ github.sha }} \
-          --name ${{ env.WEBAPP }}
-
-    # Step 8: Cleanup temporary slot.
+    # Step 9: Cleanup temporary slot.
     - name: Cleanup 🧹
       if: always()
       uses: azure/cli@v2.1.0
