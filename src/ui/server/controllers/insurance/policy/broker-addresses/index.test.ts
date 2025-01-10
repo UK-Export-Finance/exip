@@ -10,6 +10,7 @@ import api from '../../../../api';
 import mapOrdnanceSurveyAddresses from '../../../../helpers/mappings/map-ordnance-survey-addresses';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import getChosenOrdnanceSurveyAddress from '../../../../helpers/get-chosen-ordnance-survey-address';
 import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockOrdnanceSurveyAddressResponse, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
@@ -22,7 +23,7 @@ const {
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  POLICY: { BROKER_DETAILS_ROOT, BROKER_ZERO_ADDRESSES_ROOT, BROKER_CONFIRM_ADDRESS_ROOT, BROKER_MANUAL_ADDRESS_ROOT },
+  POLICY: { BROKER_ADDRESSES_SAVE_AND_BACK, BROKER_DETAILS_ROOT, BROKER_ZERO_ADDRESSES_ROOT, BROKER_CONFIRM_ADDRESS_ROOT, BROKER_MANUAL_ADDRESS_ROOT },
 } = INSURANCE_ROUTES;
 
 const { BROKER_ADDRESSES } = POLICY_FIELDS;
@@ -85,7 +86,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
       },
       SEARCH_AGAIN_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
       ENTER_ADDRESS_MANUALLY_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`,
-      SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
+      SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ADDRESSES_SAVE_AND_BACK}`,
     };
 
     describe('when totalAddresses is 1', () => {
@@ -322,9 +323,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
 
         const payload = constructPayload(req.body, [FIELD_ID]);
 
-        const answer = payload[FIELD_ID];
-
-        const chosenAddress = mockOrdnanceSurveyAddressResponse.addresses[answer];
+        const chosenAddress = getChosenOrdnanceSurveyAddress(payload, FIELD_ID, mockOrdnanceSurveyAddressResponse.addresses);
 
         expect(mapAndSave.broker).toHaveBeenCalledWith(chosenAddress, mockApplication);
       });

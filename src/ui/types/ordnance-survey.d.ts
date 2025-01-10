@@ -1,6 +1,7 @@
 import { Address } from './address';
 
 export interface MappedOrdnanceSurveyAddress extends Address {
+  __typename?: string;
   addressLine1?: string;
   addressLine2?: string;
   town?: string;

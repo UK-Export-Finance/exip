@@ -48,6 +48,7 @@ describe('controllers/insurance/policy/broker-details/save-and-back', () => {
       await post(req, res);
 
       const payload = constructPayload(req.body, FIELD_IDS);
+
       const validationErrors = generateValidationErrors(payload);
 
       expect(updateMapAndSave).toHaveBeenCalledTimes(1);
@@ -73,6 +74,7 @@ describe('controllers/insurance/policy/broker-details/save-and-back', () => {
       await post(req, res);
 
       const payload = constructPayload(req.body, FIELD_IDS);
+
       const validationErrors = generateValidationErrors(payload);
 
       expect(updateMapAndSave).toHaveBeenCalledTimes(1);

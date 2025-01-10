@@ -9,6 +9,7 @@ import api from '../../../../api';
 import mapOrdnanceSurveyAddresses from '../../../../helpers/mappings/map-ordnance-survey-addresses';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import getChosenOrdnanceSurveyAddress from '../../../../helpers/get-chosen-ordnance-survey-address';
 import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
 
@@ -17,7 +18,7 @@ const { SELECT_THE_ADDRESS } = POLICY_FIELD_IDS.BROKER_ADDRESSES;
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  POLICY: { BROKER_DETAILS_ROOT, BROKER_ZERO_ADDRESSES_ROOT, BROKER_CONFIRM_ADDRESS_ROOT, BROKER_MANUAL_ADDRESS_ROOT },
+  POLICY: { BROKER_ADDRESSES_SAVE_AND_BACK, BROKER_DETAILS_ROOT, BROKER_ZERO_ADDRESSES_ROOT, BROKER_CONFIRM_ADDRESS_ROOT, BROKER_MANUAL_ADDRESS_ROOT },
 } = INSURANCE_ROUTES;
 
 const { BROKER_ADDRESSES } = POLICY_FIELDS;
@@ -55,7 +56,7 @@ export const pageVariables = (referenceNumber: number, totalAddresses: number) =
     },
     SEARCH_AGAIN_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
     ENTER_ADDRESS_MANUALLY_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`,
-    SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
+    SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ADDRESSES_SAVE_AND_BACK}`,
   };
 };
 
@@ -161,9 +162,7 @@ export const post = async (req: Request, res: Response) => {
       });
     }
 
-    const answer = payload[FIELD_ID];
-
-    const { __typename, ...chosenAddress } = addresses[answer];
+    const chosenAddress = getChosenOrdnanceSurveyAddress(payload, FIELD_ID, addresses);
 
     const saveResponse = await mapAndSave.broker(chosenAddress, application);
 
