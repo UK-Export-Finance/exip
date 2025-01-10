@@ -18,7 +18,7 @@
 # 2. Any modifications to atleast one of the `paths` targets.
 
 name: Deployment˙˙
-run-name: 🚀 Deploying to ${{ github.ref }}
+run-name: 🚀 Deploying to ${{ github.ref_name }}
 
 on:
   schedule:
@@ -40,7 +40,7 @@ on:
 
 env:
   PRODUCT: exip
-  ENVIRONMENT: ${{ github.ref }}
+  ENVIRONMENT: ${{ github.ref_name }}
   TIMEZONE: ${{ vars.TIMEZONE }}
 
 jobs:
@@ -57,7 +57,7 @@ jobs:
       - name: Environment 🧪
         id: environment
         run: |
-          if [[ "${{ env.ENVIRONMENT }}" == *EMS-4098-deployment-pipeline* ]]; then
+          if [[ "${{ env.ENVIRONMENT }}" == refs/heads/feat/EMS-4098-deployment-pipeline ]]; then
             echo "environment=dev" >> "$GITHUB_OUTPUT"
           else
             echo "environment=${{ github.ref }}" >> "$GITHUB_OUTPUT"
