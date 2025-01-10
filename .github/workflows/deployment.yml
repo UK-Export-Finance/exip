@@ -93,7 +93,7 @@ jobs:
   # 3. micro-serices WebApp deployments
   webapp:
     name: WebApp 🌐
-    needs: [setup, database]
+    needs: [setup]
     environment: ${{ needs.setup.outputs.environment }}
     runs-on: [self-hosted, EXIP, deployment]
     env:
@@ -181,7 +181,7 @@ jobs:
   # 4. Notification
   notify:
     name: Notification 🔔
-    needs: [setup, database, webapp]
+    needs: [setup, webapp]
     environment: ${{ needs.setup.outputs.environment }}
     runs-on: [self-hosted, EXIP, deployment]
 
