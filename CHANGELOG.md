@@ -1,5 +1,35 @@
 # Changelog
 
+## [2.39.1](https://github.com/UK-Export-Finance/exip/compare/v2.39.0...v2.39.1) (2025-01-10)
+
+
+### Bug Fixes
+
+* **EMS-4098:** fixed deployment script ([a183678](https://github.com/UK-Export-Finance/exip/commit/a183678113ab70c4114a00706840d3afc96addad))
+* **EMS-4098:** fixed deployment script ([b26c951](https://github.com/UK-Export-Finance/exip/commit/b26c951e6fca7a1264fa695e0df4e128d15d00e0))
+* **EMS-4098:** fixed deployment script ([db3dc77](https://github.com/UK-Export-Finance/exip/commit/db3dc7701657f1f7e568a590e1feea47b9f24490))
+* **EMS-4098:** fixed deployment script ([9cbf083](https://github.com/UK-Export-Finance/exip/commit/9cbf0837d31ffe62fa3c90890a36399f97ebb718))
+* **EMS-4098:** fixed deployment script ([9ac4884](https://github.com/UK-Export-Finance/exip/commit/9ac48849d967b011b9db7236d65d8e4ac86b9986))
+* **EMS-4098:** fixed deployment script ([7170d3a](https://github.com/UK-Export-Finance/exip/commit/7170d3ad7824329ea06906671937b4881484a196))
+* **EMS-4098:** fixed deployment script ([ec5d451](https://github.com/UK-Export-Finance/exip/commit/ec5d451ae79d67102e61909baf29f4db57e1804c))
+* **EMS-4098:** fixed deployment script ([d741915](https://github.com/UK-Export-Finance/exip/commit/d7419152a3640a2a508e63f0a6c6060085f23730))
+* **EMS-4098:** fixed deployment script ([276eeff](https://github.com/UK-Export-Finance/exip/commit/276eeffb7552b8449d595992dcf0970ed3f5c302))
+* **EMS-4098:** fixed deployment script ([1658332](https://github.com/UK-Export-Finance/exip/commit/16583322f32caaf6000364e5a9c2bd575ac6a589))
+* **EMS-4098:** fixed deployment script ([b4055d2](https://github.com/UK-Export-Finance/exip/commit/b4055d2c92bc2dd9dd780aac6d8820365043fbff))
+* **EMS-4098:** fixed deployment script ([a6c355b](https://github.com/UK-Export-Finance/exip/commit/a6c355bde1d457afbf55b7408c7976d62b73b78f))
+* **EMS-4098:** fixed deployment script ([6cf6153](https://github.com/UK-Export-Finance/exip/commit/6cf61532b622f9bd6133b3115a5dcad9e19c7191))
+* **EMS-4098:** fixed deployment script ([6c3724b](https://github.com/UK-Export-Finance/exip/commit/6c3724bdd01ec969da3b3aee50ff648e11a0711d))
+* **EMS-4098:** fixed deployment script ([09205ca](https://github.com/UK-Export-Finance/exip/commit/09205ca0636985be50dcd4b868f43034c85326c6))
+* **EMS-4098:** fixed deployment script ([d110b3c](https://github.com/UK-Export-Finance/exip/commit/d110b3cf85e533ea3424c00cc0ea1c32435a93dd))
+* **EMS-4098:** fixed deployment script ([96456e2](https://github.com/UK-Export-Finance/exip/commit/96456e2da1020dd292c7cfe56a87142f70fab7fa))
+* **EMS-4098:** fixed deployment script ([191c84b](https://github.com/UK-Export-Finance/exip/commit/191c84b2b65252a97793ad18317cea47b4469e29))
+* **EMS-4098:** fixed deployment script ([e63d437](https://github.com/UK-Export-Finance/exip/commit/e63d4372479582825d199917587d30747771b971))
+* **EMS-4098:** fixed deployment script ([906e142](https://github.com/UK-Export-Finance/exip/commit/906e1426e8c5cdea841e540b3d1d6e47857c0473))
+* **EMS-4098:** fixed deployment script ([ba0e0a3](https://github.com/UK-Export-Finance/exip/commit/ba0e0a31c5d37a8074456bb08a42f0f0cf092516))
+* **EMS-4098:** fixed deployment script ([be2fcc5](https://github.com/UK-Export-Finance/exip/commit/be2fcc554c2e725ddcf5375f74553f90b650336a))
+* **EMS-4098:** fixed deployment script ([25d07b0](https://github.com/UK-Export-Finance/exip/commit/25d07b014af400299f152a3ef65beb2772b45be1))
+* **EMS-4101:** update gov integrity hash ([#3472](https://github.com/UK-Export-Finance/exip/issues/3472)) ([b0658de](https://github.com/UK-Export-Finance/exip/commit/b0658de1729584a382e260ff9b1e0d3cf9397634))
+
 ## [2.39.0](https://github.com/UK-Export-Finance/exip/compare/v2.38.2...v2.39.0) (2025-01-09)
 
 
