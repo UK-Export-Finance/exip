@@ -169,6 +169,26 @@ export const assertPostcodeFieldValidation = ({
 
         field.errorMessage().should('not.exist');
       });
+
+      it(`should NOT render a validation error when ${fieldId} is correctly formatted - FIVE_DIGITS_WITH_SPACE`, () => {
+        cy.keyboardInput(fieldSelector(fieldId).input(), VALID_POSTCODES.FIVE_DIGITS_WITH_SPACE);
+
+        cy.clickSubmitButton();
+
+        cy.assertErrorSummaryListLength(totalExpectedOtherErrorsWithValidPostcode);
+
+        field.errorMessage().should('not.exist');
+      });
+
+      it(`should NOT render a validation error when ${fieldId} is correctly formatted - FIVE_DIGITS_WITHOUT_SPACE`, () => {
+        cy.keyboardInput(fieldSelector(fieldId).input(), VALID_POSTCODES.FIVE_DIGITS_WITHOUT_SPACE);
+
+        cy.clickSubmitButton();
+
+        cy.assertErrorSummaryListLength(totalExpectedOtherErrorsWithValidPostcode);
+
+        field.errorMessage().should('not.exist');
+      });
     });
   });
 };
