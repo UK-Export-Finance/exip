@@ -6169,7 +6169,7 @@ var objectHasKeysAndValues = (obj) => {
     return false;
   }
   const keys = Object.keys(obj);
-  if (!keys?.length) {
+  if (!keys.length) {
     return false;
   }
   let hasValues = false;
