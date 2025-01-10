@@ -1,14 +1,14 @@
-import { OrdnanceSurveyResponse } from '../../types';
+import { OrdnanceSurveyAddress } from '../../types';
 
 /**
  * filterOrdnanceSurveyAddresses
  * Filter Ordnance Survey addresses based on building name/number
- * @param {Array<OrdnanceSurveyResponse>} addresses
+ * @param {Array<OrdnanceSurveyAddress>} addresses
  * @param {String} houseNameOrNumber
  * @returns {Array<Address>} Filtered addresses
  */
-const filterOrdnanceSurveyAddresses = (addresses: Array<OrdnanceSurveyResponse>, houseNameOrNumber: string): Array<OrdnanceSurveyResponse> => {
-  const filtered = addresses.filter((address: OrdnanceSurveyResponse) => {
+const filterOrdnanceSurveyAddresses = (addresses: Array<OrdnanceSurveyAddress>, houseNameOrNumber: string): Array<OrdnanceSurveyAddress> => {
+  const filtered = addresses.filter((address: OrdnanceSurveyAddress) => {
     if (address.DPA.SUB_BUILDING_NAME && address.DPA.SUB_BUILDING_NAME.includes(houseNameOrNumber)) {
       return address;
     }

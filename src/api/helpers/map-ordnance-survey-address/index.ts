@@ -1,8 +1,8 @@
-import { Address, OrdnanceSurveyResponse } from '../../types';
+import { Address, OrdnanceSurveyAddress } from '../../types';
 
 /**
  * mapOrdnanceSurveyAddress
- * Maps address from OrdnanceSurveyResponse to a UKEF/EXIP aligned format
+ * Maps address from OrdnanceSurveyAddress to a UKEF/EXIP aligned format
  * NOTE - depending on the postcode and "house name or number",
  * Ordnance Survey returns different fields.
  * For example, some addresses will only return one of the following fields:
@@ -14,10 +14,10 @@ import { Address, OrdnanceSurveyResponse } from '../../types';
  * postcode = SW1A 2HQ, houseNameOrNumber = 1
  * postcode = W1A 1AA, houseNameOrNumber = Wogan House
  * postcode = SW1A 2HQ, houseNameOrNumber = Treasury  // TODO: update
- * @param {OrdnanceSurveyResponse} address
+ * @param {OrdnanceSurveyAddress} address
  * @returns {Address} mapped address
  */
-const mapOrdnanceSurveyAddress = (address: OrdnanceSurveyResponse): Address => {
+const mapOrdnanceSurveyAddress = (address: OrdnanceSurveyAddress): Address => {
   let addressLine1 = '';
 
   if (address.DPA.BUILDING_NUMBER) {

@@ -9565,10 +9565,10 @@ var mapOrdnanceSurveyAddresses = (addresses) => {
 var map_ordnance_survey_addresses_default = mapOrdnanceSurveyAddresses;
 
 // helpers/map-and-filter-ordnance-survey-addresses/index.ts
-var mapAndFilterOrdnanceSurveyAddresses = (ordnanceSurveyResponse, houseNameOrNumber) => {
+var mapAndFilterOrdnanceSurveyAddresses = (addresses, houseNameOrNumber) => {
   try {
     console.info('Mapping and filtering Ordnance Survey addresses');
-    const filtered = filter_ordnance_survey_addresses_default(ordnanceSurveyResponse, houseNameOrNumber);
+    const filtered = filter_ordnance_survey_addresses_default(addresses, houseNameOrNumber);
     const mapped = map_ordnance_survey_addresses_default(filtered);
     return mapped;
   } catch (error) {

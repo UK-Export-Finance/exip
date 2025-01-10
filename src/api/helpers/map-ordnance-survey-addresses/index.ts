@@ -1,14 +1,14 @@
 import mapAddress from '../map-ordnance-survey-address';
-import { Address, OrdnanceSurveyResponse } from '../../types';
+import { Address, OrdnanceSurveyAddress } from '../../types';
 
 /**
  * mapOrdnanceSurveyAddresses
  * Map Ordnance Survey addresses
- * @param {Array<OrdnanceSurveyResponse>} addresses
+ * @param {Array<OrdnanceSurveyAddress>} addresses
  * @param {String} houseNameOrNumber
  * @returns {Array<Address>} Filtered addresses
  */
-const mapOrdnanceSurveyAddresses = (addresses: Array<OrdnanceSurveyResponse>): Array<Address> => {
+const mapOrdnanceSurveyAddresses = (addresses: Array<OrdnanceSurveyAddress>): Array<Address> => {
   const mapped = addresses.map((address) => mapAddress(address));
 
   return mapped;

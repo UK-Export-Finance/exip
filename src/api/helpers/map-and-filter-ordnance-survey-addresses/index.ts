@@ -1,26 +1,20 @@
 import filterOrdnanceSurveyAddresses from '../filter-ordnance-survey-addresses';
 import mapOrdnanceSurveyAddresses from '../map-ordnance-survey-addresses';
-import { OrdnanceSurveyResponse, Address } from '../../types';
-
-// TODO:
-// TODO:
-// TODO:
-// TODO:
-// TODO: rename OrdnanceSurveyResponse.
+import { OrdnanceSurveyAddress, Address } from '../../types';
 
 /**
  * mapAndFilterOrdnanceSurveyAddresses
  * - Filter addresses based on building name/number
  * - Map the filtered addresses
- * @param {Array<OrdnanceSurveyResponse>} ordnanceSurveyResponse
+ * @param {Array<OrdnanceSurveyAddress>} ordnanceSurveyResponse
  * @param {String} houseNameOrNumber
  * @returns {Array<Address>} Mapped addresses
  */
-const mapAndFilterOrdnanceSurveyAddresses = (ordnanceSurveyResponse: Array<OrdnanceSurveyResponse>, houseNameOrNumber: string): Array<Address> => {
+const mapAndFilterOrdnanceSurveyAddresses = (addresses: Array<OrdnanceSurveyAddress>, houseNameOrNumber: string): Array<Address> => {
   try {
     console.info('Mapping and filtering Ordnance Survey addresses');
 
-    const filtered = filterOrdnanceSurveyAddresses(ordnanceSurveyResponse, houseNameOrNumber);
+    const filtered = filterOrdnanceSurveyAddresses(addresses, houseNameOrNumber);
 
     const mapped = mapOrdnanceSurveyAddresses(filtered);
 

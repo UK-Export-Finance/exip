@@ -1,6 +1,6 @@
 import mapOrdnanceSurveyAddress from '.';
 import mockOrdnanceSurveyResponse from '../../test-mocks/mock-ordnance-survey-response';
-import { OrdnanceSurveyResponse } from '../../types';
+import { OrdnanceSurveyAddress } from '../../types';
 
 describe('api/helpers/map-ordnance-survey-address', () => {
   const mockBuildingNumber = '100';
@@ -8,7 +8,7 @@ describe('api/helpers/map-ordnance-survey-address', () => {
   const mockOrganisationName = 'Mock organisation name';
   const mockBuildingName = 'Mock building name';
 
-  const mockAddressFullyPopulated: OrdnanceSurveyResponse = {
+  const mockAddressFullyPopulated: OrdnanceSurveyAddress = {
     DPA: {
       ...mockOrdnanceSurveyResponse.results[0].DPA,
       BUILDING_NUMBER: mockBuildingNumber,

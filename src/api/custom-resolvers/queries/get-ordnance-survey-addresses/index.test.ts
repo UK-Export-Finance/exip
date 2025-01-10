@@ -3,7 +3,7 @@ import ordnanceSurvey from '../../../integrations/ordnance-survey';
 import mapAndFilterOrdnanceSurveyAddresses from '../../../helpers/map-and-filter-ordnance-survey-addresses';
 import mockOrdnanceSurveyResponse from '../../../test-mocks/mock-ordnance-survey-response';
 import { MOCK_OS_ADDRESS_INPUT } from '../../../test-mocks/mock-os-address-input';
-import { OrdnanceSurveyResponse } from '../../../types';
+import { OrdnanceSurveyAddress } from '../../../types';
 import { mockSpyPromiseRejection } from '../../../test-mocks';
 
 describe('getOrdnanceSurveyAddresses', () => {
@@ -55,7 +55,7 @@ describe('getOrdnanceSurveyAddresses', () => {
 
   describe('when ordnance survey API returns a valid response', () => {
     beforeEach(() => {
-      const ordnanceSurveyResponse: Array<OrdnanceSurveyResponse> = mockOrdnanceSurveyResponse.results;
+      const ordnanceSurveyResponse: Array<OrdnanceSurveyAddress> = mockOrdnanceSurveyResponse.results;
 
       ordnanceSurvey.get = jest.fn(() => Promise.resolve({ success: true, data: ordnanceSurveyResponse }));
     });
