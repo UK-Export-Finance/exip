@@ -18,7 +18,7 @@
 # 2. Any modifications to atleast one of the `paths` targets.
 
 name: Deployment
-run-name: 🚀 Deploying to ${{ github.event.workflow_run.head_branch }}
+run-name: 🚀 Deploying from ${{ github.ref_name }}
 
 on:
   schedule:
@@ -34,11 +34,11 @@ on:
     paths:
       - 'src/**'
       - 'database/**'
-      - '.github/workflows/**'
+      - '.github/**'
 
 env:
   PRODUCT: exip
-  ENVIRONMENT: ${{ github.event.workflow_run.head_branch }}
+  ENVIRONMENT: ${{ github.ref_name }}
   TIMEZONE: ${{ vars.TIMEZONE }}
 
 jobs:
@@ -58,7 +58,7 @@ jobs:
           if [[ "${{ env.ENVIRONMENT }}" == "main" ]]; then
             echo "environment=dev" >> "$GITHUB_OUTPUT"
           else
-            echo "environment=${{ github.event.workflow_run.head_branch }}" >> "$GITHUB_OUTPUT"
+            echo "environment=${{ env.ENVIRONMENT }}" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Timezone 🌐
@@ -70,6 +70,7 @@ jobs:
     needs: [setup]
     environment: ${{ needs.setup.outputs.environment }}
     runs-on: [self-hosted, EXIP, deployment]
+    if: ${{ '1' == vars.DATABASE }}
     env:
       ENVIRONMENT: ${{ needs.setup.outputs.environment }}
 
@@ -91,7 +92,7 @@ jobs:
   # 3. micro-serices WebApp deployments
   webapp:
     name: WebApp 🌐
-    needs: [setup, database]
+    needs: [setup]
     environment: ${{ needs.setup.outputs.environment }}
     runs-on: [self-hosted, EXIP, deployment]
     env:
@@ -110,10 +111,10 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - name: Repository 🗂️
+      - name: Repository 🗂️🌎
         uses: actions/checkout@v4
 
-      - name: Port 🛜
+      - name: Port ⭕️
         run: |
           if [[ "${{ matrix.webapp }}" == "ui" ]]; then
             echo "PORT=${{ vars.UI_PORT }}" >> "$GITHUB_ENV"
@@ -125,7 +126,7 @@ jobs:
         uses: ./.github/actions/webapp
         with:
           region: ${{ vars.REGION }}
-          group: ${{ secrets.RESOURCE_GROUP }}
+          group: rg-${{ env.PRODUCT }}-${{ env.ENVIRONMENT }}-${{ vars.VERSION }}
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
           acr: ${{ secrets.ACR_PASSWORD }}
           webapp: ${{ matrix.webapp }}
@@ -135,8 +136,31 @@ jobs:
           session: ${{ secrets.SESSION_SECRET }}
           notify: ${{ secrets.GOV_NOTIFY_API_KEY }}
 
-      - name: Environment 🧱
+      - name: UI 🧱
         uses: azure/cli@v2
+        if: ${{ 'ui' == matrix.webapp }}
+        with:
+          inlineScript: |
+            az webapp config appsettings set \
+            --name app-${{ env.PRODUCT }}-ui-${{ env.ENVIRONMENT }}-${{ vars.VERSION }} \
+            --settings \
+            TZ='${{ vars.TIMEZONE }}' \
+            NODE_ENV='${{ vars.NODE_ENV }}' \
+            PORT='${{ vars.UI_PORT }}' \
+            WEBSITES_PORT='${{ vars.UI_PORT }}' \
+            SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
+            GOOGLE_ANALYTICS_ID='${{ secrets.GOOGLE_ANALYTICS_ID }}' \
+            GOOGLE_TAG_MANAGER_ID='${{ secrets.GOOGLE_TAG_MANAGER_ID }}' \
+            APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
+            APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
+            APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
+            API_KEY='${{ secrets.API_KEY }}'
+            APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
+            API_KEY='${{ secrets.API_KEY }}'
+
+      - name: API 🧱
+        uses: azure/cli@v2
+        if: ${{ 'api' == matrix.webapp }}
         with:
           inlineScript: |
             az webapp config appsettings set \
@@ -159,27 +183,10 @@ jobs:
             FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}' \
             EXCELJS_PROTECTION_PASSWORD='${{ secrets.EXCELJS_PROTECTION_PASSWORD }}'
 
-            az webapp config appsettings set \
-            --name app-${{ env.PRODUCT }}-ui-${{ env.ENVIRONMENT }}-${{ vars.VERSION }} \
-            --settings \
-            TZ='${{ vars.TIMEZONE }}' \
-            NODE_ENV='${{ vars.NODE_ENV }}' \
-            PORT='${{ vars.UI_PORT }}' \
-            WEBSITES_PORT='${{ vars.UI_PORT }}' \
-            SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
-            GOOGLE_ANALYTICS_ID='${{ secrets.GOOGLE_ANALYTICS_ID }}' \
-            GOOGLE_TAG_MANAGER_ID='${{ secrets.GOOGLE_TAG_MANAGER_ID }}' \
-            APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
-            APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
-            APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
-            API_KEY='${{ secrets.API_KEY }}'
-            APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
-            API_KEY='${{ secrets.API_KEY }}'
-
   # 4. Notification
   notify:
     name: Notification 🔔
-    needs: [setup, database, webapp]
+    needs: [setup, webapp]
     environment: ${{ needs.setup.outputs.environment }}
     runs-on: [self-hosted, EXIP, deployment]
 
