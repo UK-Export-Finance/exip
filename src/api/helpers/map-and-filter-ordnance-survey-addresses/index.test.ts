@@ -1,6 +1,6 @@
 import mapAndFilterOrdnanceSurveyAddresses from '.';
 import filterOrdnanceSurveyAddresses from '../filter-ordnance-survey-addresses';
-import mapAddress from '../map-ordnance-survey-address';
+import mapOrdnanceSurveyAddresses from '../map-ordnance-survey-addresses';
 import mockOrdnanceSurveyResponse from '../../test-mocks/mock-ordnance-survey-response';
 
 const ordnanceSurveyResponse = mockOrdnanceSurveyResponse.results;
@@ -13,7 +13,7 @@ describe('api/helpers/map-and-filter-ordnance-survey-addresses', () => {
 
     const filtered = filterOrdnanceSurveyAddresses(ordnanceSurveyResponse, mockHouseNameOrNumber);
 
-    const expected = filtered.map((address) => mapAddress(address));
+    const expected = mapOrdnanceSurveyAddresses(filtered);
 
     expect(result).toEqual(expected);
   });

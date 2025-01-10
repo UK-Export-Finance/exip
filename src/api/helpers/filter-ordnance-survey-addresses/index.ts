@@ -2,7 +2,7 @@ import { OrdnanceSurveyResponse } from '../../types';
 
 /**
  * filterOrdnanceSurveyAddresses
- * Filter addresses based on building name/number
+ * Filter Ordnance Survey addresses based on building name/number
  * @param {Array<OrdnanceSurveyResponse>} addresses
  * @param {String} houseNameOrNumber
  * @returns {Array<Address>} Filtered addresses

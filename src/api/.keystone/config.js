@@ -9557,12 +9557,19 @@ var mapOrdnanceSurveyAddress = (address) => {
 };
 var map_ordnance_survey_address_default = mapOrdnanceSurveyAddress;
 
+// helpers/map-ordnance-survey-addresses/index.ts
+var mapOrdnanceSurveyAddresses = (addresses) => {
+  const mapped = addresses.map((address) => map_ordnance_survey_address_default(address));
+  return mapped;
+};
+var map_ordnance_survey_addresses_default = mapOrdnanceSurveyAddresses;
+
 // helpers/map-and-filter-ordnance-survey-addresses/index.ts
 var mapAndFilterOrdnanceSurveyAddresses = (ordnanceSurveyResponse, houseNameOrNumber) => {
   try {
     console.info('Mapping and filtering Ordnance Survey addresses');
     const filtered = filter_ordnance_survey_addresses_default(ordnanceSurveyResponse, houseNameOrNumber);
-    const mapped = filtered.map((address) => map_ordnance_survey_address_default(address));
+    const mapped = map_ordnance_survey_addresses_default(filtered);
     return mapped;
   } catch (error) {
     console.error('Error mapping and filtering Ordnance Survey addresses %o', error);

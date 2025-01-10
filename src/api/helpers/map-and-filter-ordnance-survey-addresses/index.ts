@@ -1,5 +1,5 @@
 import filterOrdnanceSurveyAddresses from '../filter-ordnance-survey-addresses';
-import mapAddress from '../map-ordnance-survey-address';
+import mapOrdnanceSurveyAddresses from '../map-ordnance-survey-addresses';
 import { OrdnanceSurveyResponse, Address } from '../../types';
 
 // TODO:
@@ -22,7 +22,7 @@ const mapAndFilterOrdnanceSurveyAddresses = (ordnanceSurveyResponse: Array<Ordna
 
     const filtered = filterOrdnanceSurveyAddresses(ordnanceSurveyResponse, houseNameOrNumber);
 
-    const mapped = filtered.map((address: OrdnanceSurveyResponse) => mapAddress(address));
+    const mapped = mapOrdnanceSurveyAddresses(filtered);
 
     return mapped;
   } catch (error) {
