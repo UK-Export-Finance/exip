@@ -138,8 +138,31 @@ jobs:
           session: ${{ secrets.SESSION_SECRET }}
           notify: ${{ secrets.GOV_NOTIFY_API_KEY }}
 
-      - name: Environment 🧱
+      - name: UI 🧱
         uses: azure/cli@v2
+        if: ${{ 'ui' == matrix.webapp }}
+        with:
+          inlineScript: |
+            az webapp config appsettings set \
+            --name app-${{ env.PRODUCT }}-ui-${{ env.ENVIRONMENT }}-${{ vars.VERSION }} \
+            --settings \
+            TZ='${{ vars.TIMEZONE }}' \
+            NODE_ENV='${{ vars.NODE_ENV }}' \
+            PORT='${{ vars.UI_PORT }}' \
+            WEBSITES_PORT='${{ vars.UI_PORT }}' \
+            SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
+            GOOGLE_ANALYTICS_ID='${{ secrets.GOOGLE_ANALYTICS_ID }}' \
+            GOOGLE_TAG_MANAGER_ID='${{ secrets.GOOGLE_TAG_MANAGER_ID }}' \
+            APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
+            APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
+            APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
+            API_KEY='${{ secrets.API_KEY }}'
+            APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
+            API_KEY='${{ secrets.API_KEY }}'
+
+      - name: API 🧱
+        uses: azure/cli@v2
+        if: ${{ 'api' == matrix.webapp }}
         with:
           inlineScript: |
             az webapp config appsettings set \
@@ -161,23 +184,6 @@ jobs:
             UNDERWRITING_TEAM_EMAIL='${{ secrets.UNDERWRITING_TEAM_EMAIL }}' \
             FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}' \
             EXCELJS_PROTECTION_PASSWORD='${{ secrets.EXCELJS_PROTECTION_PASSWORD }}'
-
-            az webapp config appsettings set \
-            --name app-${{ env.PRODUCT }}-ui-${{ env.ENVIRONMENT }}-${{ vars.VERSION }} \
-            --settings \
-            TZ='${{ vars.TIMEZONE }}' \
-            NODE_ENV='${{ vars.NODE_ENV }}' \
-            PORT='${{ vars.UI_PORT }}' \
-            WEBSITES_PORT='${{ vars.UI_PORT }}' \
-            SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
-            GOOGLE_ANALYTICS_ID='${{ secrets.GOOGLE_ANALYTICS_ID }}' \
-            GOOGLE_TAG_MANAGER_ID='${{ secrets.GOOGLE_TAG_MANAGER_ID }}' \
-            APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
-            APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
-            APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
-            API_KEY='${{ secrets.API_KEY }}'
-            APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
-            API_KEY='${{ secrets.API_KEY }}'
 
   # 4. Notification
   notify:
