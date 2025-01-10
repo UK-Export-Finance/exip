@@ -1,10 +1,4 @@
-import { Address } from '../address';
 import { SuccessResponse } from '../generic';
-
-export interface MappedOrdnanceSurveyAddress extends Address {
-  town?: string;
-  county?: string;
-}
 
 export interface OrdnanceSurveyAddress {
   ADDRESS: string;

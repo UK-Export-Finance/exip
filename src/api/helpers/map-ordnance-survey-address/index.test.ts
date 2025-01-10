@@ -2,7 +2,8 @@ import mapOrdnanceSurveyAddress from '.';
 import mockOrdnanceSurveyResponse from '../../test-mocks/mock-ordnance-survey-response';
 import { OrdnanceSurveyResponse } from '../../types';
 
-describe('mapOrdnanceSurveyAddress', () => {
+describe('api/helpers/map-ordnance-survey-address', () => {
+  const mockBuildingNumber = '100';
   const mockSubBuildingName = 'Mock sub building name';
   const mockOrganisationName = 'Mock organisation name';
   const mockBuildingName = 'Mock building name';
@@ -10,6 +11,7 @@ describe('mapOrdnanceSurveyAddress', () => {
   const mockAddressFullyPopulated: OrdnanceSurveyResponse = {
     DPA: {
       ...mockOrdnanceSurveyResponse.results[0].DPA,
+      BUILDING_NUMBER: mockBuildingNumber,
       SUB_BUILDING_NAME: mockSubBuildingName,
       ORGANISATION_NAME: mockOrganisationName,
       BUILDING_NAME: mockBuildingName,
@@ -28,7 +30,7 @@ describe('mapOrdnanceSurveyAddress', () => {
 
       const expected = {
         ...expectedBase,
-        addressLine1: `${mockSubBuildingName} ${mockOrganisationName} ${mockBuildingName}`,
+        addressLine1: `${mockBuildingNumber} ${mockSubBuildingName} ${mockOrganisationName} ${mockBuildingName}`,
         addressLine2: mockAddressFullyPopulated.DPA.THOROUGHFARE_NAME,
       };
 
@@ -41,6 +43,7 @@ describe('mapOrdnanceSurveyAddress', () => {
       const mockAddress = {
         DPA: {
           ...mockAddressFullyPopulated.DPA,
+          BUILDING_NUMBER: '',
           ORGANISATION_NAME: '',
           BUILDING_NAME: '',
         },
@@ -63,6 +66,7 @@ describe('mapOrdnanceSurveyAddress', () => {
       const mockAddress = {
         DPA: {
           ...mockAddressFullyPopulated.DPA,
+          BUILDING_NUMBER: '',
           SUB_BUILDING_NAME: '',
           BUILDING_NAME: '',
         },
@@ -85,6 +89,7 @@ describe('mapOrdnanceSurveyAddress', () => {
       const mockAddress = {
         DPA: {
           ...mockAddressFullyPopulated.DPA,
+          BUILDING_NUMBER: '',
           SUB_BUILDING_NAME: '',
           ORGANISATION_NAME: '',
         },

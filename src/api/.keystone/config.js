@@ -9510,29 +9510,45 @@ var ordnance_survey_default = ordnanceSurvey;
 var import_postcode_validator = require('postcode-validator');
 var isValidPostcode = (postcode) => (0, import_postcode_validator.postcodeValidator)(postcode, 'GB');
 
+// helpers/filter-ordnance-survey-addresses/index.ts
+var filterOrdnanceSurveyAddresses = (addresses, houseNameOrNumber) => {
+  const filtered = addresses.filter((address) => {
+    if (address.DPA.SUB_BUILDING_NAME && address.DPA.SUB_BUILDING_NAME.includes(houseNameOrNumber)) {
+      return address;
+    }
+    if (address.DPA.BUILDING_NAME && address.DPA.BUILDING_NAME.includes(houseNameOrNumber)) {
+      return address;
+    }
+    if (address.DPA.ORGANISATION_NAME && address.DPA.ORGANISATION_NAME.includes(houseNameOrNumber)) {
+      return address;
+    }
+    if (address.DPA.BUILDING_NUMBER && address.DPA.BUILDING_NUMBER.includes(houseNameOrNumber)) {
+      return address;
+    }
+    return null;
+  });
+  return filtered;
+};
+var filter_ordnance_survey_addresses_default = filterOrdnanceSurveyAddresses;
+
 // helpers/map-ordnance-survey-address/index.ts
 var mapOrdnanceSurveyAddress = (address) => {
   let addressLine1 = '';
+  if (address.DPA.BUILDING_NUMBER) {
+    addressLine1 = `${address.DPA.BUILDING_NUMBER} `;
+  }
   if (address.DPA.SUB_BUILDING_NAME) {
-    addressLine1 = address.DPA.SUB_BUILDING_NAME;
+    addressLine1 += `${address.DPA.SUB_BUILDING_NAME} `;
   }
   if (address.DPA.ORGANISATION_NAME) {
-    if (addressLine1) {
-      addressLine1 += ` ${address.DPA.ORGANISATION_NAME}`;
-    } else {
-      addressLine1 = address.DPA.ORGANISATION_NAME;
-    }
+    addressLine1 += `${address.DPA.ORGANISATION_NAME} `;
   }
   if (address.DPA.BUILDING_NAME) {
-    if (addressLine1) {
-      addressLine1 += ` ${address.DPA.BUILDING_NAME}`;
-    } else {
-      addressLine1 = address.DPA.BUILDING_NAME;
-    }
+    addressLine1 += `${address.DPA.BUILDING_NAME} `;
   }
   const county = '';
   return {
-    addressLine1,
+    addressLine1: addressLine1.trim(),
     addressLine2: address.DPA.THOROUGHFARE_NAME,
     town: address.DPA.POST_TOWN,
     county,
@@ -9542,22 +9558,12 @@ var mapOrdnanceSurveyAddress = (address) => {
 var map_ordnance_survey_address_default = mapOrdnanceSurveyAddress;
 
 // helpers/map-and-filter-ordnance-survey-addresses/index.ts
-var mapAndFilterOrdnanceSurveyAddresses = (houseNameOrNumber, ordnanceSurveyResponse) => {
+var mapAndFilterOrdnanceSurveyAddresses = (ordnanceSurveyResponse, houseNameOrNumber) => {
   try {
     console.info('Mapping and filtering Ordnance Survey addresses');
-    const mappedAndFiltered = [];
-    ordnanceSurveyResponse.forEach((address) => {
-      if (address.DPA.SUB_BUILDING_NAME && address.DPA.SUB_BUILDING_NAME.includes(houseNameOrNumber)) {
-        mappedAndFiltered.push(map_ordnance_survey_address_default(address));
-      }
-      if (address.DPA.BUILDING_NAME && address.DPA.BUILDING_NAME.includes(houseNameOrNumber)) {
-        mappedAndFiltered.push(map_ordnance_survey_address_default(address));
-      }
-      if (address.DPA.BUILDING_NUMBER && address.DPA.BUILDING_NUMBER.includes(houseNameOrNumber)) {
-        mappedAndFiltered.push(map_ordnance_survey_address_default(address));
-      }
-    });
-    return mappedAndFiltered;
+    const filtered = filter_ordnance_survey_addresses_default(ordnanceSurveyResponse, houseNameOrNumber);
+    const mapped = filtered.map((address) => map_ordnance_survey_address_default(address));
+    return mapped;
   } catch (error) {
     console.error('Error mapping and filtering Ordnance Survey addresses %o', error);
     throw new Error(`Mapping and filtering Ordnance Survey addresses ${error}`);
@@ -9584,7 +9590,8 @@ var getOrdnanceSurveyAddresses = async (root, variables) => {
         success: false,
       };
     }
-    const mappedAddresses = map_and_filter_ordnance_survey_addresses_default(houseNameOrNumber, response.data);
+    const uppercaseHouseNameOrNumber = houseNameOrNumber.toUpperCase();
+    const mappedAddresses = map_and_filter_ordnance_survey_addresses_default(response.data, uppercaseHouseNameOrNumber);
     if (!mappedAddresses.length) {
       return {
         success: false,

@@ -15,12 +15,12 @@ describe('getOrdnanceSurveyAddresses', () => {
 
   const { postcode, houseNameOrNumber } = MOCK_OS_ADDRESS_INPUT;
 
-  describe('when ordnance survey API returns success as false', () => {
+  describe('when ordnance survey API returns success=false', () => {
     beforeEach(() => {
       ordnanceSurvey.get = jest.fn(() => Promise.resolve({ success: false }));
     });
 
-    it('should return object containing success as false', async () => {
+    it('should return object containing success=false', async () => {
       const response = await getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber });
 
       const expected = { success: false };
@@ -29,36 +29,22 @@ describe('getOrdnanceSurveyAddresses', () => {
     });
   });
 
-  describe('when ordnance survey API returns empty data object', () => {
+  describe('when ordnance survey API returns an empty data object', () => {
     beforeEach(() => {
       ordnanceSurvey.get = jest.fn(() => Promise.resolve({ success: true, data: undefined }));
     });
 
-    it('should return object containing success as false', async () => {
+    it('should return object containing success=false', async () => {
       const response = await getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber });
 
       const expected = { success: false };
-
-      expect(response).toEqual(expected);
-    });
-  });
-
-  describe('when ordnanceSurvey API is down', () => {
-    beforeEach(() => {
-      ordnanceSurvey.get = mockSpyPromiseRejection;
-    });
-
-    it('should return object containing success as false and apiError as true', async () => {
-      const response = await getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber });
-
-      const expected = { success: false, apiError: true };
 
       expect(response).toEqual(expected);
     });
   });
 
   describe('when the postcode is invalid', () => {
-    it('should return object containing success as false and invalidPostcode as true', async () => {
+    it('should return object containing success=false and invalidPostcode=true', async () => {
       const response = await getOrdnanceSurveyAddress({}, { postcode: 'S', houseNameOrNumber });
 
       const expected = { success: false, invalidPostcode: true };
@@ -74,25 +60,39 @@ describe('getOrdnanceSurveyAddresses', () => {
       ordnanceSurvey.get = jest.fn(() => Promise.resolve({ success: true, data: ordnanceSurveyResponse }));
     });
 
-    it('should return an object containing success as true and mapped addresses', async () => {
+    it('should return an object containing success=true and mapped addresses', async () => {
       const response = await getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber });
 
       const expected = {
         success: true,
-        addresses: mapAndFilterOrdnanceSurveyAddresses(houseNameOrNumber, mockOrdnanceSurveyResponse.results),
+        addresses: mapAndFilterOrdnanceSurveyAddresses(mockOrdnanceSurveyResponse.results, houseNameOrNumber),
       };
 
       expect(response).toEqual(expected);
     });
 
     describe('when no addresses are found', () => {
-      it('should return an object containing success as false and noAddressesFound as true', async () => {
+      it('should return an object containing success=false and noAddressesFound=true', async () => {
         const response = await getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber: 'NOT FOUND' });
 
         const expected = { success: false, noAddressesFound: true };
 
         expect(response).toEqual(expected);
       });
+    });
+  });
+
+  describe('when ordnanceSurvey API throws an error', () => {
+    beforeEach(() => {
+      ordnanceSurvey.get = mockSpyPromiseRejection;
+    });
+
+    it('should return object containing success=false and apiError=true', async () => {
+      const response = await getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber });
+
+      const expected = { success: false, apiError: true };
+
+      expect(response).toEqual(expected);
     });
   });
 });
