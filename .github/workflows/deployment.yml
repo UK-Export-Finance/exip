@@ -36,7 +36,7 @@ on:
     paths:
       - 'src/**'
       - 'database/**'
-      - '.github/workflows/**'
+      - '.github/**'
 
 env:
   PRODUCT: exip
