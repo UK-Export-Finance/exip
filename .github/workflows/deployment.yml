@@ -18,7 +18,7 @@
 # 2. Any modifications to atleast one of the `paths` targets.
 
 name: Deployment˙˙
-run-name: 🚀 Deploying to ${{ github.ref_name }}
+run-name: 🚀 Deploying from ${{ github.ref_name }}
 
 on:
   schedule:
@@ -59,14 +59,12 @@ jobs:
         run: |
           if [[ "${{ env.ENVIRONMENT }}" == "feat/EMS-4098-deployment-pipeline" ]]; then
             echo "environment=dev" >> "$GITHUB_OUTPUT"
+          else
+            echo "environment=${{ env.ENVIRONMENT }}" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Timezone 🌐
-        run: |
-          echo "Timezone set to ${{ env.TIMEZONE }}"
-          echo "Env is ${{ steps.environment }}"
-          echo "Env is ${{ steps.environment.outputs }}"
-          echo "Env is ${{ steps.environment.outputs.environment }}"
+        run: echo "Timezone set to ${{ env.TIMEZONE }}"
 
   # 2. Database schema migration
   database:
