@@ -1,7 +1,7 @@
-import { APPLICATION } from '../../../../../../../constants';
+import { APPLICATION, VALID_POSTCODES } from '../../../../../../../constants';
 
 context(
-  'Insurance - submit an application - Multiple policy type with a broker - based in UK - As an Exporter, I want to submit my completed credit insurance application, So that UKEF can process and make a decision on my application',
+  'Insurance - submit an application - Multiple policy type with a broker - based in UK - Building as a number - As an Exporter, I want to submit my completed credit insurance application, So that UKEF can process and make a decision on my application',
   () => {
     let referenceNumber;
 
@@ -10,6 +10,8 @@ context(
         policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
         usingBroker: true,
         brokerIsBasedInUk: true,
+        brokerPostcode: VALID_POSTCODES.WITH_SPACE,
+        brokerBuildingNumberOrName: '1',
       }).then((refNumber) => {
         referenceNumber = refNumber;
       });
