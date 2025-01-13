@@ -9546,9 +9546,10 @@ var mapOrdnanceSurveyAddress = (address) => {
   if (address.DPA.BUILDING_NAME) {
     addressLine1 += `${address.DPA.BUILDING_NAME} `;
   }
+  addressLine1 = addressLine1.trim();
   const county = '';
   return {
-    addressLine1: addressLine1.trim(),
+    addressLine1,
     addressLine2: address.DPA.THOROUGHFARE_NAME,
     town: address.DPA.POST_TOWN,
     county,
@@ -9610,11 +9611,8 @@ var getOrdnanceSurveyAddresses = async (root, variables) => {
       success: true,
     };
   } catch (error) {
-    console.error('Error getting Ordnance Survey addresses results %o', error);
-    return {
-      apiError: true,
-      success: false,
-    };
+    console.error('Error getting Ordnance Survey addresses %o', error);
+    throw new Error(`Getting Ordnance Survey addresses ${error}`);
   }
 };
 var get_ordnance_survey_addresses_default = getOrdnanceSurveyAddresses;

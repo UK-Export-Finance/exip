@@ -60,7 +60,7 @@ describe('api/helpers/filter-ordnance-survey-addresses', () => {
     });
   });
 
-  describe('when no address is found', () => {
+  describe('when no address has a matching sub string', () => {
     it('should return an empty array', () => {
       const substring = 'mock sub string';
 

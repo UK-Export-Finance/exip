@@ -87,12 +87,8 @@ describe('getOrdnanceSurveyAddresses', () => {
       ordnanceSurvey.get = mockSpyPromiseRejection;
     });
 
-    it('should return object containing success=false and apiError=true', async () => {
-      const response = await getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber });
-
-      const expected = { success: false, apiError: true };
-
-      expect(response).toEqual(expected);
+    it('should throw an error', async () => {
+      await expect(getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber })).rejects.toThrow('Getting Ordnance Survey addresses');
     });
   });
 });

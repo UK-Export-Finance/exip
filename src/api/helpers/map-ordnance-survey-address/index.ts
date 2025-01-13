@@ -37,6 +37,12 @@ const mapOrdnanceSurveyAddress = (address: OrdnanceSurveyAddress): Address => {
   }
 
   /**
+   * Trim the first address line.
+   * Otherwise, it will contain an empty space.
+   */
+  addressLine1 = addressLine1.trim();
+
+  /**
    * NOTE: Ordnance Survey does not return county data.
    * Therefore this should be set to an empty string,
    * to avoid any null/mapping/type issues.
@@ -44,7 +50,7 @@ const mapOrdnanceSurveyAddress = (address: OrdnanceSurveyAddress): Address => {
   const county = '';
 
   return {
-    addressLine1: addressLine1.trim(),
+    addressLine1,
     addressLine2: address.DPA.THOROUGHFARE_NAME,
     town: address.DPA.POST_TOWN,
     county,
