@@ -20,7 +20,7 @@ const {
 const {
   PROBLEM_WITH_SERVICE,
   INSURANCE_ROOT,
-  POLICY: { LOSS_PAYEE_ROOT, BROKER_MANUAL_ADDRESS_SAVE_AND_BACK },
+  POLICY: { LOSS_PAYEE_ROOT, BROKER_MANUAL_ADDRESS_CHANGE, BROKER_MANUAL_ADDRESS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const { broker } = mockApplication;
@@ -141,6 +141,17 @@ describe('controllers/insurance/policy/broker-manual-address', () => {
         expect(mapAndSave.broker).toHaveBeenCalledTimes(1);
 
         expect(mapAndSave.broker).toHaveBeenCalledWith(payload, mockApplication);
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.originalUrl = BROKER_MANUAL_ADDRESS_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
 
       it(`should redirect to ${LOSS_PAYEE_ROOT}`, () => {
