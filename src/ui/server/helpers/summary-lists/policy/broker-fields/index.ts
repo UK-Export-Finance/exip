@@ -49,15 +49,6 @@ export const optionalBrokerFields = (answers: ApplicationBroker, referenceNumber
         renderChangeLink: true,
       }),
       brokerAddressField(answers, referenceNumber, checkAndChange),
-      // fieldGroupItem(
-      //   {
-      //     field: getFieldById(POLICY_FIELDS.BROKER_DETAILS, FULL_ADDRESS),
-      //     data: answers,
-      //     href: generateChangeLink(BROKER_DETAILS_CHANGE, BROKER_DETAILS_CHECK_AND_CHANGE, `#${FULL_ADDRESS}-label`, referenceNumber, checkAndChange),
-      //     renderChangeLink: true,
-      //   },
-      //   replaceNewLineWithLineBreak(answers[FULL_ADDRESS]),
-      // ),
       fieldGroupItem({
         field: getFieldById(POLICY_FIELDS.BROKER_DETAILS, EMAIL),
         data: answers,
