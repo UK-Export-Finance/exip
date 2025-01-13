@@ -26,7 +26,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 const field = fieldSelector(FIELD_ID);
 
-const optionValue = 'H M TREASURY HORSE GUARDS ROAD';
+const optionValue = '1 H M TREASURY HORSE GUARDS ROAD';
 
 const optionDataCy = `${FIELD_ID}-${optionValue}`;
 
