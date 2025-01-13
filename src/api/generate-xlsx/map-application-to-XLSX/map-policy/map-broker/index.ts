@@ -2,11 +2,12 @@ import { POLICY as FIELD_IDS } from '../../../../constants/field-ids/insurance/p
 import { XLSX } from '../../../../content-strings';
 import xlsxRow from '../../helpers/xlsx-row';
 import mapYesNoField from '../../helpers/map-yes-no-field';
+import mapBrokerAddress from './map-broker-address';
 import { Application } from '../../../../types';
 
 const {
   USING_BROKER,
-  BROKER_DETAILS: { NAME: BROKER_NAME, EMAIL, FULL_ADDRESS },
+  BROKER_DETAILS: { NAME: BROKER_NAME, EMAIL },
 } = FIELD_IDS;
 
 const { FIELDS } = XLSX;
@@ -23,12 +24,7 @@ const mapBroker = (application: Application) => {
   let mapped = [xlsxRow(String(FIELDS[USING_BROKER]), mapYesNoField({ answer: broker[USING_BROKER] }))];
 
   if (broker[USING_BROKER]) {
-    mapped = [
-      ...mapped,
-      xlsxRow(String(FIELDS[BROKER_NAME]), broker[BROKER_NAME]),
-      xlsxRow(String(FIELDS[EMAIL]), broker[EMAIL]),
-      xlsxRow(String(FIELDS[FULL_ADDRESS]), broker[FULL_ADDRESS]),
-    ];
+    mapped = [...mapped, xlsxRow(String(FIELDS[BROKER_NAME]), broker[BROKER_NAME]), xlsxRow(String(FIELDS[EMAIL]), broker[EMAIL]), mapBrokerAddress(broker)];
   }
 
   return mapped;
