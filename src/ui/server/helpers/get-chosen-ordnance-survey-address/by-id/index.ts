@@ -1,14 +1,14 @@
-import { MappedOrdnanceSurveyAddress, ObjectType } from '../../../types';
+import { MappedOrdnanceSurveyAddress, ObjectType } from '../../../../types';
 
 /**
- * getChosenOrdnanceSurveyAddress
- * Get a chosen Ordnance Survey address from the provided params.
+ * getOrdnanceSurveyAddressById
+ * Get a chosen Ordnance Survey address by ID
  * @param {ObjectType} payload: Form body payload
  * @param {String} fieldId: Field ID
  * @param {Array<MappedOrdnanceSurveyAddress>} addresses: Mapped Ordnance Survey addressess
  * @returns {MappedOrdnanceSurveyAddress}
  */
-const getChosenOrdnanceSurveyAddress = (payload: ObjectType, fieldId: string, addresses: Array<MappedOrdnanceSurveyAddress>): MappedOrdnanceSurveyAddress => {
+const getOrdnanceSurveyAddressById = (payload: ObjectType, fieldId: string, addresses: Array<MappedOrdnanceSurveyAddress>): MappedOrdnanceSurveyAddress => {
   const answer = payload[fieldId];
 
   if (addresses[answer]) {
@@ -24,4 +24,4 @@ const getChosenOrdnanceSurveyAddress = (payload: ObjectType, fieldId: string, ad
   return {};
 };
 
-export default getChosenOrdnanceSurveyAddress;
+export default getOrdnanceSurveyAddressById;

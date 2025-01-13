@@ -2,7 +2,7 @@ import { post } from '.';
 import { ROUTES } from '../../../../../constants';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
-import getChosenOrdnanceSurveyAddress from '../../../../../helpers/get-chosen-ordnance-survey-address';
+import getOrdnanceSurveyAddressById from '../../../../../helpers/get-chosen-ordnance-survey-address/by-id';
 import mapAndSave from '../../map-and-save/broker';
 import { FIELD_ID, ERROR_MESSAGE } from '..';
 import api from '../../../../../api';
@@ -52,7 +52,7 @@ describe('controllers/insurance/policy/broker-addresses/save-and-back', () => {
     it('should call mapAndSave.broker once with address data', () => {
       const payload = constructPayload(req.body, [FIELD_ID]);
 
-      const chosenAddress = getChosenOrdnanceSurveyAddress(payload, FIELD_ID, mockOrdnanceSurveyAddressResponse.addresses);
+      const chosenAddress = getOrdnanceSurveyAddressById(payload, FIELD_ID, mockOrdnanceSurveyAddressResponse.addresses);
 
       const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
 
