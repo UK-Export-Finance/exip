@@ -9,7 +9,8 @@ const {
 
 const {
   USING_BROKER,
-  BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
+  BROKER_DETAILS: { NAME, EMAIL },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -56,8 +57,7 @@ context('Insurance - Check your answers - Policy - Single contract policy - With
     checkSummaryList.BROKER[NAME]({});
   });
 
-  // TODO: EMS-3976
-  it.skip(`should render a ${FULL_ADDRESS} summary list row`, () => {
+  it(`should render a ${FULL_ADDRESS} summary list row`, () => {
     checkSummaryList.BROKER[FULL_ADDRESS]();
   });
 
