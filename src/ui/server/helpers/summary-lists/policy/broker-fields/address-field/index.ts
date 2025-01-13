@@ -41,7 +41,6 @@ const brokerAddressField = (answers: ApplicationBroker, referenceNumber: number,
     href = generateChangeLink(changeRoute, checkAndChangeRoute, `#${SELECT_THE_ADDRESS}-label`, referenceNumber, checkAndChange);
   } else {
     field = getFieldById(POLICY_FIELDS.BROKER_MANUAL_ADDRESS, FULL_ADDRESS);
-    // fieldValue = replaceNewLineWithLineBreak(answers[FULL_ADDRESS]);
     fieldValue = answers[FULL_ADDRESS];
 
     changeRoute = BROKER_MANUAL_ADDRESS_CHANGE;
