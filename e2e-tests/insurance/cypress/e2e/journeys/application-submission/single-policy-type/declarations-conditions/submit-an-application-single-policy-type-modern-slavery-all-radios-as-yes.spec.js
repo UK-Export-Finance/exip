@@ -1,14 +1,11 @@
-import { APPLICATION } from '../../../../../../../constants';
-
-context('Insurance - submit an application, Multiple contract policy, modern slavery declaration - all radios as no', () => {
+context('Insurance - submit an application, Single contract policy, modern slavery declaration - all radios as no', () => {
   let referenceNumber;
 
   before(() => {
     cy.completeSignInAndSubmitAnApplication({
-      policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
-      willAdhereToAllRequirements: false,
-      hasNoOffensesOrInvestigations: false,
-      isNotAwareOfExistingSlavery: false,
+      willAdhereToAllRequirements: true,
+      hasNoOffensesOrInvestigations: true,
+      isNotAwareOfExistingSlavery: true,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });

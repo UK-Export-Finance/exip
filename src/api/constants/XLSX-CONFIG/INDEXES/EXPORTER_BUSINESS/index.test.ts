@@ -4,13 +4,15 @@ import { mockApplication } from '../../../../test-mocks';
 describe('api/constants/XLSX-CONFIG/INDEXES/EXPORT_BUSINESS', () => {
   describe('DEFAULT_INDEXES', () => {
     it('should return an object with indexes', () => {
+      const result = DEFAULT_INDEXES();
+
       const expected = {
         REGISTERED_OFFICE_ADDRESS: 3,
         COMPANY_SIC_CODES: 4,
         ALTERNATIVE_TRADING_ADDRESS: 0,
       };
 
-      expect(DEFAULT_INDEXES()).toEqual(expected);
+      expect(result).toEqual(expected);
     });
   });
 

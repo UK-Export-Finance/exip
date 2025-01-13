@@ -3,9 +3,9 @@ context('Insurance - submit an application, Single contract policy, modern slave
 
   before(() => {
     cy.completeSignInAndSubmitAnApplication({
+      willAdhereToAllRequirements: false,
+      hasNoOffensesOrInvestigations: false,
       isNotAwareOfExistingSlavery: false,
-      cannotAdhereToAllRequirements: false,
-      offensesOrInvestigations: false,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });
