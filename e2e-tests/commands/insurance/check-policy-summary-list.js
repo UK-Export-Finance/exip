@@ -28,6 +28,7 @@ const {
     NAME_ON_POLICY: { NAME, POSITION },
     USING_BROKER,
     BROKER_DETAILS,
+    BROKER_ADDRESSES,
     REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
     LOSS_PAYEE: { IS_APPOINTED: LOSS_PAYEE_IS_APPOINTED },
     LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME },
@@ -231,22 +232,21 @@ const checkPolicySummaryList = {
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
-    // TODO: EMS-4011
-    // [BROKER_DETAILS.FULL_ADDRESS]: () => {
-    //   const fieldId = BROKER_DETAILS.FULL_ADDRESS;
+    [BROKER_ADDRESSES.SELECT_THE_ADDRESS]: () => {
+      const fieldId = BROKER_ADDRESSES.SELECT_THE_ADDRESS;
 
-    //   const expectedKey = FIELDS.BROKER_DETAILS[fieldId].SUMMARY.TITLE;
+      const expectedKey = FIELDS.BROKER_ADDRESSES[fieldId].SUMMARY.TITLE;
 
-    //   const row = summaryList.field(fieldId);
+      const row = summaryList.field(fieldId);
 
-    //   cy.checkText(row.key(), expectedKey);
+      cy.checkText(row.key(), expectedKey);
 
-    //   row.value().contains(EXPECTED_SINGLE_LINE_STRING);
+      row.value().contains(EXPECTED_SINGLE_LINE_STRING);
 
-    //   const expectedLineBreaks = 3;
+      const expectedLineBreaks = 3;
 
-    //   cy.assertLength(row.valueHtmlLineBreak(), expectedLineBreaks);
-    // },
+      cy.assertLength(row.valueHtmlLineBreak(), expectedLineBreaks);
+    },
     [BROKER_DETAILS.EMAIL]: () => {
       const fieldId = BROKER_DETAILS.NAME;
 
