@@ -29,6 +29,7 @@ const {
     USING_BROKER,
     BROKER_DETAILS,
     BROKER_ADDRESSES,
+    BROKER_MANUAL_ADDRESS,
     REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
     LOSS_PAYEE: { IS_APPOINTED: LOSS_PAYEE_IS_APPOINTED },
     LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME },
@@ -246,6 +247,15 @@ const checkPolicySummaryList = {
       const expectedLineBreaks = 3;
 
       cy.assertLength(row.valueHtmlLineBreak(), expectedLineBreaks);
+    },
+    [BROKER_MANUAL_ADDRESS.FULL_ADDRESS]: () => {
+      const fieldId = BROKER_MANUAL_ADDRESS.FULL_ADDRESS;
+
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.BROKER_MANUAL_ADDRESS);
+
+      const expectedValue = application.BROKER[fieldId];
+
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
     [BROKER_DETAILS.EMAIL]: () => {
       const fieldId = BROKER_DETAILS.NAME;
