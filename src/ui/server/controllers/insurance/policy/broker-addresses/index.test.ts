@@ -23,7 +23,15 @@ const {
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  POLICY: { BROKER_ADDRESSES_SAVE_AND_BACK, BROKER_DETAILS_ROOT, BROKER_ZERO_ADDRESSES_ROOT, BROKER_CONFIRM_ADDRESS_ROOT, BROKER_MANUAL_ADDRESS_ROOT },
+  POLICY: {
+    BROKER_ADDRESSES_SAVE_AND_BACK,
+    BROKER_DETAILS_ROOT,
+    BROKER_ZERO_ADDRESSES_ROOT,
+    BROKER_CONFIRM_ADDRESS_ROOT,
+    BROKER_MANUAL_ADDRESS_ROOT,
+    BROKER_ADDRESSES_CHANGE,
+    CHECK_YOUR_ANSWERS,
+  },
 } = INSURANCE_ROUTES;
 
 const { BROKER_ADDRESSES } = POLICY_FIELDS;
@@ -326,6 +334,17 @@ describe('controllers/insurance/policy/broker-addresses', () => {
         const chosenAddress = getChosenOrdnanceSurveyAddress(payload, FIELD_ID, mockOrdnanceSurveyAddressResponse.addresses);
 
         expect(mapAndSave.broker).toHaveBeenCalledWith(chosenAddress, mockApplication);
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.originalUrl = BROKER_ADDRESSES_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
 
       describe('api error handling', () => {

@@ -10,6 +10,10 @@ const mockBroker = {
   isBasedInUk: false,
   postcode: 'W1A 1AA',
   buildingNumberOrName: 'WOGAN HOUSE',
+  addressLine1: 'Mock broker address line 1',
+  addressLine2: 'Mock broker address line 2',
+  town: 'Mock broker town',
+  county: 'Mock broker county',
 };
 
 export default mockBroker;
