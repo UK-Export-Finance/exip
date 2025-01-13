@@ -15,7 +15,7 @@ const {
 
 const {
   ROOT,
-  POLICY: { BROKER_MANUAL_ADDRESS_ROOT, LOSS_PAYEE_ROOT },
+  POLICY: { BROKER_DETAILS_ROOT, BROKER_MANUAL_ADDRESS_ROOT, LOSS_PAYEE_ROOT },
 } = INSURANCE_ROUTES;
 
 const { BROKER_MANUAL_ADDRESS: FIELD_STRINGS } = FIELDS;
@@ -34,13 +34,10 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'brokerDetails', usingBroker: true });
+        cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'brokerDetails', usingBroker: true, isBasedInUk: false });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
         lossPayeeUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
-
-        // TODO: EMS-3973 - remove this
-        cy.navigateToUrl(url);
 
         cy.assertUrl(url);
       });
@@ -58,7 +55,7 @@ context(
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: `${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`,
-        backLink: `${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}#`,
+        backLink: `${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
       });
     });
 
