@@ -18,7 +18,7 @@ const { NAME, EMAIL, IS_BASED_IN_UK, POSTCODE, BUILDING_NUMBER_OR_NAME } = POLIC
 
 const {
   INSURANCE_ROOT,
-  POLICY: { BROKER_DETAILS_SAVE_AND_BACK, BROKER_ADDRESSES_ROOT, BROKER_MANUAL_ADDRESS_ROOT, CHECK_YOUR_ANSWERS },
+  POLICY: { BROKER_DETAILS_SAVE_AND_BACK, BROKER_ADDRESSES_ROOT, BROKER_ADDRESSES_CHANGE, BROKER_MANUAL_ADDRESS_ROOT, BROKER_MANUAL_ADDRESS_CHANGE },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -146,18 +146,43 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    if (isChangeRoute(req.originalUrl)) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
-    }
-
-    if (isCheckAndChangeRoute(req.originalUrl)) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
-    }
-
     const isBasedInUk = payload[IS_BASED_IN_UK] === 'true';
+    const isNotBasedInUk = payload[IS_BASED_IN_UK] === 'false';
 
+    /**
+     * If broker IS_BASED_IN_UK is true,
+     * and is a change route, redirect to BROKER_ADDRESSES_CHANGE.
+     * * or is a check-and-change route, redirect to CHECK_AND_CHANGE_ROUTE.
+     * Otherwise, redirect to BROKER_ADDRESSES.
+     */
     if (isBasedInUk) {
+      if (isChangeRoute(req.originalUrl)) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ADDRESSES_CHANGE}`);
+      }
+
+      if (isCheckAndChangeRoute(req.originalUrl)) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
+      }
+
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ADDRESSES_ROOT}`);
+    }
+
+    /**
+     * If broker IS_BASED_IN_UK is false,
+     * and is a change route, redirect to BROKER_MANUAL_ADDRESS_CHANGE.
+     * or is a check-and-change route, redirect to CHECK_AND_CHANGE_ROUTE.
+     * Otherwise, redirect to BROKER_MANUAL_ADDRESS.
+     */
+    if (isNotBasedInUk) {
+      if (isChangeRoute(req.originalUrl)) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_CHANGE}`);
+      }
+
+      if (isCheckAndChangeRoute(req.originalUrl)) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
+      }
+
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`);

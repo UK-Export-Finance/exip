@@ -58,7 +58,7 @@ context('Insurance - Check your answers - Policy - Multiple contract policy - Wi
   });
 
   it(`should render a ${FULL_ADDRESS} summary list row`, () => {
-    checkSummaryList.BROKER[FULL_ADDRESS]();
+    checkSummaryList.BROKER[FULL_ADDRESS]({});
   });
 
   it(`should render a ${EMAIL} summary list row`, () => {

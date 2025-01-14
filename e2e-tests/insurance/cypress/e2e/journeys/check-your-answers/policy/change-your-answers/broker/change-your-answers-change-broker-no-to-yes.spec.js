@@ -81,7 +81,7 @@ context('Insurance - Change your answers - Policy - Broker - No to yes - As an e
       checkSummaryList.BROKER[NAME]({});
 
       // TODO: EMS-3975
-      // checkSummaryList.BROKER[FULL_ADDRESS]();
+      // checkSummaryList.BROKER[FULL_ADDRESS]({});
 
       checkSummaryList.BROKER[EMAIL]();
     });

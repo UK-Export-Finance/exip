@@ -21,10 +21,11 @@ const {
   POLICY: {
     BROKER_DETAILS_SAVE_AND_BACK,
     BROKER_ADDRESSES_ROOT,
+    BROKER_ADDRESSES_CHANGE,
     BROKER_MANUAL_ADDRESS_ROOT,
+    BROKER_MANUAL_ADDRESS_CHANGE,
     BROKER_DETAILS_CHANGE,
     BROKER_DETAILS_CHECK_AND_CHANGE,
-    CHECK_YOUR_ANSWERS,
   },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
@@ -226,30 +227,75 @@ describe('controllers/insurance/policy/broker-details', () => {
         expect(mapAndSave.broker).toHaveBeenCalledWith(payload, mockApplication);
       });
 
-      describe("when the url's last substring is `change`", () => {
-        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-          req.body = validBody.notBasedInUk;
+      describe(`when ${IS_BASED_IN_UK} is true`, () => {
+        beforeEach(() => {
+          req.body = validBody.basedInUk;
+        });
 
-          req.originalUrl = BROKER_DETAILS_CHANGE;
-
+        it(`should redirect to ${BROKER_ADDRESSES_ROOT}`, async () => {
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ADDRESSES_ROOT}`;
           expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+
+        describe("when the url's last substring is `change`", () => {
+          it(`should redirect to ${BROKER_ADDRESSES_CHANGE}`, async () => {
+            req.originalUrl = BROKER_DETAILS_CHANGE;
+
+            await post(req, res);
+
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ADDRESSES_CHANGE}`;
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
+        });
+
+        describe("when the url's last substring is `check-and-change`", () => {
+          it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+            req.originalUrl = BROKER_DETAILS_CHECK_AND_CHANGE;
+
+            await post(req, res);
+
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
         });
       });
 
-      describe("when the url's last substring is `check-and-change`", () => {
-        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+      describe(`when ${IS_BASED_IN_UK} is false`, () => {
+        beforeEach(() => {
           req.body = validBody.notBasedInUk;
+        });
 
-          req.originalUrl = BROKER_DETAILS_CHECK_AND_CHANGE;
-
+        it(`should redirect to ${BROKER_MANUAL_ADDRESS_ROOT}`, async () => {
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
-
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
           expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+
+        describe("when the url's last substring is `change`", () => {
+          it(`should redirect to ${BROKER_MANUAL_ADDRESS_CHANGE}`, async () => {
+            req.originalUrl = BROKER_DETAILS_CHANGE;
+
+            await post(req, res);
+
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_CHANGE}`;
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
+        });
+
+        describe("when the url's last substring is `check-and-change`", () => {
+          it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+            req.originalUrl = BROKER_DETAILS_CHECK_AND_CHANGE;
+
+            await post(req, res);
+
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
         });
       });
     });

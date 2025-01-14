@@ -233,29 +233,37 @@ const checkPolicySummaryList = {
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
-    [BROKER_ADDRESSES.SELECT_THE_ADDRESS]: () => {
+    [BROKER_ADDRESSES.SELECT_THE_ADDRESS]: ({ shouldRender = true }) => {
       const fieldId = BROKER_ADDRESSES.SELECT_THE_ADDRESS;
 
-      const expectedKey = FIELDS.BROKER_ADDRESSES[fieldId].SUMMARY.TITLE;
+      if (shouldRender) {
+        const expectedKey = FIELDS.BROKER_ADDRESSES[fieldId].SUMMARY.TITLE;
 
-      const row = summaryList.field(fieldId);
+        const row = summaryList.field(fieldId);
 
-      cy.checkText(row.key(), expectedKey);
+        cy.checkText(row.key(), expectedKey);
 
-      row.value().contains(EXPECTED_SINGLE_LINE_STRING);
+        row.value().contains(EXPECTED_SINGLE_LINE_STRING);
 
-      const expectedLineBreaks = 3;
+        const expectedLineBreaks = 3;
 
-      cy.assertLength(row.valueHtmlLineBreak(), expectedLineBreaks);
+        cy.assertLength(row.valueHtmlLineBreak(), expectedLineBreaks);
+      } else {
+        cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+      }
     },
-    [BROKER_MANUAL_ADDRESS.FULL_ADDRESS]: () => {
+    [BROKER_MANUAL_ADDRESS.FULL_ADDRESS]: ({ shouldRender = true }) => {
       const fieldId = BROKER_MANUAL_ADDRESS.FULL_ADDRESS;
 
-      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.BROKER_MANUAL_ADDRESS);
+      if (shouldRender) {
+        const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.BROKER_MANUAL_ADDRESS);
 
-      const expectedValue = application.BROKER[fieldId];
+        const expectedValue = application.BROKER[fieldId];
 
-      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+        cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+      } else {
+        cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+      }
     },
     [BROKER_DETAILS.EMAIL]: () => {
       const fieldId = BROKER_DETAILS.NAME;
