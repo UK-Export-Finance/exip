@@ -15,7 +15,7 @@ const application = {
     try {
       console.info('Sending application submitted email to application owner or provided business contact');
 
-      const templateId = await getSubmittedConfirmationTemplateId(policy);
+      const templateId = getSubmittedConfirmationTemplateId(policy);
 
       const { emailAddress } = variables;
 
