@@ -1,6 +1,9 @@
 export const QUOTE_ROUTES = {
   START: '/',
 
+  // TODO
+  // TODOa
+  // TODO: rename to TYPE_OF_BUYER
   BUYER_BODY: '/quote/type-of-buyer',
 
   BUYER_COUNTRY: '/quote/buyer-country',
@@ -23,6 +26,8 @@ export const QUOTE_ROUTES = {
   CANNOT_APPLY_EXIT: '/quote/cannot-apply',
 
   GET_A_QUOTE_BY_EMAIL: '/quote/get-quote-by-email',
+
+  TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT: '/quote/talk-to-an-export-finance-manager',
 
   YOUR_QUOTE: '/quote/your-quote',
 

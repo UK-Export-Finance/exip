@@ -5,7 +5,7 @@ export const AGO = {
 
 export const ARG = {
   NAME: 'Argentina',
-  ISO_CODE: 'AGO',
+  ISO_CODE: 'ARG',
 };
 
 export const BLZ = {
@@ -86,6 +86,11 @@ const NOT_SUPPORTED_4 = NCL;
 export const COUNTRY_QUOTE_SUPPORT = {
   ONLINE_SUPPORT_1,
   NO_ONLINE_SUPPORT_1,
+  NO_ONLINE_SUPPORT_2,
+  NO_ONLINE_SUPPORT_3,
+  NO_ONLINE_SUPPORT_4,
+  NO_ONLINE_SUPPORT_5,
+  NO_ONLINE_SUPPORT_6,
   NOT_SUPPORTED_1,
 };
 

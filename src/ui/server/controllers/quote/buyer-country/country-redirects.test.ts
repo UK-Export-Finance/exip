@@ -124,24 +124,10 @@ describe('controllers/quote/buyer-country - redirects', () => {
         expect(req.session.submittedData.quoteEligibility).toEqual(expected);
       });
 
-      it('should add previousRoute, exitReason and exitDescription to req.flash', async () => {
+      it(`should redirect to ${ROUTES.QUOTE.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT}`, async () => {
         await post(req, res);
 
-        expect(mockFlash).toHaveBeenCalledTimes(3);
-
-        expect(mockFlash.mock.calls[0]).toEqual(['previousRoute', ROUTES.QUOTE.BUYER_COUNTRY]);
-
-        const { GET_A_QUOTE_BY_EMAIL } = PAGES.QUOTE;
-        const { REASON } = GET_A_QUOTE_BY_EMAIL;
-
-        expect(mockFlash.mock.calls[1]).toEqual(['exitReason', REASON.BUYER_COUNTRY]);
-        expect(mockFlash.mock.calls[2]).toEqual(['exitDescription', REASON.BUYER_COUNTRY_DESCRIPTION]);
-      });
-
-      it(`should redirect to ${ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT);
       });
     });
 

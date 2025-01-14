@@ -18,6 +18,7 @@ const {
   NEED_TO_START_AGAIN_EXIT,
   POLICY_TYPE,
   POLICY_TYPE_CHANGE,
+  TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT,
   TELL_US_ABOUT_YOUR_POLICY,
   TELL_US_ABOUT_YOUR_POLICY_CHANGE,
   YOUR_QUOTE,
@@ -117,14 +118,16 @@ export const requiredQuoteEligibilityDataProvided = (req: Request, res: Response
   const routesArray = getRoutesAsArray(ROUTES.QUOTE);
 
   // array of routes that do not require any data checks.
-  const irrelevantRoutes = [BUYER_COUNTRY, CANNOT_APPLY_EXIT, GET_A_QUOTE_BY_EMAIL, NEED_TO_START_AGAIN_EXIT, START];
+  const IRRELEVANT_ROUTES = [BUYER_COUNTRY, CANNOT_APPLY_EXIT, GET_A_QUOTE_BY_EMAIL, NEED_TO_START_AGAIN_EXIT, START, TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT];
 
-  const isIrrelevantRoute = (route: string) => irrelevantRoutes.includes(route);
+  const isIrrelevantRoute = (route: string) => IRRELEVANT_ROUTES.includes(route);
 
-  // do not run any data checks if the requested route is one of the following:
-  // is a route that does not require any data checks
-  // is 404 page
-  // or the request is not a GET request.
+  /**
+   * Do not run any data checks if the requested route is one of the following:
+   * - is a route that does not require any data checks
+   * - is 404 page
+   * - the request is not a GET request.
+   */
   if (isIrrelevantRoute(url) || !routeIsKnown(routesArray, url) || method !== 'GET') {
     return next();
   }

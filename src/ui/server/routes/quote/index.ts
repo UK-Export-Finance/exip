@@ -9,6 +9,7 @@ import { get as tellUsAboutYourPolicyGet, post as tellUsAboutYourPolicyPost } fr
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../controllers/quote/check-your-answers';
 import { get as cannotObtainCoverGet } from '../../controllers/quote/cannot-apply';
 import { get as getAQuoteByEmailGet } from '../../controllers/quote/get-a-quote-by-email';
+import { get as talkToEfmGet } from '../../controllers/quote/talk-to-an-export-finance-manager';
 import { get as yourQuoteGet } from '../../controllers/quote/your-quote';
 import { get as needToStartAgainGet, post as needToStartAgainPost } from '../../controllers/quote/need-to-start-again';
 
@@ -49,6 +50,7 @@ quoteRouter.post(ROUTES.QUOTE.CHECK_YOUR_ANSWERS, checkYourAnswersPost);
 quoteRouter.get(ROUTES.QUOTE.CANNOT_APPLY_EXIT, cannotObtainCoverGet);
 
 quoteRouter.get(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL, getAQuoteByEmailGet);
+quoteRouter.get(ROUTES.QUOTE.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT, talkToEfmGet);
 
 quoteRouter.get(ROUTES.QUOTE.YOUR_QUOTE, yourQuoteGet);
 

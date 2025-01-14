@@ -9,6 +9,7 @@ import { get as tellUsAboutYourPolicyGet, post as tellUsAboutYourPolicyPost } fr
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../controllers/quote/check-your-answers';
 import { get as cannotObtainCoverGet } from '../../controllers/quote/cannot-apply';
 import { get as getAQuoteByEmailGet } from '../../controllers/quote/get-a-quote-by-email';
+import { get as talkToEfmGet } from '../../controllers/quote/talk-to-an-export-finance-manager';
 import { get as yourQuoteGet } from '../../controllers/quote/your-quote';
 import { get as needToStartAgainGet, post as needToStartAgainPost } from '../../controllers/quote/need-to-start-again';
 
@@ -22,7 +23,7 @@ describe('routes/quote', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(16);
+    expect(get).toHaveBeenCalledTimes(17);
     expect(post).toHaveBeenCalledTimes(13);
 
     expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.BUYER_COUNTRY, buyerCountryGet);
@@ -59,6 +60,7 @@ describe('routes/quote', () => {
     expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_APPLY_EXIT, cannotObtainCoverGet);
 
     expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL, getAQuoteByEmailGet);
+    expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT, talkToEfmGet);
 
     expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.YOUR_QUOTE, yourQuoteGet);
 

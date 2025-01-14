@@ -14,6 +14,7 @@ export const completeAndSubmitBuyerCountryForm = ({ countryName = ONLINE_SUPPORT
   cy.keyboardInput(autoCompleteField(FIELD_ID).input(), countryName);
   const results = autoCompleteField(FIELD_ID).results();
   results.first().click();
+
   cy.clickSubmitButton();
 };
 
