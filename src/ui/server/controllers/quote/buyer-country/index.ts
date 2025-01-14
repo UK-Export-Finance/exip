@@ -136,7 +136,7 @@ export const post = async (req: Request, res: Response) => {
         return res.redirect(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
       }
 
-      return res.redirect(ROUTES.QUOTE.BUYER_BODY);
+      return res.redirect(ROUTES.QUOTE.TYPE_OF_BUYER);
     }
 
     /**

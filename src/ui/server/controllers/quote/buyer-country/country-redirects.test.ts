@@ -80,10 +80,10 @@ describe('controllers/quote/buyer-country - redirects', () => {
         expect(req.session.submittedData.quoteEligibility).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.QUOTE.BUYER_BODY}`, async () => {
+      it(`should redirect to ${ROUTES.QUOTE.TYPE_OF_BUYER}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.BUYER_BODY);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.TYPE_OF_BUYER);
       });
 
       describe("when the url's last substring is `change`", () => {

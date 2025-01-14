@@ -3,7 +3,7 @@ export const QUOTE_ROUTES = {
 
   ROOT: '/quote',
 
-  BUYER_BODY: '/quote/type-of-buyer',
+  TYPE_OF_BUYER: '/quote/type-of-buyer',
 
   BUYER_COUNTRY: '/quote/buyer-country',
   BUYER_COUNTRY_CHANGE: '/quote/buyer-country/change',

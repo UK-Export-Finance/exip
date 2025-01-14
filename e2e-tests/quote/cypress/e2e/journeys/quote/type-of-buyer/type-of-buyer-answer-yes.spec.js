@@ -4,15 +4,15 @@ import { PAGES, LINKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 
 const {
-  QUOTE: { BUYER_BODY, GET_A_QUOTE_BY_EMAIL },
+  QUOTE: { TYPE_OF_BUYER, GET_A_QUOTE_BY_EMAIL },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  'Buyer body page - as an exporter, I want to check if I can get an EXIP online quote for my buyers country - submit `buyer is a government or public sector body`',
+  'Type of buyer page - as an exporter, I want to check if I can get an EXIP online quote for my buyers country - submit `buyer is a government or public sector body`',
   () => {
-    const url = `${baseUrl}${BUYER_BODY}`;
+    const url = `${baseUrl}${TYPE_OF_BUYER}`;
 
     before(() => {
       cy.navigateToRootUrl();
@@ -37,18 +37,18 @@ context(
     });
 
     it('renders a back link with correct url', () => {
-      cy.checkLink(backLink(), BUYER_BODY, LINKS.BACK);
+      cy.checkLink(backLink(), TYPE_OF_BUYER, LINKS.BACK);
     });
 
     it('renders a specific reason and description', () => {
-      const expectedReason = PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL.REASON.BUYER_BODY;
+      const expectedReason = PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL.REASON.TYPE_OF_BUYER;
       cy.checkText(getAQuoteByEmailPage.reason(), expectedReason);
 
-      const expectedDescription = PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL.REASON.BUYER_BODY_DESCRIPTION;
+      const expectedDescription = PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL.REASON.TYPE_OF_BUYER_DESCRIPTION;
       cy.checkText(getAQuoteByEmailPage.description(), expectedDescription);
     });
 
-    describe('navigating back to the buyer body page', () => {
+    describe('navigating back to the type of buyer page', () => {
       it('auto checks the previously submitted answer', () => {
         cy.clickBackLink();
 

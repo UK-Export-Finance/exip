@@ -10,15 +10,15 @@ import { Request, Response } from '../../../../types';
 const {
   SHARED_PAGES,
   PARTIALS: {
-    QUOTE: { BUYER_BODY },
+    QUOTE: { TYPE_OF_BUYER },
   },
 } = TEMPLATES;
 
-export const FIELD_ID = FIELD_IDS.ELIGIBILITY.VALID_BUYER_BODY;
+export const FIELD_ID = FIELD_IDS.ELIGIBILITY.VALID_TYPE_OF_BUYER;
 
 export const PAGE_VARIABLES = {
   FIELD_ID,
-  PAGE_CONTENT_STRINGS: PAGES.QUOTE.BUYER_BODY,
+  PAGE_CONTENT_STRINGS: PAGES.QUOTE.TYPE_OF_BUYER,
 };
 
 /**
@@ -26,7 +26,7 @@ export const PAGE_VARIABLES = {
  * Conditional flags for the nunjucks template to match design
  */
 export const HTML_FLAGS = {
-  CUSTOM_CONTENT_HTML: BUYER_BODY.CUSTOM_CONTENT_HTML,
+  CUSTOM_CONTENT_HTML: TYPE_OF_BUYER.CUSTOM_CONTENT_HTML,
 };
 
 export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
@@ -35,8 +35,8 @@ export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
  * mapAnswer
  * Map yes/no answer to true/false boolean.
  * The saved field ID includes 'valid' so we need to reverse the answer to save it correctly.
- * If the answer is 'false', the 'buyer body' is valid. Return true.
- * If the answer is 'true', the 'buyer body' is invalid. Return false.
+ * If the answer is 'false', the 'type of buyer' is valid. Return true.
+ * If the answer is 'true', the 'type of buyer' is invalid. Return false.
  * @returns {boolean}
  */
 export const mapAnswer = (answer: string) => {
@@ -51,8 +51,8 @@ export const mapAnswer = (answer: string) => {
  * mapSubmittedAnswer
  * Map yes/no answer to true/false boolean.
  * The saved field ID includes 'valid' so we need to reverse the answer in order to render correctly.
- * If the answer is 'false', the 'buyer body' is valid and saved as true. Return false.
- * If the answer is 'true', the 'buyer body' is invalid and saved as false. Return true.
+ * If the answer is 'false', the 'type of buyer' is valid and saved as true. Return false.
+ * If the answer is 'true', the 'type of buyer' is invalid and saved as false. Return true.
  * @returns {boolean}
  */
 export const mapSubmittedAnswer = (answer?: boolean) => {
@@ -100,13 +100,13 @@ export const post = (req: Request, res: Response) => {
   req.session.submittedData.quoteEligibility = updateSubmittedData({ [FIELD_ID]: mappedAnswer }, req.session.submittedData.quoteEligibility);
 
   if (answer === 'true') {
-    req.flash('previousRoute', ROUTES.QUOTE.BUYER_BODY);
+    req.flash('previousRoute', ROUTES.QUOTE.TYPE_OF_BUYER);
 
     const { GET_A_QUOTE_BY_EMAIL } = PAGES.QUOTE;
     const { REASON } = GET_A_QUOTE_BY_EMAIL;
 
-    req.flash('exitReason', REASON.BUYER_BODY);
-    req.flash('exitDescription', REASON.BUYER_BODY_DESCRIPTION);
+    req.flash('exitReason', REASON.TYPE_OF_BUYER);
+    req.flash('exitDescription', REASON.TYPE_OF_BUYER_DESCRIPTION);
 
     return res.redirect(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL);
   }

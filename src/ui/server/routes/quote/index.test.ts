@@ -1,7 +1,7 @@
 import { get, post } from '../../test-mocks/mock-router';
 import { ROUTES } from '../../constants';
 import { get as buyerCountryGet, post as buyerCountryPost } from '../../controllers/quote/buyer-country';
-import { get as buyerBodyGet, post as buyerBodyPost } from '../../controllers/quote/buyer-body';
+import { get as typeOfBuyerGet, post as typeOfBuyerPost } from '../../controllers/quote/type-of-buyer';
 import { get as companyBasedGet, post as companyBasedPost } from '../../controllers/quote/exporter-location';
 import { get as ukGoodsOrServicesGet, post as ukGoodsOrServicesPost } from '../../controllers/quote/uk-goods-or-services';
 import { get as policyTypeGet, post as policyTypePost } from '../../controllers/quote/policy-type';
@@ -31,8 +31,8 @@ describe('routes/quote', () => {
     expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.BUYER_COUNTRY_CHANGE, buyerCountryGet);
     expect(post).toHaveBeenCalledWith(ROUTES.QUOTE.BUYER_COUNTRY_CHANGE, buyerCountryPost);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.BUYER_BODY, buyerBodyGet);
-    expect(post).toHaveBeenCalledWith(ROUTES.QUOTE.BUYER_BODY, buyerBodyPost);
+    expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.TYPE_OF_BUYER, typeOfBuyerGet);
+    expect(post).toHaveBeenCalledWith(ROUTES.QUOTE.TYPE_OF_BUYER, typeOfBuyerPost);
 
     expect(get).toHaveBeenCalledWith(ROUTES.QUOTE.EXPORTER_LOCATION, companyBasedGet);
     expect(post).toHaveBeenCalledWith(ROUTES.QUOTE.EXPORTER_LOCATION, companyBasedPost);

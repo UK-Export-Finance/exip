@@ -1,14 +1,14 @@
 import { ROUTES } from '../../../../../../constants';
 
 const {
-  QUOTE: { BUYER_BODY, NEED_TO_START_AGAIN },
+  QUOTE: { TYPE_OF_BUYER, NEED_TO_START_AGAIN },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Manually going to the `Buyer body` via URL page without completing the previous forms', () => {
+context('Manually going to the `Type of buyer` via URL page without completing the previous forms', () => {
   beforeEach(() => {
-    cy.navigateToUrl(BUYER_BODY);
+    cy.navigateToUrl(TYPE_OF_BUYER);
   });
 
   it('should redirect to the `need to start again` exit page', () => {

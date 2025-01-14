@@ -1,6 +1,6 @@
 import { LINKS } from '../links';
 
-const BUYER_BODY = {
+const TYPE_OF_BUYER = {
   PAGE_TITLE: 'Is your buyer a government or public sector body?',
   DETAILS: {
     INTRO: 'What counts as a government or public sector body?',
@@ -57,8 +57,8 @@ const CANNOT_APPLY_EXIT = {
 const GET_A_QUOTE_BY_EMAIL = {
   PAGE_TITLE: 'You need to get a quote by email',
   REASON: {
-    BUYER_BODY: 'We cannot give you a quote online because your buyer is a government or public sector body.',
-    BUYER_BODY_DESCRIPTION: 'We can still give you a quote but may need extra information from you to assess the risks around your buyer first.',
+    TYPE_OF_BUYER: 'We cannot give you a quote online because your buyer is a government or public sector body.',
+    TYPE_OF_BUYER_DESCRIPTION: 'We can still give you a quote but may need extra information from you to assess the risks around your buyer first.',
     BUYER_COUNTRY: 'We cannot give you a quote online because of the country where your buyer is based.',
     BUYER_COUNTRY_DESCRIPTION: "We can still give you a quote but may need extra information from you to assess the risks around your buyer's country first.",
   },
@@ -126,7 +126,7 @@ const YOUR_QUOTE = {
 };
 
 const QUOTE = {
-  BUYER_BODY,
+  TYPE_OF_BUYER,
   POLICY_TYPE,
   TELL_US_ABOUT_YOUR_POLICY,
   CHECK_YOUR_ANSWERS,
