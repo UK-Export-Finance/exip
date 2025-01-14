@@ -26,7 +26,7 @@ describe('controllers/quote/talk-to-an-export-finance-manager', () => {
     it('should render template', () => {
       get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.GET_A_QUOTE_BY_EMAIL, {
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT, {
         ...corePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT,
           BACK_LINK: req.headers.referer,
