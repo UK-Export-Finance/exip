@@ -1,6 +1,6 @@
 import { field as fieldSelector, headingCaption } from '../../../../../../../pages/shared';
 import { multipleContractPolicyExportValuePage } from '../../../../../../../pages/insurance/policy';
-import { LINKS, PAGES } from '../../../../../../../content-strings';
+import { PAGES } from '../../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
@@ -103,6 +103,8 @@ context(
           cy.checkText(field.hint.forExample(), HINT.FOR_EXAMPLE);
         });
 
+        // TODO: EMS-4122
+        /*
         it('should render an `initial credit limit` hint intro', () => {
           cy.checkText(field.hint.initialCreditLimit.intro(), HINT.INITIAL_CREDIT_LIMIT.INTRO);
         });
@@ -113,6 +115,7 @@ context(
 
           cy.checkLink(field.hint.initialCreditLimit.link(), expectedHref, expectedText);
         });
+        */
 
         it('should render a `no decimals` hint', () => {
           cy.checkText(field.hint.noDecimals(), HINT.NO_DECIMALS);

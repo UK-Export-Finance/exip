@@ -20,18 +20,18 @@ const {
  * @param {ApplicationPolicy} policy: Application policy
  * @returns {Promise<String>} "Application submitted" template ID
  */
-const getSubmittedConfirmationTemplateId = async (policy: ApplicationPolicy): Promise<string> => {
+const getSubmittedConfirmationTemplateId = (policy: ApplicationPolicy): string => {
   try {
     console.info('Getting submitted confirmation template ID (getSubmittedConfirmationTemplateId helper)');
 
-    const { maximumBuyerWillOwe, policyCurrencyCode, policyType } = policy;
+    const { maximumBuyerWillOwe, policyType } = policy;
 
     if (isSinglePolicyType(policyType)) {
       return CONFIRMATION.SINGLE_OR_MULTIPLE_CONTRACT_POLICY;
     }
 
     if (isMultiplePolicyType(policyType) && maximumBuyerWillOwe) {
-      return await multiplePolicyTypeTemplateId.get(policyType, String(policyCurrencyCode), maximumBuyerWillOwe);
+      return multiplePolicyTypeTemplateId.get(policyType);
     }
 
     return UNABLE_TO_DETERMINE_TEMPLATE_ID;

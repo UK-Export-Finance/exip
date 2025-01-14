@@ -47,7 +47,7 @@ describe('emails/application', () => {
 
       const result = await application.submittedEmail(variables, policy);
 
-      const expectedTemplateId = await getSubmittedConfirmationTemplateId(policy);
+      const expectedTemplateId = getSubmittedConfirmationTemplateId(policy);
 
       expect(sendEmailSpy).toHaveBeenCalledTimes(1);
       expect(sendEmailSpy).toHaveBeenCalledWith(expectedTemplateId, email, variables);
