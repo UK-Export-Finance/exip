@@ -59,8 +59,6 @@ const GET_A_QUOTE_BY_EMAIL = {
   REASON: {
     TYPE_OF_BUYER: 'We cannot give you a quote online because your buyer is a government or public sector body.',
     TYPE_OF_BUYER_DESCRIPTION: 'We can still give you a quote but may need extra information from you to assess the risks around your buyer first.',
-    BUYER_COUNTRY: 'We cannot give you a quote online because of the country where your buyer is based.',
-    BUYER_COUNTRY_DESCRIPTION: "We can still give you a quote but may need extra information from you to assess the risks around your buyer's country first.",
   },
   ACTION: [
     [
