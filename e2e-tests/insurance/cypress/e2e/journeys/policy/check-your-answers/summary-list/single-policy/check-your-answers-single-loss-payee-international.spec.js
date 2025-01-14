@@ -1,7 +1,6 @@
-import { FIELD_VALUES } from '../../../../../../../constants';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
-import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
+import checkSummaryList from '../../../../../../../../commands/insurance/check-policy-summary-list';
 
 const { ROOT: INSURANCE_ROOT, POLICY } = INSURANCE_ROUTES;
 
@@ -15,7 +14,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Check your answers - Summary list - Multiple contract policy - Using loss payee based internationally', () => {
+context('Insurance - Policy - Check your answers - Summary list - Single contract policy - Loss payee based internationally', () => {
   let referenceNumber;
   let url;
 
@@ -24,7 +23,6 @@ context('Insurance - Policy - Check your answers - Summary list - Multiple contr
       referenceNumber = refNumber;
 
       cy.completePolicySection({
-        policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
         isAppointingLossPayee: true,
         lossPayeeIsLocatedInUK: false,
       });
@@ -41,10 +39,6 @@ context('Insurance - Policy - Check your answers - Summary list - Multiple contr
 
   after(() => {
     cy.deleteApplication(referenceNumber);
-  });
-
-  it('should render generic policy summary list rows', () => {
-    cy.assertGenericMultiplePolicySummaryListRows();
   });
 
   it(`should render a ${LOSS_PAYEE_IS_APPOINTED} summary list row`, () => {

@@ -10,19 +10,19 @@ const {
 const {
   USING_BROKER,
   BROKER_DETAILS: { NAME, EMAIL },
-  BROKER_ADDRESSES: { SELECT_THE_ADDRESS },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Check your answers - Policy - Multiple contract policy - With broker - based in UK - Summary List', () => {
+context('Insurance - Check your answers - Policy - Single contract policy - Broker - not based in UK - Summary List', () => {
   let url;
   let referenceNumber;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-      cy.completePrepareApplicationMultiplePolicyType({ usingBroker: true, brokerIsBasedInUk: true });
+      cy.completePrepareApplicationSinglePolicyType({ usingBroker: true, brokerIsBasedInUk: false });
 
       cy.clickTaskCheckAnswers();
 
@@ -46,7 +46,7 @@ context('Insurance - Check your answers - Policy - Multiple contract policy - Wi
   });
 
   it('should render generic policy summary list rows', () => {
-    cy.assertGenericMultiplePolicySummaryListRows();
+    cy.assertGenericSinglePolicySummaryListRows();
   });
 
   it(`should render a ${USING_BROKER} summary list row`, () => {
@@ -57,8 +57,8 @@ context('Insurance - Check your answers - Policy - Multiple contract policy - Wi
     checkSummaryList.BROKER[NAME]({});
   });
 
-  it(`should render a ${SELECT_THE_ADDRESS} summary list row`, () => {
-    checkSummaryList.BROKER[SELECT_THE_ADDRESS]();
+  it(`should render a ${FULL_ADDRESS} summary list row`, () => {
+    checkSummaryList.BROKER[FULL_ADDRESS]();
   });
 
   it(`should render a ${EMAIL} summary list row`, () => {

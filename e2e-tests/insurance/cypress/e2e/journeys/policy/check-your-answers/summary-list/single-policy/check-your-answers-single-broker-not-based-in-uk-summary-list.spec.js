@@ -2,10 +2,7 @@ import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insur
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
 import checkSummaryList from '../../../../../../../../commands/insurance/check-policy-summary-list';
 
-const {
-  ROOT: INSURANCE_ROOT,
-  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
-} = INSURANCE_ROUTES;
+const { ROOT: INSURANCE_ROOT, POLICY } = INSURANCE_ROUTES;
 
 const {
   USING_BROKER,
@@ -15,23 +12,17 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Check your answers - Policy - Multiple contract policy - With broker - not based in UK - Summary List', () => {
+context('Insurance - Policy - Check your answers - Summary list - Single contract policy - Broker - not based in UK - Summary List', () => {
   let url;
   let referenceNumber;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-      cy.completePrepareApplicationMultiplePolicyType({ usingBroker: true, brokerIsBasedInUk: false });
 
-      cy.clickTaskCheckAnswers();
+      cy.completePolicySection({ usingBroker: true, brokerIsBasedInUk: false });
 
-      // To get past previous "Check your answers" pages
-      cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });
-
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
-
-      cy.assertUrl(url);
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`;
     });
   });
 
@@ -43,10 +34,6 @@ context('Insurance - Check your answers - Policy - Multiple contract policy - Wi
 
   after(() => {
     cy.deleteApplication(referenceNumber);
-  });
-
-  it('should render generic policy summary list rows', () => {
-    cy.assertGenericMultiplePolicySummaryListRows();
   });
 
   it(`should render a ${USING_BROKER} summary list row`, () => {
