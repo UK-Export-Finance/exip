@@ -2,7 +2,7 @@ import { ROUTES } from '../../../../../../constants';
 
 const {
   INSURANCE: {
-    ELIGIBILITY: { COVER_PERIOD, NEED_TO_START_AGAIN },
+    ELIGIBILITY: { COVER_PERIOD, NEED_TO_START_AGAIN_EXIT },
   },
 } = ROUTES;
 
@@ -14,7 +14,7 @@ context('Manually going to the `Cover period` page via URL without completing th
   });
 
   it('should redirect to the `need to start again` exit page', () => {
-    const expectedUrl = `${baseUrl}${NEED_TO_START_AGAIN}`;
+    const expectedUrl = `${baseUrl}${NEED_TO_START_AGAIN_EXIT}`;
 
     cy.assertUrl(expectedUrl);
   });

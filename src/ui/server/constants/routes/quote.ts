@@ -1,9 +1,6 @@
 export const QUOTE_ROUTES = {
   START: '/',
 
-  // TODO
-  // TODOa
-  // TODO: rename to TYPE_OF_BUYER
   TYPE_OF_BUYER: '/quote/type-of-buyer',
 
   BUYER_COUNTRY: '/quote/buyer-country',

@@ -24,9 +24,11 @@ export const QUOTE_ROUTES = {
 
   CANNOT_APPLY_EXIT: '/quote/cannot-apply',
 
+  GET_A_QUOTE_BY_EMAIL: '/quote/get-quote-by-email',
+
   TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT: '/quote/talk-to-an-export-finance-manager',
 
   YOUR_QUOTE: '/quote/your-quote',
 
-  NEED_TO_START_AGAIN: '/quote/need-to-start-again',
+  NEED_TO_START_AGAIN_EXIT: '/quote/need-to-start-again',
 };

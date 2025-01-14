@@ -1,7 +1,7 @@
 import { ROUTES } from '../../../../../../constants';
 
 const {
-  QUOTE: { TYPE_OF_BUYER, NEED_TO_START_AGAIN },
+  QUOTE: { TYPE_OF_BUYER, NEED_TO_START_AGAIN_EXIT },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -12,7 +12,7 @@ context('Manually going to the `Type of buyer` via URL page without completing t
   });
 
   it('should redirect to the `need to start again` exit page', () => {
-    const expectedUrl = `${baseUrl}${NEED_TO_START_AGAIN}`;
+    const expectedUrl = `${baseUrl}${NEED_TO_START_AGAIN_EXIT}`;
 
     cy.assertUrl(expectedUrl);
   });
