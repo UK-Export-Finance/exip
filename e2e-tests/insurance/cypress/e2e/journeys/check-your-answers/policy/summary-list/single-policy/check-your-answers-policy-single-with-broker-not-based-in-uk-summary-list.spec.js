@@ -15,14 +15,14 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Check your answers - Policy - Single contract policy - With broker - Summary List', () => {
+context('Insurance - Check your answers - Policy - Single contract policy - With broker - not based in UK - Summary List', () => {
   let url;
   let referenceNumber;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber, usingBroker: true });
+      cy.completePrepareApplicationSinglePolicyType({ usingBroker: true, brokerIsBasedInUk: false });
 
       cy.clickTaskCheckAnswers();
 

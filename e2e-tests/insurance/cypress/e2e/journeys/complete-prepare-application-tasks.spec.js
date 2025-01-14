@@ -5,7 +5,7 @@ context('Insurance - Complete `prepare your application` tasks', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+      cy.completePrepareApplicationSinglePolicyType({});
 
       cy.navigateToAllSectionsUrl(referenceNumber);
 

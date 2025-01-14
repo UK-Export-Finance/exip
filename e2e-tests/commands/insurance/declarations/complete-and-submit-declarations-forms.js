@@ -3,10 +3,9 @@
  * completes declarations forms up to the specified form to stop at
  * eg, when 'antiBribery' is passed, it will complete all forms up to and including 'antiBribery'
  * @param {String} stopSubmittingAfter: The final form to submit
- * @param {String} referenceNumber: Application reference number
  */
-const completeAndSubmitDeclarationsForms = ({ stopSubmittingAfter, referenceNumber }) => {
-  cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+const completeAndSubmitDeclarationsForms = ({ stopSubmittingAfter }) => {
+  cy.completePrepareApplicationSinglePolicyType({});
 
   cy.completeAndSubmitCheckYourAnswers();
 

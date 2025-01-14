@@ -36,7 +36,7 @@ context(`Insurance - Check your answers - Company details - Your business - ${FI
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+      cy.completePrepareApplicationSinglePolicyType({});
 
       cy.clickTaskCheckAnswers();
 

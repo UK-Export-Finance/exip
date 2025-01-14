@@ -32,7 +32,7 @@ context('Insurance - Change your answers - Export contract - Summary list - How 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+      cy.completePrepareApplicationSinglePolicyType({});
 
       cy.clickTaskCheckAnswers();
 

@@ -27,7 +27,7 @@ context('Insurance - Check your answers - Policy - Single contract policy - Same
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber, usingBroker: false });
+      cy.completePrepareApplicationSinglePolicyType({ usingBroker: false });
 
       cy.clickTaskCheckAnswers();
 
