@@ -5,13 +5,15 @@ import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fi
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import application from '../../../../../../../fixtures/application';
 import { GBP, SYMBOLS } from '../../../../../../../fixtures/currencies';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE;
 
 const {
   ROOT: INSURANCE_ROOT,
-  POLICY: { MULTIPLE_CONTRACT_POLICY, MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE },
+  ALL_SECTIONS,
+  POLICY: { MULTIPLE_CONTRACT_POLICY, MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE, NAME_ON_POLICY },
 } = INSURANCE_ROUTES;
 
 const { EXPORT_VALUE } = FIELDS;
@@ -125,32 +127,32 @@ context(
       });
     });
 
-    // describe('form submission', () => {
-    //   beforeEach(() => {
-    //     cy.navigateToUrl(url);
-    //   });
+    describe('form submission', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
 
-    //   it(`should redirect to ${NAME_ON_POLICY}`, () => {
-    //     cy.completeAndSubmitExportValueForm({});
+      it(`should redirect to ${NAME_ON_POLICY}`, () => {
+        cy.completeAndSubmitExportValueForm({});
 
-    //     const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
-    //     cy.assertUrl(expectedUrl);
-    //   });
+        const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
+        cy.assertUrl(expectedUrl);
+      });
 
-    //   it('should retain the `type of policy` task status as `in progress` after submitting the form', () => {
-    //     cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      it('should retain the `type of policy` task status as `in progress` after submitting the form', () => {
+        cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 
-    //     cy.checkTaskPolicyStatusIsInProgress();
-    //   });
+        cy.checkTaskPolicyStatusIsInProgress();
+      });
 
-    //   describe('when going back to the page', () => {
-    //     it('should have the submitted values', () => {
-    //       cy.navigateToUrl(url);
+      describe('when going back to the page', () => {
+        it('should have the submitted values', () => {
+          cy.navigateToUrl(url);
 
-    //       cy.checkValue(fieldSelector(TOTAL_SALES_TO_BUYER), application.POLICY[TOTAL_SALES_TO_BUYER]);
-    //       cy.checkValue(fieldSelector(MAXIMUM_BUYER_WILL_OWE), application.POLICY[MAXIMUM_BUYER_WILL_OWE]);
-    //     });
-    //   });
-    // });
+          cy.checkValue(fieldSelector(TOTAL_SALES_TO_BUYER), application.POLICY[TOTAL_SALES_TO_BUYER]);
+          cy.checkValue(fieldSelector(MAXIMUM_BUYER_WILL_OWE), application.POLICY[MAXIMUM_BUYER_WILL_OWE]);
+        });
+      });
+    });
   },
 );
