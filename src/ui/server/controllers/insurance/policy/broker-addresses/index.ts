@@ -12,6 +12,7 @@ import generateValidationErrors from '../../../../shared-validation/yes-no-radio
 import getOrdnanceSurveyAddressByIndex from '../../../../helpers/get-chosen-ordnance-survey-address/by-index';
 import getOrdnanceSurveyAddressById from '../../../../helpers/get-chosen-ordnance-survey-address/by-id';
 import mapAndSave from '../map-and-save/broker';
+import isChangeRoute from '../../../../helpers/is-change-route';
 import { Request, Response } from '../../../../../types';
 
 const { SELECT_THE_ADDRESS } = POLICY_FIELD_IDS.BROKER_ADDRESSES;
@@ -19,7 +20,14 @@ const { SELECT_THE_ADDRESS } = POLICY_FIELD_IDS.BROKER_ADDRESSES;
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  POLICY: { BROKER_ADDRESSES_SAVE_AND_BACK, BROKER_DETAILS_ROOT, BROKER_ZERO_ADDRESSES_ROOT, BROKER_CONFIRM_ADDRESS_ROOT, BROKER_MANUAL_ADDRESS_ROOT },
+  POLICY: {
+    BROKER_ADDRESSES_SAVE_AND_BACK,
+    BROKER_DETAILS_ROOT,
+    BROKER_ZERO_ADDRESSES_ROOT,
+    BROKER_CONFIRM_ADDRESS_ROOT,
+    BROKER_MANUAL_ADDRESS_ROOT,
+    CHECK_YOUR_ANSWERS,
+  },
 } = INSURANCE_ROUTES;
 
 const { BROKER_ADDRESSES } = POLICY_FIELDS;
@@ -187,6 +195,10 @@ export const post = async (req: Request, res: Response) => {
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    if (isChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`);

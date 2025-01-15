@@ -22,9 +22,13 @@ const {
   BROKER_DETAILS_CHECK_AND_CHANGE,
   BROKER_ADDRESSES_ROOT,
   BROKER_ADDRESSES_SAVE_AND_BACK,
+  BROKER_ADDRESSES_CHANGE,
+  BROKER_ADDRESSES_CHECK_AND_CHANGE,
   BROKER_CONFIRM_ADDRESS_ROOT,
   BROKER_ZERO_ADDRESSES_ROOT,
   BROKER_MANUAL_ADDRESS_ROOT,
+  BROKER_MANUAL_ADDRESS_CHANGE,
+  BROKER_MANUAL_ADDRESS_CHECK_AND_CHANGE,
   BROKER_MANUAL_ADDRESS_SAVE_AND_BACK,
 } = POLICY;
 
@@ -50,6 +54,10 @@ router.post(`/:referenceNumber${BROKER_DETAILS_CHECK_AND_CHANGE}`, postBrokerDet
 router.get(`/:referenceNumber${BROKER_ADDRESSES_ROOT}`, getBrokerAddresses);
 router.post(`/:referenceNumber${BROKER_ADDRESSES_ROOT}`, postBrokerAddresses);
 router.post(`/:referenceNumber${BROKER_ADDRESSES_SAVE_AND_BACK}`, postBrokerAddressesSaveAndBack);
+router.get(`/:referenceNumber${BROKER_ADDRESSES_CHANGE}`, getBrokerAddresses);
+router.post(`/:referenceNumber${BROKER_ADDRESSES_CHANGE}`, postBrokerAddresses);
+router.get(`/:referenceNumber${BROKER_ADDRESSES_CHECK_AND_CHANGE}`, getBrokerAddresses);
+router.post(`/:referenceNumber${BROKER_ADDRESSES_CHECK_AND_CHANGE}`, postBrokerAddresses);
 
 router.get(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_ROOT}`, getBrokerConfirmAddress);
 router.post(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_ROOT}`, postBrokerConfirmAddress);
@@ -59,5 +67,9 @@ router.get(`/:referenceNumber${BROKER_ZERO_ADDRESSES_ROOT}`, getBrokerZeroAddres
 router.get(`/:referenceNumber${BROKER_MANUAL_ADDRESS_ROOT}`, getBrokerManualAddress);
 router.post(`/:referenceNumber${BROKER_MANUAL_ADDRESS_ROOT}`, postBrokerManualAddress);
 router.post(`/:referenceNumber${BROKER_MANUAL_ADDRESS_SAVE_AND_BACK}`, postBrokerManualAddressSaveAndBack);
+router.get(`/:referenceNumber${BROKER_MANUAL_ADDRESS_CHANGE}`, getBrokerManualAddress);
+router.post(`/:referenceNumber${BROKER_MANUAL_ADDRESS_CHANGE}`, postBrokerManualAddress);
+router.get(`/:referenceNumber${BROKER_MANUAL_ADDRESS_CHECK_AND_CHANGE}`, getBrokerManualAddress);
+router.post(`/:referenceNumber${BROKER_MANUAL_ADDRESS_CHECK_AND_CHANGE}`, postBrokerManualAddress);
 
 export default router;
