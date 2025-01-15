@@ -45,6 +45,6 @@ context('Insurance - Policy - Check your answers - Summary list - Multiple contr
   });
 
   it(`should render a ${SELECT_THE_ADDRESS} summary list row`, () => {
-    checkSummaryList.BROKER[SELECT_THE_ADDRESS]();
+    checkSummaryList.BROKER[SELECT_THE_ADDRESS]({});
   });
 });
