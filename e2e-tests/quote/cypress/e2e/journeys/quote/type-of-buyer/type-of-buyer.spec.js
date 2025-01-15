@@ -1,23 +1,23 @@
 import { yesRadio, noRadio } from '../../../../../../pages/shared';
-import buyerBodyPage from '../../../../../../pages/quote/buyerBody';
+import typeOfBuyerPage from '../../../../../../pages/quote/typeOfBuyer';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 
-const CONTENT_STRINGS = PAGES.QUOTE.BUYER_BODY;
+const CONTENT_STRINGS = PAGES.QUOTE.TYPE_OF_BUYER;
 
 const {
-  ELIGIBILITY: { VALID_BUYER_BODY: FIELD_ID },
+  ELIGIBILITY: { VALID_TYPE_OF_BUYER: FIELD_ID },
 } = FIELD_IDS;
 
 const {
-  QUOTE: { BUYER_BODY, BUYER_COUNTRY, EXPORTER_LOCATION },
+  QUOTE: { TYPE_OF_BUYER, BUYER_COUNTRY, EXPORTER_LOCATION },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-const url = `${baseUrl}${BUYER_BODY}`;
+const url = `${baseUrl}${TYPE_OF_BUYER}`;
 
-context('Buyer body page - as an exporter, I want to check if I can get an EXIP online quote for my buyers country', () => {
+context('Type of buyer page - as an exporter, I want to check if I can get an EXIP online quote for my buyers country', () => {
   beforeEach(() => {
     cy.navigateToRootUrl();
     cy.completeAndSubmitBuyerCountryForm({});
@@ -28,7 +28,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: BUYER_BODY,
+      currentHref: TYPE_OF_BUYER,
       backLink: BUYER_COUNTRY,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
@@ -53,7 +53,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
       cy.navigateToUrl(url);
     });
 
-    const { description } = buyerBodyPage;
+    const { description } = typeOfBuyerPage;
 
     it('should render summary text with collapsed conditional `details` content', () => {
       cy.checkText(description.summary(), CONTENT_STRINGS.DETAILS.INTRO);

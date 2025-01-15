@@ -22,7 +22,7 @@ import { get as eligibleToApplyOnlineGet, post as eligibleToApplyOnlinePost } fr
 import { get as haveAnAccountGet, post as haveAnAccountPost } from '../../../controllers/insurance/eligibility/do-you-have-an-account';
 import { get as cannotApplyGet } from '../../../controllers/insurance/eligibility/cannot-apply';
 import { get as needToStartAgainGet, post as needToStartAgainPost } from '../../../controllers/insurance/eligibility/need-to-start-again';
-import { get as talkToEfmTooShortGet } from '../../../controllers/insurance/eligibility/talk-to-an-export-finance-manager';
+import { get as talkToEfmGet } from '../../../controllers/insurance/eligibility/talk-to-an-export-finance-manager';
 import { get as partyToConsortiumExitGet } from '../../../controllers/insurance/eligibility/party-to-consortium-exit';
 import { get as memberOfAGroupExitGet } from '../../../controllers/insurance/eligibility/member-of-a-group-exit';
 
@@ -111,7 +111,7 @@ insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY_EXIT, c
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN, needToStartAgainGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN, needToStartAgainPost);
 
-insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT, talkToEfmTooShortGet);
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT, talkToEfmGet);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.PARTY_TO_CONSORTIUM_EXIT, partyToConsortiumExitGet);
 

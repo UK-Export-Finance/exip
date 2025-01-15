@@ -882,7 +882,7 @@ jobs:
             '/*.spec.js',
             'cookies-consent/**/*.spec.js',
             'quote/*.spec.js',
-            'quote/buyer-body/*.spec.js',
+            'quote/type-of-buyer/*.spec.js',
             'quote/buyer-country/*.spec.js',
             'quote/cannot-skip-flow/*.spec.js',
             'quote/change-your-answers/*.spec.js',

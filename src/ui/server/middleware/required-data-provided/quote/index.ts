@@ -5,7 +5,7 @@ import { isSinglePolicyType, isMultiplePolicyType } from '../../../helpers/polic
 
 const {
   START,
-  BUYER_BODY,
+  TYPE_OF_BUYER,
   BUYER_COUNTRY,
   BUYER_COUNTRY_CHANGE,
   CANNOT_APPLY_EXIT,
@@ -18,6 +18,7 @@ const {
   NEED_TO_START_AGAIN_EXIT,
   POLICY_TYPE,
   POLICY_TYPE_CHANGE,
+  TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT,
   TELL_US_ABOUT_YOUR_POLICY,
   TELL_US_ABOUT_YOUR_POLICY_CHANGE,
   YOUR_QUOTE,
@@ -25,7 +26,7 @@ const {
 
 const {
   ELIGIBILITY: {
-    VALID_BUYER_BODY,
+    VALID_TYPE_OF_BUYER,
     VALID_EXPORTER_LOCATION,
     HAS_MINIMUM_UK_GOODS_OR_SERVICES,
     CURRENCY,
@@ -48,9 +49,9 @@ export const allRequiredData = (submittedData: SubmittedDataQuoteEligibility): R
 
   requiredDataState[BUYER_COUNTRY] = [];
 
-  requiredDataState[BUYER_BODY] = [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
+  requiredDataState[TYPE_OF_BUYER] = [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
 
-  requiredDataState[EXPORTER_LOCATION] = [...requiredDataState[BUYER_BODY], VALID_BUYER_BODY];
+  requiredDataState[EXPORTER_LOCATION] = [...requiredDataState[TYPE_OF_BUYER], VALID_TYPE_OF_BUYER];
 
   requiredDataState[UK_GOODS_OR_SERVICES] = [...requiredDataState[EXPORTER_LOCATION], VALID_EXPORTER_LOCATION];
 
@@ -84,7 +85,7 @@ export const generateRequiredDataState = (submittedData: SubmittedDataQuoteEligi
 
   requiredDataState[BUYER_COUNTRY] = required[BUYER_COUNTRY];
   requiredDataState[BUYER_COUNTRY_CHANGE] = required[BUYER_COUNTRY];
-  requiredDataState[BUYER_BODY] = required[BUYER_BODY];
+  requiredDataState[TYPE_OF_BUYER] = required[TYPE_OF_BUYER];
   requiredDataState[EXPORTER_LOCATION] = required[EXPORTER_LOCATION];
   requiredDataState[EXPORTER_LOCATION_CHANGE] = required[EXPORTER_LOCATION];
   requiredDataState[UK_GOODS_OR_SERVICES] = required[UK_GOODS_OR_SERVICES];
@@ -117,14 +118,16 @@ export const requiredQuoteEligibilityDataProvided = (req: Request, res: Response
   const routesArray = getRoutesAsArray(ROUTES.QUOTE);
 
   // array of routes that do not require any data checks.
-  const irrelevantRoutes = [BUYER_COUNTRY, CANNOT_APPLY_EXIT, GET_A_QUOTE_BY_EMAIL, NEED_TO_START_AGAIN_EXIT, START];
+  const IRRELEVANT_ROUTES = [BUYER_COUNTRY, CANNOT_APPLY_EXIT, GET_A_QUOTE_BY_EMAIL, NEED_TO_START_AGAIN_EXIT, START, TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT];
 
-  const isIrrelevantRoute = (route: string) => irrelevantRoutes.includes(route);
+  const isIrrelevantRoute = (route: string) => IRRELEVANT_ROUTES.includes(route);
 
-  // do not run any data checks if the requested route is one of the following:
-  // is a route that does not require any data checks
-  // is 404 page
-  // or the request is not a GET request.
+  /**
+   * Do not run any data checks if the requested route is one of the following:
+   * - is a route that does not require any data checks
+   * - is 404 page
+   * - the request is not a GET request.
+   */
   if (isIrrelevantRoute(url) || !routeIsKnown(routesArray, url) || method !== 'GET') {
     return next();
   }

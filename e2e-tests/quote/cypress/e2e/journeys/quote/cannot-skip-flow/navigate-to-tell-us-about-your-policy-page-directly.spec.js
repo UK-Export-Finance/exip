@@ -1,11 +1,11 @@
 import { ROUTES } from '../../../../../../constants';
 
 const {
-  QUOTE: { TELL_US_ABOUT_YOUR_POLICY, TELL_US_ABOUT_YOUR_POLICY_CHANGE, NEED_TO_START_AGAIN },
+  QUOTE: { TELL_US_ABOUT_YOUR_POLICY, TELL_US_ABOUT_YOUR_POLICY_CHANGE, NEED_TO_START_AGAIN_EXIT },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
-const needToStartAgainUrl = `${baseUrl}${NEED_TO_START_AGAIN}`;
+const needToStartAgainUrl = `${baseUrl}${NEED_TO_START_AGAIN_EXIT}`;
 
 context('Manually going to the `Tell us about your policy` page via URL without completing previous forms', () => {
   beforeEach(() => {

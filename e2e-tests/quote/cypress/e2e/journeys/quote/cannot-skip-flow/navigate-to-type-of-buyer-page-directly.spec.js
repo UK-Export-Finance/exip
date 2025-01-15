@@ -1,16 +1,14 @@
 import { ROUTES } from '../../../../../../constants';
 
 const {
-  INSURANCE: {
-    ELIGIBILITY: { TOTAL_VALUE_INSURED, NEED_TO_START_AGAIN_EXIT },
-  },
+  QUOTE: { TYPE_OF_BUYER, NEED_TO_START_AGAIN_EXIT },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Manually going to the `total value insured` page via URL without completing the previous forms', () => {
+context('Manually going to the `Type of buyer` via URL page without completing the previous forms', () => {
   beforeEach(() => {
-    cy.navigateToUrl(TOTAL_VALUE_INSURED);
+    cy.navigateToUrl(TYPE_OF_BUYER);
   });
 
   it('should redirect to the `need to start again` exit page', () => {

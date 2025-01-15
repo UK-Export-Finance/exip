@@ -12,11 +12,11 @@ import { Request, Response } from '../../../../types';
 const {
   SHARED_PAGES,
   PARTIALS: {
-    QUOTE: { BUYER_BODY },
+    QUOTE: { TYPE_OF_BUYER },
   },
 } = TEMPLATES;
 
-describe('controllers/quote/buyer-body', () => {
+describe('controllers/quote/type-of-buyer', () => {
   let req: Request;
   let res: Response;
 
@@ -35,7 +35,7 @@ describe('controllers/quote/buyer-body', () => {
 
   describe('FIELD_ID', () => {
     it('should have the correct ID', () => {
-      const expected = FIELD_IDS.ELIGIBILITY.VALID_BUYER_BODY;
+      const expected = FIELD_IDS.ELIGIBILITY.VALID_TYPE_OF_BUYER;
 
       expect(FIELD_ID).toEqual(expected);
     });
@@ -45,7 +45,7 @@ describe('controllers/quote/buyer-body', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELD_ID: PAGE_VARIABLES.FIELD_ID,
-        PAGE_CONTENT_STRINGS: PAGES.QUOTE.BUYER_BODY,
+        PAGE_CONTENT_STRINGS: PAGES.QUOTE.TYPE_OF_BUYER,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -55,7 +55,7 @@ describe('controllers/quote/buyer-body', () => {
   describe('HTML_FLAGS', () => {
     it('should have correct properties', () => {
       const expected = {
-        CUSTOM_CONTENT_HTML: BUYER_BODY.CUSTOM_CONTENT_HTML,
+        CUSTOM_CONTENT_HTML: TYPE_OF_BUYER.CUSTOM_CONTENT_HTML,
       };
 
       expect(HTML_FLAGS).toEqual(expected);
@@ -154,13 +154,13 @@ describe('controllers/quote/buyer-body', () => {
 
         expect(mockFlash).toHaveBeenCalledTimes(3);
 
-        expect(mockFlash.mock.calls[0]).toEqual(['previousRoute', ROUTES.QUOTE.BUYER_BODY]);
+        expect(mockFlash.mock.calls[0]).toEqual(['previousRoute', ROUTES.QUOTE.TYPE_OF_BUYER]);
 
         const { GET_A_QUOTE_BY_EMAIL } = PAGES.QUOTE;
         const { REASON } = GET_A_QUOTE_BY_EMAIL;
 
-        expect(mockFlash.mock.calls[1]).toEqual(['exitReason', REASON.BUYER_BODY]);
-        expect(mockFlash.mock.calls[2]).toEqual(['exitDescription', REASON.BUYER_BODY_DESCRIPTION]);
+        expect(mockFlash.mock.calls[1]).toEqual(['exitReason', REASON.TYPE_OF_BUYER]);
+        expect(mockFlash.mock.calls[2]).toEqual(['exitDescription', REASON.TYPE_OF_BUYER_DESCRIPTION]);
       });
 
       it(`should redirect to ${ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL}`, async () => {
@@ -179,7 +179,7 @@ describe('controllers/quote/buyer-body', () => {
         req.body = validBody;
       });
 
-      it('should update the session with submitted data, populated with mapped buyer body answer', async () => {
+      it('should update the session with submitted data, populated with mapped type of buyer answer', async () => {
         await post(req, res);
 
         const payload = constructPayload(req.body, [FIELD_ID]);
