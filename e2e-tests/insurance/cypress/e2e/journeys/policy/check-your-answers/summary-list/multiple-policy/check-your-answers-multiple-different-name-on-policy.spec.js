@@ -1,6 +1,7 @@
-import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { FIELD_VALUES } from '../../../../../../../../constants';
+import checkSummaryList from '../../../../../../../../commands/insurance/check-policy-summary-list';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 
 const { ROOT: INSURANCE_ROOT, POLICY } = INSURANCE_ROUTES;
 
@@ -9,8 +10,6 @@ const {
     NEED_PRE_CREDIT_PERIOD,
     CREDIT_PERIOD_WITH_BUYER,
     NAME_ON_POLICY: { NAME },
-    USING_BROKER,
-    LOSS_PAYEE: { IS_APPOINTED: LOSS_PAYEE_IS_APPOINTED },
   },
   ACCOUNT: { EMAIL },
 } = INSURANCE_FIELD_IDS;
@@ -25,7 +24,10 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePolicySection({ sameName: false });
+      cy.completePolicySection({
+        policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+        sameName: false,
+      });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`;
     });
@@ -39,10 +41,6 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
 
   after(() => {
     cy.deleteApplication(referenceNumber);
-  });
-
-  it('should render generic policy summary list rows', () => {
-    cy.assertGenericSinglePolicySummaryListRows();
   });
 
   it(`should render a ${NEED_PRE_CREDIT_PERIOD} summary list row`, () => {
@@ -59,13 +57,5 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
 
   it(`should render a ${EMAIL} summary list row`, () => {
     checkSummaryList[EMAIL]({});
-  });
-
-  it(`should render a ${USING_BROKER} summary list row`, () => {
-    checkSummaryList[USING_BROKER]({ usingBroker: false });
-  });
-
-  it(`should render a ${LOSS_PAYEE_IS_APPOINTED} summary list row`, () => {
-    checkSummaryList[LOSS_PAYEE_IS_APPOINTED]({ isAppointingLossPayee: false });
   });
 });

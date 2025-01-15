@@ -29,7 +29,7 @@ context('Insurance - Check your answers - Turnover currency - Your business - Su
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+      cy.completePrepareApplicationSinglePolicyType({});
 
       cy.clickTaskCheckAnswers();
 

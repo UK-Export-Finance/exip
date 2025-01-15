@@ -8,19 +8,21 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
+  USING_BROKER,
+  BROKER_DETAILS: { NAME, EMAIL },
+  BROKER_ADDRESSES: { SELECT_THE_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Check your answers - Policy - Single contract policy - Other company yes - Summary List', () => {
+context('Insurance - Check your answers - Policy - Single contract policy - Broker - not based in UK - Summary List', () => {
   let url;
   let referenceNumber;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-      cy.completePrepareApplicationSinglePolicyType({ otherCompanyInvolved: true });
+      cy.completePrepareApplicationSinglePolicyType({ usingBroker: true, brokerIsBasedInUk: true });
 
       cy.clickTaskCheckAnswers();
 
@@ -47,19 +49,19 @@ context('Insurance - Check your answers - Policy - Single contract policy - Othe
     cy.assertGenericSinglePolicySummaryListRows();
   });
 
-  it(`should render a ${REQUESTED} summary list row`, () => {
-    checkSummaryList.REQUESTED_JOINTLY_INSURED_PARTY[REQUESTED]({ requested: true });
+  it(`should render a ${USING_BROKER} summary list row`, () => {
+    checkSummaryList[USING_BROKER]({ usingBroker: true });
   });
 
-  it(`should render a ${COMPANY_NAME} summary list row`, () => {
-    checkSummaryList.REQUESTED_JOINTLY_INSURED_PARTY[COMPANY_NAME]({ shouldRender: true });
+  it(`should render a ${NAME} summary list row`, () => {
+    checkSummaryList.BROKER[NAME]({});
   });
 
-  it(`should render a ${COMPANY_NUMBER} summary list row`, () => {
-    checkSummaryList.REQUESTED_JOINTLY_INSURED_PARTY[COMPANY_NUMBER]({ shouldRender: true });
+  it(`should render a ${SELECT_THE_ADDRESS} summary list row`, () => {
+    checkSummaryList.BROKER[SELECT_THE_ADDRESS]();
   });
 
-  it(`should render a ${COUNTRY_CODE} summary list row`, () => {
-    checkSummaryList.REQUESTED_JOINTLY_INSURED_PARTY[COUNTRY_CODE]({ shouldRender: true });
+  it(`should render a ${EMAIL} summary list row`, () => {
+    checkSummaryList.BROKER[EMAIL]();
   });
 });
