@@ -60,7 +60,7 @@ context(
         summaryList.field(FIELD_ID).changeLink().click();
 
         cy.completeAndSubmitBrokerForm({ usingBroker: true });
-        cy.completeAndSubmitBrokerDetailsForm({ usingBroker: true, isBasedInUk: false });
+        cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk: false });
 
         cy.completeAndSubmitBrokerManualAddressForm({});
 
@@ -69,7 +69,7 @@ context(
 
       it(`should render new ${FIELD_ID} answer and broker details fields`, () => {
         checkSummaryList[FIELD_ID]({ usingBroker: true });
-        checkSummaryList.BROKER[NAME]({});
+        checkSummaryList.BROKER[NAME]();
 
         checkSummaryList.BROKER[FULL_ADDRESS]({});
 

@@ -59,7 +59,7 @@ context(
         summaryList.field(FIELD_ID).changeLink().click();
 
         cy.completeAndSubmitBrokerForm({ usingBroker: true });
-        cy.completeAndSubmitBrokerDetailsForm({ usingBroker: true, isBasedInUk: true });
+        cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk: true });
         cy.completeAndSubmitBrokerAddressesForm({ optionValue: 'H M TREASURY HORSE GUARDS ROAD' });
 
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId: FIELD_ID });
@@ -67,7 +67,7 @@ context(
 
       it(`should render new ${FIELD_ID} answer and broker details fields`, () => {
         checkSummaryList[FIELD_ID]({ usingBroker: true });
-        checkSummaryList.BROKER[NAME]({});
+        checkSummaryList.BROKER[NAME]();
 
         checkSummaryList.BROKER[SELECT_THE_ADDRESS]({});
 

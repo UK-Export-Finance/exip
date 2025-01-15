@@ -54,7 +54,7 @@ context('Insurance - Check your answers - Policy - Single contract policy - Brok
   });
 
   it(`should render a ${NAME} summary list row`, () => {
-    checkSummaryList.BROKER[NAME]({});
+    checkSummaryList.BROKER[NAME]();
   });
 
   it(`should render a ${FULL_ADDRESS} summary list row`, () => {

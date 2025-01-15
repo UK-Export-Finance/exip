@@ -196,7 +196,7 @@ const application = {
     [USING_BROKER]: true,
     [NAME]: 'Mock broker name',
     [EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1'),
-    [BROKER_FULL_ADDRESS]: 'Mock broker address',
+    [BROKER_FULL_ADDRESS]: 'Mock full broker address',
     [BUILDING_NUMBER_OR_NAME]: '1',
     [POSTCODE]: VALID_POSTCODES.WITH_SPACE,
   },

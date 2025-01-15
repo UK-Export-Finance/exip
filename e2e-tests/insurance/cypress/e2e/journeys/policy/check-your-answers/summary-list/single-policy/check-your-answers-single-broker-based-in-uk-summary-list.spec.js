@@ -41,7 +41,7 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
   });
 
   it(`should render a ${NAME} summary list row`, () => {
-    checkSummaryList.BROKER[NAME]({});
+    checkSummaryList.BROKER[NAME]();
   });
 
   it(`should render a ${SELECT_THE_ADDRESS} summary list row`, () => {
