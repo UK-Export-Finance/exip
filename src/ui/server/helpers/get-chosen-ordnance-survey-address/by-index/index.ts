@@ -1,9 +1,4 @@
-import { MappedOrdnanceSurveyAddress } from '../../../../types';
-
-interface GetChosenOrdnanceSurveyAddressByIndexParams {
-  addresses: Array<MappedOrdnanceSurveyAddress>;
-  index?: number;
-}
+import { GetChosenOrdnanceSurveyAddressByIndexParams, MappedOrdnanceSurveyAddress } from '../../../../types';
 
 /**
  * getChosenOrdnanceSurveyAddressByIndex
