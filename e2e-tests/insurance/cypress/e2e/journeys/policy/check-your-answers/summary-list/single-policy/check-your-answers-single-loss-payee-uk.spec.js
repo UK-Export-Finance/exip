@@ -1,6 +1,6 @@
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
-import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
+import checkSummaryList from '../../../../../../../../commands/insurance/check-policy-summary-list';
 
 const { ROOT: INSURANCE_ROOT, POLICY } = INSURANCE_ROUTES;
 
@@ -14,7 +14,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Check your answers - Summary list - Single contract policy - Using loss payee based internationally', () => {
+context('Insurance - Policy - Check your answers - Summary list - Single contract policy - Loss payee based in the UK', () => {
   let referenceNumber;
   let url;
 
@@ -24,7 +24,7 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
 
       cy.completePolicySection({
         isAppointingLossPayee: true,
-        lossPayeeIsLocatedInUK: false,
+        lossPayeeIsLocatedInUK: true,
       });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`;
@@ -41,10 +41,6 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
     cy.deleteApplication(referenceNumber);
   });
 
-  it('should render generic policy summary list rows', () => {
-    cy.assertGenericSinglePolicySummaryListRows();
-  });
-
   it(`should render a ${LOSS_PAYEE_IS_APPOINTED} summary list row`, () => {
     checkSummaryList[LOSS_PAYEE_IS_APPOINTED]({ isAppointingLossPayee: true });
   });
@@ -54,22 +50,22 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
   });
 
   it(`should render a ${FINANCIAL_ADDRESS} summary list row`, () => {
-    checkSummaryList.LOSS_PAYEE[FINANCIAL_ADDRESS]({ shouldRender: true, isInternational: true });
+    checkSummaryList.LOSS_PAYEE[FINANCIAL_ADDRESS]({ shouldRender: true, isUk: true });
   });
 
-  it(`should render a ${BIC_SWIFT_CODE} summary list row`, () => {
-    checkSummaryList.LOSS_PAYEE[BIC_SWIFT_CODE]({ shouldRender: true });
+  it(`should render a ${SORT_CODE} summary list row`, () => {
+    checkSummaryList.LOSS_PAYEE[SORT_CODE]({ shouldRender: true });
   });
 
-  it(`should render an ${IBAN} summary list row`, () => {
-    checkSummaryList.LOSS_PAYEE[IBAN]({ shouldRender: true });
+  it(`should render a ${ACCOUNT_NUMBER} summary list row`, () => {
+    checkSummaryList.LOSS_PAYEE[ACCOUNT_NUMBER]({ shouldRender: true });
   });
 
-  it(`should NOT render a ${SORT_CODE} summary list row`, () => {
-    checkSummaryList.LOSS_PAYEE[SORT_CODE]({ shouldRender: false });
+  it(`should NOT render a ${BIC_SWIFT_CODE} summary list row`, () => {
+    checkSummaryList.LOSS_PAYEE[BIC_SWIFT_CODE]({ shouldRender: false });
   });
 
-  it(`should NOT render a ${ACCOUNT_NUMBER} summary list row`, () => {
-    checkSummaryList.LOSS_PAYEE[ACCOUNT_NUMBER]({ shouldRender: false });
+  it(`should NOT render an ${IBAN} summary list row`, () => {
+    checkSummaryList.LOSS_PAYEE[IBAN]({ shouldRender: false });
   });
 });

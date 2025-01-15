@@ -1,6 +1,6 @@
 import { summaryList } from '../../pages/shared';
 import getSummaryListField from './get-summary-list-field';
-import { EXPECTED_SINGLE_LINE_STRING, FIELD_VALUES } from '../../constants';
+import { EXPECTED_SINGLE_LINE_STRING, FIELD_VALUES, EXPECTED_TREASURY_SINGLE_LINE_STRING } from '../../constants';
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { POLICY_FIELDS as FIELDS } from '../../content-strings/fields/insurance/policy';
 import account from '../../fixtures/account';
@@ -243,9 +243,9 @@ const checkPolicySummaryList = {
 
         cy.checkText(row.key(), expectedKey);
 
-        row.value().contains(EXPECTED_SINGLE_LINE_STRING);
+        row.value().contains(EXPECTED_TREASURY_SINGLE_LINE_STRING);
 
-        const expectedLineBreaks = 3;
+        const expectedLineBreaks = 4;
 
         cy.assertLength(row.valueHtmlLineBreak(), expectedLineBreaks);
       } else {

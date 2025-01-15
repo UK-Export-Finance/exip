@@ -23,7 +23,7 @@ context(
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.completePrepareApplicationSinglePolicyType({ referenceNumber, hasConnectionToBuyer: false });
+        cy.completePrepareApplicationSinglePolicyType({ hasConnectionToBuyer: false });
 
         cy.clickTaskCheckAnswers();
 

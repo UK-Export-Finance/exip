@@ -1,47 +1,20 @@
 import mapAndFilterOrdnanceSurveyAddresses from '.';
+import filterOrdnanceSurveyAddresses from '../filter-ordnance-survey-addresses';
+import mapOrdnanceSurveyAddresses from '../map-ordnance-survey-addresses';
 import mockOrdnanceSurveyResponse from '../../test-mocks/mock-ordnance-survey-response';
-import mapAddress from '../map-ordnance-survey-address';
 
-describe('mapAndFilterOrdnanceSurveyAddresses', () => {
-  const ordnanceSurveyResponse = mockOrdnanceSurveyResponse.results;
+const ordnanceSurveyResponse = mockOrdnanceSurveyResponse.results;
 
-  describe('when an address is found', () => {
-    it('should return a single element array when an address is found by SUB_BUILDING_NAME', () => {
-      const address = ordnanceSurveyResponse[0].DPA;
+describe('api/helpers/map-and-filter-ordnance-survey-addresses', () => {
+  it('should return an filtered and mapped addresses', () => {
+    const mockHouseNameOrNumber = 'ABC';
 
-      const result = mapAndFilterOrdnanceSurveyAddresses(String(address.SUB_BUILDING_NAME), ordnanceSurveyResponse);
+    const result = mapAndFilterOrdnanceSurveyAddresses(ordnanceSurveyResponse, mockHouseNameOrNumber);
 
-      const expected = [mapAddress(ordnanceSurveyResponse[0])];
+    const filtered = filterOrdnanceSurveyAddresses(ordnanceSurveyResponse, mockHouseNameOrNumber);
 
-      expect(result).toEqual(expected);
-    });
+    const expected = mapOrdnanceSurveyAddresses(filtered);
 
-    it('should return a single element array when an address is found by BUILDING_NAME', () => {
-      const address = ordnanceSurveyResponse[1].DPA;
-
-      const result = mapAndFilterOrdnanceSurveyAddresses(String(address.BUILDING_NAME), ordnanceSurveyResponse);
-
-      const expected = [mapAddress(ordnanceSurveyResponse[1])];
-
-      expect(result).toEqual(expected);
-    });
-
-    it('should return a single element array when an address is found by BUILDING_NUMBER', () => {
-      const address = ordnanceSurveyResponse[2].DPA;
-
-      const result = mapAndFilterOrdnanceSurveyAddresses(String(address.BUILDING_NUMBER), ordnanceSurveyResponse);
-
-      const expected = [mapAddress(ordnanceSurveyResponse[2])];
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when no addresses are found', () => {
-    it('should return an empty array', () => {
-      const result = mapAndFilterOrdnanceSurveyAddresses('ABC', ordnanceSurveyResponse);
-
-      expect(result).toEqual([]);
-    });
+    expect(result).toEqual(expected);
   });
 });

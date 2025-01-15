@@ -24,7 +24,7 @@ context('Insurance - Change your answers - Policy - Broker - Yes to no - As an e
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber, usingBroker: true });
+      cy.completePrepareApplicationSinglePolicyType({ usingBroker: true });
 
       cy.clickTaskCheckAnswers();
 
