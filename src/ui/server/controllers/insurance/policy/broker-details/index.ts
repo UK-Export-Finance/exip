@@ -152,7 +152,7 @@ export const post = async (req: Request, res: Response) => {
     /**
      * If broker IS_BASED_IN_UK is true,
      * and is a change route, redirect to BROKER_ADDRESSES_CHANGE.
-     * * or is a check-and-change route, redirect to CHECK_AND_CHANGE_ROUTE.
+     * or is a check-and-change route, redirect to CHECK_AND_CHANGE_ROUTE.
      * Otherwise, redirect to BROKER_ADDRESSES.
      */
     if (isBasedInUk) {

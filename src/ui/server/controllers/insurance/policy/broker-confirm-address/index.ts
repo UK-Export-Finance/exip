@@ -39,7 +39,6 @@ export const pageVariables = (referenceNumber: number, isAChangeRoute: boolean) 
    * the "different address" link/URL should link to the BROKER_DETAILS_CHANGE. Otherwise, BROKER_DETAILS.
    * Otherwise, during the "change your answers" journey, a user would not be immediately taken back to "check your answers"
    */
-  // isAChangeRoute ? useDifferentAddressUrl += BROKER_DETAILS_CHANGE : useDifferentAddressUrl += BROKER_DETAILS_ROOT;
   if (isAChangeRoute) {
     useDifferentAddressUrl += BROKER_DETAILS_CHANGE;
   } else {
