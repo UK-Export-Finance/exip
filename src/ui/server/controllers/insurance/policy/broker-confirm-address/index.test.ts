@@ -16,7 +16,7 @@ const {
 const {
   INSURANCE_ROOT,
   ALL_SECTIONS,
-  POLICY: { BROKER_DETAILS_ROOT, BROKER_MANUAL_ADDRESS_ROOT, LOSS_PAYEE_ROOT },
+  POLICY: { BROKER_DETAILS_ROOT, BROKER_CONFIRM_ADDRESS_CHANGE, BROKER_MANUAL_ADDRESS_ROOT, LOSS_PAYEE_ROOT, CHECK_YOUR_ANSWERS },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -88,6 +88,17 @@ describe('controllers/insurance/policy/broker-confirm-address', () => {
   });
 
   describe('post', () => {
+    describe("when the url's last substring is `change`", () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+        req.originalUrl = BROKER_CONFIRM_ADDRESS_CHANGE;
+
+        await post(req, res);
+
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+    });
+
     it(`should redirect to ${LOSS_PAYEE_ROOT}`, () => {
       post(req, res);
 
