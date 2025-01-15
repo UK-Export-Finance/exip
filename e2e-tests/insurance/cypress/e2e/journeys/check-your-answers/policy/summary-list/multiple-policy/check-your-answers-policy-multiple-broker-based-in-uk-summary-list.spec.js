@@ -15,7 +15,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Check your answers - Policy - Multiple contract policy - Broker - based in UK - Summary List', () => {
+context('Insurance - Check your answers - Policy - Multiple contract policy - Broker - Based in UK - Summary List', () => {
   let url;
   let referenceNumber;
 
