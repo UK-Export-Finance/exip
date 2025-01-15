@@ -71,7 +71,7 @@ context('Insurance - Change your answers - Policy - Broker - No to yes - As an e
       summaryList.field(FIELD_ID).changeLink().click();
 
       cy.completeAndSubmitBrokerForm({ usingBroker: true });
-      cy.completeAndSubmitBrokerDetailsForm({ usingBroker: true });
+      cy.completeAndSubmitBrokerDetailsForm({});
 
       cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId: FIELD_ID });
     });
