@@ -18,7 +18,7 @@ const { BROKER_CONFIRM_ADDRESS_CHANGE, BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE }
 
 const checkAndChange = false;
 
-const { buildingNumberOrName, addressLine1, addressLine2, town, county, postcode } = mockBroker;
+const { addressLine1, addressLine2, town, county, postcode } = mockBroker;
 
 describe('server/helpers/summary-lists/policy/broker-fields/address-field', () => {
   describe(`when ${IS_BASED_IN_UK} is true`, () => {
@@ -44,7 +44,7 @@ describe('server/helpers/summary-lists/policy/broker-fields/address-field', () =
           renderChangeLink: true,
         },
         generateMultipleFieldHtml({
-          addressLine1: `${buildingNumberOrName} ${addressLine1}`,
+          addressLine1,
           addressLine2,
           town,
           county,

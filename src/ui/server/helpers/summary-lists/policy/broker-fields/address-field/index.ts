@@ -35,10 +35,10 @@ const brokerAddressField = (answers: ApplicationBroker, referenceNumber: number,
   if (answers[IS_BASED_IN_UK]) {
     field = getFieldById(POLICY_FIELDS.BROKER_ADDRESSES, SELECT_THE_ADDRESS);
 
-    const { buildingNumberOrName, addressLine1, addressLine2, town, county, postcode } = answers;
+    const { addressLine1, addressLine2, town, county, postcode } = answers;
 
     fieldValue = generateMultipleFieldHtml({
-      addressLine1: `${buildingNumberOrName} ${addressLine1}`,
+      addressLine1,
       addressLine2,
       town,
       county,
