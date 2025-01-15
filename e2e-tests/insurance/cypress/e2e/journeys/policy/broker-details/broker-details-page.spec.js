@@ -1,7 +1,7 @@
 import { headingCaption } from '../../../../../../partials';
 import { field as fieldSelector, noRadio, yesRadio } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
-import { FIELD_VALUES } from '../../../../../../constants';
+import { ADDRESS_INPUT_EXAMPLES, FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
@@ -14,7 +14,7 @@ const {
 
 const {
   ROOT,
-  POLICY: { BROKER_ROOT, BROKER_DETAILS_ROOT, BROKER_ADDRESSES_ROOT, BROKER_MANUAL_ADDRESS_ROOT },
+  POLICY: { BROKER_ROOT, BROKER_DETAILS_ROOT, BROKER_ADDRESSES_ROOT, BROKER_MANUAL_ADDRESS_ROOT, BROKER_CONFIRM_ADDRESS_ROOT },
 } = INSURANCE_ROUTES;
 
 const { BROKER_DETAILS: FIELD_STRINGS } = FIELDS;
@@ -28,6 +28,7 @@ context(
     let url;
     let brokerAddressesUrl;
     let brokerManualAddressUrl;
+    let brokerConfirmAddressUrl;
 
     before(() => {
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -39,6 +40,7 @@ context(
         url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
         brokerAddressesUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ADDRESSES_ROOT}`;
         brokerManualAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
+        brokerConfirmAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
 
         cy.assertUrl(url);
       });
@@ -158,9 +160,43 @@ context(
         cy.navigateToUrl(url);
       });
 
-      describe(`when submitting ${IS_BASED_IN_UK} as "yes"`, () => {
+      describe(`when submitting ${IS_BASED_IN_UK} as "yes" and there is only one address available`, () => {
+        const postcode = ADDRESS_INPUT_EXAMPLES.TREASURY.POSTCODE;
+        const buildingNumberOrName = ADDRESS_INPUT_EXAMPLES.TREASURY.BUILDING_NUMBER;
+
+        it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT} page`, () => {
+          cy.completeAndSubmitBrokerDetailsForm({
+            isBasedInUk: true,
+            postcode,
+            buildingNumberOrName,
+          });
+
+          cy.assertUrl(brokerConfirmAddressUrl);
+        });
+
+        describe('when going back to the page', () => {
+          it('should have the submitted values', () => {
+            cy.navigateToUrl(url);
+
+            cy.assertBrokerDetailsFieldValues({
+              isBasedInUk: true,
+              expectedPostcode: postcode,
+              expectedBuildingNumberOrName: buildingNumberOrName,
+            });
+          });
+        });
+      });
+
+      describe(`when submitting ${IS_BASED_IN_UK} as "yes" and there is more than one address available`, () => {
+        const postcode = ADDRESS_INPUT_EXAMPLES.WESTMINSTER_BRIDGE_STREET.POSTCODE;
+        const buildingNumberOrName = ADDRESS_INPUT_EXAMPLES.WESTMINSTER_BRIDGE_STREET.BUILDING_NAME;
+
         it(`should redirect to ${BROKER_ADDRESSES_ROOT} page`, () => {
-          cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk: true });
+          cy.completeAndSubmitBrokerDetailsForm({
+            isBasedInUk: true,
+            postcode,
+            buildingNumberOrName,
+          });
 
           cy.assertUrl(brokerAddressesUrl);
         });
@@ -169,7 +205,11 @@ context(
           it('should have the submitted values', () => {
             cy.navigateToUrl(url);
 
-            cy.assertBrokerDetailsFieldValues({ isBasedInUk: true });
+            cy.assertBrokerDetailsFieldValues({
+              isBasedInUk: true,
+              expectedPostcode: postcode,
+              expectedBuildingNumberOrName: buildingNumberOrName,
+            });
           });
         });
       });

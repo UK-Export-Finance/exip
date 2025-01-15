@@ -1,6 +1,9 @@
 import { radios } from '../../../../../../pages/shared';
+import { ORDNANCE_SURVEY_EXAMPLES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
+
+const { TREASURY } = ORDNANCE_SURVEY_EXAMPLES;
 
 const {
   BROKER_ADDRESSES: { SELECT_THE_ADDRESS: FIELD_ID },
@@ -13,7 +16,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-const optionValue = '1 H M TREASURY HORSE GUARDS ROAD';
+const optionValue = `${TREASURY.ADDRESS_LINE_1} ${TREASURY.ADDRESS_LINE_2}`;
 
 context('Insurance - Policy - Broker addresses page - Save and back', () => {
   let referenceNumber;

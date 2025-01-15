@@ -1,6 +1,7 @@
 import { errorSummaryListItems, errorSummaryListItemLinks } from '../../../../../../partials';
 import { field as fieldSelector, intro, radios } from '../../../../../../pages/shared';
 import { brokerAddressesPage } from '../../../../../../pages/insurance/policy';
+import { ORDNANCE_SURVEY_EXAMPLES } from '../../../../../../constants';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -22,11 +23,13 @@ const {
 
 const { BROKER_ADDRESSES: FIELD_STRINGS } = FIELDS;
 
+const { TREASURY } = ORDNANCE_SURVEY_EXAMPLES;
+
 const baseUrl = Cypress.config('baseUrl');
 
 const field = fieldSelector(FIELD_ID);
 
-const optionValue = '1 H M TREASURY HORSE GUARDS ROAD';
+const optionValue = `${TREASURY.ADDRESS_LINE_1} ${TREASURY.ADDRESS_LINE_2}`;
 
 const optionDataCy = `${FIELD_ID}-${optionValue}`;
 
@@ -77,7 +80,7 @@ context(
           .invoke('text')
           .then((text) => {
             expect(text.trim()).includes(`1 ${ADDRESS} ${FOUND_FOR} `);
-            expect(text.trim()).includes('SW1A 2HQ');
+            expect(text.trim()).includes(TREASURY.POSTCODE);
             expect(text.trim()).includes(` ${SEPARATOR} `);
             expect(text.trim()).includes('1.');
             expect(text.trim()).includes(SEARCH_AGAIN);

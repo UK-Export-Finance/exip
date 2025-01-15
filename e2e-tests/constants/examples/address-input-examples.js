@@ -1,0 +1,11 @@
+export const ADDRESS_INPUT_EXAMPLES = {
+  TREASURY: {
+    POSTCODE: 'SW1A 2HQ',
+    BUILDING_NUMBER: '1',
+    BUILDING_NAME: 'H M Treasury',
+  },
+  WESTMINSTER_BRIDGE_STREET: {
+    POSTCODE: 'SW1A 2JR',
+    BUILDING_NAME: 'Westminster',
+  },
+};
