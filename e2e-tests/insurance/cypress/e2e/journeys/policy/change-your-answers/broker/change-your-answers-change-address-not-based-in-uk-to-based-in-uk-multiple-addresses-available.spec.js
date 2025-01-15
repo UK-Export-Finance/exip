@@ -1,4 +1,6 @@
 import { summaryList } from '../../../../../../../pages/shared';
+import { brokerConfirmAddressPage } from '../../../../../../../pages/insurance/policy';
+import { EXPECTED_UNDERGROUND_STATION_SINGLE_LINE_STRING } from '../../../../../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
@@ -12,7 +14,7 @@ const {
 
 const {
   ROOT,
-  POLICY: { BROKER_CONFIRM_ADDRESS_CHANGE, CHECK_YOUR_ANSWERS },
+  POLICY: { BROKER_ADDRESSES_CHANGE, BROKER_CONFIRM_ADDRESS_CHANGE, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 /**
@@ -22,12 +24,14 @@ const {
  * TODO
  * use constants (after another PR is merged)
  */
-const optionValue = '1 H M TREASURY HORSE GUARDS ROAD';
+const postcode = 'SW1A 2JR';
+const optionValue = 'LONDON UNDERGROUND LTD WESTMINSTER STATION BRIDGE STREET';
+const buildingNumberOrName = 'Westminster';
 
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  'Insurance - Policy - Change your answers - Broker address - Not based in UK to Based in UK - As an exporter, I want to change my answers to the broker section',
+  'Insurance - Policy - Change your answers - Broker address - Not based in UK to Based in UK - Multiple addresses available - As an exporter, I want to change my answers to the broker section',
   () => {
     let referenceNumber;
     let checkYourAnswersUrl;
@@ -66,12 +70,21 @@ context(
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        summaryList.field(NAME).changeLink().click();
+        summaryList.field(FULL_ADDRESS).changeLink().click();
 
-        cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk: true });
+        brokerConfirmAddressPage.useDifferentAddressLink().click();
+
+        cy.completeAndSubmitBrokerDetailsForm({
+          isBasedInUk: true,
+          postcode,
+          buildingNumberOrName,
+        });
+
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_ADDRESSES_CHANGE });
+
         cy.completeAndSubmitBrokerAddressesForm({ optionValue });
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId: NAME });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS });
       });
 
       it(`should render the new ${SELECT_THE_ADDRESS} answer and related fields`, () => {
@@ -79,7 +92,10 @@ context(
         checkSummaryList.BROKER[NAME]();
         checkSummaryList.BROKER[EMAIL]();
 
-        checkSummaryList.BROKER[SELECT_THE_ADDRESS]({ shouldRender: true });
+        checkSummaryList.BROKER[SELECT_THE_ADDRESS]({
+          shouldRender: true,
+          expectedValue: EXPECTED_UNDERGROUND_STATION_SINGLE_LINE_STRING,
+        });
       });
 
       it(`should NOT render ${FULL_ADDRESS} field`, () => {

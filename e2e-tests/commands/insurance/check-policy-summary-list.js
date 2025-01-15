@@ -233,7 +233,7 @@ const checkPolicySummaryList = {
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
-    [BROKER_ADDRESSES.SELECT_THE_ADDRESS]: ({ shouldRender = true }) => {
+    [BROKER_ADDRESSES.SELECT_THE_ADDRESS]: ({ shouldRender = true, expectedValue = EXPECTED_TREASURY_SINGLE_LINE_STRING }) => {
       const fieldId = BROKER_ADDRESSES.SELECT_THE_ADDRESS;
 
       if (shouldRender) {
@@ -243,7 +243,7 @@ const checkPolicySummaryList = {
 
         cy.checkText(row.key(), expectedKey);
 
-        row.value().contains(EXPECTED_TREASURY_SINGLE_LINE_STRING);
+        row.value().contains(expectedValue);
 
         const expectedLineBreaks = 4;
 
