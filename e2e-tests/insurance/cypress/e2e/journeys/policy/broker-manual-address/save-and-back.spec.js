@@ -23,12 +23,9 @@ context('Insurance - Policy - Broker manual address page - Save and back', () =>
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'brokerDetails', usingBroker: true });
+      cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'brokerDetails', usingBroker: true, isBasedInUk: false });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
-
-      // TODO: EMS-3973 - remove this
-      cy.navigateToUrl(url);
 
       cy.assertUrl(url);
     });
@@ -76,8 +73,12 @@ context('Insurance - Policy - Broker manual address page - Save and back', () =>
     });
 
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
-      // TODO: EMS-3973 - remove this, use cy.clickSubmitButtonMultipleTimes instead.
-      cy.navigateToUrl(url);
+      cy.navigateToAllSectionsUrl(referenceNumber);
+
+      cy.startInsurancePolicySection({});
+
+      // go through 8 policy forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 8 });
 
       cy.checkTextareaValue({
         fieldId: FIELD_ID,

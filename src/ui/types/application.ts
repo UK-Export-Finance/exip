@@ -131,6 +131,7 @@ interface ApplicationBroker {
   addressLine2?: string;
   buildingNumberOrName?: string;
   town?: string;
+  county?: string;
   postcode?: string;
   fullAddress?: string;
   email?: string;

@@ -6765,6 +6765,10 @@ var POLICY_FIELDS = {
   BROKER_ADDRESSES: {
     [SELECT_THE_ADDRESS]: {
       LABEL: 'Select the address',
+      SUMMARY: {
+        TITLE: "Broker's address",
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
+      },
     },
   },
   BROKER_MANUAL_ADDRESS: {

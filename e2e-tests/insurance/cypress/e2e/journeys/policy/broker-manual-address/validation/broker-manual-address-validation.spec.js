@@ -30,12 +30,9 @@ context('Insurance - Policy - Broker manual address page - validation', () => {
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'brokerDetails', usingBroker: true });
+      cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'brokerDetails', usingBroker: true, isBasedInUk: false });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
-
-      // TODO: EMS-3973 - remove this
-      cy.navigateToUrl(url);
 
       cy.assertUrl(url);
     });
