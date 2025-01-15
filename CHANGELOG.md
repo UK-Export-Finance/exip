@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.39.2](https://github.com/UK-Export-Finance/exip/compare/v2.39.1...v2.39.2) (2025-01-15)
+
+
+### Bug Fixes
+
+* **EMS-4100:** country risk logic - quote - no online support ([beb52db](https://github.com/UK-Export-Finance/exip/commit/beb52dbc3ff6f604a75e3f49ce70c5967b2d90c9))
+* **EMS-4100:** fix typo ([b894451](https://github.com/UK-Export-Finance/exip/commit/b8944514a1fc73fe2ea58fc17e6618e2b927f076))
+* **EMS-4100:** fix typo ([f84df69](https://github.com/UK-Export-Finance/exip/commit/f84df696c484decfa9fd367b221b63e39305270d))
+* **EMS-4100:** fix typo ([5706e31](https://github.com/UK-Export-Finance/exip/commit/5706e31630c0b315b2f7232b836b7389fbacbfab))
+* **EMS-4100:** fix/update tests ([3063da1](https://github.com/UK-Export-Finance/exip/commit/3063da1b676689afcd4795de543d76cd2f233006))
+
 ## [2.39.1](https://github.com/UK-Export-Finance/exip/compare/v2.39.0...v2.39.1) (2025-01-10)
 
 
