@@ -88,7 +88,9 @@ describe('getOrdnanceSurveyAddresses', () => {
     });
 
     it('should throw an error', async () => {
-      await expect(getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber })).rejects.toThrow('Getting Ordnance Survey addresses');
+      const response = getOrdnanceSurveyAddress({}, { postcode, houseNameOrNumber });
+
+      await expect(response).rejects.toThrow('Getting Ordnance Survey addresses');
     });
   });
 });
