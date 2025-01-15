@@ -41,6 +41,8 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker".
  * @param {Boolean} brokerIsBasedInUk: Should submit "yes or "no" to "broker is based in the UK".
+ * @param {String} brokerBuildingNumberOrName: Broker building name or number.
+ * @param {String} brokerPostcode: Broker postcode.
  * @return {String} Application reference number
  */
 const completeSignInAndSubmitAnApplication = ({
@@ -78,6 +80,8 @@ const completeSignInAndSubmitAnApplication = ({
   totalContractValueOverThreshold = false,
   usingBroker = false,
   brokerIsBasedInUk = false,
+  brokerBuildingNumberOrName,
+  brokerPostcode,
 }) => {
   completeSignInAndGoToApplication({
     companyNumber,
@@ -116,6 +120,8 @@ const completeSignInAndSubmitAnApplication = ({
         totalContractValueOverThreshold,
         usingBroker,
         brokerIsBasedInUk,
+        brokerBuildingNumberOrName,
+        brokerPostcode,
       });
     } else {
       cy.completePrepareApplicationSinglePolicyType({
@@ -149,6 +155,8 @@ const completeSignInAndSubmitAnApplication = ({
         totalContractValueOverThreshold,
         usingBroker,
         brokerIsBasedInUk,
+        brokerBuildingNumberOrName,
+        brokerPostcode,
       });
     }
     cy.completeAndSubmitCheckYourAnswers();

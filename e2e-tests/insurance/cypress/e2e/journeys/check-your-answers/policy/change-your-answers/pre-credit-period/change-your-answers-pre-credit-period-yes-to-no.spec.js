@@ -32,7 +32,7 @@ context('Insurance - Change your answers - Policy - Pre-credit period - Change f
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber, needPreCreditPeriod: true });
+      cy.completePrepareApplicationSinglePolicyType({ needPreCreditPeriod: true });
 
       cy.clickTaskCheckAnswers();
 

@@ -20,7 +20,7 @@ context('Insurance - Check your answers - Policy - Single contract policy - Othe
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber, otherCompanyInvolved: true });
+      cy.completePrepareApplicationSinglePolicyType({ otherCompanyInvolved: true });
 
       cy.clickTaskCheckAnswers();
 

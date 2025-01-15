@@ -14,6 +14,8 @@ const { POLICY_TYPE } = APPLICATION;
  * @param {Boolean} needPreCreditPeriod: If the user needs a pre-credit period - defaults to false
  * @param {Boolean} usingBroker: If "using broker" - defaults to false
  * @param {Boolean} brokerIsBasedInUk: Broker is based in the UK - defaults to false
+ * @param {String} brokerBuildingNumberOrName: Broker building name or number
+ * @param {String} brokerPostcode: Broker postcode
  * @param {Boolean} otherCompanyInvolved: Should submit "yes" to "another company to be insured". Defaults to false.
  * @param {Boolean} isAppointingLossPayee: Should submit "yes" or "no" to "appointing a loss payee". Defaults to false.
  * @param {Boolean} lossPayeeIsLocatedInUK: Should submit "UK" to "loss payee details". Defaults to false.
@@ -29,6 +31,8 @@ const completePolicySection = ({
   needPreCreditPeriod = false,
   usingBroker = false,
   brokerIsBasedInUk = false,
+  brokerBuildingNumberOrName,
+  brokerPostcode,
   otherCompanyInvolved = false,
   isAppointingLossPayee = false,
   lossPayeeIsLocatedInUK = false,
@@ -71,7 +75,11 @@ const completePolicySection = ({
   cy.completeAndSubmitBrokerForm({ usingBroker });
 
   if (usingBroker) {
-    cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk: brokerIsBasedInUk });
+    cy.completeAndSubmitBrokerDetailsForm({
+      isBasedInUk: brokerIsBasedInUk,
+      buildingNumberOrName: brokerBuildingNumberOrName,
+      postcode: brokerPostcode,
+    });
 
     if (brokerIsBasedInUk) {
       cy.completeAndSubmitBrokerAddressesForm({});

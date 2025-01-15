@@ -1,12 +1,6 @@
-import { Address } from '../address';
 import { SuccessResponse } from '../generic';
 
-export interface MappedOrdnanceSurveyAddress extends Address {
-  town?: string;
-  county?: string;
-}
-
-export interface OrdnanceSurveyAddress {
+export interface OrdnanceSurveyAddressDPA {
   ADDRESS: string;
   BUILDING_NUMBER?: string;
   BUILDING_NAME?: string;
@@ -18,12 +12,12 @@ export interface OrdnanceSurveyAddress {
   THOROUGHFARE_NAME?: string;
 }
 
-export interface OrdnanceSurveyResponse {
-  DPA: OrdnanceSurveyAddress;
+export interface OrdnanceSurveyAddress {
+  DPA: OrdnanceSurveyAddressDPA;
 }
 
 export interface OrdnanceSurveyAPIResponse extends SuccessResponse {
-  data?: Array<OrdnanceSurveyResponse>;
+  data?: Array<OrdnanceSurveyAddress>;
 }
 
 export interface OrdnanceSurveyVariables {

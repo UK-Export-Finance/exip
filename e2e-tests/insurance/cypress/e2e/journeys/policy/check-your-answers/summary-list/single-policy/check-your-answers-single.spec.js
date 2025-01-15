@@ -1,7 +1,6 @@
-import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
-import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
+import checkSummaryList from '../../../../../../../../commands/insurance/check-policy-summary-list';
 
 const { ROOT: INSURANCE_ROOT, POLICY } = INSURANCE_ROUTES;
 
@@ -11,15 +10,14 @@ const {
   NAME_ON_POLICY: { NAME },
   USING_BROKER,
   LOSS_PAYEE: { IS_APPOINTED: LOSS_PAYEE_IS_APPOINTED },
+  LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME },
+  LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
+  FINANCIAL_ADDRESS,
 } = POLICY_FIELD_IDS;
-
-const {
-  ACCOUNT: { EMAIL },
-} = INSURANCE_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Check your answers - Summary list - Single contract policy - Name on policy', () => {
+context('Insurance - Policy - Check your answers - Summary list - Single contract policy', () => {
   let referenceNumber;
   let url;
 
@@ -59,15 +57,27 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
     checkSummaryList[NAME]({});
   });
 
-  it(`should render a ${EMAIL} summary list row without a change link`, () => {
-    checkSummaryList[EMAIL]({ renderChangeLink: false });
-  });
-
   it(`should render a ${USING_BROKER} summary list row`, () => {
     checkSummaryList[USING_BROKER]({ usingBroker: false });
   });
 
   it(`should render a ${LOSS_PAYEE_IS_APPOINTED} summary list row`, () => {
     checkSummaryList[LOSS_PAYEE_IS_APPOINTED]({ isAppointingLossPayee: false });
+  });
+
+  it(`should NOT render a ${LOSS_PAYEE_NAME} summary list row`, () => {
+    checkSummaryList.LOSS_PAYEE[LOSS_PAYEE_NAME]({ shouldRender: false });
+  });
+
+  it(`should NOT render a ${FINANCIAL_ADDRESS} summary list row`, () => {
+    checkSummaryList.LOSS_PAYEE[FINANCIAL_ADDRESS]({ shouldRender: false });
+  });
+
+  it(`should NOT render a ${SORT_CODE} summary list row`, () => {
+    checkSummaryList.LOSS_PAYEE[SORT_CODE]({ shouldRender: false });
+  });
+
+  it(`should NOT render a ${ACCOUNT_NUMBER} summary list row`, () => {
+    checkSummaryList.LOSS_PAYEE[ACCOUNT_NUMBER]({ shouldRender: false });
   });
 });

@@ -42,6 +42,8 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker".
  * @param {Boolean} brokerIsBasedInUk: Should submit "yes or "no" to "broker is based in the UK".
+ * @param {String} brokerBuildingNumberOrName: Broker building name or number.
+ * @param {String} brokerPostcode: Broker postcode.
  */
 const completePrepareApplicationSinglePolicyType = ({
   agentChargeMethodFixedSum = false,
@@ -80,6 +82,8 @@ const completePrepareApplicationSinglePolicyType = ({
   submitCheckYourAnswers = true,
   usingBroker = false,
   brokerIsBasedInUk = false,
+  brokerBuildingNumberOrName,
+  brokerPostcode,
 }) => {
   cy.completeBusinessSection({
     differentTradingName,
@@ -109,6 +113,8 @@ const completePrepareApplicationSinglePolicyType = ({
     submitCheckYourAnswers,
     usingBroker,
     brokerIsBasedInUk,
+    brokerBuildingNumberOrName,
+    brokerPostcode,
     otherCompanyInvolved,
     needPreCreditPeriod,
     isAppointingLossPayee,

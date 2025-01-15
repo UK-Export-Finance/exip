@@ -1,6 +1,7 @@
-import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
-import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { FIELD_VALUES } from '../../../../../../../../constants';
+import checkSummaryList from '../../../../../../../../commands/insurance/check-policy-summary-list';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 
 const { ROOT: INSURANCE_ROOT, POLICY } = INSURANCE_ROUTES;
 
@@ -10,7 +11,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Check your answers - Summary list - Single contract policy - Other company as no', () => {
+context('Insurance - Policy - Check your answers - Summary list - Multiple contract policy - Other company as no', () => {
   let referenceNumber;
   let url;
 
@@ -18,7 +19,10 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePolicySection({ sameName: false });
+      cy.completePolicySection({
+        policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+        sameName: false,
+      });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`;
     });
@@ -32,10 +36,6 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
 
   after(() => {
     cy.deleteApplication(referenceNumber);
-  });
-
-  it('should render generic policy summary list rows', () => {
-    cy.assertGenericSinglePolicySummaryListRows();
   });
 
   it(`should render a ${REQUESTED} summary list row`, () => {

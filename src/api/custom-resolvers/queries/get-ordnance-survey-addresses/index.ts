@@ -21,7 +21,10 @@ const getOrdnanceSurveyAddresses = async (root: any, variables: OrdnanceSurveyVa
 
     const noWhitespacePostcode = removeWhiteSpace(postcode);
 
-    // if not valid postcode then returns success false and additional flag
+    /**
+     * If the postcode is invalid,
+     * return success=false and an additional flag
+     */
     if (!isValidPostcode(noWhitespacePostcode)) {
       console.error('Invalid postcode: %s', postcode);
 
@@ -33,17 +36,29 @@ const getOrdnanceSurveyAddresses = async (root: any, variables: OrdnanceSurveyVa
 
     const response = await ordnanceSurvey.get(postcode);
 
-    // if no data in response or status is not 200 then return an empty object
+    /**
+     * If there is no success response, or no data,
+     * return success=false
+     */
     if (!response.success || !response.data) {
       return {
         success: false,
       };
     }
 
-    // get specific addresses by house name/number
-    const mappedAddresses = mapAndFilterOrdnanceSurveyAddresses(houseNameOrNumber, response.data);
+    /**
+     * The main Ordnance Survey data is in uppercase.
+     * Therefore we need to search for the house number/name in uppercase.
+     */
+    const uppercaseHouseNameOrNumber = houseNameOrNumber.toUpperCase();
 
-    // if no addresses found, return success false and additional flag
+    // Map and filter addresses with the provided house name/number
+    const mappedAddresses = mapAndFilterOrdnanceSurveyAddresses(response.data, uppercaseHouseNameOrNumber);
+
+    /**
+     * if no addresses are found,
+     * return success=false and additional flag
+     */
     if (!mappedAddresses.length) {
       return {
         success: false,
@@ -56,12 +71,9 @@ const getOrdnanceSurveyAddresses = async (root: any, variables: OrdnanceSurveyVa
       success: true,
     };
   } catch (error) {
-    console.error('Error getting Ordnance Survey addresses results %o', error);
+    console.error('Error getting Ordnance Survey addresses %o', error);
 
-    return {
-      apiError: true,
-      success: false,
-    };
+    throw new Error(`Getting Ordnance Survey addresses ${error}`);
   }
 };
 

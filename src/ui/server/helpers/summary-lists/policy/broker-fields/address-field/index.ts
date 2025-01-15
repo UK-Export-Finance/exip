@@ -1,10 +1,10 @@
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
 import { POLICY as POLICY_ROUTES } from '../../../../../constants/routes/insurance/policy';
 import { POLICY_FIELDS } from '../../../../../content-strings/fields/insurance';
-import mapBrokerAddressBasedInTheUk from './based-in-the-uk';
 import fieldGroupItem from '../../../generate-field-group-item';
 import getFieldById from '../../../../get-field-by-id';
 import generateChangeLink from '../../../../generate-change-link';
+import generateMultipleFieldHtml from '../../../../generate-multiple-field-html';
 import { ApplicationBroker } from '../../../../../../types';
 
 const {
@@ -33,7 +33,16 @@ const brokerAddressField = (answers: ApplicationBroker, referenceNumber: number,
 
   if (answers[IS_BASED_IN_UK]) {
     field = getFieldById(POLICY_FIELDS.BROKER_ADDRESSES, SELECT_THE_ADDRESS);
-    fieldValue = mapBrokerAddressBasedInTheUk(answers);
+
+    const { buildingNumberOrName, addressLine1, addressLine2, town, county, postcode } = answers;
+
+    fieldValue = generateMultipleFieldHtml({
+      addressLine1: `${buildingNumberOrName} ${addressLine1}`,
+      addressLine2,
+      town,
+      county,
+      postcode,
+    });
 
     changeRoute = BROKER_ADDRESSES_CHANGE;
     checkAndChangeRoute = BROKER_ADDRESSES_CHECK_AND_CHANGE;
