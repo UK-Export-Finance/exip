@@ -13,7 +13,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-const optionValue = 'H M TREASURY HORSE GUARDS ROAD';
+const optionValue = '1 H M TREASURY HORSE GUARDS ROAD';
 
 context('Insurance - Policy - Broker addresses page - Save and back', () => {
   let referenceNumber;
