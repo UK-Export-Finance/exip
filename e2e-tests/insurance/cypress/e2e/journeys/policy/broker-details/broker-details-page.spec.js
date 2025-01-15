@@ -1,12 +1,14 @@
 import { headingCaption } from '../../../../../../partials';
 import { field as fieldSelector, noRadio, yesRadio } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
-import { ADDRESS_INPUT_EXAMPLES, FIELD_VALUES } from '../../../../../../constants';
+import { ADDRESS_LOOKUP_INPUT_EXAMPLES, FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_DETAILS;
+
+const { TREASURY } = ADDRESS_LOOKUP_INPUT_EXAMPLES;
 
 const {
   BROKER_DETAILS: { NAME, EMAIL, IS_BASED_IN_UK, POSTCODE, BUILDING_NUMBER_OR_NAME },
@@ -161,8 +163,8 @@ context(
       });
 
       describe(`when submitting ${IS_BASED_IN_UK} as "yes" and there is only one address available`, () => {
-        const postcode = ADDRESS_INPUT_EXAMPLES.TREASURY.POSTCODE;
-        const buildingNumberOrName = ADDRESS_INPUT_EXAMPLES.TREASURY.BUILDING_NUMBER;
+        const postcode = TREASURY.POSTCODE;
+        const buildingNumberOrName = TREASURY.BUILDING_NUMBER;
 
         it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT} page`, () => {
           cy.completeAndSubmitBrokerDetailsForm({
@@ -188,8 +190,8 @@ context(
       });
 
       describe(`when submitting ${IS_BASED_IN_UK} as "yes" and there is more than one address available`, () => {
-        const postcode = ADDRESS_INPUT_EXAMPLES.WESTMINSTER_BRIDGE_STREET.POSTCODE;
-        const buildingNumberOrName = ADDRESS_INPUT_EXAMPLES.WESTMINSTER_BRIDGE_STREET.BUILDING_NAME;
+        const postcode = ADDRESS_LOOKUP_INPUT_EXAMPLES.WESTMINSTER_BRIDGE_STREET.POSTCODE;
+        const buildingNumberOrName = ADDRESS_LOOKUP_INPUT_EXAMPLES.WESTMINSTER_BRIDGE_STREET.BUILDING_NAME;
 
         it(`should redirect to ${BROKER_ADDRESSES_ROOT} page`, () => {
           cy.completeAndSubmitBrokerDetailsForm({

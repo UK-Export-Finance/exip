@@ -1,4 +1,4 @@
-export * from './address-input-examples';
+export * from './address-lookup-input-examples';
 export * from './building-names';
 export * from './company-details-examples';
 export * from './companies-house-number-examples';

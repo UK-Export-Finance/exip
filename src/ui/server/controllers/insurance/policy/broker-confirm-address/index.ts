@@ -48,12 +48,6 @@ export const get = (req: Request, res: Response) => {
   }
 
   /**
-   * TODO: need PR 3474 merged first.
-   * Then, we can update below to conditionally create multi line address,
-   * depending on if the broker is based in the UK or not.
-   */
-
-  /**
    * Generate a submittedAnswer const
    * This is required because the address value is a single string with line break characters.
    * However, for this page, the address is rendered as pure HTML.
