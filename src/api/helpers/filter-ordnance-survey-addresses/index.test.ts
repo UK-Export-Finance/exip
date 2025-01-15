@@ -1,72 +1,80 @@
-import filterOrdnanceSurveyAddresses from '.';
+import filterOrdnanceSurveyAddresses, { filterOrdnanceSurveyAddress } from '.';
 import mockOrdnanceSurveyResponse from '../../test-mocks/mock-ordnance-survey-response';
 
 const ordnanceSurveyResponse = mockOrdnanceSurveyResponse.results;
 
 describe('api/helpers/filter-ordnance-survey-addresses', () => {
-  describe('when an address has a SUB_BUILDING_NAME with a matching substring', () => {
-    it('should return an array with address', () => {
-      const [address] = ordnanceSurveyResponse;
+  describe('filterOrdnanceSurveyAddress', () => {
+    describe('when an address has a SUB_BUILDING_NAME with a matching substring', () => {
+      it('should return the address', () => {
+        const [mockAddress] = ordnanceSurveyResponse;
 
-      const substring = String(address.DPA.SUB_BUILDING_NAME)?.substring(0, 5);
+        const substring = String(mockAddress.DPA.SUB_BUILDING_NAME)?.substring(0, 5);
 
-      const result = filterOrdnanceSurveyAddresses(ordnanceSurveyResponse, substring);
+        const result = filterOrdnanceSurveyAddress(mockAddress, substring);
 
-      const expected = [address];
+        expect(result).toEqual(mockAddress);
+      });
+    });
 
-      expect(result).toEqual(expected);
+    describe('when an address has a BUILDING_NAME with a matching substring', () => {
+      it('should return the address', () => {
+        const { 1: mockAddress } = ordnanceSurveyResponse;
+
+        const substring = String(mockAddress.DPA.BUILDING_NAME)?.substring(0, 5);
+
+        const result = filterOrdnanceSurveyAddress(mockAddress, substring);
+
+        expect(result).toEqual(mockAddress);
+      });
+    });
+
+    describe('when an address has a ORGANISATION_NAME with a matching substring', () => {
+      it('should return the address', () => {
+        const { 2: mockAddress } = ordnanceSurveyResponse;
+
+        const substring = String(mockAddress.DPA.ORGANISATION_NAME)?.substring(0, 5);
+
+        const result = filterOrdnanceSurveyAddress(mockAddress, substring);
+
+        expect(result).toEqual(mockAddress);
+      });
+    });
+
+    describe('when an address has a BUILDING_NUMBER with a matching substring', () => {
+      it('should return the address', () => {
+        const { 3: mockAddress } = ordnanceSurveyResponse;
+
+        const substring = String(mockAddress.DPA.BUILDING_NUMBER)?.substring(0, 5);
+
+        const result = filterOrdnanceSurveyAddress(mockAddress, substring);
+
+        expect(result).toEqual(mockAddress);
+      });
+    });
+
+    describe('when an address does NOT have a matching sub string', () => {
+      it('should return null', () => {
+        const [mockAddress] = ordnanceSurveyResponse;
+
+        const substring = 'mock sub string';
+
+        const result = filterOrdnanceSurveyAddress(mockAddress, substring);
+
+        expect(result).toEqual(null);
+      });
     });
   });
 
-  describe('when an address has a BUILDING_NAME with a matching substring', () => {
-    it('should return an array with the address', () => {
-      const { 1: address } = ordnanceSurveyResponse;
-
-      const substring = String(address.DPA.BUILDING_NAME)?.substring(0, 5);
-
-      const result = filterOrdnanceSurveyAddresses(ordnanceSurveyResponse, substring);
-
-      const expected = [address];
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when an address has a ORGANISATION_NAME with a matching substring', () => {
-    it('should return an array with the address', () => {
-      const { 2: address } = ordnanceSurveyResponse;
-
-      const substring = String(address.DPA.ORGANISATION_NAME)?.substring(0, 5);
-
-      const result = filterOrdnanceSurveyAddresses(ordnanceSurveyResponse, substring);
-
-      const expected = [address];
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when an address has a BUILDING_NUMBER with a matching substring', () => {
-    it('should return an array with the address', () => {
-      const { 3: address } = ordnanceSurveyResponse;
-
-      const substring = String(address.DPA.BUILDING_NUMBER)?.substring(0, 5);
-
-      const result = filterOrdnanceSurveyAddresses(ordnanceSurveyResponse, substring);
-
-      const expected = [address];
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when no address has a matching sub string', () => {
-    it('should return an empty array', () => {
+  describe('filterOrdnanceSurveyAddresses', () => {
+    it('should return filtered addresses via filterOrdnanceSurveyAddress', () => {
       const substring = 'mock sub string';
 
       const result = filterOrdnanceSurveyAddresses(ordnanceSurveyResponse, substring);
 
-      expect(result).toEqual([]);
+      const expected = ordnanceSurveyResponse.filter((address) => filterOrdnanceSurveyAddress(address, substring));
+
+      expect(result).toEqual(expected);
     });
   });
 });

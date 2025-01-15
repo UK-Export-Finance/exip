@@ -9562,24 +9562,22 @@ var import_postcode_validator = require('postcode-validator');
 var isValidPostcode = (postcode) => (0, import_postcode_validator.postcodeValidator)(postcode, 'GB');
 
 // helpers/filter-ordnance-survey-addresses/index.ts
-var filterOrdnanceSurveyAddresses = (addresses, houseNameOrNumber) => {
-  const filtered = addresses.filter((address) => {
-    if (address.DPA.SUB_BUILDING_NAME && address.DPA.SUB_BUILDING_NAME.includes(houseNameOrNumber)) {
-      return address;
-    }
-    if (address.DPA.BUILDING_NAME && address.DPA.BUILDING_NAME.includes(houseNameOrNumber)) {
-      return address;
-    }
-    if (address.DPA.ORGANISATION_NAME && address.DPA.ORGANISATION_NAME.includes(houseNameOrNumber)) {
-      return address;
-    }
-    if (address.DPA.BUILDING_NUMBER && address.DPA.BUILDING_NUMBER.includes(houseNameOrNumber)) {
-      return address;
-    }
-    return null;
-  });
-  return filtered;
+var filterOrdnanceSurveyAddress = (address, houseNameOrNumber) => {
+  if (address.DPA.SUB_BUILDING_NAME && address.DPA.SUB_BUILDING_NAME.includes(houseNameOrNumber)) {
+    return address;
+  }
+  if (address.DPA.BUILDING_NAME && address.DPA.BUILDING_NAME.includes(houseNameOrNumber)) {
+    return address;
+  }
+  if (address.DPA.ORGANISATION_NAME && address.DPA.ORGANISATION_NAME.includes(houseNameOrNumber)) {
+    return address;
+  }
+  if (address.DPA.BUILDING_NUMBER && address.DPA.BUILDING_NUMBER.includes(houseNameOrNumber)) {
+    return address;
+  }
+  return null;
 };
+var filterOrdnanceSurveyAddresses = (addresses, houseNameOrNumber) => addresses.filter((address) => filterOrdnanceSurveyAddress(address, houseNameOrNumber));
 var filter_ordnance_survey_addresses_default = filterOrdnanceSurveyAddresses;
 
 // helpers/map-ordnance-survey-address/index.ts
