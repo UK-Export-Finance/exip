@@ -87,6 +87,9 @@ context('Insurance - Policy - Broker manual address page - Save and back', () =>
       // go through 8 policy forms.
       cy.clickSubmitButtonMultipleTimes({ count: 8 });
 
+      // go to the "enter manually" page.
+      cy.clickZeroAddressesEntryManuallyLink();
+
       cy.checkTextareaValue({
         fieldId: FIELD_ID,
         expectedValue: application.BROKER[FIELD_ID],
