@@ -40,14 +40,12 @@ const post = async (req: Request, res: Response) => {
 
     const validationErrors = companyDetailsValidation(payload);
 
-    // runs save and go back command
     const saveResponse = await mapAndSave.companyDetails(payload, application, validationErrors);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    // redirect to all sections page
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   } catch (error) {
     console.error('Error updating application - your business - company details (save and back) %o', error);

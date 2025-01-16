@@ -27,11 +27,9 @@ const post = async (req: Request, res: Response) => {
 
     const payload = constructPayload(body, FIELD_IDS);
 
-    // run validation on inputs
     const validationErrors = generateValidationErrors(payload);
 
     if (!validationErrors) {
-      // runs save and go back command
       const saveResponse = await mapAndSave.companyDifferentTradingAddress(payload, application, validationErrors);
 
       if (!saveResponse) {
@@ -39,7 +37,6 @@ const post = async (req: Request, res: Response) => {
       }
     }
 
-    // redirect to all sections page
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   } catch (error) {
     console.error('Error updating application - your business - alternative trading address (save and back) %o', error);
