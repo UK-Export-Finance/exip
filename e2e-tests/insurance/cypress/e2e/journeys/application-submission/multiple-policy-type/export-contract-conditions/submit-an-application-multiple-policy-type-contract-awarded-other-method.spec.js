@@ -24,7 +24,7 @@ context('Insurance - submit an application - Multiple policy type, contract awar
     cy.assertApplicationSubmittedUrl(referenceNumber);
   });
 
-  it('should render a `submitted` state in the dashboard', () => {
+  it('should render the application in a `submitted` state in the dashboard', () => {
     cy.assertDashboardApplicationSubmitted(referenceNumber);
   });
 });
