@@ -18,7 +18,7 @@ const generateMultipleFieldHtml = (fieldValues: object): string => {
      * include the field with a <br>.
      */
     if (fieldValues[field] && field !== '__typename' && field !== 'id') {
-      fieldValuesString += `${fieldValues[field]}<br>`;
+      fieldValuesString += `${fieldValues[field]}<br />`;
     }
   });
 
