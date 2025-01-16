@@ -9,7 +9,7 @@ const mockBroker = {
   fullAddress: 'Mock full broker address',
   isBasedInUk: false,
   postcode: 'W1A 1AA',
-  buildingNumberOrName: 'WOGAN HOUSE',
+  buildingNumberOrName: 'Treasury',
   addressLine1: 'Mock broker address line 1',
   addressLine2: 'Mock broker address line 2',
   town: 'Mock broker town',
