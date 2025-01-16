@@ -17,6 +17,6 @@ const {
  * @param {Object} errors: Other validation errors for the same form
  * @returns {ValidationErrors} fullAddressValidation
  */
-const fullBrokerAddress = (responseBody: RequestBody, errors: object) => fullAddressValidation(responseBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors);
+const fullBrokerAddress = (formBody: RequestBody, errors: object) => fullAddressValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors);
 
 export default fullBrokerAddress;
