@@ -672,7 +672,17 @@ var VERSION_3 = {
   VERSION_NUMBER: '3',
   REQUESTED_CREDIT_LIMIT_REQUIRED: true,
 };
-var VERSIONS = [VERSION_1, VERSION_2, VERSION_3];
+var VERSION_4 = {
+  ...VERSION_3,
+  VERSION_NUMBER: '4',
+  DECLARATIONS_MODERN_SLAVERY: true,
+};
+var VERSION_5 = {
+  ...VERSION_4,
+  VERSION_NUMBER: '5',
+  BROKER_ADDRESS_LOOKUP: true,
+};
+var VERSIONS = [VERSION_1, VERSION_2, VERSION_3, VERSION_4, VERSION_5];
 var versions_default = VERSIONS;
 
 // constants/application/get-application-definition/index.ts
@@ -1832,7 +1842,7 @@ var lists = {
         validation: { isRequired: true },
         db: { nativeType: 'VarChar(4)' },
       }),
-      migratedV2toV3: nullable_checkbox_default(),
+      migratedTo: (0, import_fields.integer)(),
     },
     access: import_access.allowAll,
   },

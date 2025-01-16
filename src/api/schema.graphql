@@ -87,7 +87,7 @@ type Application {
   sectionReview: SectionReview
   version: String
   dealType: String
-  migratedV2toV3: Boolean
+  migratedTo: Int
 }
 
 scalar DateTime @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
@@ -125,6 +125,7 @@ input ApplicationWhereInput {
   sectionReview: SectionReviewWhereInput
   version: StringFilter
   dealType: StringFilter
+  migratedTo: IntNullableFilter
 }
 
 input DateTimeNullableFilter {
@@ -215,6 +216,7 @@ input ApplicationOrderByInput {
   previousStatus: OrderDirection
   version: OrderDirection
   dealType: OrderDirection
+  migratedTo: OrderDirection
 }
 
 input ApplicationUpdateInput {
@@ -241,7 +243,7 @@ input ApplicationUpdateInput {
   sectionReview: SectionReviewRelateToOneForUpdateInput
   version: String
   dealType: String
-  migratedV2toV3: Boolean
+  migratedTo: Int
 }
 
 input EligibilityRelateToOneForUpdateInput {
@@ -345,7 +347,7 @@ input ApplicationCreateInput {
   sectionReview: SectionReviewRelateToOneForCreateInput
   version: String
   dealType: String
-  migratedV2toV3: Boolean
+  migratedTo: Int
 }
 
 input EligibilityRelateToOneForCreateInput {
