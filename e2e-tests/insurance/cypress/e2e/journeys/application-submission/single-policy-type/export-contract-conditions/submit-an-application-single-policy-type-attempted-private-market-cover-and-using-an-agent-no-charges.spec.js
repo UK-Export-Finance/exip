@@ -24,7 +24,7 @@ context('Insurance - submit an application - Single policy type, attempted priva
     cy.assertApplicationSubmittedUrl(referenceNumber);
   });
 
-  it('should render in a `submitted` state in the dashboard', () => {
+  it('should render a `submitted` state in the dashboard', () => {
     cy.assertDashboardApplicationSubmitted(referenceNumber);
   });
 });

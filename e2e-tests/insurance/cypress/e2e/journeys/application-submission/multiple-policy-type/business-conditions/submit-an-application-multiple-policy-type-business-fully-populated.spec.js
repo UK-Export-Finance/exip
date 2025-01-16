@@ -26,7 +26,7 @@ context('Insurance - submit an application - Multiple policy - fully populated b
     cy.assertApplicationSubmittedUrl(referenceNumber);
   });
 
-  it('should render in a `submitted` state in the dashboard', () => {
+  it('should render a `submitted` state in the dashboard', () => {
     cy.assertDashboardApplicationSubmitted(referenceNumber);
   });
 });

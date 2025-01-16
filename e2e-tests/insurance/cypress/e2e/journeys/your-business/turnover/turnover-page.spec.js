@@ -74,7 +74,7 @@ context(
         cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
-      it(`should display ${FINANCIAL_YEAR_END_DATE} section`, () => {
+      it(`should render ${FINANCIAL_YEAR_END_DATE} section`, () => {
         const fieldId = FINANCIAL_YEAR_END_DATE;
         const field = fieldSelector(fieldId);
 
