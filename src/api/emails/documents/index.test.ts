@@ -29,7 +29,7 @@ describe('emails/documents', () => {
     jest.clearAllMocks();
   });
 
-  test('it should call notify.sendEmail and return the response', async () => {
+  it('should call notify.sendEmail and return the response', async () => {
     notify.sendEmail = sendEmailSpy;
 
     const result = await documentsEmail(variables, templateId);
@@ -47,7 +47,7 @@ describe('emails/documents', () => {
       notify.sendEmail = mockSpyPromiseRejection;
     });
 
-    test('should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await documentsEmail(variables, templateId);
       } catch (error) {

@@ -35,7 +35,7 @@ describe('helpers/delete-authentication-retries', () => {
     });
   });
 
-  test(`it should wipe the account's retry entires`, async () => {
+  it(`should wipe the account's retry entires`, async () => {
     // check initial retries count
     let retries = await authRetries.findAll(context);
 

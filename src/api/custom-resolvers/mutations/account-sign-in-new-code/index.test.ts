@@ -48,13 +48,13 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
   });
 
   describe('when the provided password is valid', () => {
-    test('it should generate an OTP and save to the account', () => {
+    it('should generate an OTP and save to the account', () => {
       expect(account.otpSalt).toEqual(mockOTP.salt);
       expect(account.otpHash).toEqual(mockOTP.hash);
       expect(new Date(account.otpExpiry)).toEqual(mockOTP.expiry);
     });
 
-    test('it should call sendEmail.accessCodeEmail', () => {
+    it('should call sendEmail.accessCodeEmail', () => {
       const { email } = account;
 
       const name = getFullNameString(account);
@@ -63,7 +63,7 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
       expect(accessCodeEmailSpy).toHaveBeenCalledWith(email, name, mockOTP.securityCode);
     });
 
-    test('it should return the email response and accountId', () => {
+    it('should return the email response and accountId', () => {
       const expected = {
         ...mockSendEmailResponse,
         accountId: account.id,
@@ -74,7 +74,7 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
   });
 
   describe('when no account is found', () => {
-    test('it should return success=false', async () => {
+    it('should return success=false', async () => {
       // wipe accounts so an account will not be found.
       await accounts.deleteAll(context);
 
@@ -91,7 +91,7 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
       sendEmail.accessCodeEmail = mockSpyPromiseRejection;
     });
 
-    test('should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await accountSignInSendNewCode({}, variables, context);
       } catch (error) {

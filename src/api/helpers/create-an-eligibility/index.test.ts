@@ -34,7 +34,7 @@ describe('helpers/create-an-eligibility', () => {
     totalContractValue = await totalContractValueTestHelper.create(context);
   });
 
-  test('it should return a eligibility with ID', async () => {
+  it('should return a eligibility with ID', async () => {
     const result = await creatAnEligibility(context, country.id, application.id, coverPeriod.id, totalContractValue.id);
 
     expect(result.id).toBeDefined();
@@ -42,7 +42,7 @@ describe('helpers/create-an-eligibility', () => {
     expect(result.id.length).toBeGreaterThan(0);
   });
 
-  test('it should return empty eligibility fields', async () => {
+  it('should return empty eligibility fields', async () => {
     const result = await creatAnEligibility(context, country.id, application.id, coverPeriod.id, totalContractValue.id);
 
     expect(result.applicationId).toEqual(application.id);
@@ -58,7 +58,7 @@ describe('helpers/create-an-eligibility', () => {
   });
 
   describe('when an invalid country ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await creatAnEligibility(context, mockInvalidId, application.id, coverPeriod.id, totalContractValue.id);
       } catch (error) {
@@ -68,7 +68,7 @@ describe('helpers/create-an-eligibility', () => {
   });
 
   describe('when an invalid application ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await creatAnEligibility(context, country.id, mockInvalidId, coverPeriod.id, totalContractValue.id);
       } catch (error) {
@@ -78,7 +78,7 @@ describe('helpers/create-an-eligibility', () => {
   });
 
   describe('when an invalid coverPeriod ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await creatAnEligibility(context, country.id, application.id, mockInvalidId, totalContractValue.id);
       } catch (error) {
@@ -88,7 +88,7 @@ describe('helpers/create-an-eligibility', () => {
   });
 
   describe('when an invalid totalContractValue ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await creatAnEligibility(context, country.id, application.id, coverPeriod.id, mockInvalidId);
       } catch (error) {
@@ -98,7 +98,7 @@ describe('helpers/create-an-eligibility', () => {
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         await creatAnEligibility({}, country.id, application.id, coverPeriod.id, totalContractValue.id);

@@ -126,7 +126,7 @@ describe('Keystone - Application timestamp updates', () => {
   };
 
   describe('Business', () => {
-    test('it should call updateApplication.timestamp', async () => {
+    it('should call updateApplication.timestamp', async () => {
       await context.query.Business.updateOne({
         where: { id: application.businessId },
         data: {},
@@ -138,7 +138,7 @@ describe('Keystone - Application timestamp updates', () => {
   });
 
   describe('Broker', () => {
-    test('it should call updateApplication.timestamp', async () => {
+    it('should call updateApplication.timestamp', async () => {
       await context.query.Broker.updateOne({
         where: { id: application.brokerId },
         data: {},
@@ -150,7 +150,7 @@ describe('Keystone - Application timestamp updates', () => {
   });
 
   describe('Buyer', () => {
-    test('it should call updateApplication.timestamp', async () => {
+    it('should call updateApplication.timestamp', async () => {
       await context.query.Buyer.updateOne({
         where: { id: application.buyerId },
         data: {},
@@ -162,7 +162,7 @@ describe('Keystone - Application timestamp updates', () => {
   });
 
   describe('BuyerTradingHistory', () => {
-    test('it should call updateApplication.timestamp', async () => {
+    it('should call updateApplication.timestamp', async () => {
       await context.query.BuyerTradingHistory.updateOne({
         where: { id: application.buyer.buyerTradingHistory.id },
         data: {},
@@ -174,7 +174,7 @@ describe('Keystone - Application timestamp updates', () => {
   });
 
   describe('Company', () => {
-    test('it should call updateApplication.timestamp', async () => {
+    it('should call updateApplication.timestamp', async () => {
       await context.query.Company.updateOne({
         where: { id: application.company.id },
         data: {},
@@ -186,7 +186,7 @@ describe('Keystone - Application timestamp updates', () => {
   });
 
   describe('Declaration', () => {
-    test('it should call updateApplication.timestamp', async () => {
+    it('should call updateApplication.timestamp', async () => {
       await context.query.Declaration.updateOne({
         where: { id: application.declaration.id },
         data: {},
@@ -198,7 +198,7 @@ describe('Keystone - Application timestamp updates', () => {
   });
 
   describe('ExportContract', () => {
-    test('it should call updateApplication.timestamp', async () => {
+    it('should call updateApplication.timestamp', async () => {
       await context.query.ExportContract.updateOne({
         where: { id: application.exportContract.id },
         data: {},
@@ -210,7 +210,7 @@ describe('Keystone - Application timestamp updates', () => {
   });
 
   describe('Policy', () => {
-    test('it should call updateApplication.timestamp', async () => {
+    it('should call updateApplication.timestamp', async () => {
       await context.query.Policy.updateOne({
         where: { id: application.policy.id },
         data: {},
@@ -222,7 +222,7 @@ describe('Keystone - Application timestamp updates', () => {
   });
 
   describe('SectionReview', () => {
-    test('it should call updateApplication.timestamp', async () => {
+    it('should call updateApplication.timestamp', async () => {
       await context.query.SectionReview.updateOne({
         where: { id: application.sectionReview.id },
         data: {},

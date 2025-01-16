@@ -35,20 +35,20 @@ describe('custom-resolvers/create-an-application', () => {
     variables.accountId = account.id;
   });
 
-  test('it should return success=true', async () => {
+  it('should return success=true', async () => {
     result = await createAnApplication({}, variables, context);
 
     expect(result.success).toEqual(true);
   });
 
-  test(`it should return status as ${STATUS.IN_PROGRESS}`, async () => {
+  it(`should return status as ${STATUS.IN_PROGRESS}`, async () => {
     result = await createAnApplication({}, variables, context);
 
     expect(result.status).toEqual(STATUS.IN_PROGRESS);
   });
 
   describe('when there is no account for the provided accountId', () => {
-    test('it should return success=false', async () => {
+    it('should return success=false', async () => {
       variables.accountId = mockInvalidId;
 
       result = await createAnApplication({}, variables, context);
@@ -58,7 +58,7 @@ describe('custom-resolvers/create-an-application', () => {
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         await createAnApplication({}, variables, {});

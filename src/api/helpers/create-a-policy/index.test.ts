@@ -21,7 +21,7 @@ describe('helpers/create-a-policy', () => {
     application = (await applications.create({ context })) as Application;
   });
 
-  test('it should return a policy with ID and jointlyInsuredParty relationship', async () => {
+  it('should return a policy with ID and jointlyInsuredParty relationship', async () => {
     const result = await createAPolicy(context, application.id);
 
     expect(result.id).toBeDefined();
@@ -29,7 +29,7 @@ describe('helpers/create-a-policy', () => {
     expect(result.id.length).toBeGreaterThan(0);
   });
 
-  test('it should return empty policy fields, default needPreCreditPeriodCover', async () => {
+  it('should return empty policy fields, default needPreCreditPeriodCover', async () => {
     const result = await createAPolicy(context, application.id);
 
     expect(result.applicationId).toEqual(application.id);
@@ -45,7 +45,7 @@ describe('helpers/create-a-policy', () => {
     expect(result.maximumBuyerWillOwe).toBeNull();
   });
 
-  test('it should return empty jointlyInsuredParty fields', async () => {
+  it('should return empty jointlyInsuredParty fields', async () => {
     const { jointlyInsuredParty } = await createAPolicy(context, application.id);
 
     expect(jointlyInsuredParty.requested).toBeNull();
@@ -55,7 +55,7 @@ describe('helpers/create-a-policy', () => {
   });
 
   describe('when an invalid application ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createAPolicy(context, mockInvalidId);
       } catch (error) {
@@ -65,7 +65,7 @@ describe('helpers/create-a-policy', () => {
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         await createAPolicy({}, application.id);
