@@ -119,6 +119,8 @@ export const get = async (req: Request, res: Response) => {
      * 3) Redirect to the next part of the flow.
      */
     if (addresses.length === 1) {
+      console.info(`Policy - broker addresses - only 1 address available. Redirecting to ${BROKER_CONFIRM_ADDRESS_ROOT}`);
+
       const addressToSave = getOrdnanceSurveyAddressByIndex({ addresses, index: 0 });
 
       const saveResponse = await mapAndSave.broker(addressToSave, application);
