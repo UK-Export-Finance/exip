@@ -19,7 +19,7 @@ const {
 /**
  * getAboutGoodsOrServicesTasks
  * @param {Boolean} finalDestinationKnown: "Final destination known"
- * @returns {Array} Array of tasks
+ * @returns {Array<string>} Array of tasks/field IDs
  */
 export const getAboutGoodsOrServicesTasks = (finalDestinationKnown?: boolean) => {
   if (finalDestinationKnown) {
@@ -43,7 +43,7 @@ interface RequiredFields {
  * privateCoverTasks
  * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * @param {Boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
- * @returns {Array} Array of tasks
+ * @returns {Array<string>} Array of tasks/field IDs
  */
 export const privateCoverTasks = ({ totalContractValueOverThreshold, attemptedPrivateMarketCover }: RequiredFields): Array<string> => {
   if (totalContractValueOverThreshold) {
@@ -61,7 +61,7 @@ export const privateCoverTasks = ({ totalContractValueOverThreshold, attemptedPr
  * agentServiceChargeTasks
  * @param {Boolean} agentIsCharging: "Is the agent charging for their support in the export contract?" flag
  * @param {Boolean} agentChargeMethod: Agent charge method
- * @returns {Array} Array of tasks
+ * @returns {Array<string>} Array of tasks/field IDs
  */
 export const agentServiceChargeTasks = ({ agentIsCharging, agentChargeMethod }: RequiredFields): Array<string> => {
   if (agentIsCharging) {
@@ -86,7 +86,7 @@ export const agentServiceChargeTasks = ({ agentIsCharging, agentChargeMethod }: 
  * @param {Boolean} isUsingAgent: "Is using an agent to help win the export contract" flag
  * @param {Boolean} agentIsCharging: "Is the agent charging for their support in the export contract?" flag
  * @param {Boolean} agentChargeMethod: Agent charge method
- * @returns {Array} Array of tasks
+ * @returns {Array<string>} Array of tasks/field IDs
  */
 export const agentTasks = ({ isUsingAgent, agentIsCharging, agentChargeMethod }: RequiredFields): Array<string> => {
   if (isUsingAgent) {
@@ -108,7 +108,7 @@ export const agentTasks = ({ isUsingAgent, agentIsCharging, agentChargeMethod }:
 /**
  * awardMethodTasks
  * @param {String} awardMethodId: Export contract award method ID
- * @returns {Array} Array of tasks
+ * @returns {Array<string>} Array of tasks/field IDs
  */
 export const awardMethodTasks = (awardMethodId?: string): Array<string> => {
   if (awardMethodId === EXPORT_CONTRACT_AWARD_METHOD.OTHER.DB_ID) {
