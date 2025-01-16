@@ -44,6 +44,7 @@ const { POLICY_TYPE } = APPLICATION;
  * @param {Boolean} brokerIsBasedInUk: Should submit "yes or "no" to "broker is based in the UK".
  * @param {String} brokerBuildingNumberOrName: Broker building name or number.
  * @param {String} brokerPostcode: Broker postcode.
+ * @param {Boolean} multipleBrokerAddressesAvailable: Multiple broker addresses are available from Ordnance Survey.
  */
 const completePrepareApplicationMultiplePolicyType = ({
   agentChargeMethodFixedSum = false,
@@ -84,6 +85,7 @@ const completePrepareApplicationMultiplePolicyType = ({
   brokerIsBasedInUk = false,
   brokerBuildingNumberOrName,
   brokerPostcode,
+  multipleBrokerAddressesAvailable,
 }) => {
   cy.completeBusinessSection({
     differentTradingName,
@@ -115,6 +117,7 @@ const completePrepareApplicationMultiplePolicyType = ({
     brokerIsBasedInUk,
     brokerBuildingNumberOrName,
     brokerPostcode,
+    multipleBrokerAddressesAvailable,
     otherCompanyInvolved,
     needPreCreditPeriod,
     isAppointingLossPayee,
