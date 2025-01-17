@@ -87,7 +87,7 @@ export const get = async (req: Request, res: Response) => {
 
     /**
      * If a user manually navigates to this route,
-     * without providing previously required data,
+     * without providing previously required address data,
      * redirect the user back to BROKER_DETAILS,
      * where the data can be submitted.
      */
