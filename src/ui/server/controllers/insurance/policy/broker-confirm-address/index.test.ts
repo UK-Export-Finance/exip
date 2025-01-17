@@ -10,6 +10,7 @@ import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
 
 const {
+  BROKER_DETAILS: { POSTCODE, BUILDING_NUMBER_OR_NAME },
   BROKER_MANUAL_ADDRESS: { FULL_ADDRESS: FIELD_ID },
 } = POLICY_FIELD_IDS;
 
@@ -60,6 +61,66 @@ describe('controllers/insurance/policy/broker-confirm-address', () => {
   });
 
   describe('get', () => {
+    describe(`when application.broker does not have ${POSTCODE}, ${BUILDING_NUMBER_OR_NAME} or ${FIELD_ID}`, () => {
+      beforeEach(() => {
+        res.locals.application = {
+          ...mockApplication,
+          broker: {
+            ...mockApplication.broker,
+            [POSTCODE]: '',
+            [BUILDING_NUMBER_OR_NAME]: '',
+            [FIELD_ID]: '',
+          },
+        };
+      });
+
+      it(`should redirect to ${BROKER_DETAILS_ROOT}`, () => {
+        get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`);
+      });
+    });
+
+    describe(`when application.broker has ${POSTCODE} and ${BUILDING_NUMBER_OR_NAME}, no ${FIELD_ID}`, () => {
+      beforeEach(() => {
+        res.locals.application = {
+          ...mockApplication,
+          broker: {
+            ...mockApplication.broker,
+            [POSTCODE]: 'Mock postcode',
+            [BUILDING_NUMBER_OR_NAME]: 'Mock building name/number',
+            [FIELD_ID]: '',
+          },
+        };
+      });
+
+      it(`should NOT redirect to ${BROKER_DETAILS_ROOT}`, () => {
+        get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledTimes(0);
+      });
+    });
+
+    describe(`when application.broker has ${FIELD_ID}, no ${POSTCODE} or ${BUILDING_NUMBER_OR_NAME}`, () => {
+      beforeEach(() => {
+        res.locals.application = {
+          ...mockApplication,
+          broker: {
+            ...mockApplication.broker,
+            [POSTCODE]: '',
+            [BUILDING_NUMBER_OR_NAME]: '',
+            [FIELD_ID]: 'Mock full address',
+          },
+        };
+      });
+
+      it(`should NOT redirect to ${BROKER_DETAILS_ROOT}`, () => {
+        get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledTimes(0);
+      });
+    });
+
     it('should render template', () => {
       get(req, res);
 

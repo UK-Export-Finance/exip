@@ -2,12 +2,12 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
-  POLICY: { BROKER_ADDRESSES_ROOT, BROKER_DETAILS_ROOT },
+  POLICY: { BROKER_CONFIRM_ADDRESS_ROOT, BROKER_DETAILS_ROOT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Broker addresses page - Visit directly without completing the BROKER_DETAILS form', () => {
+context('Insurance - Policy - Broker confirm address - Visit directly without completing any address forms', () => {
   let referenceNumber;
   let url;
   let brokerDetailsUrl;
@@ -16,7 +16,7 @@ context('Insurance - Policy - Broker addresses page - Visit directly without com
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ADDRESSES_ROOT}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
       brokerDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
     });
   });
