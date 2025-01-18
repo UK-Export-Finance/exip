@@ -11,7 +11,7 @@ const {
 /**
  * Required fields for an application
  * @param {ApplicationFlat} application
- * @returns {Array} Required field IDs
+ * @returns {Array<string>} Array of tasks/field IDs
  */
 const requiredFields = (application: ApplicationFlat) => [
   ...requiredPrepareApplicationFields(application),

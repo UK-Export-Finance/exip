@@ -25,6 +25,6 @@ const {
  * @param {Object} errors: Other validation errors for the same form
  * @returns {ValidationErrors} fullAddressValidation
  */
-const addressRules = (responseBody: RequestBody, errors: object) => fullAddressValidation(responseBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors);
+const addressRules = (formBody: RequestBody, errors: object) => fullAddressValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors);
 
 export default addressRules;

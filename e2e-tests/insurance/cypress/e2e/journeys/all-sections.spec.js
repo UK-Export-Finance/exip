@@ -169,7 +169,7 @@ context('Insurance - All sections - new application', () => {
       cy.checkText(insurance.allSectionsPage.submissionDeadlineHeading(), CONTENT_STRINGS.DEADLINE_TO_SUBMIT);
     });
 
-    it('should render correct submission deadline', () => {
+    it('should render the correct submission deadline', () => {
       insurance.allSectionsPage.submissionDeadline().should('exist');
 
       const now = new Date();

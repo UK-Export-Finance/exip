@@ -25,7 +25,7 @@ describe('emails/reactivate-account-link', () => {
     notify.sendEmail = sendEmailSpy;
   });
 
-  test('it should call notify.sendEmail and return the response', async () => {
+  it('should call notify.sendEmail and return the response', async () => {
     notify.sendEmail = sendEmailSpy;
 
     const result = await reactivateAccountLink(mockUrlOrigin, email, fullName, mockReactivationHash);
@@ -43,7 +43,7 @@ describe('emails/reactivate-account-link', () => {
       notify.sendEmail = mockSpyPromiseRejection;
     });
 
-    test('should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await reactivateAccountLink(mockUrlOrigin, email, fullName, mockReactivationHash);
       } catch (error) {

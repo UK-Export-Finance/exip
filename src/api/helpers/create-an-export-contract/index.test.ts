@@ -21,7 +21,7 @@ describe('helpers/create-an-export-contract', () => {
     application = (await applications.create({ context })) as Application;
   });
 
-  test('it should return an export contract with ID and privateMarket relationship', async () => {
+  it('should return an export contract with ID and privateMarket relationship', async () => {
     const result = await createAnExportContract(context, application.id);
 
     const { privateMarket } = result;
@@ -31,7 +31,7 @@ describe('helpers/create-an-export-contract', () => {
     expect(privateMarket.id.length).toBeGreaterThan(0);
   });
 
-  test('it should return empty exportContract fields, application relationship and default finalDestinationKnown', async () => {
+  it('should return empty exportContract fields, application relationship and default finalDestinationKnown', async () => {
     const result = await createAnExportContract(context, application.id);
 
     expect(result.applicationId).toEqual(application.id);
@@ -43,7 +43,7 @@ describe('helpers/create-an-export-contract', () => {
     expect(result.paymentTermsDescription).toEqual('');
   });
 
-  test('it should return empty privateMarket fields', async () => {
+  it('should return empty privateMarket fields', async () => {
     const { privateMarket } = await createAnExportContract(context, application.id);
 
     expect(privateMarket.attempted).toBeNull();
@@ -51,7 +51,7 @@ describe('helpers/create-an-export-contract', () => {
   });
 
   describe('when an invalid policy ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createAnExportContract(context, mockInvalidId);
       } catch (error) {
@@ -61,7 +61,7 @@ describe('helpers/create-an-export-contract', () => {
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         await createAnExportContract({}, application.id);

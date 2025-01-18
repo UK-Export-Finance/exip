@@ -24,7 +24,7 @@ describe('emails/access-code-email', () => {
     notify.sendEmail = sendEmailSpy;
   });
 
-  test('it should call notify.sendEmail and return the response', async () => {
+  it('should call notify.sendEmail and return the response', async () => {
     const result = await accessCodeEmail(email, fullName, mockSecurityCode);
 
     expect(sendEmailSpy).toHaveBeenCalledTimes(1);
@@ -41,7 +41,7 @@ describe('emails/access-code-email', () => {
       notify.sendEmail = mockSpyPromiseRejection;
     });
 
-    test('should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await accessCodeEmail(email, fullName, mockSecurityCode);
       } catch (error) {

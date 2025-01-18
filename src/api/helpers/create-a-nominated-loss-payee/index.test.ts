@@ -20,7 +20,7 @@ describe('helpers/create-a-nominated-loss-payee', () => {
     application = (await applications.create({ context })) as Application;
   });
 
-  test('it should return a nominated loss payee with ID', async () => {
+  it('should return a nominated loss payee with ID', async () => {
     const nominatedLossPayee = await createANominatedLossPayee(context, application.id);
 
     expect(nominatedLossPayee.id).toBeDefined();
@@ -28,7 +28,7 @@ describe('helpers/create-a-nominated-loss-payee', () => {
     expect(nominatedLossPayee.id.length).toBeGreaterThan(0);
   });
 
-  test('it should return application ID and empty nominated loss payee fields', async () => {
+  it('should return application ID and empty nominated loss payee fields', async () => {
     const nominatedLossPayee = await createANominatedLossPayee(context, application.id);
 
     expect(nominatedLossPayee.applicationId).toEqual(application.id);
@@ -39,7 +39,7 @@ describe('helpers/create-a-nominated-loss-payee', () => {
   });
 
   describe('when an invalid application ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createANominatedLossPayee(context, mockInvalidId);
       } catch (error) {
@@ -49,7 +49,7 @@ describe('helpers/create-a-nominated-loss-payee', () => {
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         await createANominatedLossPayee({}, application.id);

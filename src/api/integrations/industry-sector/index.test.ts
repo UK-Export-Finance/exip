@@ -12,7 +12,7 @@ const { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
 
 describe('integrations/industry-sector', () => {
   describe('when a 200 status and data is returned', () => {
-    test('it should return success=true and data', async () => {
+    it('should return success=true and data', async () => {
       const mock = new MockAdapter(axios);
 
       const mockResponseData = mockIndustrySectors;
@@ -31,7 +31,7 @@ describe('integrations/industry-sector', () => {
   });
 
   describe('when no data is returned', () => {
-    test('it should return success=false', async () => {
+    it('should return success=false', async () => {
       const mock = new MockAdapter(axios);
 
       mock.onGet(`${APIM_MDM_URL}${APIM_MDM.INDUSTRY_SECTORS}`).reply(200);
@@ -47,7 +47,7 @@ describe('integrations/industry-sector', () => {
   });
 
   describe('when a 200 status is not returned', () => {
-    test('it should return success=false and apiError=true', async () => {
+    it('should return success=false and apiError=true', async () => {
       const mock = new MockAdapter(axios);
 
       mock.onGet(`${APIM_MDM_URL}${APIM_MDM.INDUSTRY_SECTORS}`).reply(500);

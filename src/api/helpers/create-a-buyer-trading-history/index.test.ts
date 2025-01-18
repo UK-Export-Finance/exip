@@ -27,7 +27,7 @@ describe('helpers/create-a-buyer-trading-history', () => {
     buyer = (await buyerHelpers.create(context)) as ApplicationBuyer;
   });
 
-  test('it should return a buyer trading history with respective IDs', async () => {
+  it('should return a buyer trading history with respective IDs', async () => {
     const result = await createABuyerTradingHistory(context, buyer.id, applicationId);
 
     expect(result).toBeDefined();
@@ -35,7 +35,7 @@ describe('helpers/create-a-buyer-trading-history', () => {
     expect(result.id.length).toBeGreaterThan(0);
   });
 
-  test('it should return empty buyerTradingAddress fields with default currencyCode', async () => {
+  it('should return empty buyerTradingAddress fields with default currencyCode', async () => {
     const result = await createABuyerTradingHistory(context, buyer.id, applicationId);
 
     expect(result.exporterHasTradedWithBuyer).toBeNull();
@@ -45,7 +45,7 @@ describe('helpers/create-a-buyer-trading-history', () => {
   });
 
   describe('when an invalid buyer ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createABuyerTradingHistory(context, mockInvalidId, applicationId);
       } catch (error) {
@@ -55,7 +55,7 @@ describe('helpers/create-a-buyer-trading-history', () => {
   });
 
   describe('when an invalid application ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createABuyerTradingHistory(context, buyer.id, mockInvalidId);
       } catch (error) {
@@ -65,7 +65,7 @@ describe('helpers/create-a-buyer-trading-history', () => {
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         await createABuyerTradingHistory({}, buyer.id, applicationId);

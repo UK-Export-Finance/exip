@@ -30,7 +30,7 @@ const {
 /**
  * Required fields for the insurance - check your answers section
  * @param {ApplicationFlat} application
- * @returns {Array<string>} Required field IDs
+ * @returns {Array<string>} Array of tasks/field IDs
  */
 const requiredFields = (application: ApplicationFlat): Array<string> => [
   ...requiredEligibilityFields(),

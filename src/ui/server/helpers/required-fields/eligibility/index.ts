@@ -34,7 +34,7 @@ export const IRRELEVANT_FIELD_IDS = [
 
 /**
  * Required fields for the insurance - eligibility section
- * @returns {Array} Required field IDs
+ * @returns {Array<string>} Array of tasks/field IDs
  */
 const requiredFields = (): Array<string> => {
   const fieldIds = Object.values(FIELD_IDS);

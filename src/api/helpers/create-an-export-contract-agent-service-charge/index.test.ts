@@ -26,7 +26,7 @@ describe('helpers/create-an-export-contract-agent-service-charge', () => {
     applicationExportContractAgentService = agentService;
   });
 
-  test('it should return an agentServiceCharge ID', async () => {
+  it('should return an agentServiceCharge ID', async () => {
     const agentServiceCharge = await createAnExportContractAgentServiceCharge(context, applicationExportContractAgentService.id);
 
     expect(agentServiceCharge.id).toBeDefined();
@@ -34,7 +34,7 @@ describe('helpers/create-an-export-contract-agent-service-charge', () => {
     expect(agentServiceCharge.id.length).toBeGreaterThan(0);
   });
 
-  test('it should return empty agentServiceCharge fields with default currency code', async () => {
+  it('should return empty agentServiceCharge fields with default currency code', async () => {
     const agentServiceCharge = await createAnExportContractAgentServiceCharge(context, applicationExportContractAgentService.id);
 
     expect(agentServiceCharge.percentageCharge).toBeNull();
@@ -45,7 +45,7 @@ describe('helpers/create-an-export-contract-agent-service-charge', () => {
   });
 
   describe('when an invalid agentServiceId ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createAnExportContractAgentServiceCharge(context, mockInvalidId);
       } catch (error) {
@@ -55,7 +55,7 @@ describe('helpers/create-an-export-contract-agent-service-charge', () => {
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         await createAnExportContractAgentServiceCharge({}, mockInvalidId);

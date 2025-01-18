@@ -20,7 +20,7 @@ describe('helpers/create-a-company-different-trading-address', () => {
     company = (await companyHelpers.createCompany(context)) as object;
   });
 
-  test('it should return a company different trading address with ID', async () => {
+  it('should return a company different trading address with ID', async () => {
     const result = await createACompanyDifferentTradingAddress(context, company.id);
 
     expect(typeof result.id).toEqual('string');
@@ -28,7 +28,7 @@ describe('helpers/create-a-company-different-trading-address', () => {
   });
 
   describe('when an invalid company ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createACompanyDifferentTradingAddress(context, mockInvalidId);
       } catch (error) {
@@ -38,7 +38,7 @@ describe('helpers/create-a-company-different-trading-address', () => {
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         await createACompanyDifferentTradingAddress({}, company.id);

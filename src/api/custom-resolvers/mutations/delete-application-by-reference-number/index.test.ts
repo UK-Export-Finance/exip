@@ -21,7 +21,7 @@ describe('custom-resolvers/delete-application-by-reference-number', () => {
     })) as Application;
   });
 
-  test('it should return success=true', async () => {
+  it('should return success=true', async () => {
     variables.referenceNumber = application.referenceNumber;
 
     result = await deleteApplicationByReferenceNumber({}, variables, context);

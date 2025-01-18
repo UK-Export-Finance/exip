@@ -23,18 +23,18 @@ describe('helpers/block-account', () => {
     result = await blockAccount(context, account.status.id);
   });
 
-  test('it should update an account to be blocked', async () => {
+  it('should update an account to be blocked', async () => {
     account = await accounts.get(context, account.id);
 
     expect(account.status.isBlocked).toEqual(true);
   });
 
-  test('it should return true', async () => {
+  it('should return true', async () => {
     expect(result).toEqual(true);
   });
 
   describe('when an account is NOT updated - invalid ID', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await blockAccount(context, mockInvalidId);
       } catch (error) {
@@ -47,7 +47,7 @@ describe('helpers/block-account', () => {
   });
 
   describe('when an account is NOT updated - account not found', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       await accounts.deleteAll(context);
 
       try {

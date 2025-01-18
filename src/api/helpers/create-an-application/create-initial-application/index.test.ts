@@ -31,7 +31,7 @@ describe('helpers/create-an-application/create-initial-application', () => {
     result = await initialApplication.create({ context, accountId });
   });
 
-  test('it should return with some empty data/ relationships', () => {
+  it('should return with some empty data/ relationships', () => {
     expect(result.business).toBeUndefined();
     expect(result.broker).toBeUndefined();
     expect(result.buyer).toBeUndefined();
@@ -47,28 +47,28 @@ describe('helpers/create-an-application/create-initial-application', () => {
     expect(result.sectionReview).toBeUndefined();
   });
 
-  test('it should have a default submissionType', () => {
+  it('should have a default submissionType', () => {
     expect(result.submissionType).toEqual(SUBMISSION_TYPE.MIA);
   });
 
-  test('it should have a default previousStatus', () => {
+  it('should have a default previousStatus', () => {
     expect(result.previousStatus).toEqual('');
   });
 
-  test('it should have a default dealType', () => {
+  it('should have a default dealType', () => {
     expect(result.dealType).toEqual(DEAL_TYPE);
   });
 
-  test('it should have a default submissionCount', () => {
+  it('should have a default submissionCount', () => {
     expect(result.submissionCount).toEqual(SUBMISSION_COUNT_DEFAULT);
   });
 
-  test('it should have a default submissionType', () => {
+  it('should have a default submissionType', () => {
     expect(result.submissionType).toEqual(SUBMISSION_TYPE.MIA);
   });
 
   describe('when a status is provided', () => {
-    test('it should return an application with the provided status', async () => {
+    it('should return an application with the provided status', async () => {
       const { status } = await initialApplication.create({ context, accountId, status: ABANDONED });
 
       expect(status).toEqual(ABANDONED);
@@ -76,7 +76,7 @@ describe('helpers/create-an-application/create-initial-application', () => {
   });
 
   describe('when a status is NOT provided', () => {
-    test(`it should return an application with a ${IN_PROGRESS} status`, async () => {
+    it(`should return an application with a ${IN_PROGRESS} status`, async () => {
       const { status } = await initialApplication.create({ context, accountId });
 
       expect(status).toEqual(IN_PROGRESS);
@@ -86,7 +86,7 @@ describe('helpers/create-an-application/create-initial-application', () => {
   describe('timestamp fields', () => {
     const now = new Date();
 
-    test('it should have a submission deadline date', () => {
+    it('should have a submission deadline date', () => {
       const submissionDeadlineDay = new Date(result.submissionDeadline).getDate();
       const submissionDeadlineMonth = new Date(result.submissionDeadline).getMonth();
       const submissionDeadlineYear = new Date(result.submissionDeadline).getFullYear();
@@ -98,7 +98,7 @@ describe('helpers/create-an-application/create-initial-application', () => {
       expect(submissionDeadlineYear).toEqual(new Date(expectedDate).getFullYear());
     });
 
-    test('it should have a createdAt date', () => {
+    it('should have a createdAt date', () => {
       const createdAtDay = new Date(result.createdAt).getDate();
       const createdAtMonth = new Date(result.createdAt).getMonth();
       const createdAtYear = new Date(result.createdAt).getFullYear();
@@ -108,7 +108,7 @@ describe('helpers/create-an-application/create-initial-application', () => {
       expect(createdAtYear).toEqual(new Date().getFullYear());
     });
 
-    test('it should have updatedAt date', () => {
+    it('should have updatedAt date', () => {
       const updatedAtDay = new Date(result.updatedAt).getDate();
       const updatedAtMonth = new Date(result.updatedAt).getMonth();
       const updatedAtYear = new Date(result.updatedAt).getFullYear();
@@ -119,14 +119,14 @@ describe('helpers/create-an-application/create-initial-application', () => {
     });
   });
 
-  test('it should have a default latest version number', () => {
+  it('should have a default latest version number', () => {
     const expected = LATEST_VERSION_NUMBER;
 
     expect(result.version).toEqual(expected);
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       await expect(initialApplication.create({ context: {}, accountId })).rejects.toThrow(
         `Creating initial application (createInitialApplication helper) for user ${account.id}`,
       );

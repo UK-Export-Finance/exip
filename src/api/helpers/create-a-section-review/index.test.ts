@@ -23,7 +23,7 @@ describe('helpers/create-a-section-review', () => {
     sectionReview = { eligibility: true };
   });
 
-  test('it should return a sectionReview with ID', async () => {
+  it('should return a sectionReview with ID', async () => {
     const result = await createASectionReview(context, application.id, sectionReview);
 
     expect(result.id).toBeDefined();
@@ -31,7 +31,7 @@ describe('helpers/create-a-section-review', () => {
     expect(result.id.length).toBeGreaterThan(0);
   });
 
-  test('it should return empty sectionReview fields apart from eligibility', async () => {
+  it('should return empty sectionReview fields apart from eligibility', async () => {
     const result = await createASectionReview(context, application.id, sectionReview);
 
     expect(result.applicationId).toEqual(application.id);
@@ -42,7 +42,7 @@ describe('helpers/create-a-section-review', () => {
   });
 
   describe('when an invalid sectionReview is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createASectionReview(context, application.id, {} as SectionReview);
       } catch (error) {
@@ -52,7 +52,7 @@ describe('helpers/create-a-section-review', () => {
   });
 
   describe('when an invalid application ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createASectionReview(context, mockInvalidId, {} as SectionReview);
       } catch (error) {
