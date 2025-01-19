@@ -85,7 +85,7 @@ jobs:
           username: ${{ secrets.MYSQL_USER }}
           password: ${{ secrets.MYSQL_PASSWORD }}
           database: ${{ env.PRODUCT }}
-          branch: ${{ env.ENVIRONMENT }}
+          branch: ${{ github.ref_name }}
           node: ${{ vars.NODE_VERSION }}
           execute: ${{ vars.DATABASE }}
 
@@ -130,7 +130,7 @@ jobs:
           credentials: ${{ secrets.AZURE_CREDENTIALS }}
           acr: ${{ secrets.ACR_PASSWORD }}
           webapp: ${{ matrix.webapp }}
-          branch: ${{ env.ENVIRONMENT }}
+          branch: ${{ github.ref_name }}
           node: ${{ vars.NODE_ENV }}
           port: ${{ env.PORT }}
           session: ${{ secrets.SESSION_SECRET }}
