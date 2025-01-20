@@ -37,10 +37,10 @@ export const DECLARATIONS_FIELDS = {
         {
           VERSION: '1',
           LABEL:
-            'Provide full details. Include all information relating to the type of Modern Slavery that exists or has existed, and/or any investigation or enforcement action, and any actions taken by you in connection with this.',
+            'To the best of your knowledge, can you confirm you are not aware of the existence of Modern Slavery in respect of yourself, the export contract(s), your immediate holding company or your supply chain, in each case, at present or in the past 2 years.',
           CONDITIONAL_REASON: {
             LABEL:
-              'Enter full details why you cannot. Include all information relating to the type of Modern Slavery that exists or has existed, and/or any investigation or enforcement action, and any actions taken by you in connection with this.',
+              'Provide full details. Include all information relating to the type of Modern Slavery that exists or has existed, and/or any investigation or enforcement action, and any actions taken by you in connection with this.',
             MAXIMUM: MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON,
           },
         },
