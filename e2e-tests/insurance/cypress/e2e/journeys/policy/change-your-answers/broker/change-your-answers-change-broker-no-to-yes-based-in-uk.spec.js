@@ -1,7 +1,10 @@
 import { summaryList } from '../../../../../../../pages/shared';
+import { ORDNANCE_SURVEY_EXAMPLES } from '../../../../../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
+
+const { UNDERGROUND_STATION } = ORDNANCE_SURVEY_EXAMPLES.WESTMINSTER_BRIDGE_STREET;
 
 const {
   USING_BROKER: FIELD_ID,
@@ -13,6 +16,8 @@ const {
   ROOT,
   POLICY: { BROKER_CHANGE, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
+
+const optionValue = `${UNDERGROUND_STATION.ADDRESS_LINE_1} ${UNDERGROUND_STATION.ADDRESS_LINE_2}`;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -60,7 +65,7 @@ context(
 
         cy.completeAndSubmitBrokerForm({ usingBroker: true });
         cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk: true });
-        cy.completeAndSubmitBrokerAddressesForm({ optionValue: 'H M TREASURY HORSE GUARDS ROAD' });
+        cy.completeAndSubmitBrokerAddressesForm({ optionValue });
 
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId: FIELD_ID });
       });

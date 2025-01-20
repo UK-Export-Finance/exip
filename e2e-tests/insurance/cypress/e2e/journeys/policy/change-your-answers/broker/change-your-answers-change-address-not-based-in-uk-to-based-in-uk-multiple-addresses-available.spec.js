@@ -1,9 +1,12 @@
 import { summaryList } from '../../../../../../../pages/shared';
 import { brokerConfirmAddressPage } from '../../../../../../../pages/insurance/policy';
-import { EXPECTED_UNDERGROUND_STATION_SINGLE_LINE_STRING } from '../../../../../../../constants';
+import { EXPECTED_UNDERGROUND_STATION_SINGLE_LINE_STRING, ADDRESS_LOOKUP_INPUT_EXAMPLES, ORDNANCE_SURVEY_EXAMPLES } from '../../../../../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
+
+const { WESTMINSTER_BRIDGE_STREET } = ADDRESS_LOOKUP_INPUT_EXAMPLES;
+const { UNDERGROUND_STATION } = ORDNANCE_SURVEY_EXAMPLES.WESTMINSTER_BRIDGE_STREET;
 
 const {
   USING_BROKER,
@@ -17,16 +20,7 @@ const {
   POLICY: { BROKER_ADDRESSES_CHANGE, BROKER_CONFIRM_ADDRESS_CHANGE, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
-/**
- * TODO
- * TODO
- * TODO
- * TODO
- * use constants (after another PR is merged)
- */
-const postcode = 'SW1A 2JR';
-const optionValue = 'LONDON UNDERGROUND LTD WESTMINSTER STATION BRIDGE STREET';
-const buildingNumberOrName = 'Westminster';
+const optionValue = `${UNDERGROUND_STATION.ADDRESS_LINE_1} ${UNDERGROUND_STATION.ADDRESS_LINE_2}`;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -76,8 +70,8 @@ context(
 
         cy.completeAndSubmitBrokerDetailsForm({
           isBasedInUk: true,
-          postcode,
-          buildingNumberOrName,
+          postcode: WESTMINSTER_BRIDGE_STREET.POSTCODE,
+          buildingNumberOrName: WESTMINSTER_BRIDGE_STREET.BUILDING_NAME,
         });
 
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_ADDRESSES_CHANGE });
