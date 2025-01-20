@@ -1,6 +1,7 @@
 import { pageVariables, PAGE_CONTENT_STRINGS, TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES } from '../../../../constants';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -8,6 +9,11 @@ import isChangeRoute from '../../../../helpers/is-change-route';
 import generateBrokerAddressInsetTextHtml from '../../../../helpers/generate-broker-address-inset-text-html';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
+
+const {
+  BROKER_DETAILS: { POSTCODE, BUILDING_NUMBER_OR_NAME },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS: FIELD_ID },
+} = POLICY_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
@@ -81,6 +87,106 @@ describe('controllers/insurance/policy/broker-confirm-address', () => {
   });
 
   describe('get', () => {
+    describe(`when application.broker does not have ${POSTCODE}, ${BUILDING_NUMBER_OR_NAME} or ${FIELD_ID}`, () => {
+      beforeEach(() => {
+        res.locals.application = {
+          ...mockApplication,
+          broker: {
+            ...mockApplication.broker,
+            [POSTCODE]: '',
+            [BUILDING_NUMBER_OR_NAME]: '',
+            [FIELD_ID]: '',
+          },
+        };
+      });
+
+      it(`should redirect to ${BROKER_DETAILS_ROOT}`, () => {
+        get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`);
+      });
+    });
+
+    describe(`when application.broker has ${POSTCODE} and ${BUILDING_NUMBER_OR_NAME}, no ${FIELD_ID}`, () => {
+      beforeEach(() => {
+        res.locals.application = {
+          ...mockApplication,
+          broker: {
+            ...mockApplication.broker,
+            [POSTCODE]: 'Mock postcode',
+            [BUILDING_NUMBER_OR_NAME]: 'Mock building name/number',
+            [FIELD_ID]: '',
+          },
+        };
+      });
+
+      it(`should NOT redirect to ${BROKER_DETAILS_ROOT}`, () => {
+        get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledTimes(0);
+      });
+    });
+
+    describe(`when application.broker has ${FIELD_ID}, no ${POSTCODE} or ${BUILDING_NUMBER_OR_NAME}`, () => {
+      beforeEach(() => {
+        res.locals.application = {
+          ...mockApplication,
+          broker: {
+            ...mockApplication.broker,
+            [POSTCODE]: '',
+            [BUILDING_NUMBER_OR_NAME]: '',
+            [FIELD_ID]: 'Mock full address',
+          },
+        };
+      });
+
+      it(`should NOT redirect to ${BROKER_DETAILS_ROOT}`, () => {
+        get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledTimes(0);
+      });
+    });
+
+    describe(`when application.broker has ${FIELD_ID} and ${POSTCODE}, no ${BUILDING_NUMBER_OR_NAME}`, () => {
+      beforeEach(() => {
+        res.locals.application = {
+          ...mockApplication,
+          broker: {
+            ...mockApplication.broker,
+            [POSTCODE]: 'Mock postcode',
+            [BUILDING_NUMBER_OR_NAME]: '',
+            [FIELD_ID]: 'Mock full address',
+          },
+        };
+      });
+
+      it(`should NOT redirect to ${BROKER_DETAILS_ROOT}`, () => {
+        get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledTimes(0);
+      });
+    });
+
+    describe(`when application.broker has ${FIELD_ID} and ${BUILDING_NUMBER_OR_NAME}, no ${POSTCODE}`, () => {
+      beforeEach(() => {
+        res.locals.application = {
+          ...mockApplication,
+          broker: {
+            ...mockApplication.broker,
+            [POSTCODE]: '',
+            [BUILDING_NUMBER_OR_NAME]: 'Mock building name/number',
+            [FIELD_ID]: 'Mock full address',
+          },
+        };
+      });
+
+      it(`should NOT redirect to ${BROKER_DETAILS_ROOT}`, () => {
+        get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledTimes(0);
+      });
+    });
+
     it('should render template', () => {
       get(req, res);
 

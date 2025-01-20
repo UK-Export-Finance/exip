@@ -60,6 +60,22 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
+  const { broker, referenceNumber } = application;
+  const { postcode, buildingNumberOrName, fullAddress } = broker;
+
+  /**
+   * If a user manually navigates to this route,
+   * without providing previously required address data
+   * redirect the user back to BROKER_DETAILS,
+   * where the data can be submitted.
+   * NOTE: the required data is either address lookup fields, or a manual address entry field.
+   */
+  const hasAddressLookupFields = postcode && buildingNumberOrName;
+
+  if (!hasAddressLookupFields && !fullAddress) {
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`);
+  }
+
   const submittedAnswer = generateBrokerAddressInsetTextHtml(application.broker);
 
   return res.render(TEMPLATE, {
