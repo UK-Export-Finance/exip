@@ -17,7 +17,7 @@ dotenv.config();
 const { SESSION_SECRET } = process.env;
 
 import configureNunjucks from './nunjucks-configuration';
-import { redirectRoutes, rootRoute, quoteRoutes, insuranceRoutes } from './routes';
+import { redirectRoutes, rootRoute, quoteRoutes, insuranceRoutes, wellknownRoutes } from './routes';
 import { ROUTES, COOKIE } from './constants';
 import { PAGES } from './content-strings';
 
@@ -128,6 +128,7 @@ ui.use('/', userSession);
 ui.use('/', rootRoute);
 ui.use('/', quoteRoutes);
 ui.use('/', insuranceRoutes);
+ui.use('/', wellknownRoutes);
 
 ui.use(
   '/assets',
