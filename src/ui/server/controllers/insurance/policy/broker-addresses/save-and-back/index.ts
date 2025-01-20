@@ -1,7 +1,7 @@
 import { ROUTES } from '../../../../../constants';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
-import getChosenOrdnanceSurveyAddress from '../../../../../helpers/get-chosen-ordnance-survey-address';
+import getOrdnanceSurveyAddressById from '../../../../../helpers/get-chosen-ordnance-survey-address/by-id';
 import mapAndSave from '../../map-and-save/broker';
 import { FIELD_ID, ERROR_MESSAGE } from '..';
 import api from '../../../../../api';
@@ -36,7 +36,7 @@ const post = async (req: Request, res: Response) => {
 
       const { addresses } = response;
 
-      const chosenAddress = getChosenOrdnanceSurveyAddress(payload, FIELD_ID, addresses);
+      const chosenAddress = getOrdnanceSurveyAddressById(payload, FIELD_ID, addresses);
 
       const saveResponse = await mapAndSave.broker(chosenAddress, application, validationErrors);
 

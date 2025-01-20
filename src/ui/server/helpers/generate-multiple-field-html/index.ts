@@ -12,9 +12,13 @@ const generateMultipleFieldHtml = (fieldValues: object): string => {
   let fieldValuesString = '';
 
   Object.keys(fieldValues).forEach((field) => {
-    // if the field exists and not the typename part
+    /**
+     * If the field exists,
+     * is not a __typename or ID field,
+     * include the field with a <br>.
+     */
     if (fieldValues[field] && field !== '__typename' && field !== 'id') {
-      fieldValuesString += `${fieldValues[field]}<br>`;
+      fieldValuesString += `${fieldValues[field]}<br />`;
     }
   });
 

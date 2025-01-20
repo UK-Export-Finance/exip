@@ -43,6 +43,7 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * @param {Boolean} brokerIsBasedInUk: Should submit "yes or "no" to "broker is based in the UK".
  * @param {String} brokerBuildingNumberOrName: Broker building name or number.
  * @param {String} brokerPostcode: Broker postcode.
+ * @param {Boolean} multipleBrokerAddressesAvailable: Multiple broker addresses are available from Ordnance Survey.
  * @return {String} Application reference number
  */
 const completeSignInAndSubmitAnApplication = ({
@@ -82,6 +83,7 @@ const completeSignInAndSubmitAnApplication = ({
   brokerIsBasedInUk = false,
   brokerBuildingNumberOrName,
   brokerPostcode,
+  multipleBrokerAddressesAvailable,
 }) => {
   completeSignInAndGoToApplication({
     companyNumber,
@@ -122,6 +124,7 @@ const completeSignInAndSubmitAnApplication = ({
         brokerIsBasedInUk,
         brokerBuildingNumberOrName,
         brokerPostcode,
+        multipleBrokerAddressesAvailable,
       });
     } else {
       cy.completePrepareApplicationSinglePolicyType({
@@ -157,6 +160,7 @@ const completeSignInAndSubmitAnApplication = ({
         brokerIsBasedInUk,
         brokerBuildingNumberOrName,
         brokerPostcode,
+        multipleBrokerAddressesAvailable,
       });
     }
     cy.completeAndSubmitCheckYourAnswers();

@@ -1,18 +1,18 @@
-import getChosenOrdnanceSurveyAddress from '.';
-import { mockOrdnanceSurveyAddressResponse } from '../../test-mocks';
+import getOrdnanceSurveyAddressById from '.';
+import { mockOrdnanceSurveyAddressResponse } from '../../../test-mocks';
 
 const mockAddresses = mockOrdnanceSurveyAddressResponse.addresses;
 
 const mockFieldId = 'mockField';
 
-describe('helpers/get-chosen-ordnance-survey-address', () => {
+describe('helpers/get-chosen-ordnance-survey-address/by-id', () => {
   describe('when an address is found', () => {
     const mockPayload = {
       [mockFieldId]: '0',
     };
 
     it('should return an address without __typename', () => {
-      const result = getChosenOrdnanceSurveyAddress(mockPayload, mockFieldId, mockAddresses);
+      const result = getOrdnanceSurveyAddressById(mockPayload, mockFieldId, mockAddresses);
 
       const [firstAddress] = mockAddresses;
 
@@ -35,7 +35,7 @@ describe('helpers/get-chosen-ordnance-survey-address', () => {
     };
 
     it('should return an empty object', () => {
-      const result = getChosenOrdnanceSurveyAddress(mockPayload, 'other-field-id', mockAddresses);
+      const result = getOrdnanceSurveyAddressById(mockPayload, 'other-field-id', mockAddresses);
 
       expect(result).toEqual({});
     });
@@ -47,7 +47,7 @@ describe('helpers/get-chosen-ordnance-survey-address', () => {
     };
 
     it('should return an empty object', () => {
-      const result = getChosenOrdnanceSurveyAddress(mockPayload, mockFieldId, mockAddresses);
+      const result = getOrdnanceSurveyAddressById(mockPayload, mockFieldId, mockAddresses);
 
       expect(result).toEqual({});
     });
