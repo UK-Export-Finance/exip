@@ -20,7 +20,7 @@ describe('emails/insurance-feedback-email', () => {
     jest.clearAllMocks();
   });
 
-  test('it should call notify.sendEmail and return the response with all variables provided', async () => {
+  it('should call notify.sendEmail and return the response with all variables provided', async () => {
     notify.sendEmail = sendEmailSpy;
 
     const emailVariables = {
@@ -45,7 +45,7 @@ describe('emails/insurance-feedback-email', () => {
     expect(result).toEqual(expected);
   });
 
-  test('it should call notify.sendEmail and return the response with no satisfaction provided', async () => {
+  it('should call notify.sendEmail and return the response with no satisfaction provided', async () => {
     notify.sendEmail = sendEmailSpy;
 
     const { satisfaction, ...mockInsuranceFeedbackNoSatisfaction } = mockInsuranceFeedback;
@@ -76,7 +76,7 @@ describe('emails/insurance-feedback-email', () => {
       notify.sendEmail = mockSpyPromiseRejection;
     });
 
-    test('should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await insuranceFeedbackEmail(mockInsuranceFeedback);
       } catch (error) {

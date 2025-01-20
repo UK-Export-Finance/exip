@@ -105,7 +105,7 @@ describe('custom-resolvers/submit-application', () => {
       });
     });
 
-    test('it should call generate.XLSX', async () => {
+    it('should call generate.XLSX', async () => {
       expect(generateXLSXSpy).toHaveBeenCalledTimes(1);
 
       const expectedCountries = await getCountries(context);
@@ -113,7 +113,7 @@ describe('custom-resolvers/submit-application', () => {
       expect(generateXLSXSpy).toHaveBeenCalledWith(populatedApplication, expectedCountries);
     });
 
-    test('it should call applicationSubmittedEmails.send', async () => {
+    it('should call applicationSubmittedEmails.send', async () => {
       expect(applicationSubmittedEmailsSpy).toHaveBeenCalledTimes(1);
 
       expect(applicationSubmittedEmailsSpy).toHaveBeenCalledWith(populatedApplication, mockGenerateXLSXResponse);
@@ -195,7 +195,7 @@ describe('custom-resolvers/submit-application', () => {
   });
 
   describe('error handling', () => {
-    test('should throw an error', async () => {
+    it('should throw an error', async () => {
       variables = {
         applicationId: 'invalidId',
       };

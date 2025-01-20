@@ -221,7 +221,7 @@ describe('custom-resolvers/account-sign-in/account-sign-in-checks', () => {
       sendEmail.accessCodeEmail = mockSpyPromiseRejection;
     });
 
-    test('should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await accountSignInChecks(context, account, mockUrlOrigin);
       } catch (error) {

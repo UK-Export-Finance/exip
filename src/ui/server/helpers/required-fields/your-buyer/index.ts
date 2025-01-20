@@ -21,7 +21,7 @@ const {
  * then returns CONNECTION_WITH_BUYER_DESCRIPTION, CONNECTION_WITH_BUYER, TRADED_WITH_BUYER (yes no radios and description field)
  * else returns CONNECTION_WITH_BUYER, TRADED_WITH_BUYER (yes no radios)
  * @param {Boolean} connectionWithBuyer
- * @returns {Array<String>} Array of fieldIds
+ * @returns {Array<string>} Array of tasks/field IDs
  */
 export const workingWithBuyerTasks = ({ connectionWithBuyer }: { connectionWithBuyer?: boolean }): Array<string> => {
   if (connectionWithBuyer) {
@@ -41,7 +41,7 @@ export const workingWithBuyerTasks = ({ connectionWithBuyer }: { connectionWithB
  * if none are true, then returns an empty array as page will not be rendered
  * @param {Boolean} tradedWithBuyer
  * @param {Boolean} outstandingPayments
- * @returns {Array<String>} fieldIds
+ * @returns {Array<string>} Array of tasks/field IDs
  */
 export const tradingHistoryTasks = ({ tradedWithBuyer, outstandingPayments }: { tradedWithBuyer?: boolean; outstandingPayments?: boolean }): Array<string> => {
   if (tradedWithBuyer) {
@@ -65,7 +65,7 @@ export const tradingHistoryTasks = ({ tradedWithBuyer, outstandingPayments }: { 
  * if none are true, then returns an empty array
  * @param {Boolean} totalContractValueOverThreshold
  * @param {Boolean} hasPreviousCreditInsuranceWithBuyer
- * @returns {Array<String>} fieldIds
+ * @returns {Array<string>} Array of tasks/field IDs
  */
 export const creditInsuranceCoverTasks = ({
   totalContractValueOverThreshold,
@@ -93,7 +93,7 @@ export const creditInsuranceCoverTasks = ({
  * @param {Boolean} outstandingPayments
  * @param {Boolean} hasPreviousCreditInsuranceWithBuyer
  * @param {Boolean} totalContractValueOverThreshold
- * @returns {Array} Required field IDs
+ * @returns {Array<string>} Array of tasks/field IDs
  */
 const requiredFields = ({
   connectionWithBuyer,

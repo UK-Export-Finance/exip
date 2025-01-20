@@ -13,7 +13,7 @@ describe('server/helpers/generate-multiple-field-html', () => {
 
       const result = generateMultipleFieldHtml(fieldValues);
 
-      const expected = `${fieldValues.fieldOne}<br>${fieldValues.fieldTwo}<br>${fieldValues.fieldThree}<br>`;
+      const expected = `${fieldValues.fieldOne}<br />${fieldValues.fieldTwo}<br />${fieldValues.fieldThree}<br />`;
       expect(result).toEqual(expected);
     });
 
@@ -28,7 +28,7 @@ describe('server/helpers/generate-multiple-field-html', () => {
 
       const result = generateMultipleFieldHtml(fieldValues);
 
-      const expected = `${fieldValues.fieldOne}<br>${fieldValues.fieldThree}<br>`;
+      const expected = `${fieldValues.fieldOne}<br />${fieldValues.fieldThree}<br />`;
       expect(result).toEqual(expected);
     });
   });

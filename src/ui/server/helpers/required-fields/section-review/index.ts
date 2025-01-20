@@ -5,7 +5,7 @@ const { ELIGIBILITY, EXPORTER_BUSINESS, BUYER, POLICY, EXPORT_CONTRACT } = FIELD
 /**
  * requiredFields
  * Required fields for the insurance - check your answers section.
- * @returns {Array<string>} Required field IDs
+ * @returns {Array<string>} Array of tasks/field IDs
  */
 const requiredFields = () => [ELIGIBILITY, EXPORTER_BUSINESS, BUYER, POLICY, EXPORT_CONTRACT];
 

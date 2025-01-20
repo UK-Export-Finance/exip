@@ -49,7 +49,7 @@ describe('helpers/send-email-application-submission-deadline', () => {
   });
 
   describe(`when an account has an submissionDeadline ${REMINDER_DAYS} days in the future`, () => {
-    test('it should call sendEmail.submissionDeadlineEmail and return success=true', async () => {
+    it('should call sendEmail.submissionDeadlineEmail and return success=true', async () => {
       const result = await applicationSubmissionDeadlineEmail(context);
 
       expect(sendEmailSpy).toHaveBeenCalledTimes(1);
@@ -64,7 +64,7 @@ describe('helpers/send-email-application-submission-deadline', () => {
   });
 
   describe(`when an account has an submissionDeadline ${REMINDER_DAYS} days in the future but sendEmail.submissionDeadlineEmail returns an array of length 0`, () => {
-    test('it should call sendEmail.submissionDeadlineEmail and return success=false when sendEmail.submissionDeadlineEmail returns an array of 0 length', async () => {
+    it('should call sendEmail.submissionDeadlineEmail and return success=false when sendEmail.submissionDeadlineEmail returns an array of 0 length', async () => {
       applicationSubmissionDeadineEmail.send = jest.fn(() => Promise.resolve([]));
 
       const result = await applicationSubmissionDeadlineEmail(context);
@@ -78,7 +78,7 @@ describe('helpers/send-email-application-submission-deadline', () => {
   });
 
   describe(`when no accounts have a submissionDeadline ${REMINDER_DAYS} days in the future`, () => {
-    test('it should NOT call sendEmail.submissionDeadlineEmail and return success=true', async () => {
+    it('should NOT call sendEmail.submissionDeadlineEmail and return success=true', async () => {
       await applications.update({ context, applicationId: application.id, data: { submissionDeadline: DATE_24_HOURS_FROM_NOW() } });
 
       const result = await applicationSubmissionDeadlineEmail(context);
@@ -95,7 +95,7 @@ describe('helpers/send-email-application-submission-deadline', () => {
 
   describe('error handling', () => {
     describe('when an error occurs whilst getting and sending email for expiring applications', () => {
-      test('should throw an error', async () => {
+      it('should throw an error', async () => {
         jest.resetAllMocks();
         await expect(applicationSubmissionDeadlineEmail()).rejects.toThrow(
           'Sending application submission deadline email (emailApplicationSubmissionDeadlineEmail helper)',

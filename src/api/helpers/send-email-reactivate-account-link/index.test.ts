@@ -85,7 +85,7 @@ describe('helpers/send-email-reactivate-account-link', () => {
     expect(expiryDay).toEqual(tomorrowDay);
   });
 
-  test('it should call sendEmail.reactivateAccountLink', () => {
+  it('should call sendEmail.reactivateAccountLink', () => {
     const { email, reactivationHash } = account;
 
     const name = getFullNameString(account);
@@ -95,7 +95,7 @@ describe('helpers/send-email-reactivate-account-link', () => {
   });
 
   describe('when no account is found', () => {
-    test('it should return success=false', async () => {
+    it('should return success=false', async () => {
       // wipe accounts so an account will not be found.
       await accounts.deleteAll(context);
 
@@ -108,7 +108,7 @@ describe('helpers/send-email-reactivate-account-link', () => {
   });
 
   describe('error handling', () => {
-    test('should throw an error', async () => {
+    it('should throw an error', async () => {
       await expect(sendEmailReactivateAccountLinkHelper.send()).rejects.toThrow(
         'Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper)',
       );

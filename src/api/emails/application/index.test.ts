@@ -43,7 +43,7 @@ describe('emails/application', () => {
       fileSystem.unlink = unlinkSpy;
     });
 
-    test('it should call notify.sendEmail and return the response', async () => {
+    it('should call notify.sendEmail and return the response', async () => {
       notify.sendEmail = sendEmailSpy;
 
       const result = await application.submittedEmail(variables);
@@ -61,7 +61,7 @@ describe('emails/application', () => {
         notify.sendEmail = mockSpyPromiseRejection;
       });
 
-      test('should throw an error', async () => {
+      it('should throw an error', async () => {
         try {
           await application.submittedEmail(variables);
         } catch (error) {
@@ -86,7 +86,7 @@ describe('emails/application', () => {
       fileSystem.unlink = unlinkSpy;
     });
 
-    test('it should call notify.sendEmail and return the response', async () => {
+    it('should call notify.sendEmail and return the response', async () => {
       notify.sendEmail = sendEmailSpy;
 
       const result = await application.underwritingTeam(variables, mockFilePath, templateId);
@@ -109,7 +109,7 @@ describe('emails/application', () => {
         notify.sendEmail = mockSpyPromiseRejection;
       });
 
-      test('should throw an error', async () => {
+      it('should throw an error', async () => {
         try {
           await application.underwritingTeam(variables, mockFilePath, templateId);
         } catch (error) {

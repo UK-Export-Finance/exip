@@ -36,7 +36,7 @@ describe('custom-resolvers/send-email-confirm-email-address', () => {
     sendEmail.confirmEmailAddress = sendConfirmEmailAddressEmailSpy;
   });
 
-  test('it should call sendEmail.confirmEmailAddress and return success=true', async () => {
+  it('should call sendEmail.confirmEmailAddress and return success=true', async () => {
     const result = await sendEmailConfirmEmailAddressMutation({}, variables, context);
 
     const { email, verificationHash } = account;
@@ -55,7 +55,7 @@ describe('custom-resolvers/send-email-confirm-email-address', () => {
   });
 
   describe('when sendEmailConfirmEmailAddress does not return success=true', () => {
-    test('should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await sendEmailConfirmEmailAddressMutation({}, variables, context);
       } catch (error) {

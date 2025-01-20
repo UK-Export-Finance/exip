@@ -2,17 +2,12 @@ import { pageVariables, PAGE_CONTENT_STRINGS, TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
-import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import replaceNewLineWithLineBreak from '../../../../helpers/replace-new-line-with-line-break';
 import isChangeRoute from '../../../../helpers/is-change-route';
+import generateBrokerAddressInsetTextHtml from '../../../../helpers/generate-broker-address-inset-text-html';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
-
-const {
-  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS: FIELD_ID },
-} = POLICY_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
@@ -96,7 +91,7 @@ describe('controllers/insurance/policy/broker-confirm-address', () => {
         }),
         ...pageVariables(referenceNumber, isChangeRoute(req.originalUrl)),
         userName: getUserNameFromSession(req.session.user),
-        submittedAnswer: replaceNewLineWithLineBreak(mockApplication.broker[FIELD_ID]),
+        submittedAnswer: generateBrokerAddressInsetTextHtml(mockApplication.broker),
       });
     });
 

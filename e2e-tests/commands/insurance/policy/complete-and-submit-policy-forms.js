@@ -18,6 +18,7 @@ const { SINGLE } = APPLICATION.POLICY_TYPE;
  * @param {Boolean} isBasedInUk: Broker is based in the UK
  * @param {String} postcode: Broker postcode
  * @param {String} buildingNumberOrName: Broker building name or number
+ * @param {Boolean} multipleBrokerAddressesAvailable: Multiple broker addresses are available from Ordnance Survey
  */
 const completeAndSubmitPolicyForms = ({
   stopSubmittingAfter,
@@ -32,6 +33,7 @@ const completeAndSubmitPolicyForms = ({
   isBasedInUk = true,
   postcode,
   buildingNumberOrName,
+  multipleBrokerAddressesAvailable,
 }) => {
   cy.startInsurancePolicySection({});
 
@@ -60,9 +62,13 @@ const completeAndSubmitPolicyForms = ({
     steps.push({ name: 'brokerDetails', action: () => cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk, postcode, buildingNumberOrName }) });
 
     if (isBasedInUk) {
-      steps.push({ name: 'brokerAddresses', action: () => cy.completeAndSubmitBrokerAddressesForm({ isBasedInUk }) });
+      if (multipleBrokerAddressesAvailable) {
+        steps.push({ name: 'brokerAddresses', action: () => cy.completeAndSubmitBrokerAddressesForm({ isBasedInUk }) });
+      }
 
       steps.push({ name: 'brokerConfirmAddress', action: () => cy.clickSubmitButton() });
+    } else {
+      cy.completeAndSubmitBrokerManualAddressForm({});
     }
   }
 

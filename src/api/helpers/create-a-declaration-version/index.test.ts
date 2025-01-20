@@ -25,7 +25,7 @@ describe('helpers/create-a-declaration-version', () => {
     declaration = (await declarations.create(context)) as ApplicationDeclaration;
   });
 
-  test('it should return a declaration version with ID', async () => {
+  it('should return a declaration version with ID', async () => {
     const result = await createADeclarationVersion(context, declaration.id);
 
     expect(result.id).toBeDefined();
@@ -33,13 +33,13 @@ describe('helpers/create-a-declaration-version', () => {
     expect(result.id.length).toBeGreaterThan(0);
   });
 
-  test('it should return a declaration ID', async () => {
+  it('should return a declaration ID', async () => {
     const result = await createADeclarationVersion(context, declaration.id);
 
     expect(result.declarationId).toEqual(declaration.id);
   });
 
-  test('it should return declaration version fields with the latest versions', async () => {
+  it('should return declaration version fields with the latest versions', async () => {
     const result = await createADeclarationVersion(context, declaration.id);
 
     expect(result.agreeHowDataWillBeUsed).toEqual('');
@@ -51,7 +51,7 @@ describe('helpers/create-a-declaration-version', () => {
   });
 
   describe('when an invalid declaration ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createADeclarationVersion(context, invalidId);
       } catch (error) {
