@@ -28,7 +28,11 @@ const executeSqlQuery = async ({ connection, query, loggingMessage }: ExecuteSql
       throw new Error(`🚨 Invalid connection passed to executeSqlQuery (${loggingMessage})`);
     }
 
-    const response = await connection.query(query);
+    const [response] = await connection.query(query);
+
+    const responseLogContext = ` ${loggingMessage} - `;
+
+    console.info('ℹ️ %s %s', responseLogContext, response.info);
 
     return response;
   } catch (error) {
