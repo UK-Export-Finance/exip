@@ -65,7 +65,9 @@ context(
 
         cy.completeAndSubmitBrokerForm({ usingBroker: true });
         cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk: true });
-        cy.completeAndSubmitBrokerAddressesForm({ optionValue });
+
+        // submit the "confirm broker address" form
+        cy.clickSubmitButton();
 
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId: FIELD_ID });
       });
