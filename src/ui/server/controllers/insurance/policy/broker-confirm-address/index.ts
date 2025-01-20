@@ -1,15 +1,10 @@
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
-import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import replaceNewLineWithLineBreak from '../../../../helpers/replace-new-line-with-line-break';
+import generateBrokerAddressInsetTextHtml from '../../../../helpers/generate-broker-address-inset-text-html';
 import { Request, Response } from '../../../../../types';
-
-const {
-  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS: FIELD_ID },
-} = POLICY_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
@@ -63,14 +58,7 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`);
   }
 
-  /**
-   * Generate a submittedAnswer const
-   * This is required because the address value is a single string with line break characters.
-   * However, for this page, the address is rendered as pure HTML.
-   * Therefore, we need to transform \r\n characters into <br />,
-   * In order for the address to be rendered with multiple lines.
-   */
-  const submittedAnswer = replaceNewLineWithLineBreak(application.broker[FIELD_ID]);
+  const submittedAnswer = generateBrokerAddressInsetTextHtml(application.broker);
 
   return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({

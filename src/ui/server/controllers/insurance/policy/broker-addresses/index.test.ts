@@ -10,7 +10,8 @@ import api from '../../../../api';
 import mapOrdnanceSurveyAddresses from '../../../../helpers/mappings/map-ordnance-survey-addresses';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
-import getChosenOrdnanceSurveyAddress from '../../../../helpers/get-chosen-ordnance-survey-address';
+import getOrdnanceSurveyAddressByIndex from '../../../../helpers/get-chosen-ordnance-survey-address/by-index';
+import getOrdnanceSurveyAddressById from '../../../../helpers/get-chosen-ordnance-survey-address/by-id';
 import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockOrdnanceSurveyAddressResponse, mockSpyPromiseRejection, referenceNumber } from '../../../../test-mocks';
@@ -52,6 +53,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
     res = mockRes();
 
     api.keystone.getOrdnanceSurveyAddresses = getOrdnanceSurveyAddressesSpy;
+    mapAndSave.broker = jest.fn(() => Promise.resolve(true));
   });
 
   afterAll(() => {
@@ -177,6 +179,73 @@ describe('controllers/insurance/policy/broker-addresses', () => {
       expect(getOrdnanceSurveyAddressesSpy).toHaveBeenCalledTimes(1);
 
       expect(getOrdnanceSurveyAddressesSpy).toHaveBeenCalledWith(postcode, buildingNumberOrName);
+    });
+
+    it('should NOT call mapAndSave.broker', () => {
+      expect(mapAndSave.broker).toHaveBeenCalledTimes(0);
+    });
+
+    describe('when api.keystone.getOrdnanceSurveyAddresses returns only 1 address', () => {
+      const mockAddresses = mockOrdnanceSurveyAddressResponse.addresses;
+
+      beforeEach(async () => {
+        const mockResponse = {
+          ...mockOrdnanceSurveyAddressResponse,
+          addresses: [mockAddresses[0]],
+        };
+
+        api.keystone.getOrdnanceSurveyAddresses = jest.fn(() => Promise.resolve(mockResponse));
+        mapAndSave.broker = jest.fn(() => Promise.resolve(true));
+
+        await get(req, res);
+      });
+
+      it('should call mapAndSave.broker once with address data and application data', () => {
+        expect(mapAndSave.broker).toHaveBeenCalledTimes(1);
+
+        const addressToSave = getOrdnanceSurveyAddressByIndex({
+          addresses: mockAddresses,
+          index: 0,
+        });
+
+        expect(mapAndSave.broker).toHaveBeenCalledWith(addressToSave, mockApplication);
+      });
+
+      it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, async () => {
+        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`);
+      });
+
+      describe('api error handling', () => {
+        describe('mapAndSave.broker call', () => {
+          describe('when mapAndSave.broker does not return a true boolean', () => {
+            beforeEach(() => {
+              const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
+
+              mapAndSave.broker = mapAndSaveSpy;
+            });
+
+            it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+              await get(req, res);
+
+              expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+            });
+          });
+
+          describe('when there is an error', () => {
+            beforeEach(() => {
+              const mapAndSaveSpy = mockSpyPromiseRejection;
+
+              mapAndSave.broker = mapAndSaveSpy;
+            });
+
+            it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+              await get(req, res);
+
+              expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+            });
+          });
+        });
+      });
     });
 
     it('should render template', async () => {
@@ -331,7 +400,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
 
         const payload = constructPayload(req.body, [FIELD_ID]);
 
-        const chosenAddress = getChosenOrdnanceSurveyAddress(payload, FIELD_ID, mockOrdnanceSurveyAddressResponse.addresses);
+        const chosenAddress = getOrdnanceSurveyAddressById(payload, FIELD_ID, mockOrdnanceSurveyAddressResponse.addresses);
 
         expect(mapAndSave.broker).toHaveBeenCalledWith(chosenAddress, mockApplication);
       });
@@ -365,7 +434,7 @@ describe('controllers/insurance/policy/broker-addresses', () => {
             req.body = validBody;
           });
 
-          describe('when no application is returned', () => {
+          describe('when mapAndSave.broker does not return a true boolean', () => {
             beforeEach(() => {
               const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
 

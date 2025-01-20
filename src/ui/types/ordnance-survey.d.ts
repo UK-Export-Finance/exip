@@ -8,3 +8,8 @@ export interface MappedOrdnanceSurveyAddress extends Address {
   county?: string;
   postcode?: string;
 }
+
+export interface GetChosenOrdnanceSurveyAddressByIndexParams {
+  addresses: Array<MappedOrdnanceSurveyAddress>;
+  index?: number;
+}
