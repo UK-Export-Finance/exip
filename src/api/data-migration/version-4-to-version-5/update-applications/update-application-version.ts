@@ -13,7 +13,7 @@ const { STATUS, LATEST_VERSION_NUMBER, VERSIONS } = APPLICATION;
 const updateApplicationVersion = (connection: Connection) => {
   const originalVersionNumber = VERSIONS[2].VERSION_NUMBER;
 
-  const loggingMessage = `Updating IN_PROGRESS FIELD VERSION from ${originalVersionNumber} to ${LATEST_VERSION_NUMBER} in the application table`;
+  const loggingMessage = `Updating IN_PROGRESS FIELD VERSION from ${originalVersionNumber} to ${LATEST_VERSION_NUMBER} in the Application table`;
 
   const query = `
     UPDATE Application SET version = '${LATEST_VERSION_NUMBER}' WHERE status = '${STATUS.IN_PROGRESS}'

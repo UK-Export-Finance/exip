@@ -11,7 +11,7 @@ const { STATUS } = APPLICATION;
  * @returns {Promise<object>} executeSqlQuery response
  */
 const updateInProgressApplicationsMigratedTo = (connection: Connection) => {
-  const loggingMessage = `Updating in progress application's migratedTo FIELD to 5 in the application table`;
+  const loggingMessage = `Updating in progress application's migratedTo FIELD to 5 in the Application table`;
 
   const query = `
     UPDATE Application SET migratedTo=5 WHERE status = '${STATUS.IN_PROGRESS}'
