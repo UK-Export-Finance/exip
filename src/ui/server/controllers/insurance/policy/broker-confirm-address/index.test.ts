@@ -121,6 +121,46 @@ describe('controllers/insurance/policy/broker-confirm-address', () => {
       });
     });
 
+    describe(`when application.broker has ${FIELD_ID} and ${POSTCODE}, no ${BUILDING_NUMBER_OR_NAME}`, () => {
+      beforeEach(() => {
+        res.locals.application = {
+          ...mockApplication,
+          broker: {
+            ...mockApplication.broker,
+            [POSTCODE]: 'Mock postcode',
+            [BUILDING_NUMBER_OR_NAME]: '',
+            [FIELD_ID]: 'Mock full address',
+          },
+        };
+      });
+
+      it(`should NOT redirect to ${BROKER_DETAILS_ROOT}`, () => {
+        get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledTimes(0);
+      });
+    });
+
+    describe(`when application.broker has ${FIELD_ID} and ${BUILDING_NUMBER_OR_NAME}, no ${POSTCODE}`, () => {
+      beforeEach(() => {
+        res.locals.application = {
+          ...mockApplication,
+          broker: {
+            ...mockApplication.broker,
+            [POSTCODE]: '',
+            [BUILDING_NUMBER_OR_NAME]: 'Mock building name/number',
+            [FIELD_ID]: 'Mock full address',
+          },
+        };
+      });
+
+      it(`should NOT redirect to ${BROKER_DETAILS_ROOT}`, () => {
+        get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledTimes(0);
+      });
+    });
+
     it('should render template', () => {
       get(req, res);
 
