@@ -6443,8 +6443,7 @@ var DECLARATIONS_FIELDS = {
         TITLE: 'Adhere to the Modern Slavery Act',
       },
       CONDITIONAL_REASON: {
-        LABEL:
-          'If you have a turnover of more than \xA336 million enter full details why you cannot. Include all information relating to the type of Modern Slavery that exists or has existed, and/or any investigation or enforcement action, and any actions taken by you in connection with this.',
+        LABEL: 'Provide full details.',
         MAXIMUM: MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON,
         SUMMARY: {
           TITLE: 'Why can the exporter not adhere?',
@@ -6459,7 +6458,7 @@ var DECLARATIONS_FIELDS = {
       },
       CONDITIONAL_REASON: {
         LABEL:
-          'Enter full details why you cannot. Include all information relating to the type of Modern Slavery that exists or has existed, and/or any investigation or enforcement action, and any actions taken by you in connection with this.',
+          'Provide full details. Include all information relating to the type of Modern Slavery that exists or has existed, and/or any investigation or enforcement action, and any actions taken by you in connection with this.',
         MAXIMUM: MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON,
         SUMMARY: {
           TITLE: 'Details of investigation for violating the Modern Slavery Act',
@@ -6474,7 +6473,7 @@ var DECLARATIONS_FIELDS = {
       },
       CONDITIONAL_REASON: {
         LABEL:
-          'Enter full details why you cannot. Include all information relating to the type of Modern Slavery that exists or has existed, and/or any investigation or enforcement action, and any actions taken by you in connection with this.',
+          'Provide full details. Include all information relating to the type of Modern Slavery that exists or has existed, and/or any investigation or enforcement action, and any actions taken by you in connection with this.',
         MAXIMUM: MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASON,
         SUMMARY: {
           TITLE: 'Details of how modern slavery is involved in the export',
