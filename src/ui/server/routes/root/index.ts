@@ -13,7 +13,7 @@ import problemWithServiceGet from '../../controllers/root/problem-with-service';
 const rootRouter = express.Router();
 
 rootRouter.get(ROUTES.ROOT, rootGet);
-rootRouter.get(ROUTES.THANKYOU, thankyouGet);
+rootRouter.get(ROUTES.THANK_YOU, thankyouGet);
 
 rootRouter.get(ROUTES.ACCESSIBILITY_STATEMENT, accessibilityStatementGet);
 rootRouter.get(ROUTES.INSURANCE.ACCESSIBILITY_STATEMENT, accessibilityStatementGet);

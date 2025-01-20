@@ -8,6 +8,16 @@ export const now = (): Date => new Date();
 /**
  * Returns the current date and time in ISO 8601 format.
  *
- * @returns {IsoDateTimeStamp} The current date and time as an ISO 8601 string.
+ * @param {Date} date JavaScript date object
+ * @returns {String} The current date and time as an ISO 8601 string.
  */
-export const getISO8601 = (): string => now().toISOString();
+export const getISO8601 = (date: Date = now()): string => date.toISOString();
+
+/**
+ * Adds a specified number of years to a given date.
+ *
+ * @param year - The number of years to add.
+ * @param date - The date to which the years will be added. Defaults to the current date and time.
+ * @returns A new Date object with the specified number of years added.
+ */
+export const addYear = (year: number, date: Date = now()): Date => new Date(date.setFullYear(date.getFullYear() + year));

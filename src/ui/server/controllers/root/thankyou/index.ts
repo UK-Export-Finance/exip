@@ -1,13 +1,15 @@
 import { Request, Response } from '../../../../types';
 
 /**
- * Handles the GET request for the thank you page.
+ * get
+ *  Handles the GET request for the thank you page.
  *
- * This function sets the response type to plain text and writes a thank you message
+ * This controller sets the response type to plain text and writes a thank you message
  * with a placeholder for the date, name, and description.
  *
- * @param req - The request object.
- * @param res - The response object.
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.render} All sections page
  */
 export const get = (req: Request, res: Response) => {
   res.type('text/plain');

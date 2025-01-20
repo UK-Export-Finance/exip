@@ -1,23 +1,27 @@
 import { Request, Response } from '../../../../types';
-import { getISO8601 } from '../../../helpers/date/iso-8601';
+import { addYear, getISO8601 } from '../../../helpers/date/iso-8601';
 
 /**
+ * get
  * Handles the GET request to serve the security.txt file.
  *
- * This endpoint returns a plain text response containing various security-related
+ * This controller returns a plain text response containing various security-related
  * contact information, acknowledgments, preferred languages, canonical URL, policy,
  * and hiring information.
- *
- * @param req - The HTTP request object.
- * @param res - The HTTP response object.
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.render} All sections page
  */
 const get = (req: Request, res: Response) => {
+  const addOneYear = addYear(1);
+  const expiry = getISO8601(addOneYear);
+
   res.type('text/plain');
 
   res.write('Contact: https://www.gov.uk/contact/govuk\n');
   res.write('Contact: https://hackerone.com/7af14fd9-fe4e-4f39-bea1-8f8a364061b8/embedded_submissions/new\n');
   res.write('Contact: https://forms.office.com/pages/responsepage.aspx?id=jhOEgACUnkCm2ka1KB4LCi7SbbFdjaZCuuaGbE7xK1BUQ0ZIOEZLMDdXUjhLTDNRMzVXOUNVQzZNMy4u\n');
-  res.write(`Expires: ${getISO8601()}\n`);
+  res.write(`Expires: ${expiry}\n`);
   res.write('Acknowledgments: https://get-a-quote-for-export-credit-insurance.service.gov.uk/thanks.txt\n');
   res.write('Preferred-Languages: en\n');
   res.write('Canonical: https://get-a-quote-for-export-credit-insurance.service.gov.uk/.well-known/security.txt\n');
