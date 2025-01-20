@@ -142,7 +142,7 @@ describe('helpers/create-an-application', () => {
     });
   });
 
-  test('it should return the result of applicationColumns.update', async () => {
+  it('should return the result of applicationColumns.update', async () => {
     const result = await createAnApplicationHelper(variables, context);
 
     const createdApplication = await applications.get({ context, applicationId: result.id });
@@ -151,7 +151,7 @@ describe('helpers/create-an-application', () => {
   });
 
   describe('when there is no account for the provided accountId', () => {
-    test('it should return null', async () => {
+    it('should return null', async () => {
       variables.accountId = mockInvalidId;
 
       const result = await createAnApplicationHelper(variables, context);

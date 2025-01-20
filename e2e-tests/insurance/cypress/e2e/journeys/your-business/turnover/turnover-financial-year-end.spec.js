@@ -55,7 +55,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, ()
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should display ${FINANCIAL_YEAR_END_DATE} section`, () => {
+  it(`should render ${FINANCIAL_YEAR_END_DATE} section`, () => {
     cy.checkText(field.label(), FIELDS.TURNOVER[fieldId].LABEL);
 
     cy.checkText(turnoverPage[fieldId](), expectedValue);

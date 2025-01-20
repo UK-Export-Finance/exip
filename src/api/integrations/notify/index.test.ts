@@ -18,7 +18,7 @@ describe('integrations/notify', () => {
       });
     });
 
-    test('it should return success=true and emailRecipient', async () => {
+    it('should return success=true and emailRecipient', async () => {
       const result = await notify.sendEmail(mockTemplateId, mockSendToEmailAddress, mockVariables);
 
       const expected = {
@@ -38,7 +38,7 @@ describe('integrations/notify', () => {
       });
     });
 
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await notify.sendEmail(mockTemplateId, mockSendToEmailAddress, mockVariables);
       } catch (error) {

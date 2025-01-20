@@ -80,7 +80,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
     account = await accounts.get(context, account.id);
   });
 
-  test('should return success=true with accountId and emailRecipient', () => {
+  it('should return success=true with accountId and emailRecipient', () => {
     const expected = {
       success: true,
       accountId: account.id,
@@ -90,26 +90,26 @@ describe('custom-resolvers/verify-account-email-address', () => {
     expect(result).toEqual(expected);
   });
 
-  test(`should update the account to be ${IS_VERIFIED}=true`, () => {
+  it(`should update the account to be ${IS_VERIFIED}=true`, () => {
     expect(account.status[IS_VERIFIED]).toEqual(true);
   });
 
-  test(`should remove ${VERIFICATION_HASH} from the account`, () => {
+  it(`should remove ${VERIFICATION_HASH} from the account`, () => {
     expect(account[VERIFICATION_HASH]).toEqual('');
   });
 
-  test(`should nullify ${VERIFICATION_EXPIRY} from the account`, () => {
+  it(`should nullify ${VERIFICATION_EXPIRY} from the account`, () => {
     expect(account[VERIFICATION_EXPIRY]).toBeNull();
   });
 
-  test('should remove all entries for the account in the AuthenticationRetry table', async () => {
+  it('should remove all entries for the account in the AuthenticationRetry table', async () => {
     const retries = await authRetries.findAll(context);
 
     expect(retries.length).toEqual(0);
   });
 
   describe(`when the ${VERIFICATION_EXPIRY} has expired`, () => {
-    test('it should return success=false and expired=true', async () => {
+    it('should return success=false and expired=true', async () => {
       const oneMinuteInThePast = DATE_ONE_MINUTE_IN_THE_PAST();
 
       const accountVerificationExpired = {
@@ -136,7 +136,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
   });
 
   describe('when an account is already verified', () => {
-    test('it should return success=true', async () => {
+    it('should return success=true', async () => {
       account = await accounts.create({ context, data: mockAccountUpdate });
       await accountStatusHelper.update(context, account.status.id, { [IS_VERIFIED]: true });
       variables.token = account[VERIFICATION_HASH];
@@ -155,7 +155,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
   });
 
   describe(`when no account is found from the provided ${ID}`, () => {
-    test('it should return success=false and invalid=true', async () => {
+    it('should return success=false and invalid=true', async () => {
       variables[ID] = 'invalid';
 
       result = await verifyAccountEmailAddress({}, variables, context);
@@ -167,7 +167,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
   });
 
   describe(`when the verification hash does not match the received token`, () => {
-    test('it should return success=false and invalid=true', async () => {
+    it('should return success=false and invalid=true', async () => {
       variables.token = 'invalid';
       variables.accountId = account.id;
 
@@ -180,7 +180,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
   });
 
   describe(`when the verification hash is valid but account id is invalid`, () => {
-    test('it should return success=false and invalid=true', async () => {
+    it('should return success=false and invalid=true', async () => {
       variables.token = account[VERIFICATION_HASH];
       variables.accountId = 'invalid';
 
@@ -193,7 +193,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
   });
 
   describe(`when the verification hash is valid but account id is not provided`, () => {
-    test('it should return success=false and invalid=true', async () => {
+    it('should return success=false and invalid=true', async () => {
       variables.token = account[VERIFICATION_HASH];
       variables.accountId = null;
 
@@ -206,7 +206,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
   });
 
   describe(`when the verification hash is not provided but account id is valid`, () => {
-    test('it should return success=false and invalid=true', async () => {
+    it('should return success=false and invalid=true', async () => {
       variables.token = null;
       variables.accountId = account.id;
 
@@ -219,7 +219,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
   });
 
   describe('when no account is found', () => {
-    test('it should return success=false and invalid=true', async () => {
+    it('should return success=false and invalid=true', async () => {
       // ensure we have the valid token that was previously created
       variables.token = verificationHash;
 

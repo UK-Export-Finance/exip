@@ -33,7 +33,7 @@ describe('custom-resolvers/add-and-get-OTP', () => {
     account = await accounts.get(context, account.id);
   });
 
-  test('it should generate an OTP and save to the account', () => {
+  it('should generate an OTP and save to the account', () => {
     expect(account.otpSalt).toEqual(mockOTP.salt);
     expect(account.otpHash).toEqual(mockOTP.hash);
     // @ts-ignore
@@ -58,7 +58,7 @@ describe('custom-resolvers/add-and-get-OTP', () => {
       };
     });
 
-    test('should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await addAndGetOTP({}, variables, context);
       } catch (error) {

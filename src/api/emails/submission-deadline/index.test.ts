@@ -22,7 +22,7 @@ describe('emails/submission-deadline', () => {
     notify.sendEmail = sendEmailSpy;
   });
 
-  test('it should call notify.sendEmail and return the response', async () => {
+  it('should call notify.sendEmail and return the response', async () => {
     const result = await submissionDeadlineEmail(variables.email, variables);
 
     expect(sendEmailSpy).toHaveBeenCalledTimes(1);
@@ -39,7 +39,7 @@ describe('emails/submission-deadline', () => {
       notify.sendEmail = mockSpyPromiseRejection;
     });
 
-    test('should throw an error', async () => {
+    it('should throw an error', async () => {
       await expect(submissionDeadlineEmail(variables.email, variables)).rejects.toThrow(`Sending submission deadline email for ${variables.referenceNumber}`);
     });
   });

@@ -40,7 +40,7 @@ describe('custom-resolvers/verify-account-password-reset-token', () => {
   });
 
   describe(`when the account does not have ${PASSWORD_RESET_HASH}`, () => {
-    test('it should return success=false and invalid=true', async () => {
+    it('should return success=false and invalid=true', async () => {
       // update the account so it does not have a PASSWORD_RESET_HASH
       await context.query.Account.updateOne({
         where: { id: account.id },
@@ -61,7 +61,7 @@ describe('custom-resolvers/verify-account-password-reset-token', () => {
   });
 
   describe(`when the account's ${PASSWORD_RESET_EXPIRY} has expired`, () => {
-    test('it should return success=false and expired=true with account ID', async () => {
+    it('should return success=false and expired=true with account ID', async () => {
       const today = new Date();
 
       const previousTime = subMinutes(today, 6);
@@ -87,7 +87,7 @@ describe('custom-resolvers/verify-account-password-reset-token', () => {
   });
 
   describe(`when no account is found from the provided ${PASSWORD_RESET_HASH}`, () => {
-    test('it should return success=false and invalid=true', async () => {
+    it('should return success=false and invalid=true', async () => {
       // update the account so PASSWORD_RESET_HASH has a value
       await context.query.Account.updateOne({
         where: { id: account.id },
@@ -107,7 +107,7 @@ describe('custom-resolvers/verify-account-password-reset-token', () => {
   });
 
   describe('when no account is found', () => {
-    test('it should return success=false', async () => {
+    it('should return success=false', async () => {
       // wipe accounts so an account will not be found.
       await accounts.deleteAll(context);
 

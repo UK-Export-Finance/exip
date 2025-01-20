@@ -12,7 +12,7 @@ const {
 describe('helpers/get-application-submitted-email-template-ids', () => {
   let application: Application;
 
-  test('it should return an object with the correct template IDs', async () => {
+  it('should return an object with the correct template IDs', async () => {
     application = mockApplication;
 
     const result = getApplicationSubmittedEmailTemplateIds(application);
@@ -43,7 +43,7 @@ describe('helpers/get-application-submitted-email-template-ids', () => {
       };
     });
 
-    test('it should return an object with the correct template IDs', async () => {
+    it('should return an object with the correct template IDs', async () => {
       const result = getApplicationSubmittedEmailTemplateIds(application);
 
       const expected = {
@@ -74,7 +74,7 @@ describe('helpers/get-application-submitted-email-template-ids', () => {
       };
     });
 
-    test('it should return an object with only a template ID for underwritingTeam', async () => {
+    it('should return an object with only a template ID for underwritingTeam', async () => {
       const result = getApplicationSubmittedEmailTemplateIds(application);
 
       const expected = {
@@ -104,7 +104,7 @@ describe('helpers/get-application-submitted-email-template-ids', () => {
       };
     });
 
-    test('it should return an object with the correct, empty template IDs', async () => {
+    it('should return an object with the correct, empty template IDs', async () => {
       const result = getApplicationSubmittedEmailTemplateIds(application);
 
       const expected = {
