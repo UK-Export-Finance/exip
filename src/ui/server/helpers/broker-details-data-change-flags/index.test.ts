@@ -16,7 +16,7 @@ describe('server/helpers/broker-details-data-change-flags', () => {
     // TODO: when DOES match
 
     describe(`when ${BUILDING_NUMBER_OR_NAME} matches, but ${POSTCODE} does not`, () => {
-      it('should return postcodeOrBuildingNumberName as true', () => {
+      it('should return postcodeOrBuildingNumberNameHasChanged as true', () => {
         const mockFormBody = {
           [IS_BASED_IN_UK]: 'true',
           [BUILDING_NUMBER_OR_NAME]: mockBroker[BUILDING_NUMBER_OR_NAME],
@@ -31,12 +31,12 @@ describe('server/helpers/broker-details-data-change-flags', () => {
 
         const result = brokerDetailsDataChangeFlags(mockFormBody, mockBrokerData);
 
-        expect(result.postcodeOrBuildingNumberName).toEqual(true);
+        expect(result.postcodeOrBuildingNumberNameHasChanged).toEqual(true);
       });
     });
 
     describe(`when ${POSTCODE} matches, but ${BUILDING_NUMBER_OR_NAME} does not`, () => {
-      it('should return postcodeOrBuildingNumberName as true', () => {
+      it('should return postcodeOrBuildingNumberNameHasChanged as true', () => {
         const mockFormBody = {
           [IS_BASED_IN_UK]: 'true',
           [POSTCODE]: mockBroker[POSTCODE],
@@ -51,12 +51,12 @@ describe('server/helpers/broker-details-data-change-flags', () => {
 
         const result = brokerDetailsDataChangeFlags(mockFormBody, mockBrokerData);
 
-        expect(result.postcodeOrBuildingNumberName).toEqual(true);
+        expect(result.postcodeOrBuildingNumberNameHasChanged).toEqual(true);
       });
     });
 
     describe(`when both ${POSTCODE} and ${BUILDING_NUMBER_OR_NAME} do not match`, () => {
-      it('should return postcodeOrBuildingNumberName as true', () => {
+      it('should return postcodeOrBuildingNumberNameHasChanged as true', () => {
         const mockFormBody = {
           [IS_BASED_IN_UK]: 'true',
           [POSTCODE]: 'Form body postcode',
@@ -71,12 +71,12 @@ describe('server/helpers/broker-details-data-change-flags', () => {
 
         const result = brokerDetailsDataChangeFlags(mockFormBody, mockBrokerData);
 
-        expect(result.postcodeOrBuildingNumberName).toEqual(true);
+        expect(result.postcodeOrBuildingNumberNameHasChanged).toEqual(true);
       });
     });
 
     describe(`when both ${POSTCODE} and ${BUILDING_NUMBER_OR_NAME} match`, () => {
-      it('should return postcodeOrBuildingNumberName as false', () => {
+      it('should return postcodeOrBuildingNumberNameHasChanged as false', () => {
         const mockFormBody = {
           [IS_BASED_IN_UK]: 'true',
           [POSTCODE]: mockBroker[POSTCODE],
@@ -91,7 +91,7 @@ describe('server/helpers/broker-details-data-change-flags', () => {
 
         const result = brokerDetailsDataChangeFlags(mockFormBody, mockBrokerData);
 
-        expect(result.postcodeOrBuildingNumberName).toEqual(false);
+        expect(result.postcodeOrBuildingNumberNameHasChanged).toEqual(false);
       });
     });
   });

@@ -17,7 +17,7 @@ const {
  * @returns {Object}
  */
 const brokerDetailsDataChangeFlags = (formBody: RequestBody, brokerData: ApplicationBroker) => {
-  let postcodeOrBuildingNumberName = false;
+  let postcodeOrBuildingNumberNameHasChanged = false;
   let manualAddressRequired = false;
 
   const isBasedInUk = formBody[IS_BASED_IN_UK] === 'true';
@@ -27,7 +27,7 @@ const brokerDetailsDataChangeFlags = (formBody: RequestBody, brokerData: Applica
     const postcodeHasChanged = formBody[POSTCODE] !== brokerData[POSTCODE];
     const buildingNumberOrNameHasChanged = formBody[BUILDING_NUMBER_OR_NAME] !== brokerData[BUILDING_NUMBER_OR_NAME];
 
-    postcodeOrBuildingNumberName = postcodeHasChanged || buildingNumberOrNameHasChanged;
+    postcodeOrBuildingNumberNameHasChanged = postcodeHasChanged || buildingNumberOrNameHasChanged;
   }
 
   if (isNotBasedInUk) {
@@ -35,7 +35,7 @@ const brokerDetailsDataChangeFlags = (formBody: RequestBody, brokerData: Applica
   }
 
   return {
-    postcodeOrBuildingNumberName, // TODO: rename ???
+    postcodeOrBuildingNumberNameHasChanged,
     manualAddressRequired,
   };
 };
