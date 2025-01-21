@@ -17,7 +17,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Change your answers - Broker - Yes to no - As an exporter, I want to change my answers to the broker section', () => {
+context('Insurance - Policy - Change your answers - Using a broker - Yes to no - As an exporter, I want to change my answers to the broker section', () => {
   let referenceNumber;
   let checkYourAnswersUrl;
 
@@ -100,7 +100,7 @@ context('Insurance - Policy - Change your answers - Broker - Yes to no - As an e
         });
       });
 
-      describe(`when going back to ${BROKER_MANUAL_ADDRESS_ROOT}`, () => {
+      describe(`after completing (now required) broker fields and going back to ${BROKER_MANUAL_ADDRESS_ROOT}`, () => {
         beforeEach(() => {
           cy.navigateToUrl(checkYourAnswersUrl);
 

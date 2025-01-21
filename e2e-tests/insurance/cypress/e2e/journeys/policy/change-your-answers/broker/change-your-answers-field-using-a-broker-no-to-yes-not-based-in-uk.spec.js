@@ -18,7 +18,7 @@ const {
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  'Insurance - Policy - Change your answers - Broker - No to yes - Not based in UK - As an exporter, I want to change my answers to the broker section',
+  'Insurance - Policy - Change your answers - Using a broker - No to yes - Not based in UK - As an exporter, I want to change my answers to the broker section',
   () => {
     let referenceNumber;
     let checkYourAnswersUrl;
