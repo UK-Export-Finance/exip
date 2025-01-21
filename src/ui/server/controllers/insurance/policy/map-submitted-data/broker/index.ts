@@ -26,6 +26,7 @@ const mapSubmittedData = (formBody: RequestBody): object => {
   if (formBody[USING_BROKER] === 'false') {
     populatedData[NAME] = '';
     populatedData[EMAIL] = '';
+    populatedData[IS_BASED_IN_UK] = null;
 
     populatedData[FULL_ADDRESS] = '';
     populatedData[BUILDING_NUMBER_OR_NAME] = '';

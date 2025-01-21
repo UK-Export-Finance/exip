@@ -34,6 +34,7 @@ describe('controllers/insurance/policy/map-submitted-data/broker', () => {
         ...mockFormBody,
         [NAME]: '',
         [EMAIL]: '',
+        [IS_BASED_IN_UK]: null,
         [FULL_ADDRESS]: '',
         [BUILDING_NUMBER_OR_NAME]: '',
         [ADDRESS_LINE_1]: '',

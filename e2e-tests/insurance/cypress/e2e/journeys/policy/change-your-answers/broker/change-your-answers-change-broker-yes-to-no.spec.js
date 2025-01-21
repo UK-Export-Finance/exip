@@ -91,6 +91,8 @@ context('Insurance - Policy - Change your answers - Broker - Yes to no - As an e
           cy.assertEmptyFieldValue(NAME);
           cy.assertEmptyFieldValue(EMAIL);
 
+          cy.assertUncheckedYesNoRadios();
+
           cy.clickYesRadioInput();
 
           cy.assertEmptyFieldValue(POSTCODE);
