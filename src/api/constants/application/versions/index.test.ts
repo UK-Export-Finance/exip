@@ -30,6 +30,27 @@ describe('api/constants/application/versions', () => {
         BROKER_ADDRESS_AS_MULTIPLE_FIELDS: false,
         REQUESTED_CREDIT_LIMIT_REQUIRED: true,
       },
+      {
+        VERSION_NUMBER: '4',
+        OVER_500K_SUPPORT: true,
+        DEFAULT_FINAL_DESTINATION_KNOWN: null,
+        DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: null,
+        DEFAULT_CURRENCY: GBP,
+        BROKER_ADDRESS_AS_MULTIPLE_FIELDS: false,
+        REQUESTED_CREDIT_LIMIT_REQUIRED: true,
+        DECLARATIONS_MODERN_SLAVERY: true,
+      },
+      {
+        VERSION_NUMBER: '5',
+        OVER_500K_SUPPORT: true,
+        DEFAULT_FINAL_DESTINATION_KNOWN: null,
+        DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: null,
+        DEFAULT_CURRENCY: GBP,
+        BROKER_ADDRESS_AS_MULTIPLE_FIELDS: false,
+        REQUESTED_CREDIT_LIMIT_REQUIRED: true,
+        DECLARATIONS_MODERN_SLAVERY: true,
+        BROKER_ADDRESS_LOOKUP: true,
+      },
     ];
 
     expect(VERSIONS).toEqual(expected);

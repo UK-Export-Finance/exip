@@ -9,8 +9,8 @@ import VERSIONS from '.';
  * - Version number 1: MVP - No support for applications over 500k.
  * - Version number 2: "No PDF" - Support for applications over 500k.
  * - Version number 3: "No PDF" design and content iterations. 1x new database field.
- * - Version number 4: File uploads
- * - Version number 5: Address lookup
+ * - Version number 4: New declaration - "Modern slavery".
+ * - Version number 5: Broker address lookup (Ordnance Survey integration)
  * - Version number 6: Payments integration
  * @returns {String} Latest application version number
  */
