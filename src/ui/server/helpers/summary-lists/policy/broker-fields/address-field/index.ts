@@ -13,7 +13,7 @@ const {
   BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
-const { BROKER_ADDRESSES_CHANGE, BROKER_ADDRESSES_CHECK_AND_CHANGE, BROKER_MANUAL_ADDRESS_CHANGE, BROKER_MANUAL_ADDRESS_CHECK_AND_CHANGE } = POLICY_ROUTES;
+const { BROKER_CONFIRM_ADDRESS_CHANGE, BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE } = POLICY_ROUTES;
 
 /**
  * brokerAddressField
@@ -27,33 +27,28 @@ const { BROKER_ADDRESSES_CHANGE, BROKER_ADDRESSES_CHECK_AND_CHANGE, BROKER_MANUA
 const brokerAddressField = (answers: ApplicationBroker, referenceNumber: number, checkAndChange?: boolean) => {
   let field;
   let fieldValue;
-  let changeRoute;
-  let checkAndChangeRoute;
   let href;
+
+  const changeRoute = BROKER_CONFIRM_ADDRESS_CHANGE;
+  const checkAndChangeRoute = BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE;
 
   if (answers[IS_BASED_IN_UK]) {
     field = getFieldById(POLICY_FIELDS.BROKER_ADDRESSES, SELECT_THE_ADDRESS);
 
-    const { buildingNumberOrName, addressLine1, addressLine2, town, county, postcode } = answers;
+    const { addressLine1, addressLine2, town, county, postcode } = answers;
 
     fieldValue = generateMultipleFieldHtml({
-      addressLine1: `${buildingNumberOrName} ${addressLine1}`,
+      addressLine1,
       addressLine2,
       town,
       county,
       postcode,
     });
 
-    changeRoute = BROKER_ADDRESSES_CHANGE;
-    checkAndChangeRoute = BROKER_ADDRESSES_CHECK_AND_CHANGE;
-
     href = generateChangeLink(changeRoute, checkAndChangeRoute, `#${SELECT_THE_ADDRESS}-label`, referenceNumber, checkAndChange);
   } else {
     field = getFieldById(POLICY_FIELDS.BROKER_MANUAL_ADDRESS, FULL_ADDRESS);
     fieldValue = answers[FULL_ADDRESS];
-
-    changeRoute = BROKER_MANUAL_ADDRESS_CHANGE;
-    checkAndChangeRoute = BROKER_MANUAL_ADDRESS_CHECK_AND_CHANGE;
 
     href = generateChangeLink(changeRoute, checkAndChangeRoute, `#${FULL_ADDRESS}-label`, referenceNumber, checkAndChange);
   }

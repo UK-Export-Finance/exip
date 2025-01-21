@@ -12,7 +12,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Check your answers - Summary list - Single contract policy - Broker - based in UK - Summary List', () => {
+context('Insurance - Policy - Check your answers - Summary list - Single contract policy - Broker - Based in UK - Summary List', () => {
   let url;
   let referenceNumber;
 
@@ -41,11 +41,11 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
   });
 
   it(`should render a ${NAME} summary list row`, () => {
-    checkSummaryList.BROKER[NAME]({});
+    checkSummaryList.BROKER[NAME]();
   });
 
   it(`should render a ${SELECT_THE_ADDRESS} summary list row`, () => {
-    checkSummaryList.BROKER[SELECT_THE_ADDRESS]();
+    checkSummaryList.BROKER[SELECT_THE_ADDRESS]({});
   });
 
   it(`should render a ${EMAIL} summary list row`, () => {

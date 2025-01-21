@@ -14,11 +14,11 @@ const {
   BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
-const { BROKER_ADDRESSES_CHANGE, BROKER_ADDRESSES_CHECK_AND_CHANGE, BROKER_MANUAL_ADDRESS_CHANGE, BROKER_MANUAL_ADDRESS_CHECK_AND_CHANGE } = POLICY_ROUTES;
+const { BROKER_CONFIRM_ADDRESS_CHANGE, BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE } = POLICY_ROUTES;
 
 const checkAndChange = false;
 
-const { buildingNumberOrName, addressLine1, addressLine2, town, county, postcode } = mockBroker;
+const { addressLine1, addressLine2, town, county, postcode } = mockBroker;
 
 describe('server/helpers/summary-lists/policy/broker-fields/address-field', () => {
   describe(`when ${IS_BASED_IN_UK} is true`, () => {
@@ -34,11 +34,17 @@ describe('server/helpers/summary-lists/policy/broker-fields/address-field', () =
         {
           field: getFieldById(POLICY_FIELDS.BROKER_ADDRESSES, SELECT_THE_ADDRESS),
           data: mockAnswers,
-          href: generateChangeLink(BROKER_ADDRESSES_CHANGE, BROKER_ADDRESSES_CHECK_AND_CHANGE, `#${SELECT_THE_ADDRESS}-label`, referenceNumber, checkAndChange),
+          href: generateChangeLink(
+            BROKER_CONFIRM_ADDRESS_CHANGE,
+            BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE,
+            `#${SELECT_THE_ADDRESS}-label`,
+            referenceNumber,
+            checkAndChange,
+          ),
           renderChangeLink: true,
         },
         generateMultipleFieldHtml({
-          addressLine1: `${buildingNumberOrName} ${addressLine1}`,
+          addressLine1,
           addressLine2,
           town,
           county,
@@ -64,8 +70,8 @@ describe('server/helpers/summary-lists/policy/broker-fields/address-field', () =
           field: getFieldById(POLICY_FIELDS.BROKER_MANUAL_ADDRESS, FULL_ADDRESS),
           data: mockAnswers,
           href: generateChangeLink(
-            BROKER_MANUAL_ADDRESS_CHANGE,
-            BROKER_MANUAL_ADDRESS_CHECK_AND_CHANGE,
+            BROKER_CONFIRM_ADDRESS_CHANGE,
+            BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE,
             `#${FULL_ADDRESS}-label`,
             referenceNumber,
             checkAndChange,

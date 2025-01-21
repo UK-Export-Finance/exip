@@ -27,10 +27,8 @@ const post = async (req: Request, res: Response) => {
 
     const payload = constructPayload(body, [FIELD_ID]);
 
-    // run validation on inputs
     const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
 
-    // runs save and go back command
     const saveResponse = await mapAndSave.lossPayee(payload, application, validationErrors);
 
     if (!saveResponse) {

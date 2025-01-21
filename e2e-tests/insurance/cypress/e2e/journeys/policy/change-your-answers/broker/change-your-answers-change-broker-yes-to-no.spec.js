@@ -5,7 +5,9 @@ import { FIELD_VALUES } from '../../../../../../../constants';
 
 const {
   USING_BROKER: FIELD_ID,
-  BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
+  BROKER_DETAILS: { NAME, EMAIL },
+  BROKER_ADDRESSES: { SELECT_THE_ADDRESS },
+  BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 const {
@@ -71,6 +73,7 @@ context('Insurance - Policy - Change your answers - Broker - Yes to no - As an e
        */
       summaryList.field(EMAIL).changeLink().should('not.exist');
 
+      cy.assertSummaryListRowDoesNotExist(summaryList, SELECT_THE_ADDRESS);
       cy.assertSummaryListRowDoesNotExist(summaryList, FULL_ADDRESS);
     });
 

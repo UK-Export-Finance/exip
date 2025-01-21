@@ -5,6 +5,7 @@ import { POLICY as POLICY_FIELD_IDS } from '../../../../constants/field-ids/insu
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import isChangeRoute from '../../../../helpers/is-change-route';
 import generateBrokerAddressInsetTextHtml from '../../../../helpers/generate-broker-address-inset-text-html';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
@@ -17,7 +18,15 @@ const {
 const {
   INSURANCE_ROOT,
   ALL_SECTIONS,
-  POLICY: { BROKER_DETAILS_ROOT, BROKER_MANUAL_ADDRESS_ROOT, LOSS_PAYEE_ROOT },
+  POLICY: {
+    BROKER_DETAILS_ROOT,
+    BROKER_DETAILS_CHANGE,
+    BROKER_CONFIRM_ADDRESS_ROOT,
+    BROKER_CONFIRM_ADDRESS_CHANGE,
+    BROKER_MANUAL_ADDRESS_ROOT,
+    LOSS_PAYEE_ROOT,
+    CHECK_YOUR_ANSWERS,
+  },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -47,16 +56,33 @@ describe('controllers/insurance/policy/broker-confirm-address', () => {
   });
 
   describe('pageVariables', () => {
-    it('should have correct properties', () => {
-      const result = pageVariables(referenceNumber);
+    const expectedGenericVariables = {
+      USE_DIFFERENT_ADDRESS_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
+      ENTER_ADDRESS_MANUALLY_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`,
+      SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
+    };
 
-      const expected = {
-        USE_DIFFERENT_ADDRESS_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
-        ENTER_ADDRESS_MANUALLY_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`,
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
-      };
+    describe("when the url's last substring is `change`", () => {
+      it('should return the correct properties', () => {
+        const result = pageVariables(referenceNumber, isChangeRoute(BROKER_CONFIRM_ADDRESS_CHANGE));
 
-      expect(result).toEqual(expected);
+        const expected = {
+          ...expectedGenericVariables,
+          USE_DIFFERENT_ADDRESS_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_CHANGE}`,
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe("when the url's last substring is NOT `change`", () => {
+      it('should return the correct properties', () => {
+        const result = pageVariables(referenceNumber, isChangeRoute(BROKER_CONFIRM_ADDRESS_ROOT));
+
+        const expected = expectedGenericVariables;
+
+        expect(result).toEqual(expected);
+      });
     });
   });
 
@@ -169,7 +195,7 @@ describe('controllers/insurance/policy/broker-confirm-address', () => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(referenceNumber),
+        ...pageVariables(referenceNumber, isChangeRoute(req.originalUrl)),
         userName: getUserNameFromSession(req.session.user),
         submittedAnswer: generateBrokerAddressInsetTextHtml(mockApplication.broker),
       });
@@ -189,6 +215,17 @@ describe('controllers/insurance/policy/broker-confirm-address', () => {
   });
 
   describe('post', () => {
+    describe("when the url's last substring is `change`", () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+        req.originalUrl = BROKER_CONFIRM_ADDRESS_CHANGE;
+
+        await post(req, res);
+
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+    });
+
     it(`should redirect to ${LOSS_PAYEE_ROOT}`, () => {
       post(req, res);
 

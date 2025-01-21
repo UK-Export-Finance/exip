@@ -12,8 +12,9 @@ import { Address, OrdnanceSurveyAddress } from '../../types';
  * - ORGANISATION_NAME
  * Good examples:
  * postcode = SW1A 2HQ, houseNameOrNumber = 1
- * postcode = W1A 1AA, houseNameOrNumber = Wogan House
- * postcode = SW1A 2HQ, houseNameOrNumber = Treasury  // TODO: update
+ * postcode = SW1A 2HQ, houseNameOrNumber = HM Treasury
+ * postcode = SW1A 2JR, houseNameOrNumber = Westminster
+ * postcode = W1A 1AA, houseNameOrNumber = House
  * @param {OrdnanceSurveyAddress} address
  * @returns {Address} mapped address
  */
