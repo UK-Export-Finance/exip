@@ -1,7 +1,7 @@
 import { SHARED, CONFIRM_READ_AND_AGREE, HAVE_READ_AND_AGREED } from '../shared';
 
 const EXPANDABLE = {
-  INTRO: 'Definition of terms in this declaration',
+  INTRO: 'Definition of terms',
   TABLE: {
     HEADERS: {
       TERM: 'Term',

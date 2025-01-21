@@ -16,7 +16,7 @@ export const MODERN_SLAVERY = {
     VERSIONS: [
       {
         VERSION: '1',
-        INTRO: 'Definition of terms in this declaration',
+        INTRO: 'Definition of terms',
         TABLE: {
           HEADERS: {
             TERM: 'Term',
