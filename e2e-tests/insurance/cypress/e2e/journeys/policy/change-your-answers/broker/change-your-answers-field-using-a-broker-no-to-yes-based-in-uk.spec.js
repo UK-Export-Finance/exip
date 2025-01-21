@@ -17,7 +17,7 @@ const {
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  'Insurance - Policy - Change your answers - Broker - No to yes - Based in UK - As an exporter, I want to change my answers to the broker section',
+  'Insurance - Policy - Change your answers - Using a broker - No to yes - Based in UK - As an exporter, I want to change my answers to the broker section',
   () => {
     let referenceNumber;
     let checkYourAnswersUrl;
@@ -69,11 +69,12 @@ context(
 
       it(`should render new ${FIELD_ID} answer and broker details fields`, () => {
         checkSummaryList[FIELD_ID]({ usingBroker: true });
+
         checkSummaryList.BROKER[NAME]();
 
-        checkSummaryList.BROKER[SELECT_THE_ADDRESS]({});
-
         checkSummaryList.BROKER[EMAIL]();
+
+        checkSummaryList.BROKER[SELECT_THE_ADDRESS]({});
       });
     });
   },

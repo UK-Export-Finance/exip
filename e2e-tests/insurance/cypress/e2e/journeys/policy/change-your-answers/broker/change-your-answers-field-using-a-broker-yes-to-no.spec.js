@@ -5,19 +5,19 @@ import { FIELD_VALUES } from '../../../../../../../constants';
 
 const {
   USING_BROKER: FIELD_ID,
-  BROKER_DETAILS: { NAME, EMAIL },
+  BROKER_DETAILS: { NAME, EMAIL, POSTCODE, BUILDING_NUMBER_OR_NAME },
   BROKER_ADDRESSES: { SELECT_THE_ADDRESS },
   BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 const {
   ROOT,
-  POLICY: { BROKER_CHANGE, BROKER_DETAILS_ROOT, CHECK_YOUR_ANSWERS },
+  POLICY: { BROKER_CHANGE, BROKER_DETAILS_ROOT, BROKER_MANUAL_ADDRESS_ROOT, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Change your answers - Broker - Yes to no - As an exporter, I want to change my answers to the broker section', () => {
+context('Insurance - Policy - Change your answers - Using a broker - Yes to no - As an exporter, I want to change my answers to the broker section', () => {
   let referenceNumber;
   let checkYourAnswersUrl;
 
@@ -77,14 +77,47 @@ context('Insurance - Policy - Change your answers - Broker - Yes to no - As an e
       cy.assertSummaryListRowDoesNotExist(summaryList, FULL_ADDRESS);
     });
 
-    describe(`when changing the answer again from no to yes and going back to ${BROKER_DETAILS_ROOT}`, () => {
-      it('should have empty field values', () => {
+    describe('when changing the answer again from no to yes', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(checkYourAnswersUrl);
+
         summaryList.field(FIELD_ID).changeLink().click();
 
         cy.completeAndSubmitBrokerForm({ usingBroker: true });
+      });
 
-        cy.assertEmptyFieldValue(NAME);
-        cy.assertEmptyFieldValue(EMAIL);
+      describe(`when going back to ${BROKER_DETAILS_ROOT}`, () => {
+        it('should have empty field values', () => {
+          cy.assertEmptyFieldValue(NAME);
+          cy.assertEmptyFieldValue(EMAIL);
+
+          cy.assertUncheckedYesNoRadios();
+
+          cy.clickYesRadioInput();
+
+          cy.assertEmptyFieldValue(POSTCODE);
+          cy.assertEmptyFieldValue(BUILDING_NUMBER_OR_NAME);
+        });
+      });
+
+      describe(`after completing (now required) broker fields and going back to ${BROKER_MANUAL_ADDRESS_ROOT}`, () => {
+        beforeEach(() => {
+          cy.navigateToUrl(checkYourAnswersUrl);
+
+          summaryList.field(FIELD_ID).changeLink().click();
+
+          cy.completeAndSubmitBrokerForm({ usingBroker: true });
+
+          cy.completeAndSubmitBrokerDetailsForm({
+            buildingNumberOrName: '123456789',
+          });
+
+          cy.clickZeroAddressesEntryManuallyLink();
+        });
+
+        it('should have empty field values', () => {
+          cy.assertEmptyTextareaFieldValue(FULL_ADDRESS);
+        });
       });
     });
   });

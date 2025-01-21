@@ -3,17 +3,29 @@ import FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 
 const {
   USING_BROKER,
-  BROKER_DETAILS: { BUILDING_NUMBER_OR_NAME, EMAIL, IS_BASED_IN_UK, NAME, POSTCODE },
+  BROKER_DETAILS: { BUILDING_NUMBER_OR_NAME, EMAIL, IS_BASED_IN_UK, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE },
   BROKER_ADDRESSES: { SELECT_THE_ADDRESS },
   BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = FIELD_IDS;
 
+const mockFullyPopulatedBrokerBody = {
+  [USING_BROKER]: 'false',
+  [NAME]: 'mock name',
+  [FULL_ADDRESS]: 'Mock full address',
+  [BUILDING_NUMBER_OR_NAME]: 'Mock building name',
+  [ADDRESS_LINE_1]: 'Mock address line 1',
+  [ADDRESS_LINE_2]: 'Mock address line 2',
+  [TOWN]: 'Mock town',
+  [COUNTY]: 'Mock county',
+  [POSTCODE]: 'Mock postcode',
+};
+
 describe('controllers/insurance/policy/map-submitted-data/broker', () => {
   describe(`when ${USING_BROKER} is provided with a value of 'false'`, () => {
-    it('should return the form body with empty BROKER_DETAILS values', () => {
+    it(`should return the form body with nullified/empty ${USING_BROKER} related values`, () => {
       const mockFormBody = {
+        ...mockFullyPopulatedBrokerBody,
         [USING_BROKER]: 'false',
-        [NAME]: 'mock name',
       };
 
       const result = mapSubmittedData(mockFormBody);
@@ -22,7 +34,14 @@ describe('controllers/insurance/policy/map-submitted-data/broker', () => {
         ...mockFormBody,
         [NAME]: '',
         [EMAIL]: '',
+        [IS_BASED_IN_UK]: null,
         [FULL_ADDRESS]: '',
+        [BUILDING_NUMBER_OR_NAME]: '',
+        [ADDRESS_LINE_1]: '',
+        [ADDRESS_LINE_2]: '',
+        [TOWN]: '',
+        [COUNTY]: '',
+        [POSTCODE]: '',
       };
 
       expect(result).toEqual(expected);
@@ -57,7 +76,7 @@ describe('controllers/insurance/policy/map-submitted-data/broker', () => {
   });
 
   describe(`when ${IS_BASED_IN_UK} is provided as an empty string`, () => {
-    it(`should return the form body with empty ${IS_BASED_IN_UK} values`, () => {
+    it(`should return the form body with a nullified ${IS_BASED_IN_UK} field`, () => {
       const mockFormBody = {
         [IS_BASED_IN_UK]: '',
       };
@@ -65,9 +84,32 @@ describe('controllers/insurance/policy/map-submitted-data/broker', () => {
       const result = mapSubmittedData(mockFormBody);
 
       const expected = {
+        [IS_BASED_IN_UK]: null,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when ${IS_BASED_IN_UK} is provided with a value of 'false'`, () => {
+    it(`should return the form body with nullified/empty ${IS_BASED_IN_UK} related values`, () => {
+      const mockFormBody = {
+        ...mockFullyPopulatedBrokerBody,
+        [IS_BASED_IN_UK]: 'false',
+      };
+
+      const result = mapSubmittedData(mockFormBody);
+
+      const expected = {
         ...mockFormBody,
-        [POSTCODE]: '',
+        [IS_BASED_IN_UK]: null,
+        [FULL_ADDRESS]: '',
         [BUILDING_NUMBER_OR_NAME]: '',
+        [ADDRESS_LINE_1]: '',
+        [ADDRESS_LINE_2]: '',
+        [TOWN]: '',
+        [COUNTY]: '',
+        [POSTCODE]: '',
       };
 
       expect(result).toEqual(expected);
