@@ -12,7 +12,7 @@ const {
 
 /**
  * mapSubmittedData
- * Map agent fields
+ * Map broker fields
  * @param {RequestBody} formBody: Form body
  * @returns {Object} populatedData
  */
