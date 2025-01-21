@@ -13,7 +13,7 @@
   Otherwise, nunjucks will not have a submittedAnswer variable of false
   and submittedAnswer would be empty.
 #}
-{% set submittedAnswer = application.declaration.modernSlavery[fieldId] or submittedValues[fieldId] %}
+{% set submittedAnswer = submittedValues[fieldId] or application.declaration.modernSlavery[fieldId] %}
 
 {% if submittedValues[fieldId] === false %}
   {% set submittedAnswer = submittedValues[fieldId] %}
