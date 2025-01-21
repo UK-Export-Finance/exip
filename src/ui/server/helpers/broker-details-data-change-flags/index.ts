@@ -1,11 +1,16 @@
 import POLICY_FIELD_IDS from '../../constants/field-ids/insurance/policy';
-import { ApplicationBroker, RequestBody } from '../../../types';
 import { isEmptyString } from '../string';
+import { ApplicationBroker, RequestBody } from '../../../types';
 
 const {
   BROKER_DETAILS: { IS_BASED_IN_UK, POSTCODE, BUILDING_NUMBER_OR_NAME },
   BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
+
+interface BrokerDetailsDataChangeFlagsParams {
+  postcodeOrBuildingNumberNameHasChanged: boolean;
+  manualAddressRequired: boolean;
+}
 
 /**
  * brokerDetailsDataChangeFlags
@@ -16,7 +21,7 @@ const {
  * @param {ApplicationBroker} brokerData: Saved broker data
  * @returns {Object}
  */
-const brokerDetailsDataChangeFlags = (formBody: RequestBody, brokerData: ApplicationBroker) => {
+const brokerDetailsDataChangeFlags = (formBody: RequestBody, brokerData: ApplicationBroker): BrokerDetailsDataChangeFlagsParams => {
   let postcodeOrBuildingNumberNameHasChanged = false;
   let manualAddressRequired = false;
 

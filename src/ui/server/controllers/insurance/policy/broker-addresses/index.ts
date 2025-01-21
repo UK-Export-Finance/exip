@@ -25,6 +25,7 @@ const {
     BROKER_DETAILS_ROOT,
     BROKER_ZERO_ADDRESSES_ROOT,
     BROKER_CONFIRM_ADDRESS_ROOT,
+    BROKER_CONFIRM_ADDRESS_CHANGE,
     BROKER_MANUAL_ADDRESS_ROOT,
     CHECK_YOUR_ANSWERS,
   },
@@ -119,7 +120,7 @@ export const get = async (req: Request, res: Response) => {
      * 3) Redirect to the next part of the flow.
      */
     if (addresses.length === 1) {
-      console.info(`Policy - broker addresses - only 1 address available. Redirecting to ${BROKER_CONFIRM_ADDRESS_ROOT}`);
+      console.info('Policy - broker addresses - only 1 address available');
 
       const addressToSave = getOrdnanceSurveyAddressByIndex({ addresses, index: 0 });
 
@@ -128,6 +129,14 @@ export const get = async (req: Request, res: Response) => {
       if (!saveResponse) {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
+
+      if (isChangeRoute(req.originalUrl)) {
+        console.info(`Policy - broker addresses - Redirecting to ${BROKER_CONFIRM_ADDRESS_CHANGE}`);
+
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_CHANGE}`);
+      }
+
+      console.info(`Policy - broker addresses - Redirecting to ${BROKER_CONFIRM_ADDRESS_ROOT}`);
 
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`);
     }

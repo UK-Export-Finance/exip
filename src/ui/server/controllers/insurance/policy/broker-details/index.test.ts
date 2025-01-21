@@ -11,6 +11,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/broker';
+import getBrokerDetailsPostRedirectUrl from '../../../../helpers/get-broker-details-post-redirect-url';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, referenceNumber, mockSpyPromiseRejection } from '../../../../test-mocks';
 
@@ -18,16 +19,7 @@ const { NAME, EMAIL, IS_BASED_IN_UK, POSTCODE, BUILDING_NUMBER_OR_NAME } = POLIC
 
 const {
   INSURANCE_ROOT,
-  POLICY: {
-    BROKER_DETAILS_SAVE_AND_BACK,
-    BROKER_ADDRESSES_ROOT,
-    BROKER_ADDRESSES_CHANGE,
-    BROKER_MANUAL_ADDRESS_ROOT,
-    BROKER_MANUAL_ADDRESS_CHANGE,
-    BROKER_DETAILS_CHANGE,
-    BROKER_DETAILS_CHECK_AND_CHANGE,
-  },
-  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
+  POLICY: { BROKER_DETAILS_SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -191,35 +183,13 @@ describe('controllers/insurance/policy/broker-details', () => {
     });
 
     describe('when there are no validation errors', () => {
-      describe(`when ${IS_BASED_IN_UK} is true`, () => {
-        it(`should redirect to ${BROKER_ADDRESSES_ROOT}`, async () => {
-          req.body = validBody.basedInUk;
+      beforeEach(async () => {
+        req.body = validBody.basedInUk;
 
-          await post(req, res);
-
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ADDRESSES_ROOT}`;
-
-          expect(res.redirect).toHaveBeenCalledWith(expected);
-        });
-      });
-
-      describe(`when ${IS_BASED_IN_UK} is false`, () => {
-        it(`should redirect to ${BROKER_MANUAL_ADDRESS_ROOT}`, async () => {
-          req.body = validBody.notBasedInUk;
-
-          await post(req, res);
-
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
-
-          expect(res.redirect).toHaveBeenCalledWith(expected);
-        });
+        await post(req, res);
       });
 
       it('should call mapAndSave.broker once with data from constructPayload function', async () => {
-        req.body = validBody.notBasedInUk;
-
-        await post(req, res);
-
         const payload = constructPayload(req.body, FIELD_IDS);
 
         expect(mapAndSave.broker).toHaveBeenCalledTimes(1);
@@ -227,76 +197,17 @@ describe('controllers/insurance/policy/broker-details', () => {
         expect(mapAndSave.broker).toHaveBeenCalledWith(payload, mockApplication);
       });
 
-      describe(`when ${IS_BASED_IN_UK} is true`, () => {
-        beforeEach(() => {
-          req.body = validBody.basedInUk;
+      it(`should redirect to a URL via getBrokerDetailsPostRedirectUrl helper`, async () => {
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        const expected = getBrokerDetailsPostRedirectUrl({
+          referenceNumber,
+          originalUrl: req.originalUrl,
+          formBody: payload,
+          brokerData: mockApplication.broker,
         });
 
-        it(`should redirect to ${BROKER_ADDRESSES_ROOT}`, async () => {
-          await post(req, res);
-
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ADDRESSES_ROOT}`;
-          expect(res.redirect).toHaveBeenCalledWith(expected);
-        });
-
-        describe("when the url's last substring is `change`", () => {
-          it(`should redirect to ${BROKER_ADDRESSES_CHANGE}`, async () => {
-            req.originalUrl = BROKER_DETAILS_CHANGE;
-
-            await post(req, res);
-
-            const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ADDRESSES_CHANGE}`;
-            expect(res.redirect).toHaveBeenCalledWith(expected);
-          });
-        });
-
-        describe("when the url's last substring is `check-and-change`", () => {
-          it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
-            req.originalUrl = BROKER_DETAILS_CHECK_AND_CHANGE;
-
-            await post(req, res);
-
-            const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
-
-            expect(res.redirect).toHaveBeenCalledWith(expected);
-          });
-        });
-      });
-
-      describe(`when ${IS_BASED_IN_UK} is false`, () => {
-        beforeEach(() => {
-          req.body = validBody.notBasedInUk;
-        });
-
-        it(`should redirect to ${BROKER_MANUAL_ADDRESS_ROOT}`, async () => {
-          await post(req, res);
-
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
-          expect(res.redirect).toHaveBeenCalledWith(expected);
-        });
-
-        describe("when the url's last substring is `change`", () => {
-          it(`should redirect to ${BROKER_MANUAL_ADDRESS_CHANGE}`, async () => {
-            req.originalUrl = BROKER_DETAILS_CHANGE;
-
-            await post(req, res);
-
-            const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_CHANGE}`;
-            expect(res.redirect).toHaveBeenCalledWith(expected);
-          });
-        });
-
-        describe("when the url's last substring is `check-and-change`", () => {
-          it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
-            req.originalUrl = BROKER_DETAILS_CHECK_AND_CHANGE;
-
-            await post(req, res);
-
-            const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
-
-            expect(res.redirect).toHaveBeenCalledWith(expected);
-          });
-        });
+        expect(res.redirect).toHaveBeenCalledWith(expected);
       });
     });
 
