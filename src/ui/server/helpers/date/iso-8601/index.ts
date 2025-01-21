@@ -21,3 +21,11 @@ export const getISO8601 = (date: Date = now()): string => date.toISOString();
  * @returns A new Date object with the specified number of years added.
  */
 export const addYear = (year: number, date: Date = now()): Date => new Date(date.setFullYear(date.getFullYear() + year));
+
+/**
+ * Returns the epoch time in milliseconds for a given date.
+ *
+ * @param {Date} [date=now()] - The date for which to get the epoch time. Defaults to the current date and time if not provided.
+ * @returns {number} The epoch time in milliseconds.
+ */
+export const getEpochMs = (date: Date = now()): number => new Date(date).valueOf();

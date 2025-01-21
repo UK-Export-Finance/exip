@@ -9,7 +9,7 @@ import { Request, Response } from '../../../../types';
  *
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} All sections page
+ * @returns {Express.Response.render} thanks.txt file
  */
 export const get = (req: Request, res: Response) => {
   res.type('text/plain');
