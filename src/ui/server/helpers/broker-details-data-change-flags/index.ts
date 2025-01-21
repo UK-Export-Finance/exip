@@ -19,14 +19,13 @@ interface BrokerDetailsDataChangeFlagsParams {
  * Depending on the checks, return certain flags to assist with redirection.
  * @param {RequestBody} formBody: Form body
  * @param {ApplicationBroker} brokerData: Saved broker data
- * @returns {Object}
+ * @returns {BrokerDetailsDataChangeFlagsParams}
  */
 const brokerDetailsDataChangeFlags = (formBody: RequestBody, brokerData: ApplicationBroker): BrokerDetailsDataChangeFlagsParams => {
   let postcodeOrBuildingNumberNameHasChanged = false;
   let manualAddressRequired = false;
 
   const isBasedInUk = formBody[IS_BASED_IN_UK] === 'true';
-  const isNotBasedInUk = formBody[IS_BASED_IN_UK] === 'false';
 
   if (isBasedInUk) {
     const postcodeHasChanged = formBody[POSTCODE] !== brokerData[POSTCODE];
@@ -35,7 +34,7 @@ const brokerDetailsDataChangeFlags = (formBody: RequestBody, brokerData: Applica
     postcodeOrBuildingNumberNameHasChanged = postcodeHasChanged || buildingNumberOrNameHasChanged;
   }
 
-  if (isNotBasedInUk) {
+  if (!isBasedInUk) {
     manualAddressRequired = isEmptyString(brokerData[FULL_ADDRESS]);
   }
 

@@ -17,11 +17,7 @@ const {
  */
 const notBasedInUkRedirectUrl = ({ baseUrl, isAChangeRoute, isACheckAndChangeRoute, manualAddressRequired }: BrokerDetailsNotBasedInUkRedirectUrlParams) => {
   if (isAChangeRoute) {
-    if (manualAddressRequired) {
-      return `${baseUrl}${BROKER_MANUAL_ADDRESS_CHANGE}`;
-    }
-
-    return `${baseUrl}${CHECK_YOUR_ANSWERS}`;
+    return manualAddressRequired ? `${baseUrl}${BROKER_MANUAL_ADDRESS_CHANGE}` : `${baseUrl}${CHECK_YOUR_ANSWERS}`;
   }
 
   if (isACheckAndChangeRoute) {

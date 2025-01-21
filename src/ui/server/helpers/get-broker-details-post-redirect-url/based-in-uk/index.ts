@@ -22,11 +22,7 @@ const basedInUkRedirectUrl = ({
   postcodeOrBuildingNumberNameHasChanged,
 }: BrokerDetailsBasedInUkRedirectUrlParams) => {
   if (isAChangeRoute) {
-    if (postcodeOrBuildingNumberNameHasChanged) {
-      return `${baseUrl}${BROKER_ADDRESSES_CHANGE}`;
-    }
-
-    return `${baseUrl}${CHECK_YOUR_ANSWERS}`;
+    return postcodeOrBuildingNumberNameHasChanged ? `${baseUrl}${BROKER_ADDRESSES_CHANGE}` : `${baseUrl}${CHECK_YOUR_ANSWERS}`;
   }
 
   if (isACheckAndChangeRoute) {

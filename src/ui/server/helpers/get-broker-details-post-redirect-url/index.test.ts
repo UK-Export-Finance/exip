@@ -8,10 +8,7 @@ import basedInUkRedirectUrl from './based-in-uk';
 import notBasedInUkRedirectUrl from './not-based-in-uk';
 import { referenceNumber, mockApplication } from '../../test-mocks';
 
-const {
-  INSURANCE_ROOT,
-  POLICY: { BROKER_MANUAL_ADDRESS_ROOT },
-} = INSURANCE_ROUTES;
+const { INSURANCE_ROOT } = INSURANCE_ROUTES;
 
 const { IS_BASED_IN_UK } = POLICY_FIELD_IDS.BROKER_DETAILS;
 
@@ -82,7 +79,7 @@ describe('server/helpers/src/ui/server/helpers/get-broker-details-post-redirect-
       [IS_BASED_IN_UK]: 'some other value',
     };
 
-    it(`should return a URL with ${BROKER_MANUAL_ADDRESS_ROOT}`, () => {
+    it('should return the result of notBasedInUkRedirectUrl', () => {
       const result = getBrokerDetailsPostRedirectUrl({
         ...baseParams,
         formBody: mockFormBody,

@@ -13,8 +13,6 @@ const mockBroker = broker;
 
 describe('server/helpers/broker-details-data-change-flags', () => {
   describe(`when form body has a ${IS_BASED_IN_UK} value of 'true'`, () => {
-    // TODO: when DOES match
-
     describe(`when ${BUILDING_NUMBER_OR_NAME} matches, but ${POSTCODE} does not`, () => {
       it('should return postcodeOrBuildingNumberNameHasChanged as true', () => {
         const mockFormBody = {
