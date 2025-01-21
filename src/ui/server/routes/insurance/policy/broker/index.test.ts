@@ -25,6 +25,7 @@ const {
   BROKER_ADDRESSES_CHANGE,
   BROKER_ADDRESSES_CHECK_AND_CHANGE,
   BROKER_CONFIRM_ADDRESS_ROOT,
+  BROKER_CONFIRM_ADDRESS_CHANGE,
   BROKER_ZERO_ADDRESSES_ROOT,
   BROKER_MANUAL_ADDRESS_ROOT,
   BROKER_MANUAL_ADDRESS_CHANGE,
@@ -42,8 +43,8 @@ describe('routes/insurance/policy/broker', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(14);
-    expect(post).toHaveBeenCalledTimes(17);
+    expect(get).toHaveBeenCalledTimes(15);
+    expect(post).toHaveBeenCalledTimes(18);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${BROKER_ROOT}`, getBroker);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${BROKER_ROOT}`, postBroker);
@@ -71,6 +72,8 @@ describe('routes/insurance/policy/broker', () => {
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_ROOT}`, getBrokerConfirmAddress);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_ROOT}`, postBrokerConfirmAddress);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_CHANGE}`, getBrokerConfirmAddress);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_CHANGE}`, postBrokerConfirmAddress);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${BROKER_ZERO_ADDRESSES_ROOT}`, getBrokerZeroAddresses);
 

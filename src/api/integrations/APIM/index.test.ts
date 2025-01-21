@@ -14,7 +14,7 @@ const url = `${APIM_MDM_URL}${APIM_MDM.MARKETS}`;
 
 describe('integrations/APIM', () => {
   describe('when a 200 status and data is returned', () => {
-    test('it should return success=true and data', async () => {
+    it('should return success=true and data', async () => {
       const mock = new MockAdapter(axios);
 
       const mockResponseData = mockCisCountries;
@@ -33,7 +33,7 @@ describe('integrations/APIM', () => {
   });
 
   describe('when no data is returned', () => {
-    test('it should return success=false', async () => {
+    it('should return success=false', async () => {
       const mock = new MockAdapter(axios);
 
       mock.onGet(url).reply(200);
@@ -49,7 +49,7 @@ describe('integrations/APIM', () => {
   });
 
   describe('when a 200 status is not returned', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       const mock = new MockAdapter(axios);
 
       mock.onGet(url).reply(500);

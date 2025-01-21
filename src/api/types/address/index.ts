@@ -3,6 +3,8 @@ export interface Address {
   premises?: string;
   addressLine1?: string;
   addressLine2?: string;
+  county?: string;
+  town?: string;
   postcode?: string;
   country?: string;
 }

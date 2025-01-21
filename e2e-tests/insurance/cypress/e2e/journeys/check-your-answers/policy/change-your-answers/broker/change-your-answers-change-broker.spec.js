@@ -37,7 +37,7 @@ context('Insurance - Change your answers - Policy - Broker - As an exporter, I w
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber, usingBroker: true });
+      cy.completePrepareApplicationSinglePolicyType({ usingBroker: true });
 
       cy.clickTaskCheckAnswers();
 

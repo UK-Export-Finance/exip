@@ -41,7 +41,6 @@ const post = async (req: Request, res: Response) => {
       }
     }
 
-    // redirect to all sections page
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   } catch (error) {
     console.error('Error updating application - your business - credit control (save and back) %o', error);

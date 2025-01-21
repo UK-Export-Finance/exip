@@ -23,7 +23,7 @@ describe('emails/confirm-email-address', () => {
     notify.sendEmail = sendEmailSpy;
   });
 
-  test('it should call notify.sendEmail and return the response', async () => {
+  it('should call notify.sendEmail and return the response', async () => {
     const result = await confirmEmailAddress(email, mockUrlOrigin, fullName, verificationHash, id);
 
     expect(sendEmailSpy).toHaveBeenCalledTimes(1);
@@ -40,7 +40,7 @@ describe('emails/confirm-email-address', () => {
       notify.sendEmail = mockSpyPromiseRejection;
     });
 
-    test('should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await confirmEmailAddress(email, mockUrlOrigin, fullName, verificationHash, id);
       } catch (error) {

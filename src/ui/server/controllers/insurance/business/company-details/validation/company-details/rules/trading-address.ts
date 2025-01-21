@@ -16,10 +16,10 @@ const {
 /**
  * validate the "tradingAddress" in "company details" request body
  * throws validation errors if there is no tradingAddress property
- * @param {RequestBody} formBody: containing an object with the company details response
+ * @param {RequestBody} formBody: Form body
  * @param {Object} errors: Other validation errors for the same form
  * @returns {ValidationErrors} fullAddressValidation
  */
-const tradingAddress = (responseBody: RequestBody, errors: object) => fullAddressValidation(responseBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors);
+const tradingAddress = (formBody: RequestBody, errors: object) => fullAddressValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors);
 
 export default tradingAddress;

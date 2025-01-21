@@ -9,7 +9,8 @@ import api from '../../../../api';
 import mapOrdnanceSurveyAddresses from '../../../../helpers/mappings/map-ordnance-survey-addresses';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
-import getChosenOrdnanceSurveyAddress from '../../../../helpers/get-chosen-ordnance-survey-address';
+import getOrdnanceSurveyAddressByIndex from '../../../../helpers/get-chosen-ordnance-survey-address/by-index';
+import getOrdnanceSurveyAddressById from '../../../../helpers/get-chosen-ordnance-survey-address/by-id';
 import mapAndSave from '../map-and-save/broker';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import { Request, Response } from '../../../../../types';
@@ -24,6 +25,7 @@ const {
     BROKER_DETAILS_ROOT,
     BROKER_ZERO_ADDRESSES_ROOT,
     BROKER_CONFIRM_ADDRESS_ROOT,
+    BROKER_CONFIRM_ADDRESS_CHANGE,
     BROKER_MANUAL_ADDRESS_ROOT,
     CHECK_YOUR_ANSWERS,
   },
@@ -87,7 +89,7 @@ export const get = async (req: Request, res: Response) => {
 
     /**
      * If a user manually navigates to this route,
-     * without providing previously required data,
+     * without providing previously required address data,
      * redirect the user back to BROKER_DETAILS,
      * where the data can be submitted.
      */
@@ -110,6 +112,34 @@ export const get = async (req: Request, res: Response) => {
     }
 
     const { addresses } = response;
+
+    /**
+     * If only one address is found - no need to ask the user to select an address. Therefore:
+     * 1) Generate an address to save.
+     * 2) Send to the API.
+     * 3) Redirect to the next part of the flow.
+     */
+    if (addresses.length === 1) {
+      console.info('Policy - broker addresses - only 1 address available');
+
+      const addressToSave = getOrdnanceSurveyAddressByIndex({ addresses, index: 0 });
+
+      const saveResponse = await mapAndSave.broker(addressToSave, application);
+
+      if (!saveResponse) {
+        return res.redirect(PROBLEM_WITH_SERVICE);
+      }
+
+      if (isChangeRoute(req.originalUrl)) {
+        console.info(`Policy - broker addresses - Redirecting to ${BROKER_CONFIRM_ADDRESS_CHANGE}`);
+
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_CHANGE}`);
+      }
+
+      console.info(`Policy - broker addresses - Redirecting to ${BROKER_CONFIRM_ADDRESS_ROOT}`);
+
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`);
+    }
 
     const mappedAddresses = mapOrdnanceSurveyAddresses(addresses, broker);
 
@@ -170,7 +200,7 @@ export const post = async (req: Request, res: Response) => {
       });
     }
 
-    const chosenAddress = getChosenOrdnanceSurveyAddress(payload, FIELD_ID, addresses);
+    const chosenAddress = getOrdnanceSurveyAddressById(payload, FIELD_ID, addresses);
 
     const saveResponse = await mapAndSave.broker(chosenAddress, application);
 

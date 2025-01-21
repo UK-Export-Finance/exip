@@ -21,7 +21,7 @@ describe('helpers/create-a-declaration', () => {
     application = (await applications.create({ context, data: {} })) as Application;
   });
 
-  test('it should return a declaration with ID', async () => {
+  it('should return a declaration with ID', async () => {
     const result = await createADeclaration(context, application.id);
 
     expect(result.id).toBeDefined();
@@ -30,13 +30,13 @@ describe('helpers/create-a-declaration', () => {
   });
 
   // declarationVersion
-  test('it should return an application ID', async () => {
+  it('should return an application ID', async () => {
     const result = await createADeclaration(context, application.id);
 
     expect(result.applicationId).toEqual(application.id);
   });
 
-  test('it should return empty declaration fields', async () => {
+  it('should return empty declaration fields', async () => {
     const result = await createADeclaration(context, application.id);
 
     expect(result.agreeHowDataWillBeUsed).toBeNull();
@@ -47,7 +47,7 @@ describe('helpers/create-a-declaration', () => {
     expect(result.willExportWithAntiBriberyCodeOfConduct).toBeNull();
   });
 
-  test('it should return declaration version fields via createADeclarationVersion helper', async () => {
+  it('should return declaration version fields via createADeclarationVersion helper', async () => {
     const result = await createADeclaration(context, application.id);
 
     const {
@@ -80,13 +80,13 @@ describe('helpers/create-a-declaration', () => {
   });
 
   describe('when an invalid application ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       await expect(createADeclaration(context, mockInvalidId)).rejects.toThrow('Creating an application declaration');
     });
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       await expect(createADeclaration({}, application.id)).rejects.toThrow('Creating an application declaration');
       try {
         await createADeclaration(context, mockInvalidId);

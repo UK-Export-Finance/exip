@@ -1,6 +1,10 @@
 import { radios } from '../../../../../../pages/shared';
+import { ADDRESS_LOOKUP_INPUT_EXAMPLES, ORDNANCE_SURVEY_EXAMPLES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
+
+const { WESTMINSTER_BRIDGE_STREET } = ADDRESS_LOOKUP_INPUT_EXAMPLES;
+const { UNDERGROUND_STATION } = ORDNANCE_SURVEY_EXAMPLES.WESTMINSTER_BRIDGE_STREET;
 
 const {
   BROKER_ADDRESSES: { SELECT_THE_ADDRESS: FIELD_ID },
@@ -13,7 +17,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-const optionValue = 'H M TREASURY HORSE GUARDS ROAD';
+const optionValue = `${UNDERGROUND_STATION.ADDRESS_LINE_1} ${UNDERGROUND_STATION.ADDRESS_LINE_2}`;
 
 context('Insurance - Policy - Broker addresses page - Save and back', () => {
   let referenceNumber;
@@ -24,7 +28,13 @@ context('Insurance - Policy - Broker addresses page - Save and back', () => {
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'brokerDetails', usingBroker: true, isBasedInUk: true });
+      cy.completeAndSubmitPolicyForms({
+        stopSubmittingAfter: 'brokerDetails',
+        usingBroker: true,
+        isBasedInUk: true,
+        postcode: WESTMINSTER_BRIDGE_STREET.POSTCODE,
+        buildingNumberOrName: WESTMINSTER_BRIDGE_STREET.BUILDING_NAME,
+      });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ADDRESSES_ROOT}`;
 

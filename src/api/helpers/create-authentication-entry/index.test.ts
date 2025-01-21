@@ -15,7 +15,7 @@ describe('helpers/create-authentication-entry', () => {
     account = await accounts.create({ context });
   });
 
-  test('it should create a new entry and return the entry with a timestamp', async () => {
+  it('should create a new entry and return the entry with a timestamp', async () => {
     const authEntry = {
       account: {
         connect: {

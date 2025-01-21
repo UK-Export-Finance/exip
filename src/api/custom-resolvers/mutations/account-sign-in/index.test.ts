@@ -61,7 +61,7 @@ describe('custom-resolvers/account-sign-in', () => {
       result = await accountSignIn({}, variables, context);
     });
 
-    test('it should return the result of accountChecks', async () => {
+    it('should return the result of accountChecks', async () => {
       account = await accounts.get(context, account.id);
 
       const expected = await accountChecks(context, account, mockUrlOrigin);
@@ -69,7 +69,7 @@ describe('custom-resolvers/account-sign-in', () => {
       expect(result).toEqual(expected);
     });
 
-    test('it should NOT add an authentication retry entry', async () => {
+    it('should NOT add an authentication retry entry', async () => {
       const retries = await authRetries.findAll(context);
 
       expect(retries.length).toEqual(0);
@@ -93,7 +93,7 @@ describe('custom-resolvers/account-sign-in', () => {
       await accountStatusHelper.update(context, account.status.id, { isBlocked: true });
     });
 
-    test('it should return success=false, isBlocked=true and accountId', async () => {
+    it('should return success=false, isBlocked=true and accountId', async () => {
       result = await accountSignIn({}, variables, context);
 
       const expected = {
@@ -124,7 +124,7 @@ describe('custom-resolvers/account-sign-in', () => {
       variables[PASSWORD] = mockPassword;
     });
 
-    test('it should return success=false', async () => {
+    it('should return success=false', async () => {
       result = await accountSignIn({}, variables, context);
 
       const expected = { success: false };
@@ -132,7 +132,7 @@ describe('custom-resolvers/account-sign-in', () => {
       expect(result).toEqual(expected);
     });
 
-    test('it should add an authentication retry entry', async () => {
+    it('should add an authentication retry entry', async () => {
       // get the latest retries
       const retries = await authRetries.findAll(context);
 
@@ -163,7 +163,7 @@ describe('custom-resolvers/account-sign-in', () => {
         result = await accountSignIn({}, variables, context);
       });
 
-      test('it should return success=false, isBlocked=true and accountId', async () => {
+      it('should return success=false, isBlocked=true and accountId', async () => {
         const expected = {
           success: false,
           isBlocked: true,
@@ -173,7 +173,7 @@ describe('custom-resolvers/account-sign-in', () => {
         expect(result).toEqual(expected);
       });
 
-      test('it should mark the account as isBlocked=true', async () => {
+      it('should mark the account as isBlocked=true', async () => {
         // get the latest account
         account = await accounts.get(context, account.id);
 
@@ -183,7 +183,7 @@ describe('custom-resolvers/account-sign-in', () => {
   });
 
   describe('when no account is found', () => {
-    test('it should return success=false', async () => {
+    it('should return success=false', async () => {
       // wipe accounts so an account will not be found.
       await accounts.deleteAll(context);
 
@@ -200,7 +200,7 @@ describe('custom-resolvers/account-sign-in', () => {
       sendEmail.accessCodeEmail = mockSpyPromiseRejection;
     });
 
-    test('should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await accountSignIn({}, variables, context);
       } catch (error) {

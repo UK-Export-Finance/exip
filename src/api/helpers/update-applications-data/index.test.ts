@@ -50,7 +50,7 @@ describe('helpers/update-applications-data', () => {
   });
 
   describe('when update is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await updateApplicationsData({}, []);
       } catch (error) {

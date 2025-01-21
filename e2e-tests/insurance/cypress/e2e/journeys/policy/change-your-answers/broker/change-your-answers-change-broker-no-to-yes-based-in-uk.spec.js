@@ -60,18 +60,21 @@ context(
 
         cy.completeAndSubmitBrokerForm({ usingBroker: true });
         cy.completeAndSubmitBrokerDetailsForm({ isBasedInUk: true });
-        cy.completeBrokerAddressesForm({});
 
-        cy.assertChangeAnswersPageUrl({ route: CHECK_YOUR_ANSWERS, fieldId: FIELD_ID });
+        // submit the "confirm broker address" form
+        cy.clickSubmitButton();
+
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId: FIELD_ID });
       });
 
       it(`should render new ${FIELD_ID} answer and broker details fields`, () => {
         checkSummaryList[FIELD_ID]({ usingBroker: true });
 
-        checkSummaryList.BROKER[NAME]({});
+        checkSummaryList.BROKER[NAME]();
+
         checkSummaryList.BROKER[EMAIL]();
 
-        checkSummaryList.BROKER[SELECT_THE_ADDRESS]();
+        checkSummaryList.BROKER[SELECT_THE_ADDRESS]({});
       });
     });
   },

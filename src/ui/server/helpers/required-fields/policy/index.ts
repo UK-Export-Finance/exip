@@ -59,7 +59,7 @@ export const getContractPolicyTasks = (policyType?: string): object => {
  * getJointlyInsuredPartyTasks
  * Get "Jointly insured party" tasks depending on the jointlyInsuredParty field.
  * @param {Boolean} jointlyInsuredParty: "Jointly insured party" flag
- * @returns {Array} Array of tasks
+ * @returns {Array<string>} Array of tasks/field IDs
  */
 export const getJointlyInsuredPartyTasks = (jointlyInsuredParty?: boolean) => {
   if (jointlyInsuredParty) {
@@ -74,7 +74,7 @@ export const getJointlyInsuredPartyTasks = (jointlyInsuredParty?: boolean) => {
  * Get "Broker" tasks depending on the isUsingBroker field
  * @param {Boolean} isUsingBroker: "Is using broker" flag
  * @param {Boolean} brokerIsBasedInUk: "Broker is based in the UK" flag
- * @returns {Array} Array of tasks
+ * @returns {Array<string>} Array of tasks/field IDs
  */
 export const getBrokerTasks = (isUsingBroker?: boolean, brokerIsBasedInUk?: boolean) => {
   let tasks: Array<string> = [];
@@ -98,7 +98,7 @@ export const getBrokerTasks = (isUsingBroker?: boolean, brokerIsBasedInUk?: bool
  * @param {Boolean} isAppointingLossPayee: "Is using loss payee" flag
  * @param {Boolean} lossPayeeIsLocatedInUk: "Loss payee is located in the UK" flag
  * @param {Boolean} lossPayeeIsLocatedInternationally: "Loss payee is located internationally" flag
- * @returns {Array} Array of tasks
+ * @returns {Array<string>} Array of tasks/field IDs
  */
 export const lossPayeeTasks = (isAppointingLossPayee?: boolean, lossPayeeIsLocatedInUk?: boolean, lossPayeeIsLocatedInternationally?: boolean) => {
   if (isAppointingLossPayee) {

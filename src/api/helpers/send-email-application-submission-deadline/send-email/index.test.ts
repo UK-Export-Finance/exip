@@ -40,7 +40,7 @@ describe('helpers/send-email-application-submission-deadline/send-email', () => 
   });
 
   describe('when an account has an submissionDeadline 2 days in the future', () => {
-    test('it should call sendEmail.submissionDeadlineEmail', async () => {
+    it('should call sendEmail.submissionDeadlineEmail', async () => {
       await applicationSubmissionDeadineEmail.send([application]);
 
       const variables = mapApplicationSubmissionDeadlineVariables(application);
@@ -49,7 +49,7 @@ describe('helpers/send-email-application-submission-deadline/send-email', () => 
       expect(sendEmailSubmissionDeadlineSpy).toHaveBeenCalledWith(variables.email, variables);
     });
 
-    test('it should return an array of length 1', async () => {
+    it('should return an array of length 1', async () => {
       const result = await applicationSubmissionDeadineEmail.send([application]);
 
       expect(result.length).toEqual(1);
@@ -62,7 +62,7 @@ describe('helpers/send-email-application-submission-deadline/send-email', () => 
         sendEmail.submissionDeadlineEmail = jest.fn(() => Promise.reject(mockSpyPromiseRejection));
       });
 
-      test('should throw an error', async () => {
+      it('should throw an error', async () => {
         await expect(applicationSubmissionDeadineEmail.send([application])).rejects.toThrow('Sending application submission deadline email (send helper)');
       });
     });

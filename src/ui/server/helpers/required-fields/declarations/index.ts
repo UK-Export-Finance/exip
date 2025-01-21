@@ -9,7 +9,7 @@ const { AGREE_CONFIDENTIALITY, AGREE_ANTI_BRIBERY, HAS_ANTI_BRIBERY_CODE_OF_COND
  * getAntiBriberyCodeOfConductTasks
  * Get anti-bribery code of conduct tasks depending on if "has anti-bribery code of conduct" answer
  * @param {String} Application "Has anti-bribery code of conduct" flag
- * @returns {Array} Anti-bribery code of conduct tasks
+ * @returns {Array<string>} Array of tasks/field IDs
  */
 export const getAntiBriberyCodeOfConductTasks = (hasAntiBriberyCodeOfConduct?: boolean | null): Array<string> => {
   // has not been answered yet.

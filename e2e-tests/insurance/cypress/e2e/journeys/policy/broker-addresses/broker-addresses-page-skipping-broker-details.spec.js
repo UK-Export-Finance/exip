@@ -7,7 +7,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Broker addresses page - Visit directly without completing the BROKER_DETAILS form.', () => {
+context('Insurance - Policy - Broker addresses page - Visit directly without completing the BROKER_DETAILS form', () => {
   let referenceNumber;
   let url;
   let brokerDetailsUrl;
@@ -32,8 +32,6 @@ context('Insurance - Policy - Broker addresses page - Visit directly without com
   });
 
   it(`should redirect to ${BROKER_DETAILS_ROOT}`, () => {
-    cy.navigateToUrl(url);
-
     cy.assertUrl(brokerDetailsUrl);
   });
 });

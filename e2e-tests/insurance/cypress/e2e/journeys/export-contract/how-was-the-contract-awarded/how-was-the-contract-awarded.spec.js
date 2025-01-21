@@ -107,7 +107,7 @@ context(
         fieldSelector(OTHER_AWARD_METHOD).input().should('not.be.visible');
       });
 
-      it(`should display conditional "${OTHER_AWARD_METHOD}" section when selecting the "${OTHER.VALUE}" radio`, () => {
+      it(`should render conditional "${OTHER_AWARD_METHOD}" section when selecting the "${OTHER.VALUE}" radio`, () => {
         radios(AWARD_METHOD_OPTIONS.OTHER.ID).option.label().click();
 
         fieldSelector(OTHER_AWARD_METHOD).input().should('be.visible');

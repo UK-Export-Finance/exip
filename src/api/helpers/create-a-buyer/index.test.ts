@@ -22,7 +22,7 @@ describe('helpers/create-a-buyer', () => {
     country = await getCountryByField(context, 'isoCode', countryIsoCode);
   });
 
-  test('it should return a buyer', async () => {
+  it('should return a buyer', async () => {
     const result = await createABuyer(context, country.id);
 
     expect(result).toBeDefined();
@@ -30,7 +30,7 @@ describe('helpers/create-a-buyer', () => {
     expect(result.id.length).toBeGreaterThan(0);
   });
 
-  test('it should return empty buyer fields', async () => {
+  it('should return empty buyer fields', async () => {
     const result = await createABuyer(context, country.id);
 
     expect(result.address).toEqual('');
@@ -41,7 +41,7 @@ describe('helpers/create-a-buyer', () => {
   });
 
   describe('when an invalid country ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createABuyer(context, mockInvalidId);
       } catch (error) {
@@ -51,7 +51,7 @@ describe('helpers/create-a-buyer', () => {
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         await createABuyer({}, country.id);

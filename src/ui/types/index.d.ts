@@ -31,6 +31,7 @@ import {
 } from './application';
 import { ApplicationByReferenceNumberVariables } from './application-by-reference-number-variables';
 import { ApolloResponse } from './apollo';
+import { BrokerDetailsRedirectUrlParams, BrokerDetailsNotBasedInUkRedirectUrlParams, BrokerDetailsBasedInUkRedirectUrlParams } from './broker-details';
 import { Company } from './company';
 import { CompaniesHouseResponse } from './company-house-response';
 import { Connect } from './connect';
@@ -39,7 +40,7 @@ import { Currency, CurrencyRadios } from './currency';
 import { Business } from './business';
 import { DateErrorMessage, ErrorMessageObject } from './errors';
 import { Next, Request, RequestBody, RequestSession, RequestSessionUser, Response } from './express';
-import { MappedOrdnanceSurveyAddress } from './ordnance-survey';
+import { GetChosenOrdnanceSurveyAddressByIndexParams, MappedOrdnanceSurveyAddress } from './ordnance-survey';
 import { RequiredDataStateInsuranceEligibility, RequiredDataStateQuoteEligibility } from './required-data-state';
 import { PricingGrid, PricingGridMonth, PricingGridRate } from './pricing-grid';
 import { Quote, QuoteContent } from './quote';
@@ -126,6 +127,9 @@ export {
   ApplicationByReferenceNumberVariables,
   ApolloResponse,
   ApplicationOwner,
+  BrokerDetailsRedirectUrlParams,
+  BrokerDetailsNotBasedInUkRedirectUrlParams,
+  BrokerDetailsBasedInUkRedirectUrlParams,
   CanCreateApplicationEligibilityFlags,
   Company,
   CompaniesHouseResponse,
@@ -146,6 +150,7 @@ export {
   InsuranceEligibility,
   InsuranceEligibilityCore,
   InsuranceFeedbackVariables,
+  GetChosenOrdnanceSurveyAddressByIndexParams,
   MappedOrdnanceSurveyAddress,
   Next,
   Object,

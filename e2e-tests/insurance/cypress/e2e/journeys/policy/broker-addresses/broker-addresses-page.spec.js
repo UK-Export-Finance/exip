@@ -1,14 +1,18 @@
 import { errorSummaryListItems, errorSummaryListItemLinks } from '../../../../../../partials';
 import { field as fieldSelector, intro, radios } from '../../../../../../pages/shared';
 import { brokerAddressesPage } from '../../../../../../pages/insurance/policy';
+import { ADDRESS_LOOKUP_INPUT_EXAMPLES, ORDNANCE_SURVEY_EXAMPLES } from '../../../../../../constants';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 
+const { WESTMINSTER_BRIDGE_STREET } = ADDRESS_LOOKUP_INPUT_EXAMPLES;
+const { UNDERGROUND_STATION } = ORDNANCE_SURVEY_EXAMPLES.WESTMINSTER_BRIDGE_STREET;
+
 const {
   PAGE_TITLE,
-  INTRO: { ADDRESS, FOUND_FOR, SEPARATOR, SEARCH_AGAIN },
+  INTRO: { ADDRESSES, FOUND_FOR, SEPARATOR, SEARCH_AGAIN },
 } = PAGES.INSURANCE.POLICY.BROKER_ADDRESSES;
 
 const {
@@ -26,7 +30,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 const field = fieldSelector(FIELD_ID);
 
-const optionValue = 'H M TREASURY HORSE GUARDS ROAD';
+const optionValue = `${UNDERGROUND_STATION.ADDRESS_LINE_1} ${UNDERGROUND_STATION.ADDRESS_LINE_2}`;
 
 const optionDataCy = `${FIELD_ID}-${optionValue}`;
 
@@ -42,7 +46,13 @@ context(
         referenceNumber = refNumber;
 
         // go to the page we want to test.
-        cy.completeAndSubmitPolicyForms({ stopSubmittingAfter: 'brokerDetails', usingBroker: true, isBasedInUk: true });
+        cy.completeAndSubmitPolicyForms({
+          stopSubmittingAfter: 'brokerDetails',
+          usingBroker: true,
+          isBasedInUk: true,
+          postcode: WESTMINSTER_BRIDGE_STREET.POSTCODE,
+          buildingNumberOrName: WESTMINSTER_BRIDGE_STREET.BUILDING_NAME,
+        });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ADDRESSES_ROOT}`;
         brokerConfirmAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
@@ -76,10 +86,10 @@ context(
         intro()
           .invoke('text')
           .then((text) => {
-            expect(text.trim()).includes(`1 ${ADDRESS} ${FOUND_FOR} `);
-            expect(text.trim()).includes('SW1A 2HQ');
+            expect(text.trim()).includes(`2 ${ADDRESSES} ${FOUND_FOR} `);
+            expect(text.trim()).includes(WESTMINSTER_BRIDGE_STREET.POSTCODE);
             expect(text.trim()).includes(` ${SEPARATOR} `);
-            expect(text.trim()).includes('1.');
+            expect(text.trim()).includes(`${WESTMINSTER_BRIDGE_STREET.BUILDING_NAME}.`);
             expect(text.trim()).includes(SEARCH_AGAIN);
           });
       });

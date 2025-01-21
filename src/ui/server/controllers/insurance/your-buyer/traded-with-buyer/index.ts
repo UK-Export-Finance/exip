@@ -139,8 +139,8 @@ export const post = async (req: Request, res: Response) => {
     /**
      * If is a change route
      * the exporter has TRADED_WITH_BUYER,
-     * redirect to TRADING_HISTORY CHANGE.
-     * redirect to CHECK_YOUR_ANSWERS
+     * redirect to TRADING_HISTORY_CHANGE.
+     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
      */
     if (isChangeRoute(req.originalUrl)) {
       if (hasTradedWithBuyer) {
@@ -154,7 +154,7 @@ export const post = async (req: Request, res: Response) => {
      * If is a check-and-change route,
      * the exporter has TRADED_WITH_BUYER,
      * redirect to TRADING_HISTORY_CHECK_AND_CHANGE.
-     * Otherwise, redirect to CHECK_AND_CHANGE_ROUTE
+     * Otherwise, redirect to CHECK_AND_CHANGE_ROUTE.
      */
     if (isCheckAndChangeRoute(req.originalUrl)) {
       if (hasTradedWithBuyer) {

@@ -34,6 +34,7 @@ const completeBrokerDetailsForm = ({
     cy.clickYesRadioInput();
 
     cy.keyboardInput(field(POSTCODE).input(), postcode);
+
     cy.keyboardInput(field(BUILDING_NUMBER_OR_NAME).input(), buildingNumberOrName);
   } else {
     cy.clickNoRadioInput();

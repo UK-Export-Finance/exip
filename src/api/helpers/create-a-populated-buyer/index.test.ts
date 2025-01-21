@@ -27,7 +27,7 @@ describe('helpers/create-a-populated-buyer', () => {
     country = await getCountryByField(context, 'isoCode', countryIsoCode);
   });
 
-  test('it should return a buyer and buyer trading history with respective IDs', async () => {
+  it('should return a buyer and buyer trading history with respective IDs', async () => {
     const result = await createAPopulatedBuyer(context, country.id, application.id);
 
     const { buyerTradingHistory } = result;
@@ -40,7 +40,7 @@ describe('helpers/create-a-populated-buyer', () => {
     expect(buyerTradingHistory.id.length).toBeGreaterThan(0);
   });
 
-  test('it should return empty buyer fields', async () => {
+  it('should return empty buyer fields', async () => {
     const result = await createAPopulatedBuyer(context, country.id, application.id);
 
     expect(result.address).toEqual('');
@@ -51,7 +51,7 @@ describe('helpers/create-a-populated-buyer', () => {
     expect(result.website).toEqual('');
   });
 
-  test('it should return empty buyerTradingAddress fields with default currencyCode', async () => {
+  it('should return empty buyerTradingAddress fields with default currencyCode', async () => {
     const { buyerTradingHistory } = await createAPopulatedBuyer(context, country.id, application.id);
 
     expect(buyerTradingHistory.currencyCode).toEqual(GBP);
@@ -59,7 +59,7 @@ describe('helpers/create-a-populated-buyer', () => {
     expect(buyerTradingHistory.failedPayments).toBeNull();
   });
 
-  test('it should return empty buyer relationship fields', async () => {
+  it('should return empty buyer relationship fields', async () => {
     const { relationship } = await createAPopulatedBuyer(context, country.id, application.id);
 
     expect(relationship.exporterIsConnectedWithBuyer).toBeNull();
@@ -69,7 +69,7 @@ describe('helpers/create-a-populated-buyer', () => {
     expect(relationship.previousCreditInsuranceWithBuyerDescription).toEqual('');
   });
 
-  test('it should return empty buyerContact fields', async () => {
+  it('should return empty buyerContact fields', async () => {
     const { buyerContact } = await createAPopulatedBuyer(context, country.id, application.id);
 
     expect(buyerContact.contactFirstName).toEqual('');
@@ -80,7 +80,7 @@ describe('helpers/create-a-populated-buyer', () => {
   });
 
   describe('when an invalid country ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createAPopulatedBuyer(context, mockInvalidId, application.id);
       } catch (error) {
@@ -90,7 +90,7 @@ describe('helpers/create-a-populated-buyer', () => {
   });
 
   describe('when an invalid application ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createAPopulatedBuyer(context, country.id, mockInvalidId);
       } catch (error) {
@@ -100,7 +100,7 @@ describe('helpers/create-a-populated-buyer', () => {
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         await createAPopulatedBuyer({}, country.id, application.id);

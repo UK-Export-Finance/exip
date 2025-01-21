@@ -20,7 +20,7 @@ describe('helpers/create-a-reference-number', () => {
     application = (await applications.create({ context })) as Application;
   });
 
-  test('it should return a reference number and with a respective ID', async () => {
+  it('should return a reference number and with a respective ID', async () => {
     const result = await createAReferenceNumber(context, application.id);
 
     expect(typeof result).toEqual('number');
@@ -28,7 +28,7 @@ describe('helpers/create-a-reference-number', () => {
   });
 
   describe('when an invalid application ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createAReferenceNumber(context, mockInvalidId);
       } catch (error) {
@@ -38,7 +38,7 @@ describe('helpers/create-a-reference-number', () => {
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         await createAReferenceNumber({}, application.id);

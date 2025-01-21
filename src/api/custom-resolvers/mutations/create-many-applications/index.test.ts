@@ -33,13 +33,13 @@ describe('custom-resolvers/create-many-applications', () => {
     await referenceNumber.deleteAll(context);
   });
 
-  test('it should return success=true', async () => {
+  it('should return success=true', async () => {
     result = await createManyApplications({}, variables, context);
 
     expect(result.success).toEqual(true);
   });
 
-  test(`it should return an array of applications`, async () => {
+  it(`should return an array of applications`, async () => {
     result = await createManyApplications({}, variables, context);
 
     const applications = await application.getAll(context);
@@ -64,7 +64,7 @@ describe('custom-resolvers/create-many-applications', () => {
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         await createManyApplications({}, variables, {});

@@ -26,6 +26,18 @@ const VERSION_3 = {
   REQUESTED_CREDIT_LIMIT_REQUIRED: true,
 } as ApplicationVersion;
 
+const VERSION_4: ApplicationVersion = {
+  ...VERSION_3,
+  VERSION_NUMBER: '4',
+  DECLARATIONS_MODERN_SLAVERY: true,
+};
+
+const VERSION_5: ApplicationVersion = {
+  ...VERSION_4,
+  VERSION_NUMBER: '5',
+  BROKER_ADDRESS_LOOKUP: true,
+};
+
 /**
  * VERSIONS
  * All possible application versions.
@@ -35,9 +47,11 @@ const VERSION_3 = {
  * - Version number 1: MVP, no support for applications over 500k.
  * - Version number 2: Support for applications over 500k.
  * - Version number 3: Design and content iterations. 1x new database field.
- * - Version number 4: Payments integration
+ * - Version number 4: New declaration - "Modern slavery".
+ * - Version number 5: Broker address lookup (Ordnance Survey integration)
+ * - Version number 6: Payments integration
  * @returns {Array<ApplicationVersion>} All application versions
  */
-const VERSIONS = [VERSION_1, VERSION_2, VERSION_3] as Array<ApplicationVersion>;
+const VERSIONS = [VERSION_1, VERSION_2, VERSION_3, VERSION_4, VERSION_5] as Array<ApplicationVersion>;
 
 export default VERSIONS;

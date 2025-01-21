@@ -20,7 +20,7 @@ describe('helpers/create-a-company', () => {
     application = (await applications.create({ context })) as Application;
   });
 
-  test('it should return a company with an application relationship, address, SIC code, different trading address relationships', async () => {
+  it('should return a company with an application relationship, address, SIC code, different trading address relationships', async () => {
     const result = await createACompany(context, application.id, mockCompany);
 
     expect(typeof result.id).toEqual('string');
@@ -43,7 +43,7 @@ describe('helpers/create-a-company', () => {
   });
 
   describe('when an invalid application ID is passed', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         await createACompany(context, mockInvalidId, mockCompany);
       } catch (error) {
@@ -53,7 +53,7 @@ describe('helpers/create-a-company', () => {
   });
 
   describe('when creation is not successful', () => {
-    test('it should throw an error', async () => {
+    it('should throw an error', async () => {
       try {
         // pass empty context object to force an error
         await createACompany({}, application.id, mockCompany);

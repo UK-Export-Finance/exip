@@ -24,7 +24,7 @@ context(`Insurance - Check your answers - Export contract - Summary list - Contr
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber, contractAwardedCompetitiveBidding: true });
+      cy.completePrepareApplicationSinglePolicyType({ contractAwardedCompetitiveBidding: true });
 
       cy.clickTaskCheckAnswers();
 

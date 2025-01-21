@@ -15,7 +15,7 @@ describe('emails/call-notify', () => {
     notify.sendEmail = sendEmailSpy;
   });
 
-  test('it should call notify.sendEmail and return the response', async () => {
+  it('should call notify.sendEmail and return the response', async () => {
     const templateId = 'mockTemplateId';
     const mockVariables = { test: true };
 
