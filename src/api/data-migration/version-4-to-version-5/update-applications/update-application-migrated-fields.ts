@@ -2,7 +2,7 @@ import { Connection } from 'mysql2/promise';
 import { APPLICATION } from '../../../constants';
 import executeSqlQuery from '../../execute-sql-query';
 
-const { STATUS } = APPLICATION;
+const { LATEST_VERSION_NUMBER, STATUS } = APPLICATION;
 
 /**
  * updateInProgressApplicationsMigratedTo
@@ -13,9 +13,7 @@ const { STATUS } = APPLICATION;
 const updateInProgressApplicationsMigratedTo = (connection: Connection) => {
   const loggingMessage = `Updating in progress application's migratedTo FIELD to 5 in the Application table`;
 
-  const query = `
-    UPDATE Application SET migratedTo=5 WHERE status = '${STATUS.IN_PROGRESS}'
-  `;
+  const query = `UPDATE Application SET migratedTo=${LATEST_VERSION_NUMBER} WHERE status = '${STATUS.IN_PROGRESS}'`;
 
   return executeSqlQuery({ connection, query, loggingMessage });
 };

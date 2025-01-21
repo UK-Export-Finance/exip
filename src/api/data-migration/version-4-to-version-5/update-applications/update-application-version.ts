@@ -15,9 +15,7 @@ const updateApplicationVersion = (connection: Connection) => {
 
   const loggingMessage = `Updating IN_PROGRESS FIELD VERSION from ${originalVersionNumber} to ${LATEST_VERSION_NUMBER} in the Application table`;
 
-  const query = `
-    UPDATE Application SET version = '${LATEST_VERSION_NUMBER}' WHERE status = '${STATUS.IN_PROGRESS}'
-  `;
+  const query = `UPDATE Application SET version = '${LATEST_VERSION_NUMBER}' WHERE status = '${STATUS.IN_PROGRESS}'`;
 
   return executeSqlQuery({ connection, query, loggingMessage });
 };
