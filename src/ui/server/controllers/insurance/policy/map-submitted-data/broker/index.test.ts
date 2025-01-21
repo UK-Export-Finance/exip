@@ -76,10 +76,26 @@ describe('controllers/insurance/policy/map-submitted-data/broker', () => {
   });
 
   describe(`when ${IS_BASED_IN_UK} is provided as an empty string`, () => {
+    it(`should return the form body with a nullified ${IS_BASED_IN_UK} field`, () => {
+      const mockFormBody = {
+        [IS_BASED_IN_UK]: '',
+      };
+
+      const result = mapSubmittedData(mockFormBody);
+
+      const expected = {
+        [IS_BASED_IN_UK]: null,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when ${IS_BASED_IN_UK} is provided with a value of 'false'`, () => {
     it(`should return the form body with nullified/empty ${IS_BASED_IN_UK} related values`, () => {
       const mockFormBody = {
         ...mockFullyPopulatedBrokerBody,
-        [IS_BASED_IN_UK]: '',
+        [IS_BASED_IN_UK]: 'false',
       };
 
       const result = mapSubmittedData(mockFormBody);

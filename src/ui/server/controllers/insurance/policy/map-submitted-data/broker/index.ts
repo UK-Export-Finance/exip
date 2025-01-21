@@ -47,18 +47,23 @@ const mapSubmittedData = (formBody: RequestBody): object => {
 
   /**
    * If IS_BASED_IN_UK is an empty string,
-   * nullify/wipe all IS_BASED_IN_UK related fields
+   * make the field null.
    */
   if (isEmptyString(formBody[IS_BASED_IN_UK])) {
     populatedData[IS_BASED_IN_UK] = null;
+  }
 
+  /**
+   * If IS_BASED_IN_UK is false,
+   * nullify/wipe all IS_BASED_IN_UK related fields
+   */
+  if (formBody[IS_BASED_IN_UK] === 'false') {
     populatedData[POSTCODE] = '';
     populatedData[BUILDING_NUMBER_OR_NAME] = '';
     populatedData[ADDRESS_LINE_1] = '';
     populatedData[ADDRESS_LINE_2] = '';
     populatedData[TOWN] = '';
     populatedData[COUNTY] = '';
-    populatedData[POSTCODE] = '';
   }
 
   /**
