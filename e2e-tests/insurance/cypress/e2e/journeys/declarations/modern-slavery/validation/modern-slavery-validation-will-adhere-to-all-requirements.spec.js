@@ -11,7 +11,7 @@ const {
 
 const {
   MODERN_SLAVERY: {
-    WILL_ADHERE_TO_ALL_REQUIREMENTS,
+    WILL_ADHERE_TO_ALL_REQUIREMENTS: FIELD_ID,
     CONDITIONAL_REASONS: { CANNOT_ADHERE_TO_ALL_REQUIREMENTS },
   },
 } = DECLARATIONS_FIELD_IDS;
@@ -22,12 +22,11 @@ const MAXIMUM = MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASO
 
 const reasonOverMaximum = 'a'.repeat(MAXIMUM + 1);
 
-const fieldId = WILL_ADHERE_TO_ALL_REQUIREMENTS;
 const conditionalFieldId = CANNOT_ADHERE_TO_ALL_REQUIREMENTS;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(`Insurance - Declarations - Modern slavery page - validation - ${fieldId}`, () => {
+context(`Insurance - Declarations - Modern slavery page - validation - ${FIELD_ID}`, () => {
   let referenceNumber;
   let url;
 
@@ -52,7 +51,7 @@ context(`Insurance - Declarations - Modern slavery page - validation - ${fieldId
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(`when ${fieldId} is 'no', but ${conditionalFieldId} is not provided`, () => {
+  describe(`when ${FIELD_ID} is 'no', but ${conditionalFieldId} is not provided`, () => {
     it(`should render a ${conditionalFieldId} validation error`, () => {
       cy.navigateToUrl(url);
 
@@ -60,22 +59,16 @@ context(`Insurance - Declarations - Modern slavery page - validation - ${fieldId
         willAdhereToAllRequirements: false,
       });
 
-      cy.completeAndSubmitModernSlaveryFormConditionalFields({
-        cannotAdhereToAllRequirements: null,
-        awareOfExistingSlavery: null,
-        offensesOrInvestigations: null,
-      });
-
       cy.assertFieldErrors({
         field: autoCompleteField(conditionalFieldId),
         errorIndex: 0,
-        errorSummaryLength: 3,
+        errorSummaryLength: 1,
         errorMessage: ERROR_STRINGS.CONDITIONAL_REASONS[conditionalFieldId].IS_EMPTY,
       });
     });
   });
 
-  describe(`when ${fieldId} is 'no', but ${conditionalFieldId} is over ${MAXIMUM} characters`, () => {
+  describe(`when ${FIELD_ID} is 'no', but ${conditionalFieldId} is over ${MAXIMUM} characters`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
@@ -94,18 +87,46 @@ context(`Insurance - Declarations - Modern slavery page - validation - ${fieldId
       cy.assertFieldErrors({
         field: autoCompleteField(conditionalFieldId),
         errorIndex: 0,
-        errorSummaryLength: 3,
+        errorSummaryLength: 1,
         errorMessage: ERROR_STRINGS.CONDITIONAL_REASONS[conditionalFieldId].ABOVE_MAXIMUM,
       });
     });
 
     it('should retain the submitted values', () => {
+      cy.assertNoRadioOptionIsChecked();
+
       cy.checkTextareaValue({
         fieldId: conditionalFieldId,
         expectedValue: reasonOverMaximum,
       });
+    });
+  });
 
-      cy.assertNoRadioOptionIsChecked();
+  describe(`when ${FIELD_ID} is 'yes' and no other required radio fields are provided`, () => {
+    it('should retain the submitted radio value', () => {
+      cy.navigateToUrl(url);
+
+      cy.completeAndSubmitModernSlaveryForm({
+        willAdhereToAllRequirements: true,
+        hasNoOffensesOrInvestigations: null,
+        isNotAwareOfExistingSlavery: null,
+      });
+
+      cy.assertYesRadioOptionIsChecked(0);
+    });
+  });
+
+  describe(`when ${FIELD_ID} is 'no' and no other required radio fields are provided`, () => {
+    it('should retain the submitted radio value', () => {
+      cy.navigateToUrl(url);
+
+      cy.completeAndSubmitModernSlaveryForm({
+        willAdhereToAllRequirements: false,
+        hasNoOffensesOrInvestigations: null,
+        isNotAwareOfExistingSlavery: null,
+      });
+
+      cy.assertNoRadioOptionIsChecked(0);
     });
   });
 });

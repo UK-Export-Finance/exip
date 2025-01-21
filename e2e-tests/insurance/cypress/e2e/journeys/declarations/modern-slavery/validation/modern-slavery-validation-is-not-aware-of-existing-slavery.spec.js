@@ -11,7 +11,7 @@ const {
 
 const {
   MODERN_SLAVERY: {
-    IS_NOT_AWARE_OF_EXISTING_SLAVERY,
+    IS_NOT_AWARE_OF_EXISTING_SLAVERY: FIELD_ID,
     CONDITIONAL_REASONS: { AWARE_OF_EXISTING_SLAVERY },
   },
 } = DECLARATIONS_FIELD_IDS;
@@ -22,12 +22,11 @@ const MAXIMUM = MAXIMUM_CHARACTERS.DECLARATIONS.MODERN_SLAVERY.CONDITIONAL_REASO
 
 const reasonOverMaximum = 'a'.repeat(MAXIMUM + 1);
 
-const fieldId = IS_NOT_AWARE_OF_EXISTING_SLAVERY;
 const conditionalFieldId = AWARE_OF_EXISTING_SLAVERY;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(`Insurance - Declarations - Modern slavery page - validation - ${fieldId}`, () => {
+context(`Insurance - Declarations - Modern slavery page - validation - ${FIELD_ID}`, () => {
   let referenceNumber;
   let url;
 
@@ -52,7 +51,7 @@ context(`Insurance - Declarations - Modern slavery page - validation - ${fieldId
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(`when ${fieldId} is 'no', but ${conditionalFieldId} is not provided`, () => {
+  describe(`when ${FIELD_ID} is 'no', but ${conditionalFieldId} is not provided`, () => {
     it(`should render a ${conditionalFieldId} validation error`, () => {
       cy.navigateToUrl(url);
 
@@ -69,7 +68,7 @@ context(`Insurance - Declarations - Modern slavery page - validation - ${fieldId
     });
   });
 
-  describe(`when ${fieldId} is 'no', but ${conditionalFieldId} is over ${MAXIMUM} characters`, () => {
+  describe(`when ${FIELD_ID} is 'no', but ${conditionalFieldId} is over ${MAXIMUM} characters`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
@@ -87,19 +86,47 @@ context(`Insurance - Declarations - Modern slavery page - validation - ${fieldId
     it(`should render a ${conditionalFieldId} validation error`, () => {
       cy.assertFieldErrors({
         field: autoCompleteField(conditionalFieldId),
-        errorIndex: 2,
-        errorSummaryLength: 3,
+        errorIndex: 0,
+        errorSummaryLength: 1,
         errorMessage: ERROR_STRINGS.CONDITIONAL_REASONS[conditionalFieldId].ABOVE_MAXIMUM,
       });
     });
 
     it('should retain the submitted values', () => {
+      cy.assertNoRadioOptionIsChecked();
+
       cy.checkTextareaValue({
         fieldId: conditionalFieldId,
         expectedValue: reasonOverMaximum,
       });
+    });
+  });
 
-      cy.assertNoRadioOptionIsChecked();
+  describe(`when ${FIELD_ID} is 'yes' and no other required radio fields are provided`, () => {
+    it('should retain the submitted radio value', () => {
+      cy.navigateToUrl(url);
+
+      cy.completeAndSubmitModernSlaveryForm({
+        willAdhereToAllRequirements: null,
+        hasNoOffensesOrInvestigations: null,
+        isNotAwareOfExistingSlavery: true,
+      });
+
+      cy.assertYesRadioOptionIsChecked(2);
+    });
+  });
+
+  describe(`when ${FIELD_ID} is 'no' and no other required radio fields are provided`, () => {
+    it('should retain the submitted radio value', () => {
+      cy.navigateToUrl(url);
+
+      cy.completeAndSubmitModernSlaveryForm({
+        willAdhereToAllRequirements: null,
+        hasNoOffensesOrInvestigations: null,
+        isNotAwareOfExistingSlavery: false,
+      });
+
+      cy.assertNoRadioOptionIsChecked(2);
     });
   });
 });

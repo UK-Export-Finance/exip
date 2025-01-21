@@ -14,7 +14,7 @@
   submittedValues[fieldId] or application.declaration.modernSlavery[fieldId]
   It will always go to the application field, because the first value is false.
 #}
-{% set submittedAnswer = application.declaration.modernSlavery[fieldId] %}
+{% set submittedAnswer = application.declaration.modernSlavery[fieldId] or submittedValues[fieldId] %}
 
 {% if submittedValues[fieldId] === false %}
   {% set submittedAnswer = submittedValues[fieldId] %}
