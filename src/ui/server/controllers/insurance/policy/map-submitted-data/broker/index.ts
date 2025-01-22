@@ -1,7 +1,7 @@
 import FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import { isEmptyString } from '../../../../../helpers/string';
 import { objectHasProperty } from '../../../../../helpers/object';
-import { RequestBody } from '../../../../../../types';
+import { RequestBody, ApplicationBroker } from '../../../../../../types';
 
 const {
   USING_BROKER,
@@ -14,14 +14,15 @@ const {
  * mapSubmittedData
  * Map broker fields
  * @param {RequestBody} formBody: Form body
+ * @param {ApplicationBroker} brokerData: Application broker data
  * @returns {Object} populatedData
  */
-const mapSubmittedData = (formBody: RequestBody): object => {
+const mapSubmittedData = (formBody: RequestBody, brokerData: ApplicationBroker): object => {
   const populatedData = formBody;
 
   /**
    * If USING_BROKER is false,
-   * nullify/wipe all USING_BROKER related fields.
+   * nullify/wipe all USING_BROKER and address lookup related fields.
    */
   if (formBody[USING_BROKER] === 'false') {
     populatedData[NAME] = '';
@@ -55,7 +56,7 @@ const mapSubmittedData = (formBody: RequestBody): object => {
 
   /**
    * If IS_BASED_IN_UK is false,
-   * nullify/wipe all IS_BASED_IN_UK related fields
+   * nullify/wipe all address lookup related fields
    */
   if (formBody[IS_BASED_IN_UK] === 'false') {
     populatedData[POSTCODE] = '';
@@ -65,6 +66,27 @@ const mapSubmittedData = (formBody: RequestBody): object => {
     populatedData[TOWN] = '';
     populatedData[COUNTY] = '';
   }
+
+  /**
+   * If broker data has a IS_BASED_IN_UK flag,
+   * and FULL_ADDRESS is provided and empty,
+   * wipe all address lookup related fields.
+   */
+
+  const fullAddressValue = formBody[FULL_ADDRESS];
+
+  const fullAddressIsPopulated = fullAddressValue && !isEmptyString(fullAddressValue);
+
+  if (brokerData[IS_BASED_IN_UK] && fullAddressIsPopulated) {
+    populatedData[BUILDING_NUMBER_OR_NAME] = '';
+    populatedData[ADDRESS_LINE_1] = '';
+    populatedData[ADDRESS_LINE_2] = '';
+    populatedData[TOWN] = '';
+    populatedData[COUNTY] = '';
+    populatedData[POSTCODE] = '';
+  }
+
+  // TODO: helper for wiping address lookup fields?
 
   /**
    * If SELECT_THE_ADDRESS is provided,

@@ -5,7 +5,7 @@ import { isSinglePolicyType, isMultiplePolicyType } from '../../policy-type';
 const { REQUESTED_START_DATE, POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
 
 const {
-  BROKER_DETAILS: { BROKER_NAME, BROKER_EMAIL, BROKER_ADDRESS_LINE_1, BROKER_ADDRESS_LINE_2, BROKER_POSTCODE },
+  BROKER_DETAILS: { BROKER_NAME, BROKER_EMAIL, IS_BASED_IN_UK, BROKER_ADDRESS_LINE_1, BROKER_ADDRESS_LINE_2, BROKER_POSTCODE },
   BROKER_MANUAL_ADDRESS: { BROKER_FULL_ADDRESS },
   CONTRACT_POLICY: {
     SINGLE: { CONTRACT_COMPLETION_DATE, REQUESTED_CREDIT_LIMIT, TOTAL_CONTRACT_VALUE },
@@ -74,18 +74,21 @@ export const getJointlyInsuredPartyTasks = (jointlyInsuredParty?: boolean) => {
  * Get "Broker" tasks depending on the isUsingBroker field
  * @param {Boolean} isUsingBroker: "Is using broker" flag
  * @param {Boolean} brokerIsBasedInUk: "Broker is based in the UK" flag
+ * @param {String} brokerFullAddress: Broker "full address" data
  * @returns {Array<string>} Array of tasks/field IDs
  */
-export const getBrokerTasks = (isUsingBroker?: boolean, brokerIsBasedInUk?: boolean) => {
+export const getBrokerTasks = (isUsingBroker?: boolean, brokerIsBasedInUk?: boolean, brokerFullAddress?: string) => {
   let tasks: Array<string> = [];
 
-  if (isUsingBroker) {
-    tasks = [BROKER_NAME, BROKER_EMAIL];
+  // if based in UK = postcode etc, OR full address
+  // if not based in UK = full address
 
-    if (brokerIsBasedInUk) {
-      tasks = [...tasks, BROKER_ADDRESS_LINE_1, BROKER_ADDRESS_LINE_2, BROKER_POSTCODE];
-    } else {
-      tasks = [...tasks, BROKER_FULL_ADDRESS];
+  if (isUsingBroker) {
+    const genericTasks = [BROKER_NAME, BROKER_EMAIL, IS_BASED_IN_UK];
+    tasks = [...genericTasks, BROKER_FULL_ADDRESS];
+
+    if (brokerIsBasedInUk && !brokerFullAddress) {
+      tasks = [...genericTasks, BROKER_ADDRESS_LINE_1, BROKER_ADDRESS_LINE_2, BROKER_POSTCODE];
     }
   }
 
@@ -121,6 +124,7 @@ interface RequiredFields {
   jointlyInsuredParty?: boolean;
   isUsingBroker?: boolean;
   brokerIsBasedInUk?: boolean;
+  brokerFullAddress?: string;
   isAppointingLossPayee?: boolean;
   lossPayeeIsLocatedInUk?: boolean;
   lossPayeeIsLocatedInternationally?: boolean;
@@ -133,6 +137,7 @@ interface RequiredFields {
  * @param {Boolean} jointlyInsuredParty: "Jointly insured party" flag
  * @param {Boolean} isUsingBroker: "Is using broker"
  * @param {Boolean} brokerIsBasedInUk: "Broker is based in the UK" flag
+ * @param {String} brokerFullAddress: Broker "full address" data
  * @param {Boolean} isAppointingLossPayee: "Is using loss payee" flag
  * @param {Boolean} lossPayeeIsLocatedInUk: "Loss payee is located in the UK" flag
  * @param {Boolean} lossPayeeIsLocatedInternationally: "Loss payee is located internationally" flag
@@ -143,6 +148,7 @@ const requiredFields = ({
   jointlyInsuredParty,
   isUsingBroker,
   brokerIsBasedInUk,
+  brokerFullAddress,
   isAppointingLossPayee,
   lossPayeeIsLocatedInUk,
   lossPayeeIsLocatedInternationally,
@@ -158,7 +164,7 @@ const requiredFields = ({
   POLICY_CONTACT_EMAIL,
   POSITION,
   USING_BROKER,
-  ...getBrokerTasks(isUsingBroker, brokerIsBasedInUk),
+  ...getBrokerTasks(isUsingBroker, brokerIsBasedInUk, brokerFullAddress),
   ...lossPayeeTasks(isAppointingLossPayee, lossPayeeIsLocatedInUk, lossPayeeIsLocatedInternationally),
 ];
 

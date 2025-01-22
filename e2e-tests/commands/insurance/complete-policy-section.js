@@ -1,4 +1,5 @@
 import { APPLICATION } from '../../constants';
+import { enterAddressManuallyLink } from '../../partials/insurance';
 
 const { POLICY_TYPE } = APPLICATION;
 
@@ -15,6 +16,7 @@ const { POLICY_TYPE } = APPLICATION;
  * @param {Boolean} usingBroker: If "using broker" - defaults to false
  * @param {Boolean} brokerIsBasedInUk: Broker is based in the UK - defaults to false
  * @param {Boolean} multipleBrokerAddressesAvailable: Multiple broker addresses are available from Ordnance Survey
+ * @param {Boolean} provideBrokerAddressManually: Provide a broker address manually, instead of selecting a result from Ordnance Survey
  * @param {String} brokerBuildingNumberOrName: Broker building name or number
  * @param {String} brokerPostcode: Broker postcode
  * @param {Boolean} otherCompanyInvolved: Should submit "yes" to "another company to be insured". Defaults to false.
@@ -33,6 +35,7 @@ const completePolicySection = ({
   usingBroker = false,
   brokerIsBasedInUk = false,
   multipleBrokerAddressesAvailable = false,
+  provideBrokerAddressManually = false,
   brokerBuildingNumberOrName,
   brokerPostcode,
   otherCompanyInvolved = false,
@@ -88,8 +91,15 @@ const completePolicySection = ({
         cy.completeAndSubmitBrokerAddressesForm({});
       }
 
-      // submit the "confirm broker address" form
-      cy.clickSubmitButton();
+      if (provideBrokerAddressManually) {
+        // TODO: DRY command for this
+        enterAddressManuallyLink().click();
+
+        cy.completeAndSubmitBrokerManualAddressForm({});
+      } else {
+        // submit the "confirm broker address" form
+        cy.clickSubmitButton();
+      }
     } else {
       cy.completeAndSubmitBrokerManualAddressForm({});
     }

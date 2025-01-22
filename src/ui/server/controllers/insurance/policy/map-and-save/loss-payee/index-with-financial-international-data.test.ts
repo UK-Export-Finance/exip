@@ -1,5 +1,5 @@
 import mapAndSave from '.';
-import mapSubmittedData from '../../map-submitted-data/broker';
+import mapSubmittedData from '../../map-submitted-data/loss-payee';
 import saveLossPayee from '../../save-data/nominated-loss-payee';
 import nullifyLossPayeeFinancialInternationalData from '../../../../../helpers/nullify-loss-payee-financial-international-data';
 import saveUk from '../../save-data/loss-payee-financial-details-uk';

@@ -1,5 +1,6 @@
 import mapSubmittedData from '.';
 import FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
+import { mockApplication } from '../../../../../test-mocks';
 
 const {
   USING_BROKER,
@@ -7,6 +8,13 @@ const {
   BROKER_ADDRESSES: { SELECT_THE_ADDRESS },
   BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
 } = FIELD_IDS;
+
+const { broker } = mockApplication;
+
+const mockBroker = {
+  ...broker,
+  [IS_BASED_IN_UK]: true,
+};
 
 const mockFullyPopulatedBrokerBody = {
   [USING_BROKER]: 'false',
@@ -28,7 +36,7 @@ describe('controllers/insurance/policy/map-submitted-data/broker', () => {
         [USING_BROKER]: 'false',
       };
 
-      const result = mapSubmittedData(mockFormBody);
+      const result = mapSubmittedData(mockFormBody, mockBroker);
 
       const expected = {
         ...mockFormBody,
@@ -55,7 +63,7 @@ describe('controllers/insurance/policy/map-submitted-data/broker', () => {
         [NAME]: 'mock name',
       };
 
-      const result = mapSubmittedData(mockFormBody);
+      const result = mapSubmittedData(mockFormBody, mockBroker);
 
       const expected = mockFormBody;
 
@@ -69,7 +77,7 @@ describe('controllers/insurance/policy/map-submitted-data/broker', () => {
         [USING_BROKER]: '',
       };
 
-      const result = mapSubmittedData(mockFormBody);
+      const result = mapSubmittedData(mockFormBody, mockBroker);
 
       expect(result).toEqual({});
     });
@@ -81,7 +89,7 @@ describe('controllers/insurance/policy/map-submitted-data/broker', () => {
         [IS_BASED_IN_UK]: '',
       };
 
-      const result = mapSubmittedData(mockFormBody);
+      const result = mapSubmittedData(mockFormBody, mockBroker);
 
       const expected = {
         [IS_BASED_IN_UK]: null,
@@ -98,12 +106,65 @@ describe('controllers/insurance/policy/map-submitted-data/broker', () => {
         [IS_BASED_IN_UK]: 'false',
       };
 
-      const result = mapSubmittedData(mockFormBody);
+      const result = mapSubmittedData(mockFormBody, mockBroker);
 
       const expected = {
         ...mockFormBody,
         [IS_BASED_IN_UK]: null,
         [FULL_ADDRESS]: '',
+        [BUILDING_NUMBER_OR_NAME]: '',
+        [ADDRESS_LINE_1]: '',
+        [ADDRESS_LINE_2]: '',
+        [TOWN]: '',
+        [COUNTY]: '',
+        [POSTCODE]: '',
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when ${IS_BASED_IN_UK} is provided with a value of 'false'`, () => {
+    it(`should return the form body with nullified/empty ${IS_BASED_IN_UK} related values`, () => {
+      const mockFormBody = {
+        ...mockFullyPopulatedBrokerBody,
+        [IS_BASED_IN_UK]: 'false',
+      };
+
+      const result = mapSubmittedData(mockFormBody, mockBroker);
+
+      const expected = {
+        ...mockFormBody,
+        [IS_BASED_IN_UK]: null,
+        [FULL_ADDRESS]: '',
+        [BUILDING_NUMBER_OR_NAME]: '',
+        [ADDRESS_LINE_1]: '',
+        [ADDRESS_LINE_2]: '',
+        [TOWN]: '',
+        [COUNTY]: '',
+        [POSTCODE]: '',
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when broker data has ${IS_BASED_IN_UK} and ${FULL_ADDRESS} is populated`, () => {
+    it(`should return the form body with nullified/empty ${IS_BASED_IN_UK} related values`, () => {
+      const mockFormBody = {
+        ...mockFullyPopulatedBrokerBody,
+        [FULL_ADDRESS]: 'Mock full address',
+      };
+
+      const mockBrokerData = {
+        ...mockBroker,
+        [IS_BASED_IN_UK]: true,
+      };
+
+      const result = mapSubmittedData(mockFormBody, mockBrokerData);
+
+      const expected = {
+        ...mockFormBody,
         [BUILDING_NUMBER_OR_NAME]: '',
         [ADDRESS_LINE_1]: '',
         [ADDRESS_LINE_2]: '',
@@ -123,7 +184,7 @@ describe('controllers/insurance/policy/map-submitted-data/broker', () => {
         [POSTCODE]: '',
       };
 
-      const result = mapSubmittedData(mockFormBody);
+      const result = mapSubmittedData(mockFormBody, mockBroker);
 
       const expected = {
         [POSTCODE]: '',
@@ -140,7 +201,7 @@ describe('controllers/insurance/policy/map-submitted-data/broker', () => {
         [POSTCODE]: '',
       };
 
-      const result = mapSubmittedData(mockFormBody);
+      const result = mapSubmittedData(mockFormBody, mockBroker);
 
       const expected = {
         [POSTCODE]: '',
