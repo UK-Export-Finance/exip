@@ -4,8 +4,7 @@ import wellknownGet from '../../controllers/wellknown/security';
 
 describe('routes/.well-known', () => {
   beforeEach(() => {
-    // eslint-disable-next-line global-require
-    require('.');
+    require('.'); // eslint-disable-line global-require
   });
 
   afterEach(() => {
