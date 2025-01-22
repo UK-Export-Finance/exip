@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.40.0](https://github.com/UK-Export-Finance/exip/compare/v2.39.4...v2.40.0) (2025-01-22)
+
+
+### Features
+
+* **EMS-4134:** add additional security routes ([#3489](https://github.com/UK-Export-Finance/exip/issues/3489)) ([65ef0a5](https://github.com/UK-Export-Finance/exip/commit/65ef0a5f0644c19dc666b89aab0e039d1c1603f3))
+
 ## [2.39.4](https://github.com/UK-Export-Finance/exip/compare/v2.39.3...v2.39.4) (2025-01-16)
 
 
