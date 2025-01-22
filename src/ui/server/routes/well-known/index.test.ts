@@ -1,6 +1,6 @@
 import { get } from '../../test-mocks/mock-router';
 import { ROUTES } from '../../constants';
-import wellknownGet from '../../controllers/well-known/security';
+import wellKnownGet from '../../controllers/well-known/security';
 
 describe('routes/well-known', () => {
   beforeEach(() => {
@@ -14,6 +14,6 @@ describe('routes/well-known', () => {
   it('should setup all routes', () => {
     expect(get).toHaveBeenCalledTimes(1);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.WELL_KNOWN.SECURITY, wellknownGet);
+    expect(get).toHaveBeenCalledWith(ROUTES.WELL_KNOWN.SECURITY, wellKnownGet);
   });
 });
