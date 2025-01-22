@@ -6,16 +6,15 @@
 
 {% set fieldId = FIELDS.HAS_NO_OFFENSES_OR_INVESTIGATIONS.ID %}
 
-{#
-  When a submitted answer that is not saved in the database has a value of value,
-  to ensure that the "no" radio is checked,
-  we need to manually set the submittedAnswer after the application field.
-  Otherwise, if we do the following:
-  submittedValues[fieldId] or application.declaration.modernSlavery[fieldId]
-  It will always go to the application field, because the first value is false.
-#}
-{% set submittedAnswer = application.declaration.modernSlavery[fieldId] %}
+{% set submittedAnswer = submittedValues[fieldId] or application.declaration.modernSlavery[fieldId] %}
 
+{#
+  When a submitted answer has a boolean value of false,
+  to ensure that the "no" radio is checked,
+  we need to manually set the submittedAnswer to the false boolean.
+  Otherwise, nunjucks will not have a submittedAnswer variable of false
+  and submittedAnswer would be empty.
+#}
 {% if submittedValues[fieldId] === false %}
   {% set submittedAnswer = submittedValues[fieldId] %}
 {% endif %}
