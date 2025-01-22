@@ -1,5 +1,4 @@
 import { APPLICATION } from '../../constants';
-import { enterAddressManuallyLink } from '../../partials/insurance';
 
 const { POLICY_TYPE } = APPLICATION;
 
@@ -92,8 +91,7 @@ const completePolicySection = ({
       }
 
       if (provideBrokerAddressManually) {
-        // TODO: DRY command for this
-        enterAddressManuallyLink().click();
+        cy.clickEnterAddressManuallyLink();
 
         cy.completeAndSubmitBrokerManualAddressForm({});
       } else {
