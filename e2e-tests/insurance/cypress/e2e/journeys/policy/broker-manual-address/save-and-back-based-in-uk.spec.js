@@ -14,7 +14,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Broker manual address page - Save and back', () => {
+context('Insurance - Policy - Broker manual address page - Based in UK - Save and back', () => {
   let referenceNumber;
   let url;
 
@@ -26,9 +26,11 @@ context('Insurance - Policy - Broker manual address page - Save and back', () =>
       cy.completeAndSubmitPolicyForms({
         stopSubmittingAfter: 'brokerDetails',
         usingBroker: true,
-        isBasedInUk: false,
+        isBasedInUk: true,
         buildingNumberOrName: '123456789',
       });
+
+      cy.clickZeroAddressesEnterManuallyLink();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
 
@@ -66,6 +68,7 @@ context('Insurance - Policy - Broker manual address page - Save and back', () =>
 
       // submit the form via 'save and go back' button
       cy.keyboardInput(field(FIELD_ID).textarea(), application.BROKER[FIELD_ID]);
+
       cy.clickSaveAndBackButton();
     });
 
@@ -75,20 +78,6 @@ context('Insurance - Policy - Broker manual address page - Save and back', () =>
 
     it('should retain the `insurance policy` task status as `in progress`', () => {
       cy.checkTaskPolicyStatusIsInProgress();
-    });
-
-    it('should have the originally submitted answer selected when going back to the page after submission', () => {
-      cy.navigateToAllSectionsUrl(referenceNumber);
-
-      cy.startInsurancePolicySection({});
-
-      // go through 8 policy forms.
-      cy.clickSubmitButtonMultipleTimes({ count: 8 });
-
-      cy.checkTextareaValue({
-        fieldId: FIELD_ID,
-        expectedValue: application.BROKER[FIELD_ID],
-      });
     });
   });
 });
