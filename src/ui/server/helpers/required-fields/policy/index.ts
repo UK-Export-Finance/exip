@@ -80,9 +80,14 @@ export const getJointlyInsuredPartyTasks = (jointlyInsuredParty?: boolean) => {
 export const getBrokerTasks = (isUsingBroker?: boolean, brokerIsBasedInUk?: boolean, brokerFullAddress?: string) => {
   let tasks: Array<string> = [];
 
-  // if based in UK = postcode etc, OR full address
-  // if not based in UK = full address
-
+  /**
+   * If USING_BROKER is true:
+   * 1) A few fields are always required.
+   * 2) At this point, we assume BROKER_FULL_ADDRESS is required.
+   * 3) Otherwise, If IS_BASED_IN_UK is true and there is no BROKER_FULL_ADDRESS:
+   * - Address lookup fields are required.
+   * - BROKER_FULL_ADDRESS is NOT required (because address lookup fields are required).
+   */
   if (isUsingBroker) {
     const genericTasks = [BROKER_NAME, BROKER_EMAIL, IS_BASED_IN_UK];
     tasks = [...genericTasks, BROKER_FULL_ADDRESS];
