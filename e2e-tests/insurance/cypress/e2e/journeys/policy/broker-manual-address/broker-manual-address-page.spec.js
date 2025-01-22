@@ -37,11 +37,9 @@ context(
         cy.completeAndSubmitPolicyForms({
           stopSubmittingAfter: 'brokerDetails',
           usingBroker: true,
-          isBasedInUk: true,
+          isBasedInUk: false,
           buildingNumberOrName: '123456789',
         });
-
-        cy.clickZeroAddressesEntryManuallyLink();
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
         lossPayeeUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;

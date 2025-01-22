@@ -26,11 +26,9 @@ context('Insurance - Policy - Broker manual address page - Save and back', () =>
       cy.completeAndSubmitPolicyForms({
         stopSubmittingAfter: 'brokerDetails',
         usingBroker: true,
-        isBasedInUk: true,
+        isBasedInUk: false,
         buildingNumberOrName: '123456789',
       });
-
-      cy.clickZeroAddressesEntryManuallyLink();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
 
@@ -86,9 +84,6 @@ context('Insurance - Policy - Broker manual address page - Save and back', () =>
 
       // go through 8 policy forms.
       cy.clickSubmitButtonMultipleTimes({ count: 8 });
-
-      // go to the "enter manually" page.
-      cy.clickZeroAddressesEntryManuallyLink();
 
       cy.checkTextareaValue({
         fieldId: FIELD_ID,
