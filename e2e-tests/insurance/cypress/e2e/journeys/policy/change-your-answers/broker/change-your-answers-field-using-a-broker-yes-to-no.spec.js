@@ -112,7 +112,7 @@ context('Insurance - Policy - Change your answers - Using a broker - Yes to no -
             buildingNumberOrName: '123456789',
           });
 
-          cy.clickZeroAddressesEntryManuallyLink();
+          cy.clickZeroAddressesEnterManuallyLink();
         });
 
         it('should have empty field values', () => {
