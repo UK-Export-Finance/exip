@@ -95,6 +95,9 @@ const mockRes = () => {
   res.removeHeader = jest.fn();
   res.setHeader = jest.fn();
   res.status = jest.fn();
+  res.type = jest.fn();
+  res.write = jest.fn();
+  res.send = jest.fn();
 
   res.locals = {
     application: mockApplication,
