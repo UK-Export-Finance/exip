@@ -116,29 +116,29 @@ describe('date helpers', () => {
     it.each(yearsToAdd)('should add $year year(s) to the provided date object', ({ year }) => {
       const pastDate = new Date('1989-09-20');
       const expectedYear = pastDate.getFullYear() + year;
-      // JavaScript month are 0 indexed
+      // JavaScript months are 0 indexed
       const expectedMonth = 8;
       const expectedDate = 20;
 
       const result = addYear(year, pastDate);
 
-      expect(result.getFullYear()).toBe(expectedYear);
-      expect(result.getMonth()).toBe(expectedMonth);
-      expect(result.getDate()).toBe(expectedDate);
+      expect(result.getFullYear()).toEqual(expectedYear);
+      expect(result.getMonth()).toEqual(expectedMonth);
+      expect(result.getDate()).toEqual(expectedDate);
     });
 
     it.each(yearsToAdd)('should add $year year(s) with no date argument', ({ year }) => {
       const todayDate = now();
       const expectedYear = todayDate.getFullYear() + year;
-      // JavaScript month are 0 indexed
+      // JavaScript months are 0 indexed
       const expectedMonth = todayDate.getMonth();
       const expectedDate = todayDate.getDate();
 
       const result = addYear(year, todayDate);
 
-      expect(result.getFullYear()).toBe(expectedYear);
-      expect(result.getMonth()).toBe(expectedMonth);
-      expect(result.getDate()).toBe(expectedDate);
+      expect(result.getFullYear()).toEqual(expectedYear);
+      expect(result.getMonth()).toEqual(expectedMonth);
+      expect(result.getDate()).toEqual(expectedDate);
     });
   });
 
@@ -149,7 +149,7 @@ describe('date helpers', () => {
 
       const result = getEpochMs(date);
 
-      expect(result).toBe(epoch);
+      expect(result).toEqual(epoch);
     });
 
     it('should return EPOCH with milliseconds for now with no argument', () => {
@@ -157,7 +157,7 @@ describe('date helpers', () => {
 
       const result = getEpochMs();
 
-      expect(result).toBe(epoch);
+      expect(result).toEqual(epoch);
     });
 
     it('should return EPOCH with milliseconds for 20/09/1989', () => {
@@ -166,7 +166,7 @@ describe('date helpers', () => {
 
       const result = getEpochMs(date);
 
-      expect(result).toBe(epoch);
+      expect(result).toEqual(epoch);
     });
 
     it('should return EPOCH with milliseconds for 01/01/1970', () => {
@@ -174,7 +174,7 @@ describe('date helpers', () => {
 
       const result = getEpochMs(date);
 
-      expect(result).toBe(0);
+      expect(result).toEqual(0);
     });
 
     it('should return EPOCH with milliseconds for a future date', () => {
@@ -183,7 +183,7 @@ describe('date helpers', () => {
 
       const result = getEpochMs(date);
 
-      expect(result).toBe(epoch);
+      expect(result).toEqual(epoch);
     });
 
     it('should return EPOCH with milliseconds for a leap year date', () => {
@@ -192,7 +192,7 @@ describe('date helpers', () => {
 
       const result = getEpochMs(date);
 
-      expect(result).toBe(epoch);
+      expect(result).toEqual(epoch);
     });
   });
 });

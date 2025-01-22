@@ -2,7 +2,7 @@ import { get } from './index';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
-describe('controllers/thanks.txt', () => {
+describe('controllers/root/thank-you', () => {
   let req: Request;
   let res: Response;
 
@@ -22,6 +22,7 @@ describe('controllers/thanks.txt', () => {
       get(req, res);
 
       expect(res.write).toHaveBeenCalledWith('# We would like to thank the following:');
+      expect(res.write).toHaveBeenCalledWith('\n');
       expect(res.write).toHaveBeenCalledWith('# [DD-MM-YYYY] : Name : description');
     });
 

@@ -2,7 +2,9 @@ import { Request, Response } from '../../../../types';
 
 /**
  * get
- *  Handles the GET request for the thank you page.
+ * Handles the GET request for the thank you page, this page
+ * shows the timestamp, name and description of any vulnerability
+ * reported to UKEF.
  *
  * This controller sets the response type to plain text and writes a thank you message
  * with a placeholder for the date, name, and description.

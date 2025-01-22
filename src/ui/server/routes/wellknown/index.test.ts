@@ -1,8 +1,8 @@
 import { get } from '../../test-mocks/mock-router';
 import { ROUTES } from '../../constants';
-import wellknownGet from '../../controllers/wellknown/security';
+import wellknownGet from '../../controllers/well-known/security';
 
-describe('routes/.well-known', () => {
+describe('routes/well-known', () => {
   beforeEach(() => {
     require('.'); // eslint-disable-line global-require
   });
