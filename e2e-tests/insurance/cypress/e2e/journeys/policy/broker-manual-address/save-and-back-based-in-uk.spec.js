@@ -30,7 +30,7 @@ context('Insurance - Policy - Broker manual address page - Based in UK - Save an
         buildingNumberOrName: '123456789',
       });
 
-      cy.clickZeroAddressesEnterManuallyLink();
+      cy.clickEnterAddressManuallyLink();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`;
 
