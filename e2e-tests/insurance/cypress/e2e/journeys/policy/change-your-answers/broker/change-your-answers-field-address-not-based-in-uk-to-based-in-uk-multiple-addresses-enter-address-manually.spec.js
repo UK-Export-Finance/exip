@@ -4,11 +4,13 @@ import { ADDRESS_LOOKUP_INPUT_EXAMPLES } from '../../../../../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
+import application from '../../../../../../../fixtures/application';
 
 const { WESTMINSTER_BRIDGE_STREET } = ADDRESS_LOOKUP_INPUT_EXAMPLES;
 
 const {
   USING_BROKER,
+  IS_BASED_IN_UK,
   BROKER_DETAILS: { NAME, EMAIL },
   BROKER_ADDRESSES: { SELECT_THE_ADDRESS },
   BROKER_MANUAL_ADDRESS: { FULL_ADDRESS },
@@ -16,7 +18,14 @@ const {
 
 const {
   ROOT,
-  POLICY: { BROKER_ADDRESSES_CHANGE, BROKER_CONFIRM_ADDRESS_CHANGE, BROKER_MANUAL_ADDRESS_CHANGE, CHECK_YOUR_ANSWERS },
+  POLICY: {
+    BROKER_ADDRESSES_CHANGE,
+    BROKER_CONFIRM_ADDRESS_CHANGE,
+    BROKER_DETAILS_ROOT,
+    BROKER_MANUAL_ADDRESS_ROOT,
+    BROKER_MANUAL_ADDRESS_CHANGE,
+    CHECK_YOUR_ANSWERS,
+  },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -95,6 +104,39 @@ context(
 
       it(`should NOT render ${SELECT_THE_ADDRESS} field`, () => {
         checkSummaryList.BROKER[SELECT_THE_ADDRESS]({ shouldRender: false });
+      });
+
+      describe(`when going back to ${BROKER_DETAILS_ROOT}`, () => {
+        beforeEach(() => {
+          cy.navigateToUrl(checkYourAnswersUrl);
+
+          summaryList.field(NAME).changeLink().click();
+        });
+
+        it(`should retain the new ${IS_BASED_IN_UK} value and have empty address lookup fields`, () => {
+          cy.assertBrokerDetailsFieldValues({
+            isBasedInUk: true,
+            expectedPostcode: '',
+            expectedBuildingNumberOrName: '',
+          });
+        });
+      });
+
+      describe(`when going to ${BROKER_MANUAL_ADDRESS_ROOT}`, () => {
+        beforeEach(() => {
+          cy.navigateToUrl(checkYourAnswersUrl);
+
+          summaryList.field(FULL_ADDRESS).changeLink().click();
+
+          cy.clickEnterAddressManuallyLink();
+        });
+
+        it('should have the submitted value', () => {
+          cy.checkTextareaValue({
+            fieldId: FULL_ADDRESS,
+            expectedValue: application.BROKER[FULL_ADDRESS],
+          });
+        });
       });
     });
   },
