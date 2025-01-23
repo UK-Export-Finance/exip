@@ -30,10 +30,6 @@ context(
 
         cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-        /**
-         * TODO: EMS-4096
-         * Introduce/enforce this, for all other declaration routes.
-         */
         cy.completeAndSubmitCheckYourAnswers();
 
         cy.completeAndSubmitDeclarationsForms({ stopSubmittingAfter: 'confidentiality', referenceNumber });
