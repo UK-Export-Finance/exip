@@ -56,14 +56,10 @@ context('Insurance - Policy - Name on policy - Validation', () => {
       cy.navigateToUrl(url);
     });
 
-    it('should render validation error', () => {
-      const expectedErrorsCount = 1;
-      const expectedErrorMessage = NAME_ON_POLICY_ERRORS[NAME].IS_EMPTY;
-
+    it('should render a validation error', () => {
       cy.submitAndAssertRadioErrors({
         field: fieldSelector(SAME_NAME),
-        expectedErrorsCount,
-        expectedErrorMessage,
+        expectedErrorMessage: NAME_ON_POLICY_ERRORS[NAME].IS_EMPTY,
       });
     });
   });

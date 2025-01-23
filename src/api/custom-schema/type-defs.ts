@@ -224,14 +224,11 @@ const typeDefs = `
     isoCode: String!
     name: String
     shortTermCover: Boolean
-    riskCategory: String
-    nbiIssueAvailable: Boolean
+    esraClassification: String
     canGetAQuoteOnline: Boolean
-    canGetAQuoteOffline: Boolean
-    canGetAQuoteByEmail: Boolean
     cannotGetAQuote: Boolean
-    cannotApply: Boolean
     canApplyForInsuranceOnline: Boolean
+    noOnlineSupport: Boolean
     noInsuranceSupport: Boolean
   }
 

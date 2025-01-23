@@ -9,10 +9,10 @@ const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
 const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
 const {
-  QUOTE: { BUYER_COUNTRY, BUYER_BODY },
+  QUOTE: { BUYER_COUNTRY, TYPE_OF_BUYER },
 } = ROUTES;
 
-const supportedCountryName = COUNTRY_QUOTE_SUPPORT.ONLINE.NAME;
+const supportedCountryName = COUNTRY_QUOTE_SUPPORT.ONLINE_SUPPORT_1.NAME;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -68,7 +68,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
       });
     });
 
-    describe('when submitting with a supported country', () => {
+    describe('when submitting with a country that can get a quote online', () => {
       const field = autoCompleteField(FIELD_ID);
 
       beforeEach(() => {
@@ -80,8 +80,8 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
         cy.clickSubmitButton();
       });
 
-      it(`should redirect to ${BUYER_BODY}`, () => {
-        const expectedUrl = `${baseUrl}${BUYER_BODY}`;
+      it(`should redirect to ${TYPE_OF_BUYER}`, () => {
+        const expectedUrl = `${baseUrl}${TYPE_OF_BUYER}`;
 
         cy.assertUrl(expectedUrl);
       });

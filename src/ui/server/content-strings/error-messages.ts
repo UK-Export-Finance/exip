@@ -9,13 +9,13 @@ type ErrorMessage = {
   [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 };
 
-const THRESHOLD = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
+const THRESHOLD = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE);
 
 export const ERROR_MESSAGES = {
   THERE_IS_A_PROBLEM: 'There is a problem',
   ELIGIBILITY: {
     [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]: 'Select where your buyer is based',
-    [FIELD_IDS.ELIGIBILITY.VALID_BUYER_BODY]: 'Select if your buyer is a government or public sector body',
+    [FIELD_IDS.ELIGIBILITY.VALID_TYPE_OF_BUYER]: 'Select if your buyer is a government or public sector body',
     [FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION]: "Select whether you're exporting from a business base in the UK, Channel Islands, Isle of Man or not",
     [FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
       IS_EMPTY: 'Select whether at least 20% of your export contract value is made up from UK goods or services or not',

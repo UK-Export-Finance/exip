@@ -50,7 +50,7 @@ const completeAndSubmitPolicyForms = ({
       name: 'multipleContractPolicy',
       action: () => cy.completeAndSubmitMultipleContractPolicyForm({ isoCode, alternativeCurrency }),
     });
-    steps.push({ name: 'exportValue', action: () => cy.completeAndSubmitExportValueForm({ policyType }) });
+    steps.push({ name: 'exportValue', action: () => cy.completeAndSubmitExportValueForm({}) });
   }
 
   steps.push({ name: 'nameOnPolicy', action: () => cy.completeAndSubmitNameOnPolicyForm({ sameName }) });

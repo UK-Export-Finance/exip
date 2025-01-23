@@ -1,5 +1,4 @@
-import { headingCaption } from '../../../../../../partials';
-import { field as fieldSelector } from '../../../../../../pages/shared';
+import { field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
 import { turnoverPage } from '../../../../../../pages/your-business';
 import { PAGES } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
@@ -74,7 +73,7 @@ context(
         cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
       });
 
-      it(`should render ${FINANCIAL_YEAR_END_DATE} section`, () => {
+      it(`should render a ${FINANCIAL_YEAR_END_DATE} section`, () => {
         const fieldId = FINANCIAL_YEAR_END_DATE;
         const field = fieldSelector(fieldId);
 

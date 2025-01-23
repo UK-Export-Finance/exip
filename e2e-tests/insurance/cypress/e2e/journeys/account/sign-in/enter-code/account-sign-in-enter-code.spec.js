@@ -69,8 +69,6 @@ context(
 
           cy.checkText(field.label(), FIELD_STRINGS.LABEL);
 
-          field.input().should('exist');
-
           cy.checkClassName(field.input(), 'govuk-input govuk-input--width-4 govuk-input--extra-letter-spacing');
         });
 

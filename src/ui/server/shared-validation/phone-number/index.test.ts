@@ -10,49 +10,49 @@ describe('shared-validation/phone-number', () => {
   const errorMessage = 'incorrect format';
 
   describe('with errors', () => {
-    it(`should render error when phone number is ${INVALID_PHONE_NUMBERS.EMERGENCY_NUMBER}`, () => {
+    it(`should return an error when phone number is ${INVALID_PHONE_NUMBERS.EMERGENCY_NUMBER}`, () => {
       const result = validatePhoneNumber(INVALID_PHONE_NUMBERS.EMERGENCY_NUMBER, fieldId, errorMessage, errors);
       const expected = generateValidationErrors(fieldId, errorMessage);
 
       expect(result).toEqual(expected);
     });
 
-    it('should render error when landline number is too long', () => {
+    it('should return an error when landline number is too long', () => {
       const result = validatePhoneNumber(INVALID_PHONE_NUMBERS.LANDLINE_LONG, fieldId, errorMessage, errors);
       const expected = generateValidationErrors(fieldId, errorMessage);
 
       expect(result).toEqual(expected);
     });
 
-    it('should render error when landline number is too short', () => {
+    it('should return an error when landline number is too short', () => {
       const result = validatePhoneNumber(INVALID_PHONE_NUMBERS.LANDLINE_SHORT, fieldId, errorMessage, errors);
       const expected = generateValidationErrors(fieldId, errorMessage);
 
       expect(result).toEqual(expected);
     });
 
-    it('should render error when mobile number is too long', () => {
+    it('should return an error when mobile number is too long', () => {
       const result = validatePhoneNumber(INVALID_PHONE_NUMBERS.MOBILE_LONG, fieldId, errorMessage, errors);
       const expected = generateValidationErrors(fieldId, errorMessage);
 
       expect(result).toEqual(expected);
     });
 
-    it('should render error when number has letters in it', () => {
+    it('should return an error when number has letters in it', () => {
       const result = validatePhoneNumber(INVALID_PHONE_NUMBERS.LANDLINE_LETTER, fieldId, errorMessage, errors);
       const expected = generateValidationErrors(fieldId, errorMessage);
 
       expect(result).toEqual(expected);
     });
 
-    it('should render error when number has special characters in it', () => {
+    it('should return an error when number has special characters in it', () => {
       const result = validatePhoneNumber(INVALID_PHONE_NUMBERS.LANDLINE_SPECIAL_CHAR, fieldId, errorMessage, errors);
       const expected = generateValidationErrors(fieldId, errorMessage);
 
       expect(result).toEqual(expected);
     });
 
-    it('should render error entering international number', () => {
+    it('should return an error entering international number', () => {
       let result = validatePhoneNumber(INVALID_PHONE_NUMBERS.INTERNATIONAL, fieldId, errorMessage, errors);
       let expected = generateValidationErrors(fieldId, errorMessage);
 
@@ -69,28 +69,28 @@ describe('shared-validation/phone-number', () => {
       expect(result).toEqual(expected);
     });
 
-    it('should render error entering just 2 digits', () => {
+    it('should return an error entering just 2 digits', () => {
       const result = validatePhoneNumber(INVALID_PHONE_NUMBERS.TOO_SHORT, fieldId, errorMessage, errors);
       const expected = generateValidationErrors(fieldId, errorMessage);
 
       expect(result).toEqual(expected);
     });
 
-    it('should render error entering just 2 digits with a special character', () => {
+    it('should return an error entering just 2 digits with a special character', () => {
       const result = validatePhoneNumber(INVALID_PHONE_NUMBERS.TOO_SHORT_SPECIAL_CHAR, fieldId, errorMessage, errors);
       const expected = generateValidationErrors(fieldId, errorMessage);
 
       expect(result).toEqual(expected);
     });
 
-    it('should render error entering mobile number with a special character', () => {
+    it('should return an error entering mobile number with a special character', () => {
       const result = validatePhoneNumber(INVALID_PHONE_NUMBERS.MOBILE_SPECIAL_CHAR, fieldId, errorMessage, errors);
       const expected = generateValidationErrors(fieldId, errorMessage);
 
       expect(result).toEqual(expected);
     });
 
-    it('should render error entering mobile number which is above 191 characters', () => {
+    it('should return an error entering mobile number which is above 191 characters', () => {
       const result = validatePhoneNumber(INVALID_PHONE_NUMBERS.ABOVE_MAX_CHARS, fieldId, errorMessage, errors);
       const expected = generateValidationErrors(fieldId, errorMessage);
 

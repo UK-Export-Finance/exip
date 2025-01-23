@@ -20,3 +20,22 @@ export interface GetApimCurrenciesQueryResponse {
   alternativeCurrencies?: [Currency];
   allCurrencies?: [Currency];
 }
+
+export interface CurrencyExchange {
+  id: number;
+  sourceCurrencyId: number;
+  targetCurrencyId: number;
+  currencyPair: string;
+  bidPrice: number;
+  askPrice: number;
+  lastPrice: number;
+  midPrice: number;
+  created: string;
+  updated: string;
+  effectiveFrom: string;
+  effectiveTo: string;
+}
+
+export interface GetApimCurrenciesExchangeResponse extends SuccessResponse {
+  data?: [CurrencyExchange];
+}
