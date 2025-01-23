@@ -25,7 +25,7 @@ context('Insurance - Textarea fields - `Declarations` textarea fields should ren
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-      cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'exportingWithCodeOfConduct', referenceNumber });
+      cy.completeAndSubmitDeclarationsForms({ stopSubmittingAfter: 'exportingWithCodeOfConduct', referenceNumber });
 
       modernSlaveryUrl = `${baseUrl}${ROOT}/${referenceNumber}${MODERN_SLAVERY}`;
     });
