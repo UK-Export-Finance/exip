@@ -86,8 +86,6 @@ const mapSubmittedData = (formBody: RequestBody, brokerData: ApplicationBroker):
     populatedData[POSTCODE] = '';
   }
 
-  // TODO: helper for wiping address lookup fields?
-
   /**
    * If SELECT_THE_ADDRESS is provided,
    * or is an empty string,
