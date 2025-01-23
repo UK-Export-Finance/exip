@@ -57,11 +57,11 @@ context('Insurance - Check your answers - Policy - Single contract policy - Brok
     checkSummaryList.BROKER[NAME]();
   });
 
-  it(`should render a ${SELECT_THE_ADDRESS} summary list row`, () => {
-    checkSummaryList.BROKER[SELECT_THE_ADDRESS]({});
-  });
-
   it(`should render a ${EMAIL} summary list row`, () => {
     checkSummaryList.BROKER[EMAIL]();
+  });
+
+  it(`should render a ${SELECT_THE_ADDRESS} summary list row`, () => {
+    checkSummaryList.BROKER[SELECT_THE_ADDRESS]({});
   });
 });
