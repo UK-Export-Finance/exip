@@ -11,7 +11,7 @@ import { Request, Response } from '../../../../../types';
 const {
   INSURANCE_ROOT,
   ALL_SECTIONS,
-  POLICY: { BROKER_DETAILS_ROOT, BROKER_DETAILS_CHANGE, BROKER_MANUAL_ADDRESS_ROOT, LOSS_PAYEE_ROOT, CHECK_YOUR_ANSWERS },
+  POLICY: { BROKER_DETAILS_ROOT, BROKER_DETAILS_CHANGE, BROKER_DETAILS_CHECK_AND_CHANGE, BROKER_MANUAL_ADDRESS_ROOT, LOSS_PAYEE_ROOT, CHECK_YOUR_ANSWERS },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -25,9 +25,10 @@ export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.BROKER_CONFIRM_ADDRESS;
  * "Use different address" and "Save and go back" URL
  * @param {Number} referenceNumber: Application reference number
  * @param {Boolean} isAChangeRoute: If the last part of a string/URL is 'change'
+ * @param {Boolean} isACheckAndChangeRoute: If the last part of a string/URL is 'check-and-change'
  * @returns {Object} Page variables
  */
-export const pageVariables = (referenceNumber: number, isAChangeRoute: boolean) => {
+export const pageVariables = (referenceNumber: number, isAChangeRoute: boolean, isACheckAndChangeRoute: boolean) => {
   const useDifferentAddressRootUrl = `${INSURANCE_ROOT}/${referenceNumber}`;
   let useDifferentAddressUrl = useDifferentAddressRootUrl;
 
@@ -38,6 +39,9 @@ export const pageVariables = (referenceNumber: number, isAChangeRoute: boolean) 
    */
   if (isAChangeRoute) {
     useDifferentAddressUrl += BROKER_DETAILS_CHANGE;
+  }
+  if (isACheckAndChangeRoute) {
+    useDifferentAddressUrl += BROKER_DETAILS_CHECK_AND_CHANGE;
   } else {
     useDifferentAddressUrl += BROKER_DETAILS_ROOT;
   }
@@ -85,7 +89,7 @@ export const get = (req: Request, res: Response) => {
       PAGE_CONTENT_STRINGS,
       BACK_LINK: req.headers.referer,
     }),
-    ...pageVariables(application.referenceNumber, isChangeRoute(req.originalUrl)),
+    ...pageVariables(application.referenceNumber, isChangeRoute(req.originalUrl), isCheckAndChangeRoute(req.originalUrl)),
     userName: getUserNameFromSession(req.session.user),
     submittedAnswer,
   });
