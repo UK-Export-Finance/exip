@@ -15,7 +15,7 @@ const {
 
 const {
   ROOT,
-  POLICY: { BROKER_MANUAL_ADDRESS_ROOT, BROKER_ZERO_ADDRESSES_ROOT, LOSS_PAYEE_ROOT },
+  POLICY: { BROKER_DETAILS_ROOT, BROKER_MANUAL_ADDRESS_ROOT, LOSS_PAYEE_ROOT },
 } = INSURANCE_ROUTES;
 
 const { BROKER_MANUAL_ADDRESS: FIELD_STRINGS } = FIELDS;
@@ -60,7 +60,7 @@ context(
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: `${ROOT}/${referenceNumber}${BROKER_MANUAL_ADDRESS_ROOT}`,
-        backLink: `${ROOT}/${referenceNumber}${BROKER_ZERO_ADDRESSES_ROOT}`,
+        backLink: `${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
       });
     });
 
