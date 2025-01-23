@@ -50,7 +50,7 @@ context('Insurance - Export contract - About goods or services page - form valid
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.completeAndSubmitExportContractForms({ formToStopAt: 'howWasTheContractAwarded' });
+      cy.completeAndSubmitExportContractForms({ stopSubmittingAfter: 'howWasTheContractAwarded' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
 
@@ -85,7 +85,7 @@ context('Insurance - Export contract - About goods or services page - form valid
     });
   });
 
-  it(`should display validation errors if ${DESCRIPTION} is over ${MAXIMUM} characters`, () => {
+  it(`should render validation errors if ${DESCRIPTION} is over ${MAXIMUM} characters`, () => {
     cy.navigateToUrl(url);
 
     cy.submitAndAssertFieldErrors({
@@ -131,7 +131,7 @@ context('Insurance - Export contract - About goods or services page - form valid
 
       cy.assertYesRadioOptionIsChecked();
 
-      cy.checkText(autoCompleteField(FINAL_DESTINATION).results(), COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME);
+      cy.checkText(autoCompleteField(FINAL_DESTINATION).results(), COUNTRY_APPLICATION_SUPPORT.ONLINE_SUPPORT_1.NAME);
     });
   });
 

@@ -5,7 +5,8 @@ import mockAccount from './mock-account';
 import mockAnswers from './mock-answers';
 import mockSession from './mock-session';
 import mockQuote from './mock-quote';
-import mockCountries from './mock-countries';
+export * from './mock-countries';
+import mockCountriesAndCurrencies from './mock-countries-and-currencies';
 import mockCurrencies, { EUR, HKD, JPY, GBP, USD, mockCurrenciesResponse, mockCurrenciesEmptyResponse } from './mock-currencies';
 import mockCompaniesHouseResponse from './mock-companies-house-response';
 import mockCompany from './mock-company';
@@ -94,6 +95,9 @@ const mockRes = () => {
   res.removeHeader = jest.fn();
   res.setHeader = jest.fn();
   res.status = jest.fn();
+  res.type = jest.fn();
+  res.write = jest.fn();
+  res.send = jest.fn();
 
   res.locals = {
     application: mockApplication,
@@ -155,7 +159,7 @@ export {
   mockBuyerOutstandingOrOverduePayments,
   mockBuyerRelationship,
   mockBuyerTradingHistory,
-  mockCountries,
+  mockCountriesAndCurrencies,
   mockCompaniesHouseResponse,
   mockCompany,
   mockCreateApplicationResponse,

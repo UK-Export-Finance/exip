@@ -52,7 +52,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         cy.completeCompanyDetailsForm({});
       });
 
-      it('should display validation errors', () => {
+      it('should render validation errors', () => {
         cy.submitAndAssertFieldErrors({
           field,
           value: WEBSITE_EXAMPLES.INVALID,
@@ -68,7 +68,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         cy.completeCompanyDetailsForm({});
       });
 
-      it('should display validation errors', () => {
+      it('should render validation errors', () => {
         cy.submitAndAssertFieldErrors({
           field,
           value: WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH,

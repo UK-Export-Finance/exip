@@ -31,4 +31,7 @@ export const APPLICATION = {
       },
     },
   },
+  SMALL_EXPORT_BUILDER: {
+    MAXIMUM_BUYER_WILL_OWE: 25000,
+  },
 };

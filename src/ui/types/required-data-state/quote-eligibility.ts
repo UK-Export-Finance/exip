@@ -1,7 +1,7 @@
 type RequiredDataStateQuoteEligibility = {
   'buyer-country': Array<string>;
   'buyer-country/change': Array<string>;
-  'buyer-body': Array<string>;
+  'type-of-buyer': Array<string>;
   'exporter-location': Array<string>;
   'exporter-location/change': Array<string>;
   'uk-goods-services': Array<string>;

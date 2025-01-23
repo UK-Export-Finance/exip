@@ -21,7 +21,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'companyDetails' });
+      cy.completeAndSubmitYourBusinessForms({ stopSubmittingAfter: 'companyDetails' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
 
@@ -81,8 +81,8 @@ context('Insurance - Your business - Nature of your business page - Save and bac
         expectedValue: application.EXPORTER_BUSINESS[GOODS_OR_SERVICES],
       });
 
-      cy.checkValue(field(YEARS_EXPORTING), '');
-      cy.checkValue(field(EMPLOYEES_UK), '');
+      cy.assertEmptyFieldValue(YEARS_EXPORTING);
+      cy.assertEmptyFieldValue(EMPLOYEES_UK);
     });
   });
 

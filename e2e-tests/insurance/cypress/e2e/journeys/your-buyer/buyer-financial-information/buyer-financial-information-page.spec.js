@@ -35,7 +35,7 @@ context(
         url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
         checkYourAnswersUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
-        cy.completeAndSubmitYourBuyerForms({ formToStopAt: 'tradedWithBuyer' });
+        cy.completeAndSubmitYourBuyerForms({ stopSubmittingAfter: 'tradedWithBuyer' });
 
         cy.assertUrl(url);
       });
@@ -82,7 +82,7 @@ context(
         cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
       });
 
-      it('should display summary text with collapsed conditional `details` content', () => {
+      it('should render summary text with collapsed conditional `details` content', () => {
         cy.checkText(buyerFinancialInformationPage.summary(), CONTENT_STRINGS.SUMMARY);
 
         buyerFinancialInformationPage.details().should('not.have.attr', 'open');
@@ -106,11 +106,8 @@ context(
       });
 
       it('should render validation errors', () => {
-        const expectedErrorsCount = 1;
-
         cy.submitAndAssertRadioErrors({
           field: noRadio(FIELD_ID),
-          expectedErrorsCount,
           expectedErrorMessage: ERROR_MESSAGE.IS_EMPTY,
         });
       });

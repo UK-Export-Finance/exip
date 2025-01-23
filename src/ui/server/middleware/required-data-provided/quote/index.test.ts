@@ -4,7 +4,7 @@ import { mockReq, mockRes, mockSession } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
 const {
-  BUYER_BODY,
+  TYPE_OF_BUYER,
   BUYER_COUNTRY,
   BUYER_COUNTRY_CHANGE,
   CHECK_YOUR_ANSWERS,
@@ -17,6 +17,7 @@ const {
   NEED_TO_START_AGAIN_EXIT,
   POLICY_TYPE,
   POLICY_TYPE_CHANGE,
+  TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT,
   TELL_US_ABOUT_YOUR_POLICY,
   TELL_US_ABOUT_YOUR_POLICY_CHANGE,
   YOUR_QUOTE,
@@ -25,7 +26,7 @@ const {
 
 const {
   ELIGIBILITY: {
-    VALID_BUYER_BODY,
+    VALID_TYPE_OF_BUYER,
     VALID_EXPORTER_LOCATION,
     HAS_MINIMUM_UK_GOODS_OR_SERVICES,
     CURRENCY,
@@ -54,20 +55,20 @@ describe('middleware/required-data-provided/quote', () => {
 
         const expected = {
           [BUYER_COUNTRY]: [],
-          [BUYER_BODY]: [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY],
-          [EXPORTER_LOCATION]: [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY, VALID_BUYER_BODY],
-          [UK_GOODS_OR_SERVICES]: [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY, VALID_BUYER_BODY, VALID_EXPORTER_LOCATION],
-          [POLICY_TYPE]: [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY, VALID_BUYER_BODY, VALID_EXPORTER_LOCATION, HAS_MINIMUM_UK_GOODS_OR_SERVICES],
+          [TYPE_OF_BUYER]: [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY],
+          [EXPORTER_LOCATION]: [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY, VALID_TYPE_OF_BUYER],
+          [UK_GOODS_OR_SERVICES]: [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY, VALID_TYPE_OF_BUYER, VALID_EXPORTER_LOCATION],
+          [POLICY_TYPE]: [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY, VALID_TYPE_OF_BUYER, VALID_EXPORTER_LOCATION, HAS_MINIMUM_UK_GOODS_OR_SERVICES],
           [TELL_US_ABOUT_YOUR_POLICY]: [
             FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY,
-            VALID_BUYER_BODY,
+            VALID_TYPE_OF_BUYER,
             VALID_EXPORTER_LOCATION,
             HAS_MINIMUM_UK_GOODS_OR_SERVICES,
             FIELD_IDS.POLICY_TYPE,
           ],
           [CHECK_YOUR_ANSWERS]: [
             FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY,
-            VALID_BUYER_BODY,
+            VALID_TYPE_OF_BUYER,
             VALID_EXPORTER_LOCATION,
             HAS_MINIMUM_UK_GOODS_OR_SERVICES,
             FIELD_IDS.POLICY_TYPE,
@@ -78,7 +79,7 @@ describe('middleware/required-data-provided/quote', () => {
           ],
           [YOUR_QUOTE]: [
             FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY,
-            VALID_BUYER_BODY,
+            VALID_TYPE_OF_BUYER,
             VALID_EXPORTER_LOCATION,
             HAS_MINIMUM_UK_GOODS_OR_SERVICES,
             FIELD_IDS.POLICY_TYPE,
@@ -106,20 +107,20 @@ describe('middleware/required-data-provided/quote', () => {
 
         const expected = {
           [BUYER_COUNTRY]: [],
-          [BUYER_BODY]: [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY],
-          [EXPORTER_LOCATION]: [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY, VALID_BUYER_BODY],
-          [UK_GOODS_OR_SERVICES]: [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY, VALID_BUYER_BODY, VALID_EXPORTER_LOCATION],
-          [POLICY_TYPE]: [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY, VALID_BUYER_BODY, VALID_EXPORTER_LOCATION, HAS_MINIMUM_UK_GOODS_OR_SERVICES],
+          [TYPE_OF_BUYER]: [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY],
+          [EXPORTER_LOCATION]: [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY, VALID_TYPE_OF_BUYER],
+          [UK_GOODS_OR_SERVICES]: [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY, VALID_TYPE_OF_BUYER, VALID_EXPORTER_LOCATION],
+          [POLICY_TYPE]: [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY, VALID_TYPE_OF_BUYER, VALID_EXPORTER_LOCATION, HAS_MINIMUM_UK_GOODS_OR_SERVICES],
           [TELL_US_ABOUT_YOUR_POLICY]: [
             FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY,
-            VALID_BUYER_BODY,
+            VALID_TYPE_OF_BUYER,
             VALID_EXPORTER_LOCATION,
             HAS_MINIMUM_UK_GOODS_OR_SERVICES,
             FIELD_IDS.POLICY_TYPE,
           ],
           [CHECK_YOUR_ANSWERS]: [
             FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY,
-            VALID_BUYER_BODY,
+            VALID_TYPE_OF_BUYER,
             VALID_EXPORTER_LOCATION,
             HAS_MINIMUM_UK_GOODS_OR_SERVICES,
             FIELD_IDS.POLICY_TYPE,
@@ -131,7 +132,7 @@ describe('middleware/required-data-provided/quote', () => {
           ],
           [YOUR_QUOTE]: [
             FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY,
-            VALID_BUYER_BODY,
+            VALID_TYPE_OF_BUYER,
             VALID_EXPORTER_LOCATION,
             HAS_MINIMUM_UK_GOODS_OR_SERVICES,
             FIELD_IDS.POLICY_TYPE,
@@ -155,7 +156,7 @@ describe('middleware/required-data-provided/quote', () => {
       const expected = {
         [BUYER_COUNTRY]: allRequiredData({})[BUYER_COUNTRY],
         [BUYER_COUNTRY_CHANGE]: allRequiredData({})[BUYER_COUNTRY],
-        [BUYER_BODY]: allRequiredData({})[BUYER_BODY],
+        [TYPE_OF_BUYER]: allRequiredData({})[TYPE_OF_BUYER],
         [EXPORTER_LOCATION]: allRequiredData({})[EXPORTER_LOCATION],
         [EXPORTER_LOCATION_CHANGE]: allRequiredData({})[EXPORTER_LOCATION],
         [UK_GOODS_OR_SERVICES]: allRequiredData({})[UK_GOODS_OR_SERVICES],
@@ -192,27 +193,9 @@ describe('middleware/required-data-provided/quote', () => {
       });
     });
 
-    describe(`when req.originalUrl is ${START}`, () => {
-      it('should call req.next', () => {
-        req.originalUrl = START;
-        requiredQuoteEligibilityDataProvided(req, res, nextSpy);
-
-        expect(nextSpy).toHaveBeenCalled();
-      });
-    });
-
     describe(`when req.originalUrl is ${BUYER_COUNTRY}`, () => {
       it('should call req.next', () => {
         req.originalUrl = BUYER_COUNTRY;
-        requiredQuoteEligibilityDataProvided(req, res, nextSpy);
-
-        expect(nextSpy).toHaveBeenCalled();
-      });
-    });
-
-    describe(`when req.originalUrl is ${NEED_TO_START_AGAIN_EXIT}`, () => {
-      it('should call req.next', () => {
-        req.originalUrl = NEED_TO_START_AGAIN_EXIT;
         requiredQuoteEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
@@ -231,6 +214,33 @@ describe('middleware/required-data-provided/quote', () => {
     describe(`when req.originalUrl is ${GET_A_QUOTE_BY_EMAIL}`, () => {
       it('should call req.next', () => {
         req.originalUrl = GET_A_QUOTE_BY_EMAIL;
+        requiredQuoteEligibilityDataProvided(req, res, nextSpy);
+
+        expect(nextSpy).toHaveBeenCalled();
+      });
+    });
+
+    describe(`when req.originalUrl is ${NEED_TO_START_AGAIN_EXIT}`, () => {
+      it('should call req.next', () => {
+        req.originalUrl = NEED_TO_START_AGAIN_EXIT;
+        requiredQuoteEligibilityDataProvided(req, res, nextSpy);
+
+        expect(nextSpy).toHaveBeenCalled();
+      });
+    });
+
+    describe(`when req.originalUrl is ${START}`, () => {
+      it('should call req.next', () => {
+        req.originalUrl = START;
+        requiredQuoteEligibilityDataProvided(req, res, nextSpy);
+
+        expect(nextSpy).toHaveBeenCalled();
+      });
+    });
+
+    describe(`when req.originalUrl is ${TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT}`, () => {
+      it('should call req.next', () => {
+        req.originalUrl = TALK_TO_AN_EXPORT_FINANCE_MANAGER_EXIT;
         requiredQuoteEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();

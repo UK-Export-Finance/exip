@@ -28,7 +28,7 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'creditControl' });
+      cy.completeAndSubmitYourBusinessForms({ stopSubmittingAfter: 'creditControl' });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });

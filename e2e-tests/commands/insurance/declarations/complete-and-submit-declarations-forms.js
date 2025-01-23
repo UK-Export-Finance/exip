@@ -2,7 +2,7 @@
  * completeAndDeclarationsForms
  * completes declarations forms up to the specified form to stop at
  * eg, when 'antiBribery' is passed, it will complete all forms up to and including 'antiBribery'
- * @param {String} formToStopAt: the form to stop at
+ * @param {String} stopSubmittingAfter: The final form to submit
  * @param {Boolean} hasAntiBriberyCodeOfConduct: has "anti-bribery - code of conduct"
  * @param {Boolean} exportingWithCodeOfConduct: will export with "anti-bribery - exporting with code of conduct"
  * @param {Boolean} willAdhereToAllRequirements: "Modern slavery - will adhere to all requirements" answer
@@ -13,7 +13,7 @@
  * @param {String} offensesOrInvestigations: "Modern slavery - offenses or investigations" textarea answer
  */
 const completeAndSubmitDeclarationsForms = ({
-  formToStopAt,
+  stopSubmittingAfter,
   hasAntiBriberyCodeOfConduct,
   exportingWithCodeOfConduct,
   willAdhereToAllRequirements,
@@ -78,7 +78,7 @@ const completeAndSubmitDeclarationsForms = ({
   for (const step of steps) {
     step.action();
 
-    if (step.name === formToStopAt) {
+    if (step.name === stopSubmittingAfter) {
       break;
     }
   }

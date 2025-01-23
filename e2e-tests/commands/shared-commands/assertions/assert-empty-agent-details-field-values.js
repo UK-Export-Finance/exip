@@ -1,4 +1,3 @@
-import { field } from '../../../pages/shared';
 import FIELD_IDS from '../../../constants/field-ids/insurance/export-contract';
 import { checkAutocompleteInput } from '../../../shared-test-assertions';
 
@@ -11,7 +10,7 @@ const {
  * Assert all field values in the "agent details" form are empty.
  */
 const assertEmptyAgentDetailsFieldValues = () => {
-  cy.checkValue(field(NAME), '');
+  cy.assertEmptyFieldValue(NAME);
 
   cy.checkTextareaValue({
     fieldId: FULL_ADDRESS,

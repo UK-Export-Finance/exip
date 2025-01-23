@@ -123,8 +123,6 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
       });
 
       it('should render a validation error', () => {
-        const expectedErrorsCount = 1;
-
         const { errorMessage } = field(FIELD_ID);
 
         const radioField = {
@@ -134,7 +132,6 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
 
         cy.submitAndAssertRadioErrors({
           field: radioField,
-          expectedErrorsCount,
           expectedErrorMessage: ERROR_MESSAGES.INSURANCE.POLICY.TYPE_OF_POLICY[FIELD_ID].IS_EMPTY,
         });
       });

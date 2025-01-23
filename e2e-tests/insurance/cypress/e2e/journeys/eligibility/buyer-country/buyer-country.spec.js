@@ -13,13 +13,13 @@ const {
 
 const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
-const COUNTRY_NAME = COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME;
+const COUNTRY_NAME = COUNTRY_APPLICATION_SUPPORT.ONLINE_SUPPORT_1.NAME;
 
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Buyer country page - as an exporter, I want to check if UKEF offer credit insurance policy for where my buyer is based', () => {
   beforeEach(() => {
-    cy.completeAndSubmitEligibilityForms({ formToStopAt: 'companyDetails' });
+    cy.completeAndSubmitEligibilityForms({ stopSubmittingAfter: 'companyDetails' });
 
     const expectedUrl = `${baseUrl}${BUYER_COUNTRY}`;
 

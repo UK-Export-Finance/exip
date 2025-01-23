@@ -1,50 +1,42 @@
-import { Currency } from '../currency';
+import { SuccessResponse } from '../generic';
 import { Relationship } from '../relationship';
 
 export interface CisCountry {
-  marketName: string;
-  isoCode: string;
-  shortTermCoverAvailabilityDesc: string;
+  countryRatingDesc: string;
   ESRAClassificationDesc: string;
-  NBIIssue: string;
+  isoCode: string;
+  marketName: string;
   marketRiskAppetitePublicDesc: string;
-  riskCategory?: string;
+  NBIIssue: string;
+  esraClassification?: string;
+  shortTermCoverAvailabilityDesc: string;
 }
 
 export interface Country extends Relationship {
   name: string;
   isoCode: string;
-  riskCategory?: string;
-  shortTermCover?: boolean;
-  nbiIssueAvailable?: boolean;
+  esraClassification?: string;
   canGetAQuoteOnline?: boolean;
-  canGetAQuoteOffline?: boolean;
-  canGetAQuoteByEmail?: boolean;
   cannotGetAQuote?: boolean;
   canApplyForInsuranceOnline?: boolean;
-  noInsuranceSupport?: boolean;
-}
-
-export interface GetApimCisCountriesResponse {
-  success: boolean;
-  data?: [CisCountry];
-}
-
-export interface GetApimCurrenciesResponse {
-  success: boolean;
-  data?: [Currency];
 }
 
 export interface MappedCisCountry {
-  name: string;
+  countryRating: string;
+  esraClassification?: string | null;
   isoCode: string;
-  shortTermCover: boolean;
-  riskCategory?: string;
-  nbiIssueAvailable: boolean;
+  name: string;
+  noOnlineSupport: boolean;
   canGetAQuoteOnline: boolean;
-  canGetAQuoteOffline: boolean;
-  canGetAQuoteByEmail: boolean;
   cannotGetAQuote: boolean;
   canApplyForInsuranceOnline: boolean;
   noInsuranceSupport: boolean;
+}
+
+export interface GetApimCisCountriesResponse extends SuccessResponse {
+  data?: [CisCountry];
+}
+
+export interface GetApimCisCountriesHelperResponse extends SuccessResponse {
+  countries: [MappedCisCountry];
 }

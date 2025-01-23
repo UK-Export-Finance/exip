@@ -1,6 +1,7 @@
 import application from '.';
 import notify from '../../integrations/notify';
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
+import getSubmittedConfirmationTemplateId from './get-submitted-confirmation-template-id';
 import getFullNameString from '../../helpers/get-full-name-string';
 import fileSystem from '../../file-system';
 import { mockAccount, mockApplication, mockCompany, mockBuyer, mockSendEmailResponse, mockErrorMessage, mockSpyPromiseRejection } from '../../test-mocks';
@@ -16,7 +17,7 @@ describe('emails/application', () => {
   const unlinkSpy = jest.fn(() => Promise.resolve(true));
 
   const { email } = mockAccount;
-  const { referenceNumber } = mockApplication;
+  const { referenceNumber, policy } = mockApplication;
   const { companyName } = mockCompany;
   const { companyOrOrganisationName } = mockBuyer;
 
@@ -32,9 +33,7 @@ describe('emails/application', () => {
 
   const mockFilePath = '/path-to-file';
 
-  describe('account', () => {
-    const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
-
+  describe('application', () => {
     beforeEach(() => {
       jest.clearAllMocks();
 
@@ -46,10 +45,12 @@ describe('emails/application', () => {
     test('it should call notify.sendEmail and return the response', async () => {
       notify.sendEmail = sendEmailSpy;
 
-      const result = await application.submittedEmail(variables);
+      const result = await application.submittedEmail(variables, policy);
+
+      const expectedTemplateId = getSubmittedConfirmationTemplateId(policy);
 
       expect(sendEmailSpy).toHaveBeenCalledTimes(1);
-      expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, variables);
+      expect(sendEmailSpy).toHaveBeenCalledWith(expectedTemplateId, email, variables);
 
       const expected = mockSendEmailResponse;
 
@@ -63,7 +64,7 @@ describe('emails/application', () => {
 
       test('should throw an error', async () => {
         try {
-          await application.submittedEmail(variables);
+          await application.submittedEmail(variables, policy);
         } catch (error) {
           const expected = new Error(
             `Sending application submitted email to to application owner or provided business contact Error: Sending email ${new Error(mockErrorMessage)}`,

@@ -11,22 +11,21 @@ const {
 const baseUrl = Cypress.config('baseUrl');
 
 context('Cannot apply exit page', () => {
+  const ukGoodsOrServicesUrl = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
+  const cannotApplyUrl = `${baseUrl}${CANNOT_APPLY_EXIT}`;
+
   beforeEach(() => {
     cy.navigateToRootUrl();
     cy.completeAndSubmitBuyerCountryForm({});
     cy.completeAndSubmitBuyerBodyForm();
     cy.completeAndSubmitExporterLocationForm();
 
-    let expectedUrl = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
-
-    cy.assertUrl(expectedUrl);
+    cy.assertUrl(ukGoodsOrServicesUrl);
 
     cy.clickNoRadioInput();
     cy.clickSubmitButton();
 
-    expectedUrl = `${baseUrl}${CANNOT_APPLY_EXIT}`;
-
-    cy.assertUrl(expectedUrl);
+    cy.assertUrl(cannotApplyUrl);
   });
 
   it('renders core page elements', () => {

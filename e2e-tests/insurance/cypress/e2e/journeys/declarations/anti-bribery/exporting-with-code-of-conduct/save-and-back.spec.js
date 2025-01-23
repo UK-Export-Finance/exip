@@ -27,7 +27,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-      cy.completeAndSubmitDeclarationsForms({ formToStopAt: 'codeOfConduct', referenceNumber });
+      cy.completeAndSubmitDeclarationsForms({ stopSubmittingAfter: 'codeOfConduct', referenceNumber });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`;
 

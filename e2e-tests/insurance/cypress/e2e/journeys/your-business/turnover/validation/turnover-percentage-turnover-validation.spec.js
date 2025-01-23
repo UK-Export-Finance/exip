@@ -19,7 +19,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeAndSubmitYourBusinessForms({ formToStopAt: 'turnoverCurrency' });
+      cy.completeAndSubmitYourBusinessForms({ stopSubmittingAfter: 'turnoverCurrency' });
 
       url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ROOT}`;
 
