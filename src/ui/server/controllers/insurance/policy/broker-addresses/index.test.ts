@@ -26,13 +26,15 @@ const {
   PROBLEM_WITH_SERVICE,
   POLICY: {
     BROKER_ADDRESSES_SAVE_AND_BACK,
+    BROKER_ADDRESSES_CHANGE,
+    BROKER_ADDRESSES_CHECK_AND_CHANGE,
     BROKER_DETAILS_ROOT,
     BROKER_ZERO_ADDRESSES_ROOT,
     BROKER_CONFIRM_ADDRESS_ROOT,
     BROKER_MANUAL_ADDRESS_ROOT,
-    BROKER_ADDRESSES_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
 const { BROKER_ADDRESSES } = POLICY_FIELDS;
@@ -412,6 +414,17 @@ describe('controllers/insurance/policy/broker-addresses', () => {
           await post(req, res);
 
           const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the url's last substring is `check-and-change`", () => {
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.originalUrl = BROKER_ADDRESSES_CHECK_AND_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });

@@ -13,6 +13,7 @@ import getOrdnanceSurveyAddressByIndex from '../../../../helpers/get-chosen-ordn
 import getOrdnanceSurveyAddressById from '../../../../helpers/get-chosen-ordnance-survey-address/by-id';
 import mapAndSave from '../map-and-save/broker';
 import isChangeRoute from '../../../../helpers/is-change-route';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
 const { SELECT_THE_ADDRESS } = POLICY_FIELD_IDS.BROKER_ADDRESSES;
@@ -29,6 +30,7 @@ const {
     BROKER_MANUAL_ADDRESS_ROOT,
     CHECK_YOUR_ANSWERS,
   },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
 const { BROKER_ADDRESSES } = POLICY_FIELDS;
@@ -210,6 +212,10 @@ export const post = async (req: Request, res: Response) => {
 
     if (isChangeRoute(req.originalUrl)) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    }
+
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`);

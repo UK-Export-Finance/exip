@@ -4,6 +4,7 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import isChangeRoute from '../../../../helpers/is-change-route';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import generateBrokerAddressInsetTextHtml from '../../../../helpers/generate-broker-address-inset-text-html';
 import { Request, Response } from '../../../../../types';
 
@@ -11,6 +12,7 @@ const {
   INSURANCE_ROOT,
   ALL_SECTIONS,
   POLICY: { BROKER_DETAILS_ROOT, BROKER_DETAILS_CHANGE, BROKER_MANUAL_ADDRESS_ROOT, LOSS_PAYEE_ROOT, CHECK_YOUR_ANSWERS },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -107,6 +109,10 @@ export const post = (req: Request, res: Response) => {
 
   if (isChangeRoute(req.originalUrl)) {
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+  }
+
+  if (isCheckAndChangeRoute(req.originalUrl)) {
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
   }
 
   return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`);

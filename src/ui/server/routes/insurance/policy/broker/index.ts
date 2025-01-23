@@ -26,6 +26,7 @@ const {
   BROKER_ADDRESSES_CHECK_AND_CHANGE,
   BROKER_CONFIRM_ADDRESS_ROOT,
   BROKER_CONFIRM_ADDRESS_CHANGE,
+  BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE,
   BROKER_ZERO_ADDRESSES_ROOT,
   BROKER_MANUAL_ADDRESS_ROOT,
   BROKER_MANUAL_ADDRESS_CHANGE,
@@ -64,6 +65,8 @@ router.get(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_ROOT}`, getBrokerConfirmAd
 router.post(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_ROOT}`, postBrokerConfirmAddress);
 router.get(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_CHANGE}`, getBrokerConfirmAddress);
 router.post(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_CHANGE}`, postBrokerConfirmAddress);
+router.get(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE}`, getBrokerConfirmAddress);
+router.post(`/:referenceNumber${BROKER_CONFIRM_ADDRESS_CHECK_AND_CHANGE}`, postBrokerConfirmAddress);
 
 router.get(`/:referenceNumber${BROKER_ZERO_ADDRESSES_ROOT}`, getBrokerZeroAddresses);
 
